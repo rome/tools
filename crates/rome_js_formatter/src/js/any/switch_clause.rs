@@ -6,8 +6,8 @@ use rome_js_syntax::JsAnySwitchClause;
 impl FormatRule<JsAnySwitchClause> for FormatJsAnySwitchClause {
     fn format(node: &JsAnySwitchClause, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnySwitchClause::JsCaseClause(node) => formatted![formatter, node.format()],
-            JsAnySwitchClause::JsDefaultClause(node) => formatted![formatter, node.format()],
+            JsAnySwitchClause::JsCaseClause(node) => formatted![formatter, [node.format()]],
+            JsAnySwitchClause::JsDefaultClause(node) => formatted![formatter, [node.format()]],
         }
     }
 }

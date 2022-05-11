@@ -25,18 +25,18 @@ impl FormatNodeFields<TsMethodSignatureClassMember>
             formatter,
             formatted![
                 formatter,
-                modifiers.format(),
-                async_token.format().with_or_empty(|token| formatted![
-                    formatter,
-                    token,
-                    space_token()
-                ]),
-                space_token(),
-                name.format(),
-                question_mark_token.format(),
-                type_parameters.format(),
-                parameters.format(),
-                return_type_annotation.format(),
+                [
+                    modifiers.format(),
+                    async_token
+                        .format()
+                        .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                    space_token(),
+                    name.format(),
+                    question_mark_token.format(),
+                    type_parameters.format(),
+                    parameters.format(),
+                    return_type_annotation.format(),
+                ]
             ]?,
             semicolon_token,
         )?))

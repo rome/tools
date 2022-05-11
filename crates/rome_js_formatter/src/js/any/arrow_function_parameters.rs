@@ -10,10 +10,10 @@ impl FormatRule<JsAnyArrowFunctionParameters> for FormatJsAnyArrowFunctionParame
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrowFunctionParameters::JsParameters(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyArrowFunctionParameters::JsAnyBinding(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

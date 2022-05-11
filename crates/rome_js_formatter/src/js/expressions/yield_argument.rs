@@ -13,9 +13,7 @@ impl FormatNodeFields<JsYieldArgument> for FormatNodeRule<JsYieldArgument> {
 
         formatted![
             formatter,
-            star_token.format(),
-            space_token(),
-            expression.format()
+            [star_token.format(), space_token(), expression.format()]
         ]
     }
 }

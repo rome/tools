@@ -9,6 +9,9 @@ impl FormatNodeFields<TsReturnTypeAnnotation> for FormatNodeRule<TsReturnTypeAnn
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsReturnTypeAnnotationFields { colon_token, ty } = node.as_fields();
-        formatted![formatter, colon_token.format(), space_token(), ty.format()]
+        formatted![
+            formatter,
+            [colon_token.format(), space_token(), ty.format()]
+        ]
     }
 }

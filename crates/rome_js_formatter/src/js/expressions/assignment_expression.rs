@@ -17,13 +17,15 @@ impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExp
 
         Ok(group_elements(formatted![
             formatter,
-            left.format(),
-            space_token(),
-            operator_token.format(),
-            group_elements(soft_line_indent_or_space(formatted![
-                formatter,
-                right.format()
-            ]?)),
+            [
+                left.format(),
+                space_token(),
+                operator_token.format(),
+                group_elements(soft_line_indent_or_space(formatted![
+                    formatter,
+                    [right.format()]
+                ]?)),
+            ]
         ]?))
     }
 }

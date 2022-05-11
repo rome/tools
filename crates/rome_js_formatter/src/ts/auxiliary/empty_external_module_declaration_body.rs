@@ -11,6 +11,6 @@ impl FormatNodeFields<TsEmptyExternalModuleDeclarationBody>
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsEmptyExternalModuleDeclarationBodyFields { semicolon_token } = node.as_fields();
-        formatted![formatter, semicolon_token.format()]
+        formatted![formatter, [semicolon_token.format()]]
     }
 }

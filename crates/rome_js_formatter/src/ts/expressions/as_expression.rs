@@ -13,11 +13,13 @@ impl FormatNodeFields<TsAsExpression> for FormatNodeRule<TsAsExpression> {
 
         formatted![
             formatter,
-            expression.format(),
-            space_token(),
-            as_token.format(),
-            space_token(),
-            ty.format(),
+            [
+                expression.format(),
+                space_token(),
+                as_token.format(),
+                space_token(),
+                ty.format(),
+            ]
         ]
     }
 }

@@ -100,12 +100,14 @@ impl Format for FormatSuppressedNode<'_> {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         formatted![
             formatter,
-            // Insert a force a line break to ensure the suppression comment is on its own line
-            // and correctly registers as a leading trivia on the opening token of this node
-            hard_line_break(),
-            FormatElement::Verbatim(Verbatim::new_suppressed(format_verbatim_node_or_token(
-                self.node, formatter
-            ))),
+            [
+                // Insert a force a line break to ensure the suppression comment is on its own line
+                // and correctly registers as a leading trivia on the opening token of this node
+                hard_line_break(),
+                FormatElement::Verbatim(Verbatim::new_suppressed(format_verbatim_node_or_token(
+                    self.node, formatter
+                ))),
+            ]
         ]
     }
 }
@@ -516,7 +518,7 @@ pub(crate) trait JsFormatter {
         let formatter = self.as_formatter();
 
         for (index, element) in list.elements().enumerate() {
-            let node = formatted![formatter, element.node()?.format()]?;
+            let node = formatted![formatter, [element.node()?.format()]]?;
 
             // Reuse the existing trailing separator or create it if it wasn't in the
             // input source. Only print the last trailing token if the outer group breaks
@@ -528,12 +530,12 @@ pub(crate) trait JsFormatter {
                         // but still print its associated trivias unconditionally
                         self.format_replaced(separator, if_group_breaks(Token::from(separator)))
                     } else if trailing_separator.is_mandatory() {
-                        formatted![formatter, separator.format()]?
+                        formatted![formatter, [separator.format()]]?
                     } else {
                         empty_element()
                     }
                 } else {
-                    formatted![formatter, separator.format()]?
+                    formatted![formatter, [separator.format()]]?
                 }
             } else if index == last_index {
                 if trailing_separator.is_allowed() {
@@ -547,7 +549,7 @@ pub(crate) trait JsFormatter {
                 separator_factory()
             };
 
-            result.push(formatted![formatter, node, separator]?);
+            result.push(formatted![formatter, [node, separator]]?);
         }
 
         Ok(result.into_iter())
@@ -570,7 +572,7 @@ pub(crate) trait JsFormatter {
             let snapshot = formatter.snapshot();
             let format = module_item.format();
 
-            let elem = match formatted![formatter, format] {
+            let elem = match formatted![formatter, [format]] {
                 Ok(result) => result,
                 Err(_) => {
                     formatter.restore(snapshot);
@@ -616,8 +618,7 @@ fn format_delimited(
     let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
         formatted![
             formatter,
-            open_token_trailing_trivia,
-            soft_line_break_or_space()
+            [open_token_trailing_trivia, soft_line_break_or_space()]
         ]?
     } else {
         empty_element()
@@ -625,8 +626,7 @@ fn format_delimited(
     let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
         formatted![
             formatter,
-            soft_line_break_or_space(),
-            close_token_leading_trivia
+            [soft_line_break_or_space(), close_token_leading_trivia]
         ]?
     } else {
         empty_element()
@@ -635,15 +635,19 @@ fn format_delimited(
     let formatted_content = match content {
         DelimitedContent::BlockIndent(content) => block_indent(formatted![
             formatter,
-            open_token_trailing_trivia,
-            content,
-            close_token_leading_trivia
+            [
+                open_token_trailing_trivia,
+                content,
+                close_token_leading_trivia
+            ]
         ]?),
         DelimitedContent::SoftBlockIndent(content) => soft_block_indent(formatted![
             formatter,
-            open_token_trailing_trivia,
-            content,
-            close_token_leading_trivia
+            [
+                open_token_trailing_trivia,
+                content,
+                close_token_leading_trivia
+            ]
         ]?),
         DelimitedContent::SoftBlockSpaces(content) => {
             if open_token_trailing_trivia.is_empty()
@@ -654,14 +658,18 @@ fn format_delimited(
             } else {
                 formatted![
                     formatter,
-                    indent(formatted![
-                        formatter,
+                    [
+                        indent(formatted![
+                            formatter,
+                            [
+                                soft_line_break_or_space(),
+                                open_token_trailing_trivia,
+                                content,
+                                close_token_leading_trivia,
+                            ]
+                        ]?),
                         soft_line_break_or_space(),
-                        open_token_trailing_trivia,
-                        content,
-                        close_token_leading_trivia,
-                    ]?),
-                    soft_line_break_or_space(),
+                    ]
                 ]?
             }
         }
@@ -669,12 +677,14 @@ fn format_delimited(
 
     formatted![
         formatter,
-        format_leading_trivia(open_token, TriviaPrintMode::Full),
-        group_elements(format_elements![
-            Token::from(open_token),
-            formatted_content,
-            Token::from(close_token),
-        ]),
-        format_trailing_trivia(close_token),
+        [
+            format_leading_trivia(open_token, TriviaPrintMode::Full),
+            group_elements(format_elements![
+                Token::from(open_token),
+                formatted_content,
+                Token::from(close_token),
+            ]),
+            format_trailing_trivia(close_token),
+        ]
     ]
 }

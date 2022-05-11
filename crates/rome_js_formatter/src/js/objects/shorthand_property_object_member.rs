@@ -13,6 +13,6 @@ impl FormatNodeFields<JsShorthandPropertyObjectMember>
     ) -> FormatResult<FormatElement> {
         let JsShorthandPropertyObjectMemberFields { name } = node.as_fields();
 
-        formatted![formatter, name.format()]
+        formatted![formatter, [name.format()]]
     }
 }

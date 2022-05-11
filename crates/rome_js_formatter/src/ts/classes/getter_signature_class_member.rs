@@ -24,14 +24,16 @@ impl FormatNodeFields<TsGetterSignatureClassMember>
             formatter,
             formatted![
                 formatter,
-                modifiers.format(),
-                space_token(),
-                get_token.format(),
-                space_token(),
-                name.format(),
-                l_paren_token.format(),
-                r_paren_token.format(),
-                return_type.format(),
+                [
+                    modifiers.format(),
+                    space_token(),
+                    get_token.format(),
+                    space_token(),
+                    name.format(),
+                    l_paren_token.format(),
+                    r_paren_token.format(),
+                    return_type.format(),
+                ]
             ]?,
             semicolon_token,
         )?))

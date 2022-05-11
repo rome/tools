@@ -12,6 +12,6 @@ impl FormatNodeFields<JsxOpeningFragment> for FormatNodeRule<JsxOpeningFragment>
             l_angle_token,
         } = node.as_fields();
 
-        formatted![formatter, l_angle_token.format(), r_angle_token.format()]
+        formatted![formatter, [l_angle_token.format(), r_angle_token.format()]]
     }
 }

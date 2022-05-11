@@ -32,13 +32,13 @@ pub trait FormatOptional {
     /// let none_token: Option<MyFormat> = None;
     /// // Returns `empty_element()` for a `None` value
     /// let none_result = none_token.with_or_empty(|token| token);
-    /// assert_eq!(Ok(empty_element()), formatted![&formatter, none_result]);
+    /// assert_eq!(Ok(empty_element()), formatted![&formatter, [none_result]]);
     ///
     /// let some_token = Some(MyFormat);
     /// let some_result = some_token.with_or_empty(|token| {
-    ///     formatted![&formatter, space_token(), token]
+    ///     formatted![&formatter, [space_token(), token]]
     /// });
-    /// assert_eq!(formatted![&formatter, space_token(), token("MyToken")], formatted![&formatter, some_result]);
+    /// assert_eq!(formatted![&formatter, [space_token(), token("MyToken")]], formatted![&formatter, [some_result]]);
     fn with_or_empty<With, WithResult>(
         &self,
         with: With,
@@ -71,7 +71,7 @@ pub trait FormatOptional {
     /// let none_token: Option<MyFormat> = None;
     /// let result = none_token.or_format(|| token(" other result"));
     ///
-    /// assert_eq!(Ok(token(" other result")), formatted![&formatter, result]);
+    /// assert_eq!(Ok(token(" other result")), formatted![&formatter, [result]]);
     fn or_format<Or, OrResult>(
         &self,
         op: Or,
@@ -111,14 +111,14 @@ pub trait FormatOptional {
     /// let none_result = none_token.with_or(|token| token, || {
     ///     token("empty")
     /// });
-    /// assert_eq!(Ok(token("empty")), formatted![&formatter, none_result]);
+    /// assert_eq!(Ok(token("empty")), formatted![&formatter, [none_result]]);
     ///
     /// // Returns the result of the first callback when called with `Some(value)`
     /// let some_result = Some(MyFormat).with_or(|token| {
-    ///     formatted![&formatter, space_token(), token]
+    ///     formatted![&formatter, [space_token(), token]]
     /// }, || empty_element());
     ///
-    /// assert_eq!(formatted![&formatter, space_token(), token("MyToken")], formatted![&formatter, some_result]);
+    /// assert_eq!(formatted![&formatter, [space_token(), token("MyToken")]], formatted![&formatter, [some_result]]);
     fn with_or<With, Or, WithResult, OrResult>(
         &self,
         with: With,
@@ -157,10 +157,10 @@ pub trait FormatWith {
     /// let formatter = Formatter::default();
     ///
     /// let result = MyFormat.with(|string_literal| {
-    ///     formatted![&formatter, string_literal, space_token(), token("+")]
+    ///     formatted![&formatter, [string_literal, space_token(), token("+")]]
     /// });
     ///
-    /// assert_eq!(formatted![&formatter, token("MyToken"), space_token(), token("+")], formatted![&formatter, result])
+    /// assert_eq!(formatted![&formatter, [token("MyToken"), space_token(), token("+")]], formatted![&formatter, [result]])
     fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult>
     where
         With: Fn(FormatElement) -> WithResult,
@@ -303,14 +303,14 @@ pub trait MemoizeFormat {
     /// // Calls `format` for everytime the object gets formatted
     /// assert_eq!(
     ///     Ok(format_elements![token("Formatted 1 times."), token("Formatted 2 times.")]),
-    ///     formatted![&formatter, &normal, &normal]
+    ///     formatted![&formatter, [&normal, &normal]]
     /// );
     ///
     /// // Memoized memoizes the result and calls `format` only once.
     /// let memoized = normal.memoized();
     /// assert_eq!(
     ///     Ok(format_elements![token("Formatted 3 times."), token("Formatted 3 times.")]),
-    ///     formatted![&formatter, &memoized, &memoized]
+    ///     formatted![&formatter, [&memoized, &memoized]]
     /// );
     /// ```
     ///

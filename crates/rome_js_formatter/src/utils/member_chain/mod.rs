@@ -322,9 +322,11 @@ fn flatten_call_expression(
             flatten_call_expression(queue, callee.syntax().clone(), formatter)?;
             let formatted = vec![formatted![
                 formatter,
-                call_expression.optional_chain_token().format(),
-                call_expression.type_arguments().format(),
-                call_expression.arguments().format()
+                [
+                    call_expression.optional_chain_token().format(),
+                    call_expression.type_arguments().format(),
+                    call_expression.arguments().format()
+                ]
             ]?];
 
             queue.push(FlattenItem::CallExpression(call_expression, formatted));
@@ -335,8 +337,10 @@ fn flatten_call_expression(
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![formatted![
                 formatter,
-                static_member.operator_token().format(),
-                static_member.member().format(),
+                [
+                    static_member.operator_token().format(),
+                    static_member.member().format(),
+                ]
             ]?];
             queue.push(FlattenItem::StaticMember(static_member, formatted));
         }
@@ -347,10 +351,12 @@ fn flatten_call_expression(
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![formatted!(
                 formatter,
-                computed_expression.optional_chain_token().format(),
-                computed_expression.l_brack_token().format(),
-                computed_expression.member().format(),
-                computed_expression.r_brack_token().format(),
+                [
+                    computed_expression.optional_chain_token().format(),
+                    computed_expression.l_brack_token().format(),
+                    computed_expression.member().format(),
+                    computed_expression.r_brack_token().format(),
+                ]
             )?];
 
             queue.push(FlattenItem::ComputedExpression(
@@ -360,7 +366,7 @@ fn flatten_call_expression(
         }
 
         _ => {
-            let formatted = formatted![formatter, node.format()]?;
+            let formatted = formatted![formatter, [node.format()]]?;
             queue.push(FlattenItem::Node(node, formatted));
         }
     }

@@ -23,13 +23,15 @@ impl FormatNodeFields<JsPropertyClassMember> for FormatNodeRule<JsPropertyClassM
             formatter,
             formatted![
                 formatter,
-                modifiers.format(),
-                space_token(),
-                name.format(),
-                property_annotation.format(),
-                value
-                    .format()
-                    .with_or_empty(|node| formatted![formatter, space_token(), node]),
+                [
+                    modifiers.format(),
+                    space_token(),
+                    name.format(),
+                    property_annotation.format(),
+                    value
+                        .format()
+                        .with_or_empty(|node| formatted![formatter, [space_token(), node]]),
+                ]
             ]?,
             semicolon_token,
         )

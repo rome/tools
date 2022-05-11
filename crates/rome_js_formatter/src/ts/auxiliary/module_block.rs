@@ -13,7 +13,7 @@ impl FormatNodeFields<TsModuleBlock> for FormatNodeRule<TsModuleBlock> {
 
         formatter.format_delimited_block_indent(
             &l_curly_token?,
-            formatted![formatter, items.format()]?,
+            formatted![formatter, [items.format()]]?,
             &r_curly_token?,
         )
     }

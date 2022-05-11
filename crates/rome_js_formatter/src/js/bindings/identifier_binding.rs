@@ -11,6 +11,6 @@ impl FormatNodeFields<JsIdentifierBinding> for FormatNodeRule<JsIdentifierBindin
     ) -> FormatResult<FormatElement> {
         let JsIdentifierBindingFields { name_token } = node.as_fields();
 
-        formatted![formatter, name_token.format()]
+        formatted![formatter, [name_token.format()]]
     }
 }

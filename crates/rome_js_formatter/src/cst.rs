@@ -8,7 +8,7 @@ pub struct FormatJsSyntaxNode;
 
 impl rome_formatter::FormatRule<JsSyntaxNode> for FormatJsSyntaxNode {
     fn format(node: &JsSyntaxNode, formatter: &Formatter) -> FormatResult<FormatElement> {
-        map_syntax_node!(node.clone(), node => formatted![formatter, node.format()])
+        map_syntax_node!(node.clone(), node => formatted![formatter, [node.format()]])
     }
 }
 

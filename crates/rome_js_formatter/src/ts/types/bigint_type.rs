@@ -6,6 +6,6 @@ impl FormatNodeFields<TsBigintType> for FormatNodeRule<TsBigintType> {
     fn format_fields(node: &TsBigintType, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsBigintTypeFields { bigint_token } = node.as_fields();
 
-        formatted![formatter, bigint_token.format()]
+        formatted![formatter, [bigint_token.format()]]
     }
 }

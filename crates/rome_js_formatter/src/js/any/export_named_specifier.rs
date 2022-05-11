@@ -10,10 +10,10 @@ impl FormatRule<JsAnyExportNamedSpecifier> for FormatJsAnyExportNamedSpecifier {
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyExportNamedSpecifier::JsExportNamedSpecifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

@@ -17,10 +17,12 @@ impl FormatNodeFields<TsExternalModuleReference> for FormatNodeRule<TsExternalMo
 
         formatted![
             formatter,
-            require_token.format(),
-            l_paren_token.format(),
-            source.format(),
-            r_paren_token.format(),
+            [
+                require_token.format(),
+                l_paren_token.format(),
+                source.format(),
+                r_paren_token.format(),
+            ]
         ]
     }
 }

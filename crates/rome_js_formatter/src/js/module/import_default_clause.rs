@@ -19,19 +19,19 @@ impl FormatNodeFields<JsImportDefaultClause> for FormatNodeRule<JsImportDefaultC
 
         formatted![
             formatter,
-            type_token
-                .format()
-                .with_or_empty(|token| formatted![formatter, token, space_token()]),
-            local_name.format(),
-            space_token(),
-            from_token.format(),
-            space_token(),
-            source.format(),
-            assertion.format().with_or_empty(|assertion| formatted![
-                formatter,
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                local_name.format(),
                 space_token(),
+                from_token.format(),
+                space_token(),
+                source.format(),
                 assertion
-            ])
+                    .format()
+                    .with_or_empty(|assertion| formatted![formatter, [space_token(), assertion]])
+            ]
         ]
     }
 }

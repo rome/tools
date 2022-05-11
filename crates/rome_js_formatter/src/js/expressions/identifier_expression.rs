@@ -11,6 +11,6 @@ impl FormatNodeFields<JsIdentifierExpression> for FormatNodeRule<JsIdentifierExp
     ) -> FormatResult<FormatElement> {
         let JsIdentifierExpressionFields { name } = node.as_fields();
 
-        formatted![formatter, name.format()]
+        formatted![formatter, [name.format()]]
     }
 }

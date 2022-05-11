@@ -16,11 +16,13 @@ impl FormatNodeFields<TsExternalModuleDeclaration> for FormatNodeRule<TsExternal
 
         formatted![
             formatter,
-            module_token.format(),
-            space_token(),
-            source.format(),
-            space_token(),
-            body.format()
+            [
+                module_token.format(),
+                space_token(),
+                source.format(),
+                space_token(),
+                body.format()
+            ]
         ]
     }
 }

@@ -16,9 +16,7 @@ impl FormatNodeFields<JsAwaitExpression> for FormatNodeRule<JsAwaitExpression> {
 
         formatted![
             formatter,
-            await_token.format(),
-            space_token(),
-            argument.format(),
+            [await_token.format(), space_token(), argument.format(),]
         ]
     }
 }

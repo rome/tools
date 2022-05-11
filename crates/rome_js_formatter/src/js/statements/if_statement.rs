@@ -26,10 +26,12 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
                 alternate => {
                     if_chain.push(formatted![
                         formatter,
-                        space_token(),
-                        else_token.format(),
-                        space_token(),
-                        into_block(formatter, alternate)?,
+                        [
+                            space_token(),
+                            else_token.format(),
+                            space_token(),
+                            into_block(formatter, alternate)?,
+                        ]
                     ]?);
                 }
             }
@@ -56,21 +58,21 @@ fn format_if_element(
 
     let head = formatted![
         formatter,
-        else_token.format().with_or_empty(|token| formatted![
-            formatter,
+        [
+            else_token.format().with_or_empty(|token| formatted![
+                formatter,
+                [space_token(), token, space_token(),]
+            ]),
+            if_token.format(),
             space_token(),
-            token,
+            formatter.format_delimited_soft_block_indent(
+                &l_paren_token?,
+                formatted![formatter, [test.format()]]?,
+                &r_paren_token?,
+            )?,
             space_token(),
-        ]),
-        if_token.format(),
-        space_token(),
-        formatter.format_delimited_soft_block_indent(
-            &l_paren_token?,
-            formatted![formatter, test.format()]?,
-            &r_paren_token?,
-        )?,
-        space_token(),
-        into_block(formatter, consequent?)?,
+            into_block(formatter, consequent?)?,
+        ]
     ]?;
 
     Ok((head, else_clause))
@@ -79,7 +81,7 @@ fn format_if_element(
 /// Wraps the statement into a block if its not already a JsBlockStatement
 fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<FormatElement> {
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
-        return formatted![formatter, stmt.format()];
+        return formatted![formatter, [stmt.format()]];
     }
 
     // If the body is an empty statement, force a line break to ensure behavior
@@ -87,17 +89,16 @@ fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<Forma
     if matches!(stmt, JsAnyStatement::JsEmptyStatement(_)) {
         return formatted![
             formatter,
-            token("{"),
-            stmt.format(),
-            hard_line_break(),
-            token("}")
+            [token("{"), stmt.format(), hard_line_break(), token("}")]
         ];
     }
 
     Ok(group_elements(formatted![
         formatter,
-        token("{"),
-        block_indent(formatted![formatter, stmt.format()]?),
-        token("}"),
+        [
+            token("{"),
+            block_indent(formatted![formatter, [stmt.format()]]?),
+            token("}"),
+        ]
     ]?))
 }

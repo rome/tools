@@ -13,37 +13,36 @@ impl FormatRule<JsAnyClass> for FormatJsAnyClass {
         let format = implements_clause.format();
 
         let implements_clause = format.with_or_empty(|implements_clause| {
-            formatted![formatter, space_token(), implements_clause]
+            formatted![formatter, [space_token(), implements_clause]]
         });
 
         Ok(hard_group_elements(formatted![
             formatter,
-            abstract_token.format().with_or_empty(|token| formatted![
-                formatter,
-                token,
-                space_token()
-            ]),
-            node.class_token().format(),
-            id.format()
-                .with_or_empty(|id| formatted![formatter, space_token(), id]),
-            node.type_parameters().format(),
-            extends.format().with_or_empty(|extends_clause| formatted![
-                formatter,
+            [
+                abstract_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                node.class_token().format(),
+                id.format()
+                    .with_or_empty(|id| formatted![formatter, [space_token(), id]]),
+                node.type_parameters().format(),
+                extends.format().with_or_empty(|extends_clause| formatted![
+                    formatter,
+                    [space_token(), extends_clause]
+                ]),
+                implements_clause,
                 space_token(),
-                extends_clause
-            ]),
-            implements_clause,
-            space_token(),
-            formatter.format_delimited_block_indent(
-                &node.l_curly_token()?,
-                join_elements_hard_line(
-                    node.members()
-                        .into_iter()
-                        .map(|node| node.syntax().clone())
-                        .zip(formatter.format_all(node.members().iter().formatted())?)
-                ),
-                &node.r_curly_token()?
-            )?
+                formatter.format_delimited_block_indent(
+                    &node.l_curly_token()?,
+                    join_elements_hard_line(
+                        node.members()
+                            .into_iter()
+                            .map(|node| node.syntax().clone())
+                            .zip(formatter.format_all(node.members().iter().formatted())?)
+                    ),
+                    &node.r_curly_token()?
+                )?
+            ]
         ]?))
     }
 }

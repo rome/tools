@@ -14,6 +14,6 @@ impl FormatNodeFields<JsImportCallExpression> for FormatNodeRule<JsImportCallExp
             arguments,
         } = node.as_fields();
 
-        formatted![formatter, import_token.format(), arguments.format(),]
+        formatted![formatter, [import_token.format(), arguments.format(),]]
     }
 }

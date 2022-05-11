@@ -17,9 +17,7 @@ impl FormatNodeFields<JsExportDefaultDeclarationClause>
 
         formatted![
             formatter,
-            default_token.format(),
-            space_token(),
-            declaration.format()
+            [default_token.format(), space_token(), declaration.format()]
         ]
     }
 }

@@ -29,9 +29,7 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
         if is_keyword_operator {
             return formatted![
                 formatter,
-                operator_token.format(),
-                space_token(),
-                argument.format(),
+                [operator_token.format(), space_token(), argument.format(),]
             ];
         }
 
@@ -61,27 +59,33 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
             let parenthesized = if is_simple_expression(argument.clone())? {
                 formatted![
                     formatter,
-                    operator_token.format(),
-                    token("("),
-                    argument.format(),
-                    token(")"),
+                    [
+                        operator_token.format(),
+                        token("("),
+                        argument.format(),
+                        token(")"),
+                    ]
                 ]
             } else {
                 formatted![
                     formatter,
-                    operator_token.format(),
-                    group_elements(formatted![
-                        formatter,
-                        token("("),
-                        soft_block_indent(formatted![formatter, argument.format()]?),
-                        token(")"),
-                    ]?),
+                    [
+                        operator_token.format(),
+                        group_elements(formatted![
+                            formatter,
+                            [
+                                token("("),
+                                soft_block_indent(formatted![formatter, [argument.format()]]?),
+                                token(")"),
+                            ]
+                        ]?),
+                    ]
                 ]
             };
 
             return parenthesized;
         }
 
-        formatted![formatter, operator_token.format(), argument.format(),]
+        formatted![formatter, [operator_token.format(), argument.format(),]]
     }
 }

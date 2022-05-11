@@ -14,12 +14,14 @@ impl FormatNodeFields<TsFunctionType> for FormatNodeRule<TsFunctionType> {
 
         Ok(hard_group_elements(formatted![
             formatter,
-            type_parameters.format(),
-            parameters.format(),
-            space_token(),
-            fat_arrow_token.format(),
-            space_token(),
-            return_type.format()
+            [
+                type_parameters.format(),
+                parameters.format(),
+                space_token(),
+                fat_arrow_token.format(),
+                space_token(),
+                return_type.format()
+            ]
         ]?))
     }
 }

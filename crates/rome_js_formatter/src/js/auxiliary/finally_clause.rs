@@ -13,9 +13,7 @@ impl FormatNodeFields<JsFinallyClause> for FormatNodeRule<JsFinallyClause> {
 
         formatted![
             formatter,
-            finally_token.format(),
-            space_token(),
-            body.format()
+            [finally_token.format(), space_token(), body.format()]
         ]
     }
 }

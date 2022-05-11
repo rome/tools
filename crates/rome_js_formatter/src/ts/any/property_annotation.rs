@@ -9,12 +9,14 @@ impl FormatRule<TsAnyPropertyAnnotation> for FormatTsAnyPropertyAnnotation {
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         match node {
-            TsAnyPropertyAnnotation::TsTypeAnnotation(node) => formatted![formatter, node.format()],
+            TsAnyPropertyAnnotation::TsTypeAnnotation(node) => {
+                formatted![formatter, [node.format()]]
+            }
             TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

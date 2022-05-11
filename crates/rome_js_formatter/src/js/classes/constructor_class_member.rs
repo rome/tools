@@ -18,12 +18,14 @@ impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructor
 
         Ok(hard_group_elements(formatted![
             formatter,
-            modifiers.format(),
-            space_token(),
-            name.format(),
-            parameters.format(),
-            space_token(),
-            body.format()
+            [
+                modifiers.format(),
+                space_token(),
+                name.format(),
+                parameters.format(),
+                space_token(),
+                body.format()
+            ]
         ]?))
     }
 }

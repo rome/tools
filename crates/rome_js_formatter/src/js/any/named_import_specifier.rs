@@ -10,13 +10,13 @@ impl FormatRule<JsAnyNamedImportSpecifier> for FormatJsAnyNamedImportSpecifier {
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

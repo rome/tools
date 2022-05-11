@@ -25,11 +25,11 @@ impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
         let formatted_cons = if statements.is_empty() {
             hard_line_break()
         } else if first_child_is_block_stmt {
-            formatted![formatter, space_token(), statements]?
+            formatted![formatter, [space_token(), statements]]?
         } else {
             // no line break needed after because it is added by the indent in the switch statement
-            indent(formatted![formatter, hard_line_break(), statements]?)
+            indent(formatted![formatter, [hard_line_break(), statements]]?)
         };
-        formatted![formatter, default, colon, space_token(), formatted_cons]
+        formatted![formatter, [default, colon, space_token(), formatted_cons]]
     }
 }

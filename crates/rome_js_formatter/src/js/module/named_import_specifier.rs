@@ -18,14 +18,16 @@ impl FormatNodeFields<JsNamedImportSpecifier> for FormatNodeRule<JsNamedImportSp
 
         formatted![
             formatter,
-            type_token
-                .format()
-                .with_or_empty(|token| formatted![formatter, token, space_token()]),
-            name.format(),
-            soft_line_break_or_space(),
-            as_token.format(),
-            soft_line_break_or_space(),
-            local_name.format()
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                name.format(),
+                soft_line_break_or_space(),
+                as_token.format(),
+                soft_line_break_or_space(),
+                local_name.format()
+            ]
         ]
     }
 }

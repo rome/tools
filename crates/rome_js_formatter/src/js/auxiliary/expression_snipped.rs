@@ -14,6 +14,6 @@ impl FormatNodeFields<JsExpressionSnipped> for FormatNodeRule<JsExpressionSnippe
             eof_token,
         } = node.as_fields();
 
-        formatted![formatter, expression.format(), eof_token.format(),]
+        formatted![formatter, [expression.format(), eof_token.format(),]]
     }
 }

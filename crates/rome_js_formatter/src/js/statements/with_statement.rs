@@ -19,13 +19,15 @@ impl FormatNodeFields<JsWithStatement> for FormatNodeRule<JsWithStatement> {
             formatter,
             formatted![
                 formatter,
-                with_token.format(),
-                space_token(),
-                formatter.format_delimited_soft_block_indent(
-                    &l_paren_token?,
-                    formatted![formatter, object.format()]?,
-                    &r_paren_token?,
-                )?,
+                [
+                    with_token.format(),
+                    space_token(),
+                    formatter.format_delimited_soft_block_indent(
+                        &l_paren_token?,
+                        formatted![formatter, [object.format()]]?,
+                        &r_paren_token?,
+                    )?,
+                ]
             ]?,
             body?,
         )

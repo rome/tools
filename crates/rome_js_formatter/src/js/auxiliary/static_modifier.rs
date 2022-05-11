@@ -11,6 +11,6 @@ impl FormatNodeFields<JsStaticModifier> for FormatNodeRule<JsStaticModifier> {
     ) -> FormatResult<FormatElement> {
         let JsStaticModifierFields { modifier_token } = node.as_fields();
 
-        formatted![formatter, modifier_token.format()]
+        formatted![formatter, [modifier_token.format()]]
     }
 }

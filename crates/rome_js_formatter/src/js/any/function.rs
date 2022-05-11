@@ -12,45 +12,48 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
 
         tokens.push(formatted![
             formatter,
-            node.async_token()
+            [node
+                .async_token()
                 .format()
-                .with_or_empty(|token| { formatted![formatter, token, space_token()] })
+                .with_or_empty(|token| { formatted![formatter, [token, space_token()]] })]
         ]?);
 
-        tokens.push(formatted![formatter, node.function_token().format()]?);
-        tokens.push(formatted![formatter, node.star_token().format()]?);
+        tokens.push(formatted![formatter, [node.function_token().format()]]?);
+        tokens.push(formatted![formatter, [node.star_token().format()]]?);
 
         tokens.push(match node {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
             _ => formatted![
                 formatter,
-                node.id()
+                [node
+                    .id()
                     .format()
-                    .with_or(|id| formatted![formatter, space_token(), id], space_token,)
+                    .with_or(|id| formatted![formatter, [space_token(), id]], space_token,)]
             ]?,
         });
 
-        tokens.push(formatted![formatter, node.type_parameters().format()]?);
+        tokens.push(formatted![formatter, [node.type_parameters().format()]]?);
 
         tokens.push(match node.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => group_elements(formatted![
                 formatter,
-                token("("),
-                soft_block_indent(formatted![
-                    formatter,
-                    binding.format(),
-                    if_group_breaks(token(",")),
-                ]?),
-                token(")"),
+                [
+                    token("("),
+                    soft_block_indent(formatted![
+                        formatter,
+                        [binding.format(), if_group_breaks(token(",")),]
+                    ]?),
+                    token(")"),
+                ]
             ]?),
             JsAnyArrowFunctionParameters::JsParameters(params) => {
-                formatted![formatter, params.format()]?
+                formatted![formatter, [params.format()]]?
             }
         });
 
         tokens.push(formatted![
             formatter,
-            node.return_type_annotation().format()
+            [node.return_type_annotation().format()]
         ]?);
 
         tokens.push(space_token());
@@ -69,7 +72,7 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         //
         let mut body_group = vec![];
         if let JsAnyFunction::JsArrowFunctionExpression(arrow) = node {
-            body_group.push(formatted![formatter, arrow.fat_arrow_token().format()]?);
+            body_group.push(formatted![formatter, [arrow.fat_arrow_token().format()]]?);
             body_group.push(space_token());
         }
 
@@ -104,11 +107,11 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         };
 
         if body_has_soft_line_break {
-            body_group.push(formatted![formatter, node.body().format()]?);
+            body_group.push(formatted![formatter, [node.body().format()]]?);
         } else {
             body_group.push(soft_line_indent_or_space(formatted![
                 formatter,
-                node.body().format()
+                [node.body().format()]
             ]?));
         }
 

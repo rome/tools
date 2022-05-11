@@ -11,6 +11,6 @@ impl FormatNodeFields<JsNumberLiteralExpression> for FormatNodeRule<JsNumberLite
     ) -> FormatResult<FormatElement> {
         let JsNumberLiteralExpressionFields { value_token } = node.as_fields();
 
-        formatted![formatter, value_token.format()]
+        formatted![formatter, [value_token.format()]]
     }
 }

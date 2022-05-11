@@ -15,12 +15,12 @@ impl FormatNodeFields<JsExportNamedShorthandSpecifier>
 
         formatted![
             formatter,
-            type_token.format().with_or_empty(|type_token| formatted![
-                formatter,
-                type_token,
-                space_token()
-            ]),
-            name.format()
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|type_token| formatted![formatter, [type_token, space_token()]]),
+                name.format()
+            ]
         ]
     }
 }

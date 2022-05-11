@@ -12,7 +12,7 @@ impl FormatNodeFields<TsTypeArguments> for FormatNodeRule<TsTypeArguments> {
 
         formatter.format_delimited_soft_block_indent(
             &l_angle_token?,
-            formatted![formatter, ts_type_argument_list.format()]?,
+            formatted![formatter, [ts_type_argument_list.format()]]?,
             &r_angle_token?,
         )
     }

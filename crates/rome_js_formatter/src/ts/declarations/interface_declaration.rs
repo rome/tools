@@ -18,22 +18,22 @@ impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDecl
         } = node.as_fields();
         let members = formatter.format_delimited_block_indent(
             &l_curly_token?,
-            formatted![formatter, members.format()]?,
+            formatted![formatter, [members.format()]]?,
             &r_curly_token?,
         )?;
         Ok(hard_group_elements(formatted![
             formatter,
-            interface_token.format(),
-            space_token(),
-            id.format(),
-            type_parameters.format(),
-            space_token(),
-            extends_clause.format().with_or_empty(|extends| formatted![
-                formatter,
-                extends,
-                space_token()
-            ]),
-            members
+            [
+                interface_token.format(),
+                space_token(),
+                id.format(),
+                type_parameters.format(),
+                space_token(),
+                extends_clause
+                    .format()
+                    .with_or_empty(|extends| formatted![formatter, [extends, space_token()]]),
+                members
+            ]
         ]?))
     }
 }

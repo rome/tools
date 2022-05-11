@@ -24,6 +24,6 @@ impl FormatNodeFields<JsStaticInitializationBlockClassMember>
             formatter.format_list(&statements),
             &r_curly_token?,
         )?;
-        formatted![formatter, static_token, space_token(), separated]
+        formatted![formatter, [static_token, space_token(), separated]]
     }
 }

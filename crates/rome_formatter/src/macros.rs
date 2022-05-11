@@ -95,11 +95,13 @@ macro_rules! format_elements {
 ///
 /// let formatted = formatted![
 ///     &formatter,
-///     token("a"),
-///     space_token(),
-///     token("simple"),
-///     space_token(),
-///     TestFormat
+///     [
+///         token("a"),
+///         space_token(),
+///         token("simple"),
+///         space_token(),
+///         TestFormat
+///     ]
 ///  ]
 ///  .unwrap();
 ///
@@ -122,21 +124,21 @@ macro_rules! format_elements {
 ///
 /// let formatter = Formatter::new(FormatOptions::default());
 ///
-/// let formatted = formatted![&formatter, token("test")].unwrap();
+/// let formatted = formatted![&formatter, [token("test")]].unwrap();
 ///
 /// assert_eq!(formatted, token("test"));
 /// ```
 #[macro_export]
 macro_rules! formatted {
 
-    // called for things like formatted![formatter, token("test")]
-    ($formatter:expr, $element:expr) => {
+    // called for things like formatted![formatter, [token("test")]]
+    ($formatter:expr, [$element:expr]) => {
         {
             $crate::IntoFormatElement::into_format_element($element, $formatter)
         }
     };
 
-    ($formatter:expr, $($element:expr),+ $(,)?) => {{
+    ($formatter:expr, [$($element:expr),+ $(,)?]) => {{
         use $crate::macros::FormatBuilder;
 
         const SIZE: usize = $crate::__count_elements!($($element),*);
@@ -212,7 +214,7 @@ mod tests {
     fn test_single_element() {
         let formatter = Formatter::new(FormatOptions::default());
 
-        let formatted = formatted![&formatter, TestFormat].unwrap();
+        let formatted = formatted![&formatter, [TestFormat]].unwrap();
 
         assert_eq!(formatted, token("test"));
     }
@@ -223,11 +225,13 @@ mod tests {
 
         let formatted = formatted![
             &formatter,
-            token("a"),
-            space_token(),
-            token("simple"),
-            space_token(),
-            TestFormat
+            [
+                token("a"),
+                space_token(),
+                token("simple"),
+                space_token(),
+                TestFormat
+            ]
         ]
         .unwrap();
 

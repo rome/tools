@@ -7,9 +7,9 @@ impl FormatRule<JsAnyTemplateElement> for FormatJsAnyTemplateElement {
     fn format(node: &JsAnyTemplateElement, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyTemplateElement::JsTemplateChunkElement(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
-            JsAnyTemplateElement::JsTemplateElement(node) => formatted![formatter, node.format()],
+            JsAnyTemplateElement::JsTemplateElement(node) => formatted![formatter, [node.format()]],
         }
     }
 }

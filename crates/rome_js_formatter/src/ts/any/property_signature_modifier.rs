@@ -10,22 +10,22 @@ impl FormatRule<TsAnyPropertySignatureModifier> for FormatTsAnyPropertySignature
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyPropertySignatureModifier::TsDeclareModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertySignatureModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertySignatureModifier::JsStaticModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertySignatureModifier::TsReadonlyModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertySignatureModifier::TsOverrideModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertySignatureModifier::TsAbstractModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

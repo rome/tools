@@ -9,6 +9,6 @@ impl FormatNodeFields<TsNonPrimitiveType> for FormatNodeRule<TsNonPrimitiveType>
     ) -> FormatResult<FormatElement> {
         let TsNonPrimitiveTypeFields { object_token } = node.as_fields();
 
-        formatted![formatter, object_token.format()]
+        formatted![formatter, [object_token.format()]]
     }
 }

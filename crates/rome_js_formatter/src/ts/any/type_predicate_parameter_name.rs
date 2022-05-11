@@ -10,10 +10,10 @@ impl FormatRule<TsAnyTypePredicateParameterName> for FormatTsAnyTypePredicatePar
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyTypePredicateParameterName::JsReferenceIdentifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTypePredicateParameterName::TsThisType(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

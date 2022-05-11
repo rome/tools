@@ -18,7 +18,7 @@ impl FormatNodeFields<JsImport> for FormatNodeRule<JsImport> {
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, import_token, space_token(), import_clause]?,
+            formatted![formatter, [import_token, space_token(), import_clause]]?,
             semicolon_token,
         )
     }

@@ -10,10 +10,10 @@ impl FormatRule<TsAnyExternalModuleDeclarationBody> for FormatTsAnyExternalModul
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyExternalModuleDeclarationBody::TsModuleBlock(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

@@ -14,9 +14,11 @@ impl FormatNodeFields<JsRestParameter> for FormatNodeRule<JsRestParameter> {
 
         formatted![
             formatter,
-            dotdotdot_token.format(),
-            binding.format(),
-            type_annotation.format(),
+            [
+                dotdotdot_token.format(),
+                binding.format(),
+                type_annotation.format(),
+            ]
         ]
     }
 }

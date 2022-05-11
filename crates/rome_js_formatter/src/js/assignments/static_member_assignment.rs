@@ -16,9 +16,7 @@ impl FormatNodeFields<JsStaticMemberAssignment> for FormatNodeRule<JsStaticMembe
 
         formatted![
             formatter,
-            object.format(),
-            dot_token.format(),
-            member.format(),
+            [object.format(), dot_token.format(), member.format(),]
         ]
     }
 }

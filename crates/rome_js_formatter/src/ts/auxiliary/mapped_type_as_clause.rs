@@ -11,10 +11,12 @@ impl FormatNodeFields<TsMappedTypeAsClause> for FormatNodeRule<TsMappedTypeAsCla
 
         formatted![
             formatter,
-            as_token
-                .format()
-                .with(|as_token| { formatted![formatter, as_token, space_token()] }),
-            ty.format()
+            [
+                as_token
+                    .format()
+                    .with(|as_token| { formatted![formatter, [as_token, space_token()]] }),
+                ty.format()
+            ]
         ]
     }
 }

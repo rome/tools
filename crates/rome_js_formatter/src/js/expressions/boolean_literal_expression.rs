@@ -11,6 +11,6 @@ impl FormatNodeFields<JsBooleanLiteralExpression> for FormatNodeRule<JsBooleanLi
     ) -> FormatResult<FormatElement> {
         let JsBooleanLiteralExpressionFields { value_token } = node.as_fields();
 
-        formatted![formatter, value_token.format()]
+        formatted![formatter, [value_token.format()]]
     }
 }

@@ -11,6 +11,6 @@ impl FormatNodeFields<JsReferenceIdentifier> for FormatNodeRule<JsReferenceIdent
     ) -> FormatResult<FormatElement> {
         let JsReferenceIdentifierFields { value_token } = node.as_fields();
 
-        formatted![formatter, value_token.format()]
+        formatted![formatter, [value_token.format()]]
     }
 }

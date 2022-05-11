@@ -14,6 +14,9 @@ impl FormatNodeFields<TsQualifiedModuleName> for FormatNodeRule<TsQualifiedModul
             right,
         } = node.as_fields();
 
-        formatted![formatter, left.format(), dot_token.format(), right.format(),]
+        formatted![
+            formatter,
+            [left.format(), dot_token.format(), right.format(),]
+        ]
     }
 }

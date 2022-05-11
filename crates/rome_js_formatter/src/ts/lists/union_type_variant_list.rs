@@ -19,9 +19,7 @@ impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
                     } else {
                         formatted![
                             formatter,
-                            soft_line_break_or_space(),
-                            token.format(),
-                            space_token()
+                            [soft_line_break_or_space(), token.format(), space_token()]
                         ]?
                     }
                 }
@@ -31,15 +29,13 @@ impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
                     } else {
                         formatted![
                             formatter,
-                            soft_line_break_or_space(),
-                            token("|"),
-                            space_token()
+                            [soft_line_break_or_space(), token("|"), space_token()]
                         ]?
                     }
                 }
             };
 
-            elements.push(formatted![formatter, ty.format(), separator]?)
+            elements.push(formatted![formatter, [ty.format(), separator]]?)
         }
 
         Ok(concat_elements(elements))

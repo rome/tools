@@ -21,11 +21,7 @@ impl FormatNodeFields<JsNamespaceImportSpecifier> for FormatNodeRule<JsNamespace
 
         formatted![
             formatter,
-            star,
-            space_token(),
-            as_token,
-            space_token(),
-            local_name
+            [star, space_token(), as_token, space_token(), local_name]
         ]
     }
 }

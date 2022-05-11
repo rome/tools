@@ -11,10 +11,12 @@ impl FormatNodeFields<TsTypeOperatorType> for FormatNodeRule<TsTypeOperatorType>
 
         formatted![
             formatter,
-            operator_token
-                .format()
-                .with(|operator| { formatted![formatter, operator, space_token()] }),
-            ty.format()
+            [
+                operator_token
+                    .format()
+                    .with(|operator| { formatted![formatter, [operator, space_token()]] }),
+                ty.format()
+            ]
         ]
     }
 }

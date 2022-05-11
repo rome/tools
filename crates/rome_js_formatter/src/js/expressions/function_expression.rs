@@ -8,6 +8,6 @@ impl FormatNodeFields<JsFunctionExpression> for FormatNodeRule<JsFunctionExpress
         node: &JsFunctionExpression,
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
-        formatted![formatter, JsAnyFunction::from(node.clone()).format()]
+        formatted![formatter, [JsAnyFunction::from(node.clone()).format()]]
     }
 }

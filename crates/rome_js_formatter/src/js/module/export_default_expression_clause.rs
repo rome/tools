@@ -23,7 +23,7 @@ impl FormatNodeFields<JsExportDefaultExpressionClause>
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, default_token, space_token(), class]?,
+            formatted![formatter, [default_token, space_token(), class]]?,
             semicolon_token,
         )
     }

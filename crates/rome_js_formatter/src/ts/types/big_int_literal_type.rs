@@ -12,6 +12,6 @@ impl FormatNodeFields<TsBigIntLiteralType> for FormatNodeRule<TsBigIntLiteralTyp
             literal_token,
         } = node.as_fields();
 
-        formatted![formatter, minus_token.format(), literal_token.format()]
+        formatted![formatter, [minus_token.format(), literal_token.format()]]
     }
 }

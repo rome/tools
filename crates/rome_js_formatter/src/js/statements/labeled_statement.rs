@@ -22,10 +22,10 @@ impl FormatNodeFields<JsLabeledStatement> for FormatNodeRule<JsLabeledStatement>
         if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
             // If the body is an empty statement, force semicolon insertion
             let statement = body.format();
-            formatted![formatter, label, colon, statement, token(";")]
+            formatted![formatter, [label, colon, statement, token(";")]]
         } else {
             let statement = body.format();
-            formatted![formatter, label, colon, space_token(), statement]
+            formatted![formatter, [label, colon, space_token(), statement]]
         }
     }
 }

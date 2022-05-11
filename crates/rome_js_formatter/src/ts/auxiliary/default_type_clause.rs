@@ -8,6 +8,6 @@ impl FormatNodeFields<TsDefaultTypeClause> for FormatNodeRule<TsDefaultTypeClaus
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsDefaultTypeClauseFields { eq_token, ty } = node.as_fields();
-        formatted![formatter, eq_token.format(), space_token(), ty.format()]
+        formatted![formatter, [eq_token.format(), space_token(), ty.format()]]
     }
 }

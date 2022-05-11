@@ -18,14 +18,16 @@ impl FormatNodeFields<JsxSelfClosingElement> for FormatNodeRule<JsxSelfClosingEl
 
         formatted![
             formatter,
-            l_angle_token.format(),
-            name.format(),
-            type_arguments.format(),
-            space_token(),
-            attributes.format(),
-            space_token(),
-            slash_token.format(),
-            r_angle_token.format()
+            [
+                l_angle_token.format(),
+                name.format(),
+                type_arguments.format(),
+                space_token(),
+                attributes.format(),
+                space_token(),
+                slash_token.format(),
+                r_angle_token.format()
+            ]
         ]
     }
 }

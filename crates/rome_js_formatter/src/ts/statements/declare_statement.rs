@@ -14,9 +14,7 @@ impl FormatNodeFields<TsDeclareStatement> for FormatNodeRule<TsDeclareStatement>
         } = node.as_fields();
         formatted![
             formatter,
-            declare_token.format(),
-            space_token(),
-            declaration.format()
+            [declare_token.format(), space_token(), declaration.format()]
         ]
     }
 }

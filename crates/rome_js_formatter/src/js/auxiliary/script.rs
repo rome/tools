@@ -16,11 +16,13 @@ impl FormatNodeFields<JsScript> for FormatNodeRule<JsScript> {
 
         formatted![
             formatter,
-            format_interpreter(interpreter_token, formatter)?,
-            directives.format(),
-            formatter.format_list(&statements),
-            eof_token.format(),
-            hard_line_break()
+            [
+                format_interpreter(interpreter_token, formatter)?,
+                directives.format(),
+                formatter.format_list(&statements),
+                eof_token.format(),
+                hard_line_break()
+            ]
         ]
     }
 }

@@ -19,11 +19,13 @@ impl FormatNodeFields<JsTemplate> for FormatNodeRule<JsTemplate> {
 
         Ok(hard_group_elements(formatted![
             formatter,
-            tag.format(),
-            type_arguments.format(),
-            l_tick,
-            concat_elements(formatter.format_all(elements.iter().formatted())?),
-            r_tick
+            [
+                tag.format(),
+                type_arguments.format(),
+                l_tick,
+                concat_elements(formatter.format_all(elements.iter().formatted())?),
+                r_tick
+            ]
         ]?))
     }
 }

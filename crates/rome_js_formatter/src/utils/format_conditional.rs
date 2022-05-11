@@ -43,22 +43,24 @@ impl Conditional {
             ),
         };
 
-        formatted![formatter, head, body]
+        formatted![formatter, [head, body]]
     }
 
     fn format_head(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             Conditional::Expression(expr) => {
-                formatted![formatter, expr.test()?.format(), space_token(),]
+                formatted![formatter, [expr.test()?.format(), space_token(),]]
             }
             Conditional::Type(t) => formatted![
                 formatter,
-                t.check_type()?.format(),
-                space_token(),
-                t.extends_token()?.format(),
-                space_token(),
-                t.extends_type()?.format(),
-                space_token(),
+                [
+                    t.check_type()?.format(),
+                    space_token(),
+                    t.extends_token()?.format(),
+                    space_token(),
+                    t.extends_type()?.format(),
+                    space_token(),
+                ]
             ],
         }
     }
@@ -112,18 +114,12 @@ impl Conditional {
         let body = if left_or_right_is_conditional || parent_is_conditional {
             indent(formatted![
                 formatter,
-                hard_line_break(),
-                consequent,
-                hard_line_break(),
-                alternate
+                [hard_line_break(), consequent, hard_line_break(), alternate]
             ]?)
         } else {
             group_elements(formatted![
                 formatter,
-                space_token(),
-                consequent,
-                space_token(),
-                alternate
+                [space_token(), consequent, space_token(), alternate]
             ]?)
         };
         Ok(body)
@@ -139,16 +135,20 @@ impl Conditional {
                 if let Some(consequent) = consequent {
                     formatted![
                         formatter,
-                        expr.question_mark_token().format(),
-                        space_token(),
-                        consequent
+                        [
+                            expr.question_mark_token().format(),
+                            space_token(),
+                            consequent
+                        ]
                     ]
                 } else {
                     formatted![
                         formatter,
-                        expr.question_mark_token().format(),
-                        space_token(),
-                        expr.consequent().format()
+                        [
+                            expr.question_mark_token().format(),
+                            space_token(),
+                            expr.consequent().format()
+                        ]
                     ]
                 }
             }
@@ -156,16 +156,16 @@ impl Conditional {
                 if let Some(consequent) = consequent {
                     formatted![
                         formatter,
-                        ty.question_mark_token().format(),
-                        space_token(),
-                        consequent
+                        [ty.question_mark_token().format(), space_token(), consequent]
                     ]
                 } else {
                     formatted![
                         formatter,
-                        ty.question_mark_token().format(),
-                        space_token(),
-                        ty.true_type().format()
+                        [
+                            ty.question_mark_token().format(),
+                            space_token(),
+                            ty.true_type().format()
+                        ]
                     ]
                 }
             }
@@ -182,16 +182,16 @@ impl Conditional {
                 if let Some(alternate) = alternate {
                     formatted![
                         formatter,
-                        expr.colon_token().format(),
-                        space_token(),
-                        alternate
+                        [expr.colon_token().format(), space_token(), alternate]
                     ]
                 } else {
                     formatted![
                         formatter,
-                        expr.colon_token().format(),
-                        space_token(),
-                        expr.alternate().format()
+                        [
+                            expr.colon_token().format(),
+                            space_token(),
+                            expr.alternate().format()
+                        ]
                     ]
                 }
             }
@@ -199,16 +199,16 @@ impl Conditional {
                 if let Some(alternate) = alternate {
                     formatted![
                         formatter,
-                        ty.colon_token().format(),
-                        space_token(),
-                        alternate
+                        [ty.colon_token().format(), space_token(), alternate]
                     ]
                 } else {
                     formatted![
                         formatter,
-                        ty.colon_token().format(),
-                        space_token(),
-                        ty.false_type().format()
+                        [
+                            ty.colon_token().format(),
+                            space_token(),
+                            ty.false_type().format()
+                        ]
                     ]
                 }
             }

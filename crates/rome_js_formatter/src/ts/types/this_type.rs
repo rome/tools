@@ -6,6 +6,6 @@ impl FormatNodeFields<TsThisType> for FormatNodeRule<TsThisType> {
     fn format_fields(node: &TsThisType, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsThisTypeFields { this_token } = node.as_fields();
 
-        formatted![formatter, this_token.format()]
+        formatted![formatter, [this_token.format()]]
     }
 }

@@ -24,7 +24,7 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
 
         let list = formatter.format_delimited_soft_block_spaces(
             &l_curly_token?,
-            formatted![formatter, specifiers.format()]?,
+            formatted![formatter, [specifiers.format()]]?,
             &r_curly_token?,
         )?;
 
@@ -32,21 +32,20 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
             formatter,
             formatted![
                 formatter,
-                type_token.format().with_or_empty(|token| formatted![
-                    formatter,
-                    token,
-                    space_token()
-                ]),
-                list,
-                space_token(),
-                from_token.format(),
-                space_token(),
-                source.format(),
-                assertion.format().with_or_empty(|assertion| formatted![
-                    formatter,
+                [
+                    type_token
+                        .format()
+                        .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                    list,
                     space_token(),
-                    assertion
-                ]),
+                    from_token.format(),
+                    space_token(),
+                    source.format(),
+                    assertion.format().with_or_empty(|assertion| formatted![
+                        formatter,
+                        [space_token(), assertion]
+                    ]),
+                ]
             ]?,
             semicolon_token,
         )

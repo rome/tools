@@ -17,15 +17,17 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         if is_simple_function_arguments(node)? {
             return Ok(hard_group_elements(formatted![
                 formatter,
-                l_paren_token.format(),
-                args.format(),
-                r_paren_token.format(),
+                [
+                    l_paren_token.format(),
+                    args.format(),
+                    r_paren_token.format(),
+                ]
             ]?));
         }
 
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            formatted![formatter, args.format()]?,
+            formatted![formatter, [args.format()]]?,
             &r_paren_token?,
         )
     }

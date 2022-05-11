@@ -21,13 +21,15 @@ impl FormatNodeFields<TsGetterSignatureTypeMember> for FormatNodeRule<TsGetterSi
 
         formatted![
             formatter,
-            get_token.format(),
-            space_token(),
-            name.format(),
-            l_paren_token.format(),
-            r_paren_token.format(),
-            type_annotation.format(),
-            separator
+            [
+                get_token.format(),
+                space_token(),
+                name.format(),
+                l_paren_token.format(),
+                r_paren_token.format(),
+                type_annotation.format(),
+                separator
+            ]
         ]
     }
 }

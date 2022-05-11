@@ -19,18 +19,18 @@ impl FormatNodeFields<TsConstructorType> for FormatNodeRule<TsConstructorType> {
 
         formatted![
             formatter,
-            abstract_token.format().with_or_empty(|element| formatted![
-                formatter,
-                element,
-                space_token()
-            ]),
-            new_token.format(),
-            type_parameters.format(),
-            parameters.format(),
-            space_token(),
-            fat_arrow_token.format(),
-            space_token(),
-            return_type.format()
+            [
+                abstract_token
+                    .format()
+                    .with_or_empty(|element| formatted![formatter, [element, space_token()]]),
+                new_token.format(),
+                type_parameters.format(),
+                parameters.format(),
+                space_token(),
+                fat_arrow_token.format(),
+                space_token(),
+                return_type.format()
+            ]
         ]
     }
 }

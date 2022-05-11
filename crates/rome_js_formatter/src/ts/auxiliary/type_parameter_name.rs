@@ -9,6 +9,6 @@ impl FormatNodeFields<TsTypeParameterName> for FormatNodeRule<TsTypeParameterNam
     ) -> FormatResult<FormatElement> {
         let TsTypeParameterNameFields { ident_token } = node.as_fields();
 
-        formatted![formatter, ident_token.format()]
+        formatted![formatter, [ident_token.format()]]
     }
 }

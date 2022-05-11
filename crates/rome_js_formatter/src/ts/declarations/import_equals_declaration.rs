@@ -22,18 +22,18 @@ impl FormatNodeFields<TsImportEqualsDeclaration> for FormatNodeRule<TsImportEqua
             formatter,
             formatted![
                 formatter,
-                import_token.format(),
-                space_token(),
-                type_token.format().with_or_empty(|token| formatted![
-                    formatter,
-                    token,
+                [
+                    import_token.format(),
                     space_token(),
-                ]),
-                id.format(),
-                space_token(),
-                eq_token.format(),
-                space_token(),
-                module_reference.format(),
+                    type_token
+                        .format()
+                        .with_or_empty(|token| formatted![formatter, [token, space_token(),]]),
+                    id.format(),
+                    space_token(),
+                    eq_token.format(),
+                    space_token(),
+                    module_reference.format(),
+                ]
             ]?,
             semicolon_token,
         )

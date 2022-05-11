@@ -10,10 +10,10 @@ impl FormatRule<TsAnyIndexSignatureModifier> for FormatTsAnyIndexSignatureModifi
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyIndexSignatureModifier::JsStaticModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyIndexSignatureModifier::TsReadonlyModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

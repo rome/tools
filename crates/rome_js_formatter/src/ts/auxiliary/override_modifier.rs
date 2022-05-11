@@ -9,6 +9,6 @@ impl FormatNodeFields<TsOverrideModifier> for FormatNodeRule<TsOverrideModifier>
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsOverrideModifierFields { modifier_token } = node.as_fields();
-        formatted![formatter, modifier_token.format()]
+        formatted![formatter, [modifier_token.format()]]
     }
 }

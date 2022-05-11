@@ -13,9 +13,7 @@ impl FormatNodeFields<JsElseClause> for FormatNodeRule<JsElseClause> {
 
         formatted![
             formatter,
-            else_token.format(),
-            space_token(),
-            alternate.format(),
+            [else_token.format(), space_token(), alternate.format(),]
         ]
     }
 }

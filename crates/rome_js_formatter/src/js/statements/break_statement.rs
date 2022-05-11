@@ -20,12 +20,12 @@ impl FormatNodeFields<JsBreakStatement> for FormatNodeRule<JsBreakStatement> {
             formatter,
             formatted![
                 formatter,
-                break_token.format(),
-                label_token.format().with_or_empty(|label| formatted![
-                    formatter,
-                    space_token(),
-                    label
-                ])
+                [
+                    break_token.format(),
+                    label_token
+                        .format()
+                        .with_or_empty(|label| formatted![formatter, [space_token(), label]])
+                ]
             ]?,
             semicolon_token,
         )

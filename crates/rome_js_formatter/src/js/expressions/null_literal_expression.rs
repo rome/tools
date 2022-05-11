@@ -11,6 +11,6 @@ impl FormatNodeFields<JsNullLiteralExpression> for FormatNodeRule<JsNullLiteralE
     ) -> FormatResult<FormatElement> {
         let JsNullLiteralExpressionFields { value_token } = node.as_fields();
 
-        formatted![formatter, value_token.format()]
+        formatted![formatter, [value_token.format()]]
     }
 }

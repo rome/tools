@@ -14,9 +14,11 @@ impl FormatNodeFields<NewTarget> for FormatNodeRule<NewTarget> {
 
         formatted![
             formatter,
-            new_token.format(),
-            dot_token.format(),
-            target_token.format(),
+            [
+                new_token.format(),
+                dot_token.format(),
+                target_token.format(),
+            ]
         ]
     }
 }

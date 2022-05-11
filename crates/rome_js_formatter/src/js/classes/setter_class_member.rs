@@ -21,16 +21,18 @@ impl FormatNodeFields<JsSetterClassMember> for FormatNodeRule<JsSetterClassMembe
 
         Ok(hard_group_elements(formatted![
             formatter,
-            modifiers.format(),
-            space_token(),
-            set_token.format(),
-            space_token(),
-            name.format(),
-            l_paren_token.format(),
-            parameter.format(),
-            r_paren_token.format(),
-            space_token(),
-            body.format(),
+            [
+                modifiers.format(),
+                space_token(),
+                set_token.format(),
+                space_token(),
+                name.format(),
+                l_paren_token.format(),
+                parameter.format(),
+                r_paren_token.format(),
+                space_token(),
+                body.format(),
+            ]
         ]?))
     }
 }

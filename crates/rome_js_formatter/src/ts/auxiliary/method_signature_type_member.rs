@@ -20,12 +20,14 @@ impl FormatNodeFields<TsMethodSignatureTypeMember> for FormatNodeRule<TsMethodSi
         let separator = format_type_member_separator(separator_token, formatter);
         formatted![
             formatter,
-            name.format(),
-            optional_token.format(),
-            type_parameters.format(),
-            parameters.format(),
-            return_type_annotation.format(),
-            separator
+            [
+                name.format(),
+                optional_token.format(),
+                type_parameters.format(),
+                parameters.format(),
+                return_type_annotation.format(),
+                separator
+            ]
         ]
     }
 }

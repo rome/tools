@@ -21,10 +21,12 @@ impl FormatNodeFields<TsPropertySignatureClassMember>
             formatter,
             formatted![
                 formatter,
-                modifiers.format(),
-                space_token(),
-                name.format(),
-                property_annotation.format(),
+                [
+                    modifiers.format(),
+                    space_token(),
+                    name.format(),
+                    property_annotation.format(),
+                ]
             ]?,
             semicolon_token,
         )

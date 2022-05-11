@@ -10,6 +10,6 @@ impl FormatNodeFields<TsEnumMember> for FormatNodeRule<TsEnumMember> {
         let name = name.format();
         let initializer = format_initializer_clause(formatter, initializer)?;
 
-        formatted![formatter, name, initializer]
+        formatted![formatter, [name, initializer]]
     }
 }

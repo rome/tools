@@ -16,8 +16,7 @@ impl FormatNodeFields<JsDefaultImportSpecifier> for FormatNodeRule<JsDefaultImpo
 
         formatted![
             formatter,
-            local_name.format(),
-            trailing_comma_token.format()
+            [local_name.format(), trailing_comma_token.format()]
         ]
     }
 }

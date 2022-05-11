@@ -12,9 +12,11 @@ impl FormatNodeFields<JsxFragment> for FormatNodeRule<JsxFragment> {
 
         formatted![
             formatter,
-            opening_fragment.format(),
-            children.format(),
-            closing_fragment.format()
+            [
+                opening_fragment.format(),
+                children.format(),
+                closing_fragment.format()
+            ]
         ]
     }
 }

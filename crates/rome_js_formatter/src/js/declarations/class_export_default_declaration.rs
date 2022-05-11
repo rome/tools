@@ -11,6 +11,6 @@ impl FormatNodeFields<JsClassExportDefaultDeclaration>
         node: &JsClassExportDefaultDeclaration,
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
-        formatted![formatter, JsAnyClass::from(node.clone()).format()]
+        formatted![formatter, [JsAnyClass::from(node.clone()).format()]]
     }
 }

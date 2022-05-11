@@ -7,9 +7,9 @@ impl FormatRule<JsAnyForInitializer> for FormatJsAnyForInitializer {
     fn format(node: &JsAnyForInitializer, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyForInitializer::JsVariableDeclaration(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
-            JsAnyForInitializer::JsAnyExpression(node) => formatted![formatter, node.format()],
+            JsAnyForInitializer::JsAnyExpression(node) => formatted![formatter, [node.format()]],
         }
     }
 }

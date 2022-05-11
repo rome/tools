@@ -22,12 +22,14 @@ impl FormatNodeFields<TsIndexSignatureClassMember> for FormatNodeRule<TsIndexSig
             formatter,
             formatted![
                 formatter,
-                modifiers.format(),
-                space_token(),
-                l_brack_token.format(),
-                parameter.format(),
-                r_brack_token.format(),
-                type_annotation.format(),
+                [
+                    modifiers.format(),
+                    space_token(),
+                    l_brack_token.format(),
+                    parameter.format(),
+                    r_brack_token.format(),
+                    type_annotation.format(),
+                ]
             ]?,
             semicolon_token,
         )

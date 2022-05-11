@@ -12,9 +12,7 @@ impl FormatNodeFields<TsGlobalDeclaration> for FormatNodeRule<TsGlobalDeclaratio
 
         formatted![
             formatter,
-            global_token.format(),
-            space_token(),
-            body.format()
+            [global_token.format(), space_token(), body.format()]
         ]
     }
 }

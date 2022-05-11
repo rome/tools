@@ -26,13 +26,15 @@ impl FormatNodeFields<TsSetterSignatureTypeMember> for FormatNodeRule<TsSetterSi
 
         formatted![
             formatter,
-            set,
-            space_token(),
-            name,
-            l_paren,
-            parameter,
-            r_paren,
-            separator
+            [
+                set,
+                space_token(),
+                name,
+                l_paren,
+                parameter,
+                r_paren,
+                separator
+            ]
         ]
     }
 }

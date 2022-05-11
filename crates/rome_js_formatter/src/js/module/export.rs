@@ -13,6 +13,6 @@ impl FormatNodeFields<JsExport> for FormatNodeRule<JsExport> {
 
         let export_token = export_token.format();
         let export_clause = export_clause.format();
-        formatted![formatter, export_token, space_token(), export_clause]
+        formatted![formatter, [export_token, space_token(), export_clause]]
     }
 }

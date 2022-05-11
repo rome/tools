@@ -16,9 +16,11 @@ impl FormatNodeFields<JsObjectAssignmentPatternShorthandProperty>
 
         formatted![
             formatter,
-            identifier.format()?,
-            init.format()
-                .with_or_empty(|node| formatted![formatter, space_token(), node])
+            [
+                identifier.format()?,
+                init.format()
+                    .with_or_empty(|node| formatted![formatter, [space_token(), node]])
+            ]
         ]
     }
 }

@@ -19,10 +19,12 @@ impl FormatNodeFields<TsCallSignatureTypeMember> for FormatNodeRule<TsCallSignat
 
         formatted![
             formatter,
-            type_parameters.format(),
-            parameters.format(),
-            return_type_annotation.format(),
-            separator
+            [
+                type_parameters.format(),
+                parameters.format(),
+                return_type_annotation.format(),
+                separator
+            ]
         ]
     }
 }

@@ -16,11 +16,13 @@ impl FormatNodeFields<TsModuleDeclaration> for FormatNodeRule<TsModuleDeclaratio
 
         formatted![
             formatter,
-            module_or_namespace.format(),
-            space_token(),
-            name.format(),
-            space_token(),
-            body.format(),
+            [
+                module_or_namespace.format(),
+                space_token(),
+                name.format(),
+                space_token(),
+                body.format(),
+            ]
         ]
     }
 }

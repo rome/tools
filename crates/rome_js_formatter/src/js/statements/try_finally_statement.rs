@@ -18,14 +18,19 @@ impl FormatNodeFields<JsTryFinallyStatement> for FormatNodeRule<JsTryFinallyStat
 
         Ok(hard_group_elements(formatted![
             formatter,
-            try_token.format(),
-            space_token(),
-            body.format(),
-            catch_clause
-                .format()
-                .with_or_empty(|catch_clause| formatted![formatter, space_token(), catch_clause]),
-            space_token(),
-            finally_clause.format()
+            [
+                try_token.format(),
+                space_token(),
+                body.format(),
+                catch_clause
+                    .format()
+                    .with_or_empty(|catch_clause| formatted![
+                        formatter,
+                        [space_token(), catch_clause]
+                    ]),
+                space_token(),
+                finally_clause.format()
+            ]
         ]?))
     }
 }

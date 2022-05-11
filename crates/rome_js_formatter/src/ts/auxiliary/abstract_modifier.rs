@@ -10,6 +10,6 @@ impl FormatNodeFields<TsAbstractModifier> for FormatNodeRule<TsAbstractModifier>
     ) -> FormatResult<FormatElement> {
         let TsAbstractModifierFields { modifier_token } = node.as_fields();
 
-        formatted![formatter, modifier_token.format()]
+        formatted![formatter, [modifier_token.format()]]
     }
 }

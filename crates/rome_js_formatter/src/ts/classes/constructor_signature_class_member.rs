@@ -22,10 +22,12 @@ impl FormatNodeFields<TsConstructorSignatureClassMember>
             formatter,
             formatted![
                 formatter,
-                modifiers.format(),
-                space_token(),
-                name.format(),
-                parameters.format(),
+                [
+                    modifiers.format(),
+                    space_token(),
+                    name.format(),
+                    parameters.format(),
+                ]
             ]?,
             semicolon_token,
         )?))

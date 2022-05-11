@@ -21,14 +21,16 @@ impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDecl
             formatter,
             formatted![
                 formatter,
-                type_token.format(),
-                space_token(),
-                binding_identifier.format(),
-                type_parameters.format(),
-                space_token(),
-                eq_token.format(),
-                space_token(),
-                ty.format(),
+                [
+                    type_token.format(),
+                    space_token(),
+                    binding_identifier.format(),
+                    type_parameters.format(),
+                    space_token(),
+                    eq_token.format(),
+                    space_token(),
+                    ty.format(),
+                ]
             ]?,
             semicolon_token,
         )?))

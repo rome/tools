@@ -12,7 +12,7 @@ impl FormatNodeFields<TsTupleType> for FormatNodeRule<TsTupleType> {
 
         formatter.format_delimited_soft_block_indent(
             &l_brack_token?,
-            formatted![formatter, elements.format()]?,
+            formatted![formatter, [elements.format()]]?,
             &r_brack_token?,
         )
     }

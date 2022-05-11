@@ -17,7 +17,7 @@ impl FormatNodeFields<JsExpressionStatement> for FormatNodeRule<JsExpressionStat
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, expression.format()]?,
+            formatted![formatter, [expression.format()]]?,
             semicolon_token,
         )
     }

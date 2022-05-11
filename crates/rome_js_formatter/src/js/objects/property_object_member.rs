@@ -18,6 +18,6 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
         let key = name.format();
         let colon = colon_token.format();
         let value = value.format();
-        formatted![formatter, key, colon, space_token(), value]
+        formatted![formatter, [key, colon, space_token(), value]]
     }
 }

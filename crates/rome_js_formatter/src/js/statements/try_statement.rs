@@ -14,11 +14,13 @@ impl FormatNodeFields<JsTryStatement> for FormatNodeRule<JsTryStatement> {
 
         Ok(hard_group_elements(formatted![
             formatter,
-            try_token.format(),
-            space_token(),
-            body.format(),
-            space_token(),
-            catch_clause.format(),
+            [
+                try_token.format(),
+                space_token(),
+                body.format(),
+                space_token(),
+                catch_clause.format(),
+            ]
         ]?))
     }
 }

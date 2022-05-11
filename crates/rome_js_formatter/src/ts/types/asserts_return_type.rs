@@ -15,11 +15,13 @@ impl FormatNodeFields<TsAssertsReturnType> for FormatNodeRule<TsAssertsReturnTyp
         } = node.as_fields();
         formatted![
             formatter,
-            asserts_token.format(),
-            space_token(),
-            parameter_name.format(),
-            space_token(),
-            predicate.format()
+            [
+                asserts_token.format(),
+                space_token(),
+                parameter_name.format(),
+                space_token(),
+                predicate.format()
+            ]
         ]
     }
 }

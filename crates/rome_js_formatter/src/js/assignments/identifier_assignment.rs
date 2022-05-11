@@ -11,6 +11,6 @@ impl FormatNodeFields<JsIdentifierAssignment> for FormatNodeRule<JsIdentifierAss
     ) -> FormatResult<FormatElement> {
         let JsIdentifierAssignmentFields { name_token } = node.as_fields();
 
-        formatted![formatter, name_token.format()]
+        formatted![formatter, [name_token.format()]]
     }
 }

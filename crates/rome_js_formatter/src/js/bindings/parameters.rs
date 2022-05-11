@@ -14,7 +14,7 @@ impl FormatNodeFields<JsParameters> for FormatNodeRule<JsParameters> {
 
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            formatted![formatter, items.format()]?,
+            formatted![formatter, [items.format()]]?,
             &r_paren_token?,
         )
     }

@@ -16,7 +16,7 @@ impl FormatNodeFields<JsObjectAssignmentPattern> for FormatNodeRule<JsObjectAssi
 
         formatter.format_delimited_soft_block_spaces(
             &l_curly_token?,
-            formatted![formatter, properties.format()]?,
+            formatted![formatter, [properties.format()]]?,
             &r_curly_token?,
         )
     }

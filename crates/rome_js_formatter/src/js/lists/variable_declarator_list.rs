@@ -16,7 +16,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
             .elements()
             .enumerate()
             .map(|(index, element)| {
-                let node = formatted![formatter, element.node()?.format()]?;
+                let node = formatted![formatter, [element.node()?.format()]]?;
                 let separator = match element.trailing_separator()? {
                     None => {
                         if index == last_index {
@@ -29,12 +29,12 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
                         if index == last_index {
                             empty_element()
                         } else {
-                            formatted![formatter, separator.format()]?
+                            formatted![formatter, [separator.format()]]?
                         }
                     }
                 };
 
-                formatted![formatter, node, separator]
+                formatted![formatter, [node, separator]]
             })
             .collect::<FormatResult<Vec<_>>>()?;
 
@@ -49,8 +49,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
                 .chain(if !trailing_elements.is_empty() {
                     Some(indent(formatted![
                         formatter,
-                        soft_line_break_or_space(),
-                        trailing_elements
+                        [soft_line_break_or_space(), trailing_elements]
                     ]?))
                 } else {
                     None

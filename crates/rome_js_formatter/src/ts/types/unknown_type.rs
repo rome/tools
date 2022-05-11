@@ -5,6 +5,6 @@ use rome_js_syntax::{TsUnknownType, TsUnknownTypeFields};
 impl FormatNodeFields<TsUnknownType> for FormatNodeRule<TsUnknownType> {
     fn format_fields(node: &TsUnknownType, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsUnknownTypeFields { unknown_token } = node.as_fields();
-        formatted![formatter, unknown_token.format()]
+        formatted![formatter, [unknown_token.format()]]
     }
 }

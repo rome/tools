@@ -18,17 +18,17 @@ impl FormatNodeFields<TsImportType> for FormatNodeRule<TsImportType> {
 
         formatted![
             formatter,
-            typeof_token.format().with_or_empty(|token| formatted![
-                formatter,
-                token,
-                space_token()
-            ]),
-            import_token.format(),
-            l_paren_token.format(),
-            format_string_literal_token(argument_token?, formatter),
-            r_paren_token.format(),
-            qualifier_clause.format(),
-            type_arguments.format(),
+            [
+                typeof_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                import_token.format(),
+                l_paren_token.format(),
+                format_string_literal_token(argument_token?, formatter),
+                r_paren_token.format(),
+                qualifier_clause.format(),
+                type_arguments.format(),
+            ]
         ]
     }
 }

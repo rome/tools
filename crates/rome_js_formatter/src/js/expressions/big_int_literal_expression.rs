@@ -17,7 +17,7 @@ impl FormatNodeFields<JsBigIntLiteralExpression> for FormatNodeRule<JsBigIntLite
 
         let original = value_token.text_trimmed();
         match original.to_ascii_lowercase_cow() {
-            Cow::Borrowed(_) => formatted![formatter, value_token.format()],
+            Cow::Borrowed(_) => formatted![formatter, [value_token.format()]],
             Cow::Owned(lowercase) => Ok(formatter.format_replaced(
                 &value_token,
                 Token::new_dynamic(lowercase, value_token.text_trimmed_range().start()).into(),

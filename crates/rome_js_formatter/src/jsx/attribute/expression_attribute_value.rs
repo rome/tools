@@ -54,16 +54,18 @@ impl FormatNodeFields<JsxExpressionAttributeValue> for FormatNodeRule<JsxExpress
                 | JsAnyExpression::JsArrayExpression(_)
                 | JsAnyExpression::JsCallExpression(_)
         ) {
-            formatted![formatter, expression.format()]?
+            formatted![formatter, [expression.format()]]?
         } else {
-            soft_block_indent(formatted![formatter, expression.format()]?)
+            soft_block_indent(formatted![formatter, [expression.format()]]?)
         };
 
         Ok(group_elements(formatted![
             formatter,
-            l_curly_token.format(),
-            formatted_expression,
-            r_curly_token.format(),
+            [
+                l_curly_token.format(),
+                formatted_expression,
+                r_curly_token.format(),
+            ]
         ]?))
     }
 }

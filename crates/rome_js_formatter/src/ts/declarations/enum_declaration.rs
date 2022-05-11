@@ -32,17 +32,18 @@ impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
 
         formatted![
             formatter,
-            const_token.format().with_or_empty(|const_token| formatted![
-                formatter,
-                const_token,
-                space_token()
-            ]),
-            enum_token
-                .format()
-                .with(|enum_token| formatted![formatter, enum_token, space_token()]),
-            id.format()
-                .with(|id| formatted![formatter, id, space_token()]),
-            list
+            [
+                const_token.format().with_or_empty(|const_token| formatted![
+                    formatter,
+                    [const_token, space_token()]
+                ]),
+                enum_token
+                    .format()
+                    .with(|enum_token| formatted![formatter, [enum_token, space_token()]]),
+                id.format()
+                    .with(|id| formatted![formatter, [id, space_token()]]),
+                list
+            ]
         ]
     }
 }

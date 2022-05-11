@@ -10,6 +10,6 @@ impl FormatNodeFields<TsInferType> for FormatNodeRule<TsInferType> {
         } = node.as_fields();
         let infer = infer_token.format();
         let type_parameter = type_parameter.format();
-        formatted![formatter, infer, space_token(), type_parameter]
+        formatted![formatter, [infer, space_token(), type_parameter]]
     }
 }

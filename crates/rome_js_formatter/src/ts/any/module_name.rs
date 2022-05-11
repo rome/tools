@@ -6,8 +6,8 @@ use rome_js_syntax::TsAnyModuleName;
 impl FormatRule<TsAnyModuleName> for FormatTsAnyModuleName {
     fn format(node: &TsAnyModuleName, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            TsAnyModuleName::TsIdentifierBinding(node) => formatted![formatter, node.format()],
-            TsAnyModuleName::TsQualifiedModuleName(node) => formatted![formatter, node.format()],
+            TsAnyModuleName::TsIdentifierBinding(node) => formatted![formatter, [node.format()]],
+            TsAnyModuleName::TsQualifiedModuleName(node) => formatted![formatter, [node.format()]],
         }
     }
 }

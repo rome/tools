@@ -16,9 +16,11 @@ impl FormatNodeFields<TsTemplateLiteralType> for FormatNodeRule<TsTemplateLitera
 
         formatted![
             formatter,
-            l_tick_token.format(),
-            elements.format(),
-            r_tick_token.format(),
+            [
+                l_tick_token.format(),
+                elements.format(),
+                r_tick_token.format(),
+            ]
         ]
     }
 }

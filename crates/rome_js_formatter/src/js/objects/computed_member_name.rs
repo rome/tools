@@ -17,9 +17,11 @@ impl FormatNodeFields<JsComputedMemberName> for FormatNodeRule<JsComputedMemberN
 
         formatted![
             formatter,
-            l_brack_token.format(),
-            expression.format(),
-            r_brack_token.format(),
+            [
+                l_brack_token.format(),
+                expression.format(),
+                r_brack_token.format(),
+            ]
         ]
     }
 }

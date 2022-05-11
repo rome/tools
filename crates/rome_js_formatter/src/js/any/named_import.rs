@@ -6,9 +6,11 @@ use rome_js_syntax::JsAnyNamedImport;
 impl FormatRule<JsAnyNamedImport> for FormatJsAnyNamedImport {
     fn format(node: &JsAnyNamedImport, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyNamedImport::JsNamedImportSpecifiers(node) => formatted![formatter, node.format()],
+            JsAnyNamedImport::JsNamedImportSpecifiers(node) => {
+                formatted![formatter, [node.format()]]
+            }
             JsAnyNamedImport::JsNamespaceImportSpecifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

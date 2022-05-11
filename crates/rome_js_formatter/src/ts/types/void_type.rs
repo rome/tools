@@ -6,6 +6,6 @@ impl FormatNodeFields<TsVoidType> for FormatNodeRule<TsVoidType> {
     fn format_fields(node: &TsVoidType, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsVoidTypeFields { void_token } = node.as_fields();
 
-        formatted![formatter, void_token.format()]
+        formatted![formatter, [void_token.format()]]
     }
 }

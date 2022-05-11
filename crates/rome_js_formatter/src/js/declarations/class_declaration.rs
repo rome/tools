@@ -8,6 +8,6 @@ impl FormatNodeFields<JsClassDeclaration> for FormatNodeRule<JsClassDeclaration>
         node: &JsClassDeclaration,
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
-        formatted![formatter, JsAnyClass::from(node.clone()).format()]
+        formatted![formatter, [JsAnyClass::from(node.clone()).format()]]
     }
 }

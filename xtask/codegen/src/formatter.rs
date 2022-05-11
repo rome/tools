@@ -360,7 +360,7 @@ pub fn generate_formatter() {
                     .into_iter()
                     .map(|variant| {
                         let variant = Ident::new(&variant, Span::call_site());
-                        quote! { #node_id::#variant(node) => formatted![formatter, node.format()], }
+                        quote! { #node_id::#variant(node) => formatted![formatter, [node.format()]], }
                     })
                     .collect();
 

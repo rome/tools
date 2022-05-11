@@ -11,7 +11,7 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
         let items = items
             .enumerate()
             .map(|(index, element)| {
-                let formatted_element = formatted![formatter, element.format()]?;
+                let formatted_element = formatted![formatter, [element.format()]]?;
 
                 let is_verbatim = matches!(
                     formatted_element.last_element(),
@@ -30,7 +30,7 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
                     empty_element()
                 };
 
-                formatted![formatter, formatted_element, separator]
+                formatted![formatter, [formatted_element, separator]]
             })
             .collect::<FormatResult<Vec<_>>>()?;
 

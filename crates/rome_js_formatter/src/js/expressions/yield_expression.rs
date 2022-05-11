@@ -14,6 +14,6 @@ impl FormatNodeFields<JsYieldExpression> for FormatNodeRule<JsYieldExpression> {
             argument,
         } = node.as_fields();
 
-        formatted![formatter, yield_token.format(), argument.format()]
+        formatted![formatter, [yield_token.format(), argument.format()]]
     }
 }

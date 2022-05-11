@@ -29,20 +29,24 @@ impl FormatNodeFields<JsForInStatement> for FormatNodeRule<JsForInStatement> {
             formatter,
             formatted![
                 formatter,
-                for_token,
-                space_token(),
-                formatter.format_delimited_soft_block_indent(
-                    &l_paren_token?,
-                    formatted![
-                        formatter,
-                        initializer,
-                        soft_line_break_or_space(),
-                        in_token,
-                        soft_line_break_or_space(),
-                        expression,
-                    ]?,
-                    &r_paren_token?
-                )?,
+                [
+                    for_token,
+                    space_token(),
+                    formatter.format_delimited_soft_block_indent(
+                        &l_paren_token?,
+                        formatted![
+                            formatter,
+                            [
+                                initializer,
+                                soft_line_break_or_space(),
+                                in_token,
+                                soft_line_break_or_space(),
+                                expression,
+                            ]
+                        ]?,
+                        &r_paren_token?
+                    )?,
+                ]
             ]?,
             body?,
         )

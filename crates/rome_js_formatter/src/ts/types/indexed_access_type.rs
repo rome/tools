@@ -16,10 +16,12 @@ impl FormatNodeFields<TsIndexedAccessType> for FormatNodeRule<TsIndexedAccessTyp
         } = node.as_fields();
         formatted![
             formatter,
-            object_type.format(),
-            l_brack_token.format(),
-            index_type.format(),
-            r_brack_token.format()
+            [
+                object_type.format(),
+                l_brack_token.format(),
+                index_type.format(),
+                r_brack_token.format()
+            ]
         ]
     }
 }

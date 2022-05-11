@@ -16,12 +16,14 @@ impl FormatNodeFields<TsNamedTupleTypeElement> for FormatNodeRule<TsNamedTupleTy
         } = node.as_fields();
         formatted![
             formatter,
-            dotdotdot_token.format(),
-            name.format(),
-            question_mark_token.format(),
-            colon_token.format(),
-            space_token(),
-            ty.format(),
+            [
+                dotdotdot_token.format(),
+                name.format(),
+                question_mark_token.format(),
+                colon_token.format(),
+                space_token(),
+                ty.format(),
+            ]
         ]
     }
 }

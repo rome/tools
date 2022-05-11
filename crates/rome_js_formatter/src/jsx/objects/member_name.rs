@@ -12,9 +12,7 @@ impl FormatNodeFields<JsxMemberName> for FormatNodeRule<JsxMemberName> {
 
         formatted![
             formatter,
-            object.format(),
-            dot_token.format(),
-            member.format(),
+            [object.format(), dot_token.format(), member.format(),]
         ]
     }
 }

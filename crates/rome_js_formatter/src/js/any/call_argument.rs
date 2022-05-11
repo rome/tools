@@ -6,8 +6,8 @@ use rome_js_syntax::JsAnyCallArgument;
 impl FormatRule<JsAnyCallArgument> for FormatJsAnyCallArgument {
     fn format(node: &JsAnyCallArgument, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyCallArgument::JsAnyExpression(node) => formatted![formatter, node.format()],
-            JsAnyCallArgument::JsSpread(node) => formatted![formatter, node.format()],
+            JsAnyCallArgument::JsAnyExpression(node) => formatted![formatter, [node.format()]],
+            JsAnyCallArgument::JsSpread(node) => formatted![formatter, [node.format()]],
         }
     }
 }

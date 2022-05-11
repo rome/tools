@@ -10,6 +10,6 @@ impl FormatNodeFields<TsImportTypeQualifier> for FormatNodeRule<TsImportTypeQual
     ) -> FormatResult<FormatElement> {
         let TsImportTypeQualifierFields { dot_token, right } = node.as_fields();
 
-        formatted![formatter, dot_token.format(), right.format(),]
+        formatted![formatter, [dot_token.format(), right.format(),]]
     }
 }

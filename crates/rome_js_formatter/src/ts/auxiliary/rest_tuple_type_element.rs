@@ -13,6 +13,6 @@ impl FormatNodeFields<TsRestTupleTypeElement> for FormatNodeRule<TsRestTupleType
         } = node.as_fields();
         let dotdotdot = dotdotdot_token.format();
         let ty = ty.format();
-        formatted![formatter, dotdotdot, ty]
+        formatted![formatter, [dotdotdot, ty]]
     }
 }

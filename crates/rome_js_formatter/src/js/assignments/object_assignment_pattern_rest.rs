@@ -16,6 +16,6 @@ impl FormatNodeFields<JsObjectAssignmentPatternRest>
             target,
         } = node.as_fields();
 
-        formatted![formatter, dotdotdot_token.format(), target.format()?,]
+        formatted![formatter, [dotdotdot_token.format(), target.format()?,]]
     }
 }

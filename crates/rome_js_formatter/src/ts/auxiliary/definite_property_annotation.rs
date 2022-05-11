@@ -14,6 +14,6 @@ impl FormatNodeFields<TsDefinitePropertyAnnotation>
             excl_token,
             type_annotation,
         } = node.as_fields();
-        formatted![formatter, excl_token.format(), type_annotation.format()]
+        formatted![formatter, [excl_token.format(), type_annotation.format()]]
     }
 }

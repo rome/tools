@@ -17,12 +17,14 @@ impl FormatNodeFields<TsTypeAssertionExpression> for FormatNodeRule<TsTypeAssert
 
         formatted![
             formatter,
-            formatter.format_delimited_soft_block_indent(
-                &l_angle_token?,
-                formatted![formatter, ty.format()]?,
-                &r_angle_token?,
-            )?,
-            expression.format()
+            [
+                formatter.format_delimited_soft_block_indent(
+                    &l_angle_token?,
+                    formatted![formatter, [ty.format()]]?,
+                    &r_angle_token?,
+                )?,
+                expression.format()
+            ]
         ]
     }
 }

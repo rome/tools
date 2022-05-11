@@ -11,6 +11,6 @@ impl FormatNodeFields<JsThisExpression> for FormatNodeRule<JsThisExpression> {
     ) -> FormatResult<FormatElement> {
         let JsThisExpressionFields { this_token } = node.as_fields();
 
-        formatted![formatter, this_token.format()]
+        formatted![formatter, [this_token.format()]]
     }
 }

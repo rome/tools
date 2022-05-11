@@ -16,7 +16,7 @@ impl FormatNodeFields<TsParenthesizedType> for FormatNodeRule<TsParenthesizedTyp
 
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            formatted![formatter, ty.format()]?,
+            formatted![formatter, [ty.format()]]?,
             &r_paren_token?,
         )
     }

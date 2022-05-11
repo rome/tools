@@ -14,6 +14,6 @@ impl FormatNodeFields<TsIndexSignatureParameter> for FormatNodeRule<TsIndexSigna
         let binding = binding.format();
         let type_annotation = type_annotation.format();
 
-        formatted![formatter, binding, type_annotation]
+        formatted![formatter, [binding, type_annotation]]
     }
 }

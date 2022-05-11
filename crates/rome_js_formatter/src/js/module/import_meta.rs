@@ -14,9 +14,11 @@ impl FormatNodeFields<ImportMeta> for FormatNodeRule<ImportMeta> {
 
         formatted![
             formatter,
-            import_token.format(),
-            dot_token.format(),
-            meta_token.format(),
+            [
+                import_token.format(),
+                dot_token.format(),
+                meta_token.format(),
+            ]
         ]
     }
 }

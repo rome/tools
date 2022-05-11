@@ -24,7 +24,7 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
             None => if_group_breaks(format_elements![token("|"), space_token()]),
         };
 
-        let types = formatted![formatter, types.format()]?;
+        let types = formatted![formatter, [types.format()]]?;
 
         // Push trailing comments for the union out of the group (and indent block),
         // so any potential line break doesn't influence the formatting of the type itself
@@ -32,14 +32,18 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
 
         formatted![
             formatter,
-            group_elements(indent(formatted![
-                formatter,
-                soft_line_break(),
-                leading_separator_token,
-                leading_comments,
-                types,
-            ]?)),
-            trailing_comments
+            [
+                group_elements(indent(formatted![
+                    formatter,
+                    [
+                        soft_line_break(),
+                        leading_separator_token,
+                        leading_comments,
+                        types,
+                    ]
+                ]?)),
+                trailing_comments
+            ]
         ]
     }
 }

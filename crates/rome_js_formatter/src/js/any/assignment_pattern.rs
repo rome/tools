@@ -6,12 +6,12 @@ use rome_js_syntax::JsAnyAssignmentPattern;
 impl FormatRule<JsAnyAssignmentPattern> for FormatJsAnyAssignmentPattern {
     fn format(node: &JsAnyAssignmentPattern, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyAssignmentPattern::JsAnyAssignment(node) => formatted![formatter, node.format()],
+            JsAnyAssignmentPattern::JsAnyAssignment(node) => formatted![formatter, [node.format()]],
             JsAnyAssignmentPattern::JsArrayAssignmentPattern(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyAssignmentPattern::JsObjectAssignmentPattern(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

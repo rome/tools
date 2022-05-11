@@ -17,11 +17,13 @@ impl FormatNodeFields<JsBindingPatternWithDefault> for FormatNodeRule<JsBindingP
 
         formatted![
             formatter,
-            pattern.format(),
-            space_token(),
-            eq_token.format(),
-            space_token(),
-            default.format()
+            [
+                pattern.format(),
+                space_token(),
+                eq_token.format(),
+                space_token(),
+                default.format()
+            ]
         ]
     }
 }

@@ -24,16 +24,20 @@ impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
             ) {
                 formatted![
                     formatter,
-                    space_token(),
-                    group_elements(formatted![
-                        formatter,
-                        token("("),
-                        soft_block_indent(formatted![formatter, argument.format()]?),
-                        token(")")
-                    ]?),
+                    [
+                        space_token(),
+                        group_elements(formatted![
+                            formatter,
+                            [
+                                token("("),
+                                soft_block_indent(formatted![formatter, [argument.format()]]?),
+                                token(")")
+                            ]
+                        ]?),
+                    ]
                 ]?
             } else {
-                formatted![formatter, space_token(), argument.format()]?
+                formatted![formatter, [space_token(), argument.format()]]?
             }
         } else {
             empty_element()
@@ -41,7 +45,7 @@ impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, return_token, argument]?,
+            formatted![formatter, [return_token, argument]]?,
             semicolon_token,
         )
     }

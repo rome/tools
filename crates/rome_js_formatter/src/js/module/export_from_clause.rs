@@ -24,21 +24,20 @@ impl FormatNodeFields<JsExportFromClause> for FormatNodeRule<JsExportFromClause>
             formatter,
             formatted![
                 formatter,
-                star_token.format(),
-                space_token(),
-                export_as.format().with_or_empty(|as_token| formatted![
-                    formatter,
-                    as_token,
-                    space_token()
-                ]),
-                from_token.format(),
-                space_token(),
-                source.format(),
-                assertion.format().with_or_empty(|assertion| formatted![
-                    formatter,
+                [
+                    star_token.format(),
                     space_token(),
-                    assertion
-                ]),
+                    export_as
+                        .format()
+                        .with_or_empty(|as_token| formatted![formatter, [as_token, space_token()]]),
+                    from_token.format(),
+                    space_token(),
+                    source.format(),
+                    assertion.format().with_or_empty(|assertion| formatted![
+                        formatter,
+                        [space_token(), assertion]
+                    ]),
+                ]
             ]?,
             semicolon_token,
         )

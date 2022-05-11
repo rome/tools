@@ -19,9 +19,7 @@ impl FormatNodeFields<TsExportAssignmentClause> for FormatNodeRule<TsExportAssig
             formatter,
             formatted![
                 formatter,
-                eq_token.format(),
-                space_token(),
-                expression.format(),
+                [eq_token.format(), space_token(), expression.format(),]
             ]?,
             semicolon_token,
         )

@@ -16,6 +16,6 @@ impl FormatNodeFields<JsArrayBindingPatternRestElement>
             pattern,
         } = node.as_fields();
 
-        formatted![formatter, dotdotdot_token.format(), pattern.format(),]
+        formatted![formatter, [dotdotdot_token.format(), pattern.format(),]]
     }
 }

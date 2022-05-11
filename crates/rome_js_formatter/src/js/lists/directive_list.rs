@@ -25,13 +25,15 @@ impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
             };
             formatted![
                 formatter,
-                formatter.format_list(node),
-                hard_line_break(),
-                if need_extra_empty_line {
-                    empty_line()
-                } else {
-                    empty_element()
-                }
+                [
+                    formatter.format_list(node),
+                    hard_line_break(),
+                    if need_extra_empty_line {
+                        empty_line()
+                    } else {
+                        empty_element()
+                    }
+                ]
             ]
         } else {
             Ok(empty_element())

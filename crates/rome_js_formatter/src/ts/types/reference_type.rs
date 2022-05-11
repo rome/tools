@@ -9,6 +9,6 @@ impl FormatNodeFields<TsReferenceType> for FormatNodeRule<TsReferenceType> {
             type_arguments,
         } = node.as_fields();
 
-        formatted![formatter, name.format(), type_arguments.format()]
+        formatted![formatter, [name.format(), type_arguments.format()]]
     }
 }

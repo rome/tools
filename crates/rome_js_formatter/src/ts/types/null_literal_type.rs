@@ -8,6 +8,6 @@ impl FormatNodeFields<TsNullLiteralType> for FormatNodeRule<TsNullLiteralType> {
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsNullLiteralTypeFields { literal_token } = node.as_fields();
-        formatted![formatter, literal_token.format()]
+        formatted![formatter, [literal_token.format()]]
     }
 }

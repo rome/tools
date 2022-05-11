@@ -7,9 +7,9 @@ impl FormatRule<TsAnyTemplateElement> for FormatTsAnyTemplateElement {
     fn format(node: &TsAnyTemplateElement, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
             TsAnyTemplateElement::TsTemplateChunkElement(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
-            TsAnyTemplateElement::TsTemplateElement(node) => formatted![formatter, node.format()],
+            TsAnyTemplateElement::TsTemplateElement(node) => formatted![formatter, [node.format()]],
         }
     }
 }

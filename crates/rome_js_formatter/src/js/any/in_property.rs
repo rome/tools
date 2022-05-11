@@ -6,8 +6,8 @@ use rome_js_syntax::JsAnyInProperty;
 impl FormatRule<JsAnyInProperty> for FormatJsAnyInProperty {
     fn format(node: &JsAnyInProperty, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyInProperty::JsPrivateName(node) => formatted![formatter, node.format()],
-            JsAnyInProperty::JsAnyExpression(node) => formatted![formatter, node.format()],
+            JsAnyInProperty::JsPrivateName(node) => formatted![formatter, [node.format()]],
+            JsAnyInProperty::JsAnyExpression(node) => formatted![formatter, [node.format()]],
         }
     }
 }

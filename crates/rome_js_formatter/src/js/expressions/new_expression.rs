@@ -15,13 +15,15 @@ impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
 
         formatted![
             formatter,
-            new_token.format(),
-            space_token(),
-            callee.format(),
-            type_arguments.format(),
-            arguments
-                .format()
-                .or_format(|| formatted![formatter, token("("), token(")")]),
+            [
+                new_token.format(),
+                space_token(),
+                callee.format(),
+                type_arguments.format(),
+                arguments
+                    .format()
+                    .or_format(|| formatted![formatter, [token("("), token(")")]]),
+            ]
         ]
     }
 }

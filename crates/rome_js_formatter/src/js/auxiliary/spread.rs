@@ -11,6 +11,6 @@ impl FormatNodeFields<JsSpread> for FormatNodeRule<JsSpread> {
             argument,
         } = node.as_fields();
 
-        formatted![formatter, dotdotdot_token.format(), argument.format()]
+        formatted![formatter, [dotdotdot_token.format(), argument.format()]]
     }
 }

@@ -10,16 +10,16 @@ impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDecla
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

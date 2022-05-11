@@ -23,19 +23,21 @@ impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMembe
 
         Ok(hard_group_elements(formatted![
             formatter,
-            modifiers.format(),
-            space_token(),
-            async_token
-                .format()
-                .with_or_empty(|token| formatted![formatter, token, space_token()]),
-            star_token.format(),
-            name.format(),
-            question_mark_token.format(),
-            type_parameters.format(),
-            parameters.format(),
-            return_type_annotation.format(),
-            space_token(),
-            body.format()
+            [
+                modifiers.format(),
+                space_token(),
+                async_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                star_token.format(),
+                name.format(),
+                question_mark_token.format(),
+                type_parameters.format(),
+                parameters.format(),
+                return_type_annotation.format(),
+                space_token(),
+                body.format()
+            ]
         ]?))
     }
 }

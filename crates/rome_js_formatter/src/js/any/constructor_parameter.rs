@@ -10,13 +10,13 @@ impl FormatRule<JsAnyConstructorParameter> for FormatJsAnyConstructorParameter {
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyConstructorParameter::JsAnyFormalParameter(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyConstructorParameter::JsRestParameter(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyConstructorParameter::TsPropertyParameter(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

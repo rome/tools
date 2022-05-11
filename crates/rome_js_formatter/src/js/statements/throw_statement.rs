@@ -21,7 +21,7 @@ impl FormatNodeFields<JsThrowStatement> for FormatNodeRule<JsThrowStatement> {
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, throw_token, space_token(), exception]?,
+            formatted![formatter, [throw_token, space_token(), exception]]?,
             semicolon_token,
         )
     }

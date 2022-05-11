@@ -17,7 +17,7 @@ impl FormatNodeFields<JsVariableDeclarationClause> for FormatNodeRule<JsVariable
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, declaration.format()]?,
+            formatted![formatter, [declaration.format()]]?,
             semicolon_token,
         )
     }

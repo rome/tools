@@ -14,6 +14,6 @@ impl FormatNodeFields<TsNonNullAssertionAssignment>
             assignment,
             excl_token,
         } = node.as_fields();
-        formatted![formatter, assignment.format(), excl_token.format()]
+        formatted![formatter, [assignment.format(), excl_token.format()]]
     }
 }

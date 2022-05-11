@@ -25,17 +25,18 @@ impl FormatNodeFields<TsDeclareFunctionDeclaration>
             formatter,
             formatted![
                 formatter,
-                async_token.format().with_or_empty(|async_token| formatted![
-                    formatter,
-                    async_token,
-                    space_token()
-                ]),
-                function_token.format(),
-                space_token(),
-                id.format(),
-                type_parameters.format(),
-                parameters.format(),
-                return_type_annotation.format(),
+                [
+                    async_token.format().with_or_empty(|async_token| formatted![
+                        formatter,
+                        [async_token, space_token()]
+                    ]),
+                    function_token.format(),
+                    space_token(),
+                    id.format(),
+                    type_parameters.format(),
+                    parameters.format(),
+                    return_type_annotation.format(),
+                ]
             ]?,
             semicolon_token,
         )?))

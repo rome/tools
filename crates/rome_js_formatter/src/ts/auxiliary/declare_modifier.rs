@@ -9,6 +9,6 @@ impl FormatNodeFields<TsDeclareModifier> for FormatNodeRule<TsDeclareModifier> {
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsDeclareModifierFields { modifier_token } = node.as_fields();
-        formatted![formatter, modifier_token.format()]
+        formatted![formatter, [modifier_token.format()]]
     }
 }

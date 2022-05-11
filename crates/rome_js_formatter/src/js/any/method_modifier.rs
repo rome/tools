@@ -7,10 +7,10 @@ impl FormatRule<JsAnyMethodModifier> for FormatJsAnyMethodModifier {
     fn format(node: &JsAnyMethodModifier, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyMethodModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
-            JsAnyMethodModifier::JsStaticModifier(node) => formatted![formatter, node.format()],
-            JsAnyMethodModifier::TsOverrideModifier(node) => formatted![formatter, node.format()],
+            JsAnyMethodModifier::JsStaticModifier(node) => formatted![formatter, [node.format()]],
+            JsAnyMethodModifier::TsOverrideModifier(node) => formatted![formatter, [node.format()]],
         }
     }
 }

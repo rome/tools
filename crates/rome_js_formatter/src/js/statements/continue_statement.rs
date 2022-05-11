@@ -20,12 +20,12 @@ impl FormatNodeFields<JsContinueStatement> for FormatNodeRule<JsContinueStatemen
             formatter,
             formatted![
                 formatter,
-                continue_token.format(),
-                label_token.format().with_or_empty(|token| formatted![
-                    formatter,
-                    space_token(),
-                    token
-                ])
+                [
+                    continue_token.format(),
+                    label_token
+                        .format()
+                        .with_or_empty(|token| formatted![formatter, [space_token(), token]])
+                ]
             ]?,
             semicolon_token,
         )

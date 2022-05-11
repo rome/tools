@@ -13,12 +13,12 @@ impl FormatNodeFields<JsImportBareClause> for FormatNodeRule<JsImportBareClause>
 
         formatted![
             formatter,
-            source.format(),
-            assertion.format().with_or_empty(|assertion| formatted![
-                formatter,
-                space_token(),
+            [
+                source.format(),
                 assertion
-            ])
+                    .format()
+                    .with_or_empty(|assertion| formatted![formatter, [space_token(), assertion]])
+            ]
         ]
     }
 }

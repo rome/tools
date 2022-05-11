@@ -6,12 +6,14 @@ use rome_js_syntax::JsAnyClassMemberName;
 impl FormatRule<JsAnyClassMemberName> for FormatJsAnyClassMemberName {
     fn format(node: &JsAnyClassMemberName, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyClassMemberName::JsLiteralMemberName(node) => formatted![formatter, node.format()],
+            JsAnyClassMemberName::JsLiteralMemberName(node) => {
+                formatted![formatter, [node.format()]]
+            }
             JsAnyClassMemberName::JsComputedMemberName(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyClassMemberName::JsPrivateClassMemberName(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

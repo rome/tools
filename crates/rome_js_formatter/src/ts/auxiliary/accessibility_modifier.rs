@@ -10,6 +10,6 @@ impl FormatNodeFields<TsAccessibilityModifier> for FormatNodeRule<TsAccessibilit
     ) -> FormatResult<FormatElement> {
         let TsAccessibilityModifierFields { modifier_token } = node.as_fields();
 
-        formatted![formatter, modifier_token.format()]
+        formatted![formatter, [modifier_token.format()]]
     }
 }

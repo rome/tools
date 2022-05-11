@@ -9,6 +9,6 @@ impl FormatNodeFields<TsAssertsCondition> for FormatNodeRule<TsAssertsCondition>
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsAssertsConditionFields { is_token, ty } = node.as_fields();
-        formatted![formatter, is_token.format(), space_token(), ty.format()]
+        formatted![formatter, [is_token.format(), space_token(), ty.format()]]
     }
 }

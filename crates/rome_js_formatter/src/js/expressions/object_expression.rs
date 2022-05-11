@@ -15,7 +15,7 @@ impl FormatNodeFields<JsObjectExpression> for FormatNodeRule<JsObjectExpression>
             r_curly_token,
         } = node.as_fields();
 
-        let members_content = formatted![formatter, members.format()]?;
+        let members_content = formatted![formatter, [members.format()]]?;
 
         if members.is_empty() {
             formatter.format_delimited_soft_block_indent(

@@ -15,11 +15,13 @@ impl FormatNodeFields<TsPredicateReturnType> for FormatNodeRule<TsPredicateRetur
         } = node.as_fields();
         formatted![
             formatter,
-            parameter_name.format(),
-            space_token(),
-            is_token.format(),
-            space_token(),
-            ty.format()
+            [
+                parameter_name.format(),
+                space_token(),
+                is_token.format(),
+                space_token(),
+                ty.format()
+            ]
         ]
     }
 }

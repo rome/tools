@@ -11,6 +11,6 @@ impl FormatNodeFields<JsxAttributeInitializerClause>
     ) -> FormatResult<FormatElement> {
         let JsxAttributeInitializerClauseFields { eq_token, value } = node.as_fields();
 
-        formatted![formatter, eq_token.format(), value.format()]
+        formatted![formatter, [eq_token.format(), value.format()]]
     }
 }

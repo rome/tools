@@ -6,6 +6,6 @@ impl FormatNodeFields<JsxName> for FormatNodeRule<JsxName> {
     fn format_fields(node: &JsxName, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsxNameFields { value_token } = node.as_fields();
 
-        formatted![formatter, value_token.format()]
+        formatted![formatter, [value_token.format()]]
     }
 }

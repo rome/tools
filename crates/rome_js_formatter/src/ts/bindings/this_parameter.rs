@@ -9,6 +9,6 @@ impl FormatNodeFields<TsThisParameter> for FormatNodeRule<TsThisParameter> {
             type_annotation,
         } = node.as_fields();
 
-        formatted![formatter, this_token.format(), type_annotation.format()]
+        formatted![formatter, [this_token.format(), type_annotation.format()]]
     }
 }

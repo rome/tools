@@ -6,10 +6,10 @@ use rome_js_syntax::JsxAnyAttributeValue;
 impl FormatRule<JsxAnyAttributeValue> for FormatJsxAnyAttributeValue {
     fn format(node: &JsxAnyAttributeValue, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsxAnyAttributeValue::JsxAnyTag(node) => formatted![formatter, node.format()],
-            JsxAnyAttributeValue::JsxString(node) => formatted![formatter, node.format()],
+            JsxAnyAttributeValue::JsxAnyTag(node) => formatted![formatter, [node.format()]],
+            JsxAnyAttributeValue::JsxString(node) => formatted![formatter, [node.format()]],
             JsxAnyAttributeValue::JsxExpressionAttributeValue(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

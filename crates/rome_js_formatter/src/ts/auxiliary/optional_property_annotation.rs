@@ -17,8 +17,7 @@ impl FormatNodeFields<TsOptionalPropertyAnnotation>
 
         formatted![
             formatter,
-            question_mark_token.format(),
-            type_annotation.format()
+            [question_mark_token.format(), type_annotation.format()]
         ]
     }
 }

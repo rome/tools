@@ -7,27 +7,27 @@ impl FormatRule<TsAnyTypeMember> for FormatTsAnyTypeMember {
     fn format(node: &TsAnyTypeMember, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
             TsAnyTypeMember::TsCallSignatureTypeMember(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTypeMember::TsPropertySignatureTypeMember(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTypeMember::TsConstructSignatureTypeMember(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTypeMember::TsMethodSignatureTypeMember(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTypeMember::TsGetterSignatureTypeMember(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTypeMember::TsSetterSignatureTypeMember(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTypeMember::TsIndexSignatureTypeMember(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
-            TsAnyTypeMember::JsUnknownMember(node) => formatted![formatter, node.format()],
+            TsAnyTypeMember::JsUnknownMember(node) => formatted![formatter, [node.format()]],
         }
     }
 }

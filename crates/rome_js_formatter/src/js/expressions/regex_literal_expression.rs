@@ -18,7 +18,7 @@ impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLitera
         let ends_with_slash = trimmed_raw_string.ends_with('/');
         // this means that we have a regex literal with no flags
         if ends_with_slash {
-            return formatted![formatter, value_token.format()];
+            return formatted![formatter, [value_token.format()]];
         }
         // SAFETY: a valid regex literal must have a end slash
         let end_slash_pos = trimmed_raw_string.rfind('/').unwrap();

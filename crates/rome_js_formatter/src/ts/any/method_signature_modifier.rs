@@ -10,16 +10,16 @@ impl FormatRule<TsAnyMethodSignatureModifier> for FormatTsAnyMethodSignatureModi
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyMethodSignatureModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyMethodSignatureModifier::JsStaticModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyMethodSignatureModifier::TsOverrideModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyMethodSignatureModifier::TsAbstractModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

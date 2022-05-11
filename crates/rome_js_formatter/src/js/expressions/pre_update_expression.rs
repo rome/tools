@@ -14,6 +14,6 @@ impl FormatNodeFields<JsPreUpdateExpression> for FormatNodeRule<JsPreUpdateExpre
             operand,
         } = node.as_fields();
 
-        formatted![formatter, operator_token.format(), operand.format(),]
+        formatted![formatter, [operator_token.format(), operand.format(),]]
     }
 }

@@ -13,6 +13,6 @@ impl FormatNodeFields<TsOptionalTupleTypeElement> for FormatNodeRule<TsOptionalT
         } = node.as_fields();
         let ty = ty.format();
         let question_mark = question_mark_token.format();
-        formatted![formatter, ty, question_mark]
+        formatted![formatter, [ty, question_mark]]
     }
 }

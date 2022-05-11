@@ -48,9 +48,9 @@ pub(crate) fn format_initializer_clause(
 ) -> FormatResult<FormatElement> {
     formatted![
         formatter,
-        initializer
+        [initializer
             .format()
-            .with_or_empty(|initializer| { formatted![formatter, space_token(), initializer] })
+            .with_or_empty(|initializer| { formatted![formatter, [space_token(), initializer]] })]
     ]
 }
 
@@ -60,10 +60,10 @@ pub(crate) fn format_interpreter(
 ) -> FormatResult<FormatElement> {
     formatted![
         formatter,
-        interpreter.format().with_or(
-            |interpreter| formatted![formatter, interpreter, empty_line()],
+        [interpreter.format().with_or(
+            |interpreter| formatted![formatter, [interpreter, empty_line()]],
             empty_element,
-        )
+        )]
     ]
 }
 
@@ -116,24 +116,18 @@ pub(crate) fn format_head_body_statement(
     if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
         Ok(hard_group_elements(formatted![
             formatter,
-            head,
-            space_token(),
-            body.format(),
+            [head, space_token(), body.format(),]
         ]?))
     } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
         // Force semicolon insertion if the body is empty
         formatted![
             formatter,
-            hard_group_elements(head),
-            body.format(),
-            token(";"),
+            [hard_group_elements(head), body.format(), token(";"),]
         ]
     } else {
         formatted![
             formatter,
-            hard_group_elements(head),
-            space_token(),
-            body.format(),
+            [hard_group_elements(head), space_token(), body.format(),]
         ]
     }
 }
@@ -432,7 +426,7 @@ impl TemplateElement {
                 } = template_element.as_fields();
 
                 let dollar_curly_token = dollar_curly_token?;
-                let expression = formatted![formatter, expression.format()]?;
+                let expression = formatted![formatter, [expression.format()]]?;
                 let r_curly_token = r_curly_token?;
 
                 (dollar_curly_token, expression, r_curly_token)
@@ -445,7 +439,7 @@ impl TemplateElement {
                 } = template_element.as_fields();
 
                 let dollar_curly_token = dollar_curly_token?;
-                let ty = formatted![formatter, ty.format()]?;
+                let ty = formatted![formatter, [ty.format()]]?;
                 let r_curly_token = r_curly_token?;
 
                 (dollar_curly_token, ty, r_curly_token)
@@ -455,9 +449,7 @@ impl TemplateElement {
         if should_hard_group {
             Ok(hard_group_elements(formatted![
                 formatter,
-                dollar_curly_token.format(),
-                middle,
-                r_curly_token.format()
+                [dollar_curly_token.format(), middle, r_curly_token.format()]
             ]?))
         } else {
             formatter.format_delimited_soft_block_indent(
@@ -605,12 +597,14 @@ pub(crate) fn format_with_semicolon(
 
     formatted![
         formatter,
-        content,
-        semicolon.format().or_format(if is_unknown {
-            empty_element
-        } else {
-            || token(";")
-        })
+        [
+            content,
+            semicolon.format().or_format(if is_unknown {
+                empty_element
+            } else {
+                || token(";")
+            })
+        ]
     ]
 }
 

@@ -6,6 +6,6 @@ impl FormatNodeFields<TsStringType> for FormatNodeRule<TsStringType> {
     fn format_fields(node: &TsStringType, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsStringTypeFields { string_token } = node.as_fields();
 
-        formatted![formatter, string_token.format()]
+        formatted![formatter, [string_token.format()]]
     }
 }

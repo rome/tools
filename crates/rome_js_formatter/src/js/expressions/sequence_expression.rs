@@ -27,10 +27,12 @@ impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpress
 
         let mut formatted = vec![formatted![
             formatter,
-            left.format(),
-            comma_token.format(),
-            space_token(),
-            right.format(),
+            [
+                left.format(),
+                comma_token.format(),
+                space_token(),
+                right.format(),
+            ]
         ]?];
 
         // Traverse upwards again and concatenate the sequence expression until we find the first non-sequence expression
@@ -44,9 +46,7 @@ impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpress
 
                 formatted.push(formatted![
                     formatter,
-                    comma_token.format(),
-                    space_token(),
-                    right.format()
+                    [comma_token.format(), space_token(), right.format()]
                 ]?);
 
                 current = parent_sequence;

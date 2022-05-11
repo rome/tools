@@ -16,10 +16,12 @@ impl FormatNodeFields<JsxSpreadAttribute> for FormatNodeRule<JsxSpreadAttribute>
 
         formatted![
             formatter,
-            l_curly_token.format(),
-            dotdotdot_token.format(),
-            argument.format(),
-            r_curly_token.format(),
+            [
+                l_curly_token.format(),
+                dotdotdot_token.format(),
+                argument.format(),
+                r_curly_token.format(),
+            ]
         ]
     }
 }

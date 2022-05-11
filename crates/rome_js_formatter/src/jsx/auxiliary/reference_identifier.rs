@@ -7,6 +7,6 @@ impl FormatNodeFields<JsxReferenceIdentifier> for FormatNodeRule<JsxReferenceIde
         node: &JsxReferenceIdentifier,
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
-        formatted![formatter, node.value_token().format()]
+        formatted![formatter, [node.value_token().format()]]
     }
 }

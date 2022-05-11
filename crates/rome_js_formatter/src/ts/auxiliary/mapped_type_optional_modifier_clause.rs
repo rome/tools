@@ -17,8 +17,7 @@ impl FormatNodeFields<TsMappedTypeOptionalModifierClause>
 
         formatted![
             formatter,
-            operator_token.format(),
-            question_mark_token.format()
+            [operator_token.format(), question_mark_token.format()]
         ]
     }
 }

@@ -9,6 +9,6 @@ impl FormatNodeFields<TsIdentifierBinding> for FormatNodeRule<TsIdentifierBindin
     ) -> FormatResult<FormatElement> {
         let TsIdentifierBindingFields { name_token } = node.as_fields();
 
-        formatted![formatter, name_token.format()]
+        formatted![formatter, [name_token.format()]]
     }
 }

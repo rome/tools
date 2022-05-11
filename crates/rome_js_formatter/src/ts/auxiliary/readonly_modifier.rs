@@ -9,6 +9,6 @@ impl FormatNodeFields<TsReadonlyModifier> for FormatNodeRule<TsReadonlyModifier>
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsReadonlyModifierFields { modifier_token } = node.as_fields();
-        formatted![formatter, modifier_token.format()]
+        formatted![formatter, [modifier_token.format()]]
     }
 }

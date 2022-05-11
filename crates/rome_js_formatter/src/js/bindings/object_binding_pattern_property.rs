@@ -20,12 +20,14 @@ impl FormatNodeFields<JsObjectBindingPatternProperty>
 
         formatted![
             formatter,
-            member.format(),
-            colon_token.format(),
-            space_token(),
-            pattern.format(),
-            init.format()
-                .with_or_empty(|node| formatted![formatter, space_token(), node]),
+            [
+                member.format(),
+                colon_token.format(),
+                space_token(),
+                pattern.format(),
+                init.format()
+                    .with_or_empty(|node| formatted![formatter, [space_token(), node]]),
+            ]
         ]
     }
 }

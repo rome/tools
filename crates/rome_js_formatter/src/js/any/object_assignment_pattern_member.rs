@@ -11,15 +11,15 @@ impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignm
         match node {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
                 node,
-            ) => formatted![formatter, node.format()],
+            ) => formatted![formatter, [node.format()]],
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

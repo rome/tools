@@ -14,6 +14,6 @@ impl FormatNodeFields<JsPostUpdateExpression> for FormatNodeRule<JsPostUpdateExp
             operator_token,
         } = node.as_fields();
 
-        formatted![formatter, operand.format(), operator_token.format(),]
+        formatted![formatter, [operand.format(), operator_token.format(),]]
     }
 }

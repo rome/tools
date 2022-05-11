@@ -10,13 +10,13 @@ impl FormatRule<TsAnyPropertyParameterModifier> for FormatTsAnyPropertyParameter
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyPropertyParameterModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertyParameterModifier::TsReadonlyModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertyParameterModifier::TsOverrideModifier(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

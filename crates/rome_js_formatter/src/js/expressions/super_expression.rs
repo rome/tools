@@ -11,6 +11,6 @@ impl FormatNodeFields<JsSuperExpression> for FormatNodeRule<JsSuperExpression> {
     ) -> FormatResult<FormatElement> {
         let JsSuperExpressionFields { super_token } = node.as_fields();
 
-        formatted![formatter, super_token.format()]
+        formatted![formatter, [super_token.format()]]
     }
 }

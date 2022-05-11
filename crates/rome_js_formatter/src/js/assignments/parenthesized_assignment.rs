@@ -16,9 +16,11 @@ impl FormatNodeFields<JsParenthesizedAssignment> for FormatNodeRule<JsParenthesi
 
         formatted![
             formatter,
-            l_paren_token.format(),
-            assignment.format(),
-            r_paren_token.format(),
+            [
+                l_paren_token.format(),
+                assignment.format(),
+                r_paren_token.format(),
+            ]
         ]
     }
 }

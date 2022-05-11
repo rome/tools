@@ -6,9 +6,9 @@ use rome_js_syntax::JsAnyModuleItem;
 impl FormatRule<JsAnyModuleItem> for FormatJsAnyModuleItem {
     fn format(node: &JsAnyModuleItem, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyModuleItem::JsAnyStatement(node) => formatted![formatter, node.format()],
-            JsAnyModuleItem::JsExport(node) => formatted![formatter, node.format()],
-            JsAnyModuleItem::JsImport(node) => formatted![formatter, node.format()],
+            JsAnyModuleItem::JsAnyStatement(node) => formatted![formatter, [node.format()]],
+            JsAnyModuleItem::JsExport(node) => formatted![formatter, [node.format()]],
+            JsAnyModuleItem::JsImport(node) => formatted![formatter, [node.format()]],
         }
     }
 }

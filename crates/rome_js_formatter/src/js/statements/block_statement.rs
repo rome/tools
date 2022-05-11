@@ -24,9 +24,11 @@ impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
         if is_non_collapsable_empty_block(node) {
             formatted![
                 formatter,
-                l_curly_token.format(),
-                hard_line_break(),
-                r_curly_token.format()
+                [
+                    l_curly_token.format(),
+                    hard_line_break(),
+                    r_curly_token.format()
+                ]
             ]
         } else {
             formatter.format_delimited_block_indent(&l_curly_token?, stmts, &r_curly_token?)

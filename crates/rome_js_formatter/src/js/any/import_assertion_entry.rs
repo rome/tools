@@ -10,10 +10,10 @@ impl FormatRule<JsAnyImportAssertionEntry> for FormatJsAnyImportAssertionEntry {
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyImportAssertionEntry::JsImportAssertionEntry(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

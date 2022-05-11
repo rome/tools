@@ -12,7 +12,7 @@ impl FormatNodeFields<TsObjectType> for FormatNodeRule<TsObjectType> {
 
         formatter.format_delimited_soft_block_spaces(
             &l_curly_token?,
-            formatted![formatter, members.format()]?,
+            formatted![formatter, [members.format()]]?,
             &r_curly_token?,
         )
     }

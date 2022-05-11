@@ -30,12 +30,12 @@ impl FormatNodeFields<JsCaseClause> for FormatNodeRule<JsCaseClause> {
             // block to push them into
             hard_line_break()
         } else if is_first_child_block_stmt {
-            formatted![formatter, space_token(), cons]?
+            formatted![formatter, [space_token(), cons]]?
         } else {
             // no line break needed after because it is added by the indent in the switch statement
-            indent(formatted![formatter, hard_line_break(), cons]?)
+            indent(formatted![formatter, [hard_line_break(), cons]]?)
         };
 
-        formatted![formatter, case_word, space_token(), test, colon, cons]
+        formatted![formatter, [case_word, space_token(), test, colon, cons]]
     }
 }

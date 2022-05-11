@@ -12,15 +12,15 @@ impl FormatNodeFields<TsTypeParameter> for FormatNodeRule<TsTypeParameter> {
 
         formatted![
             formatter,
-            name.format(),
-            constraint.format().with_or_empty(|constraint| formatted![
-                formatter,
-                space_token(),
+            [
+                name.format(),
                 constraint
-            ]),
-            default
-                .format()
-                .with_or_empty(|default| formatted![formatter, space_token(), default])
+                    .format()
+                    .with_or_empty(|constraint| formatted![formatter, [space_token(), constraint]]),
+                default
+                    .format()
+                    .with_or_empty(|default| formatted![formatter, [space_token(), default]])
+            ]
         ]
     }
 }

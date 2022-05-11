@@ -15,9 +15,7 @@ impl FormatNodeFields<JsxNamespaceName> for FormatNodeRule<JsxNamespaceName> {
 
         formatted![
             formatter,
-            namespace.format(),
-            colon_token.format(),
-            name.format()
+            [namespace.format(), colon_token.format(), name.format()]
         ]
     }
 }

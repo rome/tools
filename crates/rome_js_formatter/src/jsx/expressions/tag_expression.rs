@@ -7,6 +7,6 @@ impl FormatNodeFields<JsxTagExpression> for FormatNodeRule<JsxTagExpression> {
         node: &JsxTagExpression,
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
-        formatted![formatter, node.tag().format()]
+        formatted![formatter, [node.tag().format()]]
     }
 }

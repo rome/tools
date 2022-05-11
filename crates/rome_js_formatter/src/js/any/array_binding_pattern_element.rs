@@ -10,16 +10,16 @@ impl FormatRule<JsAnyArrayBindingPatternElement> for FormatJsAnyArrayBindingPatt
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrayBindingPatternElement::JsArrayHole(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyArrayBindingPatternElement::JsAnyBindingPattern(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

@@ -11,6 +11,6 @@ impl FormatNodeFields<JsPrivateName> for FormatNodeRule<JsPrivateName> {
             value_token,
         } = node.as_fields();
 
-        formatted![formatter, hash_token.format(), value_token.format()]
+        formatted![formatter, [hash_token.format(), value_token.format()]]
     }
 }

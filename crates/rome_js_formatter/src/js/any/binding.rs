@@ -6,8 +6,8 @@ use rome_js_syntax::JsAnyBinding;
 impl FormatRule<JsAnyBinding> for FormatJsAnyBinding {
     fn format(node: &JsAnyBinding, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyBinding::JsIdentifierBinding(node) => formatted![formatter, node.format()],
-            JsAnyBinding::JsUnknownBinding(node) => formatted![formatter, node.format()],
+            JsAnyBinding::JsIdentifierBinding(node) => formatted![formatter, [node.format()]],
+            JsAnyBinding::JsUnknownBinding(node) => formatted![formatter, [node.format()]],
         }
     }
 }

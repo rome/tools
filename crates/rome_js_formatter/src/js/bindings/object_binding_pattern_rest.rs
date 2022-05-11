@@ -14,6 +14,6 @@ impl FormatNodeFields<JsObjectBindingPatternRest> for FormatNodeRule<JsObjectBin
             binding,
         } = node.as_fields();
 
-        formatted![formatter, dotdotdot_token.format(), binding.format(),]
+        formatted![formatter, [dotdotdot_token.format(), binding.format(),]]
     }
 }

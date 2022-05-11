@@ -17,6 +17,6 @@ impl FormatNodeFields<JsExportAsClause> for FormatNodeRule<JsExportAsClause> {
         let as_token = as_token.format();
         let exported_name = exported_name.format();
 
-        formatted![formatter, as_token, space_token(), exported_name]
+        formatted![formatter, [as_token, space_token(), exported_name]]
     }
 }

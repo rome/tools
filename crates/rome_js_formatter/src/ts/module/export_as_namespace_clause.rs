@@ -20,11 +20,13 @@ impl FormatNodeFields<TsExportAsNamespaceClause> for FormatNodeRule<TsExportAsNa
             formatter,
             formatted![
                 formatter,
-                as_token.format(),
-                space_token(),
-                namespace_token.format(),
-                space_token(),
-                name.format(),
+                [
+                    as_token.format(),
+                    space_token(),
+                    namespace_token.format(),
+                    space_token(),
+                    name.format(),
+                ]
             ]?,
             semicolon_token,
         )

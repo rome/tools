@@ -19,18 +19,19 @@ impl FormatNodeFields<TsIndexSignatureTypeMember> for FormatNodeRule<TsIndexSign
 
         formatted![
             formatter,
-            readonly_token
-                .format()
-                .with_or_empty(|readonly_token| formatted![
-                    formatter,
-                    readonly_token,
-                    space_token()
-                ]),
-            l_brack_token.format(),
-            parameter.format(),
-            r_brack_token.format(),
-            type_annotation.format(),
-            format_type_member_separator(separator_token, formatter),
+            [
+                readonly_token
+                    .format()
+                    .with_or_empty(|readonly_token| formatted![
+                        formatter,
+                        [readonly_token, space_token()]
+                    ]),
+                l_brack_token.format(),
+                parameter.format(),
+                r_brack_token.format(),
+                type_annotation.format(),
+                format_type_member_separator(separator_token, formatter),
+            ]
         ]
     }
 }

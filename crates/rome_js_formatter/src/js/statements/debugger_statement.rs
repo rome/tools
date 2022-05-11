@@ -17,7 +17,7 @@ impl FormatNodeFields<JsDebuggerStatement> for FormatNodeRule<JsDebuggerStatemen
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, debugger_token.format()]?,
+            formatted![formatter, [debugger_token.format()]]?,
             semicolon_token,
         )
     }

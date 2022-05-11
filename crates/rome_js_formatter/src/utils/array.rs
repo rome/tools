@@ -42,10 +42,10 @@ where
                 // In forced separator mode or if this element is not the last in the list, print the separator
                 formatted![
                     formatter,
-                    &element
+                    [&element
                         .trailing_separator()
                         .format()
-                        .or_format(|| token(","))
+                        .or_format(|| token(","))]
                 ]?
             } else if let Some(separator) = element.trailing_separator()? {
                 formatter.format_replaced(separator, if_group_breaks(token(",")))
@@ -55,7 +55,7 @@ where
 
             Ok((
                 node.syntax().clone(),
-                formatted![formatter, elem, separator]?,
+                formatted![formatter, [elem, separator]]?,
             ))
         })
         .collect::<FormatResult<Vec<_>>>()?;

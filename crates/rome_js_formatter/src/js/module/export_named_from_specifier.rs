@@ -17,17 +17,15 @@ impl FormatNodeFields<JsExportNamedFromSpecifier> for FormatNodeRule<JsExportNam
 
         formatted![
             formatter,
-            type_token.format().with_or_empty(|type_token| formatted![
-                formatter,
-                type_token,
-                space_token()
-            ]),
-            source_name.format(),
-            export_as.format().with_or_empty(|export_as| formatted![
-                formatter,
-                space_token(),
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|type_token| formatted![formatter, [type_token, space_token()]]),
+                source_name.format(),
                 export_as
-            ])
+                    .format()
+                    .with_or_empty(|export_as| formatted![formatter, [space_token(), export_as]])
+            ]
         ]
     }
 }

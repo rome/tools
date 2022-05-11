@@ -18,10 +18,12 @@ impl FormatNodeFields<JsShorthandNamedImportSpecifier>
 
         formatted![
             formatter,
-            type_token
-                .format()
-                .with_or_empty(|token| formatted![formatter, token, space_token()]),
-            local_name.format()
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                local_name.format()
+            ]
         ]
     }
 }

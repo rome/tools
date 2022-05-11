@@ -20,28 +20,30 @@ impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
 
         Ok(hard_group_elements(formatted![
             formatter,
-            switch_token.format(),
-            space_token(),
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                formatted![formatter, discriminant.format()]?,
-                &r_paren_token?,
-            )?,
-            space_token(),
-            formatter.format_delimited_block_indent(
-                &l_curly_token?,
-                if cases.is_empty() {
-                    hard_line_break()
-                } else {
-                    join_elements_hard_line(
-                        cases
-                            .iter()
-                            .map(|node| node.syntax().clone())
-                            .zip(formatter.format_all(cases.iter().formatted())?),
-                    )
-                },
-                &r_curly_token?
-            )?
+            [
+                switch_token.format(),
+                space_token(),
+                formatter.format_delimited_soft_block_indent(
+                    &l_paren_token?,
+                    formatted![formatter, [discriminant.format()]]?,
+                    &r_paren_token?,
+                )?,
+                space_token(),
+                formatter.format_delimited_block_indent(
+                    &l_curly_token?,
+                    if cases.is_empty() {
+                        hard_line_break()
+                    } else {
+                        join_elements_hard_line(
+                            cases
+                                .iter()
+                                .map(|node| node.syntax().clone())
+                                .zip(formatter.format_all(cases.iter().formatted())?),
+                        )
+                    },
+                    &r_curly_token?
+                )?
+            ]
         ]?))
     }
 }

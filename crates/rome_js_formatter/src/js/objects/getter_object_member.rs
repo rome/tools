@@ -20,14 +20,16 @@ impl FormatNodeFields<JsGetterObjectMember> for FormatNodeRule<JsGetterObjectMem
 
         Ok(hard_group_elements(formatted![
             formatter,
-            get_token.format(),
-            space_token(),
-            name.format(),
-            l_paren_token.format(),
-            r_paren_token.format(),
-            return_type.format(),
-            space_token(),
-            body.format()
+            [
+                get_token.format(),
+                space_token(),
+                name.format(),
+                l_paren_token.format(),
+                r_paren_token.format(),
+                return_type.format(),
+                space_token(),
+                body.format()
+            ]
         ]?))
     }
 }

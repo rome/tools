@@ -6,6 +6,6 @@ impl FormatNodeFields<TsSymbolType> for FormatNodeRule<TsSymbolType> {
     fn format_fields(node: &TsSymbolType, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsSymbolTypeFields { symbol_token } = node.as_fields();
 
-        formatted![formatter, symbol_token.format()]
+        formatted![formatter, [symbol_token.format()]]
     }
 }

@@ -10,10 +10,10 @@ impl FormatRule<JsAnyForInOrOfInitializer> for FormatJsAnyForInOrOfInitializer {
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyForInOrOfInitializer::JsForVariableDeclaration(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

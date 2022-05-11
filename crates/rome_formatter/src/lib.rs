@@ -398,9 +398,11 @@ impl From<&SyntaxError> for FormatError {
 /// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 ///         formatted![
 ///             formatter,
-///             hard_line_break(),
-///             FormatElement::from(Token::new_dynamic(self.0.clone(), TextSize::from(0))),
-///             hard_line_break(),
+///             [
+///                 hard_line_break(),
+///                 FormatElement::from(Token::new_dynamic(self.0.clone(), TextSize::from(0))),
+///                 hard_line_break(),
+///             ]
 ///         ]
 ///     }
 /// }
@@ -649,7 +651,7 @@ pub fn format_node<L: Language, N: FormatWithRule<Item = SyntaxNode<L>>>(
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {
         let formatter = Formatter::new(options);
-        let element = formatted![&formatter, root]?;
+        let element = formatted![&formatter, [root]]?;
 
         formatter.assert_formatted_all_tokens(root.item());
 

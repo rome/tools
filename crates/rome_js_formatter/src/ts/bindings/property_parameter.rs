@@ -14,9 +14,7 @@ impl FormatNodeFields<TsPropertyParameter> for FormatNodeRule<TsPropertyParamete
 
         formatted![
             formatter,
-            modifiers.format(),
-            space_token(),
-            formal_parameter.format()
+            [modifiers.format(), space_token(), formal_parameter.format()]
         ]
     }
 }

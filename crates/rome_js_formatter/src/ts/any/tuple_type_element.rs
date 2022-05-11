@@ -7,14 +7,14 @@ impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
     fn format(node: &TsAnyTupleTypeElement, formatter: &Formatter) -> FormatResult<FormatElement> {
         match node {
             TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
-            TsAnyTupleTypeElement::TsType(node) => formatted![formatter, node.format()],
+            TsAnyTupleTypeElement::TsType(node) => formatted![formatter, [node.format()]],
             TsAnyTupleTypeElement::TsRestTupleTypeElement(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyTupleTypeElement::TsOptionalTupleTypeElement(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

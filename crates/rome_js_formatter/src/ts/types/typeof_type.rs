@@ -11,6 +11,6 @@ impl FormatNodeFields<TsTypeofType> for FormatNodeRule<TsTypeofType> {
 
         let r#typeof = typeof_token.format();
         let expression_name = expression_name.format();
-        formatted![formatter, r#typeof, space_token(), expression_name]
+        formatted![formatter, [r#typeof, space_token(), expression_name]]
     }
 }

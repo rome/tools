@@ -14,10 +14,12 @@ impl FormatNodeFields<JsExtendsClause> for FormatNodeRule<JsExtendsClause> {
 
         Ok(formatted![
             formatter,
-            extends_token.format(),
-            space_token(),
-            super_class.format(),
-            type_arguments.format(),
+            [
+                extends_token.format(),
+                space_token(),
+                super_class.format(),
+                type_arguments.format(),
+            ]
         ]?)
     }
 }

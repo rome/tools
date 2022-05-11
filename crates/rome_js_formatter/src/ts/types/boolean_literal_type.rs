@@ -8,6 +8,6 @@ impl FormatNodeFields<TsBooleanLiteralType> for FormatNodeRule<TsBooleanLiteralT
         formatter: &Formatter,
     ) -> FormatResult<FormatElement> {
         let TsBooleanLiteralTypeFields { literal } = node.as_fields();
-        formatted![formatter, literal.format()]
+        formatted![formatter, [literal.format()]]
     }
 }

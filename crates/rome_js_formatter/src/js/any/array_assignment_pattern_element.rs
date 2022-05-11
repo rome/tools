@@ -10,16 +10,16 @@ impl FormatRule<JsAnyArrayAssignmentPatternElement> for FormatJsAnyArrayAssignme
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             JsAnyArrayAssignmentPatternElement::JsArrayHole(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

@@ -29,9 +29,7 @@ impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType>
 
         Ok(group_elements(indent(formatted![
             formatter,
-            soft_line_break(),
-            leading_separator_token,
-            types.format(),
+            [soft_line_break(), leading_separator_token, types.format(),]
         ]?)))
     }
 }

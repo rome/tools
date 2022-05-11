@@ -15,9 +15,11 @@ impl FormatNodeFields<JsxClosingFragment> for FormatNodeRule<JsxClosingFragment>
 
         formatted![
             formatter,
-            l_angle_token.format(),
-            slash_token.format(),
-            r_angle_token.format()
+            [
+                l_angle_token.format(),
+                slash_token.format(),
+                r_angle_token.format()
+            ]
         ]
     }
 }

@@ -22,12 +22,14 @@ impl FormatNodeFields<TsConstructSignatureTypeMember>
 
         formatted![
             formatter,
-            new_token.format(),
-            space_token(),
-            type_parameters.format(),
-            parameters.format(),
-            type_annotation.format(),
-            separator_token,
+            [
+                new_token.format(),
+                space_token(),
+                type_parameters.format(),
+                parameters.format(),
+                type_annotation.format(),
+                separator_token,
+            ]
         ]
     }
 }

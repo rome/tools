@@ -15,6 +15,6 @@ impl FormatNodeFields<TsNonNullAssertionExpression>
             excl_token,
         } = node.as_fields();
 
-        formatted![formatter, expression.format(), excl_token.format()]
+        formatted![formatter, [expression.format(), excl_token.format()]]
     }
 }

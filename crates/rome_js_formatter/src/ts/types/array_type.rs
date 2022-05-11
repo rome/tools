@@ -11,9 +11,11 @@ impl FormatNodeFields<TsArrayType> for FormatNodeRule<TsArrayType> {
         } = node.as_fields();
         formatted![
             formatter,
-            element_type.format(),
-            l_brack_token.format(),
-            r_brack_token.format(),
+            [
+                element_type.format(),
+                l_brack_token.format(),
+                r_brack_token.format(),
+            ]
         ]
     }
 }

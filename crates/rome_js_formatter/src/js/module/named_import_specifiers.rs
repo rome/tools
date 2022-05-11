@@ -17,7 +17,7 @@ impl FormatNodeFields<JsNamedImportSpecifiers> for FormatNodeRule<JsNamedImportS
 
         formatter.format_delimited_soft_block_spaces(
             &l_curly_token?,
-            formatted![formatter, specifiers.format()]?,
+            formatted![formatter, [specifiers.format()]]?,
             &r_curly_token?,
         )
     }

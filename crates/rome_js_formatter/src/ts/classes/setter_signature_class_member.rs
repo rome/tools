@@ -30,14 +30,16 @@ impl FormatNodeFields<TsSetterSignatureClassMember>
             formatter,
             formatted![
                 formatter,
-                modifiers.format(),
-                space_token(),
-                set_token,
-                space_token(),
-                name,
-                l_paren_token,
-                parameters,
-                r_paren_token,
+                [
+                    modifiers.format(),
+                    space_token(),
+                    set_token,
+                    space_token(),
+                    name,
+                    l_paren_token,
+                    parameters,
+                    r_paren_token,
+                ]
             ]?,
             semicolon_token,
         )?))

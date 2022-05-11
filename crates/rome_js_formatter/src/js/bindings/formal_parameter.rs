@@ -21,10 +21,12 @@ impl FormatNodeFields<JsFormalParameter> for FormatNodeRule<JsFormalParameter> {
 
         formatted![
             formatter,
-            binding.format(),
-            question_mark_token.format(),
-            type_annotation.format(),
-            initializer
+            [
+                binding.format(),
+                question_mark_token.format(),
+                type_annotation.format(),
+                initializer
+            ]
         ]
     }
 }

@@ -22,40 +22,43 @@ impl FormatNodeFields<JsForStatement> for FormatNodeRule<JsForStatement> {
         let inner = if initializer.is_some() || test.is_some() || update.is_some() {
             formatted![
                 formatter,
-                initializer.format(),
-                first_semi_token.format(),
-                soft_line_break_or_space(),
-                test.format(),
-                second_semi_token.format(),
-                soft_line_break_or_space(),
-                update.format(),
+                [
+                    initializer.format(),
+                    first_semi_token.format(),
+                    soft_line_break_or_space(),
+                    test.format(),
+                    second_semi_token.format(),
+                    soft_line_break_or_space(),
+                    update.format(),
+                ]
             ]?
         } else {
             formatted![
                 formatter,
-                first_semi_token.format(),
-                second_semi_token.format(),
+                [first_semi_token.format(), second_semi_token.format(),]
             ]?
         };
 
         // Force semicolon insertion for empty bodies
         let body = body?;
         let body = if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
-            formatted![formatter, body.format(), token(";")]?
+            formatted![formatter, [body.format(), token(";")]]?
         } else {
-            formatted![formatter, space_token(), body.format()]?
+            formatted![formatter, [space_token(), body.format()]]?
         };
 
         Ok(group_elements(formatted![
             formatter,
-            for_token.format(),
-            space_token(),
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                inner,
-                &r_paren_token?,
-            )?,
-            body
+            [
+                for_token.format(),
+                space_token(),
+                formatter.format_delimited_soft_block_indent(
+                    &l_paren_token?,
+                    inner,
+                    &r_paren_token?,
+                )?,
+                body
+            ]
         ]?))
     }
 }

@@ -15,9 +15,7 @@ impl FormatNodeFields<TsExportDeclareClause> for FormatNodeRule<TsExportDeclareC
 
         formatted![
             formatter,
-            declare_token.format(),
-            space_token(),
-            declaration.format(),
+            [declare_token.format(), space_token(), declaration.format(),]
         ]
     }
 }

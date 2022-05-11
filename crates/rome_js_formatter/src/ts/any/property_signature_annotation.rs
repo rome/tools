@@ -10,10 +10,10 @@ impl FormatRule<TsAnyPropertySignatureAnnotation> for FormatTsAnyPropertySignatu
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
             TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node) => {
-                formatted![formatter, node.format()]
+                formatted![formatter, [node.format()]]
             }
         }
     }

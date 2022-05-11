@@ -11,6 +11,6 @@ impl FormatNodeFields<TsTypeAnnotation> for FormatNodeRule<TsTypeAnnotation> {
         let colon = colon_token.format();
         let ty = ty.format();
 
-        formatted![formatter, colon, space_token(), ty]
+        formatted![formatter, [colon, space_token(), ty]]
     }
 }
