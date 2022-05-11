@@ -188,21 +188,23 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
 
         strip_placeholders(&mut content);
 
+        let root_path = Path::new(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/specs/prettier/"
+        ));
+
+        let input_file = input_file.strip_prefix(root_path).unwrap_or_else(|_| {
+            panic!(
+                "failed to strip prefix {:?} from {:?}",
+                root_path, input_file
+            )
+        });
         if formatted != content {
-            let root_path = Path::new(concat!(
-                env!("CARGO_MANIFEST_DIR"),
-                "/tests/specs/prettier/"
-            ));
-
-            let input_file = input_file.strip_prefix(root_path).unwrap_or_else(|_| {
-                panic!(
-                    "failed to strip prefix {:?} from {:?}",
-                    root_path, input_file
-                )
-            });
-
             let input_file = input_file.to_str().unwrap();
-            DiffReport::get().report(input_file, formatted, content);
+            DiffReport::get().report_diff(input_file, formatted, content);
+        } else {
+            let input_file = input_file.to_str().unwrap();
+            DiffReport::get().report_match(input_file, formatted, content);
         }
     }
 }
@@ -254,8 +256,22 @@ fn strip_placeholders(input_code: &mut String) -> (Option<usize>, Option<usize>,
     (cursor_index, range_start_index, range_end_index)
 }
 
+/// This enum type is used to represent if our formatting result is expected
+/// [MatchCategory::Diff] means that our formatting result have some thing different from the expected
+/// [MatchCategory::Match] means that our formatting result is the same as the expected
+enum MatchCategory {
+    Diff,
+    Match,
+}
+
+struct DiffReportItem {
+    file_name: &'static str,
+    rome_formatted_result: String,
+    prettier_formatted_result: String,
+    match_category: MatchCategory,
+}
 struct DiffReport {
-    state: Mutex<Vec<(&'static str, String, String)>>,
+    state: Mutex<Vec<DiffReportItem>>,
 }
 
 impl DiffReport {
@@ -288,10 +304,33 @@ impl DiffReport {
         &REPORTER
     }
 
-    fn report(&self, file_name: &'static str, rome: String, prettier: String) {
-        self.state.lock().push((file_name, rome, prettier));
+    fn report_diff(
+        &self,
+        file_name: &'static str,
+        rome_formatted_result: String,
+        prettier_formatted_result: String,
+    ) {
+        self.state.lock().push(DiffReportItem {
+            file_name,
+            rome_formatted_result,
+            prettier_formatted_result,
+            match_category: MatchCategory::Diff,
+        });
     }
 
+    fn report_match(
+        &self,
+        file_name: &'static str,
+        rome_formatted_result: String,
+        prettier_formatted_result: String,
+    ) {
+        self.state.lock().push(DiffReportItem {
+            file_name,
+            rome_formatted_result,
+            prettier_formatted_result,
+            match_category: MatchCategory::Match,
+        });
+    }
     fn print(&self) {
         if let Some(report) = rome_rowan::check_live() {
             panic!("\n{report}")
@@ -308,7 +347,7 @@ impl DiffReport {
 
         match env::var("REPORT_METRIC") {
             Ok(value) if value == "1" => {
-                self.report_metric();
+                // self.report_metric();
             }
             _ => {}
         }
@@ -317,12 +356,24 @@ impl DiffReport {
     fn report_prettier(&self) {
         let mut report = String::new();
         let mut state = self.state.lock();
-        state.sort_by_key(|(name, ..)| *name);
-        for (file_name, rome, prettier) in state.iter() {
+        state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
+        for DiffReportItem {
+            file_name,
+            rome_formatted_result,
+            prettier_formatted_result,
+            ..
+        } in state
+            .iter()
+            .filter(|item| matches!(item.match_category, MatchCategory::Diff))
+        {
             writeln!(report, "# {}", file_name).unwrap();
             writeln!(report, "```diff").unwrap();
 
-            for (tag, line) in diff_lines(Algorithm::default(), prettier, rome) {
+            for (tag, line) in diff_lines(
+                Algorithm::default(),
+                prettier_formatted_result,
+                rome_formatted_result,
+            ) {
                 let line = line.strip_suffix('\n').unwrap_or(line);
                 writeln!(report, "{}{}", tag, line).unwrap();
             }
@@ -332,58 +383,58 @@ impl DiffReport {
         write("report.md", report).unwrap();
     }
 
-    fn report_metric(&self) {
-        let mut report = String::new();
-        let mut state = self.state.lock();
-        state.sort_by_key(|(name, ..)| *name);
-        let mut sum_of_per_compatibility_file = 0_f64;
-        let mut total_line = 0;
-        let mut total_matched_line = 0;
-        for (file_name, rome, prettier) in state.iter() {
-            writeln!(report, "# {}", file_name).unwrap();
-            let rome_lines = rome.lines().count();
-            let prettier_lines = prettier.lines().count();
+    // fn report_metric(&self) {
+    //     let mut report = String::new();
+    //     let mut state = self.state.lock();
+    //     state.sort_by_key(|(name, ..)| *name);
+    //     let mut sum_of_per_compatibility_file = 0_f64;
+    //     let mut total_line = 0;
+    //     let mut total_matched_line = 0;
+    //     for (file_name, rome, prettier) in state.iter() {
+    //         writeln!(report, "# {}", file_name).unwrap();
+    //         let rome_lines = rome.lines().count();
+    //         let prettier_lines = prettier.lines().count();
 
-            let matched_lines = diff_lines(Algorithm::default(), prettier, rome)
-                .iter()
-                .filter(|(tag, _)| matches!(tag, ChangeTag::Equal))
-                .fold(0, |acc, (_, insert_lines)| {
-                    acc + insert_lines.lines().count()
-                });
-            let compatibility_per_file =
-                matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
+    //         let matched_lines = diff_lines(Algorithm::default(), prettier, rome)
+    //             .iter()
+    //             .filter(|(tag, _)| matches!(tag, ChangeTag::Equal))
+    //             .fold(0, |acc, (_, insert_lines)| {
+    //                 acc + insert_lines.lines().count()
+    //             });
+    //         let compatibility_per_file =
+    //             matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
 
-            sum_of_per_compatibility_file += compatibility_per_file;
-            total_line += rome_lines.max(prettier_lines);
-            total_matched_line += matched_lines;
-            writeln!(report, "```bash",).unwrap();
-            writeln!(
-                report,
-                "total_line_of_file: {}",
-                rome_lines.max(prettier_lines)
-            )
-            .unwrap();
-            writeln!(
-                report,
-                "compatibility_per_file: {:.2}%",
-                compatibility_per_file * 100_f64
-            )
-            .unwrap();
-            writeln!(report, "```",).unwrap();
-        }
-        let file_count = state.iter().count();
-        writeln!(
-            report,
-            "file_based_compatibility: {:.2}%",
-            (sum_of_per_compatibility_file / file_count as f64) * 100_f64
-        )
-        .unwrap();
-        writeln!(
-            report,
-            "line_based_compatibility: {:.2}%",
-            (total_matched_line as f64 / total_line as f64) * 100_f64
-        )
-        .unwrap();
-        write("report_metric.md", report).unwrap();
-    }
+    //         sum_of_per_compatibility_file += compatibility_per_file;
+    //         total_line += rome_lines.max(prettier_lines);
+    //         total_matched_line += matched_lines;
+    //         writeln!(report, "```bash",).unwrap();
+    //         writeln!(
+    //             report,
+    //             "total_line_of_file: {}",
+    //             rome_lines.max(prettier_lines)
+    //         )
+    //         .unwrap();
+    //         writeln!(
+    //             report,
+    //             "compatibility_per_file: {:.2}%",
+    //             compatibility_per_file * 100_f64
+    //         )
+    //         .unwrap();
+    //         writeln!(report, "```",).unwrap();
+    //     }
+    //     let file_count = state.iter().count();
+    //     writeln!(
+    //         report,
+    //         "file_based_compatibility: {:.2}%",
+    //         (sum_of_per_compatibility_file / file_count as f64) * 100_f64
+    //     )
+    //     .unwrap();
+    //     writeln!(
+    //         report,
+    //         "line_based_compatibility: {:.2}%",
+    //         (total_matched_line as f64 / total_line as f64) * 100_f64
+    //     )
+    //     .unwrap();
+    //     write("report_metric.md", report).unwrap();
+    // }
 }
