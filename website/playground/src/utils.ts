@@ -70,6 +70,7 @@ export function usePlaygroundState(): [
 	});
 
 	useEffect(() => {
+		//@ts-ignore
 		const queryString = new URLSearchParams({
 			...playgroundState,
 			code: encodeCode(playgroundState.code),

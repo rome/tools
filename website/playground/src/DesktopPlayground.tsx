@@ -4,15 +4,14 @@ import { createSetter, getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
+import ReactJson from "react-json-view";
 
-export default function DesktopPlayground(
-	{
-		setPlaygroundState,
-		playgroundState: { code, treeStyle, ...settings },
-		prettierOutput,
-		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-	}: PlaygroundProps,
-) {
+export default function DesktopPlayground({
+	setPlaygroundState,
+	playgroundState: { code, treeStyle, ...settings },
+	prettierOutput,
+	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+}: PlaygroundProps) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 	return (
@@ -83,12 +82,6 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-<<<<<<< HEAD
-							<TreeView tree={JSON.parse(cst)} />
-						</TabPanel>
-						<TabPanel>
-							<TreeView tree={JSON.parse(ast)} />
-=======
 							<TreeView
 								treeStyle={treeStyle}
 								setPlaygroundState={setPlaygroundState}
@@ -101,13 +94,12 @@ export default function DesktopPlayground(
 								setPlaygroundState={setPlaygroundState}
 								tree={ast}
 							/>
->>>>>>> cf4faf5829 (Toggling tree view for json or text)
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<TreeView tree={prettierOutput.ir} />
+							<ReactJson src={prettierOutput.ir} />
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">

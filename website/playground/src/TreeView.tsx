@@ -6,12 +6,16 @@ import { PlaygroundState, TreeStyle } from "./types";
 import { createSetter } from "./utils";
 
 interface Props {
-	tree: object;
+	tree: string;
 	treeStyle: TreeStyle;
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
 }
 
-export default function TreeView({ tree, treeStyle, setPlaygroundState }: Props) {
+export default function TreeView({
+	tree,
+	treeStyle,
+	setPlaygroundState,
+}: Props) {
 	return (
 		<div className="overflow-scroll">
 			<TreeStyleSelect
@@ -19,7 +23,7 @@ export default function TreeView({ tree, treeStyle, setPlaygroundState }: Props)
 				setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
 			/>
 			{treeStyle === TreeStyle.Json ? (
-				<ReactJson src={tree} />
+				<ReactJson src={JSON.parse(tree)} />
 			) : (
 				<pre>{tree}</pre>
 			)}

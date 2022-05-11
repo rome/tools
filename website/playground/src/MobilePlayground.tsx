@@ -4,6 +4,7 @@ import { createSetter, getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
+import ReactJson from "react-json-view";
 
 export function MobilePlayground({
 	setPlaygroundState,
@@ -84,14 +85,14 @@ export function MobilePlayground({
 				</TabPanel>
 				<TabPanel>
 					<TreeView
-						tree={JSON.parse(cst)}
+						tree={cst}
 						treeStyle={treeStyle}
 						setPlaygroundState={setPlaygroundState}
 					/>
 				</TabPanel>
 				<TabPanel>
 					<TreeView
-						tree={JSON.parse(ast)}
+						tree={ast}
 						treeStyle={treeStyle}
 						setPlaygroundState={setPlaygroundState}
 					/>
@@ -100,7 +101,7 @@ export function MobilePlayground({
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
 				</TabPanel>
 				<TabPanel>
-					<TreeView tree={prettierOutput.ir} />
+					<ReactJson src={prettierOutput.ir} />
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
