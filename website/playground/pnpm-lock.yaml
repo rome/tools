@@ -24,7 +24,7 @@ dependencies:
   prettier: 2.5.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
-  react-json-view: 1.21.3_b8fdba992ce7d797017dc07106486496
+  react-json-view: 1.21.3_xd63vgjm47lzoal5ybyqmsdesy
   react-tabs: 3.2.3_react@17.0.2
 
 devDependencies:
@@ -2582,7 +2582,7 @@ packages:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
-  /react-json-view/1.21.3_b8fdba992ce7d797017dc07106486496:
+  /react-json-view/1.21.3_xd63vgjm47lzoal5ybyqmsdesy:
     resolution: {integrity: sha512-13p8IREj9/x/Ye4WI/JpjhoIwuzEgUAtgJZNBJckfzJt1qyh24BdTm6UQNGnyTq9dapQdrqvquZTo3dz1X6Cjw==}
     peerDependencies:
       react: ^17.0.0 || ^16.3.0 || ^15.5.4
@@ -2593,7 +2593,7 @@ packages:
       react-base16-styling: 0.6.0
       react-dom: 17.0.2_react@17.0.2
       react-lifecycles-compat: 3.0.4
-      react-textarea-autosize: 8.3.3_a0c521d4794c7ad97f5f4c1c4a7d5818
+      react-textarea-autosize: 8.3.3_udcsdvdzjr5ns727jqoeu7kyda
     transitivePeerDependencies:
       - '@types/react'
       - encoding
@@ -2618,7 +2618,7 @@ packages:
       react: 17.0.2
     dev: false
 
-  /react-textarea-autosize/8.3.3_a0c521d4794c7ad97f5f4c1c4a7d5818:
+  /react-textarea-autosize/8.3.3_udcsdvdzjr5ns727jqoeu7kyda:
     resolution: {integrity: sha512-2XlHXK2TDxS6vbQaoPbMOfQ8GK7+irc2fVK6QFIcC8GOnH3zI/v481n+j1L0WaPVvKxwesnY93fEfH++sus2rQ==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -3254,7 +3254,7 @@ packages:
       react: 17.0.2
     dev: false
 
-  /use-isomorphic-layout-effect/1.1.2_a0c521d4794c7ad97f5f4c1c4a7d5818:
+  /use-isomorphic-layout-effect/1.1.2_udcsdvdzjr5ns727jqoeu7kyda:
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -3278,7 +3278,7 @@ packages:
     dependencies:
       '@types/react': 17.0.39
       react: 17.0.2
-      use-isomorphic-layout-effect: 1.1.2_a0c521d4794c7ad97f5f4c1c4a7d5818
+      use-isomorphic-layout-effect: 1.1.2_udcsdvdzjr5ns727jqoeu7kyda
     dev: false
 
   /user-home/2.0.0:

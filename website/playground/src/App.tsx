@@ -1,7 +1,7 @@
 import "react-tabs/style/react-tabs.css";
 import init, { run } from "../pkg/rome_playground";
 import { useEffect, useState } from "react";
-import { IndentStyle } from "./types";
+import { IndentStyle, TreeStyle } from "./types";
 import { formatWithPrettier, usePlaygroundState, useWindowSize } from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
@@ -23,7 +23,7 @@ function App() {
 	);
 
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
-	const playgroundState = usePlaygroundState();
+	const [playgroundState, setPlaygroundState] = usePlaygroundState();
 	const { width } = useWindowSize();
 
 	switch (loadingState) {
@@ -45,6 +45,7 @@ function App() {
 				isTypeScript,
 				isJsx,
 				sourceType,
+				treeStyle,
 			} = playgroundState;
 
 			const romeOutput = run(
@@ -55,6 +56,7 @@ function App() {
 				isTypeScript,
 				isJsx,
 				sourceType,
+				treeStyle === TreeStyle.Json,
 			);
 			const prettierOutput = formatWithPrettier(
 				code,
@@ -70,6 +72,7 @@ function App() {
 			if (width && width < 480) {
 				return (
 					<MobilePlayground
+						setPlaygroundState={setPlaygroundState}
 						playgroundState={playgroundState}
 						prettierOutput={prettierOutput}
 						romeOutput={romeOutput}
@@ -78,6 +81,7 @@ function App() {
 			}
 			return (
 				<DesktopPlayground
+					setPlaygroundState={setPlaygroundState}
 					playgroundState={playgroundState}
 					prettierOutput={prettierOutput}
 					romeOutput={romeOutput}
