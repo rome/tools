@@ -2,8 +2,8 @@ use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
 
 use rome_js_syntax::{
-    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields,
-    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
+    JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
+    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -100,13 +100,37 @@ fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> Synta
 fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
     let expression = node.expression()?;
     let parent = node.syntax().parent();
+
+    // if expression is a StringLiteralExpression, we need to check it before precedence comparison, here is an example:
+    // ```js
+    // a[("test")]
+    // ```
+    // if we use precedence comparison, we will get:
+    // parent_precedence should be `High` due to the parenthesized_expression's parent is ComputedMemberExpression,
+    // and node_precedence should be `Low` due to expression is StringLiteralExpression. `parent_precedence > node_precedence` will return false,
+    // the parenthesis will not be omitted.
+    // But the expected behavior is that the parenthesis will be omitted. The code above should be formatted as:
+    // ```js
+    // a["test"]
+    // ```
+    // So we need to add extra branch to handle this case.
+    if matches!(
+        expression,
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(
+            _
+        ))
+    ) {
+        return Ok(!matches!(
+            parent.map(|p| p.kind()),
+            Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT)
+        ));
+    }
     let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
     let node_precedence = FormatPrecedence::with_precedence_for_parenthesis(Some(node.syntax()));
 
     if parent_precedence > node_precedence {
         return Ok(false);
     }
-
     // Here we handle cases where we have binary/logical expressions.
     // We want to remove the parenthesis only in cases where `left` and `right` are not other
     // binary/logical expressions.

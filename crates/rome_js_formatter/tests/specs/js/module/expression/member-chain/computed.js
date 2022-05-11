@@ -4,5 +4,3 @@ nock(/test/)
   .reply(200, {
     foo: 'bar',
   });
-
-a[("test")]
