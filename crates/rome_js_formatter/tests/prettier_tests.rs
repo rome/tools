@@ -337,11 +337,12 @@ impl DiffReport {
         let mut state = self.state.lock();
         state.sort_by_key(|(name, ..)| *name);
         let mut sum_of_per_compatibility_file = 0_f64;
-        let mut total_line_of_rome = 0;
-        let mut total_matched_line_of_rome = 0;
+        let mut total_line = 0;
+        let mut total_matched_line = 0;
         for (file_name, rome, prettier) in state.iter() {
             writeln!(report, "# {}", file_name).unwrap();
             let rome_lines = rome.lines().count();
+            let prettier_lines = prettier.lines().count();
 
             let matched_lines = diff_lines(Algorithm::default(), prettier, rome)
                 .iter()
@@ -352,10 +353,10 @@ impl DiffReport {
             let compatibility_per_file = matched_lines as f64 / rome_lines as f64;
 
             sum_of_per_compatibility_file += compatibility_per_file;
-            total_line_of_rome += rome_lines;
-            total_matched_line_of_rome += matched_lines;
+            total_line += rome_lines.max(prettier_lines);
+            total_matched_line += matched_lines;
             writeln!(report, "```bash",).unwrap();
-            writeln!(report, "rome_lines: {}", rome_lines).unwrap();
+            writeln!(report, "total_line_of_file: {}", rome_lines.max(prettier_lines)).unwrap();
             writeln!(
                 report,
                 "compatibility_per_file: {:.2}%",
@@ -374,7 +375,7 @@ impl DiffReport {
         writeln!(
             report,
             "line_based_compatibility: {:.2}%",
-            (total_matched_line_of_rome as f64 / total_line_of_rome as f64) * 100_f64
+            (total_matched_line as f64 / total_line as f64) * 100_f64
         )
         .unwrap();
         write("report_metric.md", report).unwrap();
