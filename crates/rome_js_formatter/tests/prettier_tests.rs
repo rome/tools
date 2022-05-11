@@ -342,21 +342,19 @@ impl DiffReport {
         for (file_name, rome, prettier) in state.iter() {
             writeln!(report, "# {}", file_name).unwrap();
             let rome_lines = rome.lines().count();
-            let unmatched_rome_line = diff_lines(Algorithm::default(), prettier, rome)
+
+            let matched_lines = diff_lines(Algorithm::default(), prettier, rome)
                 .iter()
-                .filter(|(tag, _)| matches!(tag, ChangeTag::Insert))
+                .filter(|(tag, _)| matches!(tag, ChangeTag::Equal))
                 .fold(0, |acc, (_, insert_lines)| {
                     acc + insert_lines.lines().count()
                 });
-            let matched_lines = rome_lines - unmatched_rome_line;
-
             let compatibility_per_file = matched_lines as f64 / rome_lines as f64;
 
             sum_of_per_compatibility_file += compatibility_per_file;
             total_line_of_rome += rome_lines;
             total_matched_line_of_rome += matched_lines;
             writeln!(report, "```bash",).unwrap();
-            writeln!(report, "unmatched_rome_line: {}", unmatched_rome_line).unwrap();
             writeln!(report, "rome_lines: {}", rome_lines).unwrap();
             writeln!(
                 report,
