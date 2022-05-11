@@ -1,4 +1,7 @@
-use rome_js_syntax::{JsAnyRoot, TextRange};
+use rome_js_syntax::{
+    suppression::{has_suppressions_category, SuppressionCategory},
+    JsAnyRoot, TextRange, WalkEvent,
+};
 use rome_rowan::AstNode;
 
 mod analyzers;
@@ -32,13 +35,53 @@ where
 {
     let registry = RuleRegistry::with_filter(&filter);
 
-    for node in root.syntax().descendants() {
+    let mut iter = root.syntax().preorder();
+    while let Some(event) = iter.next() {
+        let node = match event {
+            WalkEvent::Enter(node) => node,
+            WalkEvent::Leave(_) => continue,
+        };
+
         if let Some(range) = filter.range {
             if node.text_range().ordering(range).is_ne() {
+                iter.skip_subtree();
                 continue;
             }
         }
 
+        if has_suppressions_category(SuppressionCategory::Lint, &node) {
+            iter.skip_subtree();
+            continue;
+        }
+
         registry.analyze(root, node, &mut callback);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use rome_js_parser::{parse, SourceType};
+
+    use crate::{analyze, AnalysisFilter};
+
+    #[test]
+    fn suppression() {
+        const SOURCE: &str = "
+            // rome-ignore lint(noDoubleEquals): test
+            function isEqual(a, b) {
+                return a == b;
+            }
+        ";
+
+        let parsed = parse(SOURCE, 0, SourceType::js_module());
+
+        analyze(&parsed.tree(), AnalysisFilter::default(), |signal| {
+            if let Some(diag) = signal.diagnostic() {
+                assert_ne!(
+                    diag.rule_name, "noDoubleEquals",
+                    "unexpected diagnostic signal raised"
+                );
+            }
+        });
     }
 }

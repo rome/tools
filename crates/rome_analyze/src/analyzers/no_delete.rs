@@ -54,7 +54,8 @@ impl Rule for NoDelete {
         )?;
 
         Some(RuleAction {
-            category: ActionCategories::empty(),
+            category: ActionCategories::SUGGESTION,
+            message: markup! { "Replace with undefined assignment" }.to_owned(),
             root,
         })
     }

@@ -29,6 +29,7 @@ pub struct AnalyzerDiagnostic {
 pub struct AnalyzerAction {
     pub rule_name: &'static str,
     pub category: ActionCategories,
+    pub message: MarkupBuf,
     pub root: JsAnyRoot,
 }
 
@@ -69,6 +70,7 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
         R::action(self.root.clone(), &self.node, &self.state).map(|action| AnalyzerAction {
             rule_name: R::NAME,
             category: action.category,
+            message: action.message,
             root: action.root,
         })
     }

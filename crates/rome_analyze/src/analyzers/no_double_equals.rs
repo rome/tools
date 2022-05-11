@@ -50,7 +50,8 @@ impl Rule for NoDoubleEquals {
         )?;
 
         Some(RuleAction {
-            category: ActionCategories::empty(),
+            category: ActionCategories::SUGGESTION,
+            message: markup! { "Replace with strict equality" }.to_owned(),
             root,
         })
     }
