@@ -1,10 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{
-    format_elements, group_elements, soft_line_break_or_space, space_token, token, Format,
-    FormatElement, FormatNode, Formatter, JsFormatter,
-};
+use crate::prelude::*;
 
 use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsForStatement;
@@ -25,31 +19,34 @@ impl FormatNode for JsForStatement {
         } = self.as_fields();
 
         let inner = if initializer.is_some() || test.is_some() || update.is_some() {
-            format_elements![
-                initializer.format_or_empty(formatter)?,
+            formatted![
+                formatter,
+                initializer,
                 first_semi_token.format(formatter)?,
                 soft_line_break_or_space(),
-                test.format_or_empty(formatter)?,
+                test,
                 second_semi_token.format(formatter)?,
                 soft_line_break_or_space(),
-                update.format_or_empty(formatter)?,
-            ]
+                update,
+            ]?
         } else {
-            format_elements![
+            formatted![
+                formatter,
                 first_semi_token.format(formatter)?,
                 second_semi_token.format(formatter)?,
-            ]
+            ]?
         };
 
         // Force semicolon insertion for empty bodies
         let body = body?;
         let body = if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
-            format_elements![body.format(formatter)?, token(";")]
+            formatted![formatter, body.format(formatter)?, token(";")]?
         } else {
-            format_elements![space_token(), body.format(formatter)?]
+            formatted![formatter, space_token(), body.format(formatter)?]?
         };
 
-        Ok(group_elements(format_elements![
+        Ok(group_elements(formatted![
+            formatter,
             for_token.format(formatter)?,
             space_token(),
             formatter.format_delimited_soft_block_indent(
@@ -58,6 +55,6 @@ impl FormatNode for JsForStatement {
                 &r_paren_token?,
             )?,
             body
-        ]))
+        ]?))
     }
 }

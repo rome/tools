@@ -1,6 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
 use rome_js_syntax::JsStaticMemberAssignment;
 use rome_js_syntax::JsStaticMemberAssignmentFields;
 
@@ -12,10 +10,11 @@ impl FormatNode for JsStaticMemberAssignment {
             member,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             object.format(formatter)?,
             dot_token.format(formatter)?,
             member.format(formatter)?,
-        ])
+        ]
     }
 }

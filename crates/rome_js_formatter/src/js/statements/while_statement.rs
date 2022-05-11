@@ -1,9 +1,6 @@
-use crate::utils::format_head_body_statement;
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::utils::format_head_body_statement;
 use rome_js_syntax::JsWhileStatement;
 use rome_js_syntax::JsWhileStatementFields;
 
@@ -19,7 +16,8 @@ impl FormatNode for JsWhileStatement {
 
         format_head_body_statement(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 while_token.format(formatter)?,
                 space_token(),
                 formatter.format_delimited_soft_block_indent(
@@ -27,7 +25,7 @@ impl FormatNode for JsWhileStatement {
                     test.format(formatter)?,
                     &r_paren_token?,
                 )?,
-            ],
+            ]?,
             body?,
         )
     }

@@ -1,8 +1,4 @@
-use crate::{
-    format_elements, hard_line_break, indent, space_token, FormatElement, FormatNode, Formatter,
-};
-use crate::{Format, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
@@ -28,16 +24,11 @@ impl FormatNode for JsDefaultClause {
         let formatted_cons = if statements.is_empty() {
             hard_line_break()
         } else if first_child_is_block_stmt {
-            format_elements![space_token(), statements]
+            formatted![formatter, space_token(), statements]?
         } else {
             // no line break needed after because it is added by the indent in the switch statement
-            indent(format_elements![hard_line_break(), statements])
+            indent(formatted![formatter, hard_line_break(), statements]?)
         };
-        Ok(format_elements![
-            default,
-            colon,
-            space_token(),
-            formatted_cons
-        ])
+        formatted![formatter, default, colon, space_token(), formatted_cons]
     }
 }

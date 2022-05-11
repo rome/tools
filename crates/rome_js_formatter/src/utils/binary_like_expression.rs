@@ -1,10 +1,4 @@
-use crate::{
-    empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
-    join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
-    space_token, token, Format, FormatElement, FormatNode, Formatter,
-};
-
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
     JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,
@@ -175,6 +169,7 @@ fn format_with_or_without_parenthesis(
     parent_operator: BinaryLikeOperator,
     node: &JsSyntaxNode,
     formatted_node: FormatElement,
+    formatter: &Formatter,
 ) -> FormatResult<(FormatElement, bool)> {
     let compare_to = match JsAnyExpression::cast(node.clone()) {
         Some(JsAnyExpression::JsLogicalExpression(logical)) => {
@@ -211,14 +206,16 @@ fn format_with_or_without_parenthesis(
 
     let result = if operation_is_higher {
         let (leading, content, trailing) = formatted_node.split_trivia();
-        let formatted = format_elements![
+        let formatted = formatted![
+            formatter,
             leading,
-            group_elements(format_elements![
+            group_elements(formatted![
+                formatter,
                 token("("),
-                soft_block_indent(format_elements![content, trailing]),
+                soft_block_indent(formatted![formatter, content, trailing]?),
                 token(")")
-            ])
-        ];
+            ]?)
+        ]?;
 
         (formatted, true)
     } else {
@@ -322,6 +319,7 @@ impl FlattenItems {
             binary_like_expression.operator()?,
             right.syntax(),
             right_formatted,
+            formatter,
         )?;
 
         let flatten_item =
@@ -353,7 +351,7 @@ impl FlattenItems {
 
         let left_formatted = self.take_format_element(left.syntax(), formatter)?;
         let (left_formatted, _) =
-            format_with_or_without_parenthesis(operator, left.syntax(), left_formatted)?;
+            format_with_or_without_parenthesis(operator, left.syntax(), left_formatted, formatter)?;
 
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
         let mut left_item = FlattenItem::regular(
@@ -371,8 +369,12 @@ impl FlattenItems {
         let right = binary_like_expression.right()?;
 
         // Format the right node
-        let (formatted_right, parenthesized) =
-            format_with_or_without_parenthesis(operator, right.syntax(), right.format(formatter)?)?;
+        let (formatted_right, parenthesized) = format_with_or_without_parenthesis(
+            operator,
+            right.syntax(),
+            right.format(formatter)?,
+            formatter,
+        )?;
 
         let parent_operator_has_comments = parent_operator
             .as_ref()
@@ -424,7 +426,7 @@ impl FlattenItems {
                 let operator = match &element.operator {
                     Some(operator) => {
                         // SAFETY: `syntax_token.format` never returns MissingToken.
-                        format_elements![space_token(), operator.format(formatter).unwrap()]
+                        formatted![formatter, space_token(), operator].unwrap()
                     }
                     None => empty_element(),
                 };

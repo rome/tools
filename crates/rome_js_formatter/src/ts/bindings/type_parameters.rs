@@ -1,5 +1,4 @@
-use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::{TsTypeParameters, TsTypeParametersFields};
 
 impl FormatNode for TsTypeParameters {

@@ -1,6 +1,6 @@
+use crate::prelude::*;
 use crate::utils::format_template_chunk;
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+
 use rome_js_syntax::{JsTemplateChunkElement, JsTemplateChunkElementFields};
 
 impl FormatNode for JsTemplateChunkElement {

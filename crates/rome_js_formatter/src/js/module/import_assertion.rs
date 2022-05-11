@@ -1,7 +1,4 @@
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsImportAssertion;
 use rome_js_syntax::JsImportAssertionFields;
@@ -24,6 +21,6 @@ impl FormatNode for JsImportAssertion {
             &r_curly_token?,
         )?;
 
-        Ok(format_elements![assert_token, space_token(), result])
+        formatted![formatter, assert_token, space_token(), result]
     }
 }

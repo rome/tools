@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsExportDeclareClause;
 use rome_js_syntax::TsExportDeclareClauseFields;
 
@@ -10,10 +9,11 @@ impl FormatNode for TsExportDeclareClause {
             declaration,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             declare_token.format(formatter)?,
             space_token(),
             declaration.format(formatter)?,
-        ])
+        ]
     }
 }

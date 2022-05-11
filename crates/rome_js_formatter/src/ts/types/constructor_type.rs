@@ -1,6 +1,4 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsConstructorType;
 use rome_js_syntax::TsConstructorTypeFields;
 
@@ -14,19 +12,19 @@ impl FormatNode for TsConstructorType {
             fat_arrow_token,
             return_type,
         } = self.as_fields();
-        let abstract_token = abstract_token.format_with_or_empty(formatter, |element| {
-            format_elements![element, space_token()]
-        })?;
+        let abstract_token =
+            abstract_token.with_or_empty(|element| formatted![formatter, element, space_token()]);
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             abstract_token,
             new_token.format(formatter)?,
-            type_parameters.format_or_empty(formatter)?,
+            type_parameters,
             parameters.format(formatter)?,
             space_token(),
             fat_arrow_token.format(formatter)?,
             space_token(),
             return_type.format(formatter)?
-        ])
+        ]
     }
 }

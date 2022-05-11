@@ -1,7 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsCatchClause;
 use rome_js_syntax::JsCatchClauseFields;
@@ -14,24 +11,28 @@ impl FormatNode for JsCatchClause {
             body,
         } = self.as_fields();
 
-        declaration.format_with_or(
+        formatted![
             formatter,
-            |declaration| {
-                Ok(format_elements![
-                    catch_token.format(formatter)?,
-                    space_token(),
-                    declaration,
-                    space_token(),
-                    body.format(formatter)?
-                ])
-            },
-            || {
-                Ok(format_elements![
-                    catch_token.format(formatter)?,
-                    space_token(),
-                    body.format(formatter)?
-                ])
-            },
-        )
+            declaration.with_or(
+                |declaration| {
+                    formatted![
+                        formatter,
+                        catch_token.format(formatter)?,
+                        space_token(),
+                        declaration,
+                        space_token(),
+                        body.format(formatter)?
+                    ]
+                },
+                || {
+                    formatted![
+                        formatter,
+                        catch_token.format(formatter)?,
+                        space_token(),
+                        body.format(formatter)?
+                    ]
+                },
+            )
+        ]
     }
 }

@@ -242,7 +242,7 @@ pub fn generate_formatter() {
     // script to build the module import files
     let mut modules = ModuleIndex::new(project_root().join("crates/rome_js_formatter/src"));
     let mut format_impls =
-        FormatImpls::new(project_root().join("crates/rome_js_formatter/src/format.rs"));
+        FormatImpls::new(project_root().join("crates/rome_js_formatter/src/generated.rs"));
 
     // Build an unified iterator over all the AstNode types
     let names = ast
@@ -302,8 +302,7 @@ pub fn generate_formatter() {
         // format_verbatim for all the other nodes
         let tokens = match kind {
             NodeKind::List { separated: false } => quote! {
-                use rome_formatter::{FormatResult, FormatElement};
-                use crate::{Formatter, Format};
+                use crate::prelude::*;
                 use rome_js_syntax::#id;
 
                 impl Format for #id {
@@ -314,9 +313,8 @@ pub fn generate_formatter() {
             },
             NodeKind::Node | NodeKind::List { separated: true } => {
                 quote! {
-                    use crate::{Formatter, FormatNode, verbatim_node, Format};
+                    use crate::prelude::*;
                     use rome_rowan::AstNode;
-                    use rome_formatter::{FormatResult, FormatElement};
                     use rome_js_syntax::{#id};
 
                     impl FormatNode for #id {
@@ -328,9 +326,8 @@ pub fn generate_formatter() {
             }
             NodeKind::Unknown => {
                 quote! {
-                    use crate::{Formatter, FormatNode, unknown_node, Format};
+                    use crate::prelude::*;
                     use rome_rowan::AstNode;
-                    use rome_formatter::{FormatResult, FormatElement};
                     use rome_js_syntax::{#id};
 
                     impl FormatNode for #id {
@@ -351,8 +348,7 @@ pub fn generate_formatter() {
                     .collect();
 
                 quote! {
-                    use crate::{Formatter, Format};
-                    use rome_formatter::{FormatResult, FormatElement};
+                    use crate::prelude::*;
                     use rome_js_syntax::#id;
 
                     impl Format for #id {
@@ -414,8 +410,7 @@ impl FormatImpls {
         let impls = self.impls;
 
         let tokens = quote! {
-            use crate::{FormatElement, Formatter, Format, FormatNode};
-            use rome_formatter::FormatResult;
+            use crate::prelude::*;
 
             #( #impls )*
         };

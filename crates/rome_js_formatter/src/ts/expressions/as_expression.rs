@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsAsExpression;
 use rome_js_syntax::TsAsExpressionFields;
 
@@ -11,12 +10,13 @@ impl FormatNode for TsAsExpression {
             expression,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             expression.format(formatter)?,
             space_token(),
             as_token.format(formatter)?,
             space_token(),
             ty.format(formatter)?,
-        ])
+        ]
     }
 }

@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsPreUpdateExpression;
 use rome_js_syntax::JsPreUpdateExpressionFields;
@@ -11,9 +10,10 @@ impl FormatNode for JsPreUpdateExpression {
             operand,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             operator_token.format(formatter)?,
             operand.format(formatter)?,
-        ])
+        ]
     }
 }

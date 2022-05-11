@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsFinallyClause;
 use rome_js_syntax::JsFinallyClauseFields;
@@ -11,10 +10,11 @@ impl FormatNode for JsFinallyClause {
             body,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             finally_token.format(formatter)?,
             space_token(),
             body.format(formatter)?
-        ])
+        ]
     }
 }

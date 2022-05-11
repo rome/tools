@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
@@ -15,6 +14,6 @@ impl FormatNode for JsPropertyObjectMember {
         let key = name.format(formatter)?;
         let colon = colon_token.format(formatter)?;
         let value = value.format(formatter)?;
-        Ok(format_elements![key, colon, space_token(), value])
+        formatted![formatter, key, colon, space_token(), value]
     }
 }

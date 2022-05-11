@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsExternalModuleReference;
 use rome_js_syntax::TsExternalModuleReferenceFields;
 
@@ -12,11 +11,12 @@ impl FormatNode for TsExternalModuleReference {
             r_paren_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             require_token.format(formatter)?,
             l_paren_token.format(formatter)?,
             source.format(formatter)?,
             r_paren_token.format(formatter)?,
-        ])
+        ]
     }
 }

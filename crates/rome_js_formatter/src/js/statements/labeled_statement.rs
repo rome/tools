@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsLabeledStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsLabeledStatement};
@@ -19,10 +18,10 @@ impl FormatNode for JsLabeledStatement {
         if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
             // If the body is an empty statement, force semicolon insertion
             let statement = body.format(formatter)?;
-            Ok(format_elements![label, colon, statement, token(";")])
+            formatted![formatter, label, colon, statement, token(";")]
         } else {
             let statement = body.format(formatter)?;
-            Ok(format_elements![label, colon, space_token(), statement])
+            formatted![formatter, label, colon, space_token(), statement]
         }
     }
 }

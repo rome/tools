@@ -1,5 +1,5 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
 use rome_js_syntax::{JsAnyClass, JsClassExpression};
 
 impl FormatNode for JsClassExpression {

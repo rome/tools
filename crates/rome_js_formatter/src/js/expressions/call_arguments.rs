@@ -1,7 +1,5 @@
+use crate::prelude::*;
 use crate::utils::{is_simple_expression, token_has_comments};
-use crate::{format_elements, hard_group_elements, Format, JsFormatter};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsCallArgumentsFields;
 use rome_js_syntax::{JsAnyCallArgument, JsCallArguments};
@@ -16,11 +14,12 @@ impl FormatNode for JsCallArguments {
         } = self.as_fields();
 
         if is_simple_function_arguments(self)? {
-            return Ok(hard_group_elements(format_elements![
+            return Ok(hard_group_elements(formatted![
+                formatter,
                 l_paren_token.format(formatter)?,
                 args.format(formatter)?,
                 r_paren_token.format(formatter)?,
-            ]));
+            ]?));
         }
 
         formatter.format_delimited_soft_block_indent(

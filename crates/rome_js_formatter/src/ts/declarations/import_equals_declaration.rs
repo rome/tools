@@ -1,8 +1,5 @@
-use crate::format_traits::FormatOptional;
-use crate::space_token;
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::TsImportEqualsDeclaration;
 use rome_js_syntax::TsImportEqualsDeclarationFields;
 
@@ -19,19 +16,17 @@ impl FormatNode for TsImportEqualsDeclaration {
 
         format_with_semicolon(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 import_token.format(formatter)?,
                 space_token(),
-                type_token.format_with_or_empty(formatter, |token| format_elements![
-                    token,
-                    space_token(),
-                ])?,
+                type_token.with_or_empty(|token| formatted![formatter, token, space_token(),]),
                 id.format(formatter)?,
                 space_token(),
                 eq_token.format(formatter)?,
                 space_token(),
                 module_reference.format(formatter)?,
-            ],
+            ]?,
             semicolon_token,
         )
     }

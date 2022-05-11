@@ -1,8 +1,4 @@
-use crate::{
-    format_elements, group_elements, if_group_breaks, indent, soft_line_break, space_token, token,
-    Format, FormatElement, FormatNode, Formatter, JsFormatter, Token,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsUnionType;
 use rome_js_syntax::TsUnionTypeFields;
 
@@ -33,14 +29,16 @@ impl FormatNode for TsUnionType {
         // so any potential line break doesn't influence the formatting of the type itself
         let (leading_comments, types, trailing_comments) = types.split_trivia();
 
-        Ok(format_elements![
-            group_elements(indent(format_elements![
+        formatted![
+            formatter,
+            group_elements(indent(formatted![
+                formatter,
                 soft_line_break(),
                 leading_separator_token,
                 leading_comments,
                 types,
-            ])),
+            ]?)),
             trailing_comments
-        ])
+        ]
     }
 }

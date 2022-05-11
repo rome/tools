@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsElseClause;
 use rome_js_syntax::JsElseClauseFields;
@@ -11,10 +10,11 @@ impl FormatNode for JsElseClause {
             alternate,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             else_token.format(formatter)?,
             space_token(),
             alternate.format(formatter)?,
-        ])
+        ]
     }
 }

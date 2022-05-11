@@ -1,7 +1,4 @@
-use crate::{
-    empty_element, format_elements, hard_line_break, Format, FormatElement, Formatter, JsFormatter,
-};
-use rome_formatter::{empty_line, format_element::get_lines_before, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::JsDirectiveList;
 use rome_rowan::{AstNode, AstNodeList};
 
@@ -25,7 +22,8 @@ impl Format for JsDirectiveList {
             } else {
                 false
             };
-            Ok(format_elements![
+            formatted![
+                formatter,
                 formatter.format_list(self.clone()),
                 hard_line_break(),
                 if need_extra_empty_line {
@@ -33,7 +31,7 @@ impl Format for JsDirectiveList {
                 } else {
                     empty_element()
                 }
-            ])
+            ]
         } else {
             Ok(empty_element())
         }

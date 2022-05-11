@@ -1,6 +1,4 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::format_elements;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::{JsxOpeningFragment, JsxOpeningFragmentFields};
 
 impl FormatNode for JsxOpeningFragment {

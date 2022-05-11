@@ -1,6 +1,5 @@
+use crate::prelude::*;
 use crate::utils::{format_string_literal_token, format_with_semicolon};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsDirective;
 use rome_js_syntax::JsDirectiveFields;

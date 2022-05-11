@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsMappedTypeOptionalModifierClause;
 use rome_js_syntax::TsMappedTypeOptionalModifierClauseFields;
 
@@ -10,9 +9,10 @@ impl FormatNode for TsMappedTypeOptionalModifierClause {
             question_mark_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             operator_token.format(formatter)?,
             question_mark_token.format(formatter)?
-        ])
+        ]
     }
 }

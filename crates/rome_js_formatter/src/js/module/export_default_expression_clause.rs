@@ -1,6 +1,5 @@
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsExportDefaultExpressionClause;
 use rome_js_syntax::JsExportDefaultExpressionClauseFields;
@@ -18,7 +17,7 @@ impl FormatNode for JsExportDefaultExpressionClause {
 
         format_with_semicolon(
             formatter,
-            format_elements![default_token, space_token(), class],
+            formatted![formatter, default_token, space_token(), class]?,
             semicolon_token,
         )
     }

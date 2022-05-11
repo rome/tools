@@ -1,5 +1,4 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::{format_elements, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::{JsxNamespaceName, JsxNamespaceNameFields};
 
 impl FormatNode for JsxNamespaceName {
@@ -10,10 +9,11 @@ impl FormatNode for JsxNamespaceName {
             name,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             namespace.format(formatter)?,
             colon_token.format(formatter)?,
             name.format(formatter)?
-        ])
+        ]
     }
 }

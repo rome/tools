@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::NewTarget;
 use rome_js_syntax::NewTargetFields;
@@ -12,10 +11,11 @@ impl FormatNode for NewTarget {
             target_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             new_token.format(formatter)?,
             dot_token.format(formatter)?,
             target_token.format(formatter)?,
-        ])
+        ]
     }
 }

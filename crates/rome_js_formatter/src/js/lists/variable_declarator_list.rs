@@ -1,5 +1,5 @@
 use crate::{
-    concat_elements, empty_element, format_elements, format_traits::FormatOptional, group_elements,
+    concat_elements, empty_element, format_extensions::FormatOptional, formatted, group_elements,
     indent, join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter,
 };
 use rome_formatter::FormatResult;
@@ -15,8 +15,8 @@ impl Format for JsVariableDeclaratorList {
             .enumerate()
             .map(|(index, element)| {
                 let node = element.node().format(formatter)?;
-                let separator = element.trailing_separator().format_with_or(
-                    formatter,
+                let separator = element.trailing_separator();
+                let separator = separator.with_or(
                     |separator| {
                         if index == last_index {
                             Ok(empty_element())
@@ -31,9 +31,9 @@ impl Format for JsVariableDeclaratorList {
                             Ok(token(","))
                         }
                     },
-                )?;
+                );
 
-                Ok(format_elements![node, separator])
+                formatted![formatter, node, separator]
             })
             .collect::<FormatResult<Vec<_>>>()?;
 
@@ -46,10 +46,11 @@ impl Format for JsVariableDeclaratorList {
             leading_element
                 .into_iter()
                 .chain(if !trailing_elements.is_empty() {
-                    Some(indent(format_elements![
+                    Some(indent(formatted![
+                        formatter,
                         soft_line_break_or_space(),
                         trailing_elements
-                    ]))
+                    ]?))
                 } else {
                     None
                 }),
