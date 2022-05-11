@@ -336,7 +336,7 @@ impl DiffReport {
         let mut report = String::new();
         let mut state = self.state.lock();
         state.sort_by_key(|(name, ..)| *name);
-        let mut sum_of_per_compatibility_file = 0 as f64;
+        let mut sum_of_per_compatibility_file = 0_f64;
         let mut total_line_of_rome = 0;
         let mut total_matched_line_of_rome = 0;
         for (file_name, rome, prettier) in state.iter() {
@@ -361,7 +361,7 @@ impl DiffReport {
             writeln!(
                 report,
                 "compatibility_per_file: {:.2}%",
-                compatibility_per_file * 100 as f64
+                compatibility_per_file * 100_f64
             )
             .unwrap();
             writeln!(report, "```",).unwrap();
@@ -370,13 +370,13 @@ impl DiffReport {
         writeln!(
             report,
             "file_based_compatibility: {:.2}%",
-            (sum_of_per_compatibility_file / file_count as f64) * 100 as f64
+            (sum_of_per_compatibility_file / file_count as f64) * 100_f64
         )
         .unwrap();
         writeln!(
             report,
             "line_based_compatibility: {:.2}%",
-            (total_matched_line_of_rome as f64 / total_line_of_rome as f64) * 100 as f64
+            (total_matched_line_of_rome as f64 / total_line_of_rome as f64) * 100_f64
         )
         .unwrap();
         write("report_metric.md", report).unwrap();
