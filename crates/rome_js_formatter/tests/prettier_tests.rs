@@ -345,13 +345,6 @@ impl DiffReport {
             }
             _ => {}
         }
-
-        match env::var("REPORT_METRIC") {
-            Ok(value) if value == "1" => {
-                // self.report_metric();
-            }
-            _ => {}
-        }
     }
 
     fn report_prettier(&self) {
@@ -437,15 +430,4 @@ impl DiffReport {
         writeln!(report, "```",).unwrap();
         write("report.md", report).unwrap();
     }
-
-    // fn report_metric(&self) {
-    //     let mut report = String::new();
-    //     let mut state = self.state.lock();
-    //     state.sort_by_key(|(name, ..)| *name);
-    //     for (file_name, rome, prettier) in state.iter() {
-    //         writeln!(report, "# {}", file_name).unwrap();
-
-    //     }
-    //     write("report_metric.md", report).unwrap();
-    // }
 }
