@@ -4,7 +4,12 @@ use rome_js_syntax::JsAnyClass;
 use rome_rowan::AstNode;
 
 impl FormatRule<JsAnyClass> for FormatJsAnyClass {
-    fn format(node: &JsAnyClass, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsAnyClass,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let abstract_token = node.abstract_token();
         let id = node.id();
         let extends = node.extends_clause();

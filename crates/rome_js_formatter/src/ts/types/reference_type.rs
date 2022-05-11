@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsReferenceType, TsReferenceTypeFields};
 
 impl FormatNodeFields<TsReferenceType> for FormatNodeRule<TsReferenceType> {
-    fn format_fields(node: &TsReferenceType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsReferenceType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsReferenceTypeFields {
             name,
             type_arguments,

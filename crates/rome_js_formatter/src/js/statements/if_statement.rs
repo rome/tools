@@ -6,7 +6,10 @@ use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
 
 impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
-    fn format_fields(node: &JsIfStatement, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsIfStatement,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let (head, mut else_clause) = format_if_element(formatter, None, node)?;
 
         let mut if_chain = vec![head];
@@ -43,7 +46,7 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
 
 /// Format a single `else? if(test) consequent` element, returning the next else clause
 fn format_if_element(
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
     else_token: Option<JsSyntaxToken>,
     stmt: &JsIfStatement,
 ) -> FormatResult<(FormatElement, Option<JsElseClause>)> {
@@ -79,7 +82,10 @@ fn format_if_element(
 }
 
 /// Wraps the statement into a block if its not already a JsBlockStatement
-fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<FormatElement> {
+fn into_block(
+    formatter: &Formatter<JsFormatOptions>,
+    stmt: JsAnyStatement,
+) -> FormatResult<FormatElement> {
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
         return formatted![formatter, [stmt.format()]];
     }

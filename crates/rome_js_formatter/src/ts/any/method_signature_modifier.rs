@@ -4,9 +4,10 @@ use crate::generated::FormatTsAnyMethodSignatureModifier;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyMethodSignatureModifier;
 impl FormatRule<TsAnyMethodSignatureModifier> for FormatTsAnyMethodSignatureModifier {
+    type Options = JsFormatOptions;
     fn format(
         node: &TsAnyMethodSignatureModifier,
-        formatter: &Formatter,
+        formatter: &Formatter<Self::Options>,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyMethodSignatureModifier::TsAccessibilityModifier(node) => {

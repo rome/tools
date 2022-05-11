@@ -7,7 +7,7 @@ use rome_js_syntax::JsNullLiteralExpressionFields;
 impl FormatNodeFields<JsNullLiteralExpression> for FormatNodeRule<JsNullLiteralExpression> {
     fn format_fields(
         node: &JsNullLiteralExpression,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsNullLiteralExpressionFields { value_token } = node.as_fields();
 

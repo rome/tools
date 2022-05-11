@@ -10,7 +10,7 @@ impl FormatNodeFields<JsExportDefaultExpressionClause>
 {
     fn format_fields(
         node: &JsExportDefaultExpressionClause,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsExportDefaultExpressionClauseFields {
             default_token,

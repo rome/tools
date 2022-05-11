@@ -8,7 +8,7 @@ impl FormatNodeFields<TsPropertySignatureTypeMember>
 {
     fn format_fields(
         node: &TsPropertySignatureTypeMember,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsPropertySignatureTypeMemberFields {
             readonly_token,

@@ -8,7 +8,7 @@ use rome_js_syntax::{JsLiteralMemberName, JsSyntaxKind};
 impl FormatNodeFields<JsLiteralMemberName> for FormatNodeRule<JsLiteralMemberName> {
     fn format_fields(
         node: &JsLiteralMemberName,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsLiteralMemberNameFields { value } = node.as_fields();
 

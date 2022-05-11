@@ -1,7 +1,6 @@
 use crate::prelude::*;
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
-use crate::FormatOptions;
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
@@ -10,17 +9,18 @@ use std::cell::RefCell;
 /// The formatter is passed to the [Format] implementation of every node in the CST so that they
 /// can use it to format their children.
 #[derive(Debug, Default)]
-pub struct Formatter {
-    options: FormatOptions,
+pub struct Formatter<Options> {
+    options: Options,
+
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
     pub printed_tokens: RefCell<PrintedTokens>,
 }
 
-impl Formatter {
+impl<Options> Formatter<Options> {
     /// Creates a new context that uses the given formatter options
-    pub fn new(options: FormatOptions) -> Self {
+    pub fn new(options: Options) -> Self {
         Self {
             options,
             #[cfg(debug_assertions)]
@@ -29,7 +29,7 @@ impl Formatter {
     }
 
     /// Returns the [FormatOptions] specifying how to format the current CST
-    pub fn options(&self) -> &FormatOptions {
+    pub fn options(&self) -> &Options {
         &self.options
     }
 
@@ -60,7 +60,7 @@ impl Formatter {
     ///
     /// Returns the [Err] of the first item that failed to format.
     #[inline]
-    pub fn format_all<T: Format>(
+    pub fn format_all<T: Format<Options = Options>>(
         &self,
         nodes: impl IntoIterator<Item = T>,
     ) -> FormatResult<impl Iterator<Item = FormatElement>> {
@@ -79,7 +79,7 @@ impl Formatter {
     }
 }
 
-impl Formatter {
+impl<Options> Formatter<Options> {
     /// Take a snapshot of the state of the formatter
     #[inline]
     pub fn snapshot(&self) -> FormatterSnapshot {

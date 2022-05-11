@@ -4,9 +4,11 @@ use rome_js_syntax::JsConstructorModifierList;
 use rome_rowan::AstNodeList;
 
 impl FormatRule<JsConstructorModifierList> for FormatJsConstructorModifierList {
+    type Options = JsFormatOptions;
+
     fn format(
         node: &JsConstructorModifierList,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),

@@ -5,7 +5,10 @@ use rome_js_syntax::JsParameters;
 use rome_js_syntax::JsParametersFields;
 
 impl FormatNodeFields<JsParameters> for FormatNodeRule<JsParameters> {
-    fn format_fields(node: &JsParameters, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsParameters,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsParametersFields {
             l_paren_token,
             items,

@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{JsxMemberName, JsxMemberNameFields};
 
 impl FormatNodeFields<JsxMemberName> for FormatNodeRule<JsxMemberName> {
-    fn format_fields(node: &JsxMemberName, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsxMemberName,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsxMemberNameFields {
             object,
             dot_token,

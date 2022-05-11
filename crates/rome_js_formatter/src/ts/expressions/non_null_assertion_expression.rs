@@ -8,7 +8,7 @@ impl FormatNodeFields<TsNonNullAssertionExpression>
 {
     fn format_fields(
         node: &TsNonNullAssertionExpression,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsNonNullAssertionExpressionFields {
             expression,

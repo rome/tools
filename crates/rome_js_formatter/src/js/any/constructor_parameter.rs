@@ -4,9 +4,10 @@ use crate::generated::FormatJsAnyConstructorParameter;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyConstructorParameter;
 impl FormatRule<JsAnyConstructorParameter> for FormatJsAnyConstructorParameter {
+    type Options = JsFormatOptions;
     fn format(
         node: &JsAnyConstructorParameter,
-        formatter: &Formatter,
+        formatter: &Formatter<Self::Options>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyConstructorParameter::JsAnyFormalParameter(node) => {

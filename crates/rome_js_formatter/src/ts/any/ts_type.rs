@@ -4,7 +4,8 @@ use crate::generated::FormatTsType;
 use crate::prelude::*;
 use rome_js_syntax::TsType;
 impl FormatRule<TsType> for FormatTsType {
-    fn format(node: &TsType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(node: &TsType, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         match node {
             TsType::TsAnyType(node) => formatted![formatter, [node.format()]],
             TsType::TsUnknownType(node) => formatted![formatter, [node.format()]],

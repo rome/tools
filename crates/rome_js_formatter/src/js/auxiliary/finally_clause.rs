@@ -5,7 +5,10 @@ use rome_js_syntax::JsFinallyClause;
 use rome_js_syntax::JsFinallyClauseFields;
 
 impl FormatNodeFields<JsFinallyClause> for FormatNodeRule<JsFinallyClause> {
-    fn format_fields(node: &JsFinallyClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsFinallyClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsFinallyClauseFields {
             finally_token,
             body,

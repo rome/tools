@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpression> {
     fn format_fields(
         node: &JsSequenceExpression,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let mut current = node.clone();
 

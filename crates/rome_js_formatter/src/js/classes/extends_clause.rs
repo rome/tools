@@ -5,7 +5,10 @@ use rome_js_syntax::JsExtendsClause;
 use rome_js_syntax::JsExtendsClauseFields;
 
 impl FormatNodeFields<JsExtendsClause> for FormatNodeRule<JsExtendsClause> {
-    fn format_fields(node: &JsExtendsClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsExtendsClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsExtendsClauseFields {
             extends_token,
             super_class,

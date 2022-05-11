@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsTypeArguments, TsTypeArgumentsFields};
 
 impl FormatNodeFields<TsTypeArguments> for FormatNodeRule<TsTypeArguments> {
-    fn format_fields(node: &TsTypeArguments, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsTypeArguments,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsTypeArgumentsFields {
             l_angle_token,
             ts_type_argument_list,

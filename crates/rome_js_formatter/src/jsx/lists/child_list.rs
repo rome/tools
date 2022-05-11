@@ -5,7 +5,12 @@ use rome_js_syntax::JsxChildList;
 use rome_rowan::AstNode;
 
 impl FormatRule<JsxChildList> for FormatJsxChildList {
-    fn format(node: &JsxChildList, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsxChildList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         verbatim_node(node.syntax()).format(formatter)
     }
 }

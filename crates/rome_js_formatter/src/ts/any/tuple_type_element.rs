@@ -4,7 +4,11 @@ use crate::generated::FormatTsAnyTupleTypeElement;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyTupleTypeElement;
 impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
-    fn format(node: &TsAnyTupleTypeElement, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &TsAnyTupleTypeElement,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
         match node {
             TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => {
                 formatted![formatter, [node.format()]]

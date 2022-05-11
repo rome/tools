@@ -13,7 +13,8 @@ use std::{
 };
 
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_formatter::{FormatOptions, IndentStyle};
+use rome_formatter::IndentStyle;
+use rome_js_formatter::options::JsFormatOptions;
 use rome_js_parser::{parse, SourceType};
 
 use crate::check_reformat::CheckReformatParams;
@@ -56,7 +57,10 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
-    let options = FormatOptions::new(IndentStyle::Space(2));
+    let options = JsFormatOptions {
+        indent_style: IndentStyle::Space(2),
+        ..JsFormatOptions::default()
+    };
 
     let result = match (range_start_index, range_end_index) {
         (Some(start), Some(end)) => {

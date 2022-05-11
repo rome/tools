@@ -4,7 +4,12 @@ use rome_js_syntax::JsDirectiveList;
 use rome_rowan::{AstNode, AstNodeList};
 
 impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
-    fn format(node: &JsDirectiveList, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsDirectiveList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         if !node.is_empty() {
             let syntax_node = node.syntax();
             let next_sibling = syntax_node.next_sibling();

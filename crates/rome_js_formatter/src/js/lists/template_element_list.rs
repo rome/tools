@@ -3,7 +3,12 @@ use crate::prelude::*;
 use rome_js_syntax::JsTemplateElementList;
 
 impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
-    fn format(node: &JsTemplateElementList, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsTemplateElementList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         Ok(formatter.format_list(node))
     }
 }

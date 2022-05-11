@@ -4,7 +4,12 @@ use rome_js_syntax::TsTemplateElementList;
 use rome_rowan::AstNodeList;
 
 impl FormatRule<TsTemplateElementList> for FormatTsTemplateElementList {
-    fn format(node: &TsTemplateElementList, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &TsTemplateElementList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         Ok(concat_elements(
             formatter.format_all(node.iter().formatted())?,
         ))

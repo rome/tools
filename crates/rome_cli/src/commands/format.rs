@@ -21,16 +21,17 @@ use rome_diagnostics::{
     file::{FileId, Files, SimpleFile},
     Diagnostic, DiagnosticHeader, Severity,
 };
-use rome_formatter::{FormatOptions, IndentStyle};
+use rome_formatter::IndentStyle;
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
+use rome_js_formatter::options::JsFormatOptions;
 use rome_js_parser::{parse, SourceType};
 
 use crate::{CliSession, Termination};
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    let mut options = FormatOptions::default();
+    let mut options = JsFormatOptions::default();
 
     let size = session
         .args
@@ -355,7 +356,7 @@ struct FormatCommandOptions<'ctx, 'app> {
     /// Set of features supported by this instance of the CLI
     features: &'ctx Features,
     /// Options to use for formatting the discovered files
-    options: FormatOptions,
+    options: JsFormatOptions,
     /// Determines how the result of formatting should be handled
     mode: FormatMode,
     /// Whether the formatter should silently skip files with errors
@@ -453,7 +454,7 @@ fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
 struct FormatFileParams<'ctx, 'app> {
     fs: &'app dyn FileSystem,
     features: &'ctx Features,
-    options: FormatOptions,
+    options: JsFormatOptions,
     mode: FormatMode,
     ignore_errors: bool,
     path: &'ctx Path,

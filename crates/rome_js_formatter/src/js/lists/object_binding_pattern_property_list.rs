@@ -4,9 +4,11 @@ use crate::prelude::*;
 use rome_js_syntax::{JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList};
 
 impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPatternPropertyList {
+    type Options = JsFormatOptions;
+
     fn format(
         node: &JsObjectBindingPatternPropertyList,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         // The trailing separator is disallowed after a rest element
         let has_trailing_rest = match node.into_iter().last() {

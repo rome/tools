@@ -6,7 +6,10 @@ use rome_js_syntax::JsDirective;
 use rome_js_syntax::JsDirectiveFields;
 
 impl FormatNodeFields<JsDirective> for FormatNodeRule<JsDirective> {
-    fn format_fields(node: &JsDirective, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsDirective,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsDirectiveFields {
             value_token,
             semicolon_token,

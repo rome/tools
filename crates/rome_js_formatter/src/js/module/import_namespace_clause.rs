@@ -7,7 +7,7 @@ use rome_js_syntax::JsImportNamespaceClauseFields;
 impl FormatNodeFields<JsImportNamespaceClause> for FormatNodeRule<JsImportNamespaceClause> {
     fn format_fields(
         node: &JsImportNamespaceClause,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsImportNamespaceClauseFields {
             type_token,

@@ -4,9 +4,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsExportNamedFromSpecifierList;
 
 impl FormatRule<JsExportNamedFromSpecifierList> for FormatJsExportNamedFromSpecifierList {
+    type Options = JsFormatOptions;
+
     fn format(
         node: &JsExportNamedFromSpecifierList,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

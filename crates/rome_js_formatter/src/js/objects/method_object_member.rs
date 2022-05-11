@@ -7,7 +7,7 @@ use rome_js_syntax::JsMethodObjectMemberFields;
 impl FormatNodeFields<JsMethodObjectMember> for FormatNodeRule<JsMethodObjectMember> {
     fn format_fields(
         node: &JsMethodObjectMember,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsMethodObjectMemberFields {
             async_token,

@@ -8,7 +8,7 @@ impl FormatNodeFields<TsPropertySignatureClassMember>
 {
     fn format_fields(
         node: &TsPropertySignatureClassMember,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsPropertySignatureClassMemberFields {
             modifiers,

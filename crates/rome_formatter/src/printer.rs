@@ -3,8 +3,8 @@ use crate::format_element::{
 };
 use crate::intersperse::Intersperse;
 use crate::{
-    hard_line_break, space_token, FormatElement, FormatOptions, IndentStyle, LineWidth, Printed,
-    SourceMarker, TextRange,
+    hard_line_break, space_token, FormatElement, IndentStyle, LineWidth, Printed, SourceMarker,
+    TextRange,
 };
 use rome_rowan::TextSize;
 use std::iter::once;
@@ -29,21 +29,25 @@ pub struct PrinterOptions {
     pub indent_string: String,
 }
 
-impl From<FormatOptions> for PrinterOptions {
-    fn from(options: FormatOptions) -> Self {
-        let tab_width = options.tab_width();
+impl PrinterOptions {
+    pub fn with_print_with(mut self, with: LineWidth) -> Self {
+        self.print_width = with;
+        self
+    }
 
-        let indent_string = match options.indent_style {
-            IndentStyle::Tab => String::from("\t"),
-            IndentStyle::Space(width) => " ".repeat(width as usize),
-        };
-
-        PrinterOptions {
-            indent_string,
-            tab_width,
-            print_width: options.line_width,
-            ..PrinterOptions::default()
+    pub fn with_indent(mut self, style: IndentStyle) -> Self {
+        match style {
+            IndentStyle::Tab => {
+                self.indent_string = String::from("\t");
+                self.tab_width = 2;
+            }
+            IndentStyle::Space(quantity) => {
+                self.indent_string = " ".repeat(quantity as usize);
+                self.tab_width = quantity;
+            }
         }
+
+        self
     }
 }
 

@@ -1,8 +1,9 @@
 use rome_core::App;
 use rome_formatter::LineWidth;
-use rome_formatter::{FormatOptions, IndentStyle, Printed, QuoteStyle};
+use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_formatter::format_node;
+use rome_js_formatter::options::{JsFormatOptions, QuoteStyle};
 use rome_js_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
@@ -57,7 +58,7 @@ pub struct SerializableFormatOptions {
     pub quote_style: Option<SerializableQuoteStyle>,
 }
 
-impl From<SerializableFormatOptions> for FormatOptions {
+impl From<SerializableFormatOptions> for JsFormatOptions {
     fn from(test: SerializableFormatOptions) -> Self {
         Self {
             indent_style: test
@@ -82,11 +83,11 @@ struct TestOptions {
 #[derive(Debug, Default)]
 struct SnapshotContent {
     input: String,
-    output: Vec<(String, FormatOptions)>,
+    output: Vec<(String, JsFormatOptions)>,
 }
 
 impl SnapshotContent {
-    fn add_output(&mut self, formatted: Printed, options: FormatOptions) {
+    fn add_output(&mut self, formatted: Printed, options: JsFormatOptions) {
         let code = formatted.as_code();
         let mut output: String = code.to_string();
         if !formatted.verbatim_ranges().is_empty() {
@@ -191,7 +192,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let root = parsed.syntax();
 
         // we ignore the error for now
-        let formatted = format_node(FormatOptions::default(), &root).unwrap();
+        let formatted = format_node(JsFormatOptions::default(), &root).unwrap();
         let printed = formatted.print();
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
@@ -201,11 +202,11 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                 text: printed.as_code(),
                 source_type: source_type.clone(),
                 file_name,
-                format_options: FormatOptions::default(),
+                format_options: JsFormatOptions::default(),
             });
         }
 
-        snapshot_content.add_output(printed, FormatOptions::default());
+        snapshot_content.add_output(printed, JsFormatOptions::default());
 
         let test_directory = PathBuf::from(test_directory);
         let options_path = test_directory.join("options.json");
@@ -217,7 +218,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
 
                 for test_case in options.cases {
-                    let format_options: FormatOptions = test_case.into();
+                    let format_options: JsFormatOptions = test_case.into();
                     let formatted = format_node(format_options, &root).unwrap();
                     let printed = formatted.print();
 

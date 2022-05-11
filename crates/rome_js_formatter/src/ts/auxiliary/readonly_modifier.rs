@@ -6,7 +6,7 @@ use rome_js_syntax::TsReadonlyModifierFields;
 impl FormatNodeFields<TsReadonlyModifier> for FormatNodeRule<TsReadonlyModifier> {
     fn format_fields(
         node: &TsReadonlyModifier,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsReadonlyModifierFields { modifier_token } = node.as_fields();
         formatted![formatter, [modifier_token.format()]]

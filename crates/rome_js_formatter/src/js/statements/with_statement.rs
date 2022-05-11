@@ -6,7 +6,10 @@ use rome_js_syntax::JsWithStatement;
 use rome_js_syntax::JsWithStatementFields;
 
 impl FormatNodeFields<JsWithStatement> for FormatNodeRule<JsWithStatement> {
-    fn format_fields(node: &JsWithStatement, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsWithStatement,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsWithStatementFields {
             with_token,
             l_paren_token,

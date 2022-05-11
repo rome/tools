@@ -4,9 +4,10 @@ use crate::generated::FormatJsAnyExportDefaultDeclaration;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyExportDefaultDeclaration;
 impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDeclaration {
+    type Options = JsFormatOptions;
     fn format(
         node: &JsAnyExportDefaultDeclaration,
-        formatter: &Formatter,
+        formatter: &Formatter<Self::Options>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {

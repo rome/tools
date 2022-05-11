@@ -10,7 +10,12 @@ use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};
 
 impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
-    fn format(node: &JsArrayElementList, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsArrayElementList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes

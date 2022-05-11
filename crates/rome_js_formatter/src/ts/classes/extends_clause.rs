@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsExtendsClause, TsExtendsClauseFields};
 
 impl FormatNodeFields<TsExtendsClause> for FormatNodeRule<TsExtendsClause> {
-    fn format_fields(node: &TsExtendsClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsExtendsClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsExtendsClauseFields {
             extends_token,
             types,

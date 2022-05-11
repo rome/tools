@@ -7,7 +7,7 @@ use rome_js_syntax::{JsAnyStatement, JsLabeledStatement};
 impl FormatNodeFields<JsLabeledStatement> for FormatNodeRule<JsLabeledStatement> {
     fn format_fields(
         node: &JsLabeledStatement,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsLabeledStatementFields {
             label_token,
