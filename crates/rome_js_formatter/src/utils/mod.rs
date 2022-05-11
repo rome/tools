@@ -17,7 +17,7 @@ pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBina
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
 use rome_formatter::{normalize_newlines, FormatResult};
-use rome_js_syntax::suppression::has_suppressions_category;
+use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
@@ -136,7 +136,7 @@ pub(crate) fn format_head_body_statement(
 }
 
 pub(crate) fn has_formatter_suppressions(node: &JsSyntaxNode) -> bool {
-    has_suppressions_category("format", node)
+    has_suppressions_category(SuppressionCategory::Format, node)
 }
 
 /// This function consumes a list of modifiers and applies a predictable sorting.

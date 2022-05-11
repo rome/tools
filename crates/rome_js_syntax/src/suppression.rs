@@ -100,8 +100,22 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
     })
 }
 
+pub enum SuppressionCategory {
+    Format,
+    Lint,
+}
+
+impl PartialEq<&str> for SuppressionCategory {
+    fn eq(&self, other: &&str) -> bool {
+        matches!(
+            (self, *other),
+            (Self::Format, "format") | (Self::Lint, "lint")
+        )
+    }
+}
+
 /// Returns true if this node has a suppression comment of the provided category
-pub fn has_suppressions_category(category: &str, node: &JsSyntaxNode) -> bool {
+pub fn has_suppressions_category(category: SuppressionCategory, node: &JsSyntaxNode) -> bool {
     // Lists cannot have a suppression comment attached, it must
     // belong to either the entire parent node or one of the children
     let kind = node.kind();
@@ -121,7 +135,7 @@ pub fn has_suppressions_category(category: &str, node: &JsSyntaxNode) -> bool {
         .any(|comment| {
             parse_suppression_comment(comment.text())
                 .flat_map(|suppression| suppression.categories)
-                .any(|entry| entry.0 == category)
+                .any(|entry| category == entry.0)
         })
 }
 

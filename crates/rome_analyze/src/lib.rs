@@ -1,4 +1,7 @@
-use rome_js_syntax::{suppression::has_suppressions_category, JsAnyRoot, TextRange, WalkEvent};
+use rome_js_syntax::{
+    suppression::{has_suppressions_category, SuppressionCategory},
+    JsAnyRoot, TextRange, WalkEvent,
+};
 use rome_rowan::AstNode;
 
 mod analyzers;
@@ -46,7 +49,7 @@ where
             }
         }
 
-        if has_suppressions_category("lint", &node) {
+        if has_suppressions_category(SuppressionCategory::Lint, &node) {
             iter.skip_subtree();
             continue;
         }
