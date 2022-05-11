@@ -1,14 +1,10 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
     JsLanguage,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
-
-use crate::{
-    empty_element, format_elements, format_traits::FormatOptional, if_group_breaks,
-    join_elements_soft_line, token, Format, FormatElement, Formatter, JsFormatter,
-};
 
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
 pub(crate) fn format_array_node<N, I>(
@@ -43,16 +39,20 @@ where
                 }
             } else if is_force || index != last_index {
                 // In forced separator mode or if this element is not the last in the list, print the separator
-                element
-                    .trailing_separator()
-                    .format_or(formatter, || token(","))?
+                formatted![
+                    formatter,
+                    element.trailing_separator().or_format(|| token(","))
+                ]?
             } else if let Some(separator) = element.trailing_separator()? {
                 formatter.format_replaced(separator, if_group_breaks(token(",")))
             } else {
                 if_group_breaks(token(","))
             };
 
-            Ok((node.syntax().clone(), format_elements![elem, separator]))
+            Ok((
+                node.syntax().clone(),
+                formatted![formatter, elem, separator]?,
+            ))
         })
         .collect::<FormatResult<Vec<_>>>()?;
 

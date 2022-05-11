@@ -1,7 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsRestParameter;
 use rome_js_syntax::JsRestParameterFields;
@@ -14,10 +11,11 @@ impl FormatNode for JsRestParameter {
             type_annotation,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             dotdotdot_token.format(formatter)?,
             binding.format(formatter)?,
-            type_annotation.format_or_empty(formatter)?
-        ])
+            type_annotation
+        ]
     }
 }

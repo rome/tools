@@ -1,7 +1,7 @@
-use crate::format_traits::FormatOptional;
+use crate::format_extensions::FormatOptional;
 use crate::utils::is_simple_expression;
 use crate::{
-    concat_elements, empty_element, format_elements, group_elements, hard_group_elements,
+    concat_elements, empty_element, formatted, group_elements, hard_group_elements,
     if_group_breaks, soft_block_indent, soft_line_indent_or_space, space_token, token, Format,
     FormatElement, FormatNode, Formatter,
 };
@@ -15,40 +15,41 @@ impl Format for JsAnyFunction {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut tokens = vec![];
 
-        tokens.push(
+        tokens.push(formatted![
+            formatter,
             self.async_token()
-                .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?,
-        );
+                .with_or_empty(|token| { formatted![formatter, token, space_token()] })
+        ]?);
 
-        tokens.push(self.function_token().format_or_empty(formatter)?);
-        tokens.push(self.star_token().format_or_empty(formatter)?);
+        tokens.push(self.function_token().format(formatter)?);
+        tokens.push(self.star_token().format(formatter)?);
 
         tokens.push(match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
-            _ => self.id().format_with_or(
+            _ => formatted![
                 formatter,
-                |id| format_elements![space_token(), id],
-                space_token,
-            )?,
+                self.id()
+                    .with_or(|id| formatted![formatter, space_token(), id], space_token,)
+            ]?,
         });
 
-        tokens.push(self.type_parameters().format_or_empty(formatter)?);
+        tokens.push(self.type_parameters().format(formatter)?);
 
         tokens.push(match self.parameters()? {
-            JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
-                group_elements(format_elements![
-                    token("("),
-                    soft_block_indent(format_elements![
-                        binding.format(formatter)?,
-                        if_group_breaks(token(",")),
-                    ]),
-                    token(")"),
-                ])
-            }
+            JsAnyArrowFunctionParameters::JsAnyBinding(binding) => group_elements(formatted![
+                formatter,
+                token("("),
+                soft_block_indent(formatted![
+                    formatter,
+                    binding.format(formatter)?,
+                    if_group_breaks(token(",")),
+                ]?),
+                token(")"),
+            ]?),
             JsAnyArrowFunctionParameters::JsParameters(params) => params.format_node(formatter)?,
         });
 
-        tokens.push(self.return_type_annotation().format_or_empty(formatter)?);
+        tokens.push(self.return_type_annotation().format(formatter)?);
 
         tokens.push(space_token());
 

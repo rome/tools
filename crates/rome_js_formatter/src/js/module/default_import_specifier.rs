@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsDefaultImportSpecifier;
 use rome_js_syntax::JsDefaultImportSpecifierFields;
@@ -11,9 +10,10 @@ impl FormatNode for JsDefaultImportSpecifier {
             trailing_comma_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             local_name.format(formatter)?,
             trailing_comma_token.format(formatter)?
-        ])
+        ]
     }
 }

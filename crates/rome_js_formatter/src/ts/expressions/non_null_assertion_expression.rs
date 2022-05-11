@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsNonNullAssertionExpression;
 use rome_js_syntax::TsNonNullAssertionExpressionFields;
 
@@ -10,9 +9,10 @@ impl FormatNode for TsNonNullAssertionExpression {
             excl_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             expression.format(formatter)?,
             excl_token.format(formatter)?
-        ])
+        ]
     }
 }

@@ -1,7 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::JsAnyBindingPattern;
 impl Format for JsAnyBindingPattern {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

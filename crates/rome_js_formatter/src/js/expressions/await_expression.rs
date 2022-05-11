@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsAwaitExpression;
 use rome_js_syntax::JsAwaitExpressionFields;
@@ -11,10 +10,11 @@ impl FormatNode for JsAwaitExpression {
             argument,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             await_token.format(formatter)?,
             space_token(),
             argument.format(formatter)?,
-        ])
+        ]
     }
 }

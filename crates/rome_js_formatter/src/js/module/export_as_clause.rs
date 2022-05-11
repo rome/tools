@@ -1,5 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsExportAsClause;
 use rome_js_syntax::JsExportAsClauseFields;
@@ -14,6 +13,6 @@ impl FormatNode for JsExportAsClause {
         let as_token = as_token.format(formatter)?;
         let exported_name = exported_name.format(formatter)?;
 
-        Ok(format_elements![as_token, space_token(), exported_name])
+        formatted![formatter, as_token, space_token(), exported_name]
     }
 }

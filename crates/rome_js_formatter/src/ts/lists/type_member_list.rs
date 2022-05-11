@@ -1,8 +1,4 @@
-use crate::{
-    empty_element, format_elements, if_group_breaks, join_elements, soft_line_break_or_space,
-    token, Format, FormatElement, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsTypeMemberList;
 use rome_rowan::AstNodeList;
 
@@ -33,7 +29,7 @@ impl Format for TsTypeMemberList {
                     empty_element()
                 };
 
-                Ok(format_elements![formatted_element, separator])
+                formatted![formatter, formatted_element, separator]
             })
             .collect::<FormatResult<Vec<_>>>()?;
 

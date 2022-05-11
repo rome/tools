@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsPrivateName;
 use rome_js_syntax::JsPrivateNameFields;
@@ -11,9 +10,10 @@ impl FormatNode for JsPrivateName {
             value_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             hash_token.format(formatter)?,
             value_token.format(formatter)?
-        ])
+        ]
     }
 }

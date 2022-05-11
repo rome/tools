@@ -1,7 +1,4 @@
-use crate::{
-    format_elements, hard_line_break, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsBlockStatement;
@@ -21,11 +18,12 @@ impl FormatNode for JsBlockStatement {
         let stmts = formatter.format_list(statements);
 
         if is_non_collapsable_empty_block(self) {
-            Ok(format_elements![
+            formatted![
+                formatter,
                 l_curly_token.format(formatter)?,
                 hard_line_break(),
                 r_curly_token.format(formatter)?
-            ])
+            ]
         } else {
             formatter.format_delimited_block_indent(&l_curly_token?, stmts, &r_curly_token?)
         }

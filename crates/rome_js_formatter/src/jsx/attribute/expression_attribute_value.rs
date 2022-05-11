@@ -1,5 +1,4 @@
-use crate::{format_elements, soft_block_indent, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::{group_elements, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
 };
@@ -56,10 +55,11 @@ impl FormatNode for JsxExpressionAttributeValue {
             soft_block_indent(expression.format(formatter)?)
         };
 
-        Ok(group_elements(format_elements![
+        Ok(group_elements(formatted![
+            formatter,
             l_curly_token.format(formatter)?,
             formatted_expression,
             r_curly_token.format(formatter)?,
-        ]))
+        ]?))
     }
 }
