@@ -1,7 +1,77 @@
-use crate::{Formatter, IntoFormatElement};
-use rome_formatter::{ConcatBuilder, FormatElement, FormatError, FormatResult};
+use crate::prelude::*;
+use crate::{ConcatBuilder, IntoFormatElement};
 
-/// The macro `format` is a convenience macro to chain a list of [FormatElement] or objects
+/// The macro `format_elements` is a convenience macro to
+/// use when writing a list of tokens that should be at the same level
+/// without particular rule.
+///
+/// # Examples
+///
+/// Let's suppose you need to create tokens for the string `"foo": "bar"`,
+/// you would write:
+///
+/// ```rust
+/// use rome_formatter::prelude::*;
+///
+/// let element = format_elements![token("foo:"), space_token(), token("bar")];
+/// ```
+///
+/// The macro can be also nested, although the macro needs to be decorated with the token you need.
+/// For example, let's try to format following string:
+///
+/// ```no_rust
+/// foo: { bar: lorem }
+/// ```
+/// You would write it like the following:
+///
+/// ```rust
+/// use rome_formatter::{FormatOptions, Formatted};
+/// use rome_formatter::prelude::*;
+///
+/// let element = format_elements![
+///   token("foo:"),
+///   space_token(),
+///   token("{"),
+///   space_token(),
+///   token("bar:"),
+///   space_token(),
+///   token("lorem"),
+///   space_token(),
+///   token("}")
+/// ];
+/// assert_eq!(r#"foo: { bar: lorem }"#, Formatted::new(element, FormatOptions::default()).print().as_code());
+/// ```
+/// Or you can also create single element:
+/// ```
+/// use rome_formatter::{Formatted, FormatOptions};
+/// use rome_formatter::prelude::*;
+///
+/// use rome_formatter::prelude::*;
+/// let element = format_elements![token("single")];
+/// assert_eq!(r#"single"#, Formatted::new(element, FormatOptions::default()).print().as_code());
+/// ```
+#[macro_export]
+macro_rules! format_elements {
+
+    // called for things like format_tokens!["hey"]
+    ($element:expr) => {
+        {
+            use $crate::FormatElement;
+            FormatElement::from($element)
+        }
+    };
+
+    ( $( $element:expr ),+ $(,)?) => {{
+        use $crate::{FormatElement, concat_elements};
+        concat_elements([
+            $(
+                     FormatElement::from($element)
+            ),+
+        ])
+    }};
+}
+
+/// The macro `formatted` is a convenience macro to chain a list of [FormatElement] or objects
 /// that implement [IntoFormatElement] (which is implemented by all object implementing [Format]).
 ///
 /// # Examples
@@ -10,8 +80,8 @@ use rome_formatter::{ConcatBuilder, FormatElement, FormatError, FormatResult};
 /// you would write:
 ///
 /// ```rust
-/// use rome_formatter::{concat_elements, format_elements, FormatElement, FormatOptions, FormatResult, space_token, token};
-/// use rome_js_formatter::{Format, formatted, Formatter};
+/// use rome_formatter::FormatOptions;
+/// use rome_formatter::prelude::*;
 ///
 /// struct TestFormat;
 ///
@@ -24,49 +94,51 @@ use rome_formatter::{ConcatBuilder, FormatElement, FormatError, FormatResult};
 /// let formatter = Formatter::new(FormatOptions::default());
 ///
 /// let formatted = formatted![
-///         &formatter,
+///     &formatter,
+///     [
 ///         token("a"),
 ///         space_token(),
 ///         token("simple"),
 ///         space_token(),
 ///         TestFormat
 ///     ]
-///     .unwrap();
+///  ]
+///  .unwrap();
 ///
-///     assert_eq!(
-///         formatted,
-///         concat_elements([
-///             token("a"),
-///             space_token(),
-///             token("simple"),
-///             space_token(),
-///             token("test")
-///         ])
+///  assert_eq!(
+///     formatted,
+///     concat_elements([
+///         token("a"),
+///         space_token(),
+///         token("simple"),
+///         space_token(),
+///         token("test")
+///     ])
 ///  );
 /// ```
 ///
 /// Or you can also create single element:
 /// ```
-/// use rome_formatter::{FormatOptions, token};
-/// use rome_js_formatter::{formatted, Formatter};
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::FormatOptions;
 ///
 /// let formatter = Formatter::new(FormatOptions::default());
 ///
-/// let formatted = formatted![&formatter, token("test")].unwrap();
+/// let formatted = formatted![&formatter, [token("test")]].unwrap();
 ///
 /// assert_eq!(formatted, token("test"));
 /// ```
 #[macro_export]
 macro_rules! formatted {
 
-    // called for things like formatted![formatter, token("test")]
-    ($formatter:expr, $element:expr) => {
+    // called for things like formatted![formatter, [token("test")]]
+    ($formatter:expr, [$element:expr]) => {
         {
             $crate::IntoFormatElement::into_format_element($element, $formatter)
         }
     };
 
-    ($formatter:expr, $($element:expr),+ $(,)?) => {{
+    ($formatter:expr, [$($element:expr),+ $(,)?]) => {{
         use $crate::macros::FormatBuilder;
 
         const SIZE: usize = $crate::__count_elements!($($element),*);
@@ -127,10 +199,8 @@ impl FormatBuilder {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Format, Formatter};
-    use rome_formatter::{
-        concat_elements, space_token, token, FormatElement, FormatOptions, FormatResult,
-    };
+    use crate::prelude::*;
+    use crate::FormatOptions;
 
     struct TestFormat;
 
@@ -144,7 +214,7 @@ mod tests {
     fn test_single_element() {
         let formatter = Formatter::new(FormatOptions::default());
 
-        let formatted = formatted![&formatter, TestFormat].unwrap();
+        let formatted = formatted![&formatter, [TestFormat]].unwrap();
 
         assert_eq!(formatted, token("test"));
     }
@@ -155,11 +225,13 @@ mod tests {
 
         let formatted = formatted![
             &formatter,
-            token("a"),
-            space_token(),
-            token("simple"),
-            space_token(),
-            TestFormat
+            [
+                token("a"),
+                space_token(),
+                token("simple"),
+                space_token(),
+                TestFormat
+            ]
         ]
         .unwrap();
 

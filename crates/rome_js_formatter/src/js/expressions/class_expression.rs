@@ -1,9 +1,13 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::{JsAnyClass, JsClassExpression};
 
-impl FormatNode for JsClassExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        JsAnyClass::from(self.clone()).format(formatter)
+impl FormatNodeFields<JsClassExpression> for FormatNodeRule<JsClassExpression> {
+    fn format_fields(
+        node: &JsClassExpression,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        formatted![formatter, [JsAnyClass::from(node.clone()).format()]]
     }
 }

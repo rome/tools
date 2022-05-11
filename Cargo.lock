@@ -1297,6 +1297,7 @@ dependencies = [
  "rome_core",
  "rome_diagnostics",
  "rome_flags",
+ "rome_formatter",
  "rome_fs",
  "rome_js_formatter",
  "rome_js_parser",
@@ -1365,6 +1366,7 @@ dependencies = [
 name = "rome_formatter"
 version = "0.1.0"
 dependencies = [
+ "cfg-if",
  "rome_rowan",
  "tracing",
 ]
@@ -1392,7 +1394,6 @@ dependencies = [
 name = "rome_js_formatter"
 version = "0.0.0"
 dependencies = [
- "cfg-if",
  "countme",
  "ctor",
  "iai",
@@ -1472,6 +1473,7 @@ dependencies = [
  "rome_console",
  "rome_diagnostics",
  "rome_flags",
+ "rome_formatter",
  "rome_fs",
  "rome_js_formatter",
  "rome_js_parser",
@@ -1502,6 +1504,7 @@ dependencies = [
  "rome_analyze",
  "rome_console",
  "rome_diagnostics",
+ "rome_formatter",
  "rome_js_formatter",
  "rome_js_parser",
  "serde_json",
@@ -2357,6 +2360,7 @@ dependencies = [
  "regex",
  "rome_analyze",
  "rome_diagnostics",
+ "rome_formatter",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",

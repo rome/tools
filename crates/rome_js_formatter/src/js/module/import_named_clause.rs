@@ -1,10 +1,14 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
 
-impl FormatNode for JsImportNamedClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClause> {
+    fn format_fields(
+        node: &JsImportNamedClause,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsImportNamedClauseFields {
             type_token,
             default_specifier,
@@ -12,29 +16,26 @@ impl FormatNode for JsImportNamedClause {
             from_token,
             source,
             assertion,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token =
-            type_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
-
-        let source = source.format(formatter)?;
-
-        let default = default_specifier
-            .with_or_empty(|specifier| formatted![formatter, specifier, space_token()]);
-        let from = from_token.format(formatter)?;
-        let name = named_import.format(formatter)?;
-        let assertion =
-            assertion.with_or_empty(|assertion| formatted![formatter, space_token(), assertion]);
         formatted![
             formatter,
-            type_token,
-            default,
-            name,
-            space_token(),
-            from,
-            space_token(),
-            source,
-            assertion
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                default_specifier
+                    .format()
+                    .with_or_empty(|specifier| formatted![formatter, [specifier, space_token()]]),
+                named_import.format(),
+                space_token(),
+                from_token.format(),
+                space_token(),
+                source.format(),
+                assertion
+                    .format()
+                    .with_or_empty(|assertion| formatted![formatter, [space_token(), assertion]])
+            ]
         ]
     }
 }

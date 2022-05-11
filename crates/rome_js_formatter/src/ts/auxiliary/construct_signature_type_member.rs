@@ -1,31 +1,35 @@
 use crate::prelude::*;
 use crate::utils::format_type_member_separator;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsConstructSignatureTypeMember, TsConstructSignatureTypeMemberFields};
 
-impl FormatNode for TsConstructSignatureTypeMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsConstructSignatureTypeMember>
+    for FormatNodeRule<TsConstructSignatureTypeMember>
+{
+    fn format_fields(
+        node: &TsConstructSignatureTypeMember,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsConstructSignatureTypeMemberFields {
             new_token,
             type_parameters,
             parameters,
             type_annotation,
             separator_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let new = new_token.format(formatter)?;
-        let type_parameters = type_parameters;
-        let parameters = parameters.format(formatter)?;
-        let type_annotation = type_annotation;
         let separator_token = format_type_member_separator(separator_token, formatter);
 
         formatted![
             formatter,
-            new,
-            space_token(),
-            type_parameters,
-            parameters,
-            type_annotation,
-            separator_token,
+            [
+                new_token.format(),
+                space_token(),
+                type_parameters.format(),
+                parameters.format(),
+                type_annotation.format(),
+                separator_token,
+            ]
         ]
     }
 }

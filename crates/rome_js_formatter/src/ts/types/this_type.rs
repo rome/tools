@@ -1,8 +1,11 @@
 use crate::prelude::*;
-use rome_js_syntax::TsThisType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsThisType, TsThisTypeFields};
 
-impl FormatNode for TsThisType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.this_token().format(formatter)
+impl FormatNodeFields<TsThisType> for FormatNodeRule<TsThisType> {
+    fn format_fields(node: &TsThisType, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let TsThisTypeFields { this_token } = node.as_fields();
+
+        formatted![formatter, [this_token.format()]]
     }
 }

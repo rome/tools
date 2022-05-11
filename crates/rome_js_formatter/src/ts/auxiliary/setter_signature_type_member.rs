@@ -1,25 +1,40 @@
 use crate::prelude::*;
 use crate::utils::format_type_member_separator;
-use rome_js_syntax::TsSetterSignatureTypeMember;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsSetterSignatureTypeMember, TsSetterSignatureTypeMemberFields};
 
-impl FormatNode for TsSetterSignatureTypeMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let set = self.set_token().format(formatter)?;
-        let name = self.name().format(formatter)?;
-        let l_paren = self.l_paren_token().format(formatter)?;
-        let parameter = self.parameter().format(formatter)?;
-        let r_paren = self.r_paren_token().format(formatter)?;
-        let separator = format_type_member_separator(self.separator_token(), formatter);
+impl FormatNodeFields<TsSetterSignatureTypeMember> for FormatNodeRule<TsSetterSignatureTypeMember> {
+    fn format_fields(
+        node: &TsSetterSignatureTypeMember,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let TsSetterSignatureTypeMemberFields {
+            set_token,
+            name,
+            l_paren_token,
+            parameter,
+            r_paren_token,
+            separator_token,
+        } = node.as_fields();
+
+        let set = set_token.format();
+        let name = name.format();
+        let l_paren = l_paren_token.format();
+        let parameter = parameter.format();
+        let r_paren = r_paren_token.format();
+        let separator = format_type_member_separator(separator_token, formatter);
 
         formatted![
             formatter,
-            set,
-            space_token(),
-            name,
-            l_paren,
-            parameter,
-            r_paren,
-            separator
+            [
+                set,
+                space_token(),
+                name,
+                l_paren,
+                parameter,
+                r_paren,
+                separator
+            ]
         ]
     }
 }

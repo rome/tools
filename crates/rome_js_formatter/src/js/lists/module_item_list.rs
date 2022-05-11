@@ -1,7 +1,9 @@
+use crate::generated::FormatJsModuleItemList;
 use crate::prelude::*;
 use rome_js_syntax::JsModuleItemList;
-impl Format for JsModuleItemList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(self.clone()))
+
+impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
+    fn format(node: &JsModuleItemList, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Ok(formatter.format_list(node))
     }
 }

@@ -1,8 +1,12 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::JsxReferenceIdentifier;
 
-impl FormatNode for JsxReferenceIdentifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.value_token().format(formatter)
+impl FormatNodeFields<JsxReferenceIdentifier> for FormatNodeRule<JsxReferenceIdentifier> {
+    fn format_fields(
+        node: &JsxReferenceIdentifier,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        formatted![formatter, [node.value_token().format()]]
     }
 }

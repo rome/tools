@@ -1,10 +1,16 @@
 use crate::prelude::*;
-use rome_js_syntax::TsNumberLiteralType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsNumberLiteralType, TsNumberLiteralTypeFields};
 
-impl FormatNode for TsNumberLiteralType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let minus = self.minus_token();
-        let literal = self.literal_token().format(formatter)?;
-        formatted![formatter, minus, literal]
+impl FormatNodeFields<TsNumberLiteralType> for FormatNodeRule<TsNumberLiteralType> {
+    fn format_fields(
+        node: &TsNumberLiteralType,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let TsNumberLiteralTypeFields {
+            minus_token,
+            literal_token,
+        } = node.as_fields();
+        formatted![formatter, [minus_token.format(), literal_token.format()]]
     }
 }

@@ -1,22 +1,32 @@
 use crate::prelude::*;
 use crate::utils::format_with_semicolon;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsBreakStatement;
 use rome_js_syntax::JsBreakStatementFields;
 
-impl FormatNode for JsBreakStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsBreakStatement> for FormatNodeRule<JsBreakStatement> {
+    fn format_fields(
+        node: &JsBreakStatement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsBreakStatementFields {
             break_token,
             label_token,
             semicolon_token,
-        } = self.as_fields();
-
-        let label = label_token.with_or_empty(|label| formatted![formatter, space_token(), label]);
+        } = node.as_fields();
 
         format_with_semicolon(
             formatter,
-            formatted![formatter, break_token.format(formatter)?, label]?,
+            formatted![
+                formatter,
+                [
+                    break_token.format(),
+                    label_token
+                        .format()
+                        .with_or_empty(|label| formatted![formatter, [space_token(), label]])
+                ]
+            ]?,
             semicolon_token,
         )
     }

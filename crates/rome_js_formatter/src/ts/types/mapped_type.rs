@@ -1,9 +1,10 @@
 use crate::prelude::*;
 use crate::utils::format_with_semicolon;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 
-impl FormatNode for TsMappedType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
+    fn format_fields(node: &TsMappedType, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsMappedTypeFields {
             l_curly_token,
             readonly_modifier,
@@ -17,17 +18,7 @@ impl FormatNode for TsMappedType {
             mapped_type,
             semicolon_token,
             r_curly_token,
-        } = self.as_fields();
-
-        let readonly = readonly_modifier
-            .with_or_empty(|readonly| formatted![formatter, readonly, space_token()]);
-        let l_square = l_brack_token.format(formatter)?;
-        let property_name = property_name.format(formatter)?;
-        let in_token = in_token.format(formatter)?;
-        let keys = keys_type.format(formatter)?;
-        let as_clause =
-            as_clause.with_or_empty(|clause| formatted![formatter, space_token(), clause]);
-        let r_square = r_brack_token.format(formatter)?;
+        } = node.as_fields();
 
         formatter.format_delimited_block_indent(
             &l_curly_token?,
@@ -35,17 +26,26 @@ impl FormatNode for TsMappedType {
                 formatter,
                 formatted![
                     formatter,
-                    readonly,
-                    l_square,
-                    property_name,
-                    space_token(),
-                    in_token,
-                    space_token(),
-                    keys,
-                    as_clause,
-                    r_square,
-                    optional_modifier,
-                    mapped_type,
+                    [
+                        readonly_modifier
+                            .format()
+                            .with_or_empty(|readonly| formatted![
+                                formatter,
+                                [readonly, space_token()]
+                            ]),
+                        l_brack_token.format(),
+                        property_name.format(),
+                        space_token(),
+                        in_token.format(),
+                        space_token(),
+                        keys_type.format(),
+                        as_clause
+                            .format()
+                            .with_or_empty(|clause| formatted![formatter, [space_token(), clause]]),
+                        r_brack_token.format(),
+                        optional_modifier.format(),
+                        mapped_type.format(),
+                    ]
                 ]?,
                 semicolon_token,
             )?,

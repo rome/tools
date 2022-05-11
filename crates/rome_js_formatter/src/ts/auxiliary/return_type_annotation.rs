@@ -1,15 +1,17 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsReturnTypeAnnotation;
 use rome_js_syntax::TsReturnTypeAnnotationFields;
 
-impl FormatNode for TsReturnTypeAnnotation {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let TsReturnTypeAnnotationFields { colon_token, ty } = self.as_fields();
+impl FormatNodeFields<TsReturnTypeAnnotation> for FormatNodeRule<TsReturnTypeAnnotation> {
+    fn format_fields(
+        node: &TsReturnTypeAnnotation,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let TsReturnTypeAnnotationFields { colon_token, ty } = node.as_fields();
         formatted![
             formatter,
-            colon_token.format(formatter)?,
-            space_token(),
-            ty.format(formatter)?
+            [colon_token.format(), space_token(), ty.format()]
         ]
     }
 }

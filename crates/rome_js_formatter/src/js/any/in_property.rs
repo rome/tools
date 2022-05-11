@@ -1,12 +1,13 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatJsAnyInProperty;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyInProperty;
-impl Format for JsAnyInProperty {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsPrivateName(node) => node.format(formatter),
-            Self::JsAnyExpression(node) => node.format(formatter),
+impl FormatRule<JsAnyInProperty> for FormatJsAnyInProperty {
+    fn format(node: &JsAnyInProperty, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyInProperty::JsPrivateName(node) => formatted![formatter, [node.format()]],
+            JsAnyInProperty::JsAnyExpression(node) => formatted![formatter, [node.format()]],
         }
     }
 }

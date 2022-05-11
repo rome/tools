@@ -1,14 +1,26 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatJsAnyObjectAssignmentPatternMember;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectAssignmentPatternMember;
-impl Format for JsAnyObjectAssignmentPatternMember {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsObjectAssignmentPatternShorthandProperty(node) => node.format(formatter),
-            Self::JsObjectAssignmentPatternProperty(node) => node.format(formatter),
-            Self::JsObjectAssignmentPatternRest(node) => node.format(formatter),
-            Self::JsUnknownAssignment(node) => node.format(formatter),
+impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignmentPatternMember {
+    fn format(
+        node: &JsAnyObjectAssignmentPatternMember,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
+                node,
+            ) => formatted![formatter, [node.format()]],
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node) => {
+                formatted![formatter, [node.format()]]
+            }
         }
     }
 }

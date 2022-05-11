@@ -1,4 +1,5 @@
 use crate::prelude::*;
+
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
     JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,
@@ -117,8 +118,8 @@ pub(crate) fn format_binary_like_expression(
 
             let left = parent.left()?;
 
-            let formatted = left.format_node(formatter)?;
             let has_comments = left.syntax().has_comments_direct();
+            let formatted = formatted![formatter, [left]]?;
 
             flatten_items.items.push(FlattenItem::regular(
                 formatted,
@@ -207,13 +208,17 @@ fn format_with_or_without_parenthesis(
         let (leading, content, trailing) = formatted_node.split_trivia();
         let formatted = formatted![
             formatter,
-            leading,
-            group_elements(formatted![
-                formatter,
-                token("("),
-                soft_block_indent(formatted![formatter, content, trailing]?),
-                token(")")
-            ]?)
+            [
+                leading,
+                group_elements(formatted![
+                    formatter,
+                    [
+                        token("("),
+                        soft_block_indent(formatted![formatter, [content, trailing]]?),
+                        token(")")
+                    ]
+                ]?)
+            ]
         ]?;
 
         (formatted, true)
@@ -312,7 +317,7 @@ impl FlattenItems {
     ) -> FormatResult<()> {
         let right = binary_like_expression.right()?;
         let has_comments = right.syntax().has_comments_direct();
-        let right_formatted = right.format(formatter)?;
+        let right_formatted = formatted![formatter, [right.format()]]?;
 
         let (formatted_node, _) = format_with_or_without_parenthesis(
             binary_like_expression.operator()?,
@@ -371,7 +376,7 @@ impl FlattenItems {
         let (formatted_right, parenthesized) = format_with_or_without_parenthesis(
             operator,
             right.syntax(),
-            right.format(formatter)?,
+            formatted![formatter, [right.format()]]?,
             formatter,
         )?;
 
@@ -425,7 +430,7 @@ impl FlattenItems {
                 let operator = match &element.operator {
                     Some(operator) => {
                         // SAFETY: `syntax_token.format` never returns MissingToken.
-                        formatted![formatter, space_token(), operator].unwrap()
+                        formatted![formatter, [space_token(), operator.format()]].unwrap()
                     }
                     None => empty_element(),
                 };
@@ -864,14 +869,14 @@ impl AstNode for JsAnyBinaryLikeLeftExpression {
     }
 }
 
-impl FormatNode for JsAnyBinaryLikeLeftExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsAnyBinaryLikeLeftExpression {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                expression.format(formatter)
+                formatted![formatter, [expression.format()]]
             }
             JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
-                private_name.format_fields(formatter)
+                formatted![formatter, [private_name.format()]]
             }
         }
     }

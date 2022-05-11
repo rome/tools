@@ -1,18 +1,20 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsDeclareStatement;
 use rome_js_syntax::TsDeclareStatementFields;
 
-impl FormatNode for TsDeclareStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsDeclareStatement> for FormatNodeRule<TsDeclareStatement> {
+    fn format_fields(
+        node: &TsDeclareStatement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsDeclareStatementFields {
             declaration,
             declare_token,
-        } = self.as_fields();
+        } = node.as_fields();
         formatted![
             formatter,
-            declare_token.format(formatter)?,
-            space_token(),
-            declaration.format(formatter)?
+            [declare_token.format(), space_token(), declaration.format()]
         ]
     }
 }

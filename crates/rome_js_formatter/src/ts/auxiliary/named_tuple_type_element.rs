@@ -1,26 +1,29 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsNamedTupleTypeElement, TsNamedTupleTypeElementFields};
 
-impl FormatNode for TsNamedTupleTypeElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsNamedTupleTypeElement> for FormatNodeRule<TsNamedTupleTypeElement> {
+    fn format_fields(
+        node: &TsNamedTupleTypeElement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsNamedTupleTypeElementFields {
             ty,
             question_mark_token,
             colon_token,
             name,
             dotdotdot_token,
-        } = self.as_fields();
-        let name = name.format(formatter)?;
-        let colon = colon_token.format(formatter)?;
-        let ty = ty.format(formatter)?;
+        } = node.as_fields();
         formatted![
             formatter,
-            dotdotdot_token,
-            name,
-            question_mark_token,
-            colon,
-            space_token(),
-            ty,
+            [
+                dotdotdot_token.format(),
+                name.format(),
+                question_mark_token.format(),
+                colon_token.format(),
+                space_token(),
+                ty.format(),
+            ]
         ]
     }
 }

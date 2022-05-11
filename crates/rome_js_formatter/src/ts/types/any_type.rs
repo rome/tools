@@ -1,8 +1,11 @@
 use crate::prelude::*;
-use rome_js_syntax::TsAnyType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsAnyType, TsAnyTypeFields};
 
-impl FormatNode for TsAnyType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.any_token().format(formatter)
+impl FormatNodeFields<TsAnyType> for FormatNodeRule<TsAnyType> {
+    fn format_fields(node: &TsAnyType, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let TsAnyTypeFields { any_token } = node.as_fields();
+
+        formatted![formatter, [any_token.format()]]
     }
 }

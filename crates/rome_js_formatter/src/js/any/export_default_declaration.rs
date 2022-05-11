@@ -1,14 +1,26 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatJsAnyExportDefaultDeclaration;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyExportDefaultDeclaration;
-impl Format for JsAnyExportDefaultDeclaration {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsClassExportDefaultDeclaration(node) => node.format(formatter),
-            Self::JsFunctionExportDefaultDeclaration(node) => node.format(formatter),
-            Self::TsDeclareFunctionDeclaration(node) => node.format(formatter),
-            Self::TsInterfaceDeclaration(node) => node.format(formatter),
+impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDeclaration {
+    fn format(
+        node: &JsAnyExportDefaultDeclaration,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
         }
     }
 }

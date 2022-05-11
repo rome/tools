@@ -1,55 +1,60 @@
-use crate::format_extensions::FormatOptional;
+use crate::prelude::*;
 use crate::utils::is_simple_expression;
-use crate::{
-    concat_elements, empty_element, formatted, group_elements, hard_group_elements,
-    if_group_breaks, soft_block_indent, soft_line_indent_or_space, space_token, token, Format,
-    FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
 
+use crate::generated::FormatJsAnyFunction;
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
 
-impl Format for JsAnyFunction {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
+    fn format(node: &JsAnyFunction, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut tokens = vec![];
 
         tokens.push(formatted![
             formatter,
-            self.async_token()
-                .with_or_empty(|token| { formatted![formatter, token, space_token()] })
+            [node
+                .async_token()
+                .format()
+                .with_or_empty(|token| { formatted![formatter, [token, space_token()]] })]
         ]?);
 
-        tokens.push(self.function_token().format(formatter)?);
-        tokens.push(self.star_token().format(formatter)?);
+        tokens.push(formatted![formatter, [node.function_token().format()]]?);
+        tokens.push(formatted![formatter, [node.star_token().format()]]?);
 
-        tokens.push(match self {
+        tokens.push(match node {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
             _ => formatted![
                 formatter,
-                self.id()
-                    .with_or(|id| formatted![formatter, space_token(), id], space_token,)
+                [node
+                    .id()
+                    .format()
+                    .with_or(|id| formatted![formatter, [space_token(), id]], space_token,)]
             ]?,
         });
 
-        tokens.push(self.type_parameters().format(formatter)?);
+        tokens.push(formatted![formatter, [node.type_parameters().format()]]?);
 
-        tokens.push(match self.parameters()? {
+        tokens.push(match node.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => group_elements(formatted![
                 formatter,
-                token("("),
-                soft_block_indent(formatted![
-                    formatter,
-                    binding.format(formatter)?,
-                    if_group_breaks(token(",")),
-                ]?),
-                token(")"),
+                [
+                    token("("),
+                    soft_block_indent(formatted![
+                        formatter,
+                        [binding.format(), if_group_breaks(token(",")),]
+                    ]?),
+                    token(")"),
+                ]
             ]?),
-            JsAnyArrowFunctionParameters::JsParameters(params) => params.format_node(formatter)?,
+            JsAnyArrowFunctionParameters::JsParameters(params) => {
+                formatted![formatter, [params.format()]]?
+            }
         });
 
-        tokens.push(self.return_type_annotation().format(formatter)?);
+        tokens.push(formatted![
+            formatter,
+            [node.return_type_annotation().format()]
+        ]?);
 
         tokens.push(space_token());
 
@@ -66,12 +71,12 @@ impl Format for JsAnyFunction {
         // The line break for `a + b` is not necessary
         //
         let mut body_group = vec![];
-        if let JsAnyFunction::JsArrowFunctionExpression(arrow) = self {
-            body_group.push(arrow.fat_arrow_token().format(formatter)?);
+        if let JsAnyFunction::JsArrowFunctionExpression(arrow) = node {
+            body_group.push(formatted![formatter, [arrow.fat_arrow_token().format()]]?);
             body_group.push(space_token());
         }
 
-        let body = self.body()?;
+        let body = node.body()?;
         // With arrays, arrow functions and objects, they have a natural line breaking strategy:
         // Arrays and objects become blocks:
         //
@@ -102,9 +107,12 @@ impl Format for JsAnyFunction {
         };
 
         if body_has_soft_line_break {
-            body_group.push(self.body().format(formatter)?);
+            body_group.push(formatted![formatter, [node.body().format()]]?);
         } else {
-            body_group.push(soft_line_indent_or_space(self.body().format(formatter)?));
+            body_group.push(soft_line_indent_or_space(formatted![
+                formatter,
+                [node.body().format()]
+            ]?));
         }
 
         tokens.push(group_elements(concat_elements(body_group)));

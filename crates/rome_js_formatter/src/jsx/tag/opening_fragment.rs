@@ -1,16 +1,17 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{JsxOpeningFragment, JsxOpeningFragmentFields};
 
-impl FormatNode for JsxOpeningFragment {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsxOpeningFragment> for FormatNodeRule<JsxOpeningFragment> {
+    fn format_fields(
+        node: &JsxOpeningFragment,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsxOpeningFragmentFields {
             r_angle_token,
             l_angle_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            l_angle_token.format(formatter)?,
-            r_angle_token.format(formatter)?
-        ])
+        formatted![formatter, [l_angle_token.format(), r_angle_token.format()]]
     }
 }

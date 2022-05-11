@@ -1,7 +1,8 @@
 use rome_core::App;
 use rome_formatter::LineWidth;
+use rome_formatter::{FormatOptions, IndentStyle, Printed, QuoteStyle};
 use rome_fs::RomePath;
-use rome_js_formatter::{format_node, FormatOptions, IndentStyle, Printed, QuoteStyle};
+use rome_js_formatter::format_node;
 use rome_js_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;

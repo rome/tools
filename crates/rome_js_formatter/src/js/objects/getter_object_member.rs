@@ -1,10 +1,14 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsGetterObjectMember;
 use rome_js_syntax::JsGetterObjectMemberFields;
 
-impl FormatNode for JsGetterObjectMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsGetterObjectMember> for FormatNodeRule<JsGetterObjectMember> {
+    fn format_fields(
+        node: &JsGetterObjectMember,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsGetterObjectMemberFields {
             get_token,
             name,
@@ -12,18 +16,20 @@ impl FormatNode for JsGetterObjectMember {
             r_paren_token,
             return_type,
             body,
-        } = self.as_fields();
+        } = node.as_fields();
 
         Ok(hard_group_elements(formatted![
             formatter,
-            get_token.format(formatter)?,
-            space_token(),
-            name.format(formatter)?,
-            l_paren_token.format(formatter)?,
-            r_paren_token.format(formatter)?,
-            return_type,
-            space_token(),
-            body.format(formatter)?
+            [
+                get_token.format(),
+                space_token(),
+                name.format(),
+                l_paren_token.format(),
+                r_paren_token.format(),
+                return_type.format(),
+                space_token(),
+                body.format()
+            ]
         ]?))
     }
 }

@@ -1,32 +1,12 @@
-use crate::{
-    block_indent, concat_elements, empty_element, empty_line, format_elements, formatted,
-    group_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
-    join_elements_hard_line, line_suffix, soft_block_indent, soft_line_break_or_space, space_token,
-    Format, FormatElement, FormatOptions, TextRange, Token, Verbatim,
-};
-#[cfg(debug_assertions)]
-use rome_formatter::printed_tokens::PrintedTokens;
+use crate::prelude::*;
+
 use rome_formatter::{normalize_newlines, FormatResult, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 
-use rome_rowan::{
-    AstNode, AstNodeList, AstSeparatedList, Language, SyntaxNode, SyntaxToken, SyntaxTriviaPiece,
-};
-#[cfg(debug_assertions)]
-use std::cell::RefCell;
-use std::iter::once;
+use crate::AsFormat;
+use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece, TextRange};
 
-/// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
-/// The formatter is passed to the [Format] implementation of every node in the CST so that they
-/// can use it to format their children.
-#[derive(Debug, Default)]
-pub struct Formatter {
-    options: FormatOptions,
-    // This is using a RefCell as it only exists in debug mode,
-    // the Formatter is still completely immutable in release builds
-    #[cfg(debug_assertions)]
-    pub(super) printed_tokens: RefCell<PrintedTokens>,
-}
+use std::iter::once;
 
 #[derive(Debug)]
 pub enum TrailingSeparator {
@@ -50,103 +30,12 @@ impl Default for TrailingSeparator {
     }
 }
 
-impl Formatter {
-    /// Creates a new context that uses the given formatter options
-    pub fn new(options: FormatOptions) -> Self {
-        Self {
-            options,
-            #[cfg(debug_assertions)]
-            printed_tokens: RefCell::default(),
-        }
-    }
-
-    /// Returns the [FormatOptions] specifying how to format the current CST
-    #[inline]
-    pub fn options(&self) -> &FormatOptions {
-        &self.options
-    }
-
-    /// Tracks the given token as formatted
-
-    pub fn track_token<L: Language>(&self, #[allow(unused_variables)] token: &SyntaxToken<L>) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.printed_tokens.borrow_mut().track_token(token);
-            }
-        }
-    }
-
-    pub fn assert_formatted_all_tokens<L: Language>(
-        &self,
-        #[allow(unused_variables)] root: &SyntaxNode<L>,
-    ) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                let printed_tokens = self.printed_tokens.borrow();
-                printed_tokens.assert_all_tracked(root);
-            }
-        }
-    }
-
-    /// Formats all items of the iterator and returns the formatted result
-    ///
-    /// Returns the [Err] of the first item that failed to format.
-    pub fn format_all<T: Format>(
-        &self,
-        nodes: impl IntoIterator<Item = T>,
-    ) -> FormatResult<impl Iterator<Item = FormatElement>> {
-        let mut result = Vec::new();
-
-        for node in nodes {
-            match node.format(self) {
-                Ok(formatted) => {
-                    result.push(formatted);
-                }
-                Err(err) => return Err(err),
-            }
-        }
-
-        Ok(result.into_iter())
-    }
-}
-
 /// Determines if the whitespace separating comment trivias
 /// from their associated tokens should be printed or trimmed
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub(super) enum TriviaPrintMode {
     Full,
     Trim,
-}
-
-/// Snapshot of the formatter state  used to handle backtracking if
-/// errors are encountered in the formatting process and the formatter
-/// has to fallback to printing raw tokens
-///
-/// In practice this only saves the set of printed tokens in debug
-/// mode and compiled to nothing in release mode
-pub struct FormatterSnapshot {
-    #[cfg(debug_assertions)]
-    printed_tokens: PrintedTokens,
-}
-
-impl Formatter {
-    /// Take a snapshot of the state of the formatter
-    pub fn snapshot(&self) -> FormatterSnapshot {
-        FormatterSnapshot {
-            #[cfg(debug_assertions)]
-            printed_tokens: self.printed_tokens.borrow().clone(),
-        }
-    }
-
-    #[cfg(debug_assertions)]
-    /// Restore the state of the formatter to a previous snapshot
-    pub fn restore(&self, snapshot: FormatterSnapshot) {
-        *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
-    }
-
-    #[cfg(not(debug_assertions))]
-    /// Restore the state of the formatter to a previous snapshot
-    pub fn restore(&self, _: FormatterSnapshot) {}
 }
 
 /// "Formats" a node according to its original formatting in the source text. Being able to format
@@ -211,12 +100,14 @@ impl Format for FormatSuppressedNode<'_> {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         formatted![
             formatter,
-            // Insert a force a line break to ensure the suppression comment is on its own line
-            // and correctly registers as a leading trivia on the opening token of this node
-            hard_line_break(),
-            FormatElement::Verbatim(Verbatim::new_suppressed(format_verbatim_node_or_token(
-                self.node, formatter
-            ))),
+            [
+                // Insert a force a line break to ensure the suppression comment is on its own line
+                // and correctly registers as a leading trivia on the opening token of this node
+                hard_line_break(),
+                FormatElement::Verbatim(Verbatim::new_suppressed(format_verbatim_node_or_token(
+                    self.node, formatter
+                ))),
+            ]
         ]
     }
 }
@@ -618,7 +509,7 @@ pub(crate) trait JsFormatter {
         trailing_separator: TrailingSeparator,
     ) -> FormatResult<std::vec::IntoIter<FormatElement>>
     where
-        T: AstNode<Language = JsLanguage> + Format,
+        for<'a> T: AstNode<Language = JsLanguage> + AsFormat<'a>,
         L: AstSeparatedList<Language = JsLanguage, Node = T>,
         F: Fn() -> FormatElement,
     {
@@ -627,7 +518,7 @@ pub(crate) trait JsFormatter {
         let formatter = self.as_formatter();
 
         for (index, element) in list.elements().enumerate() {
-            let node = element.node()?.format(formatter)?;
+            let node = formatted![formatter, [element.node()?.format()]]?;
 
             // Reuse the existing trailing separator or create it if it wasn't in the
             // input source. Only print the last trailing token if the outer group breaks
@@ -639,12 +530,12 @@ pub(crate) trait JsFormatter {
                         // but still print its associated trivias unconditionally
                         self.format_replaced(separator, if_group_breaks(Token::from(separator)))
                     } else if trailing_separator.is_mandatory() {
-                        separator.format(formatter)?
+                        formatted![formatter, [separator.format()]]?
                     } else {
                         empty_element()
                     }
                 } else {
-                    separator.format(formatter)?
+                    formatted![formatter, [separator.format()]]?
                 }
             } else if index == last_index {
                 if trailing_separator.is_allowed() {
@@ -658,7 +549,7 @@ pub(crate) trait JsFormatter {
                 separator_factory()
             };
 
-            result.push(formatted![formatter, node, separator]?);
+            result.push(formatted![formatter, [node, separator]]?);
         }
 
         Ok(result.into_iter())
@@ -671,17 +562,17 @@ pub(crate) trait JsFormatter {
     /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    fn format_list<List, Node: AstNode<Language = JsLanguage> + Format>(
-        &self,
-        list: List,
-    ) -> FormatElement
+    fn format_list<List, Node>(&self, list: &List) -> FormatElement
     where
         List: AstNodeList<Language = JsLanguage, Node = Node>,
+        for<'a> Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
     {
         let formatter = self.as_formatter();
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = formatter.snapshot();
-            let elem = match module_item.format(formatter) {
+            let format = module_item.format();
+
+            let elem = match formatted![formatter, [format]] {
                 Ok(result) => result,
                 Err(_) => {
                     formatter.restore(snapshot);
@@ -727,8 +618,7 @@ fn format_delimited(
     let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
         formatted![
             formatter,
-            open_token_trailing_trivia,
-            soft_line_break_or_space()
+            [open_token_trailing_trivia, soft_line_break_or_space()]
         ]?
     } else {
         empty_element()
@@ -736,8 +626,7 @@ fn format_delimited(
     let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
         formatted![
             formatter,
-            soft_line_break_or_space(),
-            close_token_leading_trivia
+            [soft_line_break_or_space(), close_token_leading_trivia]
         ]?
     } else {
         empty_element()
@@ -746,15 +635,19 @@ fn format_delimited(
     let formatted_content = match content {
         DelimitedContent::BlockIndent(content) => block_indent(formatted![
             formatter,
-            open_token_trailing_trivia,
-            content,
-            close_token_leading_trivia
+            [
+                open_token_trailing_trivia,
+                content,
+                close_token_leading_trivia
+            ]
         ]?),
         DelimitedContent::SoftBlockIndent(content) => soft_block_indent(formatted![
             formatter,
-            open_token_trailing_trivia,
-            content,
-            close_token_leading_trivia
+            [
+                open_token_trailing_trivia,
+                content,
+                close_token_leading_trivia
+            ]
         ]?),
         DelimitedContent::SoftBlockSpaces(content) => {
             if open_token_trailing_trivia.is_empty()
@@ -765,14 +658,18 @@ fn format_delimited(
             } else {
                 formatted![
                     formatter,
-                    indent(formatted![
-                        formatter,
+                    [
+                        indent(formatted![
+                            formatter,
+                            [
+                                soft_line_break_or_space(),
+                                open_token_trailing_trivia,
+                                content,
+                                close_token_leading_trivia,
+                            ]
+                        ]?),
                         soft_line_break_or_space(),
-                        open_token_trailing_trivia,
-                        content,
-                        close_token_leading_trivia,
-                    ]?),
-                    soft_line_break_or_space(),
+                    ]
                 ]?
             }
         }
@@ -780,12 +677,14 @@ fn format_delimited(
 
     formatted![
         formatter,
-        format_leading_trivia(open_token, TriviaPrintMode::Full),
-        group_elements(format_elements![
-            Token::from(open_token),
-            formatted_content,
-            Token::from(close_token),
-        ]),
-        format_trailing_trivia(close_token),
+        [
+            format_leading_trivia(open_token, TriviaPrintMode::Full),
+            group_elements(format_elements![
+                Token::from(open_token),
+                formatted_content,
+                Token::from(close_token),
+            ]),
+            format_trailing_trivia(close_token),
+        ]
     ]
 }

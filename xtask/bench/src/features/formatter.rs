@@ -1,5 +1,6 @@
 use crate::BenchmarkSummary;
-use rome_js_formatter::{format_node, FormatOptions, Printed};
+use rome_formatter::{FormatOptions, Printed};
+use rome_js_formatter::format_node;
 use rome_js_syntax::JsSyntaxNode;
 use std::fmt::{Display, Formatter};
 use std::time::Duration;

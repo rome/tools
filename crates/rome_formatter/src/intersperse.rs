@@ -2,7 +2,7 @@
 
 use std::{fmt::Debug, iter::Peekable};
 
-use crate::FormatElement;
+use crate::prelude::*;
 
 /// An iterator adapter that places a separator between all elements.
 #[derive(Debug, Clone)]

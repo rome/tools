@@ -1,15 +1,29 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatJsAnyObjectBindingPatternMember;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectBindingPatternMember;
-impl Format for JsAnyObjectBindingPatternMember {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsObjectBindingPatternProperty(node) => node.format(formatter),
-            Self::JsObjectBindingPatternRest(node) => node.format(formatter),
-            Self::JsObjectBindingPatternShorthandProperty(node) => node.format(formatter),
-            Self::JsIdentifierBinding(node) => node.format(formatter),
-            Self::JsUnknownBinding(node) => node.format(formatter),
+impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPatternMember {
+    fn format(
+        node: &JsAnyObjectBindingPatternMember,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectBindingPatternMember::JsIdentifierBinding(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => {
+                formatted![formatter, [node.format()]]
+            }
         }
     }
 }

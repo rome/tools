@@ -1,13 +1,23 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatTsAnyPropertyParameterModifier;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertyParameterModifier;
-impl Format for TsAnyPropertyParameterModifier {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsAccessibilityModifier(node) => node.format(formatter),
-            Self::TsReadonlyModifier(node) => node.format(formatter),
-            Self::TsOverrideModifier(node) => node.format(formatter),
+impl FormatRule<TsAnyPropertyParameterModifier> for FormatTsAnyPropertyParameterModifier {
+    fn format(
+        node: &TsAnyPropertyParameterModifier,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            TsAnyPropertyParameterModifier::TsAccessibilityModifier(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            TsAnyPropertyParameterModifier::TsReadonlyModifier(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            TsAnyPropertyParameterModifier::TsOverrideModifier(node) => {
+                formatted![formatter, [node.format()]]
+            }
         }
     }
 }

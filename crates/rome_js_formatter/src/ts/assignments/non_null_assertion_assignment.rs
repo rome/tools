@@ -1,17 +1,19 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsNonNullAssertionAssignment;
 use rome_js_syntax::TsNonNullAssertionAssignmentFields;
 
-impl FormatNode for TsNonNullAssertionAssignment {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsNonNullAssertionAssignment>
+    for FormatNodeRule<TsNonNullAssertionAssignment>
+{
+    fn format_fields(
+        node: &TsNonNullAssertionAssignment,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsNonNullAssertionAssignmentFields {
             assignment,
             excl_token,
-        } = self.as_fields();
-        formatted![
-            formatter,
-            assignment.format(formatter)?,
-            excl_token.format(formatter)?
-        ]
+        } = node.as_fields();
+        formatted![formatter, [assignment.format(), excl_token.format()]]
     }
 }

@@ -1,26 +1,24 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use std::convert::Infallible;
 
 use crate::formatter::TrailingSeparator;
 use crate::utils::array::format_array_node;
-use crate::{
-    fill_elements, token, utils::has_formatter_trivia, Format, FormatElement, Formatter,
-    JsFormatter,
-};
 
+use crate::generated::FormatJsArrayElementList;
+use crate::utils::has_formatter_trivia;
 use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};
 
-impl Format for JsArrayElementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
+impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
+    fn format(node: &JsArrayElementList, formatter: &Formatter) -> FormatResult<FormatElement> {
+        if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
-                formatter.format_separated(self, || token(","), TrailingSeparator::default())?,
+                formatter.format_separated(node, || token(","), TrailingSeparator::default())?,
             ));
         }
 
-        format_array_node(self, formatter)
+        format_array_node(node, formatter)
     }
 }
 

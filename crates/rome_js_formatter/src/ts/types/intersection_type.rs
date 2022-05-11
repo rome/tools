@@ -1,13 +1,17 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsIntersectionType;
 use rome_js_syntax::TsIntersectionTypeFields;
 
-impl FormatNode for TsIntersectionType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType> {
+    fn format_fields(
+        node: &TsIntersectionType,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsIntersectionTypeFields {
             leading_separator_token,
             types,
-        } = self.as_fields();
+        } = node.as_fields();
 
         let leading_separator_token = match leading_separator_token {
             Some(token) => {
@@ -25,9 +29,7 @@ impl FormatNode for TsIntersectionType {
 
         Ok(group_elements(indent(formatted![
             formatter,
-            soft_line_break(),
-            leading_separator_token,
-            types.format(formatter)?,
+            [soft_line_break(), leading_separator_token, types.format(),]
         ]?)))
     }
 }

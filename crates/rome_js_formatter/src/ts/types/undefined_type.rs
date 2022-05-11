@@ -1,8 +1,11 @@
 use crate::prelude::*;
-use rome_js_syntax::TsUndefinedType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsUndefinedType, TsUndefinedTypeFields};
 
-impl FormatNode for TsUndefinedType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.undefined_token().format(formatter)
+impl FormatNodeFields<TsUndefinedType> for FormatNodeRule<TsUndefinedType> {
+    fn format_fields(node: &TsUndefinedType, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let TsUndefinedTypeFields { undefined_token } = node.as_fields();
+
+        formatted![formatter, [undefined_token.format()]]
     }
 }

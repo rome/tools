@@ -1,15 +1,19 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{
     JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
 };
 
-impl FormatNode for JsxExpressionAttributeValue {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsxExpressionAttributeValue> for FormatNodeRule<JsxExpressionAttributeValue> {
+    fn format_fields(
+        node: &JsxExpressionAttributeValue,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsxExpressionAttributeValueFields {
             l_curly_token,
             expression,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
         let expression = expression?;
 
@@ -50,16 +54,18 @@ impl FormatNode for JsxExpressionAttributeValue {
                 | JsAnyExpression::JsArrayExpression(_)
                 | JsAnyExpression::JsCallExpression(_)
         ) {
-            expression.format(formatter)?
+            formatted![formatter, [expression.format()]]?
         } else {
-            soft_block_indent(expression.format(formatter)?)
+            soft_block_indent(formatted![formatter, [expression.format()]]?)
         };
 
         Ok(group_elements(formatted![
             formatter,
-            l_curly_token.format(formatter)?,
-            formatted_expression,
-            r_curly_token.format(formatter)?,
+            [
+                l_curly_token.format(),
+                formatted_expression,
+                r_curly_token.format(),
+            ]
         ]?))
     }
 }

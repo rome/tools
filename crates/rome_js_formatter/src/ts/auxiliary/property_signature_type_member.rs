@@ -1,20 +1,35 @@
 use crate::prelude::*;
 use crate::utils::format_type_member_separator;
-use rome_js_syntax::TsPropertySignatureTypeMember;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsPropertySignatureTypeMember, TsPropertySignatureTypeMemberFields};
 
-impl FormatNode for TsPropertySignatureTypeMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.name().format(formatter)?;
-        let separator = format_type_member_separator(self.separator_token(), formatter);
+impl FormatNodeFields<TsPropertySignatureTypeMember>
+    for FormatNodeRule<TsPropertySignatureTypeMember>
+{
+    fn format_fields(
+        node: &TsPropertySignatureTypeMember,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let TsPropertySignatureTypeMemberFields {
+            readonly_token,
+            name,
+            optional_token,
+            type_annotation,
+            separator_token,
+        } = node.as_fields();
+
+        let separator = format_type_member_separator(separator_token, formatter);
 
         formatted![
             formatter,
-            self.readonly_token(),
-            space_token(),
-            name,
-            self.optional_token(),
-            self.type_annotation(),
-            separator
+            [
+                readonly_token.format(),
+                space_token(),
+                name.format(),
+                optional_token.format(),
+                type_annotation.format(),
+                separator
+            ]
         ]
     }
 }

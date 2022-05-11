@@ -1,8 +1,14 @@
 use crate::prelude::*;
-use rome_js_syntax::TsNonPrimitiveType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsNonPrimitiveType, TsNonPrimitiveTypeFields};
 
-impl FormatNode for TsNonPrimitiveType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.object_token().format(formatter)
+impl FormatNodeFields<TsNonPrimitiveType> for FormatNodeRule<TsNonPrimitiveType> {
+    fn format_fields(
+        node: &TsNonPrimitiveType,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let TsNonPrimitiveTypeFields { object_token } = node.as_fields();
+
+        formatted![formatter, [object_token.format()]]
     }
 }

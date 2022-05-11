@@ -1,14 +1,17 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsNameWithTypeArguments, TsNameWithTypeArgumentsFields};
 
-impl FormatNode for TsNameWithTypeArguments {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsNameWithTypeArguments> for FormatNodeRule<TsNameWithTypeArguments> {
+    fn format_fields(
+        node: &TsNameWithTypeArguments,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsNameWithTypeArgumentsFields {
             name,
             type_arguments,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let name = name.format(formatter)?;
-        formatted![formatter, name, type_arguments]
+        formatted![formatter, [name.format(), type_arguments.format()]]
     }
 }

@@ -1,20 +1,22 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsQualifiedModuleName;
 use rome_js_syntax::TsQualifiedModuleNameFields;
 
-impl FormatNode for TsQualifiedModuleName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsQualifiedModuleName> for FormatNodeRule<TsQualifiedModuleName> {
+    fn format_fields(
+        node: &TsQualifiedModuleName,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsQualifiedModuleNameFields {
             left,
             dot_token,
             right,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            left.format(formatter)?,
-            dot_token.format(formatter)?,
-            right.format(formatter)?,
+            [left.format(), dot_token.format(), right.format(),]
         ]
     }
 }

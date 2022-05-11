@@ -1,46 +1,54 @@
 use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
 
+use crate::FormatNodeFields;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
     JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
-impl FormatNode for JsParenthesizedExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesizedExpression> {
+    fn format_fields(
+        node: &JsParenthesizedExpression,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsParenthesizedExpressionFields {
             l_paren_token,
             expression,
             r_paren_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let parenthesis_can_be_omitted = parenthesis_can_be_omitted(self)?;
+        let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node)?;
 
         let expression = expression?;
 
-        if is_simple_parenthesized_expression(self)? {
+        if is_simple_parenthesized_expression(node)? {
             Ok(hard_group_elements(formatted![
                 formatter,
-                if parenthesis_can_be_omitted {
-                    formatter.format_replaced(&l_paren_token?, empty_element())
-                } else {
-                    l_paren_token.format(formatter)?
-                },
-                expression.format(formatter)?,
-                if parenthesis_can_be_omitted {
-                    formatter.format_replaced(&r_paren_token?, empty_element())
-                } else {
-                    r_paren_token.format(formatter)?
-                },
+                [
+                    if parenthesis_can_be_omitted {
+                        formatter.format_replaced(&l_paren_token?, empty_element())
+                    } else {
+                        formatted![formatter, [l_paren_token.format()]]?
+                    },
+                    expression.format(),
+                    if parenthesis_can_be_omitted {
+                        formatter.format_replaced(&r_paren_token?, empty_element())
+                    } else {
+                        formatted![formatter, [r_paren_token.format()]]?
+                    },
+                ]
             ]?))
         } else if parenthesis_can_be_omitted {
             // we mimic the format delimited utility function
             formatted![
                 formatter,
-                formatter.format_replaced(&l_paren_token?, empty_element()),
-                group_elements(expression.format(formatter)?),
-                formatter.format_replaced(&r_paren_token?, empty_element()),
+                [
+                    formatter.format_replaced(&l_paren_token?, empty_element()),
+                    group_elements(formatted![formatter, [expression.format()]]?),
+                    formatter.format_replaced(&r_paren_token?, empty_element()),
+                ]
             ]
         }
         // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
@@ -65,14 +73,16 @@ impl FormatNode for JsParenthesizedExpression {
         else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
             formatted![
                 formatter,
-                &l_paren_token,
-                expression.format(formatter)?,
-                &r_paren_token,
+                [
+                    l_paren_token.format(),
+                    expression.format(),
+                    r_paren_token.format(),
+                ]
             ]
         } else {
             formatter.format_delimited_soft_block_indent(
                 &l_paren_token?,
-                expression.format(formatter)?,
+                formatted![formatter, [expression.format()]]?,
                 &r_paren_token?,
             )
         }

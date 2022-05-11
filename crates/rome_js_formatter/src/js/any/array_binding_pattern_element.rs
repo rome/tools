@@ -1,14 +1,26 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatJsAnyArrayBindingPatternElement;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayBindingPatternElement;
-impl Format for JsAnyArrayBindingPatternElement {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsArrayHole(node) => node.format(formatter),
-            Self::JsAnyBindingPattern(node) => node.format(formatter),
-            Self::JsBindingPatternWithDefault(node) => node.format(formatter),
-            Self::JsArrayBindingPatternRestElement(node) => node.format(formatter),
+impl FormatRule<JsAnyArrayBindingPatternElement> for FormatJsAnyArrayBindingPatternElement {
+    fn format(
+        node: &JsAnyArrayBindingPatternElement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyArrayBindingPatternElement::JsArrayHole(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(node) => {
+                formatted![formatter, [node.format()]]
+            }
         }
     }
 }
