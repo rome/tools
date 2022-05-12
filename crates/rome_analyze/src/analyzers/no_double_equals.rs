@@ -1,12 +1,12 @@
 use rome_console::markup;
-use rome_diagnostics::Severity;
+use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression, T};
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategories, RuleCategory};
+use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoDoubleEquals {}
 
@@ -50,7 +50,8 @@ impl Rule for NoDoubleEquals {
         )?;
 
         Some(RuleAction {
-            category: ActionCategories::SUGGESTION,
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with strict equality" }.to_owned(),
             root,
         })

@@ -1,4 +1,5 @@
 use rome_console::markup;
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyRoot, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
@@ -6,9 +7,8 @@ use rome_js_syntax::{
 use rome_rowan::AstNodeExt;
 
 use crate::{
-    categories::RuleCategory,
     registry::{Rule, RuleAction},
-    ActionCategories,
+    ActionCategory, RuleCategory,
 };
 
 pub(crate) enum FlipBinExp {}
@@ -48,7 +48,8 @@ impl Rule for FlipBinExp {
         let new_node = new_node.replace_node(prev_right, new_right)?;
 
         Some(RuleAction {
-            category: ActionCategories::REFACTOR,
+            category: ActionCategory::Refactor,
+            applicability: Applicability::Always,
             message: markup! { "Flip Binary Expression" }.to_owned(),
             root: root.replace_node(node.clone(), new_node)?,
         })

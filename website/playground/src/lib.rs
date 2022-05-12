@@ -1,13 +1,9 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
 use rome_analyze::AnalysisFilter;
-use rome_console::codespan::{Codespan, Label, LabelStyle, Locus};
-use rome_console::diff::{Diff, DiffMode};
-use rome_console::fmt::{Formatter, Termcolor};
-use rome_console::markup;
-use rome_diagnostics::file::{Files, SimpleFiles};
+use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
-use rome_diagnostics::{DiagnosticHeader, Emitter};
+use rome_diagnostics::Emitter;
 use rome_formatter::{FormatOptions, IndentStyle};
 use rome_js_formatter::format_node;
 use rome_js_parser::{parse, LanguageVariant, SourceType};
@@ -190,50 +186,22 @@ pub fn run(
             .unwrap();
     }
 
-    let mut fmt = Termcolor(&mut errors);
-    let mut fmt = Formatter::new(&mut fmt);
+    rome_analyze::analyze(
+        main_file_id,
+        &parse.tree(),
+        AnalysisFilter::default(),
+        |signal| {
+            if let Some(mut diag) = signal.diagnostic() {
+                if let Some(action) = signal.action() {
+                    diag.suggestions.push(action.into());
+                }
 
-    rome_analyze::analyze(&parse.tree(), AnalysisFilter::default(), |signal| {
-        if let Some(diag) = signal.diagnostic() {
-            let source_file = simple_files.source(main_file_id).unwrap();
-
-            let severity = diag.severity;
-            let locus = Locus::FileLocation {
-                name: simple_files.name(main_file_id).unwrap(),
-                location: source_file.location(diag.range.start()).unwrap(),
-            };
-
-            fmt.write_markup(markup! {
-                {DiagnosticHeader {
-                    code: Some(diag.rule_name),
-                    locus: None,
-                    severity,
-                    title: markup! { {diag.message} },
-                }}"\n"
-            })
-            .unwrap();
-
-            let labels = [Label {
-                style: LabelStyle::Primary,
-                message: diag.message,
-                range: diag.range,
-            }];
-
-            fmt.write_markup(markup! {
-                {Codespan { source_file, severity, locus: Some(locus), labels: &labels }}"\n"
-            })
-            .unwrap();
-
-            if let Some(action) = signal.action() {
-                let output = action.root.to_string();
-                fmt.write_markup(markup! {
-                    "Suggested fix:\n"
-                    {Diff { mode: DiffMode::Unified, left: &code, right: &output }}"\n"
-                })
-                .unwrap();
+                Emitter::new(&simple_files)
+                    .emit_with_writer(&diag, &mut errors)
+                    .unwrap();
             }
-        }
-    });
+        },
+    );
 
     RomeOutput {
         cst,

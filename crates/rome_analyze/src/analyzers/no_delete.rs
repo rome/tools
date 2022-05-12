@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::Severity;
+use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyRoot,
@@ -9,7 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategories, RuleCategory};
+use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoDelete {}
 
@@ -54,7 +54,8 @@ impl Rule for NoDelete {
         )?;
 
         Some(RuleAction {
-            category: ActionCategories::SUGGESTION,
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with undefined assignment" }.to_owned(),
             root,
         })

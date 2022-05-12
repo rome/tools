@@ -1,12 +1,12 @@
 use rome_console::MarkupBuf;
-use rome_diagnostics::Severity;
+use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, TextRange};
 use rome_rowan::{AstNode, SyntaxNode};
 
 use crate::{
     analyzers::*,
     assists::*,
-    categories::{ActionCategories, RuleCategory},
+    categories::{ActionCategory, RuleCategory},
     signals::{AnalyzerSignal, RuleSignal},
     AnalysisFilter,
 };
@@ -47,12 +47,13 @@ impl RuleRegistry {
     // Run all rules known to the registry associated with nodes of type N
     pub(crate) fn analyze(
         &self,
+        file_id: FileId,
         root: &JsAnyRoot,
         node: JsSyntaxNode,
         callback: &mut impl FnMut(&dyn AnalyzerSignal),
     ) {
         for rule in &self.rules {
-            if let Some(event) = (rule)(root, &node) {
+            if let Some(event) = (rule)(file_id, root, &node) {
                 callback(&*event);
             }
         }
@@ -61,10 +62,11 @@ impl RuleRegistry {
 
 /// Representation of a single rule in the registry as a generic function pointer
 type RegistryRule =
-    for<'a> fn(&'a JsAnyRoot, &'a JsSyntaxNode) -> Option<Box<dyn AnalyzerSignal + 'a>>;
+    for<'a> fn(FileId, &'a JsAnyRoot, &'a JsSyntaxNode) -> Option<Box<dyn AnalyzerSignal + 'a>>;
 
 /// Generic implementation of RegistryRule for any rule type R
 fn run<'a, R: Rule + 'static>(
+    file_id: FileId,
     root: &'a JsAnyRoot,
     node: &'a SyntaxNode<<R::Query as AstNode>::Language>,
 ) -> Option<Box<dyn AnalyzerSignal + 'a>> {
@@ -74,7 +76,7 @@ fn run<'a, R: Rule + 'static>(
 
     let node = <R::Query>::cast(node.clone())?;
     let result = R::run(&node)?;
-    Some(RuleSignal::<R>::new_boxed(root, node, result))
+    Some(RuleSignal::<R>::new_boxed(file_id, root, node, result))
 }
 
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
@@ -127,9 +129,8 @@ pub struct RuleDiagnostic {
 
 /// Code Action object returned by a single analysis rule
 pub struct RuleAction {
-    /// The category this action belongs to, this will influence how clients
-    /// may chose to present this action to the user
-    pub category: ActionCategories,
+    pub category: ActionCategory,
+    pub applicability: Applicability,
     pub message: MarkupBuf,
     pub root: JsAnyRoot,
 }

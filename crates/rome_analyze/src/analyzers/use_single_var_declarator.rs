@@ -1,7 +1,7 @@
 use std::iter;
 
 use rome_console::markup;
-use rome_diagnostics::Severity;
+use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyRoot, JsAnyStatement, JsStatementList, JsSyntaxToken, JsVariableDeclarationFields,
@@ -9,7 +9,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, AstNodeListExt, AstSeparatedList};
 
-use crate::{ActionCategories, RuleCategory};
+use crate::{ActionCategory, RuleCategory};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 
@@ -91,7 +91,8 @@ impl Rule for UseSingleVarDeclarator {
         );
 
         Some(RuleAction {
-            category: ActionCategories::SUGGESTION,
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
             message: markup! { "Break out into multiple declarations" }.to_owned(),
             root: root.replace_node_discard_trivia(prev_parent, next_parent)?,
         })
