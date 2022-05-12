@@ -388,20 +388,13 @@ impl DiffReport {
                 sum_of_per_compatibility_file += compatibility_per_file;
                 writeln!(report, "```").unwrap();
                 writeln!(report, "----").unwrap();
-                writeln!(report, "```bash",).unwrap();
                 writeln!(
                     report,
-                    "total_line_of_file: {}",
-                    rome_lines.max(prettier_lines)
-                )
-                .unwrap();
-                writeln!(
-                    report,
-                    "compatibility_per_file: {:.2}%",
+                    "**Prettier Similarity**: {:.2}%",
                     compatibility_per_file * 100_f64
                 )
                 .unwrap();
-                writeln!(report, "```",).unwrap();
+                writeln!(report).unwrap();
                 writeln!(report, "----").unwrap();
             } else {
                 // in this branch `rome_lines` == `prettier_lines` == `matched_lines`
@@ -411,23 +404,13 @@ impl DiffReport {
             }
             total_line += rome_lines.max(prettier_lines);
             total_matched_line += matched_lines;
-            // report prettier compatibility metric for per file
         }
-
-        writeln!(report, "```bash",).unwrap();
-        writeln!(
-            report,
-            "file_based_compatibility: {:.2}%",
-            (sum_of_per_compatibility_file / file_count as f64) * 100_f64
-        )
-        .unwrap();
-        writeln!(
-            report,
-            "line_based_compatibility: {:.2}%",
+        // extra two space force markdown render insert a new line
+        report = format!(
+            "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \n the definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893 \n",
+            (sum_of_per_compatibility_file / file_count as f64) * 100_f64,
             (total_matched_line as f64 / total_line as f64) * 100_f64
-        )
-        .unwrap();
-        writeln!(report, "```",).unwrap();
+        ) + &report;
         write("report.md", report).unwrap();
     }
 }
