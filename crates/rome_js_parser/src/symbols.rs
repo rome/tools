@@ -218,16 +218,14 @@ impl SymbolIterator {
     fn push_symbol_to_scope(&mut self, name: &str, range: &TextRange) {
         let shadowed_value = self.current_scope.insert(name.to_string(), *range);
 
-        self.items_entered_into_scope
-            .last_mut()
-            .unwrap()
-            .push(name.to_string());
+        if let Some(items_entered_into_scope) = self.items_entered_into_scope.last_mut() {
+            items_entered_into_scope.push(name.to_string());
+        }
 
-        if let Some(shadowed_value) = shadowed_value {
-            self.items_shadowed
-                .last_mut()
-                .unwrap()
-                .push((name.to_string(), shadowed_value));
+        if let Some((shadowed_value, items_shadowed)) =
+            shadowed_value.zip(self.items_shadowed.last_mut())
+        {
+            items_shadowed.push((name.to_string(), shadowed_value));
         }
     }
 
@@ -251,7 +249,7 @@ impl SymbolIterator {
                 let name = ident.name_token().unwrap();
                 self.solve_pending(&name);
             }
-            JsAnyBinding::JsUnknownBinding(_) => todo!(),
+            JsAnyBinding::JsUnknownBinding(_) => {}
         }
     }
 
@@ -268,7 +266,9 @@ impl SymbolIterator {
             JsSyntaxKind::JS_FUNCTION_DECLARATION => {
                 let declaration =
                     unsafe { rome_js_syntax::JsFunctionDeclaration::new_unchecked(node.clone()) };
-                self.solve_pending_with_binding(&declaration.id().unwrap());
+                if let Ok(id) = declaration.id() {
+                    self.solve_pending_with_binding(&id);
+                }
                 self.push_new_scope(true);
             }
             JsSyntaxKind::JS_VARIABLE_DECLARATION => {
@@ -276,13 +276,11 @@ impl SymbolIterator {
                     unsafe { rome_js_syntax::JsVariableDeclaration::new_unchecked(node.clone()) };
                 if declaration.is_var() {
                     for decl in declaration.declarators().into_iter().flatten() {
-                        let id = decl.id().unwrap();
-                        match id {
-                            JsAnyBindingPattern::JsAnyBinding(binding) => {
+                        match decl.id() {
+                            Ok(JsAnyBindingPattern::JsAnyBinding(binding)) => {
                                 self.solve_pending_with_binding(&binding)
                             }
-                            JsAnyBindingPattern::JsArrayBindingPattern(_) => todo!(),
-                            JsAnyBindingPattern::JsObjectBindingPattern(_) => todo!(),
+                            _ => {}
                         }
                     }
                 }

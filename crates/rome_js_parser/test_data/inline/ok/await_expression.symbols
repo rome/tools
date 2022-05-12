@@ -8,15 +8,27 @@
         range: 32..37,
         declared_at: None,
     },
+    Link {
+        range: 32..37,
+        declared_at: 93..98,
+    },
     Reference {
         name: "inner",
         range: 50..55,
         declared_at: None,
     },
+    Link {
+        range: 50..55,
+        declared_at: 93..98,
+    },
     Reference {
         name: "inner",
         range: 67..72,
         declared_at: None,
+    },
+    Link {
+        range: 67..72,
+        declared_at: 93..98,
     },
     Declaration {
         name: "inner",
