@@ -115,9 +115,10 @@ impl Session {
 
         let diagnostics = if workspace_settings.analysis.enable_diagnostics {
             let file_id = doc.file_id();
+            let url = url.clone();
 
             let handle = tokio::task::spawn_blocking(move || {
-                handlers::analysis::diagnostics(file_id, &doc.text)
+                handlers::analysis::diagnostics(file_id, &url, &doc.text)
             });
 
             handle.await??

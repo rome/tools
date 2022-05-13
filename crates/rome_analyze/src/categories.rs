@@ -14,17 +14,19 @@ pub enum RuleCategory {
     Action,
 }
 
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum ActionCategory {
+    /// This action provides a fix to the diagnostic emitted by the same signal
+    QuickFix,
+    /// This action provides an optional refactor opportunity
+    Refactor,
+}
+
 bitflags! {
     pub struct RuleCategories: u8 {
         const SYNTAX = 1 << RuleCategory::Syntax as u8;
         const LINT = 1 << RuleCategory::Lint as u8;
         const ACTION = 1 << RuleCategory::Action as u8;
-    }
-
-    pub struct ActionCategories: u8 {
-        const SAFE_FIX = 1 << 0;
-        const SUGGESTION = 1 << 1;
-        const REFACTOR = 1 << 2;
     }
 }
 

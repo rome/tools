@@ -1,8 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 92
 expression: noDelete.js
-
 ---
 # Input
 ```js
@@ -16,31 +14,13 @@ delete a?.["b"];
 
 # Diagnostics
 ```
+warning[noDelete]: This is an unexpected use of the delete operator.
   ┌─ noDelete.js:2:1
   │
 2 │ delete a.b;
-  │ ^^^^^^^^^^ This is an unexpected use of the delete operator.
+  │ ---------- This is an unexpected use of the delete operator.
 
-```
-
-```
-  ┌─ noDelete.js:3:1
-  │
-3 │ delete a?.b;
-  │ ^^^^^^^^^^^ This is an unexpected use of the delete operator.
-
-```
-
-```
-  ┌─ noDelete.js:4:1
-  │
-4 │ delete a["b"];
-  │ ^^^^^^^^^^^^^ This is an unexpected use of the delete operator.
-
-```
-
-# Actions
-```
+Replace with undefined assignment
     | @@ -1,5 +1,5 @@
 0 0 |   delete a;
 1   | - delete a.b;
@@ -49,9 +29,17 @@ delete a?.["b"];
 3 3 |   delete a["b"];
 4 4 |   delete a?.["b"];
 
+
 ```
 
 ```
+warning[noDelete]: This is an unexpected use of the delete operator.
+  ┌─ noDelete.js:3:1
+  │
+3 │ delete a?.b;
+  │ ----------- This is an unexpected use of the delete operator.
+
+Replace with undefined assignment
     | @@ -1,5 +1,5 @@
 0 0 |   delete a;
 1 1 |   delete a.b;
@@ -60,9 +48,17 @@ delete a?.["b"];
 3 3 |   delete a["b"];
 4 4 |   delete a?.["b"];
 
+
 ```
 
 ```
+warning[noDelete]: This is an unexpected use of the delete operator.
+  ┌─ noDelete.js:4:1
+  │
+4 │ delete a["b"];
+  │ ------------- This is an unexpected use of the delete operator.
+
+Replace with undefined assignment
     | @@ -1,5 +1,5 @@
 0 0 |   delete a;
 1 1 |   delete a.b;
@@ -70,6 +66,7 @@ delete a?.["b"];
 3   | - delete a["b"];
   3 | + a["b"] = undefined;
 4 4 |   delete a?.["b"];
+
 
 ```
 

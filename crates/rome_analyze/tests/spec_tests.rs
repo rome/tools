@@ -2,14 +2,13 @@ use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
 };
 
-use rome_analyze::{AnalysisFilter, AnalyzerAction, AnalyzerDiagnostic};
+use rome_analyze::{AnalysisFilter, AnalyzerAction};
 use rome_console::{
-    codespan::{Codespan, Label, LabelStyle, Locus, SourceFile},
     diff::{Diff, DiffMode},
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
-use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
 use rome_js_parser::parse;
 use rome_rowan::AstNode;
 
@@ -47,9 +46,14 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
 
-    rome_analyze::analyze(&root, filter, |event| {
-        if let Some(diag) = event.diagnostic() {
+    rome_analyze::analyze(0, &root, filter, |event| {
+        if let Some(mut diag) = event.diagnostic() {
+            if let Some(action) = event.action() {
+                diag.suggestions.push(action.into());
+            }
+
             diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
+            return;
         }
 
         if let Some(action) = event.action() {
@@ -102,25 +106,13 @@ fn markup_to_string(markup: Markup) -> String {
     String::from_utf8(buffer).unwrap()
 }
 
-fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> String {
-    let line_starts: Vec<_> = SourceFile::line_starts(source).collect();
-    let source_file = SourceFile::new(source, &line_starts);
+fn diagnostic_to_string(name: &str, source: &str, diag: Diagnostic) -> String {
+    let file = SimpleFile::new(name.into(), source.into());
+    let text = markup_to_string(markup! {
+        {diag.display(&file)}
+    });
 
-    let severity = diag.severity;
-    let locus = Locus::FileLocation {
-        name,
-        location: source_file.location(diag.range.start()).unwrap(),
-    };
-
-    let labels = [Label {
-        style: LabelStyle::Primary,
-        message: diag.message,
-        range: diag.range,
-    }];
-
-    markup_to_string(markup! {
-        {Codespan { source_file, severity, locus: Some(locus), labels: &labels }}
-    })
+    text
 }
 
 fn code_fix_to_string(source: &str, action: AnalyzerAction) -> String {

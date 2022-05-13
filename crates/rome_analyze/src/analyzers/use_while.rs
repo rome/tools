@@ -1,12 +1,12 @@
 use rome_console::markup;
-use rome_diagnostics::Severity;
+use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::{
     registry::{Rule, RuleAction, RuleDiagnostic},
-    ActionCategories, RuleCategory,
+    ActionCategory, RuleCategory,
 };
 
 pub(crate) enum UseWhile {}
@@ -80,7 +80,8 @@ impl Rule for UseWhile {
         )?;
 
         Some(RuleAction {
-            category: ActionCategories::SUGGESTION,
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use a while loop" }.to_owned(),
             root,
         })
