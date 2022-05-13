@@ -8,7 +8,7 @@ impl ExtensionHandler for JsFileHandler {
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
             format: true,
-            lint: false,
+            lint: true,
         }
     }
 

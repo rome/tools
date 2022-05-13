@@ -46,9 +46,9 @@ pub enum Termination {
     #[error("incompatible arguments '{0}' and '{1}'")]
     IncompatibleArguments(&'static str, &'static str),
 
-    /// Returned by the formatter when error diagnostics were emitted in CI mode
-    #[error("errors where emitted while formatting")]
-    FormattingError,
+    /// Returned by a traversal command when error diagnostics were emitted
+    #[error("errors where emitted while running checks")]
+    CheckError,
 }
 
 fn command_name() -> String {
