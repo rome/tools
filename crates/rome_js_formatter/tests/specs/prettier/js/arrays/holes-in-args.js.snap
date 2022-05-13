@@ -14,9 +14,7 @@ new Test()
 # Output
 ```js
 new Test()
-  .test()
-  .test([, 0])
-  .test();
+  .test().test([, 0]).test();
 
 ```
 
