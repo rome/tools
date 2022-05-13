@@ -289,7 +289,8 @@ fn format_groups(
     head_group: HeadGroup,
     groups: Groups,
 ) -> FormatResult<FormatElement> {
-    if groups.groups_should_break(calls_count, &head_group)? {
+    // TODO use Alternatives once available
+    if groups.groups_should_break(calls_count)? {
         Ok(format_elements![
             head_group.into_format_element(),
             group_elements(indent(format_elements![
@@ -298,13 +299,10 @@ fn format_groups(
             ]),)
         ])
     } else {
-        let head_formatted = head_group.into_format_element();
-        let (one_line, _) = groups.into_format_elements();
-
-        // TODO: this is not the definitive solution, as there are few restrictions due to how the printer works:
-        // - groups that contains other groups with hard lines break all the groups
-        // - conditionally print one single line is subject to how the printer works (by default, multiline)
-        Ok(format_elements![head_formatted, one_line])
+        Ok(format_elements![
+            head_group.into_format_element(),
+            groups.into_format_elements()
+        ])
     }
 }
 
