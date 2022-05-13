@@ -112,7 +112,7 @@ impl<'f> Groups<'f> {
             .iter()
             .flat_map(|group| group.iter())
             .flat_map(|item| item.as_format_elements())
-            .any(|element| element.has_hard_line_breaks());
+            .any(|element| element.will_break());
 
         let should_break = has_line_breaks
             || node_has_comments
@@ -219,7 +219,7 @@ impl<'f> Groups<'f> {
 
         if let Some(last_group) = last_group {
             let element = last_group.as_format_elements().last();
-            let group_will_break = element.map_or(false, |element| element.has_hard_line_breaks());
+            let group_will_break = element.map_or(false, |element| element.will_break());
 
             let is_call_expression = last_group.is_loose_call_expression();
 
