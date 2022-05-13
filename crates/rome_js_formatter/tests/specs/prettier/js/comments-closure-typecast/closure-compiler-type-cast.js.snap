@@ -75,7 +75,7 @@ let inlineComment = /* some comment */ (
 );
 
 let object = {
-  key: (someReallyLongFunctionCall(withLots, ofArguments)), /* some comment */
+  key: /* some comment */ (someReallyLongFunctionCall(withLots, ofArguments)),
 };
 
 // preserve parens only for type casts

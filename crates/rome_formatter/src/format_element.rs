@@ -728,11 +728,15 @@ pub fn group_elements_with_options(
     content: FormatElement,
     options: GroupElementsOptions,
 ) -> FormatElement {
-    let (leading, content, trailing) = content.split_trivia();
+    if content.is_empty() {
+        content
+    } else {
+        let (leading, content, trailing) = content.split_trivia();
 
-    let group = Group::new(content).with_id(options.group_id);
+        let group = Group::new(content).with_id(options.group_id);
 
-    format_elements![leading, group, trailing]
+        format_elements![leading, group, trailing]
+    }
 }
 
 /// IR element that forces the parent group to print in expanded mode.
@@ -1630,8 +1634,8 @@ impl FormatElement {
 
     /// Splits off the leading and trailing trivias (comments) from this [FormatElement]
     ///
-    /// For [FormatElement::HardGroup] and [FormatElement::Group], the trailing and leading trivias
-    /// are automatically moved  outside of the group. The group itself is then recreated around the
+    /// For [FormatElement::HardGroup], the trailing trivia
+    /// is automatically moved  outside of the group. The group itself is then recreated around the
     /// content itself.
     pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
         match self {

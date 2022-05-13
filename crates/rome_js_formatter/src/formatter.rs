@@ -567,7 +567,7 @@ pub(crate) trait JsFormatter {
                 separator_factory()
             };
 
-            result.push(formatted![formatter, [node, separator]]?);
+            result.push(format_elements![group_elements(node), separator]);
         }
 
         Ok(result.into_iter())
