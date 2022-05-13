@@ -1,8 +1,4 @@
-interface Props {
-	lineWidth: number;
-	setLineWidth: (lineWidth: number) => void;
-}
-
+interface Props { lineWidth: number; setLineWidth: (lineWidth: number) => void }
 export default function LineWidthInput({ lineWidth, setLineWidth }: Props) {
 	return (
 		<div className="w-[300px] p-5 flex items-end">

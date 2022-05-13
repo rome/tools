@@ -9,10 +9,7 @@ export function classNames(...classes: (string | undefined | boolean)[]): string
 }
 
 // Define general type for useWindowSize hook, which includes width and height
-interface Size {
-	width: number | undefined;
-	height: number | undefined;
-}
+interface Size { width: number | undefined; height: number | undefined }
 
 // Hook
 export function useWindowSize(): Size {
