@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: square_0.js
 ---
 # Input
@@ -22,8 +21,7 @@ const component = find('.org-lclp-edit-copy-url-banner__link')[0]
 const version = someLongString.split("jest version =").pop().split(EOL)[0].trim();
 
 const component = find(".org-lclp-edit-copy-url-banner__link")[0]
-  .getAttribute("href")
-  .indexOf(this.landingPageLink);
+  .getAttribute("href").indexOf(this.landingPageLink);
 
 ```
 

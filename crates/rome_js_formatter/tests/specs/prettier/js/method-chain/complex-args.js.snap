@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: complex-args.js
 ---
 # Input
@@ -17,8 +16,7 @@ client.execute(
 ```js
 client.execute(
   Post.selectAll()
-    .where(Post.id.eq(42))
-    .where(Post.published.eq(true)),
+    .where(Post.id.eq(42)).where(Post.published.eq(true)),
 );
 
 ```

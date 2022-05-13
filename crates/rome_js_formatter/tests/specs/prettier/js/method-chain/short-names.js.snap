@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: short-names.js
 ---
 # Input
@@ -15,9 +14,9 @@ const svgJsFiles = fs
 # Output
 ```js
 const svgJsFiles = fs
-  .readdirSync(svgDir)
-  .filter((f) => svgJsFileExtRegex.test(f))
-  .map((f) => path.join(svgDir, f));
+  .readdirSync(svgDir).filter((f) => svgJsFileExtRegex.test(f)).map(
+    (f) => path.join(svgDir, f),
+  );
 
 ```
 

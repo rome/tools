@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: pipe-function-calls-with-comments.js
-
 ---
 # Input
 ```js
@@ -82,8 +80,7 @@ expression: pipe-function-calls-with-comments.js
       ),
     ),
   )()
-    .then(messageResponse(logger, msg))
-    .catch((err) => {
+    .then(messageResponse(logger, msg)).catch((err) => {
       logger.error(
         pipe(
           // add a descriptive comment here

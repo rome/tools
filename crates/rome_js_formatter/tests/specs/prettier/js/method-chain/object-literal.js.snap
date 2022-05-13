@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: object-literal.js
-
 ---
 # Input
 ```js
@@ -27,16 +25,14 @@ of("test")
 # Output
 ```js
 of("test")
-  .pipe(throwIfEmpty())
-  .subscribe({
+  .pipe(throwIfEmpty()).subscribe({
     error(err) {
       thrown = err;
     },
   });
 
 of("test")
-  .pipe(throwIfEmpty())
-  .subscribe({
+  .pipe(throwIfEmpty()).subscribe({
     get foo() {
       bar();
     },

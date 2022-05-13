@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: expand.js
 ---
 # Input
@@ -52,9 +51,7 @@ const small = doc.expandedStates[doc.expandedStates.length - 1];
 
 const promises = [
   promise
-    .resolve()
-    .then(console.log)
-    .catch(
+    .resolve().then(console.log).catch(
       (err) => {
         console.log(err);
         return null;
@@ -66,11 +63,7 @@ const promises = [
 
 const promises2 = [
   promise
-    .resolve()
-    .veryLongFunctionCall()
-    .veryLongFunctionCall()
-    .then(console.log)
-    .catch(
+    .resolve().veryLongFunctionCall().veryLongFunctionCall().then(console.log).catch(
       (err) => {
         console.log(err);
         return null;
@@ -97,4 +90,8 @@ window.FooClient.something.setVars({
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   20:     .resolve().veryLongFunctionCall().veryLongFunctionCall().then(console.log).catch(
+```
 

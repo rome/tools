@@ -6,7 +6,6 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, SyntaxResult};
 use std::fmt::Debug;
-use std::slice;
 
 #[derive(Clone)]
 /// Data structure that holds the node with its formatted version
@@ -35,30 +34,12 @@ impl FlattenItem {
         }
     }
 
-    pub(crate) fn as_format_elements(&self) -> &[FormatElement] {
-        match self {
-            FlattenItem::StaticMember(_, elements) => elements,
-            FlattenItem::CallExpression(_, elements) => elements,
-            FlattenItem::ComputedExpression(_, elements) => elements,
-            FlattenItem::Node(_, element) => slice::from_ref(element),
-        }
-    }
-
     pub(crate) fn as_syntax(&self) -> &JsSyntaxNode {
         match self {
             FlattenItem::StaticMember(node, _) => node.syntax(),
             FlattenItem::CallExpression(node, _) => node.syntax(),
             FlattenItem::ComputedExpression(node, _) => node.syntax(),
             FlattenItem::Node(node, _) => node,
-        }
-    }
-
-    pub(crate) fn has_leading_comments(&self) -> bool {
-        match self {
-            FlattenItem::StaticMember(node, _) => node.syntax().has_leading_comments(),
-            FlattenItem::CallExpression(node, _) => node.syntax().has_leading_comments(),
-            FlattenItem::ComputedExpression(node, _) => node.syntax().has_leading_comments(),
-            FlattenItem::Node(node, _) => node.has_leading_comments(),
         }
     }
 
