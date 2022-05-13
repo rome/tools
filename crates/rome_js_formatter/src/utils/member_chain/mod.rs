@@ -303,13 +303,6 @@ fn format_groups(
             head_group.into_format_element(),
             groups.into_format_elements()
         ])
-        // Ok(format_elements![
-        //     head_group.into_format_element(),
-        //     group_elements(indent(format_elements![
-        //         soft_line_break(),
-        //         groups.into_format_elements()
-        //     ]))
-        // ])
     }
 }
 

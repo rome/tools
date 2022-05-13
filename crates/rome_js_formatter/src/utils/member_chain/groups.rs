@@ -103,7 +103,7 @@ impl<'f> Groups<'f> {
     /// Format groups on multiple lines
     pub fn into_joined_hard_line_groups(self) -> FormatElement {
         let formatted_groups = self.into_formatted_groups();
-        concat_elements(formatted_groups)
+        join_elements(hard_line_break(), formatted_groups)
     }
 
     /// Creates two different versions of the formatted groups, one that goes in one line
@@ -112,7 +112,7 @@ impl<'f> Groups<'f> {
     /// It's up to the printer to decide which one to use.
     pub fn into_format_elements(self) -> FormatElement {
         let formatted_groups = self.into_formatted_groups();
-        concat_elements(formatted_groups.clone())
+        concat_elements(formatted_groups)
     }
 
     /// Filters the stack of [FlattenItem] and return only the ones that

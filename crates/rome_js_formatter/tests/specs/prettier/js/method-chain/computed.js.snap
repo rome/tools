@@ -16,15 +16,9 @@ nock(/test/)
 # Output
 ```js
 nock(/test/)
-  .matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo").reply(
-    200,
-    { foo: "bar" },
-  );
+  .matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")
+  .reply(200, { foo: "bar" });
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    2:   .matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo").reply(
-```
 

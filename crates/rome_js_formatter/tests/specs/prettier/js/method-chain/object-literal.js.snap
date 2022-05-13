@@ -25,14 +25,16 @@ of("test")
 # Output
 ```js
 of("test")
-  .pipe(throwIfEmpty()).subscribe({
+  .pipe(throwIfEmpty())
+  .subscribe({
     error(err) {
       thrown = err;
     },
   });
 
 of("test")
-  .pipe(throwIfEmpty()).subscribe({
+  .pipe(throwIfEmpty())
+  .subscribe({
     get foo() {
       bar();
     },

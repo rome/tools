@@ -23,7 +23,8 @@ fetched.then((response) => response.json()).then(
 );
 
 let column = new Column(null, conn)
-  .table(data.table).json(data.column);
+  .table(data.table)
+  .json(data.column);
 
 ```
 

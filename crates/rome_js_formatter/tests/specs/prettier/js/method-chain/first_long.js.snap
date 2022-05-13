@@ -51,9 +51,9 @@ export default function theFunction(action$, store) {
         more: stuff(),
         evenMore: stuff({ value1: true, value2: false, value3: false }),
       })
-        .filter((data) => theFilter(data)).map(
-          ({ theType, ...data }) => theMap(theType, data),
-        ).retryWhen((errors) => errors),
+        .filter((data) => theFilter(data))
+        .map(({ theType, ...data }) => theMap(theType, data))
+        .retryWhen((errors) => errors),
   );
 }
 

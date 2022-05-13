@@ -19,6 +19,7 @@ Quote style: Double Quotes
 -----
 client.execute(
 	Post.selectAll()
-		.where(Post.id.eq(42)).where(Post.published.eq(true)),
+		.where(Post.id.eq(42))
+		.where(Post.published.eq(true)),
 );
 
