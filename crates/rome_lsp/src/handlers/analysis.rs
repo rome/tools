@@ -59,7 +59,7 @@ pub(crate) fn code_actions(
 
     rome_analyze::analyze(file_id, &root, filter, |event| {
         if let Some(action) = event.action() {
-            let action = utils::code_fix_to_lsp(&url, text, &line_index, diagnostics, action);
+            let action = utils::code_fix_to_lsp(&url, &line_index, diagnostics, action);
 
             has_fixes |= action.diagnostics.is_some();
             result.push(CodeActionOrCommand::CodeAction(action));
