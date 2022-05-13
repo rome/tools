@@ -1,5 +1,5 @@
 [package]
-name = "rome_core"
+name = "rome_service"
 version = "0.0.0"
 edition = "2021"
 

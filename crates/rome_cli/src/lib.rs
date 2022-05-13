@@ -1,5 +1,5 @@
 use pico_args::Arguments;
-use rome_core::App;
+use rome_service::App;
 use rome_flags::FeatureFlags;
 
 mod commands;

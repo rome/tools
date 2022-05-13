@@ -17,7 +17,7 @@ use rome_console::{
     diff::{Diff, DiffMode},
     markup, Console, ConsoleExt,
 };
-use rome_core::Features;
+use rome_service::Features;
 use rome_diagnostics::{
     file::{FileId, SimpleFile},
     Diagnostic, DiagnosticHeader, Severity,

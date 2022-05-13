@@ -1,4 +1,4 @@
-use rome_core::App;
+use rome_service::App;
 use rome_formatter::LineWidth;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
