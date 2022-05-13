@@ -162,8 +162,8 @@ impl SyntaxNode {
     }
 
     #[inline]
-    pub fn ancestors(&self) -> impl Iterator<Item = SyntaxNode> {
-        iter::successors(Some(self.clone()), SyntaxNode::parent)
+    pub fn ancestors(&self) -> impl Iterator<Item = SyntaxNode> + FusedIterator {
+        iter::successors(Some(self.clone()), SyntaxNode::parent).fuse()
     }
 
     #[inline]

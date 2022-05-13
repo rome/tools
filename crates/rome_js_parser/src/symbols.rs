@@ -1,9 +1,10 @@
 use rome_js_syntax::{
-    JsAnyBinding, JsAnyBindingPattern, JsComputedMemberExpression, JsLanguage, JsLiteralMemberName,
-    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TextRange,
+    JsAnyBinding, JsAnyBindingPattern, JsComputedMemberExpression, JsIdentifierBinding, JsLanguage,
+    JsLiteralMemberName, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, TextRange,
     TsGlobalDeclaration, TsThisParameter, WalkEvent,
 };
-use rome_rowan::syntax::Preorder;
+use rome_rowan::{syntax::Preorder, AstNodeFromSyntaxNode};
 use std::collections::{HashMap, VecDeque};
 
 #[derive(Debug)]
@@ -11,6 +12,7 @@ pub enum Symbol {
     Declaration {
         name: String,
         range: TextRange,
+        hoists: bool,
     },
     Reference {
         name: String,
@@ -45,19 +47,36 @@ pub struct SymbolIterator {
     iter: Preorder<JsLanguage>,
     current_scope: HashMap<String, TextRange>,
     hoisting_scope: Vec<HashMap<String, Vec<TextRange>>>,
+    hoisting_scope_idx: Vec<usize>,
     items_entered_into_scope: Vec<Vec<String>>,
     items_shadowed: Vec<Vec<(String, TextRange)>>,
     stash: VecDeque<Symbol>,
 }
 
+fn is_identifier_declared_with_var(node: JsSyntaxNode) -> bool {
+    use rome_rowan::AstNodeParent;
+    node.cast::<JsIdentifierBinding>()
+        .parent::<JsVariableDeclarator>()
+        .parent::<JsVariableDeclaratorList>()
+        .parent::<JsVariableDeclaration>()
+        .map(|x| x.is_var())
+        .unwrap_or(false)
+}
+
 fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
     match node.kind() {
-        JsSyntaxKind::JS_IDENTIFIER_BINDING
-        | JsSyntaxKind::TS_IDENTIFIER_BINDING
-        | JsSyntaxKind::JS_LITERAL_EXPORT_NAME => Some(Symbol::Declaration {
+        JsSyntaxKind::JS_IDENTIFIER_BINDING => Some(Symbol::Declaration {
             name: node.text_trimmed().to_string(),
             range: node.text_range(),
+            hoists: is_identifier_declared_with_var(node),
         }),
+        JsSyntaxKind::TS_IDENTIFIER_BINDING | JsSyntaxKind::JS_LITERAL_EXPORT_NAME => {
+            Some(Symbol::Declaration {
+                name: node.text_trimmed().to_string(),
+                range: node.text_range(),
+                hoists: false,
+            })
+        }
         JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT
         | JsSyntaxKind::JS_SUPER_EXPRESSION
         | JsSyntaxKind::JS_THIS_EXPRESSION
@@ -103,6 +122,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
             (!is_inside_constructor && !is_string_literal).then(|| Symbol::Declaration {
                 name: value.text_trimmed().to_string(),
                 range: value.text_range(),
+                hoists: false,
             })
         }
         //
@@ -133,6 +153,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
             Some(Symbol::Declaration {
                 name: this_token.text_trimmed().to_string(),
                 range: this_token.text_range(),
+                hoists: false,
             })
         }
         JsSyntaxKind::TS_GLOBAL_DECLARATION => {
@@ -144,6 +165,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
             Some(Symbol::Declaration {
                 name: global_token.text_trimmed().to_string(),
                 range: global_token.text_range(),
+                hoists: false,
             })
         }
         JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
@@ -174,6 +196,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
             (is_in_type_parameter_list || is_in_mapped_type).then(|| Symbol::Declaration {
                 name: node.text_trimmed().to_string(),
                 range: node.text_range(),
+                hoists: false,
             })
         }
         _ => None,
@@ -187,6 +210,8 @@ impl SymbolIterator {
 
         if also_hoist_scope {
             self.hoisting_scope.push(HashMap::new());
+            self.hoisting_scope_idx
+                .push(self.items_entered_into_scope.len() - 1);
         }
     }
 
@@ -204,6 +229,7 @@ impl SymbolIterator {
         }
 
         if also_hoist_scope {
+            self.hoisting_scope_idx.pop();
             if let (Some(old), Some(current)) =
                 (self.hoisting_scope.pop(), self.hoisting_scope.last_mut())
             {
@@ -227,6 +253,17 @@ impl SymbolIterator {
         {
             items_shadowed.push((name.to_string(), shadowed_value));
         }
+    }
+
+    fn push_hoisted_symbol_to_scope(&mut self, name: &str, range: &TextRange) {
+        let scope_idx = self.hoisting_scope_idx.last_mut().unwrap();
+
+        if self.current_scope.get(name).is_some() {
+            //TODO signal error name already declared
+        }
+
+        self.current_scope.insert(name.to_string(), *range);
+        self.items_entered_into_scope[*scope_idx].push(name.to_string());
     }
 
     fn solve_pending(&mut self, token: &JsSyntaxToken) {
@@ -262,7 +299,9 @@ impl SymbolIterator {
             | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
             | JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER
             | JsSyntaxKind::JS_GETTER_CLASS_MEMBER
-            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER => self.push_new_scope(false),
+            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER
+            | JsSyntaxKind::JS_CATCH_CLAUSE
+            | JsSyntaxKind::JS_FINALLY_CLAUSE => self.push_new_scope(false),
             JsSyntaxKind::JS_FUNCTION_DECLARATION => {
                 let declaration =
                     unsafe { rome_js_syntax::JsFunctionDeclaration::new_unchecked(node.clone()) };
@@ -276,11 +315,8 @@ impl SymbolIterator {
                     unsafe { rome_js_syntax::JsVariableDeclaration::new_unchecked(node.clone()) };
                 if declaration.is_var() {
                     for decl in declaration.declarators().into_iter().flatten() {
-                        match decl.id() {
-                            Ok(JsAnyBindingPattern::JsAnyBinding(binding)) => {
-                                self.solve_pending_with_binding(&binding)
-                            }
-                            _ => {}
+                        if let Ok(JsAnyBindingPattern::JsAnyBinding(binding)) = decl.id() {
+                            self.solve_pending_with_binding(&binding);
                         }
                     }
                 }
@@ -301,7 +337,9 @@ impl SymbolIterator {
             | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
             | JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER
             | JsSyntaxKind::JS_GETTER_CLASS_MEMBER
-            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER => {
+            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER
+            | JsSyntaxKind::JS_CATCH_CLAUSE
+            | JsSyntaxKind::JS_FINALLY_CLAUSE => {
                 self.pop_scope(false);
             }
             _ => {}
@@ -324,8 +362,16 @@ impl Iterator for SymbolIterator {
 
                     if let Some(mut s) = extract_symbol(node) {
                         match &mut s {
-                            Symbol::Declaration { name, range } => {
-                                self.push_symbol_to_scope(name, range);
+                            Symbol::Declaration {
+                                name,
+                                range,
+                                hoists,
+                            } => {
+                                if *hoists {
+                                    self.push_hoisted_symbol_to_scope(name, range);
+                                } else {
+                                    self.push_symbol_to_scope(name, range);
+                                }
                             }
                             Symbol::Reference {
                                 name,
@@ -362,6 +408,7 @@ pub fn symbols(root: JsSyntaxNode) -> SymbolIterator {
         iter: root.preorder(),
         current_scope: HashMap::new(),
         hoisting_scope: vec![],
+        hoisting_scope_idx: vec![],
         items_entered_into_scope: vec![],
         items_shadowed: vec![],
         stash: VecDeque::new(),
@@ -801,6 +848,32 @@ function f(a/*#A1*/) {
     console.log(global/*@GLOBAL*/);
 
     ((c/*#C7*/) => console.log(a/*@A1*/, b/*@B*/, c/*@C7*/))();
+
+    console.log(x/*@HOISTED-X*/, w, u);
+    {
+        let b/*#B2*/ = 2;
+        console.log(x/*@HOISTED-X*/, w, u);
+        try
+        {
+            let a/*#A4*/ = 1;
+            console.log(a/*@A4*/, b/*@B2*/, y/*@Y*/);
+            console.log('try', x/*@HOISTED-X*/, w, u);
+            var x/*#HOISTED-X*/;
+        } catch (a/*#A5*/) {
+            console.log(a/*@A5*/, b/*@B2*/, y/*@Y*/);
+            let a/*#A6*/ = 1;
+            console.log(a/*@A6*/, b/*@B2*/, y/*@Y*/);
+            console.log('catch', x/*@HOISTED-X*/, w, u);
+            var w;
+        } finally {
+            console.log(a/*@A1*/, b/*@B2*/, y/*@Y*/);
+            console.log('finally', x/*@HOISTED-X*/, w, u);
+            var u;
+        }
+        console.log(a/*@A1*/, b/*@B2*/, y);
+        console.log(x/*@HOISTED-X*/, w, u);
+        var y/*#Y*/;
+    }
 
     return a/*@A1*/ + b/*@B*/ + c/*@C1*/;
 }

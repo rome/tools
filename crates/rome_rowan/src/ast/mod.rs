@@ -78,6 +78,54 @@ pub trait AstNode {
     }
 }
 
+pub trait AstNodeParent {
+    type Language: Language;
+    fn parent<T: AstNode<Language = Self::Language> + Sized>(&self) -> Option<T>;
+}
+
+impl<TAstNode, TLanguage> AstNodeParent for TAstNode
+where
+    TAstNode: AstNode<Language = TLanguage>,
+    TLanguage: Language,
+{
+    type Language = TLanguage;
+    fn parent<T: AstNode<Language = Self::Language> + Sized>(&self) -> Option<T> {
+        self.syntax().parent().and_then(T::cast)
+    }
+}
+
+impl<TAstNode, TLanguage> AstNodeParent for Option<TAstNode>
+where
+    TAstNode: AstNode<Language = TLanguage>,
+    TLanguage: Language,
+{
+    type Language = TLanguage;
+    fn parent<T: AstNode<Language = Self::Language> + Sized>(&self) -> Option<T> {
+        self.as_ref()?.syntax().parent().and_then(T::cast)
+    }
+}
+
+pub trait AstNodeFromSyntaxNode<L>
+where
+    L: Language,
+{
+    fn cast<T>(self) -> Option<T>
+    where
+        T: AstNode<Language = L>;
+}
+
+impl<L> AstNodeFromSyntaxNode<L> for SyntaxNode<L>
+where
+    L: Language,
+{
+    fn cast<T>(self) -> Option<T>
+    where
+        T: AstNode<Language = L>,
+    {
+        T::cast(self)
+    }
+}
+
 /// List of homogenous nodes
 pub trait AstNodeList {
     type Language: Language;

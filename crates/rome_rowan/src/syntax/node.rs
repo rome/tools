@@ -247,7 +247,7 @@ impl<L: Language> SyntaxNode<L> {
         self.raw.index()
     }
 
-    pub fn ancestors(&self) -> impl Iterator<Item = SyntaxNode<L>> {
+    pub fn ancestors(&self) -> impl Iterator<Item = SyntaxNode<L>> + FusedIterator {
         self.raw.ancestors().map(SyntaxNode::from)
     }
 
