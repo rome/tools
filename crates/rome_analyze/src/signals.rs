@@ -6,7 +6,7 @@ use rome_diagnostics::{
     Applicability, CodeSuggestion, Diagnostic, SubDiagnostic, SuggestionChange, SuggestionStyle,
 };
 use rome_js_syntax::{JsAnyRoot, TextRange};
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, Language, SyntaxNode};
 
 use crate::{categories::ActionCategory, registry::Rule};
 
@@ -30,19 +30,35 @@ pub struct AnalyzerAction {
     pub applicability: Applicability,
     pub message: MarkupBuf,
     /// Range of the original document being modified by this action
-    ///
-    /// By default this is conservatively set to cover the entire document
-    pub range: TextRange,
+    pub original_range: TextRange,
+    /// Range of the new document that differs from the original document
+    pub new_range: TextRange,
     pub root: JsAnyRoot,
 }
 
 impl From<AnalyzerAction> for CodeSuggestion {
     fn from(action: AnalyzerAction) -> Self {
+        // Only print the relevant subset of tokens
+        let mut code = String::new();
+
+        for token in action.root.syntax().descendants_tokens() {
+            let range = token.text_range();
+            if range
+                .intersect(action.new_range)
+                .filter(|range| !range.is_empty())
+                .is_none()
+            {
+                continue;
+            }
+
+            code.push_str(token.text());
+        }
+
         CodeSuggestion {
-            substitution: SuggestionChange::String(action.root.to_string()),
+            substitution: SuggestionChange::String(code),
             span: FileSpan {
                 file: action.file_id,
-                range: action.range,
+                range: action.original_range,
             },
             applicability: action.applicability,
             msg: action.message,
@@ -101,14 +117,73 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
     }
 
     fn action(&self) -> Option<AnalyzerAction> {
-        R::action(self.root.clone(), &self.node, &self.state).map(|action| AnalyzerAction {
-            rule_name: R::NAME,
-            file_id: self.file_id,
-            category: action.category,
-            applicability: action.applicability,
-            message: action.message,
-            range: self.root.syntax().text_range(),
-            root: action.root,
+        R::action(self.root.clone(), &self.node, &self.state).and_then(|action| {
+            let (original_range, new_range) =
+                find_diff_range(self.root.syntax(), action.root.syntax())?;
+            Some(AnalyzerAction {
+                rule_name: R::NAME,
+                file_id: self.file_id,
+                category: action.category,
+                applicability: action.applicability,
+                message: action.message,
+                original_range,
+                new_range,
+                root: action.root,
+            })
         })
+    }
+}
+
+/// Compares two revisions of the same syntax tree and find the narrowest text
+/// range that differs between the two
+fn find_diff_range<L>(prev: &SyntaxNode<L>, next: &SyntaxNode<L>) -> Option<(TextRange, TextRange)>
+where
+    L: Language,
+{
+    let prev_tokens = prev.descendants_tokens();
+    let next_tokens = next.descendants_tokens();
+    let mut tokens = prev_tokens.zip(next_tokens);
+
+    let range_start = (&mut tokens).find_map(|(prev_token, next_token)| {
+        debug_assert_eq!(
+            prev_token.text_range().start(),
+            next_token.text_range().start(),
+        );
+
+        if prev_token != next_token {
+            Some(prev_token.text_range().start())
+        } else {
+            None
+        }
+    });
+
+    let range_end = tokens.find_map(|(prev_token, next_token)| {
+        if prev_token == next_token {
+            Some((
+                prev_token.text_range().start(),
+                next_token.text_range().start(),
+            ))
+        } else {
+            None
+        }
+    });
+
+    match (range_start, range_end) {
+        (Some(start), Some((prev_end, next_end))) => Some((
+            TextRange::new(start, prev_end),
+            TextRange::new(start, next_end),
+        )),
+        (Some(start), None) => Some((
+            TextRange::new(start, prev.text_range().end()),
+            TextRange::new(start, next.text_range().end()),
+        )),
+
+        (None, None) => None,
+
+        // This branch is unreachable since `range_start` can only be `None` if
+        // it consumes the entire `tokens` iterator without ever returning
+        // `Some(_)`, then `range_end` will also necessarily return `None` as
+        // there as not items left to inspect
+        (None, Some(_)) => unreachable!(),
     }
 }

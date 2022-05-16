@@ -14,6 +14,8 @@ rome_core = { path = "../rome_core" }
 rome_flags = { path = "../rome_flags" }
 rome_fs = { path = "../rome_fs" }
 rome_console = { path = "../rome_console" }
+rome_analyze = { path = "../rome_analyze" }
+rome_rowan = { path = "../rome_rowan" }
 pico-args = "0.4.2"
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 tracing-subscriber = "0.3.6"

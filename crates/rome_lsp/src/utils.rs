@@ -7,9 +7,8 @@ use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
-use rome_diagnostics::Severity;
-use rome_diagnostics::{Applicability, Diagnostic};
-use rome_rowan::AstNode;
+use rome_diagnostics::{Applicability, Diagnostic, SuggestionChange};
+use rome_diagnostics::{CodeSuggestion, Severity};
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::lsp_types::{self as lsp};
@@ -44,7 +43,6 @@ pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> TextRange
 
 pub(crate) fn code_fix_to_lsp(
     url: &lsp::Url,
-    text: &str,
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
     action: AnalyzerAction,
@@ -70,15 +68,22 @@ pub(crate) fn code_fix_to_lsp(
         Vec::new()
     };
 
+    let kind = match action.category {
+        ActionCategory::QuickFix => Some(lsp::CodeActionKind::QUICKFIX),
+        ActionCategory::Refactor => Some(lsp::CodeActionKind::REFACTOR),
+    };
+
+    let suggestion = CodeSuggestion::from(action);
+
     let mut changes = HashMap::new();
     changes.insert(
         url.clone(),
         vec![lsp::TextEdit {
-            range: lsp::Range::new(
-                position(line_index, 0.into()),
-                position(line_index, TextSize::of(text)),
-            ),
-            new_text: action.root.syntax().to_string(),
+            range: range(line_index, suggestion.span.range),
+            new_text: match suggestion.substitution {
+                SuggestionChange::String(text) => text,
+                SuggestionChange::Indels(_) => unimplemented!(),
+            },
         }],
     );
 
@@ -89,11 +94,8 @@ pub(crate) fn code_fix_to_lsp(
     };
 
     lsp::CodeAction {
-        title: print_markup(&action.message),
-        kind: match action.category {
-            ActionCategory::QuickFix => Some(lsp::CodeActionKind::QUICKFIX),
-            ActionCategory::Refactor => Some(lsp::CodeActionKind::REFACTOR),
-        },
+        title: print_markup(&suggestion.msg),
+        kind,
         diagnostics: if !diagnostics.is_empty() {
             Some(diagnostics)
         } else {
@@ -101,7 +103,7 @@ pub(crate) fn code_fix_to_lsp(
         },
         edit: Some(edit),
         command: None,
-        is_preferred: if matches!(action.applicability, Applicability::Always) {
+        is_preferred: if matches!(suggestion.applicability, Applicability::Always) {
             Some(true)
         } else {
             None

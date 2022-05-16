@@ -6,6 +6,7 @@ mod commands;
 mod metrics;
 mod panic;
 mod termination;
+mod traversal;
 
 pub use panic::setup_panic_handler;
 pub use termination::Termination;
@@ -50,22 +51,16 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
     // True if the command line did not contain any arguments beside the subcommand
     let is_empty = session.args.clone().finish().is_empty();
 
-    match subcommand.as_deref() {
+    let result = match subcommand.as_deref() {
         // Print the help for the subcommand if it was called with `--help`
         Some(cmd) if has_help => crate::commands::help::help(Some(cmd)),
 
-        Some("format") if !is_empty => {
-            let result = crate::commands::format::format(session);
-
-            if has_metrics {
-                crate::metrics::print_metrics();
-            }
-
-            result
-        }
+        Some("format") if !is_empty => crate::commands::format::format(session),
+        Some("check") if !is_empty => crate::commands::check::check(session),
+        Some("ci") if !is_empty => crate::commands::ci::ci(session),
 
         // Print the help for known commands called without any arguments, and exit with an error
-        Some(cmd @ "format") => {
+        Some(cmd @ ("format" | "check" | "ci")) => {
             crate::commands::help::help(Some(cmd))?;
             Err(Termination::EmptyArguments)
         }
@@ -76,5 +71,11 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
         Some(cmd) => Err(Termination::UnknownCommand {
             command: cmd.into(),
         }),
+    };
+
+    if has_metrics {
+        crate::metrics::print_metrics();
     }
+
+    result
 }
