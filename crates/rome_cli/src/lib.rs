@@ -1,6 +1,6 @@
 use pico_args::Arguments;
-use rome_service::App;
 use rome_flags::FeatureFlags;
+use rome_service::App;
 
 mod commands;
 mod metrics;

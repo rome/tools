@@ -1,68 +1,90 @@
-use rome_fs::RomePath;
-use std::sync::Arc;
+use anyhow::{bail, Result};
+use rome_service::workspace::{ChangeFileParams, CloseFileParams, OpenFileParams};
 use tower_lsp::lsp_types;
 use tracing::error;
 
 use crate::{documents::Document, session::Session};
 
 /// Handler for `textDocument/didOpen` LSP notification
-pub(crate) async fn did_open(session: Arc<Session>, params: lsp_types::DidOpenTextDocumentParams) {
-    let url = params.text_document.uri.clone();
-    let file_id = session.file_id(url.clone());
+pub(crate) async fn did_open(
+    session: &Session,
+    params: lsp_types::DidOpenTextDocumentParams,
+) -> Result<()> {
+    let url = params.text_document.uri;
     let version = params.text_document.version;
-    let language_id = match params.text_document.language_id.as_str().try_into() {
-        Ok(id) => id,
-        Err(err) => return error!("{}", err),
-    };
-    let path = RomePath::new(url.path()).with_id(file_id);
+    let content = params.text_document.text;
 
-    let doc = Document::new(path, language_id, version, params.text_document.text);
+    let rome_path = session.file_path(&url);
+    let doc = Document::new(version, &content);
+
+    session.workspace.open_file(OpenFileParams {
+        path: rome_path,
+        version,
+        content,
+    })?;
+
     session.insert_document(url.clone(), doc);
 
     if let Err(err) = session.update_diagnostics(url).await {
         error!("Failed to update diagnostics: {}", err);
     }
+
+    Ok(())
 }
 
 /// Handler for `textDocument/didChange` LSP notification
 pub(crate) async fn did_change(
-    session: Arc<Session>,
+    session: &Session,
     params: lsp_types::DidChangeTextDocumentParams,
-) {
+) -> Result<()> {
     let url = params.text_document.uri;
     let version = params.text_document.version;
-
-    let doc = match session.document(&url) {
-        Ok(doc) => doc,
-        Err(err) => return error!("{}", err),
-    };
+    let rome_path = session.file_path(&url);
 
     // Because of TextDocumentSyncKind::Full, there should only be one change.
     let mut content_changes = params.content_changes;
-    let text = match content_changes.pop() {
+    let content = match content_changes.pop() {
         Some(change) => change.text,
-        None => return error!("Invalid textDocument/didChange for {:?}", url),
+        None => bail!("Invalid textDocument/didChange for {:?}", url),
     };
-    let path = RomePath::new(url.path()).with_id(doc.path.file_id().unwrap_or(0_usize));
-    let doc = Document::new(path, doc.editor_language, version, text);
+
+    let doc = Document::new(version, &content);
+
+    session.workspace.change_file(ChangeFileParams {
+        path: rome_path,
+        version,
+        content,
+    })?;
+
     session.insert_document(url.clone(), doc);
 
     if let Err(err) = session.update_diagnostics(url).await {
         error!("Failed to update diagnostics: {}", err);
     }
+
+    Ok(())
 }
 
 /// Handler for `textDocument/didClose` LSP notification
 pub(crate) async fn did_close(
-    session: Arc<Session>,
+    session: &Session,
     params: lsp_types::DidCloseTextDocumentParams,
-) {
+) -> Result<()> {
     let url = params.text_document.uri;
+    let rome_path = session.file_path(&url);
+
+    session
+        .workspace
+        .close_file(CloseFileParams { path: rome_path })?;
+
     session.remove_document(&url);
+
     let diagnostics = vec![];
     let version = None;
     session
         .client
         .publish_diagnostics(url, diagnostics, version)
         .await;
+
+    Ok(())
 }

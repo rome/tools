@@ -3,8 +3,8 @@ use std::{ffi::OsString, path::Path};
 use pico_args::Arguments;
 use rome_cli::{run_cli, CliSession, Termination};
 use rome_console::BufferConsole;
-use rome_service::{App, DynRef};
 use rome_fs::{FileSystem, MemoryFileSystem};
+use rome_service::{App, DynRef};
 
 const UNFORMATTED: &str = "  statement(  )  ";
 const FORMATTED: &str = "statement();\n";

@@ -1293,16 +1293,11 @@ dependencies = [
  "parking_lot",
  "pico-args",
  "rayon",
- "rome_analyze",
  "rome_console",
  "rome_diagnostics",
  "rome_flags",
  "rome_formatter",
  "rome_fs",
- "rome_js_formatter",
- "rome_js_parser",
- "rome_js_syntax",
- "rome_rowan",
  "rome_service",
  "thiserror",
  "tracing",
@@ -1471,12 +1466,12 @@ dependencies = [
  "rome_formatter",
  "rome_fs",
  "rome_js_formatter",
- "rome_js_parser",
- "rome_js_syntax",
  "rome_rowan",
+ "rome_service",
  "serde",
  "serde_json",
  "tokio",
+ "tower",
  "tower-lsp",
  "tracing",
  "tracing-subscriber",
@@ -1526,8 +1521,16 @@ dependencies = [
 name = "rome_service"
 version = "0.0.0"
 dependencies = [
+ "dashmap 5.2.0",
+ "rome_analyze",
  "rome_console",
+ "rome_diagnostics",
+ "rome_formatter",
  "rome_fs",
+ "rome_js_formatter",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_rowan",
 ]
 
 [[package]]
@@ -1936,8 +1939,10 @@ dependencies = [
  "futures-util",
  "pin-project",
  "pin-project-lite",
+ "tokio",
  "tower-layer",
  "tower-service",
+ "tracing",
 ]
 
 [[package]]
@@ -1993,6 +1998,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f6c650a8ef0cd2dd93736f033d21cbd1224c5a967aa0c258d00fcf7dafef9b9f"
 dependencies = [
  "cfg-if",
+ "log",
  "pin-project-lite",
  "tracing-attributes",
  "tracing-core",

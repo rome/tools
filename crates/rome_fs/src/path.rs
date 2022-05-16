@@ -10,7 +10,7 @@ use std::{fs::File, io, io::Write, ops::Deref, path::PathBuf};
 #[derive(Debug, Clone, Eq, Hash, PartialEq)]
 pub struct RomePath {
     file: PathBuf,
-    file_id: Option<usize>,
+    file_id: usize,
 }
 
 impl Deref for RomePath {
@@ -22,17 +22,11 @@ impl Deref for RomePath {
 }
 
 impl RomePath {
-    pub fn new(path_to_file: impl Into<PathBuf>) -> Self {
+    pub fn new(path_to_file: impl Into<PathBuf>, file_id: usize) -> Self {
         Self {
             file: path_to_file.into(),
-            file_id: None,
+            file_id,
         }
-    }
-
-    /// Builder pattern. It assigns an ID to the file
-    pub fn with_id(mut self, file_id: usize) -> Self {
-        self.file_id = Some(file_id);
-        self
     }
 
     // TODO: handle error with diagnostic?
@@ -67,7 +61,7 @@ impl RomePath {
 
     /// Retrieves the ID assigned to the file. It might not exist, that's why it
     /// returns an [Option]
-    pub fn file_id(&self) -> Option<usize> {
+    pub fn file_id(&self) -> usize {
         self.file_id
     }
 

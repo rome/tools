@@ -176,7 +176,8 @@ fn handle_dir<'scope>(
             // files entirely as well as silently ignore unsupported files when
             // doing a directory traversal but printing an error message if the
             // user explicitly requests an unsupported file to be formatted
-            if !ctx.can_handle(&RomePath::new(&path)) {
+            let rome_path = RomePath::new(&path, file_id);
+            if !ctx.can_handle(&rome_path) {
                 continue;
             }
 

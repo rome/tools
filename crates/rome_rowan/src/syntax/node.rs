@@ -7,6 +7,7 @@ use crate::{
 };
 #[cfg(feature = "serde")]
 use serde_crate::Serialize;
+use std::any::TypeId;
 use std::fmt::{Debug, Formatter};
 use std::iter::{self, FusedIterator};
 use std::marker::PhantomData;
@@ -479,6 +480,25 @@ impl<L: Language> SyntaxNode<L> {
     }
 }
 
+impl<L> SyntaxNode<L>
+where
+    L: Language + 'static,
+{
+    /// Create a [Send] + [Sync] handle to this node
+    ///
+    /// Returns `None` if self is not a root node
+    pub fn as_send(&self) -> Option<SendNode> {
+        if self.parent().is_none() {
+            Some(SendNode {
+                language: TypeId::of::<L>(),
+                green: self.green_node(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
 impl<L: Language> fmt::Debug for SyntaxNode<L> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if f.alternate() {
@@ -533,6 +553,31 @@ impl<L: Language> From<cursor::SyntaxNode> for SyntaxNode<L> {
         SyntaxNode {
             raw,
             _p: PhantomData,
+        }
+    }
+}
+
+/// Language-agnostic representation of the root node of a syntax tree, can be
+/// sent or shared between threads
+#[derive(Clone)]
+pub struct SendNode {
+    language: TypeId,
+    green: GreenNode,
+}
+
+impl SendNode {
+    /// Downcast this handle back into a [SyntaxNode]
+    ///
+    /// Returns `None` if the specified language `L` is not the one this node
+    /// was created with
+    pub fn into_node<L>(self) -> Option<SyntaxNode<L>>
+    where
+        L: Language + 'static,
+    {
+        if TypeId::of::<L>() == self.language {
+            Some(SyntaxNode::new_root(self.green))
+        } else {
+            None
         }
     }
 }

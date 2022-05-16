@@ -1,42 +1,43 @@
-use crate::file_handlers::unknown::UnknownFileHandler;
-use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
-use file_handlers::json::JsonFileHandler;
 use rome_console::{Console, EnvConsole};
+use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
 
-pub mod file_handlers;
+mod file_handlers;
+pub mod settings;
+pub mod workspace;
 
-/// Features available for each language
-pub struct Features {
-    js: JsFileHandler,
-    json: JsonFileHandler,
-    unknown: UnknownFileHandler,
-}
+pub use crate::file_handlers::JsFormatSettings;
+pub use crate::workspace::Workspace;
 
 pub struct App<'app> {
     pub fs: DynRef<'app, dyn FileSystem>,
-    /// features available throughout the application
-    pub features: Features,
+    pub workspace: DynRef<'app, dyn Workspace>,
     pub console: DynRef<'app, dyn Console>,
 }
 
 /// Generic errors thrown during rome operations
 pub enum RomeError {
-    /// A file can't be read
-    CantReadTheFile,
+    /// The file does not exist in the [Workspace]
+    NotFound,
     /// A file is not supported. It contains the extension of the file
     /// Use this error if Rome is trying to process a file that Rome can't understand
-    SourceFileNotSupported(String),
+    SourceFileNotSupported(RomePath),
+    /// The formatter encountered an error while formatting the file
+    FormatError(FormatError),
+    /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
+    FormatWithErrorsDisabled,
 }
 
 impl Debug for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            RomeError::NotFound => std::fmt::Display::fmt(self, f),
             RomeError::SourceFileNotSupported(_) => std::fmt::Display::fmt(self, f),
-            RomeError::CantReadTheFile => std::fmt::Display::fmt(self, f),
+            RomeError::FormatError(_) => std::fmt::Display::fmt(self, f),
+            RomeError::FormatWithErrorsDisabled => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -44,17 +45,38 @@ impl Debug for RomeError {
 impl Display for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            RomeError::SourceFileNotSupported(extension) => {
-                write!(f, "Rome doesn't support this {extension} yet")
+            RomeError::SourceFileNotSupported(path) => {
+                let ext = path
+                    .extension()
+                    .and_then(|ext| ext.to_str())
+                    .unwrap_or("<unknown>");
+
+                write!(f, "Rome doesn't support the file extension {ext:?} yet")
             }
-            RomeError::CantReadTheFile => {
-                write!(f, "Rome is not able to read the file")
+            RomeError::NotFound => {
+                write!(f, "the file does not exist in the workspace")
+            }
+            RomeError::FormatError(cause) => {
+                write!(
+                    f,
+                    "the formatter encountered an error while formatting the file: {}",
+                    cause
+                )
+            }
+            RomeError::FormatWithErrorsDisabled => {
+                write!(f, "the file could not be formatted since it has syntax errors and `format_with_errors` is disabled")
             }
         }
     }
 }
 
 impl Error for RomeError {}
+
+impl From<FormatError> for RomeError {
+    fn from(err: FormatError) -> Self {
+        Self::FormatError(err)
+    }
+}
 
 impl App<'static> {
     /// Create a new instance of the app using the [OsFileSystem] and [EnvConsole]
@@ -75,65 +97,8 @@ impl<'app> App<'app> {
         Self {
             fs,
             console,
-            features: Features {
-                js: JsFileHandler {},
-                json: JsonFileHandler {},
-                unknown: UnknownFileHandler::default(),
-            },
+            workspace: DynRef::Owned(workspace::server()),
         }
-    }
-
-    /// Return a [Language] from a string
-    pub fn get_language<L: Into<Language>>(file_extension: L) -> Language {
-        file_extension.into()
-    }
-
-    /// Check if the current language is supported
-    pub fn is_language_supported<L: Into<Language>>(&self, file_extension: L) -> bool {
-        Language::Unknown != file_extension.into()
-    }
-
-    /// Return the features that are available for JavaScript
-    pub fn get_js_features(&self) -> &JsFileHandler {
-        &self.features.js
-    }
-
-    /// Return the features that are available for JSON
-    pub fn get_json_features(&self) -> &JsonFileHandler {
-        &self.features.json
-    }
-
-    /// Features available to a language that is not supported
-    pub fn get_unknown_features(&self) -> &UnknownFileHandler {
-        &self.features.unknown
-    }
-}
-
-impl Features {
-    /// Checks if the current file can be formatted
-    pub fn can_format(&self, rome_path: &RomePath) -> bool {
-        rome_path.extension().map_or(false, |extension| {
-            let language = App::get_language(extension);
-
-            match language {
-                Language::JavaScript => self.js.capabilities().format,
-                Language::Json => self.json.capabilities().format,
-                Language::Unknown => self.unknown.capabilities().format,
-            }
-        })
-    }
-
-    /// Checks if the current file can be analyzed for linting rules
-    pub fn can_lint(&self, rome_path: &RomePath) -> bool {
-        rome_path.extension().map_or(false, |extension| {
-            let language = App::get_language(extension);
-
-            match language {
-                Language::JavaScript => self.js.capabilities().lint,
-                Language::Json => self.json.capabilities().lint,
-                Language::Unknown => self.unknown.capabilities().lint,
-            }
-        })
     }
 }
 

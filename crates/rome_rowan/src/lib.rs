@@ -34,9 +34,9 @@ pub use crate::{
     ast::*,
     green::RawSyntaxKind,
     syntax::{
-        Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
-        SyntaxNodeChildren, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments, TriviaPiece,
-        TriviaPieceKind,
+        Language, SendNode, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList,
+        SyntaxNode, SyntaxNodeChildren, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+        TriviaPiece, TriviaPieceKind,
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,

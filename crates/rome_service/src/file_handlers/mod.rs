@@ -1,12 +1,24 @@
 use std::ffi::OsStr;
 
-pub mod javascript;
-pub mod json;
-pub mod unknown;
+use rome_analyze::AnalyzerAction;
+use rome_diagnostics::Diagnostic;
+use rome_formatter::{IndentStyle, Printed};
+use rome_fs::RomePath;
+use rome_js_syntax::{TextRange, TextSize};
+
+use crate::{settings::SettingsHandle, workspace::server::AnyParse, RomeError};
+
+use self::{javascript::JsFileHandler, json::JsonFileHandler, unknown::UnknownFileHandler};
+
+mod javascript;
+mod json;
+mod unknown;
+
+pub use javascript::JsFormatSettings;
 
 /// Supported languages by Rome
 #[derive(Debug, PartialEq)]
-pub enum Language {
+pub(crate) enum Language {
     /// JavaScript, TypeScript, JSX, TSX
     JavaScript,
     /// JSON
@@ -35,7 +47,9 @@ impl From<&OsStr> for Language {
     }
 }
 
-pub enum Mime {
+// TODO: The Css variant is unused at the moment
+#[allow(dead_code)]
+pub(crate) enum Mime {
     Javascript,
     Json,
     Css,
@@ -53,14 +67,28 @@ impl std::fmt::Display for Mime {
     }
 }
 
-#[derive(Debug)]
-pub struct Capabilities {
-    pub lint: bool,
-    pub format: bool,
+type Parse = fn(&RomePath, &str) -> AnyParse;
+type DebugPrint = fn(&RomePath, AnyParse) -> String;
+type Lint = fn(&RomePath, AnyParse) -> Vec<Diagnostic>;
+type CodeActions = fn(&RomePath, AnyParse, TextRange) -> Vec<AnalyzerAction>;
+type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;
+type FormatRange =
+    fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;
+type FormatOnType =
+    fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextSize) -> Result<Printed, RomeError>;
+
+pub(crate) struct Capabilities {
+    pub(crate) parse: Option<Parse>,
+    pub(crate) debug_print: Option<DebugPrint>,
+    pub(crate) lint: Option<Lint>,
+    pub(crate) code_actions: Option<CodeActions>,
+    pub(crate) format: Option<Format>,
+    pub(crate) format_range: Option<FormatRange>,
+    pub(crate) format_on_type: Option<FormatOnType>,
 }
 
 /// Main trait to use to add a new language to Rome
-pub trait ExtensionHandler {
+pub(crate) trait ExtensionHandler {
     /// The language of the file. It can be a super language.
     /// For example, a ".js" file can have [Language::Ts]
     fn language(&self) -> Language;
@@ -76,8 +104,13 @@ pub trait ExtensionHandler {
     /// Capabilities that can applied to a file
     fn capabilities(&self) -> Capabilities {
         Capabilities {
-            format: false,
-            lint: false,
+            parse: None,
+            debug_print: None,
+            format: None,
+            lint: None,
+            code_actions: None,
+            format_range: None,
+            format_on_type: None,
         }
     }
 
@@ -86,5 +119,39 @@ pub trait ExtensionHandler {
     /// An image should me parked as asset.
     fn is_asset(&self) -> bool {
         false
+    }
+}
+
+/// Features available for each language
+pub(crate) struct Features {
+    js: JsFileHandler,
+    json: JsonFileHandler,
+    unknown: UnknownFileHandler,
+}
+
+impl Features {
+    pub(crate) fn new() -> Self {
+        Features {
+            js: JsFileHandler {},
+            json: JsonFileHandler {},
+            unknown: UnknownFileHandler::default(),
+        }
+    }
+
+    /// Return a [Language] from a string
+    fn get_language(rome_path: &RomePath) -> Language {
+        match rome_path.extension() {
+            Some(file_extension) => file_extension.into(),
+            None => Language::Unknown,
+        }
+    }
+
+    /// Returns the [Capabilities] associated with a [RomePath]
+    pub(crate) fn get_capabilities(&self, rome_path: &RomePath) -> Capabilities {
+        match Self::get_language(rome_path) {
+            Language::JavaScript => self.js.capabilities(),
+            Language::Json => self.json.capabilities(),
+            Language::Unknown => self.unknown.capabilities(),
+        }
     }
 }

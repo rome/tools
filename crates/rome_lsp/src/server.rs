@@ -1,30 +1,23 @@
 use crate::capabilities::server_capabilities;
-use crate::handlers;
-use crate::handlers::formatting::{
-    to_format_options, FormatOnTypeParams, FormatParams, FormatRangeParams,
-};
-use crate::line_index::LineIndex;
-use crate::requests::syntax_tree::{syntax_tree, SyntaxTreePayload, SYNTAX_TREE_REQUEST};
+use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::Session;
-use crate::utils;
 use crate::utils::into_lsp_error;
+use crate::{handlers, requests};
 use serde_json::Value;
-use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
 use tower_lsp::jsonrpc::Result as LspResult;
-use tower_lsp::lsp_types::*;
+use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{Client, LanguageServer, LspService, Server};
 use tracing::{error, info, trace};
 
-struct LSPServer {
-    client: Client,
-    session: Arc<Session>,
+pub struct LSPServer {
+    session: Session,
 }
 
 impl LSPServer {
     fn new(client: Client) -> Self {
-        let session = Arc::new(Session::new(client.clone()));
-        Self { client, session }
+        let session = Session::new(client);
+        Self { session }
     }
 
     async fn syntax_tree_request(&self, params: SyntaxTreePayload) -> LspResult<Option<Value>> {
@@ -34,11 +27,10 @@ impl LSPServer {
             &params
         );
 
-        let params: SyntaxTreePayload = params;
-        let url = params.text_document.uri.clone();
-        let document = self.session.document(&url)?;
-        let task = utils::spawn_blocking_task(move || syntax_tree(document));
-        let result = task.await?;
+        let url = params.text_document.uri;
+        let result =
+            requests::syntax_tree::syntax_tree(&self.session, &url).map_err(into_lsp_error)?;
+
         let result = serde_json::to_value(result).map_err(into_lsp_error)?;
         Ok(Some(result))
     }
@@ -56,7 +48,10 @@ impl LanguageServer for LSPServer {
 
         let init = InitializeResult {
             capabilities: server_capabilities(),
-            ..Default::default()
+            server_info: Some(ServerInfo {
+                name: String::from(env!("CARGO_PKG_NAME")),
+                version: Some(String::from(env!("CARGO_PKG_VERSION"))),
+            }),
         };
 
         Ok(init)
@@ -70,16 +65,23 @@ impl LanguageServer for LSPServer {
         }
 
         let msg = format!("Server initialized with PID: {}", std::process::id());
-        self.client.log_message(MessageType::INFO, msg).await;
+        self.session
+            .client
+            .log_message(MessageType::INFO, msg)
+            .await;
+
+        let mut registrations = Vec::new();
 
         if self.session.can_register_did_change_configuration() {
-            let registration = Registration {
+            registrations.push(Registration {
                 id: "workspace/didChangeConfiguration".to_string(),
                 method: "workspace/didChangeConfiguration".to_string(),
                 register_options: None,
-            };
+            });
+        }
 
-            if let Err(e) = self.client.register_capability(vec![registration]).await {
+        if !registrations.is_empty() {
+            if let Err(e) = self.session.client.register_capability(registrations).await {
                 error!("Error registering didChangeConfiguration capability: {}", e);
             }
         }
@@ -93,91 +95,28 @@ impl LanguageServer for LSPServer {
     }
 
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
-        let workspace_settings = self.session.config.read().get_workspace_settings();
-        if !workspace_settings.analysis.enable_code_actions {
-            return Ok(None);
-        }
-
-        let url = params.text_document.uri.clone();
-        let doc = self.session.document(&url)?;
-        let diagnostics = params.context.diagnostics;
-
-        let line_index = LineIndex::new(&doc.text);
-        let cursor_range = crate::utils::text_range(&line_index, params.range);
-
-        let file_id = doc.file_id();
-
-        let task = utils::spawn_blocking_task(move || {
-            handlers::analysis::code_actions(file_id, &doc.text, url, &diagnostics, cursor_range)
-        });
-        let actions = task.await?;
-        Ok(Some(actions))
+        handlers::analysis::code_actions(&self.session, params).map_err(into_lsp_error)
     }
 
     async fn formatting(
         &self,
         params: DocumentFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        let url = params.text_document.uri;
-        let doc = self.session.document(&url)?;
-        let workspace_settings = self.session.config.read().get_workspace_settings();
-
-        trace!("Formatting...");
-        let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format(FormatParams {
-                text: &doc.text,
-                source_type: doc.get_source_type(),
-                format_options: to_format_options(&params.options, &workspace_settings.formatter),
-                workspace_settings,
-                file_id: doc.file_id(),
-            })
-        });
-        let edits = task.await?;
-        Ok(edits)
+        handlers::formatting::format(&self.session, params).map_err(into_lsp_error)
     }
 
     async fn range_formatting(
         &self,
         params: DocumentRangeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        let url = params.text_document.uri;
-        let doc = self.session.document(&url)?;
-        let workspace_settings = self.session.config.read().get_workspace_settings();
-
-        let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format_range(FormatRangeParams {
-                text: doc.text.as_ref(),
-                file_id: doc.file_id(),
-                format_options: to_format_options(&params.options, &workspace_settings.formatter),
-                range: params.range,
-                workspace_settings,
-                source_type: doc.get_source_type(),
-            })
-        });
-        let edits = task.await?;
-        Ok(edits)
+        handlers::formatting::format_range(&self.session, params).map_err(into_lsp_error)
     }
 
     async fn on_type_formatting(
         &self,
         params: DocumentOnTypeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        let url = params.text_document_position.text_document.uri;
-        let doc = self.session.document(&url)?;
-        let workspace_settings = self.session.config.read().get_workspace_settings();
-
-        let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format_on_type(FormatOnTypeParams {
-                text: doc.text.as_ref(),
-                file_id: doc.file_id(),
-                format_options: to_format_options(&params.options, &workspace_settings.formatter),
-                position: params.text_document_position.position,
-                workspace_settings,
-                source_type: doc.get_source_type(),
-            })
-        });
-        let edits = task.await?;
-        Ok(edits)
+        handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
     }
 
     async fn did_change_configuration(&self, _params: DidChangeConfigurationParams) {
@@ -191,24 +130,31 @@ impl LanguageServer for LSPServer {
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {
-        let session = self.session.clone();
-        handlers::text_document::did_open(session, params).await;
+        handlers::text_document::did_open(&self.session, params)
+            .await
+            .ok();
     }
 
     async fn did_change(&self, params: DidChangeTextDocumentParams) {
-        let session = self.session.clone();
-        handlers::text_document::did_change(session, params).await;
+        handlers::text_document::did_change(&self.session, params)
+            .await
+            .ok();
     }
 
     async fn did_close(&self, params: DidCloseTextDocumentParams) {
-        let session = self.session.clone();
-        handlers::text_document::did_close(session, params).await;
+        handlers::text_document::did_close(&self.session, params)
+            .await
+            .ok();
     }
 }
 
-pub async fn run_server(stdin: Stdin, stdout: Stdout) {
-    let (service, messages) = LspService::build(LSPServer::new)
+pub fn build_server() -> (LspService<LSPServer>, ClientSocket) {
+    LspService::build(LSPServer::new)
         .custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request)
-        .finish();
+        .finish()
+}
+
+pub async fn run_server(stdin: Stdin, stdout: Stdout) {
+    let (service, messages) = build_server();
     Server::new(stdin, stdout, messages).serve(service).await;
 }

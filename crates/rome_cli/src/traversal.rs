@@ -11,24 +11,22 @@ use std::{
 
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use rayon::join;
-use rome_analyze::{analyze, AnalysisFilter, RuleCategories};
 use rome_console::{
     codespan::Locus,
     diff::{Diff, DiffMode},
     markup, Console, ConsoleExt,
 };
-use rome_service::Features;
 use rome_diagnostics::{
     file::{FileId, SimpleFile},
     Diagnostic, DiagnosticHeader, Severity,
 };
+use rome_formatter::IndentStyle;
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_js_formatter::format_node;
-use rome_js_formatter::options::JsFormatOptions;
-use rome_js_parser::parse;
-use rome_js_syntax::SourceType;
-use rome_rowan::AstNode;
+use rome_service::{
+    workspace::{FeatureName, FileGuard, OpenFileParams, SupportsFeatureParams},
+    Workspace,
+};
 
 use crate::{CliSession, Termination};
 
@@ -64,7 +62,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
     let skipped = AtomicUsize::new(0);
 
     let fs = &*session.app.fs;
-    let features = &session.app.features;
+    let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
 
     let (has_errors, duration) = join(
@@ -77,7 +75,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
                 inputs,
                 &TraversalOptions {
                     fs,
-                    features,
+                    workspace,
                     mode,
                     interner,
                     processed: &processed,
@@ -249,22 +247,16 @@ fn print_messages_to_console(
 #[derive(Clone, Copy)]
 pub(crate) enum TraversalMode {
     Check,
-    CI {
-        options: JsFormatOptions,
-    },
-    Format {
-        options: JsFormatOptions,
-        ignore_errors: bool,
-        write: bool,
-    },
+    CI,
+    Format { ignore_errors: bool, write: bool },
 }
 
 /// Context object shared between directory traversal tasks
 struct TraversalOptions<'ctx, 'app> {
     /// Shared instance of [FileSystem]
     fs: &'app dyn FileSystem,
-    /// Set of features supported by this instance of the CLI
-    features: &'ctx Features,
+    /// Instance of [Workspace] used by this instance of the CLI
+    workspace: &'ctx dyn Workspace,
     /// Determines how the files should be processed
     mode: TraversalMode,
     /// File paths interner used by the filesystem traversal
@@ -299,8 +291,14 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
     }
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
-        let can_lint = self.features.can_lint(rome_path);
-        let can_format = self.features.can_format(rome_path);
+        let can_lint = self.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Format,
+        });
+        let can_format = self.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Lint,
+        });
 
         match self.mode {
             TraversalMode::Check => can_lint,
@@ -365,9 +363,15 @@ type FileResult = Result<Option<Message>, Message>;
 /// write mode is enabled
 fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileResult {
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
-        let rome_path = RomePath::new(path);
-        let can_lint = ctx.features.can_lint(&rome_path);
-        let can_format = ctx.features.can_format(&rome_path);
+        let rome_path = RomePath::new(path, file_id);
+        let can_lint = ctx.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Format,
+        });
+        let can_format = ctx.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Lint,
+        });
 
         let can_handle = match ctx.mode {
             TraversalMode::Check => can_lint,
@@ -384,18 +388,32 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             }));
         }
 
-        let source_type = SourceType::try_from(path).unwrap_or_else(|_| SourceType::js_module());
-
         let mut file = ctx.fs.open(path).with_file_id(file_id)?;
 
         let mut input = String::new();
         file.read_to_string(&mut input).with_file_id(file_id)?;
 
-        let parsed = parse(&input, file_id, source_type);
+        let file_guard = FileGuard::open(
+            ctx.workspace,
+            OpenFileParams {
+                path: rome_path,
+                version: 0,
+                content: input.clone(),
+            },
+        )
+        .with_file_id_and_code(file_id, "IO")?;
+
+        let diagnostics = file_guard
+            .pull_diagnostics()
+            .with_file_id_and_code(file_id, "Lint")?;
+
+        let has_errors = diagnostics
+            .iter()
+            .any(|diag| diag.severity >= Severity::Error);
 
         // In formatting mode, abort immediately if the file has errors
         match ctx.mode {
-            TraversalMode::Format { ignore_errors, .. } if parsed.has_errors() => {
+            TraversalMode::Format { ignore_errors, .. } if has_errors => {
                 return Err(if ignore_errors {
                     Message::from(TraversalError {
                         severity: Severity::Warning,
@@ -407,40 +425,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     Message::Diagnostics {
                         name: path.display().to_string(),
                         content: input,
-                        diagnostics: parsed.into_diagnostics(),
+                        diagnostics,
                     }
                 });
             }
 
             _ => {}
         }
-
-        let tree = parsed.tree();
-        let mut diagnostics = parsed.into_diagnostics();
-
-        if can_lint && matches!(ctx.mode, TraversalMode::Check | TraversalMode::CI { .. }) {
-            let filter = AnalysisFilter {
-                // Only run the syntax and lint rules, ignore refactors
-                categories: RuleCategories::SYNTAX | RuleCategories::LINT,
-                ..AnalysisFilter::default()
-            };
-
-            analyze(file_id, &tree, filter, |signal| {
-                if let Some(mut diag) = signal.diagnostic() {
-                    if let Some(action) = signal.action() {
-                        diag.suggestions.push(action.into());
-                    }
-
-                    diagnostics.push(diag);
-                }
-            });
-        }
-
-        // Return early if the file has error diagnostics, there's a good
-        // chance it would cause formatting errors
-        let has_errors = diagnostics
-            .iter()
-            .any(|diag| diag.severity >= Severity::Error);
 
         let result = if diagnostics.is_empty() {
             None
@@ -463,23 +454,21 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         }
 
         if can_format {
-            let (options, write) = match ctx.mode {
+            let write = match ctx.mode {
                 // In check mode do not run the formatter and return the result immediately
                 TraversalMode::Check => return Ok(result),
-                TraversalMode::CI { options } => (options, false),
-                TraversalMode::Format { options, write, .. } => (options, write),
+                TraversalMode::CI => false,
+                TraversalMode::Format { write, .. } => write,
             };
 
-            let printed = format_node(options, tree.syntax())
-                .with_file_id_and_code(file_id, "Format")?
-                .print();
+            let printed = file_guard
+                .format_file(IndentStyle::default())
+                .with_file_id_and_code(file_id, "Format")?;
 
-            let output = printed.as_code().as_bytes();
-            let has_diff = output != input.as_bytes();
-
-            if has_diff {
+            let output = printed.into_code();
+            if output != input {
                 if write {
-                    file.set_content(output).with_file_id(file_id)?;
+                    file.set_content(output.as_bytes()).with_file_id(file_id)?;
                 } else {
                     // Returning the diff message will discard the content of
                     // diagnostics, meaning those would not be printed so they
@@ -491,7 +480,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     return Ok(Some(Message::Diff {
                         file_name: path.display().to_string(),
                         old: input,
-                        new: printed.into_code(),
+                        new: output,
                     }));
                 }
             }
