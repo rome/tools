@@ -13,6 +13,7 @@ use crate::utils;
 /// If the `AnalysisServer` has no matching file, results in error.
 pub(crate) fn diagnostics(
     file_id: FileId,
+    url: &lsp_types::Url,
     text: &str,
 ) -> jsonrpc::Result<Vec<lsp_types::Diagnostic>> {
     let parse = parse_script(text, file_id);
@@ -21,9 +22,13 @@ pub(crate) fn diagnostics(
     let mut result = Vec::new();
     let line_index = LineIndex::new(text);
 
-    rome_analyze::analyze(&root, AnalysisFilter::default(), |event| {
-        if let Some(d) = event.diagnostic() {
-            result.push(utils::diagnostic_to_lsp(d, &line_index));
+    rome_analyze::analyze(file_id, &root, AnalysisFilter::default(), |event| {
+        let diag = event
+            .diagnostic()
+            .and_then(|d| utils::diagnostic_to_lsp(d, url, &line_index));
+
+        if let Some(diag) = diag {
+            result.push(diag);
         }
     });
 
@@ -52,7 +57,7 @@ pub(crate) fn code_actions(
     let mut result = Vec::new();
     let line_index = LineIndex::new(text);
 
-    rome_analyze::analyze(&root, filter, |event| {
+    rome_analyze::analyze(file_id, &root, filter, |event| {
         if let Some(action) = event.action() {
             let action = utils::code_fix_to_lsp(&url, text, &line_index, diagnostics, action);
 

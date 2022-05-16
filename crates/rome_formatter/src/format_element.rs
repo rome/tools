@@ -1418,25 +1418,30 @@ impl FormatElement {
         matches!(self, FormatElement::Empty)
     }
 
-    /// Returns true if this [FormatElement] recursively contains any hard line break
-    /// ([hard_line_break], [empty_line], [Token] containing the '\n' character)
-    pub fn has_hard_line_breaks(&self) -> bool {
+    /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
+    /// This is the case if this format element recursively contains a:
+    /// * [empty_line] or [hard_line_break]
+    /// * A token containing '\n'
+    ///
+    /// Use this with caution, this is only a heuristic and the printer may print the element over multiple
+    /// lines if this element is part of a group and the group doesn't fit on a single line.
+    pub fn will_break(&self) -> bool {
         match self {
             FormatElement::Empty => false,
             FormatElement::Space => false,
             FormatElement::Line(line) => matches!(line.mode, LineMode::Hard | LineMode::Empty),
-            FormatElement::Indent(indent) => indent.content.has_hard_line_breaks(),
+            FormatElement::Indent(indent) => indent.content.will_break(),
             FormatElement::Group(group) | FormatElement::HardGroup(group) => {
-                group.content.has_hard_line_breaks()
+                group.content.will_break()
             }
-            FormatElement::ConditionalGroupContent(group) => group.content.has_hard_line_breaks(),
+            FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
             FormatElement::List(list) | FormatElement::Fill(list) => {
-                list.content.iter().any(FormatElement::has_hard_line_breaks)
+                list.content.iter().any(FormatElement::will_break)
             }
             FormatElement::Token(token) => token.contains('\n'),
-            FormatElement::LineSuffix(_) => true,
-            FormatElement::Comment(content) => content.has_hard_line_breaks(),
-            FormatElement::Verbatim(verbatim) => verbatim.element.has_hard_line_breaks(),
+            FormatElement::LineSuffix(_) => false,
+            FormatElement::Comment(content) => content.will_break(),
+            FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
         }
     }
 

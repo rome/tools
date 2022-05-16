@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: issue-4125.js
 ---
 # Input
@@ -180,11 +179,7 @@ somePromise
 
 // you can still force multi-line chaining with a comment:
 const sha256_2 = (data) =>
-  crypto
-    // breakme
-    .createHash("sha256")
-    .update(data)
-    .digest("hex");
+  crypto.createHash("sha256").update(data).digest("hex"); // breakme
 
 // examples from https://github.com/prettier/prettier/pull/4765
 
@@ -247,10 +242,7 @@ const date = moment.utc(userInput).hour(0).minute(0).second(0);
 
 fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
 
-fetchUser(id)
-  //
-  .then(fetchAccountForUser)
-  .catch(handleFetchError);
+fetchUser(id).then(fetchAccountForUser).catch(handleFetchError); //
 
 // examples from https://github.com/prettier/prettier/issues/3107
 
@@ -260,18 +252,16 @@ function HelloWorld() {
     authorizationToken: data.token,
   }).initVerify("foo_container");
 
-  fejax
-    .ajax({ url: "/verification/", dataType: "json" })
-    .then(
-      (data) => {
-        this.setState({ isLoading: false });
-        this.initWidget(data);
-      },
-      (data) => {
-        this.logImpression("foo_fetch_error", data);
-        Flash.error(I18n.t("offline_identity.foo_issue"));
-      },
-    );
+  fejax.ajax({ url: "/verification/", dataType: "json" }).then(
+    (data) => {
+      this.setState({ isLoading: false });
+      this.initWidget(data);
+    },
+    (data) => {
+      this.logImpression("foo_fetch_error", data);
+      Flash.error(I18n.t("offline_identity.foo_issue"));
+    },
+  );
 }
 
 action$

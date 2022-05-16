@@ -1,8 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 92
 expression: useSingleVarDeclarator.js
-
 ---
 # Input
 ```js
@@ -15,15 +13,13 @@ function test() {
 
 # Diagnostics
 ```
+warning[useSingleVarDeclarator]: Declare variables separately.
   ┌─ useSingleVarDeclarator.js:3:2
   │
 3 │     let foo, bar;
-  │     ^^^^^^^^^^^^^ Declare variables separately.
+  │     ------------- Declare variables separately.
 
-```
-
-# Actions
-```
+Break out into multiple declarations
     | @@ -1,4 +1,5 @@
 0 0 |   function test() {
 1 1 |   	// Comment
@@ -31,6 +27,7 @@ function test() {
   2 | + 	let foo;
   3 | + 	let bar;
 3 4 |   }
+
 
 ```
 

@@ -1,3 +1,4 @@
+use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
     suppression::{has_suppressions_category, SuppressionCategory},
     JsAnyRoot, TextRange, WalkEvent,
@@ -10,9 +11,9 @@ mod categories;
 mod registry;
 mod signals;
 
-pub use crate::categories::{ActionCategories, RuleCategories, RuleCategory};
+pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 use crate::registry::RuleRegistry;
-pub use crate::signals::{AnalyzerAction, AnalyzerDiagnostic, AnalyzerSignal};
+pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 
 /// Allows filtering the list of rules that will be executed in a run of the analyzer,
 /// and at what source code range signals (diagnostics or actions) may be raised
@@ -29,7 +30,7 @@ pub struct AnalysisFilter<'a> {
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
 /// then call the `callback` when an analysis rule emits a diagnostic or action
-pub fn analyze<B>(root: &JsAnyRoot, filter: AnalysisFilter, mut callback: B)
+pub fn analyze<B>(file_id: FileId, root: &JsAnyRoot, filter: AnalysisFilter, mut callback: B)
 where
     B: FnMut(&dyn AnalyzerSignal),
 {
@@ -54,7 +55,7 @@ where
             continue;
         }
 
-        registry.analyze(root, node, &mut callback);
+        registry.analyze(file_id, root, node, &mut callback);
     }
 }
 
@@ -75,10 +76,11 @@ mod tests {
 
         let parsed = parse(SOURCE, 0, SourceType::js_module());
 
-        analyze(&parsed.tree(), AnalysisFilter::default(), |signal| {
+        analyze(0, &parsed.tree(), AnalysisFilter::default(), |signal| {
             if let Some(diag) = signal.diagnostic() {
                 assert_ne!(
-                    diag.rule_name, "noDoubleEquals",
+                    diag.code,
+                    Some(String::from("noDoubleEquals")),
                     "unexpected diagnostic signal raised"
                 );
             }

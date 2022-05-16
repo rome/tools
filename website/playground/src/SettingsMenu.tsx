@@ -2,53 +2,55 @@ import LineWidthInput from "./LineWidthInput";
 import IndentStyleSelect from "./IndentStyleSelect";
 import QuoteStyleSelect from "./QuoteStyleSelect";
 import SourceTypeSelect from "./SourceTypeSelect";
-import { PlaygroundSettings } from "./types";
+import { PlaygroundSettings, PlaygroundState } from "./types";
+import { Dispatch, SetStateAction } from "react";
+import { createSetter } from "./utils";
 
-interface Props { settings: PlaygroundSettings }
+interface Props {
+	settings: PlaygroundSettings;
+	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
+}
 
 export function SettingsMenu(
 	{
+		setPlaygroundState,
 		settings: {
 			lineWidth,
-			setLineWidth,
 			indentWidth,
-			setIndentWidth,
 			indentStyle,
-			setIndentStyle,
 			quoteStyle,
-			setQuoteStyle,
 			sourceType,
-			setSourceType,
 			isTypeScript,
-			setIsTypeScript,
 			isJsx,
-			setIsJsx,
 		},
 	}: Props,
 ) {
 	return (
 		<div>
 			<div className="flex flex-col sm:flex-row">
-				<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />
+				<LineWidthInput
+					lineWidth={lineWidth}
+					setLineWidth={createSetter(setPlaygroundState, "lineWidth")}
+				/>
 				<IndentStyleSelect
 					indentWidth={indentWidth}
-					setIndentWidth={setIndentWidth}
+					setIndentWidth={createSetter(setPlaygroundState, "indentWidth")}
 					indentStyle={indentStyle}
-					setIndentStyle={setIndentStyle}
+					setIndentStyle={createSetter(setPlaygroundState, "indentStyle")}
 				/>
 			</div>
 			<div className="flex flex-col sm:flex-row">
 				<QuoteStyleSelect
 					quoteStyle={quoteStyle}
-					setQuoteStyle={setQuoteStyle}
+					setQuoteStyle={createSetter(setPlaygroundState, "quoteStyle")}
 				/>
 				<SourceTypeSelect
 					isTypeScript={isTypeScript}
-					setIsTypeScript={setIsTypeScript}
+					setIsTypeScript={createSetter(setPlaygroundState, "isTypeScript")}
 					isJsx={isJsx}
-					setIsJsx={setIsJsx}
+					setIsJsx={createSetter(setPlaygroundState, "isJsx")}
 					sourceType={sourceType}
-					setSourceType={setSourceType}
+					setSourceType={createSetter(setPlaygroundState, "sourceType")}
 				/>
 			</div>
 		</div>

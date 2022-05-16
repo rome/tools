@@ -1,13 +1,9 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
 use rome_analyze::AnalysisFilter;
-use rome_console::codespan::{Codespan, Label, LabelStyle, Locus};
-use rome_console::diff::{Diff, DiffMode};
-use rome_console::fmt::{Formatter, Termcolor};
-use rome_console::markup;
-use rome_diagnostics::file::{Files, SimpleFiles};
+use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
-use rome_diagnostics::{DiagnosticHeader, Emitter};
+use rome_diagnostics::Emitter;
 use rome_formatter::IndentStyle;
 use rome_js_formatter::format_node;
 use rome_js_formatter::options::JsFormatOptions;
@@ -116,16 +112,37 @@ fn clean_up_json(json: serde_json::Value) -> serde_json::Value {
         s => s,
     }
 }
+#[wasm_bindgen]
+pub struct PlaygroundFormatOptions {
+    line_width: u16,
+    indent_width: Option<u8>, // If None, we use tabs
+    quote_style: String,
+}
+
+#[wasm_bindgen]
+impl PlaygroundFormatOptions {
+    #[wasm_bindgen(constructor)]
+    pub fn new(
+        line_width: u16,
+        indent_width: Option<u8>, // If None, we use tabs
+        quote_style: String,
+    ) -> Self {
+        Self {
+            line_width,
+            indent_width,
+            quote_style,
+        }
+    }
+}
 
 #[wasm_bindgen]
 pub fn run(
     code: String,
-    line_width: u16,
-    indent_width: Option<u8>, // If None, we use tabs
-    quote_style: String,
+    options: PlaygroundFormatOptions,
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
+    output_json: bool,
 ) -> RomeOutput {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
@@ -149,7 +166,7 @@ pub fn run(
     let parse = parse(&code, main_file_id, source_type);
     let syntax = parse.syntax();
 
-    let indent_style = if let Some(width) = indent_width {
+    let indent_style = if let Some(width) = options.indent_width {
         IndentStyle::Space(width)
     } else {
         IndentStyle::Tab
@@ -157,18 +174,25 @@ pub fn run(
 
     let options = JsFormatOptions {
         indent_style,
-        line_width: line_width.try_into().unwrap_or_default(),
-        quote_style: quote_style.parse().unwrap_or_default(),
+        line_width: options.line_width.try_into().unwrap_or_default(),
+        quote_style: options.quote_style.parse().unwrap_or_default(),
     };
 
-    let cst_json = serde_json::to_value(&syntax)
-        .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" }));
+    let (cst, ast) = if output_json {
+        let cst_json = clean_up_json(
+            serde_json::to_value(&syntax)
+                .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" })),
+        );
 
-    let ast_json = serde_json::to_value(&parse.tree())
-        .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" }));
+        let ast_json = clean_up_json(
+            serde_json::to_value(&parse.tree())
+                .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" })),
+        );
 
-    let cst_json = clean_up_json(cst_json);
-    let ast_json = clean_up_json(ast_json);
+        (cst_json.to_string(), ast_json.to_string())
+    } else {
+        (format!("{:#?}", syntax), format!("{:#?}", parse.tree()))
+    };
 
     let formatted = format_node(options, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
@@ -183,54 +207,26 @@ pub fn run(
             .unwrap();
     }
 
-    let mut fmt = Termcolor(&mut errors);
-    let mut fmt = Formatter::new(&mut fmt);
+    rome_analyze::analyze(
+        main_file_id,
+        &parse.tree(),
+        AnalysisFilter::default(),
+        |signal| {
+            if let Some(mut diag) = signal.diagnostic() {
+                if let Some(action) = signal.action() {
+                    diag.suggestions.push(action.into());
+                }
 
-    rome_analyze::analyze(&parse.tree(), AnalysisFilter::default(), |signal| {
-        if let Some(diag) = signal.diagnostic() {
-            let source_file = simple_files.source(main_file_id).unwrap();
-
-            let severity = diag.severity;
-            let locus = Locus::FileLocation {
-                name: simple_files.name(main_file_id).unwrap(),
-                location: source_file.location(diag.range.start()).unwrap(),
-            };
-
-            fmt.write_markup(markup! {
-                {DiagnosticHeader {
-                    code: Some(diag.rule_name),
-                    locus: None,
-                    severity,
-                    title: markup! { {diag.message} },
-                }}"\n"
-            })
-            .unwrap();
-
-            let labels = [Label {
-                style: LabelStyle::Primary,
-                message: diag.message,
-                range: diag.range,
-            }];
-
-            fmt.write_markup(markup! {
-                {Codespan { source_file, severity, locus: Some(locus), labels: &labels }}"\n"
-            })
-            .unwrap();
-
-            if let Some(action) = signal.action() {
-                let output = action.root.to_string();
-                fmt.write_markup(markup! {
-                    "Suggested fix:\n"
-                    {Diff { mode: DiffMode::Unified, left: &code, right: &output }}"\n"
-                })
-                .unwrap();
+                Emitter::new(&simple_files)
+                    .emit_with_writer(&diag, &mut errors)
+                    .unwrap();
             }
-        }
-    });
+        },
+    );
 
     RomeOutput {
-        cst: cst_json.to_string(),
-        ast: ast_json.to_string(),
+        cst,
+        ast,
         formatted_code,
         formatter_ir,
         errors: String::from_utf8(errors.0).unwrap(),

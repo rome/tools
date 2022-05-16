@@ -2,34 +2,33 @@ use std::collections::HashMap;
 use std::fmt::Display;
 
 use crate::line_index::{LineCol, LineIndex};
-use rome_analyze::ActionCategories;
-use rome_analyze::AnalyzerAction;
-use rome_analyze::AnalyzerDiagnostic;
+use rome_analyze::{ActionCategory, AnalyzerAction};
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::Severity;
+use rome_diagnostics::{Applicability, Diagnostic};
 use rome_rowan::AstNode;
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::jsonrpc::Result as LspResult;
-use tower_lsp::lsp_types::{self, Diagnostic};
+use tower_lsp::lsp_types::{self as lsp};
 use tracing::error;
 
 use rome_js_syntax::{TextRange, TextSize};
 
-pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp_types::Position {
+pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp::Position {
     let line_col = line_index.line_col(offset);
-    lsp_types::Position::new(line_col.line, line_col.col)
+    lsp::Position::new(line_col.line, line_col.col)
 }
 
-pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp_types::Range {
+pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp::Range {
     let start = position(line_index, range.start());
     let end = position(line_index, range.end());
-    lsp_types::Range::new(start, end)
+    lsp::Range::new(start, end)
 }
 
-pub(crate) fn offset(line_index: &LineIndex, position: lsp_types::Position) -> TextSize {
+pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> TextSize {
     let line_col = LineCol {
         line: position.line as u32,
         col: position.character as u32,
@@ -37,41 +36,45 @@ pub(crate) fn offset(line_index: &LineIndex, position: lsp_types::Position) -> T
     line_index.offset(line_col)
 }
 
-pub(crate) fn text_range(line_index: &LineIndex, range: lsp_types::Range) -> TextRange {
+pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> TextRange {
     let start = offset(line_index, range.start);
     let end = offset(line_index, range.end);
     TextRange::new(start, end)
 }
 
 pub(crate) fn code_fix_to_lsp(
-    url: &lsp_types::Url,
+    url: &lsp::Url,
     text: &str,
     line_index: &LineIndex,
-    diagnostics: &[lsp_types::Diagnostic],
+    diagnostics: &[lsp::Diagnostic],
     action: AnalyzerAction,
-) -> lsp_types::CodeAction {
+) -> lsp::CodeAction {
     // Mark diagnostics emitted by the same rule as resolved by this action
-    let diagnostics: Vec<_> = diagnostics
-        .iter()
-        .filter_map(|d| {
-            let code = d.code.as_ref().and_then(|code| match code {
-                lsp_types::NumberOrString::String(code) => Some(code.as_str()),
-                lsp_types::NumberOrString::Number(_) => None,
-            })?;
+    let diagnostics: Vec<_> = if matches!(action.category, ActionCategory::QuickFix) {
+        diagnostics
+            .iter()
+            .filter_map(|d| {
+                let code = d.code.as_ref().and_then(|code| match code {
+                    lsp::NumberOrString::String(code) => Some(code.as_str()),
+                    lsp::NumberOrString::Number(_) => None,
+                })?;
 
-            if code == action.rule_name {
-                Some(d.clone())
-            } else {
-                None
-            }
-        })
-        .collect();
+                if code == action.rule_name {
+                    Some(d.clone())
+                } else {
+                    None
+                }
+            })
+            .collect()
+    } else {
+        Vec::new()
+    };
 
     let mut changes = HashMap::new();
     changes.insert(
         url.clone(),
-        vec![lsp_types::TextEdit {
-            range: lsp_types::Range::new(
+        vec![lsp::TextEdit {
+            range: lsp::Range::new(
                 position(line_index, 0.into()),
                 position(line_index, TextSize::of(text)),
             ),
@@ -79,24 +82,17 @@ pub(crate) fn code_fix_to_lsp(
         }],
     );
 
-    let edit = lsp_types::WorkspaceEdit {
+    let edit = lsp::WorkspaceEdit {
         changes: Some(changes),
         document_changes: None,
         change_annotations: None,
     };
 
-    let is_safe_fix = action.category.contains(ActionCategories::SAFE_FIX);
-    let is_suggestion = action.category.contains(ActionCategories::SUGGESTION);
-    let is_refactor = action.category.contains(ActionCategories::REFACTOR);
-
-    lsp_types::CodeAction {
+    lsp::CodeAction {
         title: print_markup(&action.message),
-        kind: if is_safe_fix || is_suggestion {
-            Some(lsp_types::CodeActionKind::QUICKFIX)
-        } else if is_refactor {
-            Some(lsp_types::CodeActionKind::REFACTOR)
-        } else {
-            None
+        kind: match action.category {
+            ActionCategory::QuickFix => Some(lsp::CodeActionKind::QUICKFIX),
+            ActionCategory::Refactor => Some(lsp::CodeActionKind::REFACTOR),
         },
         diagnostics: if !diagnostics.is_empty() {
             Some(diagnostics)
@@ -105,36 +101,71 @@ pub(crate) fn code_fix_to_lsp(
         },
         edit: Some(edit),
         command: None,
-        is_preferred: if is_safe_fix { Some(true) } else { None },
+        is_preferred: if matches!(action.applicability, Applicability::Always) {
+            Some(true)
+        } else {
+            None
+        },
         disabled: None,
         data: None,
     }
 }
 
-/// Convert an [rome_diagnostics::Diagnostic] to a [lsp_types::Diagnostic], using the span
+/// Convert an [rome_diagnostics::Diagnostic] to a [lsp::Diagnostic], using the span
 /// of the diagnostic's primary label as the diagnostic range.
 /// Requires a [LineIndex] to convert a byte offset range to the line/col range
 /// expected by LSP.
 pub(crate) fn diagnostic_to_lsp(
-    diagnostic: AnalyzerDiagnostic,
+    diagnostic: Diagnostic,
+    url: &lsp::Url,
     line_index: &LineIndex,
-) -> lsp_types::Diagnostic {
-    Diagnostic::new(
-        range(line_index, diagnostic.range),
+) -> Option<lsp::Diagnostic> {
+    let primary = diagnostic.primary?;
+
+    let related_information = if !diagnostic.children.is_empty() {
+        Some(
+            diagnostic
+                .children
+                .into_iter()
+                .map(|label| lsp::DiagnosticRelatedInformation {
+                    location: lsp::Location {
+                        uri: url.clone(),
+                        range: range(line_index, primary.span.range),
+                    },
+
+                    message: print_markup(&label.msg),
+                })
+                .collect(),
+        )
+    } else {
+        None
+    };
+    Some(lsp::Diagnostic::new(
+        range(line_index, primary.span.range),
         Some(match diagnostic.severity {
-            Severity::Help => lsp_types::DiagnosticSeverity::HINT,
-            Severity::Note => lsp_types::DiagnosticSeverity::INFORMATION,
-            Severity::Warning => lsp_types::DiagnosticSeverity::WARNING,
-            Severity::Error | Severity::Bug => lsp_types::DiagnosticSeverity::ERROR,
+            Severity::Help => lsp::DiagnosticSeverity::HINT,
+            Severity::Note => lsp::DiagnosticSeverity::INFORMATION,
+            Severity::Warning => lsp::DiagnosticSeverity::WARNING,
+            Severity::Error | Severity::Bug => lsp::DiagnosticSeverity::ERROR,
         }),
-        Some(lsp_types::NumberOrString::String(
-            diagnostic.rule_name.into(),
-        )),
+        diagnostic.code.map(lsp::NumberOrString::String),
         Some("rome".into()),
-        print_markup(&diagnostic.message),
-        None,
-        None,
-    )
+        print_markup(&diagnostic.title),
+        related_information,
+        diagnostic.tag.map(|tag| {
+            let mut result = Vec::new();
+
+            if tag.is_unecessary() {
+                result.push(lsp::DiagnosticTag::UNNECESSARY);
+            }
+
+            if tag.is_deprecated() {
+                result.push(lsp::DiagnosticTag::DEPRECATED);
+            }
+
+            result
+        }),
+    ))
 }
 
 /// Convert a piece of markup into a String
