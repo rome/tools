@@ -4,8 +4,9 @@ use rome_analyze::AnalysisFilter;
 use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
-use rome_formatter::{FormatOptions, IndentStyle};
+use rome_formatter::IndentStyle;
 use rome_js_formatter::format_node;
+use rome_js_formatter::options::JsFormatOptions;
 use rome_js_parser::{parse, LanguageVariant, SourceType};
 use serde_json::json;
 use std::io;
@@ -171,7 +172,7 @@ pub fn run(
         IndentStyle::Tab
     };
 
-    let options = FormatOptions {
+    let options = JsFormatOptions {
         indent_style,
         line_width: options.line_width.try_into().unwrap_or_default(),
         quote_style: options.quote_style.parse().unwrap_or_default(),

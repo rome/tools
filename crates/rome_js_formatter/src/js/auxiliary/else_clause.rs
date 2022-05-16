@@ -5,7 +5,10 @@ use rome_js_syntax::JsElseClause;
 use rome_js_syntax::JsElseClauseFields;
 
 impl FormatNodeFields<JsElseClause> for FormatNodeRule<JsElseClause> {
-    fn format_fields(node: &JsElseClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsElseClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsElseClauseFields {
             else_token,
             alternate,

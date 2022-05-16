@@ -7,7 +7,7 @@ use rome_js_syntax::JsEmptyClassMemberFields;
 impl FormatNodeFields<JsEmptyClassMember> for FormatNodeRule<JsEmptyClassMember> {
     fn format_fields(
         node: &JsEmptyClassMember,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsEmptyClassMemberFields { semicolon_token } = node.as_fields();
 

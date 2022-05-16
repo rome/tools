@@ -6,7 +6,7 @@ use rome_js_syntax::TsExternalModuleDeclarationFields;
 impl FormatNodeFields<TsExternalModuleDeclaration> for FormatNodeRule<TsExternalModuleDeclaration> {
     fn format_fields(
         node: &TsExternalModuleDeclaration,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsExternalModuleDeclarationFields {
             body,

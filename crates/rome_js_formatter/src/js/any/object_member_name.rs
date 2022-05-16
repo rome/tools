@@ -4,7 +4,11 @@ use crate::generated::FormatJsAnyObjectMemberName;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectMemberName;
 impl FormatRule<JsAnyObjectMemberName> for FormatJsAnyObjectMemberName {
-    fn format(node: &JsAnyObjectMemberName, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyObjectMemberName,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
         match node {
             JsAnyObjectMemberName::JsLiteralMemberName(node) => {
                 formatted![formatter, [node.format()]]

@@ -4,7 +4,11 @@ use crate::generated::FormatJsAnyImportClause;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyImportClause;
 impl FormatRule<JsAnyImportClause> for FormatJsAnyImportClause {
-    fn format(node: &JsAnyImportClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyImportClause,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
         match node {
             JsAnyImportClause::JsImportBareClause(node) => formatted![formatter, [node.format()]],
             JsAnyImportClause::JsImportNamedClause(node) => formatted![formatter, [node.format()]],

@@ -4,9 +4,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsImportAssertionEntryList;
 
 impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList {
+    type Options = JsFormatOptions;
+
     fn format(
         node: &JsImportAssertionEntryList,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

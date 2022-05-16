@@ -5,7 +5,12 @@ use rome_js_syntax::TsTypeParameterList;
 use rome_rowan::AstSeparatedList;
 
 impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
-    fn format(node: &TsTypeParameterList, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &TsTypeParameterList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         // nodes and formatter are not aware of the source type (TSX vs TS), which means we can't
         // exactly pin point the exact case.
         //

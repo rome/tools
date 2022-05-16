@@ -6,9 +6,11 @@ use rome_js_syntax::JsVariableDeclaratorList;
 use rome_rowan::AstSeparatedList;
 
 impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
+    type Options = JsFormatOptions;
+
     fn format(
         node: &JsVariableDeclaratorList,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let last_index = node.len().saturating_sub(1);
 

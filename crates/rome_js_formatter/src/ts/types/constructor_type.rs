@@ -6,7 +6,7 @@ use rome_js_syntax::TsConstructorTypeFields;
 impl FormatNodeFields<TsConstructorType> for FormatNodeRule<TsConstructorType> {
     fn format_fields(
         node: &TsConstructorType,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsConstructorTypeFields {
             abstract_token,

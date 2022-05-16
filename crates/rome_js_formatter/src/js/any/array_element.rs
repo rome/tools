@@ -4,7 +4,11 @@ use crate::generated::FormatJsAnyArrayElement;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayElement;
 impl FormatRule<JsAnyArrayElement> for FormatJsAnyArrayElement {
-    fn format(node: &JsAnyArrayElement, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyArrayElement,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrayElement::JsAnyExpression(node) => formatted![formatter, [node.format()]],
             JsAnyArrayElement::JsSpread(node) => formatted![formatter, [node.format()]],

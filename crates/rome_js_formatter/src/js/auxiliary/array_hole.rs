@@ -4,7 +4,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::JsArrayHole;
 
 impl FormatNodeFields<JsArrayHole> for FormatNodeRule<JsArrayHole> {
-    fn format_fields(_: &JsArrayHole, _: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        _: &JsArrayHole,
+        _: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         Ok(empty_element())
     }
 }

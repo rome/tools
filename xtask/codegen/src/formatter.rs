@@ -309,7 +309,9 @@ pub fn generate_formatter() {
                 use rome_js_syntax::#node_id;
 
                 impl FormatRule<#node_id> for #format_id {
-                    fn format(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                    type Options = JsFormatOptions;
+
+                    fn format(node: &#node_id, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
                         Ok(formatter.format_list(node))
                     }
                 }
@@ -321,7 +323,9 @@ pub fn generate_formatter() {
                 use rome_js_syntax::#node_id;
 
                 impl FormatRule<#node_id> for #format_id {
-                    fn format(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                    type Options = JsFormatOptions;
+
+                    fn format(node: &#node_id, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
                         verbatim_node(node.syntax()).format(formatter)
                     }
                 }
@@ -334,7 +338,7 @@ pub fn generate_formatter() {
                     use rome_js_syntax::#node_id;
 
                     impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn format_fields(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                        fn format_fields(node: &#node_id, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
                             verbatim_node(node.syntax()).format(formatter)
                         }
                     }
@@ -348,7 +352,7 @@ pub fn generate_formatter() {
                     use rome_js_syntax::#node_id;
 
                     impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn format_fields(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                        fn format_fields(node: &#node_id, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
                             unknown_node(node.syntax()).format(formatter)
                         }
                     }
@@ -370,7 +374,9 @@ pub fn generate_formatter() {
                     use rome_js_syntax::#node_id;
 
                     impl FormatRule<#node_id> for #format_id {
-                        fn format(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                        type Options = JsFormatOptions;
+
+                        fn format(node: &#node_id, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
                             match node {
                                 #( #match_arms )*
                             }

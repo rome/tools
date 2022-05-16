@@ -8,7 +8,7 @@ use rome_js_syntax::JsVariableDeclarationClauseFields;
 impl FormatNodeFields<JsVariableDeclarationClause> for FormatNodeRule<JsVariableDeclarationClause> {
     fn format_fields(
         node: &JsVariableDeclarationClause,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsVariableDeclarationClauseFields {
             declaration,

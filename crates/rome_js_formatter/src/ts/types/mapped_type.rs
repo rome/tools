@@ -4,7 +4,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 
 impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
-    fn format_fields(node: &TsMappedType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsMappedType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsMappedTypeFields {
             l_curly_token,
             readonly_modifier,

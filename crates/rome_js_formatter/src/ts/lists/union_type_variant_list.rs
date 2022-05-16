@@ -4,7 +4,12 @@ use rome_js_syntax::TsUnionTypeVariantList;
 use rome_rowan::AstSeparatedList;
 
 impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
-    fn format(node: &TsUnionTypeVariantList, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &TsUnionTypeVariantList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let mut elements = Vec::with_capacity(node.len());
         let last_index = node.len().saturating_sub(1);
 

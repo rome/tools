@@ -4,9 +4,10 @@ use crate::generated::FormatTsAnyExternalModuleDeclarationBody;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyExternalModuleDeclarationBody;
 impl FormatRule<TsAnyExternalModuleDeclarationBody> for FormatTsAnyExternalModuleDeclarationBody {
+    type Options = JsFormatOptions;
     fn format(
         node: &TsAnyExternalModuleDeclarationBody,
-        formatter: &Formatter,
+        formatter: &Formatter<Self::Options>,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node) => {

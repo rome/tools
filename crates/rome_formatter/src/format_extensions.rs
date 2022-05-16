@@ -9,6 +9,8 @@ use rome_rowan::SyntaxResult;
 /// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::with_or]
 /// function.
 pub trait FormatOptional {
+    type Options;
+
     /// This function tries to format an optional object. If the object is [None]
     /// an [empty token](crate::FormatElement::Empty) is created. If exists, the utility
     /// formats the object and passes it to the closure.
@@ -22,7 +24,9 @@ pub trait FormatOptional {
     /// struct MyFormat;
     ///
     /// impl Format for MyFormat {
-    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///     type Options = ();
+    ///
+    ///     fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
     ///         Ok(token("MyToken"))
     ///     }
     /// }
@@ -42,10 +46,10 @@ pub trait FormatOptional {
     fn with_or_empty<With, WithResult>(
         &self,
         with: With,
-    ) -> FormatWithOr<With, fn() -> FormatElement, WithResult, FormatElement>
+    ) -> FormatWithOr<With, fn() -> FormatElement, WithResult, FormatElement, Self::Options>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement,
+        WithResult: IntoFormatElement<Self::Options>,
     {
         self.with_or(with, empty_element)
     }
@@ -62,7 +66,8 @@ pub trait FormatOptional {
     /// struct MyFormat;
     ///
     /// impl Format for MyFormat {
-    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///     type Options = ();
+    ///     fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
     ///         Ok(token("MyToken"))
     ///     }
     /// }
@@ -72,14 +77,10 @@ pub trait FormatOptional {
     /// let result = none_token.or_format(|| token(" other result"));
     ///
     /// assert_eq!(Ok(token(" other result")), formatted![&formatter, [result]]);
-    fn or_format<Or, OrResult>(
-        &self,
-        op: Or,
-    ) -> FormatWithOr<fn(FormatElement) -> FormatElement, Or, FormatElement, OrResult>
+    fn or_format<Or, OrResult>(&self, op: Or) -> OrFormat<Or, OrResult, Self::Options>
     where
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement,
-        Self: Sized,
+        OrResult: IntoFormatElement<Self::Options>,
     {
         self.with_or(|token| token, op)
     }
@@ -99,7 +100,8 @@ pub trait FormatOptional {
     /// struct MyFormat;
     ///
     /// impl Format for MyFormat {
-    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///     type Options = ();
+    ///     fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
     ///         Ok(token("MyToken"))
     ///     }
     /// }
@@ -123,16 +125,16 @@ pub trait FormatOptional {
         &self,
         with: With,
         op: Or,
-    ) -> FormatWithOr<With, Or, WithResult, OrResult>
+    ) -> FormatWithOr<With, Or, WithResult, OrResult, Self::Options>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement,
+        WithResult: IntoFormatElement<Self::Options>,
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement;
+        OrResult: IntoFormatElement<Self::Options>;
 }
 
 /// Utility trait for formatting a formattable object with some additional content.
-pub trait FormatWith {
+pub trait FormatWith: Format {
     /// Allows to chain a formattable object with another [elements](FormatElement)
     ///
     /// The function will decorate the result with [Ok]
@@ -149,7 +151,8 @@ pub trait FormatWith {
     /// struct MyFormat;
     ///
     /// impl Format for MyFormat {
-    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///     type Options = ();
+    ///     fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
     ///         Ok(token("MyToken"))
     ///     }
     /// }
@@ -161,27 +164,29 @@ pub trait FormatWith {
     /// });
     ///
     /// assert_eq!(formatted![&formatter, [token("MyToken"), space_token(), token("+")]], formatted![&formatter, [result]])
-    fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult>
+    fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult, Self::Options>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement;
+        WithResult: IntoFormatElement<Self::Options>;
 }
 
-pub struct FormatItemWith<'a, With, WithResult>
+pub struct FormatItemWith<'a, With, WithResult, Options>
 where
     With: Fn(FormatElement) -> WithResult,
-    WithResult: IntoFormatElement,
+    WithResult: IntoFormatElement<Options>,
 {
     with: With,
-    inner: &'a dyn Format,
+    inner: &'a dyn Format<Options = Options>,
 }
 
-impl<'a, With, WithResult> Format for FormatItemWith<'a, With, WithResult>
+impl<'a, With, WithResult, Options> Format for FormatItemWith<'a, With, WithResult, Options>
 where
     With: Fn(FormatElement) -> WithResult,
-    WithResult: IntoFormatElement,
+    WithResult: IntoFormatElement<Options>,
 {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = Options;
+
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         let element = self.inner.format(formatter)?;
 
         (self.with)(element).into_format_element(formatter)
@@ -189,26 +194,28 @@ where
 }
 
 impl<F: Format> FormatWith for F {
-    fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult>
+    fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult, F::Options>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement,
+        WithResult: IntoFormatElement<F::Options>,
     {
         FormatItemWith { with, inner: self }
     }
 }
 
 impl<F: Format> FormatOptional for SyntaxResult<Option<F>> {
+    type Options = F::Options;
+
     fn with_or<With, Or, WithResult, OrResult>(
         &self,
         with: With,
         op: Or,
-    ) -> FormatWithOr<With, Or, WithResult, OrResult>
+    ) -> FormatWithOr<With, Or, WithResult, OrResult, Self::Options>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement,
+        WithResult: IntoFormatElement<Self::Options>,
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement,
+        OrResult: IntoFormatElement<Self::Options>,
     {
         match self {
             Err(_) => FormatWithOr::With { inner: self, with },
@@ -219,16 +226,18 @@ impl<F: Format> FormatOptional for SyntaxResult<Option<F>> {
 }
 
 impl<F: Format> FormatOptional for Option<F> {
+    type Options = F::Options;
+
     fn with_or<With, Or, WithResult, OrResult>(
         &self,
         with: With,
         op: Or,
-    ) -> FormatWithOr<With, Or, WithResult, OrResult>
+    ) -> FormatWithOr<With, Or, WithResult, OrResult, Self::Options>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement,
+        WithResult: IntoFormatElement<Self::Options>,
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement,
+        OrResult: IntoFormatElement<Self::Options>,
     {
         match self {
             None => FormatWithOr::Or(op),
@@ -237,26 +246,35 @@ impl<F: Format> FormatOptional for Option<F> {
     }
 }
 
-pub enum FormatWithOr<'a, With, Or, WithResult, OrResult>
+pub type OrFormat<'a, Or, OrResult, Options> =
+    FormatWithOr<'a, fn(FormatElement) -> FormatElement, Or, FormatElement, OrResult, Options>;
+
+pub enum FormatWithOr<'a, With, Or, WithResult, OrResult, Options>
 where
     With: Fn(FormatElement) -> WithResult,
     Or: Fn() -> OrResult,
-    WithResult: IntoFormatElement,
-    OrResult: IntoFormatElement,
+    WithResult: IntoFormatElement<Options>,
+    OrResult: IntoFormatElement<Options>,
 {
-    With { inner: &'a dyn Format, with: With },
+    With {
+        inner: &'a dyn Format<Options = Options>,
+        with: With,
+    },
     Or(Or),
 }
 
-impl<'a, With, Or, WithResult, OrResult> Format for FormatWithOr<'a, With, Or, WithResult, OrResult>
+impl<'a, With, Or, WithResult, OrResult, Options> Format
+    for FormatWithOr<'a, With, Or, WithResult, OrResult, Options>
 where
     With: Fn(FormatElement) -> WithResult,
     Or: Fn() -> OrResult,
-    WithResult: IntoFormatElement,
-    OrResult: IntoFormatElement,
+    WithResult: IntoFormatElement<Options>,
+    OrResult: IntoFormatElement<Options>,
 {
+    type Options = Options;
+
     #[inline]
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         match self {
             FormatWithOr::Or(op) => op().into_format_element(formatter),
             FormatWithOr::With { inner, with } => {
@@ -289,7 +307,9 @@ pub trait MemoizeFormat {
     ///     }
     /// }
     ///
-    /// impl Format for MyFormat {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    /// impl Format for MyFormat {
+    ///     type Options = ();
+    ///     fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
     ///         let value = self.value.get();
     ///         self.value.set(value + 1);
     ///
@@ -297,7 +317,7 @@ pub trait MemoizeFormat {
     ///     }
     /// }
     ///
-    /// let formatter = Formatter::new(FormatOptions::default());
+    /// let formatter = Formatter::default();
     /// let normal = MyFormat::new();
     ///
     /// // Calls `format` for everytime the object gets formatted
@@ -343,7 +363,9 @@ impl<F> Format for Memoized<F>
 where
     F: Format,
 {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = F::Options;
+
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         if let Some(memory) = self.memory.borrow().as_ref() {
             return memory.clone();
         }

@@ -7,7 +7,7 @@ use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
 impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement> {
     fn format_fields(
         node: &JsDoWhileStatement,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsDoWhileStatementFields {
             do_token,

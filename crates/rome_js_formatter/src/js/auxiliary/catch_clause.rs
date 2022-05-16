@@ -5,7 +5,10 @@ use rome_js_syntax::JsCatchClause;
 use rome_js_syntax::JsCatchClauseFields;
 
 impl FormatNodeFields<JsCatchClause> for FormatNodeRule<JsCatchClause> {
-    fn format_fields(node: &JsCatchClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsCatchClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsCatchClauseFields {
             catch_token,
             declaration,

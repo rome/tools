@@ -33,7 +33,7 @@ pub mod printed_tokens;
 pub mod printer;
 
 use crate::formatter::Formatter;
-use crate::printer::Printer;
+use crate::printer::{Printer, PrinterOptions};
 pub use builders::ConcatBuilder;
 pub use format_element::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
@@ -161,76 +161,19 @@ impl From<LineWidth> for u16 {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
-pub enum QuoteStyle {
-    Double,
-    Single,
-}
-
-impl Default for QuoteStyle {
-    fn default() -> Self {
-        Self::Double
-    }
-}
-
-impl FromStr for QuoteStyle {
-    type Err = &'static str;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "double" | "Double" => Ok(Self::Double),
-            "single" | "Single" => Ok(Self::Single),
-            // TODO: replace this error with a diagnostic
-            _ => Err("Value not supported for QuoteStyle"),
-        }
-    }
-}
-
-impl fmt::Display for QuoteStyle {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            QuoteStyle::Double => write!(f, "Double Quotes"),
-            QuoteStyle::Single => write!(f, "Single Quotes"),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, Default)]
-pub struct FormatOptions {
+/// Options configuring how an object gets formatted.
+///
+/// Defines the common formatting options. Implementations can define additional options that
+/// are specific to formatting a specific object.
+pub trait FormatOptions {
     /// The indent style.
-    pub indent_style: IndentStyle,
+    fn indent_style(&self) -> IndentStyle;
 
     /// What's the max width of a line. Defaults to 80.
-    pub line_width: LineWidth,
+    fn line_with(&self) -> LineWidth;
 
-    // The style for quotes. Defaults to double.
-    pub quote_style: QuoteStyle,
-}
-
-impl FormatOptions {
-    pub fn new(indent_style: IndentStyle) -> Self {
-        Self {
-            indent_style,
-            ..Self::default()
-        }
-    }
-
-    /// Given the current ident style, it returns its width
-    pub fn tab_width(&self) -> u8 {
-        match self.indent_style {
-            IndentStyle::Tab => 2,
-            IndentStyle::Space(quantity) => quantity,
-        }
-    }
-}
-
-impl fmt::Display for FormatOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Indent style: {}", self.indent_style)?;
-        writeln!(f, "Line width: {}", self.line_width.value())?;
-        writeln!(f, "Quote style: {}", self.quote_style)?;
-        Ok(())
-    }
+    /// Derives the print options from the these format options
+    fn as_print_options(&self) -> PrinterOptions;
 }
 
 /// Lightweight sourcemap marker between source and output tokens
@@ -245,20 +188,20 @@ pub struct SourceMarker {
 #[derive(Debug, Clone)]
 pub struct Formatted {
     root: FormatElement,
-    options: FormatOptions,
+    options: PrinterOptions,
 }
 
 impl Formatted {
-    pub fn new(root: FormatElement, options: FormatOptions) -> Self {
+    pub fn new(root: FormatElement, options: PrinterOptions) -> Self {
         Self { root, options }
     }
 
     pub fn print(&self) -> Printed {
-        Printer::new(self.options).print(&self.root)
+        Printer::new(self.options.clone()).print(&self.root)
     }
 
     pub fn print_with_indent(&self, indent: u16) -> Printed {
-        Printer::new(self.options).print_with_indent(&self.root, indent)
+        Printer::new(self.options.clone()).print_with_indent(&self.root, indent)
     }
 
     pub fn into_format_element(self) -> FormatElement {
@@ -389,13 +332,16 @@ impl From<&SyntaxError> for FormatError {
 /// Implementing `Format` for a custom struct
 ///
 /// ```
-/// use rome_formatter::{format, FormatOptions};
+/// use rome_formatter::{format, FormatOptions, IndentStyle, LineWidth};
 /// use rome_formatter::prelude::*;
 /// use rome_rowan::TextSize;
 ///
 /// struct Paragraph(String);
 ///
-/// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+/// impl Format for Paragraph {
+///     type Options = Options;
+///
+///     fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
 ///         formatted![
 ///             formatter,
 ///             [
@@ -407,20 +353,42 @@ impl From<&SyntaxError> for FormatError {
 ///     }
 /// }
 ///
+/// struct Options;
+///
+/// impl FormatOptions for Options {
+///     fn indent_style(&self) -> IndentStyle {
+///         IndentStyle::Tab
+///     }
+///
+///     fn line_with(&self) -> LineWidth {
+///         LineWidth::default()
+///     }
+///
+///     fn as_print_options(&self) -> PrinterOptions {
+///         PrinterOptions::default()
+///     }
+/// }
+///
 /// let paragraph = Paragraph(String::from("test"));
-/// let printed = format(FormatOptions::default(), &paragraph).unwrap().print();
+/// let printed = format(Options, &paragraph).unwrap().print();
 ///
 /// assert_eq!("test\n", printed.as_code())
 /// ```
 pub trait Format {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+    /// Type of the formatter options.
+    type Options;
+
+    /// Formats the object
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement>;
 }
 
 impl<T> Format for &T
 where
     T: ?Sized + Format,
 {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = T::Options;
+
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         Format::format(&**self, formatter)
     }
 }
@@ -429,7 +397,9 @@ impl<T> Format for &mut T
 where
     T: ?Sized + Format,
 {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = T::Options;
+
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         Format::format(&**self, formatter)
     }
 }
@@ -438,7 +408,9 @@ impl<T> Format for Option<T>
 where
     T: Format,
 {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = T::Options;
+
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         match self {
             Some(value) => value.format(formatter),
             None => Ok(empty_element()),
@@ -450,7 +422,9 @@ impl<T> Format for SyntaxResult<T>
 where
     T: Format,
 {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = T::Options;
+
+    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
         match self {
             Ok(value) => value.format(formatter),
             Err(err) => Err(err.into()),
@@ -462,30 +436,30 @@ where
 ///
 /// This is similar to [Format] but with the difference that it consumes `self`, allowing it to also
 /// be implemented on [FormatElement].format_elements.rs
-pub trait IntoFormatElement {
-    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement>;
+pub trait IntoFormatElement<O> {
+    fn into_format_element(self, formatter: &Formatter<O>) -> FormatResult<FormatElement>;
 }
 
-impl IntoFormatElement for FormatElement {
+impl<O> IntoFormatElement<O> for FormatElement {
     #[inline]
-    fn into_format_element(self, _: &Formatter) -> FormatResult<FormatElement> {
+    fn into_format_element(self, _: &Formatter<O>) -> FormatResult<FormatElement> {
         Ok(self)
     }
 }
 
-impl IntoFormatElement for FormatResult<FormatElement> {
+impl<O> IntoFormatElement<O> for FormatResult<FormatElement> {
     #[inline]
-    fn into_format_element(self, _: &Formatter) -> FormatResult<FormatElement> {
+    fn into_format_element(self, _: &Formatter<O>) -> FormatResult<FormatElement> {
         self
     }
 }
 
-impl<T> IntoFormatElement for T
+impl<T, O> IntoFormatElement<O> for T
 where
-    T: Format,
+    T: Format<Options = O>,
 {
     #[inline]
-    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn into_format_element(self, formatter: &Formatter<O>) -> FormatResult<FormatElement> {
         self.format(formatter)
     }
 }
@@ -501,7 +475,9 @@ where
 /// That's why the `rome_js_formatter` crate must define a new-type that implements the formatting
 /// of `JsIfStatement`.
 pub trait FormatRule<T> {
-    fn format(item: &T, formatter: &Formatter) -> FormatResult<FormatElement>;
+    type Options;
+
+    fn format(item: &T, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement>;
 }
 
 /// Trait for an object that formats an object with a specified rule.
@@ -521,8 +497,8 @@ pub trait FormatRule<T> {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{FormatOptions, FormatWithRule};
 /// use rome_rowan::{Language, SyntaxNode};
-/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>>>(node: F) -> FormatResult<FormatElement> {
-///     let formatter = Formatter::new(FormatOptions::default());
+/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>, Options=()>>(node: F) -> FormatResult<FormatElement> {
+///     let formatter = Formatter::default();
 ///
 ///     let formatted = node.format(&formatter);
 ///     let _syntax = node.item();
@@ -574,8 +550,10 @@ impl<T, R> Format for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
+    type Options = R::Options;
+
     #[inline]
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<R::Options>) -> FormatResult<FormatElement> {
         R::format(self.item, formatter)
     }
 }
@@ -614,8 +592,10 @@ impl<T, R> Format for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
+    type Options = R::Options;
+
     #[inline]
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<R::Options>) -> FormatResult<FormatElement> {
         R::format(&self.item, formatter)
     }
 }
@@ -634,28 +614,37 @@ where
 /// Formats any value that implements [Format].
 ///
 /// Please note that [format_node] is preferred to format a [JsSyntaxNode]
-pub fn format(options: FormatOptions, root: &dyn Format) -> FormatResult<Formatted> {
+pub fn format<O: FormatOptions>(
+    options: O,
+    root: &dyn Format<Options = O>,
+) -> FormatResult<Formatted> {
     tracing::trace_span!("format").in_scope(move || {
+        let printer_options = options.as_print_options();
         let formatter = Formatter::new(options);
         let element = root.format(&formatter)?;
-        Ok(Formatted::new(element, options))
+        Ok(Formatted::new(element, printer_options))
     })
 }
 
 /// Formats a syntax node file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node<L: Language, N: FormatWithRule<Item = SyntaxNode<L>>>(
-    options: FormatOptions,
+pub fn format_node<
+    O: FormatOptions,
+    L: Language,
+    N: FormatWithRule<Item = SyntaxNode<L>, Options = O>,
+>(
+    options: O,
     root: &N,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {
+        let printer_options = options.as_print_options();
         let formatter = Formatter::new(options);
         let element = formatted![&formatter, [root]]?;
 
         formatter.assert_formatted_all_tokens(root.item());
 
-        Ok(Formatted::new(element, options))
+        Ok(Formatted::new(element, printer_options))
     })
 }
 
@@ -670,8 +659,12 @@ pub fn format_node<L: Language, N: FormatWithRule<Item = SyntaxNode<L>>>(
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
-pub fn format_range<L: Language, R: FormatRule<SyntaxNode<L>>>(
-    options: FormatOptions,
+pub fn format_range<
+    Options: FormatOptions,
+    L: Language,
+    R: FormatRule<SyntaxNode<L>, Options = Options>,
+>(
+    options: Options,
     root: &SyntaxNode<L>,
     range: TextRange,
 ) -> FormatResult<Printed> {
@@ -805,8 +798,12 @@ pub fn format_range<L: Language, R: FormatRule<SyntaxNode<L>>>(
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree<L: Language, N: FormatWithRule<Item = SyntaxNode<L>>>(
-    options: FormatOptions,
+pub fn format_sub_tree<
+    O: FormatOptions,
+    L: Language,
+    N: FormatWithRule<Item = SyntaxNode<L>, Options = O>,
+>(
+    options: O,
     root: &N,
 ) -> FormatResult<Printed> {
     let syntax = root.item();
@@ -848,7 +845,7 @@ pub fn format_sub_tree<L: Language, N: FormatWithRule<Item = SyntaxNode<L>>>(
             // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
-            match options.indent_style {
+            match options.indent_style() {
                 IndentStyle::Tab => length,
                 IndentStyle::Space(width) => length / u16::from(width),
             }

@@ -8,7 +8,7 @@ impl FormatNodeFields<TsDefiniteVariableAnnotation>
 {
     fn format_fields(
         node: &TsDefiniteVariableAnnotation,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsDefiniteVariableAnnotationFields {
             excl_token,

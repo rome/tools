@@ -6,7 +6,10 @@ use rome_js_syntax::JsUnknownMember;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsUnknownMember> for FormatNodeRule<JsUnknownMember> {
-    fn format_fields(node: &JsUnknownMember, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsUnknownMember,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         unknown_node(node.syntax()).format(formatter)
     }
 }

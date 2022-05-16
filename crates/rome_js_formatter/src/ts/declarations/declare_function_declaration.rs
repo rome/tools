@@ -9,7 +9,7 @@ impl FormatNodeFields<TsDeclareFunctionDeclaration>
 {
     fn format_fields(
         node: &TsDeclareFunctionDeclaration,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsDeclareFunctionDeclarationFields {
             async_token,

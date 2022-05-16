@@ -5,7 +5,10 @@ use rome_js_syntax::NewTarget;
 use rome_js_syntax::NewTargetFields;
 
 impl FormatNodeFields<NewTarget> for FormatNodeRule<NewTarget> {
-    fn format_fields(node: &NewTarget, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &NewTarget,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let NewTargetFields {
             new_token,
             dot_token,

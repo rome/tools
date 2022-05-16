@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsTupleType, TsTupleTypeFields};
 
 impl FormatNodeFields<TsTupleType> for FormatNodeRule<TsTupleType> {
-    fn format_fields(node: &TsTupleType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsTupleType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsTupleTypeFields {
             l_brack_token,
             elements,

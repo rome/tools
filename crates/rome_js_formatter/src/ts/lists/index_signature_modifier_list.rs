@@ -4,9 +4,11 @@ use crate::utils::sort_modifiers_by_precedence;
 use rome_js_syntax::TsIndexSignatureModifierList;
 
 impl FormatRule<TsIndexSignatureModifierList> for FormatTsIndexSignatureModifierList {
+    type Options = JsFormatOptions;
+
     fn format(
         node: &TsIndexSignatureModifierList,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),

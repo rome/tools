@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsArrayType, TsArrayTypeFields};
 
 impl FormatNodeFields<TsArrayType> for FormatNodeRule<TsArrayType> {
-    fn format_fields(node: &TsArrayType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsArrayType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsArrayTypeFields {
             l_brack_token,
             element_type,

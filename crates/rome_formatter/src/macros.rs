@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use crate::{ConcatBuilder, IntoFormatElement};
+use std::marker::PhantomData;
 
 /// The macro `format_elements` is a convenience macro to
 /// use when writing a list of tokens that should be at the same level
@@ -39,7 +40,7 @@ use crate::{ConcatBuilder, IntoFormatElement};
 ///   space_token(),
 ///   token("}")
 /// ];
-/// assert_eq!(r#"foo: { bar: lorem }"#, Formatted::new(element, FormatOptions::default()).print().as_code());
+/// assert_eq!(r#"foo: { bar: lorem }"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
 /// ```
 /// Or you can also create single element:
 /// ```
@@ -48,7 +49,7 @@ use crate::{ConcatBuilder, IntoFormatElement};
 ///
 /// use rome_formatter::prelude::*;
 /// let element = format_elements![token("single")];
-/// assert_eq!(r#"single"#, Formatted::new(element, FormatOptions::default()).print().as_code());
+/// assert_eq!(r#"single"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
 /// ```
 #[macro_export]
 macro_rules! format_elements {
@@ -86,12 +87,13 @@ macro_rules! format_elements {
 /// struct TestFormat;
 ///
 /// impl Format for TestFormat {
-///     fn format(&self, _: &Formatter) -> FormatResult<FormatElement> {
+///     type Options = ();
+///     fn format(&self, _: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
 ///         Ok(token("test"))
 ///     }
 /// }
 ///
-/// let formatter = Formatter::new(FormatOptions::default());
+/// let formatter = Formatter::default();
 ///
 /// let formatted = formatted![
 ///     &formatter,
@@ -122,7 +124,7 @@ macro_rules! format_elements {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::FormatOptions;
 ///
-/// let formatter = Formatter::new(FormatOptions::default());
+/// let formatter = Formatter::<()>::default();
 ///
 /// let formatted = formatted![&formatter, [token("test")]].unwrap();
 ///
@@ -163,12 +165,13 @@ macro_rules! __count_elements {
 }
 
 #[doc(hidden)]
-pub struct FormatBuilder {
+pub struct FormatBuilder<O> {
     builder: ConcatBuilder,
     result: Result<(), FormatError>,
+    options: PhantomData<O>,
 }
 
-impl FormatBuilder {
+impl<O> FormatBuilder<O> {
     #[inline]
     pub fn new(size: usize) -> Self {
         let mut builder = ConcatBuilder::new();
@@ -177,13 +180,14 @@ impl FormatBuilder {
         Self {
             builder,
             result: Ok(()),
+            options: PhantomData,
         }
     }
 
     #[inline]
-    pub fn entry<T>(&mut self, element: T, formatter: &Formatter)
+    pub fn entry<T>(&mut self, element: T, formatter: &Formatter<O>)
     where
-        T: IntoFormatElement,
+        T: IntoFormatElement<O>,
     {
         self.result = self.result.and_then(|_| {
             self.builder.entry(element.into_format_element(formatter)?);
@@ -200,19 +204,19 @@ impl FormatBuilder {
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
-    use crate::FormatOptions;
 
     struct TestFormat;
 
     impl Format for TestFormat {
-        fn format(&self, _: &Formatter) -> FormatResult<FormatElement> {
+        type Options = ();
+        fn format(&self, _: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
             Ok(token("test"))
         }
     }
 
     #[test]
     fn test_single_element() {
-        let formatter = Formatter::new(FormatOptions::default());
+        let formatter = Formatter::new(());
 
         let formatted = formatted![&formatter, [TestFormat]].unwrap();
 
@@ -221,7 +225,7 @@ mod tests {
 
     #[test]
     fn test_multiple_elements() {
-        let formatter = Formatter::new(FormatOptions::default());
+        let formatter = Formatter::new(());
 
         let formatted = formatted![
             &formatter,

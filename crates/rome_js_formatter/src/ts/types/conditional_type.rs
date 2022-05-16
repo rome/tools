@@ -6,7 +6,7 @@ use rome_js_syntax::TsConditionalType;
 impl FormatNodeFields<TsConditionalType> for FormatNodeRule<TsConditionalType> {
     fn format_fields(
         node: &TsConditionalType,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         format_conditional(Conditional::Type(node.clone()), formatter, false)
     }

@@ -9,7 +9,7 @@ use rome_js_syntax::JsForOfStatementFields;
 impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
     fn format_fields(
         node: &JsForOfStatement,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsForOfStatementFields {
             for_token,

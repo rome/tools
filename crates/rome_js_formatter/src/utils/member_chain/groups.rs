@@ -2,6 +2,7 @@ use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
 
+use crate::options::JsFormatOptions;
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 use std::mem;
@@ -19,7 +20,7 @@ pub(crate) struct Groups<'f> {
     current_group: Vec<FlattenItem>,
 
     /// instance of the formatter
-    formatter: &'f Formatter,
+    formatter: &'f Formatter<JsFormatOptions>,
 
     /// This is a threshold of when we should start breaking the groups
     ///
@@ -28,7 +29,7 @@ pub(crate) struct Groups<'f> {
 }
 
 impl<'f> Groups<'f> {
-    pub fn new(formatter: &'f Formatter, in_expression_statement: bool) -> Self {
+    pub fn new(formatter: &'f Formatter<JsFormatOptions>, in_expression_statement: bool) -> Self {
         Self {
             formatter,
             in_expression_statement,

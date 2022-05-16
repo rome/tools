@@ -4,7 +4,11 @@ use crate::generated::FormatTsAnyReturnType;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyReturnType;
 impl FormatRule<TsAnyReturnType> for FormatTsAnyReturnType {
-    fn format(node: &TsAnyReturnType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &TsAnyReturnType,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
         match node {
             TsAnyReturnType::TsType(node) => formatted![formatter, [node.format()]],
             TsAnyReturnType::TsPredicateReturnType(node) => formatted![formatter, [node.format()]],

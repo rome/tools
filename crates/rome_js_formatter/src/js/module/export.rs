@@ -5,7 +5,10 @@ use rome_js_syntax::JsExport;
 use rome_js_syntax::JsExportFields;
 
 impl FormatNodeFields<JsExport> for FormatNodeRule<JsExport> {
-    fn format_fields(node: &JsExport, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &JsExport,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsExportFields {
             export_token,
             export_clause,

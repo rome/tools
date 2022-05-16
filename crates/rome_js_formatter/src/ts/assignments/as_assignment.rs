@@ -4,7 +4,10 @@ use rome_js_syntax::TsAsAssignment;
 use rome_js_syntax::TsAsAssignmentFields;
 
 impl FormatNodeFields<TsAsAssignment> for FormatNodeRule<TsAsAssignment> {
-    fn format_fields(node: &TsAsAssignment, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsAsAssignment,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsAsAssignmentFields {
             assignment,
             as_token,

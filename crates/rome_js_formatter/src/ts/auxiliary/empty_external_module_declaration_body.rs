@@ -8,7 +8,7 @@ impl FormatNodeFields<TsEmptyExternalModuleDeclarationBody>
 {
     fn format_fields(
         node: &TsEmptyExternalModuleDeclarationBody,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsEmptyExternalModuleDeclarationBodyFields { semicolon_token } = node.as_fields();
         formatted![formatter, [semicolon_token.format()]]

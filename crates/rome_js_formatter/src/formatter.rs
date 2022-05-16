@@ -3,7 +3,7 @@ use crate::prelude::*;
 use rome_formatter::{normalize_newlines, FormatResult, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 
-use crate::AsFormat;
+use crate::{AsFormat, JsFormatOptions};
 use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece, TextRange};
 
 use std::iter::once;
@@ -58,7 +58,9 @@ pub struct FormatVerbatimNode<'node> {
 }
 
 impl Format for FormatVerbatimNode<'_> {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
         let verbatim = format_verbatim_node_or_token(self.node, formatter);
         Ok(FormatElement::Verbatim(Verbatim::new_verbatim(
             verbatim,
@@ -79,7 +81,9 @@ pub struct FormatUnknownNode<'node> {
 }
 
 impl Format for FormatUnknownNode<'_> {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
         Ok(FormatElement::Verbatim(Verbatim::new_unknown(
             format_verbatim_node_or_token(self.node, formatter),
         )))
@@ -97,7 +101,9 @@ pub struct FormatSuppressedNode<'node> {
 }
 
 impl Format for FormatSuppressedNode<'_> {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+
+    fn format(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
         formatted![
             formatter,
             [
@@ -112,7 +118,10 @@ impl Format for FormatSuppressedNode<'_> {
     }
 }
 
-fn format_verbatim_node_or_token(node: &JsSyntaxNode, formatter: &Formatter) -> FormatElement {
+fn format_verbatim_node_or_token(
+    node: &JsSyntaxNode,
+    formatter: &Formatter<JsFormatOptions>,
+) -> FormatElement {
     for token in node.descendants_tokens() {
         formatter.track_token(&token);
     }
@@ -425,7 +434,7 @@ enum DelimitedContent {
 
 /// JS specific formatter extensions
 pub(crate) trait JsFormatter {
-    fn as_formatter(&self) -> &Formatter;
+    fn as_formatter(&self) -> &Formatter<JsFormatOptions>;
 
     /// Formats a group delimited by an opening and closing token, placing the
     /// content in a [block_indent] group
@@ -502,15 +511,15 @@ pub(crate) trait JsFormatter {
     /// created by calling the `separator_factory` function.
     /// The last trailing separator in the list will only be printed
     /// if the outer group breaks.
-    fn format_separated<T, L, F>(
+    fn format_separated<L, F>(
         &self,
         list: &L,
         separator_factory: F,
         trailing_separator: TrailingSeparator,
     ) -> FormatResult<std::vec::IntoIter<FormatElement>>
     where
-        for<'a> T: AstNode<Language = JsLanguage> + AsFormat<'a>,
-        L: AstSeparatedList<Language = JsLanguage, Node = T>,
+        L: AstSeparatedList<Language = JsLanguage>,
+        for<'a> L::Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
         F: Fn() -> FormatElement,
     {
         let mut result = Vec::with_capacity(list.len());
@@ -592,8 +601,8 @@ pub(crate) trait JsFormatter {
     }
 }
 
-impl JsFormatter for Formatter {
-    fn as_formatter(&self) -> &Formatter {
+impl JsFormatter for Formatter<JsFormatOptions> {
+    fn as_formatter(&self) -> &Formatter<JsFormatOptions> {
         self
     }
 }
@@ -604,7 +613,7 @@ impl JsFormatter for Formatter {
 /// Calling this method is required to correctly handle the comments attached
 /// to the opening and closing tokens and insert them inside the group block
 fn format_delimited(
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
     open_token: &JsSyntaxToken,
     content: DelimitedContent,
     close_token: &JsSyntaxToken,

@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsAnyType, TsAnyTypeFields};
 
 impl FormatNodeFields<TsAnyType> for FormatNodeRule<TsAnyType> {
-    fn format_fields(node: &TsAnyType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsAnyType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsAnyTypeFields { any_token } = node.as_fields();
 
         formatted![formatter, [any_token.format()]]

@@ -4,7 +4,11 @@ use crate::generated::FormatJsAnyMethodModifier;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyMethodModifier;
 impl FormatRule<JsAnyMethodModifier> for FormatJsAnyMethodModifier {
-    fn format(node: &JsAnyMethodModifier, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyMethodModifier,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
         match node {
             JsAnyMethodModifier::TsAccessibilityModifier(node) => {
                 formatted![formatter, [node.format()]]

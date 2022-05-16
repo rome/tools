@@ -6,7 +6,7 @@ use rome_js_syntax::TsDeclareStatementFields;
 impl FormatNodeFields<TsDeclareStatement> for FormatNodeRule<TsDeclareStatement> {
     fn format_fields(
         node: &TsDeclareStatement,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let TsDeclareStatementFields {
             declaration,

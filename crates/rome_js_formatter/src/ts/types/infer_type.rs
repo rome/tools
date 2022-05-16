@@ -3,7 +3,10 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{TsInferType, TsInferTypeFields};
 
 impl FormatNodeFields<TsInferType> for FormatNodeRule<TsInferType> {
-    fn format_fields(node: &TsInferType, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsInferType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsInferTypeFields {
             infer_token,
             type_parameter,

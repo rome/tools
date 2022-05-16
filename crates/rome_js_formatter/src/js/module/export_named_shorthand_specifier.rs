@@ -9,7 +9,7 @@ impl FormatNodeFields<JsExportNamedShorthandSpecifier>
 {
     fn format_fields(
         node: &JsExportNamedShorthandSpecifier,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let JsExportNamedShorthandSpecifierFields { type_token, name } = node.as_fields();
 

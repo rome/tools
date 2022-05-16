@@ -4,7 +4,11 @@ use crate::generated::FormatJsxAnyAttributeValue;
 use crate::prelude::*;
 use rome_js_syntax::JsxAnyAttributeValue;
 impl FormatRule<JsxAnyAttributeValue> for FormatJsxAnyAttributeValue {
-    fn format(node: &JsxAnyAttributeValue, formatter: &Formatter) -> FormatResult<FormatElement> {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsxAnyAttributeValue,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
         match node {
             JsxAnyAttributeValue::JsxAnyTag(node) => formatted![formatter, [node.format()]],
             JsxAnyAttributeValue::JsxString(node) => formatted![formatter, [node.format()]],

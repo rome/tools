@@ -4,7 +4,10 @@ use rome_js_syntax::TsAsExpression;
 use rome_js_syntax::TsAsExpressionFields;
 
 impl FormatNodeFields<TsAsExpression> for FormatNodeRule<TsAsExpression> {
-    fn format_fields(node: &TsAsExpression, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_fields(
+        node: &TsAsExpression,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsAsExpressionFields {
             ty,
             as_token,
