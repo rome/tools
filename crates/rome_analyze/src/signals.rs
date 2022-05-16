@@ -30,9 +30,9 @@ pub struct AnalyzerAction {
     pub applicability: Applicability,
     pub message: MarkupBuf,
     /// Range of the original document being modified by this action
-    pub prev_range: TextRange,
+    pub original_range: TextRange,
     /// Range of the new document that differs from the original document
-    pub next_range: TextRange,
+    pub new_range: TextRange,
     pub root: JsAnyRoot,
 }
 
@@ -43,7 +43,10 @@ impl From<AnalyzerAction> for CodeSuggestion {
 
         for token in action.root.syntax().descendants_tokens() {
             let range = token.text_range();
-            if range.end() <= action.next_range.start() || range.start() >= action.next_range.end()
+            if range
+                .intersect(action.new_range)
+                .filter(|range| !range.is_empty())
+                .is_none()
             {
                 continue;
             }
@@ -55,7 +58,7 @@ impl From<AnalyzerAction> for CodeSuggestion {
             substitution: SuggestionChange::String(code),
             span: FileSpan {
                 file: action.file_id,
-                range: action.prev_range,
+                range: action.original_range,
             },
             applicability: action.applicability,
             msg: action.message,
@@ -115,7 +118,7 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
 
     fn action(&self) -> Option<AnalyzerAction> {
         R::action(self.root.clone(), &self.node, &self.state).and_then(|action| {
-            let (prev_range, next_range) =
+            let (original_range, new_range) =
                 find_diff_range(self.root.syntax(), action.root.syntax())?;
             Some(AnalyzerAction {
                 rule_name: R::NAME,
@@ -123,15 +126,15 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
                 category: action.category,
                 applicability: action.applicability,
                 message: action.message,
-                prev_range,
-                next_range,
+                original_range,
+                new_range,
                 root: action.root,
             })
         })
     }
 }
 
-/// Compares the tokens that make up the two trees and find the narrowest text
+/// Compares two revisions of the same syntax tree and find the narrowest text
 /// range that differs between the two
 fn find_diff_range<L>(prev: &SyntaxNode<L>, next: &SyntaxNode<L>) -> Option<(TextRange, TextRange)>
 where
@@ -139,29 +142,31 @@ where
 {
     let prev_tokens = prev.descendants_tokens();
     let next_tokens = next.descendants_tokens();
+    let mut tokens = prev_tokens.zip(next_tokens);
 
-    let mut range_start = None;
-    let mut range_end = None;
+    let range_start = (&mut tokens).find_map(|(prev_token, next_token)| {
+        debug_assert_eq!(
+            prev_token.text_range().start(),
+            next_token.text_range().start(),
+        );
 
-    for (prev_token, next_token) in prev_tokens.zip(next_tokens) {
-        if range_start.is_none() {
-            debug_assert_eq!(
-                prev_token.text_range().start(),
-                next_token.text_range().start(),
-            );
-
-            if prev_token != next_token {
-                range_start = Some(prev_token.text_range().start());
-                continue;
-            }
-        } else if prev_token == next_token {
-            range_end = Some((
-                prev_token.text_range().start(),
-                next_token.text_range().start(),
-            ));
-            break;
+        if prev_token != next_token {
+            Some(prev_token.text_range().start())
+        } else {
+            None
         }
-    }
+    });
+
+    let range_end = tokens.find_map(|(prev_token, next_token)| {
+        if prev_token == next_token {
+            Some((
+                prev_token.text_range().start(),
+                next_token.text_range().start(),
+            ))
+        } else {
+            None
+        }
+    });
 
     match (range_start, range_end) {
         (Some(start), Some((prev_end, next_end))) => Some((
@@ -174,6 +179,11 @@ where
         )),
 
         (None, None) => None,
+
+        // This branch is unreachable since `range_start` can only be `None` if
+        // it consumes the entire `tokens` iterator without ever returning
+        // `Some(_)`, then `range_end` will also necessarily return `None` as
+        // there as not items left to inspect
         (None, Some(_)) => unreachable!(),
     }
 }

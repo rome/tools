@@ -436,7 +436,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         }
 
         // Return early if the file has error diagnostics, there's a good
-        // change it would cause formatting errors
+        // chance it would cause formatting errors
         let has_errors = diagnostics
             .iter()
             .any(|diag| diag.severity >= Severity::Error);
