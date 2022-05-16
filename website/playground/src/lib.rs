@@ -111,13 +111,33 @@ fn clean_up_json(json: serde_json::Value) -> serde_json::Value {
         s => s,
     }
 }
+#[wasm_bindgen]
+pub struct PlaygroundFormatOptions {
+    line_width: u16,
+    indent_width: Option<u8>, // If None, we use tabs
+    quote_style: String,
+}
+
+#[wasm_bindgen]
+impl PlaygroundFormatOptions {
+    #[wasm_bindgen(constructor)]
+    pub fn new(
+        line_width: u16,
+        indent_width: Option<u8>, // If None, we use tabs
+        quote_style: String,
+    ) -> Self {
+        Self {
+            line_width,
+            indent_width,
+            quote_style,
+        }
+    }
+}
 
 #[wasm_bindgen]
 pub fn run(
     code: String,
-    line_width: u16,
-    indent_width: Option<u8>, // If None, we use tabs
-    quote_style: String,
+    options: PlaygroundFormatOptions,
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
@@ -145,7 +165,7 @@ pub fn run(
     let parse = parse(&code, main_file_id, source_type);
     let syntax = parse.syntax();
 
-    let indent_style = if let Some(width) = indent_width {
+    let indent_style = if let Some(width) = options.indent_width {
         IndentStyle::Space(width)
     } else {
         IndentStyle::Tab
@@ -153,8 +173,8 @@ pub fn run(
 
     let options = FormatOptions {
         indent_style,
-        line_width: line_width.try_into().unwrap_or_default(),
-        quote_style: quote_style.parse().unwrap_or_default(),
+        line_width: options.line_width.try_into().unwrap_or_default(),
+        quote_style: options.quote_style.parse().unwrap_or_default(),
     };
 
     let (cst, ast) = if output_json {

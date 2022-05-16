@@ -1,5 +1,5 @@
 import "react-tabs/style/react-tabs.css";
-import init, { run } from "../pkg/rome_playground";
+import init, { PlaygroundFormatOptions, run } from "../pkg/rome_playground";
 import { useEffect, useState } from "react";
 import { IndentStyle, TreeStyle } from "./types";
 import { formatWithPrettier, usePlaygroundState, useWindowSize } from "./utils";
@@ -50,9 +50,11 @@ function App() {
 
 			const romeOutput = run(
 				code,
-				lineWidth,
-				indentStyle === IndentStyle.Space ? indentWidth : undefined,
-				quoteStyle,
+				new PlaygroundFormatOptions(
+					lineWidth,
+					indentStyle === IndentStyle.Space ? indentWidth : undefined,
+					quoteStyle,
+				),
 				isTypeScript,
 				isJsx,
 				sourceType,
