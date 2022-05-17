@@ -223,8 +223,7 @@ impl<'a> Printer<'a> {
             }
             FormatElement::LineSuffixBoundary => {
                 const HARD_BREAK: &FormatElement = &hard_line_break();
-                // enqueue a line break, this will flush the line suffix
-                queue.enqueue(PrintElementCall::new(HARD_BREAK, args));
+                self.queue_line_suffixes(HARD_BREAK, args, queue);
             }
 
             FormatElement::Comment(content) => {
@@ -240,6 +239,9 @@ impl<'a> Printer<'a> {
                 }
 
                 queue.enqueue(PrintElementCall::new(&verbatim.element, args));
+            }
+            FormatElement::ExpandParent => {
+                // No-op, only has an effect on `fits`
             }
         }
     }
@@ -603,7 +605,7 @@ fn fits_on_line<'a>(
         pending_indent: printer.state.pending_indent,
         pending_space: printer.state.pending_space,
         line_width: printer.state.line_width,
-        has_line_suffix: printer.state.line_suffixes.is_empty(),
+        has_line_suffix: printer.state.line_suffixes.len() > 0,
     };
 
     let result = loop {
@@ -764,6 +766,11 @@ fn fits_element_on_line<'a, 'rest>(
 
         FormatElement::Verbatim(verbatim) => {
             queue.enqueue(PrintElementCall::new(&verbatim.element, args))
+        }
+        FormatElement::ExpandParent => {
+            if args.mode.is_flat() || args.hard_group {
+                return Fits::No;
+            }
         }
     }
 
