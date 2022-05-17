@@ -21,6 +21,7 @@ impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExp
                 left.format(),
                 space_token(),
                 operator_token.format(),
+                line_suffix_boundary(),
                 group_elements(soft_line_indent_or_space(formatted![
                     formatter,
                     [right.format()]

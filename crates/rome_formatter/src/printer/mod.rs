@@ -605,7 +605,7 @@ fn fits_on_line<'a>(
         pending_indent: printer.state.pending_indent,
         pending_space: printer.state.pending_space,
         line_width: printer.state.line_width,
-        has_line_suffix: printer.state.line_suffixes.len() > 0,
+        has_line_suffix: !printer.state.line_suffixes.is_empty(),
     };
 
     let result = loop {
@@ -747,12 +747,6 @@ fn fits_element_on_line<'a, 'rest>(
         }
 
         FormatElement::LineSuffix(_) => {
-            // The current behavior is to return `false` for all line suffixes if trying to print
-            // something in "flat" mode.
-            if args.mode.is_flat() {
-                return Fits::No;
-            }
-
             state.has_line_suffix = true;
         }
 

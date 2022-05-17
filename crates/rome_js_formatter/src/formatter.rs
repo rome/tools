@@ -216,7 +216,10 @@ where
                     ]),
                 ]
             } else {
-                line_suffix(format_elements![space_token(), comment, space_token()])
+                format_elements![
+                    line_suffix(format_elements![space_token(), comment]),
+                    expand_parent()
+                ]
             };
 
             elements.push(crate::comment(content));
