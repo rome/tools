@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use rome_formatter::{normalize_newlines, FormatResult, LINE_TERMINATORS};
+use rome_formatter::{normalize_newlines, FormatResult, GroupId, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 
 use crate::{AsFormat, JsFormatOptions};
@@ -762,7 +762,12 @@ impl<'a, 'fmt> FormatDelimited<'a, 'fmt> {
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
                 match group_id {
                     None => group_elements(delimited),
-                    Some(group_id) => group_elements_with_id(delimited, group_id),
+                    Some(group_id) => group_elements_with_options(
+                        delimited,
+                        GroupElementsOptions {
+                            group_id: Some(group_id),
+                        },
+                    ),
                 }
             }
         };

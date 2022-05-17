@@ -3,11 +3,10 @@ mod printer_options;
 pub use printer_options::*;
 
 use crate::format_element::{
-    ConditionalGroupContent, Group, GroupId, LineMode, List, PrintMode, VerbatimKind,
+    ConditionalGroupContent, Group, LineMode, List, PrintMode, VerbatimKind,
 };
 use crate::intersperse::Intersperse;
-use crate::{FormatElement, Printed, SourceMarker, TextRange};
-use std::collections::HashMap;
+use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
 use crate::prelude::Line;
 use rome_rowan::TextSize;
@@ -145,7 +144,7 @@ impl<'a> Printer<'a> {
                 };
 
                 if let Some(id) = id {
-                    self.state.group_modes.insert(*id, group_mode);
+                    self.state.insert_group_mode(*id, group_mode);
                 }
             }
 
@@ -170,19 +169,19 @@ impl<'a> Printer<'a> {
                 group_id,
             }) => {
                 let group_mode = match group_id {
-                    None => &args.mode,
-                    Some(id) => self
-                        .state
-                        .group_modes
-                        .get(id)
-                        .unwrap_or_else(|| panic!("Expected group with id '{id:?}' to exist.")),
+                    None => args.mode,
+                    Some(id) => {
+                        self.state.get_print_mode(*id).unwrap_or_else(||
+                            panic!("Expected group with id {id:?} to exist but it wasn't present in the document. Ensure that a group with such a document appears in the document before the element {element:?}.")
+                        )
+                    }
                 };
 
                 if args.hard_group {
                     if mode == &PrintMode::Flat {
                         queue.enqueue(PrintElementCall::new(content, args));
                     }
-                } else if group_mode == mode {
+                } else if &group_mode == mode {
                     queue.enqueue(PrintElementCall::new(content, args));
                 }
             }
@@ -322,15 +321,7 @@ impl<'a> Printer<'a> {
         );
 
         // Process remaining items
-        loop {
-            let next_item = match items.next() {
-                None => {
-                    // End of list
-                    break;
-                }
-                Some(item) => item,
-            };
-
+        for next_item in items {
             // A line break in expanded mode is always necessary if the current item didn't fit.
             // otherwise see if both contents fit on the line.
             let current_and_next_fit = current_fits
@@ -450,11 +441,28 @@ struct PrinterState<'a> {
     has_empty_line: bool,
     line_suffixes: Vec<PrintElementCall<'a>>,
     verbatim_markers: Vec<TextRange>,
-    /// Tracks the mode in which groups with ids are printed.
-    group_modes: HashMap<GroupId, PrintMode>,
+    /// Tracks the mode in which groups with ids are printed. Stores the groups at `group.id()` index.
+    /// This is based on the assumption that the group ids for a single document are dense.
+    group_modes: Vec<Option<PrintMode>>,
     // Re-used queue to measure if a group fits. Optimisation to avoid re-allocating a new
     // vec everytime a group gets measured
     measure_queue: Vec<PrintElementCall<'a>>,
+}
+
+impl PrinterState<'_> {
+    fn insert_group_mode(&mut self, group_id: GroupId, mode: PrintMode) {
+        let index = u32::from(group_id) as usize;
+
+        self.group_modes.resize(index + 1, None);
+        self.group_modes[index] = Some(mode);
+    }
+
+    fn get_print_mode(&self, group_id: GroupId) -> Option<PrintMode> {
+        let index = u32::from(group_id) as usize;
+        self.group_modes
+            .get(index)
+            .and_then(|option| option.as_ref().copied())
+    }
 }
 
 /// Stores arguments passed to `print_element` call, holding the state specific to printing an element.
@@ -591,32 +599,38 @@ fn fits_on_line<'a>(
         line_width: printer.state.line_width,
     };
 
-    while let Some((element, args)) = measure_queue.dequeue() {
-        match fits_element_on_line(
-            element,
-            args,
-            &mut measure_state,
-            &mut measure_queue,
-            &printer.options,
-        ) {
-            Fits::Yes => {
-                return true;
+    let result = loop {
+        match measure_queue.dequeue() {
+            None => {
+                break true;
             }
-            Fits::No => {
-                return false;
-            }
-            Fits::Maybe => {
-                // Continue checking next item
-            }
+
+            Some((element, args)) => match fits_element_on_line(
+                element,
+                args,
+                &mut measure_state,
+                &mut measure_queue,
+                &printer.options,
+            ) {
+                Fits::Yes => {
+                    break true;
+                }
+                Fits::No => {
+                    break false;
+                }
+                Fits::Maybe => {
+                    continue;
+                }
+            },
         }
-    }
+    };
 
     let mut shared_buffer = measure_queue.into_vec();
     // Clear out remaining items
     shared_buffer.clear();
     printer.state.measure_queue = shared_buffer;
 
-    true
+    result
 }
 
 /// Tests if the passed element fits on the current line or not.

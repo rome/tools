@@ -1,6 +1,6 @@
 use crate::builders::ConcatBuilder;
 use crate::intersperse::{Intersperse, IntersperseFn};
-use crate::{format_elements, TextRange, TextSize};
+use crate::{format_elements, GroupId, TextRange, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::{
@@ -8,9 +8,7 @@ use rome_rowan::{
 };
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
-use std::num::NonZeroU32;
 use std::ops::Deref;
-use std::sync::atomic::{AtomicU32, Ordering};
 
 type Content = Box<FormatElement>;
 
@@ -693,18 +691,25 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
-    group_elements_impl(content.into(), None)
+    group_elements_with_options(content.into(), GroupElementsOptions::default())
+}
+
+#[derive(Default, Clone, Debug)]
+pub struct GroupElementsOptions {
+    pub group_id: Option<GroupId>,
 }
 
 /// Creates a group with a specific id. Useful for cases where `if_group_breaks` and `if_group_fits_on_line`
 /// shouldn't refer to the direct parent group.
-pub fn group_elements_with_id(content: FormatElement, id: GroupId) -> FormatElement {
-    group_elements_impl(content, Some(id))
-}
-
-fn group_elements_impl(content: FormatElement, id: Option<GroupId>) -> FormatElement {
+pub fn group_elements_with_options(
+    content: FormatElement,
+    options: GroupElementsOptions,
+) -> FormatElement {
     let (leading, content, trailing) = content.split_trivia();
-    format_elements![leading, Group::new(content).with_id(id), trailing]
+
+    let group = Group::new(content).with_id(options.group_id);
+
+    format_elements![leading, group, trailing]
 }
 
 /// Creates a group that forces all elements inside it to be printed on a
@@ -821,7 +826,8 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 }
 
 /// Inserts some content that the printer only prints if the group with the specified `group_id`
-/// is printed in multiline mode.
+/// is printed in multiline mode. The referred group must appear before this element in the document
+/// but doesn't have to one of its ancestors.
 ///
 /// ## Examples
 ///
@@ -833,9 +839,10 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// use rome_formatter::{Formatted, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let group_id = GroupId::new("array");
+/// let formatter = Formatter::<()>::default();
+/// let group_id = formatter.group_id("array");
 ///
-/// let elements = group_elements_with_id(format_elements![
+/// let elements = group_elements_with_options(format_elements![
 ///     token("["),
 ///     soft_block_indent(fill_elements(vec![
 ///         format_elements![token("1,")],
@@ -849,7 +856,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///         ],
 ///     ])),
 ///     token("]"),
-/// ], group_id);
+/// ], GroupElementsOptions { group_id: Some(group_id) });
 ///
 /// let options = PrinterOptions {
 ///     print_width: LineWidth::try_from(20).unwrap(),
@@ -1282,57 +1289,6 @@ impl Group {
     }
 }
 
-#[derive(Clone, Copy, Eq, PartialEq, Hash)]
-pub struct DebugGroupId {
-    id: NonZeroU32,
-    name: &'static str,
-}
-
-impl DebugGroupId {
-    pub fn new(debug_name: &'static str) -> Self {
-        static ID: AtomicU32 = AtomicU32::new(1);
-        let id = NonZeroU32::new(ID.fetch_add(1, Ordering::Relaxed)).unwrap();
-
-        Self {
-            id,
-            name: debug_name,
-        }
-    }
-}
-
-impl Debug for DebugGroupId {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "#{}-{}", self.name, self.id)
-    }
-}
-
-/// Unique ID identifying a group
-#[repr(transparent)]
-#[derive(Clone, Copy, Eq, PartialEq, Hash)]
-pub struct ReleaseGroupId(NonZeroU32);
-
-impl ReleaseGroupId {
-    /// Creates a new unique group id with the given debug name (only stored in debug builds)
-    pub fn new(_: &'static str) -> Self {
-        static ID: AtomicU32 = AtomicU32::new(1);
-
-        let id = NonZeroU32::new(ID.fetch_add(1, Ordering::Relaxed)).unwrap();
-
-        Self(id)
-    }
-}
-
-impl Debug for ReleaseGroupId {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "#{}", self.0)
-    }
-}
-
-#[cfg(not(debug_assertions))]
-pub type GroupId = ReleaseGroupId;
-#[cfg(debug_assertions)]
-pub type GroupId = DebugGroupId;
-
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum PrintMode {
     /// Omits any soft line breaks
@@ -1360,7 +1316,8 @@ pub struct ConditionalGroupContent {
     /// * Multiline -> Omitted if the enclosing group fits on a single line, printed if the group breaks over multiple lines.
     pub(crate) mode: PrintMode,
 
-    /// The id of the group for which it should check if it breaks or not
+    /// The id of the group for which it should check if it breaks or not. The group must appear in the document
+    /// before the conditional group (but doesn't have to be in the ancestor chain).
     pub(crate) group_id: Option<GroupId>,
 }
 

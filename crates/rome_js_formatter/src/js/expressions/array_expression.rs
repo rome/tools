@@ -16,7 +16,7 @@ impl FormatNodeFields<JsArrayExpression> for FormatNodeRule<JsArrayExpression> {
             r_brack_token,
         } = node.as_fields();
 
-        let group_id = GroupId::new("array");
+        let group_id = formatter.group_id("array");
 
         let elements =
             FormatJsArrayElementList::format_with_group_id(&elements, formatter, Some(group_id))?;
