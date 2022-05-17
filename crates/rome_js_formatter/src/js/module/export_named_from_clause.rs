@@ -22,11 +22,14 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
             semicolon_token,
         } = node.as_fields();
 
-        let list = formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            formatted![formatter, [specifiers.format()]]?,
-            &r_curly_token?,
-        )?;
+        let list = formatter
+            .delimited(
+                &l_curly_token?,
+                formatted![formatter, [specifiers.format()]]?,
+                &r_curly_token?,
+            )
+            .soft_block_spaces()
+            .finish()?;
 
         format_with_semicolon(
             formatter,

@@ -15,10 +15,13 @@ impl FormatNodeFields<JsObjectBindingPattern> for FormatNodeRule<JsObjectBinding
             r_curly_token,
         } = node.as_fields();
 
-        formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            formatted![formatter, [properties.format()]]?,
-            &r_curly_token?,
-        )
+        formatter
+            .delimited(
+                &l_curly_token?,
+                formatted![formatter, [properties.format()]]?,
+                &r_curly_token?,
+            )
+            .soft_block_spaces()
+            .finish()
     }
 }

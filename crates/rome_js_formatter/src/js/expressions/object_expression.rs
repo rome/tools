@@ -18,17 +18,15 @@ impl FormatNodeFields<JsObjectExpression> for FormatNodeRule<JsObjectExpression>
         let members_content = formatted![formatter, [members.format()]]?;
 
         if members.is_empty() {
-            formatter.format_delimited_soft_block_indent(
-                &l_curly_token?,
-                members_content,
-                &r_curly_token?,
-            )
+            formatter
+                .delimited(&l_curly_token?, members_content, &r_curly_token?)
+                .soft_block_indent()
+                .finish()
         } else {
-            formatter.format_delimited_soft_block_spaces(
-                &l_curly_token?,
-                members_content,
-                &r_curly_token?,
-            )
+            formatter
+                .delimited(&l_curly_token?, members_content, &r_curly_token?)
+                .soft_block_spaces()
+                .finish()
         }
     }
 }

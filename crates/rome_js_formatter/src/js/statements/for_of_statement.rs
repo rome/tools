@@ -32,20 +32,23 @@ impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
                     await_token
                         .format()
                         .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
-                    formatter.format_delimited_soft_block_indent(
-                        &l_paren_token?,
-                        formatted![
-                            formatter,
-                            [
-                                initializer.format(),
-                                soft_line_break_or_space(),
-                                of_token.format(),
-                                soft_line_break_or_space(),
-                                expression.format(),
-                            ]
-                        ]?,
-                        &r_paren_token?
-                    )?,
+                    formatter
+                        .delimited(
+                            &l_paren_token?,
+                            formatted![
+                                formatter,
+                                [
+                                    initializer.format(),
+                                    soft_line_break_or_space(),
+                                    of_token.format(),
+                                    soft_line_break_or_space(),
+                                    expression.format(),
+                                ]
+                            ]?,
+                            &r_paren_token?
+                        )
+                        .soft_block_indent()
+                        .finish()?,
                 ]
             ]?,
             body?,

@@ -1,12 +1,16 @@
 use crate::builders::ConcatBuilder;
 use crate::intersperse::{Intersperse, IntersperseFn};
 use crate::{format_elements, TextRange, TextSize};
+#[cfg(target_pointer_width = "64")]
+use rome_rowan::static_assert;
 use rome_rowan::{
     Language, SyntaxNode, SyntaxToken, SyntaxTokenText, SyntaxTriviaPieceComments, TextLen,
 };
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
+use std::num::NonZeroU32;
 use std::ops::Deref;
+use std::sync::atomic::{AtomicU32, Ordering};
 
 type Content = Box<FormatElement>;
 
@@ -326,7 +330,8 @@ where
 }
 
 /// Concatenates a list of [FormatElement]s with spaces and line breaks to fit
-/// them on as few lines as possible
+/// them on as few lines as possible. Each element introduces a conceptual group. The printer
+/// first tries to print the item in flat mode but then prints it in expanded mode if it doesn't fit.
 ///
 /// ## Examples
 ///
@@ -688,9 +693,18 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
-    let content: FormatElement = content.into();
+    group_elements_impl(content.into(), None)
+}
+
+/// Creates a group with a specific id. Useful for cases where `if_group_breaks` and `if_group_fits_on_line`
+/// shouldn't refer to the direct parent group.
+pub fn group_elements_with_id(content: FormatElement, id: GroupId) -> FormatElement {
+    group_elements_impl(content, Some(id))
+}
+
+fn group_elements_impl(content: FormatElement, id: Option<GroupId>) -> FormatElement {
     let (leading, content, trailing) = content.split_trivia();
-    format_elements![leading, Group::new(content), trailing]
+    format_elements![leading, Group::new(content).with_id(id), trailing]
 }
 
 /// Creates a group that forces all elements inside it to be printed on a
@@ -803,15 +817,60 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 /// ```
 #[inline]
 pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
-    let content = content.into();
+    if_group_breaks_impl(content.into(), None)
+}
 
+/// Inserts some content that the printer only prints if the group with the specified `group_id`
+/// is printed in multiline mode.
+///
+/// ## Examples
+///
+/// Prints the trailing comma if the array group doesn't fit. The `group_id` is necessary
+/// because `fill` creates an implicit group around each item and tries to print the item in flat mode.
+/// The item `[4]` in this example fits on a single line but the trailing comma should still be printed
+///
+/// ```
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
+///
+/// let group_id = GroupId::new("array");
+///
+/// let elements = group_elements_with_id(format_elements![
+///     token("["),
+///     soft_block_indent(fill_elements(vec![
+///         format_elements![token("1,")],
+///         format_elements![token("234568789,")],
+///         format_elements![token("3456789,")],
+///         format_elements![
+///             token("["),
+///             soft_block_indent(token("4")),
+///             token("]"),
+///             if_group_with_id_breaks(token(","), group_id)
+///         ],
+///     ])),
+///     token("]"),
+/// ], group_id);
+///
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(20).unwrap(),
+///     ..PrinterOptions::default()
+/// };
+/// assert_eq!(
+///     "[\n\t1, 234568789,\n\t3456789, [4],\n]",
+///     Formatted::new(elements, options).print().as_code()
+/// );
+/// ```
+pub fn if_group_with_id_breaks(content: FormatElement, group_id: GroupId) -> FormatElement {
+    if_group_breaks_impl(content, Some(group_id))
+}
+
+fn if_group_breaks_impl(content: FormatElement, group_id: Option<GroupId>) -> FormatElement {
     if content.is_empty() {
         content
     } else {
-        FormatElement::from(ConditionalGroupContent::new(
-            content,
-            GroupPrintMode::Multiline,
-        ))
+        FormatElement::from(
+            ConditionalGroupContent::new(content, PrintMode::Expanded).with_group_id(group_id),
+        )
     }
 }
 
@@ -879,15 +938,27 @@ pub fn if_group_fits_on_single_line<TFlat>(flat_content: TFlat) -> FormatElement
 where
     TFlat: Into<FormatElement>,
 {
-    let flat_content = flat_content.into();
+    if_group_fits_on_line_impl(flat_content.into(), None)
+}
 
+/// Inserts some content that the printer only prints if the group with the specified `group_id`
+/// is printed in flat mode.
+///
+#[inline]
+pub fn if_group_with_id_fits_on_line(flat_content: FormatElement, id: GroupId) -> FormatElement {
+    if_group_fits_on_line_impl(flat_content, Some(id))
+}
+
+fn if_group_fits_on_line_impl(
+    flat_content: FormatElement,
+    group_id: Option<GroupId>,
+) -> FormatElement {
     if flat_content.is_empty() {
         flat_content
     } else {
-        FormatElement::from(ConditionalGroupContent::new(
-            flat_content,
-            GroupPrintMode::Flat,
-        ))
+        FormatElement::from(
+            ConditionalGroupContent::new(flat_content, PrintMode::Flat).with_group_id(group_id),
+        )
     }
 }
 
@@ -1181,11 +1252,19 @@ impl Deref for List {
 #[derive(Clone, PartialEq, Eq)]
 pub struct Group {
     pub(crate) content: Content,
+    pub(crate) id: Option<GroupId>,
 }
 
 impl Debug for Group {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
-        fmt.debug_tuple("").field(&self.content).finish()
+        if let Some(id) = &self.id {
+            fmt.debug_struct("")
+                .field("content", &self.content)
+                .field("id", id)
+                .finish()
+        } else {
+            fmt.debug_tuple("").field(&self.content).finish()
+        }
     }
 }
 
@@ -1193,14 +1272,83 @@ impl Group {
     pub fn new(content: FormatElement) -> Self {
         Self {
             content: Box::new(content),
+            id: None,
+        }
+    }
+
+    pub fn with_id(mut self, id: Option<GroupId>) -> Self {
+        self.id = id;
+        self
+    }
+}
+
+#[derive(Clone, Copy, Eq, PartialEq, Hash)]
+pub struct DebugGroupId {
+    id: NonZeroU32,
+    name: &'static str,
+}
+
+impl DebugGroupId {
+    pub fn new(debug_name: &'static str) -> Self {
+        static ID: AtomicU32 = AtomicU32::new(1);
+        let id = NonZeroU32::new(ID.fetch_add(1, Ordering::Relaxed)).unwrap();
+
+        Self {
+            id,
+            name: debug_name,
         }
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub enum GroupPrintMode {
+impl Debug for DebugGroupId {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "#{}-{}", self.name, self.id)
+    }
+}
+
+/// Unique ID identifying a group
+#[repr(transparent)]
+#[derive(Clone, Copy, Eq, PartialEq, Hash)]
+pub struct ReleaseGroupId(NonZeroU32);
+
+impl ReleaseGroupId {
+    /// Creates a new unique group id with the given debug name (only stored in debug builds)
+    pub fn new(_: &'static str) -> Self {
+        static ID: AtomicU32 = AtomicU32::new(1);
+
+        let id = NonZeroU32::new(ID.fetch_add(1, Ordering::Relaxed)).unwrap();
+
+        Self(id)
+    }
+}
+
+impl Debug for ReleaseGroupId {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "#{}", self.0)
+    }
+}
+
+#[cfg(not(debug_assertions))]
+pub type GroupId = ReleaseGroupId;
+#[cfg(debug_assertions)]
+pub type GroupId = DebugGroupId;
+
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub enum PrintMode {
+    /// Omits any soft line breaks
     Flat,
-    Multiline,
+    /// Prints soft line breaks as line breaks
+    Expanded,
+}
+
+impl PrintMode {
+    pub const fn is_flat(&self) -> bool {
+        matches!(self, PrintMode::Flat)
+    }
+
+    pub const fn is_expanded(&self) -> bool {
+        matches!(self, PrintMode::Expanded)
+    }
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -1210,15 +1358,24 @@ pub struct ConditionalGroupContent {
     /// In what mode the content should be printed.
     /// * Flat -> Omitted if the enclosing group is a multiline group, printed for groups fitting on a single line
     /// * Multiline -> Omitted if the enclosing group fits on a single line, printed if the group breaks over multiple lines.
-    pub(crate) mode: GroupPrintMode,
+    pub(crate) mode: PrintMode,
+
+    /// The id of the group for which it should check if it breaks or not
+    pub(crate) group_id: Option<GroupId>,
 }
 
 impl ConditionalGroupContent {
-    pub fn new(content: FormatElement, mode: GroupPrintMode) -> Self {
+    pub fn new(content: FormatElement, mode: PrintMode) -> Self {
         Self {
             content: Box::new(content),
             mode,
+            group_id: None,
         }
+    }
+
+    pub fn with_group_id(mut self, id: Option<GroupId>) -> Self {
+        self.group_id = id;
+        self
     }
 }
 
@@ -1492,12 +1649,6 @@ impl FormatElement {
                 // re-create the grouping around the content only
                 (leading, hard_group_elements(content), trailing)
             }
-
-            FormatElement::Group(group) => {
-                let (leading, content, trailing) = group.content.split_trivia();
-                // re-create the grouping around the content only
-                (leading, group_elements(content), trailing)
-            }
             // Non-list elements are returned directly
             _ => (empty_element(), self, empty_element()),
         }
@@ -1570,10 +1721,9 @@ impl From<Option<FormatElement>> for FormatElement {
 mod tests {
 
     use crate::format_element::{
-        empty_element, join_elements, normalize_newlines, ConditionalGroupContent, List,
-        VerbatimKind, LINE_TERMINATORS,
+        empty_element, join_elements, normalize_newlines, List, LINE_TERMINATORS,
     };
-    use crate::{concat_elements, space_token, token, FormatElement, TextRange, Token, Verbatim};
+    use crate::{concat_elements, space_token, token, FormatElement};
 
     #[test]
     fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {
@@ -1689,19 +1839,32 @@ mod tests {
         assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
         assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
     }
-
-    #[test]
-    fn sizes() {
-        assert_eq!(8, std::mem::size_of::<TextRange>());
-        assert_eq!(8, std::mem::size_of::<VerbatimKind>());
-        assert_eq!(16, std::mem::size_of::<Verbatim>());
-        assert_eq!(24, std::mem::size_of::<Token>());
-        assert_eq!(16, std::mem::size_of::<ConditionalGroupContent>());
-        assert_eq!(24, std::mem::size_of::<List>());
-        // Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
-        // Is there a more efficient way to encode the data to avoid increasing its size? Can the information
-        // be recomputed at a later point in time?
-        // You reduced the size of a format element? Excellent work!
-        assert_eq!(32, std::mem::size_of::<FormatElement>());
-    }
 }
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<rome_rowan::TextRange>() == 8usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::VerbatimKind>() == 8usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 16usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::Token>() == 24usize);
+
+#[cfg(not(debug_assertions))]
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::ConditionalGroupContent>() == 16usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::List>() == 24usize);
+
+// Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
+// Is there a more efficient way to encode the data to avoid increasing its size? Can the information
+// be recomputed at a later point in time?
+// You reduced the size of a format element? Excellent work!
+
+#[cfg(not(debug_assertions))]
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::FormatElement>() == 32usize);

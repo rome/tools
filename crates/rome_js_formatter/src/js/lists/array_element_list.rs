@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use std::convert::Infallible;
 
-use crate::formatter::TrailingSeparator;
+use crate::formatter::FormatSeparatedOptions;
 use crate::utils::array::format_array_node;
 
 use crate::generated::FormatJsArrayElementList;
@@ -16,10 +16,26 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
         node: &JsArrayElementList,
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
+        Self::format_with_group_id(node, formatter, None)
+    }
+}
+
+impl FormatJsArrayElementList {
+    /// Formats the array list with
+    pub fn format_with_group_id(
+        node: &JsArrayElementList,
+        formatter: &Formatter<JsFormatOptions>,
+        group_id: Option<GroupId>,
+    ) -> FormatResult<FormatElement> {
+        dbg!(group_id);
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
-                formatter.format_separated(node, || token(","), TrailingSeparator::default())?,
+                formatter.format_separated_with_options(
+                    node,
+                    || token(","),
+                    FormatSeparatedOptions::default().with_group_id(group_id),
+                )?,
             ));
         }
 

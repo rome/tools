@@ -16,11 +16,15 @@ impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDecl
             l_curly_token,
             r_curly_token,
         } = node.as_fields();
-        let members = formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            formatted![formatter, [members.format()]]?,
-            &r_curly_token?,
-        )?;
+
+        let members = formatter
+            .delimited(
+                &l_curly_token?,
+                formatted![formatter, [members.format()]]?,
+                &r_curly_token?,
+            )
+            .block_indent()
+            .finish()?;
         Ok(hard_group_elements(formatted![
             formatter,
             [

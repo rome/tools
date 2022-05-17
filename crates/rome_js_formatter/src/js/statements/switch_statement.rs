@@ -23,26 +23,32 @@ impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
             [
                 switch_token.format(),
                 space_token(),
-                formatter.format_delimited_soft_block_indent(
-                    &l_paren_token?,
-                    formatted![formatter, [discriminant.format()]]?,
-                    &r_paren_token?,
-                )?,
+                formatter
+                    .delimited(
+                        &l_paren_token?,
+                        formatted![formatter, [discriminant.format()]]?,
+                        &r_paren_token?,
+                    )
+                    .soft_block_indent()
+                    .finish()?,
                 space_token(),
-                formatter.format_delimited_block_indent(
-                    &l_curly_token?,
-                    if cases.is_empty() {
-                        hard_line_break()
-                    } else {
-                        join_elements_hard_line(
-                            cases
-                                .iter()
-                                .map(|node| node.syntax().clone())
-                                .zip(formatter.format_all(cases.iter().formatted())?),
-                        )
-                    },
-                    &r_curly_token?
-                )?
+                formatter
+                    .delimited(
+                        &l_curly_token?,
+                        if cases.is_empty() {
+                            hard_line_break()
+                        } else {
+                            join_elements_hard_line(
+                                cases
+                                    .iter()
+                                    .map(|node| node.syntax().clone())
+                                    .zip(formatter.format_all(cases.iter().formatted())?),
+                            )
+                        },
+                        &r_curly_token?
+                    )
+                    .block_indent()
+                    .finish()?
             ]
         ]?))
     }

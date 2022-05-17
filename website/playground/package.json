@@ -8,7 +8,7 @@
 		"build": "pnpm build:wasm && pnpm build:js",
 		"build:js": "tsc && vite build",
 		"build:wasm": "wasm-pack build --target web --release",
-		"build:wasm-dev": "wasm-pack build --target web",
+		"build:wasm-dev": "wasm-pack build --target web --dev",
 		"format": "cargo run -p rome_cli --release -- format --write ./src"
 	},
 	"dependencies": {

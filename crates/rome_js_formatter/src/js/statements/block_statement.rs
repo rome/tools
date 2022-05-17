@@ -31,7 +31,10 @@ impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
                 ]
             ]
         } else {
-            formatter.format_delimited_block_indent(&l_curly_token?, stmts, &r_curly_token?)
+            formatter
+                .delimited(&l_curly_token?, stmts, &r_curly_token?)
+                .block_indent()
+                .finish()
         }
     }
 }

@@ -8,7 +8,7 @@ use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaP
 
 use std::iter::once;
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum TrailingSeparator {
     Allowed,
     Disallowed,
@@ -27,6 +27,24 @@ impl TrailingSeparator {
 impl Default for TrailingSeparator {
     fn default() -> Self {
         TrailingSeparator::Allowed
+    }
+}
+
+#[derive(Debug, Default, Copy, Clone)]
+pub struct FormatSeparatedOptions {
+    trailing_separator: TrailingSeparator,
+    group_id: Option<GroupId>,
+}
+
+impl FormatSeparatedOptions {
+    pub fn with_trailing_separator(mut self, separator: TrailingSeparator) -> Self {
+        self.trailing_separator = separator;
+        self
+    }
+
+    pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
+        self.group_id = group_id;
+        self
     }
 }
 
@@ -426,63 +444,18 @@ where
     Ok(concat_elements(elements.into_iter().rev()))
 }
 
-enum DelimitedContent {
-    BlockIndent(FormatElement),
-    SoftBlockIndent(FormatElement),
-    SoftBlockSpaces(FormatElement),
-}
-
 /// JS specific formatter extensions
 pub(crate) trait JsFormatter {
     fn as_formatter(&self) -> &Formatter<JsFormatOptions>;
 
-    /// Formats a group delimited by an opening and closing token, placing the
-    /// content in a [block_indent] group
-    fn format_delimited_block_indent(
-        &self,
-        open_token: &JsSyntaxToken,
+    #[must_use]
+    fn delimited<'a, 'fmt>(
+        &'fmt self,
+        open_token: &'a JsSyntaxToken,
         content: FormatElement,
-        close_token: &JsSyntaxToken,
-    ) -> FormatResult<FormatElement> {
-        format_delimited(
-            self.as_formatter(),
-            open_token,
-            DelimitedContent::BlockIndent(content),
-            close_token,
-        )
-    }
-
-    /// Formats a group delimited by an opening and closing token, placing the
-    /// content in a [soft_block_indent] group
-    fn format_delimited_soft_block_indent(
-        &self,
-        open_token: &JsSyntaxToken,
-        content: FormatElement,
-        close_token: &JsSyntaxToken,
-    ) -> FormatResult<FormatElement> {
-        format_delimited(
-            self.as_formatter(),
-            open_token,
-            DelimitedContent::SoftBlockIndent(content),
-            close_token,
-        )
-    }
-
-    /// Formats a group delimited by an opening and closing token, placing the
-    /// content in an [indent] group with [soft_line_break_or_space] tokens at the
-    /// start and end
-    fn format_delimited_soft_block_spaces(
-        &self,
-        open_token: &JsSyntaxToken,
-        content: FormatElement,
-        close_token: &JsSyntaxToken,
-    ) -> FormatResult<FormatElement> {
-        format_delimited(
-            self.as_formatter(),
-            open_token,
-            DelimitedContent::SoftBlockSpaces(content),
-            close_token,
-        )
+        close_token: &'a JsSyntaxToken,
+    ) -> FormatDelimited<'a, 'fmt> {
+        FormatDelimited::new(open_token, content, close_token, self.as_formatter())
     }
 
     /// Print out a `token` from the original source with a different `content`.
@@ -515,7 +488,30 @@ pub(crate) trait JsFormatter {
         &self,
         list: &L,
         separator_factory: F,
-        trailing_separator: TrailingSeparator,
+    ) -> FormatResult<std::vec::IntoIter<FormatElement>>
+    where
+        L: AstSeparatedList<Language = JsLanguage>,
+        for<'a> L::Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
+        F: Fn() -> FormatElement,
+    {
+        self.format_separated_with_options(
+            list,
+            separator_factory,
+            FormatSeparatedOptions::default(),
+        )
+    }
+
+    /// Prints a separated list of nodes
+    ///
+    /// Trailing separators will be reused from the original list or
+    /// created by calling the `separator_factory` function.
+    /// The last trailing separator in the list will only be printed
+    /// if the outer group breaks.
+    fn format_separated_with_options<L, F>(
+        &self,
+        list: &L,
+        separator_factory: F,
+        options: FormatSeparatedOptions,
     ) -> FormatResult<std::vec::IntoIter<FormatElement>>
     where
         L: AstSeparatedList<Language = JsLanguage>,
@@ -525,6 +521,16 @@ pub(crate) trait JsFormatter {
         let mut result = Vec::with_capacity(list.len());
         let last_index = list.len().saturating_sub(1);
         let formatter = self.as_formatter();
+
+        let trailing_separator_factory = || {
+            if let Some(group_id) = options.group_id {
+                if_group_with_id_breaks(separator_factory(), group_id)
+            } else {
+                if_group_breaks(separator_factory())
+            }
+        };
+
+        let trailing_separator = options.trailing_separator;
 
         for (index, element) in list.elements().enumerate() {
             let node = formatted![formatter, [element.node()?.format()]]?;
@@ -537,7 +543,7 @@ pub(crate) trait JsFormatter {
                         // Use format_replaced instead of wrapping the result of format_token
                         // in order to remove only the token itself when the group doesn't break
                         // but still print its associated trivias unconditionally
-                        self.format_replaced(separator, if_group_breaks(Token::from(separator)))
+                        self.format_replaced(separator, trailing_separator_factory())
                     } else if trailing_separator.is_mandatory() {
                         formatted![formatter, [separator.format()]]?
                     } else {
@@ -548,7 +554,7 @@ pub(crate) trait JsFormatter {
                 }
             } else if index == last_index {
                 if trailing_separator.is_allowed() {
-                    if_group_breaks(separator_factory())
+                    trailing_separator_factory()
                 } else if trailing_separator.is_mandatory() {
                     separator_factory()
                 } else {
@@ -612,88 +618,169 @@ impl JsFormatter for Formatter<JsFormatOptions> {
 ///
 /// Calling this method is required to correctly handle the comments attached
 /// to the opening and closing tokens and insert them inside the group block
-fn format_delimited(
-    formatter: &Formatter<JsFormatOptions>,
-    open_token: &JsSyntaxToken,
-    content: DelimitedContent,
-    close_token: &JsSyntaxToken,
-) -> FormatResult<FormatElement> {
-    formatter.track_token(open_token);
-    formatter.track_token(close_token);
+pub struct FormatDelimited<'a, 'fmt> {
+    open_token: &'a JsSyntaxToken,
+    content: FormatElement,
+    close_token: &'a JsSyntaxToken,
+    mode: DelimitedMode,
+    formatter: &'fmt Formatter<JsFormatOptions>,
+}
 
-    let open_token_trailing_trivia = format_trailing_trivia(open_token);
-    let close_token_leading_trivia = format_leading_trivia(close_token, TriviaPrintMode::Trim);
-
-    let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
-        formatted![
+impl<'a, 'fmt> FormatDelimited<'a, 'fmt> {
+    fn new(
+        open_token: &'a JsSyntaxToken,
+        content: FormatElement,
+        close_token: &'a JsSyntaxToken,
+        formatter: &'fmt Formatter<JsFormatOptions>,
+    ) -> Self {
+        Self {
+            open_token,
+            content,
+            close_token,
+            mode: DelimitedMode::SoftBlockIndent(None),
             formatter,
-            [open_token_trailing_trivia, soft_line_break_or_space()]
-        ]?
-    } else {
-        empty_element()
-    };
-    let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
-        formatted![
-            formatter,
-            [soft_line_break_or_space(), close_token_leading_trivia]
-        ]?
-    } else {
-        empty_element()
-    };
-
-    let formatted_content = match content {
-        DelimitedContent::BlockIndent(content) => block_indent(formatted![
-            formatter,
-            [
-                open_token_trailing_trivia,
-                content,
-                close_token_leading_trivia
-            ]
-        ]?),
-        DelimitedContent::SoftBlockIndent(content) => soft_block_indent(formatted![
-            formatter,
-            [
-                open_token_trailing_trivia,
-                content,
-                close_token_leading_trivia
-            ]
-        ]?),
-        DelimitedContent::SoftBlockSpaces(content) => {
-            if open_token_trailing_trivia.is_empty()
-                && content.is_empty()
-                && close_token_leading_trivia.is_empty()
-            {
-                empty_element()
-            } else {
-                formatted![
-                    formatter,
-                    [
-                        indent(formatted![
-                            formatter,
-                            [
-                                soft_line_break_or_space(),
-                                open_token_trailing_trivia,
-                                content,
-                                close_token_leading_trivia,
-                            ]
-                        ]?),
-                        soft_line_break_or_space(),
-                    ]
-                ]?
-            }
         }
-    };
+    }
 
-    formatted![
-        formatter,
-        [
-            format_leading_trivia(open_token, TriviaPrintMode::Full),
-            group_elements(format_elements![
-                Token::from(open_token),
-                formatted_content,
-                Token::from(close_token),
-            ]),
-            format_trailing_trivia(close_token),
+    fn with_mode(mut self, mode: DelimitedMode) -> Self {
+        self.mode = mode;
+        self
+    }
+
+    /// Formats a group delimited by an opening and closing token, placing the
+    /// content in a [block_indent] group
+    pub fn block_indent(self) -> Self {
+        self.with_mode(DelimitedMode::BlockIndent)
+    }
+
+    /// Formats a group delimited by an opening and closing token, placing the
+    /// content in a [soft_block_indent] group
+    pub fn soft_block_indent(self) -> Self {
+        self.with_mode(DelimitedMode::SoftBlockIndent(None))
+    }
+
+    /// Formats a group delimited by an opening and closing token, placing the
+    /// content in an [indent] group with [soft_line_break_or_space] tokens at the
+    /// start and end
+    pub fn soft_block_spaces(self) -> Self {
+        self.with_mode(DelimitedMode::SoftBlockSpaces(None))
+    }
+
+    pub fn soft_block_indent_with_group_id(self, group_id: Option<GroupId>) -> Self {
+        self.with_mode(DelimitedMode::SoftBlockIndent(group_id))
+    }
+
+    pub fn soft_block_spaces_with_group_id(self, group_id: Option<GroupId>) -> Self {
+        self.with_mode(DelimitedMode::SoftBlockSpaces(group_id))
+    }
+
+    pub fn finish(self) -> FormatResult<FormatElement> {
+        let FormatDelimited {
+            formatter,
+            open_token,
+            close_token,
+            content,
+            mode,
+        } = self;
+
+        formatter.track_token(open_token);
+        formatter.track_token(close_token);
+
+        let open_token_trailing_trivia = format_trailing_trivia(open_token);
+        let close_token_leading_trivia = format_leading_trivia(close_token, TriviaPrintMode::Trim);
+
+        let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
+            formatted![
+                formatter,
+                [open_token_trailing_trivia, soft_line_break_or_space()]
+            ]?
+        } else {
+            empty_element()
+        };
+        let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
+            formatted![
+                formatter,
+                [soft_line_break_or_space(), close_token_leading_trivia]
+            ]?
+        } else {
+            empty_element()
+        };
+
+        let formatted_content = match mode {
+            DelimitedMode::BlockIndent => block_indent(formatted![
+                formatter,
+                [
+                    open_token_trailing_trivia,
+                    content,
+                    close_token_leading_trivia
+                ]
+            ]?),
+            DelimitedMode::SoftBlockIndent(_) => soft_block_indent(formatted![
+                formatter,
+                [
+                    open_token_trailing_trivia,
+                    content,
+                    close_token_leading_trivia
+                ]
+            ]?),
+            DelimitedMode::SoftBlockSpaces(_) => {
+                if open_token_trailing_trivia.is_empty()
+                    && content.is_empty()
+                    && close_token_leading_trivia.is_empty()
+                {
+                    empty_element()
+                } else {
+                    formatted![
+                        formatter,
+                        [
+                            indent(formatted![
+                                formatter,
+                                [
+                                    soft_line_break_or_space(),
+                                    open_token_trailing_trivia,
+                                    content,
+                                    close_token_leading_trivia,
+                                ]
+                            ]?),
+                            soft_line_break_or_space(),
+                        ]
+                    ]?
+                }
+            }
+        };
+
+        let delimited = format_elements![
+            Token::from(open_token),
+            formatted_content,
+            Token::from(close_token),
+        ];
+
+        let grouped = match mode {
+            // Group is useless, the block indent would expand it right anyway but there are some uses
+            // that are nested inside of a `HardGroup` that depend on the expanded state. Leave it for now
+            DelimitedMode::BlockIndent => group_elements(delimited),
+            DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
+                match group_id {
+                    None => group_elements(delimited),
+                    Some(group_id) => group_elements_with_id(delimited, group_id),
+                }
+            }
+        };
+
+        formatted![
+            formatter,
+            [
+                format_leading_trivia(open_token, TriviaPrintMode::Full),
+                grouped,
+                format_trailing_trivia(close_token),
+            ]
         ]
-    ]
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+enum DelimitedMode {
+    BlockIndent,
+    SoftBlockIndent(Option<GroupId>),
+    SoftBlockSpaces(Option<GroupId>),
 }

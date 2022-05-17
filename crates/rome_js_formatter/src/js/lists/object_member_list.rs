@@ -1,4 +1,3 @@
-use crate::formatter::TrailingSeparator;
 use crate::generated::FormatJsObjectMemberList;
 use crate::prelude::*;
 use rome_js_syntax::JsObjectMemberList;
@@ -11,8 +10,7 @@ impl FormatRule<JsObjectMemberList> for FormatJsObjectMemberList {
         node: &JsObjectMemberList,
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
-        let members =
-            formatter.format_separated(node, || token(","), TrailingSeparator::default())?;
+        let members = formatter.format_separated(node, || token(","))?;
 
         Ok(join_elements_soft_line(
             node.elements()

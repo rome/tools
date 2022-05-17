@@ -14,10 +14,13 @@ impl FormatNodeFields<TsModuleBlock> for FormatNodeRule<TsModuleBlock> {
             r_curly_token,
         } = node.as_fields();
 
-        formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            formatted![formatter, [items.format()]]?,
-            &r_curly_token?,
-        )
+        formatter
+            .delimited(
+                &l_curly_token?,
+                formatted![formatter, [items.format()]]?,
+                &r_curly_token?,
+            )
+            .block_indent()
+            .finish()
     }
 }

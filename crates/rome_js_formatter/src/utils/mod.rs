@@ -226,11 +226,10 @@ impl TemplateElement {
                 [dollar_curly_token.format(), middle, r_curly_token.format()]
             ]?))
         } else {
-            formatter.format_delimited_soft_block_indent(
-                &dollar_curly_token,
-                middle,
-                &r_curly_token,
-            )
+            formatter
+                .delimited(&dollar_curly_token, middle, &r_curly_token)
+                .soft_block_indent()
+                .finish()
         }
     }
 

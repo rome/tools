@@ -55,11 +55,10 @@ impl FormatNodeFields<JsForStatement> for FormatNodeRule<JsForStatement> {
             [
                 for_token.format(),
                 space_token(),
-                formatter.format_delimited_soft_block_indent(
-                    &l_paren_token?,
-                    inner,
-                    &r_paren_token?,
-                )?,
+                formatter
+                    .delimited(&l_paren_token?, inner, &r_paren_token?,)
+                    .soft_block_indent()
+                    .finish()?,
                 body
             ]
         ]?))

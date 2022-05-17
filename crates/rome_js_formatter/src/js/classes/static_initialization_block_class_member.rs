@@ -19,11 +19,14 @@ impl FormatNodeFields<JsStaticInitializationBlockClassMember>
         } = node.as_fields();
 
         let static_token = static_token.format();
-        let separated = formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            formatter.format_list(&statements),
-            &r_curly_token?,
-        )?;
+        let separated = formatter
+            .delimited(
+                &l_curly_token?,
+                formatter.format_list(&statements),
+                &r_curly_token?,
+            )
+            .block_indent()
+            .finish()?;
         formatted![formatter, [static_token, space_token(), separated]]
     }
 }
