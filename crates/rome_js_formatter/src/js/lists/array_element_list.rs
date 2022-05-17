@@ -27,7 +27,6 @@ impl FormatJsArrayElementList {
         formatter: &Formatter<JsFormatOptions>,
         group_id: Option<GroupId>,
     ) -> FormatResult<FormatElement> {
-        dbg!(group_id);
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
