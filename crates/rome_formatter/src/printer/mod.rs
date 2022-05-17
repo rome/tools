@@ -6,7 +6,7 @@ use crate::format_element::{
     ConditionalGroupContent, Group, LineMode, List, PrintMode, VerbatimKind,
 };
 use crate::intersperse::Intersperse;
-use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
+use crate::{hard_line_break, FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
 use crate::prelude::Line;
 use rome_rowan::TextSize;
@@ -221,6 +221,12 @@ impl<'a> Printer<'a> {
                     .line_suffixes
                     .push(PrintElementCall::new(&**suffix, args));
             }
+            FormatElement::LineSuffixBoundary => {
+                const HARD_BREAK: &FormatElement = &hard_line_break();
+                // enqueue a line break, this will flush the line suffix
+                queue.enqueue(PrintElementCall::new(HARD_BREAK, args));
+            }
+
             FormatElement::Comment(content) => {
                 queue.enqueue(PrintElementCall::new(content.as_ref(), args));
             }
@@ -597,6 +603,7 @@ fn fits_on_line<'a>(
         pending_indent: printer.state.pending_indent,
         pending_space: printer.state.pending_space,
         line_width: printer.state.line_width,
+        has_line_suffix: printer.state.line_suffixes.is_empty(),
     };
 
     let result = loop {
@@ -743,6 +750,14 @@ fn fits_element_on_line<'a, 'rest>(
             if args.mode.is_flat() {
                 return Fits::No;
             }
+
+            state.has_line_suffix = true;
+        }
+
+        FormatElement::LineSuffixBoundary => {
+            if state.has_line_suffix {
+                return Fits::No;
+            }
         }
 
         FormatElement::Comment(content) => queue.enqueue(PrintElementCall::new(content, args)),
@@ -779,6 +794,7 @@ impl From<bool> for Fits {
 struct MeasureState {
     pending_indent: u16,
     pending_space: bool,
+    has_line_suffix: bool,
     line_width: usize,
 }
 

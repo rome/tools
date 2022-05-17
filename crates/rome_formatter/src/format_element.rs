@@ -241,6 +241,29 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
     FormatElement::LineSuffix(Box::new(element.into()))
 }
 
+/// Inserts a boundary for line suffixes that forces to print all pending line suffixes. Helpful
+/// if a line sufix shouldn't pass a certain point.
+///
+/// ## Examples
+///
+/// Forces the line suffix "c" to be printed before the token `d`.
+/// ```
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
+///
+/// let elements = format_elements![token("a"), line_suffix(token("c")), token("b"), line_suffix_boundary(), token("d")];
+///
+/// assert_eq!(
+///     "abc\nd",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
+/// ```
+pub const fn line_suffix_boundary() -> FormatElement {
+    FormatElement::LineSuffixBoundary
+}
+
 /// Mark a [FormatElement] as being a piece of trivia
 ///
 /// This does not directly influence how this content will be printed, but some
@@ -1079,6 +1102,10 @@ pub enum FormatElement {
     /// Delay the printing of its content until the next line break
     LineSuffix(Content),
 
+    /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
+    /// line suffixes, potentially by inserting a hard line break.
+    LineSuffixBoundary,
+
     /// Special semantic element letting the printer and formatter know this is
     /// a trivia content, and it should only have a limited influence on the
     /// formatting (for instance line breaks contained within will not cause
@@ -1163,6 +1190,7 @@ impl Debug for FormatElement {
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
+            FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
             FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
@@ -1556,6 +1584,7 @@ impl FormatElement {
             FormatElement::LineSuffix(_) => false,
             FormatElement::Comment(content) => content.will_break(),
             FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
+            FormatElement::LineSuffixBoundary => false,
         }
     }
 
