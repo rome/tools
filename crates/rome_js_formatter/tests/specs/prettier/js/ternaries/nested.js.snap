@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 181
 expression: nested.js
 ---
 # Input
@@ -169,19 +170,21 @@ const paymentMessage2 = state == "success"
         ? 4 //'Expiry must be sometime in the past.'
         : 5; // 'There was an issue with the payment.  Please contact support.'
 
-const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-  {medals[0].record
-    ? (i18n("Record"))
-    : medals[0].unique
-      ? (i18n("Unique"))
-      : medals[0].type === 0
-        ? (i18n("Silver"))
-        : medals[0].type === 1
-          ? (i18n("Gold"))
-          : medals[0].type === 2
-            ? (i18n("Platinum"))
-            : (i18n("Theme"))}
-</div>;
+const foo = (
+  <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+    {medals[0].record
+      ? (i18n("Record"))
+      : medals[0].unique
+        ? (i18n("Unique"))
+        : medals[0].type === 0
+          ? (i18n("Silver"))
+          : medals[0].type === 1
+            ? (i18n("Gold"))
+            : medals[0].type === 2
+              ? (i18n("Platinum"))
+              : (i18n("Theme"))}
+  </div>
+);
 
 a
   ? literalline
@@ -195,6 +198,6 @@ a
 
 # Lines exceeding max width of 80 characters
 ```
-   61: const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+   62:   <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
 ```
 

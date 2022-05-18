@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 181
 expression: do.js
 ---
 # Input
@@ -89,11 +90,9 @@ do {
 
 function foo() {
   return (
-    (
-      <nav>
-        <Home />{do {if (loggedIn) {<LogoutButton />} else {<LoginButton />}} }
-      </nav>
-    )
+    <nav>
+      <Home />{do {if (loggedIn) {<LogoutButton />} else {<LoginButton />}} }
+    </nav>
   );
 }
 
@@ -165,7 +164,7 @@ error[SyntaxError]: expected a statement but instead found 'else'
 error[SyntaxError]: expected a statement but instead found '}
 }'
   ┌─ do.js:6:5
-  │  
+  │
 6 │ ┌     }
 7 │ │ };
   │ └─^ Expected a statement here

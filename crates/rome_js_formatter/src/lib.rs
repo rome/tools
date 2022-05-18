@@ -379,11 +379,7 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"(function(){
-	return aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName;
-});
-
-"#;
+        let src = r#"const user = renderedUser || <div><User name={this.state.user.name} age={this.state.user.age} /></div>"#;
         let syntax = SourceType::jsx();
         let tree = parse(src, 0, syntax.clone());
         let result = format_node(JsFormatOptions::default(), &tree.syntax())
@@ -396,10 +392,7 @@ mod test {
             file_name: "quick_test",
             format_options: JsFormatOptions::default(),
         });
-        assert_eq!(
-            result.as_code(),
-            r#"(a + (b * c)) > (65 + 5);
-"#
-        );
+
+        println!("{}", result.as_code());
     }
 }

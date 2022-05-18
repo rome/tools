@@ -1,4 +1,5 @@
 use crate::options::QuoteStyle;
+use crate::utils::match_ancestors;
 use crate::{
     if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, Formatter,
     JsFormatOptions,
@@ -6,9 +7,9 @@ use crate::{
 use rome_formatter::{format_elements, space_token, FormatElement};
 use rome_js_syntax::kind::JsSyntaxKind;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsxAnyChild, JsxChildList, JsxElement,
+    JsAnyExpression, JsAnyLiteralExpression, JsLanguage, JsxAnyChild, JsxChildList,
 };
-use rome_rowan::AstNode;
+use rome_rowan::SyntaxNode;
 
 pub fn jsx_space(formatter: &Formatter<JsFormatOptions>) -> FormatElement {
     let jsx_space = match formatter.options().quote_style {
@@ -98,11 +99,15 @@ pub fn contains_multiple_expressions(children: &JsxChildList) -> bool {
     false
 }
 
-pub fn should_wrap_element_in_parens(element: &JsxElement) -> bool {
-    let mut ancestors = element.syntax().ancestors();
-    // We skip one because all elements are wrapped in JS_TAG_EXRESSION
+/// Takes in a syntax node because we need to handle both JsxElement and JsxSelfClosingElement
+pub fn should_wrap_element_in_parens(element_syntax: &SyntaxNode<JsLanguage>) -> bool {
+    let mut ancestors = element_syntax.ancestors();
+    // We skip two because all elements are wrapped in JS_ELEMENT and JS_TAG_EXRESSION
+    ancestors.next();
     ancestors.next();
 
+    // If our parent is one of the following kinds, we do not need to wrap
+    // the element in parentheses.
     ancestors
         .next()
         .map(|parent| {
@@ -114,10 +119,41 @@ pub fn should_wrap_element_in_parens(element: &JsxElement) -> bool {
                     | JsSyntaxKind::JSX_EXPRESSION_CHILD
                     | JsSyntaxKind::JSX_FRAGMENT
                     | JsSyntaxKind::JS_EXPRESSION_STATEMENT
-                    | JsSyntaxKind::JS_CALL_EXPRESSION
+                    | JsSyntaxKind::JS_CALL_ARGUMENT_LIST
                     | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
                     | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
             )
         })
-        .unwrap_or(true)
+        .unwrap_or(false)
+}
+
+/// This is a very special situation where we're returning a JsxElement
+/// from an arrow function that's passed as an argument to a function,
+/// which is itself inside a JSX expression child.
+///
+/// If you're wondering why this is the only other case, it's because
+/// Prettier defines it to be that way.
+fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
+    node: &SyntaxNode<JsLanguage>,
+) -> bool {
+    // ```jsx
+    //  let bar = <div>
+    //    {foo(() => <div> the quick brown fox jumps over the lazy dog </div>)}
+    //  </div>;
+    // ```
+    match_ancestors(
+        node,
+        vec![
+            None,
+            Some(Box::new(|syntax: SyntaxNode<JsLanguage>| {
+                syntax.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+            })),
+            Some(Box::new(|syntax: SyntaxNode<JsLanguage>| {
+                syntax.kind() == JsSyntaxKind::JS_CALL_EXPRESSION
+            })),
+            Some(Box::new(|syntax: SyntaxNode<JsLanguage>| {
+                syntax.kind() == JsSyntaxKind::JSX_EXPRESSION_CHILD
+            })),
+        ],
+    )
 }

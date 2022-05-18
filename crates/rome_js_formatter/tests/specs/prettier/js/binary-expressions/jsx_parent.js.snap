@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
+assertion_line: 181
 expression: jsx_parent.js
 ---
 # Input
@@ -75,9 +75,9 @@ expression: jsx_parent.js
 </div>;
 
 <div>
-  {(!isJellyfishEnabled && diffUpdateMessageInput != null && child) || <div>
-    <span>Text</span>
-  </div>}
+  {(!isJellyfishEnabled && diffUpdateMessageInput != null && child) || (
+    <div><span>Text</span></div>
+  )}
 </div>;
 
 ```

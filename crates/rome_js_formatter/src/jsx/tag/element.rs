@@ -16,26 +16,26 @@ impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
             closing_element,
         } = node.as_fields();
 
-        let element = group_elements(formatted![
+        let element = formatted![
             formatter,
             [
                 opening_element.format(),
                 soft_block_indent(formatted![formatter, [children.format()]]?),
                 closing_element.format()
             ]
-        ]?);
+        ]?;
 
-        if should_wrap_element_in_parens(node) {
-            formatted![
+        if should_wrap_element_in_parens(node.syntax()) {
+            Ok(group_elements(formatted![
                 formatter,
                 [
                     if_group_breaks(token("(")),
                     soft_block_indent(element),
                     if_group_breaks(token(")"))
                 ]
-            ]
+            ]?))
         } else {
-            Ok(element)
+            Ok(group_elements(element))
         }
     }
 }

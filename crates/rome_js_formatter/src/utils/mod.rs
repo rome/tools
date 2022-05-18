@@ -21,7 +21,7 @@ use rome_js_syntax::{
     TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList};
+use rome_rowan::{AstNode, AstNodeList, SyntaxNode};
 use std::borrow::Cow;
 
 use crate::options::{JsFormatOptions, QuoteStyle};
@@ -424,4 +424,21 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
             | JsAnyExpression::JsImportCallExpression(_)
             | JsAnyExpression::JsCallExpression(_)
     )
+}
+
+pub fn match_ancestors(
+    node: &SyntaxNode<JsLanguage>,
+    predicates: Vec<Option<Box<dyn Fn(SyntaxNode<JsLanguage>) -> bool>>>,
+) -> bool {
+    let mut ancestors = node.ancestors();
+    for predicate in predicates {
+        if let Some(predicate) = predicate {
+            let predicate_result = ancestors.next().map(predicate).unwrap_or(false);
+            if !predicate_result {
+                return false;
+            }
+        }
+    }
+
+    true
 }
