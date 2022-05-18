@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: variable_declarator.js
-
 ---
 # Input
 ```js
@@ -105,19 +103,23 @@ let obj8 = [
   "val",
 ];
 
-let obj9 = `val`; // Comment
+let obj9 = // Comment
+`val`;
 
-let obj10 = `
+let obj10 = // Comment
+`
 val
 val
-`; // Comment
+`;
 
-let obj11 = tag`val`; // Comment
+let obj11 = tag // Comment
+`val`;
 
-let obj12 = tag`
+let obj12 = tag // Comment
+`
 val
 val
-`; // Comment
+`;
 
 let foo1 = "val"; // Comment
 

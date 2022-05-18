@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
 use crate::FormatNodeFields;
+use rome_js_syntax::JsDoWhileStatement;
 use rome_js_syntax::JsDoWhileStatementFields;
-use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
 
 impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement> {
     fn format_fields(
@@ -39,21 +39,6 @@ impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement>
             ]
         ]?;
 
-        let body = body?;
-        if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-            Ok(hard_group_elements(formatted![
-                formatter,
-                [head, body.format(), tail,]
-            ]?))
-        } else {
-            formatted![
-                formatter,
-                [
-                    hard_group_elements(head),
-                    body.format(),
-                    hard_group_elements(tail),
-                ]
-            ]
-        }
+        formatted![formatter, [head, body.format(), tail,]]
     }
 }

@@ -11,7 +11,9 @@ impl FormatRule<TsTemplateElementList> for FormatTsTemplateElementList {
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         Ok(concat_elements(
-            formatter.format_all(node.iter().formatted())?,
+            formatter
+                .format_all(node.iter().formatted())?
+                .map(group_elements),
         ))
     }
 }

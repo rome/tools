@@ -35,7 +35,10 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
                     empty_element()
                 };
 
-                formatted![formatter, [formatted_element, separator]]
+                Ok(format_elements![
+                    group_elements(formatted_element),
+                    separator
+                ])
             })
             .collect::<FormatResult<Vec<_>>>()?;
 

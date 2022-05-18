@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: union-parens.ts
 ---
 # Input
@@ -202,7 +201,7 @@ let a11: /*1*/ ( /*2*/ C);
 
 let aa1: /*1*/ /*2*/ C | D;
 let aa2: /*1*/ /*2*/ C | /*3*/ D;
-let aa3: /*1*/ /*2*/ C | /*3*/ D; /*4*/
+let aa3: /*1*/ /*2*/ C | /*3*/ D /*4*/ ;
 
 type A1 = C;
 type A2 = C;

@@ -25,7 +25,7 @@ impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDecl
             )
             .block_indent()
             .finish()?;
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 interface_token.format(),
@@ -38,6 +38,6 @@ impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDecl
                     .with_or_empty(|extends| formatted![formatter, [extends, space_token()]]),
                 members
             ]
-        ]?))
+        ]
     }
 }

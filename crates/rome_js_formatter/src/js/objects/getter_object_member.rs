@@ -18,7 +18,7 @@ impl FormatNodeFields<JsGetterObjectMember> for FormatNodeRule<JsGetterObjectMem
             body,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 get_token.format(),
@@ -30,6 +30,6 @@ impl FormatNodeFields<JsGetterObjectMember> for FormatNodeRule<JsGetterObjectMem
                 space_token(),
                 body.format()
             ]
-        ]?))
+        ]
     }
 }

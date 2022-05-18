@@ -52,7 +52,7 @@ export default (store) => {
         actionWith({
           type: failureType,
           error: error.message || "Something bad happened",
-        }),
+        },),
       ),
   );
 };
@@ -117,7 +117,7 @@ it(
           created: "11/01/2017 13:37",
         },
       ],
-    });
+    },);
   },
 );
 

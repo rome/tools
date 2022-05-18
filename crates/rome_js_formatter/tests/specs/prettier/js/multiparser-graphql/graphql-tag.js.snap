@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: graphql-tag.js
-
 ---
 # Input
 ```js
@@ -307,7 +305,7 @@ ${USER_DETAILS_FRAGMENT}
    # and has a blank line in the middle
 
     ${FRIENDS_FRAGMENT}
-  ${generateFragment({ totally: "a good idea" })}
+  ${generateFragment({ totally: "a good idea" },)}
 
 ${fragment}#comment
 

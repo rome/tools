@@ -14,7 +14,7 @@ impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeEleme
         let last_index = node.len().saturating_sub(1);
 
         for (index, item) in node.elements().enumerate() {
-            let ty = item.node()?;
+            let ty = formatted![formatter, [item.node().format()]]?;
             let separator = item.trailing_separator()?;
 
             let separator = match separator {
@@ -40,7 +40,7 @@ impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeEleme
                 }
             };
 
-            elements.push(formatted![formatter, [ty.format(), separator]]?)
+            elements.push(format_elements![group_elements(ty), separator]);
         }
 
         Ok(concat_elements(elements))

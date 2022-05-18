@@ -21,7 +21,7 @@ impl FormatRule<JsAnyClass> for FormatJsAnyClass {
             formatted![formatter, [space_token(), implements_clause]]
         });
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 abstract_token
@@ -51,6 +51,6 @@ impl FormatRule<JsAnyClass> for FormatJsAnyClass {
                     .block_indent()
                     .finish()
             ]
-        ]?))
+        ]
     }
 }

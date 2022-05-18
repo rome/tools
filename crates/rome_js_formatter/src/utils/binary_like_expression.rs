@@ -447,7 +447,7 @@ impl FlattenItems {
 
         if can_hard_group {
             // we bail early if group doesn't need to be broken. We don't need to do further checks
-            return Ok(hard_group_elements(join_elements(space_token(), groups)));
+            return Ok(join_elements(space_token(), groups));
         }
 
         let formatted = if is_inside_parenthesis(current_node) {
@@ -469,10 +469,7 @@ impl FlattenItems {
             let head = groups.next().unwrap();
             let rest = join_elements(soft_line_break_or_space(), groups);
 
-            format_elements![
-                hard_group_elements(head),
-                group_elements(soft_line_indent_or_space(rest))
-            ]
+            format_elements![head, group_elements(soft_line_indent_or_space(rest))]
         };
 
         Ok(formatted)

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: export.js
-
 ---
 # Input
 ```js
@@ -35,7 +33,7 @@ export {
 ```js
 export {}; //comment
 
-export {}; /* comment */
+export /* comment */ {};
 
 const foo = "";
 export {

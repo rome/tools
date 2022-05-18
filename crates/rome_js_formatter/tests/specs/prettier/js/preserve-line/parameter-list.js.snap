@@ -166,7 +166,7 @@ class Foo {
 
 function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
 
-call((a, b) => {});
+call((a, b) => {},);
 
 call((one, two, three, four, five, six, seven, eight, nine, ten, eleven) => {});
 

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: comments.js
 ---
 # Input
@@ -113,14 +112,12 @@ switch (x) {
 }
 
 switch (x) {
-  default:
-    /* comment */
+  default: /* comment */
     break;
 }
 
 switch (x) {
-  default: {
-    /* comment */
+  default: /* comment */ {
     break;
   }
 }
@@ -133,8 +130,7 @@ switch (x) {
 }
 
 switch (x) {
-  default: {
-    /* comment */
+  default: /* comment */ {
     break;
   }
 }

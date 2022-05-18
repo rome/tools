@@ -56,14 +56,12 @@ Seq(typeDef.interface.groups).forEach(
 const promiseFromCallback = (fn) =>
 	new Promise(
 		(resolve, reject) =>
-			fn(
-				(err, result) => {
-					if (err) {
-						return reject(err);
-					}
-					return resolve(result);
-				},
-			),
+			fn((err, result) => {
+				if (err) {
+					return reject(err);
+				}
+				return resolve(result);
+			},),
 	);
 
 runtimeAgent.getProperties(

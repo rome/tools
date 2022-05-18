@@ -40,7 +40,7 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
             }
         }
 
-        Ok(hard_group_elements(concat_elements(if_chain)))
+        Ok(concat_elements(if_chain))
     }
 }
 
@@ -102,12 +102,12 @@ fn into_block(
         ];
     }
 
-    Ok(group_elements(formatted![
+    formatted![
         formatter,
         [
             token("{"),
             block_indent(formatted![formatter, [stmt.format()]]?),
             token("}"),
         ]
-    ]?))
+    ]
 }

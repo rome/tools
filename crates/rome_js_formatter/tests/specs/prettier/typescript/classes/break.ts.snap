@@ -79,7 +79,7 @@ class InMemoryAppender extends log4javascript.Appender
     ICachedLogMessageProvider
 {}
 
-class Foo extends Immutable.Record({ ipaddress: "" }) {
+class Foo extends Immutable.Record({ ipaddress: "" },) {
   ipaddress: string;
 }
 

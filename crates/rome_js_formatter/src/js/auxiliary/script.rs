@@ -23,7 +23,7 @@ impl FormatNodeFields<JsScript> for FormatNodeRule<JsScript> {
                 format_interpreter(interpreter_token, formatter)?,
                 directives.format(),
                 formatter.format_list(&statements),
-                eof_token.format(),
+                formatter.format_replaced(&eof_token?, empty_element()),
                 hard_line_break()
             ]
         ]
