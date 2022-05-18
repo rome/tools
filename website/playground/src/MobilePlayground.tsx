@@ -103,7 +103,7 @@ export function MobilePlayground(
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
 				</TabPanel>
 				<TabPanel>
-					<ReactJson src={prettierOutput.ir} />
+					<pre className="h-screen overflow-y-scroll">{prettierOutput.ir}</pre>
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
