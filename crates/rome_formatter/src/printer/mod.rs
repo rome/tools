@@ -242,6 +242,10 @@ impl<'a> Printer<'a> {
             }
             FormatElement::ExpandParent => {
                 // No-op, only has an effect on `fits`
+                debug_assert!(
+                    !args.mode.is_flat(),
+                    "Fits should always return false for `ExpandParent`"
+                );
             }
         }
     }
