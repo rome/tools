@@ -16,13 +16,16 @@ impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
             r_curly_token,
         } = node.as_fields();
 
-        formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            formatted![
-                formatter,
-                [directives.format(), formatter.format_list(&statements),]
-            ]?,
-            &r_curly_token?,
-        )
+        formatter
+            .delimited(
+                &l_curly_token?,
+                formatted![
+                    formatter,
+                    [directives.format(), formatter.format_list(&statements),]
+                ]?,
+                &r_curly_token?,
+            )
+            .block_indent()
+            .finish()
     }
 }

@@ -28,11 +28,14 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
             ]?));
         }
 
-        formatter.format_delimited_soft_block_indent(
-            &l_paren_token?,
-            formatted![formatter, [args.format()]]?,
-            &r_paren_token?,
-        )
+        formatter
+            .delimited(
+                &l_paren_token?,
+                formatted![formatter, [args.format()]]?,
+                &r_paren_token?,
+            )
+            .soft_block_indent()
+            .finish()
     }
 }
 

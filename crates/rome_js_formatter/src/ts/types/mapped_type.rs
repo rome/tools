@@ -23,36 +23,40 @@ impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
             r_curly_token,
         } = node.as_fields();
 
-        formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            format_with_semicolon(
-                formatter,
-                formatted![
+        formatter
+            .delimited(
+                &l_curly_token?,
+                format_with_semicolon(
                     formatter,
-                    [
-                        readonly_modifier
-                            .format()
-                            .with_or_empty(|readonly| formatted![
+                    formatted![
+                        formatter,
+                        [
+                            readonly_modifier
+                                .format()
+                                .with_or_empty(|readonly| formatted![
+                                    formatter,
+                                    [readonly, space_token()]
+                                ]),
+                            l_brack_token.format(),
+                            property_name.format(),
+                            space_token(),
+                            in_token.format(),
+                            space_token(),
+                            keys_type.format(),
+                            as_clause.format().with_or_empty(|clause| formatted![
                                 formatter,
-                                [readonly, space_token()]
+                                [space_token(), clause]
                             ]),
-                        l_brack_token.format(),
-                        property_name.format(),
-                        space_token(),
-                        in_token.format(),
-                        space_token(),
-                        keys_type.format(),
-                        as_clause
-                            .format()
-                            .with_or_empty(|clause| formatted![formatter, [space_token(), clause]]),
-                        r_brack_token.format(),
-                        optional_modifier.format(),
-                        mapped_type.format(),
-                    ]
-                ]?,
-                semicolon_token,
-            )?,
-            &r_curly_token?,
-        )
+                            r_brack_token.format(),
+                            optional_modifier.format(),
+                            mapped_type.format(),
+                        ]
+                    ]?,
+                    semicolon_token,
+                )?,
+                &r_curly_token?,
+            )
+            .block_indent()
+            .finish()
     }
 }

@@ -1,4 +1,4 @@
-use crate::formatter::TrailingSeparator;
+use crate::formatter::{FormatSeparatedOptions, TrailingSeparator};
 use crate::generated::FormatJsObjectAssignmentPatternPropertyList;
 use crate::prelude::*;
 use rome_js_syntax::{JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList};
@@ -29,7 +29,11 @@ impl FormatRule<JsObjectAssignmentPatternPropertyList>
 
         Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(node, || token(","), trailing_separator)?,
+            formatter.format_separated_with_options(
+                node,
+                || token(","),
+                FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),
+            )?,
         ))
     }
 }

@@ -16,11 +16,14 @@ impl FormatNodeFields<JsImportAssertion> for FormatNodeRule<JsImportAssertion> {
             r_curly_token,
         } = node.as_fields();
 
-        let result = formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            formatted![formatter, [assertions.format()]]?,
-            &r_curly_token?,
-        )?;
+        let result = formatter
+            .delimited(
+                &l_curly_token?,
+                formatted![formatter, [assertions.format()]]?,
+                &r_curly_token?,
+            )
+            .soft_block_spaces()
+            .finish()?;
 
         formatted![formatter, [assert_token.format(), space_token(), result]]
     }

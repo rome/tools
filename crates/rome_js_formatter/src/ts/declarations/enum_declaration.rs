@@ -1,4 +1,3 @@
-use crate::formatter::TrailingSeparator;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
@@ -17,18 +16,17 @@ impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
             r_curly_token,
         } = node.as_fields();
 
-        let list = formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            join_elements(
-                soft_line_break_or_space(),
-                formatter.format_separated(
-                    &members,
-                    || token(","),
-                    TrailingSeparator::default(),
-                )?,
-            ),
-            &r_curly_token?,
-        )?;
+        let list = formatter
+            .delimited(
+                &l_curly_token?,
+                join_elements(
+                    soft_line_break_or_space(),
+                    formatter.format_separated(&members, || token(","))?,
+                ),
+                &r_curly_token?,
+            )
+            .soft_block_spaces()
+            .finish()?;
 
         formatted![
             formatter,

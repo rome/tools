@@ -21,10 +21,13 @@
 //! * [format_elements]: Allows concatenating multiple [FormatElement]s
 //! * [formatted]: Concatenates a sequence of [FormatElement]s and/or objects implementing [Format].
 
+extern crate core;
+
 mod builders;
 pub mod format_element;
 mod format_extensions;
 pub mod formatter;
+pub mod group_id;
 pub mod intersperse;
 pub mod macros;
 pub mod prelude;
@@ -43,6 +46,7 @@ pub use format_element::{
     soft_block_indent, soft_line_break, soft_line_break_or_space, soft_line_indent_or_space,
     space_token, token, FormatElement, Token, Verbatim, LINE_TERMINATORS,
 };
+pub use group_id::GroupId;
 use rome_rowan::{
     Language, SyntaxError, SyntaxNode, SyntaxResult, TextRange, TextSize, TokenAtOffset,
 };

@@ -37,16 +37,19 @@ impl FormatRule<JsAnyClass> for FormatJsAnyClass {
                 ]),
                 implements_clause,
                 space_token(),
-                formatter.format_delimited_block_indent(
-                    &node.l_curly_token()?,
-                    join_elements_hard_line(
-                        node.members()
-                            .into_iter()
-                            .map(|node| node.syntax().clone())
-                            .zip(formatter.format_all(node.members().iter().formatted())?)
-                    ),
-                    &node.r_curly_token()?
-                )?
+                formatter
+                    .delimited(
+                        &node.l_curly_token()?,
+                        join_elements_hard_line(
+                            node.members()
+                                .into_iter()
+                                .map(|node| node.syntax().clone())
+                                .zip(formatter.format_all(node.members().iter().formatted())?)
+                        ),
+                        &node.r_curly_token()?
+                    )
+                    .block_indent()
+                    .finish()
             ]
         ]?))
     }

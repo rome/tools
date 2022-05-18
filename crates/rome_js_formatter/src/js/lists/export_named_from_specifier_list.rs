@@ -1,4 +1,3 @@
-use crate::formatter::TrailingSeparator;
 use crate::generated::FormatJsExportNamedFromSpecifierList;
 use crate::prelude::*;
 use rome_js_syntax::JsExportNamedFromSpecifierList;
@@ -12,7 +11,7 @@ impl FormatRule<JsExportNamedFromSpecifierList> for FormatJsExportNamedFromSpeci
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(node, || token(","), TrailingSeparator::default())?,
+            formatter.format_separated(node, || token(","))?,
         ))
     }
 }

@@ -68,11 +68,14 @@ fn format_if_element(
             ]),
             if_token.format(),
             space_token(),
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                formatted![formatter, [test.format()]]?,
-                &r_paren_token?,
-            )?,
+            formatter
+                .delimited(
+                    &l_paren_token?,
+                    formatted![formatter, [test.format()]]?,
+                    &r_paren_token?,
+                )
+                .soft_block_indent()
+                .finish()?,
             space_token(),
             into_block(formatter, consequent?)?,
         ]
