@@ -99,9 +99,12 @@ pub fn contains_multiple_expressions(children: &JsxChildList) -> bool {
 }
 
 pub fn should_wrap_element_in_parens(element: &JsxElement) -> bool {
-    element
-        .syntax()
-        .parent()
+    let mut ancestors = element.syntax().ancestors();
+    // We skip one because all elements are wrapped in JS_TAG_EXRESSION
+    ancestors.next();
+
+    ancestors
+        .next()
         .map(|parent| {
             !matches!(
                 parent.kind(),
@@ -113,6 +116,7 @@ pub fn should_wrap_element_in_parens(element: &JsxElement) -> bool {
                     | JsSyntaxKind::JS_EXPRESSION_STATEMENT
                     | JsSyntaxKind::JS_CALL_EXPRESSION
                     | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
+                    | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
             )
         })
         .unwrap_or(true)
