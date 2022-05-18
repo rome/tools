@@ -72,7 +72,7 @@ export function usePlaygroundState(): [
 				code,
 			)}`;
 
-			window.history.pushState({ path: url }, "", url);
+			window.history.replaceState({ path: url }, "", url);
 		},
 		[playgroundState],
 	);
