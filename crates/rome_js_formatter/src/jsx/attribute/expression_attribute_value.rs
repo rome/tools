@@ -64,6 +64,7 @@ impl FormatNodeFields<JsxExpressionAttributeValue> for FormatNodeRule<JsxExpress
             [
                 l_curly_token.format(),
                 formatted_expression,
+                line_suffix_boundary(),
                 r_curly_token.format(),
             ]
         ]?))

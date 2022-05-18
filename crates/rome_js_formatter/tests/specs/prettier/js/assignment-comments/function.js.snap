@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: function.js
-
 ---
 # Input
 ```js
@@ -89,15 +87,15 @@ f3 =
     a = b, //comment
   ) => {};
 
-f4 = () => {}; // Comment
+f4 = // Comment
+() => {};
 
 f5 =
   // Comment
 
   () => {};
 
-f6 =
-  /* comment */
+f6 = /* comment */
   // Comment
 
   () => {};

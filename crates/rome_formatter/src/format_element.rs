@@ -241,6 +241,29 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
     FormatElement::LineSuffix(Box::new(element.into()))
 }
 
+/// Inserts a boundary for line suffixes that forces to print all pending line suffixes. Helpful
+/// if a line sufix shouldn't pass a certain point.
+///
+/// ## Examples
+///
+/// Forces the line suffix "c" to be printed before the token `d`.
+/// ```
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
+///
+/// let elements = format_elements![token("a"), line_suffix(token("c")), token("b"), line_suffix_boundary(), token("d")];
+///
+/// assert_eq!(
+///     "abc\nd",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
+/// ```
+pub const fn line_suffix_boundary() -> FormatElement {
+    FormatElement::LineSuffixBoundary
+}
+
 /// Mark a [FormatElement] as being a piece of trivia
 ///
 /// This does not directly influence how this content will be printed, but some
@@ -712,6 +735,41 @@ pub fn group_elements_with_options(
     format_elements![leading, group, trailing]
 }
 
+/// IR element that forces the parent group to print in expanded mode.
+///
+/// Has no effect if used outside of a group or element that introduce implicit groups (fill element).
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
+///
+/// let elements = group_elements(format_elements![
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'Good morning! How are you today?',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         expand_parent(), // Forces the parent to expand
+///         soft_line_break_or_space(),
+///         token("3"),
+///     ]),
+///     token("]"),
+/// ]);
+///
+/// assert_eq!(
+///     "[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]",
+///     Formatted::new(elements, PrinterOptions::default()).print().as_code()
+/// );
+/// ```
+///
+/// ## Prettier
+/// Equivalent to Prettier's `break_parent` IR element
+pub const fn expand_parent() -> FormatElement {
+    FormatElement::ExpandParent
+}
+
 /// Creates a group that forces all elements inside it to be printed on a
 /// single line. This behavior can in turn be escaped by introducing an inner
 /// `Group` element that will resume the normal breaking behavior of the printer.
@@ -1060,6 +1118,9 @@ pub enum FormatElement {
     /// See [crate::group_elements] for documentation and examples.
     Group(Group),
 
+    /// Forces the parent group to print in expanded mode.
+    ExpandParent,
+
     /// See [crate::hard_group_elements] for documentation and examples.
     HardGroup(Group),
 
@@ -1078,6 +1139,10 @@ pub enum FormatElement {
 
     /// Delay the printing of its content until the next line break
     LineSuffix(Content),
+
+    /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
+    /// line suffixes, potentially by inserting a hard line break.
+    LineSuffixBoundary,
 
     /// Special semantic element letting the printer and formatter know this is
     /// a trivia content, and it should only have a limited influence on the
@@ -1163,11 +1228,13 @@ impl Debug for FormatElement {
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
+            FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
             FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
                 .field(&verbatim.element)
                 .finish(),
+            FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
         }
     }
 }
@@ -1556,6 +1623,8 @@ impl FormatElement {
             FormatElement::LineSuffix(_) => false,
             FormatElement::Comment(content) => content.will_break(),
             FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
+            FormatElement::LineSuffixBoundary => false,
+            FormatElement::ExpandParent => true,
         }
     }
 

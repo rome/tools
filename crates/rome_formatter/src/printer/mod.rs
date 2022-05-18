@@ -6,7 +6,7 @@ use crate::format_element::{
     ConditionalGroupContent, Group, LineMode, List, PrintMode, VerbatimKind,
 };
 use crate::intersperse::Intersperse;
-use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
+use crate::{hard_line_break, FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
 use crate::prelude::Line;
 use rome_rowan::TextSize;
@@ -221,6 +221,11 @@ impl<'a> Printer<'a> {
                     .line_suffixes
                     .push(PrintElementCall::new(&**suffix, args));
             }
+            FormatElement::LineSuffixBoundary => {
+                const HARD_BREAK: &FormatElement = &hard_line_break();
+                self.queue_line_suffixes(HARD_BREAK, args, queue);
+            }
+
             FormatElement::Comment(content) => {
                 queue.enqueue(PrintElementCall::new(content.as_ref(), args));
             }
@@ -234,6 +239,13 @@ impl<'a> Printer<'a> {
                 }
 
                 queue.enqueue(PrintElementCall::new(&verbatim.element, args));
+            }
+            FormatElement::ExpandParent => {
+                // No-op, only has an effect on `fits`
+                debug_assert!(
+                    !args.mode.is_flat(),
+                    "Fits should always return false for `ExpandParent`"
+                );
             }
         }
     }
@@ -597,6 +609,7 @@ fn fits_on_line<'a>(
         pending_indent: printer.state.pending_indent,
         pending_space: printer.state.pending_space,
         line_width: printer.state.line_width,
+        has_line_suffix: !printer.state.line_suffixes.is_empty(),
     };
 
     let result = loop {
@@ -738,9 +751,11 @@ fn fits_element_on_line<'a, 'rest>(
         }
 
         FormatElement::LineSuffix(_) => {
-            // The current behavior is to return `false` for all line suffixes if trying to print
-            // something in "flat" mode.
-            if args.mode.is_flat() {
+            state.has_line_suffix = true;
+        }
+
+        FormatElement::LineSuffixBoundary => {
+            if state.has_line_suffix {
                 return Fits::No;
             }
         }
@@ -749,6 +764,11 @@ fn fits_element_on_line<'a, 'rest>(
 
         FormatElement::Verbatim(verbatim) => {
             queue.enqueue(PrintElementCall::new(&verbatim.element, args))
+        }
+        FormatElement::ExpandParent => {
+            if args.mode.is_flat() || args.hard_group {
+                return Fits::No;
+            }
         }
     }
 
@@ -779,6 +799,7 @@ impl From<bool> for Fits {
 struct MeasureState {
     pending_indent: u16,
     pending_space: bool,
+    has_line_suffix: bool,
     line_width: usize,
 }
 
