@@ -484,10 +484,10 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"'\a'"#;
-        let syntax = SourceType::tsx();
-        let tree = parse(src, 0, syntax);
-        let result = format_node(JsFormatContext::default(), &tree.syntax())
+        let src = r#"const user = renderedUser || <div><User name={this.state.user.name} age={this.state.user.age} /></div>"#;
+        let syntax = SourceType::jsx();
+        let tree = parse(src, 0, syntax.clone());
+        let result = format_node(JsFormatOptions::default(), &tree.syntax())
             .unwrap()
             .print();
         check_reformat(CheckReformatParams {
@@ -497,10 +497,5 @@ mod test {
             file_name: "quick_test",
             format_context: JsFormatContext::default(),
         });
-        assert_eq!(
-            result.as_code(),
-            r#""\a";
-"#
-        );
     }
 }

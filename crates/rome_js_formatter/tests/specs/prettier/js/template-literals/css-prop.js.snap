@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 181
 expression: css-prop.js
 ---
 # Input
@@ -50,9 +51,8 @@ function SomeComponent(props) {
       font-size: 20px;
     }
   `}>
-      This will be blue until hovered.<div className="some-class">
-        This font size will be 20px
-      </div>
+      This will be blue until hovered.
+      <div className="some-class">This font size will be 20px</div>
     </div>
   );
 }
