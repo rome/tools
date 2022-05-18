@@ -15,8 +15,8 @@ hashbrown = { version = "0.11.2", features = [
 text-size = "1.1.0"
 memoffset = "0.6.5"
 countme = "3.0.0"
-
 serde_crate = { package = "serde", version = "1.0.133", optional = true, default-features = false }
+extension-trait = "1.0.1"
 
 [dev-dependencies]
 quickcheck = "1.0.3"

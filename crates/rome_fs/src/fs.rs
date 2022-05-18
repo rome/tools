@@ -27,6 +27,8 @@ pub trait FileSystem: Sync + RefUnwindSafe {
 }
 
 pub trait File {
+    fn read_string(&mut self) -> io::Result<String>;
+
     /// Read the content of the file into `buffer`
     fn read_to_string(&mut self, buffer: &mut String) -> io::Result<()>;
 

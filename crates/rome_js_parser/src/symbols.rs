@@ -1,44 +1,53 @@
 use rome_js_syntax::{
     JsAnyBinding, JsAnyBindingPattern, JsComputedMemberExpression, JsIdentifierBinding, JsLanguage,
     JsLiteralMemberName, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
-    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, TextRange,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, TextRange, TextSize,
     TsGlobalDeclaration, TsThisParameter, WalkEvent,
 };
-use rome_rowan::{syntax::Preorder, AstNodeFromSyntaxNode};
+use rome_rowan::{syntax::Preorder, AstNode, OptionAstNodeParent, SyntaxNodeCast};
 use std::collections::{HashMap, VecDeque};
 
 #[derive(Debug)]
-pub enum Symbol {
-    Declaration {
+pub enum ScopeResolutionEvent {
+    DeclarationFound {
         name: String,
         range: TextRange,
         hoists: bool,
     },
-    Reference {
+    ReferenceFound {
         name: String,
         range: TextRange,
         declared_at: Option<TextRange>,
     },
-    Link {
+    ReferenceMatched {
         range: TextRange,
         declared_at: TextRange,
     },
+    ScopeStarted {
+        start_at: TextSize,
+        hoist: bool,
+    },
+    ScopeEnded {
+        started_at: TextSize,
+        end_at: TextSize,
+    },
 }
 
-impl Symbol {
+impl ScopeResolutionEvent {
     pub fn name(&self) -> &str {
         match self {
-            Symbol::Declaration { name, .. } => name,
-            Symbol::Reference { name, .. } => name,
-            Symbol::Link { .. } => todo!(),
+            ScopeResolutionEvent::DeclarationFound { name, .. } => name,
+            ScopeResolutionEvent::ReferenceFound { name, .. } => name,
+            _ => todo!(),
         }
     }
 
     pub fn range(&self) -> TextRange {
         match self {
-            Symbol::Declaration { range, .. } => *range,
-            Symbol::Reference { range, .. } => *range,
-            Symbol::Link { range, .. } => *range,
+            ScopeResolutionEvent::DeclarationFound { range, .. } => *range,
+            ScopeResolutionEvent::ReferenceFound { range, .. } => *range,
+            ScopeResolutionEvent::ReferenceMatched { range, .. } => *range,
+            _ => todo!(),
         }
     }
 }
@@ -50,28 +59,29 @@ pub struct SymbolIterator {
     hoisting_scope_idx: Vec<usize>,
     items_entered_into_scope: Vec<Vec<String>>,
     items_shadowed: Vec<Vec<(String, TextRange)>>,
-    stash: VecDeque<Symbol>,
+    scope_start: Vec<TextSize>,
+    stash: VecDeque<ScopeResolutionEvent>,
 }
 
-fn is_identifier_declared_with_var(node: JsSyntaxNode) -> bool {
-    use rome_rowan::AstNodeParent;
-    node.cast::<JsIdentifierBinding>()
+fn is_identifier_declared_with_var(binding: JsSyntaxNode) -> bool {
+    binding
+        .cast::<JsIdentifierBinding>()
         .parent::<JsVariableDeclarator>()
         .parent::<JsVariableDeclaratorList>()
         .parent::<JsVariableDeclaration>()
-        .map(|x| x.is_var())
+        .map(|declaration| declaration.is_var())
         .unwrap_or(false)
 }
 
-fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
+fn extract_symbol(node: JsSyntaxNode) -> Option<ScopeResolutionEvent> {
     match node.kind() {
-        JsSyntaxKind::JS_IDENTIFIER_BINDING => Some(Symbol::Declaration {
+        JsSyntaxKind::JS_IDENTIFIER_BINDING => Some(ScopeResolutionEvent::DeclarationFound {
             name: node.text_trimmed().to_string(),
             range: node.text_range(),
             hoists: is_identifier_declared_with_var(node),
         }),
         JsSyntaxKind::TS_IDENTIFIER_BINDING | JsSyntaxKind::JS_LITERAL_EXPORT_NAME => {
-            Some(Symbol::Declaration {
+            Some(ScopeResolutionEvent::DeclarationFound {
                 name: node.text_trimmed().to_string(),
                 range: node.text_range(),
                 hoists: false,
@@ -80,7 +90,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
         JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT
         | JsSyntaxKind::JS_SUPER_EXPRESSION
         | JsSyntaxKind::JS_THIS_EXPRESSION
-        | JsSyntaxKind::JS_MODULE_SOURCE => Some(Symbol::Reference {
+        | JsSyntaxKind::JS_MODULE_SOURCE => Some(ScopeResolutionEvent::ReferenceFound {
             name: node.text_trimmed().to_string(),
             range: node.text_range(),
             declared_at: None,
@@ -96,7 +106,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
 
             match value_token.text_trimmed() {
                 "const" | "undefined" => None,
-                text_trimmed => Some(Symbol::Reference {
+                text_trimmed => Some(ScopeResolutionEvent::ReferenceFound {
                     name: text_trimmed.to_string(),
                     range: value_token.text_range(),
                     declared_at: None,
@@ -119,10 +129,12 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
                 .ok()?;
             let is_string_literal = matches!(value.kind(), JsSyntaxKind::JS_STRING_LITERAL);
 
-            (!is_inside_constructor && !is_string_literal).then(|| Symbol::Declaration {
-                name: value.text_trimmed().to_string(),
-                range: value.text_range(),
-                hoists: false,
+            (!is_inside_constructor && !is_string_literal).then(|| {
+                ScopeResolutionEvent::DeclarationFound {
+                    name: value.text_trimmed().to_string(),
+                    range: value.text_range(),
+                    hoists: false,
+                }
             })
         }
         //
@@ -138,7 +150,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
                     | JsSyntaxKind::TS_QUALIFIED_MODULE_NAME
                     | JsSyntaxKind::TS_QUALIFIED_NAME
             );
-            parent_ok.then(|| Symbol::Reference {
+            parent_ok.then(|| ScopeResolutionEvent::ReferenceFound {
                 name: node.text_trimmed().to_string(),
                 range: node.text_range(),
                 declared_at: None,
@@ -150,7 +162,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
                 .this_token
                 .ok()?;
 
-            Some(Symbol::Declaration {
+            Some(ScopeResolutionEvent::DeclarationFound {
                 name: this_token.text_trimmed().to_string(),
                 range: this_token.text_range(),
                 hoists: false,
@@ -162,7 +174,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
                 .global_token
                 .ok()?;
 
-            Some(Symbol::Declaration {
+            Some(ScopeResolutionEvent::DeclarationFound {
                 name: global_token.text_trimmed().to_string(),
                 range: global_token.text_range(),
                 hoists: false,
@@ -179,7 +191,7 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
                 .value_token
                 .ok()?;
 
-            Some(Symbol::Reference {
+            Some(ScopeResolutionEvent::ReferenceFound {
                 name: value_token.text_trimmed().to_string(),
                 range: value_token.text_range(),
                 declared_at: None,
@@ -193,10 +205,12 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
                 matches!(great_parent.kind(), JsSyntaxKind::TS_TYPE_PARAMETER_LIST);
             let is_in_mapped_type = matches!(parent.kind(), JsSyntaxKind::TS_MAPPED_TYPE);
 
-            (is_in_type_parameter_list || is_in_mapped_type).then(|| Symbol::Declaration {
-                name: node.text_trimmed().to_string(),
-                range: node.text_range(),
-                hoists: false,
+            (is_in_type_parameter_list || is_in_mapped_type).then(|| {
+                ScopeResolutionEvent::DeclarationFound {
+                    name: node.text_trimmed().to_string(),
+                    range: node.text_range(),
+                    hoists: false,
+                }
             })
         }
         _ => None,
@@ -204,9 +218,15 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
 }
 
 impl SymbolIterator {
-    fn push_new_scope(&mut self, also_hoist_scope: bool) {
+    fn push_new_scope(&mut self, start_at: TextSize, also_hoist_scope: bool) {
+        self.stash.push_back(ScopeResolutionEvent::ScopeStarted {
+            start_at,
+            hoist: true,
+        });
+
         self.items_entered_into_scope.push(vec![]);
         self.items_shadowed.push(vec![]);
+        self.scope_start.push(start_at);
 
         if also_hoist_scope {
             self.hoisting_scope.push(HashMap::new());
@@ -215,7 +235,7 @@ impl SymbolIterator {
         }
     }
 
-    fn pop_scope(&mut self, also_hoist_scope: bool) {
+    fn pop_scope(&mut self, end_at: TextSize, also_hoist_scope: bool) {
         if let Some(symbols) = self.items_entered_into_scope.pop() {
             for symbol in symbols {
                 self.current_scope.remove(&symbol);
@@ -238,6 +258,11 @@ impl SymbolIterator {
                     pending_references.append(&mut v);
                 }
             }
+        }
+
+        if let Some(started_at) = self.scope_start.pop() {
+            self.stash
+                .push_back(ScopeResolutionEvent::ScopeEnded { end_at, started_at });
         }
     }
 
@@ -271,10 +296,11 @@ impl SymbolIterator {
             let txt = token.text_trimmed();
             if let Some(being_solved) = hoisting_scope.remove(txt) {
                 for range in being_solved {
-                    self.stash.push_back(Symbol::Link {
-                        range,
-                        declared_at: token.text_range(),
-                    });
+                    self.stash
+                        .push_back(ScopeResolutionEvent::ReferenceMatched {
+                            range,
+                            declared_at: token.text_range(),
+                        });
                 }
             }
         }
@@ -301,14 +327,18 @@ impl SymbolIterator {
             | JsSyntaxKind::JS_GETTER_CLASS_MEMBER
             | JsSyntaxKind::JS_SETTER_CLASS_MEMBER
             | JsSyntaxKind::JS_CATCH_CLAUSE
-            | JsSyntaxKind::JS_FINALLY_CLAUSE => self.push_new_scope(false),
+            | JsSyntaxKind::JS_FINALLY_CLAUSE => {
+                self.push_new_scope(node.text_range().start(), false)
+            }
             JsSyntaxKind::JS_FUNCTION_DECLARATION => {
-                let declaration =
-                    unsafe { rome_js_syntax::JsFunctionDeclaration::new_unchecked(node.clone()) };
-                if let Ok(id) = declaration.id() {
-                    self.solve_pending_with_binding(&id);
-                }
-                self.push_new_scope(true);
+                // let declaration =
+                //     unsafe { rome_js_syntax::JsFunctionDeclaration::new_unchecked(node.clone()) };
+
+                // if let Ok(id) = declaration.id() {
+                //     self.solve_pending_with_binding(&id);
+                // }
+
+                // self.push_new_scope(node.text_range().clone(), true);
             }
             JsSyntaxKind::JS_VARIABLE_DECLARATION => {
                 let declaration =
@@ -327,9 +357,9 @@ impl SymbolIterator {
 
     fn leave_node(&mut self, node: &JsSyntaxNode) {
         match node.kind() {
-            JsSyntaxKind::JS_FUNCTION_DECLARATION => {
-                self.pop_scope(true);
-            }
+            // JsSyntaxKind::JS_FUNCTION_DECLARATION => {
+            //     self.pop_scope(node.text_range(), true);
+            // }
             JsSyntaxKind::JS_BLOCK_STATEMENT
             | JsSyntaxKind::JS_FUNCTION_BODY
             | JsSyntaxKind::JS_FOR_OF_STATEMENT
@@ -340,7 +370,8 @@ impl SymbolIterator {
             | JsSyntaxKind::JS_SETTER_CLASS_MEMBER
             | JsSyntaxKind::JS_CATCH_CLAUSE
             | JsSyntaxKind::JS_FINALLY_CLAUSE => {
-                self.pop_scope(false);
+                let end_at = node.last_token().unwrap().text_range().start();
+                self.pop_scope(end_at, false);
             }
             _ => {}
         }
@@ -348,53 +379,62 @@ impl SymbolIterator {
 }
 
 impl Iterator for SymbolIterator {
-    type Item = Symbol;
+    type Item = ScopeResolutionEvent;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some(from_stash) = self.stash.pop_front() {
-            return Some(from_stash);
-        }
+        loop {
+            if let Some(from_stash) = self.stash.pop_front() {
+                return Some(from_stash);
+            }
 
-        while let Some(e) = self.iter.next() {
-            match e {
-                WalkEvent::Enter(node) => {
-                    self.enter_node(&node);
+            if let Some(e) = self.iter.next() {
+                match e {
+                    WalkEvent::Enter(node) => {
+                        self.enter_node(&node);
 
-                    if let Some(mut s) = extract_symbol(node) {
-                        match &mut s {
-                            Symbol::Declaration {
-                                name,
-                                range,
-                                hoists,
-                            } => {
-                                if *hoists {
-                                    self.push_hoisted_symbol_to_scope(name, range);
-                                } else {
-                                    self.push_symbol_to_scope(name, range);
-                                }
-                            }
-                            Symbol::Reference {
-                                name,
-                                range,
-                                declared_at,
-                            } => match self.current_scope.get(name) {
-                                Some(target) => *declared_at = Some(*target),
-                                None => {
-                                    if let Some(hoisting_scope) = self.hoisting_scope.last_mut() {
-                                        let pending =
-                                            hoisting_scope.entry(name.clone()).or_default();
-                                        pending.push(*range);
+                        if let Some(mut s) = extract_symbol(node) {
+                            match &mut s {
+                                ScopeResolutionEvent::DeclarationFound {
+                                    name,
+                                    range,
+                                    hoists,
+                                } => {
+                                    if *hoists {
+                                        self.push_hoisted_symbol_to_scope(name, range);
+                                    } else {
+                                        self.push_symbol_to_scope(name, range);
                                     }
                                 }
-                            },
-                            _ => {}
-                        }
+                                ScopeResolutionEvent::ReferenceFound {
+                                    name,
+                                    range,
+                                    declared_at,
+                                } => match self.current_scope.get(name) {
+                                    Some(target) => *declared_at = Some(*target),
+                                    None => {
+                                        if let Some(hoisting_scope) = self.hoisting_scope.last_mut()
+                                        {
+                                            let pending =
+                                                hoisting_scope.entry(name.clone()).or_default();
+                                            pending.push(*range);
+                                        }
+                                    }
+                                },
+                                _ => {}
+                            }
 
-                        return Some(s);
+                            self.stash.push_back(s)
+                        }
+                    }
+                    WalkEvent::Leave(node) => {
+                        self.leave_node(&node);
                     }
                 }
-                WalkEvent::Leave(node) => {
-                    self.leave_node(&node);
+            } else {
+                if !self.items_entered_into_scope.is_empty() {
+                    self.pop_scope(0.into(), true);
+                } else {
+                    break;
                 }
             }
         }
@@ -411,10 +451,11 @@ pub fn symbols(root: JsSyntaxNode) -> SymbolIterator {
         hoisting_scope_idx: vec![],
         items_entered_into_scope: vec![],
         items_shadowed: vec![],
+        scope_start: vec![],
         stash: VecDeque::new(),
     };
 
-    i.push_new_scope(true); // global scope
+    i.push_new_scope(0.into(), true); // global scope
     i
 }
 
@@ -429,7 +470,7 @@ mod tests {
     use rome_rowan::NodeOrToken;
     use suggest::Suggest;
 
-    #[derive(Eq, PartialEq)]
+    #[derive(Eq, PartialEq, Debug)]
     pub struct TextRangeByStart(TextRange);
 
     impl PartialOrd for TextRangeByStart {
@@ -481,23 +522,31 @@ mod tests {
 
         // Extract symbols and index by range
 
-        let mut found_symbols_by_range = HashMap::new();
+        let mut event_by_range = HashMap::new();
         for symbol in symbols(r.syntax()) {
             match &symbol {
-                Symbol::Declaration { range, .. } => {
-                    found_symbols_by_range.insert(*range, symbol);
+                ScopeResolutionEvent::DeclarationFound { range, .. } => {
+                    event_by_range.insert(*range, symbol);
                 }
-                Symbol::Reference { range, .. } => {
-                    found_symbols_by_range.insert(*range, symbol);
+                ScopeResolutionEvent::ReferenceFound { range, .. } => {
+                    event_by_range.insert(*range, symbol);
                 }
-                Symbol::Link { range, declared_at } => {
-                    if let Some(Symbol::Reference {
+                ScopeResolutionEvent::ReferenceMatched { range, declared_at } => {
+                    if let Some(ScopeResolutionEvent::ReferenceFound {
                         declared_at: ref_declared_at,
                         ..
-                    }) = found_symbols_by_range.get_mut(range)
+                    }) = event_by_range.get_mut(range)
                     {
                         *ref_declared_at = Some(*declared_at);
                     }
+                }
+                ScopeResolutionEvent::ScopeStarted { start_at, hoist } => {
+                    let range = TextRange::new(start_at.clone(), start_at.clone());
+                    event_by_range.insert(range, symbol);
+                }
+                ScopeResolutionEvent::ScopeEnded { end_at, .. } => {
+                    let range = TextRange::new(end_at.clone(), end_at.clone());
+                    event_by_range.insert(range, symbol);
                 }
             }
         }
@@ -506,26 +555,71 @@ mod tests {
 
         let mut reference_assertions = BTreeMap::new();
         let mut declarations_assertions = BTreeMap::new();
+        let mut scope_start_assertions = BTreeMap::new();
+        let mut scope_end_assertions = BTreeMap::new();
         for node in r.syntax().preorder_with_tokens() {
             if let WalkEvent::Enter(NodeOrToken::Token(token)) = node {
                 let trivia = token.trailing_trivia();
                 let text = trivia.text();
 
-                if text.contains('@') {
+                if text.starts_with("/*START") {
+                    let old = scope_start_assertions.insert(
+                        text.trim()
+                            .trim_start_matches("/*START")
+                            .trim_end_matches("*/")
+                            .trim()
+                            .to_string(),
+                        (token.text_range().start(), trivia.text_range()),
+                    );
+
+                    // If there is already an assertion with the same name. Suggest a rename
+                    if let Some((_, old)) = old {
+                        let files = SimpleFile::new(file_name.to_string(), code.into());
+                        let d = Diagnostic::error(
+                            0,
+                            "",
+                            "Assertion label conflict.",
+                        )
+                        .primary(token.text_range(), "There is already a assertion with the same name. Consider renaming this one.")
+                        .secondary(
+                            old,
+                            "Previous assertion",
+                        );
+
+                        let mut console = EnvConsole::default();
+                        console.log(markup! {
+                            {d.display(&files)}
+                        });
+
+                        panic!("Assertion label conflict")
+                    }
+                } else if text.starts_with("/*END") {
+                    scope_end_assertions.insert(
+                        token.text_range().start(),
+                        (
+                            text.trim()
+                                .trim_start_matches("/*END")
+                                .trim_end_matches("*/")
+                                .trim()
+                                .to_string(),
+                            trivia.text_range(),
+                        ),
+                    );
+                } else if text.contains('@') {
                     reference_assertions.insert(
                         TextRangeByStart(token.text_range()),
                         text.trim()
                             .trim_start_matches("/*@")
                             .trim_end_matches("*/")
+                            .trim()
                             .to_string(),
                     );
-                }
-
-                if text.contains('#') {
+                } else if text.contains('#') {
                     let old = declarations_assertions.insert(
                         text.trim()
                             .trim_start_matches("/*#")
                             .trim_end_matches("*/")
+                            .trim()
                             .to_string(),
                         token.text_range(),
                     );
@@ -559,10 +653,10 @@ mod tests {
 
         for (assertion_range, assertion_label) in reference_assertions {
             // Check if the assertion is attached to a symbol
-            if let Some(symbol) = &found_symbols_by_range.get(&assertion_range.0) {
+            if let Some(symbol) = &event_by_range.get(&assertion_range.0) {
                 match symbol {
                     // ... if it is attached to a declaration symbol, show an error
-                    Symbol::Declaration { range, .. } => {
+                    ScopeResolutionEvent::DeclarationFound { range, .. } => {
                         error_reference_assertion_attached_to_declaration(
                             code,
                             &assertion_range,
@@ -570,7 +664,7 @@ mod tests {
                             range,
                         );
                     }
-                    Symbol::Reference {
+                    ScopeResolutionEvent::ReferenceFound {
                         range, declared_at, ..
                     } => {
                         // ... if it is attached to a reference symbol, we have fours possibilities:
@@ -615,12 +709,12 @@ mod tests {
         // Check every declaration assertion is ok
 
         for (_, assertion_range) in declarations_assertions {
-            if let Some(symbol) = found_symbols_by_range.get(&assertion_range) {
+            if let Some(symbol) = event_by_range.get(&assertion_range) {
                 match symbol {
-                    Symbol::Declaration { .. } => {
+                    ScopeResolutionEvent::DeclarationFound { .. } => {
                         // No need to check anything on declarations
                     }
-                    Symbol::Reference { range, .. } => {
+                    ScopeResolutionEvent::ReferenceFound { range, .. } => {
                         error_declaration_assertion_attached_to_reference(
                             code,
                             assertion_range,
@@ -634,6 +728,165 @@ mod tests {
                 error_declaration_attached_to_non_symbol(code, assertion_range, file_name);
             }
         }
+
+        // Check every scope end assertion is ok
+        for (expected_scope_end, (assertion_label, scope_end_assertion_range)) in
+            scope_end_assertions
+        {
+            let scope_end_start_range =
+                TextRange::new(expected_scope_end.clone(), expected_scope_end.clone());
+            if let Some(e) = event_by_range.get(&scope_end_start_range) {
+                match e {
+                    ScopeResolutionEvent::ScopeEnded {
+                        started_at: actual_started_at,
+                        ..
+                    } => {
+                        if let Some((expected_start_at, scope_start_assertion_range)) =
+                            scope_start_assertions.get(&assertion_label)
+                        {
+                            assert_scope_end_points_to_correct_scope_start(
+                                expected_start_at,
+                                &expected_scope_end,
+                                actual_started_at,
+                                file_name,
+                                code,
+                                &TextRange::new(
+                                    actual_started_at.clone(),
+                                    actual_started_at.clone(),
+                                ),
+                                &scope_start_assertion_range,
+                                &scope_end_assertion_range,
+                            );
+
+                            if expected_start_at == actual_started_at {
+                                // OK
+                            } else {
+                                todo!()
+                            }
+                        } else {
+                            error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
+                                file_name,
+                                code,
+                                &scope_end_assertion_range,
+                                &scope_start_assertions,
+                                assertion_label,
+                            )
+                        }
+                    }
+                    _ => error_no_scope_ends_here(code, scope_end_start_range, file_name),
+                }
+            } else {
+                error_no_scope_ends_here(code, scope_end_start_range, file_name);
+            }
+        }
+
+        // Check every scope start assertion is ok
+
+        for (_, (scope_start, _)) in scope_start_assertions {
+            let range = TextRange::new(scope_start.clone(), scope_start.clone());
+            if let Some(e) = event_by_range.get(&range) {
+                match e {
+                    ScopeResolutionEvent::ScopeStarted { .. } => {
+                        // OK
+                    }
+                    _ => error_no_scope_starts_here(code, range, file_name),
+                }
+            } else {
+                error_no_scope_starts_here(code, range, file_name);
+            }
+        }
+    }
+
+    fn assert_scope_end_points_to_correct_scope_start(
+        expected_start_at: &TextSize,
+        expected_scope_end: &TextSize,
+        actual_started_at: &TextSize,
+
+        file_name: &str,
+        code: &str,
+        actual_scope_start_range: &TextRange,
+        scope_start_assertion_range: &TextRange,
+        scope_end_assertion_range: &TextRange,
+    ) {
+        if *expected_start_at != *actual_started_at {
+            let files = SimpleFile::new(file_name.to_string(), code.into());
+            let d = Diagnostic::error(0, "", "Scope end assertion pointing to wrong scope start.")
+                .primary(scope_end_assertion_range, "This scope end...");
+
+            let d = d.label(
+                Severity::Error,
+                actual_scope_start_range,
+                "... is ending this scope start ...",
+            );
+
+            let d = d.secondary(
+                scope_start_assertion_range,
+                "... but this was the expected scope start.",
+            );
+
+            let mut console = EnvConsole::default();
+            console.log(markup! {
+                {d.display(&files)}
+            });
+        }
+        assert_eq!(*expected_start_at, *actual_started_at);
+    }
+
+    fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
+        file_name: &str,
+        code: &str,
+        range: &TextRange,
+        valid_assertions: &BTreeMap<String, (TextSize, TextRange)>,
+        assertion_label: String,
+    ) {
+        let files = SimpleFile::new(file_name.to_string(), code.into());
+        let d = Diagnostic::error(0, "", "Scope start assertion not found.").primary(
+            range,
+            "This scope end assertion points to a non-existing scope start assertion.",
+        );
+
+        let labels: Vec<_> = valid_assertions.keys().collect();
+        let d = if let Some(suggestion) = labels.suggest(&assertion_label) {
+            let suggestion = format!("Did you mean \"{suggestion}\"?");
+            d.suggestion_no_code(range, &suggestion, Applicability::Unspecified)
+        } else {
+            d
+        };
+        let mut console = EnvConsole::default();
+        console.log(markup! {
+            {d.display(&files)}
+        });
+        panic!("Scope start assertion not found.");
+    }
+
+    fn error_no_scope_ends_here(code: &str, assertion_range: TextRange, file_name: &str) {
+        let files = SimpleFile::new(file_name.to_string(), code.into());
+        let d = Diagnostic::error(
+            0,
+            "",
+            "Scope end assertions must be attached to scope ends.",
+        )
+        .primary(assertion_range, "A scope does not end here");
+
+        let mut console = EnvConsole::default();
+        console.log(markup! {
+            {d.display(&files)}
+        });
+    }
+
+    fn error_no_scope_starts_here(code: &str, assertion_range: TextRange, file_name: &str) {
+        let files = SimpleFile::new(file_name.to_string(), code.into());
+        let d = Diagnostic::error(
+            0,
+            "",
+            "Scope start assertions must be attached to scope starts.",
+        )
+        .primary(assertion_range, "A scope does not start here");
+
+        let mut console = EnvConsole::default();
+        console.log(markup! {
+            {d.display(&files)}
+        });
     }
 
     fn error_declaration_attached_to_non_symbol(
@@ -800,7 +1053,7 @@ mod tests {
 let global/*#GLOBAL*/ = 1;
 console.log(global/*@GLOBAL*/);
 
-function f(a/*#A1*/) {
+function f(a/*#A1*/) {/*START SCOPE1*/
     console.log(global/*@GLOBAL*/);
 
     let b/*#B*/ = 1;
@@ -876,7 +1129,7 @@ function f(a/*#A1*/) {
     }
 
     return a/*@A1*/ + b/*@B*/ + c/*@C1*/;
-}
+}/*END SCOPE1*/
 
 console.log(global/*@GLOBAL*/);
 
@@ -921,5 +1174,55 @@ function f2/*#HOISTED-F2*/ () {
 var z/*#HOISTED-Z*/ ;
 "#,
         );
+    }
+
+    #[test]
+    pub fn ok_scope_function() {
+        asserts_references(
+            std::file!(),
+            std::line!(),
+            r#"
+function f() {/*START SCOPE1*/
+}/*END SCOPE1*/"#,
+        )
+    }
+
+    #[test]
+    pub fn ok_scope_inline_function() {
+        asserts_references(
+            std::file!(),
+            std::line!(),
+            r#"
+function f1() {/*START SCOPE1*/
+    function f2() {/*START SCOPE2*/
+    }/*END SCOPE2*/"
+}/*END SCOPE1*/"#,
+        )
+    }
+
+    #[test]
+    pub fn ok_scope_function_with_statements() {
+        asserts_references(
+            std::file!(),
+            std::line!(),
+            r#"
+function f1() {/*START SCOPE1*/
+    if (1==1) {/*START SCOPE2*/
+    }/*END SCOPE2*/
+
+    for (;;) {/*START SCOPE3*/
+    }/*END SCOPE3*/
+
+    while (1==1) {/*START SCOPE4*/
+    }/*END SCOPE4*/
+
+    do {/*START SCOPE5*/
+    }/*END SCOPE5*/
+    while (1==1);
+
+    let x = (/*START SCOPE6*/) => {}/*END SCOPE6*/;
+    let y = (/*START SCOPE7*/y) => y/*END SCOPE7*/;
+}/*END SCOPE1*/"#,
+        )
     }
 }

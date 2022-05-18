@@ -25,6 +25,7 @@ impl FileSystem for OsFileSystem {
         tracing::debug_span!("OsFileSystem::open", path = ?path).in_scope(
             move || -> io::Result<Box<dyn File>> {
                 Ok(Box::new(OsFile {
+                    path: path.to_path_buf(),
                     inner: fs::File::options().read(true).write(true).open(path)?,
                 }))
             },
@@ -39,10 +40,16 @@ impl FileSystem for OsFileSystem {
 }
 
 struct OsFile {
+    path: PathBuf,
     inner: fs::File,
 }
 
 impl File for OsFile {
+    fn read_string(&mut self) -> io::Result<String> {
+        tracing::debug_span!("OsFile::read_to_string")
+            .in_scope(move || std::fs::read_to_string(&self.path))
+    }
+
     fn read_to_string(&mut self, buffer: &mut String) -> io::Result<()> {
         tracing::debug_span!("OsFile::read_to_string").in_scope(move || {
             // Reset the cursor to the starting position

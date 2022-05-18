@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use rome_js_parser::symbols::Symbol;
+use rome_js_parser::symbols::ScopeResolutionEvent;
 use tower_lsp::lsp_types::{GotoDefinitionParams, GotoDefinitionResponse, Location, Url};
 use tracing::{debug, info};
 
@@ -30,16 +30,20 @@ pub(crate) async fn goto_definition(
         .map(GotoDefinitionResponse::Scalar))
 }
 
-fn to_same_file_location(line_indices: &LineIndex, uri: Url, symbol: &Symbol) -> Option<Location> {
+fn to_same_file_location(
+    line_indices: &LineIndex,
+    uri: Url,
+    symbol: &ScopeResolutionEvent,
+) -> Option<Location> {
     match symbol {
-        Symbol::Reference {
+        ScopeResolutionEvent::ReferenceFound {
             declared_at: Some(declared_at),
             ..
         } => Some(Location {
             uri,
             range: line_indices.to_lsp_range(declared_at),
         }),
-        Symbol::Declaration { range, .. } => Some(Location {
+        ScopeResolutionEvent::DeclarationFound { range, .. } => Some(Location {
             uri,
             range: line_indices.to_lsp_range(range),
         }),
@@ -50,8 +54,8 @@ fn to_same_file_location(line_indices: &LineIndex, uri: Url, symbol: &Symbol) ->
 fn get_selected_symbol<'a>(
     params: GotoDefinitionParams,
     line_indices: &LineIndex,
-    symbols: &'a [Symbol],
-) -> Option<&'a Symbol> {
+    symbols: &'a [ScopeResolutionEvent],
+) -> Option<&'a ScopeResolutionEvent> {
     let offset = line_indices.offset(params.text_document_position_params.position.into());
     let symbol = symbols
         .iter()
@@ -59,7 +63,7 @@ fn get_selected_symbol<'a>(
     symbol
 }
 
-fn parse_and_collect_symbols(document: crate::documents::Document) -> Vec<Symbol> {
+fn parse_and_collect_symbols(document: crate::documents::Document) -> Vec<ScopeResolutionEvent> {
     let file_id = document.file_id();
     let source_type = document.get_source_type();
     let parse_result = rome_js_parser::parse(&document.text, file_id, source_type);

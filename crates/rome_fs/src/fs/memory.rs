@@ -67,6 +67,14 @@ struct MemoryFile {
 }
 
 impl File for MemoryFile {
+    fn read_string(&mut self) -> io::Result<String> {
+        // Verify the stored byte content is valid UTF-8
+        let content = str::from_utf8(&self.inner)
+            .map_err(|err| io::Error::new(io::ErrorKind::InvalidData, err))?;
+        // Append the content of the file to the buffer
+        Ok(content.to_string())
+    }
+
     fn read_to_string(&mut self, buffer: &mut String) -> io::Result<()> {
         // Verify the stored byte content is valid UTF-8
         let content = str::from_utf8(&self.inner)

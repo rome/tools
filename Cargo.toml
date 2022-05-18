@@ -6,7 +6,6 @@ members = [
 	"crates/*",
 	"website/playground",
 	"xtask/bench",
-	"xtask/codegen",
+	# "xtask/codegen",
 	"xtask/coverage",
 ]
-

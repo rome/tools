@@ -76,53 +76,24 @@ pub trait AstNode {
     {
         Self::cast(self.syntax().clone_subtree()).unwrap()
     }
-}
 
-pub trait AstNodeParent {
-    type Language: Language;
-    fn parent<T: AstNode<Language = Self::Language> + Sized>(&self) -> Option<T>;
-}
-
-impl<TAstNode, TLanguage> AstNodeParent for TAstNode
-where
-    TAstNode: AstNode<Language = TLanguage>,
-    TLanguage: Language,
-{
-    type Language = TLanguage;
-    fn parent<T: AstNode<Language = Self::Language> + Sized>(&self) -> Option<T> {
-        self.syntax().parent().and_then(T::cast)
+    fn parent<TParent: AstNode<Language = Self::Language> + Sized>(&self) -> Option<TParent> {
+        self.syntax().parent().and_then(TParent::cast)
     }
 }
 
-impl<TAstNode, TLanguage> AstNodeParent for Option<TAstNode>
-where
-    TAstNode: AstNode<Language = TLanguage>,
-    TLanguage: Language,
-{
-    type Language = TLanguage;
-    fn parent<T: AstNode<Language = Self::Language> + Sized>(&self) -> Option<T> {
-        self.as_ref()?.syntax().parent().and_then(T::cast)
-    }
-}
-
-pub trait AstNodeFromSyntaxNode<L>
-where
-    L: Language,
-{
-    fn cast<T>(self) -> Option<T>
-    where
-        T: AstNode<Language = L>;
-}
-
-impl<L> AstNodeFromSyntaxNode<L> for SyntaxNode<L>
-where
-    L: Language,
-{
-    fn cast<T>(self) -> Option<T>
-    where
-        T: AstNode<Language = L>,
-    {
+use extension_trait::*;
+#[extension_trait]
+pub impl<L: Language> SyntaxNodeCast<L> for SyntaxNode<L> {
+    fn cast<T: AstNode<Language = L>>(self) -> Option<T> {
         T::cast(self)
+    }
+}
+
+#[extension_trait]
+pub impl<L: Language, T: AstNode<Language = L>> OptionAstNodeParent<L> for Option<T> {
+    fn parent<TParent: AstNode<Language = L> + Sized>(&self) -> Option<TParent> {
+        self.as_ref()?.syntax().parent().and_then(TParent::cast)
     }
 }
 
