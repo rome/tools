@@ -43,30 +43,34 @@ export function usePlaygroundState(): [
 	Dispatch<SetStateAction<PlaygroundState>>,
 ] {
 	const searchParams = new URLSearchParams(window.location.search);
-	const [playgroundState, setPlaygroundState] = useState({
-		code: window.location.hash !== "#" ? decodeCode(
-			window.location.hash.substring(1),
-		) : "",
-		lineWidth: parseInt(searchParams.get("lineWidth") ?? "80"),
-		indentStyle: (searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
-		quoteStyle: (searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
-		indentWidth: parseInt(searchParams.get("indentWidth") ?? "2"),
-		isTypeScript: searchParams.get("typescript") === "true",
-		isJsx: searchParams.get("jsx") === "true",
-		sourceType: (searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
-		treeStyle: TreeStyle.Json,
-	});
+	const [playgroundState, setPlaygroundState] = useState(
+		() => ({
+			code: window.location.hash !== "#" ? decodeCode(
+				window.location.hash.substring(1),
+			) : "",
+			lineWidth: parseInt(searchParams.get("lineWidth") ?? "80"),
+			indentStyle: (searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
+			quoteStyle: (searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
+			indentWidth: parseInt(searchParams.get("indentWidth") ?? "2"),
+			isTypeScript: searchParams.get("typescript") === "true",
+			isJsx: searchParams.get("jsx") === "true",
+			sourceType: (searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
+			treeStyle: TreeStyle.Json,
+		}),
+	);
 
 	useEffect(
 		() => {
+			const { code, isTypeScript, isJsx, ...options } = playgroundState;
 			//@ts-ignore
 			const queryString = new URLSearchParams({
-				...playgroundState,
-				code: encodeCode(playgroundState.code),
-				isTypeScript: playgroundState.isTypeScript.toString(),
-				isJsx: playgroundState.isJsx.toString(),
+				...options,
+				isTypeScript: isTypeScript.toString(),
+				isJsx: isJsx.toString(),
 			}).toString();
-			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}`;
+			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}#${encodeCode(
+				code,
+			)}`;
 
 			window.history.pushState({ path: url }, "", url);
 		},
