@@ -20,7 +20,7 @@ export interface PlaygroundState {
 export interface PlaygroundProps {
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
 	playgroundState: PlaygroundState;
-	prettierOutput: { code: string; ir: object };
+	prettierOutput: { code: string; ir: string };
 	romeOutput: RomeOutput;
 }
 

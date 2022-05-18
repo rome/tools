@@ -101,7 +101,7 @@ export default function DesktopPlayground(
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<ReactJson src={prettierOutput.ir} />
+							<pre className="h-screen overflow-scroll">{prettierOutput.ir}</pre>
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">

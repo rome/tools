@@ -94,7 +94,7 @@ export function formatWithPrettier(
 		language: "js" | "ts";
 		quoteStyle: QuoteStyle;
 	},
-): { code: string; ir: object } {
+): { code: string; ir: string } {
 	try {
 		const prettierOptions = {
 			useTabs: options.indentStyle === IndentStyle.Tab,
@@ -104,15 +104,21 @@ export function formatWithPrettier(
 			plugins: [parserBabel],
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
 		};
-		const formattedCode = prettier.format(code, prettierOptions);
-		//@ts-ignore
-		const ir = prettier.__debug.printToDoc(code, prettierOptions);
+
+		// @ts-ignore
+		let debug = prettier.__debug;
+		const document = debug.printToDoc(code, prettierOptions);
+		const formattedCode = debug.printDocToString(document, prettierOptions).formatted;
+		const ir = debug.formatDoc(
+			document,
+			{ parser: "babel", plugins: [parserBabel] },
+		);
 		return { code: formattedCode, ir };
-	} catch (err) {
+	} catch (err: any) {
 		console.error(err);
 		//@ts-ignore
 		const code = err.toString();
-		return { code, ir: { error: "Invalid code" } };
+		return { code, ir: `Error: Invalid code\n${err.message}` };
 	}
 }
 
