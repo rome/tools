@@ -563,13 +563,8 @@ pub(crate) trait JsFormatter {
         Ok(result.into_iter())
     }
 
-    /// It formats a list of nodes that are not separated. It's an ad-hoc function to
-    /// format lists that implement [rome_js_syntax::AstNodeList].
-    ///
-    /// The elements of the list are joined together using [join_elements_hard_line], which will
-    /// end up separated by hard lines or empty lines.
-    ///
-    /// If the formatter fails to format an element, said element gets printed verbatim.
+    /// It formats a list of nodes that are not separated. Essentially a wrapper for [format_list] that
+    /// joins the result together with [join_elements_hard_line].
     fn format_list_with_hard_line<List, Node>(&self, list: &List) -> FormatElement
     where
         List: AstNodeList<Language = JsLanguage, Node = Node>,
@@ -581,8 +576,7 @@ pub(crate) trait JsFormatter {
     /// It formats a list of nodes that are not separated. It's an ad-hoc function to
     /// format lists that implement [rome_js_syntax::AstNodeList].
     ///
-    /// The elements of the list are joined together using [join_elements_hard_line], which will
-    /// end up separated by hard lines or empty lines.
+    /// Returns a list of syntax nodes and format elements.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
     fn format_list<List, Node>(&self, list: &List) -> Vec<(SyntaxNode<JsLanguage>, FormatElement)>

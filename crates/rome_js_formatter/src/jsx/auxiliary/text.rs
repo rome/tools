@@ -3,7 +3,7 @@ use crate::utils::jsx_utils::WHITESPACE;
 use crate::FormatNodeFields;
 use crate::{FormatElement, Formatter, JsFormatter};
 use rome_formatter::{FormatResult, Token};
-use rome_js_syntax::{JsxText, JsxTextFields};
+use rome_js_syntax::{JsxText, JsxTextFields, TextSize};
 use std::borrow::Cow;
 use std::ops::Range;
 use std::str::CharIndices;
@@ -15,8 +15,7 @@ impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
     ) -> FormatResult<FormatElement> {
         let JsxTextFields { value_token } = node.as_fields();
         let token = value_token?;
-        let new_text = clean_jsx_text(token.text());
-        let start = token.text_range().start();
+        let (new_text, start) = clean_jsx_text(token.text(), token.text_range().start());
         let new_token = Token::from_syntax_token_cow_slice(new_text, &token, start);
 
         Ok(formatter.format_replaced(&token, FormatElement::from(new_token)))
@@ -26,6 +25,7 @@ impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
 struct TextCleaner<'a> {
     pub text: &'a str,
     pub leading_whitespace_type: Option<WhitespaceType>,
+    pub start_idx: usize,
     /// Whitespace ranges are the ranges of text that contain whitespace. We keep track of them
     /// so that on our second pass, we strip them out.
     ///
@@ -40,7 +40,7 @@ impl<'a> TextCleaner<'a> {
         let mut char_indices = text.char_indices();
 
         // Once `get_leading_whitespace_type` is done, we have consumed our first non-whitespace character
-        let leading_whitespace_type = get_leading_whitespace_type(&mut char_indices);
+        let (leading_whitespace_type, start_idx) = get_leading_whitespace_type(&mut char_indices);
 
         let mut whitespace_ranges = Vec::new();
         let mut current_whitespace_range_start: Option<usize> = None;
@@ -81,6 +81,7 @@ impl<'a> TextCleaner<'a> {
 
         TextCleaner {
             text,
+            start_idx,
             leading_whitespace_type,
             whitespace_ranges,
             trailing_whitespace_type,
@@ -197,15 +198,20 @@ enum WhitespaceType {
 
 /// We push the CharIndices iterator forward until we get to a non-whitespace character
 ///
+/// Returns the whitespace type (if whitespace exists), ond the start index of the non-whitespace
+/// text
+///
 /// NOTE: It's okay that we consume this non-whitespace character, as it won't affect our
 ///       whitespace group finding logic.
-fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> Option<WhitespaceType> {
+fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> (Option<WhitespaceType>, usize) {
     let mut leading_type = None;
+    let mut start_idx = 0;
 
-    for (_, c) in char_indices.by_ref() {
+    for (i, c) in char_indices.by_ref() {
         if !WHITESPACE.contains(&c) {
-            return leading_type;
+            return (leading_type, i);
         }
+        start_idx = i;
         if c == '\n' {
             leading_type = Some(WhitespaceType::HasNewline);
         } else if leading_type.is_none() {
@@ -213,7 +219,7 @@ fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> Option<Whitesp
         }
     }
 
-    leading_type
+    (leading_type, start_idx + 1)
 }
 
 /// Get the whitespace type for the trailing whitespace.
@@ -234,14 +240,14 @@ fn get_trailing_whitespace_type(end_whitespace: &str) -> Option<WhitespaceType> 
     trailing_type
 }
 
-fn clean_jsx_text(text: &str) -> Cow<str> {
+fn clean_jsx_text(text: &str, text_start: TextSize) -> (Cow<str>, TextSize) {
     if text.is_empty() {
-        return Cow::Borrowed(text);
+        return (Cow::Borrowed(text), text_start);
     }
 
     let text_cleaner = TextCleaner::build(text);
 
-    if let Some(normalized_text) = text_cleaner.clean_text() {
+    let cleaned_text = if let Some(normalized_text) = text_cleaner.clean_text() {
         Cow::Owned(normalized_text)
     } else {
         get_trimmed_text(
@@ -249,33 +255,83 @@ fn clean_jsx_text(text: &str) -> Cow<str> {
             text_cleaner.leading_whitespace_type,
             text_cleaner.trailing_whitespace_type,
         )
-    }
+    };
+
+    let start_idx: TextSize = text_cleaner
+        .start_idx
+        .try_into()
+        .expect("index is larger than 2^32 bits");
+
+    (cleaned_text, text_start + start_idx)
 }
 
 #[cfg(test)]
 mod tests {
     use crate::jsx::auxiliary::text::clean_jsx_text;
+    use std::borrow::Cow;
 
     #[test]
     fn clean_jsx_text_works() {
-        assert_eq!("", clean_jsx_text(""));
-        assert_eq!(" ", clean_jsx_text(" "));
-        assert_eq!("Foo", clean_jsx_text("Foo"));
-        assert_eq!(" Foo", clean_jsx_text(" Foo"));
-        assert_eq!("Foo", clean_jsx_text("\nFoo"));
-        assert_eq!(" Foo", clean_jsx_text("\tFoo"));
-        assert_eq!("Foo", clean_jsx_text("\n \t Foo"));
-        assert_eq!("Foo", clean_jsx_text("\n \t \n \t\nFoo"));
-        assert_eq!(" Foo bar lorem", clean_jsx_text(" Foo bar lorem"));
-        assert_eq!("Foo ", clean_jsx_text("Foo "));
-        assert_eq!("Foo", clean_jsx_text("Foo\n"));
-        assert_eq!("Foo ", clean_jsx_text("Foo\t"));
-        assert_eq!("Foo", clean_jsx_text("Foo\t \n "));
-        assert_eq!("Foo", clean_jsx_text("Foo\n \t \n \t\n"));
-        assert_eq!("Foo Bar", clean_jsx_text("Foo\n \t\t\n \tBar"));
+        assert_eq!((Cow::Borrowed(""), 0.into()), clean_jsx_text("", 0.into()));
         assert_eq!(
-            "Foo Bar",
-            clean_jsx_text("\n \t\t\n \tFoo\n \t\t\n \tBar\n \t\t\n \t")
+            (Cow::Borrowed(" "), 1.into()),
+            clean_jsx_text(" ", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo"), 0.into()),
+            clean_jsx_text("Foo", 0.into())
+        );
+        assert_eq!(
+            ((Cow::Borrowed(" Foo"), 1.into())),
+            clean_jsx_text(" Foo", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo"), 1.into()),
+            clean_jsx_text("\nFoo", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed(" Foo"), 1.into()),
+            clean_jsx_text("\tFoo", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo"), 4.into()),
+            clean_jsx_text("\n \t Foo", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo"), 8.into()),
+            clean_jsx_text("\n \t \n \t\nFoo", 0.into())
+        );
+        assert_eq!(
+            (Cow::Owned(" Foo bar lorem".to_string()), 1.into()),
+            clean_jsx_text(" Foo bar lorem", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo "), 0.into()),
+            clean_jsx_text("Foo ", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo"), 0.into()),
+            clean_jsx_text("Foo\n", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo "), 0.into()),
+            clean_jsx_text("Foo\t", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo"), 0.into()),
+            clean_jsx_text("Foo\t \n ", 0.into())
+        );
+        assert_eq!(
+            (Cow::Borrowed("Foo"), 0.into()),
+            clean_jsx_text("Foo\n \t \n \t\n", 0.into())
+        );
+        assert_eq!(
+            (Cow::Owned("Foo Bar".to_string()), 0.into()),
+            clean_jsx_text("Foo\n \t\t\n \tBar", 0.into())
+        );
+        assert_eq!(
+            (Cow::Owned("Foo Bar".to_string()), 7.into()),
+            clean_jsx_text("\n \t\t\n \tFoo\n \t\t\n \tBar\n \t\t\n \t", 0.into())
         );
     }
 }
