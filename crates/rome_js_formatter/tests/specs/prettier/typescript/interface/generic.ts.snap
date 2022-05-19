@@ -17,7 +17,10 @@ interface Foo<
 
 # Output
 ```js
-interface Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOO> extends Foo {}
+interface Foo<
+  FOOOOOOOOOOOOOOOOOOOOOOOOOO,
+  FOOOOOOOOOOOOOOOOOOOOOOO,
+> extends Foo {}
 
 interface Foo<
   FOOOOOOOOOOOOOOOOOOOOOOOOOO,
@@ -27,8 +30,4 @@ interface Foo<
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: interface Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOO> extends Foo {}
-```
 

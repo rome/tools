@@ -18,7 +18,9 @@ export const SUPPORTED_VEHICLE_TYPES: Array<
 
 # Output
 ```js
-const getUnusedAuthorizationHoldDocuments = async (): Promise<DocumentData[]> => {};
+const getUnusedAuthorizationHoldDocuments = async (): Promise<
+  DocumentData[]
+> => {};
 
 const firestorePersonallyIdentifiablePaths: Array<
   keyof Collections.Users.Entity
@@ -30,8 +32,4 @@ export const SUPPORTED_VEHICLE_TYPES: Array<
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const getUnusedAuthorizationHoldDocuments = async (): Promise<DocumentData[]> => {};
-```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: castTest.ts
-
 ---
 # Input
 ```js
@@ -61,7 +59,9 @@ declare class Point {
   constructor(x: number, y: number);
 }
 
-var p_cast = <Point>({
+var p_cast = <
+  Point
+>({
   x: 0,
   y: 0,
   add: function (dx, dy) {

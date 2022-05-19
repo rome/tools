@@ -22,18 +22,16 @@ class X {
 
 # Output
 ```js
-function onDidInsertSuggestion({ editor, triggerPosition, re }): Promise<void> {}
+function onDidInsertSuggestion(
+  { editor, triggerPosition, re },
+): Promise<void> {}
 
 class X {
-  async onDidInsertSuggestion({ editor, triggerPosition, suggestion }): Promise<
-    void
-  > {}
+  async onDidInsertSuggestion(
+    { editor, triggerPosition, suggestion },
+  ): Promise<void> {}
 }
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: function onDidInsertSuggestion({ editor, triggerPosition, re }): Promise<void> {}
-```
 

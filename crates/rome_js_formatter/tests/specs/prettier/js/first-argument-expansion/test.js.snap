@@ -129,7 +129,9 @@ setTimeout(
   500,
 );
 
-["a", "b", "c"].reduce(
+[
+  "a", "b", "c",
+].reduce(
   function (item, thing) {
     return thing + " " + item;
   },
@@ -210,10 +212,10 @@ func(
   () => {
     thing();
   },
-  something(longArgumentName, anotherLongArgumentName) ? someOtherThing() : somethingElse(
-    true,
-    0,
-  ),
+  something(
+    longArgumentName,
+    anotherLongArgumentName,
+  ) ? someOtherThing() : somethingElse(true, 0),
 );
 
 func(
@@ -319,8 +321,4 @@ func(
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   89:   something(longArgumentName, anotherLongArgumentName) ? someOtherThing() : somethingElse(
-```
 

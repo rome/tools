@@ -22,7 +22,11 @@ function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
 
 # Output
 ```js
-function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
+function filterTooltipWithFoo<
+  F extends Field,
+>(
+  oldEncoding: Encoding<F>,
+): {
   customTooltipWithoutAggregatedField?:
     | StringFieldDefWithCondition<F>
     | StringValueDefWithCondition<F>

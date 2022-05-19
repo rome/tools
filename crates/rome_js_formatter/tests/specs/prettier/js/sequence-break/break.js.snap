@@ -22,8 +22,14 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
 
 # Output
 ```js
-const f = (argument1, argument2, argument3) => (
-  doSomethingWithArgument(argument1), doSomethingWithArgument(argument2), argument1
+const f = (
+  argument1,
+  argument2,
+  argument3,
+) => (
+  doSomethingWithArgument(
+    argument1,
+  ), doSomethingWithArgument(argument2), argument1
 );
 (function () {
   return (
@@ -37,8 +43,9 @@ a.then(
   ),
 );
 for (
-  aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName =
-    0;
+  aLongIdentifierName =
+    0, aLongIdentifierName =
+    0, aLongIdentifierName = 0, aLongIdentifierName = 0;
   test;
   update
 ) {}
@@ -73,10 +80,8 @@ for (
 
 # Lines exceeding max width of 80 characters
 ```
-    2:   doSomethingWithArgument(argument1), doSomethingWithArgument(argument2), argument1
-    6:     aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName
-    9: aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName;
    12:     aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName
-   16:   aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName =
+   15: aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName;
+   18:     aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName
 ```
 

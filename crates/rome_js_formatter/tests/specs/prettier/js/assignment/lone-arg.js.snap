@@ -37,9 +37,9 @@ let vgChannel = pointPositionDefaultRef({
 
 let vgChannel2 = pointPositionDefaultRef({ model, defaultPos, channel })();
 
-const bifornCringerMoshedPerplexSawderGlyphsHa = someBigFunctionName("foo")(
-  "bar",
-);
+const bifornCringerMoshedPerplexSawderGlyphsHa = someBigFunctionName(
+  "foo",
+)("bar");
 
 if (true) {
   node.id =

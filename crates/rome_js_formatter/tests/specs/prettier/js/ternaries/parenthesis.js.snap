@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: parenthesis.js
-
 ---
 # Input
 ```js
@@ -28,15 +26,18 @@ debug
     : "hidden"
   : null;
 
-(a) =>
+(
+  a,
+) =>
   a ? () => {
     a;
   } : () => {
     a;
   };
 (a) => a ? a : a;
-(a) =>
-  a ? aasdasdasdasdasdasdaaasdasdasdasdasdasdasdasdasdasdasdasdasdaaaaaa : a;
+(
+  a,
+) => a ? aasdasdasdasdasdasdaaasdasdasdasdasdasdasdasdasdasdasdasdasdaaaaaa : a;
 
 ```
 

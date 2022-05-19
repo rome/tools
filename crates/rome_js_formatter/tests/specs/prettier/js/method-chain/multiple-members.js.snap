@@ -92,10 +92,9 @@ wrapper
 
 wrapper
   .find("SomewhatLongNodeName")
-  .prop("longPropFunctionName")(
-    "argument",
-    "second argument that pushes this group past 80 characters",
-  )
+  .prop(
+    "longPropFunctionName",
+  )("argument", "second argument that pushes this group past 80 characters")
   .then(function () {
     doSomething();
   },);

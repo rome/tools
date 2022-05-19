@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: class-property.js
-
 ---
 # Input
 ```js
@@ -15,7 +13,10 @@ const composition = (ViewComponent, ContainerComponent) =>
 
 # Output
 ```js
-const composition = (ViewComponent, ContainerComponent) =>
+const composition = (
+  ViewComponent,
+  ContainerComponent,
+) =>
   class extends React.Component {
     static propTypes = {};
   };

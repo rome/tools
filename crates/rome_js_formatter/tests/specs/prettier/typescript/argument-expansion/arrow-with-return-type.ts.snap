@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: arrow-with-return-type.ts
-
 ---
 # Input
 ```js
@@ -66,7 +64,9 @@ longfunctionWithCallBack(
 longfunctionWithCall1(
   "bla",
   foo,
-  (thing: string): complex<
+  (
+    thing: string,
+  ): complex<
     type<
       `
 `

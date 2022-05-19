@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: logical_expression.js
 ---
 # Input
@@ -232,7 +231,9 @@ const a = x + y;
 }
 
 if (
-	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) || (
+	(
+		somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
+	) || (
 		somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
 	)
 ) {
@@ -270,7 +271,10 @@ const a = (
 );
 
 (
-	lorem && call_function(1, 3) // foo
+	lorem && call_function(
+		1,
+		3,
+	) // foo
 );
 
 (
@@ -309,7 +313,9 @@ a in
 	LongClassName;
 
 (
-	(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String) && (
+	(
+		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String
+	) && (
 		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number
 	)
 ) || (
@@ -319,7 +325,5 @@ a in
 
 ## Lines exceeding width of 80 characters
 
-  108: 	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) || (
-  119: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
-  185: 	(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String) && (
+  121: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
 

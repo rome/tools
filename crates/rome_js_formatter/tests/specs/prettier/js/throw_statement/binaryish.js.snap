@@ -37,9 +37,9 @@ function f() {
     property.isIdentifier() &&
       FUNCTIONS[property.node.name] &&
       (
-        object.isIdentifier(JEST_GLOBAL) || (
-          callee.isMemberExpression() && shouldHoistExpression(object)
-        )
+        object.isIdentifier(
+          JEST_GLOBAL,
+        ) || (callee.isMemberExpression() && shouldHoistExpression(object))
       ) &&
       FUNCTIONS[property.node.name](expr.get("arguments"))
   );
@@ -50,9 +50,9 @@ function f() {
     patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
   );
 
-  throw !filePath.includes(coverageDirectory) && !filePath.endsWith(
-    `.${SNAPSHOT_EXTENSION}`,
-  );
+  throw !filePath.includes(
+    coverageDirectory,
+  ) && !filePath.endsWith(`.${SNAPSHOT_EXTENSION}`);
 }
 
 ```

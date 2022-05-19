@@ -29,9 +29,15 @@ const funnelSnapshotCard = (
 
 room =
   room.map(
-    (row, rowIndex) => (
+    (
+      row,
+      rowIndex,
+    ) => (
       row.map(
-        (col, colIndex) => (
+        (
+          col,
+          colIndex,
+        ) => (
           (
             rowIndex === 0 ||
               colIndex === 0 ||

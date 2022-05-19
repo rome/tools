@@ -14,13 +14,11 @@ const radioSelectedAttr =
 # Output
 ```js
 const radioSelectedAttr = (
-  isAnyValueSelected && node.getAttribute(radioAttr.toLowerCase()) === radioValue
+  isAnyValueSelected && node.getAttribute(
+    radioAttr.toLowerCase(),
+  ) === radioValue
 ) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    2:   isAnyValueSelected && node.getAttribute(radioAttr.toLowerCase()) === radioValue
-```
 

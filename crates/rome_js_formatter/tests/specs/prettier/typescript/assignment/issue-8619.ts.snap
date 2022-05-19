@@ -19,15 +19,13 @@ expression: issue-8619.ts
 {
   {
     {
-      const myLongVariableName: MyLongTypeName | null = myLongFunctionCallHere();
+      const myLongVariableName:
+        | MyLongTypeName
+        | null = myLongFunctionCallHere();
     }
   }
 }
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    4:       const myLongVariableName: MyLongTypeName | null = myLongFunctionCallHere();
-```
 

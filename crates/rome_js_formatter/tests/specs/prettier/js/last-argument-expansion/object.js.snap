@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: object.js
-
 ---
 # Input
 ```js
@@ -33,7 +31,9 @@ export const log = y => {
 const formatData = pipe(
   zip,
   map(
-    ([ref, data]) => ({
+    (
+      [ref, data],
+    ) => ({
       nodeId: ref.nodeId.toString(),
       ...attributeFromDataValue(ref.attributeId, data),
     }),
@@ -43,10 +43,9 @@ const formatData = pipe(
   values,
 );
 
-export const setProp = (y) => ({
-  ...y,
-  a: "very, very, very long very, very long text",
-});
+export const setProp = (
+  y,
+) => ({ ...y, a: "very, very, very long very, very long text" });
 
 export const log = (y) => {
   console.log("very, very, very long very, very long text");

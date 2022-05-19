@@ -256,10 +256,7 @@ differentArgTypes(
 
 moreArgTypes(
   [1, 2, 3],
-  {
-    name: "Hello World",
-    age: 29,
-  },
+  { name: "Hello World", age: 29 },
   doSomething(
     // Hello world
 
@@ -305,29 +302,15 @@ doSomething.apply(
   ["Hello world 1", "Hello world 2", "Hello world 3"],
 );
 
-doAnotherThing(
-  "node",
-  {
-    solution_type,
-    time_frame,
-  },
-);
+doAnotherThing("node", { solution_type, time_frame });
 
-stuff.doThing(
-  someStuff,
-  -1,
-  {
-    accept: (node) => doSomething(node),
-  },
-);
+stuff.doThing(someStuff, -1, { accept: (node) => doSomething(node) });
 
 doThing(
   someOtherStuff,
   // This is important
   true,
-  {
-    decline: (creditCard) => takeMoney(creditCard),
-  },
+  { decline: (creditCard) => takeMoney(creditCard) },
 );
 
 func(
@@ -346,12 +329,20 @@ doSomething(
   { helloWorld, someImportantStuff },
 );
 
-function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
+function foo(
+  one,
+  two,
+  three,
+  four,
+  five,
+  six,
+  seven,
+  eight,
+  nine,
+  ten,
+  eleven,
+) {}
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-  132: function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
-```
 

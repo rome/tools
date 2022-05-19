@@ -182,7 +182,9 @@ const create = () => {
 const create2 = () => {
   const result = doSomething();
   return (
-    (shouldReturn && result.ok && result) || {
+    (
+      shouldReturn && result.ok && result
+    ) || {
       status: "ok",
       createdAt: result.createdAt,
       updatedAt: result.updatedAt,
