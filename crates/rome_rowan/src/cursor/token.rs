@@ -140,22 +140,30 @@ impl SyntaxToken {
     }
 
     pub fn next_token(&self) -> Option<SyntaxToken> {
-        match self.next_sibling_or_token() {
-            Some(element) => element.first_token(),
-            None => self
-                .ancestors()
-                .find_map(|it| it.next_sibling_or_token())
-                .and_then(|element| element.first_token()),
-        }
+        iter::successors(
+            self.next_sibling_or_token(),
+            SyntaxElement::next_sibling_or_token,
+        )
+        .chain(self.ancestors().flat_map(|node| {
+            iter::successors(
+                node.next_sibling_or_token(),
+                SyntaxElement::next_sibling_or_token,
+            )
+        }))
+        .find_map(|element| element.first_token())
     }
     pub fn prev_token(&self) -> Option<SyntaxToken> {
-        match self.prev_sibling_or_token() {
-            Some(element) => element.last_token(),
-            None => self
-                .ancestors()
-                .find_map(|it| it.prev_sibling_or_token())
-                .and_then(|element| element.last_token()),
-        }
+        iter::successors(
+            self.prev_sibling_or_token(),
+            SyntaxElement::prev_sibling_or_token,
+        )
+        .chain(self.ancestors().flat_map(|node| {
+            iter::successors(
+                node.prev_sibling_or_token(),
+                SyntaxElement::prev_sibling_or_token,
+            )
+        }))
+        .find_map(|element| element.last_token())
     }
 
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
