@@ -133,7 +133,7 @@ pub fn should_wrap_element_in_parens(element_syntax: &SyntaxNode<JsLanguage>) ->
 ///
 /// If you're wondering why this is the only other case, it's because
 /// Prettier defines it to be that way.
-fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
+pub fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
     node: &SyntaxNode<JsLanguage>,
 ) -> bool {
     // ```jsx
