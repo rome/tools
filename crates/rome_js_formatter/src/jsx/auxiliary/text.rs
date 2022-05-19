@@ -174,16 +174,24 @@ fn get_trimmed_text(
 ) -> Cow<str> {
     match (leading_whitespace_type, trailing_whitespace_type) {
         (Some(WhitespaceType::HasNewline), Some(WhitespaceType::HasNewline)) => {
-            Cow::Borrowed(text.trim())
+            Cow::Borrowed(text.trim_matches(&WHITESPACE[..]))
         }
         (None, None) => Cow::Borrowed(text),
-        (Some(WhitespaceType::HasNewline), None) => Cow::Borrowed(text.trim_start()),
-        (None, Some(WhitespaceType::HasNewline)) => Cow::Borrowed(text.trim_end()),
-        (Some(WhitespaceType::NoNewline), Some(WhitespaceType::NoNewline)) => {
-            Cow::Owned(format!(" {} ", text.trim()))
+        (Some(WhitespaceType::HasNewline), None) => {
+            Cow::Borrowed(text.trim_start_matches(&WHITESPACE[..]))
         }
-        (Some(WhitespaceType::NoNewline), _) => Cow::Owned(format!(" {}", text.trim())),
-        (_, Some(WhitespaceType::NoNewline)) => Cow::Owned(format!("{} ", text.trim())),
+        (None, Some(WhitespaceType::HasNewline)) => {
+            Cow::Borrowed(text.trim_end_matches(&WHITESPACE[..]))
+        }
+        (Some(WhitespaceType::NoNewline), Some(WhitespaceType::NoNewline)) => {
+            Cow::Owned(format!(" {} ", text.trim_matches(&WHITESPACE[..])))
+        }
+        (Some(WhitespaceType::NoNewline), _) => {
+            Cow::Owned(format!(" {}", text.trim_matches(&WHITESPACE[..])))
+        }
+        (_, Some(WhitespaceType::NoNewline)) => {
+            Cow::Owned(format!("{} ", text.trim_matches(&WHITESPACE[..])))
+        }
     }
 }
 
@@ -282,7 +290,7 @@ mod tests {
             clean_jsx_text("Foo", 0.into())
         );
         assert_eq!(
-            ((Cow::Borrowed(" Foo"), 1.into())),
+            (Cow::Borrowed(" Foo"), 1.into()),
             clean_jsx_text(" Foo", 0.into())
         );
         assert_eq!(
