@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: large-dict.js
-
 ---
 # Input
 ```js
@@ -21,10 +19,10 @@ function ugly() {
 ```js
 function ugly() {
   const dictWithSeveralEntries = {
-    key:          "value",
+    key: "value",
     anotherKey: "another value",
     firstNumber: 1,
-    secondNumber: 2
+    secondNumber: 2,
   };
 }
 

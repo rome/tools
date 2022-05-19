@@ -96,14 +96,34 @@ impl<'a> Printer<'a> {
                     self.state.pending_space = false;
                 }
 
+                // Insert source map markers before and after the token
+                //
+                // If the token has source position informations the start marker
+                // will use the start position of the original token, and the end
+                // marker will use that position + the text length of the token
+                //
+                // If the token has no source position (was created by the formatter)
+                // both the start and end marker will use the last known position
+                // in the input source (from state.source_position)
                 if let Some(source) = token.source_position() {
-                    self.state.source_markers.push(SourceMarker {
-                        source: *source,
-                        dest: TextSize::from(self.state.buffer.len() as u32),
-                    });
+                    self.state.source_position = *source;
                 }
 
+                self.state.source_markers.push(SourceMarker {
+                    source: self.state.source_position,
+                    dest: TextSize::of(&self.state.buffer),
+                });
+
                 self.print_str(token);
+
+                if token.source_position().is_some() {
+                    self.state.source_position += TextSize::of(&**token);
+                }
+
+                self.state.source_markers.push(SourceMarker {
+                    source: self.state.source_position,
+                    dest: TextSize::of(&self.state.buffer),
+                });
             }
 
             FormatElement::Group(Group { content, id }) => {
@@ -470,6 +490,7 @@ impl<'a> Printer<'a> {
 struct PrinterState<'a> {
     buffer: String,
     source_markers: Vec<SourceMarker>,
+    source_position: TextSize,
     pending_indent: u16,
     pending_space: bool,
     measured_group_fits: bool,
