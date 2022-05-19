@@ -816,108 +816,6 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
     }
 }
 
-/// Provides multiple different alternatives and the printer picks the first one that fits.
-/// Use this as last resort because it requires that the printer must try all variants in the worst case.
-/// The passed variants must be in the following order:
-/// * First: The variant that takes up most space horizontally
-/// * Last: The variant that takes up the least space horizontally by splitting the content over multiple lines.
-///
-/// ## Examples
-///
-/// ```
-/// use rome_formatter::{Formatted, LineWidth};
-/// use rome_formatter::prelude::*;
-///
-/// let elements =
-///  format_elements![token("aVeryLongIdentifier"),
-///   best_fitting(vec![
-///     // Everything fits on a single line
-///     format_elements![
-///         token("("),
-///         group_elements(format_elements![
-///             token("["),
-///                 soft_block_indent(format_elements![
-///                 token("1,"),
-///                 soft_line_break_or_space(),
-///                 token("2,"),
-///                 soft_line_break_or_space(),
-///                 token("3"),
-///             ]),
-///             token("]")
-///         ]),
-///         token(")")
-///     ],
-///
-///     // Breaks after `[`, but prints all elements on a single line
-///     format_elements![
-///         token("("),
-///         token("["),
-///         block_indent(token("1, 2, 3")),
-///         token("]"),
-///         token(")"),
-///     ],
-///
-///     // Breaks after `[` and prints each element on a single line
-///     format_elements![
-///         token("("),
-///         block_indent(format_elements![
-///             token("["),
-///             block_indent(format_elements![
-///                 token("1,"),
-///                 hard_line_break(),
-///                 token("2,"),
-///                 hard_line_break(),
-///                 token("3"),
-///             ]),
-///             token("]"),
-///         ]),
-///         token(")")
-///     ]
-///   ])
-/// ];
-///
-/// // Takes the first variant if everything fits on a single line
-/// assert_eq!(
-///     "aVeryLongIdentifier([1, 2, 3])",
-///     Formatted::new(elements.clone(), PrinterOptions::default())
-///         .print()
-///         .as_code()
-/// );
-///
-/// // It takes the second if the first variant doesn't fit on a single line. The second variant
-/// // has some additional line breaks to make sure inner groups don't break
-/// assert_eq!(
-///     "aVeryLongIdentifier([\n\t1, 2, 3\n])",
-///     Formatted::new(elements.clone(), PrinterOptions::default().with_print_width(21.try_into().unwrap()))
-///         .print()
-///         .as_code()
-/// );
-///
-/// // Prints the last option as last resort
-/// assert_eq!(
-///     "aVeryLongIdentifier(\n\t[\n\t\t1,\n\t\t2,\n\t\t3\n\t]\n)",
-///     Formatted::new(elements.clone(), PrinterOptions::default().with_print_width(20.try_into().unwrap()))
-///         .print()
-///         .as_code()
-/// );
-/// ```
-///
-/// ## Complexity
-/// Be mindful of using this IR element as it has a considerable performance penalty:
-/// * There are multiple representation for the same content. This results in increased memory usage
-///   and traversal time in the printer.
-/// * The worst case complexity is that the printer tires each variant. This can result in quadratic
-///   complexity if used in nested structures.
-///
-/// ## Prettier
-/// This IR is similar to Prettier's `ConditionalGroupContent` IR. It provides the same functionality but
-/// differs in that Prettier automatically wraps each variant in a `Group`. Rome doesn't do so.
-/// You can wrap the variant content in a group if you want to use soft line breaks.
-#[inline]
-pub fn best_fitting(variants: Vec<FormatElement>) -> FormatElement {
-    FormatElement::BestFitting(BestFitting::new(variants))
-}
-
 /// Adds a conditional content that is emitted only if it isn't inside an enclosing `Group` that
 /// is printed on a single line. The element allows, for example, to insert a trailing comma after the last
 /// array element only if the array doesn't fit on a single line.
@@ -1497,17 +1395,21 @@ pub struct BestFitting {
 }
 
 impl BestFitting {
-    pub fn new(variants: Vec<FormatElement>) -> Self {
-        assert!(variants.len() > 1, "The variants collection must contain at least two variants where the first is the least expanded state and the last element the most expanded option.");
+    pub unsafe fn from_slice_unchecked(variants: &[FormatElement]) -> Self {
+        debug_assert!(
+            variants.len() >= 2,
+            "Requires at least the least expanded and most expanded variants"
+        );
 
         Self {
-            variants: variants.into_boxed_slice(),
+            variants: Vec::from(variants).into_boxed_slice(),
         }
     }
 
+    /// Returns the most expanded variant
     pub fn most_expanded(&self) -> &FormatElement {
         self.variants.last().expect(
-            "Most contain at least two elements, as guaranteed by the constructor invariant.",
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
         )
     }
 
@@ -1515,9 +1417,10 @@ impl BestFitting {
         &self.variants
     }
 
+    /// Returns the least expanded variant
     pub fn most_flat(&self) -> &FormatElement {
         self.variants.first().expect(
-            "Most contain at least two elements, as guaranteed by the constructor invariant.",
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
         )
     }
 }
