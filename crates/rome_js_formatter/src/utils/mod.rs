@@ -426,17 +426,17 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
     )
 }
 
+type PredicateFn = Box<dyn Fn(SyntaxNode<JsLanguage>) -> bool>;
+
 pub fn match_ancestors(
     node: &SyntaxNode<JsLanguage>,
-    predicates: Vec<Option<Box<dyn Fn(SyntaxNode<JsLanguage>) -> bool>>>,
+    predicates: Vec<Option<PredicateFn>>,
 ) -> bool {
     let mut ancestors = node.ancestors();
-    for predicate in predicates {
-        if let Some(predicate) = predicate {
-            let predicate_result = ancestors.next().map(predicate).unwrap_or(false);
-            if !predicate_result {
-                return false;
-            }
+    for predicate in predicates.into_iter().flatten() {
+        let predicate_result = ancestors.next().map(predicate).unwrap_or(false);
+        if !predicate_result {
+            return false;
         }
     }
 
