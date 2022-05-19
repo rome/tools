@@ -1131,11 +1131,11 @@ two lines`,
             group_elements(format_elements![
                 token("["),
                 soft_block_indent(format_elements![fill_elements(
-                    token(", "),
+                    token(" "),
                     vec![
-                        format_elements![token("1")],
-                        format_elements![token("2")],
-                        format_elements![token("3")]
+                        format_elements![token("1"), token(",")],
+                        format_elements![token("2"), token(",")],
+                        format_elements![token("3"), if_group_breaks(token(","))]
                     ]
                 )]),
                 token("]")
