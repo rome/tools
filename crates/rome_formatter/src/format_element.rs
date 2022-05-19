@@ -1395,6 +1395,15 @@ pub struct BestFitting {
 }
 
 impl BestFitting {
+    /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
+    /// but it is to discourage people from using it because the printer will panic if
+    /// the slice doesn't contain at least the least and most expanded variants.
+    ///
+    /// You're looking for a way to create a `BestFitting` object, use the `best_fitting![least_expanded, most_expanded]` macro.
+    ///
+    /// ## Safety
+    /// The slice must contain at least two variants.
+    #[doc(hidden)]
     pub unsafe fn from_slice_unchecked(variants: &[FormatElement]) -> Self {
         debug_assert!(
             variants.len() >= 2,
