@@ -4,6 +4,7 @@
 //! from any error and produce an ast from any source code. If you don't want to account for
 //! optionals for everything, you can use ...
 
+use extension_trait::extension_trait;
 #[cfg(feature = "serde")]
 use serde_crate::Serialize;
 use std::error::Error;
@@ -75,6 +76,17 @@ pub trait AstNode {
         Self: Sized,
     {
         Self::cast(self.syntax().clone_subtree()).unwrap()
+    }
+
+    fn parent<T: AstNode<Language = Self::Language>>(&self) -> Option<T> {
+        self.syntax().parent().and_then(T::cast)
+    }
+}
+
+#[extension_trait]
+impl<L: Language> SyntaxNodeCast<L> for SyntaxNode<L> {
+    fn cast<T: AstNode<Language = L>>(self) -> Option<T> {
+        T::cast(self)
     }
 }
 
@@ -641,5 +653,51 @@ mod tests {
             list.elements(),
             vec![(Some(1.), None), (Some(2.), Some(","))],
         );
+    }
+
+    #[test]
+    fn ok_typed_parent_navigation() {
+        use crate::ast::SyntaxNodeCast;
+        use crate::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+        use crate::*;
+
+        // This test creates the following tree
+        // Root
+        //     Condition
+        //         Let
+        // then selects the CONDITION node, cast it,
+        // then navigate upwards to its parent.
+        // All casts are fake and implemented below
+
+        let tree = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+            builder.start_node(RawLanguageKind::CONDITION);
+            builder.token(RawLanguageKind::LET_TOKEN, "let");
+            builder.finish_node();
+        });
+        let typed = tree.first_child().unwrap().cast::<RawRoot>().unwrap();
+        let _ = typed.parent::<RawRoot>().unwrap();
+
+        struct RawRoot(SyntaxNode<RawLanguage>);
+        impl AstNode for RawRoot {
+            type Language = RawLanguage;
+            fn can_cast(_: <Self::Language as Language>::Kind) -> bool {
+                todo!()
+            }
+
+            fn cast(syntax: SyntaxNode<Self::Language>) -> Option<Self>
+            where
+                Self: Sized,
+            {
+                Some(Self(syntax))
+            }
+
+            fn syntax(&self) -> &SyntaxNode<Self::Language> {
+                &self.0
+            }
+
+            fn into_syntax(self) -> SyntaxNode<Self::Language> {
+                todo!()
+            }
+        }
     }
 }

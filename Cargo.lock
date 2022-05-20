@@ -467,6 +467,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "extension-trait"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5129068fe3183546eaa0529af88ab0afbcddec2a373db69e94a20b8d5f6c4d74"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "filetime"
 version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1518,6 +1529,7 @@ name = "rome_rowan"
 version = "0.0.0"
 dependencies = [
  "countme",
+ "extension-trait",
  "hashbrown",
  "memoffset",
  "quickcheck",
