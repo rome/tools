@@ -51,10 +51,7 @@ while (true) {} // comment
 
 while (true) /* comment */ ++x;
 
-while (
-  1
-) foo() // Comment
-;
+while (1) foo(); // Comment
 
 ```
 

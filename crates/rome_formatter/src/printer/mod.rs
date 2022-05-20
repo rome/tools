@@ -254,11 +254,10 @@ impl<'a> Printer<'a> {
                                 // Test if this variant fits and if so, use it. Otherwise try the next
                                 // variant.
 
-                                // TODO pass in proper queue to respect remaining content in document.
                                 if fits_on_line(
                                     &[variant],
                                     args.with_print_mode(PrintMode::Expanded),
-                                    &ElementCallQueue::default(),
+                                    queue,
                                     self,
                                 ) {
                                     self.state.measured_group_fits = true;

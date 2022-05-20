@@ -147,8 +147,7 @@ const {
   configureStore,
 } = process.env.NODE_ENV === "production" ? require(
   "./configureProdStore",
-) // a
-: require("./configureDevStore"); // b
+) : require("./configureDevStore"); // a // b
 
 test /* comment
   comment
