@@ -1152,6 +1152,10 @@ pub enum FormatElement {
 
     /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
     Verbatim(Verbatim),
+
+    /// A list of different variants representing the same content. The printer picks the best fitting content.
+    /// Line breaks inside of a best fitting don't propagate to parent groups.
+    BestFitting(BestFitting),
 }
 
 #[derive(Clone, Eq, PartialEq)]
@@ -1234,6 +1238,10 @@ impl Debug for FormatElement {
                 .debug_tuple("Verbatim")
                 .field(&verbatim.element)
                 .finish(),
+            FormatElement::BestFitting(best_fitting) => {
+                write!(fmt, "BestFitting")?;
+                best_fitting.fmt(fmt)
+            }
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
         }
     }
@@ -1371,6 +1379,64 @@ impl PrintMode {
 
     pub const fn is_expanded(&self) -> bool {
         matches!(self, PrintMode::Expanded)
+    }
+}
+
+/// Provides the printer with different representations for the same element so that the printer
+/// can pick the best fitting variant.
+///
+/// Best fitting is defined as the variant that takes the most horizontal space but fits on the line.
+#[derive(Clone, Eq, PartialEq)]
+pub struct BestFitting {
+    /// The different variants for this element.
+    /// The first element is the one that takes up the most space horizontally (the most flat),
+    /// The last element takes up the least space horizontally (but most horizontal space).
+    variants: Box<[FormatElement]>,
+}
+
+impl BestFitting {
+    /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
+    /// but it is to discourage people from using it because the printer will panic if
+    /// the slice doesn't contain at least the least and most expanded variants.
+    ///
+    /// You're looking for a way to create a `BestFitting` object, use the `best_fitting![least_expanded, most_expanded]` macro.
+    ///
+    /// ## Safety
+    /// The slice must contain at least two variants.
+    #[doc(hidden)]
+    pub unsafe fn from_slice_unchecked(variants: &[FormatElement]) -> Self {
+        debug_assert!(
+            variants.len() >= 2,
+            "Requires at least the least expanded and most expanded variants"
+        );
+
+        Self {
+            variants: Vec::from(variants).into_boxed_slice(),
+        }
+    }
+
+    /// Returns the most expanded variant
+    pub fn most_expanded(&self) -> &FormatElement {
+        self.variants.last().expect(
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
+        )
+    }
+
+    pub fn variants(&self) -> &[FormatElement] {
+        &self.variants
+    }
+
+    /// Returns the least expanded variant
+    pub fn most_flat(&self) -> &FormatElement {
+        self.variants.first().expect(
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
+        )
+    }
+}
+
+impl Debug for BestFitting {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        f.debug_list().entries(&*self.variants).finish()
     }
 }
 
@@ -1623,6 +1689,7 @@ impl FormatElement {
             FormatElement::LineSuffix(_) => false,
             FormatElement::Comment(content) => content.will_break(),
             FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
+            FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
             FormatElement::ExpandParent => true,
         }

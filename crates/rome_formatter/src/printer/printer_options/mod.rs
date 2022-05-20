@@ -21,8 +21,8 @@ pub struct PrinterOptions {
 }
 
 impl PrinterOptions {
-    pub fn with_print_with(mut self, with: LineWidth) -> Self {
-        self.print_width = with;
+    pub fn with_print_width(mut self, width: LineWidth) -> Self {
+        self.print_width = width;
         self
     }
 

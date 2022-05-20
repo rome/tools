@@ -247,6 +247,45 @@ impl<'a> Printer<'a> {
                     "Fits should always return false for `ExpandParent`"
                 );
             }
+            FormatElement::BestFitting(best_fitting) => {
+                match args.mode {
+                    PrintMode::Flat if self.state.measured_group_fits => {
+                        queue.enqueue(PrintElementCall::new(best_fitting.most_flat(), args))
+                    }
+                    _ => {
+                        let last_index = best_fitting.variants().len() - 1;
+                        for (index, variant) in best_fitting.variants().iter().enumerate() {
+                            if index == last_index {
+                                // No variant fits, take the last (most expanded) as fallback
+                                queue.enqueue(PrintElementCall::new(
+                                    variant,
+                                    args.with_print_mode(PrintMode::Expanded),
+                                ));
+                                break;
+                            } else {
+                                // Test if this variant fits and if so, use it. Otherwise try the next
+                                // variant.
+
+                                // TODO pass in proper queue to respect remaining content in document.
+                                if fits_on_line(
+                                    &[variant],
+                                    args.with_print_mode(PrintMode::Expanded),
+                                    &ElementCallQueue::default(),
+                                    self,
+                                ) {
+                                    self.state.measured_group_fits = true;
+
+                                    queue.enqueue(PrintElementCall::new(
+                                        variant,
+                                        args.with_print_mode(PrintMode::Expanded),
+                                    ));
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -765,6 +804,14 @@ fn fits_element_on_line<'a, 'rest>(
         FormatElement::Verbatim(verbatim) => {
             queue.enqueue(PrintElementCall::new(&verbatim.element, args))
         }
+        FormatElement::BestFitting(best_fitting) => {
+            let content = match args.mode {
+                PrintMode::Flat => best_fitting.most_flat(),
+                PrintMode::Expanded => best_fitting.most_expanded(),
+            };
+
+            queue.enqueue(PrintElementCall::new(content, args))
+        }
         FormatElement::ExpandParent => {
             if args.mode.is_flat() || args.hard_group {
                 return Fits::No;
@@ -1124,8 +1171,8 @@ two lines`,
             ]),
         ]);
 
-        let printed =
-            Printer::new(PrinterOptions::default().with_print_with(LineWidth(10))).print(&document);
+        let printed = Printer::new(PrinterOptions::default().with_print_width(LineWidth(10)))
+            .print(&document);
 
         assert_eq!(
             printed.as_code(),
