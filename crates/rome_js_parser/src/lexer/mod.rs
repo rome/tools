@@ -15,8 +15,6 @@
 
 #![allow(clippy::or_fun_call)]
 
-#[rustfmt::skip]
-mod tables;
 mod errors;
 mod tests;
 
@@ -30,7 +28,6 @@ use bitflags::bitflags;
 pub use highlight::*;
 
 use rome_diagnostics::Diagnostic;
-use tables::derived_property::*;
 
 pub(crate) use buffered_lexer::BufferedLexer;
 pub use rome_js_syntax::*;
@@ -62,11 +59,11 @@ const UNICODE_SPACES: [char; 19] = [
 ];
 
 fn is_id_start(c: char) -> bool {
-    c == '_' || c == '$' || ID_Start(c)
+    c == '_' || c == '$' || unicode_id_start::is_id_start(c)
 }
 
 fn is_id_continue(c: char) -> bool {
-    c == '$' || c == '\u{200d}' || c == '\u{200c}' || ID_Continue(c)
+    c == '$' || c == '\u{200d}' || c == '\u{200c}' || unicode_id_start::is_id_continue(c)
 }
 
 /// Context in which the lexer should lex the next token

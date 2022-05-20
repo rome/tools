@@ -1437,6 +1437,7 @@ dependencies = [
  "smallvec",
  "tests_macros",
  "tracing",
+ "unicode-id-start",
 ]
 
 [[package]]
@@ -2080,6 +2081,12 @@ name = "unicode-bidi"
 version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1a01404663e3db436ed2746d9fefef640d868edae3cceb81c3b8d5732fda678f"
+
+[[package]]
+name = "unicode-id-start"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7630b6f96d164f7eba863088374041712cb77252a9242945744045d9d18ee06b"
 
 [[package]]
 name = "unicode-normalization"
