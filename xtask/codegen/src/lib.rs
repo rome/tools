@@ -13,7 +13,6 @@ mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
 mod termcolorful;
-mod unicode;
 use proc_macro2::TokenStream;
 use quote::quote;
 use std::path::Path;
@@ -24,7 +23,6 @@ use xtask::{glue::fs2, Mode, Result};
 pub use self::ast::generate_ast;
 pub use self::formatter::generate_formatter;
 pub use self::parser_tests::generate_parser_tests;
-pub use self::unicode::generate_tables;
 
 const JS_SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
 const JS_AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";

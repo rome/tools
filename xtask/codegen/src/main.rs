@@ -1,7 +1,7 @@
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
-use xtask_codegen::{generate_ast, generate_formatter, generate_parser_tests, generate_tables};
+use xtask_codegen::{generate_ast, generate_formatter, generate_parser_tests};
 
 fn main() -> Result<()> {
     let _d = pushd(project_root());
@@ -26,10 +26,6 @@ fn main() -> Result<()> {
             generate_parser_tests(Mode::Overwrite)?;
             Ok(())
         }
-        "unicode" => {
-            generate_tables()?;
-            Ok(())
-        }
         _ => {
             eprintln!(
                 "\
@@ -40,7 +36,6 @@ USAGE:
 SUBCOMMANDS:
 	grammar      Transforms js.ungram into AST
 	test         Extracts parser inline comments into test files
-	unicode      Generates unicode table inside lexer
 			"
             );
             Ok(())

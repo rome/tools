@@ -68,7 +68,3 @@ cargo codegen test
 cargo test parser # for checking failed tests
 UPDATE_EXPECT=1 cargo test parser # for committing the changes
 ```
-
-## `cargo codegen unicode`
-This command downloads unicode data from unicode.org and writes it `crates/rome_js_lexer/src/tables.rs`.
-Use this command when unicode support has changed.
