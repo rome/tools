@@ -1,10 +1,12 @@
 import { PlaygroundProps } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { createSetter, getLanguage } from "./utils";
+import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import ReactJson from "react-json-view";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export default function DesktopPlayground(
 	{
@@ -14,8 +16,19 @@ export default function DesktopPlayground(
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
 ) {
+
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
+	const handleClickCopyRomeIrToClipBoard = () => {
+		if (!navigator.clipboard) {
+			toast("Your browser does not support clipboard, could not copy text", {});
+		}
+		navigator.clipboard.writeText(formatter_ir).then(function() {
+			toast("RomeIR has been successfully copy to your clipboard", {});
+		}, function(err) {
+			toast("Could not copy text: ", err);
+		});
+	}
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
@@ -98,6 +111,8 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
+							<ToastContainer />
+							<button className="bg-slate-500 px-4 py-1 text-white absolute right-0 mr-5" onClick={handleClickCopyRomeIrToClipBoard}>Copy to ClipBoard</button>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>

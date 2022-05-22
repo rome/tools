@@ -15,6 +15,7 @@ specifiers:
   react-dom: ^17.0.2
   react-json-view: ^1.21.3
   react-tabs: ^3.2.3
+  react-toastify: ^9.0.1
   tailwindcss: ^3.0.19
   typescript: ^4.4.4
   vite: ^2.7.2
@@ -26,6 +27,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-json-view: 1.21.3_xd63vgjm47lzoal5ybyqmsdesy
   react-tabs: 3.2.3_react@17.0.2
+  react-toastify: 9.0.1_sfoxds7t5ydpegc3knd667wn6m
 
 devDependencies:
   '@tailwindcss/forms': 0.4.1_tailwindcss@3.0.19
@@ -219,6 +221,8 @@ packages:
     resolution: {integrity: sha512-VKXSCQx5D8S04ej+Dqsr1CzYvvWgf20jIw2D+YhQCrIlr2UZGaDds23Y0xg75/skOxpLCRpUZvk/1EAVkGoDOw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.17.0
     dev: true
 
   /@babel/plugin-syntax-jsx/7.16.7_@babel+core@7.17.0:
@@ -399,6 +403,16 @@ packages:
       '@types/unist': 2.0.6
     dev: false
 
+  /@types/keyv/3.1.4:
+    resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
+    dependencies:
+      '@types/node': 17.0.35
+    dev: false
+
+  /@types/node/17.0.35:
+    resolution: {integrity: sha512-vu1SrqBjbbZ3J6vwY17jBs8Sr/BKA+/a/WtjRG+whKg1iuLFOosq872EXS0eXWILdO36DHQQeku/ZcL6hz2fpg==}
+    dev: false
+
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
@@ -434,6 +448,12 @@ packages:
       '@types/scheduler': 0.16.2
       csstype: 3.0.10
     dev: true
+
+  /@types/responselike/1.0.0:
+    resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
+    dependencies:
+      '@types/node': 17.0.35
+    dev: false
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
@@ -1511,6 +1531,8 @@ packages:
     resolution: {integrity: sha1-JAzQV4WpoY5WHcG0S0HHY+8ejbA=}
     engines: {node: '>=4'}
     dependencies:
+      '@types/keyv': 3.1.4
+      '@types/responselike': 1.0.0
       create-error-class: 3.0.2
       duplexer3: 0.1.4
       get-stream: 3.0.0
@@ -1530,6 +1552,8 @@ packages:
     dependencies:
       '@sindresorhus/is': 0.14.0
       '@szmarczak/http-timer': 1.1.2
+      '@types/keyv': 3.1.4
+      '@types/responselike': 1.0.0
       cacheable-request: 6.1.0
       decompress-response: 3.3.0
       duplexer3: 0.1.4
@@ -2630,6 +2654,17 @@ packages:
       use-latest: 1.2.1_udcsdvdzjr5ns727jqoeu7kyda
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-toastify/9.0.1_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-c2zeZHkCX+WXuItS/JRqQ/8CH8Qm/je+M0rt09xe9fnu5YPJigtNOdD8zX4fwLA093V2am3abkGfOowwpkrwOQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.1.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /react/17.0.2:
