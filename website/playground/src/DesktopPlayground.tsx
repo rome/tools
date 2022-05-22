@@ -4,9 +4,8 @@ import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function DesktopPlayground(
 	{
@@ -16,19 +15,23 @@ export default function DesktopPlayground(
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
 ) {
-
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 	const handleClickCopyRomeIrToClipBoard = () => {
 		if (!navigator.clipboard) {
 			toast("Your browser does not support clipboard, could not copy text", {});
 		}
-		navigator.clipboard.writeText(formatter_ir).then(function() {
-			toast("RomeIR has been successfully copy to your clipboard", {});
-		}, function(err) {
-			toast("Could not copy text: ", err);
-		});
-	}
+		navigator.clipboard
+			.writeText(formatter_ir)
+			.then(
+				function () {
+					toast("RomeIR has been successfully copy to your clipboard", {});
+				},
+				function (err) {
+					toast("Could not copy text: ", err);
+				},
+			);
+	};
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
