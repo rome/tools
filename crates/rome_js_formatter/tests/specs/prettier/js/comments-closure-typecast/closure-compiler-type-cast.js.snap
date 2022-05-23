@@ -118,13 +118,19 @@ const style = /** @type {{
   marginLeft: number,
   marginRight: number,
   marginBottom: number,
-}} */ ({ width, height, ...margins });
+}} */ ({
+  width,
+  height,
+  ...margins,
+});
 
 const style2 = /**
  * @type {{
  *   width: number,
  * }}
-*/ ({ width });
+*/ ({
+  width,
+});
 
 ```
 

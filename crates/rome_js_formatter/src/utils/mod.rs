@@ -105,6 +105,18 @@ pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
     false
 }
 
+/// Returns true if this node contains newlines in trivias.
+pub(crate) fn has_leading_newline(node: &JsSyntaxNode) -> bool {
+    if let Some(leading_trivia) = node.first_leading_trivia() {
+        for piece in leading_trivia.pieces() {
+            if piece.is_newline() {
+                return true;
+            }
+        }
+    }
+    false
+}
+
 /// Format an element with a single line head and a body that might
 /// be either a block or a single statement
 ///

@@ -153,7 +153,10 @@ type W = {
 	g: symbol;
 };
 type X = { a: string; b: symbol };
-type Z = { a: string; b: symbol };
+type Z = {
+	a: string;
+	b: symbol;
+};
 
 type OptionsFlags<Type> = {
 	+readonly [Property in keyof Type as string]-?: boolean;

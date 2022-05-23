@@ -42,9 +42,10 @@ var arr2 = ["hello", true]; // (string | number)[]
 var arr3Tuple: [number, string] = [3, "three"]; // [number, string]
 var arr4Tuple: [number, string] = [3, "three", "hello"]; // [number, string, string]
 var arrEmpty = [];
-var arr5Tuple: { 0: string; 5: number } = [
-  "hello", true, false, " hello", true, 10, "any",
-]; // Tuple
+var arr5Tuple: {
+  0: string;
+  5: number;
+} = ["hello", true, false, " hello", true, 10, "any"]; // Tuple
 class C {
   foo() {}
 }

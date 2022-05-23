@@ -5,6 +5,9 @@ expression: import_specifiers.js
 # Input
 import { hey } from "hey"
 import { hey } from "hey";
+import {
+    apple,
+banana } from "fruits";
 import {test} from "foo.json" assert { for: "for" }
 import { // some funky comment
     loooooooooooooooooooong as moreeeeeeloooooooooooooooooooong,
@@ -30,6 +33,7 @@ Quote style: Double Quotes
 -----
 import { hey } from "hey";
 import { hey } from "hey";
+import { apple, banana } from "fruits";
 import { test } from "foo.json" assert { for: "for" };
 import {
 	// some funky comment

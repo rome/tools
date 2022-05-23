@@ -51,9 +51,13 @@ const c = classnames({
   "some-prop": ["foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar", "foo"],
 });
 
-const d = classnames({ "some-prop": () => {} });
+const d = classnames({
+  "some-prop": () => {},
+});
 
-const e = classnames({ "some-prop": function bar() {} });
+const e = classnames({
+  "some-prop": function bar() {},
+});
 
 const f = classnames({
   "some-prop": { foo: "bar", bar: "foo", foo: "bar", bar: "foo", foo: "bar" },
@@ -74,6 +78,6 @@ ipsum`,
 # Lines exceeding max width of 80 characters
 ```
     6:   "some-prop": this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
-   22:   "some-prop": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
+   26:   "some-prop": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
 ```
 
