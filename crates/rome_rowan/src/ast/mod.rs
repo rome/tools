@@ -4,7 +4,6 @@
 //! from any error and produce an ast from any source code. If you don't want to account for
 //! optionals for everything, you can use ...
 
-use extension_trait::extension_trait;
 #[cfg(feature = "serde")]
 use serde_crate::Serialize;
 use std::error::Error;
@@ -83,7 +82,15 @@ pub trait AstNode {
     }
 }
 
-#[extension_trait]
+trait SyntaxNodeCast<L: Language> {
+    /// Tries to cast the current syntax node to specified AST node.
+    ///
+    /// # Returns
+    ///
+    /// [None] if the current node is of a different kind. [Some] otherwise.
+    fn cast<T: AstNode<Language = L>>(self) -> Option<T>;
+}
+
 impl<L: Language> SyntaxNodeCast<L> for SyntaxNode<L> {
     fn cast<T: AstNode<Language = L>>(self) -> Option<T> {
         T::cast(self)
