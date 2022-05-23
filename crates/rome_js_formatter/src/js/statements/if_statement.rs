@@ -87,16 +87,14 @@ fn into_block(
     formatter: &Formatter<JsFormatOptions>,
     stmt: JsAnyStatement,
 ) -> FormatResult<FormatElement> {
-    let formatted_statement = stmt.format();
-
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
-        return formatted![formatter, [space_token(), formatted_statement]];
+        return formatted![formatter, [space_token(), stmt.format()]];
     }
 
     // If the body is an empty statement, force a line break to ensure behavior
     // is coherent with `is_non_collapsable_empty_block`
     if matches!(stmt, JsAnyStatement::JsEmptyStatement(_)) {
-        return formatted![formatter, [formatted_statement, hard_line_break()]];
+        return formatted![formatter, [stmt.format(), hard_line_break()]];
     }
 
     formatted![
