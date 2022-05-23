@@ -1,20 +1,21 @@
-use crate::utils::{format_sequence_expression, SequenceContext};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::JsSequenceExpression;
+use crate::prelude::*;
+use crate::{FormatElement, FormatNodeFields, FormatNodeRule, Formatter, JsFormatOptions};
+use rome_formatter::{concat_elements, group_elements, soft_block_indent, FormatResult};
+use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
+use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpression> {
     fn format_fields(
         node: &JsSequenceExpression,
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
-        format_sequence_expression(self, formatter, SequenceContext::None)
+        format_sequence_expression(node, formatter)
     }
 }
 
 pub(crate) fn format_sequence_expression(
     node: &JsSequenceExpression,
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
 ) -> FormatResult<FormatElement> {
     let mut current = node.clone();
     let parent = current.syntax().parent();
@@ -34,7 +35,9 @@ pub(crate) fn format_sequence_expression(
             matches!(
                 great_parent,
                 Some(
-                    JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION | JsSyntaxKind::JS_RETURN_STATEMENT
+                    JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+                        | JsSyntaxKind::JS_RETURN_STATEMENT
+                        | JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER
                 )
             )
         } else {
@@ -56,10 +59,10 @@ pub(crate) fn format_sequence_expression(
         right,
     } = current.as_fields();
 
-    let mut formatted = vec![format_elements![
-        left.format(formatter)?,
-        comma_token.format(formatter)?
-    ]];
+    let mut formatted = vec![formatted![
+        formatter,
+        [left.format()?, comma_token.format()?]
+    ]?];
 
     let mut previous_right = right;
 
@@ -76,32 +79,38 @@ pub(crate) fn format_sequence_expression(
         } = parent_sequence.as_fields();
 
         if has_already_indentation {
-            formatted.push(format_elements![
-                soft_line_break_or_space(),
-                previous_right.format(formatter)?,
-                comma_token.format(formatter)?,
-            ]);
+            formatted.push(formatted![
+                formatter,
+                [
+                    soft_line_break_or_space(),
+                    previous_right.format()?,
+                    comma_token.format()?,
+                ]
+            ]?);
         } else {
-            formatted.push(soft_block_indent(format_elements![
-                soft_line_break_or_space(),
-                previous_right.format(formatter)?,
-                comma_token.format(formatter)?,
-            ]))
+            formatted.push(soft_block_indent(formatted![
+                formatter,
+                [
+                    soft_line_break_or_space(),
+                    previous_right.format()?,
+                    comma_token.format()?,
+                ]
+            ]?))
         }
         previous_right = right;
         current = parent_sequence;
     }
 
     if has_already_indentation {
-        formatted.push(format_elements![
-            soft_line_break_or_space(),
-            previous_right.format(formatter)?,
-        ]);
+        formatted.push(formatted![
+            formatter,
+            [soft_line_break_or_space(), previous_right.format()?,]
+        ]?);
     } else {
-        formatted.push(soft_block_indent(format_elements![
-            soft_line_break_or_space(),
-            previous_right.format(formatter)?,
-        ]))
+        formatted.push(soft_block_indent(formatted![
+            formatter,
+            [soft_line_break_or_space(), previous_right.format()?,]
+        ]?))
     }
 
     Ok(group_elements(concat_elements(formatted)))

@@ -19,30 +19,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
             r_paren_token,
         } = node.as_fields();
 
-        let expression = expression?;
         let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node)?;
-        let is_in_function = self.syntax().parent().map_or(false, |p| {
-            matches!(
-                p.kind(),
-                JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION | JsSyntaxKind::JS_RETURN_STATEMENT
-            )
-        });
-
-        let expression = if is_in_function {
-            if let Some(sequence_expression) =
-                JsSequenceExpression::cast(expression.syntax().clone())
-            {
-                format_sequence_expression(
-                    &sequence_expression,
-                    formatter,
-                    SequenceContext::InFunction,
-                )?
-            } else {
-                expression.format(formatter)?
-            }
-        } else {
-            expression.format(formatter)?
-        };
 
         let expression = expression?;
 

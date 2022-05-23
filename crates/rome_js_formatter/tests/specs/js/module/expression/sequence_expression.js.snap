@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
+assertion_line: 244
 expression: sequence_expression.js
 ---
 # Input
@@ -9,7 +9,7 @@ a,b
 const f = () => (
     ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
 
-)
+);
 
 (
     ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
@@ -18,6 +18,13 @@ const f = () => (
 
 function a() {
     return     ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
+}
+
+const object ={
+    something: (
+        ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
+    )
+
 }
 =============================
 # Outputs
@@ -29,24 +36,25 @@ Quote style: Double Quotes
 -----
 a, b;
 
-const f = () =>
-	(
-		____________first,
-			____________second,
-			____________third,
-			____________third,
-			____________third,
-			____________third,
-			____________third
-	)(
-		____________first,
+const f = () => (
+	____________first,
+	____________second,
+	____________third,
+	____________third,
+	____________third,
+	____________third,
+	____________third
+);
+
+(
+	____________first,
 		____________second,
 		____________third,
 		____________third,
 		____________third,
 		____________third,
-		____________third,
-	);
+		____________third
+);
 
 function a() {
 	return (
@@ -59,4 +67,16 @@ function a() {
 		____________third
 	);
 }
+
+const object = {
+	something: (
+		____________first,
+		____________second,
+		____________third,
+		____________third,
+		____________third,
+		____________third,
+		____________third
+	),
+};
 
