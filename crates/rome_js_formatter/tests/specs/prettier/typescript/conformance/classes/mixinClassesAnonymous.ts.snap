@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: mixinClassesAnonymous.ts
-
 ---
 # Input
 ```js
@@ -87,7 +85,11 @@ class Derived extends Base {
   }
 }
 
-const Printable = <T extends Constructor<Base>>(superClass: T) =>
+const Printable = <
+  T extends Constructor<Base>,
+>(
+  superClass: T,
+) =>
   class extends superClass {
     static message = "hello";
     print() {

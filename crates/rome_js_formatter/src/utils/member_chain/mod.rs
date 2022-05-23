@@ -299,9 +299,18 @@ fn format_groups(
             ])
         ])
     } else {
+        let chain = groups.into_format_elements();
+
         Ok(format_elements![
             head_group.into_format_element(),
-            groups.into_format_elements()
+            // TODO This line suffix boundary shouldn't be needed but currently is because comments
+            // can move over node boundaries. Follow up when re-working member chain formatting
+            if chain.is_empty() {
+                empty_element()
+            } else {
+                line_suffix_boundary()
+            },
+            chain
         ])
     }
 }

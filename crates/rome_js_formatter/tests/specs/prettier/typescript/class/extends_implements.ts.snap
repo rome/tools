@@ -137,16 +137,14 @@ class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstract
     Interface8
 {}
 
-class ImplementsInterfaceAndExtendsAbstractClass1<Foo> extends FOOOOOOOOOOOOOOOOO
-  implements
-    FOOOOOOOOOOOOOOOOO,
-    BARRRRRRRRRR
-{}
+class ImplementsInterfaceAndExtendsAbstractClass1<
+  Foo,
+> extends FOOOOOOOOOOOOOOOOO implements FOOOOOOOOOOOOOOOOO, BARRRRRRRRRR {}
 
-class Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOOOOOO>
-  implements
-    Foo
-{}
+class Foo<
+  FOOOOOOOOOOOOOOOOOOOOOOOOOOO,
+  FOOOOOOOOOOOOOOOOOOOOOOOOOOO,
+> implements Foo {}
 
 class ImplementsInterfaceAndExtendsAbstractClass2<
   TypeArgumentNumberOne,
@@ -174,6 +172,5 @@ class ImplementsInterfaceClassWithComments1<
    25: class ExtendsAbstractClassAndImplementsInterfaces3 extends AAAAAAAAAAAAAAbstractClass
    37: class ExtendsAbstractClassAndImplementsInterfaces4 extends AAAAAAAAAAAAAAbstractClass<
    47: class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstractClass<
-   67: class ImplementsInterfaceAndExtendsAbstractClass1<Foo> extends FOOOOOOOOOOOOOOOOO
 ```
 

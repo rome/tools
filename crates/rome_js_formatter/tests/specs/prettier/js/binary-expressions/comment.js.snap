@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: comment.js
 ---
 # Input
@@ -66,9 +65,9 @@ foo[
 a =
   (
     // Comment 1
-    (Math.random() * (yRange * (1 - minVerticalFraction))) + (
-      minVerticalFraction * yRange
-    )
+    (
+      Math.random() * (yRange * (1 - minVerticalFraction))
+    ) + (minVerticalFraction * yRange)
   ) - offset;
 
 a +

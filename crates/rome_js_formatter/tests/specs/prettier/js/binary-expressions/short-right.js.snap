@@ -29,12 +29,14 @@ defaultContent.filter(defaultLocale => {
 # Output
 ```js
 this._cumulativeHeights && Math.abs(
-  this._cachedItemHeight(this._firstVisibleIndex + i) - this._provider.fastHeight(
-    i + this._firstVisibleIndex,
-  ),
+  this._cachedItemHeight(
+    this._firstVisibleIndex + i,
+  ) - this._provider.fastHeight(i + this._firstVisibleIndex),
 ) > 1;
 
-foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(aaaaaaaaaaaaaaaaaaa) + a;
+foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(
+  aaaaaaaaaaaaaaaaaaa,
+) + a;
 
 const isPartOfPackageJSON = dependenciesArray.indexOf(
   dependencyWithOutRelativePath.split("/")[0],
@@ -46,9 +48,4 @@ defaultContent.filter((defaultLocale) => {
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    2:   this._cachedItemHeight(this._firstVisibleIndex + i) - this._provider.fastHeight(
-    7: foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(aaaaaaaaaaaaaaaaaaa) + a;
-```
 

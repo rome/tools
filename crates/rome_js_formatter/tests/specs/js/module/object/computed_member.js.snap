@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: computed_member.js
 ---
 # Input
@@ -41,11 +40,29 @@ foo.bar["bar"]["lorem_ispsum"].foo["lorem-ipsum"] = true;
 a[b];
 c?.[d];
 
-x["very"]["long"]["chain"]["of"]["computed"]["members"]["that"]["goes"]["on"][
-	"for"
-]["ever"]["I"]["mean"]["it"]["for"]["ever"]["and"]["even"]["longer"]["than"][
+x[
+	"very"
+][
+	"long"
+][
+	"chain"
+][
+	"of"
+][
+	"computed"
+][
+	"members"
+][
 	"that"
-];
+][
+	"goes"
+][
+	"on"
+][
+	"for"
+][
+	"ever"
+]["I"]["mean"]["it"]["for"]["ever"]["and"]["even"]["longer"]["than"]["that"];
 
 x.very.long.chain.of.static.members.that.goes.on.for.ever.I.mean.it.for.ever[
 	"and"

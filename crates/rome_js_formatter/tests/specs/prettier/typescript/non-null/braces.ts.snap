@@ -24,7 +24,9 @@ class a extends ({}!) {}
 
 # Output
 ```js
-const myFunction2 = (key: string): number => (
+const myFunction2 = (
+  key: string,
+): number => (
   {
     a: 42,
     b: 42,

@@ -121,8 +121,7 @@ impl<'a> Printer<'a> {
                         // print the group in "flat" mode, otherwise continue in expanded mode
 
                         let flat_args = args.with_print_mode(PrintMode::Flat);
-                        // TODO replace `ElementCallQueue::default` with the real queue to also measure the rest of the document
-                        if fits_on_line(&[content], flat_args, &ElementCallQueue::default(), self) {
+                        if fits_on_line(&[content], flat_args, queue, self) {
                             queue.enqueue(PrintElementCall::new(content, flat_args));
                             self.state.measured_group_fits = true;
                             PrintMode::Flat
@@ -255,11 +254,10 @@ impl<'a> Printer<'a> {
                                 // Test if this variant fits and if so, use it. Otherwise try the next
                                 // variant.
 
-                                // TODO pass in proper queue to respect remaining content in document.
                                 if fits_on_line(
                                     &[variant],
                                     args.with_print_mode(PrintMode::Expanded),
-                                    &ElementCallQueue::default(),
+                                    queue,
                                     self,
                                 ) {
                                     self.state.measured_group_fits = true;

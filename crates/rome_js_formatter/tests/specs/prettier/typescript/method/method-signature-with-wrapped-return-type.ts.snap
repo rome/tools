@@ -28,7 +28,9 @@ type ReleaseToolConfig = {
 };
 
 type ReleaseToolConfig2 = {
-  get(key: "changelog"): `
+  get(
+    key: "changelog",
+  ): `
   `;
 };
 

@@ -27,7 +27,9 @@ const result = template(
   SOME_VAR: value,
 },);
 
-const output = template(`function f() %%A%%`)({
+const output = template(
+  `function f() %%A%%`,
+)({
   A: t.blockStatement([]),
 },);
 

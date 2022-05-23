@@ -42,13 +42,17 @@ var unionOfDifferentReturnType: { [a: string]: number } | { [a: string]: Date };
 numOrDate = unionOfDifferentReturnType["hello"]; // number | Date
 numOrDate = unionOfDifferentReturnType[10]; // number | Date
 
-var unionOfTypesWithAndWithoutStringSignature: { [a: string]: number } | boolean;
+var unionOfTypesWithAndWithoutStringSignature:
+  | { [a: string]: number }
+  | boolean;
 anyVar = unionOfTypesWithAndWithoutStringSignature["hello"]; // any
 anyVar = unionOfTypesWithAndWithoutStringSignature[10]; // any
 
 // If each type in U has a numeric index signature,
 // U has a numeric index signature of a union type of the types of the numeric index signatures from each type in U.
-var unionOfDifferentReturnType1: { [a: number]: number } | { [a: number]: Date };
+var unionOfDifferentReturnType1:
+  | { [a: number]: number }
+  | { [a: number]: Date };
 numOrDate = unionOfDifferentReturnType1["hello"]; // any
 numOrDate = unionOfDifferentReturnType1[10]; // number | Date
 
@@ -63,8 +67,6 @@ anyVar = unionOfTypesWithAndWithoutStringSignature1[10]; // any
 # Lines exceeding max width of 80 characters
 ```
     5: // U has a string index signature of a union type of the types of the string index signatures from each type in U.
-   11: var unionOfTypesWithAndWithoutStringSignature: { [a: string]: number } | boolean;
-   16: // U has a numeric index signature of a union type of the types of the numeric index signatures from each type in U.
-   17: var unionOfDifferentReturnType1: { [a: number]: number } | { [a: number]: Date };
+   18: // U has a numeric index signature of a union type of the types of the numeric index signatures from each type in U.
 ```
 

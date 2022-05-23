@@ -44,8 +44,12 @@ function f() {
 # Output
 ```js
 export default function theFunction(action$, store) {
-  return action$.ofType(THE_ACTION).switchMap(
-    (action) =>
+  return action$.ofType(
+    THE_ACTION,
+  ).switchMap(
+    (
+      action,
+    ) =>
       Observable.webSocket({
         url: THE_URL,
         more: stuff(),
@@ -62,7 +66,9 @@ export default function theFunction(action$, store) {
 }
 
 function f() {
-  return this._getWorker(workerOptions)({
+  return this._getWorker(
+    workerOptions,
+  )({
     filePath,
     hasteImplModulePath: this._options.hasteImplModulePath,
   },)

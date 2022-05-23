@@ -80,39 +80,46 @@ expect(
 );
 // .toThrowError(/Required parameter/);
 
-expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
+expect(
+	() => asyncRequest({ type: "foo", url: "/test-endpoint" }),
+).not.toThrowError();
 
 expect(
 	() => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
 ).not.toThrowError();
 
-const a = Observable.fromPromise(axiosInstance.post("/carts/mine")).map(
-	(response) => response.data,
-);
+const a = Observable.fromPromise(
+	axiosInstance.post("/carts/mine"),
+).map((response) => response.data);
 
-const b = Observable.fromPromise(axiosInstance.get(url)).map(
-	(response) => response.data,
-);
+const b = Observable.fromPromise(
+	axiosInstance.get(url),
+).map((response) => response.data);
 
 func(
 	veryLoooooooooooooooooooooooongName,
-	(veryLooooooooooooooooooooooooongName) =>
-		veryLoooooooooooooooongName.something(),
+	(
+		veryLooooooooooooooooooooooooongName,
+	) => veryLoooooooooooooooongName.something(),
 );
 
-const composition = (ViewComponent, ContainerComponent) =>
+const composition = (
+	ViewComponent,
+	ContainerComponent,
+) =>
 	class extends React.Component {
 		static propTypes = {};
 	};
 
 romise.then(
-	(result) =>
+	(
+		result,
+	) =>
 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 );
 
 
 ## Lines exceeding width of 80 characters
 
-   25: expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
-   52: 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+   60: 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 

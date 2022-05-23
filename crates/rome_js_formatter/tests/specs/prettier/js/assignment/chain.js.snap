@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: chain.js
-
 ---
 # Input
 ```js
@@ -49,7 +47,11 @@ bifornCringerMoshedPerplexSawder =
     glimseGlyphsHazardNoopsTieTie =
       x =
         averredBathersBoxroomBuggyNurl =
-          anodyneCondosMal(sdsadsa, dasdas, asd(() => sdf)).ateOverateRetinol =
+          anodyneCondosMal(
+            sdsadsa,
+            dasdas,
+            asd(() => sdf),
+          ).ateOverateRetinol =
             annularCooeedSplicesWalksWayWay = kochabCooieGameOnOboleUnweave;
 
 bifornCringerMoshedPerplexSawder =
@@ -57,7 +59,11 @@ bifornCringerMoshedPerplexSawder =
     glimseGlyphsHazardNoopsTieTie =
       x =
         averredBathersBoxroomBuggyNurl =
-          anodyneCondosMal(sdsadsa, dasdas, asd(() => sdf)).ateOverateRetinol =
+          anodyneCondosMal(
+            sdsadsa,
+            dasdas,
+            asd(() => sdf),
+          ).ateOverateRetinol =
             annularCooeedSplicesWalksWayWay =
               kochabCooieGameOnOboleUnweave + kochabCooieGameOnOboleUnweave;
 

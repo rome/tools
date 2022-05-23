@@ -39,10 +39,19 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-Seq(typeDef.interface.groups).forEach(
-	(group) =>
-		Seq(group.members).forEach(
-			(member, memberName) =>
+Seq(
+	typeDef.interface.groups,
+).forEach(
+	(
+		group,
+	) =>
+		Seq(
+			group.members,
+		).forEach(
+			(
+				member,
+				memberName,
+			) =>
 				markdownDoc(
 					member.doc,
 					{
@@ -53,9 +62,14 @@ Seq(typeDef.interface.groups).forEach(
 		),
 );
 
-const promiseFromCallback = (fn) =>
+const promiseFromCallback = (
+	fn,
+) =>
 	new Promise(
-		(resolve, reject) =>
+		(
+			resolve,
+			reject,
+		) =>
 			fn((err, result) => {
 				if (err) {
 					return reject(err);

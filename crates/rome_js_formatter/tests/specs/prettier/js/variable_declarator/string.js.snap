@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: string.js
-
 ---
 # Input
 ```js
@@ -12,7 +10,9 @@ elements[0].innerHTML = '<div></div><div></div><div></div><div></div><div></div>
 
 # Output
 ```js
-elements[0].innerHTML =
+elements[
+  0
+].innerHTML =
   "<div></div><div></div><div></div><div></div><div></div><div></div>";
 
 ```

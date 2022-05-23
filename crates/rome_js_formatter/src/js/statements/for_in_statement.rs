@@ -25,33 +25,23 @@ impl FormatNodeFields<JsForInStatement> for FormatNodeRule<JsForInStatement> {
         let in_token = in_token.format();
         let expression = expression.format();
 
-        format_head_body_statement(
+        Ok(group_elements(format_head_body_statement(
             formatter,
             formatted![
                 formatter,
                 [
                     for_token,
                     space_token(),
-                    formatter
-                        .delimited(
-                            &l_paren_token?,
-                            formatted![
-                                formatter,
-                                [
-                                    initializer,
-                                    soft_line_break_or_space(),
-                                    in_token,
-                                    soft_line_break_or_space(),
-                                    expression,
-                                ]
-                            ]?,
-                            &r_paren_token?
-                        )
-                        .soft_block_indent()
-                        .finish()?,
+                    l_paren_token.format(),
+                    group_elements(formatted![formatter, [initializer]]?),
+                    space_token(),
+                    in_token,
+                    space_token(),
+                    expression,
+                    r_paren_token.format(),
                 ]
             ]?,
             body?,
-        )
+        )?))
     }
 }

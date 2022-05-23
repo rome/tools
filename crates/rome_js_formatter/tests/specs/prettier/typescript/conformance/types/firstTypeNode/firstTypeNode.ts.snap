@@ -24,21 +24,23 @@ export function fooWithTypeTypePredicateAndRestParam(a: any, ...rest): a is numb
 export function fooWithTypePredicate(a: any): a is number {
   return true;
 }
-export function fooWithTypePredicateAndMulitpleParams(a: any, b: any, c: any): a is number {
+export function fooWithTypePredicateAndMulitpleParams(
+  a: any,
+  b: any,
+  c: any,
+): a is number {
   return true;
 }
 export function fooWithTypeTypePredicateAndGeneric<T>(a: any): a is T {
   return true;
 }
-export function fooWithTypeTypePredicateAndRestParam(a: any, ...rest): a is number {
+export function fooWithTypeTypePredicateAndRestParam(
+  a: any,
+  ...rest
+): a is number {
   return true;
 }
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    4: export function fooWithTypePredicateAndMulitpleParams(a: any, b: any, c: any): a is number {
-   10: export function fooWithTypeTypePredicateAndRestParam(a: any, ...rest): a is number {
-```
 

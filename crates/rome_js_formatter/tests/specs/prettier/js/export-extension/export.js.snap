@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: export.js
 ---
 # Input
@@ -39,7 +38,9 @@ export * as d
 }
 from;
 ("mod");
-export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+export {
+  fooooooooooooooooooooooooooooooooooooooooooooooooo,
+} from "fooooooooooooooooooooooooooooo";
 export
 Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr };
 from;
@@ -182,8 +183,4 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   22: export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
-```
 

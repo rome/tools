@@ -61,40 +61,47 @@ it(
   },
 );
 
-expect(() => asyncRequest({ url: "/test-endpoint" })).toThrowError(
-  /Required parameter/,
-);
-
-expect(() => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" })).toThrowError(
-  /Required parameter/,
-);
-
 expect(
-  () => asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
+  () => asyncRequest({ url: "/test-endpoint" }),
 ).toThrowError(/Required parameter/);
 
-expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
+expect(
+  () => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" }),
+).toThrowError(/Required parameter/);
 
 expect(
-  () => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
+  () =>
+    asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" },),
+).toThrowError(/Required parameter/);
+
+expect(
+  () => asyncRequest({ type: "foo", url: "/test-endpoint" }),
 ).not.toThrowError();
 
-const a = Observable.fromPromise(axiosInstance.post("/carts/mine")).map(
-  (response) => response.data,
-);
+expect(
+  () =>
+    asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" },),
+).not.toThrowError();
 
-const b = Observable.fromPromise(axiosInstance.get(url)).map(
-  (response) => response.data,
-);
+const a = Observable.fromPromise(
+  axiosInstance.post("/carts/mine"),
+).map((response) => response.data);
+
+const b = Observable.fromPromise(
+  axiosInstance.get(url),
+).map((response) => response.data);
 
 func(
   veryLoooooooooooooooooooooooongName,
-  (veryLooooooooooooooooooooooooongName) =>
-    veryLoooooooooooooooongName.something(),
+  (
+    veryLooooooooooooooooooooooooongName,
+  ) => veryLoooooooooooooooongName.something(),
 );
 
 promise.then(
-  (result) =>
+  (
+    result,
+  ) =>
     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 );
 
@@ -102,10 +109,6 @@ promise.then(
 
 # Lines exceeding max width of 80 characters
 ```
-   18: expect(() => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" })).toThrowError(
-   23:   () => asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
-   26: expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
-   29:   () => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
-   48:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+   55:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 ```
 

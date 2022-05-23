@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: react.tsx
 ---
 # Input
@@ -16,7 +15,9 @@ const MyCoolThing = ({ thingo }) => <li>{thingo}</li>;
 
 # Output
 ```js
-const MyCoolList = ({ things }) =>
+const MyCoolList = (
+  { things },
+) =>
   <ul>
         {things.map(MyCoolThing)}
     </ul>;

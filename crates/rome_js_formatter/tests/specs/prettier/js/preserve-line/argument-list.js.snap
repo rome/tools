@@ -346,12 +346,20 @@ doSomething(
   { helloWorld, someImportantStuff },
 );
 
-function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
+function foo(
+  one,
+  two,
+  three,
+  four,
+  five,
+  six,
+  seven,
+  eight,
+  nine,
+  ten,
+  eleven,
+) {}
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-  132: function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
-```
 

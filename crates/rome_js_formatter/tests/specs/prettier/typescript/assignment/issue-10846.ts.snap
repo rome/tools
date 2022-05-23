@@ -71,7 +71,15 @@ export const CallRecorderContext = createContext<
     | null
 >(null, "useless");
 
-const foo = call<Foooooo, Foooooo, Foooooo, Foooooo, Foooooo, Foooooo, Foooooo>();
+const foo = call<
+  Foooooo,
+  Foooooo,
+  Foooooo,
+  Foooooo,
+  Foooooo,
+  Foooooo,
+  Foooooo
+>();
 
 const foo = call<
   Foooooooooooo | Foooooooooooo | Foooooooooooo | Foooooooooooo | Foooooooooooo
@@ -83,8 +91,4 @@ const foo = call<
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   25: const foo = call<Foooooo, Foooooo, Foooooo, Foooooo, Foooooo, Foooooo, Foooooo>();
-```
 

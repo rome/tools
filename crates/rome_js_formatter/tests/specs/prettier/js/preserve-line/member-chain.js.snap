@@ -102,18 +102,14 @@ helloWorld.text().then((t) => t);
   veryLongVeryLongVeryLong ||
     anotherVeryLongVeryLongVeryLong ||
     veryVeryVeryLongError
-).map((tickets) => TicketRecord.createFromSomeLongString()).filter(
-  (obj) => !!obj,
-);
+).map(
+  (tickets) => TicketRecord.createFromSomeLongString(),
+).filter((obj) => !!obj);
 
-const sel = this.connections.concat(this.activities.concat(this.operators)).filter(
-  (x) => x.selected,
-);
+const sel = this.connections.concat(
+  this.activities.concat(this.operators),
+).filter((x) => x.selected);
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   39: const sel = this.connections.concat(this.activities.concat(this.operators)).filter(
-```
 

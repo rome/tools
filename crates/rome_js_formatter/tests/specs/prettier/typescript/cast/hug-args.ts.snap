@@ -46,7 +46,9 @@ window.postMessage(
 );
 
 postMessages(
-  <IActionMessage[]>[
+  <
+    IActionMessage[]
+  >[
     {
       context: item.context,
       topic: item.topic,

@@ -143,7 +143,9 @@ const extractTextPluginOptions3 = shouldUseRelativeAssetPaths ? {
   publicPath: Array(cssFilename.split("/").length).join("../"),
 } : {};
 
-const { configureStore } = process.env.NODE_ENV === "production" ? require(
+const {
+  configureStore,
+} = process.env.NODE_ENV === "production" ? require(
   "./configureProdStore",
 ) : require("./configureDevStore"); // a // b
 
