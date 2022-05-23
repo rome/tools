@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
 use crate::FormatNodeFields;
-use rome_js_syntax::JsDoWhileStatement;
 use rome_js_syntax::JsDoWhileStatementFields;
+use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
 
 impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement> {
     fn format_fields(
@@ -19,7 +19,7 @@ impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement>
             semicolon_token,
         } = node.as_fields();
 
-        let head = formatted![formatter, [do_token.format(), space_token(),]]?;
+        let head = formatted![formatter, [do_token.format()]]?;
 
         let tail = formatted![
             formatter,
@@ -39,6 +39,11 @@ impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement>
             ]
         ]?;
 
-        formatted![formatter, [head, body.format(), tail,]]
+        let body = body?;
+        if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+            formatted![formatter, [head, body.format(), hard_line_break(), tail,]]
+        } else {
+            formatted![formatter, [head, space_token(), body.format(), tail,]]
+        }
     }
 }

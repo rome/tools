@@ -32,7 +32,6 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
                         [
                             space_token(),
                             else_token.format(),
-                            space_token(),
                             into_block(formatter, alternate)?,
                         ]
                     ]?);
@@ -76,7 +75,6 @@ fn format_if_element(
                 )
                 .soft_block_indent()
                 .finish()?,
-            space_token(),
             into_block(formatter, consequent?)?,
         ]
     ]?;
@@ -90,21 +88,19 @@ fn into_block(
     stmt: JsAnyStatement,
 ) -> FormatResult<FormatElement> {
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
-        return formatted![formatter, [stmt.format()]];
+        return formatted![formatter, [space_token(), stmt.format()]];
     }
 
     // If the body is an empty statement, force a line break to ensure behavior
     // is coherent with `is_non_collapsable_empty_block`
     if matches!(stmt, JsAnyStatement::JsEmptyStatement(_)) {
-        return formatted![
-            formatter,
-            [token("{"), stmt.format(), hard_line_break(), token("}")]
-        ];
+        return formatted![formatter, [stmt.format(), hard_line_break()]];
     }
 
     formatted![
         formatter,
         [
+            space_token(),
             token("{"),
             block_indent(formatted![formatter, [stmt.format()]]?),
             token("}"),
