@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::{FormatElement, FormatNodeFields, FormatNodeRule, Formatter, JsFormatOptions};
-use rome_formatter::{concat_elements, group_elements, soft_block_indent, FormatResult};
+use rome_formatter::{concat_elements, group_elements, FormatResult};
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
@@ -88,14 +88,20 @@ pub(crate) fn format_sequence_expression(
                 ]
             ]?);
         } else {
-            formatted.push(soft_block_indent(formatted![
+            formatted.push(formatted![
                 formatter,
                 [
-                    soft_line_break_or_space(),
-                    previous_right.format()?,
-                    comma_token.format()?,
+                    soft_line_break(),
+                    indent(formatted![
+                        formatter,
+                        [
+                            soft_line_break_or_space(),
+                            previous_right.format()?,
+                            comma_token.format()?,
+                        ]
+                    ]?),
                 ]
-            ]?))
+            ]?)
         }
         previous_right = right;
         current = parent_sequence;
@@ -107,10 +113,16 @@ pub(crate) fn format_sequence_expression(
             [soft_line_break_or_space(), previous_right.format()?,]
         ]?);
     } else {
-        formatted.push(soft_block_indent(formatted![
+        formatted.push(formatted![
             formatter,
-            [soft_line_break_or_space(), previous_right.format()?,]
-        ]?))
+            [
+                soft_line_break(),
+                indent(formatted![
+                    formatter,
+                    [soft_line_break_or_space(), previous_right.format()?,]
+                ]?),
+            ]
+        ]?)
     }
 
     Ok(group_elements(concat_elements(formatted)))

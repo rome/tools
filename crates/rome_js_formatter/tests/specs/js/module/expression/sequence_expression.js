@@ -20,3 +20,8 @@ const object ={
     )
 
 }
+
+aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName;

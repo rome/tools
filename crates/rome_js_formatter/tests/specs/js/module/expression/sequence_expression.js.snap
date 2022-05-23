@@ -26,6 +26,11 @@ const object ={
     )
 
 }
+
+aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName;
 =============================
 # Outputs
 ## Output 1
@@ -79,4 +84,9 @@ const object = {
 		____________third
 	),
 };
+
+aLongIdentifierName,
+	aLongIdentifierName,
+	aLongIdentifierName,
+	aLongIdentifierName;
 
