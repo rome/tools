@@ -82,7 +82,7 @@ pub trait AstNode {
     }
 }
 
-trait SyntaxNodeCast<L: Language> {
+pub trait SyntaxNodeCast<L: Language> {
     /// Tries to cast the current syntax node to specified AST node.
     ///
     /// # Returns
