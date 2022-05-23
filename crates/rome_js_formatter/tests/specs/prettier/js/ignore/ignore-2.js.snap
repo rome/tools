@@ -34,8 +34,8 @@ a = <div {...{}/* prettier-ignore */}/>
 function HelloWorld() {
   return (
     <div
-      {...{}} /*
-      // @ts-ignore */ /* prettier-ignore */
+      {...{} /*
+      // @ts-ignore */ /* prettier-ignore */ }
       invalidProp="HelloWorld"
     >
       test

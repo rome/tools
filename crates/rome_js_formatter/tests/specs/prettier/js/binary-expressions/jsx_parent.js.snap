@@ -75,9 +75,11 @@ expression: jsx_parent.js
 </div>;
 
 <div>
-  {(!isJellyfishEnabled && diffUpdateMessageInput != null && child) || (
-    <div><span>Text</span></div>
-  )}
+  {(
+    !isJellyfishEnabled && diffUpdateMessageInput != null && child
+  ) || <div><span>Text</span></div>}
 </div>;
 
 ```
+
+
