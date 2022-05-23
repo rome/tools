@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 181
 expression: issues.js
 ---
 # Input
@@ -125,9 +126,7 @@ Observable.of(process)
   .takeUntil(exit);
 
 // Comments disappear inside of JSX
-<div>
-  { /* Some comment */ }
-</div>;
+<div>{ /* Some comment */ }</div>;
 
 // Comments in JSX tag are placed in a non optimal way
 <div

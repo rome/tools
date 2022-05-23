@@ -5,6 +5,7 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
     JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
+    JsxTagExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -22,6 +23,8 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node)?;
 
         let expression = expression?;
+        let syntax = expression.syntax();
+        let kind = syntax.kind();
 
         if is_simple_parenthesized_expression(node)? {
             formatted![
@@ -70,13 +73,22 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         // ");
         // ```
         // this is what we want
-        else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
+        else if JsStringLiteralExpression::can_cast(kind) {
             formatted![
                 formatter,
                 [
                     l_paren_token.format(),
                     expression.format(),
                     r_paren_token.format(),
+                ]
+            ]
+        } else if JsxTagExpression::can_cast(kind) {
+            formatted![
+                formatter,
+                [
+                    formatter.format_replaced(&l_paren_token?, empty_element()),
+                    expression.format(),
+                    formatter.format_replaced(&r_paren_token?, empty_element())
                 ]
             ]
         } else {

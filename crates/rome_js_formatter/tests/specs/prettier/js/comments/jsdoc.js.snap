@@ -36,7 +36,7 @@ function HelloWorld() {
 # Output
 ```js
 /** @type {any} */
-const x = (<div><div /></div>);
+const x = <div><div /></div>;
 
 /**
  * @type {object}
@@ -51,7 +51,7 @@ const x = (<div><div /></div>);
  * @type {object}
  */
 function HelloWorld() {
-  return (<div><span>Test</span></div>);
+  return <div><span>Test</span></div>;
 }
 
 ```
