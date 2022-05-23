@@ -44,6 +44,14 @@ pub(crate) struct Document {
     pub(crate) version: i32,
 }
 
+/// Language-independent cache entry for a parsed file
+///
+/// This struct holds a handle to the root node of the parsed syntax tree,
+/// along with the list of diagnostics emitted by the parser while generating
+/// this entry.
+///
+/// It can be dynamically downcast into a concrete [SyntaxNode] or [AstNode] of
+/// the corresponding language, generally through a language-specific capability
 #[derive(Clone)]
 pub(crate) struct AnyParse {
     pub(crate) root: SendNode,
@@ -103,8 +111,8 @@ impl WorkspaceServer {
 
     /// Get the parser result for a given file
     ///
-    /// Returns `None` if no file exists in the workspace with this path or if
-    /// the language associated with the file has no known parser
+    /// Returns and error if no file exists in the workspace with this path or
+    /// if the language associated with the file has no parser capability
     fn get_parse(&self, rome_path: RomePath) -> Result<AnyParse, RomeError> {
         match self.syntax.entry(rome_path) {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
@@ -134,6 +142,11 @@ impl Workspace for WorkspaceServer {
         }
     }
 
+    /// Update the global settings for this workspace
+    ///
+    /// ## Panics
+    /// This function may panic if the internal settings mutex has been poisoned
+    /// by another thread having previously panicked while holding the lock
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
         let mut settings = self.settings.write().unwrap();
         *settings = params.settings;

@@ -274,6 +274,20 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
     fn push_message(&self, msg: impl Into<Message>) {
         self.messages.send(msg.into()).ok();
     }
+
+    fn can_format(&self, rome_path: &RomePath) -> bool {
+        self.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Format,
+        })
+    }
+
+    fn can_lint(&self, rome_path: &RomePath) -> bool {
+        self.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Lint,
+        })
+    }
 }
 
 impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
@@ -291,19 +305,10 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
     }
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
-        let can_lint = self.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path.clone(),
-            feature: FeatureName::Format,
-        });
-        let can_format = self.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path.clone(),
-            feature: FeatureName::Lint,
-        });
-
         match self.mode {
-            TraversalMode::Check => can_lint,
-            TraversalMode::CI { .. } => can_lint || can_format,
-            TraversalMode::Format { .. } => can_format,
+            TraversalMode::Check => self.can_lint(rome_path),
+            TraversalMode::CI { .. } => self.can_lint(rome_path) || self.can_format(rome_path),
+            TraversalMode::Format { .. } => self.can_format(rome_path),
         }
     }
 
@@ -364,18 +369,10 @@ type FileResult = Result<Option<Message>, Message>;
 fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileResult {
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
         let rome_path = RomePath::new(path, file_id);
-        let can_lint = ctx.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path.clone(),
-            feature: FeatureName::Format,
-        });
-        let can_format = ctx.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path.clone(),
-            feature: FeatureName::Lint,
-        });
-
+        let can_format = ctx.can_format(&rome_path);
         let can_handle = match ctx.mode {
-            TraversalMode::Check => can_lint,
-            TraversalMode::CI { .. } => can_lint || can_format,
+            TraversalMode::Check => ctx.can_lint(&rome_path),
+            TraversalMode::CI { .. } => ctx.can_lint(&rome_path) || can_format,
             TraversalMode::Format { .. } => can_format,
         };
 

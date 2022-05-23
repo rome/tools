@@ -89,7 +89,7 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Remove a file from the workspace
     fn close_file(&self, params: CloseFileParams) -> Result<(), RomeError>;
 
-    /// Retrieves the list of diagnostics associated with a file
+    /// Retrieves the list of diagnostics associated to a file
     fn pull_diagnostics(&self, params: PullDiagnosticsParams)
         -> Result<Vec<Diagnostic>, RomeError>;
 
@@ -114,7 +114,8 @@ pub fn server() -> Box<dyn Workspace> {
     Box::new(server::WorkspaceServer::new())
 }
 
-/// RAII guard for an open file in a workspace, takes care of closing the file
+/// [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization)
+/// guard for an open file in a workspace, takes care of closing the file
 /// automatically on drop
 pub struct FileGuard<'app, W: Workspace + ?Sized> {
     workspace: &'app W,
