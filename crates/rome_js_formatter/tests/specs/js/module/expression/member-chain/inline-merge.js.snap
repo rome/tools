@@ -31,10 +31,8 @@ _.flatMap(this.visibilityHandlers, (fn) => fn())
 Object.keys(
 	availableLocales({
 		test: true,
-	}),
-).forEach(
-	(locale) => {
-		// ...
-	},
-);
+	},),
+).forEach((locale) => {
+	// ...
+},);
 

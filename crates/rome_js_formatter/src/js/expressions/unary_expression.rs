@@ -56,7 +56,7 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
         };
 
         if is_ambiguous_expression {
-            let parenthesized = if is_simple_expression(argument.clone())? {
+            let parenthesized = if is_simple_expression(&argument)? {
                 formatted![
                     formatter,
                     [

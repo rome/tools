@@ -290,17 +290,17 @@ border-color : tomato
 
 `;
 
-Button.extend.attr({})`
+Button.extend.attr({},)`
 border-color : black;
 `;
 
 styled(ExistingComponent)`
        color : papayawhip ; background-color: firebrick`;
 
-styled.button.attr({})`
+styled.button.attr({},)`
 border : rebeccapurple`;
 
-styled(ExistingComponent).attr({})`
+styled(ExistingComponent).attr({},)`
 border : rebeccapurple`;
 
 styled.div`

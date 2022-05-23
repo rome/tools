@@ -9,6 +9,10 @@ impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
         node: &JsTemplateElementList,
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(node))
+        Ok(concat_elements(
+            formatter
+                .format_all(node.iter().formatted())?
+                .map(group_elements),
+        ))
     }
 }

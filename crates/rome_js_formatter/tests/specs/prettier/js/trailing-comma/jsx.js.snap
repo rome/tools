@@ -21,7 +21,7 @@ expression: jsx.js
     () =>
       doSomething({
         foo: bar,
-      })
+      },)
   }
 />;
 

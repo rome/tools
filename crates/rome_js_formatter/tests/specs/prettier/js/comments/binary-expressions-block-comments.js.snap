@@ -49,7 +49,8 @@ a = b + /** TODO this is a very very very very long comment that makes it go > 8
 
 # Output
 ```js
-a = b || /** Comment */
+a =
+  b || /** Comment */
   c;
 
 a = b /** Comment */ || c;
@@ -65,7 +66,8 @@ a =
   b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
   c;
 
-a = b && /** Comment */
+a =
+  b && /** Comment */
   c;
 
 a = b /** Comment */ && c;
@@ -81,7 +83,8 @@ a =
   b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
   c;
 
-a = b + /** Comment */
+a =
+  b + /** Comment */
   c;
 
 a = b /** Comment */ + c;
@@ -101,14 +104,14 @@ a =
 
 # Lines exceeding max width of 80 characters
 ```
-    7:   b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
-   11:   b /** TODO this is a very very very very long comment that makes it go > 80 columns */ || c;
-   14:   b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
-   23:   b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
-   27:   b /** TODO this is a very very very very long comment that makes it go > 80 columns */ && c;
-   30:   b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
-   39:   b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
-   43:   b /** TODO this is a very very very very long comment that makes it go > 80 columns */ + c;
-   46:   b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
+    8:   b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
+   12:   b /** TODO this is a very very very very long comment that makes it go > 80 columns */ || c;
+   15:   b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
+   25:   b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
+   29:   b /** TODO this is a very very very very long comment that makes it go > 80 columns */ && c;
+   32:   b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
+   42:   b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
+   46:   b /** TODO this is a very very very very long comment that makes it go > 80 columns */ + c;
+   49:   b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
 ```
 

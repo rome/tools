@@ -16,7 +16,7 @@ impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructor
             body,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 modifiers.format(),
@@ -26,6 +26,6 @@ impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructor
                 space_token(),
                 body.format()
             ]
-        ]?))
+        ]
     }
 }

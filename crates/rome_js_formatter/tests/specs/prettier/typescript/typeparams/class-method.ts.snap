@@ -132,7 +132,7 @@ export class Thing3 implements OtherThing {
       return someVar.method();
     }
     return false;
-  });
+  },);
 }
 
 export class Thing4 implements OtherThing {
@@ -214,7 +214,7 @@ export class Thing14 implements OtherThing {
       return someVar.method();
     }
     return false;
-  });
+  },);
 }
 
 export class Thing15 implements OtherThing {

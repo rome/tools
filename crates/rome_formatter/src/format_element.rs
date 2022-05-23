@@ -728,11 +728,15 @@ pub fn group_elements_with_options(
     content: FormatElement,
     options: GroupElementsOptions,
 ) -> FormatElement {
-    let (leading, content, trailing) = content.split_trivia();
+    if content.is_empty() {
+        content
+    } else {
+        let (leading, content, trailing) = content.split_trivia();
 
-    let group = Group::new(content).with_id(options.group_id);
+        let group = Group::new(content).with_id(options.group_id);
 
-    format_elements![leading, group, trailing]
+        format_elements![leading, group, trailing]
+    }
 }
 
 /// IR element that forces the parent group to print in expanded mode.
@@ -768,52 +772,6 @@ pub fn group_elements_with_options(
 /// Equivalent to Prettier's `break_parent` IR element
 pub const fn expand_parent() -> FormatElement {
     FormatElement::ExpandParent
-}
-
-/// Creates a group that forces all elements inside it to be printed on a
-/// single line. This behavior can in turn be escaped by introducing an inner
-/// `Group` element that will resume the normal breaking behavior of the printer.
-///
-/// This is useful for constructs that have a non-breaking head and a breaking
-/// body, such class declarations:
-/// ```js
-///    abstract /* comment */ class Example
-/// // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ non-breaking part
-/// { // <
-/// } // < breaking part
-/// ```
-///
-/// # Example
-/// ```
-/// use rome_formatter::Formatted;
-/// use rome_formatter::prelude::*;
-///
-/// let elements = group_elements(hard_group_elements(format_elements![
-///     if_group_breaks(token("not printed")),
-///     empty_line(),
-///     if_group_fits_on_single_line(token("printed")),
-/// ]));
-///
-/// assert_eq!(
-///     "\nprinted",
-///     Formatted::new(elements, PrinterOptions::default())
-///         .print()
-///         .as_code()
-/// );
-/// ```
-#[inline]
-pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
-    let content = content.into();
-
-    if content.is_empty() {
-        content
-    } else {
-        let (leading, content, trailing) = content.split_trivia();
-        format_elements![
-            leading,
-            FormatElement::HardGroup(Group::new(format_elements![content, trailing])),
-        ]
-    }
 }
 
 /// Adds a conditional content that is emitted only if it isn't inside an enclosing `Group` that
@@ -1121,9 +1079,6 @@ pub enum FormatElement {
     /// Forces the parent group to print in expanded mode.
     ExpandParent,
 
-    /// See [crate::hard_group_elements] for documentation and examples.
-    HardGroup(Group),
-
     /// Allows to specify content that gets printed depending on whatever the enclosing group
     /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
     ConditionalGroupContent(ConditionalGroupContent),
@@ -1213,10 +1168,6 @@ impl Debug for FormatElement {
             FormatElement::Indent(content) => content.fmt(fmt),
             FormatElement::Group(content) => {
                 write!(fmt, "Group")?;
-                content.fmt(fmt)
-            }
-            FormatElement::HardGroup(content) => {
-                write!(fmt, "HardGroup")?;
                 content.fmt(fmt)
             }
             FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
@@ -1678,9 +1629,7 @@ impl FormatElement {
             FormatElement::Space => false,
             FormatElement::Line(line) => matches!(line.mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Indent(indent) => indent.content.will_break(),
-            FormatElement::Group(group) | FormatElement::HardGroup(group) => {
-                group.content.will_break()
-            }
+            FormatElement::Group(group) => group.content.will_break(),
             FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
             FormatElement::List(list) | FormatElement::Fill(list) => {
                 list.content.iter().any(FormatElement::will_break)
@@ -1697,8 +1646,8 @@ impl FormatElement {
 
     /// Splits off the leading and trailing trivias (comments) from this [FormatElement]
     ///
-    /// For [FormatElement::HardGroup] and [FormatElement::Group], the trailing and leading trivias
-    /// are automatically moved  outside of the group. The group itself is then recreated around the
+    /// For [FormatElement::HardGroup], the trailing trivia
+    /// is automatically moved  outside of the group. The group itself is then recreated around the
     /// content itself.
     pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
         match self {
@@ -1737,11 +1686,6 @@ impl FormatElement {
                     (FormatElement::List(list), empty_element(), empty_element())
                 }
             }
-            FormatElement::HardGroup(group) => {
-                let (leading, content, trailing) = group.content.split_trivia();
-                // re-create the grouping around the content only
-                (leading, hard_group_elements(content), trailing)
-            }
             // Non-list elements are returned directly
             _ => (empty_element(), self, empty_element()),
         }
@@ -1759,9 +1703,7 @@ impl FormatElement {
             FormatElement::Empty | FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
             FormatElement::Indent(indent) => indent.content.last_element(),
-            FormatElement::Group(group) | FormatElement::HardGroup(group) => {
-                group.content.last_element()
-            }
+            FormatElement::Group(group) => group.content.last_element(),
 
             _ => Some(self),
         }

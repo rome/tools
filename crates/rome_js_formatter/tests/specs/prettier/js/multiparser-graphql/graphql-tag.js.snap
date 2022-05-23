@@ -307,7 +307,7 @@ ${USER_DETAILS_FRAGMENT}
     ${FRIENDS_FRAGMENT}
   ${generateFragment({
   totally: "a good idea",
-})}
+},)}
 
 ${fragment}#comment
 

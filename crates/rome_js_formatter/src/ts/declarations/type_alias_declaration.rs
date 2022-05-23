@@ -17,7 +17,7 @@ impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDecl
             semicolon_token,
         } = node.as_fields();
 
-        Ok(hard_group_elements(format_with_semicolon(
+        format_with_semicolon(
             formatter,
             formatted![
                 formatter,
@@ -33,6 +33,6 @@ impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDecl
                 ]
             ]?,
             semicolon_token,
-        )?))
+        )
     }
 }

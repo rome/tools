@@ -45,13 +45,13 @@ true
     require("postcss-url")({
       url: (url) =>
         url.startsWith("/") || /^[a-z]+:/.test(url) ? url : `/static/${url}`,
-    }),
+    },),
   ],
 });
 
 true ? test({
   a: 1,
-}) : <div
+},) : <div
   a={123412342314}
   b={123412341234}
   c={123412341234}

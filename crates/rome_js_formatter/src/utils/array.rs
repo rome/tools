@@ -30,7 +30,7 @@ where
             let is_disallow = matches!(separator_mode, TrailingSeparatorMode::Disallow);
             let is_force = matches!(separator_mode, TrailingSeparatorMode::Force);
 
-            let elem = node.format();
+            let formatted_element = formatted![formatter, [node.format()]]?;
             let separator = if is_disallow {
                 // Trailing separators are disallowed, replace it with an empty element
                 if let Some(separator) = element.trailing_separator()? {
@@ -55,7 +55,7 @@ where
 
             Ok((
                 node.syntax().clone(),
-                formatted![formatter, [elem, separator]]?,
+                format_elements![group_elements(formatted_element), separator],
             ))
         })
         .collect::<FormatResult<Vec<_>>>()?;

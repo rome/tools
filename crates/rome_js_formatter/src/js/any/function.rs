@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use crate::utils::is_simple_expression;
 
 use crate::generated::FormatJsAnyFunction;
+use crate::utils::is_simple_expression;
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
@@ -75,10 +75,11 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         //
         // The line break for `a + b` is not necessary
         //
-        let mut body_group = vec![];
         if let JsAnyFunction::JsArrowFunctionExpression(arrow) = node {
-            body_group.push(formatted![formatter, [arrow.fat_arrow_token().format()]]?);
-            body_group.push(space_token());
+            tokens.push(formatted![
+                formatter,
+                [arrow.fat_arrow_token().format(), space_token()]
+            ]?);
         }
 
         let body = node.body()?;
@@ -107,21 +108,19 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
             JsAnyFunctionBody::JsAnyExpression(expr) => match expr {
                 JsAnyExpression::JsArrowFunctionExpression(_) => true,
                 JsAnyExpression::JsParenthesizedExpression(_) => true,
-                expr => is_simple_expression(expr)?,
+                expr => is_simple_expression(&expr)?,
             },
         };
 
         if body_has_soft_line_break {
-            body_group.push(formatted![formatter, [node.body().format()]]?);
+            tokens.push(formatted![formatter, [node.body().format()]]?);
         } else {
-            body_group.push(soft_line_indent_or_space(formatted![
+            tokens.push(group_elements(soft_line_indent_or_space(formatted![
                 formatter,
                 [node.body().format()]
-            ]?));
+            ]?)));
         }
 
-        tokens.push(group_elements(concat_elements(body_group)));
-
-        Ok(hard_group_elements(concat_elements(tokens)))
+        Ok(concat_elements(tokens))
     }
 }

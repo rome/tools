@@ -16,7 +16,7 @@ impl FormatNodeFields<JsTryFinallyStatement> for FormatNodeRule<JsTryFinallyStat
             finally_clause,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 try_token.format(),
@@ -31,6 +31,6 @@ impl FormatNodeFields<JsTryFinallyStatement> for FormatNodeRule<JsTryFinallyStat
                 space_token(),
                 finally_clause.format()
             ]
-        ]?))
+        ]
     }
 }

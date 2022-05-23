@@ -18,14 +18,14 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         } = node.as_fields();
 
         if is_simple_function_arguments(node)? {
-            return Ok(hard_group_elements(formatted![
+            return formatted![
                 formatter,
                 [
                     l_paren_token.format(),
                     args.format(),
                     r_paren_token.format(),
                 ]
-            ]?));
+            ];
         }
 
         formatter
@@ -48,16 +48,22 @@ fn is_simple_function_arguments(node: &JsCallArguments) -> SyntaxResult<bool> {
         r_paren_token,
     } = node.as_fields();
 
-    if token_has_comments(l_paren_token?) || token_has_comments(r_paren_token?) {
+    if token_has_comments(&l_paren_token?) || token_has_comments(&r_paren_token?) {
         return Ok(false);
     }
 
-    if args.syntax_list().len() > 1 {
+    if args.len() > 1 {
         return Ok(false);
     }
 
-    for item in args {
-        match item {
+    for item in args.elements() {
+        if let Some(separator) = item.trailing_separator()? {
+            if token_has_comments(separator) {
+                return Ok(false);
+            }
+        }
+
+        match item.node() {
             Ok(JsAnyCallArgument::JsAnyExpression(expr)) => {
                 if !is_simple_expression(expr)? {
                     return Ok(false);

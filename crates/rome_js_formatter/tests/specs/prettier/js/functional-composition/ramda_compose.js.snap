@@ -69,8 +69,8 @@ var getStateCode = R.composeK(
   get("address"),
   get("user"),
 );
-getStateCode({ user: { address: { state: "ny" } } }); //=> Maybe.Just("NY")
-getStateCode({}); //=> Maybe.Nothing()
+getStateCode({ user: { address: { state: "ny" } } },); //=> Maybe.Just("NY")
+getStateCode({},); //=> Maybe.Nothing()
 
 var db = {
   users: {

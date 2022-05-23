@@ -18,7 +18,7 @@ impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
             r_curly_token,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 switch_token.format(),
@@ -50,6 +50,6 @@ impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
                     .block_indent()
                     .finish()?
             ]
-        ]?))
+        ]
     }
 }

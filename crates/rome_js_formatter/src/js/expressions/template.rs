@@ -20,15 +20,16 @@ impl FormatNodeFields<JsTemplate> for FormatNodeRule<JsTemplate> {
         let l_tick = l_tick_token.format();
         let r_tick = r_tick_token.format();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 tag.format(),
                 type_arguments.format(),
+                line_suffix_boundary(),
                 l_tick,
                 concat_elements(formatter.format_all(elements.iter().formatted())?),
                 r_tick
             ]
-        ]?))
+        ]
     }
 }

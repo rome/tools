@@ -73,9 +73,9 @@ _.a(a)
 /* very very very very very very very long such that it is longer than 80 columns */
 .a();
 
-_.a(a).a(); /* very very very very very very very long such that it is longer than 80 columns */
+_.a(a) /* very very very very very very very long such that it is longer than 80 columns */ .a();
 
-_.a(a).a(); /* very very very very very very very long such that it is longer than 80 columns */
+_.a(a) /* very very very very very very very long such that it is longer than 80 columns */ .a();
 
 Something
 // $FlowFixMe(>=0.41.0)
@@ -84,12 +84,12 @@ Something
 // Warm-up first
 measure().then(() => {
   SomethingLong();
-});
+},);
 
 measure().then(() => {
   // Warm-up first
   SomethingLong();
-});
+},);
 
 const configModel = this.baseConfigurationService.getCache().consolidated.merge(
   // global/default values (do NOT modify)
@@ -123,7 +123,7 @@ angular.module("AngularAppModule")
 ```
     3:   // Debounce manually rather than using editor.onDidStopChanging so that the debounce time is
     9: /* very very very very very very very long such that it is longer than 80 columns */
-   12: _.a(a).a(); /* very very very very very very very long such that it is longer than 80 columns */
-   14: _.a(a).a(); /* very very very very very very very long such that it is longer than 80 columns */
+   12: _.a(a) /* very very very very very very very long such that it is longer than 80 columns */ .a();
+   14: _.a(a) /* very very very very very very very long such that it is longer than 80 columns */ .a();
 ```
 

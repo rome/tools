@@ -81,7 +81,7 @@ class InMemoryAppender extends log4javascript.Appender
 
 class Foo extends Immutable.Record({
   ipaddress: "",
-}) {
+},) {
   ipaddress: string;
 }
 

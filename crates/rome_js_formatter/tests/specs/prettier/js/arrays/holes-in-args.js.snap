@@ -15,7 +15,7 @@ new Test()
 ```js
 new Test()
   .test()
-  .test([, 0])
+  .test([, 0],)
   .test();
 
 ```

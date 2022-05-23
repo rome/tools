@@ -293,10 +293,10 @@ fn format_groups(
     if groups.groups_should_break(calls_count)? {
         Ok(format_elements![
             head_group.into_format_element(),
-            group_elements(indent(format_elements![
+            indent(format_elements![
                 hard_line_break(),
                 groups.into_joined_hard_line_groups()
-            ]),)
+            ])
         ])
     } else {
         Ok(format_elements![

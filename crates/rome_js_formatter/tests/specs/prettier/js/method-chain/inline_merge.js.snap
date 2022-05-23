@@ -30,12 +30,10 @@ var jqxhr = $.ajax("example.php")
 Object.keys(
   availableLocales({
     test: true,
-  }),
-).forEach(
-  (locale) => {
-    // ...
-  },
-);
+  },),
+).forEach((locale) => {
+  // ...
+},);
 
 this.layoutPartsToHide =
   this.utils.hashset(

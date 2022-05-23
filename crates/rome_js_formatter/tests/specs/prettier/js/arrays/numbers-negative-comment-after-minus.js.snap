@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: numbers-negative-comment-after-minus.js
-
 ---
 # Input
 ```js
@@ -68,7 +66,7 @@ const numbers = [
 
 c =
   [
-    -66, /**/
+    - /**/ 66,
     66,
     57,
     45,

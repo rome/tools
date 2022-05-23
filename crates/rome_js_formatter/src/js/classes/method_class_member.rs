@@ -21,7 +21,7 @@ impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMembe
             body,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 modifiers.format(),
@@ -38,6 +38,6 @@ impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMembe
                 space_token(),
                 body.format()
             ]
-        ]?))
+        ]
     }
 }

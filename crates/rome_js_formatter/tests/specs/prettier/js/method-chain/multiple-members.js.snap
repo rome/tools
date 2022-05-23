@@ -58,7 +58,7 @@ if (testConfig.ENABLE_ONLINE_TESTS === "true") {
                 Region: "Berlin",
                 City: "Berlin",
                 Country: "DE",
-              });
+              },);
           }
         },
       );
@@ -71,14 +71,14 @@ wrapper
   .prop("longPropFunctionName")()
   .then(function () {
     doSomething();
-  });
+  },);
 
 wrapper
   .find("SomewhatLongNodeName")
   .prop("longPropFunctionName")("argument")
   .then(function () {
     doSomething();
-  });
+  },);
 
 wrapper
   .find("SomewhatLongNodeName")
@@ -88,7 +88,7 @@ wrapper
   )("argument")
   .then(function () {
     doSomething();
-  });
+  },);
 
 wrapper
   .find("SomewhatLongNodeName")
@@ -98,7 +98,7 @@ wrapper
   )
   .then(function () {
     doSomething();
-  });
+  },);
 
 ```
 

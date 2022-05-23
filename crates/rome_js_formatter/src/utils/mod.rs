@@ -128,21 +128,12 @@ pub(crate) fn format_head_body_statement(
     body: JsAnyStatement,
 ) -> FormatResult<FormatElement> {
     if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-        Ok(hard_group_elements(formatted![
-            formatter,
-            [head, space_token(), body.format(),]
-        ]?))
+        formatted![formatter, [head, space_token(), body.format(),]]
     } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
         // Force semicolon insertion if the body is empty
-        formatted![
-            formatter,
-            [hard_group_elements(head), body.format(), token(";"),]
-        ]
+        formatted![formatter, [head, body.format(), token(";"),]]
     } else {
-        formatted![
-            formatter,
-            [hard_group_elements(head), space_token(), body.format(),]
-        ]
+        formatted![formatter, [head, space_token(), body.format(),]]
     }
 }
 
@@ -232,11 +223,13 @@ impl TemplateElement {
             }
         };
 
+        let middle = format_elements![middle, line_suffix_boundary()];
+
         if should_hard_group {
-            Ok(hard_group_elements(formatted![
+            formatted![
                 formatter,
                 [dollar_curly_token.format(), middle, r_curly_token.format()]
-            ]?))
+            ]
         } else {
             formatter
                 .delimited(&dollar_curly_token, middle, &r_curly_token)

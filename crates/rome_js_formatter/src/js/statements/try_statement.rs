@@ -15,7 +15,7 @@ impl FormatNodeFields<JsTryStatement> for FormatNodeRule<JsTryStatement> {
             catch_clause,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 try_token.format(),
@@ -24,6 +24,6 @@ impl FormatNodeFields<JsTryStatement> for FormatNodeRule<JsTryStatement> {
                 space_token(),
                 catch_clause.format(),
             ]
-        ]?))
+        ]
     }
 }

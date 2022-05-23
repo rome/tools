@@ -19,7 +19,7 @@ impl FormatNodeFields<JsMethodObjectMember> for FormatNodeRule<JsMethodObjectMem
             body,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 async_token.format().with_or_empty(|async_token| formatted![
@@ -34,6 +34,6 @@ impl FormatNodeFields<JsMethodObjectMember> for FormatNodeRule<JsMethodObjectMem
                 space_token(),
                 body.format(),
             ]
-        ]?))
+        ]
     }
 }

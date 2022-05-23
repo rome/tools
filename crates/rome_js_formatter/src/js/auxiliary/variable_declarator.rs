@@ -20,11 +20,7 @@ impl FormatNodeFields<JsVariableDeclarator> for FormatNodeRule<JsVariableDeclara
 
         formatted![
             formatter,
-            [
-                hard_group_elements(formatted![formatter, [id.format()]]?),
-                variable_annotation.format(),
-                initializer
-            ]
+            [id.format(), variable_annotation.format(), initializer]
         ]
     }
 }

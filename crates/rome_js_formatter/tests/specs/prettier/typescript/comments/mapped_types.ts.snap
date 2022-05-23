@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: mapped_types.ts
-
 ---
 # Input
 ```js
@@ -61,23 +59,23 @@ type B = {
 };
 
 type C = {
-  [c in C]: string; /* commentC */
+  [ /* commentC */ c in C]: string;
 };
 
 type D = {
-  [d in D]: string; /* commentD */
+  [d /* commentD */ in D]: string;
 };
 
 type E = {
-  [e in E]: string; /* commentE */
+  [e in /* commentE */ E]: string;
 };
 
 type F = {
-  [f in F]: string; /* commentF */
+  [f in F /* commentF */ ]: string;
 };
 
 type G = {
-  [g in G]: string; /* commentG */
+  [g in G] /* commentG */ : string;
 };
 
 type H = {
@@ -86,23 +84,23 @@ type H = {
 };
 
 type I = {
-  [i in I]: string; /* commentI */
+  [ /* commentI */ i in I]: string;
 };
 
 type J = {
-  [j in J]: string; /* commentJ */
+  [j /* commentJ */ in J]: string;
 };
 
 type K = {
-  [k in K]: string; /* commentK */
+  [k in /* commentK */ K]: string;
 };
 
 type L = {
-  [l in L]: string; /* commentL */
+  [l in L /* commentL */ ]: string;
 };
 
 type M = {
-  [m in M]: string; /* commentG */
+  [m in M] /* commentG */ : string;
 };
 
 ```
