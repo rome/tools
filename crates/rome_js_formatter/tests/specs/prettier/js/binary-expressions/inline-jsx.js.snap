@@ -29,9 +29,9 @@ const user2 = renderedUser || (
 
 const avatar = hasAvatar && <Gravatar user={author} size={size} />;
 
-const avatar2 = (hasAvatar || showPlaceholder) && (
-  <Gravatar user={author} size={size} />
-);
+const avatar2 = (
+  hasAvatar || showPlaceholder
+) && <Gravatar user={author} size={size} />;
 
 ```
 

@@ -164,7 +164,7 @@ error[SyntaxError]: expected a statement but instead found 'else'
 error[SyntaxError]: expected a statement but instead found '}
 }'
   ┌─ do.js:6:5
-  │
+  │  
 6 │ ┌     }
 7 │ │ };
   │ └─^ Expected a statement here

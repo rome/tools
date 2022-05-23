@@ -61,9 +61,9 @@ function SomeComponent(props) {
   );
 }
 
-const TestComponent = ({ children, ...props }) => (
-  <div css={`color: white; background: black`}>{children}</div>
-);
+const TestComponent = (
+  { children, ...props },
+) => <div css={`color: white; background: black`}>{children}</div>;
 
 ```
 

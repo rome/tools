@@ -46,11 +46,15 @@ let comp = (
   <Component<number> foo
   // comment6
   ></Component>
-  <Component<number>
+  <Component<
+    number
+  >
     // comment7
     foo
   ></Component>
-  <Component<number>
+  <Component<
+    number
+  >
     foo
     // comment8
     bar
