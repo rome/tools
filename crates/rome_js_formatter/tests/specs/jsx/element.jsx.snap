@@ -1,10 +1,10 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
+assertion_line: 244
 expression: element.jsx
 ---
 # Input
-<div> A Brighter   Summer Day</div>
+<div><div></div><a> jumps over the lazy dog </a></div>
 
 =============================
 # Outputs
@@ -14,11 +14,5 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-<div> A Brighter Summer Day</div>;
-
-
-## Unimplemented nodes/tokens
-
-"<div>" => 0..5
-"</div>" => 27..33
+<div><div></div><a> jumps over the lazy dog </a></div>;
 

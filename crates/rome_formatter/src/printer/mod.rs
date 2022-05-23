@@ -160,8 +160,8 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::Fill { list, separator } => {
-                self.print_fill(queue, list, separator, args);
+            FormatElement::Fill(fill) => {
+                self.print_fill(queue, fill.list(), fill.separator(), args);
             }
 
             FormatElement::List(list) => {
@@ -743,8 +743,9 @@ fn fits_element_on_line<'a, 'rest>(
             queue.extend(list.iter().map(|t| PrintElementCall::new(t, args)))
         }
 
-        FormatElement::Fill { list, separator } => queue.queue.0.extend(
-            Intersperse::new(list.iter().rev(), separator).map(|t| PrintElementCall::new(t, args)),
+        FormatElement::Fill(fill) => queue.queue.0.extend(
+            Intersperse::new(fill.list().iter().rev(), fill.separator())
+                .map(|t| PrintElementCall::new(t, args)),
         ),
 
         FormatElement::Token(token) => {

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 181
 expression: issue-3532.js
 ---
 # Input
@@ -78,11 +79,13 @@ const AspectRatioBox = (
   { aspectRatio, children, ...props },
 ) => (
   <div
-    className={`height: 0;
+    className={
+      `height: 0;
   overflow: hidden;
-  padding-top: ${props => 100 / props.aspectRatio}%;
+  padding-top: ${(props) => 100 / props.aspectRatio}%;
   background: white;
-  position: relative;`}
+  position: relative;`
+    }
   >
     <div>{children}</div>
   </div>

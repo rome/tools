@@ -99,32 +99,43 @@ pub fn contains_multiple_expressions(children: &JsxChildList) -> bool {
     false
 }
 
+pub enum WrapState {
+    NoWrap,
+    WrapOnBreak,
+    AlwaysWrap,
+}
+
 /// Takes in a syntax node because we need to handle both JsxElement and JsxSelfClosingElement
-pub fn should_wrap_element_in_parens(element_syntax: &SyntaxNode<JsLanguage>) -> bool {
-    let mut ancestors = element_syntax.ancestors();
-    // We skip two because all elements are wrapped in JS_ELEMENT and JS_TAG_EXRESSION
-    ancestors.next();
+pub fn should_wrap_element_in_parens(node: &SyntaxNode<JsLanguage>) -> WrapState {
+    let mut ancestors = node.ancestors();
+    // We skip 1 for the current node
     ancestors.next();
 
-    // If our parent is one of the following kinds, we do not need to wrap
-    // the element in parentheses.
     ancestors
         .next()
         .map(|parent| {
-            !matches!(
-                parent.kind(),
+            let kind = parent.kind();
+            if kind == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION {
+                return should_wrap_element_in_parens(&parent);
+            }
+            // If our parent is one of the following kinds, we do not need to wrap
+            // the element in parentheses.
+
+            match kind {
                 JsSyntaxKind::JS_ARRAY_EXPRESSION
-                    | JsSyntaxKind::JSX_ATTRIBUTE
-                    | JsSyntaxKind::JSX_ELEMENT
-                    | JsSyntaxKind::JSX_EXPRESSION_CHILD
-                    | JsSyntaxKind::JSX_FRAGMENT
-                    | JsSyntaxKind::JS_EXPRESSION_STATEMENT
-                    | JsSyntaxKind::JS_CALL_ARGUMENT_LIST
-                    | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
-                    | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
-            )
+                | JsSyntaxKind::JSX_ATTRIBUTE
+                | JsSyntaxKind::JSX_ELEMENT
+                | JsSyntaxKind::JSX_EXPRESSION_CHILD
+                | JsSyntaxKind::JSX_FRAGMENT
+                | JsSyntaxKind::JS_EXPRESSION_STATEMENT
+                | JsSyntaxKind::JS_CALL_ARGUMENT_LIST
+                | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => WrapState::NoWrap,
+                JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+                | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => WrapState::AlwaysWrap,
+                _ => WrapState::WrapOnBreak,
+            }
         })
-        .unwrap_or(false)
+        .unwrap_or(WrapState::NoWrap)
 }
 
 /// This is a very special situation where we're returning a JsxElement

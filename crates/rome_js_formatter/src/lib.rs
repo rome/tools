@@ -481,10 +481,25 @@ mod test {
     use rome_js_syntax::SourceType;
 
     #[test]
-    #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"const user = renderedUser || <div><User name={this.state.user.name} age={this.state.user.age} /></div>"#;
+        let src = r#"
+        const AspectRatioBox = ({
+  aspectRatio,
+  children,
+  ...props
+}) => (
+  <div
+    className={`height: 0;
+  overflow: hidden;
+  padding-top: ${props => 100 / props.aspectRatio}%;
+  background: white;
+  position: relative;`}
+  >
+    <div>{children}</div>
+  </div>
+);
+        "#;
         let syntax = SourceType::jsx();
         let tree = parse(src, 0, syntax.clone());
         let result = format_node(JsFormatOptions::default(), &tree.syntax())

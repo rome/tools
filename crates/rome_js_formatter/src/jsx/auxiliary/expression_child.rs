@@ -20,6 +20,7 @@ impl FormatNodeFields<JsxExpressionChild> for FormatNodeRule<JsxExpressionChild>
             [
                 l_curly_token.format(),
                 expression.format(),
+                line_suffix_boundary(),
                 r_curly_token.format()
             ]
         ]?))

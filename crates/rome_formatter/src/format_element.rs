@@ -365,7 +365,7 @@ where
 /// let b = from_utf8(&[b'b'; 30]).unwrap();
 /// let c = from_utf8(&[b'c'; 30]).unwrap();
 /// let d = from_utf8(&[b'd'; 30]).unwrap();
-/// let expr = fill_elements([token(a), token(b), token(c), token(d)]);
+/// let expr = fill_elements(space_token(), [token(a), token(b), token(c), token(d)]);
 ///
 /// assert_eq!(
 ///     format!("{a} {b}\n{c} {d}"),
@@ -382,10 +382,10 @@ pub fn fill_elements<TSep: Into<FormatElement>>(
     match list.len() {
         0 => empty_element(),
         1 => list.pop().unwrap(),
-        _ => FormatElement::Fill {
+        _ => FormatElement::Fill(Box::new(Fill {
             list: List::new(list),
             separator: Box::new(separator.into()),
-        },
+        })),
     }
 }
 
@@ -866,7 +866,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// let elements = group_elements_with_options(format_elements![
 ///     token("["),
-///     soft_block_indent(fill_elements(vec![
+///     soft_block_indent(fill_elements(space_token(), vec![
 ///         format_elements![token("1,")],
 ///         format_elements![token("234568789,")],
 ///         format_elements![token("3456789,")],
@@ -1093,10 +1093,7 @@ pub enum FormatElement {
     List(List),
 
     /// Concatenates multiple elements together with a given separator or line breaks to fill the print width. See [fill_elements].
-    Fill {
-        list: List,
-        separator: Content,
-    },
+    Fill(Box<Fill>),
 
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
@@ -1184,10 +1181,10 @@ impl Debug for FormatElement {
                 write!(fmt, "List ")?;
                 content.fmt(fmt)
             }
-            FormatElement::Fill { list, separator } => fmt
+            FormatElement::Fill(fill) => fmt
                 .debug_struct("Fill")
-                .field("list", list)
-                .field("separator", separator)
+                .field("list", &fill.list)
+                .field("separator", &fill.separator)
                 .finish(),
             FormatElement::Token(content) => content.fmt(fmt),
             FormatElement::LineSuffix(content) => {
@@ -1285,6 +1282,22 @@ impl Deref for List {
 
     fn deref(&self) -> &Self::Target {
         &self.content
+    }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+pub struct Fill {
+    list: List,
+    separator: Content,
+}
+
+impl Fill {
+    pub fn list(&self) -> &List {
+        &self.list
+    }
+
+    pub fn separator(&self) -> &Content {
+        &self.separator
     }
 }
 
@@ -1650,8 +1663,9 @@ impl FormatElement {
             FormatElement::Group(group) => group.content.will_break(),
             FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
-            FormatElement::Fill { list, separator } => {
-                list.content.iter().any(FormatElement::will_break) || separator.will_break()
+            FormatElement::Fill(fill) => {
+                fill.list.content.iter().any(FormatElement::will_break)
+                    || fill.separator.will_break()
             }
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
@@ -1715,10 +1729,14 @@ impl FormatElement {
     /// a line break or a comment
     pub fn last_element(&self) -> Option<&FormatElement> {
         match self {
-            FormatElement::List(list) | FormatElement::Fill { list, .. } => {
+            FormatElement::Fill(fill) => fill
+                .list
+                .iter()
+                .rev()
+                .find_map(|element| element.last_element()),
+            FormatElement::List(list) => {
                 list.iter().rev().find_map(|element| element.last_element())
             }
-
             FormatElement::Empty | FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
             FormatElement::Indent(indent) => indent.content.last_element(),

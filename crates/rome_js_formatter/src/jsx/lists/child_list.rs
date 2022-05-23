@@ -20,7 +20,6 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
             Ok(join_elements(
                 soft_line_break(),
                 children.filter(|element| !element.is_empty_string()),
-                //children,
             ))
         }
     }
