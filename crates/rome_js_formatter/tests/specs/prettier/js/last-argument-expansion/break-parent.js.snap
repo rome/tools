@@ -38,7 +38,9 @@ true
   processors: [
     require(
       "autoprefixer",
-      { browsers: ["> 1%", "last 2 versions", "ie >= 11", "Firefox ESR"] },
+      {
+        browsers: ["> 1%", "last 2 versions", "ie >= 11", "Firefox ESR"],
+      },
     ),
     require("postcss-url")({
       url: (url) =>
@@ -47,7 +49,9 @@ true
   ],
 });
 
-true ? test({ a: 1 },) : <div
+true ? test({
+  a: 1,
+},) : <div
   a={123412342314}
   b={123412341234}
   c={123412341234}

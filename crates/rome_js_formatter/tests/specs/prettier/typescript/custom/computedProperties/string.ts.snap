@@ -29,13 +29,17 @@ interface I {
   "string": "I";
 }
 
-type T = { "string": "T" };
+type T = {
+  "string": "T";
+};
 
 interface A {
   "string": "A";
 }
 
-type B = { "string": "B" };
+type B = {
+  "string": "B";
+};
 
 ```
 

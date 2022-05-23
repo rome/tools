@@ -75,9 +75,15 @@ const foo3 = 123
 
 # Output
 ```js
-let obj1 = { key: "val" }; // Comment
+let obj1 = {
+  // Comment
+  key: "val",
+};
 
-let obj2 = { key: "val" }; // Comment
+let obj2 = {
+  // Comment
+  key: "val",
+};
 
 let obj3 = {
   // Comment

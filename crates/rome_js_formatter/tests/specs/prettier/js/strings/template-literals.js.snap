@@ -159,7 +159,14 @@ const env = ${JSON.stringify(
 `;
 
 // https://github.com/prettier/prettier/issues/821#issue-210557749
-f(`${{ a: 4, b: 9 }}`);
+f(
+  `${
+    {
+      a: 4,
+      b: 9,
+    }
+  }`,
+);
 
 // https://github.com/prettier/prettier/issues/1183#issue-220863505
 const makeBody = (store, assets, html) =>
@@ -194,7 +201,7 @@ const Bar = styled.div`
 # Lines exceeding max width of 80 characters
 ```
    74:   `\n  ${chalk.dim(`\u203A and ${more} more ${more} more ${more} more ${more}`)}`,
-  105:         `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState(), null, 2)};`,
-  117:     props.highlight.length > 0 ? palette(["text", "dark", "tertiary"],)(props) : palette([
+  112:         `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState(), null, 2)};`,
+  124:     props.highlight.length > 0 ? palette(["text", "dark", "tertiary"],)(props) : palette([
 ```
 

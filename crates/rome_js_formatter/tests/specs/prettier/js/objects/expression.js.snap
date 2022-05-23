@@ -45,7 +45,9 @@ a = () => ({}).x;
 ({} = 0);
 (({} = 0), 1);
 
-const a1 = { someKey: (shortName, shortName) };
+const a1 = {
+  someKey: (shortName, shortName),
+};
 
 const a2 = {
   someKey: (
@@ -80,6 +82,6 @@ error[SyntaxError]: expected `')'` but instead found `:`
 
 # Lines exceeding max width of 80 characters
 ```
-   23:     longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName
+   25:     longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName
 ```
 

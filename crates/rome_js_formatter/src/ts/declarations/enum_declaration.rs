@@ -1,6 +1,8 @@
 use crate::prelude::*;
+use crate::utils::has_leading_newline;
 use crate::FormatNodeFields;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
+use rome_rowan::AstNode;
 
 impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
     fn format_fields(
@@ -16,11 +18,16 @@ impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
             r_curly_token,
         } = node.as_fields();
 
+        let has_newline = has_leading_newline(members.syntax());
         let list = formatter
             .delimited(
                 &l_curly_token?,
                 join_elements(
-                    soft_line_break_or_space(),
+                    if has_newline {
+                        hard_line_break()
+                    } else {
+                        soft_line_break_or_space()
+                    },
                     formatter.format_separated(&members, || token(","))?,
                 ),
                 &r_curly_token?,
