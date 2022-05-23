@@ -390,6 +390,79 @@ function() {
             Some(TextRange::new(range_start, range_end + TextSize::from(1)))
         );
     }
+
+    #[test]
+    fn test_range_formatting_semicolon() {
+        let input = "
+    statement_1()
+    statement_2()
+    statement_3()
+";
+
+        let range_start = TextSize::try_from(input.find("statement_2").unwrap()).unwrap();
+        let range_end = range_start + TextSize::of("statement_2()");
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "statement_2();");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+    }
+
+    #[test]
+    fn test_range_formatting_expression() {
+        let input = "1 + 2 + 3 + 4 + 5";
+
+        let range_start = TextSize::try_from(input.find("3 + 4").unwrap()).unwrap();
+        let range_end = range_start + TextSize::of("3 + 4");
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "1 + 2 + 3 + 4 + 5;");
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(TextSize::from(0), TextSize::of(input)))
+        );
+    }
+
+    #[test]
+    fn test_range_formatting_whitespace() {
+        let input = "               ";
+
+        let range_start = TextSize::from(5);
+        let range_end = TextSize::from(5);
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+    }
 }
 
 #[cfg(test)]
