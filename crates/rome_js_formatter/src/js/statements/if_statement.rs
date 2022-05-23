@@ -75,7 +75,6 @@ fn format_if_element(
                 )
                 .soft_block_indent()
                 .finish()?,
-            space_token(),
             into_block(formatter, consequent?)?,
         ]
     ]?;
@@ -88,22 +87,25 @@ fn into_block(
     formatter: &Formatter<JsFormatOptions>,
     stmt: JsAnyStatement,
 ) -> FormatResult<FormatElement> {
+    let formatted_statement = stmt.format();
+
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
-        return Ok(format_elements![space_token(), stmt.format(formatter)?]);
+        return formatted![formatter, [space_token(), formatted_statement]];
     }
 
     // If the body is an empty statement, force a line break to ensure behavior
     // is coherent with `is_non_collapsable_empty_block`
     if matches!(stmt, JsAnyStatement::JsEmptyStatement(_)) {
-        return Ok(format_elements![stmt.format(formatter)?, hard_line_break()]);
+        return formatted![formatter, [formatted_statement, hard_line_break()]];
     }
 
-    Ok(format_elements![
-        space_token(),
-        group_elements(format_elements![
+    formatted![
+        formatter,
+        [
+            space_token(),
             token("{"),
-            block_indent(stmt.format(formatter)?),
+            block_indent(formatted![formatter, [stmt.format()]]?),
             token("}"),
-        ])
-    ])
+        ]
+    ]
 }
