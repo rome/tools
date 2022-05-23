@@ -17,7 +17,12 @@ export const enviromentProdValues: EnvironmentValues = assign<EnvironmentValues>
 ```js
 export const enviromentProdValues: EnvironmentValues = assign<
   EnvironmentValues
->({ apiURL: "/api" }, enviromentBaseValues);
+>(
+  {
+    apiURL: "/api",
+  },
+  enviromentBaseValues,
+);
 
 ```
 

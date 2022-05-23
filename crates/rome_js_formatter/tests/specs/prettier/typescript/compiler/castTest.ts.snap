@@ -59,9 +59,7 @@ declare class Point {
   constructor(x: number, y: number);
 }
 
-var p_cast = <
-  Point
->({
+var p_cast = <Point>({
   x: 0,
   y: 0,
   add: function (dx, dy) {

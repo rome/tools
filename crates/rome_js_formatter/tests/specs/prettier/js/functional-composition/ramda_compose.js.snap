@@ -95,9 +95,7 @@ followersForUser(
 ).then((followers) => console.log("Followers:", followers));
 // Followers: ["STEVE","SUZY"]
 
-const mapStateToProps = (
-  state,
-) => ({
+const mapStateToProps = (state) => ({
   users: R.compose(
     R.filter(R.propEq("status", "active")),
     R.values,

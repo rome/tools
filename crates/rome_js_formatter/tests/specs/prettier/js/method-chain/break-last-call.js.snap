@@ -49,7 +49,15 @@ export default (store) => {
     endpoint,
     schema,
   ).then(
-    (response) => next(actionWith({ response, type: successType })),
+    (
+      response,
+    ) =>
+      next(
+        actionWith({
+          response,
+          type: successType,
+        },),
+      ),
     (
       error,
     ) =>

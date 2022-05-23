@@ -81,7 +81,12 @@ async function g1() {
 }
 ({}) as X;
 () => ({}) as X;
-const state = JSON.stringify({ next: window.location.href, nonce } as State);
+const state = JSON.stringify(
+  {
+    next: window.location.href,
+    nonce,
+  } as State,
+);
 
 (foo.bar as Baz) = [bar];
 (foo.bar as any)++;
@@ -119,8 +124,8 @@ const iter2 = createIterator(
 
 # Lines exceeding max width of 80 characters
 ```
-   41: const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
-   42: const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
-   51: const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
+   46: const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
+   47: const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
+   56: const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
 ```
 

@@ -28,7 +28,9 @@ var jqxhr = $.ajax("example.php")
 # Output
 ```js
 Object.keys(
-  availableLocales({ test: true }),
+  availableLocales({
+    test: true,
+  },),
 ).forEach((locale) => {
   // ...
 },);

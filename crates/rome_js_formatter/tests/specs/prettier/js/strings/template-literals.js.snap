@@ -161,7 +161,14 @@ const env = ${JSON.stringify(
 `;
 
 // https://github.com/prettier/prettier/issues/821#issue-210557749
-f(`${{ a: 4, b: 9 }}`);
+f(
+  `${
+    {
+      a: 4,
+      b: 9,
+    }
+  }`,
+);
 
 // https://github.com/prettier/prettier/issues/1183#issue-220863505
 const makeBody = (
