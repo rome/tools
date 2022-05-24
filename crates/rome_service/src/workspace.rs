@@ -1,3 +1,56 @@
+//! The [Workspace] is the main entry point for high-level clients (the Rome
+//! CLI and Language Server) into the various language-specific services of the
+//! Rome toolchain (parser, formatter, analyzer ...)
+//!
+//! # Documents
+//!
+//! A [Workspace] instance operates on a set of open documents managed by one
+//! or multiple clients, and provides language services for these documents
+//! like diagnostics, code actions or formatting in a language independent way.
+//!
+//! In this regard the [Workspace] trait shares many similarities with the
+//! Language Server Protocol, and in the context of the Language Server the
+//! state of the [Workspace] instance is intended to closely mirror the state
+//! of the actual in-editor workspace (the set of documents open in the
+//! [Workspace] is the set of files currently open in the editor)
+//!
+//! In the context of the CLI most commands will generally work on batches of
+//! files, and as such the set of "open documents" instead corresponds to the
+//! list of files the CLI is currently actively processing
+//!
+//! # State
+//!
+//! A [Workspace] instance is stateful: this is not reflected on the trait (all
+//! methods take an immutable `&self` borrow) because the interface is also
+//! required to be thread-safe ([Send] + [Sync]), but the workspace is allowed
+//! to internally cache data across calls (this is in fact the main reason for
+//! the use of the "open documents" set, those documents can serve as
+//! conceptual garbage collection roots to manage the caching and eviction of
+//! parse trees, intermediate analysis data or diagnostics)
+//!
+//! # Implementations
+//!
+//! Currently the [Workspace] trait is implemented for a single [server::WorkspaceServer]
+//! type. However it is eventually intended to also be implemented for a
+//! potential `WorkspaceClient` type and to operate on a remote workspace
+//! server through a transport layer. This would allow the CLI and Language
+//! Server process to share a the same [Workspace] instance in a common daemon
+//! process for instance
+//!
+//! # Errors
+//!
+//! Because of the aforementioned client-server abstraction, the [Workspace]
+//! is designed to let any operation fail: all methods return a [Result] with a
+//! [RomeError] enum wrapping the underlying issue. Some common errors are:
+//!
+//! - [RomeError::NotFound]: This error is returned when an operation is being
+//! run on a path that doesn't correspond to any open document: either the
+//! document has been closed or the client didn't open it in the first place
+//! - [RomeError::SourceFileNotSupported]: This error is returned when an
+//! operation could not be completed because the language associated with the
+//! document does not implement the required capability: for instance trying to
+//! format a file with a language that does not have a formatter
+
 use std::panic::RefUnwindSafe;
 
 use rome_analyze::AnalyzerAction;
