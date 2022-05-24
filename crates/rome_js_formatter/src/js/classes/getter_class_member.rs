@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::utils::{format_member_name, MemberContext};
 use crate::FormatNodeFields;
 use rome_js_syntax::JsGetterClassMember;
 use rome_js_syntax::JsGetterClassMemberFields;
@@ -26,7 +27,7 @@ impl FormatNodeFields<JsGetterClassMember> for FormatNodeRule<JsGetterClassMembe
                 space_token(),
                 get_token.format(),
                 space_token(),
-                name.format(),
+                format_member_name(name?, formatter, MemberContext::Member),
                 l_paren_token.format(),
                 r_paren_token.format(),
                 return_type.format(),
