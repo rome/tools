@@ -25,9 +25,7 @@ export default function DesktopPlayground(
 			await navigator.clipboard.writeText(formatter_ir);
 			toast("RomeIR has been successfully copy to your clipboard", {});
 		} catch (err: any) {
-			if (err) {
 				toast("Could not copy text: ", err);
-			}
 		}
 	};
 	return (
