@@ -21,7 +21,7 @@ use rome_js_syntax::{
     TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList, SyntaxNode};
+use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
 
 use crate::options::{JsFormatOptions, QuoteStyle};
