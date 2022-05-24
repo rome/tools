@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
+assertion_line: 182
 expression: inline.js
 ---
 # Input
@@ -25,11 +25,15 @@ import {
   a2,
   somethingSuperLongsomethingSuperLong3,
 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+import {
+  somethingSuperLongsomethingSuperLoooooooooooooooooooooooooooooooooooooooooooong,
+} from "source";
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
     1: import somethingSuperLongsomethingSuperLong from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+   13:   somethingSuperLongsomethingSuperLoooooooooooooooooooooooooooooooooooooooooooong,
 ```
 
