@@ -1,9 +1,14 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsStringType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsStringType, TsStringTypeFields};
 
-impl FormatNode for TsStringType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.string_token().format(formatter)
+impl FormatNodeFields<TsStringType> for FormatNodeRule<TsStringType> {
+    fn format_fields(
+        node: &TsStringType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let TsStringTypeFields { string_token } = node.as_fields();
+
+        formatted![formatter, [string_token.format()]]
     }
 }

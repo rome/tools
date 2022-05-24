@@ -4,14 +4,19 @@
 //! from any error and produce an ast from any source code. If you don't want to account for
 //! optionals for everything, you can use ...
 
+#[cfg(feature = "serde")]
+use serde_crate::Serialize;
 use std::error::Error;
 use std::fmt::{self, Debug, Display, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use text_size::TextRange;
 
+mod mutation;
+
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
 use crate::{Language, SyntaxList, SyntaxNode, SyntaxToken};
+pub use mutation::{AstNodeExt, AstNodeListExt, AstSeparatedListExt};
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
@@ -34,6 +39,9 @@ pub trait AstNode {
 
     /// Returns the underlying syntax node.
     fn syntax(&self) -> &SyntaxNode<Self::Language>;
+
+    /// Returns the underlying syntax node.
+    fn into_syntax(self) -> SyntaxNode<Self::Language>;
 
     /// Cast this node to this AST node
     ///
@@ -77,6 +85,9 @@ pub trait AstNodeList {
 
     /// Returns the underlying syntax list
     fn syntax_list(&self) -> &SyntaxList<Self::Language>;
+
+    /// Returns the underlying syntax list
+    fn into_syntax_list(self) -> SyntaxList<Self::Language>;
 
     fn iter(&self) -> AstNodeListIterator<Self::Language, Self::Node> {
         AstNodeListIterator {
@@ -158,18 +169,27 @@ impl<L: Language, N: AstNode<Language = L>> ExactSizeIterator for AstNodeListIte
 impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstNodeListIterator<L, N> {}
 
 #[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct AstSeparatedElement<L: Language, N> {
     node: SyntaxResult<N>,
     trailing_separator: SyntaxResult<Option<SyntaxToken<L>>>,
 }
 
-impl<L: Language, N: AstNode<Language = L> + Clone> AstSeparatedElement<L, N> {
-    pub fn node(&self) -> SyntaxResult<N> {
-        self.node.clone()
+impl<L: Language, N: AstNode<Language = L>> AstSeparatedElement<L, N> {
+    pub fn node(&self) -> SyntaxResult<&N> {
+        match &self.node {
+            Ok(node) => Ok(node),
+            Err(err) => Err(*err),
+        }
     }
 
-    pub fn trailing_separator(&self) -> SyntaxResult<Option<SyntaxToken<L>>> {
-        self.trailing_separator.clone()
+    pub fn trailing_separator(&self) -> SyntaxResult<Option<&SyntaxToken<L>>> {
+        match &self.trailing_separator {
+            Ok(Some(sep)) => Ok(Some(sep)),
+            Ok(_) => Ok(None),
+            Err(err) => Err(*err),
+        }
     }
 }
 
@@ -202,6 +222,9 @@ pub trait AstSeparatedList {
 
     /// Returns the underlying syntax list
     fn syntax_list(&self) -> &SyntaxList<Self::Language>;
+
+    /// Returns the underlying syntax list
+    fn into_syntax_list(self) -> SyntaxList<Self::Language>;
 
     /// Returns an iterator over all nodes with their trailing separator
     fn elements(&self) -> AstSeparatedListElementsIterator<Self::Language, Self::Node> {
@@ -331,7 +354,8 @@ impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstSeparatedListNo
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub enum SyntaxError {
     /// Error thrown when a mandatory node is not found
     MissingRequiredChild,

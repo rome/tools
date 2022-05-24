@@ -1,13 +1,17 @@
-use crate::formatter::TrailingSeparator;
-use crate::{join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
+use crate::generated::FormatJsImportAssertionEntryList;
+use crate::prelude::*;
 use rome_js_syntax::JsImportAssertionEntryList;
 
-impl Format for JsImportAssertionEntryList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsImportAssertionEntryList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(self, || token(","), TrailingSeparator::default())?,
+            formatter.format_separated(node, || token(","))?,
         ))
     }
 }

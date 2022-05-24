@@ -1,10 +1,15 @@
+use crate::generated::FormatJsArrayBindingPatternElementList;
+use crate::prelude::*;
 use crate::utils::array::format_array_node;
-use crate::{Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::JsArrayBindingPatternElementList;
 
-impl Format for JsArrayBindingPatternElementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        format_array_node(self, formatter)
+impl FormatRule<JsArrayBindingPatternElementList> for FormatJsArrayBindingPatternElementList {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsArrayBindingPatternElementList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        format_array_node(node, formatter)
     }
 }

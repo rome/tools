@@ -1,27 +1,27 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsNamespaceImportSpecifier;
 use rome_js_syntax::JsNamespaceImportSpecifierFields;
 
-impl FormatNode for JsNamespaceImportSpecifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsNamespaceImportSpecifier> for FormatNodeRule<JsNamespaceImportSpecifier> {
+    fn format_fields(
+        node: &JsNamespaceImportSpecifier,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsNamespaceImportSpecifierFields {
             star_token,
             as_token,
             local_name,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let star = star_token.format(formatter)?;
-        let as_token = as_token.format(formatter)?;
-        let local_name = local_name.format(formatter)?;
+        let star = star_token.format();
+        let as_token = as_token.format();
+        let local_name = local_name.format();
 
-        Ok(format_elements![
-            star,
-            space_token(),
-            as_token,
-            space_token(),
-            local_name
-        ])
+        formatted![
+            formatter,
+            [star, space_token(), as_token, space_token(), local_name]
+        ]
     }
 }

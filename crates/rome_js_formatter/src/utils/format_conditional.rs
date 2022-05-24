@@ -1,8 +1,4 @@
-use crate::{
-    format_elements, group_elements, hard_line_break, indent, space_token, Format, FormatElement,
-    Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
 use rome_rowan::AstNode;
 
@@ -33,7 +29,7 @@ impl Conditional {
 
     fn into_format_element(
         self,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
         parent_is_conditional: bool,
     ) -> FormatResult<FormatElement> {
         let (head, body) = match self {
@@ -47,23 +43,25 @@ impl Conditional {
             ),
         };
 
-        Ok(format_elements![head, body])
+        formatted![formatter, [head, body]]
     }
 
-    fn format_head(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    fn format_head(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
         match self {
-            Conditional::Expression(expr) => Ok(format_elements![
-                expr.test()?.format(formatter)?,
-                space_token(),
-            ]),
-            Conditional::Type(t) => Ok(format_elements![
-                t.check_type()?.format(formatter)?,
-                space_token(),
-                t.extends_token()?.format(formatter)?,
-                space_token(),
-                t.extends_type()?.format(formatter)?,
-                space_token(),
-            ]),
+            Conditional::Expression(expr) => {
+                formatted![formatter, [expr.test()?.format(), space_token(),]]
+            }
+            Conditional::Type(t) => formatted![
+                formatter,
+                [
+                    t.check_type()?.format(),
+                    space_token(),
+                    t.extends_token()?.format(),
+                    space_token(),
+                    t.extends_type()?.format(),
+                    space_token(),
+                ]
+            ],
         }
     }
     fn consequent_to_conditional(&self) -> FormatResult<Option<Self>> {
@@ -90,7 +88,7 @@ impl Conditional {
 
     fn format_body(
         &self,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
         parent_is_conditional: bool,
     ) -> FormatResult<FormatElement> {
         let mut left_or_right_is_conditional = false;
@@ -114,57 +112,61 @@ impl Conditional {
         };
 
         let body = if left_or_right_is_conditional || parent_is_conditional {
-            indent(format_elements![
-                hard_line_break(),
-                consequent,
-                hard_line_break(),
-                alternate
-            ])
+            indent(formatted![
+                formatter,
+                [hard_line_break(), consequent, hard_line_break(), alternate]
+            ]?)
         } else {
-            group_elements(format_elements![
-                space_token(),
-                consequent,
-                space_token(),
-                alternate
-            ])
+            group_elements(formatted![
+                formatter,
+                [space_token(), consequent, space_token(), alternate]
+            ]?)
         };
         Ok(body)
     }
 
     fn format_with_consequent(
         &self,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
         consequent: Option<FormatElement>,
     ) -> FormatResult<FormatElement> {
         match self {
             Conditional::Expression(expr) => {
                 if let Some(consequent) = consequent {
-                    Ok(format_elements![
-                        expr.question_mark_token().format(formatter)?,
-                        space_token(),
-                        consequent
-                    ])
+                    formatted![
+                        formatter,
+                        [
+                            expr.question_mark_token().format(),
+                            space_token(),
+                            consequent
+                        ]
+                    ]
                 } else {
-                    Ok(format_elements![
-                        expr.question_mark_token().format(formatter)?,
-                        space_token(),
-                        expr.consequent().format(formatter)?
-                    ])
+                    formatted![
+                        formatter,
+                        [
+                            expr.question_mark_token().format(),
+                            space_token(),
+                            expr.consequent().format()
+                        ]
+                    ]
                 }
             }
             Conditional::Type(ty) => {
                 if let Some(consequent) = consequent {
-                    Ok(format_elements![
-                        ty.question_mark_token().format(formatter)?,
-                        space_token(),
-                        consequent
-                    ])
+                    formatted![
+                        formatter,
+                        [ty.question_mark_token().format(), space_token(), consequent]
+                    ]
                 } else {
-                    Ok(format_elements![
-                        ty.question_mark_token().format(formatter)?,
-                        space_token(),
-                        ty.true_type().format(formatter)?
-                    ])
+                    formatted![
+                        formatter,
+                        [
+                            ty.question_mark_token().format(),
+                            space_token(),
+                            ty.true_type().format()
+                        ]
+                    ]
                 }
             }
         }
@@ -172,38 +174,42 @@ impl Conditional {
 
     fn format_with_alternate(
         &self,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
         alternate: Option<FormatElement>,
     ) -> FormatResult<FormatElement> {
         match self {
             Conditional::Expression(expr) => {
                 if let Some(alternate) = alternate {
-                    Ok(format_elements![
-                        expr.colon_token().format(formatter)?,
-                        space_token(),
-                        alternate
-                    ])
+                    formatted![
+                        formatter,
+                        [expr.colon_token().format(), space_token(), alternate]
+                    ]
                 } else {
-                    Ok(format_elements![
-                        expr.colon_token().format(formatter)?,
-                        space_token(),
-                        expr.alternate().format(formatter)?
-                    ])
+                    formatted![
+                        formatter,
+                        [
+                            expr.colon_token().format(),
+                            space_token(),
+                            expr.alternate().format()
+                        ]
+                    ]
                 }
             }
             Conditional::Type(ty) => {
                 if let Some(alternate) = alternate {
-                    Ok(format_elements![
-                        ty.colon_token().format(formatter)?,
-                        space_token(),
-                        alternate
-                    ])
+                    formatted![
+                        formatter,
+                        [ty.colon_token().format(), space_token(), alternate]
+                    ]
                 } else {
-                    Ok(format_elements![
-                        ty.colon_token().format(formatter)?,
-                        space_token(),
-                        ty.false_type().format(formatter)?
-                    ])
+                    formatted![
+                        formatter,
+                        [
+                            ty.colon_token().format(),
+                            space_token(),
+                            ty.false_type().format()
+                        ]
+                    ]
                 }
             }
         }
@@ -219,7 +225,7 @@ impl Conditional {
 /// - [rome_js_syntax::JsConditionalExpression]
 pub fn format_conditional(
     conditional: Conditional,
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
     parent_is_conditional: bool,
 ) -> FormatResult<FormatElement> {
     conditional.into_format_element(formatter, parent_is_conditional)

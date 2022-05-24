@@ -1,12 +1,17 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsBigIntLiteralType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsBigIntLiteralType, TsBigIntLiteralTypeFields};
 
-impl FormatNode for TsBigIntLiteralType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let minus = self.minus_token().format_or_empty(formatter)?;
-        let literal = self.literal_token().format(formatter)?;
-        Ok(format_elements![minus, literal])
+impl FormatNodeFields<TsBigIntLiteralType> for FormatNodeRule<TsBigIntLiteralType> {
+    fn format_fields(
+        node: &TsBigIntLiteralType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let TsBigIntLiteralTypeFields {
+            minus_token,
+            literal_token,
+        } = node.as_fields();
+
+        formatted![formatter, [minus_token.format(), literal_token.format()]]
     }
 }

@@ -145,10 +145,10 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
     /// let checkpoint = builder.checkpoint();
     /// parser.parse_expr();
     /// if parser.peek() == Some(PLUS) {
-    ///   // 1 + 2 = Add(1, 2)
-    ///   builder.start_node_at(checkpoint, OPERATION);
-    ///   parser.parse_expr();
-    ///   builder.finish_node();
+    ///     // 1 + 2 = Add(1, 2)
+    ///     builder.start_node_at(checkpoint, OPERATION);
+    ///     parser.parse_expr();
+    ///     builder.finish_node();
     /// }
     /// ```
     #[inline]

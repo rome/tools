@@ -1,14 +1,12 @@
-use crate::format_traits::{FormatOptional, FormatWith};
-use crate::formatter::TrailingSeparator;
-use crate::{
-    format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
-    FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 
-impl FormatNode for TsEnumDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
+    fn format_fields(
+        node: &TsEnumDeclaration,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsEnumDeclarationFields {
             const_token,
             enum_token,
@@ -16,24 +14,34 @@ impl FormatNode for TsEnumDeclaration {
             members,
             l_curly_token,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let const_token = const_token.format_with_or_empty(formatter, |const_token| {
-            format_elements![const_token, space_token()]
-        })?;
-        let enum_token = enum_token.format_with(formatter, |enum_token| {
-            format_elements![enum_token, space_token()]
-        })?;
-        let id = id.format_with(formatter, |id| format_elements![id, space_token()])?;
+        let list = formatter
+            .delimited(
+                &l_curly_token?,
+                join_elements(
+                    soft_line_break_or_space(),
+                    formatter.format_separated(&members, || token(","))?,
+                ),
+                &r_curly_token?,
+            )
+            .soft_block_spaces()
+            .finish()?;
 
-        let members =
-            formatter.format_separated(&members, || token(","), TrailingSeparator::default())?;
-        let list = formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            join_elements(soft_line_break_or_space(), members),
-            &r_curly_token?,
-        )?;
-
-        Ok(format_elements![const_token, enum_token, id, list])
+        formatted![
+            formatter,
+            [
+                const_token.format().with_or_empty(|const_token| formatted![
+                    formatter,
+                    [const_token, space_token()]
+                ]),
+                enum_token
+                    .format()
+                    .with(|enum_token| formatted![formatter, [enum_token, space_token()]]),
+                id.format()
+                    .with(|id| formatted![formatter, [id, space_token()]]),
+                list
+            ]
+        ]
     }
 }

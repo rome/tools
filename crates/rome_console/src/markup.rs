@@ -4,11 +4,12 @@ use std::{
 };
 
 use termcolor::{Color, ColorSpec};
+use text_size::TextSize;
 
 use crate::fmt::{Display, Formatter, MarkupElements, Write};
 
 /// Enumeration of all the supported markup elements
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
 pub enum MarkupElement {
     Emphasis,
     Dim,
@@ -70,7 +71,7 @@ pub struct MarkupNode<'fmt> {
     pub content: &'fmt dyn Display,
 }
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct MarkupNodeBuf {
     pub elements: Vec<MarkupElement>,
     pub content: String,
@@ -110,12 +111,16 @@ impl<'fmt> Markup<'fmt> {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Eq)]
+#[derive(Clone, Default, PartialEq, Eq, Hash)]
 pub struct MarkupBuf(pub Vec<MarkupNodeBuf>);
 
 impl MarkupBuf {
-    pub(crate) fn is_empty(&self) -> bool {
-        self.0.is_empty()
+    pub fn is_empty(&self) -> bool {
+        self.0.iter().all(|node| node.content.is_empty())
+    }
+
+    pub fn len(&self) -> TextSize {
+        self.0.iter().map(|node| TextSize::of(&node.content)).sum()
     }
 }
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: comments.ts
-
 ---
 # Input
 ```js
@@ -96,15 +94,15 @@ type T = test extends B ? foo : bar; /* comment
   */
 
 type T = test extends B
-  ? foo /* comment
+  ? /* comment
        comment
        comment
        comment
-    */
+    */ foo
   : test extends B
-    ? foo /* comment
+    ? /* comment
   comment
-    comment */
+    comment */ foo
     : bar;
 
 type T = test extends B ? /* comment */ foo : bar;
@@ -117,23 +115,21 @@ type T = test extends B ? foo : bar; /* comment
 
 type T = test extends B
   ? foo
-  : test extends B
-    /* comment
+  : /* comment
          comment
      comment
            comment
-    */
+    */ test extends B
     ? foo
-    : bar; /* comment
+    : /* comment
   comment
     comment
-   */
+   */ bar;
 
 type T = test extends B ? foo : /* comment */ bar;
 
 type T = test extends B
-  ? test extends B
-    /* c
+  ? test extends B /* c
 c */
     ? foo
     : bar

@@ -1,14 +1,18 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyModuleItem;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyModuleItem;
-impl Format for JsAnyModuleItem {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsAnyStatement(node) => node.format(formatter),
-            Self::JsExport(node) => node.format(formatter),
-            Self::JsImport(node) => node.format(formatter),
+impl FormatRule<JsAnyModuleItem> for FormatJsAnyModuleItem {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyModuleItem,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyModuleItem::JsAnyStatement(node) => formatted![formatter, [node.format()]],
+            JsAnyModuleItem::JsExport(node) => formatted![formatter, [node.format()]],
+            JsAnyModuleItem::JsImport(node) => formatted![formatter, [node.format()]],
         }
     }
 }

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: decimal.js
-
 ---
 # Input
 ```js
@@ -47,13 +46,17 @@ typeof 1m === "decimal128";
 .1m
 ({ 0m: 0, .1m() {}, get
 0.2m()
-{}
+{
+}
 , set 3m(_)
-{}
+{
+}
 , async 4m()
-{}
+{
+}
 , *.5m()
-{}
+{
+}
 })
 1.m
 100m

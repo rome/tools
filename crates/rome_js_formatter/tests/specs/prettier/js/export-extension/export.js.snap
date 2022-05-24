@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: export.js
 ---
 # Input
@@ -21,28 +22,28 @@ export * as ns from "mod";
 export
 v;
 from;
-"mod";
+("mod");
 export
 a, * as
 b;
 from;
-"mod";
+("mod");
 export
 c, { foo };
 from;
-"mod";
+("mod");
 export * as d
 ,
 {
   bar;
 }
 from;
-"mod";
+("mod");
 export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
 export
 Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr };
 from;
-"barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+("barrrrrrrrrrrrrrrrrrrrrrrrrrrr");
 export {
   foooooooooooooooooooooooooooooooooooooooooooooo,
   fooooooooooooooooooooooooooooooooooooooooooooooo,

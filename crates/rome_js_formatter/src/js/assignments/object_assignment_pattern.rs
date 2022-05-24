@@ -1,21 +1,26 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::JsObjectAssignmentPattern;
 use rome_js_syntax::JsObjectAssignmentPatternFields;
 
-impl FormatNode for JsObjectAssignmentPattern {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsObjectAssignmentPattern> for FormatNodeRule<JsObjectAssignmentPattern> {
+    fn format_fields(
+        node: &JsObjectAssignmentPattern,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsObjectAssignmentPatternFields {
             l_curly_token,
             properties,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            properties.format(formatter)?,
-            &r_curly_token?,
-        )
+        formatter
+            .delimited(
+                &l_curly_token?,
+                formatted![formatter, [properties.format()]]?,
+                &r_curly_token?,
+            )
+            .soft_block_spaces()
+            .finish()
     }
 }

@@ -1,13 +1,16 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_formatter::Token;
 use rome_js_syntax::JsRegexLiteralExpression;
 use rome_js_syntax::JsRegexLiteralExpressionFields;
 
-impl FormatNode for JsRegexLiteralExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsRegexLiteralExpressionFields { value_token } = self.as_fields();
+impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLiteralExpression> {
+    fn format_fields(
+        node: &JsRegexLiteralExpression,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let JsRegexLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
         let trimmed_raw_string = value_token.text_trimmed();
         // find end slash, so we could split our regex literal to two part `body`: raw_string[0..end_slash_pos + 1] and `flags`: raw_string[end_slash_pos + 1..]
@@ -15,7 +18,7 @@ impl FormatNode for JsRegexLiteralExpression {
         let ends_with_slash = trimmed_raw_string.ends_with('/');
         // this means that we have a regex literal with no flags
         if ends_with_slash {
-            return value_token.format(formatter);
+            return formatted![formatter, [value_token.format()]];
         }
         // SAFETY: a valid regex literal must have a end slash
         let end_slash_pos = trimmed_raw_string.rfind('/').unwrap();

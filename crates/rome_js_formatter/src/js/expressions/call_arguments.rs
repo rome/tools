@@ -1,33 +1,41 @@
+use crate::prelude::*;
 use crate::utils::{is_simple_expression, token_has_comments};
-use crate::{format_elements, hard_group_elements, Format};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsCallArgumentsFields;
 use rome_js_syntax::{JsAnyCallArgument, JsCallArguments};
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
-impl FormatNode for JsCallArguments {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
+    fn format_fields(
+        node: &JsCallArguments,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsCallArgumentsFields {
             l_paren_token,
             args,
             r_paren_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        if is_simple_function_arguments(self)? {
-            return Ok(hard_group_elements(format_elements![
-                l_paren_token.format(formatter)?,
-                args.format(formatter)?,
-                r_paren_token.format(formatter)?,
-            ]));
+        if is_simple_function_arguments(node)? {
+            return Ok(hard_group_elements(formatted![
+                formatter,
+                [
+                    l_paren_token.format(),
+                    args.format(),
+                    r_paren_token.format(),
+                ]
+            ]?));
         }
 
-        formatter.format_delimited_soft_block_indent(
-            &l_paren_token?,
-            args.format(formatter)?,
-            &r_paren_token?,
-        )
+        formatter
+            .delimited(
+                &l_paren_token?,
+                formatted![formatter, [args.format()]]?,
+                &r_paren_token?,
+            )
+            .soft_block_indent()
+            .finish()
     }
 }
 

@@ -1,17 +1,16 @@
-use rome_formatter::FormatResult;
 use rome_js_syntax::JsForOfStatement;
 
-use crate::format_traits::FormatOptional;
-
+use crate::prelude::*;
 use crate::utils::format_head_body_statement;
-use crate::{
-    format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
-    Formatter,
-};
+
+use crate::FormatNodeFields;
 use rome_js_syntax::JsForOfStatementFields;
 
-impl FormatNode for JsForOfStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
+    fn format_fields(
+        node: &JsForOfStatement,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsForOfStatementFields {
             for_token,
             await_token,
@@ -21,33 +20,37 @@ impl FormatNode for JsForOfStatement {
             expression,
             r_paren_token,
             body,
-        } = self.as_fields();
-
-        let for_token = for_token.format(formatter)?;
-        let await_token = await_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let initializer = initializer.format(formatter)?;
-        let of_token = of_token.format(formatter)?;
-        let expression = expression.format(formatter)?;
+        } = node.as_fields();
 
         format_head_body_statement(
             formatter,
-            format_elements![
-                for_token,
-                space_token(),
-                await_token,
-                formatter.format_delimited_soft_block_indent(
-                    &l_paren_token?,
-                    format_elements![
-                        initializer,
-                        soft_line_break_or_space(),
-                        of_token,
-                        soft_line_break_or_space(),
-                        expression,
-                    ],
-                    &r_paren_token?
-                )?,
-            ],
+            formatted![
+                formatter,
+                [
+                    for_token.format(),
+                    space_token(),
+                    await_token
+                        .format()
+                        .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                    formatter
+                        .delimited(
+                            &l_paren_token?,
+                            formatted![
+                                formatter,
+                                [
+                                    initializer.format(),
+                                    soft_line_break_or_space(),
+                                    of_token.format(),
+                                    soft_line_break_or_space(),
+                                    expression.format(),
+                                ]
+                            ]?,
+                            &r_paren_token?
+                        )
+                        .soft_block_indent()
+                        .finish()?,
+                ]
+            ]?,
             body?,
         )
     }

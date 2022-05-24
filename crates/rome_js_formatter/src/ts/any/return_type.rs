@@ -1,14 +1,18 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatTsAnyReturnType;
+use crate::prelude::*;
 use rome_js_syntax::TsAnyReturnType;
-impl Format for TsAnyReturnType {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsType(node) => node.format(formatter),
-            Self::TsPredicateReturnType(node) => node.format(formatter),
-            Self::TsAssertsReturnType(node) => node.format(formatter),
+impl FormatRule<TsAnyReturnType> for FormatTsAnyReturnType {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &TsAnyReturnType,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            TsAnyReturnType::TsType(node) => formatted![formatter, [node.format()]],
+            TsAnyReturnType::TsPredicateReturnType(node) => formatted![formatter, [node.format()]],
+            TsAnyReturnType::TsAssertsReturnType(node) => formatted![formatter, [node.format()]],
         }
     }
 }

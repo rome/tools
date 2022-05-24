@@ -1,6 +1,7 @@
 use crate::token_source::Trivia;
 use crate::{ParseDiagnostic, TreeSink};
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxTreeBuilder, TextRange, TextSize};
+use rome_js_factory::JsSyntaxTreeBuilder;
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TextRange, TextSize};
 use rome_rowan::TriviaPiece;
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.

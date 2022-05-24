@@ -1,13 +1,17 @@
-use crate::formatter::TrailingSeparator;
-use crate::{join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
+use crate::generated::FormatJsConstructorParameterList;
+use crate::prelude::*;
 use rome_js_syntax::JsConstructorParameterList;
 
-impl Format for JsConstructorParameterList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatRule<JsConstructorParameterList> for FormatJsConstructorParameterList {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsConstructorParameterList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(self, || token(","), TrailingSeparator::default())?,
+            formatter.format_separated(node, || token(","))?,
         ))
     }
 }

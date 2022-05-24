@@ -1,23 +1,27 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsRestParameter;
 use rome_js_syntax::JsRestParameterFields;
 
-impl FormatNode for JsRestParameter {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsRestParameter> for FormatNodeRule<JsRestParameter> {
+    fn format_fields(
+        node: &JsRestParameter,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsRestParameterFields {
             dotdotdot_token,
             binding,
             type_annotation,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            dotdotdot_token.format(formatter)?,
-            binding.format(formatter)?,
-            type_annotation.format_or_empty(formatter)?
-        ])
+        formatted![
+            formatter,
+            [
+                dotdotdot_token.format(),
+                binding.format(),
+                type_annotation.format(),
+            ]
+        ]
     }
 }

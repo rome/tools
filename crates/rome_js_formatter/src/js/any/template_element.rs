@@ -1,13 +1,19 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyTemplateElement;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyTemplateElement;
-impl Format for JsAnyTemplateElement {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsTemplateChunkElement(node) => node.format(formatter),
-            Self::JsTemplateElement(node) => node.format(formatter),
+impl FormatRule<JsAnyTemplateElement> for FormatJsAnyTemplateElement {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyTemplateElement,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyTemplateElement::JsTemplateChunkElement(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyTemplateElement::JsTemplateElement(node) => formatted![formatter, [node.format()]],
         }
     }
 }

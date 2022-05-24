@@ -9,6 +9,8 @@ use std::path::Path;
 use std::str::FromStr;
 use std::time::Duration;
 
+pub use crate::features::analyzer::benchmark_analyze_lib;
+use crate::features::analyzer::{run_analyzer, AnalyzerMeasurement};
 pub use crate::features::formatter::benchmark_format_lib;
 use crate::features::formatter::{run_format, FormatterMeasurement};
 pub use crate::features::parser::benchmark_parse_lib;
@@ -21,6 +23,8 @@ pub enum FeatureToBenchmark {
     Parser,
     /// benchmark of the formatter
     Formatter,
+    /// benchmark of the analyzer
+    Analyzer,
 }
 
 impl FromStr for FeatureToBenchmark {
@@ -30,6 +34,7 @@ impl FromStr for FeatureToBenchmark {
         match s {
             "parser" => Ok(Self::Parser),
             "formatter" => Ok(Self::Formatter),
+            "analyzer" => Ok(Self::Analyzer),
             _ => Err(pico_args::Error::OptionWithoutAValue("feature")),
         }
     }
@@ -40,6 +45,7 @@ impl Display for FeatureToBenchmark {
         match self {
             FeatureToBenchmark::Parser => write!(f, "parser"),
             FeatureToBenchmark::Formatter => write!(f, "formatter"),
+            FeatureToBenchmark::Analyzer => write!(f, "analyzer"),
         }
     }
 }
@@ -49,6 +55,7 @@ impl Display for FeatureToBenchmark {
 pub enum BenchmarkSummary {
     Parser(ParseMeasurement),
     Formatter(FormatterMeasurement),
+    Analyzer(AnalyzerMeasurement),
 }
 
 impl BenchmarkSummary {
@@ -56,6 +63,7 @@ impl BenchmarkSummary {
         match self {
             BenchmarkSummary::Parser(result) => result.summary(),
             BenchmarkSummary::Formatter(result) => result.summary(),
+            BenchmarkSummary::Analyzer(result) => result.summary(),
         }
     }
 }
@@ -65,6 +73,7 @@ impl Display for BenchmarkSummary {
         match self {
             BenchmarkSummary::Parser(result) => std::fmt::Display::fmt(&result, f),
             BenchmarkSummary::Formatter(result) => std::fmt::Display::fmt(&result, f),
+            BenchmarkSummary::Analyzer(result) => std::fmt::Display::fmt(&result, f),
         }
     }
 }
@@ -140,6 +149,12 @@ pub fn run(args: RunArgs) {
                                 criterion::black_box(run_format(&root));
                             })
                         }
+                        FeatureToBenchmark::Analyzer => {
+                            let root = parse(code, 0, source_type.clone()).tree();
+                            b.iter(|| {
+                                run_analyzer(&root);
+                            })
+                        }
                     });
                     group.finish();
                 } else {
@@ -152,6 +167,10 @@ pub fn run(args: RunArgs) {
                             let root = parse(code, 0, source_type.clone()).syntax();
                             run_format(&root);
                         }
+                        FeatureToBenchmark::Analyzer => {
+                            let root = parse(code, 0, source_type.clone()).tree();
+                            run_analyzer(&root);
+                        }
                     }
                 }
 
@@ -160,6 +179,10 @@ pub fn run(args: RunArgs) {
                     FeatureToBenchmark::Formatter => {
                         let root = parse(code, 0, source_type).syntax();
                         benchmark_format_lib(&id, &root)
+                    }
+                    FeatureToBenchmark::Analyzer => {
+                        let root = parse(code, 0, source_type).tree();
+                        benchmark_analyze_lib(&id, &root)
                     }
                 };
 

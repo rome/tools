@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: closure-compiler-type-cast.js
-
 ---
 # Input
 ```js
@@ -84,11 +82,8 @@ let object = {
 let assignment = /** @type {string} */ (getValue());
 let value = /** @type {string} */ (this.members[0]).functionCall();
 
-functionCall(
-  1 + /** @type {string} */
-  (value), /** @type {!Foo} */
-  ({}),
-);
+functionCall(1 + /** @type {string} */
+  (value), /** @type {!Foo} */ ({}));
 
 function returnValue() {
   return (["hello", "you"]); /** @type {!Array.<string>} */

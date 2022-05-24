@@ -1,17 +1,19 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsVariableDeclaration;
 use rome_js_syntax::JsVariableDeclarationFields;
 
-impl FormatNode for JsVariableDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsVariableDeclarationFields { kind, declarators } = self.as_fields();
+impl FormatNodeFields<JsVariableDeclaration> for FormatNodeRule<JsVariableDeclaration> {
+    fn format_fields(
+        node: &JsVariableDeclaration,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let JsVariableDeclarationFields { kind, declarators } = node.as_fields();
 
-        Ok(format_elements![
-            kind.format(formatter)?,
-            space_token(),
-            declarators.format(formatter)?,
-        ])
+        formatted![
+            formatter,
+            [kind.format(), space_token(), declarators.format(),]
+        ]
     }
 }

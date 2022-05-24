@@ -78,6 +78,10 @@ impl<L: Language> SyntaxList<L> {
     pub fn node(&self) -> &SyntaxNode<L> {
         &self.list
     }
+
+    pub fn into_node(self) -> SyntaxNode<L> {
+        self.list
+    }
 }
 
 impl<L: Language> IntoIterator for &SyntaxList<L> {

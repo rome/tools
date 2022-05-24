@@ -1,4 +1,8 @@
 //! This module provides important and useful traits to help to format tokens and nodes
 //! when implementing the [crate::FormatNode] trait.
 
-pub use crate::format_traits::{FormatOptional as _, FormatWith as _, IntoFormatResult as _};
+pub(crate) use crate::{
+    AsFormat as _, FormatNodeRule, FormattedIterExt, JsFormatOptions, JsFormatter as _,
+};
+pub use rome_formatter::prelude::*;
+pub use rome_rowan::{AstNode as _, AstNodeList as _, AstSeparatedList as _};

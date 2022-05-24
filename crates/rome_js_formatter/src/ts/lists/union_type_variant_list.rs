@@ -1,42 +1,46 @@
-use crate::{
-    concat_elements, empty_element, format_elements, soft_line_break_or_space, space_token, token,
-    Format, FormatElement, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::generated::FormatTsUnionTypeVariantList;
+use crate::prelude::*;
 use rome_js_syntax::TsUnionTypeVariantList;
 use rome_rowan::AstSeparatedList;
 
-impl Format for TsUnionTypeVariantList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let mut elements = Vec::with_capacity(self.len());
-        let last_index = self.len().saturating_sub(1);
+impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
+    type Options = JsFormatOptions;
 
-        for (index, item) in self.elements().enumerate() {
+    fn format(
+        node: &TsUnionTypeVariantList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let mut elements = Vec::with_capacity(node.len());
+        let last_index = node.len().saturating_sub(1);
+
+        for (index, item) in node.elements().enumerate() {
             let ty = item.node()?;
             let separator = item.trailing_separator()?;
 
             let separator = match separator {
                 Some(token) => {
                     if index == last_index {
-                        formatter.format_replaced(&token, empty_element())
+                        formatter.format_replaced(token, empty_element())
                     } else {
-                        format_elements![
-                            soft_line_break_or_space(),
-                            token.format(formatter)?,
-                            space_token()
-                        ]
+                        formatted![
+                            formatter,
+                            [soft_line_break_or_space(), token.format(), space_token()]
+                        ]?
                     }
                 }
                 None => {
                     if index == last_index {
                         empty_element()
                     } else {
-                        format_elements![soft_line_break_or_space(), token("|"), space_token()]
+                        formatted![
+                            formatter,
+                            [soft_line_break_or_space(), token("|"), space_token()]
+                        ]?
                     }
                 }
             };
 
-            elements.push(format_elements![ty.format(formatter)?, separator])
+            elements.push(formatted![formatter, [ty.format(), separator]]?)
         }
 
         Ok(concat_elements(elements))

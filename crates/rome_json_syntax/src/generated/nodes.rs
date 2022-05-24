@@ -14,6 +14,10 @@ use rome_rowan::{support, AstNode, SyntaxResult};
 use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
+#[cfg(feature = "serde")]
+use serde_crate::ser::SerializeSeq;
+#[cfg(feature = "serde")]
+use serde_crate::{Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonArray {
@@ -42,6 +46,16 @@ impl JsonArray {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonArray {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonArrayFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsonArrayElementList,
@@ -72,6 +86,16 @@ impl JsonBoolean {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonBoolean {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonBooleanFields {
     pub true_token: SyntaxResult<SyntaxToken>,
     pub false_token: SyntaxResult<SyntaxToken>,
@@ -101,6 +125,16 @@ impl JsonMember {
     }
     pub fn value(&self) -> SyntaxResult<JsonValue> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonMemberFields {
     pub key: SyntaxResult<JsonString>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -127,6 +161,16 @@ impl JsonNull {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonNull {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonNullFields {
     pub null_token: SyntaxResult<SyntaxToken>,
 }
@@ -151,6 +195,16 @@ impl JsonNumber {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonNumber {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonNumberFields {
     pub json_number_literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -181,6 +235,16 @@ impl JsonObject {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonObject {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonObjectFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub json_member_list: JsonMemberList,
@@ -207,6 +271,16 @@ impl JsonRoot {
         support::required_node(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonRoot {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonRootFields {
     pub json_value: SyntaxResult<JsonValue>,
 }
@@ -231,10 +305,22 @@ impl JsonString {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonString {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonStringFields {
     pub json_string_literal_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsonValue {
     JsonArray(JsonArray),
     JsonBoolean(JsonBoolean),
@@ -243,6 +329,50 @@ pub enum JsonValue {
     JsonObject(JsonObject),
     JsonString(JsonString),
     JsonUnknown(JsonUnknown),
+}
+impl JsonValue {
+    pub fn as_json_array(&self) -> Option<&JsonArray> {
+        match &self {
+            JsonValue::JsonArray(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_boolean(&self) -> Option<&JsonBoolean> {
+        match &self {
+            JsonValue::JsonBoolean(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_null(&self) -> Option<&JsonNull> {
+        match &self {
+            JsonValue::JsonNull(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_number(&self) -> Option<&JsonNumber> {
+        match &self {
+            JsonValue::JsonNumber(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_object(&self) -> Option<&JsonObject> {
+        match &self {
+            JsonValue::JsonObject(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_string(&self) -> Option<&JsonString> {
+        match &self {
+            JsonValue::JsonString(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_unknown(&self) -> Option<&JsonUnknown> {
+        match &self {
+            JsonValue::JsonUnknown(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 impl AstNode for JsonArray {
     type Language = Language;
@@ -255,6 +385,7 @@ impl AstNode for JsonArray {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonArray {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -288,6 +419,7 @@ impl AstNode for JsonBoolean {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonBoolean {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -317,6 +449,7 @@ impl AstNode for JsonMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -347,6 +480,7 @@ impl AstNode for JsonNull {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonNull {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -372,6 +506,7 @@ impl AstNode for JsonNumber {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonNumber {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -400,6 +535,7 @@ impl AstNode for JsonObject {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonObject {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -433,6 +569,7 @@ impl AstNode for JsonRoot {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -458,6 +595,7 @@ impl AstNode for JsonString {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -532,6 +670,17 @@ impl AstNode for JsonValue {
             JsonValue::JsonObject(it) => &it.syntax,
             JsonValue::JsonString(it) => &it.syntax,
             JsonValue::JsonUnknown(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsonValue::JsonArray(it) => it.syntax,
+            JsonValue::JsonBoolean(it) => it.syntax,
+            JsonValue::JsonNull(it) => it.syntax,
+            JsonValue::JsonNumber(it) => it.syntax,
+            JsonValue::JsonObject(it) => it.syntax,
+            JsonValue::JsonString(it) => it.syntax,
+            JsonValue::JsonUnknown(it) => it.syntax,
         }
     }
 }
@@ -613,6 +762,8 @@ impl std::fmt::Display for JsonString {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsonUnknown {
     syntax: SyntaxNode,
 }
@@ -637,6 +788,7 @@ impl AstNode for JsonUnknown {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsonUnknown {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -681,11 +833,26 @@ impl AstNode for JsonArrayElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsonArrayElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsonArrayElementList {
     type Language = Language;
     type Node = JsonValue;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsonArrayElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -733,11 +900,26 @@ impl AstNode for JsonMemberList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsonMemberList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsonMemberList {
     type Language = Language;
     type Node = JsonMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsonMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

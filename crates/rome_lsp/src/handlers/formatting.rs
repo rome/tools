@@ -1,8 +1,9 @@
 use crate::config::{FormatterWorkspaceSettings, WorkspaceSettings};
 use crate::line_index::{self, LineCol};
 use anyhow::{bail, Result};
-use rome_analyze::FileId;
-use rome_js_formatter::{FormatOptions, IndentStyle, QuoteStyle};
+use rome_diagnostics::file::FileId;
+use rome_formatter::IndentStyle;
+use rome_js_formatter::options::{JsFormatOptions, QuoteStyle};
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::{TextRange, TokenAtOffset};
 use std::str::FromStr;
@@ -17,15 +18,15 @@ use tracing::info;
 pub(crate) fn to_format_options(
     params: &FormattingOptions,
     workspace_settings: &FormatterWorkspaceSettings,
-) -> FormatOptions {
+) -> JsFormatOptions {
     let indent_style = if params.insert_spaces {
         IndentStyle::Space(params.tab_size as u8)
     } else {
         IndentStyle::Tab
     };
-    let mut default_options = FormatOptions {
+    let mut default_options = JsFormatOptions {
         indent_style,
-        ..FormatOptions::default()
+        ..JsFormatOptions::default()
     };
 
     let custom_ident_style =
@@ -70,7 +71,7 @@ pub(crate) fn to_format_options(
 pub(crate) struct FormatParams<'input> {
     pub(crate) text: &'input str,
     pub(crate) file_id: usize,
-    pub(crate) format_options: FormatOptions,
+    pub(crate) format_options: JsFormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
     pub(crate) source_type: SourceType,
 }
@@ -114,7 +115,7 @@ pub(crate) struct FormatRangeParams<'input> {
     pub(crate) file_id: FileId,
     pub(crate) range: Range,
     /// Options to pass to [rome_js_formatter]
-    pub(crate) format_options: FormatOptions,
+    pub(crate) format_options: JsFormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
     pub(crate) source_type: SourceType,
 }
@@ -181,7 +182,7 @@ pub(crate) struct FormatOnTypeParams<'input> {
     pub(crate) file_id: FileId,
     pub(crate) position: Position,
     /// Options to pass to [rome_js_formatter]
-    pub(crate) format_options: FormatOptions,
+    pub(crate) format_options: JsFormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
     pub(crate) source_type: SourceType,
 }

@@ -40,10 +40,8 @@ impl JsVariableDeclaration {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        JsSyntaxTreeBuilder, JsVariableDeclaration, IDENT, JS_IDENTIFIER_BINDING,
-        JS_VARIABLE_DECLARATION, JS_VARIABLE_DECLARATOR, JS_VARIABLE_DECLARATOR_LIST, VAR_KW,
-    };
+    use rome_js_factory::syntax::{JsSyntaxKind::*, JsVariableDeclaration};
+    use rome_js_factory::JsSyntaxTreeBuilder;
     use rome_rowan::AstNode;
 
     #[test]

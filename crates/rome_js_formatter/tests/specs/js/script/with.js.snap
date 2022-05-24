@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: with.js
 ---
 # Input
@@ -9,6 +10,7 @@ with (   b)
 	5
 }
 
+with({}) {}
 =============================
 # Outputs
 ## Output 1
@@ -19,5 +21,8 @@ Quote style: Double Quotes
 -----
 with (b) {
 	5;
+}
+
+with ({}) {
 }
 

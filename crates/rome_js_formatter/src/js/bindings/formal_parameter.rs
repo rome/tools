@@ -1,27 +1,32 @@
-use crate::format_traits::FormatOptional;
+use crate::prelude::*;
 use crate::utils::format_initializer_clause;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+
+use crate::FormatNodeFields;
 use rome_js_syntax::JsFormalParameter;
 use rome_js_syntax::JsFormalParameterFields;
 
-impl FormatNode for JsFormalParameter {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsFormalParameter> for FormatNodeRule<JsFormalParameter> {
+    fn format_fields(
+        node: &JsFormalParameter,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsFormalParameterFields {
             binding,
             question_mark_token,
             type_annotation,
             initializer,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_annotation = type_annotation.format_or_empty(formatter)?;
         let initializer = format_initializer_clause(formatter, initializer)?;
 
-        Ok(format_elements![
-            binding.format(formatter)?,
-            question_mark_token.format_or_empty(formatter)?,
-            type_annotation,
-            initializer
-        ])
+        formatted![
+            formatter,
+            [
+                binding.format(),
+                question_mark_token.format(),
+                type_annotation.format(),
+                initializer
+            ]
+        ]
     }
 }

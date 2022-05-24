@@ -1,14 +1,16 @@
-use crate::format_traits::FormatOptional;
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsDeclareFunctionDeclaration;
 use rome_js_syntax::TsDeclareFunctionDeclarationFields;
 
-impl FormatNode for TsDeclareFunctionDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsDeclareFunctionDeclaration>
+    for FormatNodeRule<TsDeclareFunctionDeclaration>
+{
+    fn format_fields(
+        node: &TsDeclareFunctionDeclaration,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsDeclareFunctionDeclarationFields {
             async_token,
             function_token,
@@ -17,29 +19,25 @@ impl FormatNode for TsDeclareFunctionDeclaration {
             parameters,
             return_type_annotation,
             semicolon_token,
-        } = self.as_fields();
-
-        let async_token = async_token.format_with_or_empty(formatter, |async_token| {
-            format_elements![async_token, space_token()]
-        })?;
-
-        let function_token = function_token.format(formatter)?;
-        let id = id.format(formatter)?;
-        let type_parameters = type_parameters.format_or_empty(formatter)?;
-        let parameters = parameters.format(formatter)?;
-        let return_type_annotation = return_type_annotation.format_or_empty(formatter)?;
+        } = node.as_fields();
 
         Ok(hard_group_elements(format_with_semicolon(
             formatter,
-            format_elements![
-                async_token,
-                function_token,
-                space_token(),
-                id,
-                type_parameters,
-                parameters,
-                return_type_annotation,
-            ],
+            formatted![
+                formatter,
+                [
+                    async_token.format().with_or_empty(|async_token| formatted![
+                        formatter,
+                        [async_token, space_token()]
+                    ]),
+                    function_token.format(),
+                    space_token(),
+                    id.format(),
+                    type_parameters.format(),
+                    parameters.format(),
+                    return_type_annotation.format(),
+                ]
+            ]?,
             semicolon_token,
         )?))
     }

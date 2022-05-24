@@ -1,10 +1,5 @@
-use crate::{
-    empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
-    join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
-    space_token, token, Format, FormatElement, FormatNode, Formatter,
-};
+use crate::prelude::*;
 
-use rome_formatter::FormatResult;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
     JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,
@@ -98,10 +93,9 @@ use std::iter::FusedIterator;
 /// anymore because we passed it to its child. And we can't try to add a new operator.
 /// But this is fine! Because this is want we wanted! By removing the operator, we are left with `happy`
 /// which is what we wanted since the beginning!
-///
 pub(crate) fn format_binary_like_expression(
     expression: JsAnyBinaryLikeExpression,
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
 ) -> FormatResult<FormatElement> {
     let mut flatten_items = FlattenItems::default();
     let current_node = expression.syntax().clone();
@@ -124,8 +118,8 @@ pub(crate) fn format_binary_like_expression(
 
             let left = parent.left()?;
 
-            let formatted = left.format_node(formatter)?;
             let has_comments = left.syntax().has_comments_direct();
+            let formatted = formatted![formatter, [left]]?;
 
             flatten_items.items.push(FlattenItem::regular(
                 formatted,
@@ -175,6 +169,7 @@ fn format_with_or_without_parenthesis(
     parent_operator: BinaryLikeOperator,
     node: &JsSyntaxNode,
     formatted_node: FormatElement,
+    formatter: &Formatter<JsFormatOptions>,
 ) -> FormatResult<(FormatElement, bool)> {
     let compare_to = match JsAnyExpression::cast(node.clone()) {
         Some(JsAnyExpression::JsLogicalExpression(logical)) => {
@@ -211,14 +206,20 @@ fn format_with_or_without_parenthesis(
 
     let result = if operation_is_higher {
         let (leading, content, trailing) = formatted_node.split_trivia();
-        let formatted = format_elements![
-            leading,
-            group_elements(format_elements![
-                token("("),
-                soft_block_indent(format_elements![content, trailing]),
-                token(")")
-            ])
-        ];
+        let formatted = formatted![
+            formatter,
+            [
+                leading,
+                group_elements(formatted![
+                    formatter,
+                    [
+                        token("("),
+                        soft_block_indent(formatted![formatter, [content, trailing]]?),
+                        token(")")
+                    ]
+                ]?)
+            ]
+        ]?;
 
         (formatted, true)
     } else {
@@ -296,7 +297,7 @@ impl FlattenItems {
         &mut self,
         expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<()> {
         let should_flatten = expression.can_flatten()?;
 
@@ -312,16 +313,17 @@ impl FlattenItems {
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<()> {
         let right = binary_like_expression.right()?;
         let has_comments = right.syntax().has_comments_direct();
-        let right_formatted = right.format(formatter)?;
+        let right_formatted = formatted![formatter, [right.format()]]?;
 
         let (formatted_node, _) = format_with_or_without_parenthesis(
             binary_like_expression.operator()?,
             right.syntax(),
             right_formatted,
+            formatter,
         )?;
 
         let flatten_item =
@@ -338,7 +340,7 @@ impl FlattenItems {
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<()> {
         if let Some(last) = self.items.last_mut() {
             // Remove any line breaks and the trailing operator so that the operator/trailing aren't part
@@ -353,7 +355,7 @@ impl FlattenItems {
 
         let left_formatted = self.take_format_element(left.syntax(), formatter)?;
         let (left_formatted, _) =
-            format_with_or_without_parenthesis(operator, left.syntax(), left_formatted)?;
+            format_with_or_without_parenthesis(operator, left.syntax(), left_formatted, formatter)?;
 
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
         let mut left_item = FlattenItem::regular(
@@ -371,8 +373,12 @@ impl FlattenItems {
         let right = binary_like_expression.right()?;
 
         // Format the right node
-        let (formatted_right, parenthesized) =
-            format_with_or_without_parenthesis(operator, right.syntax(), right.format(formatter)?)?;
+        let (formatted_right, parenthesized) = format_with_or_without_parenthesis(
+            operator,
+            right.syntax(),
+            formatted![formatter, [right.format()]]?,
+            formatter,
+        )?;
 
         let parent_operator_has_comments = parent_operator
             .as_ref()
@@ -409,7 +415,7 @@ impl FlattenItems {
     fn take_format_element(
         &mut self,
         current_node: &JsSyntaxNode,
-        formatter: &Formatter,
+        formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
         let can_hard_group = can_hard_group(&self.items);
         let len = self.items.len();
@@ -424,7 +430,7 @@ impl FlattenItems {
                 let operator = match &element.operator {
                     Some(operator) => {
                         // SAFETY: `syntax_token.format` never returns MissingToken.
-                        format_elements![space_token(), operator.format(formatter).unwrap()]
+                        formatted![formatter, [space_token(), operator.format()]].unwrap()
                     }
                     None => empty_element(),
                 };
@@ -767,6 +773,17 @@ impl AstNode for JsAnyBinaryLikeExpression {
             JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.syntax(),
         }
     }
+
+    fn into_syntax(self) -> JsSyntaxNode {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.into_syntax(),
+            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.into_syntax(),
+            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => {
+                instanceof.into_syntax()
+            }
+            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.into_syntax(),
+        }
+    }
 }
 
 impl JsAnyBinaryLikeExpression {
@@ -841,16 +858,27 @@ impl AstNode for JsAnyBinaryLikeLeftExpression {
             JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => private_name.syntax(),
         }
     }
+
+    fn into_syntax(self) -> JsSyntaxNode {
+        match self {
+            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression.into_syntax(),
+            JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
+                private_name.into_syntax()
+            }
+        }
+    }
 }
 
-impl FormatNode for JsAnyBinaryLikeLeftExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsAnyBinaryLikeLeftExpression {
+    type Options = JsFormatOptions;
+
+    fn format(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                expression.format(formatter)
+                formatted![formatter, [expression.format()]]
             }
             JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
-                private_name.format_fields(formatter)
+                formatted![formatter, [private_name.format()]]
             }
         }
     }

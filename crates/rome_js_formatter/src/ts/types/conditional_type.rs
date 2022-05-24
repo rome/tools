@@ -1,10 +1,13 @@
+use crate::prelude::*;
 use crate::utils::{format_conditional, Conditional};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsConditionalType;
 
-impl FormatNode for TsConditionalType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        format_conditional(Conditional::Type(self.clone()), formatter, false)
+impl FormatNodeFields<TsConditionalType> for FormatNodeRule<TsConditionalType> {
+    fn format_fields(
+        node: &TsConditionalType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        format_conditional(Conditional::Type(node.clone()), formatter, false)
     }
 }

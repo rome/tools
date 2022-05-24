@@ -1,23 +1,28 @@
 import { PlaygroundProps } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { formatWithPrettier, getLanguage } from "./utils";
+import { createSetter, getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
+import TreeView from "./TreeView";
+import ReactJson from "react-json-view";
 
 export default function DesktopPlayground(
 	{
-		playgroundState: { code, setCode, ...settings },
+		setPlaygroundState,
+		playgroundState: { code, treeStyle, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
-
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
-			<SettingsMenu settings={settings} />
+			<SettingsMenu
+				settings={settings}
+				setPlaygroundState={setPlaygroundState}
+			/>
 			<div className="box-border flex h-screen divide-x divide-slate-300">
 				<div className="w-1/2 p-5">
 					<CodeEditor
@@ -25,7 +30,10 @@ export default function DesktopPlayground(
 						language={language}
 						placeholder="Enter some code here"
 						onChange={(evn) => {
-							setCode(evn.target.value);
+							setPlaygroundState((state) => ({
+								...state,
+								code: evn.target.value,
+							}));
 						}}
 						style={{
 							fontSize: 12,
@@ -41,7 +49,8 @@ export default function DesktopPlayground(
 							<Tab selectedClassName="bg-slate-300">Formatter</Tab>
 							<Tab selectedClassName="bg-slate-300">CST</Tab>
 							<Tab selectedClassName="bg-slate-300">AST</Tab>
-							<Tab selectedClassName="bg-slate-300">Formatter IR</Tab>
+							<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
+							<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
 							<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
 								Errors
 							</Tab>
@@ -62,7 +71,7 @@ export default function DesktopPlayground(
 							/>
 							<h1>Prettier</h1>
 							<CodeEditor
-								value={prettierOutput}
+								value={prettierOutput.code}
 								language={language}
 								placeholder="Prettier Output"
 								style={{
@@ -75,16 +84,27 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll">{cst}</pre>
+							<TreeView
+								treeStyle={treeStyle}
+								setPlaygroundState={setPlaygroundState}
+								tree={cst}
+							/>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll">{ast}</pre>
+							<TreeView
+								treeStyle={treeStyle}
+								setPlaygroundState={setPlaygroundState}
+								tree={ast}
+							/>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
+							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
+							<pre className="h-screen overflow-scroll">{prettierOutput.ir}</pre>
+						</TabPanel>
+						<TabPanel>
+							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">
 								{errors}
 							</pre>
 						</TabPanel>

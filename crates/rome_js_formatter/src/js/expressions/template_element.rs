@@ -1,10 +1,13 @@
+use crate::prelude::*;
 use crate::utils::{format_template_literal, TemplateElement};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::FormatNodeFields;
 use rome_js_syntax::JsTemplateElement;
 
-impl FormatNode for JsTemplateElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        format_template_literal(TemplateElement::Js(self.clone()), formatter)
+impl FormatNodeFields<JsTemplateElement> for FormatNodeRule<JsTemplateElement> {
+    fn format_fields(
+        node: &JsTemplateElement,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        format_template_literal(TemplateElement::Js(node.clone()), formatter)
     }
 }

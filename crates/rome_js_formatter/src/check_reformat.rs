@@ -1,4 +1,4 @@
-use crate::{format_node, FormatOptions};
+use crate::{format_node, JsFormatOptions};
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::JsSyntaxNode;
@@ -8,7 +8,7 @@ pub struct CheckReformatParams<'a> {
     pub text: &'a str,
     pub source_type: SourceType,
     pub file_name: &'a str,
-    pub format_options: FormatOptions,
+    pub format_options: JsFormatOptions,
 }
 
 /// Perform a second pass of formatting on a file, printing a diff if the

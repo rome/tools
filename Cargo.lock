@@ -236,6 +236,11 @@ name = "countme"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "03746e0c6dd9b5d2d9132ffe0bede35fb5f815604fd371bb42599fd37bc8e483"
+dependencies = [
+ "dashmap 4.0.2",
+ "once_cell",
+ "rustc-hash",
+]
 
 [[package]]
 name = "crc32fast"
@@ -380,6 +385,16 @@ checksum = "ccc0a48a9b826acdf4028595adc9db92caea352f7af011a3034acd172a52a0aa"
 dependencies = [
  "quote",
  "syn",
+]
+
+[[package]]
+name = "dashmap"
+version = "4.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e77a43b28d0668df09411cb0bc9a8c2adc40f9a048afe863e05fd43251e8e39c"
+dependencies = [
+ "cfg-if",
+ "num_cpus",
 ]
 
 [[package]]
@@ -1256,12 +1271,16 @@ dependencies = [
 name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
- "anyhow",
+ "bitflags",
+ "countme",
+ "insta",
+ "rome_console",
  "rome_diagnostics",
+ "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
- "tracing",
+ "tests_macros",
 ]
 
 [[package]]
@@ -1274,13 +1293,16 @@ dependencies = [
  "parking_lot",
  "pico-args",
  "rayon",
+ "rome_analyze",
  "rome_console",
  "rome_core",
  "rome_diagnostics",
  "rome_flags",
+ "rome_formatter",
  "rome_fs",
  "rome_js_formatter",
  "rome_js_parser",
+ "rome_rowan",
  "thiserror",
  "tracing",
  "tracing-subscriber",
@@ -1308,11 +1330,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_css_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_css_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_css_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1339,6 +1368,7 @@ dependencies = [
 name = "rome_formatter"
 version = "0.1.0"
 dependencies = [
+ "cfg-if",
  "rome_rowan",
  "tracing",
 ]
@@ -1355,10 +1385,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_js_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_js_formatter"
 version = "0.0.0"
 dependencies = [
- "cfg-if",
+ "countme",
  "ctor",
  "iai",
  "insta",
@@ -1369,6 +1407,7 @@ dependencies = [
  "rome_diagnostics",
  "rome_formatter",
  "rome_fs",
+ "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
@@ -1392,6 +1431,7 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rome_diagnostics",
+ "rome_js_factory",
  "rome_js_syntax",
  "rome_rowan",
  "smallvec",
@@ -1403,6 +1443,16 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.1.4"
 dependencies = [
+ "rome_js_factory",
+ "rome_rowan",
+ "serde",
+]
+
+[[package]]
+name = "rome_json_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_json_syntax",
  "rome_rowan",
 ]
 
@@ -1411,7 +1461,6 @@ name = "rome_json_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1423,12 +1472,15 @@ dependencies = [
  "indexmap",
  "parking_lot",
  "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
  "rome_flags",
+ "rome_formatter",
  "rome_fs",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
+ "rome_rowan",
  "serde",
  "serde_json",
  "tokio",
@@ -1451,9 +1503,13 @@ dependencies = [
 name = "rome_playground"
 version = "0.0.0"
 dependencies = [
+ "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
+ "rome_formatter",
  "rome_js_formatter",
  "rome_js_parser",
+ "serde_json",
  "wasm-bindgen",
 ]
 
@@ -1468,8 +1524,8 @@ dependencies = [
  "quickcheck_macros",
  "rustc-hash",
  "serde",
+ "serde_json",
  "text-size",
- "thiserror",
 ]
 
 [[package]]
@@ -1551,9 +1607,9 @@ checksum = "568a8e6258aa33c13358f81fd834adb854c6f7c9468520910a9b1e8fac068012"
 
 [[package]]
 name = "serde"
-version = "1.0.135"
+version = "1.0.136"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2cf9235533494ea2ddcdb794665461814781c53f19d87b76e571a1c35acbad2b"
+checksum = "ce31e24b01e1e524df96f1c2fdd054405f8d7376249a5110886fb4b658484789"
 dependencies = [
  "serde_derive",
 ]
@@ -1570,9 +1626,9 @@ dependencies = [
 
 [[package]]
 name = "serde_derive"
-version = "1.0.135"
+version = "1.0.136"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8dcde03d87d4c973c04be249e7d8f0b35db1c848c487bd43032808e59dd8328d"
+checksum = "08597e7152fcd306f41838ed3e37be9eaeed2b61c42e2117266a554fab4662f9"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1581,9 +1637,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.78"
+version = "1.0.79"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d23c1ba4cf0efd44be32017709280b32d1cea5c3f1275c3b6d9e8bc54f758085"
+checksum = "8e8d9fa5c3b304765ce1fd9c4c8a3de2c8db365a5b91be52f186efc675681d95"
 dependencies = [
  "itoa 1.0.1",
  "ryu",
@@ -1897,7 +1953,7 @@ dependencies = [
  "async-trait",
  "auto_impl",
  "bytes",
- "dashmap",
+ "dashmap 5.2.0",
  "futures",
  "httparse",
  "log",
@@ -2304,7 +2360,9 @@ dependencies = [
  "itertools",
  "pico-args",
  "regex",
+ "rome_analyze",
  "rome_diagnostics",
+ "rome_formatter",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",

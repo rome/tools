@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: module-blocks.js
-
 ---
 # Input
 ```js
@@ -77,7 +76,8 @@ module;
 }
 
 const m = module;
-{}
+{
+}
 
 const worker = new Worker(module {
   export const foo = "foo";

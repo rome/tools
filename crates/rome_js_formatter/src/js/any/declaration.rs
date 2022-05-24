@@ -1,22 +1,36 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyDeclaration;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyDeclaration;
-impl Format for JsAnyDeclaration {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsClassDeclaration(node) => node.format(formatter),
-            Self::JsFunctionDeclaration(node) => node.format(formatter),
-            Self::JsVariableDeclaration(node) => node.format(formatter),
-            Self::TsEnumDeclaration(node) => node.format(formatter),
-            Self::TsTypeAliasDeclaration(node) => node.format(formatter),
-            Self::TsInterfaceDeclaration(node) => node.format(formatter),
-            Self::TsDeclareFunctionDeclaration(node) => node.format(formatter),
-            Self::TsModuleDeclaration(node) => node.format(formatter),
-            Self::TsExternalModuleDeclaration(node) => node.format(formatter),
-            Self::TsGlobalDeclaration(node) => node.format(formatter),
-            Self::TsImportEqualsDeclaration(node) => node.format(formatter),
+impl FormatRule<JsAnyDeclaration> for FormatJsAnyDeclaration {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyDeclaration,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyDeclaration::JsClassDeclaration(node) => formatted![formatter, [node.format()]],
+            JsAnyDeclaration::JsFunctionDeclaration(node) => formatted![formatter, [node.format()]],
+            JsAnyDeclaration::JsVariableDeclaration(node) => formatted![formatter, [node.format()]],
+            JsAnyDeclaration::TsEnumDeclaration(node) => formatted![formatter, [node.format()]],
+            JsAnyDeclaration::TsTypeAliasDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyDeclaration::TsInterfaceDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyDeclaration::TsDeclareFunctionDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyDeclaration::TsModuleDeclaration(node) => formatted![formatter, [node.format()]],
+            JsAnyDeclaration::TsExternalModuleDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyDeclaration::TsGlobalDeclaration(node) => formatted![formatter, [node.format()]],
+            JsAnyDeclaration::TsImportEqualsDeclaration(node) => {
+                formatted![formatter, [node.format()]]
+            }
         }
     }
 }

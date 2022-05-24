@@ -1,23 +1,20 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use crate::AsFormat;
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
     JsLanguage,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
-use crate::{
-    empty_element, format_elements, format_traits::FormatOptional, if_group_breaks,
-    join_elements_soft_line, token, Format, FormatElement, Formatter,
-};
-
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
 pub(crate) fn format_array_node<N, I>(
     node: &N,
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
 ) -> FormatResult<FormatElement>
 where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,
-    I: ArrayNodeElement,
+    for<'a> I: ArrayNodeElement + AsFormat<'a>,
 {
     // Specifically do not use format_separated as arrays need separators
     // inserted after holes regardless of the formatting since this makes a
@@ -33,26 +30,33 @@ where
             let is_disallow = matches!(separator_mode, TrailingSeparatorMode::Disallow);
             let is_force = matches!(separator_mode, TrailingSeparatorMode::Force);
 
-            let elem = node.format(formatter)?;
+            let elem = node.format();
             let separator = if is_disallow {
                 // Trailing separators are disallowed, replace it with an empty element
                 if let Some(separator) = element.trailing_separator()? {
-                    formatter.format_replaced(&separator, empty_element())
+                    formatter.format_replaced(separator, empty_element())
                 } else {
                     empty_element()
                 }
             } else if is_force || index != last_index {
                 // In forced separator mode or if this element is not the last in the list, print the separator
-                element
-                    .trailing_separator()
-                    .format_or(formatter, || token(","))?
+                formatted![
+                    formatter,
+                    [&element
+                        .trailing_separator()
+                        .format()
+                        .or_format(|| token(","))]
+                ]?
             } else if let Some(separator) = element.trailing_separator()? {
-                formatter.format_replaced(&separator, if_group_breaks(token(",")))
+                formatter.format_replaced(separator, if_group_breaks(token(",")))
             } else {
                 if_group_breaks(token(","))
             };
 
-            Ok((node.syntax().clone(), format_elements![elem, separator]))
+            Ok((
+                node.syntax().clone(),
+                formatted![formatter, [elem, separator]]?,
+            ))
         })
         .collect::<FormatResult<Vec<_>>>()?;
 
@@ -70,7 +74,7 @@ pub(crate) enum TrailingSeparatorMode {
     Force,
 }
 
-pub(crate) trait ArrayNodeElement: AstNode<Language = JsLanguage> + Format + Clone {
+pub(crate) trait ArrayNodeElement: AstNode<Language = JsLanguage> {
     /// Determines how the trailing separator should be printer for this element
     fn separator_mode(&self) -> TrailingSeparatorMode;
 }

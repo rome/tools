@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 175
 expression: default-escaped.js
-
 ---
 # Input
 ```js
@@ -16,7 +15,7 @@ export n\u{63} from "async";
 export
 n\u{63};
 from;
-"async";
+("async");
 
 ```
 

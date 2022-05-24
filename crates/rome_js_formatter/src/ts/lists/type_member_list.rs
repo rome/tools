@@ -1,20 +1,22 @@
-use crate::{
-    empty_element, format_elements, if_group_breaks, join_elements, soft_line_break_or_space,
-    token, Format, FormatElement, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::generated::FormatTsTypeMemberList;
+use crate::prelude::*;
 use rome_js_syntax::TsTypeMemberList;
 use rome_rowan::AstNodeList;
 
-impl Format for TsTypeMemberList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let items = self.iter();
+impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &TsTypeMemberList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 
         let items = items
             .enumerate()
             .map(|(index, element)| {
-                let formatted_element = element.format(formatter)?;
+                let formatted_element = formatted![formatter, [element.format()]]?;
 
                 let is_verbatim = matches!(
                     formatted_element.last_element(),
@@ -33,7 +35,7 @@ impl Format for TsTypeMemberList {
                     empty_element()
                 };
 
-                Ok(format_elements![formatted_element, separator])
+                formatted![formatter, [formatted_element, separator]]
             })
             .collect::<FormatResult<Vec<_>>>()?;
 

@@ -1,13 +1,21 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyNamedImport;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyNamedImport;
-impl Format for JsAnyNamedImport {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsNamedImportSpecifiers(node) => node.format(formatter),
-            Self::JsNamespaceImportSpecifier(node) => node.format(formatter),
+impl FormatRule<JsAnyNamedImport> for FormatJsAnyNamedImport {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyNamedImport,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyNamedImport::JsNamedImportSpecifiers(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyNamedImport::JsNamespaceImportSpecifier(node) => {
+                formatted![formatter, [node.format()]]
+            }
         }
     }
 }

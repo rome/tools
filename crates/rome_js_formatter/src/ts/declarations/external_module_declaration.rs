@@ -1,27 +1,28 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsExternalModuleDeclaration;
 use rome_js_syntax::TsExternalModuleDeclarationFields;
 
-impl FormatNode for TsExternalModuleDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsExternalModuleDeclaration> for FormatNodeRule<TsExternalModuleDeclaration> {
+    fn format_fields(
+        node: &TsExternalModuleDeclaration,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsExternalModuleDeclarationFields {
             body,
             module_token,
             source,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let module_token = module_token.format(formatter)?;
-        let source = source.format(formatter)?;
-        let body = body.format_or_empty(formatter)?;
-
-        Ok(format_elements![
-            module_token,
-            space_token(),
-            source,
-            space_token(),
-            body
-        ])
+        formatted![
+            formatter,
+            [
+                module_token.format(),
+                space_token(),
+                source.format(),
+                space_token(),
+                body.format()
+            ]
+        ]
     }
 }

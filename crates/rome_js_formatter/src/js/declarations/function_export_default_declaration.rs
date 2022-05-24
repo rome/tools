@@ -1,10 +1,16 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use crate::FormatNodeFields;
 use rome_js_syntax::JsAnyFunction;
 use rome_js_syntax::JsFunctionExportDefaultDeclaration;
 
-impl FormatNode for JsFunctionExportDefaultDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        JsAnyFunction::from(self.clone()).format(formatter)
+impl FormatNodeFields<JsFunctionExportDefaultDeclaration>
+    for FormatNodeRule<JsFunctionExportDefaultDeclaration>
+{
+    fn format_fields(
+        node: &JsFunctionExportDefaultDeclaration,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        formatted![formatter, [JsAnyFunction::from(node.clone()).format()]]
     }
 }

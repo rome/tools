@@ -1,34 +1,36 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsTryFinallyStatement;
 use rome_js_syntax::JsTryFinallyStatementFields;
 
-impl FormatNode for JsTryFinallyStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsTryFinallyStatement> for FormatNodeRule<JsTryFinallyStatement> {
+    fn format_fields(
+        node: &JsTryFinallyStatement,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsTryFinallyStatementFields {
             try_token,
             body,
             catch_clause,
             finally_clause,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let formatted_catch_clause = catch_clause
-            .format_with_or_empty(formatter, |catch_clause| {
-                format_elements![space_token(), catch_clause]
-            })?;
-
-        Ok(hard_group_elements(format_elements![
-            try_token.format(formatter)?,
-            space_token(),
-            body.format(formatter)?,
-            formatted_catch_clause,
-            space_token(),
-            finally_clause.format(formatter)?
-        ]))
+        Ok(hard_group_elements(formatted![
+            formatter,
+            [
+                try_token.format(),
+                space_token(),
+                body.format(),
+                catch_clause
+                    .format()
+                    .with_or_empty(|catch_clause| formatted![
+                        formatter,
+                        [space_token(), catch_clause]
+                    ]),
+                space_token(),
+                finally_clause.format()
+            ]
+        ]?))
     }
 }

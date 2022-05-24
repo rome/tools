@@ -10,6 +10,10 @@ pub(crate) struct GreenTriviaHead {
     _c: Count<GreenTrivia>,
 }
 
+pub(crate) fn has_live() -> bool {
+    countme::get::<GreenTrivia>().live > 0
+}
+
 type ReprThin = HeaderSlice<GreenTriviaHead, [TriviaPiece; 0]>;
 
 #[repr(transparent)]

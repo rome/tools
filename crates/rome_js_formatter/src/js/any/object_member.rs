@@ -1,18 +1,26 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyObjectMember;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectMember;
-impl Format for JsAnyObjectMember {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsPropertyObjectMember(node) => node.format(formatter),
-            Self::JsMethodObjectMember(node) => node.format(formatter),
-            Self::JsGetterObjectMember(node) => node.format(formatter),
-            Self::JsSetterObjectMember(node) => node.format(formatter),
-            Self::JsShorthandPropertyObjectMember(node) => node.format(formatter),
-            Self::JsSpread(node) => node.format(formatter),
-            Self::JsUnknownMember(node) => node.format(formatter),
+impl FormatRule<JsAnyObjectMember> for FormatJsAnyObjectMember {
+    type Options = JsFormatOptions;
+    fn format(
+        node: &JsAnyObjectMember,
+        formatter: &Formatter<Self::Options>,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyObjectMember::JsPropertyObjectMember(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectMember::JsMethodObjectMember(node) => formatted![formatter, [node.format()]],
+            JsAnyObjectMember::JsGetterObjectMember(node) => formatted![formatter, [node.format()]],
+            JsAnyObjectMember::JsSetterObjectMember(node) => formatted![formatter, [node.format()]],
+            JsAnyObjectMember::JsShorthandPropertyObjectMember(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            JsAnyObjectMember::JsSpread(node) => formatted![formatter, [node.format()]],
+            JsAnyObjectMember::JsUnknownMember(node) => formatted![formatter, [node.format()]],
         }
     }
 }

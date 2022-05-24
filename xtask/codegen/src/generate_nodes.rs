@@ -178,6 +178,17 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         #(#methods)*
                     }
 
+                    #[cfg(feature = "serde")]
+                        impl Serialize for #name {
+                            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+                            where
+                            S: Serializer,
+                            {
+                                self.as_fields().serialize(serializer)
+                            }
+                    }
+
+                    #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
                     pub struct #slots_name {
                         #( pub #slot_fields, )*
                     }
@@ -193,6 +204,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                             if Self::can_cast(syntax.kind()) { Some(Self { syntax }) } else { None }
                         }
                         fn syntax(&self) -> &SyntaxNode { &self.syntax }
+                        fn into_syntax(self) -> SyntaxNode { self.syntax }
                     }
 
                     impl std::fmt::Debug for #name {
@@ -230,6 +242,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         .unions
         .iter()
         .map(|union| {
+            let name = format_ident!("{}", union.name);
+
             // here we collect all the variants because this will generate the enums
             // so we don't care about filtered variants
             let variants_for_union: Vec<_> = union
@@ -237,9 +251,25 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 .iter()
                 .map(|variant| {
                     let variant_name = format_ident!("{}", variant);
-
                     quote! {
                         #variant_name(#variant_name)
+                    }
+                })
+                .collect();
+
+            let as_method_for_variants_for_union: Vec<_> = union
+                .variants
+                .iter()
+                .map(|variant| {
+                    let variant_name = format_ident!("{}", variant);
+                    let fn_name = format_ident!("as_{}", to_lower_snake_case(variant));
+                    quote! {
+                        pub fn #fn_name(&self) -> Option<&#variant_name> {
+                           match &self {
+                            #name::#variant_name(item) => Some(item),
+                               _ => None
+                           }
+                        }
                     }
                 })
                 .collect();
@@ -262,7 +292,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 .map(|var| format_ident!("{}", var))
                 .collect();
 
-            let name = format_ident!("{}", union.name);
             let kinds: Vec<_> = variants
                 .iter()
                 .map(|name| format_ident!("{}", to_upper_snake_case(&name.to_string())))
@@ -315,6 +344,10 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         quote! {
                             #name::#variant_name(it) => it.syntax()
                         },
+                        // into_syntax() code
+                        quote! {
+                            #name::#variant_name(it) => it.into_syntax()
+                        },
                     )
                 })
                 .collect();
@@ -323,6 +356,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
             let vv_can_cast = vv.iter().map(|v| v.1.clone());
             let vv_syntax = vv.iter().map(|v| v.2.clone());
+            let vv_into_syntax = vv.iter().map(|v| v.3.clone());
 
             let all_kinds = if !kinds.is_empty() {
                 quote! {
@@ -370,14 +404,19 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             };
 
-            let variant_can_cast: Vec<_> = simple_variants
+            let (variant_syntax, variant_into_syntax): (Vec<_>, Vec<_>) = simple_variants
                 .iter()
                 .map(|_| {
-                    quote! {
-                        &it.syntax
-                    }
+                    (
+                        quote! {
+                            &it.syntax
+                        },
+                        quote! {
+                            it.syntax
+                        },
+                    )
                 })
-                .collect();
+                .unzip();
 
             let all_variant_names: Vec<_> = union
                 .variants
@@ -389,8 +428,14 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 quote! {
                     // #[doc = #doc]
                     #[derive(Clone, PartialEq, Eq, Hash)]
+                    #[cfg_attr(feature = "serde", derive(Serialize))]
+                    #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
                     pub enum #name {
                         #(#variants_for_union),*
+                    }
+
+                    impl #name {
+                        #(#as_method_for_variants_for_union)*
                     }
                 },
                 quote! {
@@ -414,12 +459,21 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         fn syntax(&self) -> &SyntaxNode {
                             match self {
                                 #(
-                                #name::#variants(it) => #variant_can_cast,
+                                #name::#variants(it) => #variant_syntax,
                                 )*
                                 #(
                                     #vv_syntax
                                 ),*
-
+                            }
+                        }
+                        fn into_syntax(self) -> SyntaxNode {
+                            match self {
+                                #(
+                                #name::#variants(it) => #variant_into_syntax,
+                                )*
+                                #(
+                                    #vv_into_syntax
+                                ),*
                             }
                         }
                     }
@@ -478,6 +532,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
         quote! {
             #[derive(Clone, PartialEq, Eq, Hash)]
+            #[cfg_attr(feature = "serde", derive(Serialize))]
+            #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
             pub struct #name {
                 syntax: SyntaxNode
             }
@@ -513,6 +569,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
                 fn syntax(&self) -> &SyntaxNode {
                     &self.syntax
+                }
+                fn into_syntax(self) -> SyntaxNode {
+                    self.syntax
                 }
             }
 
@@ -573,17 +632,38 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 fn syntax(&self) -> &SyntaxNode {
                     self.syntax_list.node()
                 }
+                fn into_syntax(self) -> SyntaxNode {
+                    self.syntax_list.into_node()
+                }
             }
         };
 
         let padded_name = format!("{} ", name);
+
         let list_impl = if list.separator.is_some() {
             quote! {
+                #[cfg(feature = "serde")]
+                impl Serialize for #list_name {
+                    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+                        where
+                        S: Serializer,
+                        {
+                            let mut seq = serializer.serialize_seq(Some(self.len()))?;
+                            for e in self.iter() {
+                                seq.serialize_element(&e)?;
+                            }
+                            seq.end()
+                        }
+                }
+
                 impl AstSeparatedList for #list_name {
                     type Language = Language;
                     type Node = #element_type;
                     fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
+                    }
+                    fn into_syntax_list(self) -> SyntaxList {
+                        self.syntax_list
                     }
                 }
 
@@ -614,11 +694,28 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             }
         } else {
             quote! {
+                #[cfg(feature = "serde")]
+                impl Serialize for #list_name {
+                    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+                        where
+                        S: Serializer,
+                        {
+                            let mut seq = serializer.serialize_seq(Some(self.len()))?;
+                            for e in self.iter() {
+                                seq.serialize_element(&e)?;
+                            }
+                            seq.end()
+                        }
+                }
+
                 impl AstNodeList for #list_name {
                     type Language = Language;
                     type Node = #element_type;
                     fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
+                    }
+                    fn into_syntax_list(self) -> SyntaxList {
+                        self.syntax_list
                     }
                 }
 
@@ -669,6 +766,13 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
     let syntax_token = language_kind.syntax_token();
     let language = language_kind.language();
 
+    let serde_import = quote! {
+        #[cfg(feature = "serde")]
+        use serde_crate::{Serialize, Serializer};
+        #[cfg(feature = "serde")]
+        use serde_crate::ser::SerializeSeq;
+    };
+
     let ast = quote! {
         #![allow(clippy::enum_variant_names)]
         // sometimes we generate comparison of simple tokens
@@ -685,6 +789,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         };
         use rome_rowan::{support, AstNode, SyntaxResult};
         use std::fmt::{Debug, Formatter};
+        #serde_import
 
         #(#node_defs)*
         #(#union_defs)*

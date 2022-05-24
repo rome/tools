@@ -1,13 +1,14 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsImportNamespaceClause;
 use rome_js_syntax::JsImportNamespaceClauseFields;
 
-impl FormatNode for JsImportNamespaceClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsImportNamespaceClause> for FormatNodeRule<JsImportNamespaceClause> {
+    fn format_fields(
+        node: &JsImportNamespaceClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsImportNamespaceClauseFields {
             type_token,
             star_token,
@@ -16,31 +17,27 @@ impl FormatNode for JsImportNamespaceClause {
             from_token,
             source,
             assertion,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-
-        let star = star_token.format(formatter)?;
-        let as_token = as_token.format(formatter)?;
-        let local_name = local_name.format(formatter)?;
-        let source = source.format(formatter)?;
-        let from = from_token.format(formatter)?;
-        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            format_elements![space_token(), assertion]
-        })?;
-        Ok(format_elements![
-            type_token,
-            star,
-            space_token(),
-            as_token,
-            space_token(),
-            local_name,
-            space_token(),
-            from,
-            space_token(),
-            source,
-            assertion
-        ])
+        formatted![
+            formatter,
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                star_token.format(),
+                space_token(),
+                as_token.format(),
+                space_token(),
+                local_name.format(),
+                space_token(),
+                from_token.format(),
+                space_token(),
+                source.format(),
+                assertion
+                    .format()
+                    .with_or_empty(|assertion| formatted![formatter, [space_token(), assertion]])
+            ]
+        ]
     }
 }

@@ -1,37 +1,43 @@
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{
-    empty_element, format_elements, group_elements, soft_block_indent, space_token, token, Format,
-    FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::FormatNodeFields;
 use rome_js_syntax::{JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-impl FormatNode for JsReturnStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
+    fn format_fields(
+        node: &JsReturnStatement,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsReturnStatementFields {
             return_token,
             argument,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let return_token = return_token.format(formatter)?;
+        let return_token = return_token.format();
 
         let argument = if let Some(argument) = argument {
             if matches!(
                 argument.syntax().kind(),
                 JsSyntaxKind::JS_SEQUENCE_EXPRESSION
             ) {
-                format_elements![
-                    space_token(),
-                    group_elements(format_elements![
-                        token("("),
-                        soft_block_indent(argument.format(formatter)?),
-                        token(")")
-                    ]),
-                ]
+                formatted![
+                    formatter,
+                    [
+                        space_token(),
+                        group_elements(formatted![
+                            formatter,
+                            [
+                                token("("),
+                                soft_block_indent(formatted![formatter, [argument.format()]]?),
+                                token(")")
+                            ]
+                        ]?),
+                    ]
+                ]?
             } else {
-                format_elements![space_token(), argument.format(formatter)?]
+                formatted![formatter, [space_token(), argument.format()]]?
             }
         } else {
             empty_element()
@@ -39,7 +45,7 @@ impl FormatNode for JsReturnStatement {
 
         format_with_semicolon(
             formatter,
-            format_elements![return_token, argument],
+            formatted![formatter, [return_token, argument]]?,
             semicolon_token,
         )
     }

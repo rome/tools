@@ -1,5 +1,8 @@
+use crate::builders::ConcatBuilder;
 use crate::intersperse::{Intersperse, IntersperseFn};
-use crate::{format_elements, TextRange, TextSize};
+use crate::{format_elements, GroupId, TextRange, TextSize};
+#[cfg(target_pointer_width = "64")]
+use rome_rowan::static_assert;
 use rome_rowan::{
     Language, SyntaxNode, SyntaxToken, SyntaxTokenText, SyntaxTriviaPieceComments, TextLen,
 };
@@ -26,35 +29,41 @@ pub fn empty_element() -> FormatElement {
 /// Soft line breaks are omitted if the enclosing `Group` fits on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break, FormatOptions};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
-/// let elements = group_elements(format_elements![
-///   token("a,"),
-///   soft_line_break(),
-///   token("b"),
-/// ]);
+/// let elements = group_elements(format_elements![token("a,"), soft_line_break(), token("b"),]);
 ///
-/// assert_eq!("a,b", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a,b",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 /// See [soft_line_break_or_space] if you want to insert a space between the elements if the enclosing
 /// `Group` fits on a single line.
 ///
 /// Soft line breaks are emitted if the enclosing `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break, FormatOptions, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("a long word,"),
-///   soft_line_break(),
-///   token("so that the group doesn't fit on a single line"),
+///     token("a long word,"),
+///     soft_line_break(),
+///     token("so that the group doesn't fit on a single line"),
 /// ]);
 ///
-/// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(10).unwrap(),
+///     ..PrinterOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "a long word,\nso that the group doesn't fit on a single line",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 #[inline]
 pub const fn soft_line_break() -> FormatElement {
@@ -68,16 +77,22 @@ pub const fn soft_line_break() -> FormatElement {
 ///
 /// It forces a line break, even if the enclosing `Group` would otherwise fit on a single line.
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, FormatOptions, hard_line_break};
+/// use rome_formatter::*;
+/// use rome_formatter::prelude::PrinterOptions;
 ///
 /// let elements = group_elements(format_elements![
-///   token("a,"),
-///   hard_line_break(),
-///   token("b"),
-///   hard_line_break()
+///     token("a,"),
+///     hard_line_break(),
+///     token("b"),
+///     hard_line_break()
 /// ]);
 ///
-/// assert_eq!("a,\nb\n", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a,\nb\n",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub const fn hard_line_break() -> FormatElement {
@@ -90,16 +105,22 @@ pub const fn hard_line_break() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, FormatOptions, empty_line};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("a,"),
-///   empty_line(),
-///   token("b"),
-///   empty_line()
+///     token("a,"),
+///     empty_line(),
+///     token("b"),
+///     empty_line()
 /// ]);
 ///
-/// assert_eq!("a,\n\nb\n\n", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a,\n\nb\n\n",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub const fn empty_line() -> FormatElement {
@@ -112,33 +133,43 @@ pub const fn empty_line() -> FormatElement {
 ///
 /// The line breaks are emitted as spaces if the enclosing `Group` fits on a a single line:
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("a,"),
-///   soft_line_break_or_space(),
-///   token("b"),
+///     token("a,"),
+///     soft_line_break_or_space(),
+///     token("b"),
 /// ]);
 ///
-/// assert_eq!("a, b", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a, b",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("a long word,"),
-///   soft_line_break_or_space(),
-///   token("so that the group doesn't fit on a single line"),
+///     token("a long word,"),
+///     soft_line_break_or_space(),
+///     token("so that the group doesn't fit on a single line"),
 /// ]);
 ///
-/// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(10).unwrap(),
+///     ..PrinterOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "a long word,\nso that the group doesn't fit on a single line",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 #[inline]
 pub const fn soft_line_break_or_space() -> FormatElement {
@@ -155,22 +186,29 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{token, Formatted, FormatOptions};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 /// let elements = token("Hello World");
 ///
-/// assert_eq!("Hello World", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "Hello World",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// Printing a string literal as a literal requires that the string literal is properly escaped and
 /// enclosed in quotes (depending on the target language).
 ///
 /// ```
-/// use rome_formatter::{FormatOptions, token, Formatted};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = token("\"Hello\\tWorld\"");
 ///
-/// assert_eq!(r#""Hello\tWorld""#, Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(r#""Hello\tWorld""#, Formatted::new(elements, PrinterOptions::default()).print().as_code());
 /// ```
 #[inline]
 pub const fn token(text: &'static str) -> FormatElement {
@@ -186,15 +224,44 @@ pub const fn token(text: &'static str) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{FormatOptions, token, Formatted, line_suffix, format_elements};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
 ///
-/// assert_eq!("abc", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "abc",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
     FormatElement::LineSuffix(Box::new(element.into()))
+}
+
+/// Inserts a boundary for line suffixes that forces to print all pending line suffixes. Helpful
+/// if a line sufix shouldn't pass a certain point.
+///
+/// ## Examples
+///
+/// Forces the line suffix "c" to be printed before the token `d`.
+/// ```
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
+///
+/// let elements = format_elements![token("a"), line_suffix(token("c")), token("b"), line_suffix_boundary(), token("d")];
+///
+/// assert_eq!(
+///     "abc\nd",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
+/// ```
+pub const fn line_suffix_boundary() -> FormatElement {
+    FormatElement::LineSuffixBoundary
 }
 
 /// Mark a [FormatElement] as being a piece of trivia
@@ -205,11 +272,22 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{FormatOptions, token, Formatted, comment, format_elements, group_elements, empty_line, soft_line_break_or_space};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
-/// let elements = group_elements(format_elements![comment(empty_line()), token("a"), soft_line_break_or_space(), token("b")]);
+/// let elements = group_elements(format_elements![
+///     comment(empty_line()),
+///     token("a"),
+///     soft_line_break_or_space(),
+///     token("b")
+/// ]);
 ///
-/// assert_eq!("\na b", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "\na b",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
@@ -221,12 +299,13 @@ pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{FormatOptions, token, Formatted, space_token, format_elements};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = format_elements![token("a"), space_token(), token("b")];
 ///
-/// assert_eq!("a b", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!("a b", Formatted::new(elements, PrinterOptions::default()).print().as_code());
 /// ```
 #[inline]
 pub const fn space_token() -> FormatElement {
@@ -238,72 +317,62 @@ pub const fn space_token() -> FormatElement {
 /// ## Examples
 ///
 /// ```rust
-/// use rome_formatter::{concat_elements, FormatElement, space_token, token, Formatted, FormatOptions};
-/// let expr = concat_elements(vec![token("a"), space_token(), token("+"), space_token(), token("b")]);
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
+/// let expr = concat_elements(vec![
+///     token("a"),
+///     space_token(),
+///     token("+"),
+///     space_token(),
+///     token("b"),
+/// ]);
 ///
-/// assert_eq!("a + b", Formatted::new(expr, FormatOptions::default()).print().as_code())
+/// assert_eq!(
+///     "a + b",
+///     Formatted::new(expr, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// )
 /// ```
 pub fn concat_elements<I>(elements: I) -> FormatElement
 where
     I: IntoIterator<Item = FormatElement>,
 {
-    let mut elements = elements.into_iter();
+    let elements = elements.into_iter();
+    let mut builder = ConcatBuilder::new();
 
-    let (lower_bound, upper_bound) = elements.size_hint();
-    let size_hint = upper_bound.unwrap_or(lower_bound);
+    builder.size_hint(elements.size_hint());
 
-    // If the first non empty element is a vec, use it,
-    // otherwise create a new one with the current element
-    let mut concatenated = loop {
-        match elements.next() {
-            Some(FormatElement::Empty) => continue,
-            Some(FormatElement::List(list)) => {
-                let mut v = list.content;
-                v.reserve(size_hint);
-                break v;
-            }
-            Some(element) => {
-                let mut v = Vec::with_capacity(size_hint);
-                v.push(element);
-                break v;
-            }
-            None => return empty_element(),
-        }
-    };
-
-    // continue to the rest of the list
     for element in elements {
-        match element {
-            FormatElement::List(list) => concatenated.extend(list.content),
-            FormatElement::Empty => {}
-            element => concatenated.push(element),
-        }
+        builder.entry(element);
     }
 
-    if concatenated.is_empty() {
-        empty_element()
-    } else if concatenated.len() == 1 {
-        concatenated.pop().unwrap()
-    } else {
-        FormatElement::from(List::new(concatenated))
-    }
+    builder.finish()
 }
 
 /// Concatenates a list of [FormatElement]s with spaces and line breaks to fit
-/// them on as few lines as possible
+/// them on as few lines as possible. Each element introduces a conceptual group. The printer
+/// first tries to print the item in flat mode but then prints it in expanded mode if it doesn't fit.
 ///
 /// ## Examples
 ///
 /// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::Formatted;
 /// use std::str::from_utf8;
-/// use rome_formatter::{fill_elements, FormatElement, space_token, token, Formatted, FormatOptions};
+///
 /// let a = from_utf8(&[b'a'; 30]).unwrap();
 /// let b = from_utf8(&[b'b'; 30]).unwrap();
 /// let c = from_utf8(&[b'c'; 30]).unwrap();
 /// let d = from_utf8(&[b'd'; 30]).unwrap();
 /// let expr = fill_elements([token(a), token(b), token(c), token(d)]);
 ///
-/// assert_eq!(format!("{a} {b}\n{c} {d}"), Formatted::new(expr, FormatOptions::default()).print().as_code())
+/// assert_eq!(
+///     format!("{a} {b}\n{c} {d}"),
+///     Formatted::new(expr, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// )
 /// ```
 pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> FormatElement {
     let mut list: Vec<_> = elements.into_iter().collect();
@@ -321,12 +390,21 @@ pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> Forma
 /// Joining different tokens by separating them with a comma and a space.
 ///
 /// ```
-/// use rome_formatter::{concat_elements, FormatOptions, join_elements, space_token, token, Formatted};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let separator = concat_elements(vec![token(","), space_token()]);
-/// let elements = join_elements(separator, vec![token("1"), token("2"), token("3"), token("4")]);
+/// let elements = join_elements(
+///     separator,
+///     vec![token("1"), token("2"), token("3"), token("4")],
+/// );
 ///
-/// assert_eq!("1, 2, 3, 4", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "1, 2, 3, 4",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn join_elements<TSep, I>(separator: TSep, elements: I) -> FormatElement
@@ -351,22 +429,27 @@ where
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{format_elements, Formatted, FormatOptions, hard_line_break, block_indent, token, indent};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
+///
 /// let block = (format_elements![
-///   token("switch {"),
-///   block_indent(format_elements![
-///     token("default:"),
-///     indent(format_elements![ // this is where we want to use a
-///        hard_line_break(),
-///        token("break;"),
-///     ])
-///   ]),
-///   token("}"),
+///     token("switch {"),
+///     block_indent(format_elements![
+///         token("default:"),
+///         indent(format_elements![
+///             // this is where we want to use a
+///             hard_line_break(),
+///             token("break;"),
+///         ])
+///     ]),
+///     token("}"),
 /// ]);
 ///
 /// assert_eq!(
-///   "switch {\n\tdefault:\n\t\tbreak;\n}",
-///   Formatted::new(block, FormatOptions::default()).print().as_code()
+///     "switch {\n\tdefault:\n\t\tbreak;\n}",
+///     Formatted::new(block, PrinterOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
 #[inline]
@@ -390,21 +473,24 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{Formatted, format_elements, token, FormatOptions, hard_line_break, block_indent};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let block = (format_elements![
-///   token("{"),
-///   block_indent(format_elements![
-///     token("let a = 10;"),
-///     hard_line_break(),
-///     token("let c = a + 5;"),
-///   ]),
-///   token("}"),
+///     token("{"),
+///     block_indent(format_elements![
+///         token("let a = 10;"),
+///         hard_line_break(),
+///         token("let c = a + 5;"),
+///     ]),
+///     token("}"),
 /// ]);
 ///
 /// assert_eq!(
-///   "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
-///   Formatted::new(block, FormatOptions::default()).print().as_code()
+///     "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
+///     Formatted::new(block, PrinterOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
 #[inline]
@@ -430,46 +516,52 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'First string',"),
-///     soft_line_break_or_space(),
-///     token("'second string',"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'First string',"),
+///         soft_line_break_or_space(),
+///         token("'second string',"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(10).unwrap(),
+///     ..PrinterOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'First string',\n\t'second string',\n]", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "[\n\t'First string',\n\t'second string',\n]",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 ///
 /// Doesn't change the formatting if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("5,"),
-///     soft_line_break_or_space(),
-///     token("10"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("5,"),
+///         soft_line_break_or_space(),
+///         token("10"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
 /// assert_eq!(
-///   "[5, 10]",
-///   Formatted::new(elements, FormatOptions::default()).print().as_code()
+///     "[5, 10]",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
-///
 #[inline]
 pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
     let content = content.into();
@@ -496,48 +588,52 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("name"),
-///   space_token(),
-///   token("="),
-///   soft_line_indent_or_space(format_elements![
-///     token("firstName"),
+///     token("name"),
 ///     space_token(),
-///     token("+"),
-///     space_token(),
-///     token("lastName"),
-///   ]),
+///     token("="),
+///     soft_line_indent_or_space(format_elements![
+///         token("firstName"),
+///         space_token(),
+///         token("+"),
+///         space_token(),
+///         token("lastName"),
+///     ]),
 /// ]);
 ///
-/// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(10).unwrap(),
+///     ..PrinterOptions::default()
 /// };
 ///
-/// assert_eq!("name =\n\tfirstName + lastName", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "name =\n\tfirstName + lastName",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 ///
 /// Only adds a space if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("a"),
-///   space_token(),
-///   token("="),
-///   soft_line_indent_or_space(format_elements![
-///      token("10")
-///   ]),
+///     token("a"),
+///     space_token(),
+///     token("="),
+///     soft_line_indent_or_space(format_elements![token("10")]),
 /// ]);
 ///
 /// assert_eq!(
-///   "a = 10",
-///   Formatted::new(elements, FormatOptions::default()).print().as_code()
+///     "a = 10",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
-///
 #[inline]
 pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatElement {
     let content = content.into();
@@ -566,51 +662,112 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// `Group` that fits on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("1,"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("1,"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// assert_eq!("[1, 2, 3]", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "[1, 2, 3]",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'Good morning! How are you today?',"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'Good morning! How are you today?',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// let options = FormatOptions {
-///   line_width: LineWidth::try_from(20).unwrap(),
-///   ..FormatOptions::default()
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(20).unwrap(),
+///     ..PrinterOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
-    let content: FormatElement = content.into();
+    group_elements_with_options(content.into(), GroupElementsOptions::default())
+}
+
+#[derive(Default, Clone, Debug)]
+pub struct GroupElementsOptions {
+    pub group_id: Option<GroupId>,
+}
+
+/// Creates a group with a specific id. Useful for cases where `if_group_breaks` and `if_group_fits_on_line`
+/// shouldn't refer to the direct parent group.
+pub fn group_elements_with_options(
+    content: FormatElement,
+    options: GroupElementsOptions,
+) -> FormatElement {
     let (leading, content, trailing) = content.split_trivia();
-    format_elements![leading, Group::new(content), trailing]
+
+    let group = Group::new(content).with_id(options.group_id);
+
+    format_elements![leading, group, trailing]
+}
+
+/// IR element that forces the parent group to print in expanded mode.
+///
+/// Has no effect if used outside of a group or element that introduce implicit groups (fill element).
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
+///
+/// let elements = group_elements(format_elements![
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'Good morning! How are you today?',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         expand_parent(), // Forces the parent to expand
+///         soft_line_break_or_space(),
+///         token("3"),
+///     ]),
+///     token("]"),
+/// ]);
+///
+/// assert_eq!(
+///     "[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]",
+///     Formatted::new(elements, PrinterOptions::default()).print().as_code()
+/// );
+/// ```
+///
+/// ## Prettier
+/// Equivalent to Prettier's `break_parent` IR element
+pub const fn expand_parent() -> FormatElement {
+    FormatElement::ExpandParent
 }
 
 /// Creates a group that forces all elements inside it to be printed on a
@@ -628,19 +785,21 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// # Example
 /// ```
-/// use rome_formatter::{
-///   group_elements, Formatted, format_elements, token, hard_group_elements,
-///
-///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
-/// };
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(hard_group_elements(format_elements![
-///   if_group_breaks(token("not printed")),
-///   empty_line(),
-///   if_group_fits_on_single_line(token("printed")),
+///     if_group_breaks(token("not printed")),
+///     empty_line(),
+///     if_group_fits_on_single_line(token("printed")),
 /// ]));
 ///
-/// assert_eq!("\nprinted", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "\nprinted",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
@@ -669,57 +828,114 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///
 /// Omits the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("1,"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_breaks(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("1,"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_breaks(token(","))
+///     ]),
+///     token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3]", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "[1, 2, 3]",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'A somewhat longer string to force a line break',"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_breaks(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'A somewhat longer string to force a line break',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_breaks(token(","))
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(20).unwrap(),
+///     ..PrinterOptions::default()
+/// };
 /// assert_eq!(
-///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
-///   Formatted::new(elements, options).print().as_code()
+///     "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
+///     Formatted::new(elements, options).print().as_code()
 /// );
 /// ```
 #[inline]
 pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
-    let content = content.into();
+    if_group_breaks_impl(content.into(), None)
+}
 
+/// Inserts some content that the printer only prints if the group with the specified `group_id`
+/// is printed in multiline mode. The referred group must appear before this element in the document
+/// but doesn't have to one of its ancestors.
+///
+/// ## Examples
+///
+/// Prints the trailing comma if the array group doesn't fit. The `group_id` is necessary
+/// because `fill` creates an implicit group around each item and tries to print the item in flat mode.
+/// The item `[4]` in this example fits on a single line but the trailing comma should still be printed
+///
+/// ```
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
+///
+/// let formatter = Formatter::<()>::default();
+/// let group_id = formatter.group_id("array");
+///
+/// let elements = group_elements_with_options(format_elements![
+///     token("["),
+///     soft_block_indent(fill_elements(vec![
+///         format_elements![token("1,")],
+///         format_elements![token("234568789,")],
+///         format_elements![token("3456789,")],
+///         format_elements![
+///             token("["),
+///             soft_block_indent(token("4")),
+///             token("]"),
+///             if_group_with_id_breaks(token(","), group_id)
+///         ],
+///     ])),
+///     token("]"),
+/// ], GroupElementsOptions { group_id: Some(group_id) });
+///
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(20).unwrap(),
+///     ..PrinterOptions::default()
+/// };
+/// assert_eq!(
+///     "[\n\t1, 234568789,\n\t3456789, [4],\n]",
+///     Formatted::new(elements, options).print().as_code()
+/// );
+/// ```
+pub fn if_group_with_id_breaks(content: FormatElement, group_id: GroupId) -> FormatElement {
+    if_group_breaks_impl(content, Some(group_id))
+}
+
+fn if_group_breaks_impl(content: FormatElement, group_id: Option<GroupId>) -> FormatElement {
     if content.is_empty() {
         content
     } else {
-        FormatElement::from(ConditionalGroupContent::new(
-            content,
-            GroupPrintMode::Multiline,
-        ))
+        FormatElement::from(
+            ConditionalGroupContent::new(content, PrintMode::Expanded).with_group_id(group_id),
+        )
     }
 }
 
@@ -732,44 +948,54 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Adds the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
+/// use rome_formatter::Formatted;
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("1,"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_fits_on_single_line(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("1,"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_fits_on_single_line(token(","))
+///     ]),
+///     token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3,]", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "[1, 2, 3,]",
+///     Formatted::new(elements, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::prelude::*;
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'A somewhat longer string to force a line break',"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_fits_on_single_line(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'A somewhat longer string to force a line break',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_fits_on_single_line(token(","))
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
+/// let options = PrinterOptions {
+///     print_width: LineWidth::try_from(20).unwrap(),
+///     ..PrinterOptions::default()
+/// };
 /// assert_eq!(
-///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3\n]",
-///   Formatted::new(elements, options).print().as_code()
+///     "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3\n]",
+///     Formatted::new(elements, options).print().as_code()
 /// );
 /// ```
 #[inline]
@@ -777,15 +1003,27 @@ pub fn if_group_fits_on_single_line<TFlat>(flat_content: TFlat) -> FormatElement
 where
     TFlat: Into<FormatElement>,
 {
-    let flat_content = flat_content.into();
+    if_group_fits_on_line_impl(flat_content.into(), None)
+}
 
+/// Inserts some content that the printer only prints if the group with the specified `group_id`
+/// is printed in flat mode.
+///
+#[inline]
+pub fn if_group_with_id_fits_on_line(flat_content: FormatElement, id: GroupId) -> FormatElement {
+    if_group_fits_on_line_impl(flat_content, Some(id))
+}
+
+fn if_group_fits_on_line_impl(
+    flat_content: FormatElement,
+    group_id: Option<GroupId>,
+) -> FormatElement {
     if flat_content.is_empty() {
         flat_content
     } else {
-        FormatElement::from(ConditionalGroupContent::new(
-            flat_content,
-            GroupPrintMode::Flat,
-        ))
+        FormatElement::from(
+            ConditionalGroupContent::new(flat_content, PrintMode::Flat).with_group_id(group_id),
+        )
     }
 }
 
@@ -880,6 +1118,9 @@ pub enum FormatElement {
     /// See [crate::group_elements] for documentation and examples.
     Group(Group),
 
+    /// Forces the parent group to print in expanded mode.
+    ExpandParent,
+
     /// See [crate::hard_group_elements] for documentation and examples.
     HardGroup(Group),
 
@@ -899,6 +1140,10 @@ pub enum FormatElement {
     /// Delay the printing of its content until the next line break
     LineSuffix(Content),
 
+    /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
+    /// line suffixes, potentially by inserting a hard line break.
+    LineSuffixBoundary,
+
     /// Special semantic element letting the printer and formatter know this is
     /// a trivia content, and it should only have a limited influence on the
     /// formatting (for instance line breaks contained within will not cause
@@ -907,6 +1152,10 @@ pub enum FormatElement {
 
     /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
     Verbatim(Verbatim),
+
+    /// A list of different variants representing the same content. The printer picks the best fitting content.
+    /// Line breaks inside of a best fitting don't propagate to parent groups.
+    BestFitting(BestFitting),
 }
 
 #[derive(Clone, Eq, PartialEq)]
@@ -983,11 +1232,17 @@ impl Debug for FormatElement {
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
+            FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
             FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
                 .field(&verbatim.element)
                 .finish(),
+            FormatElement::BestFitting(best_fitting) => {
+                write!(fmt, "BestFitting")?;
+                best_fitting.fmt(fmt)
+            }
+            FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
         }
     }
 }
@@ -1055,8 +1310,12 @@ impl Debug for List {
 }
 
 impl List {
-    fn new(content: Vec<FormatElement>) -> Self {
+    pub(crate) fn new(content: Vec<FormatElement>) -> Self {
         Self { content }
+    }
+
+    pub(crate) fn into_vec(self) -> Vec<FormatElement> {
+        self.content
     }
 }
 
@@ -1075,11 +1334,19 @@ impl Deref for List {
 #[derive(Clone, PartialEq, Eq)]
 pub struct Group {
     pub(crate) content: Content,
+    pub(crate) id: Option<GroupId>,
 }
 
 impl Debug for Group {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
-        fmt.debug_tuple("").field(&self.content).finish()
+        if let Some(id) = &self.id {
+            fmt.debug_struct("")
+                .field("content", &self.content)
+                .field("id", id)
+                .finish()
+        } else {
+            fmt.debug_tuple("").field(&self.content).finish()
+        }
     }
 }
 
@@ -1087,14 +1354,90 @@ impl Group {
     pub fn new(content: FormatElement) -> Self {
         Self {
             content: Box::new(content),
+            id: None,
         }
+    }
+
+    pub fn with_id(mut self, id: Option<GroupId>) -> Self {
+        self.id = id;
+        self
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub enum GroupPrintMode {
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub enum PrintMode {
+    /// Omits any soft line breaks
     Flat,
-    Multiline,
+    /// Prints soft line breaks as line breaks
+    Expanded,
+}
+
+impl PrintMode {
+    pub const fn is_flat(&self) -> bool {
+        matches!(self, PrintMode::Flat)
+    }
+
+    pub const fn is_expanded(&self) -> bool {
+        matches!(self, PrintMode::Expanded)
+    }
+}
+
+/// Provides the printer with different representations for the same element so that the printer
+/// can pick the best fitting variant.
+///
+/// Best fitting is defined as the variant that takes the most horizontal space but fits on the line.
+#[derive(Clone, Eq, PartialEq)]
+pub struct BestFitting {
+    /// The different variants for this element.
+    /// The first element is the one that takes up the most space horizontally (the most flat),
+    /// The last element takes up the least space horizontally (but most horizontal space).
+    variants: Box<[FormatElement]>,
+}
+
+impl BestFitting {
+    /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
+    /// but it is to discourage people from using it because the printer will panic if
+    /// the slice doesn't contain at least the least and most expanded variants.
+    ///
+    /// You're looking for a way to create a `BestFitting` object, use the `best_fitting![least_expanded, most_expanded]` macro.
+    ///
+    /// ## Safety
+    /// The slice must contain at least two variants.
+    #[doc(hidden)]
+    pub unsafe fn from_slice_unchecked(variants: &[FormatElement]) -> Self {
+        debug_assert!(
+            variants.len() >= 2,
+            "Requires at least the least expanded and most expanded variants"
+        );
+
+        Self {
+            variants: Vec::from(variants).into_boxed_slice(),
+        }
+    }
+
+    /// Returns the most expanded variant
+    pub fn most_expanded(&self) -> &FormatElement {
+        self.variants.last().expect(
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
+        )
+    }
+
+    pub fn variants(&self) -> &[FormatElement] {
+        &self.variants
+    }
+
+    /// Returns the least expanded variant
+    pub fn most_flat(&self) -> &FormatElement {
+        self.variants.first().expect(
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
+        )
+    }
+}
+
+impl Debug for BestFitting {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        f.debug_list().entries(&*self.variants).finish()
+    }
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -1104,15 +1447,25 @@ pub struct ConditionalGroupContent {
     /// In what mode the content should be printed.
     /// * Flat -> Omitted if the enclosing group is a multiline group, printed for groups fitting on a single line
     /// * Multiline -> Omitted if the enclosing group fits on a single line, printed if the group breaks over multiple lines.
-    pub(crate) mode: GroupPrintMode,
+    pub(crate) mode: PrintMode,
+
+    /// The id of the group for which it should check if it breaks or not. The group must appear in the document
+    /// before the conditional group (but doesn't have to be in the ancestor chain).
+    pub(crate) group_id: Option<GroupId>,
 }
 
 impl ConditionalGroupContent {
-    pub fn new(content: FormatElement, mode: GroupPrintMode) -> Self {
+    pub fn new(content: FormatElement, mode: PrintMode) -> Self {
         Self {
             content: Box::new(content),
             mode,
+            group_id: None,
         }
+    }
+
+    pub fn with_group_id(mut self, id: Option<GroupId>) -> Self {
+        self.group_id = id;
+        self
     }
 }
 
@@ -1312,25 +1665,33 @@ impl FormatElement {
         matches!(self, FormatElement::Empty)
     }
 
-    /// Returns true if this [FormatElement] recursively contains any hard line break
-    /// ([hard_line_break], [empty_line], [Token] containing the '\n' character)
-    pub fn has_hard_line_breaks(&self) -> bool {
+    /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
+    /// This is the case if this format element recursively contains a:
+    /// * [empty_line] or [hard_line_break]
+    /// * A token containing '\n'
+    ///
+    /// Use this with caution, this is only a heuristic and the printer may print the element over multiple
+    /// lines if this element is part of a group and the group doesn't fit on a single line.
+    pub fn will_break(&self) -> bool {
         match self {
             FormatElement::Empty => false,
             FormatElement::Space => false,
             FormatElement::Line(line) => matches!(line.mode, LineMode::Hard | LineMode::Empty),
-            FormatElement::Indent(indent) => indent.content.has_hard_line_breaks(),
+            FormatElement::Indent(indent) => indent.content.will_break(),
             FormatElement::Group(group) | FormatElement::HardGroup(group) => {
-                group.content.has_hard_line_breaks()
+                group.content.will_break()
             }
-            FormatElement::ConditionalGroupContent(group) => group.content.has_hard_line_breaks(),
+            FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
             FormatElement::List(list) | FormatElement::Fill(list) => {
-                list.content.iter().any(FormatElement::has_hard_line_breaks)
+                list.content.iter().any(FormatElement::will_break)
             }
             FormatElement::Token(token) => token.contains('\n'),
-            FormatElement::LineSuffix(_) => true,
-            FormatElement::Comment(content) => content.has_hard_line_breaks(),
-            FormatElement::Verbatim(verbatim) => verbatim.element.has_hard_line_breaks(),
+            FormatElement::LineSuffix(_) => false,
+            FormatElement::Comment(content) => content.will_break(),
+            FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
+            FormatElement::BestFitting(_) => false,
+            FormatElement::LineSuffixBoundary => false,
+            FormatElement::ExpandParent => true,
         }
     }
 
@@ -1380,12 +1741,6 @@ impl FormatElement {
                 let (leading, content, trailing) = group.content.split_trivia();
                 // re-create the grouping around the content only
                 (leading, hard_group_elements(content), trailing)
-            }
-
-            FormatElement::Group(group) => {
-                let (leading, content, trailing) = group.content.split_trivia();
-                // re-create the grouping around the content only
-                (leading, group_elements(content), trailing)
             }
             // Non-list elements are returned directly
             _ => (empty_element(), self, empty_element()),
@@ -1459,10 +1814,9 @@ impl From<Option<FormatElement>> for FormatElement {
 mod tests {
 
     use crate::format_element::{
-        empty_element, join_elements, normalize_newlines, ConditionalGroupContent, List,
-        VerbatimKind, LINE_TERMINATORS,
+        empty_element, join_elements, normalize_newlines, List, LINE_TERMINATORS,
     };
-    use crate::{concat_elements, space_token, token, FormatElement, TextRange, Token, Verbatim};
+    use crate::{concat_elements, space_token, token, FormatElement};
 
     #[test]
     fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {
@@ -1578,19 +1932,32 @@ mod tests {
         assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
         assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
     }
-
-    #[test]
-    fn sizes() {
-        assert_eq!(8, std::mem::size_of::<TextRange>());
-        assert_eq!(8, std::mem::size_of::<VerbatimKind>());
-        assert_eq!(16, std::mem::size_of::<Verbatim>());
-        assert_eq!(24, std::mem::size_of::<Token>());
-        assert_eq!(16, std::mem::size_of::<ConditionalGroupContent>());
-        assert_eq!(24, std::mem::size_of::<List>());
-        // Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
-        // Is there a more efficient way to encode the data to avoid increasing its size? Can the information
-        // be recomputed at a later point in time?
-        // You reduced the size of a format element? Excellent work!
-        assert_eq!(32, std::mem::size_of::<FormatElement>());
-    }
 }
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<rome_rowan::TextRange>() == 8usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::VerbatimKind>() == 8usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 16usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::Token>() == 24usize);
+
+#[cfg(not(debug_assertions))]
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::ConditionalGroupContent>() == 16usize);
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::format_element::List>() == 24usize);
+
+// Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
+// Is there a more efficient way to encode the data to avoid increasing its size? Can the information
+// be recomputed at a later point in time?
+// You reduced the size of a format element? Excellent work!
+
+#[cfg(not(debug_assertions))]
+#[cfg(target_pointer_width = "64")]
+static_assert!(std::mem::size_of::<crate::FormatElement>() == 32usize);

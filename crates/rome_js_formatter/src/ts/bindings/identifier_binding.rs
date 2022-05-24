@@ -1,9 +1,14 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsIdentifierBinding;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsIdentifierBinding, TsIdentifierBindingFields};
 
-impl FormatNode for TsIdentifierBinding {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.name_token().format(formatter)
+impl FormatNodeFields<TsIdentifierBinding> for FormatNodeRule<TsIdentifierBinding> {
+    fn format_fields(
+        node: &TsIdentifierBinding,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let TsIdentifierBindingFields { name_token } = node.as_fields();
+
+        formatted![formatter, [name_token.format()]]
     }
 }

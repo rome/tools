@@ -1,24 +1,29 @@
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsExportDefaultExpressionClause;
 use rome_js_syntax::JsExportDefaultExpressionClauseFields;
 
-impl FormatNode for JsExportDefaultExpressionClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsExportDefaultExpressionClause>
+    for FormatNodeRule<JsExportDefaultExpressionClause>
+{
+    fn format_fields(
+        node: &JsExportDefaultExpressionClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsExportDefaultExpressionClauseFields {
             default_token,
             expression,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let default_token = default_token.format(formatter)?;
-        let class = expression.format(formatter)?;
+        let default_token = default_token.format();
+        let class = expression.format();
 
         format_with_semicolon(
             formatter,
-            format_elements![default_token, space_token(), class],
+            formatted![formatter, [default_token, space_token(), class]]?,
             semicolon_token,
         )
     }

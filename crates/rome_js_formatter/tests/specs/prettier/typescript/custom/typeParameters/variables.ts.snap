@@ -44,15 +44,13 @@ const baaaaaaaaaaaaaaar: SomeThing<
   }
 > = looooooooooooooooooooooooooooooongNameFunc();
 const baaaaaaaaaaaaaaaar: SomeThing<K extends T ? G : S> = looooooooooooooooooooooooooooooongNameFunc();
-const isAnySuccessfulAttempt$: Observable<boolean> = this._quizService
-  .isAnySuccessfulAttempt$()
-  .pipe(
-    tap(
-      (isAnySuccessfulAttempt: boolean) => {
-        this.isAnySuccessfulAttempt = isAnySuccessfulAttempt;
-      },
-    ),
-  );
+const isAnySuccessfulAttempt$: Observable<boolean> = this._quizService.isAnySuccessfulAttempt$().pipe(
+  tap(
+    (isAnySuccessfulAttempt: boolean) => {
+      this.isAnySuccessfulAttempt = isAnySuccessfulAttempt;
+    },
+  ),
+);
 const isAnySuccessfulAttempt2$: Observable<boolean> = this._someMethodWithLongName();
 const fooooooooooooooo: SomeThing<boolean | string> = looooooooooooooooooooooooooooooongNameFunc();
 const fooooooooooooooo: SomeThing<boolean & string> = looooooooooooooooooooooooooooooongNameFunc();
@@ -67,11 +65,12 @@ const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooo
     9: const fooooooooooooooo: SomeThing<boolean> = looooooooooooooooooooooooooooooongNameFunc();
    10: const baaaaaaaaaaaaaaaaaaaaar: SomeThing<boolean, boolean> = looooooooooooooooooooooooooooooongNameFunc();
    16: const baaaaaaaaaaaaaaaar: SomeThing<K extends T ? G : S> = looooooooooooooooooooooooooooooongNameFunc();
-   26: const isAnySuccessfulAttempt2$: Observable<boolean> = this._someMethodWithLongName();
-   27: const fooooooooooooooo: SomeThing<boolean | string> = looooooooooooooooooooooooooooooongNameFunc();
-   28: const fooooooooooooooo: SomeThing<boolean & string> = looooooooooooooooooooooooooooooongNameFunc();
-   29: const fooooooooooooooo: SomeThing<keyof string> = looooooooooooooooooooooooooooooongNameFunc();
-   30: const fooooooooooooooo: SomeThing<string[]> = looooooooooooooooooooooooooooooongNameFunc();
-   31: const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooooooooongNameFunc();
+   17: const isAnySuccessfulAttempt$: Observable<boolean> = this._quizService.isAnySuccessfulAttempt$().pipe(
+   24: const isAnySuccessfulAttempt2$: Observable<boolean> = this._someMethodWithLongName();
+   25: const fooooooooooooooo: SomeThing<boolean | string> = looooooooooooooooooooooooooooooongNameFunc();
+   26: const fooooooooooooooo: SomeThing<boolean & string> = looooooooooooooooooooooooooooooongNameFunc();
+   27: const fooooooooooooooo: SomeThing<keyof string> = looooooooooooooooooooooooooooooongNameFunc();
+   28: const fooooooooooooooo: SomeThing<string[]> = looooooooooooooooooooooooooooooongNameFunc();
+   29: const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooooooooongNameFunc();
 ```
 

@@ -1,24 +1,33 @@
-use crate::format_traits::FormatOptional;
+use crate::prelude::*;
 use crate::utils::format_type_member_separator;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsMethodSignatureTypeMember;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsMethodSignatureTypeMember, TsMethodSignatureTypeMemberFields};
 
-impl FormatNode for TsMethodSignatureTypeMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.name().format(formatter)?;
-        let optional_token = self.optional_token().format_or_empty(formatter)?;
-        let type_arguments = self.type_parameters().format_or_empty(formatter)?;
-        let parameters = self.parameters().format(formatter)?;
-        let return_type_annotation = self.return_type_annotation().format_or_empty(formatter)?;
-        let separator = format_type_member_separator(self.separator_token(), formatter);
-        Ok(format_elements![
+impl FormatNodeFields<TsMethodSignatureTypeMember> for FormatNodeRule<TsMethodSignatureTypeMember> {
+    fn format_fields(
+        node: &TsMethodSignatureTypeMember,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let TsMethodSignatureTypeMemberFields {
             name,
             optional_token,
-            type_arguments,
+            type_parameters,
             parameters,
             return_type_annotation,
-            separator
-        ])
+            separator_token,
+        } = node.as_fields();
+
+        let separator = format_type_member_separator(separator_token, formatter);
+        formatted![
+            formatter,
+            [
+                name.format(),
+                optional_token.format(),
+                type_parameters.format(),
+                parameters.format(),
+                return_type_annotation.format(),
+                separator
+            ]
+        ]
     }
 }

@@ -1,30 +1,38 @@
-use crate::Format;
-use crate::{
-    format_elements, hard_line_break, indent, space_token, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsDefaultClause;
-use rome_js_syntax::JsDefaultClauseFields;
+use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
+use rome_rowan::AstNodeList;
 
-impl FormatNode for JsDefaultClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
+    fn format_fields(
+        node: &JsDefaultClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsDefaultClauseFields {
             default_token,
             colon_token,
             consequent,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let default = default_token.format(formatter)?;
-        let colon = colon_token.format(formatter)?;
-        let statements = formatter.format_list(consequent);
+        let first_child_is_block_stmt = matches!(
+            consequent.iter().next(),
+            Some(JsAnyStatement::JsBlockStatement(_))
+        );
 
-        Ok(format_elements![
-            default,
-            colon,
-            space_token(),
+        let default = default_token.format();
+        let colon = colon_token.format();
+        let statements = formatter.format_list(&consequent);
+
+        let formatted_cons = if statements.is_empty() {
+            hard_line_break()
+        } else if first_child_is_block_stmt {
+            formatted![formatter, [space_token(), statements]]?
+        } else {
             // no line break needed after because it is added by the indent in the switch statement
-            indent(format_elements![hard_line_break(), statements])
-        ])
+            indent(formatted![formatter, [hard_line_break(), statements]]?)
+        };
+        formatted![formatter, [default, colon, space_token(), formatted_cons]]
     }
 }

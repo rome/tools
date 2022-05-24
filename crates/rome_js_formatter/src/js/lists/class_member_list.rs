@@ -1,8 +1,14 @@
-use crate::{Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
+use crate::generated::FormatJsClassMemberList;
+use crate::prelude::*;
 use rome_js_syntax::JsClassMemberList;
-impl Format for JsClassMemberList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(self.clone()))
+
+impl FormatRule<JsClassMemberList> for FormatJsClassMemberList {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsClassMemberList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        Ok(formatter.format_list(node))
     }
 }

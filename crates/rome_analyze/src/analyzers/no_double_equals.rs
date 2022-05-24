@@ -1,34 +1,61 @@
-use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression};
-use rome_rowan::SyntaxResult;
+use rome_console::markup;
+use rome_diagnostics::{Applicability, Severity};
+use rome_js_factory::make;
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression, T};
+use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
+use rome_rowan::{AstNodeExt, SyntaxResult};
 
-use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
+use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::{ActionCategory, RuleCategory};
 
-pub const ANALYZER: Analyzer = Analyzer {
-    name: "noDoubleEquals",
-    action_categories: &[],
-    analyze,
-};
+pub(crate) enum NoDoubleEquals {}
 
-fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
-    ctx.query_nodes::<JsBinaryExpression>()
-        .filter_map(|n| {
-            let op = n.operator_token().ok()?;
+impl Rule for NoDoubleEquals {
+    const NAME: &'static str = "noDoubleEquals";
+    const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-            if !matches!(op.kind(), EQ2 | NEQ) {
-                return None;
+    type Query = JsBinaryExpression;
+    type State = JsSyntaxToken;
+
+    fn run(n: &Self::Query) -> Option<Self::State> {
+        let op = n.operator_token().ok()?;
+
+        if !matches!(op.kind(), EQ2 | NEQ) {
+            return None;
+        }
+
+        // TODO: Implement SyntaxResult helpers to make this cleaner
+        if is_null_literal(n.left()) || is_null_literal(n.right()) {
+            return None;
+        }
+
+        Some(op)
+    }
+
+    fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
+        Some(RuleDiagnostic {
+            severity: Severity::Error,
+            message: markup! {
+                "Do not use the "{op.text_trimmed()}" operator"
             }
-
-            // TODO: Implement SyntaxResult helpers to make this cleaner
-            if is_null_literal(n.left()) || is_null_literal(n.right()) {
-                return None;
-            }
-
-            let message = format!("Do not use the {} operator", op.text_trimmed());
-            let signal = ctx.error(op.text_trimmed_range(), message).into_signal();
-            Some(signal)
+            .to_owned(),
+            range: op.text_trimmed_range(),
         })
-        .collect()
+    }
+
+    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<RuleAction> {
+        let root = root.replace_token(
+            op.clone(),
+            make::token(if op.kind() == EQ2 { T![===] } else { T![!==] }),
+        )?;
+
+        Some(RuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            message: markup! { "Replace with strict equality" }.to_owned(),
+            root,
+        })
+    }
 }
 
 fn is_null_literal(res: SyntaxResult<JsAnyExpression>) -> bool {

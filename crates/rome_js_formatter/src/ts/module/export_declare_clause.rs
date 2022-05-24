@@ -1,19 +1,21 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsExportDeclareClause;
 use rome_js_syntax::TsExportDeclareClauseFields;
 
-impl FormatNode for TsExportDeclareClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsExportDeclareClause> for FormatNodeRule<TsExportDeclareClause> {
+    fn format_fields(
+        node: &TsExportDeclareClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsExportDeclareClauseFields {
             declare_token,
             declaration,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            declare_token.format(formatter)?,
-            space_token(),
-            declaration.format(formatter)?,
-        ])
+        formatted![
+            formatter,
+            [declare_token.format(), space_token(), declaration.format(),]
+        ]
     }
 }

@@ -1,25 +1,32 @@
-use crate::{
-    format_elements, group_elements, soft_line_indent_or_space, space_token, Format, FormatElement,
-    FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsAssignmentExpression;
 use rome_js_syntax::JsAssignmentExpressionFields;
 
-impl FormatNode for JsAssignmentExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExpression> {
+    fn format_fields(
+        node: &JsAssignmentExpression,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsAssignmentExpressionFields {
             left,
             operator_token,
             right,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(group_elements(format_elements![
-            left.format(formatter)?,
-            space_token(),
-            operator_token.format(formatter)?,
-            group_elements(soft_line_indent_or_space(right.format(formatter)?)),
-        ]))
+        Ok(group_elements(formatted![
+            formatter,
+            [
+                left.format(),
+                space_token(),
+                operator_token.format(),
+                line_suffix_boundary(),
+                group_elements(soft_line_indent_or_space(formatted![
+                    formatter,
+                    [right.format()]
+                ]?)),
+            ]
+        ]?))
     }
 }

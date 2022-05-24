@@ -2,10 +2,17 @@
 edition = "2021"
 name = "rome_js_syntax"
 version = "0.1.4"
-authors = ["RSLint developers"]
+authors = ["Rome Tools"]
 description = "SyntaxKind and common rowan definitions for rome_js_parser"
 license = "MIT"
-repository = "https://github.com/rslint/rslint"
+repository = "https://github.com/rome/tools"
 
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }
+serde_crate = { package = "serde", version = "1.0.136", features = ["derive"], optional = true }
+
+[dev-dependencies]
+rome_js_factory = { path = "../rome_js_factory" }
+
+[features]
+serde = ["serde_crate", "rome_rowan/serde"]

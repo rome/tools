@@ -3,16 +3,17 @@
 
 use crate::{file::Files, Diagnostic};
 use crate::{SuggestionChange, SuggestionStyle};
+use rome_console::Markup;
 use rome_console::{
     codespan::{Codespan, Label, LabelStyle, Locus, Severity, WithSeverity},
     diff::{Diff, DiffMode},
     fmt::{Display, Formatter, Termcolor},
     markup, MarkupBuf,
 };
-use rome_rowan::{TextRange, TextSize};
 use rome_text_edit::apply_indels;
 use std::borrow::Cow;
 use std::io;
+use std::ops::Range;
 use termcolor::{ColorChoice, StandardStream, WriteColor};
 
 /// The emitter is responsible for emitting
@@ -97,7 +98,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                 },
                 severity: self.d.severity,
                 code: self.d.code.as_deref().filter(|code| !code.is_empty()),
-                title: &self.d.title,
+                title: markup! { {self.d.title} },
             }}
             "\n"
         })?;
@@ -159,16 +160,12 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                         SuggestionChange::String(string) => Cow::Borrowed(string),
                     };
 
-                    let new = format!(
-                        "{}{}{}",
-                        &old[TextRange::new(TextSize::from(0u32), range.start())],
-                        new,
-                        &old[TextRange::new(range.end(), TextSize::of(old))],
-                    );
+                    let mut buffer = old.to_string();
+                    buffer.replace_range(Range::<usize>::from(range), &new);
 
                     fmt.write_markup(markup! {
                         <Info>{suggestion.msg}</Info>"\n"
-                        {Diff { mode: DiffMode::Unified, left: old, right: &new }}
+                        {Diff { mode: DiffMode::Unified, left: old, right: &buffer }}
                     })?;
                 }
                 SuggestionStyle::Inline => {
@@ -236,7 +233,7 @@ pub struct DiagnosticHeader<'a> {
     pub locus: Option<Locus<'a>>,
     pub severity: Severity,
     pub code: Option<&'a str>,
-    pub title: &'a str,
+    pub title: Markup<'a>,
 }
 
 impl<'a> Display for DiagnosticHeader<'a> {

@@ -2,28 +2,32 @@ use std::collections::HashMap;
 use std::fmt::Display;
 
 use crate::line_index::{LineCol, LineIndex};
-use rome_analyze::{DiagnosticExt, Indel, TextAction};
+use rome_analyze::{ActionCategory, AnalyzerAction};
+use rome_console::fmt::Termcolor;
+use rome_console::fmt::{self, Formatter};
+use rome_console::MarkupBuf;
+use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::{Applicability, Diagnostic, SuggestionChange};
+use rome_diagnostics::{CodeSuggestion, Severity};
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::jsonrpc::Result as LspResult;
-use tower_lsp::lsp_types::{
-    self, CodeAction, CodeActionKind, Diagnostic, TextEdit, Url, WorkspaceEdit,
-};
-use tracing::{error, trace};
+use tower_lsp::lsp_types::{self as lsp};
+use tracing::error;
 
 use rome_js_syntax::{TextRange, TextSize};
 
-pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp_types::Position {
+pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp::Position {
     let line_col = line_index.line_col(offset);
-    lsp_types::Position::new(line_col.line, line_col.col)
+    lsp::Position::new(line_col.line, line_col.col)
 }
 
-pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp_types::Range {
+pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp::Range {
     let start = position(line_index, range.start());
     let end = position(line_index, range.end());
-    lsp_types::Range::new(start, end)
+    lsp::Range::new(start, end)
 }
 
-pub(crate) fn offset(line_index: &LineIndex, position: lsp_types::Position) -> TextSize {
+pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> TextSize {
     let line_col = LineCol {
         line: position.line as u32,
         col: position.character as u32,
@@ -31,70 +35,150 @@ pub(crate) fn offset(line_index: &LineIndex, position: lsp_types::Position) -> T
     line_index.offset(line_col)
 }
 
-pub(crate) fn text_range(line_index: &LineIndex, range: lsp_types::Range) -> TextRange {
+pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> TextRange {
     let start = offset(line_index, range.start);
     let end = offset(line_index, range.end);
     TextRange::new(start, end)
 }
 
-pub(crate) fn text_edit(line_index: &LineIndex, indel: &Indel) -> TextEdit {
-    let text_range = indel.range;
-    let range = range(line_index, text_range);
-    let new_text = indel.text.clone();
-    TextEdit { range, new_text }
-}
-
-pub(crate) fn text_action_to_lsp(
-    action: &TextAction,
+pub(crate) fn code_fix_to_lsp(
+    url: &lsp::Url,
     line_index: &LineIndex,
-    url: Url,
-    diagnostics: Option<Vec<Diagnostic>>,
-) -> CodeAction {
-    trace!("Action to LSP");
-    let edits = action
-        .edits
-        .iter()
-        .map(|r| text_edit(line_index, r))
-        .collect();
+    diagnostics: &[lsp::Diagnostic],
+    action: AnalyzerAction,
+) -> lsp::CodeAction {
+    // Mark diagnostics emitted by the same rule as resolved by this action
+    let diagnostics: Vec<_> = if matches!(action.category, ActionCategory::QuickFix) {
+        diagnostics
+            .iter()
+            .filter_map(|d| {
+                let code = d.code.as_ref().and_then(|code| match code {
+                    lsp::NumberOrString::String(code) => Some(code.as_str()),
+                    lsp::NumberOrString::Number(_) => None,
+                })?;
 
-    let mut text_edits = HashMap::new();
-    text_edits.insert(url, edits);
-    let changes = Some(text_edits);
-    let edit = WorkspaceEdit {
-        changes,
+                if code == action.rule_name {
+                    Some(d.clone())
+                } else {
+                    None
+                }
+            })
+            .collect()
+    } else {
+        Vec::new()
+    };
+
+    let kind = match action.category {
+        ActionCategory::QuickFix => Some(lsp::CodeActionKind::QUICKFIX),
+        ActionCategory::Refactor => Some(lsp::CodeActionKind::REFACTOR),
+    };
+
+    let suggestion = CodeSuggestion::from(action);
+
+    let mut changes = HashMap::new();
+    changes.insert(
+        url.clone(),
+        vec![lsp::TextEdit {
+            range: range(line_index, suggestion.span.range),
+            new_text: match suggestion.substitution {
+                SuggestionChange::String(text) => text,
+                SuggestionChange::Indels(_) => unimplemented!(),
+            },
+        }],
+    );
+
+    let edit = lsp::WorkspaceEdit {
+        changes: Some(changes),
         document_changes: None,
         change_annotations: None,
     };
 
-    CodeAction {
-        title: action.title.clone(),
-        kind: Some(CodeActionKind::QUICKFIX),
-        diagnostics,
+    lsp::CodeAction {
+        title: print_markup(&suggestion.msg),
+        kind,
+        diagnostics: if !diagnostics.is_empty() {
+            Some(diagnostics)
+        } else {
+            None
+        },
         edit: Some(edit),
         command: None,
-        is_preferred: None,
+        is_preferred: if matches!(suggestion.applicability, Applicability::Always) {
+            Some(true)
+        } else {
+            None
+        },
         disabled: None,
         data: None,
     }
 }
 
-/// Convert an [rome_diagnostics::Diagnostic] to a [lsp_types::Diagnostic], using the span
+/// Convert an [rome_diagnostics::Diagnostic] to a [lsp::Diagnostic], using the span
 /// of the diagnostic's primary label as the diagnostic range.
 /// Requires a [LineIndex] to convert a byte offset range to the line/col range
 /// expected by LSP.
 pub(crate) fn diagnostic_to_lsp(
-    diagnostic: rome_diagnostics::Diagnostic,
+    diagnostic: Diagnostic,
+    url: &lsp::Url,
     line_index: &LineIndex,
-) -> Option<lsp_types::Diagnostic> {
-    let text_range = diagnostic.primary_text_range()?;
-    let lsp_range = crate::utils::range(line_index, text_range);
-    let message = diagnostic.title;
-    let code = diagnostic
-        .code
-        .map(tower_lsp::lsp_types::NumberOrString::String);
-    let source = Some("rome".into());
-    let diagnostic = Diagnostic::new(lsp_range, None, code, source, message, None, None);
-    Some(diagnostic)
+) -> Option<lsp::Diagnostic> {
+    let primary = diagnostic.primary?;
+
+    let related_information = if !diagnostic.children.is_empty() {
+        Some(
+            diagnostic
+                .children
+                .into_iter()
+                .map(|label| lsp::DiagnosticRelatedInformation {
+                    location: lsp::Location {
+                        uri: url.clone(),
+                        range: range(line_index, primary.span.range),
+                    },
+
+                    message: print_markup(&label.msg),
+                })
+                .collect(),
+        )
+    } else {
+        None
+    };
+    Some(lsp::Diagnostic::new(
+        range(line_index, primary.span.range),
+        Some(match diagnostic.severity {
+            Severity::Help => lsp::DiagnosticSeverity::HINT,
+            Severity::Note => lsp::DiagnosticSeverity::INFORMATION,
+            Severity::Warning => lsp::DiagnosticSeverity::WARNING,
+            Severity::Error | Severity::Bug => lsp::DiagnosticSeverity::ERROR,
+        }),
+        diagnostic.code.map(lsp::NumberOrString::String),
+        Some("rome".into()),
+        print_markup(&diagnostic.title),
+        related_information,
+        diagnostic.tag.map(|tag| {
+            let mut result = Vec::new();
+
+            if tag.is_unecessary() {
+                result.push(lsp::DiagnosticTag::UNNECESSARY);
+            }
+
+            if tag.is_deprecated() {
+                result.push(lsp::DiagnosticTag::DEPRECATED);
+            }
+
+            result
+        }),
+    ))
+}
+
+/// Convert a piece of markup into a String
+fn print_markup(markup: &MarkupBuf) -> String {
+    let mut message = Termcolor(NoColor::new(Vec::new()));
+    fmt::Display::fmt(markup, &mut Formatter::new(&mut message))
+        // SAFETY: Writing to a memory buffer should never fail
+        .unwrap();
+
+    // SAFETY: Printing uncolored markup never generates non UTF-8 byte sequences
+    String::from_utf8(message.0.into_inner()).unwrap()
 }
 
 /// Helper to create a [tower_lsp::jsonrpc::Error] from a message

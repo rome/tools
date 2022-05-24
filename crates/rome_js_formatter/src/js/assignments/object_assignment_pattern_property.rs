@@ -1,28 +1,33 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsObjectAssignmentPatternProperty;
 use rome_js_syntax::JsObjectAssignmentPatternPropertyFields;
 
-impl FormatNode for JsObjectAssignmentPatternProperty {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsObjectAssignmentPatternProperty>
+    for FormatNodeRule<JsObjectAssignmentPatternProperty>
+{
+    fn format_fields(
+        node: &JsObjectAssignmentPatternProperty,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsObjectAssignmentPatternPropertyFields {
             member,
             colon_token,
             pattern,
             init,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let init_node =
-            init.format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
-        Ok(format_elements![
-            member.format(formatter)?,
-            colon_token.format(formatter)?,
-            space_token(),
-            pattern.format(formatter)?,
-            init_node,
-        ])
+        formatted![
+            formatter,
+            [
+                member.format(),
+                colon_token.format(),
+                space_token(),
+                pattern.format(),
+                init.format()
+                    .with_or_empty(|node| formatted![formatter, [space_token(), node]]),
+            ]
+        ]
     }
 }

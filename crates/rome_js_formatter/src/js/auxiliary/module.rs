@@ -1,24 +1,31 @@
+use crate::prelude::*;
 use crate::utils::format_interpreter;
-use crate::{format_elements, hard_line_break, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+
+use crate::FormatNodeFields;
 use rome_js_syntax::JsModule;
 use rome_js_syntax::JsModuleFields;
 
-impl FormatNode for JsModule {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsModule> for FormatNodeRule<JsModule> {
+    fn format_fields(
+        node: &JsModule,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsModuleFields {
             interpreter_token,
             directives,
             items,
             eof_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            format_interpreter(interpreter_token, formatter)?,
-            directives.format(formatter)?,
-            formatter.format_list(items),
-            eof_token.format(formatter)?,
-            hard_line_break()
-        ])
+        formatted![
+            formatter,
+            [
+                format_interpreter(interpreter_token, formatter)?,
+                directives.format(),
+                formatter.format_list(&items),
+                eof_token.format(),
+                hard_line_break()
+            ]
+        ]
     }
 }

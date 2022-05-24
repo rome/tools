@@ -1,37 +1,33 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{
-    format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
-    Formatter,
-};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsNamedImportSpecifier;
 use rome_js_syntax::JsNamedImportSpecifierFields;
 
-impl FormatNode for JsNamedImportSpecifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsNamedImportSpecifier> for FormatNodeRule<JsNamedImportSpecifier> {
+    fn format_fields(
+        node: &JsNamedImportSpecifier,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsNamedImportSpecifierFields {
             type_token,
             name,
             as_token,
             local_name,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-
-        let name = name.format(formatter)?;
-        let as_token = as_token.format(formatter)?;
-        let local_name = local_name.format(formatter)?;
-
-        Ok(format_elements![
-            type_token,
-            name,
-            soft_line_break_or_space(),
-            as_token,
-            soft_line_break_or_space(),
-            local_name
-        ])
+        formatted![
+            formatter,
+            [
+                type_token
+                    .format()
+                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                name.format(),
+                soft_line_break_or_space(),
+                as_token.format(),
+                soft_line_break_or_space(),
+                local_name.format()
+            ]
+        ]
     }
 }

@@ -1,29 +1,32 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{format_elements, space_token, token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsNewExpression;
 use rome_js_syntax::JsNewExpressionFields;
 
-impl FormatNode for JsNewExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
+    fn format_fields(
+        node: &JsNewExpression,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsNewExpressionFields {
             new_token,
             callee,
             type_arguments,
             arguments,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let arguments =
-            arguments.format_or(formatter, || format_elements![token("("), token(")")])?;
-
-        Ok(format_elements![
-            new_token.format(formatter)?,
-            space_token(),
-            callee.format(formatter)?,
-            type_arguments.format_or_empty(formatter)?,
-            arguments,
-        ])
+        formatted![
+            formatter,
+            [
+                new_token.format(),
+                space_token(),
+                callee.format(),
+                type_arguments.format(),
+                arguments
+                    .format()
+                    .or_format(|| formatted![formatter, [token("("), token(")")]]),
+            ]
+        ]
     }
 }

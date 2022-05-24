@@ -1,19 +1,29 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsTypeParameter;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsTypeParameter, TsTypeParameterFields};
 
-impl FormatNode for TsTypeParameter {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.name().format(formatter)?;
-        let constraint = self
-            .constraint()
-            .format_with_or_empty(formatter, |constraint| {
-                format_elements![space_token(), constraint]
-            })?;
-        let default = self.default().format_with_or_empty(formatter, |default| {
-            format_elements![space_token(), default]
-        })?;
-        Ok(format_elements![name, constraint, default])
+impl FormatNodeFields<TsTypeParameter> for FormatNodeRule<TsTypeParameter> {
+    fn format_fields(
+        node: &TsTypeParameter,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let TsTypeParameterFields {
+            name,
+            constraint,
+            default,
+        } = node.as_fields();
+
+        formatted![
+            formatter,
+            [
+                name.format(),
+                constraint
+                    .format()
+                    .with_or_empty(|constraint| formatted![formatter, [space_token(), constraint]]),
+                default
+                    .format()
+                    .with_or_empty(|default| formatted![formatter, [space_token(), default]])
+            ]
+        ]
     }
 }

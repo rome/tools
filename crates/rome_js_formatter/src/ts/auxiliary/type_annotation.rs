@@ -1,12 +1,16 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsTypeAnnotation;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsTypeAnnotation, TsTypeAnnotationFields};
 
-impl FormatNode for TsTypeAnnotation {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let colon = self.colon_token().format(formatter)?;
-        let ty = self.ty().format(formatter)?;
+impl FormatNodeFields<TsTypeAnnotation> for FormatNodeRule<TsTypeAnnotation> {
+    fn format_fields(
+        node: &TsTypeAnnotation,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        let TsTypeAnnotationFields { colon_token, ty } = node.as_fields();
+        let colon = colon_token.format();
+        let ty = ty.format();
 
-        Ok(format_elements![colon, space_token(), ty])
+        formatted![formatter, [colon, space_token(), ty]]
     }
 }

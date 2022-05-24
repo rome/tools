@@ -1,4 +1,5 @@
 use crate::{file::FileSpan, *};
+use rome_console::MarkupBuf;
 use rome_rowan::TextRange;
 use rome_text_edit::Indel;
 
@@ -12,7 +13,7 @@ pub struct CodeSuggestion {
     pub substitution: SuggestionChange,
     pub span: FileSpan,
     pub applicability: Applicability,
-    pub msg: String,
+    pub msg: MarkupBuf,
     pub style: SuggestionStyle,
     pub labels: Vec<TextRange>,
 }

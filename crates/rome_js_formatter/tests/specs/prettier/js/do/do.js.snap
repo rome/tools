@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: do.js
 ---
 # Input
@@ -69,7 +70,7 @@ const envSpecific = {
       if(env === 'production') 'https://abc.mno.com/';
 else
 if (env === "development") {
-  "http://localhost:4000";
+  ("http://localhost:4000");
 }
 }
 }

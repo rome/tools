@@ -1,13 +1,14 @@
-use crate::format_traits::FormatOptional;
-use crate::space_token;
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsImportEqualsDeclaration;
 use rome_js_syntax::TsImportEqualsDeclarationFields;
 
-impl FormatNode for TsImportEqualsDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsImportEqualsDeclaration> for FormatNodeRule<TsImportEqualsDeclaration> {
+    fn format_fields(
+        node: &TsImportEqualsDeclaration,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsImportEqualsDeclarationFields {
             import_token,
             type_token,
@@ -15,23 +16,25 @@ impl FormatNode for TsImportEqualsDeclaration {
             eq_token,
             module_reference,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
         format_with_semicolon(
             formatter,
-            format_elements![
-                import_token.format(formatter)?,
-                space_token(),
-                type_token.format_with_or_empty(formatter, |token| format_elements![
-                    token,
+            formatted![
+                formatter,
+                [
+                    import_token.format(),
                     space_token(),
-                ])?,
-                id.format(formatter)?,
-                space_token(),
-                eq_token.format(formatter)?,
-                space_token(),
-                module_reference.format(formatter)?,
-            ],
+                    type_token
+                        .format()
+                        .with_or_empty(|token| formatted![formatter, [token, space_token(),]]),
+                    id.format(),
+                    space_token(),
+                    eq_token.format(),
+                    space_token(),
+                    module_reference.format(),
+                ]
+            ]?,
             semicolon_token,
         )
     }

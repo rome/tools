@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: empty_statement.js
 ---
 # Input
@@ -15,19 +16,18 @@ switch (error.code) {
 # Output
 ```js
 switch (error.code) {
-  case ConfigurationEditingErrorCode.ERROR_INVALID_CONFIGURATION:
-    {
-      nls.localize(
-        "errorInvalidConfiguration",
-        "Unable to write into settings. Correct errors/warnings in the file and try again.",
-      );
-    }
+  case ConfigurationEditingErrorCode.ERROR_INVALID_CONFIGURATION: {
+    nls.localize(
+      "errorInvalidConfiguration",
+      "Unable to write into settings. Correct errors/warnings in the file and try again.",
+    );
+  }
 }
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-    6:         "Unable to write into settings. Correct errors/warnings in the file and try again.",
+    5:       "Unable to write into settings. Correct errors/warnings in the file and try again.",
 ```
 

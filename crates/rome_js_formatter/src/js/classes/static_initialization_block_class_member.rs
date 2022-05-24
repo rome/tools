@@ -1,24 +1,32 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsStaticInitializationBlockClassMember;
 use rome_js_syntax::JsStaticInitializationBlockClassMemberFields;
 
-impl FormatNode for JsStaticInitializationBlockClassMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsStaticInitializationBlockClassMember>
+    for FormatNodeRule<JsStaticInitializationBlockClassMember>
+{
+    fn format_fields(
+        node: &JsStaticInitializationBlockClassMember,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsStaticInitializationBlockClassMemberFields {
             static_token,
             l_curly_token,
             statements,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let static_token = static_token.format(formatter)?;
-        let separated = formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            formatter.format_list(statements),
-            &r_curly_token?,
-        )?;
-        Ok(format_elements![static_token, space_token(), separated])
+        let static_token = static_token.format();
+        let separated = formatter
+            .delimited(
+                &l_curly_token?,
+                formatter.format_list(&statements),
+                &r_curly_token?,
+            )
+            .block_indent()
+            .finish()?;
+        formatted![formatter, [static_token, space_token(), separated]]
     }
 }

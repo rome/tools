@@ -1,23 +1,45 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::GroupId;
 use std::convert::Infallible;
 
-use crate::formatter::TrailingSeparator;
+use crate::formatter::FormatSeparatedOptions;
 use crate::utils::array::format_array_node;
-use crate::{fill_elements, token, utils::has_formatter_trivia, Format, FormatElement, Formatter};
 
+use crate::generated::FormatJsArrayElementList;
+use crate::utils::has_formatter_trivia;
 use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};
 
-impl Format for JsArrayElementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
+impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &JsArrayElementList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        Self::format_with_group_id(node, formatter, None)
+    }
+}
+
+impl FormatJsArrayElementList {
+    /// Formats the array list with
+    pub fn format_with_group_id(
+        node: &JsArrayElementList,
+        formatter: &Formatter<JsFormatOptions>,
+        group_id: Option<GroupId>,
+    ) -> FormatResult<FormatElement> {
+        if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
-                formatter.format_separated(self, || token(","), TrailingSeparator::default())?,
+                formatter.format_separated_with_options(
+                    node,
+                    || token(","),
+                    FormatSeparatedOptions::default().with_group_id(group_id),
+                )?,
             ));
         }
 
-        format_array_node(self, formatter)
+        format_array_node(node, formatter)
     }
 }
 

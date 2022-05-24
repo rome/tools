@@ -1,11 +1,15 @@
+use crate::prelude::*;
 use crate::utils::format_call_expression;
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+
+use crate::FormatNodeFields;
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::AstNode;
 
-impl FormatNode for JsCallExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        format_call_expression(self.syntax(), formatter)
+impl FormatNodeFields<JsCallExpression> for FormatNodeRule<JsCallExpression> {
+    fn format_fields(
+        node: &JsCallExpression,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
+        format_call_expression(node.syntax(), formatter)
     }
 }

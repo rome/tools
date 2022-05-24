@@ -1,25 +1,34 @@
-use crate::formatter::TrailingSeparator;
-use crate::{join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
+use crate::formatter::{FormatSeparatedOptions, TrailingSeparator};
+use crate::generated::FormatTsTypeParameterList;
+use crate::prelude::*;
 use rome_js_syntax::TsTypeParameterList;
 use rome_rowan::AstSeparatedList;
 
-impl Format for TsTypeParameterList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
+    type Options = JsFormatOptions;
+
+    fn format(
+        node: &TsTypeParameterList,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         // nodes and formatter are not aware of the source type (TSX vs TS), which means we can't
         // exactly pin point the exact case.
         //
         // This is just an heuristic to avoid removing the trailing comma from a TSX grammar.
         // This means that, if we are in a TS context and we have a trailing comma, the formatter won't remove it.
         // It's an edge case, while waiting for a better solution,
-        let trailing_separator = if self.len() == 1 && self.trailing_separator().is_some() {
+        let trailing_separator = if node.len() == 1 && node.trailing_separator().is_some() {
             TrailingSeparator::Mandatory
         } else {
             TrailingSeparator::default()
         };
         Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(self, || token(","), trailing_separator)?,
+            formatter.format_separated_with_options(
+                node,
+                || token(","),
+                FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),
+            )?,
         ))
     }
 }

@@ -1,20 +1,26 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsTemplateLiteralType;
 use rome_js_syntax::TsTemplateLiteralTypeFields;
 
-impl FormatNode for TsTemplateLiteralType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsTemplateLiteralType> for FormatNodeRule<TsTemplateLiteralType> {
+    fn format_fields(
+        node: &TsTemplateLiteralType,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsTemplateLiteralTypeFields {
             l_tick_token,
             elements,
             r_tick_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            l_tick_token.format(formatter)?,
-            elements.format(formatter)?,
-            r_tick_token.format(formatter)?,
-        ])
+        formatted![
+            formatter,
+            [
+                l_tick_token.format(),
+                elements.format(),
+                r_tick_token.format(),
+            ]
+        ]
     }
 }

@@ -1,26 +1,36 @@
-use crate::{
-    block_indent, format_elements, group_elements, if_group_breaks, if_group_fits_on_single_line,
-    soft_block_indent, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsExtendsClause, TsExtendsClauseFields};
 
-impl FormatNode for TsExtendsClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsExtendsClause> for FormatNodeRule<TsExtendsClause> {
+    fn format_fields(
+        node: &TsExtendsClause,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let TsExtendsClauseFields {
             extends_token,
             types,
-        } = self.as_fields();
-        let extends = extends_token.format(formatter)?;
-        let types = types.format(formatter)?;
+        } = node.as_fields();
 
-        Ok(group_elements(format_elements![
-            if_group_breaks(block_indent(format_elements![
-                extends.clone(),
-                space_token(),
-                soft_block_indent(types.clone())
-            ])),
-            if_group_fits_on_single_line(format_elements![extends, space_token(), types]),
-        ]))
+        let extends_token = extends_token.format().memoized();
+        let types = types.format().memoized();
+
+        Ok(group_elements(formatted![
+            formatter,
+            [
+                if_group_breaks(block_indent(formatted![
+                    formatter,
+                    [
+                        &extends_token,
+                        space_token(),
+                        soft_block_indent(formatted![formatter, [&types]]?)
+                    ]
+                ]?)),
+                if_group_fits_on_single_line(formatted![
+                    formatter,
+                    [&extends_token, space_token(), &types]
+                ]?),
+            ]
+        ]?))
     }
 }

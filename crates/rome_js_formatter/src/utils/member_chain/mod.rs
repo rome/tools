@@ -2,13 +2,9 @@ mod flatten_item;
 mod groups;
 mod simple_argument;
 
-use crate::format_traits::FormatOptional;
+use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::groups::{Groups, HeadGroup};
-use crate::{
-    format_elements, group_elements, hard_line_break, indent, Format, FormatElement, FormatResult,
-    Formatter,
-};
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsStaticMemberExpression,
 };
@@ -123,7 +119,7 @@ use rome_rowan::AstNode;
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js
 pub fn format_call_expression(
     syntax_node: &JsSyntaxNode,
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
 ) -> FormatResult<FormatElement> {
     let mut flattened_items = vec![];
     let parent_is_expression_statement = syntax_node.parent().map_or(false, |parent| {
@@ -238,7 +234,7 @@ fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
 fn compute_groups(
     flatten_items: impl Iterator<Item = FlattenItem>,
     in_expression_statement: bool,
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
 ) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
     let mut groups = Groups::new(formatter, in_expression_statement);
@@ -293,7 +289,8 @@ fn format_groups(
     head_group: HeadGroup,
     groups: Groups,
 ) -> FormatResult<FormatElement> {
-    if groups.groups_should_break(calls_count, &head_group)? {
+    // TODO use Alternatives once available
+    if groups.groups_should_break(calls_count)? {
         Ok(format_elements![
             head_group.into_format_element(),
             group_elements(indent(format_elements![
@@ -302,13 +299,10 @@ fn format_groups(
             ]),)
         ])
     } else {
-        let head_formatted = head_group.into_format_element();
-        let (one_line, _) = groups.into_format_elements();
-
-        // TODO: this is not the definitive solution, as there are few restrictions due to how the printer works:
-        // - groups that contains other groups with hard lines break all the groups
-        // - conditionally print one single line is subject to how the printer works (by default, multiline)
-        Ok(format_elements![head_formatted, one_line])
+        Ok(format_elements![
+            head_group.into_format_element(),
+            groups.into_format_elements()
+        ])
     }
 }
 
@@ -317,22 +311,21 @@ fn format_groups(
 fn flatten_call_expression(
     queue: &mut Vec<FlattenItem>,
     node: JsSyntaxNode,
-    formatter: &Formatter,
+    formatter: &Formatter<JsFormatOptions>,
 ) -> FormatResult<()> {
     match node.kind() {
         JsSyntaxKind::JS_CALL_EXPRESSION => {
             let call_expression = JsCallExpression::cast(node).unwrap();
             let callee = call_expression.callee()?;
             flatten_call_expression(queue, callee.syntax().clone(), formatter)?;
-            let formatted = vec![
-                call_expression
-                    .optional_chain_token()
-                    .format_or_empty(formatter)?,
-                call_expression
-                    .type_arguments()
-                    .format_or_empty(formatter)?,
-                call_expression.arguments().format(formatter)?,
-            ];
+            let formatted = vec![formatted![
+                formatter,
+                [
+                    call_expression.optional_chain_token().format(),
+                    call_expression.type_arguments().format(),
+                    call_expression.arguments().format()
+                ]
+            ]?];
 
             queue.push(FlattenItem::CallExpression(call_expression, formatted));
         }
@@ -340,10 +333,13 @@ fn flatten_call_expression(
             let static_member = JsStaticMemberExpression::cast(node).unwrap();
             let object = static_member.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
-            let formatted = vec![
-                static_member.operator_token().format(formatter)?,
-                static_member.member().format(formatter)?,
-            ];
+            let formatted = vec![formatted![
+                formatter,
+                [
+                    static_member.operator_token().format(),
+                    static_member.member().format(),
+                ]
+            ]?];
             queue.push(FlattenItem::StaticMember(static_member, formatted));
         }
 
@@ -351,14 +347,15 @@ fn flatten_call_expression(
             let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
             let object = computed_expression.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
-            let formatted = vec![
-                computed_expression
-                    .optional_chain_token()
-                    .format_or_empty(formatter)?,
-                computed_expression.l_brack_token().format(formatter)?,
-                computed_expression.member().format(formatter)?,
-                computed_expression.r_brack_token().format(formatter)?,
-            ];
+            let formatted = vec![formatted!(
+                formatter,
+                [
+                    computed_expression.optional_chain_token().format(),
+                    computed_expression.l_brack_token().format(),
+                    computed_expression.member().format(),
+                    computed_expression.r_brack_token().format(),
+                ]
+            )?];
 
             queue.push(FlattenItem::ComputedExpression(
                 computed_expression,
@@ -367,7 +364,7 @@ fn flatten_call_expression(
         }
 
         _ => {
-            let formatted = node.format(formatter)?;
+            let formatted = formatted![formatter, [node.format()]]?;
             queue.push(FlattenItem::Node(node, formatted));
         }
     }

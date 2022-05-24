@@ -1,19 +1,19 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsPostUpdateExpression;
 use rome_js_syntax::JsPostUpdateExpressionFields;
 
-impl FormatNode for JsPostUpdateExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsPostUpdateExpression> for FormatNodeRule<JsPostUpdateExpression> {
+    fn format_fields(
+        node: &JsPostUpdateExpression,
+        formatter: &Formatter<JsFormatOptions>,
+    ) -> FormatResult<FormatElement> {
         let JsPostUpdateExpressionFields {
             operand,
             operator_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            operand.format(formatter)?,
-            operator_token.format(formatter)?,
-        ])
+        formatted![formatter, [operand.format(), operator_token.format(),]]
     }
 }
