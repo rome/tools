@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: lone-arg.js
-
 ---
 # Input
 ```js
@@ -31,13 +29,17 @@ const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(`foo
 
 # Output
 ```js
-let vgChannel = pointPositionDefaultRef({ model, defaultPos, channel })();
+let vgChannel = pointPositionDefaultRef({
+  model,
+  defaultPos,
+  channel,
+},)();
 
 let vgChannel2 = pointPositionDefaultRef({ model, defaultPos, channel })();
 
-const bifornCringerMoshedPerplexSawderGlyphsHa = someBigFunctionName("foo")(
-  "bar",
-);
+const bifornCringerMoshedPerplexSawderGlyphsHa = someBigFunctionName(
+  "foo",
+)("bar");
 
 if (true) {
   node.id =

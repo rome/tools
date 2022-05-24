@@ -10,3 +10,6 @@ do { // trailing
 }
 
 while (something)
+
+
+do; while(true);

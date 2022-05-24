@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: arrow.js
-
 ---
 # Input
 ```js
@@ -28,8 +26,12 @@ function f2() {
 # Output
 ```js
 function f() {
-  const appEntities = getAppEntities(loadObject).filter(
-    (entity) =>
+  const appEntities = getAppEntities(
+    loadObject,
+  ).filter(
+    (
+      entity,
+    ) =>
       entity &&
       entity.isInstallAvailable() &&
       !entity.isQueue() &&
@@ -38,13 +40,19 @@ function f() {
 }
 
 function f2() {
-  const appEntities = getAppEntities(loadObject).map(
-    (entity) =>
+  const appEntities = getAppEntities(
+    loadObject,
+  ).map(
+    (
+      entity,
+    ) =>
       entity &&
       entity.isInstallAvailable() &&
       !entity.isQueue() &&
       entity.isDisabled() &&
-      { id: entity.id },
+      {
+        id: entity.id,
+      },
   );
 }
 

@@ -115,7 +115,9 @@ import { LitElement, html } from "@polymer/lit-element";
 
 class MyElement extends LitElement {
   static get properties() {
-    return { mood: { type: String } };
+    return {
+      mood: { type: String },
+    };
   }
 
   constructor() {
@@ -169,7 +171,9 @@ function HelloWorld() {
   return html`
     <h3>Bar List</h3>
     ${bars.map(
-    (bar) =>
+    (
+      bar,
+    ) =>
       html`
        <p>${bar}</p>
     `,
@@ -178,7 +182,9 @@ function HelloWorld() {
 }
 
 const trickyParens = html`<script> f((${expr}) / 2); </script>`;
-const nestedFun = /* HTML */ `${outerExpr(1)} <script>const tpl = html\`<div>\${innerExpr( 1 )} ${outerExpr(
+const nestedFun = /* HTML */ `${outerExpr(
+  1,
+)} <script>const tpl = html\`<div>\${innerExpr( 1 )} ${outerExpr(
   2,
 )}</div>\`</script>`;
 
@@ -216,7 +222,6 @@ ${foo}:${bar};
 
 # Lines exceeding max width of 80 characters
 ```
-   68: const nestedFun = /* HTML */ `${outerExpr(1)} <script>const tpl = html\`<div>\${innerExpr( 1 )} ${outerExpr(
-   78: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
+   84: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
 ```
 

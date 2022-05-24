@@ -15,21 +15,21 @@ import {somethingSuperLongsomethingSuperLooooooooooooooooooooooooooooooooooooooo
 # Output
 ```js
 import somethingSuperLongsomethingSuperLong from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-import { somethingSuperLongsomethingSuperLong1 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-import a, { somethingSuperLongsomethingSuperLong2 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-import { a2, somethingSuperLongsomethingSuperLong3 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
 import {
-  somethingSuperLongsomethingSuperLoooooooooooooooooooooooooooooooooooooooooooong,
-} from "source";
+  somethingSuperLongsomethingSuperLong1,
+} from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+import a, {
+  somethingSuperLongsomethingSuperLong2,
+} from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+import {
+  a2,
+  somethingSuperLongsomethingSuperLong3,
+} from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
     1: import somethingSuperLongsomethingSuperLong from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-    2: import { somethingSuperLongsomethingSuperLong1 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-    3: import a, { somethingSuperLongsomethingSuperLong2 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-    4: import { a2, somethingSuperLongsomethingSuperLong3 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-    6:   somethingSuperLongsomethingSuperLoooooooooooooooooooooooooooooooooooooooooooong,
 ```
 

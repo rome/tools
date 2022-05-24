@@ -26,7 +26,7 @@ impl FormatNodeFields<TsSetterSignatureClassMember>
         let parameters = parameter.format();
         let r_paren_token = r_paren_token.format();
 
-        Ok(hard_group_elements(format_with_semicolon(
+        format_with_semicolon(
             formatter,
             formatted![
                 formatter,
@@ -42,6 +42,6 @@ impl FormatNodeFields<TsSetterSignatureClassMember>
                 ]
             ]?,
             semicolon_token,
-        )?))
+        )
     }
 }

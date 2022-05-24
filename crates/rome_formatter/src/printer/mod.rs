@@ -96,24 +96,37 @@ impl<'a> Printer<'a> {
                     self.state.pending_space = false;
                 }
 
+                // Insert source map markers before and after the token
+                //
+                // If the token has source position informations the start marker
+                // will use the start position of the original token, and the end
+                // marker will use that position + the text length of the token
+                //
+                // If the token has no source position (was created by the formatter)
+                // both the start and end marker will use the last known position
+                // in the input source (from state.source_position)
                 if let Some(source) = token.source_position() {
-                    self.state.source_markers.push(SourceMarker {
-                        source: *source,
-                        dest: TextSize::from(self.state.buffer.len() as u32),
-                    });
+                    self.state.source_position = *source;
                 }
 
+                self.state.source_markers.push(SourceMarker {
+                    source: self.state.source_position,
+                    dest: TextSize::of(&self.state.buffer),
+                });
+
                 self.print_str(token);
+
+                if token.source_position().is_some() {
+                    self.state.source_position += TextSize::of(&**token);
+                }
+
+                self.state.source_markers.push(SourceMarker {
+                    source: self.state.source_position,
+                    dest: TextSize::of(&self.state.buffer),
+                });
             }
 
-            FormatElement::HardGroup(group) => queue.enqueue(PrintElementCall::new(
-                &group.content,
-                args.with_hard_group(true),
-            )),
-
             FormatElement::Group(Group { content, id }) => {
-                let args = args.with_hard_group(false);
-
                 let group_mode = match args.mode {
                     PrintMode::Flat if self.state.measured_group_fits => {
                         // A parent group has already verified that this group fits on a single line
@@ -128,8 +141,7 @@ impl<'a> Printer<'a> {
                         // print the group in "flat" mode, otherwise continue in expanded mode
 
                         let flat_args = args.with_print_mode(PrintMode::Flat);
-                        // TODO replace `ElementCallQueue::default` with the real queue to also measure the rest of the document
-                        if fits_on_line(&[content], flat_args, &ElementCallQueue::default(), self) {
+                        if fits_on_line(&[content], flat_args, queue, self) {
                             queue.enqueue(PrintElementCall::new(content, flat_args));
                             self.state.measured_group_fits = true;
                             PrintMode::Flat
@@ -177,17 +189,13 @@ impl<'a> Printer<'a> {
                     }
                 };
 
-                if args.hard_group {
-                    if mode == &PrintMode::Flat {
-                        queue.enqueue(PrintElementCall::new(content, args));
-                    }
-                } else if &group_mode == mode {
+                if &group_mode == mode {
                     queue.enqueue(PrintElementCall::new(content, args));
                 }
             }
 
             FormatElement::Line(line) => {
-                if (args.mode.is_flat() || args.hard_group)
+                if args.mode.is_flat()
                     && matches!(line.mode, LineMode::Soft | LineMode::SoftOrSpace)
                 {
                     if line.mode == LineMode::SoftOrSpace && self.state.line_width > 0 {
@@ -266,11 +274,10 @@ impl<'a> Printer<'a> {
                                 // Test if this variant fits and if so, use it. Otherwise try the next
                                 // variant.
 
-                                // TODO pass in proper queue to respect remaining content in document.
                                 if fits_on_line(
                                     &[variant],
                                     args.with_print_mode(PrintMode::Expanded),
-                                    &ElementCallQueue::default(),
+                                    queue,
                                     self,
                                 ) {
                                     self.state.measured_group_fits = true;
@@ -483,6 +490,7 @@ impl<'a> Printer<'a> {
 struct PrinterState<'a> {
     buffer: String,
     source_markers: Vec<SourceMarker>,
+    source_position: TextSize,
     pending_indent: u16,
     pending_space: bool,
     measured_group_fits: bool,
@@ -525,7 +533,6 @@ impl PrinterState<'_> {
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 struct PrintElementArgs {
     indent: u16,
-    hard_group: bool,
     mode: PrintMode,
 }
 
@@ -542,11 +549,6 @@ impl PrintElementArgs {
         self
     }
 
-    pub fn with_hard_group(mut self, hard_group: bool) -> Self {
-        self.hard_group = hard_group;
-        self
-    }
-
     pub fn with_print_mode(mut self, mode: PrintMode) -> Self {
         self.mode = mode;
         self
@@ -557,7 +559,6 @@ impl Default for PrintElementArgs {
     fn default() -> Self {
         Self {
             indent: 0,
-            hard_group: false,
             mode: PrintMode::Expanded,
         }
     }
@@ -703,16 +704,14 @@ fn fits_element_on_line<'a, 'rest>(
         }
 
         FormatElement::Line(line) => {
-            if args.mode.is_flat() || args.hard_group {
+            if args.mode.is_flat() {
                 match line.mode {
                     LineMode::SoftOrSpace => {
                         state.pending_space = true;
                     }
                     LineMode::Soft => {}
                     LineMode::Hard | LineMode::Empty => {
-                        // Propagate the line break to make it break the parent too, except if this is
-                        // a hard group that ALWAYS fits on a single line.
-                        return Fits::from(args.hard_group);
+                        return Fits::No;
                     }
                 }
             } else {
@@ -729,21 +728,13 @@ fn fits_element_on_line<'a, 'rest>(
             args.with_incremented_indent(),
         )),
 
-        FormatElement::HardGroup(group) => queue.enqueue(PrintElementCall::new(
-            &group.content,
-            args.with_hard_group(true),
-        )),
         FormatElement::Group(group) => queue.enqueue(PrintElementCall::new(
             &group.content,
-            args.with_hard_group(false).with_print_mode(PrintMode::Flat),
+            args.with_print_mode(PrintMode::Flat),
         )),
 
         FormatElement::ConditionalGroupContent(conditional) => {
-            if args.hard_group {
-                if conditional.mode == PrintMode::Flat {
-                    queue.enqueue(PrintElementCall::new(&conditional.content, args))
-                }
-            } else if args.mode == conditional.mode {
+            if args.mode == conditional.mode {
                 queue.enqueue(PrintElementCall::new(&conditional.content, args))
             }
         }
@@ -813,7 +804,7 @@ fn fits_element_on_line<'a, 'rest>(
             queue.enqueue(PrintElementCall::new(content, args))
         }
         FormatElement::ExpandParent => {
-            if args.mode.is_flat() || args.hard_group {
+            if args.mode.is_flat() {
                 return Fits::No;
             }
         }
@@ -1104,51 +1095,6 @@ two lines`,
     }
 
     #[test]
-    fn test_sequence() {
-        let document = format_elements![
-            hard_group_elements(format_elements![
-                token("something"),
-                space_token(),
-                token("&&")
-            ]),
-            group_elements(soft_line_indent_or_space(format_elements![
-                token("elsewhere"),
-                space_token(),
-                token("&&"),
-                soft_line_break_or_space(),
-                token("happy"),
-                space_token(),
-                token("&&"),
-                soft_line_break_or_space(),
-                token("thoughts"),
-                space_token(),
-                token("&&"),
-                soft_line_break_or_space(),
-                token("dldldlldldldldldldldl"),
-                space_token(),
-                token("&&"),
-                soft_line_break_or_space(),
-                token("dldldlldldldldldldldl")
-            ])),
-            token(";"),
-            hard_line_break()
-        ];
-
-        let printed = print_element(document);
-
-        assert_eq!(
-            r#"something &&
-  elsewhere &&
-  happy &&
-  thoughts &&
-  dldldlldldldldldldldl &&
-  dldldlldldldldldldldl;
-"#,
-            printed.as_code()
-        );
-    }
-
-    #[test]
     fn test_fill_breaks() {
         let document = fill_elements(vec![
             // These all fit on the same line together
@@ -1203,45 +1149,6 @@ two lines`,
         let printed = print_element(document);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")
-    }
-
-    #[test]
-    fn hard_group_inner_group_breaks() {
-        let document = format_elements![hard_group_elements(format_elements![
-            token("do"),
-            space_token(),
-            group_elements(format_elements![token("{"), token("}")]),
-            space_token(),
-            token("while"),
-            space_token(),
-            group_elements(format_elements![
-                token("("),
-                soft_block_indent(format_elements![
-                    hard_group_elements(token("testsomelongerid")),
-                    space_token(),
-                    token("&&"),
-                    soft_line_break_or_space(),
-                    token("thoughts"),
-                    space_token(),
-                    token("&&"),
-                    soft_line_break_or_space(),
-                    token("somethingsomethingsomethingsomethin")
-                ]),
-                token(")")
-            ]),
-            token(";")
-        ])];
-
-        let printed = print_element(document);
-
-        assert_eq!(
-            printed.as_code(),
-            r#"do {} while (
-  testsomelongerid &&
-  thoughts &&
-  somethingsomethingsomethingsomethin
-);"#
-        );
     }
 
     fn create_array_element(items: Vec<FormatElement>) -> FormatElement {

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: comment.js
-
 ---
 # Input
 ```js
@@ -48,63 +46,37 @@ y);
 
 # Output
 ```js
-for (
-  x
-  /*a*/
-  in //b
-  y
-); //c
+for (x
+/*a*/
+in y); //b //c
 
-for (
-  x
-  in /*a*/ //b
-  y
-); //c
+for (x in /*a*/ y); //b //c
 
 for (x /*a*/ in y); //b //c
 
-for (
-  x
-  //a
-  in
-  y
-);
+for (x
+//a
+in y);
 
-for (
-  x
-  in
-  //a
-  y
-);
+for (x in
+//a
+y);
 
-for (
-  x
-  /*a*/
-  of //b
-  y
-); //c
+for (x
+/*a*/
+of y); //b //c
 
-for (
-  x
-  of /*a*/ //b
-  y
-); //c
+for (x of /*a*/ y); //b //c
 
 for (x /*a*/ of y); //b //c
 
-for (
-  x
-  //a
-  of
-  y
-);
+for (x
+//a
+of y);
 
-for (
-  x
-  of
-  //a
-  y
-);
+for (x of
+//a
+y);
 
 ```
 

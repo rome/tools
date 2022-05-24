@@ -36,7 +36,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
                     }
                 };
 
-                formatted![formatter, [node, separator]]
+                Ok(format_elements![group_elements(node), separator])
             })
             .collect::<FormatResult<Vec<_>>>()?;
 

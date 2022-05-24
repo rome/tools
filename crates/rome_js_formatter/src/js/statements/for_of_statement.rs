@@ -22,7 +22,7 @@ impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
             body,
         } = node.as_fields();
 
-        format_head_body_statement(
+        Ok(group_elements(format_head_body_statement(
             formatter,
             formatted![
                 formatter,
@@ -32,26 +32,16 @@ impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
                     await_token
                         .format()
                         .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
-                    formatter
-                        .delimited(
-                            &l_paren_token?,
-                            formatted![
-                                formatter,
-                                [
-                                    initializer.format(),
-                                    soft_line_break_or_space(),
-                                    of_token.format(),
-                                    soft_line_break_or_space(),
-                                    expression.format(),
-                                ]
-                            ]?,
-                            &r_paren_token?
-                        )
-                        .soft_block_indent()
-                        .finish()?,
+                    l_paren_token.format(),
+                    group_elements(formatted![formatter, [initializer.format()]]?),
+                    space_token(),
+                    of_token.format(),
+                    space_token(),
+                    expression.format(),
+                    r_paren_token.format()
                 ]
             ]?,
             body?,
-        )
+        )?))
     }
 }

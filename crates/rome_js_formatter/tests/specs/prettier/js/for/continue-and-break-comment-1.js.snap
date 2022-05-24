@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: continue-and-break-comment-1.js
-
 ---
 # Input
 ```js
@@ -181,51 +179,51 @@ label2: {
 }
 
 for (;;) {
-  continue; /* comment */
+  continue /* comment */ ;
 }
 
 for (;;) {
-  break; /* comment */
+  break /* comment */ ;
 }
 
 for (const f of []) {
-  continue; /* comment */
+  continue /* comment */ ;
 }
 
 for (const f of []) {
-  break; /* comment */
+  break /* comment */ ;
 }
 
 for (const f in {}) {
-  continue; /* comment */
+  continue /* comment */ ;
 }
 
 for (const f in {}) {
-  break; /* comment */
+  break /* comment */ ;
 }
 
 while (true) {
-  continue; /* comment */
+  continue /* comment */ ;
 }
 
 while (true) {
-  break; /* comment */
+  break /* comment */ ;
 }
 
 do {
-  continue; /* comment */
+  continue /* comment */ ;
 } while (true);
 
 do {
-  break; /* comment */
+  break /* comment */ ;
 } while (true);
 
 label1: for (;;) {
-  continue label1; /* comment */
+  continue label1 /* comment */ ;
 }
 
 label2: {
-  break label2; /* comment */
+  break label2 /* comment */ ;
 }
 
 ```

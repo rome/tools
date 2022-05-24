@@ -75,18 +75,21 @@ let inlineComment = /* some comment */ (
 );
 
 let object = {
-  key: (someReallyLongFunctionCall(withLots, ofArguments)), /* some comment */
+  key: /* some comment */ (someReallyLongFunctionCall(withLots, ofArguments)),
 };
 
 // preserve parens only for type casts
 let assignment = /** @type {string} */ (getValue());
 let value = /** @type {string} */ (this.members[0]).functionCall();
 
-functionCall(1 + /** @type {string} */
-  (value), /** @type {!Foo} */ ({}));
+functionCall(
+  1 + /** @type {string} */
+  (value), /** @type {!Foo} */
+  ({}),
+);
 
 function returnValue() {
-  return (["hello", "you"]); /** @type {!Array.<string>} */
+  return /** @type {!Array.<string>} */ (["hello", "you"]);
 }
 
 // Only numberOrString is typecast
@@ -118,13 +121,19 @@ const style = /** @type {{
   marginLeft: number,
   marginRight: number,
   marginBottom: number,
-}} */ ({ width, height, ...margins });
+}} */ ({
+  width,
+  height,
+  ...margins,
+});
 
 const style2 = /**
  * @type {{
  *   width: number,
  * }}
-*/ ({ width });
+*/ ({
+  width,
+});
 
 ```
 

@@ -61,7 +61,8 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_js_parser::{parse, SourceType};
+    use rome_js_parser::parse;
+    use rome_js_syntax::SourceType;
 
     use crate::{analyze, AnalysisFilter};
 

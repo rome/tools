@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: issue-5697.js
-
 ---
 # Input
 ```js
@@ -35,7 +33,9 @@ const StyledH1 = styled.div`
   letter-spacing: ${(props) => (props.light ? "0.04em" : 0)};
   color: ${(props) => props.textColor};
   ${
-  (props) =>
+  (
+    props,
+  ) =>
     props.center ? ` display: flex;
                 align-items: center;
                 justify-content: center;

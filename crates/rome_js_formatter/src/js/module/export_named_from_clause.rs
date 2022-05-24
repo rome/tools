@@ -1,10 +1,11 @@
 use crate::prelude::*;
-
 use crate::utils::format_with_semicolon;
+use crate::utils::has_leading_newline;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedFromClause;
 use rome_js_syntax::JsExportNamedFromClauseFields;
+use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedFromClause> {
     fn format_fields(
@@ -22,14 +23,25 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
             semicolon_token,
         } = node.as_fields();
 
-        let list = formatter
-            .delimited(
-                &l_curly_token?,
-                formatted![formatter, [specifiers.format()]]?,
-                &r_curly_token?,
-            )
-            .soft_block_spaces()
-            .finish()?;
+        let list = if has_leading_newline(specifiers.syntax()) {
+            formatter
+                .delimited(
+                    &l_curly_token?,
+                    formatted![formatter, [specifiers.format()]]?,
+                    &r_curly_token?,
+                )
+                .block_indent()
+                .finish()?
+        } else {
+            formatter
+                .delimited(
+                    &l_curly_token?,
+                    formatted![formatter, [specifiers.format()]]?,
+                    &r_curly_token?,
+                )
+                .soft_block_spaces()
+                .finish()?
+        };
 
         format_with_semicolon(
             formatter,

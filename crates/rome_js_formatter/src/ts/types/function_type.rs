@@ -15,7 +15,7 @@ impl FormatNodeFields<TsFunctionType> for FormatNodeRule<TsFunctionType> {
             return_type,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 type_parameters.format(),
@@ -25,6 +25,6 @@ impl FormatNodeFields<TsFunctionType> for FormatNodeRule<TsFunctionType> {
                 space_token(),
                 return_type.format()
             ]
-        ]?))
+        ]
     }
 }

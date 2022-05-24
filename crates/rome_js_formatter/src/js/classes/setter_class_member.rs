@@ -19,7 +19,7 @@ impl FormatNodeFields<JsSetterClassMember> for FormatNodeRule<JsSetterClassMembe
             body,
         } = node.as_fields();
 
-        Ok(hard_group_elements(formatted![
+        formatted![
             formatter,
             [
                 modifiers.format(),
@@ -33,6 +33,6 @@ impl FormatNodeFields<JsSetterClassMember> for FormatNodeRule<JsSetterClassMembe
                 space_token(),
                 body.format(),
             ]
-        ]?))
+        ]
     }
 }

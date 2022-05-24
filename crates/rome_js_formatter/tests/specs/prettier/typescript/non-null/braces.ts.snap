@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: braces.ts
-
 ---
 # Input
 ```js
@@ -26,7 +24,14 @@ class a extends ({}!) {}
 
 # Output
 ```js
-const myFunction2 = (key: string): number => ({ a: 42, b: 42 }[key]!);
+const myFunction2 = (
+  key: string,
+): number => (
+  {
+    a: 42,
+    b: 42,
+  }[key]!
+);
 
 const myFunction3 = (key) => ({}!.a);
 

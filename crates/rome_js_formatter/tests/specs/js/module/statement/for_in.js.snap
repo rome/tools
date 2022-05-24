@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: for_in.js
 ---
 # Input
@@ -22,11 +21,7 @@ Quote style: Double Quotes
 for (a in b) {
 }
 
-for (
-	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
-	in
-	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
-) {
+for (aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks in aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks) {
 }
 
 for (a in b) {
@@ -36,6 +31,5 @@ for (a in b) {
 
 ## Lines exceeding width of 80 characters
 
-    5: 	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
-    7: 	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
+    4: for (aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks in aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks) {
 

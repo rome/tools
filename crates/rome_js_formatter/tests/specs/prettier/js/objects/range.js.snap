@@ -25,18 +25,17 @@ group(
 group(
   concat([
     "(",
-    indent(options.tabWidth, concat([line, join(concat([",", line]), printed)])),
+    indent(
+      options.tabWidth,
+      concat([line, join(concat([",", line]), printed)]),
+    ),
     options.trailingComma ? "," : "",
     line,
     ")",
-  ]),
+  ],),
   { shouldBreak: true },
 );
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    4:     indent(options.tabWidth, concat([line, join(concat([",", line]), printed)])),
-```
 

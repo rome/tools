@@ -293,15 +293,24 @@ fn format_groups(
     if groups.groups_should_break(calls_count)? {
         Ok(format_elements![
             head_group.into_format_element(),
-            group_elements(indent(format_elements![
+            indent(format_elements![
                 hard_line_break(),
                 groups.into_joined_hard_line_groups()
-            ]),)
+            ])
         ])
     } else {
+        let chain = groups.into_format_elements();
+
         Ok(format_elements![
             head_group.into_format_element(),
-            groups.into_format_elements()
+            // TODO This line suffix boundary shouldn't be needed but currently is because comments
+            // can move over node boundaries. Follow up when re-working member chain formatting
+            if chain.is_empty() {
+                empty_element()
+            } else {
+                line_suffix_boundary()
+            },
+            chain
         ])
     }
 }

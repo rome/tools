@@ -1,12 +1,17 @@
 use super::{ExtensionHandler, Mime};
 #[derive(Debug, Default, PartialEq, Eq)]
-pub struct JsonFileHandler;
+pub(crate) struct JsonFileHandler;
 
 impl ExtensionHandler for JsonFileHandler {
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
-            format: false,
-            lint: false,
+            parse: None,
+            debug_print: None,
+            format: None,
+            lint: None,
+            code_actions: None,
+            format_range: None,
+            format_on_type: None,
         }
     }
 

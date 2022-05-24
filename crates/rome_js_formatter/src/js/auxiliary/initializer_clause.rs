@@ -16,11 +16,7 @@ impl FormatNodeFields<JsInitializerClause> for FormatNodeRule<JsInitializerClaus
 
         formatted![
             formatter,
-            [
-                hard_group_elements(formatted![formatter, [eq_token.format()]]?),
-                space_token(),
-                expression.format()
-            ]
+            [eq_token.format(), space_token(), expression.format()]
         ]
     }
 }

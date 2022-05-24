@@ -77,11 +77,13 @@ import { observable } from "mobx";
     return this.price * this.amount;
   }
 
-  @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) =>
-    this.count--;
+  @action handleDecrease = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => this.count--;
 
-  @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) =>
-    doSomething();
+  @action handleSomething = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => doSomething();
 }
 
 ```

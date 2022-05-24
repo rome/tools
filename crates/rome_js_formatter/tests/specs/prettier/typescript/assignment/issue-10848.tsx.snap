@@ -62,7 +62,9 @@ const MyComponent: React.VoidFunctionComponent<MyComponentProps> = ({ x }) => {
   return <div>x = {x}; a = {a}</div>;
 };
 
-const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({ x, y }) => {
+const MyComponent2: React.VoidFunctionComponent<
+  MyComponent2Props
+> = ({ x, y }) => {
   const a = useA();
   return <div>x = {x}; y = {y}; a = {a}</div>;
 };
@@ -107,7 +109,9 @@ export const ExportToExcalidrawPlus: React.FC<
   return null;
 };
 
-const Query: FunctionComponent<QueryProps> = (
+const Query: FunctionComponent<
+  QueryProps
+> = (
   {
     children,
     type,
@@ -127,8 +131,4 @@ const Query: FunctionComponent<QueryProps> = (
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    6: const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({ x, y }) => {
-```
 

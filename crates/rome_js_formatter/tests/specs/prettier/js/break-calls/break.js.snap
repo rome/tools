@@ -56,7 +56,7 @@ h(
   f(
     g(() => {
       a;
-    }),
+    },),
   ),
 );
 
@@ -78,10 +78,9 @@ deepCopyAndAsyncMapLeavesC(
 );
 
 function someFunction(url) {
-  return get(url).then(
-    (json) => dispatch(success(json)),
-    (error) => dispatch(failed(error)),
-  );
+  return get(
+    url,
+  ).then((json) => dispatch(success(json)), (error) => dispatch(failed(error)));
 }
 
 const mapChargeItems = fp.flow(
@@ -89,11 +88,18 @@ const mapChargeItems = fp.flow(
   (l) => Immutable.Range(l).toMap(),
 );
 
-expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLongRange(
-  new LongLongLongRange([0, 0], [0, 0]),
-);
+expect(
+  new LongLongLongLongLongRange([0, 0], [0, 0]),
+).toEqualAtomLongLongLongLongRange(new LongLongLongRange([0, 0], [0, 0]));
 
-["red", "white", "blue", "black", "hotpink", "rebeccapurple"].reduce(
+[
+  "red",
+  "white",
+  "blue",
+  "black",
+  "hotpink",
+  "rebeccapurple",
+].reduce(
   (allColors, color) => {
     return allColors.concat(color);
   },
@@ -102,8 +108,4 @@ expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLon
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   38: expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLongRange(
-```
 

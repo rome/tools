@@ -1,5 +1,8 @@
 import { hey } from "hey"
 import { hey } from "hey";
+import {
+    apple,
+banana } from "fruits";
 import {test} from "foo.json" assert { for: "for" }
 import { // some funky comment
     loooooooooooooooooooong as moreeeeeeloooooooooooooooooooong,

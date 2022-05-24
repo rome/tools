@@ -203,18 +203,7 @@ where
             let comment = FormatElement::from(Token::from(comment));
 
             let content = if !is_single_line {
-                format_elements![
-                    if_group_breaks(line_suffix(format_elements![
-                        space_token(),
-                        comment.clone(),
-                        space_token(),
-                    ])),
-                    if_group_fits_on_single_line(format_elements![
-                        space_token(),
-                        comment,
-                        space_token(),
-                    ]),
-                ]
+                format_elements![space_token(), comment, space_token(),]
             } else {
                 format_elements![
                     line_suffix(format_elements![space_token(), comment]),
@@ -567,7 +556,7 @@ pub(crate) trait JsFormatter {
                 separator_factory()
             };
 
-            result.push(formatted![formatter, [node, separator]]?);
+            result.push(format_elements![group_elements(node), separator]);
         }
 
         Ok(result.into_iter())
@@ -759,9 +748,8 @@ impl<'a, 'fmt> FormatDelimited<'a, 'fmt> {
         ];
 
         let grouped = match mode {
-            // Group is useless, the block indent would expand it right anyway but there are some uses
-            // that are nested inside of a `HardGroup` that depend on the expanded state. Leave it for now
-            DelimitedMode::BlockIndent => group_elements(delimited),
+            // Group is useless, the block indent would expand it right anyway
+            DelimitedMode::BlockIndent => delimited,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
                 match group_id {
                     None => group_elements(delimited),

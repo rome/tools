@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: edge_case.js
 ---
 # Input
@@ -101,13 +100,12 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
   [],
   // comment
   [],
-]);
+],);
 
 (function webpackUniversalModuleDefinition() {})(
   this,
   function (__WEBPACK_EXTERNAL_MODULE_85__, __WEBPACK_EXTERNAL_MODULE_115__) {
-    return (function (modules) {
-      /******/
+    return /******/ (function (modules) {
       // webpackBootstrap
       /******/
     })

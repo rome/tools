@@ -29,8 +29,8 @@ use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    parser, CompletedMarker, JsSyntaxFeature, Marker, ModuleKind, ParseRecovery,
-    ParseSeparatedList, Parser, SyntaxFeature, TokenSet,
+    parser, CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, ParseSeparatedList, Parser,
+    SyntaxFeature, TokenSet,
 };
 use rome_diagnostics::Span;
 use rome_js_syntax::{JsSyntaxKind::*, *};

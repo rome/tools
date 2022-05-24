@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: expressions.js
 ---
 # Input
@@ -69,9 +68,9 @@ const foo = `such a long template string ${foo.bar.baz} that prettier will want 
 
 const shouldWrapForNow = `such a long template string ${foo().bar.baz} that prettier will want to wrap it`;
 
-const shouldNotWrap = `simple expressions should not break ${this} ${variable} ${a.b.c} ${this.b.c} ${a[
-  b
-].c} ${a.b[c]} ${a.b["c"]} ${a?.b?.c}`;
+const shouldNotWrap = `simple expressions should not break ${
+  this
+} ${variable} ${a.b.c} ${this.b.c} ${a[b].c} ${a.b[c]} ${a.b["c"]} ${a?.b?.c}`;
 
 console.log(
   chalk.white(
@@ -134,7 +133,6 @@ throw new Error(
     8: const description = `The value of the ${cssName} css of the ${this._name} element`;
    10: const foo = `such a long template string ${foo.bar.baz} that prettier will want to wrap it`;
    12: const shouldWrapForNow = `such a long template string ${foo().bar.baz} that prettier will want to wrap it`;
-   14: const shouldNotWrap = `simple expressions should not break ${this} ${variable} ${a.b.c} ${this.b.c} ${a[
    20:     `Covered Lines below threshold: ${coverageSettings.lines}%. Actual: ${coverageSummary.total.lines.pct}%`,
    34:       return `${process.env.OPENID_URL}/something/something/something?${Object.keys(
    44:   `Trying update appcast for ${app.name} (${app.cask.appcast}) -> (${app.cask.appcastGenerated})`,

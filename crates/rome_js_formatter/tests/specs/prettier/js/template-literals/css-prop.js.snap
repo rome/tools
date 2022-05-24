@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: css-prop.js
 ---
 # Input
@@ -59,7 +58,9 @@ function SomeComponent(props) {
   );
 }
 
-const TestComponent = ({ children, ...props }) => (
+const TestComponent = (
+  { children, ...props },
+) => (
   <div css={`color: white; background: black`}>
     {children}
   </div>

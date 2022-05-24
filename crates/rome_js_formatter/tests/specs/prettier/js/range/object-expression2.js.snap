@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: object-expression2.js
-
 ---
 # Input
 ```js
@@ -22,12 +20,15 @@ const y =       [
 # Output
 ```js
 
-const y =       [
-    {
-                a: 1,
-    },
-    { a: 1, b: 2 },
-]
+const y = [
+  {
+    a: 1,
+  },
+  {
+    a: 1,
+    b: 2,
+  },
+];
 
 ```
 

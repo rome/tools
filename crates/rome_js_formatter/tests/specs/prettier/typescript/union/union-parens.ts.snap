@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: union-parens.ts
 ---
 # Input
@@ -154,16 +153,26 @@ interface Interface {
 }
 
 type State =
-  & { sharedProperty: any }
+  & {
+    sharedProperty: any;
+  }
   & (
       | { discriminant: "FOO"; foo: any }
       | { discriminant: "BAR"; bar: any }
       | { discriminant: "BAZ"; baz: any }
   );
 
-const foo1 = [abc, def, ghi, jkl, mno, pqr, stu, vwx, yz] as (
-  string | undefined
-)[];
+const foo1 = [
+  abc,
+  def,
+  ghi,
+  jkl,
+  mno,
+  pqr,
+  stu,
+  vwx,
+  yz,
+] as (string | undefined)[];
 
 const foo2: (
     | AAAAAAAAAAAAAAAAAAAAAA
@@ -202,7 +211,7 @@ let a11: /*1*/ ( /*2*/ C);
 
 let aa1: /*1*/ /*2*/ C | D;
 let aa2: /*1*/ /*2*/ C | /*3*/ D;
-let aa3: /*1*/ /*2*/ C | /*3*/ D; /*4*/
+let aa3: /*1*/ /*2*/ C | /*3*/ D /*4*/ ;
 
 type A1 = C;
 type A2 = C;

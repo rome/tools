@@ -1,11 +1,11 @@
-use rome_js_parser::{parse, ModuleKind, SourceType};
-use rome_rowan::SyntaxKind;
-
 use crate::runner::create_unknown_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
+use rome_js_parser::parse;
+use rome_js_syntax::{ModuleKind, SourceType};
+use rome_rowan::SyntaxKind;
 use std::path::Path;
 
 const OK_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/jsx/basic";

@@ -36,44 +36,36 @@ function x() { inject(() => {}) }
 # Output
 ```js
 beforeEach(
-  inject(
-    ($fooService, $barService) => {
-      // code
-    },
-  ),
+  inject(($fooService, $barService) => {
+    // code
+  },),
 );
 
 afterAll(
-  inject(
-    ($fooService, $barService) => {
-      console.log("Hello");
-    },
-  ),
+  inject(($fooService, $barService) => {
+    console.log("Hello");
+  },),
 );
 
 it(
   "should create the app",
-  inject(
-    ($fooService, $barService) => {
-      //code
-    },
-  ),
+  inject(($fooService, $barService) => {
+    //code
+  },),
 );
 
 it(
   "does something really long and complicated so I have to write a very long name for the test",
   inject(() => {
     // code
-  }),
+  },),
 );
 
 it(
   "does something really long and complicated so I have to write a very long name for the test",
-  inject(
-    ($fooServiceLongName, $barServiceLongName) => {
-      // code
-    },
-  ),
+  inject(($fooServiceLongName, $barServiceLongName) => {
+    // code
+  },),
 );
 
 /*
@@ -82,14 +74,14 @@ it(
 * no errors are thrown when calling isTestCall(parent)
 */
 function x() {
-  inject(() => {});
+  inject(() => {},);
 }
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-   27:   "does something really long and complicated so I have to write a very long name for the test",
-   34:   "does something really long and complicated so I have to write a very long name for the test",
+   21:   "does something really long and complicated so I have to write a very long name for the test",
+   28:   "does something really long and complicated so I have to write a very long name for the test",
 ```
 

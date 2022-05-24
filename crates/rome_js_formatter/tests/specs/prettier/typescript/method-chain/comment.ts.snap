@@ -21,7 +21,11 @@ this.firebase.object(`/shops/${shopLocation.shop}`)
 this.firebase.object(`/shops/${shopLocation.shop}`)
 // keep distance info
 .first(
-  (shop: ShopQueryResult, index: number, source: Observable<ShopQueryResult>): any => {
+  (
+    shop: ShopQueryResult,
+    index: number,
+    source: Observable<ShopQueryResult>,
+  ): any => {
     // add distance to result
     const s = shop;
     s.distance = shopLocation.distance;
@@ -31,8 +35,4 @@ this.firebase.object(`/shops/${shopLocation.shop}`)
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    4:   (shop: ShopQueryResult, index: number, source: Observable<ShopQueryResult>): any => {
-```
 

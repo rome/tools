@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: issue-6107-curry.ts
-
 ---
 # Input
 ```js
@@ -30,9 +28,9 @@ const getIconEngagementTypeFrom2 =
 
 # Output
 ```js
-const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) => (
-  iconEngagementType,
-) => engagementTypes.includes(iconEngagementType);
+const getIconEngagementTypeFrom = (
+  engagementTypes: Array<EngagementType>,
+) => (iconEngagementType) => engagementTypes.includes(iconEngagementType);
 
 const getIconEngagementTypeFrom2 = (
   engagementTypes: Array<EngagementType>,

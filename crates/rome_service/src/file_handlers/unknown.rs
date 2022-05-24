@@ -1,13 +1,18 @@
 use super::ExtensionHandler;
 
 #[derive(Debug, Default, PartialEq, Eq)]
-pub struct UnknownFileHandler {}
+pub(crate) struct UnknownFileHandler {}
 
 impl ExtensionHandler for UnknownFileHandler {
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
-            format: false,
-            lint: false,
+            parse: None,
+            debug_print: None,
+            format: None,
+            lint: None,
+            code_actions: None,
+            format_range: None,
+            format_on_type: None,
         }
     }
 
