@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{FormatResult, GroupId};
+use rome_formatter::GroupId;
 use std::convert::Infallible;
 
 use crate::formatter::FormatSeparatedOptions;

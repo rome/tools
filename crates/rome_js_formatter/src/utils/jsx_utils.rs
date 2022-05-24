@@ -86,8 +86,7 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
         // If there is a non-whitespace character
         if !WHITESPACE.contains(&c) {
             return true;
-        }
-        if c == '\n' {
+        } else if c == '\n' {
             has_newline = true;
         }
     }
