@@ -1,7 +1,7 @@
 use crate::{format_node, JsFormatOptions};
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_js_parser::{parse, SourceType};
-use rome_js_syntax::JsSyntaxNode;
+use rome_js_parser::parse;
+use rome_js_syntax::{JsSyntaxNode, SourceType};
 
 pub struct CheckReformatParams<'a> {
     pub root: &'a JsSyntaxNode,

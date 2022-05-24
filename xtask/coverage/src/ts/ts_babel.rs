@@ -1,11 +1,10 @@
-use rome_js_parser::{LanguageVariant, SourceType};
-use rome_rowan::SyntaxKind;
-
 use crate::runner::create_unknown_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
+use rome_js_syntax::{LanguageVariant, SourceType};
+use rome_rowan::SyntaxKind;
 use std::path::Path;
 
 const CASES_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/typescript";

@@ -4,7 +4,8 @@ use crate::token_source::Trivia;
 use crate::*;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{
-    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode,
+    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
+    SourceType,
 };
 use rome_rowan::AstNode;
 use std::marker::PhantomData;
@@ -131,7 +132,7 @@ pub fn parse_common(
 ///
 /// ```
 /// use rome_js_parser::parse_script;
-/// use rome_js_syntax::{JsSyntaxToken, JsSyntaxList, JsComputedMemberExpression};
+/// use rome_js_syntax::{JsSyntaxToken, SourceType, JsSyntaxList, JsComputedMemberExpression};
 /// use rome_rowan::AstNode;
 ///
 /// let parse = parse_script("foo.bar[2]", 0);

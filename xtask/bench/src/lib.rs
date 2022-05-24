@@ -1,7 +1,8 @@
 mod features;
 mod utils;
 
-use rome_js_parser::{parse, SourceType};
+use rome_js_parser::parse;
+use rome_js_syntax::SourceType;
 use std::collections::HashMap;
 use std::convert::TryInto;
 use std::fmt::{Display, Formatter};

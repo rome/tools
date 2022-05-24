@@ -26,7 +26,8 @@ use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_js_formatter::format_node;
 use rome_js_formatter::options::JsFormatOptions;
-use rome_js_parser::{parse, SourceType};
+use rome_js_parser::parse;
+use rome_js_syntax::SourceType;
 use rome_rowan::AstNode;
 
 use crate::{CliSession, Termination};
