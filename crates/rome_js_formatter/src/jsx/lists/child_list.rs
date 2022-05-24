@@ -4,6 +4,7 @@ use crate::utils::jsx_utils::contains_text;
 use crate::{FormatElement, Formatter, JsFormatter};
 use rome_formatter::{empty_element, fill_elements, FormatResult};
 use rome_js_syntax::JsxChildList;
+use std::ops::Deref;
 
 impl FormatRule<JsxChildList> for FormatJsxChildList {
     type Options = JsFormatOptions;
@@ -22,7 +23,10 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
         } else {
             Ok(join_elements(
                 soft_line_break(),
-                children.filter(|element| !element.is_empty_string()),
+                children.filter(|element| match element {
+                    FormatElement::Token(token) => token.deref() != "",
+                    _ => true,
+                }),
             ))
         }
     }
