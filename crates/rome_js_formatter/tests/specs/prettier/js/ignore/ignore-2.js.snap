@@ -1,7 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
+assertion_line: 175
 expression: ignore-2.js
+
 ---
 # Input
 ```js

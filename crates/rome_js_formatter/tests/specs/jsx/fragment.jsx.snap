@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 244
+assertion_line: 242
 expression: fragment.jsx
 ---
 # Input
@@ -15,4 +15,9 @@ Line width: 80
 Quote style: Double Quotes
 -----
 <></>;
+
+
+## Unimplemented nodes/tokens
+
+"" => 2..2
 
