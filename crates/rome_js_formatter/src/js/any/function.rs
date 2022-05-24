@@ -105,6 +105,7 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
             JsAnyFunctionBody::JsAnyExpression(expr) => match expr {
                 JsAnyExpression::JsArrowFunctionExpression(_) => true,
                 JsAnyExpression::JsParenthesizedExpression(_) => true,
+                JsAnyExpression::JsxTagExpression(_) => true,
                 expr => is_simple_expression(&expr)?,
             },
         };

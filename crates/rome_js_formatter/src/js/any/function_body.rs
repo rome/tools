@@ -7,7 +7,9 @@ impl FormatRule<JsAnyFunctionBody> for FormatJsAnyFunctionBody {
     type Context = JsFormatContext;
     fn format(node: &JsAnyFunctionBody, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
-            JsAnyFunctionBody::JsAnyExpression(node) => formatted![formatter, [node.format()]],
+            JsAnyFunctionBody::JsAnyExpression(node) => {
+                formatted![formatter, [node.format()]]
+            }
             JsAnyFunctionBody::JsFunctionBody(node) => formatted![formatter, [node.format()]],
         }
     }
