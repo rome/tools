@@ -1281,6 +1281,10 @@ impl Deref for List {
     }
 }
 
+/// Fill is a list of [FormatElement]s along with a separator.
+///
+/// The printer prints this list delimited by a separator, wrapping the list when it
+/// reaches the specified `line_width`.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Fill {
     list: List,
