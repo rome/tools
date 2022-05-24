@@ -616,13 +616,13 @@ pub struct Checkpoint {
 #[cfg(test)]
 mod tests {
     use crate::Parser;
-    use rome_js_syntax::JsSyntaxKind;
+    use rome_js_syntax::{JsSyntaxKind, SourceType};
     use rome_rowan::AstNode;
 
     #[test]
     fn example() {
         use crate::syntax::expr::parse_expression_snipped;
-        use crate::{process, LosslessTreeSink, Parser, SourceType};
+        use crate::{process, LosslessTreeSink, Parser};
         use rome_js_syntax::{JsAnyExpression, JsExpressionSnipped};
 
         let source = "(void b)";

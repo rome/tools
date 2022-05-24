@@ -1,9 +1,8 @@
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-
 use rome_js_formatter::format_node;
 use rome_js_formatter::options::JsFormatOptions;
-use rome_js_parser::{parse, SourceType};
-use rome_js_syntax::JsSyntaxNode;
+use rome_js_parser::parse;
+use rome_js_syntax::{JsSyntaxNode, SourceType};
 
 pub struct CheckReformatParams<'a> {
     pub root: &'a JsSyntaxNode,
