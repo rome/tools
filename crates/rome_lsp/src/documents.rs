@@ -1,7 +1,6 @@
 use anyhow::bail;
-use rome_fs::RomePath;
-use rome_js_syntax::SourceType;
-use std::sync::Arc;
+
+use crate::line_index::LineIndex;
 
 /// Internal representation of supported [language identifiers]
 ///
@@ -28,49 +27,20 @@ impl TryFrom<&str> for EditorLanguage {
     }
 }
 
-impl From<EditorLanguage> for SourceType {
-    fn from(l: EditorLanguage) -> Self {
-        match l {
-            EditorLanguage::JavaScript => SourceType::js_module(),
-            EditorLanguage::JavaScriptReact => SourceType::jsx(),
-            EditorLanguage::TypeScript => SourceType::ts(),
-            EditorLanguage::TypeScriptReact => SourceType::tsx(),
-        }
-    }
-}
-
 /// Represents an open [`textDocument`]. Can be cheaply cloned.
 ///
 /// [`textDocument`]: https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocumentItem
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct Document {
-    pub path: RomePath,
-    pub editor_language: EditorLanguage,
     pub version: i32,
-    pub text: Arc<str>,
+    pub line_index: LineIndex,
 }
 
 impl Document {
-    pub fn new(
-        path: RomePath,
-        language_id: EditorLanguage,
-        version: i32,
-        text: impl Into<Arc<str>>,
-    ) -> Self {
+    pub fn new(version: i32, text: &str) -> Self {
         Self {
-            path,
-            editor_language: language_id,
             version,
-            text: text.into(),
+            line_index: LineIndex::new(text),
         }
-    }
-
-    /// Retrieves the unique ID associated to the current document (file)
-    pub fn file_id(&self) -> usize {
-        self.path.file_id().unwrap_or(0_usize)
-    }
-
-    pub fn get_source_type(&self) -> SourceType {
-        self.editor_language.into()
     }
 }

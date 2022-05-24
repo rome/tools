@@ -6,18 +6,17 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_fs = {  path = "../rome_fs" }
 serde_json = "1.0.74"
 serde = { version = "1.0.133", features = ["derive"] }
 anyhow = "1.0.52"
 indexmap = "1.8.0"
+rome_fs = {  path = "../rome_fs" }
+rome_service = { path = "../rome_service" }
 rome_js_formatter = { path = "../rome_js_formatter" }
 rome_formatter = { path = "../rome_formatter" }
 rome_analyze = { path = "../rome_analyze" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 rome_flags = { path = "../rome_flags" }
-rome_js_parser = { path = "../rome_js_parser" }
-rome_js_syntax = { path = "../rome_js_syntax" }
 rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../rome_console" }
 tower-lsp = { version = "0.17.0"}
@@ -27,3 +26,6 @@ tracing-tree = "0.2.0"
 tracing-subscriber = "0.3.5"
 parking_lot = "0.12.0"
 futures = "0.3"
+
+[dev-dependencies]
+tower = { version = "0.4.12", features = ["timeout"] }

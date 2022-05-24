@@ -1,4 +1,3 @@
-use rome_core::App;
 use rome_formatter::LineWidth;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
@@ -6,6 +5,8 @@ use rome_js_formatter::format_node;
 use rome_js_formatter::options::{JsFormatOptions, QuoteStyle};
 use rome_js_parser::parse;
 use rome_js_syntax::{ModuleKind, SourceType};
+use rome_service::workspace::{FeatureName, SupportsFeatureParams};
+use rome_service::App;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::fs;
@@ -176,8 +177,13 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         spec_input_file.display()
     );
 
-    let mut rome_path = RomePath::new(file_path);
-    if app.features.can_format(&rome_path) {
+    let mut rome_path = RomePath::new(file_path, 0);
+    let can_format = app.workspace.supports_feature(SupportsFeatureParams {
+        path: rome_path.clone(),
+        feature: FeatureName::Format,
+    });
+
+    if can_format {
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
         let mut source_type: SourceType = rome_path.as_path().try_into().unwrap();
@@ -213,7 +219,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let options_path = test_directory.join("options.json");
         if options_path.exists() {
             {
-                let mut options_path = RomePath::new(options_path.display().to_string().as_str());
+                let mut options_path = RomePath::new(&options_path, 0);
                 // SAFETY: we checked its existence already, we assume we have rights to read it
                 let options: TestOptions =
                     serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();

@@ -1,3 +1,4 @@
+use rome_service::RomeError;
 use std::{
     env::current_exe,
     ffi::OsString,
@@ -49,6 +50,10 @@ pub enum Termination {
     /// Returned by a traversal command when error diagnostics were emitted
     #[error("errors where emitted while running checks")]
     CheckError,
+
+    /// Wrapper for an underlying `rome_service` error
+    #[error(transparent)]
+    WorkspaceError(#[from] RomeError),
 }
 
 fn command_name() -> String {
