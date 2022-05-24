@@ -552,7 +552,6 @@ pub(crate) trait JsFormatterExt {
     /// The elements of the list are joined together using [join_elements_hard_line], which will
     /// end up separated by hard lines or empty lines.
     ///
-    ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
     fn format_list<List, Node>(&self, list: &List) -> FormatElement
     where
@@ -562,7 +561,7 @@ pub(crate) trait JsFormatterExt {
         let formatter = self.as_formatter();
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = formatter.snapshot();
-            let format = formatted![formatter, [module_item.format()]];
+            let format = module_item.format();
 
             let elem = match formatted![formatter, [format]] {
                 Ok(result) => result,
@@ -580,7 +579,6 @@ pub(crate) trait JsFormatterExt {
 
             (module_item.syntax().clone(), elem)
         });
-
         join_elements_hard_line(formatted_list)
     }
 }

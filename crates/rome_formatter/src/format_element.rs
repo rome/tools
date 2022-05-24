@@ -1181,11 +1181,7 @@ impl Debug for FormatElement {
                 write!(fmt, "List ")?;
                 content.fmt(fmt)
             }
-            FormatElement::Fill(fill) => fmt
-                .debug_struct("Fill")
-                .field("list", &fill.list)
-                .field("separator", &fill.separator)
-                .finish(),
+            FormatElement::Fill(fill) => fill.fmt(fmt),
             FormatElement::Token(content) => content.fmt(fmt),
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
@@ -1285,7 +1281,7 @@ impl Deref for List {
     }
 }
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Fill {
     list: List,
     separator: FormatElement,
