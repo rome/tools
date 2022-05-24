@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
+assertion_line: 182
 expression: styled-jsx.js
 ---
 # Input
@@ -91,33 +91,29 @@ margin: 0;
 
 # Output
 ```js
-<style jsx>
-  {`
+<style jsx>{`
 	/* a comment */
 	div :global(.react-select) {
 		color: red; display: none
 	}
-`}
-</style>;
+`}</style>;
 
 <div>
-  <style jsx>
-    {`
+<style jsx>{`
 	/* a comment */
 div :global(.react-select) {
 color: red; display: none
-}`}
-  </style>
+}`}</style>
 </div>;
 
-<div><style jsx>{`div{color:red}`}</style></div>;
+<div>
+<style jsx>{`div{color:red}`}</style>
+</div>;
 
 <div>
-  <style jsx>
-    {`This is invalid css. 
+<style jsx>{`This is invalid css. 
       Shouldn't fail.
-            Shouldn't be formatted.`}
-  </style>
+            Shouldn't be formatted.`}</style>
 </div>;
 
 const header = css`

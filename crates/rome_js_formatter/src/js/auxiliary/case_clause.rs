@@ -19,7 +19,6 @@ impl FormatNodeFields<JsCaseClause> for FormatNodeRule<JsCaseClause> {
             consequent.iter().next(),
             Some(JsAnyStatement::JsBlockStatement(_))
         );
-
         let case_word = case_token.format();
         let colon = colon_token.format();
         let test = test.format();

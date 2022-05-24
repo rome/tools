@@ -16,7 +16,7 @@ impl FormatNodeFields<JsxSelfClosingElement> for FormatNodeRule<JsxSelfClosingEl
             r_angle_token,
         } = node.as_fields();
 
-        Ok(group_elements(formatted![
+        formatted![
             formatter,
             [
                 l_angle_token.format(),
@@ -28,6 +28,6 @@ impl FormatNodeFields<JsxSelfClosingElement> for FormatNodeRule<JsxSelfClosingEl
                 slash_token.format(),
                 r_angle_token.format()
             ]
-        ]?))
+        ]
     }
 }

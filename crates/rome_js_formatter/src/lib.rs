@@ -503,7 +503,7 @@ mod test {
         "#;
         let syntax = SourceType::jsx();
         let tree = parse(src, 0, syntax.clone());
-        let result = format_node(JsFormatOptions::default(), &tree.syntax())
+        let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
         check_reformat(CheckReformatParams {

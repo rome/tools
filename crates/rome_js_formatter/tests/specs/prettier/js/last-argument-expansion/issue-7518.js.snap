@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
+assertion_line: 182
 expression: issue-7518.js
 ---
 # Input
@@ -33,7 +33,11 @@ const Broken = React.forwardRef(
       // 3
     },
     ref,
-  ) => <div ref={ref}>{children}</div>,
+  ) => (
+    <div ref={ref}>
+		{children}
+	</div>
+  ),
 );
 
 ```

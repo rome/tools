@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
+assertion_line: 182
 expression: member-expression.tsx
 ---
 # Input
@@ -38,10 +38,26 @@ expression: member-expression.tsx
 (<a />).property;
 (<a />)["computed"];
 (<a />)["computed"]();
-(<div><a>foo</a></div>).method();
-(<div><a>foo</a></div>).property;
-(<div><a>foo</a></div>)["computed"];
-(<div><a>foo</a></div>)["computed"]();
+(
+  <div>
+    <a>foo</a>
+  </div>
+).method();
+(
+  <div>
+    <a>foo</a>
+  </div>
+).property;
+(
+  <div>
+    <a>foo</a>
+  </div>
+)["computed"];
+(
+  <div>
+    <a>foo</a>
+  </div>
+)["computed"]();
 
 ```
 

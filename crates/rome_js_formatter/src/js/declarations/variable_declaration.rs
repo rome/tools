@@ -13,7 +13,7 @@ impl FormatNodeFields<JsVariableDeclaration> for FormatNodeRule<JsVariableDeclar
 
         formatted![
             formatter,
-            [kind.format(), space_token(), declarators.format()]
+            [kind.format(), space_token(), declarators.format(),]
         ]
     }
 }

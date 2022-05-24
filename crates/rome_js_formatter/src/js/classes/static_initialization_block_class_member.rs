@@ -27,7 +27,6 @@ impl FormatNodeFields<JsStaticInitializationBlockClassMember>
             )
             .block_indent()
             .finish()?;
-
         formatted![formatter, [static_token, space_token(), separated]]
     }
 }

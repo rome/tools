@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
+assertion_line: 182
 expression: jsx.js
 ---
 # Input
@@ -16,7 +16,13 @@ const els = items.map(item => (
 # Output
 ```js
 const els = items.map(
-  (item) => <div className="whatever"><span>{children}</span></div>,
+  (
+    item,
+  ) => (
+    <div className="whatever">
+    <span>{children}</span>
+  </div>
+  ),
 );
 
 ```

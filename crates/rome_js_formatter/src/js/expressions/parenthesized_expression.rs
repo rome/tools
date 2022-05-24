@@ -22,7 +22,6 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node)?;
 
         let expression = expression?;
-        let kind = expression.syntax().kind();
 
         if is_simple_parenthesized_expression(node)? {
             formatted![
@@ -71,22 +70,13 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         // ");
         // ```
         // this is what we want
-        else if JsStringLiteralExpression::can_cast(kind) {
+        else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
             formatted![
                 formatter,
                 [
                     l_paren_token.format(),
                     expression.format(),
                     r_paren_token.format(),
-                ]
-            ]
-        } else if let JsAnyExpression::JsxTagExpression(expression) = expression {
-            formatted![
-                formatter,
-                [
-                    formatter.format_replaced(&l_paren_token?, empty_element()),
-                    expression.format(),
-                    formatter.format_replaced(&r_paren_token?, empty_element())
                 ]
             ]
         } else {

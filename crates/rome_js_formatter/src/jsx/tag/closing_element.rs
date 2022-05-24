@@ -1,28 +1,14 @@
+use crate::formatter::verbatim_node;
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_js_syntax::{JsxClosingElement, JsxClosingElementFields};
+use rome_js_syntax::JsxClosingElement;
+use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsxClosingElement> for FormatNodeRule<JsxClosingElement> {
     fn format_fields(
         node: &JsxClosingElement,
         formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
-        let JsxClosingElementFields {
-            l_angle_token,
-            slash_token,
-            name,
-            r_angle_token,
-        } = node.as_fields();
-
-        Ok(group_elements(formatted![
-            formatter,
-            [
-                l_angle_token.format(),
-                slash_token.format(),
-                name.format(),
-                line_suffix_boundary(),
-                r_angle_token.format(),
-            ]
-        ]?))
+        verbatim_node(node.syntax()).format(formatter)
     }
 }
