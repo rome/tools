@@ -17,20 +17,18 @@ export default function DesktopPlayground(
 ) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
-	const handleClickCopyRomeIrToClipBoard = () => {
+	const copyToClipboard = async () => {
 		if (!navigator.clipboard) {
 			toast("Your browser does not support clipboard, could not copy text", {});
 		}
-		navigator.clipboard
-			.writeText(formatter_ir)
-			.then(
-				function () {
-					toast("RomeIR has been successfully copy to your clipboard", {});
-				},
-				function (err) {
-					toast("Could not copy text: ", err);
-				},
-			);
+		try {
+			await navigator.clipboard.writeText(formatter_ir);
+			toast("RomeIR has been successfully copy to your clipboard", {});
+		} catch (err: any) {
+			if (err) {
+				toast("Could not copy text: ", err);
+			}
+		}
 	};
 	return (
 		<div className="divide-y divide-slate-300">
@@ -115,7 +113,7 @@ export default function DesktopPlayground(
 						</TabPanel>
 						<TabPanel>
 							<ToastContainer />
-							<button className="bg-slate-500 px-4 py-1 text-white absolute right-0 mr-5" onClick={handleClickCopyRomeIrToClipBoard}>Copy to ClipBoard</button>
+							<button className="bg-slate-500 px-4 py-1 text-white absolute right-0 mr-5" onClick={copyToClipboard}>Copy to ClipBoard</button>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
