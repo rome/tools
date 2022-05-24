@@ -1,6 +1,6 @@
-import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import * as fs from "node:fs";
+import { resolve } from "path";
+import { fileURLToPath } from "url";
+import * as fs from "fs";
 
 const ROMECLI_ROOT = resolve(fileURLToPath(import.meta.url), "../..");
 const PACKAGES_ROOT = resolve(ROMECLI_ROOT, "..");
