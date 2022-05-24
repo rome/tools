@@ -108,3 +108,17 @@ function LoginForm() {
 		<input type="password" value={password} onChange={e => setPassword(e.target.value)} />
 	</form>
 }
+
+function MapoTofuRecipe() {
+	return <ul>
+		Mapo tofu recipe
+		<li>2 packets soft or silken tofu</li>
+		<li>1 tablespoon minced garlic</li>
+		<li>1 tablespoon minced ginger </li>
+		<li>2 tablespoons doubanjiang</li>
+		<li>1 tablespoon douchi</li>
+		<li>1 tablespoon corn or potato starch</li>
+		<li>2 scallions or jiu cai</li>
+		<li>6 ounces of ground beef</li>
+	</ul>
+}
