@@ -119,6 +119,6 @@ function MapoTofuRecipe() {
 		<li>1 tablespoon douchi</li>
 		<li>1 tablespoon corn or potato starch</li>
 		<li>2 scallions or jiu cai</li>
-		<li>6 ounces of ground beef</li>
+		<li>6 ounces of ground beef or pork</li>
 	</ul>
 }
