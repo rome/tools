@@ -1,5 +1,4 @@
 use crate::options::QuoteStyle;
-use crate::utils::match_ancestors;
 use crate::{
     if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, Formatter,
     JsFormatOptions,
@@ -11,6 +10,8 @@ use rome_js_syntax::{
 };
 use rome_rowan::SyntaxNode;
 
+/// Creates either a space using an expression child and a string literal,
+/// or a regular space, depending on whether the group breaks or not.
 pub fn jsx_space(formatter: &Formatter<JsFormatOptions>) -> FormatElement {
     let jsx_space = match formatter.options().quote_style {
         QuoteStyle::Double => "{{\" \"}}",
@@ -56,18 +57,17 @@ pub static WHITESPACE: [char; 4] = [' ', '\n', '\t', '\r'];
 
 pub fn is_meaningful_jsx_text(text: &str) -> bool {
     let mut has_newline = false;
-    let mut has_non_whitespace = false;
     for c in text.chars() {
         // If there is a non-whitespace character
         if !WHITESPACE.contains(&c) {
-            has_non_whitespace = true;
+            return true;
         }
         if c == '\n' {
             has_newline = true;
         }
     }
 
-    has_non_whitespace || !has_newline
+    !has_newline
 }
 
 pub fn contains_tag(children: &JsxChildList) -> bool {
@@ -152,19 +152,25 @@ pub fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
     //    {foo(() => <div> the quick brown fox jumps over the lazy dog </div>)}
     //  </div>;
     // ```
-    match_ancestors(
-        node,
-        vec![
-            None,
-            Some(Box::new(|syntax: SyntaxNode<JsLanguage>| {
-                syntax.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
-            })),
-            Some(Box::new(|syntax: SyntaxNode<JsLanguage>| {
-                syntax.kind() == JsSyntaxKind::JS_CALL_EXPRESSION
-            })),
-            Some(Box::new(|syntax: SyntaxNode<JsLanguage>| {
-                syntax.kind() == JsSyntaxKind::JSX_EXPRESSION_CHILD
-            })),
-        ],
-    )
+    let mut ancestors = node.ancestors();
+    let required_ancestors = [
+        JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION,
+        JsSyntaxKind::JS_CALL_EXPRESSION,
+        JsSyntaxKind::JSX_EXPRESSION_CHILD,
+    ];
+
+    // Skip current node
+    ancestors.next();
+
+    for required_ancestor in required_ancestors {
+        let is_required_ancestor = ancestors
+            .next()
+            .map(|ancestor| ancestor.kind() == required_ancestor)
+            .unwrap_or(false);
+        if !is_required_ancestor {
+            return false;
+        }
+    }
+
+    true
 }

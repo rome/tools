@@ -384,7 +384,7 @@ pub fn fill_elements<TSep: Into<FormatElement>>(
         1 => list.pop().unwrap(),
         _ => FormatElement::Fill(Box::new(Fill {
             list: List::new(list),
-            separator: Box::new(separator.into()),
+            separator: separator.into(),
         })),
     }
 }
@@ -1288,7 +1288,7 @@ impl Deref for List {
 #[derive(Clone, PartialEq, Eq)]
 pub struct Fill {
     list: List,
-    separator: Content,
+    separator: FormatElement,
 }
 
 impl Fill {
@@ -1296,7 +1296,7 @@ impl Fill {
         &self.list
     }
 
-    pub fn separator(&self) -> &Content {
+    pub fn separator(&self) -> &FormatElement {
         &self.separator
     }
 }
@@ -1637,14 +1637,6 @@ impl FormatElement {
     /// Returns true if the element contains no content.
     pub const fn is_empty(&self) -> bool {
         matches!(self, FormatElement::Empty)
-    }
-
-    pub fn is_empty_string(&self) -> bool {
-        match self {
-            FormatElement::Empty => true,
-            FormatElement::Token(token) => token.deref() == "",
-            _ => false,
-        }
     }
 
     /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
