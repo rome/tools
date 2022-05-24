@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: issue-7148.ts
-
 ---
 # Input
 ```js
@@ -15,7 +13,7 @@ export default class Test {
 # Output
 ```js
 export default class Test {
-  private obj = { isTest: true }
+  private obj = { isTest: true };
 }
 
 ```

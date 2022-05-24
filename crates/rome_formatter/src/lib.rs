@@ -48,7 +48,8 @@ pub use format_element::{
 };
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, SyntaxError, SyntaxNode, SyntaxResult, TextRange, TextSize, TokenAtOffset,
+    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, TextRange, TextSize,
+    TokenAtOffset,
 };
 use std::error::Error;
 use std::fmt;
@@ -652,7 +653,51 @@ pub fn format_node<
     })
 }
 
+/// Returns the [TextRange] for this [SyntaxElement] with the leading and
+/// trailing whitespace trimmed (but keeping comments or skipped trivias)
+fn text_non_whitespace_range<E, L>(elem: &E) -> TextRange
+where
+    E: Into<SyntaxElement<L>> + Clone,
+    L: Language,
+{
+    let elem: SyntaxElement<L> = elem.clone().into();
+
+    let start = elem
+        .leading_trivia()
+        .into_iter()
+        .flat_map(|trivia| trivia.pieces())
+        .find_map(|piece| {
+            if piece.is_whitespace() || piece.is_newline() {
+                None
+            } else {
+                Some(piece.text_range().start())
+            }
+        })
+        .unwrap_or_else(|| elem.text_trimmed_range().start());
+
+    let end = elem
+        .trailing_trivia()
+        .into_iter()
+        .flat_map(|trivia| trivia.pieces().rev())
+        .find_map(|piece| {
+            if piece.is_whitespace() || piece.is_newline() {
+                None
+            } else {
+                Some(piece.text_range().end())
+            }
+        })
+        .unwrap_or_else(|| elem.text_trimmed_range().end());
+
+    TextRange::new(start, end)
+}
+
 /// Formats a range within a file, supported by Rome
+///
+/// Because this function is language-agnostic, it must be provided with a
+/// `predicate` function that's used to select appropriate "root nodes" for the
+/// range formatting process: for instance in JavaScript the predicate returns
+/// true for statement and declaration nodes, to ensure the entire statement
+/// gets formatted instead of the smallest sub-expression that fits the range
 ///
 /// This runs a simple heuristic to determine the initial indentation
 /// level of the node based on the provided [FormatOptions], which
@@ -663,15 +708,27 @@ pub fn format_node<
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
-pub fn format_range<
+pub fn format_range<Options, L, R, P>(
+    options: Options,
+    root: &SyntaxNode<L>,
+    mut range: TextRange,
+    mut predicate: P,
+) -> FormatResult<Printed>
+where
     Options: FormatOptions,
     L: Language,
     R: FormatRule<SyntaxNode<L>, Options = Options>,
->(
-    options: Options,
-    root: &SyntaxNode<L>,
-    range: TextRange,
-) -> FormatResult<Printed> {
+    P: FnMut(&SyntaxNode<L>) -> bool,
+{
+    if range.is_empty() {
+        return Ok(Printed::new(
+            String::new(),
+            Some(range),
+            Vec::new(),
+            Vec::new(),
+        ));
+    }
+
     // Find the tokens corresponding to the start and end of the range
     let start_token = root.token_at_offset(range.start());
     let end_token = root.token_at_offset(range.end());
@@ -681,7 +738,7 @@ pub fn format_range<
     // 2. The input node was not the root [SyntaxNode] of the file
     // In the first case we can return an empty result immediately,
     // otherwise default to the first and last tokens in the root node
-    let start_token = match start_token {
+    let mut start_token = match start_token {
         // If the start of the range lies between two tokens,
         // start at the rightmost one
         TokenAtOffset::Between(_, token) => token,
@@ -692,7 +749,7 @@ pub fn format_range<
             None => return Ok(Printed::new_empty()),
         },
     };
-    let end_token = match end_token {
+    let mut end_token = match end_token {
         // If the end of the range lies between two tokens,
         // end at the leftmost one
         TokenAtOffset::Between(token, _) => token,
@@ -704,20 +761,97 @@ pub fn format_range<
         },
     };
 
-    // Find the lowest common ancestor node for the start and end token
-    // by building the path to the root node from both tokens and
-    // iterating along the two paths at once to find the first divergence
-    #[allow(clippy::needless_collect)]
-    let start_to_root: Vec<_> = start_token.ancestors().collect();
-    #[allow(clippy::needless_collect)]
-    let end_to_root: Vec<_> = end_token.ancestors().collect();
+    // Trim leading and trailing whitespace off from the formatting range
+    let mut trimmed_start = range.start();
 
-    let common_root = start_to_root
-        .into_iter()
-        .rev()
-        .zip(end_to_root.into_iter().rev())
-        .map_while(|(lhs, rhs)| if lhs == rhs { Some(lhs) } else { None })
-        .last();
+    let start_token_range = text_non_whitespace_range(&start_token);
+    let start_token_trimmed_start = start_token_range.start();
+    let start_token_trimmed_end = start_token_range.end();
+
+    if start_token_trimmed_start >= range.start() && start_token_trimmed_start <= range.end() {
+        // If the range starts before the trimmed start of the token, move the
+        // start towards that position
+        trimmed_start = start_token_trimmed_start;
+    } else if start_token_trimmed_end <= range.start() {
+        // If the range starts after the trimmed end of the token, move the
+        // start to the trimmed start of the next token if it exists
+        if let Some(next_token) = start_token.next_token() {
+            let next_token_start = text_non_whitespace_range(&next_token).start();
+            if next_token_start <= range.end() {
+                trimmed_start = next_token_start;
+                start_token = next_token;
+            }
+        }
+    }
+
+    let end_token_range = text_non_whitespace_range(&end_token);
+    let end_token_trimmed_start = end_token_range.start();
+
+    // If the range ends before the trimmed start of the token, move the
+    // end to the trimmed end of the previous token if it exists
+    if end_token_trimmed_start >= range.end() {
+        if let Some(next_token) = end_token.prev_token() {
+            let next_token_end = text_non_whitespace_range(&next_token).end();
+            if next_token_end >= trimmed_start {
+                end_token = next_token;
+            }
+        }
+    }
+
+    // Find suitable formatting-root nodes (matching the predicate provided by
+    // the language implementation) in the ancestors of the start and end tokens
+    let start_node = start_token
+        .ancestors()
+        .find(&mut predicate)
+        .unwrap_or_else(|| root.clone());
+    let end_node = end_token
+        .ancestors()
+        .find(predicate)
+        .unwrap_or_else(|| root.clone());
+
+    let common_root = if start_node == end_node {
+        range = text_non_whitespace_range(&start_node);
+        Some(start_node)
+    } else {
+        // Find the two highest sibling nodes that satisfy the formatting range
+        // from the ancestors of the start and end nodes (this is roughly the
+        // same algorithm as the findSiblingAncestors function in Prettier, see
+        // https://github.com/prettier/prettier/blob/cae195187f524dd74e60849e0a4392654423415b/src/main/range-util.js#L36)
+        let start_node_start = start_node.text_range().start();
+        let end_node_end = end_node.text_range().end();
+
+        let result_end_node = end_node
+            .ancestors()
+            .take_while(|end_parent| end_parent.text_range().start() >= start_node_start)
+            .last()
+            .unwrap_or(end_node);
+
+        let result_start_node = start_node
+            .ancestors()
+            .take_while(|start_parent| start_parent.text_range().end() <= end_node_end)
+            .last()
+            .unwrap_or(start_node);
+
+        range = text_non_whitespace_range(&result_start_node)
+            .cover(text_non_whitespace_range(&result_end_node));
+
+        // Find the lowest common ancestor node for the previously selected
+        // sibling nodes by building the path to the root node from both
+        // nodes and iterating along the two paths at once to find the first
+        // divergence (the ancestors have to be collected into vectors first
+        // since the ancestor iterator isn't double ended)
+        #[allow(clippy::needless_collect)]
+        let start_to_root: Vec<_> = result_start_node.ancestors().collect();
+        #[allow(clippy::needless_collect)]
+        let end_to_root: Vec<_> = result_end_node.ancestors().collect();
+
+        start_to_root
+            .into_iter()
+            .rev()
+            .zip(end_to_root.into_iter().rev())
+            .map_while(|(lhs, rhs)| if lhs == rhs { Some(lhs) } else { None })
+            .last()
+    };
 
     // Logically this should always return at least the root node,
     // fallback to said node just in case
@@ -736,7 +870,8 @@ pub fn format_range<
 
     let sourcemap = Vec::from(formatted.sourcemap());
     for marker in &sourcemap {
-        if let Some(start_dist) = marker.source.checked_sub(range.start()) {
+        // marker.source <= range.start()
+        if let Some(start_dist) = range.start().checked_sub(marker.source) {
             range_start = match range_start {
                 Some((prev_marker, prev_dist)) => {
                     if start_dist < prev_dist {
@@ -749,10 +884,11 @@ pub fn format_range<
             }
         }
 
-        if let Some(end_dist) = range.end().checked_sub(marker.source) {
+        // marker.source >= range.end()
+        if let Some(end_dist) = marker.source.checked_sub(range.end()) {
             range_end = match range_end {
                 Some((prev_marker, prev_dist)) => {
-                    if end_dist < prev_dist {
+                    if end_dist <= prev_dist {
                         Some((marker, end_dist))
                     } else {
                         Some((prev_marker, prev_dist))

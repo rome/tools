@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: module-import.js
-
 ---
 # Input
 ```js
@@ -20,7 +18,7 @@ export   default    42
 
 # Output
 ```js
-import  def, { named }  from    'x'
+import def, { named } from "x";
 
 export *  from   'd'
 

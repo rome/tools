@@ -13,7 +13,9 @@ use crate::utils::has_formatter_suppressions;
 pub(crate) use formatter::{format_leading_trivia, format_trailing_trivia, JsFormatter};
 use rome_formatter::prelude::*;
 use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
+use rome_js_syntax::{
+    JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+};
 use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
@@ -246,7 +248,28 @@ pub fn format_range(
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    rome_formatter::format_range::<_, _, FormatJsSyntaxNode>(options, root, range)
+    rome_formatter::format_range::<_, _, FormatJsSyntaxNode, _>(
+        options,
+        root,
+        range,
+        is_range_formatting_root,
+    )
+}
+
+fn is_range_formatting_root(node: &JsSyntaxNode) -> bool {
+    let kind = node.kind();
+
+    // Do not format variable declaration nodes, format the whole statement instead
+    if matches!(kind, JsSyntaxKind::JS_VARIABLE_DECLARATION) {
+        return false;
+    }
+
+    JsAnyStatement::can_cast(kind)
+        || JsAnyDeclaration::can_cast(kind)
+        || matches!(
+            kind,
+            JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT
+        )
 }
 
 /// Formats a JavaScript (and its super languages) file based on its features.
@@ -322,12 +345,15 @@ while(
 
         let result = result.expect("range formatting failed");
         assert_eq!(
-            result.range(),
-            Some(TextRange::new(range_start + TextSize::from(2), range_end))
+            result.as_code(),
+            "function func() {\n        func( /* comment */ );\n\n        let array = [1, 2];\n    }\n\n    function func2() {\n        const no_format = () => {};\n    }"
         );
         assert_eq!(
-            result.as_code(),
-            "let array = [1, 2];\n    }\n\n    function func2() {\n        "
+            result.range(),
+            Some(TextRange::new(
+                range_start - TextSize::from(56),
+                range_end + TextSize::from(40)
+            ))
         );
     }
 
@@ -353,13 +379,89 @@ function() {
         );
 
         let result = result.expect("range formatting failed");
-        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
         // As a result of the indentation normalization, the number of spaces within
         // the object expression is currently rounded down from an odd indentation level
         assert_eq!(
             result.as_code(),
-            "const veryLongIdentifierToCauseALineBreak = {\n            veryLongKeyToCauseALineBreak: \"veryLongValueToCauseALineBreak\",\n        "
+            "const veryLongIdentifierToCauseALineBreak = {\n            veryLongKeyToCauseALineBreak: \"veryLongValueToCauseALineBreak\",\n        };"
         );
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(range_start, range_end + TextSize::from(1)))
+        );
+    }
+
+    #[test]
+    fn test_range_formatting_semicolon() {
+        let input = "
+    statement_1()
+    statement_2()
+    statement_3()
+";
+
+        let range_start = TextSize::try_from(input.find("statement_2").unwrap()).unwrap();
+        let range_end = range_start + TextSize::of("statement_2()");
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "statement_2();");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+    }
+
+    #[test]
+    fn test_range_formatting_expression() {
+        let input = "1 + 2 + 3 + 4 + 5";
+
+        let range_start = TextSize::try_from(input.find("3 + 4").unwrap()).unwrap();
+        let range_end = range_start + TextSize::of("3 + 4");
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "1 + 2 + 3 + 4 + 5;");
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(TextSize::from(0), TextSize::of(input)))
+        );
+    }
+
+    #[test]
+    fn test_range_formatting_whitespace() {
+        let input = "               ";
+
+        let range_start = TextSize::from(5);
+        let range_end = TextSize::from(5);
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
     }
 }
 
