@@ -374,6 +374,24 @@ where
 ///         .as_code()
 /// )
 /// ```
+/// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::Formatted;
+/// use std::str::from_utf8;
+///
+/// let a = "<b>Important: </b>";
+/// let b = "Please do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you ";
+/// let c = "<em>will</em>";
+/// let d = " be reprimanded";
+/// let expr = fill_elements(empty_element(), [token(a), token(b), token(c), token(d)]);
+///
+/// assert_eq!(
+///     format!("{a}\n{b}\n{c}{d}"),
+///     Formatted::new(expr, PrinterOptions::default())
+///         .print()
+///         .as_code()
+/// )
+/// ```
 pub fn fill_elements<TSep: Into<FormatElement>>(
     separator: TSep,
     elements: impl IntoIterator<Item = FormatElement>,
