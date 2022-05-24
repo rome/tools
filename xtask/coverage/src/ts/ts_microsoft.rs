@@ -3,7 +3,7 @@ use crate::runner::{
     create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
-use rome_js_parser::{ModuleKind, SourceType};
+use rome_js_syntax::{ModuleKind, SourceType};
 use rome_rowan::{AstNode, SyntaxKind};
 use std::convert::TryFrom;
 use std::path::Path;

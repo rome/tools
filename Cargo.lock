@@ -1302,6 +1302,7 @@ dependencies = [
  "rome_fs",
  "rome_js_formatter",
  "rome_js_parser",
+ "rome_js_syntax",
  "rome_rowan",
  "thiserror",
  "tracing",
@@ -1509,6 +1510,7 @@ dependencies = [
  "rome_formatter",
  "rome_js_formatter",
  "rome_js_parser",
+ "rome_js_syntax",
  "serde_json",
  "wasm-bindgen",
 ]

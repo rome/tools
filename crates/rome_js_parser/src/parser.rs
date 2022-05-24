@@ -13,7 +13,7 @@ pub(crate) mod single_token_parse_recovery;
 use drop_bomb::DebugDropBomb;
 use rome_js_syntax::{
     JsSyntaxKind::{self},
-    TextRange,
+    SourceType, TextRange,
 };
 use std::num::NonZeroU32;
 
@@ -388,7 +388,7 @@ impl<'s> Parser<'s> {
 
     /// Whether the code we are parsing is a module
     pub fn is_module(&self) -> bool {
-        self.source_type.module_kind.is_module()
+        self.source_type.module_kind().is_module()
     }
 }
 
@@ -615,7 +615,7 @@ pub struct Checkpoint {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Parser, SourceType};
+    use crate::Parser;
     use rome_js_syntax::JsSyntaxKind;
     use rome_rowan::AstNode;
 
