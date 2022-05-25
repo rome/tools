@@ -80,10 +80,10 @@ impl From<FormatError> for RomeError {
 
 impl App<'static> {
     /// Create a new instance of the app using the [OsFileSystem] and [EnvConsole]
-    pub fn from_env() -> Self {
+    pub fn from_env(no_colors: bool) -> Self {
         Self::with_filesystem_and_console(
             DynRef::Owned(Box::new(OsFileSystem)),
-            DynRef::Owned(Box::new(EnvConsole::default())),
+            DynRef::Owned(Box::new(EnvConsole::new(no_colors))),
         )
     }
 }

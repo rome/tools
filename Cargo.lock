@@ -1308,6 +1308,7 @@ dependencies = [
 name = "rome_console"
 version = "0.0.0"
 dependencies = [
+ "atty",
  "lazy_static",
  "rome_markup",
  "similar",
