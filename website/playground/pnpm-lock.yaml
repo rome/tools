@@ -16,7 +16,6 @@ specifiers:
   react-dom: ^17.0.2
   react-json-view: ^1.21.3
   react-tabs: ^3.2.3
-  react-toastify: ^9.0.1
   rome: 0.5.0-next
   tailwindcss: ^3.0.19
   typescript: ^4.4.4
@@ -29,7 +28,6 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-json-view: 1.21.3_xd63vgjm47lzoal5ybyqmsdesy
   react-tabs: 3.2.3_react@17.0.2
-  react-toastify: 9.0.1_sfoxds7t5ydpegc3knd667wn6m
 
 devDependencies:
   '@honkhonk/vite-plugin-svgr': 1.1.0_vite@2.7.13
@@ -2802,17 +2800,6 @@ packages:
       use-latest: 1.2.1_udcsdvdzjr5ns727jqoeu7kyda
     transitivePeerDependencies:
       - '@types/react'
-    dev: false
-
-  /react-toastify/9.0.1_sfoxds7t5ydpegc3knd667wn6m:
-    resolution: {integrity: sha512-c2zeZHkCX+WXuItS/JRqQ/8CH8Qm/je+M0rt09xe9fnu5YPJigtNOdD8zX4fwLA093V2am3abkGfOowwpkrwOQ==}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      clsx: 1.1.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /react/17.0.2:
