@@ -28,7 +28,7 @@ export default function DesktopPlayground(
 		if (!navigator.clipboard) {
 			setClipboardStatus("failed");
 			console.error(
-				"Your browser does not support clipboard, could not copy text",
+				"Your browser does not support clipboard, could not copy the text",
 			);
 		}
 		try {
