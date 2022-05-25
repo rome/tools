@@ -58,12 +58,13 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
         // Print the help for the subcommand if it was called with `--help`
         Some(cmd) if has_help => crate::commands::help::help(session, Some(cmd)),
 
-        Some("format") if !is_empty => crate::commands::format::format(session),
         Some("check") if !is_empty => crate::commands::check::check(session),
         Some("ci") if !is_empty => crate::commands::ci::ci(session),
+        Some("fix") if !is_empty => crate::commands::fix::fix(session),
+        Some("format") if !is_empty => crate::commands::format::format(session),
 
         // Print the help for known commands called without any arguments, and exit with an error
-        Some(cmd @ ("format" | "check" | "ci")) => {
+        Some(cmd @ ("check" | "ci" | "fix" | "format")) => {
             crate::commands::help::help(session, Some(cmd))?;
             Err(Termination::EmptyArguments)
         }

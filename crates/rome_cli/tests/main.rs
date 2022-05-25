@@ -12,6 +12,23 @@ const FORMATTED: &str = "statement();\n";
 const PARSE_ERROR: &str = "if\n";
 const LINT_ERROR: &str = "for(;true;);\n";
 
+const FIX_BEFORE: &str = "
+var a, b, c;
+var d, e, f;
+var g, h, i;
+";
+const FIX_AFTER: &str = "
+var a;
+var b;
+var c;
+var d;
+var e;
+var f;
+var g;
+var h;
+var i;
+";
+
 mod check {
     use super::*;
 
@@ -176,6 +193,60 @@ mod ci {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
+    }
+}
+
+mod fix {
+    use super::*;
+
+    #[test]
+    fn ok() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("fix"), file_path.as_os_str().into()]),
+        });
+
+        println!("{console:#?}");
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, FIX_AFTER);
+    }
+
+    #[test]
+    fn no_fix() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_AFTER.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("fix"), file_path.as_os_str().into()]),
+        });
+
+        println!("{console:#?}");
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 }
 
