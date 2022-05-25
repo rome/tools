@@ -4,8 +4,11 @@ import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+//@ts-ignore
+import SuccessIcon from "../assets/success.svg?component";
+//@ts-ignore
+import FailedIcon from "../assets/failed.svg?component";
+import { useState } from "react";
 
 export default function DesktopPlayground(
 	{
@@ -16,16 +19,30 @@ export default function DesktopPlayground(
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;
+	const [clipboardStatus, setClipboardStatus] = useState<
+		"success" | "failed" | "normal"
+	>("normal");
 	const language = getLanguage(isJsx, isTypeScript);
+
 	const copyToClipboard = async () => {
 		if (!navigator.clipboard) {
-			toast("Your browser does not support clipboard, could not copy text", {});
+			setClipboardStatus("failed");
+			console.error(
+				"Your browser does not support clipboard, could not copy text",
+			);
 		}
 		try {
 			await navigator.clipboard.writeText(formatter_ir);
-			toast("RomeIR has been successfully copy to your clipboard", {});
+			setClipboardStatus("success");
+			setTimeout(
+				() => {
+					setClipboardStatus("normal");
+				},
+				3000,
+			);
 		} catch (err: any) {
-				toast("Could not copy text: ", err);
+			setClipboardStatus("failed");
+			console.error(err.toString());
 		}
 	};
 	return (
@@ -110,8 +127,11 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<ToastContainer />
-							<button className="bg-slate-500 px-4 py-1 text-white absolute right-0 mr-5" onClick={copyToClipboard}>Copy to ClipBoard</button>
+							<button className="bg-slate-500 px-4 py-1 text-white absolute right-0 mr-5 flex items-center" onClick={copyToClipboard}>
+								{clipboardStatus === 'success' && <SuccessIcon style={{width: 16, height: 16, marginRight: 5}} />}
+								{clipboardStatus === 'failed' && <FailedIcon style={{width: 16, height: 16, marginRight: 5}} />}
+								Copy to ClipBoard
+							</button>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>

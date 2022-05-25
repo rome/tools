@@ -18,10 +18,10 @@
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-json-view": "^1.21.3",
-		"react-tabs": "^3.2.3",
-		"react-toastify": "^9.0.1"
+		"react-tabs": "^3.2.3"
 	},
 	"devDependencies": {
+		"@honkhonk/vite-plugin-svgr": "^1.1.0",
 		"@tailwindcss/forms": "^0.4.0",
 		"@types/prettier": "^2.4.3",
 		"@types/react": "^17.0.33",
