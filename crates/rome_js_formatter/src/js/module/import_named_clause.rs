@@ -1,8 +1,11 @@
 use crate::prelude::*;
 
 use crate::FormatNodeFields;
+use rome_js_syntax::JsAnyNamedImport;
+use rome_js_syntax::JsAnyNamedImportSpecifier;
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
+use rome_js_syntax::JsNamedImportSpecifiersFields;
 
 impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClause> {
     fn format_fields(
@@ -18,6 +21,64 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
             assertion,
         } = node.as_fields();
 
+        let named_import = named_import?;
+
+        // can_break implementation, return `format_element` instead of boolean to reduce enum conversion overhead.
+        // reference https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L173
+        let formatted_named_import = if default_specifier.is_some() {
+            // `can_break` is true.
+            named_import.format().format(formatter)
+        } else {
+            match named_import {
+                JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
+                    if specifiers.specifiers().len() > 1 =>
+                {
+                    named_import.format().format(formatter)
+                }
+                JsAnyNamedImport::JsNamespaceImportSpecifier(_) => {
+                    // this means `standaloneSpecifiers.length > 0`, then we can break;
+
+                    named_import.format().format(formatter)
+                }
+                JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
+                    if specifiers.specifiers().len() == 1 =>
+                {
+                    let syntax_node = specifiers.clone().into_syntax();
+                    if syntax_node.has_leading_comments() || syntax_node.has_trailing_comments() {
+                        named_import.format().format(formatter)
+                    } else {
+                        let JsNamedImportSpecifiersFields {
+                            l_curly_token,
+                            specifiers,
+                            r_curly_token,
+                        } = specifiers.as_fields();
+                        let first_specifier = specifiers.iter().next().unwrap();
+                        let can_break = match first_specifier {
+                            Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_)) => {
+                                false
+                            }
+                            _ => true,
+                        };
+                        if can_break {
+                            named_import.format().format(formatter)
+                        } else {
+                            formatted![
+                                formatter,
+                                [
+                                    l_curly_token.format(),
+                                    space_token(),
+                                    first_specifier.format(),
+                                    space_token(),
+                                    r_curly_token.format()
+                                ]
+                            ]
+                        }
+                    }
+                }
+                _ => named_import.format().format(formatter),
+            }
+        };
+
         formatted![
             formatter,
             [
@@ -27,7 +88,7 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                 default_specifier
                     .format()
                     .with_or_empty(|specifier| formatted![formatter, [specifier, space_token()]]),
-                named_import.format(),
+                formatted_named_import,
                 space_token(),
                 from_token.format(),
                 space_token(),
