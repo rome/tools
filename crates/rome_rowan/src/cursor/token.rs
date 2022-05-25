@@ -1,6 +1,8 @@
 use crate::cursor::{NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
 use crate::green::GreenElementRef;
-use crate::{green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
+use crate::{
+    green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText, WalkEvent,
+};
 use std::hash::{Hash, Hasher};
 use std::rc::Rc;
 use std::{fmt, iter};
@@ -140,30 +142,65 @@ impl SyntaxToken {
     }
 
     pub fn next_token(&self) -> Option<SyntaxToken> {
-        iter::successors(
-            self.next_sibling_or_token(),
-            SyntaxElement::next_sibling_or_token,
-        )
-        .chain(self.ancestors().flat_map(|node| {
-            iter::successors(
-                node.next_sibling_or_token(),
-                SyntaxElement::next_sibling_or_token,
-            )
-        }))
-        .find_map(|element| element.first_token())
+        self.next_token_impl(Direction::Next)
     }
+
     pub fn prev_token(&self) -> Option<SyntaxToken> {
-        iter::successors(
-            self.prev_sibling_or_token(),
-            SyntaxElement::prev_sibling_or_token,
-        )
-        .chain(self.ancestors().flat_map(|node| {
-            iter::successors(
-                node.prev_sibling_or_token(),
-                SyntaxElement::prev_sibling_or_token,
-            )
-        }))
-        .find_map(|element| element.last_token())
+        self.next_token_impl(Direction::Prev)
+    }
+
+    /// Returns the token preceding or following this token depending on the passed `direction`.
+    fn next_token_impl(&self, direction: Direction) -> Option<SyntaxToken> {
+        let mut current: WalkEvent<SyntaxElement> =
+            WalkEvent::Leave(SyntaxElement::Token(self.clone()));
+
+        loop {
+            current = match current {
+                WalkEvent::Enter(element) => match element {
+                    SyntaxElement::Token(token) => break Some(token),
+                    SyntaxElement::Node(node) => {
+                        let first_child = match direction {
+                            Direction::Next => node.first_child_or_token(),
+                            Direction::Prev => node.last_child_or_token(),
+                        };
+
+                        match first_child {
+                            // If node is empty, leave parent
+                            None => WalkEvent::Leave(SyntaxElement::Node(node)),
+                            // Otherwise traverse full sub-tree
+                            Some(child) => WalkEvent::Enter(child),
+                        }
+                    }
+                },
+                WalkEvent::Leave(element) => {
+                    let mut current_element = element;
+
+                    loop {
+                        // Only traverse the left (pref) / right (next) siblings of the parent
+                        // to avoid traversing into the same children again.
+                        let sibling = match direction {
+                            Direction::Next => current_element.next_sibling_or_token(),
+                            Direction::Prev => current_element.prev_sibling_or_token(),
+                        };
+
+                        match sibling {
+                            // Traverse all children of the sibling
+                            Some(sibling) => break WalkEvent::Enter(sibling),
+                            None => {
+                                match current_element.parent() {
+                                    Some(node) => {
+                                        current_element = SyntaxElement::Node(node);
+                                    }
+                                    None => {
+                                        return None; // Reached root, no token found
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
