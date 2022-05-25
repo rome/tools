@@ -11,10 +11,13 @@ const MAIN: Markup = markup! {
 "Rome CLI v"{VERSION}"
 
 "<Emphasis>"COMMANDS:"</Emphasis>"
-- "<Emphasis>"check"</Emphasis>"
-- "<Emphasis>"ci"</Emphasis>"
-- "<Emphasis>"format"</Emphasis>"
-- "<Emphasis>"help"</Emphasis>"
+    - "<Emphasis>"check"</Emphasis>"
+    - "<Emphasis>"ci"</Emphasis>"
+    - "<Emphasis>"format"</Emphasis>"
+    - "<Emphasis>"help"</Emphasis>"
+
+"<Emphasis>"OPTIONS:"</Emphasis>"
+    "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
 "
 };
 
@@ -23,6 +26,16 @@ const CHECK: Markup = markup! {
 
 "<Emphasis>"USAGE:"</Emphasis>"
     rome check <INPUTS...>
+
+    INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
+"
+};
+
+const FIX: Markup = markup! {
+    <Emphasis>"Rome Fix"</Emphasis>": Apply all safe code fixes for a set of files
+
+"<Emphasis>"USAGE:"</Emphasis>"
+    rome fix <INPUTS...>
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 "
@@ -75,6 +88,10 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         }
         Some("ci") => {
             session.app.console.log(CI);
+            Ok(())
+        }
+        Some("fix") => {
+            session.app.console.log(FIX);
             Ok(())
         }
         Some("format") => {
