@@ -8,7 +8,9 @@ import TreeView from "./TreeView";
 import SuccessIcon from "../assets/success.svg?component";
 //@ts-ignore
 import FailedIcon from "../assets/failed.svg?component";
-import { useState } from "react";
+//@ts-ignore
+import CopyIcon from "../assets/copy.svg?component";
+import { useEffect, useState } from "react";
 
 export default function DesktopPlayground(
 	{
@@ -24,6 +26,15 @@ export default function DesktopPlayground(
 	>("normal");
 	const language = getLanguage(isJsx, isTypeScript);
 
+	useEffect(
+		() => {
+			if (clipboardStatus !== "normal") {
+				setClipboardStatus("normal");
+			}
+		},
+		[formatter_ir],
+	);
+
 	const copyToClipboard = async () => {
 		if (!navigator.clipboard) {
 			setClipboardStatus("failed");
@@ -34,12 +45,6 @@ export default function DesktopPlayground(
 		try {
 			await navigator.clipboard.writeText(formatter_ir);
 			setClipboardStatus("success");
-			setTimeout(
-				() => {
-					setClipboardStatus("normal");
-				},
-				3000,
-			);
 		} catch (err: any) {
 			setClipboardStatus("failed");
 			console.error(err.toString());
@@ -127,10 +132,10 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<button className="bg-slate-500 px-4 py-1 text-white absolute right-0 mr-5 flex items-center" onClick={copyToClipboard}>
+							<button className="bg-gray-300 px-2 py-2 text-white absolute right-0 top--1 mr-5 flex items-center rounded-md" onClick={copyToClipboard}>
 								{clipboardStatus === 'success' && <SuccessIcon style={{width: 16, height: 16, marginRight: 5}} />}
 								{clipboardStatus === 'failed' && <FailedIcon style={{width: 16, height: 16, marginRight: 5}} />}
-								Copy to ClipBoard
+								<CopyIcon style={{width: 16, height: 16}} />
 							</button>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
