@@ -55,36 +55,39 @@ impl TestCase for SymbolsMicrosoftTestCase {
             .collect();
         actual.sort_by_key(|x| x.range().start());
 
-        if std::env::var("PRINT_CMP").is_ok() {
-            let mut expecteds = expected.symbols.iter();
-            let mut actuals = actual.iter();
-            loop {
-                let e = expecteds.next();
-                let a = actuals.next();
+        // Print to debug! detailed information
+        // on symbols that are different from the
+        // expected
+        let mut expecteds = expected.symbols.iter();
+        let mut actuals = actual.iter();
+        loop {
+            let expected = expecteds.next();
+            let actual = actuals.next();
 
-                if e.is_none() && a.is_none() {
-                    break;
-                }
-
-                if let Some(s) = e {
-                    print!("{}", s.name);
-                }
-
-                print!(" - ");
-
-                if let Some(s) = a {
-                    print!("{:?}", s);
-                }
-
-                match (e, a) {
-                    (Some(e), Some(a)) if e.name != a.name() => {
-                        println!(" <<<<<<<<<<<<<<<<<<<< Diff here")
-                    }
-                    _ => {}
-                }
-
-                println!();
+            if expected.is_none() && actual.is_none() {
+                break;
             }
+
+            let mut debug_text = String::new();
+
+            if let Some(symbol) = expected {
+                debug_text.push_str(&symbol.name);
+            }
+
+            debug_text.push_str(" - ");
+
+            if let Some(symbol) = actual {
+                debug_text.push_str(&format!("{:?}", symbol));
+            }
+
+            match (expected, actual) {
+                (Some(e), Some(a)) if e.name != a.name() => {
+                    debug_text.push_str(" <<<<<<<<<<<<<<<<<<<< Diff here");
+                }
+                _ => {}
+            }
+
+            tracing::debug!("{}", debug_text);
         }
 
         if expected.symbols.len() != actual.len() {

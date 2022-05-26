@@ -4,6 +4,8 @@ use xtask::{project_root, pushd, Result};
 use xtask_coverage::{compare::coverage_compare, run, SummaryDetailLevel};
 
 fn main() -> Result<()> {
+    tracing_subscriber::fmt::init();
+
     let _d = pushd(project_root());
 
     let mut args = Arguments::from_env();
