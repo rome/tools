@@ -1,6 +1,7 @@
+use rome_js_syntax::SourceType;
+
 use crate::check_file_encoding;
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
-use rome_js_parser::SourceType;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
