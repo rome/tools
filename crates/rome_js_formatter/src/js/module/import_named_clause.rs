@@ -27,7 +27,7 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
         // if `can_break` is true we just use the previous format strategy, otherwise we use the new format strategy.
         // reference https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L173
 
-        // https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L184-L209v, 
+        // https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L184-L209v,
         // `standaloneSpecifiers` corresponding our `default_specifier` + part of `named_import`
         let formatted_named_import = if default_specifier.is_some() {
             // `can_break` is true.
@@ -42,8 +42,7 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                     match first_specifier {
                         Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_)) => {
                             let syntax_node = specifiers.syntax();
-                            if syntax_node.has_comments_direct()
-                            {
+                            if syntax_node.has_comments_direct() {
                                 named_import.format().format(formatter)
                             } else {
                                 let JsNamedImportSpecifiersFields {
