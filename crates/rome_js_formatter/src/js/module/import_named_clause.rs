@@ -26,6 +26,9 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
         // can_break implementation, return `format_element` instead of boolean to reduce enum conversion overhead.
         // if `can_break` is true we just use the previous format strategy, otherwise we use the new format strategy.
         // reference https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L173
+
+        // https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L184-L209v, 
+        // `standaloneSpecifiers` corresponding our `default_specifier` + part of `named_import`
         let formatted_named_import = if default_specifier.is_some() {
             // `can_break` is true.
             named_import.format().format(formatter)
@@ -34,12 +37,12 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                 JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
                     if specifiers.specifiers().len() == 1 =>
                 {
+                    // SAFETY: we know that the `specifiers.specifiers().len() == 1`, so unwrap `iter().next()` is safe.
                     let first_specifier = specifiers.specifiers().iter().next().unwrap();
                     match first_specifier {
                         Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_)) => {
-                            let syntax_node = specifiers.clone().into_syntax();
-                            if syntax_node.has_leading_comments()
-                                || syntax_node.has_trailing_comments()
+                            let syntax_node = specifiers.syntax();
+                            if syntax_node.has_comments_direct()
                             {
                                 named_import.format().format(formatter)
                             } else {
