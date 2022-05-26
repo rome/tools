@@ -160,36 +160,15 @@ struct SymbolsFile {
     symbols: Vec<Symbol>,
 }
 
-fn parse_decl(input: &str) -> Option<(&str, Decl)> {
-    let (input, _) = parse_str(input, "Decl")?;
-    let (input, _) = parse_whitespace0(input);
-    let (input, _) = parse_str(input, "(")?;
-    let (input, _) = parse_whitespace0(input);
-    let (input, file) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
-    let (input, _) = parse_whitespace0(input);
-    let (input, _) = parse_str(input, ",")?;
-    let (input, _) = parse_whitespace0(input);
-    let (input, row_start) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
-    let (input, _) = parse_whitespace0(input);
-    let (input, _) = parse_str(input, ",")?;
-    let (input, _) = parse_whitespace0(input);
-    let (input, col_start) = parse_until_chr(input, |x| x.is_whitespace() || x == ')')?;
-    let (input, _) = parse_whitespace0(input);
-    let (input, _) = parse_str(input, ")")?;
-    Some((
-        input,
-        Decl {
-            file: file.to_string(),
-            row_start: row_start.parse().ok(),
-            col_start: col_start.parse().ok(),
-        },
-    ))
-}
-
-/// see xtask\coverage\Typescript\src\harness\typeWriter.ts
-/// to understand how the symbol line is generated
-/// example:
+/// This function parses lines like:
 /// >Cell : Symbol(Cell, Decl(2dArrays.ts, 0, 0))
+///   |              |     |     |         \--+---> line and column ofthe first char of the leading trivia where the declaration
+///   |              |     |     \--> File where the declaration of this symbol is
+///   |              |     \--> States that this Symbol is a declaration
+///   |              \--> Complete Path of the Symbol
+///   \--> text of the symbol
+/// To understand how the Typescript codebase generate this line
+/// see xtask\coverage\Typescript\src\harness\typeWriter.ts
 fn parse_symbol(input: &str) -> Option<Symbol> {
     let (input, _) = parse_str(input, ">")?;
     let (input, name) = parse_until_chr(input, |x| x.is_whitespace() || x == ':')?;
@@ -231,6 +210,38 @@ fn parse_symbol(input: &str) -> Option<Symbol> {
     })
 }
 
+fn parse_decl(input: &str) -> Option<(&str, Decl)> {
+    let (input, _) = parse_str(input, "Decl")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, "(")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, file) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ",")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, row_start) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ",")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, col_start) = parse_until_chr(input, |x| x.is_whitespace() || x == ')')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ")")?;
+    Some((
+        input,
+        Decl {
+            file: file.to_string(),
+            row_start: row_start.parse().ok(),
+            col_start: col_start.parse().ok(),
+        },
+    ))
+}
+
+/// This method will load .symbols file
+/// from the Typescript test suite.
+/// Each file is composed of:
+/// first line pointing to the original ts file;
+/// For each line of the source file: the actual ts line;
+/// and if the line contains any symbols, one line per symbol as described by the method [parse_symbol];
 fn load_symbols_file(txt: &str) -> SymbolsFile {
     let mut lines = txt.lines();
 
