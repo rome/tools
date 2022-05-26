@@ -62,7 +62,6 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                         }
                         _ => named_import.format().format(formatter),
                     }
-
                 }
                 _ => named_import.format().format(formatter),
             }
