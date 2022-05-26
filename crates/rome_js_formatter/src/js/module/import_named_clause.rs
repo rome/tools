@@ -63,20 +63,7 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                         _ => named_import.format().format(formatter),
                     }
 
-                    // if syntax_node.has_leading_comments() || syntax_node.has_trailing_comments() {
-                    // } else {
-                    // }
                 }
-                // JsAnyNamedImport::JsNamespaceImportSpecifier(_) => {
-                //     // this means `standaloneSpecifiers.length > 0`, then we can break;
-
-                //     named_import.format().format(formatter)
-                // }
-                // JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
-                //     if specifiers.specifiers().len() > 1 =>
-                // {
-                //     named_import.format().format(formatter)
-                // }
                 _ => named_import.format().format(formatter),
             }
         };
