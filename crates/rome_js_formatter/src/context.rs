@@ -120,3 +120,47 @@ impl fmt::Display for QuoteStyle {
         }
     }
 }
+
+impl QuoteStyle {
+    pub fn as_char(&self) -> char {
+        match self {
+            QuoteStyle::Double => '"',
+            QuoteStyle::Single => '\'',
+        }
+    }
+
+    pub fn as_string(&self) -> &str {
+        match self {
+            QuoteStyle::Double => "\"",
+            QuoteStyle::Single => "'",
+        }
+    }
+
+    /// Returns the quote, prepended with a backslash (escaped)
+    pub fn as_escaped(&self) -> &str {
+        match self {
+            QuoteStyle::Double => "\\\"",
+            QuoteStyle::Single => "\\'",
+        }
+    }
+
+    pub fn as_bytes(&self) -> u8 {
+        self.as_char() as u8
+    }
+
+    /// Returns the quote in HTML entity
+    pub fn as_html_entity(&self) -> &str {
+        match self {
+            QuoteStyle::Double => "&quot;",
+            QuoteStyle::Single => "&apos;",
+        }
+    }
+
+    /// Given the current quote, it returns the other one
+    pub fn other(&self) -> Self {
+        match self {
+            QuoteStyle::Double => QuoteStyle::Single,
+            QuoteStyle::Single => QuoteStyle::Double,
+        }
+    }
+}
