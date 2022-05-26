@@ -98,11 +98,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
         } else {
             for (expected, actual) in expected.symbols.iter().zip(actual) {
                 let are_names_eq = expected.name == actual.name();
-                // let are_paths_eq = expected.name == actual.name;
-                //TODO check decls
-                if !are_names_eq
-                /*|| !are_paths_eq*/
-                {
+                if !are_names_eq {
                     return TestRunOutcome::IncorrectlyErrored {
                         files: t,
                         errors: vec![],
