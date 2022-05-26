@@ -354,6 +354,9 @@ where
 /// them on as few lines as possible. Each element introduces a conceptual group. The printer
 /// first tries to print the item in flat mode but then prints it in expanded mode if it doesn't fit.
 ///
+/// The separator should be an item that breaks, e.g. [soft_line_break], as the printer relies on
+/// the separator breaking to fill print the items.
+///
 /// ## Examples
 ///
 /// ```rust
@@ -365,7 +368,7 @@ where
 /// let b = from_utf8(&[b'b'; 30]).unwrap();
 /// let c = from_utf8(&[b'c'; 30]).unwrap();
 /// let d = from_utf8(&[b'd'; 30]).unwrap();
-/// let expr = fill_elements(space_token(), [token(a), token(b), token(c), token(d)]);
+/// let expr = fill_elements(soft_line_break_or_space(), [token(a), token(b), token(c), token(d)]);
 ///
 /// assert_eq!(
 ///     format!("{a} {b}\n{c} {d}"),
@@ -383,7 +386,7 @@ where
 /// let b = "Please do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you ";
 /// let c = "<em>will</em>";
 /// let d = " be reprimanded";
-/// let expr = fill_elements(empty_element(), [token(a), token(b), token(c), token(d)]);
+/// let expr = fill_elements(soft_line_break(), [token(a), token(b), token(c), token(d)]);
 ///
 /// assert_eq!(
 ///     format!("{a}\n{b}\n{c}{d}"),
@@ -884,7 +887,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// let elements = group_elements_with_options(format_elements![
 ///     token("["),
-///     soft_block_indent(fill_elements(space_token(), vec![
+///     soft_block_indent(fill_elements(soft_line_break_or_space(), vec![
 ///         format_elements![token("1,")],
 ///         format_elements![token("234568789,")],
 ///         format_elements![token("3456789,")],
@@ -1110,7 +1113,8 @@ pub enum FormatElement {
     /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
     List(List),
 
-    /// Concatenates multiple elements together with a given separator or line breaks to fill the print width. See [fill_elements].
+    /// Concatenates multiple elements together with a given separator printed in either
+    /// flat or expanded mode to fill the print width. See [fill_elements].
     Fill(Box<Fill>),
 
     /// A token that should be printed as is, see [token] for documentation and examples.
