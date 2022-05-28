@@ -3,8 +3,6 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::jsx::jsx_parse_errors::jsx_only_syntax_error;
-use super::typescript::ts_parse_error::ts_type_assertion_on_new_expr;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -99,12 +97,6 @@ impl ExpressionContext {
     /// Returns `true` if currently parsing a decorator expression `@<expr>`.
     pub(crate) const fn is_in_ts_decorator(&self) -> bool {
         self.0.contains(ExpressionContextFlags::IN_TS_DECORATOR)
-    }
-
-    /// Returns true if typescript type assertion are valid in this context
-    pub(crate) const fn is_ts_type_assertion_allowed(&self) -> bool {
-        self.0
-            .contains(ExpressionContextFlags::ALLOW_TS_TYPE_ASSERTION)
     }
 
     /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
@@ -1306,37 +1298,14 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
 
         // test ts type_assertion_primary_expression
         // let a = <number>undefined;
-        T![<] => {
-            // Checkpoint in case we are not at a JSX tag
-            let checkpoint = p.checkpoint();
-            Jsx.parse_exclusive_syntax(p, parse_jsx_tag_expression, |p, assertion| {
-                jsx_only_syntax_error(p, "JSX tags", assertion.range(p))
-            })
-            .or_else(|| {
-                // Try to parse typescript type assertions
-                p.rewind(checkpoint);
-                TypeScript
-                    .parse_exclusive_syntax(
-                        p,
-                        |p| parse_ts_type_assertion_expression(p, context),
-                        |p, assertion| {
-                            ts_only_syntax_error(p, "type assertions", assertion.range(p))
-                        },
-                    )
-                    .map(|m| {
-                        // we parsed a type assertion, but we need an error
-                        // if type assertions are not allowed
 
-                        // test_err ts ts_type_assertions_not_valid_at_new_expr
-                        // var test2 = new <any>Test2();
-                        if !context.is_ts_type_assertion_allowed() {
-                            p.error(ts_type_assertion_on_new_expr(p, &m))
-                        }
-                        m
-                    })
-            })
-            .unwrap()
-        }
+        // test_err ts ts_type_assertions_not_valid_at_new_expr
+        // var test2 = new <any>Test2();
+
+        // test ts ts_type_assertion
+        // let a = <number>b;
+        T![<] if Jsx.is_supported(p) => return parse_jsx_tag_expression(p),
+
         // test_err primary_expr_invalid_recovery
         // let a = \; foo();
         t if t.is_contextual_keyword() || t.is_future_reserved_keyword() => {
