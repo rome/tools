@@ -9,6 +9,7 @@ use std::{
     ops::Range,
     os::raw::c_int,
     path::Path,
+    str::FromStr,
     sync::Once,
 };
 
@@ -17,6 +18,7 @@ use rome_formatter::IndentStyle;
 use rome_js_formatter::options::JsFormatOptions;
 use rome_js_parser::parse;
 use rome_js_syntax::SourceType;
+use serde::Serialize;
 
 use crate::check_reformat::CheckReformatParams;
 
@@ -270,6 +272,35 @@ enum MatchCategory {
     Match,
 }
 
+#[derive(Debug, PartialEq, Eq)]
+enum ReportType {
+    Json,
+    Markdown,
+}
+
+#[derive(Debug, PartialEq, Serialize, Default)]
+struct PeerFileJsonReport {
+    filename: String,
+    prettier_similarity: f64,
+}
+#[derive(Debug, PartialEq, Serialize, Default)]
+struct ReportJson {
+    file_based_average_prettier_similarity: f64,
+    line_based_average_prettier_similarity: f64,
+    files: Vec<PeerFileJsonReport>,
+}
+impl FromStr for ReportType {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "json" => Ok(Self::Json),
+            "markdown" => Ok(Self::Markdown),
+            _ => Err("Only `json` and `markdown` are supported".to_string()),
+        }
+    }
+}
+
 struct DiffReportItem {
     file_name: &'static str,
     rome_formatted_result: String,
@@ -341,18 +372,35 @@ impl DiffReport {
         if let Some(report) = rome_rowan::check_live() {
             panic!("\n{report}")
         }
-
         // Only create the report file if the REPORT_PRETTIER
         // environment variable is set to 1
         match env::var("REPORT_PRETTIER") {
             Ok(value) if value == "1" => {
-                self.report_prettier();
+                let report_type = match env::var("REPORT_TYPE") {
+                    Ok(value) => ReportType::from_str(&value).unwrap(),
+                    _ => ReportType::Markdown,
+                };
+                let report_filename = match env::var("REPORT_FILENAME") {
+                    Ok(value) => value,
+                    _ => match report_type {
+                        ReportType::Json => "report.json".to_string(),
+                        ReportType::Markdown => "report.md".to_string(),
+                    },
+                };
+                self.report_prettier(report_type, report_filename);
             }
             _ => {}
         }
     }
 
-    fn report_prettier(&self) {
+    fn report_prettier(&self, report_type: ReportType, report_filename: String) {
+        match report_type {
+            ReportType::Json => self.report_json(report_filename),
+            ReportType::Markdown => self.report_markdown(report_filename),
+        }
+    }
+
+    fn report_markdown(&self, report_filename: String) {
         let mut report = String::new();
         let mut state = self.state.lock();
         state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
@@ -416,6 +464,70 @@ impl DiffReport {
             (sum_of_per_compatibility_file / file_count as f64) * 100_f64,
             (total_matched_line as f64 / total_line as f64) * 100_f64
         ) + &report;
-        write("report.md", report).unwrap();
+        write(report_filename, report).unwrap();
+    }
+
+    fn report_json(&self, report_filename: String) {
+        let mut state = self.state.lock();
+        state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
+
+        let mut report_json = ReportJson::default();
+
+        let mut sum_of_per_compatibility_file = 0_f64;
+        let mut total_line = 0;
+        let mut total_matched_line = 0;
+        let mut file_count = 0;
+        for DiffReportItem {
+            file_name,
+            rome_formatted_result,
+            prettier_formatted_result,
+            match_category,
+        } in state.iter()
+        {
+            file_count += 1;
+            let rome_lines = rome_formatted_result.lines().count();
+            let prettier_lines = prettier_formatted_result.lines().count();
+            let mut matched_lines = 0;
+            let compatibility_per_file;
+            if *match_category == MatchCategory::Diff {
+                for (tag, line) in diff_lines(
+                    Algorithm::default(),
+                    prettier_formatted_result,
+                    rome_formatted_result,
+                ) {
+                    if matches!(tag, ChangeTag::Equal) {
+                        matched_lines += line.lines().count();
+                    }
+                }
+
+                compatibility_per_file =
+                    matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
+                sum_of_per_compatibility_file += compatibility_per_file;
+            } else {
+                // in this branch `rome_lines` == `prettier_lines` == `matched_lines`
+                assert!(rome_lines == prettier_lines);
+                matched_lines = rome_lines;
+                compatibility_per_file = 1_f64;
+                sum_of_per_compatibility_file += compatibility_per_file;
+            }
+
+            total_line += rome_lines.max(prettier_lines);
+            total_matched_line += matched_lines;
+            report_json.files.push(PeerFileJsonReport {
+                filename: file_name.to_string(),
+                prettier_similarity: compatibility_per_file,
+            });
+        }
+        // extra two space force markdown render insert a new line
+        let line_based = sum_of_per_compatibility_file / file_count as f64;
+        let file_based = total_matched_line as f64 / total_line as f64;
+        report_json.line_based_average_prettier_similarity = line_based;
+        report_json.file_based_average_prettier_similarity = file_based;
+
+        let json_content = serde_json::to_string(&report_json).unwrap();
+        // report = format!(
+        //     "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \n the definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893 \n",
+        // ) + &report;
+        write(report_filename, json_content).unwrap();
     }
 }
