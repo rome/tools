@@ -4,7 +4,7 @@ use crate::utils::{is_simple_expression, FormatPrecedence};
 use crate::FormatNodeFields;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
-    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
+    JsParenthesizedExpressionFields, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -50,27 +50,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
                     formatter.format_replaced(&r_paren_token?, empty_element()),
                 ]
             ]
-        }
-        // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
-        // add extra soft_block_indent, for example:
-        // ```js
-        // ("escaped carriage return \
-        // ");
-        // ```
-        // if we add soft_block_indent, we will get:
-        // ```js
-        // (
-        // "escaped carriage return \
-        // "
-        // );
-        // ```
-        // which will not match prettier's formatting behavior, if we add this extra branch to handle this case, it become:
-        // ```js
-        // ("escaped carriage return \
-        // ");
-        // ```
-        // this is what we want
-        else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
+        } else if !requires_soft_block_indent(node)? {
             formatted![
                 formatter,
                 [
@@ -173,4 +153,27 @@ fn not_binaryish_expression(node: &JsSyntaxNode) -> bool {
         node.kind(),
         JsSyntaxKind::JS_BINARY_EXPRESSION | JsSyntaxKind::JS_LOGICAL_EXPRESSION
     )
+}
+
+fn requires_soft_block_indent(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
+    let expression_kind = node.expression()?.syntax().kind();
+
+    let requires_indent = match expression_kind {
+        // Never block indent a parenthesized multiline string literal
+        JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION => false,
+        // Only soft block ident a parenthesized sequence expression when it's
+        // the child of specific node types
+        JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
+            let parent_kind = node.syntax().parent().map(|p| p.kind());
+
+            matches!(
+                parent_kind,
+                Some(JsSyntaxKind::JS_RETURN_STATEMENT)
+                    | Some(JsSyntaxKind::JS_UNARY_EXPRESSION)
+                    | Some(JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
+            )
+        }
+        _ => true,
+    };
+    Ok(requires_indent)
 }

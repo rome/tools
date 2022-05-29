@@ -16,25 +16,10 @@ impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpress
             // Return statement already does the indentation for us
             // Arrow function body can't have a sequence expression unless it's parenthesized, otherwise
             // would be a syntax error
-            if matches!(parent.kind(), JsSyntaxKind::JS_RETURN_STATEMENT) {
-                true
-            } else if matches!(parent.kind(), JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION) {
-                // In case we are inside a sequence expression, we have to go up a level and see the great parent.
-                // Arrow function body and return statements applying indentation for us, so we signal the
-                // sequence expression to not add other indentation levels
-                let great_parent = parent.parent().map(|gp| gp.kind());
-
-                matches!(
-                    great_parent,
-                    Some(
-                        JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
-                            | JsSyntaxKind::JS_RETURN_STATEMENT
-                            | JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER
-                    )
-                )
-            } else {
-                false
-            }
+            matches!(
+                parent.kind(),
+                JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
+            )
         });
 
         // Find the left most sequence expression

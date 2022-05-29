@@ -264,7 +264,11 @@ fn should_not_indent_if_parent_indents(current_node: &JsSyntaxNode) -> bool {
 
     matches!(
         parent_kind,
-        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
+        Some(
+            JsSyntaxKind::JS_RETURN_STATEMENT
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+                | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
+        )
     )
 }
 
