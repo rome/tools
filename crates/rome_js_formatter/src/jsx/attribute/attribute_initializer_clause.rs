@@ -5,12 +5,9 @@ use rome_js_syntax::{JsxAttributeInitializerClause, JsxAttributeInitializerClaus
 impl FormatNodeFields<JsxAttributeInitializerClause>
     for FormatNodeRule<JsxAttributeInitializerClause>
 {
-    fn format_fields(
-        node: &JsxAttributeInitializerClause,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsxAttributeInitializerClause, f: &JsFormatter) -> FormatResult<()> {
         let JsxAttributeInitializerClauseFields { eq_token, value } = node.as_fields();
 
-        formatted![formatter, [eq_token.format(), value.format()]]
+        write![f, [eq_token.format(), value.format()]]
     }
 }

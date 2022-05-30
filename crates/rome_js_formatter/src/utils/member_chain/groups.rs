@@ -146,7 +146,7 @@ impl<'f> Groups<'f> {
     /// This is an heuristic needed to check when the first element of the group
     /// Should be part of the "head" or the "tail".
     fn should_not_wrap(&self, first_group: &HeadGroup) -> SyntaxResult<bool> {
-        let tab_with = self.formatter.context().tab_width();
+        let tab_with = self.formatter.state().tab_width();
         let has_computed_property = if self.groups.len() > 1 {
             // SAFETY: guarded by the previous check
             let group = &self.groups[0];

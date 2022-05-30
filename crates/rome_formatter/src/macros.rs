@@ -1,6 +1,52 @@
-use crate::prelude::*;
-use crate::{ConcatBuilder, IntoFormatElement};
-use std::marker::PhantomData;
+/// TODO consider adding JSX kind of support: `<group>{}</group>
+#[macro_export]
+macro_rules! format_args {
+    ($($value:expr),+ $(,)?) => {
+        &$crate::Arguments::new(&[
+            $(
+                $crate::Argument::new(&$value)
+            ),+
+        ])
+    }
+}
+
+#[macro_export]
+macro_rules! write {
+    ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
+        use $crate::Buffer;
+        $dst.write_fmt($crate::format_args!($($arg),+))
+    }}
+}
+
+/// Creates the Format IR for a value.
+///
+/// The first argument `format!` receives is the [FormatContext] that specify how elements must be formatted.
+/// Additional parameters passed get formatted by using their [Format] implementation.
+///
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::format;
+///
+/// let formatted = format!(SimpleFormatContext::default(), [token("("), token("a"), token(")")]).unwrap();
+///
+/// assert_eq!(
+///     formatted.into_format_element(),
+///     format_elements![
+///         FormatElement::Token(Token::Static { text: "(" }),
+///         FormatElement::Token(Token::Static { text: "a" }),
+///         FormatElement::Token(Token::Static { text: ")" }),
+///     ]
+/// );
+/// ```
+#[macro_export]
+macro_rules! format {
+    ($context:expr, [$($arg:expr),+ $(,)?]) => {{
+        ($crate::format($context, $crate::format_args!($($arg),+)))
+    }}
+}
 
 /// The macro `format_elements` is a convenience macro to
 /// use when writing a list of tokens that should be at the same level
@@ -70,98 +116,6 @@ macro_rules! format_elements {
             ),+
         ])
     }};
-}
-
-/// The macro `formatted` is a convenience macro to chain a list of [FormatElement] or objects
-/// that implement [IntoFormatElement] (which is implemented by all object implementing [Format]).
-///
-/// # Examples
-///
-/// Let's suppose you need to create tokens for the string `"foo": "bar"`,
-/// you would write:
-///
-/// ```rust
-/// use rome_formatter::FormatContext;
-/// use rome_formatter::prelude::*;
-///
-/// struct TestFormat;
-///
-/// impl Format for TestFormat {
-///     type Context = ();
-///     fn format(&self, _: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-///         Ok(token("test"))
-///     }
-/// }
-///
-/// let formatter = Formatter::default();
-///
-/// let formatted = formatted![
-///     &formatter,
-///     [
-///         token("a"),
-///         space_token(),
-///         token("simple"),
-///         space_token(),
-///         TestFormat
-///     ]
-///  ]
-///  .unwrap();
-///
-///  assert_eq!(
-///     formatted,
-///     concat_elements([
-///         token("a"),
-///         space_token(),
-///         token("simple"),
-///         space_token(),
-///         token("test")
-///     ])
-///  );
-/// ```
-///
-/// Or you can also create single element:
-/// ```
-/// use rome_formatter::prelude::*;
-/// use rome_formatter::FormatContext;
-///
-/// let formatter = Formatter::<()>::default();
-///
-/// let formatted = formatted![&formatter, [token("test")]].unwrap();
-///
-/// assert_eq!(formatted, token("test"));
-/// ```
-#[macro_export]
-macro_rules! formatted {
-
-    // called for things like formatted![formatter, [token("test")]]
-    ($formatter:expr, [$element:expr]) => {
-        {
-            $crate::IntoFormatElement::into_format_element($element, $formatter)
-        }
-    };
-
-    ($formatter:expr, [$($element:expr),+ $(,)?]) => {{
-        use $crate::macros::FormatBuilder;
-
-        const SIZE: usize = $crate::__count_elements!($($element),*);
-
-        let mut builder = FormatBuilder::new(SIZE);
-
-        $(
-                     builder.entry($element, $formatter);
-        )+
-
-        builder.finish()
-    }};
-}
-
-// Helper macro that counts the count of elements passed
-#[doc(hidden)]
-#[macro_export]
-macro_rules! __count_elements {
-    () => {0usize};
-    ($ex:expr) => {1usize};
-    ($_head:expr, $($tail:expr),* $(,)?) => {1usize + $crate::__count_elements!($($tail),*)};
 }
 
 /// Provides multiple different alternatives and the printer picks the first one that fits.
@@ -271,71 +225,40 @@ macro_rules! best_fitting {
     }}
 }
 
-#[doc(hidden)]
-pub struct FormatBuilder<O> {
-    builder: ConcatBuilder,
-    result: Result<(), FormatError>,
-    options: PhantomData<O>,
-}
-
-impl<O> FormatBuilder<O> {
-    #[inline]
-    pub fn new(size: usize) -> Self {
-        let mut builder = ConcatBuilder::new();
-        builder.size_hint((size, Some(size)));
-
-        Self {
-            builder,
-            result: Ok(()),
-            options: PhantomData,
-        }
-    }
-
-    #[inline]
-    pub fn entry<T>(&mut self, element: T, formatter: &Formatter<O>)
-    where
-        T: IntoFormatElement<O>,
-    {
-        self.result = self.result.and_then(|_| {
-            self.builder.entry(element.into_format_element(formatter)?);
-            Ok(())
-        });
-    }
-
-    #[inline]
-    pub fn finish(self) -> FormatResult<FormatElement> {
-        self.result.map(|_| self.builder.finish())
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
+    use crate::{write, FormatContext, FormatState, VecBuffer};
 
     struct TestFormat;
 
     impl Format for TestFormat {
         type Context = ();
-        fn format(&self, _: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-            Ok(token("test"))
+        fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+            write!(f, [token("test")])
         }
     }
 
     #[test]
     fn test_single_element() {
-        let formatter = Formatter::new(());
+        let mut state = FormatState::new(());
+        let mut buffer = VecBuffer::new(&mut state);
 
-        let formatted = formatted![&formatter, [TestFormat]].unwrap();
+        write![&mut buffer, [TestFormat]].unwrap();
 
-        assert_eq!(formatted, token("test"));
+        assert_eq!(
+            buffer.into_document().into_element(),
+            FormatElement::Token(Token::Static { text: "test" })
+        );
     }
 
     #[test]
     fn test_multiple_elements() {
-        let formatter = Formatter::new(());
+        let mut state = FormatState::new(());
+        let mut buffer = VecBuffer::new(&mut state);
 
-        let formatted = formatted![
-            &formatter,
+        write![
+            &mut buffer,
             [
                 token("a"),
                 space_token(),
@@ -347,14 +270,14 @@ mod tests {
         .unwrap();
 
         assert_eq!(
-            formatted,
-            concat_elements([
-                token("a"),
-                space_token(),
-                token("simple"),
-                space_token(),
-                token("test")
-            ])
+            buffer.into_document().into_element(),
+            FormatElement::List(List::new(vec![
+                FormatElement::Token(Token::Static { text: "a" }),
+                FormatElement::Space,
+                FormatElement::Token(Token::Static { text: "simple" }),
+                FormatElement::Space,
+                FormatElement::Token(Token::Static { text: "test" })
+            ]))
         );
     }
 }

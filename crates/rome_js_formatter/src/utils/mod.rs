@@ -21,6 +21,10 @@ use rome_js_syntax::{
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
+use std::borrow::Cow;
+use std::fmt;
+
+use crate::options::{JsFormatOptions, QuoteStyle};
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
 
@@ -221,10 +225,10 @@ impl TemplateElement {
         let middle = format_elements![middle, line_suffix_boundary()];
 
         if should_hard_group {
-            formatted![
+            write!(
                 formatter,
                 [dollar_curly_token.format(), middle, r_curly_token.format()]
-            ]
+            )?;
         } else {
             formatter
                 .delimited(&dollar_curly_token, middle, &r_curly_token)
@@ -359,26 +363,26 @@ impl FormatPrecedence {
 /// semicolon insertion if it was missing in the input source and the
 /// preceeding element wasn't an unknown node
 pub(crate) fn format_with_semicolon(
-    formatter: &JsFormatter,
+    formatter: &mut JsFormatter,
     content: FormatElement,
     semicolon: Option<JsSyntaxToken>,
-) -> FormatResult<FormatElement> {
+) -> FormatResult<()> {
     let is_unknown = match content.last_element() {
         Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
         _ => false,
     };
 
-    formatted![
+    write!(
         formatter,
         [
             content,
             semicolon.format().or_format(if is_unknown {
-                empty_element
+                |f| Ok(())
             } else {
-                || token(";")
+                |f| write!(f, [token(";")])
             })
         ]
-    ]
+    )
 }
 
 /// A call like expression is one of:

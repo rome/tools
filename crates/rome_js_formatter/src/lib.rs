@@ -14,7 +14,7 @@ pub(crate) use formatter::{
     format_leading_trivia, format_trailing_trivia, JsFormatter, JsFormatterExt,
 };
 use rome_formatter::prelude::*;
-use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
+use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
@@ -175,15 +175,15 @@ where
 {
     type Context = JsFormatContext;
 
-    fn format(node: &N, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
+    fn format(node: &N, f: &JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
-        let element = if has_formatter_suppressions(syntax) {
-            suppressed_node(syntax).format(formatter)?
+        if has_formatter_suppressions(syntax) {
+            write!(f, [suppressed_node(syntax)])?;
         } else {
-            Self::format_fields(node, formatter)?
+            Self::format_fields(node, f)?;
         };
 
-        Ok(element)
+        Ok(())
     }
 }
 
@@ -192,10 +192,7 @@ where
     T: AstNode<Language = JsLanguage>,
 {
     /// Formats the node's fields.
-    fn format_fields(
-        item: &T,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement>;
+    fn format_fields(item: &T, formatter: &mut JsFormatter) -> FormatResult<FormatElement>;
 }
 
 /// Format implementation specific to JavaScript tokens.
@@ -204,17 +201,17 @@ pub struct FormatJsSyntaxToken;
 impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
     type Context = JsFormatContext;
 
-    fn format(
-        token: &JsSyntaxToken,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
-        formatter.track_token(token);
+    fn format(token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
+        f.state_mut().track_token(token);
 
-        Ok(format_elements![
-            format_leading_trivia(token, formatter::TriviaPrintMode::Full),
-            Token::from(token),
-            format_trailing_trivia(token),
-        ])
+        write!(
+            f,
+            [
+                format_leading_trivia(token, formatter::TriviaPrintMode::Full),
+                Token::from(token),
+                format_trailing_trivia(token),
+            ]
+        )
     }
 }
 
@@ -237,7 +234,7 @@ impl IntoFormat for JsSyntaxToken {
 /// Formats a range within a file, supported by Rome
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatOptions], which
+/// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,
@@ -284,7 +281,7 @@ pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResul
 /// Formats a single node within a file, supported by Rome.
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatOptions], which
+/// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,

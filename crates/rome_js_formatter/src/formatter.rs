@@ -442,9 +442,9 @@ pub(crate) trait JsFormatterExt {
         current_token: &JsSyntaxToken,
         content_to_replace_with: FormatElement,
     ) -> FormatElement {
-        let formatter = self.as_formatter();
+        let f = self.as_formatter();
 
-        formatter.track_token(current_token);
+        f.track_token(current_token);
 
         format_elements![
             format_leading_trivia(current_token, TriviaPrintMode::Full),

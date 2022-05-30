@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use std::fmt;
 
 use crate::FormatNodeFields;
 use rome_formatter::Token;
@@ -29,7 +30,7 @@ impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLitera
         let sorted_flag_string = flag_char_vec.iter().collect::<String>();
 
         let sorted_regex_literal = Token::from_syntax_token_cow_slice(
-            std::borrow::Cow::Owned(format!(
+            std::borrow::Cow::Owned(std::format!(
                 "{}{}",
                 &trimmed_raw_string[0..end_slash_pos + 1],
                 sorted_flag_string

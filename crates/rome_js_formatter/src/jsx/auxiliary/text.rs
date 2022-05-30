@@ -2,6 +2,7 @@ use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_js_syntax::{JsxText, JsxTextFields};
 use std::borrow::Cow;
+use std::fmt;
 use std::ops::Range;
 use std::str::CharIndices;
 
@@ -175,10 +176,10 @@ fn get_trimmed_text(
         (Some(WhitespaceType::HasNewline), None) => Cow::Borrowed(text.trim_start()),
         (None, Some(WhitespaceType::HasNewline)) => Cow::Borrowed(text.trim_end()),
         (Some(WhitespaceType::NoNewline), Some(WhitespaceType::NoNewline)) => {
-            Cow::Owned(format!(" {} ", text.trim()))
+            Cow::Owned(std::format!(" {} ", text.trim()))
         }
-        (Some(WhitespaceType::NoNewline), _) => Cow::Owned(format!(" {}", text.trim())),
-        (_, Some(WhitespaceType::NoNewline)) => Cow::Owned(format!("{} ", text.trim())),
+        (Some(WhitespaceType::NoNewline), _) => Cow::Owned(std::format!(" {}", text.trim())),
+        (_, Some(WhitespaceType::NoNewline)) => Cow::Owned(std::format!("{} ", text.trim())),
     }
 }
 

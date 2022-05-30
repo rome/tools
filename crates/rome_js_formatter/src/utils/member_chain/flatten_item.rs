@@ -5,6 +5,7 @@ use rome_js_syntax::{
     JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
+use std::fmt;
 use std::fmt::Debug;
 
 #[derive(Clone)]
@@ -141,14 +142,18 @@ impl FlattenItem {
 impl Debug for FlattenItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            FlattenItem::StaticMember(_, formatted) => write!(f, "StaticMember: {:?}", formatted),
+            FlattenItem::StaticMember(_, formatted) => {
+                std::write!(f, "StaticMember: {:?}", formatted)
+            }
             FlattenItem::CallExpression(_, formatted) => {
-                write!(f, "CallExpression: {:?}", formatted)
+                std::write!(f, "CallExpression: {:?}", formatted)
             }
             FlattenItem::ComputedExpression(_, formatted) => {
-                write!(f, "ComputedExpression: {:?}", formatted)
+                std::write!(f, "ComputedExpression: {:?}", formatted)
             }
-            FlattenItem::Node(node, formatted) => write!(f, "{:?} {:?}", node.kind(), formatted),
+            FlattenItem::Node(node, formatted) => {
+                std::write!(f, "{:?} {:?}", node.kind(), formatted)
+            }
         }
     }
 }

@@ -9,16 +9,16 @@ impl FormatNodeFields<JsExportNamedShorthandSpecifier>
 {
     fn format_fields(
         node: &JsExportNamedShorthandSpecifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsExportNamedShorthandSpecifierFields { type_token, name } = node.as_fields();
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 type_token
                     .format()
-                    .with_or_empty(|type_token| formatted![formatter, [type_token, space_token()]]),
+                    .with_or_empty(|type_token, f| write![f, [type_token, space_token()]]),
                 name.format()
             ]
         ]

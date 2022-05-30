@@ -5,12 +5,9 @@ use rome_js_syntax::JsStaticModifier;
 use rome_js_syntax::JsStaticModifierFields;
 
 impl FormatNodeFields<JsStaticModifier> for FormatNodeRule<JsStaticModifier> {
-    fn format_fields(
-        node: &JsStaticModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsStaticModifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStaticModifierFields { modifier_token } = node.as_fields();
 
-        formatted![formatter, [modifier_token.format()]]
+        write![f, [modifier_token.format()]]
     }
 }
