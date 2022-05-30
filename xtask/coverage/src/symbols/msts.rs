@@ -31,27 +31,43 @@ impl TestCase for SymbolsMicrosoftTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let code = "".to_string();
-
         let symbols = check_file_encoding(&self.path).unwrap();
         let expected = load_symbols_file(&symbols);
 
         let mut full_path = PathBuf::from_str(BASE_PATH).unwrap();
         full_path.push(expected.code_file);
 
-        if !full_path.exists() {
-            // We may be able to recover the code from the .symbols file
-            let t = TestCaseFiles::single(self.name.clone(), code, SourceType::tsx());
-            return TestRunOutcome::Passed(t);
-        }
+        // Some .symbols files point to .ts files that do no exist.
+        // In this case, the best we can do is recover the original source from
+        // the .symbol file itself.
+        let code = if !full_path.exists() {
+            tracing::warn!("Not Found: {full_path:?}");
+            symbols.lines().fold(String::new(), |mut s, line| {
+                if !line.starts_with(">")
+                    && !line.starts_with("=== ")
+                    && !line.starts_with("///<reference ")
+                {
+                    s.push_str(&line);
+                    s.push_str("\n");
+                }
+                s
+            })
+        } else {
+            std::fs::read_to_string(&full_path).unwrap()
+        };
 
-        let code = std::fs::read_to_string(&full_path).unwrap();
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
-        let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax())
+        let mut actual: Vec<_> = rome_js_parser::semantic::semantic_events(r.syntax())
             .into_iter()
-            .filter(|x| !x.name().contains('\"') && !x.name().contains('\''))
+            .filter(|x| {
+                // We filter any event pointing to string literals.
+                // We do the same below because TS classifies some string literals as symbols and we also
+                // filter them below.
+                let name = x.str(&code);
+                !name.contains('\"') && !name.contains('\'')
+            })
             .collect();
         actual.sort_by_key(|x| x.range().start());
 
@@ -70,18 +86,20 @@ impl TestCase for SymbolsMicrosoftTestCase {
 
             let mut debug_text = String::new();
 
+            debug_text.push_str("expected: ");
+
             if let Some(symbol) = expected {
-                debug_text.push_str(&symbol.name);
+                debug_text.push_str(&format!("[{}]", &symbol.name));
             }
 
-            debug_text.push_str(" - ");
+            debug_text.push_str(" - actual: ");
 
-            if let Some(symbol) = actual {
-                debug_text.push_str(&format!("{:?}", symbol));
+            if let Some(actual) = actual {
+                debug_text.push_str(&format!("[{}]", actual.str(&code)));
             }
 
             match (expected, actual) {
-                (Some(e), Some(a)) if e.name != a.name() => {
+                (Some(expected), Some(actual)) if expected.name != actual.str(&code) => {
                     debug_text.push_str(" <<<<<<<<<<<<<<<<<<<< Diff here");
                 }
                 _ => {}
@@ -97,7 +115,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
             }
         } else {
             for (expected, actual) in expected.symbols.iter().zip(actual) {
-                let are_names_eq = expected.name == actual.name();
+                let are_names_eq = expected.name == actual.str(&code);
                 if !are_names_eq {
                     return TestRunOutcome::IncorrectlyErrored {
                         files: t,
@@ -155,6 +173,7 @@ struct Symbol {
     decls: Vec<Decl>,
 }
 
+#[derive(Debug)]
 struct SymbolsFile {
     code_file: PathBuf,
     symbols: Vec<Symbol>,

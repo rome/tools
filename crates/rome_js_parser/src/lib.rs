@@ -69,7 +69,7 @@ mod state;
 #[cfg(test)]
 mod tests;
 
-pub mod symbols;
+pub mod semantic;
 pub mod syntax;
 mod token_source;
 
