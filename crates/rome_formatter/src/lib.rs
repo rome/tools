@@ -619,9 +619,9 @@ where
 /// Formats any value that implements [Format].
 ///
 /// Please note that [format_node] is preferred to format a [JsSyntaxNode]
-pub fn format<O: FormatContext>(
-    options: O,
-    root: &dyn Format<Context = O>,
+pub fn format<C: FormatContext>(
+    options: C,
+    root: &dyn Format<Context = C>,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format").in_scope(move || {
         let printer_options = options.as_print_options();
@@ -635,11 +635,11 @@ pub fn format<O: FormatContext>(
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format_node<
-    O: FormatContext,
+    C: FormatContext,
     L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Context = O>,
+    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
 >(
-    options: O,
+    options: C,
     root: &N,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {
@@ -939,11 +939,11 @@ where
 ///
 /// It returns a [Formatted] result
 pub fn format_sub_tree<
-    O: FormatContext,
+    C: FormatContext,
     L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Context = O>,
+    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
 >(
-    options: O,
+    context: C,
     root: &N,
 ) -> FormatResult<Printed> {
     let syntax = root.item();
@@ -985,7 +985,7 @@ pub fn format_sub_tree<
             // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
-            match options.indent_style() {
+            match context.indent_style() {
                 IndentStyle::Tab => length,
                 IndentStyle::Space(width) => length / u16::from(width),
             }
@@ -995,7 +995,7 @@ pub fn format_sub_tree<
         None => 0,
     };
 
-    let formatted = format_node(options, root)?;
+    let formatted = format_node(context, root)?;
     let printed = formatted.print_with_indent(initial_indent);
     let sourcemap = Vec::from(printed.sourcemap());
     let verbatim_ranges = Vec::from(printed.verbatim_ranges());

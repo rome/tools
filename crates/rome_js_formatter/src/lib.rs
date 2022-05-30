@@ -244,12 +244,12 @@ impl IntoFormat for JsSyntaxToken {
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range(
-    options: JsFormatContext,
+    context: JsFormatContext,
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
     rome_formatter::format_range::<_, _, FormatJsSyntaxNode, _>(
-        options,
+        context,
         root,
         range,
         is_range_formatting_root,
@@ -275,8 +275,8 @@ fn is_range_formatting_root(node: &JsSyntaxNode) -> bool {
 /// Formats a JavaScript (and its super languages) file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node(options: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Formatted> {
-    rome_formatter::format_node(options, &root.format())
+pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Formatted> {
+    rome_formatter::format_node(context, &root.format())
 }
 
 /// Formats a single node within a file, supported by Rome.
@@ -289,8 +289,8 @@ pub fn format_node(options: JsFormatContext, root: &JsSyntaxNode) -> FormatResul
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree(options: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
-    rome_formatter::format_sub_tree(options, &root.format())
+pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
+    rome_formatter::format_sub_tree(context, &root.format())
 }
 
 #[cfg(test)]
