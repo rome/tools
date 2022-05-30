@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange};
 use rome_rowan::syntax::Preorder;
 
@@ -21,37 +23,44 @@ impl SemanticEvent {
     }
 }
 
-struct SemanticEventIterator {
-    iter: Preorder<JsLanguage>,
+#[derive(Default)]
+pub struct SemanticEventExtractor {
+    stash: VecDeque<SemanticEvent>,
 }
 
-impl SemanticEventIterator {
-    fn extract_event(&self, node: &JsSyntaxNode) -> Option<SemanticEvent> {
+impl SemanticEventExtractor {
+    pub fn extract_from(&mut self, node: &JsSyntaxNode) {
         use rome_js_syntax::JsSyntaxKind::*;
         use SemanticEvent::*;
         match node.kind() {
-            JS_IDENTIFIER_BINDING => Some(DeclarationFound {
-                range: node.text_range(),
+            JS_IDENTIFIER_BINDING => self.stash.push_back(DeclarationFound {
+                range: node.text_trimmed_range(),
             }),
-            _ => None,
+            _ => {}
         }
     }
+}
+struct SemanticEventIterator {
+    iter: Preorder<JsLanguage>,
+    extractor: SemanticEventExtractor,
 }
 
 impl Iterator for SemanticEventIterator {
     type Item = SemanticEvent;
 
     fn next(&mut self) -> Option<Self::Item> {
-        use rome_js_syntax::WalkEvent::*;
         loop {
-            match self.iter.next() {
-                Some(Enter(node)) => {
-                    if let Some(e) = self.extract_event(&node) {
-                        break Some(e);
+            if let Some(e) = self.extractor.stash.pop_front() {
+                break Some(e);
+            } else {
+                use rome_js_syntax::WalkEvent::*;
+                match self.iter.next() {
+                    Some(Enter(node)) => {
+                        self.extractor.extract_from(&node);
                     }
+                    Some(_) => {}
+                    None => break None,
                 }
-                Some(_) => {}
-                None => break None,
             }
         }
     }
@@ -60,5 +69,6 @@ impl Iterator for SemanticEventIterator {
 pub fn semantic_events(root: JsSyntaxNode) -> impl IntoIterator<Item = SemanticEvent> {
     SemanticEventIterator {
         iter: root.preorder(),
+        extractor: SemanticEventExtractor::default(),
     }
 }

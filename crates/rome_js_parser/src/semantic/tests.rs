@@ -112,7 +112,7 @@ fn extract_declaration_assert(
             .trim_end_matches("*/")
             .trim()
             .to_string(),
-        token.text_range(),
+        token.text_trimmed_range(),
     );
 
     // If there is already an assertion with the same name. Suggest a rename
