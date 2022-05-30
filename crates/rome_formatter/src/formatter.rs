@@ -83,7 +83,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// ```
     pub fn join_with<'a, 'joiner>(
         &'a mut self,
-        joiner: &'joiner dyn Format<Context = Context>,
+        joiner: &'joiner dyn Format<Context>,
     ) -> JoinBuilder<'a, 'joiner, 'buf, Context> {
         JoinBuilder::with(self, joiner)
     }
@@ -114,7 +114,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// ```
     pub fn fill<'a, 'with>(
         &'a mut self,
-        separator: &'with dyn Format<Context = Context>,
+        separator: &'with dyn Format<Context>,
     ) -> FillBuilder<'a, 'with, 'buf, Context> {
         FillBuilder::new(self, separator)
     }

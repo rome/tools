@@ -60,7 +60,11 @@ macro_rules! format {
 /// ```rust
 /// use rome_formatter::prelude::*;
 ///
-/// let element = format_elements![token("foo:"), space_token(), token("bar")];
+/// let element = format_elements![
+///     FormatElement::Token(Token::Static { text: "foo:" }),
+///     FormatElement::Space,
+///     FormatElement::Token(Token::Static { text: "bar" })
+/// ];
 /// ```
 ///
 /// The macro can be also nested, although the macro needs to be decorated with the token you need.
@@ -76,15 +80,15 @@ macro_rules! format {
 /// use rome_formatter::prelude::*;
 ///
 /// let element = format_elements![
-///   token("foo:"),
-///   space_token(),
-///   token("{"),
-///   space_token(),
-///   token("bar:"),
-///   space_token(),
-///   token("lorem"),
-///   space_token(),
-///   token("}")
+///   FormatElement::Token(Token::Static { text: "foo:" }),
+///   FormatElement::Space,
+///   FormatElement::Token(Token::Static { text: "{" }),
+///   FormatElement::Space,
+///   FormatElement::Token(Token::Static { text: "bar:" }),
+///   FormatElement::Space,
+///   FormatElement::Token(Token::Static { text: "lorem" }),
+///   FormatElement::Space,
+///   FormatElement::Token(Token::Static { text: "}" }),
 /// ];
 /// assert_eq!(r#"foo: { bar: lorem }"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
 /// ```
@@ -94,7 +98,7 @@ macro_rules! format {
 /// use rome_formatter::prelude::*;
 ///
 /// use rome_formatter::prelude::*;
-/// let element = format_elements![token("single")];
+/// let element = format_elements![FormatElement::Token(Token::Static { text: "single" })];
 /// assert_eq!(r#"single"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
 /// ```
 #[macro_export]
@@ -232,9 +236,8 @@ mod tests {
 
     struct TestFormat;
 
-    impl Format for TestFormat {
-        type Context = ();
-        fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    impl Format<()> for TestFormat {
+        fn format(&self, f: &mut Formatter<()>) -> FormatResult<()> {
             write!(f, [token("test")])
         }
     }

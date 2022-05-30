@@ -369,10 +369,8 @@ impl From<&SyntaxError> for FormatError {
 ///
 /// struct Paragraph(String);
 ///
-/// impl Format for Paragraph {
-///     type Context = SimpleFormatContext;
-///
-///     fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+/// impl Format<SimpleFormatContext> for Paragraph {
+///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
 ///         write!(f, [
 ///             hard_line_break(),
 ///             dynamic_token(&self.0, TextSize::from(0)),
@@ -386,43 +384,34 @@ impl From<&SyntaxError> for FormatError {
 ///
 /// assert_eq!("test\n", formatted.print().as_code())
 /// ```
-pub trait Format {
-    /// Type of the formatter options.
-    type Context;
-
+pub trait Format<Context> {
     /// Formats the object
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()>;
 }
 
-impl<T> Format for &T
+impl<T, Context> Format<Context> for &T
 where
-    T: ?Sized + Format,
+    T: ?Sized + Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         Format::format(&**self, f)
     }
 }
 
-impl<T> Format for &mut T
+impl<T, Context> Format<Context> for &mut T
 where
-    T: ?Sized + Format,
+    T: ?Sized + Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         Format::format(&**self, f)
     }
 }
 
-impl<T> Format for Option<T>
+impl<T, Context> Format<Context> for Option<T>
 where
-    T: Format,
+    T: Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         match self {
             Some(value) => value.format(f),
             None => Ok(()),
@@ -430,13 +419,11 @@ where
     }
 }
 
-impl<T> Format for SyntaxResult<T>
+impl<T, Context> Format<Context> for SyntaxResult<T>
 where
-    T: Format,
+    T: Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         match self {
             Ok(value) => value.format(f),
             Err(err) => Err(err.into()),
@@ -477,7 +464,7 @@ pub trait FormatRule<T> {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, Formatted, FormatWithRule};
 /// use rome_rowan::{Language, SyntaxNode};
-/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>, Context=SimpleFormatContext>>(node: F) -> FormatResult<Formatted> {
+/// fn format_node<L: Language, F: FormatWithRule<SimpleFormatContext, Item=SyntaxNode<L>>>(node: F) -> FormatResult<Formatted> {
 ///     let formatted = format!(SimpleFormatContext::default(), [node]);
 ///     let _syntax = node.item();
 ///
@@ -485,7 +472,7 @@ pub trait FormatRule<T> {
 ///     formatted
 /// }
 /// ```
-pub trait FormatWithRule: Format {
+pub trait FormatWithRule<O>: Format<O> {
     type Item;
 
     /// Returns the associated item
@@ -513,7 +500,7 @@ where
     }
 }
 
-impl<T, R> FormatWithRule for FormatRefWithRule<'_, T, R>
+impl<T, R> FormatWithRule<R::Context> for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
@@ -524,12 +511,10 @@ where
     }
 }
 
-impl<T, R> Format for FormatRefWithRule<'_, T, R>
+impl<T, R> Format<R::Context> for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
-    type Context = R::Context;
-
     #[inline]
     fn format(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
         R::format(self.item, f)
@@ -566,19 +551,17 @@ where
     }
 }
 
-impl<T, R> Format for FormatOwnedWithRule<T, R>
+impl<T, R> Format<R::Context> for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    type Context = R::Context;
-
     #[inline]
     fn format(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
         R::format(&self.item, f)
     }
 }
 
-impl<T, R> FormatWithRule for FormatOwnedWithRule<T, R>
+impl<T, R> FormatWithRule<R::Context> for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
@@ -619,24 +602,20 @@ where
 /// Formats a syntax node file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node<
-    C: FormatContext,
-    L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
->(
-    context: C,
+pub fn format_node<O: FormatContext, L: Language, N: FormatWithRule<O, Item = SyntaxNode<L>>>(
+    context: O,
     root: &N,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {
         let print_options = context.as_print_options();
-        let mut context = FormatState::new(context);
-        let mut buffer = VecBuffer::new(&mut context);
+        let mut state = FormatState::new(context);
+        let mut buffer = VecBuffer::new(&mut state);
 
         write!(&mut buffer, [root])?;
 
         let document = buffer.into_document().into_element();
 
-        context.assert_formatted_all_tokens(root.item());
+        state.assert_formatted_all_tokens(root.item());
 
         Ok(Formatted::new(document, print_options))
     })
@@ -930,7 +909,7 @@ where
 pub fn format_sub_tree<
     C: FormatContext,
     L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
+    N: FormatWithRule<C, Item = SyntaxNode<L>>,
 >(
     context: C,
     root: &N,

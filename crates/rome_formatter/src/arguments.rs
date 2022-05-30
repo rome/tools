@@ -19,7 +19,7 @@ pub struct Argument<'fmt, O> {
 impl<'fmt, O> Argument<'fmt, O> {
     #[doc(hidden)]
     #[inline]
-    pub fn new<F: Format<Context = O>>(value: &'fmt F) -> Self {
+    pub fn new<F: Format<O>>(value: &'fmt F) -> Self {
         let formatter: fn(&F, &mut Formatter<'_, O>) -> super::FormatResult<()> = F::format;
 
         unsafe {
@@ -58,10 +58,8 @@ impl<'fmt, O> Arguments<'fmt, O> {
     }
 }
 
-impl<Context> Format for Arguments<'_, Context> {
-    type Context = Context;
-
-    fn format(&self, formatter: &mut Formatter<Context>) -> super::FormatResult<()> {
+impl<O> Format<O> for Arguments<'_, O> {
+    fn format(&self, formatter: &mut Formatter<O>) -> super::FormatResult<()> {
         formatter.write_fmt(self)
     }
 }

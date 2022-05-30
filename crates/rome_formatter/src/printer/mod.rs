@@ -907,7 +907,7 @@ mod tests {
     use crate::printer::{LineEnding, Printer, PrinterOptions};
     use crate::{format_args, write, FormatContext, FormatState, LineWidth, Printed, VecBuffer};
 
-    fn format(root: &dyn Format<Context = ()>) -> Printed {
+    fn format(root: &dyn Format<()>) -> Printed {
         format_with_options(
             root,
             PrinterOptions {
@@ -917,7 +917,7 @@ mod tests {
         )
     }
 
-    fn format_with_options(root: &dyn Format<Context = ()>, options: PrinterOptions) -> Printed {
+    fn format_with_options(root: &dyn Format<()>, options: PrinterOptions) -> Printed {
         let mut state = FormatState::new(());
         let mut buffer = VecBuffer::new(&mut state);
 
@@ -1177,13 +1177,11 @@ two lines`,
     }
 
     struct FormatArrayElements<'a> {
-        items: Vec<&'a dyn Format<Context = ()>>,
+        items: Vec<&'a dyn Format<()>>,
     }
 
-    impl Format for FormatArrayElements<'_> {
-        type Context = ();
-
-        fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    impl Format<()> for FormatArrayElements<'_> {
+        fn format(&self, f: &mut Formatter<()>) -> FormatResult<()> {
             write!(
                 f,
                 [group_elements(&format_args!(

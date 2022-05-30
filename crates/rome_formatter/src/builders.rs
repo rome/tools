@@ -10,21 +10,15 @@ use std::marker::PhantomData;
 /// Can be helpful if you need to return a `FormatElement` (e.g. in an else branch) but don't want
 /// to show any content.
 #[deprecated]
-pub const fn empty_element<O>() -> Empty<O> {
-    Empty {
-        options: PhantomData,
-    }
+pub const fn empty_element() -> Empty {
+    Empty
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-pub struct Empty<O> {
-    options: PhantomData<O>,
-}
+pub struct Empty;
 
-impl<O> Format for Empty<O> {
-    type Context = O;
-
-    fn format(&self, _: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for Empty {
+    fn format(&self, _: &mut Formatter<O>) -> FormatResult<()> {
         Ok(())
     }
 }
@@ -77,7 +71,7 @@ impl<O> Format for Empty<O> {
 /// );
 /// ```
 #[inline]
-pub const fn soft_line_break<O>() -> Line<O> {
+pub const fn soft_line_break() -> Line {
     Line::new(LineMode::Soft)
 }
 
@@ -106,7 +100,7 @@ pub const fn soft_line_break<O>() -> Line<O> {
 /// );
 /// ```
 #[inline]
-pub const fn hard_line_break<O>() -> Line<O> {
+pub const fn hard_line_break() -> Line {
     Line::new(LineMode::Hard)
 }
 
@@ -135,7 +129,7 @@ pub const fn hard_line_break<O>() -> Line<O> {
 /// );
 /// ```
 #[inline]
-pub const fn empty_line<O>() -> Line<O> {
+pub const fn empty_line() -> Line {
     Line::new(LineMode::Empty)
 }
 
@@ -186,29 +180,23 @@ pub const fn empty_line<O>() -> Line<O> {
 /// );
 /// ```
 #[inline]
-pub const fn soft_line_break_or_space<O>() -> Line<O> {
+pub const fn soft_line_break_or_space() -> Line {
     Line::new(LineMode::SoftOrSpace)
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-pub struct Line<O> {
+pub struct Line {
     mode: LineMode,
-    options: PhantomData<O>,
 }
 
-impl<O> Line<O> {
+impl Line {
     const fn new(mode: LineMode) -> Self {
-        Self {
-            mode,
-            options: PhantomData,
-        }
+        Self { mode }
     }
 }
 
-impl<O> Format for Line<O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for Line {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         f.write_element(FormatElement::Line(self.mode))
     }
 }
@@ -247,51 +235,38 @@ impl<O> Format for Line<O> {
 /// assert_eq!(r#""Hello\tWorld""#, elements.print().as_code());
 /// ```
 #[inline]
-pub fn token<O>(text: &'static str) -> StaticToken<O> {
+pub fn token(text: &'static str) -> StaticToken {
     debug_assert_no_newlines(text);
 
-    StaticToken {
-        text,
-        options: PhantomData,
-    }
+    StaticToken { text }
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-pub struct StaticToken<O> {
+pub struct StaticToken {
     text: &'static str,
-    options: PhantomData<O>,
 }
 
-impl<O> Format for StaticToken<O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for StaticToken {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         f.write_element(FormatElement::Token(Token::Static { text: self.text }))
     }
 }
 
 /// Create a token from a dynamic string and a range of the input source
-pub fn dynamic_token<O>(text: &str, position: TextSize) -> DynamicToken<O> {
+pub fn dynamic_token(text: &str, position: TextSize) -> DynamicToken {
     debug_assert_no_newlines(text);
 
-    DynamicToken {
-        text,
-        position,
-        options: PhantomData,
-    }
+    DynamicToken { text, position }
 }
 
 #[derive(Debug, Eq, PartialEq)]
-pub struct DynamicToken<'a, O> {
+pub struct DynamicToken<'a> {
     text: &'a str,
     position: TextSize,
-    options: PhantomData<O>,
 }
 
-impl<O> Format for DynamicToken<'_, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for DynamicToken<'_> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         f.write_element(FormatElement::Token(Token::Dynamic {
             text: self.text.to_string().into_boxed_str(),
             source_position: self.position,
@@ -299,32 +274,24 @@ impl<O> Format for DynamicToken<'_, O> {
     }
 }
 
-pub fn syntax_token_cow_slice<'a, L: Language, O>(
+pub fn syntax_token_cow_slice<'a, L: Language>(
     text: Cow<'a, str>,
     token: &'a SyntaxToken<L>,
     start: TextSize,
-) -> SyntaxTokenCowSlice<'a, L, O> {
+) -> SyntaxTokenCowSlice<'a, L> {
     debug_assert_no_newlines(&text);
 
-    SyntaxTokenCowSlice {
-        text,
-        token,
-        start,
-        options: PhantomData,
-    }
+    SyntaxTokenCowSlice { text, token, start }
 }
 
-pub struct SyntaxTokenCowSlice<'a, L: Language, O> {
+pub struct SyntaxTokenCowSlice<'a, L: Language> {
     text: Cow<'a, str>,
     token: &'a SyntaxToken<L>,
     start: TextSize,
-    options: PhantomData<O>,
 }
 
-impl<L: Language, O> Format for SyntaxTokenCowSlice<'_, L, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<L: Language, O> Format<O> for SyntaxTokenCowSlice<'_, L> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         match &self.text {
             Cow::Borrowed(text) => {
                 let range = TextRange::at(self.start, text.text_len());
@@ -350,10 +317,10 @@ impl<L: Language, O> Format for SyntaxTokenCowSlice<'_, L, O> {
     }
 }
 
-pub fn syntax_token_text_slice<L: Language, O>(
+pub fn syntax_token_text_slice<L: Language>(
     token: &SyntaxToken<L>,
     range: TextRange,
-) -> SyntaxTokenTextSlice<O> {
+) -> SyntaxTokenTextSlice {
     let relative_range = range - token.text_range().start();
     let slice = token.token_text().slice(relative_range);
 
@@ -362,20 +329,16 @@ pub fn syntax_token_text_slice<L: Language, O>(
     SyntaxTokenTextSlice {
         text: slice,
         source_position: range.start(),
-        options: PhantomData,
     }
 }
 
-pub struct SyntaxTokenTextSlice<O> {
+pub struct SyntaxTokenTextSlice {
     text: SyntaxTokenText,
     source_position: TextSize,
-    options: PhantomData<O>,
 }
 
-impl<O> Format for SyntaxTokenTextSlice<O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for SyntaxTokenTextSlice {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         f.write_element(FormatElement::Token(Token::SyntaxTokenSlice {
             slice: self.text.clone(),
             source_position: self.source_position,
@@ -407,19 +370,17 @@ fn debug_assert_no_newlines(text: &str) {
 /// );
 /// ```
 #[inline]
-pub const fn line_suffix<O>(inner: &dyn Format<Context = O>) -> LineSuffix<O> {
+pub const fn line_suffix<O>(inner: &dyn Format<O>) -> LineSuffix<O> {
     LineSuffix { content: inner }
 }
 
 #[derive(Copy, Clone)]
 pub struct LineSuffix<'a, O> {
-    content: &'a dyn Format<Context = O>,
+    content: &'a dyn Format<O>,
 }
 
-impl<O> Format for LineSuffix<'_, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for LineSuffix<'_, O> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
         write!(buffer, [self.content])?;
 
@@ -451,21 +412,15 @@ impl<O> Format for LineSuffix<'_, O> {
 ///     elements.print().as_code()
 /// );
 /// ```
-pub const fn line_suffix_boundary<O>() -> LineSuffixBoundary<O> {
-    LineSuffixBoundary {
-        options: PhantomData,
-    }
+pub const fn line_suffix_boundary() -> LineSuffixBoundary {
+    LineSuffixBoundary
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct LineSuffixBoundary<O> {
-    options: PhantomData<O>,
-}
+pub struct LineSuffixBoundary;
 
-impl<O> Format for LineSuffixBoundary<O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for LineSuffixBoundary {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         f.write_element(FormatElement::LineSuffixBoundary)
     }
 }
@@ -499,19 +454,17 @@ impl<O> Format for LineSuffixBoundary<O> {
 /// );
 /// ```
 #[inline]
-pub fn comment<O>(content: &dyn Format<Context = O>) -> Comment<O> {
+pub fn comment<O>(content: &dyn Format<O>) -> Comment<O> {
     Comment { content }
 }
 
 #[derive(Copy, Clone)]
 pub struct Comment<'a, O> {
-    content: &'a dyn Format<Context = O>,
+    content: &'a dyn Format<O>,
 }
 
-impl<O> Format for Comment<'_, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for Comment<'_, O> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(buffer, [self.content])?;
@@ -535,21 +488,15 @@ impl<O> Format for Comment<'_, O> {
 /// assert_eq!("a b", elements.print().as_code());
 /// ```
 #[inline]
-pub const fn space_token<O>() -> Space<O> {
-    Space {
-        options: PhantomData,
-    }
+pub const fn space_token() -> Space {
+    Space
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct Space<O> {
-    options: PhantomData<O>,
-}
+pub struct Space;
 
-impl<O> Format for Space<O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for Space {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         f.write_element(FormatElement::Space)
     }
 }
@@ -587,18 +534,16 @@ impl<O> Format for Space<O> {
 /// );
 /// ```
 #[inline]
-pub const fn indent<O>(content: &dyn Format<Context = O>) -> Indent<O> {
+pub const fn indent<O>(content: &dyn Format<O>) -> Indent<O> {
     Indent { content }
 }
 
 pub struct Indent<'a, O> {
-    content: &'a dyn Format<Context = O>,
+    content: &'a dyn Format<O>,
 }
 
-impl<O> Format for Indent<'_, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for Indent<'_, O> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(buffer, [self.content])?;
@@ -644,7 +589,7 @@ impl<O> Format for Indent<'_, O> {
 /// );
 /// ```
 #[inline]
-pub fn block_indent<O>(content: &dyn Format<Context = O>) -> BlockIndent<O> {
+pub fn block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
     BlockIndent {
         content,
         mode: IndentMode::Block,
@@ -709,7 +654,7 @@ pub fn block_indent<O>(content: &dyn Format<Context = O>) -> BlockIndent<O> {
 /// );
 /// ```
 #[inline]
-pub fn soft_block_indent<O>(content: &dyn Format<Context = O>) -> BlockIndent<O> {
+pub fn soft_block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
     BlockIndent {
         content,
         mode: IndentMode::Soft,
@@ -777,7 +722,7 @@ pub fn soft_block_indent<O>(content: &dyn Format<Context = O>) -> BlockIndent<O>
 /// );
 /// ```
 #[inline]
-pub fn soft_line_indent_or_space<O>(content: &dyn Format<Context = O>) -> BlockIndent<O> {
+pub fn soft_line_indent_or_space<O>(content: &dyn Format<O>) -> BlockIndent<O> {
     BlockIndent {
         content,
         mode: IndentMode::SoftLineOrSpace,
@@ -786,7 +731,7 @@ pub fn soft_line_indent_or_space<O>(content: &dyn Format<Context = O>) -> BlockI
 
 #[derive(Copy, Clone)]
 pub struct BlockIndent<'a, O> {
-    content: &'a dyn Format<Context = O>,
+    content: &'a dyn Format<O>,
     mode: IndentMode,
 }
 
@@ -797,10 +742,8 @@ enum IndentMode {
     SoftLineOrSpace,
 }
 
-impl<O> Format for BlockIndent<'_, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for BlockIndent<'_, O> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         match self.mode {
@@ -897,7 +840,7 @@ impl<O> Format for BlockIndent<'_, O> {
 /// );
 /// ```
 #[inline]
-pub const fn group_elements<O>(content: &dyn Format<Context = O>) -> GroupElements<O> {
+pub const fn group_elements<O>(content: &dyn Format<O>) -> GroupElements<O> {
     GroupElements {
         content,
         options: GroupElementsOptions { group_id: None },
@@ -912,7 +855,7 @@ pub struct GroupElementsOptions {
 /// Creates a group with a specific id. Useful for cases where `if_group_breaks` and `if_group_fits_on_line`
 /// shouldn't refer to the direct parent group.
 pub const fn group_elements_with_options<O>(
-    content: &dyn Format<Context = O>,
+    content: &dyn Format<O>,
     options: GroupElementsOptions,
 ) -> GroupElements<O> {
     GroupElements { content, options }
@@ -920,14 +863,12 @@ pub const fn group_elements_with_options<O>(
 
 #[derive(Copy, Clone)]
 pub struct GroupElements<'a, O> {
-    content: &'a dyn Format<Context = O>,
+    content: &'a dyn Format<O>,
     options: GroupElementsOptions,
 }
 
-impl<O> Format for GroupElements<'_, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for GroupElements<'_, O> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(buffer, [self.content])?;
@@ -983,21 +924,15 @@ impl<O> Format for GroupElements<'_, O> {
 ///
 /// ## Prettier
 /// Equivalent to Prettier's `break_parent` IR element
-pub const fn expand_parent<O>() -> ExpandParent<O> {
-    ExpandParent {
-        options: PhantomData,
-    }
+pub const fn expand_parent() -> ExpandParent {
+    ExpandParent
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct ExpandParent<O> {
-    options: PhantomData<O>,
-}
+pub struct ExpandParent;
 
-impl<O> Format for ExpandParent<O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for ExpandParent {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         f.write_element(FormatElement::ExpandParent)
     }
 }
@@ -1073,7 +1008,7 @@ impl<O> Format for ExpandParent<O> {
 /// );
 /// ```
 #[inline]
-pub fn if_group_breaks<O>(content: &dyn Format<Context = O>) -> IfGroupBreaks<O> {
+pub fn if_group_breaks<O>(content: &dyn Format<O>) -> IfGroupBreaks<O> {
     IfGroupBreaks {
         content,
         group_id: None,
@@ -1133,7 +1068,7 @@ pub fn if_group_breaks<O>(content: &dyn Format<Context = O>) -> IfGroupBreaks<O>
 /// );
 /// ```
 pub const fn if_group_with_id_breaks<O>(
-    content: &dyn Format<Context = O>,
+    content: &dyn Format<O>,
     group_id: GroupId,
 ) -> IfGroupBreaks<O> {
     IfGroupBreaks {
@@ -1207,9 +1142,7 @@ pub const fn if_group_with_id_breaks<O>(
 /// );
 /// ```
 #[inline]
-pub const fn if_group_fits_on_single_line<O>(
-    flat_content: &dyn Format<Context = O>,
-) -> IfGroupBreaks<O> {
+pub const fn if_group_fits_on_single_line<O>(flat_content: &dyn Format<O>) -> IfGroupBreaks<O> {
     IfGroupBreaks {
         mode: PrintMode::Flat,
         group_id: None,
@@ -1222,7 +1155,7 @@ pub const fn if_group_fits_on_single_line<O>(
 ///
 #[inline]
 pub const fn if_group_with_id_fits_on_line<O>(
-    flat_content: &dyn Format<Context = O>,
+    flat_content: &dyn Format<O>,
     id: GroupId,
 ) -> IfGroupBreaks<O> {
     IfGroupBreaks {
@@ -1234,15 +1167,13 @@ pub const fn if_group_with_id_fits_on_line<O>(
 
 #[derive(Copy, Clone)]
 pub struct IfGroupBreaks<'a, O> {
-    content: &'a dyn Format<Context = O>,
+    content: &'a dyn Format<O>,
     group_id: Option<GroupId>,
     mode: PrintMode,
 }
 
-impl<O> Format for IfGroupBreaks<'_, O> {
-    type Context = O;
-
-    fn format(&self, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+impl<O> Format<O> for IfGroupBreaks<'_, O> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(buffer, [self.content])?;
@@ -1261,7 +1192,7 @@ impl<O> Format for IfGroupBreaks<'_, O> {
 pub struct JoinBuilder<'fmt, 'joiner, 'buf, O> {
     result: super::FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, O>,
-    with: Option<&'joiner dyn Format<Context = O>>,
+    with: Option<&'joiner dyn Format<O>>,
     has_elements: bool,
 }
 
@@ -1275,10 +1206,7 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
         }
     }
 
-    pub(crate) fn with(
-        fmt: &'fmt mut Formatter<'buf, O>,
-        with: &'joiner dyn Format<Context = O>,
-    ) -> Self {
+    pub(crate) fn with(fmt: &'fmt mut Formatter<'buf, O>, with: &'joiner dyn Format<O>) -> Self {
         Self {
             result: Ok(()),
             fmt,
@@ -1287,7 +1215,7 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
         }
     }
 
-    pub fn entry(&mut self, entry: &dyn Format<Context = O>) -> &mut Self {
+    pub fn entry(&mut self, entry: &dyn Format<O>) -> &mut Self {
         self.result = self.result.and_then(|_| {
             if let Some(with) = &self.with {
                 if self.has_elements {
@@ -1304,7 +1232,7 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
 
     pub fn entries<F, I>(&mut self, entries: I) -> &mut Self
     where
-        F: Format<Context = O>,
+        F: Format<O>,
         I: IntoIterator<Item = F>,
     {
         for entry in entries {
@@ -1322,14 +1250,14 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
 pub struct FillBuilder<'fmt, 'separator, 'buf, O> {
     result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, O>,
-    separator: &'separator dyn Format<Context = O>,
+    separator: &'separator dyn Format<O>,
     items: Vec<FormatElement>,
 }
 
 impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
     pub(crate) fn new(
         fmt: &'a mut Formatter<'buf, O>,
-        separator: &'separator dyn Format<Context = O>,
+        separator: &'separator dyn Format<O>,
     ) -> Self {
         Self {
             result: Ok(()),
@@ -1341,7 +1269,7 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
 
     pub fn entries<F, I>(&mut self, entries: I) -> &mut Self
     where
-        F: Format<Context = O>,
+        F: Format<O>,
         I: IntoIterator<Item = F>,
     {
         for entry in entries {
@@ -1351,7 +1279,7 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
         self
     }
 
-    pub fn entry(&mut self, entry: &dyn Format<Context = O>) -> &mut Self {
+    pub fn entry(&mut self, entry: &dyn Format<O>) -> &mut Self {
         self.result = self.result.and_then(|_| {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
             write!(buffer, [entry])?;
@@ -1391,11 +1319,10 @@ where
     options: PhantomData<O>,
 }
 
-impl<O, T> Format for FormatWith<O, T>
+impl<O, T> Format<O> for FormatWith<O, T>
 where
     T: Fn(&mut Formatter<O>) -> FormatResult<()>,
 {
-    type Context = O;
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
         (self.closure)(f)
     }
