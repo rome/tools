@@ -4,10 +4,10 @@ use crate::generated::FormatJsxAnyTag;
 use crate::prelude::*;
 use rome_js_syntax::JsxAnyTag;
 impl FormatRule<JsxAnyTag> for FormatJsxAnyTag {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsxAnyTag,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsxAnyTag::JsxElement(node) => formatted![formatter, [node.format()]],

@@ -6,7 +6,7 @@ use rome_js_syntax::TsModuleBlockFields;
 impl FormatNodeFields<TsModuleBlock> for FormatNodeRule<TsModuleBlock> {
     fn format_fields(
         node: &TsModuleBlock,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsModuleBlockFields {
             l_curly_token,

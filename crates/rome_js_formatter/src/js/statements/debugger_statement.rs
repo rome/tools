@@ -8,7 +8,7 @@ use rome_js_syntax::JsDebuggerStatementFields;
 impl FormatNodeFields<JsDebuggerStatement> for FormatNodeRule<JsDebuggerStatement> {
     fn format_fields(
         node: &JsDebuggerStatement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsDebuggerStatementFields {
             debugger_token,

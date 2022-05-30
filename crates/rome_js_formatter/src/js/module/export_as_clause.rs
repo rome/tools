@@ -7,7 +7,7 @@ use rome_js_syntax::JsExportAsClauseFields;
 impl FormatNodeFields<JsExportAsClause> for FormatNodeRule<JsExportAsClause> {
     fn format_fields(
         node: &JsExportAsClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsExportAsClauseFields {
             as_token,

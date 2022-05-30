@@ -3,11 +3,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsConstructorParameterList;
 
 impl FormatRule<JsConstructorParameterList> for FormatJsConstructorParameterList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &JsConstructorParameterList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

@@ -6,7 +6,7 @@ use rome_js_syntax::TsAsAssignmentFields;
 impl FormatNodeFields<TsAsAssignment> for FormatNodeRule<TsAsAssignment> {
     fn format_fields(
         node: &TsAsAssignment,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsAsAssignmentFields {
             assignment,

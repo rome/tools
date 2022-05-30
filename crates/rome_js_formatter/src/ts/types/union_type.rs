@@ -6,7 +6,7 @@ use rome_js_syntax::TsUnionTypeFields;
 impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
     fn format_fields(
         node: &TsUnionType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsUnionTypeFields {
             leading_separator_token,

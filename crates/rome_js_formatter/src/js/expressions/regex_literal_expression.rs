@@ -8,7 +8,7 @@ use rome_js_syntax::JsRegexLiteralExpressionFields;
 impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLiteralExpression> {
     fn format_fields(
         node: &JsRegexLiteralExpression,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsRegexLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;

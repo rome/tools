@@ -7,7 +7,7 @@ use rome_js_syntax::TsIndexSignatureClassMemberFields;
 impl FormatNodeFields<TsIndexSignatureClassMember> for FormatNodeRule<TsIndexSignatureClassMember> {
     fn format_fields(
         node: &TsIndexSignatureClassMember,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsIndexSignatureClassMemberFields {
             modifiers,

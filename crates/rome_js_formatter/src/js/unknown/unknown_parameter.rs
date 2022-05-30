@@ -8,7 +8,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsUnknownParameter> for FormatNodeRule<JsUnknownParameter> {
     fn format_fields(
         node: &JsUnknownParameter,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         unknown_node(node.syntax()).format(formatter)
     }

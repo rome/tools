@@ -9,7 +9,7 @@ impl FormatNodeFields<JsClassExportDefaultDeclaration>
 {
     fn format_fields(
         node: &JsClassExportDefaultDeclaration,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         formatted![formatter, [JsAnyClass::from(node.clone()).format()]]
     }

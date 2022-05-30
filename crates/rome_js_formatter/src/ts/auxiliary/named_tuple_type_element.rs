@@ -5,7 +5,7 @@ use rome_js_syntax::{TsNamedTupleTypeElement, TsNamedTupleTypeElementFields};
 impl FormatNodeFields<TsNamedTupleTypeElement> for FormatNodeRule<TsNamedTupleTypeElement> {
     fn format_fields(
         node: &TsNamedTupleTypeElement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsNamedTupleTypeElementFields {
             ty,

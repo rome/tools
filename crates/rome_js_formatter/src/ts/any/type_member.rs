@@ -4,10 +4,10 @@ use crate::generated::FormatTsAnyTypeMember;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyTypeMember;
 impl FormatRule<TsAnyTypeMember> for FormatTsAnyTypeMember {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &TsAnyTypeMember,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyTypeMember::TsCallSignatureTypeMember(node) => {

@@ -6,7 +6,7 @@ use rome_js_syntax::{TsEnumMember, TsEnumMemberFields};
 impl FormatNodeFields<TsEnumMember> for FormatNodeRule<TsEnumMember> {
     fn format_fields(
         node: &TsEnumMember,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsEnumMemberFields { name, initializer } = node.as_fields();
 

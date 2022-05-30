@@ -102,7 +102,7 @@ impl Default for Language {
     }
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct SourceType {
     language: Language,
     variant: LanguageVariant,

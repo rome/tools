@@ -9,7 +9,7 @@ use rome_js_syntax::JsCaseClauseFields;
 impl FormatNodeFields<JsCaseClause> for FormatNodeRule<JsCaseClause> {
     fn format_fields(
         node: &JsCaseClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsCaseClauseFields {
             case_token,

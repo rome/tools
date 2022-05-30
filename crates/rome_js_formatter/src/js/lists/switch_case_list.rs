@@ -3,11 +3,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsSwitchCaseList;
 
 impl FormatRule<JsSwitchCaseList> for FormatJsSwitchCaseList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &JsSwitchCaseList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         Ok(formatter.format_list(node))
     }

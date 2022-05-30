@@ -6,7 +6,7 @@ use rome_js_syntax::{TsObjectType, TsObjectTypeFields};
 impl FormatNodeFields<TsObjectType> for FormatNodeRule<TsObjectType> {
     fn format_fields(
         node: &TsObjectType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsObjectTypeFields {
             l_curly_token,

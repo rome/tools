@@ -1,21 +1,52 @@
 use rome_formatter::printer::PrinterOptions;
-use rome_formatter::{FormatOptions, IndentStyle, LineWidth};
+use rome_formatter::{FormatContext, IndentStyle, LineWidth};
+use rome_js_syntax::SourceType;
 use std::fmt;
+use std::fmt::Debug;
 use std::str::FromStr;
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct JsFormatOptions {
+pub struct JsFormatContext {
     /// The indent style.
     pub indent_style: IndentStyle,
 
     /// What's the max width of a line. Defaults to 80.
     pub line_width: LineWidth,
 
+    /// Options of current instance of the formatter
+    pub options: JsFormatOptions,
+
+    /// Information relative to the current file
+    pub source_type: SourceType,
+}
+
+impl JsFormatContext {
+    pub fn new(
+        indent_style: IndentStyle,
+        line_width: LineWidth,
+        options: JsFormatOptions,
+        source_type: SourceType,
+    ) -> Self {
+        Self {
+            indent_style,
+            line_width,
+            options,
+            source_type,
+        }
+    }
+
+    pub fn quote_style(&self) -> QuoteStyle {
+        self.options.quote_style
+    }
+}
+
+#[derive(Debug, Copy, Clone, Default)]
+pub struct JsFormatOptions {
     // The style for quotes. Defaults to double.
     pub quote_style: QuoteStyle,
 }
 
-impl JsFormatOptions {
+impl JsFormatContext {
     pub fn tab_width(&self) -> u8 {
         match self.indent_style {
             IndentStyle::Tab => 2,
@@ -24,7 +55,7 @@ impl JsFormatOptions {
     }
 }
 
-impl FormatOptions for JsFormatOptions {
+impl FormatContext for JsFormatContext {
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -40,10 +71,17 @@ impl FormatOptions for JsFormatOptions {
     }
 }
 
-impl fmt::Display for JsFormatOptions {
+impl fmt::Display for JsFormatContext {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
+        write!(f, "{}", self.options)?;
+        Ok(())
+    }
+}
+
+impl fmt::Display for JsFormatOptions {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Quote style: {}", self.quote_style)?;
         Ok(())
     }

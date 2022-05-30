@@ -7,7 +7,7 @@ use rome_js_syntax::JsLogicalExpression;
 impl FormatNodeFields<JsLogicalExpression> for FormatNodeRule<JsLogicalExpression> {
     fn format_fields(
         node: &JsLogicalExpression,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         format_binary_like_expression(
             JsAnyBinaryLikeExpression::JsLogicalExpression(node.clone()),

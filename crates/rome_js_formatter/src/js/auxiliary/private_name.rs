@@ -7,7 +7,7 @@ use rome_js_syntax::JsPrivateNameFields;
 impl FormatNodeFields<JsPrivateName> for FormatNodeRule<JsPrivateName> {
     fn format_fields(
         node: &JsPrivateName,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsPrivateNameFields {
             hash_token,

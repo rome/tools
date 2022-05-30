@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
     fn format_fields(
         node: &JsReturnStatement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsReturnStatementFields {
             return_token,

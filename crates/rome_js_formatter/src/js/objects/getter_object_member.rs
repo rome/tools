@@ -7,7 +7,7 @@ use rome_js_syntax::JsGetterObjectMemberFields;
 impl FormatNodeFields<JsGetterObjectMember> for FormatNodeRule<JsGetterObjectMember> {
     fn format_fields(
         node: &JsGetterObjectMember,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsGetterObjectMemberFields {
             get_token,

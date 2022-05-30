@@ -3,11 +3,11 @@ use crate::prelude::*;
 use rome_js_syntax::TsTupleTypeElementList;
 
 impl FormatRule<TsTupleTypeElementList> for FormatTsTupleTypeElementList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &TsTupleTypeElementList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

@@ -7,7 +7,7 @@ impl FormatNodeFields<JsxAttributeInitializerClause>
 {
     fn format_fields(
         node: &JsxAttributeInitializerClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsxAttributeInitializerClauseFields { eq_token, value } = node.as_fields();
 

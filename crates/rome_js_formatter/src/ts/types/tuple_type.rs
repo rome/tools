@@ -5,7 +5,7 @@ use rome_js_syntax::{TsTupleType, TsTupleTypeFields};
 impl FormatNodeFields<TsTupleType> for FormatNodeRule<TsTupleType> {
     fn format_fields(
         node: &TsTupleType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsTupleTypeFields {
             l_brack_token,

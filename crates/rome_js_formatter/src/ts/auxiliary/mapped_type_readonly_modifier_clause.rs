@@ -8,7 +8,7 @@ impl FormatNodeFields<TsMappedTypeReadonlyModifierClause>
 {
     fn format_fields(
         node: &TsMappedTypeReadonlyModifierClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsMappedTypeReadonlyModifierClauseFields {
             operator_token,

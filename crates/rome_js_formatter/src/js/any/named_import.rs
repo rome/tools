@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyNamedImport;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyNamedImport;
 impl FormatRule<JsAnyNamedImport> for FormatJsAnyNamedImport {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyNamedImport,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyNamedImport::JsNamedImportSpecifiers(node) => {

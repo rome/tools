@@ -9,7 +9,7 @@ use rome_js_syntax::JsExportFromClauseFields;
 impl FormatNodeFields<JsExportFromClause> for FormatNodeRule<JsExportFromClause> {
     fn format_fields(
         node: &JsExportFromClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsExportFromClauseFields {
             star_token,

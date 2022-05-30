@@ -5,7 +5,7 @@ use rome_js_syntax::{TsSymbolType, TsSymbolTypeFields};
 impl FormatNodeFields<TsSymbolType> for FormatNodeRule<TsSymbolType> {
     fn format_fields(
         node: &TsSymbolType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsSymbolTypeFields { symbol_token } = node.as_fields();
 

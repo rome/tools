@@ -5,7 +5,7 @@ use rome_js_syntax::{JsxMemberName, JsxMemberNameFields};
 impl FormatNodeFields<JsxMemberName> for FormatNodeRule<JsxMemberName> {
     fn format_fields(
         node: &JsxMemberName,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsxMemberNameFields {
             object,

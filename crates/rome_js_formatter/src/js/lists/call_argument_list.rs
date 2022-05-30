@@ -3,11 +3,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsCallArgumentList;
 
 impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &JsCallArgumentList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

@@ -32,7 +32,7 @@ pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
     type FormatSettings: Default;
     /// Fully resolved formatter options type for this language
-    type FormatOptions: rome_formatter::FormatOptions;
+    type FormatContext: rome_formatter::FormatContext;
 
     /// Read the settings type for this language from the [LanguagesSettings] map
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self>;
@@ -43,7 +43,7 @@ pub trait Language: rome_rowan::Language {
         global: &FormatSettings,
         language: &Self::FormatSettings,
         editor: IndentStyle,
-    ) -> Self::FormatOptions;
+    ) -> Self::FormatContext;
 }
 
 #[derive(Default)]
@@ -77,7 +77,7 @@ impl<'a, E> AsRef<WorkspaceSettings> for SettingsHandle<'a, E> {
 
 impl<'a> SettingsHandle<'a, IndentStyle> {
     /// Resolve the formatting options for the given language
-    pub(crate) fn format_options<L>(self) -> L::FormatOptions
+    pub(crate) fn format_options<L>(self) -> L::FormatContext
     where
         L: Language,
     {

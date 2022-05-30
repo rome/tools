@@ -10,7 +10,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLiteralExpression> {
     fn format_fields(
         node: &JsStringLiteralExpression,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsStringLiteralExpressionFields { value_token } = node.as_fields();
 

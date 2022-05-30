@@ -7,7 +7,7 @@ use rome_js_syntax::JsComputedMemberNameFields;
 impl FormatNodeFields<JsComputedMemberName> for FormatNodeRule<JsComputedMemberName> {
     fn format_fields(
         node: &JsComputedMemberName,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsComputedMemberNameFields {
             l_brack_token,

@@ -2,8 +2,8 @@ use rome_analyze::{analyze, AnalysisFilter, AnalyzerAction, RuleCategories};
 use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
-use rome_js_formatter::options::QuoteStyle;
-use rome_js_formatter::{format_node, options::JsFormatOptions};
+use rome_js_formatter::context::{JsFormatOptions, QuoteStyle};
+use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
 use rome_rowan::AstNode;
@@ -22,11 +22,12 @@ pub struct JsFormatSettings {
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,
     pub quote_style: Option<QuoteStyle>,
+    pub source_type: Option<SourceType>,
 }
 
 impl Language for JsLanguage {
     type FormatSettings = JsFormatSettings;
-    type FormatOptions = JsFormatOptions;
+    type FormatContext = JsFormatContext;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
@@ -36,8 +37,8 @@ impl Language for JsLanguage {
         global: &FormatSettings,
         language: &JsFormatSettings,
         editor: IndentStyle,
-    ) -> JsFormatOptions {
-        JsFormatOptions {
+    ) -> JsFormatContext {
+        JsFormatContext {
             indent_style: language
                 .indent_style
                 .or(global.indent_style)
@@ -46,7 +47,10 @@ impl Language for JsLanguage {
                 .line_width
                 .or(global.line_width)
                 .unwrap_or_default(),
-            quote_style: language.quote_style.unwrap_or_default(),
+            options: JsFormatOptions {
+                quote_style: language.quote_style.unwrap_or_default(),
+            },
+            source_type: language.source_type.unwrap_or_default(),
         }
     }
 }

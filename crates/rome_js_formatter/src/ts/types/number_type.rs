@@ -5,7 +5,7 @@ use rome_js_syntax::{TsNumberType, TsNumberTypeFields};
 impl FormatNodeFields<TsNumberType> for FormatNodeRule<TsNumberType> {
     fn format_fields(
         node: &TsNumberType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsNumberTypeFields { number_token } = node.as_fields();
 
