@@ -9,7 +9,7 @@ pub enum SemanticEvent {
 impl SemanticEvent {
     pub fn range(&self) -> &TextRange {
         match self {
-            SemanticEvent::DeclarationFound { range } => &range,
+            SemanticEvent::DeclarationFound { range } => range,
         }
     }
 
@@ -31,7 +31,7 @@ impl SemanticEventIterator {
         use SemanticEvent::*;
         match node.kind() {
             JS_IDENTIFIER_BINDING => Some(DeclarationFound {
-                range: node.text_trimmed_range(),
+                range: node.text_range(),
             }),
             _ => None,
         }
@@ -58,8 +58,7 @@ impl Iterator for SemanticEventIterator {
 }
 
 pub fn semantic_events(root: JsSyntaxNode) -> impl IntoIterator<Item = SemanticEvent> {
-    let i = SemanticEventIterator {
+    SemanticEventIterator {
         iter: root.preorder(),
-    };
-    i
+    }
 }

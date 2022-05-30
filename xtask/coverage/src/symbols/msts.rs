@@ -43,12 +43,12 @@ impl TestCase for SymbolsMicrosoftTestCase {
         let code = if !full_path.exists() {
             tracing::warn!("Not Found: {full_path:?}");
             symbols.lines().fold(String::new(), |mut s, line| {
-                if !line.starts_with(">")
+                if !line.starts_with('>')
                     && !line.starts_with("=== ")
                     && !line.starts_with("///<reference ")
                 {
-                    s.push_str(&line);
-                    s.push_str("\n");
+                    s.push_str(line);
+                    s.push('\n');
                 }
                 s
             })
