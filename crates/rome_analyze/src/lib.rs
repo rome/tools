@@ -29,7 +29,7 @@ pub struct AnalysisFilter<'a> {
     pub range: Option<TextRange>,
 }
 
-/// Utility type to be used as a debault value for the `B` generic type on
+/// Utility type to be used as a default value for the `B` generic type on
 /// [analyze] when the provided callback never breaks
 ///
 /// This should eventually get replaced with the `!` type when it gets stabilized

@@ -60,11 +60,10 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
 
         Some("check") if !is_empty => crate::commands::check::check(session),
         Some("ci") if !is_empty => crate::commands::ci::ci(session),
-        Some("fix") if !is_empty => crate::commands::fix::fix(session),
         Some("format") if !is_empty => crate::commands::format::format(session),
 
         // Print the help for known commands called without any arguments, and exit with an error
-        Some(cmd @ ("check" | "ci" | "fix" | "format")) => {
+        Some(cmd @ ("check" | "ci" | "format")) => {
             crate::commands::help::help(session, Some(cmd))?;
             Err(Termination::EmptyArguments)
         }

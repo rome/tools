@@ -28,16 +28,9 @@ const CHECK: Markup = markup! {
     rome check <INPUTS...>
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
-"
-};
 
-const FIX: Markup = markup! {
-    <Emphasis>"Rome Fix"</Emphasis>": Apply all safe code fixes for a set of files
-
-"<Emphasis>"USAGE:"</Emphasis>"
-    rome fix <INPUTS...>
-
-    INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
+"<Emphasis>"OPTIONS:"</Emphasis>"
+    "<Dim>"--apply"</Dim>"                       Apply safe fixes
 "
 };
 
@@ -88,10 +81,6 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         }
         Some("ci") => {
             session.app.console.log(CI);
-            Ok(())
-        }
-        Some("fix") => {
-            session.app.console.log(FIX);
             Ok(())
         }
         Some("format") => {

@@ -92,6 +92,64 @@ mod check {
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
     }
+
+    #[test]
+    fn apply_ok() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        println!("{console:#?}");
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, FIX_AFTER);
+    }
+
+    #[test]
+    fn apply_noop() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_AFTER.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        println!("{console:#?}");
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
 }
 
 mod ci {
@@ -193,60 +251,6 @@ mod ci {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
-    }
-}
-
-mod fix {
-    use super::*;
-
-    #[test]
-    fn ok() {
-        let mut fs = MemoryFileSystem::default();
-        let mut console = BufferConsole::default();
-
-        let file_path = Path::new("fix.js");
-        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
-
-        let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("fix"), file_path.as_os_str().into()]),
-        });
-
-        println!("{console:#?}");
-
-        assert!(result.is_ok(), "run_cli returned {result:?}");
-
-        let mut buffer = String::new();
-        fs.open(file_path)
-            .unwrap()
-            .read_to_string(&mut buffer)
-            .unwrap();
-
-        assert_eq!(buffer, FIX_AFTER);
-    }
-
-    #[test]
-    fn no_fix() {
-        let mut fs = MemoryFileSystem::default();
-        let mut console = BufferConsole::default();
-
-        let file_path = Path::new("fix.js");
-        fs.insert(file_path.into(), FIX_AFTER.as_bytes());
-
-        let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("fix"), file_path.as_os_str().into()]),
-        });
-
-        println!("{console:#?}");
-
-        assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 }
 
