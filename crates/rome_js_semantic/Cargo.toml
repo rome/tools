@@ -4,7 +4,7 @@ name = "rome_js_semantic"
 version = "0.3.0"
 authors = ["Rome Tools"]
 license = "MIT"
-description = "An extremely fast ECMAScript parser made for the rslint project"
+description = "Semantic model for the JavaScript language"
 repository = "https://github.com/rome/tools"
 
 [dependencies]
