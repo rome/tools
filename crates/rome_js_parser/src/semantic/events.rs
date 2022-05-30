@@ -32,11 +32,10 @@ impl SemanticEventExtractor {
     pub fn extract_from(&mut self, node: &JsSyntaxNode) {
         use rome_js_syntax::JsSyntaxKind::*;
         use SemanticEvent::*;
-        match node.kind() {
-            JS_IDENTIFIER_BINDING => self.stash.push_back(DeclarationFound {
+        if let JS_IDENTIFIER_BINDING = node.kind() {
+            self.stash.push_back(DeclarationFound {
                 range: node.text_trimmed_range(),
-            }),
-            _ => {}
+            })
         }
     }
 }
