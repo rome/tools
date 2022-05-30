@@ -193,13 +193,15 @@ const create2 = () => {
 };
 
 const obj = {
-  state: shouldHaveState &&
+  state:
+    shouldHaveState &&
     stateIsOK &&
     {
       loadState: LOADED,
       opened: false,
     },
-  loadNext: (stateIsOK && hasNext) || {
+  loadNext:
+    (stateIsOK && hasNext) || {
     skipNext: true,
   },
   loaded: true,

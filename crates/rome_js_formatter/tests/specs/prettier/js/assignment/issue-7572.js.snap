@@ -17,14 +17,11 @@ const t = {
 ```js
 const t = {
   "hello": world(),
-  "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line": orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
+  "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line":
+    orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
   "can-someone-explain": this(),
 };
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    3:   "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line": orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
-```
 

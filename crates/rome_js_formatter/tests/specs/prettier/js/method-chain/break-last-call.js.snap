@@ -76,62 +76,66 @@ it(
     expect(
       groupMessages(messages).toJS(),
     ).toEqual({
-      "11/01/2017 13:36": [
-        {
-          message: "test",
-          messageType: "SMS",
-          status: "Unknown",
-          created: "11/01/2017 13:36",
-        },
-        {
-          message: "test",
-          messageType: "Email",
-          status: "Unknown",
-          created: "11/01/2017 13:36",
-        },
-      ],
-      "09/01/2017 17:25": [
-        {
-          message: "te",
-          messageType: "SMS",
-          status: "Unknown",
-          created: "09/01/2017 17:25",
-        },
-        {
-          message: "te",
-          messageType: "Email",
-          status: "Unknown",
-          created: "09/01/2017 17:25",
-        },
-      ],
-      "11/01/2017 13:33": [
-        {
-          message: "test",
-          messageType: "SMS",
-          status: "Unknown",
-          created: "11/01/2017 13:33",
-        },
-        {
-          message: "test",
-          messageType: "Email",
-          status: "Unknown",
-          created: "11/01/2017 13:33",
-        },
-      ],
-      "11/01/2017 13:37": [
-        {
-          message: "test",
-          messageType: "SMS",
-          status: "Unknown",
-          created: "11/01/2017 13:37",
-        },
-        {
-          message: "test",
-          messageType: "Email",
-          status: "Unknown",
-          created: "11/01/2017 13:37",
-        },
-      ],
+      "11/01/2017 13:36":
+        [
+          {
+            message: "test",
+            messageType: "SMS",
+            status: "Unknown",
+            created: "11/01/2017 13:36",
+          },
+          {
+            message: "test",
+            messageType: "Email",
+            status: "Unknown",
+            created: "11/01/2017 13:36",
+          },
+        ],
+      "09/01/2017 17:25":
+        [
+          {
+            message: "te",
+            messageType: "SMS",
+            status: "Unknown",
+            created: "09/01/2017 17:25",
+          },
+          {
+            message: "te",
+            messageType: "Email",
+            status: "Unknown",
+            created: "09/01/2017 17:25",
+          },
+        ],
+      "11/01/2017 13:33":
+        [
+          {
+            message: "test",
+            messageType: "SMS",
+            status: "Unknown",
+            created: "11/01/2017 13:33",
+          },
+          {
+            message: "test",
+            messageType: "Email",
+            status: "Unknown",
+            created: "11/01/2017 13:33",
+          },
+        ],
+      "11/01/2017 13:37":
+        [
+          {
+            message: "test",
+            messageType: "SMS",
+            status: "Unknown",
+            created: "11/01/2017 13:37",
+          },
+          {
+            message: "test",
+            messageType: "Email",
+            status: "Unknown",
+            created: "11/01/2017 13:37",
+          },
+        ],
     },);
   },
 );
