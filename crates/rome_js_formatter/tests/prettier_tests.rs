@@ -53,7 +53,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         input_file.try_into().unwrap()
     };
 
-    let parsed = parse(&parse_input, 0, source_type.clone());
+    let parsed = parse(&parse_input, 0, source_type);
 
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();

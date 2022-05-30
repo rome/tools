@@ -210,7 +210,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
             check_reformat::check_reformat(check_reformat::CheckReformatParams {
                 root: &root,
                 text: printed.as_code(),
-                source_type: source_type,
+                source_type,
                 file_name,
                 format_context: JsFormatContext::default(),
             });

@@ -142,16 +142,16 @@ pub fn run(args: RunArgs) {
 
                     group.bench_function(&id, |b| match args.feature {
                         FeatureToBenchmark::Parser => b.iter(|| {
-                            criterion::black_box(run_parse(code, source_type.clone()));
+                            criterion::black_box(run_parse(code, source_type));
                         }),
                         FeatureToBenchmark::Formatter => {
-                            let root = parse(code, 0, source_type.clone()).syntax();
+                            let root = parse(code, 0, source_type).syntax();
                             b.iter(|| {
                                 criterion::black_box(run_format(&root));
                             })
                         }
                         FeatureToBenchmark::Analyzer => {
-                            let root = parse(code, 0, source_type.clone()).tree();
+                            let root = parse(code, 0, source_type).tree();
                             b.iter(|| {
                                 run_analyzer(&root);
                             })
@@ -162,14 +162,14 @@ pub fn run(args: RunArgs) {
                     //warmup
                     match args.feature {
                         FeatureToBenchmark::Parser => {
-                            run_parse(code, source_type.clone());
+                            run_parse(code, source_type);
                         }
                         FeatureToBenchmark::Formatter => {
-                            let root = parse(code, 0, source_type.clone()).syntax();
+                            let root = parse(code, 0, source_type).syntax();
                             run_format(&root);
                         }
                         FeatureToBenchmark::Analyzer => {
-                            let root = parse(code, 0, source_type.clone()).tree();
+                            let root = parse(code, 0, source_type).tree();
                             run_analyzer(&root);
                         }
                     }
