@@ -1431,15 +1431,25 @@ dependencies = [
  "indexmap",
  "quickcheck",
  "quickcheck_macros",
- "rome_console",
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_syntax",
- "rome_markup",
  "rome_rowan",
  "smallvec",
  "tests_macros",
  "tracing",
+]
+
+[[package]]
+name = "rome_js_semantic"
+version = "0.3.0"
+dependencies = [
+ "rome_console",
+ "rome_diagnostics",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_markup",
+ "rome_rowan",
 ]
 
 [[package]]
@@ -2429,6 +2439,7 @@ dependencies = [
  "regex",
  "rome_diagnostics",
  "rome_js_parser",
+ "rome_js_semantic",
  "rome_js_syntax",
  "rome_rowan",
  "serde",

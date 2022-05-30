@@ -59,7 +59,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
-        let mut actual: Vec<_> = rome_js_parser::semantic::semantic_events(r.syntax())
+        let mut actual: Vec<_> = rome_js_semantic::semantic_events(r.syntax())
             .into_iter()
             .filter(|x| {
                 // We filter any event pointing to string literals.

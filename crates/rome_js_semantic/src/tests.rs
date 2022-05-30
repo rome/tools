@@ -45,7 +45,7 @@ class A {
 /// let a/*#A*/ = 1;
 /// ```
 fn assert(code: &str) {
-    let r = crate::parse(code, 0, SourceType::js_module());
+    let r = rome_js_parser::parse(code, 0, SourceType::js_module());
 
     if r.has_errors() {
         let files = SimpleFile::new(std::file!().to_string(), code.into());
