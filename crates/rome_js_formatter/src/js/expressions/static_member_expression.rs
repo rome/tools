@@ -1,55 +1,105 @@
-use rome_js_syntax::JsSyntaxKind;
-use rome_rowan::AstNode;
-
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
-use rome_js_syntax::JsStaticMemberExpression;
-use rome_js_syntax::JsStaticMemberExpressionFields;
+use rome_formatter::ConcatBuilder;
+use rome_js_syntax::{
+    JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxKind, JsSyntaxNode,
+    JsSyntaxToken,
+};
+use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMemberExpression> {
     fn format_fields(
         node: &JsStaticMemberExpression,
         formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
+        let mut current = node.clone();
+
+        while let Some(static_member_expression) =
+            JsStaticMemberExpression::cast(current.object()?.syntax().clone())
+        {
+            current = static_member_expression;
+        }
+
         let JsStaticMemberExpressionFields {
             object,
             operator_token,
             member,
-        } = node.as_fields();
+        } = current.as_fields();
 
-        let object_syntax = object.clone()?.syntax().clone();
+        let mut formatted = ConcatBuilder::default();
 
-        let is_object_number_literal =
-            object_syntax.kind() == JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION;
+        let operator_token = operator_token?;
+        let formatted_object = format_member(object?.syntax().clone(), &operator_token, formatter);
 
-        let has_object_trailing_trivia =
-            object_syntax.last_trailing_trivia().unwrap().pieces().len() > 0;
-        let has_operator_leading_trivia =
-            operator_token.clone()?.leading_trivia().pieces().len() > 0;
+        formatted.entry(formatted![
+            formatter,
+            [formatted_object, operator_token.format()]
+        ]?);
 
-        let formatted_object = formatted![formatter, [object?.format()]]?;
+        let mut previous_member = member;
 
-        if is_object_number_literal && (has_object_trailing_trivia || has_operator_leading_trivia) {
-            let (object_leading, object_content, object_trailing) = formatted_object.split_trivia();
+        while let Some(parent_static_member_expression) = current
+            .syntax()
+            .parent()
+            .and_then(JsStaticMemberExpression::cast)
+        {
+            let JsStaticMemberExpressionFields {
+                object: _,
+                operator_token,
+                member,
+            } = parent_static_member_expression.as_fields();
 
-            Ok(group_elements(formatted![
+            let operator_token = operator_token?;
+
+            let formatted_member = format_member(
+                previous_member?.syntax().clone(),
+                &operator_token,
                 formatter,
-                [
-                    object_leading,
-                    token("("),
-                    object_content,
-                    token(")"),
-                    object_trailing,
-                    operator_token.format(),
-                    member.format(),
-                ]
-            ]?))
-        } else {
-            Ok(group_elements(formatted![
+            )?;
+
+            formatted.entry(group_elements(formatted![
                 formatter,
-                [formatted_object, operator_token.format(), member.format(),]
-            ]?))
+                [formatted_member, operator_token.format(),]
+            ]?));
+
+            previous_member = member;
+            current = parent_static_member_expression;
         }
+
+        formatted.entry(formatted![formatter, [previous_member.format()?,]]?);
+        Ok(group_elements(formatted.finish()))
+    }
+}
+
+fn format_member(
+    member: JsSyntaxNode,
+    operator: &JsSyntaxToken,
+    formatter: &JsFormatter,
+) -> FormatResult<FormatElement> {
+    let formatted_member = formatted![formatter, [member.format()]]?;
+
+    let is_object_number_literal = member.kind() == JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION;
+
+    let object_has_trailing_trivia = member
+        .last_trailing_trivia()
+        .map_or(false, |trivia| trivia.pieces().len() > 0);
+
+    let operator_has_leading_trivia = operator.leading_trivia().pieces().len() > 0;
+
+    if is_object_number_literal && (object_has_trailing_trivia || operator_has_leading_trivia) {
+        let (object_leading, object_content, object_trailing) = formatted_member.split_trivia();
+
+        Ok(formatted![
+            formatter,
+            [
+                object_leading,
+                token("("),
+                object_content,
+                token(")"),
+                object_trailing,
+            ]
+        ]?)
+    } else {
+        Ok(formatted_member)
     }
 }
