@@ -6,7 +6,7 @@ use rome_js_syntax::TsImplementsClauseFields;
 impl FormatNodeFields<TsImplementsClause> for FormatNodeRule<TsImplementsClause> {
     fn format_fields(
         node: &TsImplementsClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsImplementsClauseFields {
             implements_token,

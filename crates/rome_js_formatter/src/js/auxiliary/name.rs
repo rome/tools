@@ -7,7 +7,7 @@ use rome_js_syntax::JsNameFields;
 impl FormatNodeFields<JsName> for FormatNodeRule<JsName> {
     fn format_fields(
         node: &JsName,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsNameFields { value_token } = node.as_fields();
 

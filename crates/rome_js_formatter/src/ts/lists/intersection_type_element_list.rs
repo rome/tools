@@ -4,11 +4,11 @@ use rome_js_syntax::TsIntersectionTypeElementList;
 use rome_rowan::AstSeparatedList;
 
 impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeElementList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &TsIntersectionTypeElementList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let mut elements = Vec::with_capacity(node.len());
         let last_index = node.len().saturating_sub(1);

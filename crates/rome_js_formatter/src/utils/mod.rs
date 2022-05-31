@@ -23,7 +23,7 @@ use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
 
-use crate::options::{JsFormatOptions, QuoteStyle};
+use crate::context::QuoteStyle;
 pub(crate) use simple::*;
 
 /// Utility function to format the separators of the nodes that belong to the unions
@@ -34,7 +34,7 @@ pub(crate) use simple::*;
 /// So here, we create - on purpose - an empty node.
 pub(crate) fn format_type_member_separator(
     separator_token: Option<JsSyntaxToken>,
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
 ) -> FormatElement {
     if let Some(separator) = separator_token {
         formatter.format_replaced(&separator, empty_element())
@@ -45,7 +45,7 @@ pub(crate) fn format_type_member_separator(
 
 /// Utility function to format the node [rome_js_syntax::JsInitializerClause]
 pub(crate) fn format_initializer_clause(
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
     initializer: Option<JsInitializerClause>,
 ) -> FormatResult<FormatElement> {
     formatted![
@@ -58,7 +58,7 @@ pub(crate) fn format_initializer_clause(
 
 pub(crate) fn format_interpreter(
     interpreter: Option<JsSyntaxToken>,
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
 ) -> FormatResult<FormatElement> {
     formatted![
         formatter,
@@ -123,7 +123,7 @@ pub(crate) fn has_leading_newline(node: &JsSyntaxNode) -> bool {
 /// This will place the head element inside a [hard_group_elements], but
 /// the body will broken out of flat printing if its a single statement
 pub(crate) fn format_head_body_statement(
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
     head: FormatElement,
     body: JsAnyStatement,
 ) -> FormatResult<FormatElement> {
@@ -158,7 +158,7 @@ where
 /// Utility to format
 pub(crate) fn format_template_chunk(
     chunk: JsSyntaxToken,
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
 ) -> FormatResult<FormatElement> {
     // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
     // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
@@ -175,7 +175,7 @@ pub(crate) fn format_template_chunk(
 /// Function to format template literals and template literal types
 pub(crate) fn format_template_literal(
     literal: TemplateElement,
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
 ) -> FormatResult<FormatElement> {
     literal.into_format_element(formatter)
 }
@@ -188,7 +188,7 @@ pub(crate) enum TemplateElement {
 impl TemplateElement {
     pub fn into_format_element(
         self,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let expression_is_plain = self.is_plain_expression()?;
         let has_comments = self.has_comments();
@@ -364,7 +364,7 @@ impl FormatPrecedence {
 /// semicolon insertion if it was missing in the input source and the
 /// preceeding element wasn't an unknown node
 pub(crate) fn format_with_semicolon(
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
     content: FormatElement,
     semicolon: Option<JsSyntaxToken>,
 ) -> FormatResult<FormatElement> {
@@ -388,10 +388,10 @@ pub(crate) fn format_with_semicolon(
 
 pub(crate) fn format_string_literal_token(
     token: JsSyntaxToken,
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
 ) -> FormatElement {
     let quoted = token.text_trimmed();
-    let (primary_quote_char, secondary_quote_char) = match formatter.options().quote_style {
+    let (primary_quote_char, secondary_quote_char) = match formatter.context().quote_style() {
         QuoteStyle::Double => ('"', '\''),
         QuoteStyle::Single => ('\'', '"'),
     };

@@ -8,7 +8,7 @@ use rome_js_syntax::JsDirectiveFields;
 impl FormatNodeFields<JsDirective> for FormatNodeRule<JsDirective> {
     fn format_fields(
         node: &JsDirective,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsDirectiveFields {
             value_token,

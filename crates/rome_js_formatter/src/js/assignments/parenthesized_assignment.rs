@@ -6,7 +6,7 @@ use rome_js_syntax::JsParenthesizedAssignmentFields;
 impl FormatNodeFields<JsParenthesizedAssignment> for FormatNodeRule<JsParenthesizedAssignment> {
     fn format_fields(
         node: &JsParenthesizedAssignment,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsParenthesizedAssignmentFields {
             l_paren_token,

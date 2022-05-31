@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyExportNamedSpecifier;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyExportNamedSpecifier;
 impl FormatRule<JsAnyExportNamedSpecifier> for FormatJsAnyExportNamedSpecifier {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyExportNamedSpecifier,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(node) => {

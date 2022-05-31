@@ -7,7 +7,7 @@ use rome_js_syntax::JsArrayAssignmentPatternFields;
 impl FormatNodeFields<JsArrayAssignmentPattern> for FormatNodeRule<JsArrayAssignmentPattern> {
     fn format_fields(
         node: &JsArrayAssignmentPattern,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsArrayAssignmentPatternFields {
             l_brack_token,

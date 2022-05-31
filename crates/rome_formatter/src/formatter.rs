@@ -11,8 +11,9 @@ use std::cell::RefCell;
 /// The formatter is passed to the [Format] implementation of every node in the CST so that they
 /// can use it to format their children.
 #[derive(Default)]
-pub struct Formatter<Options> {
-    options: Options,
+pub struct Formatter<Context> {
+    /// Yields various information that belong to the current instance of the formatter
+    context: Context,
     group_id_builder: UniqueGroupIdBuilder,
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
@@ -20,11 +21,11 @@ pub struct Formatter<Options> {
     pub printed_tokens: RefCell<PrintedTokens>,
 }
 
-impl<Options> Formatter<Options> {
+impl<Context> Formatter<Context> {
     /// Creates a new context that uses the given formatter options
-    pub fn new(options: Options) -> Self {
+    pub fn new(options: Context) -> Self {
         Self {
-            options,
+            context: options,
             group_id_builder: Default::default(),
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
@@ -32,8 +33,8 @@ impl<Options> Formatter<Options> {
     }
 
     /// Returns the [FormatOptions] specifying how to format the current CST
-    pub fn options(&self) -> &Options {
-        &self.options
+    pub fn context(&self) -> &Context {
+        &self.context
     }
 
     /// Creates a new group id that is unique to this document. The passed debug name is used in the
@@ -70,7 +71,7 @@ impl<Options> Formatter<Options> {
     ///
     /// Returns the [Err] of the first item that failed to format.
     #[inline]
-    pub fn format_all<T: Format<Options = Options>>(
+    pub fn format_all<T: Format<Context = Context>>(
         &self,
         nodes: impl IntoIterator<Item = T>,
     ) -> FormatResult<impl Iterator<Item = FormatElement>> {
@@ -89,7 +90,7 @@ impl<Options> Formatter<Options> {
     }
 }
 
-impl<Options> Formatter<Options> {
+impl<Context> Formatter<Context> {
     /// Take a snapshot of the state of the formatter
     #[inline]
     pub fn snapshot(&self) -> FormatterSnapshot {

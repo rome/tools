@@ -4,11 +4,11 @@ use crate::prelude::*;
 use rome_js_syntax::TsTypeList;
 
 impl FormatRule<TsTypeList> for FormatTsTypeList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &TsTypeList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         // the grouping will be applied by the parent
         Ok(join_elements(

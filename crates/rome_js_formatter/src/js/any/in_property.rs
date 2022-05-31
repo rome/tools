@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyInProperty;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyInProperty;
 impl FormatRule<JsAnyInProperty> for FormatJsAnyInProperty {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyInProperty,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyInProperty::JsPrivateName(node) => formatted![formatter, [node.format()]],

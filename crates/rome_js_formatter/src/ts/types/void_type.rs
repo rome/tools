@@ -5,7 +5,7 @@ use rome_js_syntax::{TsVoidType, TsVoidTypeFields};
 impl FormatNodeFields<TsVoidType> for FormatNodeRule<TsVoidType> {
     fn format_fields(
         node: &TsVoidType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsVoidTypeFields { void_token } = node.as_fields();
 

@@ -4,11 +4,11 @@ use crate::prelude::*;
 use rome_js_syntax::TsTypeArgumentList;
 
 impl FormatRule<TsTypeArgumentList> for FormatTsTypeArgumentList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &TsTypeArgumentList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

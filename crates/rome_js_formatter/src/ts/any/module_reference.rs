@@ -4,10 +4,10 @@ use crate::generated::FormatTsAnyModuleReference;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyModuleReference;
 impl FormatRule<TsAnyModuleReference> for FormatTsAnyModuleReference {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &TsAnyModuleReference,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyModuleReference::TsAnyName(node) => formatted![formatter, [node.format()]],

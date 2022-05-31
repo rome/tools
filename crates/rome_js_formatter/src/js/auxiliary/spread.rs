@@ -7,7 +7,7 @@ use rome_js_syntax::JsSpreadFields;
 impl FormatNodeFields<JsSpread> for FormatNodeRule<JsSpread> {
     fn format_fields(
         node: &JsSpread,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsSpreadFields {
             dotdotdot_token,

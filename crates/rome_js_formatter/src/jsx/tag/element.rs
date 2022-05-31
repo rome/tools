@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
     fn format_fields(
         node: &JsxElement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         verbatim_node(node.syntax()).format(formatter)
     }

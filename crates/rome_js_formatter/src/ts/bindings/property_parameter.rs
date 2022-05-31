@@ -5,7 +5,7 @@ use rome_js_syntax::{TsPropertyParameter, TsPropertyParameterFields};
 impl FormatNodeFields<TsPropertyParameter> for FormatNodeRule<TsPropertyParameter> {
     fn format_fields(
         node: &TsPropertyParameter,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsPropertyParameterFields {
             modifiers,

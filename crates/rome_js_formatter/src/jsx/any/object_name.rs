@@ -4,10 +4,10 @@ use crate::generated::FormatJsxAnyObjectName;
 use crate::prelude::*;
 use rome_js_syntax::JsxAnyObjectName;
 impl FormatRule<JsxAnyObjectName> for FormatJsxAnyObjectName {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsxAnyObjectName,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsxAnyObjectName::JsxReferenceIdentifier(node) => {

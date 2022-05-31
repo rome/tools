@@ -8,7 +8,7 @@ use rome_rowan::AstNodeList;
 impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
     fn format_fields(
         node: &JsDefaultClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsDefaultClauseFields {
             default_token,

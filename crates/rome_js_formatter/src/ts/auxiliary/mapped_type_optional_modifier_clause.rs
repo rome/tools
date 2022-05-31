@@ -8,7 +8,7 @@ impl FormatNodeFields<TsMappedTypeOptionalModifierClause>
 {
     fn format_fields(
         node: &TsMappedTypeOptionalModifierClause,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsMappedTypeOptionalModifierClauseFields {
             operator_token,

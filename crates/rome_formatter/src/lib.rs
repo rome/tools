@@ -166,11 +166,11 @@ impl From<LineWidth> for u16 {
     }
 }
 
-/// Options configuring how an object gets formatted.
+/// Context configuring how an object gets formatted.
 ///
 /// Defines the common formatting options. Implementations can define additional options that
 /// are specific to formatting a specific object.
-pub trait FormatOptions {
+pub trait FormatContext {
     /// The indent style.
     fn indent_style(&self) -> IndentStyle;
 
@@ -337,16 +337,16 @@ impl From<&SyntaxError> for FormatError {
 /// Implementing `Format` for a custom struct
 ///
 /// ```
-/// use rome_formatter::{format, FormatOptions, IndentStyle, LineWidth};
+/// use rome_formatter::{format, FormatContext, IndentStyle, LineWidth};
 /// use rome_formatter::prelude::*;
 /// use rome_rowan::TextSize;
 ///
 /// struct Paragraph(String);
 ///
 /// impl Format for Paragraph {
-///     type Options = Options;
+///     type Context = Context;
 ///
-///     fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
+///     fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
 ///         formatted![
 ///             formatter,
 ///             [
@@ -358,9 +358,9 @@ impl From<&SyntaxError> for FormatError {
 ///     }
 /// }
 ///
-/// struct Options;
+/// struct Context;
 ///
-/// impl FormatOptions for Options {
+/// impl FormatContext for Context {
 ///     fn indent_style(&self) -> IndentStyle {
 ///         IndentStyle::Tab
 ///     }
@@ -375,25 +375,25 @@ impl From<&SyntaxError> for FormatError {
 /// }
 ///
 /// let paragraph = Paragraph(String::from("test"));
-/// let printed = format(Options, &paragraph).unwrap().print();
+/// let printed = format(Context, &paragraph).unwrap().print();
 ///
 /// assert_eq!("test\n", printed.as_code())
 /// ```
 pub trait Format {
     /// Type of the formatter options.
-    type Options;
+    type Context;
 
     /// Formats the object
-    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement>;
+    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement>;
 }
 
 impl<T> Format for &T
 where
     T: ?Sized + Format,
 {
-    type Options = T::Options;
+    type Context = T::Context;
 
-    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
         Format::format(&**self, formatter)
     }
 }
@@ -402,9 +402,9 @@ impl<T> Format for &mut T
 where
     T: ?Sized + Format,
 {
-    type Options = T::Options;
+    type Context = T::Context;
 
-    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
         Format::format(&**self, formatter)
     }
 }
@@ -413,9 +413,9 @@ impl<T> Format for Option<T>
 where
     T: Format,
 {
-    type Options = T::Options;
+    type Context = T::Context;
 
-    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
         match self {
             Some(value) => value.format(formatter),
             None => Ok(empty_element()),
@@ -427,9 +427,9 @@ impl<T> Format for SyntaxResult<T>
 where
     T: Format,
 {
-    type Options = T::Options;
+    type Context = T::Context;
 
-    fn format(&self, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
         match self {
             Ok(value) => value.format(formatter),
             Err(err) => Err(err.into()),
@@ -461,7 +461,7 @@ impl<O> IntoFormatElement<O> for FormatResult<FormatElement> {
 
 impl<T, O> IntoFormatElement<O> for T
 where
-    T: Format<Options = O>,
+    T: Format<Context = O>,
 {
     #[inline]
     fn into_format_element(self, formatter: &Formatter<O>) -> FormatResult<FormatElement> {
@@ -480,9 +480,9 @@ where
 /// That's why the `rome_js_formatter` crate must define a new-type that implements the formatting
 /// of `JsIfStatement`.
 pub trait FormatRule<T> {
-    type Options;
+    type Context;
 
-    fn format(item: &T, formatter: &Formatter<Self::Options>) -> FormatResult<FormatElement>;
+    fn format(item: &T, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement>;
 }
 
 /// Trait for an object that formats an object with a specified rule.
@@ -500,9 +500,9 @@ pub trait FormatRule<T> {
 ///
 /// ```
 /// use rome_formatter::prelude::*;
-/// use rome_formatter::{FormatOptions, FormatWithRule};
+/// use rome_formatter::{FormatContext, FormatWithRule};
 /// use rome_rowan::{Language, SyntaxNode};
-/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>, Options=()>>(node: F) -> FormatResult<FormatElement> {
+/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>, Context=()>>(node: F) -> FormatResult<FormatElement> {
 ///     let formatter = Formatter::default();
 ///
 ///     let formatted = node.format(&formatter);
@@ -555,10 +555,10 @@ impl<T, R> Format for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
-    type Options = R::Options;
+    type Context = R::Context;
 
     #[inline]
-    fn format(&self, formatter: &Formatter<R::Options>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<R::Context>) -> FormatResult<FormatElement> {
         R::format(self.item, formatter)
     }
 }
@@ -597,10 +597,10 @@ impl<T, R> Format for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    type Options = R::Options;
+    type Context = R::Context;
 
     #[inline]
-    fn format(&self, formatter: &Formatter<R::Options>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<R::Context>) -> FormatResult<FormatElement> {
         R::format(&self.item, formatter)
     }
 }
@@ -619,9 +619,9 @@ where
 /// Formats any value that implements [Format].
 ///
 /// Please note that [format_node] is preferred to format a [JsSyntaxNode]
-pub fn format<O: FormatOptions>(
-    options: O,
-    root: &dyn Format<Options = O>,
+pub fn format<C: FormatContext>(
+    options: C,
+    root: &dyn Format<Context = C>,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format").in_scope(move || {
         let printer_options = options.as_print_options();
@@ -635,11 +635,11 @@ pub fn format<O: FormatOptions>(
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format_node<
-    O: FormatOptions,
+    C: FormatContext,
     L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Options = O>,
+    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
 >(
-    options: O,
+    options: C,
     root: &N,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {
@@ -700,7 +700,7 @@ where
 /// gets formatted instead of the smallest sub-expression that fits the range
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatOptions], which
+/// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,
@@ -708,16 +708,16 @@ where
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
-pub fn format_range<Options, L, R, P>(
-    options: Options,
+pub fn format_range<Context, L, R, P>(
+    options: Context,
     root: &SyntaxNode<L>,
     mut range: TextRange,
     mut predicate: P,
 ) -> FormatResult<Printed>
 where
-    Options: FormatOptions,
+    Context: FormatContext,
     L: Language,
-    R: FormatRule<SyntaxNode<L>, Options = Options>,
+    R: FormatRule<SyntaxNode<L>, Context = Context>,
     P: FnMut(&SyntaxNode<L>) -> bool,
 {
     if range.is_empty() {
@@ -931,7 +931,7 @@ where
 /// Formats a single node within a file, supported by Rome.
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatOptions], which
+/// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,
@@ -939,11 +939,11 @@ where
 ///
 /// It returns a [Formatted] result
 pub fn format_sub_tree<
-    O: FormatOptions,
+    C: FormatContext,
     L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Options = O>,
+    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
 >(
-    options: O,
+    context: C,
     root: &N,
 ) -> FormatResult<Printed> {
     let syntax = root.item();
@@ -985,7 +985,7 @@ pub fn format_sub_tree<
             // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
-            match options.indent_style() {
+            match context.indent_style() {
                 IndentStyle::Tab => length,
                 IndentStyle::Space(width) => length / u16::from(width),
             }
@@ -995,7 +995,7 @@ pub fn format_sub_tree<
         None => 0,
     };
 
-    let formatted = format_node(options, root)?;
+    let formatted = format_node(context, root)?;
     let printed = formatted.print_with_indent(initial_indent);
     let sourcemap = Vec::from(printed.sourcemap());
     let verbatim_ranges = Vec::from(printed.verbatim_ranges());

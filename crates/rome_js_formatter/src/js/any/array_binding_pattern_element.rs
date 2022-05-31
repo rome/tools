@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyArrayBindingPatternElement;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayBindingPatternElement;
 impl FormatRule<JsAnyArrayBindingPatternElement> for FormatJsAnyArrayBindingPatternElement {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyArrayBindingPatternElement,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrayBindingPatternElement::JsArrayHole(node) => {

@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyArrayElement;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayElement;
 impl FormatRule<JsAnyArrayElement> for FormatJsAnyArrayElement {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyArrayElement,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrayElement::JsAnyExpression(node) => formatted![formatter, [node.format()]],

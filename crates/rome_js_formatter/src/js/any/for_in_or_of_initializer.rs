@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyForInOrOfInitializer;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyForInOrOfInitializer;
 impl FormatRule<JsAnyForInOrOfInitializer> for FormatJsAnyForInOrOfInitializer {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyForInOrOfInitializer,
-        formatter: &Formatter<Self::Options>,
+        formatter: &Formatter<Self::Context>,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(node) => {

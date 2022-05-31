@@ -5,7 +5,7 @@ use rome_js_syntax::{TsTypeArguments, TsTypeArgumentsFields};
 impl FormatNodeFields<TsTypeArguments> for FormatNodeRule<TsTypeArguments> {
     fn format_fields(
         node: &TsTypeArguments,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsTypeArgumentsFields {
             l_angle_token,

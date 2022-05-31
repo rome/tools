@@ -7,7 +7,7 @@ use rome_js_syntax::JsParametersFields;
 impl FormatNodeFields<JsParameters> for FormatNodeRule<JsParameters> {
     fn format_fields(
         node: &JsParameters,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsParametersFields {
             l_paren_token,

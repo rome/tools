@@ -5,7 +5,7 @@ use rome_js_syntax::{TsUndefinedType, TsUndefinedTypeFields};
 impl FormatNodeFields<TsUndefinedType> for FormatNodeRule<TsUndefinedType> {
     fn format_fields(
         node: &TsUndefinedType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsUndefinedTypeFields { undefined_token } = node.as_fields();
 

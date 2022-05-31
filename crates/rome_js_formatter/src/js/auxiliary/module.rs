@@ -8,7 +8,7 @@ use rome_js_syntax::JsModuleFields;
 impl FormatNodeFields<JsModule> for FormatNodeRule<JsModule> {
     fn format_fields(
         node: &JsModule,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsModuleFields {
             interpreter_token,

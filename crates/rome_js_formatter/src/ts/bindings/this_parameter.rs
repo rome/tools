@@ -5,7 +5,7 @@ use rome_js_syntax::{TsThisParameter, TsThisParameterFields};
 impl FormatNodeFields<TsThisParameter> for FormatNodeRule<TsThisParameter> {
     fn format_fields(
         node: &TsThisParameter,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsThisParameterFields {
             this_token,

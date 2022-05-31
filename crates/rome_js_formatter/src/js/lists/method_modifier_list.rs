@@ -4,11 +4,11 @@ use crate::utils::sort_modifiers_by_precedence;
 use rome_js_syntax::JsMethodModifierList;
 
 impl FormatRule<JsMethodModifierList> for FormatJsMethodModifierList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &JsMethodModifierList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),

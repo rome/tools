@@ -5,7 +5,7 @@ use rome_js_syntax::{TsStringType, TsStringTypeFields};
 impl FormatNodeFields<TsStringType> for FormatNodeRule<TsStringType> {
     fn format_fields(
         node: &TsStringType,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let TsStringTypeFields { string_token } = node.as_fields();
 

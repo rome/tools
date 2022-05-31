@@ -7,7 +7,7 @@ use rome_js_syntax::JsTryStatementFields;
 impl FormatNodeFields<JsTryStatement> for FormatNodeRule<JsTryStatement> {
     fn format_fields(
         node: &JsTryStatement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         let JsTryStatementFields {
             try_token,

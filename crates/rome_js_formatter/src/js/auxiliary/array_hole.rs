@@ -6,7 +6,7 @@ use rome_js_syntax::JsArrayHole;
 impl FormatNodeFields<JsArrayHole> for FormatNodeRule<JsArrayHole> {
     fn format_fields(
         _: &JsArrayHole,
-        _: &Formatter<JsFormatOptions>,
+        _: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         Ok(empty_element())
     }
