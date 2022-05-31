@@ -12,7 +12,7 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
             types,
         } = node.as_fields();
 
-        let leading_separator_token = format_once(|f| {
+        let _leading_separator_token = format_once(|f| {
             match leading_separator_token {
                 Some(token) => {
                     // The SyntaxToken is converted into a FormatElement using

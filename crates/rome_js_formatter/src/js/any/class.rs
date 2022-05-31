@@ -1,5 +1,5 @@
 use crate::generated::FormatJsAnyClass;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 
 use crate::prelude::*;
 use rome_js_syntax::JsAnyClass;
@@ -38,7 +38,7 @@ impl FormatRule<JsAnyClass> for FormatJsAnyClass {
             let mut join = f.join_nodes_with_hardline();
 
             for member in node.members() {
-                join.entry(&member.syntax(), &member.format());
+                join.entry(member.syntax(), &member.format());
             }
 
             join.finish()

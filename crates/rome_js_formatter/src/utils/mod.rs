@@ -12,17 +12,16 @@ use crate::prelude::*;
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
-use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
+use rome_formatter::{normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
-    JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
-    TsTemplateElementFields, TsType,
+    JsTemplateElement, Modifiers, TsTemplateElement, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList, SyntaxResult, SyntaxToken};
+use rome_rowan::{AstNode, AstNodeList, SyntaxResult};
 use std::borrow::Cow;
-use std::fmt;
+
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
@@ -46,7 +45,7 @@ impl<'a> FormatTypeMemberSeparator<'a> {
 impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
     fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(separator) = self.token {
-            write!(f, [f.format_replaced(&separator, &empty_element())])
+            write!(f, [f.format_replaced(separator, &empty_element())])
         } else {
             Ok(())
         }

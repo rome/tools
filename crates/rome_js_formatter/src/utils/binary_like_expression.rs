@@ -6,7 +6,7 @@ use rome_js_syntax::{
     JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,
     JsSyntaxKind, JsSyntaxKind::*, JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::support::elements;
+
 use rome_rowan::{AstNode, SyntaxResult};
 use std::cmp::Ordering;
 use std::fmt::Debug;

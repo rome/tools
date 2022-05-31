@@ -1,11 +1,9 @@
 use super::{write, Arguments, FormatElement};
 use crate::format_element::List;
 use crate::formatter::FormatState;
-use crate::group_id::UniqueGroupIdBuilder;
-#[cfg(debug_assertions)]
-use crate::printed_tokens::PrintedTokens;
-use crate::{FormatResult, GroupId};
-use rome_rowan::{Language, SyntaxNode, SyntaxToken};
+
+use crate::FormatResult;
+
 use std::fmt;
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};

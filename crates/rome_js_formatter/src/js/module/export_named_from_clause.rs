@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::utils::{has_leading_newline, FormatWithSemicolon};
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedFromClause;

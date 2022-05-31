@@ -168,7 +168,7 @@ impl<'a> Printer<'a> {
 
             FormatElement::Indent(content) => {
                 queue.enqueue(PrintElementCall::new(
-                    &content,
+                    content,
                     args.with_incremented_indent(),
                 ));
             }
@@ -720,7 +720,7 @@ fn fits_element_on_line<'a, 'rest>(
         }
 
         FormatElement::Indent(content) => queue.enqueue(PrintElementCall::new(
-            &content,
+            content,
             args.with_incremented_indent(),
         )),
 

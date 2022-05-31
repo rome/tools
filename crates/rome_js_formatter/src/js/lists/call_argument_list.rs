@@ -1,4 +1,4 @@
-use crate::formatter::{FormatSeparatedExtension, FormatSeparatedIter};
+use crate::formatter::{FormatSeparatedExtension};
 use crate::generated::FormatJsCallArgumentList;
 use crate::prelude::*;
 use rome_js_syntax::JsCallArgumentList;

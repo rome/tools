@@ -348,7 +348,7 @@ fn flatten_call_expression(
             flatten_call_expression(queue, object.syntax().clone(), f)?;
 
             let mut buffer = VecBuffer::new(f.state_mut());
-            let formatted = write![
+            let _formatted = write![
                 buffer,
                 [
                     static_member.operator_token().format(),

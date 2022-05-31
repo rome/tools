@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 
 use crate::FormatNodeFields;
 use rome_js_syntax::{JsEmptyStatement, JsEmptyStatementFields, JsSyntaxKind};

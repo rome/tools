@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, Buffer, VecBuffer};
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
 use rome_rowan::AstNode;
 
@@ -78,7 +78,7 @@ impl Conditional {
 
         let format_alternate = format_with(|f| self.format_with_alternate(f, alternate.as_ref()));
 
-        let body = if left_or_right_is_conditional || parent_is_conditional {
+        let _body = if left_or_right_is_conditional || parent_is_conditional {
             write!(
                 f,
                 [indent(&format_args![

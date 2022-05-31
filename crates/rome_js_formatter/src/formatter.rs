@@ -1,18 +1,18 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, Buffer, FormatOwnedWithRule, FormatWithRule, VecBuffer};
+use rome_formatter::{format_args, write, Buffer, VecBuffer};
 use std::cell::Cell;
 
 use rome_formatter::{normalize_newlines, FormatResult, GroupId, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 
-use crate::{AsFormat, FormatJsSyntaxToken, IntoFormat, JsFormatContext};
+use crate::{AsFormat, IntoFormat};
 use rome_rowan::{
     AstNode, AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListElementsIterator,
     Language, SyntaxResult, SyntaxTriviaPiece, TextRange,
 };
 
 use rome_rowan::syntax::SyntaxTriviaPiecesIterator;
-use std::iter::{once, FusedIterator};
+use std::iter::FusedIterator;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum TrailingSeparator {
@@ -665,7 +665,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_> {
             write!(f, [FormatTrimmedToken::new(close_token)])
         });
 
-        let grouped = match mode {
+        let _grouped = match mode {
             // Group is useless, the block indent would expand it right anyway
             DelimitedMode::BlockIndent => write!(f, [delimited])?,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {

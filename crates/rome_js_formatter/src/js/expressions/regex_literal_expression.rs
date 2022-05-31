@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
-use std::fmt;
+use rome_formatter::{write};
+
 
 use crate::FormatNodeFields;
-use rome_formatter::Token;
+
 use rome_js_syntax::JsRegexLiteralExpression;
 use rome_js_syntax::JsRegexLiteralExpressionFields;
 

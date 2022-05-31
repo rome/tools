@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
 use rome_rowan::{AstNode, AstNodeList};
 
@@ -23,7 +23,7 @@ impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
                 let mut join = f.join_nodes_with_hardline();
 
                 for case in cases {
-                    join.entry(&case.syntax(), &case.format());
+                    join.entry(case.syntax(), &case.format());
                 }
 
                 join.finish()?;

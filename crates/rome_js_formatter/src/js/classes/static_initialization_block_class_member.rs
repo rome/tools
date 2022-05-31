@@ -1,7 +1,7 @@
 use crate::formatter::TryFormatNodeListExtension;
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 use rome_js_syntax::JsStaticInitializationBlockClassMember;
 use rome_js_syntax::JsStaticInitializationBlockClassMemberFields;
 

@@ -1,4 +1,4 @@
-use rome_formatter::{format_args, write, Buffer, VecBuffer};
+use rome_formatter::{write, Buffer, VecBuffer};
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
 

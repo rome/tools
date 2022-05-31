@@ -24,7 +24,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
 
     /// Returns the [FormatOptions] specifying how to format the current CST
     pub fn context(&self) -> &Context {
-        &self.state().context()
+        self.state().context()
     }
 
     /// Creates a new group id that is unique to this document. The passed debug name is used in the
@@ -184,7 +184,7 @@ impl<O> Buffer for Formatter<'_, O> {
         self.buffer.write_element(element)
     }
 
-    fn write_fmt(self: &mut Self, arguments: &Arguments<Self::Context>) -> FormatResult<()> {
+    fn write_fmt(&mut self, arguments: &Arguments<Self::Context>) -> FormatResult<()> {
         for argument in arguments.items() {
             argument.format(self)?;
         }

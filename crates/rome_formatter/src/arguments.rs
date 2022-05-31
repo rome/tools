@@ -54,7 +54,7 @@ impl<'fmt, O> Arguments<'fmt, O> {
 
     /// Returns the arguments
     pub(crate) fn items(&self) -> &'fmt [Argument<'fmt, O>] {
-        &self.0
+        self.0
     }
 }
 

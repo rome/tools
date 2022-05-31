@@ -2,7 +2,7 @@ use crate::generated::FormatTsTypeMemberList;
 use crate::prelude::*;
 use rome_formatter::{write, Buffer, VecBuffer};
 use rome_js_syntax::{TsAnyTypeMember, TsTypeMemberList};
-use rome_rowan::support::elements;
+
 use rome_rowan::AstNodeList;
 
 impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::utils::FormatInterpreterToken;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 
 use crate::formatter::TryFormatNodeListExtension;
 use crate::FormatNodeFields;

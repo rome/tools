@@ -5,7 +5,7 @@ use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
-use std::os::linux::raw::stat;
+
 
 impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
     fn format_fields(node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {

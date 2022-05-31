@@ -1,13 +1,13 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::ConcatBuilder;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpression> {
     fn format_fields(node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut content = format_with(|f| {
+        let content = format_with(|f| {
             let mut current = node.clone();
             let parent = current.syntax().parent();
 

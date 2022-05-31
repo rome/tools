@@ -1,7 +1,7 @@
 use crate::generated::FormatTsTemplateElementList;
 use crate::prelude::*;
 use rome_js_syntax::TsTemplateElementList;
-use rome_rowan::AstNodeList;
+
 
 impl FormatRule<TsTemplateElementList> for FormatTsTemplateElementList {
     type Context = JsFormatContext;

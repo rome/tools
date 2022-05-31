@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::FormatInitializerClause;
 use crate::FormatNodeFields;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 use rome_js_syntax::{TsEnumMember, TsEnumMemberFields};
 
 impl FormatNodeFields<TsEnumMember> for FormatNodeRule<TsEnumMember> {

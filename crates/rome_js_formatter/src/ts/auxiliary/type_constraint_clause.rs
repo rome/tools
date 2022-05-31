@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 use rome_js_syntax::{TsTypeConstraintClause, TsTypeConstraintClauseFields};
 
 impl FormatNodeFields<TsTypeConstraintClause> for FormatNodeRule<TsTypeConstraintClause> {

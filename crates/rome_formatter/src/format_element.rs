@@ -1,8 +1,8 @@
 use crate::builders::ConcatBuilder;
-use crate::{Format, FormatResult, GroupId, TextRange, TextSize};
+use crate::{GroupId, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
-use rome_rowan::{Language, SyntaxToken, SyntaxTokenText, SyntaxTriviaPieceComments, TextLen};
+use rome_rowan::{SyntaxTokenText};
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -596,7 +596,7 @@ impl From<ConditionalGroupContent> for FormatElement {
 mod tests {
 
     use crate::format_element::{normalize_newlines, LINE_TERMINATORS};
-    use crate::{concat_elements, space_token, token, FormatElement};
+    
 
     // #[test]
     // fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {

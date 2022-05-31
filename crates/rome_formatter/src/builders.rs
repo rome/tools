@@ -1,10 +1,7 @@
 use crate::prelude::*;
-use crate::{write, FormatWithRule, GroupId, TextRange, TextSize};
+use crate::{write, GroupId, TextRange, TextSize};
 use crate::{Buffer, VecBuffer};
-use rome_rowan::{
-    AstNode, AstSeparatedList, Language, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTokenText,
-    TextLen,
-};
+use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
 use std::cell::Cell;
 use std::marker::PhantomData;
@@ -1386,19 +1383,17 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
     }
 
     pub fn finish(&mut self) -> super::FormatResult<()> {
-        self.result.and_then(|_| {
+        self.result.map(|_| {
             let mut items = std::mem::take(&mut self.items);
 
             match items.len() {
-                0 => Ok(()),
+                0 => (),
                 1 => {
                     self.fmt.write_element(items.pop().unwrap());
-                    Ok(())
                 }
                 _ => {
                     self.fmt
                         .write_element(FormatElement::Fill(List::new(items)));
-                    Ok(())
                 }
             }
         })

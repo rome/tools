@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::AsFormat;
-use rome_formatter::FormatWithRule;
-use rome_formatter::{format_args, write};
+
+use rome_formatter::{write};
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
     JsLanguage,

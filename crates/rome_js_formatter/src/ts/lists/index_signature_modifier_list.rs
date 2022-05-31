@@ -1,7 +1,7 @@
 use crate::generated::FormatTsIndexSignatureModifierList;
 use crate::prelude::*;
 use crate::utils::sort_modifiers_by_precedence;
-use rome_formatter::{format_args, write};
+
 use rome_js_syntax::TsIndexSignatureModifierList;
 
 impl FormatRule<TsIndexSignatureModifierList> for FormatTsIndexSignatureModifierList {

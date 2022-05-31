@@ -3,7 +3,7 @@ use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::{JsxText, JsxTextFields};
 use std::borrow::Cow;
-use std::fmt;
+
 use std::ops::Range;
 use std::str::CharIndices;
 

@@ -2,8 +2,8 @@ use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{JsAnyExpression, JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
-use rome_rowan::AstNode;
+use rome_js_syntax::{JsAnyExpression, JsReturnStatement, JsReturnStatementFields};
+
 
 impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
     fn format_fields(node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {
@@ -22,7 +22,7 @@ impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
                     if let Some(argument) = &argument {
                         write!(f, [space_token()])?;
 
-                        if let JsAnyExpression::JsSequenceExpression(expression) = argument {
+                        if let JsAnyExpression::JsSequenceExpression(_expression) = argument {
                             write![
                                 f,
                                 [group_elements(&format_args![

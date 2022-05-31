@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::has_leading_newline;
 use crate::FormatNodeFields;
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 use rome_js_syntax::JsObjectExpression;
 use rome_js_syntax::JsObjectExpressionFields;
 

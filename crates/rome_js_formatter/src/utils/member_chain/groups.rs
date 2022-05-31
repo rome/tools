@@ -2,8 +2,7 @@ use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
 
-use rome_formatter::formatter::FormatState;
-use rome_formatter::{format, Buffer, VecBuffer};
+use rome_formatter::{format, Buffer};
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 use std::mem;
