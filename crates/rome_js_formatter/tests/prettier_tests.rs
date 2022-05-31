@@ -504,7 +504,6 @@ impl DiffReport {
                     matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
                 sum_of_per_compatibility_file += compatibility_per_file;
             } else {
-                // in this branch `rome_lines` == `prettier_lines` == `matched_lines`
                 assert!(rome_lines == prettier_lines);
                 matched_lines = rome_lines;
                 compatibility_per_file = 1_f64;
@@ -518,16 +517,12 @@ impl DiffReport {
                 prettier_similarity: compatibility_per_file,
             });
         }
-        // extra two space force markdown render insert a new line
         let line_based = sum_of_per_compatibility_file / file_count as f64;
         let file_based = total_matched_line as f64 / total_line as f64;
         report_json.line_based_average_prettier_similarity = line_based;
         report_json.file_based_average_prettier_similarity = file_based;
 
         let json_content = serde_json::to_string(&report_json).unwrap();
-        // report = format!(
-        //     "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \n the definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893 \n",
-        // ) + &report;
         write(report_filename, json_content).unwrap();
     }
 }
