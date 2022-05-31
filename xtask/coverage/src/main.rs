@@ -4,7 +4,10 @@ use xtask::{project_root, pushd, Result};
 use xtask_coverage::{compare::coverage_compare, run, SummaryDetailLevel};
 
 fn main() -> Result<()> {
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt()
+        .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
+        .with_writer(std::io::stderr)
+        .init();
 
     let _d = pushd(project_root());
 

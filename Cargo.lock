@@ -1441,6 +1441,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_semantic"
+version = "0.3.0"
+dependencies = [
+ "rome_console",
+ "rome_diagnostics",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_markup",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_js_syntax"
 version = "0.1.4"
 dependencies = [
@@ -2427,6 +2439,7 @@ dependencies = [
  "regex",
  "rome_diagnostics",
  "rome_js_parser",
+ "rome_js_semantic",
  "rome_js_syntax",
  "rome_rowan",
  "serde",
