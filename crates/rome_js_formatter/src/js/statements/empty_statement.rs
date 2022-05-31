@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsEmptyStatement> for FormatNodeRule<JsEmptyStatement> {
     fn format_fields(
         node: &JsEmptyStatement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsEmptyStatementFields { semicolon_token } = node.as_fields();
         let parent_kind = node.syntax().parent().map(|p| p.kind());

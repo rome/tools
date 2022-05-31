@@ -3,10 +3,7 @@ use crate::FormatNodeFields;
 use rome_js_syntax::{JsxFragment, JsxFragmentFields};
 
 impl FormatNodeFields<JsxFragment> for FormatNodeRule<JsxFragment> {
-    fn format_fields(
-        node: &JsxFragment,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsxFragment, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let JsxFragmentFields {
             opening_fragment,
             children,

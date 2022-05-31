@@ -7,7 +7,7 @@ impl FormatRule<JsAnyLiteralExpression> for FormatJsAnyLiteralExpression {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyLiteralExpression,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyLiteralExpression::JsStringLiteralExpression(node) => {

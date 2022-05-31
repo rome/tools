@@ -7,7 +7,7 @@ impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
 
     fn format(
         node: &JsTemplateElementList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(concat_elements(
             formatter

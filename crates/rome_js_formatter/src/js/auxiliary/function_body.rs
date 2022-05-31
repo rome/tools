@@ -7,7 +7,7 @@ use rome_js_syntax::JsFunctionBodyFields;
 impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
     fn format_fields(
         node: &JsFunctionBody,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsFunctionBodyFields {
             l_curly_token,

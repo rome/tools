@@ -7,7 +7,7 @@ use rome_js_syntax::JsImportBareClauseFields;
 impl FormatNodeFields<JsImportBareClause> for FormatNodeRule<JsImportBareClause> {
     fn format_fields(
         node: &JsImportBareClause,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsImportBareClauseFields { source, assertion } = node.as_fields();
 

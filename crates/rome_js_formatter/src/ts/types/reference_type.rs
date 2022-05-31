@@ -5,7 +5,7 @@ use rome_js_syntax::{TsReferenceType, TsReferenceTypeFields};
 impl FormatNodeFields<TsReferenceType> for FormatNodeRule<TsReferenceType> {
     fn format_fields(
         node: &TsReferenceType,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsReferenceTypeFields {
             name,

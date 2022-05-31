@@ -7,7 +7,7 @@ use rome_js_syntax::JsThisExpressionFields;
 impl FormatNodeFields<JsThisExpression> for FormatNodeRule<JsThisExpression> {
     fn format_fields(
         node: &JsThisExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsThisExpressionFields { this_token } = node.as_fields();
 

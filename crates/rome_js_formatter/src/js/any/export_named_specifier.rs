@@ -7,7 +7,7 @@ impl FormatRule<JsAnyExportNamedSpecifier> for FormatJsAnyExportNamedSpecifier {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyExportNamedSpecifier,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(node) => {

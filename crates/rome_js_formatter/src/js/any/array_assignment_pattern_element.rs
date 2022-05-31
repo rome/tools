@@ -7,7 +7,7 @@ impl FormatRule<JsAnyArrayAssignmentPatternElement> for FormatJsAnyArrayAssignme
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyArrayAssignmentPatternElement,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(node) => {

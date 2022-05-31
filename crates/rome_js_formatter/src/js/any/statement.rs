@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyStatement;
 impl FormatRule<JsAnyStatement> for FormatJsAnyStatement {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyStatement,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyStatement, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyStatement::JsBlockStatement(node) => formatted![formatter, [node.format()]],
             JsAnyStatement::JsBreakStatement(node) => formatted![formatter, [node.format()]],

@@ -7,7 +7,7 @@ use rome_js_syntax::JsLiteralExportNameFields;
 impl FormatNodeFields<JsLiteralExportName> for FormatNodeRule<JsLiteralExportName> {
     fn format_fields(
         node: &JsLiteralExportName,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsLiteralExportNameFields { value } = node.as_fields();
 

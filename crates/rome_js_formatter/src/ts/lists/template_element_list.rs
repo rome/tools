@@ -8,7 +8,7 @@ impl FormatRule<TsTemplateElementList> for FormatTsTemplateElementList {
 
     fn format(
         node: &TsTemplateElementList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(concat_elements(
             formatter

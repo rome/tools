@@ -5,7 +5,7 @@ use rome_js_syntax::{TsNameWithTypeArguments, TsNameWithTypeArgumentsFields};
 impl FormatNodeFields<TsNameWithTypeArguments> for FormatNodeRule<TsNameWithTypeArguments> {
     fn format_fields(
         node: &TsNameWithTypeArguments,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsNameWithTypeArgumentsFields {
             name,

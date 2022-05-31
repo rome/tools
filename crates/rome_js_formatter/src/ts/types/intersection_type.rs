@@ -6,7 +6,7 @@ use rome_js_syntax::TsIntersectionTypeFields;
 impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType> {
     fn format_fields(
         node: &TsIntersectionType,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsIntersectionTypeFields {
             leading_separator_token,

@@ -9,7 +9,7 @@ impl FormatNodeFields<TsConstructorSignatureClassMember>
 {
     fn format_fields(
         node: &TsConstructorSignatureClassMember,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsConstructorSignatureClassMemberFields {
             modifiers,

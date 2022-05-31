@@ -8,7 +8,7 @@ impl FormatRule<JsConstructorModifierList> for FormatJsConstructorModifierList {
 
     fn format(
         node: &JsConstructorModifierList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),

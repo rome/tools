@@ -8,7 +8,7 @@ impl FormatRule<JsArrayBindingPatternElementList> for FormatJsArrayBindingPatter
 
     fn format(
         node: &JsArrayBindingPatternElementList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         format_array_node(node, formatter)
     }

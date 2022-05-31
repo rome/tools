@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsxAnyObjectName;
 impl FormatRule<JsxAnyObjectName> for FormatJsxAnyObjectName {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsxAnyObjectName,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsxAnyObjectName, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsxAnyObjectName::JsxReferenceIdentifier(node) => {
                 formatted![formatter, [node.format()]]

@@ -8,7 +8,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsComputedMemberExpression> for FormatNodeRule<JsComputedMemberExpression> {
     fn format_fields(
         node: &JsComputedMemberExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let mut current = node.clone();
 

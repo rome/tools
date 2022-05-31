@@ -6,10 +6,7 @@ use rome_js_syntax::JsImport;
 use rome_js_syntax::JsImportFields;
 
 impl FormatNodeFields<JsImport> for FormatNodeRule<JsImport> {
-    fn format_fields(
-        node: &JsImport,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsImport, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let JsImportFields {
             import_token,
             import_clause,

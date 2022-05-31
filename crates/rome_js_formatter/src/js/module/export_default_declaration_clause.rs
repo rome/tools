@@ -7,7 +7,7 @@ impl FormatNodeFields<JsExportDefaultDeclarationClause>
 {
     fn format_fields(
         node: &JsExportDefaultDeclarationClause,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsExportDefaultDeclarationClauseFields {
             default_token,

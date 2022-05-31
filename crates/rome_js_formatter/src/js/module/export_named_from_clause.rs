@@ -10,7 +10,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedFromClause> {
     fn format_fields(
         node: &JsExportNamedFromClause,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsExportNamedFromClauseFields {
             type_token,

@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyExpression;
 impl FormatRule<JsAnyExpression> for FormatJsAnyExpression {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyExpression,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyExpression, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyExpression::JsAnyLiteralExpression(node) => formatted![formatter, [node.format()]],
             JsAnyExpression::ImportMeta(node) => formatted![formatter, [node.format()]],

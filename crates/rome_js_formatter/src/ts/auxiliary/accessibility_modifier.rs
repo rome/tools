@@ -6,7 +6,7 @@ use rome_js_syntax::TsAccessibilityModifierFields;
 impl FormatNodeFields<TsAccessibilityModifier> for FormatNodeRule<TsAccessibilityModifier> {
     fn format_fields(
         node: &TsAccessibilityModifier,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsAccessibilityModifierFields { modifier_token } = node.as_fields();
 

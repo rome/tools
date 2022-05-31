@@ -7,7 +7,7 @@ impl FormatRule<JsAnyForInOrOfInitializer> for FormatJsAnyForInOrOfInitializer {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyForInOrOfInitializer,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(node) => {

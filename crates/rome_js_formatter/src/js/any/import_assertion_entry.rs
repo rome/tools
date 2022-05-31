@@ -7,7 +7,7 @@ impl FormatRule<JsAnyImportAssertionEntry> for FormatJsAnyImportAssertionEntry {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyImportAssertionEntry,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyImportAssertionEntry::JsImportAssertionEntry(node) => {

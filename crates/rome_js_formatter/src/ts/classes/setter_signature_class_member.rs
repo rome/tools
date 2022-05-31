@@ -8,7 +8,7 @@ impl FormatNodeFields<TsSetterSignatureClassMember>
 {
     fn format_fields(
         node: &TsSetterSignatureClassMember,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsSetterSignatureClassMemberFields {
             modifiers,

@@ -5,7 +5,7 @@ use rome_js_syntax::{TsTypeConstraintClause, TsTypeConstraintClauseFields};
 impl FormatNodeFields<TsTypeConstraintClause> for FormatNodeRule<TsTypeConstraintClause> {
     fn format_fields(
         node: &TsTypeConstraintClause,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsTypeConstraintClauseFields { extends_token, ty } = node.as_fields();
 

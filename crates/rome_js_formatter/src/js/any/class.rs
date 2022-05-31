@@ -6,10 +6,7 @@ use rome_rowan::AstNode;
 impl FormatRule<JsAnyClass> for FormatJsAnyClass {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &JsAnyClass,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyClass, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let abstract_token = node.abstract_token();
         let id = node.id();
         let extends = node.extends_clause();

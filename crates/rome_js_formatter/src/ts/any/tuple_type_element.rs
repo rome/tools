@@ -7,7 +7,7 @@ impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyTupleTypeElement,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => {

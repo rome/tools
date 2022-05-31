@@ -6,7 +6,7 @@ use rome_js_syntax::TsGlobalDeclarationFields;
 impl FormatNodeFields<TsGlobalDeclaration> for FormatNodeRule<TsGlobalDeclaration> {
     fn format_fields(
         node: &TsGlobalDeclaration,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsGlobalDeclarationFields { global_token, body } = node.as_fields();
 

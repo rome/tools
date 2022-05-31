@@ -21,18 +21,22 @@ pub struct JsFormatContext {
 }
 
 impl JsFormatContext {
-    pub fn new(
-        indent_style: IndentStyle,
-        line_width: LineWidth,
-        options: JsFormatOptions,
-        source_type: SourceType,
-    ) -> Self {
+    pub fn new(options: JsFormatOptions, source_type: SourceType) -> Self {
         Self {
-            indent_style,
-            line_width,
             options,
             source_type,
+            ..JsFormatContext::default()
         }
+    }
+
+    pub fn with_indent_style(mut self, indent_style: IndentStyle) -> Self {
+        self.indent_style = indent_style;
+        self
+    }
+
+    pub fn with_line_width(mut self, line_width: LineWidth) -> Self {
+        self.line_width = line_width;
+        self
     }
 
     pub fn quote_style(&self) -> QuoteStyle {

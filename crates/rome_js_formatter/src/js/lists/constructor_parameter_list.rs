@@ -7,7 +7,7 @@ impl FormatRule<JsConstructorParameterList> for FormatJsConstructorParameterList
 
     fn format(
         node: &JsConstructorParameterList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

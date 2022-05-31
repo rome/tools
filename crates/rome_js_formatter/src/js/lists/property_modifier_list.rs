@@ -8,7 +8,7 @@ impl FormatRule<JsPropertyModifierList> for FormatJsPropertyModifierList {
 
     fn format(
         node: &JsPropertyModifierList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),

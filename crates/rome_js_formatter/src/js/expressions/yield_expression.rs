@@ -7,7 +7,7 @@ use rome_js_syntax::JsYieldExpressionFields;
 impl FormatNodeFields<JsYieldExpression> for FormatNodeRule<JsYieldExpression> {
     fn format_fields(
         node: &JsYieldExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsYieldExpressionFields {
             yield_token,

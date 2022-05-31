@@ -7,7 +7,7 @@ impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignm
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyObjectAssignmentPatternMember,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(

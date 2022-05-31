@@ -7,7 +7,7 @@ impl FormatRule<TsAnyTypePredicateParameterName> for FormatTsAnyTypePredicatePar
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyTypePredicateParameterName,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyTypePredicateParameterName::JsReferenceIdentifier(node) => {

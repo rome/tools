@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyClassMemberName;
 impl FormatRule<JsAnyClassMemberName> for FormatJsAnyClassMemberName {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyClassMemberName,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyClassMemberName, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyClassMemberName::JsLiteralMemberName(node) => {
                 formatted![formatter, [node.format()]]

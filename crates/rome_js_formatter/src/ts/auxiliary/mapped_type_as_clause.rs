@@ -5,7 +5,7 @@ use rome_js_syntax::{TsMappedTypeAsClause, TsMappedTypeAsClauseFields};
 impl FormatNodeFields<TsMappedTypeAsClause> for FormatNodeRule<TsMappedTypeAsClause> {
     fn format_fields(
         node: &TsMappedTypeAsClause,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsMappedTypeAsClauseFields { as_token, ty } = node.as_fields();
 

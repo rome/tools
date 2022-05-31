@@ -5,7 +5,7 @@ use rome_js_syntax::{TsBigIntLiteralType, TsBigIntLiteralTypeFields};
 impl FormatNodeFields<TsBigIntLiteralType> for FormatNodeRule<TsBigIntLiteralType> {
     fn format_fields(
         node: &TsBigIntLiteralType,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsBigIntLiteralTypeFields {
             minus_token,

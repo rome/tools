@@ -7,7 +7,7 @@ use rome_js_syntax::{JsImportAssertionEntry, JsSyntaxKind};
 impl FormatNodeFields<JsImportAssertionEntry> for FormatNodeRule<JsImportAssertionEntry> {
     fn format_fields(
         node: &JsImportAssertionEntry,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsImportAssertionEntryFields {
             key,

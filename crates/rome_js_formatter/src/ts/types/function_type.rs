@@ -6,7 +6,7 @@ use rome_js_syntax::TsFunctionTypeFields;
 impl FormatNodeFields<TsFunctionType> for FormatNodeRule<TsFunctionType> {
     fn format_fields(
         node: &TsFunctionType,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsFunctionTypeFields {
             parameters,

@@ -8,7 +8,7 @@ impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
 
     fn format(
         node: &TsUnionTypeVariantList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let mut elements = Vec::with_capacity(node.len());
         let last_index = node.len().saturating_sub(1);

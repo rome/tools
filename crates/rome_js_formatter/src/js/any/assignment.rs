@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyAssignment;
 impl FormatRule<JsAnyAssignment> for FormatJsAnyAssignment {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyAssignment,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyAssignment, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyAssignment::JsIdentifierAssignment(node) => formatted![formatter, [node.format()]],
             JsAnyAssignment::JsStaticMemberAssignment(node) => {

@@ -7,7 +7,7 @@ impl FormatRule<TsAnyExternalModuleDeclarationBody> for FormatTsAnyExternalModul
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyExternalModuleDeclarationBody,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node) => {

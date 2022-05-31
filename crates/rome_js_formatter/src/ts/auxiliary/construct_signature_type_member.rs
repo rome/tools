@@ -8,7 +8,7 @@ impl FormatNodeFields<TsConstructSignatureTypeMember>
 {
     fn format_fields(
         node: &TsConstructSignatureTypeMember,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsConstructSignatureTypeMemberFields {
             new_token,

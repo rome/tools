@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
     fn format_fields(
         node: &TsEnumDeclaration,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsEnumDeclarationFields {
             const_token,

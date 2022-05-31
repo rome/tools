@@ -6,7 +6,7 @@ use rome_js_syntax::{TsGetterSignatureTypeMember, TsGetterSignatureTypeMemberFie
 impl FormatNodeFields<TsGetterSignatureTypeMember> for FormatNodeRule<TsGetterSignatureTypeMember> {
     fn format_fields(
         node: &TsGetterSignatureTypeMember,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsGetterSignatureTypeMemberFields {
             get_token,

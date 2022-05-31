@@ -6,10 +6,7 @@ use rome_rowan::{AstNode, AstNodeList};
 impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &JsDirectiveList,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsDirectiveList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         if !node.is_empty() {
             let syntax_node = node.syntax();
             let next_sibling = syntax_node.next_sibling();

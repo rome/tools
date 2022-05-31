@@ -10,7 +10,7 @@ impl FormatNodeFields<JsUnknownImportAssertionEntry>
 {
     fn format_fields(
         node: &JsUnknownImportAssertionEntry,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         unknown_node(node.syntax()).format(formatter)
     }

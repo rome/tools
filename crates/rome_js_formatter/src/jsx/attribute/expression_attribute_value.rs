@@ -7,7 +7,7 @@ use rome_js_syntax::{
 impl FormatNodeFields<JsxExpressionAttributeValue> for FormatNodeRule<JsxExpressionAttributeValue> {
     fn format_fields(
         node: &JsxExpressionAttributeValue,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsxExpressionAttributeValueFields {
             l_curly_token,

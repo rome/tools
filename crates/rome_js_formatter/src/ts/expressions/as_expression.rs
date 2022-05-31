@@ -6,7 +6,7 @@ use rome_js_syntax::TsAsExpressionFields;
 impl FormatNodeFields<TsAsExpression> for FormatNodeRule<TsAsExpression> {
     fn format_fields(
         node: &TsAsExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsAsExpressionFields {
             ty,

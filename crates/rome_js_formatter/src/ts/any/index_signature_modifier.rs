@@ -7,7 +7,7 @@ impl FormatRule<TsAnyIndexSignatureModifier> for FormatTsAnyIndexSignatureModifi
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyIndexSignatureModifier,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyIndexSignatureModifier::JsStaticModifier(node) => {

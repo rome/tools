@@ -10,7 +10,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
 pub(crate) fn format_array_node<N, I>(
     node: &N,
-    formatter: &Formatter<JsFormatContext>,
+    formatter: &JsFormatter,
 ) -> FormatResult<FormatElement>
 where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,

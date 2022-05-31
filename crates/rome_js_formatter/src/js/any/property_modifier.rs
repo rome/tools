@@ -7,7 +7,7 @@ impl FormatRule<JsAnyPropertyModifier> for FormatJsAnyPropertyModifier {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyPropertyModifier,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyPropertyModifier::TsAccessibilityModifier(node) => {

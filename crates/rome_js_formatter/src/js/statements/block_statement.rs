@@ -11,7 +11,7 @@ use rome_rowan::{AstNode, AstNodeList};
 impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
     fn format_fields(
         node: &JsBlockStatement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsBlockStatementFields {
             l_curly_token,

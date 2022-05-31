@@ -64,7 +64,7 @@ impl<'token> FormatLiteralStringToken<'token> {
 impl Format for FormatLiteralStringToken<'_> {
     type Context = JsFormatContext;
 
-    fn format(&self, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let chosen_quote_style = formatter.context().quote_style();
         let token = self.token();
         let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);

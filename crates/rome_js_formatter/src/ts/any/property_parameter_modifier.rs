@@ -7,7 +7,7 @@ impl FormatRule<TsAnyPropertyParameterModifier> for FormatTsAnyPropertyParameter
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyPropertyParameterModifier,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyPropertyParameterModifier::TsAccessibilityModifier(node) => {

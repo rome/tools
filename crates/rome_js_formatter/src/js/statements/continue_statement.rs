@@ -8,7 +8,7 @@ use rome_js_syntax::JsContinueStatementFields;
 impl FormatNodeFields<JsContinueStatement> for FormatNodeRule<JsContinueStatement> {
     fn format_fields(
         node: &JsContinueStatement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsContinueStatementFields {
             continue_token,
