@@ -42,11 +42,7 @@ impl TestCase for BabelTypescriptTestCase {
 
     fn run(&self) -> TestRunOutcome {
         let source_type = SourceType::ts().with_variant(self.variant);
-        let files = TestCaseFiles::single(
-            self.name().to_string(),
-            self.code.clone(),
-            source_type.clone(),
-        );
+        let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
 
         let result = rome_js_parser::parse(&self.code, 0, source_type);
 

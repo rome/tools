@@ -3,11 +3,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsTemplateElementList;
 
 impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &JsTemplateElementList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(concat_elements(
             formatter

@@ -4,10 +4,10 @@ use crate::generated::FormatTsAnyIndexSignatureModifier;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyIndexSignatureModifier;
 impl FormatRule<TsAnyIndexSignatureModifier> for FormatTsAnyIndexSignatureModifier {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &TsAnyIndexSignatureModifier,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyIndexSignatureModifier::JsStaticModifier(node) => {

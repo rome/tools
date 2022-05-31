@@ -65,8 +65,8 @@ export function usePlaygroundState(): [
 			//@ts-ignore
 			const queryString = new URLSearchParams({
 				...options,
-				isTypeScript: isTypeScript.toString(),
-				isJsx: isJsx.toString(),
+				typescript: isTypeScript.toString(),
+				jsx: isJsx.toString(),
 			}).toString();
 			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}#${encodeCode(
 				code,

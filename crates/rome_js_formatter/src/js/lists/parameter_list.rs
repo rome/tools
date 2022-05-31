@@ -4,12 +4,9 @@ use crate::prelude::*;
 use rome_js_syntax::{JsAnyParameter, JsParameterList};
 
 impl FormatRule<JsParameterList> for FormatJsParameterList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &JsParameterList,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsParameterList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         // The trailing separator is disallowed if the last element in the list is a rest parameter
         let has_trailing_rest = match node.into_iter().last() {
             Some(elem) => matches!(elem?, JsAnyParameter::JsRestParameter(_)),

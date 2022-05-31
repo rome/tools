@@ -3,12 +3,9 @@ use crate::prelude::*;
 use rome_js_syntax::JsStatementList;
 
 impl FormatRule<JsStatementList> for FormatJsStatementList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &JsStatementList,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsStatementList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         Ok(formatter.format_list(node))
     }
 }

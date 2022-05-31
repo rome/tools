@@ -1,6 +1,7 @@
 use std::sync::{RwLock, RwLockReadGuard};
 
 use rome_formatter::{IndentStyle, LineWidth};
+use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
 
 /// Global settings for the entire workspace
@@ -32,18 +33,19 @@ pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
     type FormatSettings: Default;
     /// Fully resolved formatter options type for this language
-    type FormatOptions: rome_formatter::FormatOptions;
+    type FormatContext: rome_formatter::FormatContext;
 
     /// Read the settings type for this language from the [LanguagesSettings] map
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self>;
 
     /// Resolve the formatter options from the global (workspace level),
     /// per-language and editor provided formatter settings
-    fn resolve_format_options(
+    fn resolve_format_context(
         global: &FormatSettings,
         language: &Self::FormatSettings,
         editor: IndentStyle,
-    ) -> Self::FormatOptions;
+        path: &RomePath,
+    ) -> Self::FormatContext;
 }
 
 #[derive(Default)]
@@ -76,15 +78,16 @@ impl<'a, E> AsRef<WorkspaceSettings> for SettingsHandle<'a, E> {
 }
 
 impl<'a> SettingsHandle<'a, IndentStyle> {
-    /// Resolve the formatting options for the given language
-    pub(crate) fn format_options<L>(self) -> L::FormatOptions
+    /// Resolve the formatting context for the given language
+    pub(crate) fn format_context<L>(self, path: &RomePath) -> L::FormatContext
     where
         L: Language,
     {
-        L::resolve_format_options(
+        L::resolve_format_context(
             &self.inner.format,
             &L::lookup_settings(&self.inner.languages).format,
             self.editor,
+            path,
         )
     }
 }

@@ -6,7 +6,7 @@ use rome_js_syntax::{JsAnyFunction, JsFunctionExpression};
 impl FormatNodeFields<JsFunctionExpression> for FormatNodeRule<JsFunctionExpression> {
     fn format_fields(
         node: &JsFunctionExpression,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         formatted![formatter, [JsAnyFunction::from(node.clone()).format()]]
     }

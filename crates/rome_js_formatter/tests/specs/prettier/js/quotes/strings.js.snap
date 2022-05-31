@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
+assertion_line: 181
 expression: strings.js
 ---
 # Input
@@ -137,16 +137,16 @@ expression: strings.js
 ("");
 
 // Single double quote.
-("\"");
+('"');
 ('"');
 
 // Single single quote.
 ("'");
-("\'");
+("'");
 
 // Unnecessary escapes.
-("\'");
-('\"');
+("'");
+('"');
 ("\a");
 ("\a");
 ("hol\a");
@@ -177,38 +177,38 @@ expression: strings.js
 
 // One of each.
 ("\"'");
-('"\'');
+("\"'");
 
 // One of each with unnecessary escapes.
-("\"\'");
-('\"\'');
+("\"'");
+("\"'");
 
 // More double quotes than single quotes.
-("\"'\"");
+('"\'"');
 ('"\'"');
 
 // More single quotes than double quotes.
 ("\"''");
-('"\'\'');
+("\"''");
 
 // Two of each.
 ("\"\"''");
-('""\'\'');
+("\"\"''");
 
 // Single backslash.
 ("\\");
 ("\\");
 
 // Backslases.
-("\"\\\"\\\\\" '\'\\'\\\'\\\\'");
-('\'\\\'\\\\\' "\"\\"\\\"\\\\"');
+("\"\\\"\\\\\" ''\\'\\\'\\\\'");
+('\'\\\'\\\\\' ""\\"\\\"\\\\"');
 
 // Somewhat more real-word example.
 ("He's sayin': \"How's it goin'?\" Don't ask me why.");
-('He\'s sayin\': "How\'s it goin\'?" Don\'t ask me why.');
+("He's sayin': \"How's it goin'?\" Don't ask me why.");
 
 // Somewhat more real-word example 2.
-("var backslash = \"\\\", doubleQuote = '\"';");
+('var backslash = "\\\", doubleQuote = \'"\';');
 ('var backslash = "\\", doubleQuote = \'"\';');
 
 ```

@@ -4,11 +4,8 @@ use crate::generated::FormatJsAnyClassMember;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyClassMember;
 impl FormatRule<JsAnyClassMember> for FormatJsAnyClassMember {
-    type Options = JsFormatOptions;
-    fn format(
-        node: &JsAnyClassMember,
-        formatter: &Formatter<Self::Options>,
-    ) -> FormatResult<FormatElement> {
+    type Context = JsFormatContext;
+    fn format(node: &JsAnyClassMember, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyClassMember::JsConstructorClassMember(node) => {
                 formatted![formatter, [node.format()]]

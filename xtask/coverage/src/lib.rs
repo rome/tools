@@ -4,6 +4,7 @@ pub mod jsx;
 mod reporters;
 pub mod results;
 mod runner;
+pub mod symbols;
 pub mod ts;
 mod util;
 
@@ -19,6 +20,7 @@ use jsx::jsx_babel::BabelJsxTestSuite;
 use rome_js_parser::ParseDiagnostic;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
+use symbols::msts::SymbolsMicrosoftTestSuite;
 use ts::ts_babel::BabelTypescriptTestSuite;
 use ts::ts_microsoft::MicrosoftTypescriptTestSuite;
 use util::decode_maybe_utf16_string;
@@ -156,6 +158,7 @@ const ALL_SUITES: &str = "*";
 const ALL_JS_SUITES: &str = "js";
 const ALL_TS_SUITES: &str = "ts";
 const ALL_JSX_SUITES: &str = "jsx";
+const ALL_SYMBOLS_SUITES: &str = "symbols";
 
 fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
     let suites = suites.unwrap_or("*").to_lowercase();
@@ -168,12 +171,14 @@ fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
             ALL_JS_SUITES | "javascript" => ids.extend(["js/262"]),
             ALL_TS_SUITES | "typescript" => ids.extend(["ts/microsoft", "ts/babel"]),
             ALL_JSX_SUITES => ids.extend(["jsx/babel"]),
-            ALL_SUITES => ids.extend(["js", "ts", "jsx"]),
+            ALL_SYMBOLS_SUITES => ids.extend(["symbols/microsoft"]),
+            ALL_SUITES => ids.extend(["js", "ts", "jsx", "symbols"]),
 
             "js/262" => suites.push(Box::new(Test262TestSuite)),
             "ts/microsoft" => suites.push(Box::new(MicrosoftTypescriptTestSuite)),
             "ts/babel" => suites.push(Box::new(BabelTypescriptTestSuite)),
             "jsx/babel" => suites.push(Box::new(BabelJsxTestSuite)),
+            "symbols/microsoft" => suites.push(Box::new(SymbolsMicrosoftTestSuite)),
 
             _ => {}
         }

@@ -9,7 +9,7 @@ impl FormatNodeFields<JsArrayBindingPatternRestElement>
 {
     fn format_fields(
         node: &JsArrayBindingPatternRestElement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsArrayBindingPatternRestElementFields {
             dotdotdot_token,

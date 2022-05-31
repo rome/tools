@@ -4,11 +4,8 @@ use crate::generated::FormatJsAnyExportClause;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyExportClause;
 impl FormatRule<JsAnyExportClause> for FormatJsAnyExportClause {
-    type Options = JsFormatOptions;
-    fn format(
-        node: &JsAnyExportClause,
-        formatter: &Formatter<Self::Options>,
-    ) -> FormatResult<FormatElement> {
+    type Context = JsFormatContext;
+    fn format(node: &JsAnyExportClause, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyExportClause::JsExportDefaultDeclarationClause(node) => {
                 formatted![formatter, [node.format()]]

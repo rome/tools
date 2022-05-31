@@ -6,7 +6,7 @@ use rome_js_syntax::TsQualifiedNameFields;
 impl FormatNodeFields<TsQualifiedName> for FormatNodeRule<TsQualifiedName> {
     fn format_fields(
         node: &TsQualifiedName,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsQualifiedNameFields {
             left,

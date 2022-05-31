@@ -82,7 +82,7 @@ pub(crate) struct TestCaseFile {
 
 impl TestCaseFile {
     pub(crate) fn parse(&self) -> Parse<JsAnyRoot> {
-        parse(&self.code, self.id, self.source_type.clone())
+        parse(&self.code, self.id, self.source_type)
     }
 
     pub(crate) fn name(&self) -> &str {
@@ -256,9 +256,18 @@ pub(crate) fn run_test_suite(
 
             scope.execute(move || {
                 let test_ref = test.as_ref();
-                let run_result = std::panic::catch_unwind(|| test_ref.run());
 
-                let outcome = run_result.unwrap_or_else(|panic| TestRunOutcome::Panicked(panic));
+                let outcome = match std::panic::catch_unwind(|| test_ref.run()) {
+                    Ok(result) => result,
+                    Err(panic) => {
+                        let err = panic
+                            .downcast_ref::<String>()
+                            .map(|x| x.to_string())
+                            .or_else(|| panic.downcast_ref::<&str>().map(|x| x.to_string()));
+                        tracing::warn!("Test [{}] panicked: {err:?}", test.name());
+                        TestRunOutcome::Panicked(panic)
+                    }
+                };
 
                 tx.send(TestRunResult {
                     test_case: test.name().to_owned(),

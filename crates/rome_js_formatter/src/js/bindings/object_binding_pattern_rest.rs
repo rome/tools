@@ -7,7 +7,7 @@ use rome_js_syntax::JsObjectBindingPatternRestFields;
 impl FormatNodeFields<JsObjectBindingPatternRest> for FormatNodeRule<JsObjectBindingPatternRest> {
     fn format_fields(
         node: &JsObjectBindingPatternRest,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsObjectBindingPatternRestFields {
             dotdotdot_token,

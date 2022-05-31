@@ -14,7 +14,7 @@ use std::{
 
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
 use rome_formatter::IndentStyle;
-use rome_js_formatter::options::JsFormatOptions;
+use rome_js_formatter::context::JsFormatContext;
 use rome_js_parser::parse;
 use rome_js_syntax::SourceType;
 
@@ -53,14 +53,14 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         input_file.try_into().unwrap()
     };
 
-    let parsed = parse(&parse_input, 0, source_type.clone());
+    let parsed = parse(&parse_input, 0, source_type);
 
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
-    let options = JsFormatOptions {
+    let context = JsFormatContext {
         indent_style: IndentStyle::Space(2),
-        ..JsFormatOptions::default()
+        ..JsFormatContext::default()
     };
 
     let result = match (range_start_index, range_end_index) {
@@ -72,7 +72,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             }
 
             rome_js_formatter::format_range(
-                options,
+                context,
                 &syntax,
                 TextRange::new(
                     TextSize::try_from(start).unwrap(),
@@ -80,7 +80,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                 ),
             )
         }
-        _ => rome_js_formatter::format_node(options, &syntax).map(|formatted| formatted.print()),
+        _ => rome_js_formatter::format_node(context, &syntax).map(|formatted| formatted.print()),
     };
 
     let formatted = result.expect("formatting failed");
@@ -104,7 +104,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                     text: &result,
                     source_type,
                     file_name,
-                    format_options: options,
+                    format_context: context,
                 });
             }
 
@@ -153,7 +153,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         writeln!(snapshot).unwrap();
     }
 
-    let max_width = options.line_width.value() as usize;
+    let max_width = context.line_width.value() as usize;
     let mut lines_exceeding_max_width = formatted
         .lines()
         .enumerate()

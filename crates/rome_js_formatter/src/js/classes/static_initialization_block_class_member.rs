@@ -9,7 +9,7 @@ impl FormatNodeFields<JsStaticInitializationBlockClassMember>
 {
     fn format_fields(
         node: &JsStaticInitializationBlockClassMember,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsStaticInitializationBlockClassMemberFields {
             static_token,

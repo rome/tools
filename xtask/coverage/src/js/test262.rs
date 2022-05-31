@@ -97,8 +97,7 @@ impl Test262TestCase {
             .filter(|neg| neg.phase == Phase::Parse)
             .is_some();
 
-        let files =
-            TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type.clone());
+        let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type);
 
         match parse(&code, 0, source_type).ok() {
             Ok(root) if !should_fail => {

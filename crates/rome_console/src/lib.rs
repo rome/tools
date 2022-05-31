@@ -55,11 +55,22 @@ pub struct EnvConsole {
     err: StandardStream,
 }
 
-impl Default for EnvConsole {
-    fn default() -> Self {
+impl EnvConsole {
+    pub fn new(no_colors: bool) -> Self {
+        let out_mode = if no_colors || !atty::is(atty::Stream::Stdout) {
+            ColorChoice::Never
+        } else {
+            ColorChoice::Auto
+        };
+        let err_mode = if no_colors || !atty::is(atty::Stream::Stderr) {
+            ColorChoice::Never
+        } else {
+            ColorChoice::Auto
+        };
+
         Self {
-            out: StandardStream::stdout(ColorChoice::Always),
-            err: StandardStream::stderr(ColorChoice::Always),
+            out: StandardStream::stdout(out_mode),
+            err: StandardStream::stderr(err_mode),
         }
     }
 }

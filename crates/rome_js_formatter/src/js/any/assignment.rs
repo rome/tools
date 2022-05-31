@@ -4,11 +4,8 @@ use crate::generated::FormatJsAnyAssignment;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyAssignment;
 impl FormatRule<JsAnyAssignment> for FormatJsAnyAssignment {
-    type Options = JsFormatOptions;
-    fn format(
-        node: &JsAnyAssignment,
-        formatter: &Formatter<Self::Options>,
-    ) -> FormatResult<FormatElement> {
+    type Context = JsFormatContext;
+    fn format(node: &JsAnyAssignment, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyAssignment::JsIdentifierAssignment(node) => formatted![formatter, [node.format()]],
             JsAnyAssignment::JsStaticMemberAssignment(node) => {

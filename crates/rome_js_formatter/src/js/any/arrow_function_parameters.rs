@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyArrowFunctionParameters;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyArrowFunctionParameters;
 impl FormatRule<JsAnyArrowFunctionParameters> for FormatJsAnyArrowFunctionParameters {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyArrowFunctionParameters,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrowFunctionParameters::JsParameters(node) => {

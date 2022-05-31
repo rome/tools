@@ -11,12 +11,9 @@ use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};
 
 impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &JsArrayElementList,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsArrayElementList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         Self::format_with_group_id(node, formatter, None)
     }
 }
@@ -25,7 +22,7 @@ impl FormatJsArrayElementList {
     /// Formats the array list with
     pub fn format_with_group_id(
         node: &JsArrayElementList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
         group_id: Option<GroupId>,
     ) -> FormatResult<FormatElement> {
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {

@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyObjectAssignmentPatternMember;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectAssignmentPatternMember;
 impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignmentPatternMember {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyObjectAssignmentPatternMember,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(

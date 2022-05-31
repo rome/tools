@@ -7,7 +7,7 @@ use rome_js_syntax::JsComputedMemberAssignmentFields;
 impl FormatNodeFields<JsComputedMemberAssignment> for FormatNodeRule<JsComputedMemberAssignment> {
     fn format_fields(
         node: &JsComputedMemberAssignment,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsComputedMemberAssignmentFields {
             object,

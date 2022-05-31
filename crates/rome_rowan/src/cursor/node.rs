@@ -461,6 +461,8 @@ impl Iterator for SyntaxNodeChildren {
     }
 }
 
+impl FusedIterator for SyntaxNodeChildren {}
+
 #[derive(Clone, Debug, Default)]
 pub(crate) struct SyntaxElementChildren {
     next: Option<SyntaxElement>,
@@ -483,6 +485,8 @@ impl Iterator for SyntaxElementChildren {
         })
     }
 }
+
+impl FusedIterator for SyntaxElementChildren {}
 
 pub(crate) struct Preorder {
     start: SyntaxNode,
@@ -542,6 +546,8 @@ impl Iterator for Preorder {
         next
     }
 }
+
+impl FusedIterator for Preorder {}
 
 pub(crate) struct PreorderWithTokens {
     start: SyntaxElement,
@@ -626,6 +632,8 @@ impl Iterator for PreorderWithTokens {
     }
 }
 
+impl FusedIterator for PreorderWithTokens {}
+
 /// Represents a cursor to a green node slot. A slot either contains an element or is empty
 /// if the child isn't present in the source.
 #[derive(Debug, Clone)]
@@ -681,7 +689,7 @@ impl SyntaxSlots {
     }
 }
 
-impl<'a> Iterator for SyntaxSlots {
+impl Iterator for SyntaxSlots {
     type Item = SyntaxSlot;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -785,6 +793,8 @@ impl Iterator for SlotsPreorder {
         next
     }
 }
+
+impl FusedIterator for SlotsPreorder {}
 
 #[derive(Debug, Clone)]
 pub(crate) struct Siblings<'a> {

@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyImportAssertionEntry;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyImportAssertionEntry;
 impl FormatRule<JsAnyImportAssertionEntry> for FormatJsAnyImportAssertionEntry {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyImportAssertionEntry,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyImportAssertionEntry::JsImportAssertionEntry(node) => {

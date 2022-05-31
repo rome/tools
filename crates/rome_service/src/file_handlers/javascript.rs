@@ -2,8 +2,8 @@ use rome_analyze::{analyze, AnalysisFilter, AnalyzerAction, RuleCategories};
 use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
-use rome_js_formatter::options::QuoteStyle;
-use rome_js_formatter::{format_node, options::JsFormatOptions};
+use rome_js_formatter::context::{JsFormatOptions, QuoteStyle};
+use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
 use rome_rowan::AstNode;
@@ -26,18 +26,19 @@ pub struct JsFormatSettings {
 
 impl Language for JsLanguage {
     type FormatSettings = JsFormatSettings;
-    type FormatOptions = JsFormatOptions;
+    type FormatContext = JsFormatContext;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
     }
 
-    fn resolve_format_options(
+    fn resolve_format_context(
         global: &FormatSettings,
         language: &JsFormatSettings,
         editor: IndentStyle,
-    ) -> JsFormatOptions {
-        JsFormatOptions {
+        path: &RomePath,
+    ) -> JsFormatContext {
+        JsFormatContext {
             indent_style: language
                 .indent_style
                 .or(global.indent_style)
@@ -46,7 +47,10 @@ impl Language for JsLanguage {
                 .line_width
                 .or(global.line_width)
                 .unwrap_or_default(),
-            quote_style: language.quote_style.unwrap_or_default(),
+            options: JsFormatOptions {
+                quote_style: language.quote_style.unwrap_or_default(),
+            },
+            source_type: path.as_path().try_into().unwrap_or_default(),
         }
     }
 }
@@ -156,38 +160,38 @@ fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> Vec<
 }
 
 fn format(
-    _rome_path: &RomePath,
+    rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle<IndentStyle>,
 ) -> Result<Printed, RomeError> {
-    let options = settings.format_options::<JsLanguage>();
+    let context = settings.format_context::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
-    let formatted = format_node(options, &tree)?;
+    let formatted = format_node(context, &tree)?;
     let printed = formatted.print();
     Ok(printed)
 }
 
 fn format_range(
-    _rome_path: &RomePath,
+    rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle<IndentStyle>,
     range: TextRange,
 ) -> Result<Printed, RomeError> {
-    let options = settings.format_options::<JsLanguage>();
+    let context = settings.format_context::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
-    let printed = rome_js_formatter::format_range(options, &tree, range)?;
+    let printed = rome_js_formatter::format_range(context, &tree, range)?;
     Ok(printed)
 }
 
 fn format_on_type(
-    _rome_path: &RomePath,
+    rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle<IndentStyle>,
     offset: TextSize,
 ) -> Result<Printed, RomeError> {
-    let options = settings.format_options::<JsLanguage>();
+    let context = settings.format_context::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
 
@@ -205,6 +209,6 @@ fn format_on_type(
         None => panic!("found a token with no parent"),
     };
 
-    let printed = rome_js_formatter::format_sub_tree(options, &root_node)?;
+    let printed = rome_js_formatter::format_sub_tree(context, &root_node)?;
     Ok(printed)
 }

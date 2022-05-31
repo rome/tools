@@ -4,11 +4,8 @@ use crate::generated::FormatJsAnyForInitializer;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyForInitializer;
 impl FormatRule<JsAnyForInitializer> for FormatJsAnyForInitializer {
-    type Options = JsFormatOptions;
-    fn format(
-        node: &JsAnyForInitializer,
-        formatter: &Formatter<Self::Options>,
-    ) -> FormatResult<FormatElement> {
+    type Context = JsFormatContext;
+    fn format(node: &JsAnyForInitializer, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyForInitializer::JsVariableDeclaration(node) => {
                 formatted![formatter, [node.format()]]

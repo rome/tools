@@ -36,11 +36,7 @@ impl TestCase for BabelJsxTestCase {
 
     fn run(&self) -> TestRunOutcome {
         let source_type = SourceType::jsx().with_module_kind(ModuleKind::Script);
-        let files = TestCaseFiles::single(
-            self.name().to_string(),
-            self.code.clone(),
-            source_type.clone(),
-        );
+        let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
         let result = parse(&self.code, 0, source_type);
 
         if result.diagnostics().is_empty() {

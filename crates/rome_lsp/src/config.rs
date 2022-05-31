@@ -1,5 +1,5 @@
 use rome_formatter::{IndentStyle, LineWidth};
-use rome_js_formatter::options::QuoteStyle;
+use rome_js_formatter::context::QuoteStyle;
 use rome_service::settings;
 use serde::{Deserialize, Serialize};
 use serde_json::{Error, Value};

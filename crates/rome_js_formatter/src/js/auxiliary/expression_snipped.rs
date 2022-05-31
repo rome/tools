@@ -7,7 +7,7 @@ use rome_js_syntax::JsExpressionSnippedFields;
 impl FormatNodeFields<JsExpressionSnipped> for FormatNodeRule<JsExpressionSnipped> {
     fn format_fields(
         node: &JsExpressionSnipped,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsExpressionSnippedFields {
             expression,
