@@ -8,7 +8,7 @@ use rome_js_syntax::JsForInStatementFields;
 impl FormatNodeFields<JsForInStatement> for FormatNodeRule<JsForInStatement> {
     fn format_fields(
         node: &JsForInStatement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsForInStatementFields {
             for_token,

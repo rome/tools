@@ -5,7 +5,7 @@ use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDeclaration> {
     fn format_fields(
         node: &TsInterfaceDeclaration,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsInterfaceDeclarationFields {
             interface_token,

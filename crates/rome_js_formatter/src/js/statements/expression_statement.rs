@@ -8,7 +8,7 @@ use rome_js_syntax::JsExpressionStatementFields;
 impl FormatNodeFields<JsExpressionStatement> for FormatNodeRule<JsExpressionStatement> {
     fn format_fields(
         node: &JsExpressionStatement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsExpressionStatementFields {
             expression,

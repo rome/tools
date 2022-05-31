@@ -7,7 +7,7 @@ use rome_js_syntax::JsBindingPatternWithDefaultFields;
 impl FormatNodeFields<JsBindingPatternWithDefault> for FormatNodeRule<JsBindingPatternWithDefault> {
     fn format_fields(
         node: &JsBindingPatternWithDefault,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsBindingPatternWithDefaultFields {
             pattern,

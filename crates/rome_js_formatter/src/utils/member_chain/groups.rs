@@ -18,7 +18,7 @@ pub(crate) struct Groups<'f> {
     current_group: Vec<FlattenItem>,
 
     /// instance of the formatter
-    formatter: &'f Formatter<JsFormatContext>,
+    formatter: &'f JsFormatter,
 
     /// This is a threshold of when we should start breaking the groups
     ///
@@ -27,7 +27,7 @@ pub(crate) struct Groups<'f> {
 }
 
 impl<'f> Groups<'f> {
-    pub fn new(formatter: &'f Formatter<JsFormatContext>, in_expression_statement: bool) -> Self {
+    pub fn new(formatter: &'f JsFormatter, in_expression_statement: bool) -> Self {
         Self {
             formatter,
             in_expression_statement,

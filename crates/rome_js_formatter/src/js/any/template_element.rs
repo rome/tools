@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyTemplateElement;
 impl FormatRule<JsAnyTemplateElement> for FormatJsAnyTemplateElement {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyTemplateElement,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyTemplateElement, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyTemplateElement::JsTemplateChunkElement(node) => {
                 formatted![formatter, [node.format()]]

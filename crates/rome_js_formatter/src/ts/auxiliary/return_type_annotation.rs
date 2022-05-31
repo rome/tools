@@ -6,7 +6,7 @@ use rome_js_syntax::TsReturnTypeAnnotationFields;
 impl FormatNodeFields<TsReturnTypeAnnotation> for FormatNodeRule<TsReturnTypeAnnotation> {
     fn format_fields(
         node: &TsReturnTypeAnnotation,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsReturnTypeAnnotationFields { colon_token, ty } = node.as_fields();
         formatted![

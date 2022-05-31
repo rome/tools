@@ -7,7 +7,7 @@ use rome_js_syntax::JsStaticModifierFields;
 impl FormatNodeFields<JsStaticModifier> for FormatNodeRule<JsStaticModifier> {
     fn format_fields(
         node: &JsStaticModifier,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsStaticModifierFields { modifier_token } = node.as_fields();
 

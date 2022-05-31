@@ -7,7 +7,7 @@ impl FormatRule<TsAnyPropertySignatureModifier> for FormatTsAnyPropertySignature
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyPropertySignatureModifier,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyPropertySignatureModifier::TsDeclareModifier(node) => {

@@ -95,7 +95,7 @@ use std::iter::FusedIterator;
 /// which is what we wanted since the beginning!
 pub(crate) fn format_binary_like_expression(
     expression: JsAnyBinaryLikeExpression,
-    formatter: &Formatter<JsFormatContext>,
+    formatter: &JsFormatter,
 ) -> FormatResult<FormatElement> {
     let mut flatten_items = FlattenItems::default();
     let current_node = expression.syntax().clone();
@@ -169,7 +169,7 @@ fn format_with_or_without_parenthesis(
     parent_operator: BinaryLikeOperator,
     node: &JsSyntaxNode,
     formatted_node: FormatElement,
-    formatter: &Formatter<JsFormatContext>,
+    formatter: &JsFormatter,
 ) -> FormatResult<(FormatElement, bool)> {
     let compare_to = match JsAnyExpression::cast(node.clone()) {
         Some(JsAnyExpression::JsLogicalExpression(logical)) => {
@@ -297,7 +297,7 @@ impl FlattenItems {
         &mut self,
         expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<()> {
         let should_flatten = expression.can_flatten()?;
 
@@ -313,7 +313,7 @@ impl FlattenItems {
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<()> {
         let right = binary_like_expression.right()?;
         let has_comments = right.syntax().has_comments_direct();
@@ -340,7 +340,7 @@ impl FlattenItems {
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<()> {
         if let Some(last) = self.items.last_mut() {
             // Remove any line breaks and the trailing operator so that the operator/trailing aren't part
@@ -415,7 +415,7 @@ impl FlattenItems {
     fn take_format_element(
         &mut self,
         current_node: &JsSyntaxNode,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let can_hard_group = can_hard_group(&self.items);
         let len = self.items.len();
@@ -869,7 +869,7 @@ impl AstNode for JsAnyBinaryLikeLeftExpression {
 impl Format for JsAnyBinaryLikeLeftExpression {
     type Context = JsFormatContext;
 
-    fn format(&self, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
                 formatted![formatter, [expression.format()]]

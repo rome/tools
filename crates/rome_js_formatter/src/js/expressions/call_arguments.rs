@@ -9,7 +9,7 @@ use rome_rowan::{AstSeparatedList, SyntaxResult};
 impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
     fn format_fields(
         node: &JsCallArguments,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsCallArgumentsFields {
             l_paren_token,

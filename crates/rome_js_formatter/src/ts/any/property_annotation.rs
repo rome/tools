@@ -7,7 +7,7 @@ impl FormatRule<TsAnyPropertyAnnotation> for FormatTsAnyPropertyAnnotation {
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyPropertyAnnotation,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyPropertyAnnotation::TsTypeAnnotation(node) => {

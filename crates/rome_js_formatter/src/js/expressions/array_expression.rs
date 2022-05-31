@@ -8,7 +8,7 @@ use rome_js_syntax::JsArrayExpressionFields;
 impl FormatNodeFields<JsArrayExpression> for FormatNodeRule<JsArrayExpression> {
     fn format_fields(
         node: &JsArrayExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsArrayExpressionFields {
             l_brack_token,

@@ -7,7 +7,7 @@ impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDecla
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyExportDefaultDeclaration,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {

@@ -5,7 +5,7 @@ use rome_js_syntax::{TsTypeOperatorType, TsTypeOperatorTypeFields};
 impl FormatNodeFields<TsTypeOperatorType> for FormatNodeRule<TsTypeOperatorType> {
     fn format_fields(
         node: &TsTypeOperatorType,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsTypeOperatorTypeFields { operator_token, ty } = node.as_fields();
 

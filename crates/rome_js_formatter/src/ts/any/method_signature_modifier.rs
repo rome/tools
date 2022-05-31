@@ -7,7 +7,7 @@ impl FormatRule<TsAnyMethodSignatureModifier> for FormatTsAnyMethodSignatureModi
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyMethodSignatureModifier,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyMethodSignatureModifier::TsAccessibilityModifier(node) => {

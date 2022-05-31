@@ -434,8 +434,10 @@ where
     Ok(concat_elements(elements.into_iter().rev()))
 }
 
+pub(crate) type JsFormatter = Formatter<JsFormatContext>;
+
 /// JS specific formatter extensions
-pub(crate) trait JsFormatter {
+pub(crate) trait JsFormatterExt {
     fn as_formatter(&self) -> &Formatter<JsFormatContext>;
 
     #[must_use]
@@ -597,7 +599,7 @@ pub(crate) trait JsFormatter {
     }
 }
 
-impl JsFormatter for Formatter<JsFormatContext> {
+impl JsFormatterExt for Formatter<JsFormatContext> {
     fn as_formatter(&self) -> &Formatter<JsFormatContext> {
         self
     }

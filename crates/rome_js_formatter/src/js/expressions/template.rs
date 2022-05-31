@@ -5,10 +5,7 @@ use rome_js_syntax::JsTemplate;
 use rome_js_syntax::JsTemplateFields;
 
 impl FormatNodeFields<JsTemplate> for FormatNodeRule<JsTemplate> {
-    fn format_fields(
-        node: &JsTemplate,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsTemplate, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let JsTemplateFields {
             tag,
             type_arguments,

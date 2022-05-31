@@ -6,7 +6,7 @@ use rome_rowan::{AstNode, AstNodeList};
 impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
     fn format_fields(
         node: &JsSwitchStatement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsSwitchStatementFields {
             switch_token,

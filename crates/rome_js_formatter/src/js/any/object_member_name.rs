@@ -7,7 +7,7 @@ impl FormatRule<JsAnyObjectMemberName> for FormatJsAnyObjectMemberName {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyObjectMemberName,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyObjectMemberName::JsLiteralMemberName(node) => {

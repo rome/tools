@@ -7,7 +7,7 @@ use rome_js_syntax::JsNamedImportSpecifiersFields;
 impl FormatNodeFields<JsNamedImportSpecifiers> for FormatNodeRule<JsNamedImportSpecifiers> {
     fn format_fields(
         node: &JsNamedImportSpecifiers,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsNamedImportSpecifiersFields {
             l_curly_token,

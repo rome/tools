@@ -8,7 +8,7 @@ use rome_js_syntax::JsWithStatementFields;
 impl FormatNodeFields<JsWithStatement> for FormatNodeRule<JsWithStatement> {
     fn format_fields(
         node: &JsWithStatement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsWithStatementFields {
             with_token,

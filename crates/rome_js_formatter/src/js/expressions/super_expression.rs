@@ -7,7 +7,7 @@ use rome_js_syntax::JsSuperExpressionFields;
 impl FormatNodeFields<JsSuperExpression> for FormatNodeRule<JsSuperExpression> {
     fn format_fields(
         node: &JsSuperExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsSuperExpressionFields { super_token } = node.as_fields();
 

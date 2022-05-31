@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyTypeMember;
 impl FormatRule<TsAnyTypeMember> for FormatTsAnyTypeMember {
     type Context = JsFormatContext;
-    fn format(
-        node: &TsAnyTypeMember,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &TsAnyTypeMember, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             TsAnyTypeMember::TsCallSignatureTypeMember(node) => {
                 formatted![formatter, [node.format()]]

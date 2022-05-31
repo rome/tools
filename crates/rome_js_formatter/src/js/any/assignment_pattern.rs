@@ -7,7 +7,7 @@ impl FormatRule<JsAnyAssignmentPattern> for FormatJsAnyAssignmentPattern {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyAssignmentPattern,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyAssignmentPattern::JsAnyAssignment(node) => formatted![formatter, [node.format()]],

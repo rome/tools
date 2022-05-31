@@ -6,7 +6,7 @@ use rome_js_syntax::TsOverrideModifierFields;
 impl FormatNodeFields<TsOverrideModifier> for FormatNodeRule<TsOverrideModifier> {
     fn format_fields(
         node: &TsOverrideModifier,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsOverrideModifierFields { modifier_token } = node.as_fields();
         formatted![formatter, [modifier_token.format()]]

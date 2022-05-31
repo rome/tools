@@ -7,7 +7,7 @@ impl FormatRule<JsAnyConstructorParameter> for FormatJsAnyConstructorParameter {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyConstructorParameter,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyConstructorParameter::JsAnyFormalParameter(node) => {

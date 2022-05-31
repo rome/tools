@@ -7,7 +7,7 @@ impl FormatRule<JsNamedImportSpecifierList> for FormatJsNamedImportSpecifierList
 
     fn format(
         node: &JsNamedImportSpecifierList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),

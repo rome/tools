@@ -7,7 +7,7 @@ use rome_js_syntax::JsIdentifierAssignmentFields;
 impl FormatNodeFields<JsIdentifierAssignment> for FormatNodeRule<JsIdentifierAssignment> {
     fn format_fields(
         node: &JsIdentifierAssignment,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsIdentifierAssignmentFields { name_token } = node.as_fields();
 

@@ -8,7 +8,7 @@ impl FormatRule<TsIndexSignatureModifierList> for FormatTsIndexSignatureModifier
 
     fn format(
         node: &TsIndexSignatureModifierList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),

@@ -10,7 +10,7 @@ impl FormatRule<JsObjectAssignmentPatternPropertyList>
 
     fn format(
         node: &JsObjectAssignmentPatternPropertyList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         // The trailing separator is disallowed after a rest element
         let has_trailing_rest = match node.into_iter().last() {

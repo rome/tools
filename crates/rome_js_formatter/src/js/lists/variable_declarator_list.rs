@@ -10,7 +10,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
 
     fn format(
         node: &JsVariableDeclaratorList,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let last_index = node.len().saturating_sub(1);
 

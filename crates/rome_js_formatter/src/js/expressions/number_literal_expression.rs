@@ -7,7 +7,7 @@ use rome_js_syntax::JsNumberLiteralExpressionFields;
 impl FormatNodeFields<JsNumberLiteralExpression> for FormatNodeRule<JsNumberLiteralExpression> {
     fn format_fields(
         node: &JsNumberLiteralExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsNumberLiteralExpressionFields { value_token } = node.as_fields();
 

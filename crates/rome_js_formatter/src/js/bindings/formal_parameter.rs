@@ -8,7 +8,7 @@ use rome_js_syntax::JsFormalParameterFields;
 impl FormatNodeFields<JsFormalParameter> for FormatNodeRule<JsFormalParameter> {
     fn format_fields(
         node: &JsFormalParameter,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsFormalParameterFields {
             binding,

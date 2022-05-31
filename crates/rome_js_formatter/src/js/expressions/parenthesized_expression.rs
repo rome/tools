@@ -11,7 +11,7 @@ use rome_rowan::{AstNode, SyntaxResult};
 impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesizedExpression> {
     fn format_fields(
         node: &JsParenthesizedExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsParenthesizedExpressionFields {
             l_paren_token,

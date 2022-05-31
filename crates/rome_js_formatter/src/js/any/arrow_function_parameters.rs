@@ -7,7 +7,7 @@ impl FormatRule<JsAnyArrowFunctionParameters> for FormatJsAnyArrowFunctionParame
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyArrowFunctionParameters,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrowFunctionParameters::JsParameters(node) => {

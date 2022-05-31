@@ -6,10 +6,7 @@ use rome_js_syntax::JsScript;
 use rome_js_syntax::JsScriptFields;
 
 impl FormatNodeFields<JsScript> for FormatNodeRule<JsScript> {
-    fn format_fields(
-        node: &JsScript,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsScript, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let JsScriptFields {
             interpreter_token,
             directives,

@@ -5,10 +5,7 @@ use crate::FormatNodeFields;
 use rome_js_syntax::ImportMetaFields;
 
 impl FormatNodeFields<ImportMeta> for FormatNodeRule<ImportMeta> {
-    fn format_fields(
-        node: &ImportMeta,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &ImportMeta, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let ImportMetaFields {
             import_token,
             dot_token,

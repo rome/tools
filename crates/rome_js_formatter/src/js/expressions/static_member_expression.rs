@@ -10,7 +10,7 @@ use rome_js_syntax::JsStaticMemberExpressionFields;
 impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMemberExpression> {
     fn format_fields(
         node: &JsStaticMemberExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsStaticMemberExpressionFields {
             object,

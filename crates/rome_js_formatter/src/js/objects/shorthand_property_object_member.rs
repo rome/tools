@@ -9,7 +9,7 @@ impl FormatNodeFields<JsShorthandPropertyObjectMember>
 {
     fn format_fields(
         node: &JsShorthandPropertyObjectMember,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsShorthandPropertyObjectMemberFields { name } = node.as_fields();
 

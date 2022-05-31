@@ -6,10 +6,7 @@ use rome_rowan::AstNodeList;
 impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &TsTypeMemberList,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &TsTypeMemberList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 

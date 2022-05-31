@@ -10,7 +10,9 @@ pub mod utils;
 
 use crate::formatter::suppressed_node;
 use crate::utils::has_formatter_suppressions;
-pub(crate) use formatter::{format_leading_trivia, format_trailing_trivia, JsFormatter};
+pub(crate) use formatter::{
+    format_leading_trivia, format_trailing_trivia, JsFormatter, JsFormatterExt,
+};
 use rome_formatter::prelude::*;
 use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{

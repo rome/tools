@@ -6,7 +6,7 @@ use rome_js_syntax::TsPredicateReturnTypeFields;
 impl FormatNodeFields<TsPredicateReturnType> for FormatNodeRule<TsPredicateReturnType> {
     fn format_fields(
         node: &TsPredicateReturnType,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsPredicateReturnTypeFields {
             parameter_name,

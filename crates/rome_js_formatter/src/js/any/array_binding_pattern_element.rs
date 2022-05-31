@@ -7,7 +7,7 @@ impl FormatRule<JsAnyArrayBindingPatternElement> for FormatJsAnyArrayBindingPatt
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyArrayBindingPatternElement,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyArrayBindingPatternElement::JsArrayHole(node) => {

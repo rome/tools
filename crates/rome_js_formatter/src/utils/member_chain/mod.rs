@@ -119,7 +119,7 @@ use rome_rowan::AstNode;
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js
 pub fn format_call_expression(
     syntax_node: &JsSyntaxNode,
-    formatter: &Formatter<JsFormatContext>,
+    formatter: &JsFormatter,
 ) -> FormatResult<FormatElement> {
     let mut flattened_items = vec![];
     let parent_is_expression_statement = syntax_node.parent().map_or(false, |parent| {
@@ -234,7 +234,7 @@ fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
 fn compute_groups(
     flatten_items: impl Iterator<Item = FlattenItem>,
     in_expression_statement: bool,
-    formatter: &Formatter<JsFormatContext>,
+    formatter: &JsFormatter,
 ) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
     let mut groups = Groups::new(formatter, in_expression_statement);
@@ -320,7 +320,7 @@ fn format_groups(
 fn flatten_call_expression(
     queue: &mut Vec<FlattenItem>,
     node: JsSyntaxNode,
-    formatter: &Formatter<JsFormatContext>,
+    formatter: &JsFormatter,
 ) -> FormatResult<()> {
     match node.kind() {
         JsSyntaxKind::JS_CALL_EXPRESSION => {

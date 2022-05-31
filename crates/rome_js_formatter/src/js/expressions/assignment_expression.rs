@@ -7,7 +7,7 @@ use rome_js_syntax::JsAssignmentExpressionFields;
 impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExpression> {
     fn format_fields(
         node: &JsAssignmentExpression,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsAssignmentExpressionFields {
             left,

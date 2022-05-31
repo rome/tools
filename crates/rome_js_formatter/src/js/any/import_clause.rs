@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyImportClause;
 impl FormatRule<JsAnyImportClause> for FormatJsAnyImportClause {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyImportClause,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyImportClause, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyImportClause::JsImportBareClause(node) => formatted![formatter, [node.format()]],
             JsAnyImportClause::JsImportNamedClause(node) => formatted![formatter, [node.format()]],

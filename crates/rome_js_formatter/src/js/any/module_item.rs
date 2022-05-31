@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyModuleItem;
 impl FormatRule<JsAnyModuleItem> for FormatJsAnyModuleItem {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyModuleItem,
-        formatter: &Formatter<Self::Context>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyModuleItem, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyModuleItem::JsAnyStatement(node) => formatted![formatter, [node.format()]],
             JsAnyModuleItem::JsExport(node) => formatted![formatter, [node.format()]],

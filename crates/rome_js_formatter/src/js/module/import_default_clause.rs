@@ -7,7 +7,7 @@ use rome_js_syntax::JsImportDefaultClauseFields;
 impl FormatNodeFields<JsImportDefaultClause> for FormatNodeRule<JsImportDefaultClause> {
     fn format_fields(
         node: &JsImportDefaultClause,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsImportDefaultClauseFields {
             type_token,

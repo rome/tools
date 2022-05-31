@@ -8,7 +8,7 @@ impl FormatNodeFields<TsOptionalPropertyAnnotation>
 {
     fn format_fields(
         node: &TsOptionalPropertyAnnotation,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsOptionalPropertyAnnotationFields {
             question_mark_token,

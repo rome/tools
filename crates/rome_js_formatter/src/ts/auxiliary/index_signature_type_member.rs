@@ -6,7 +6,7 @@ use rome_js_syntax::{TsIndexSignatureTypeMember, TsIndexSignatureTypeMemberField
 impl FormatNodeFields<TsIndexSignatureTypeMember> for FormatNodeRule<TsIndexSignatureTypeMember> {
     fn format_fields(
         node: &TsIndexSignatureTypeMember,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsIndexSignatureTypeMemberFields {
             readonly_token,

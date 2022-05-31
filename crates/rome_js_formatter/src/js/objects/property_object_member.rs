@@ -7,7 +7,7 @@ use rome_js_syntax::JsPropertyObjectMemberFields;
 impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjectMember> {
     fn format_fields(
         node: &JsPropertyObjectMember,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsPropertyObjectMemberFields {
             name,

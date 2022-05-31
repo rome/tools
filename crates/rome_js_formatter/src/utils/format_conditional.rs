@@ -29,7 +29,7 @@ impl Conditional {
 
     fn into_format_element(
         self,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
         parent_is_conditional: bool,
     ) -> FormatResult<FormatElement> {
         let (head, body) = match self {
@@ -46,7 +46,7 @@ impl Conditional {
         formatted![formatter, [head, body]]
     }
 
-    fn format_head(&self, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
+    fn format_head(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match self {
             Conditional::Expression(expr) => {
                 formatted![formatter, [expr.test()?.format(), space_token(),]]
@@ -88,7 +88,7 @@ impl Conditional {
 
     fn format_body(
         &self,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
         parent_is_conditional: bool,
     ) -> FormatResult<FormatElement> {
         let mut left_or_right_is_conditional = false;
@@ -127,7 +127,7 @@ impl Conditional {
 
     fn format_with_consequent(
         &self,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
         consequent: Option<FormatElement>,
     ) -> FormatResult<FormatElement> {
         match self {
@@ -174,7 +174,7 @@ impl Conditional {
 
     fn format_with_alternate(
         &self,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
         alternate: Option<FormatElement>,
     ) -> FormatResult<FormatElement> {
         match self {
@@ -225,7 +225,7 @@ impl Conditional {
 /// - [rome_js_syntax::JsConditionalExpression]
 pub fn format_conditional(
     conditional: Conditional,
-    formatter: &Formatter<JsFormatContext>,
+    formatter: &JsFormatter,
     parent_is_conditional: bool,
 ) -> FormatResult<FormatElement> {
     conditional.into_format_element(formatter, parent_is_conditional)

@@ -6,7 +6,7 @@ use rome_js_syntax::TsImportTypeQualifierFields;
 impl FormatNodeFields<TsImportTypeQualifier> for FormatNodeRule<TsImportTypeQualifier> {
     fn format_fields(
         node: &TsImportTypeQualifier,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsImportTypeQualifierFields { dot_token, right } = node.as_fields();
 

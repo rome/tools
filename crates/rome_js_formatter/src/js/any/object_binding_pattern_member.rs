@@ -7,7 +7,7 @@ impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPat
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyObjectBindingPatternMember,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {

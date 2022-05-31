@@ -6,7 +6,7 @@ use rome_js_syntax::TsAbstractModifierFields;
 impl FormatNodeFields<TsAbstractModifier> for FormatNodeRule<TsAbstractModifier> {
     fn format_fields(
         node: &TsAbstractModifier,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsAbstractModifierFields { modifier_token } = node.as_fields();
 

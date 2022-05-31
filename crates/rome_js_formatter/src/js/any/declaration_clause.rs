@@ -7,7 +7,7 @@ impl FormatRule<JsAnyDeclarationClause> for FormatJsAnyDeclarationClause {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyDeclarationClause,
-        formatter: &Formatter<Self::Context>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyDeclarationClause::JsClassDeclaration(node) => {

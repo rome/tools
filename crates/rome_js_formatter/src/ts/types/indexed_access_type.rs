@@ -6,7 +6,7 @@ use rome_js_syntax::TsIndexedAccessTypeFields;
 impl FormatNodeFields<TsIndexedAccessType> for FormatNodeRule<TsIndexedAccessType> {
     fn format_fields(
         node: &TsIndexedAccessType,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let TsIndexedAccessTypeFields {
             object_type,

@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsxClosingElement> for FormatNodeRule<JsxClosingElement> {
     fn format_fields(
         node: &JsxClosingElement,
-        formatter: &Formatter<JsFormatContext>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         verbatim_node(node.syntax()).format(formatter)
     }
