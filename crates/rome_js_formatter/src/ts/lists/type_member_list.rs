@@ -42,8 +42,7 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
         write!(
             f,
             [group_elements(&format_once(|f| {
-                f.write_element(formatted_element);
-                Ok(())
+                f.write_element(formatted_element)
             }))]
         )?;
 

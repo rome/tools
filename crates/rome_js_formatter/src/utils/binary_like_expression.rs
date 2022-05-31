@@ -141,8 +141,7 @@ pub(crate) fn format_binary_like_expression(
     }
 
     let element = flatten_items.take_format_element(&current_node, f)?;
-    f.write_element(element);
-    Ok(())
+    f.write_element(element)
 }
 
 /// Small wrapper to identify the operation of an expression and deduce their precedence
@@ -214,15 +213,14 @@ fn format_with_or_without_parenthesis(
         let (leading, content, trailing) = formatted_node.split_trivia();
         let mut buffer = VecBuffer::new(f.state_mut());
 
-        buffer.write_element(leading);
+        buffer.write_element(leading)?;
         write![
             buffer,
             [group_elements(&format_args![
                 token("("),
                 soft_block_indent(&format_once(|f| {
-                    f.write_element(content);
-                    f.write_element(trailing);
-                    Ok(())
+                    f.write_element(content)?;
+                    f.write_element(trailing)
                 })),
                 token(")")
             ])]
@@ -439,7 +437,7 @@ impl FlattenItems {
                         // groups not like ["something &&", "something &&" ]
                         // we want to add a space between them in case they don't break
 
-                        f.write_element(group.formatted);
+                        f.write_element(group.formatted)?;
 
                         if let Some(operator) = group.operator {
                             write!(f, [space_token(), operator.format()])?;

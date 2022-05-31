@@ -37,11 +37,11 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
                 let (object_leading, object_content, object_trailing) =
                     formatted_object.split_trivia();
 
-                f.write_element(object_leading);
+                f.write_element(object_leading)?;
                 write!(f, [token("(")])?;
-                f.write_element(object_content);
+                f.write_element(object_content)?;
                 write!(f, [token(")")])?;
-                f.write_element(object_trailing);
+                f.write_element(object_trailing)?;
 
                 write!(f, [operator_token.format(), member.format()])
             } else {

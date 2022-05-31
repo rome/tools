@@ -108,12 +108,11 @@ impl Groups {
                 let formatted_groups = self.into_formatted_groups();
 
                 f.join_with(&hard_line_break())
-                    .entries(formatted_groups.into_iter().map(|e| {
-                        format_once(|f| {
-                            f.write_element(e);
-                            Ok(())
-                        })
-                    }))
+                    .entries(
+                        formatted_groups
+                            .into_iter()
+                            .map(|e| format_once(|f| f.write_element(e))),
+                    )
                     .finish()
             })]
         )

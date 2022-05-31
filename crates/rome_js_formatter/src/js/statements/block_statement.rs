@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::write;
-use rome_js_syntax::JsAnyStatement;
+use rome_formatter::{write, Buffer};
 use rome_js_syntax::JsBlockStatement;
+use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
 
 use crate::formatter::FormatNodeExtension;
 use crate::FormatNodeFields;
@@ -18,6 +18,13 @@ impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
         } = node.as_fields();
 
         if is_non_collapsable_empty_block(node) {
+            for stmt in statements
+                .iter()
+                .filter_map(|stmt| JsEmptyStatement::cast(stmt.into_syntax()))
+            {
+                f.state_mut().track_token(&stmt.semicolon_token()?)
+            }
+
             write!(
                 f,
                 [
@@ -88,10 +95,9 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
     // }
     // ```
     if !block.statements().is_empty()
-        && block
-            .statements()
-            .iter()
-            .any(|s| !matches!(s, JsAnyStatement::JsEmptyStatement(_)))
+        && block.statements().iter().any(|s| {
+            !matches!(s, JsAnyStatement::JsEmptyStatement(_)) || s.syntax().has_comments_direct()
+        })
     {
         return false;
     }

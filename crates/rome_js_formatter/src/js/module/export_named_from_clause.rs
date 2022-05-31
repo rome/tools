@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::utils::{has_leading_newline, FormatWithSemicolon};
-use rome_formatter::{write};
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedFromClause;
@@ -23,29 +23,29 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
         let content = format_with(|f| {
             if let Some(type_token) = &type_token {
                 write!(f, [type_token.format(), space_token()])?;
-
-                if has_leading_newline(specifiers.syntax()) {
-                    write!(
-                        f,
-                        [f.delimited(
-                            l_curly_token.as_ref()?,
-                            &specifiers.format(),
-                            r_curly_token.as_ref()?,
-                        )
-                        .block_indent()]
-                    )?;
-                } else {
-                    write!(
-                        f,
-                        [f.delimited(
-                            l_curly_token.as_ref()?,
-                            &specifiers.format(),
-                            r_curly_token.as_ref()?,
-                        )
-                        .soft_block_spaces()]
-                    )?;
-                };
             }
+
+            if has_leading_newline(specifiers.syntax()) {
+                write!(
+                    f,
+                    [f.delimited(
+                        l_curly_token.as_ref()?,
+                        &specifiers.format(),
+                        r_curly_token.as_ref()?,
+                    )
+                    .block_indent()]
+                )?;
+            } else {
+                write!(
+                    f,
+                    [f.delimited(
+                        l_curly_token.as_ref()?,
+                        &specifiers.format(),
+                        r_curly_token.as_ref()?,
+                    )
+                    .soft_block_spaces()]
+                )?;
+            };
 
             write![
                 f,

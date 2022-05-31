@@ -32,12 +32,11 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
             write!(
                 f,
                 [format_once(|f| {
-                    f.write_element(leading_trivia);
+                    f.write_element(leading_trivia)?;
                     write!(f, [token("(")])?;
-                    f.write_element(content);
+                    f.write_element(content)?;
                     write!(f, [token(")")])?;
-                    f.write_element(trailing_trivia);
-                    Ok(())
+                    f.write_element(trailing_trivia)
                 })]
             )
         } else {

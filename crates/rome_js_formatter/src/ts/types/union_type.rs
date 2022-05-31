@@ -12,12 +12,12 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
             types,
         } = node.as_fields();
 
-        let _leading_separator_token = format_once(|f| {
+        let format_leading_separator_token = format_once(|f| {
             match leading_separator_token {
                 Some(token) => {
                     // The SyntaxToken is converted into a FormatElement using
                     // Token::from to strip the token's trivia pieces which are
-                    // then reinserted informat_replaced outside of the
+                    // then reinserted in format_replaced outside of the
                     // if_group_breaks block to avoid removing comments when the
                     // group does not break
                     write!(
@@ -52,16 +52,13 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
             [
                 group_elements(&indent(&format_args![
                     soft_line_break(),
+                    format_leading_separator_token,
                     format_once(|f| {
-                        f.write_element(leading_comments);
-                        f.write_element(types);
-                        Ok(())
+                        f.write_element(leading_comments)?;
+                        f.write_element(types)
                     })
                 ])),
-                format_once(|f| {
-                    f.write_element(trailing_comments);
-                    Ok(())
-                })
+                format_once(|f| { f.write_element(trailing_comments) })
             ]
         ]
     }

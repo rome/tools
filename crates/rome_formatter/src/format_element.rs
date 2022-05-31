@@ -2,7 +2,7 @@ use crate::builders::ConcatBuilder;
 use crate::{GroupId, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
-use rome_rowan::{SyntaxTokenText};
+use rome_rowan::SyntaxTokenText;
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -133,7 +133,7 @@ impl Debug for FormatElement {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
         match self {
             FormatElement::Space => write!(fmt, "Space"),
-            FormatElement::Line(content) => content.fmt(fmt),
+            FormatElement::Line(content) => fmt.debug_tuple("Line").field(content).finish(),
             FormatElement::Indent(content) => fmt.debug_tuple("Indent").field(content).finish(),
             FormatElement::Group(content) => {
                 write!(fmt, "Group")?;
@@ -596,7 +596,6 @@ impl From<ConditionalGroupContent> for FormatElement {
 mod tests {
 
     use crate::format_element::{normalize_newlines, LINE_TERMINATORS};
-    
 
     // #[test]
     // fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {

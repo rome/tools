@@ -428,7 +428,7 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
             _ => false,
         };
 
-        f.write_element(content);
+        f.write_element(content)?;
 
         if let Some(semicolon) = self.semicolon {
             write!(f, [semicolon.format()])?;

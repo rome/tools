@@ -14,7 +14,7 @@ pub(crate) use formatter::{
     format_leading_trivia, format_trailing_trivia, JsFormatter, JsFormatterExt,
 };
 use rome_formatter::prelude::*;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,

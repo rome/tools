@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write};
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsSyntaxToken;
@@ -23,7 +23,7 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
                     else_clause = alternate;
                 }
                 alternate => {
-                    write![f, [space_token(), else_token.format(),]]?;
+                    write![f, [space_token(), else_token.format()]]?;
                     write_consequent_as_block(f, alternate)?;
                 }
             }

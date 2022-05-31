@@ -14,14 +14,10 @@ impl FormatNodeFields<JsExportNamedShorthandSpecifier>
     ) -> FormatResult<()> {
         let JsExportNamedShorthandSpecifierFields { type_token, name } = node.as_fields();
 
-        write![
-            f,
-            [
-                type_token
-                    .format()
-                    .with_or_empty(|type_token, f| write![f, [type_token, space_token()]]),
-                name.format()
-            ]
-        ]
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space_token()])?;
+        }
+
+        write![f, [name.format()]]
     }
 }

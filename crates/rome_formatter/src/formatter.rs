@@ -1,11 +1,10 @@
-use crate::buffer::BufferSnapshotId;
+use crate::buffer::BufferSnapshot;
 use crate::builders::{FillBuilder, JoinBuilder};
 use crate::group_id::UniqueGroupIdBuilder;
 use crate::prelude::*;
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
 use crate::{Arguments, Buffer, GroupId};
-use drop_bomb::DebugDropBomb;
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
 use std::fmt;
 
@@ -149,11 +148,9 @@ impl<'buf, Context> Formatter<'buf, Context> {
 impl<Options> Formatter<'_, Options> {
     /// Take a snapshot of the state of the formatter
     #[inline]
-
-    pub fn snapshot(&mut self) -> FormatterSnapshot {
+    pub fn snapshot(&self) -> FormatterSnapshot {
         FormatterSnapshot {
             buffer: self.buffer.snapshot(),
-            bomb: DebugDropBomb::new("Snapshot must either be 'released' or restored'."),
             #[cfg(debug_assertions)]
             printed_tokens: self.state().printed_tokens.clone(),
         }
@@ -161,26 +158,20 @@ impl<Options> Formatter<'_, Options> {
 
     #[inline]
     /// Restore the state of the formatter to a previous snapshot
-    pub fn restore_snapshot(&mut self, mut snapshot: FormatterSnapshot) {
+    pub fn restore_snapshot(&mut self, snapshot: FormatterSnapshot) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 self.state_mut().printed_tokens = snapshot.printed_tokens;
             }
         }
-        snapshot.bomb.defuse();
         self.buffer.restore_snapshot(snapshot.buffer)
-    }
-
-    pub fn release_snapshot(&mut self, mut snapshot: FormatterSnapshot) {
-        snapshot.bomb.defuse();
-        self.buffer.release_snapshot(snapshot.buffer)
     }
 }
 
 impl<O> Buffer for Formatter<'_, O> {
     type Context = O;
 
-    fn write_element(&mut self, element: FormatElement) {
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         self.buffer.write_element(element)
     }
 
@@ -199,16 +190,12 @@ impl<O> Buffer for Formatter<'_, O> {
         self.buffer.state_mut()
     }
 
-    fn snapshot(&mut self) -> BufferSnapshotId {
+    fn snapshot(&self) -> BufferSnapshot {
         self.buffer.snapshot()
     }
 
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshotId) {
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
         self.buffer.restore_snapshot(snapshot)
-    }
-
-    fn release_snapshot(&mut self, snapshot: BufferSnapshotId) {
-        self.buffer.release_snapshot(snapshot)
     }
 }
 
@@ -284,10 +271,8 @@ impl<O> FormatState<O> {
 ///
 /// In practice this only saves the set of printed tokens in debug
 /// mode and compiled to nothing in release mode
-#[must_use = "Snapshot must either be 'released' or 'restored'."]
 pub struct FormatterSnapshot {
-    buffer: BufferSnapshotId,
-    bomb: DebugDropBomb,
+    buffer: BufferSnapshot,
     #[cfg(debug_assertions)]
     printed_tokens: PrintedTokens,
 }

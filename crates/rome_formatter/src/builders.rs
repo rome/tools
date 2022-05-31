@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::{write, GroupId, TextRange, TextSize};
+use crate::{write, GroupId, PreambleBuffer, TextRange, TextSize};
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
@@ -197,8 +197,7 @@ impl Line {
 
 impl<O> Format<O> for Line {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::Line(self.mode));
-        Ok(())
+        f.write_element(FormatElement::Line(self.mode))
     }
 }
 
@@ -249,8 +248,7 @@ pub struct StaticToken {
 
 impl<O> Format<O> for StaticToken {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::Token(Token::Static { text: self.text }));
-        Ok(())
+        f.write_element(FormatElement::Token(Token::Static { text: self.text }))
     }
 }
 
@@ -272,8 +270,7 @@ impl<O> Format<O> for DynamicToken<'_> {
         f.write_element(FormatElement::Token(Token::Dynamic {
             text: self.text.to_string().into_boxed_str(),
             source_position: self.position,
-        }));
-        Ok(())
+        }))
     }
 }
 
@@ -316,9 +313,7 @@ impl<L: Language, O> Format<O> for SyntaxTokenCowSlice<'_, L> {
                 text: text.to_string().into_boxed_str(),
                 source_position: self.start,
             })),
-        };
-
-        Ok(())
+        }
     }
 }
 
@@ -347,9 +342,7 @@ impl<O> Format<O> for SyntaxTokenTextSlice {
         f.write_element(FormatElement::Token(Token::SyntaxTokenSlice {
             slice: self.text.clone(),
             source_position: self.source_position,
-        }));
-
-        Ok(())
+        }))
     }
 }
 
@@ -392,8 +385,7 @@ impl<O> Format<O> for LineSuffix<'_, O> {
         write!(buffer, [self.content])?;
 
         let content = buffer.into_element();
-        f.write_element(FormatElement::LineSuffix(Box::new(content)));
-        Ok(())
+        f.write_element(FormatElement::LineSuffix(Box::new(content)))
     }
 }
 
@@ -429,8 +421,7 @@ pub struct LineSuffixBoundary;
 
 impl<O> Format<O> for LineSuffixBoundary {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::LineSuffixBoundary);
-        Ok(())
+        f.write_element(FormatElement::LineSuffixBoundary)
     }
 }
 
@@ -479,8 +470,7 @@ impl<O> Format<O> for Comment<'_, O> {
         write!(buffer, [self.content])?;
         let content = buffer.into_element();
 
-        f.write_element(FormatElement::Comment(Box::new(content)));
-        Ok(())
+        f.write_element(FormatElement::Comment(Box::new(content)))
     }
 }
 
@@ -507,8 +497,7 @@ pub struct Space;
 
 impl<O> Format<O> for Space {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::Space);
-        Ok(())
+        f.write_element(FormatElement::Space)
     }
 }
 
@@ -564,8 +553,7 @@ impl<O> Format<O> for Indent<'_, O> {
         }
 
         let content = buffer.into_element();
-        f.write_element(FormatElement::Indent(Box::new(content)));
-        Ok(())
+        f.write_element(FormatElement::Indent(Box::new(content)))
     }
 }
 
@@ -773,7 +761,7 @@ impl<O> Format<O> for BlockIndent<'_, O> {
 
         let content = buffer.into_element();
 
-        f.write_element(FormatElement::Indent(Box::new(content)));
+        f.write_element(FormatElement::Indent(Box::new(content)))?;
 
         match self.mode {
             IndentMode::Soft => write!(f, [soft_line_break()])?,
@@ -891,12 +879,12 @@ impl<O> Format<O> for GroupElements<'_, O> {
         let group = Group::new(content).with_id(self.options.group_id);
 
         if !leading.is_empty() {
-            f.write_element(leading);
+            f.write_element(leading)?;
         }
-        f.write_element(FormatElement::Group(group));
+        f.write_element(FormatElement::Group(group))?;
 
         if !trailing.is_empty() {
-            f.write_element(trailing);
+            f.write_element(trailing)?;
         }
 
         Ok(())
@@ -945,8 +933,7 @@ pub struct ExpandParent;
 
 impl<O> Format<O> for ExpandParent {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::ExpandParent);
-        Ok(())
+        f.write_element(FormatElement::ExpandParent)
     }
 }
 
@@ -1198,8 +1185,7 @@ impl<O> Format<O> for IfGroupBreaks<'_, O> {
         let content = buffer.into_element();
         f.write_element(FormatElement::ConditionalGroupContent(
             ConditionalGroupContent::new(content, self.mode).with_group_id(self.group_id),
-        ));
-        Ok(())
+        ))
     }
 }
 
@@ -1283,17 +1269,26 @@ where
 
     pub fn entry<L: Language>(&mut self, node: &SyntaxNode<L>, content: &dyn Format<O>) {
         self.result = self.result.and_then(|_| {
-            if self.has_elements {
-                if get_lines_before(node) > 1 {
-                    write!(self.fmt, [empty_line()])?;
-                } else {
-                    write!(self.fmt, [&self.separator])?;
-                }
-            }
+            let mut buffer = PreambleBuffer::new(
+                self.fmt,
+                format_with(|f| {
+                    if self.has_elements {
+                        if get_lines_before(node) > 1 {
+                            write!(f, [empty_line()])?;
+                        } else {
+                            write!(f, [&self.separator])?;
+                        }
+                    }
 
-            self.has_elements = true;
+                    Ok(())
+                }),
+            );
 
-            write!(self.fmt, [content])
+            write!(buffer, [content])?;
+
+            self.has_elements = self.has_elements || buffer.did_write_preamble();
+
+            Ok(())
         });
     }
 
@@ -1383,18 +1378,15 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
     }
 
     pub fn finish(&mut self) -> super::FormatResult<()> {
-        self.result.map(|_| {
+        self.result.and_then(|_| {
             let mut items = std::mem::take(&mut self.items);
 
             match items.len() {
-                0 => (),
-                1 => {
-                    self.fmt.write_element(items.pop().unwrap());
-                }
-                _ => {
-                    self.fmt
-                        .write_element(FormatElement::Fill(List::new(items)));
-                }
+                0 => Ok(()),
+                1 => self.fmt.write_element(items.pop().unwrap()),
+                _ => self
+                    .fmt
+                    .write_element(FormatElement::Fill(List::new(items))),
             }
         })
     }

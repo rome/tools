@@ -1,8 +1,9 @@
 use super::{write, Arguments, FormatElement};
 use crate::format_element::List;
 use crate::formatter::FormatState;
+use std::any::{Any, TypeId};
 
-use crate::FormatResult;
+use crate::{Format, FormatResult};
 
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};
@@ -10,7 +11,7 @@ use std::ops::{Deref, DerefMut};
 pub trait Buffer {
     type Context;
 
-    fn write_element(&mut self, element: FormatElement);
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()>;
 
     fn write_fmt(mut self: &mut Self, arguments: &Arguments<Self::Context>) -> FormatResult<()> {
         write(&mut self, arguments)
@@ -21,43 +22,61 @@ pub trait Buffer {
     fn state_mut(&mut self) -> &mut FormatState<Self::Context>;
 
     /// Takes a snapshot of the Buffers state, excluding the formatter state.
-    fn snapshot(&mut self) -> BufferSnapshotId;
+    fn snapshot(&self) -> BufferSnapshot;
 
     /// Restores the snapshot with the given id.
     ///
     /// ## Panics
     /// If the passed snapshot id is a snapshot of another buffer OR
     /// if the snapshot is restored out of order
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshotId);
-
-    /// Releases the snapshot with the given id
-    ///
-    /// ## Panics
-    /// If the passed snapshot id is a snapshot of another buffer OR
-    /// If the snapshot is restored out of order.
-    fn release_snapshot(&mut self, snapshot: BufferSnapshotId);
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot);
 }
 
-/// Id of a buffer snapshot. What the meaning of the inner value is depends on the [Buffer] implementation.
-/// It can either be an index into a local store with all taken snapshots that stores additional values
-/// or it may be the length of the internal [FormatElement] buffer.
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct BufferSnapshotId(usize);
+#[derive(Debug)]
+pub enum BufferSnapshot {
+    Position(usize),
+    Any(Box<dyn Any>),
+}
 
-impl BufferSnapshotId {
-    pub const fn new(id: usize) -> Self {
-        Self(id)
+impl BufferSnapshot {
+    pub const fn position(index: usize) -> Self {
+        Self::Position(index)
     }
 
-    pub const fn value(&self) -> usize {
-        self.0
+    /// Unwraps the position value.
+    ///
+    /// ## Panics
+    /// If self is not [BufferSnapshot::Position]
+    pub fn unwrap_position(&self) -> usize {
+        match self {
+            BufferSnapshot::Position(index) => *index,
+            BufferSnapshot::Any(_) => panic!("Tried to unwrap Any snapshot as a position."),
+        }
+    }
+
+    pub fn unwrap_any<T: 'static>(self) -> T {
+        match self {
+            BufferSnapshot::Position(_) => {
+                panic!("Tried to unwrap Position snapshot as Any snapshot.")
+            }
+            BufferSnapshot::Any(value) => match value.downcast::<T>() {
+                Ok(snapshot) => *snapshot,
+                Err(err) => {
+                    panic!(
+                        "Tried to unwrap snapshot of type {:?} as {:?}",
+                        err.type_id(),
+                        TypeId::of::<T>()
+                    )
+                }
+            },
+        }
     }
 }
 
 impl<W: Buffer<Context = Context> + ?Sized, Context> Buffer for &mut W {
     type Context = Context;
 
-    fn write_element(&mut self, element: FormatElement) {
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         (**self).write_element(element)
     }
 
@@ -73,20 +92,15 @@ impl<W: Buffer<Context = Context> + ?Sized, Context> Buffer for &mut W {
         (**self).state_mut()
     }
 
-    fn snapshot(&mut self) -> BufferSnapshotId {
+    fn snapshot(&self) -> BufferSnapshot {
         (**self).snapshot()
     }
 
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshotId) {
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
         (**self).restore_snapshot(snapshot)
-    }
-
-    fn release_snapshot(&mut self, snapshot: BufferSnapshotId) {
-        (**self).release_snapshot(snapshot)
     }
 }
 
-// TODO use Smallvec internally
 #[derive(Debug)]
 pub struct VecBuffer<'a, Context> {
     state: &'a mut FormatState<Context>,
@@ -106,18 +120,6 @@ impl<'a, Context> VecBuffer<'a, Context> {
             state: context,
             elements: Vec::with_capacity(capacity),
         }
-    }
-
-    /// Writes the elements from this buffer into the passed buffer
-    pub fn write_into(
-        &mut self,
-        buffer: &mut dyn Buffer<Context = Context>,
-    ) -> super::FormatResult<()> {
-        for element in self.drain(..) {
-            buffer.write_element(element);
-        }
-
-        Ok(())
     }
 
     pub fn into_element(mut self) -> FormatElement {
@@ -151,7 +153,7 @@ impl<Context> DerefMut for VecBuffer<'_, Context> {
 impl<Context> Buffer for VecBuffer<'_, Context> {
     type Context = Context;
 
-    fn write_element(&mut self, element: FormatElement) {
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         match element {
             FormatElement::List(list) => {
                 if self.elements.is_empty() {
@@ -162,6 +164,8 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
             }
             element => self.elements.push(element),
         }
+
+        Ok(())
     }
 
     fn state(&self) -> &FormatState<Self::Context> {
@@ -172,17 +176,80 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
         &mut self.state
     }
 
-    fn snapshot(&mut self) -> BufferSnapshotId {
-        BufferSnapshotId::new(self.elements.len())
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::position(self.elements.len())
     }
 
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshotId) {
-        assert!(self.elements.len() >= snapshot.value());
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        let position = snapshot.unwrap_position();
+        assert!(self.elements.len() >= position);
 
-        self.elements.truncate(snapshot.value())
+        self.elements.truncate(position)
+    }
+}
+
+/// Buffer that writes a pre-amble before the first written content.
+/// Emits nothing if the buffer is empty
+pub struct PreambleBuffer<'buf, Preamble, Context> {
+    inner: &'buf mut dyn Buffer<Context = Context>,
+    preamble: Preamble,
+    empty: bool,
+}
+
+impl<'buf, Preamble, Context> PreambleBuffer<'buf, Preamble, Context> {
+    pub fn new(inner: &'buf mut dyn Buffer<Context = Context>, preamble: Preamble) -> Self {
+        Self {
+            inner,
+            preamble,
+            empty: true,
+        }
     }
 
-    fn release_snapshot(&mut self, snapshot: BufferSnapshotId) {
-        assert!(self.elements.len() >= snapshot.value());
+    /// Returns `true` if the preamble has been written, false otherwise
+    pub fn did_write_preamble(&self) -> bool {
+        !self.empty
     }
+}
+
+impl<Preamble, Context> Buffer for PreambleBuffer<'_, Preamble, Context>
+where
+    Preamble: Format<Context>,
+{
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        if self.empty {
+            write!(self.inner, [&self.preamble])?;
+            self.empty = false;
+        }
+
+        self.inner.write_element(element)
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Any(Box::new(PreambleBufferSnapshot {
+            inner: self.inner.snapshot(),
+            empty: self.empty,
+        }))
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        let snapshot = snapshot.unwrap_any::<PreambleBufferSnapshot>();
+
+        self.empty = snapshot.empty;
+        self.inner.restore_snapshot(snapshot.inner);
+    }
+}
+
+pub struct PreambleBufferSnapshot {
+    inner: BufferSnapshot,
+    empty: bool,
 }

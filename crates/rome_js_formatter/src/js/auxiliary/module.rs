@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::formatter::{FormatNodeExtension, FormatNodeOrVerbatim};
+use crate::formatter::FormatNodeExtension;
 use crate::utils::FormatInterpreterToken;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsModule;

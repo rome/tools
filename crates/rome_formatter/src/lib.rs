@@ -41,7 +41,7 @@ use crate::formatter::{FormatState, Formatter};
 use crate::prelude::syntax_token_cow_slice;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
-pub use buffer::{Buffer, VecBuffer};
+pub use buffer::{Buffer, BufferSnapshot, PreambleBuffer, VecBuffer};
 pub use builders::{
     block_indent, comment, empty_element, empty_line, group_elements, group_elements_with_options,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, if_group_with_id_breaks,

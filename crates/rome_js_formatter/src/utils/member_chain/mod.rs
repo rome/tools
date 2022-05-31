@@ -288,7 +288,7 @@ fn format_groups(
     f: &mut JsFormatter,
 ) -> FormatResult<()> {
     // TODO use Alternatives once available
-    f.write_element(head_group.into_format_element());
+    f.write_element(head_group.into_format_element())?;
 
     if groups.groups_should_break(calls_count)? {
         write!(
@@ -296,7 +296,7 @@ fn format_groups(
             [indent(&format_args!(
                 hard_line_break(),
                 format_once(|f| {
-                    f.write_element(groups.into_joined_hard_line_groups());
+                    f.write_element(groups.into_joined_hard_line_groups())?;
                     Ok(())
                 })
             ))]
@@ -309,8 +309,7 @@ fn format_groups(
             write!(f, [line_suffix_boundary()])?;
         }
 
-        f.write_element(chain);
-        Ok(())
+        f.write_element(chain)
     }
 }
 
