@@ -83,7 +83,7 @@ impl SemanticEventExtractor {
         use SemanticEvent::*;
         if let JS_IDENTIFIER_BINDING = node.kind() {
             self.stash.push_back(DeclarationFound {
-                range: node.text_trimmed_range(),
+                range: node.text_range(),
             })
         }
     }

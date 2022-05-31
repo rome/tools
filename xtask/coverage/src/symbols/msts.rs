@@ -95,11 +95,12 @@ impl TestCase for SymbolsMicrosoftTestCase {
             debug_text.push_str(" - actual: ");
 
             if let Some(actual) = actual {
-                debug_text.push_str(&format!("[{}]", actual.str(&code)));
+                let name = actual.str(&code).trim();
+                debug_text.push_str(&format!("[{}]", name));
             }
 
             match (expected, actual) {
-                (Some(expected), Some(actual)) if expected.name != actual.str(&code) => {
+                (Some(expected), Some(actual)) if expected.name != actual.str(&code).trim() => {
                     debug_text.push_str(" <<<<<<<<<<<<<<<<<<<< Diff here");
                 }
                 _ => {}
