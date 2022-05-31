@@ -495,7 +495,7 @@ pub trait FormatRule<T> {
 /// ## Examples
 ///
 /// This can be useful if you want to format a `SyntaxNode` inside rome_formatter.. `SyntaxNode` doesn't implement [Format]
-/// itself but the language agnostic crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
+/// itself but the language specific crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
 /// implement [FormatWithRule].
 ///
 /// ```
