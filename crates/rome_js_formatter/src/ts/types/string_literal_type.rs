@@ -12,7 +12,9 @@ impl FormatNodeFields<TsStringLiteralType> for FormatNodeRule<TsStringLiteralTyp
 
         formatted![
             formatter,
-            [FormatLiteralStringToken::from_string(&literal_token?)]
+            [FormatLiteralStringToken::from_parent_expression(
+                &literal_token?
+            )]
         ]
     }
 }

@@ -11,6 +11,9 @@ impl FormatNodeFields<JsLiteralExportName> for FormatNodeRule<JsLiteralExportNam
     ) -> FormatResult<FormatElement> {
         let JsLiteralExportNameFields { value } = node.as_fields();
 
-        formatted![formatter, [FormatLiteralStringToken::from_string(&value?)]]
+        formatted![
+            formatter,
+            [FormatLiteralStringToken::from_parent_expression(&value?)]
+        ]
     }
 }

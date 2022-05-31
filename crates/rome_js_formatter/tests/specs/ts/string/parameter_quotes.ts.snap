@@ -1,9 +1,11 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
+assertion_line: 257
 expression: parameter_quotes.ts
 ---
 # Input
+import * as f from "f";
+
 type X = {
     "member": string;
     // you stay like this
@@ -31,6 +33,12 @@ interface Y {
     "p9": number
     "_$_ff$_morning_not_quotes": number,
     "_$_ff$_morning_yes_quotes_@": number
+}
+
+const Y = {
+    "123": false,
+    "3n": false,
+    12334: false
 }
 =============================
 # Outputs
@@ -40,13 +48,15 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
+import * as f from "f";
+
 type X = {
 	member: string;
 	// you stay like this
 	"member-member": number;
-	"4": number;
+	4: number;
 	with_underscore: number;
-	"0197": number;
+	0197: number;
 	"3n": number;
 	"3p": number;
 	p9: number;
@@ -58,21 +68,29 @@ interface Y {
 	member: string;
 	// you stay like this
 	"member-member": number;
-	"4": number;
+	4: number;
 	with_underscore: number;
-	"0197": number;
+	0197: number;
 	"3n": number;
 	"3p": number;
 	p9: number;
 	_$_ff$_morning_not_quotes: number;
 	"_$_ff$_morning_yes_quotes_@": number;
 }
+
+const Y = {
+	123: false,
+	"3n": false,
+	12334: false,
+};
 ## Output 2
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
 -----
+import * as f from 'f';
+
 type X = {
 	member: string;
 	// you stay like this
@@ -100,4 +118,10 @@ interface Y {
 	_$_ff$_morning_not_quotes: number;
 	'_$_ff$_morning_yes_quotes_@': number;
 }
+
+const Y = {
+	'123': false,
+	'3n': false,
+	12334: false,
+};
 

@@ -1,3 +1,5 @@
+import * as f from "f";
+
 type X = {
     "member": string;
     // you stay like this
@@ -25,4 +27,10 @@ interface Y {
     "p9": number
     "_$_ff$_morning_not_quotes": number,
     "_$_ff$_morning_yes_quotes_@": number
+}
+
+const Y = {
+    "123": false,
+    "3n": false,
+    12334: false
 }

@@ -24,7 +24,7 @@ impl FormatNodeFields<TsImportType> for FormatNodeRule<TsImportType> {
                     .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
                 import_token.format(),
                 l_paren_token.format(),
-                FormatLiteralStringToken::from_string(&argument_token?),
+                FormatLiteralStringToken::from_parent_expression(&argument_token?),
                 r_paren_token.format(),
                 qualifier_clause.format(),
                 type_arguments.format(),

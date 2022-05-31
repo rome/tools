@@ -11,6 +11,6 @@ impl FormatNodeFields<JsModuleSource> for FormatNodeRule<JsModuleSource> {
     ) -> FormatResult<FormatElement> {
         let JsModuleSourceFields { value_token } = node.as_fields();
 
-        FormatLiteralStringToken::from_string(&value_token?).format(formatter)
+        FormatLiteralStringToken::from_parent_expression(&value_token?).format(formatter)
     }
 }

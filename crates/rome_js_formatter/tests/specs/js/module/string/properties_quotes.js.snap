@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
+assertion_line: 257
 expression: properties_quotes.js
 ---
 # Input
@@ -84,16 +84,14 @@ let a = { "": 10, c_d: 30 };
 
 let b = { "'": 10, c_d: 30 };
 
-let { _$_ff$_morning_not_quotes: test, "_$_ff$_morning_yes_quotes_@": test } = value;
+let {
+	_$_ff$_morning_not_quotes: test,
+	"_$_ff$_morning_yes_quotes_@": test,
+} = value;
 
 let { "_$_$_%": test } = value;
 
 let { 0197: test, "3n": test, "3p": test, p9: test } = value;
-
-
-## Lines exceeding width of 80 characters
-
-   34: let { _$_ff$_morning_not_quotes: test, "_$_ff$_morning_yes_quotes_@": test } = value;
 ## Output 2
 -----
 Indent style: Tab
@@ -133,14 +131,12 @@ let a = { '': 10, c_d: 30 };
 
 let b = { "'": 10, c_d: 30 };
 
-let { _$_ff$_morning_not_quotes: test, '_$_ff$_morning_yes_quotes_@': test } = value;
+let {
+	_$_ff$_morning_not_quotes: test,
+	'_$_ff$_morning_yes_quotes_@': test,
+} = value;
 
 let { '_$_$_%': test } = value;
 
 let { 0197: test, '3n': test, '3p': test, p9: test } = value;
-
-
-## Lines exceeding width of 80 characters
-
-   34: let { _$_ff$_morning_not_quotes: test, '_$_ff$_morning_yes_quotes_@': test } = value;
 

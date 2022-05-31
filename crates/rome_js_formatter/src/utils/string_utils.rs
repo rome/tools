@@ -1,7 +1,7 @@
 use crate::context::QuoteStyle;
 use crate::prelude::*;
 use crate::utils::string_utils::CharSignal::AlreadyPrinted;
-use rome_js_syntax::JsSyntaxToken;
+use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
 
 pub trait ToAsciiLowercaseCow {
@@ -41,22 +41,36 @@ impl ToAsciiLowercaseCow for String {
 
 const CHARACTERS_THAT_COULD_KEEP_THE_ESCAPE: [char; 4] = ['\\', '\'', '"', '\r'];
 
+/// Data structure of convenience to format string literals
 pub(crate) enum FormatLiteralStringToken<'token> {
-    String(&'token JsSyntaxToken),
+    /// Variant to track tokens that are inside a member
+    Member(&'token JsSyntaxToken),
+    /// Variant to track tokens that are inside an expression
+    Expression(&'token JsSyntaxToken),
+    /// Variant used when the string literal is inside a directive. This will apply
+    /// a simplified logic of normalisation
     Directive(&'token JsSyntaxToken),
 }
 
 impl<'token> FormatLiteralStringToken<'token> {
-    pub fn from_directive(token: &'token JsSyntaxToken) -> Self {
+    /// Use this function if the token is inside a directive
+    pub fn from_parent_directive(token: &'token JsSyntaxToken) -> Self {
         Self::Directive(token)
     }
-    pub fn from_string(token: &'token JsSyntaxToken) -> Self {
-        Self::String(token)
+    /// Use this function if the token is inside an expression
+    pub fn from_parent_expression(token: &'token JsSyntaxToken) -> Self {
+        Self::Expression(token)
+    }
+
+    /// Use this function if the token is inside a member (class or object)
+    pub fn from_parent_member(token: &'token JsSyntaxToken) -> Self {
+        Self::Member(token)
     }
     pub fn token(&self) -> &'token JsSyntaxToken {
         match self {
-            FormatLiteralStringToken::String(token) => token,
+            FormatLiteralStringToken::Expression(token) => token,
             FormatLiteralStringToken::Directive(token) => token,
+            FormatLiteralStringToken::Member(token) => token,
         }
     }
 }
@@ -69,7 +83,7 @@ impl Format for FormatLiteralStringToken<'_> {
         let token = self.token();
         let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
 
-        let content = string_cleaner.clean_text();
+        let content = string_cleaner.normalise_text(formatter.context().source_type.into());
 
         Ok(formatter.format_replaced(
             token,
@@ -79,29 +93,15 @@ impl Format for FormatLiteralStringToken<'_> {
     }
 }
 
-/// This signal is used to tell to the next character what it should do
-enum CharSignal {
-    /// There hasn't been any signal
-    None,
-    /// The function decided to keep the previous character
-    Keep,
-    /// The function has decided to print the character. Saves the character that was
-    /// already written
-    AlreadyPrinted(char),
-}
-
-/// Struct of convenience used to manipulate the string. It saves some state in order to apply
-/// the normalise process.
-pub(crate) struct LiteralStringNormaliser<'token> {
-    token: &'token FormatLiteralStringToken<'token>,
-    /// This is the quote that is set in the formatter options
-    chosen_quote: QuoteStyle,
+/// Data structure of convenience to store some information about the
+/// string that has been processed
+struct StringInformation {
     /// This is the quote that the is calculated and eventually used inside the string.
     /// It could be different from the one inside the formatter options
-    preferred_quote: Option<QuoteStyle>,
+    preferred_quote: QuoteStyle,
     /// It flags if the raw content has quotes (single or double). The raw content is the
     /// content of a string literal without the quotes
-    raw_content_has_quotes: Option<bool>,
+    raw_content_has_quotes: bool,
     /// Checks of the literal token passed to the function starts without quotes.
     ///
     /// literal, in our syntax, might not have quotes so we need to check if they start with a possible quote
@@ -113,48 +113,10 @@ pub(crate) struct LiteralStringNormaliser<'token> {
     /// ```
     ///
     /// `b` and `"b"` are both defined as literals in our grammar
-    literal_starts_with_quote: Option<bool>,
+    starts_with_quote: bool,
 }
 
-impl<'token> LiteralStringNormaliser<'token> {
-    pub fn new(
-        token: &'token FormatLiteralStringToken<'_>,
-        chosen_quote_style: QuoteStyle,
-    ) -> Self {
-        Self {
-            token,
-            chosen_quote: chosen_quote_style,
-            preferred_quote: None,
-            raw_content_has_quotes: None,
-            literal_starts_with_quote: None,
-        }
-    }
-
-    pub fn clean_text(&mut self) -> Cow<str> {
-        self.compute_preferred_quote();
-        match self.token {
-            FormatLiteralStringToken::String(_) => self.clean_string_literal(),
-            FormatLiteralStringToken::Directive(_) => self.clean_directive(),
-        }
-    }
-
-    fn get_token(&self) -> &'token JsSyntaxToken {
-        match self.token {
-            FormatLiteralStringToken::String(token) => token,
-            FormatLiteralStringToken::Directive(token) => token,
-        }
-    }
-
-    fn can_reduce_escapes(&self) -> bool {
-        if matches!(self.token, FormatLiteralStringToken::Directive(_)) {
-            !self
-                .raw_content_has_quotes
-                .expect("You must compute the quotes in order to know this information")
-        } else {
-            true
-        }
-    }
-
+impl FormatLiteralStringToken<'_> {
     /// This function determines which quotes should be used inside to enclose the string.
     /// The function take as a input the string **without quotes**.
     ///
@@ -180,10 +142,10 @@ impl<'token> LiteralStringNormaliser<'token> {
     /// (' content """ dont\'t ')
     /// ```
     /// Like this, we reduced the number of escaped quotes.
-    fn compute_preferred_quote(&mut self) {
-        let literal = self.get_token().text_trimmed();
-        let alternate = self.chosen_quote.other();
-        let mut literal_starts_with_quote = None;
+    fn compute_string_information(&self, chosen_quote: QuoteStyle) -> StringInformation {
+        let literal = self.token().text_trimmed();
+        let alternate = chosen_quote.other();
+        let mut starts_with_quote = false;
 
         let char_count = literal.chars().count();
 
@@ -191,16 +153,14 @@ impl<'token> LiteralStringNormaliser<'token> {
             (0, 0),
             |(preferred_quotes_counter, alternate_quotes_counter), (index, current_character)| {
                 if index == 0 {
-                    let chosen_quote_char = self.chosen_quote.as_char();
+                    let chosen_quote_char = chosen_quote.as_char();
                     let alternate_quote_char = alternate.as_char();
-                    literal_starts_with_quote = Some(
-                        current_character == chosen_quote_char
-                            || current_character == alternate_quote_char,
-                    );
+                    starts_with_quote = current_character == chosen_quote_char
+                        || current_character == alternate_quote_char;
                     (preferred_quotes_counter, alternate_quotes_counter)
                 } else if index == char_count - 1 {
                     (preferred_quotes_counter, alternate_quotes_counter)
-                } else if current_character == self.chosen_quote.as_char() {
+                } else if current_character == chosen_quote.as_char() {
                     (preferred_quotes_counter + 1, alternate_quotes_counter)
                 } else if current_character == alternate.as_char() {
                     (preferred_quotes_counter, alternate_quotes_counter + 1)
@@ -210,42 +170,153 @@ impl<'token> LiteralStringNormaliser<'token> {
             },
         );
 
-        self.literal_starts_with_quote = literal_starts_with_quote;
-        if preferred_quotes_count > alternate_quotes_count {
-            self.preferred_quote = Some(alternate)
+        StringInformation {
+            raw_content_has_quotes: preferred_quotes_count > 0 || alternate_quotes_count > 0,
+            preferred_quote: if preferred_quotes_count > alternate_quotes_count {
+                alternate
+            } else {
+                chosen_quote
+            },
+            starts_with_quote,
+        }
+    }
+}
+
+/// This signal is used to tell to the next character what it should do
+enum CharSignal {
+    /// There hasn't been any signal
+    None,
+    /// The function decided to keep the previous character
+    Keep,
+    /// The function has decided to print the character. Saves the character that was
+    /// already written
+    AlreadyPrinted(char),
+}
+
+/// Struct of convenience used to manipulate the string. It saves some state in order to apply
+/// the normalise process.
+pub(crate) struct LiteralStringNormaliser<'token> {
+    token: &'token FormatLiteralStringToken<'token>,
+    ///
+    ///
+    chosen_quote: QuoteStyle,
+}
+
+#[derive(Eq, PartialEq)]
+pub(crate) enum FileSource {
+    Ts,
+    Js,
+}
+
+impl From<SourceType> for FileSource {
+    fn from(st: SourceType) -> Self {
+        if st.language().is_typescript() {
+            Self::Ts
         } else {
-            self.preferred_quote = Some(self.chosen_quote);
+            Self::Js
         }
-        self.raw_content_has_quotes =
-            Some(preferred_quotes_count > 0 || alternate_quotes_count > 0);
+    }
+}
+
+impl<'token> LiteralStringNormaliser<'token> {
+    pub fn new(token: &'token FormatLiteralStringToken<'_>, chosen_quote: QuoteStyle) -> Self {
+        Self {
+            token,
+            chosen_quote,
+        }
     }
 
-    fn clean_directive(&mut self) -> Cow<str> {
-        let content = self.normalize_string();
+    pub fn normalise_text(&mut self, file_source: FileSource) -> Cow<str> {
+        let string_information = self.token.compute_string_information(self.chosen_quote);
+        match self.token {
+            FormatLiteralStringToken::Expression(_) => {
+                self.normalise_string_literal(string_information)
+            }
+            FormatLiteralStringToken::Directive(_) => self.normalise_directive(&string_information),
+            FormatLiteralStringToken::Member(_) => {
+                self.normalise_type_member(string_information, file_source)
+            }
+        }
+    }
+
+    fn get_token(&self) -> &'token JsSyntaxToken {
+        self.token.token()
+    }
+
+    fn can_reduce_escapes(&self, string_information: &StringInformation) -> bool {
+        if matches!(self.token, FormatLiteralStringToken::Directive(_)) {
+            !string_information.raw_content_has_quotes
+        } else {
+            true
+        }
+    }
+
+    fn normalise_directive(&mut self, string_information: &StringInformation) -> Cow<str> {
+        let content = self.normalize_string(string_information);
         match content {
-            Cow::Borrowed(content) => self.swap_quotes(content),
-            Cow::Owned(content) => Cow::Owned(self.swap_quotes(content.as_ref()).into_owned()),
+            Cow::Borrowed(content) => self.swap_quotes(content, string_information),
+            Cow::Owned(content) => Cow::Owned(
+                self.swap_quotes(content.as_ref(), string_information)
+                    .into_owned(),
+            ),
         }
     }
 
-    fn clean_string_literal(&self) -> Cow<'token, str> {
-        let literal = self.get_token().text_trimmed();
-        let preferred_quote = self
-            .preferred_quote
-            .expect("You must compute the preferred quote style first");
+    /// We can change the text only if there are alphanumeric or alphabetic characters, depending on the file source
+    fn can_remove_quotes(&self, file_source: FileSource) -> bool {
+        let text_to_check = self.raw_content();
+        // Text here is quoteless. If it's empty, it means it is an empty string and we can't
+        // do any transformation
+        if text_to_check.is_empty() {
+            return false;
+        }
 
-        if !self
-            .literal_starts_with_quote
-            .expect("You must compute the preferred quote style first")
-        {
+        let mut has_seen_number = false;
+        text_to_check.chars().enumerate().all(|(index, c)| {
+            if index == 0 && c.is_numeric() {
+                // In TypeScript, numbers like members have different meaning from numbers.
+                // Hence, if we see a number, we bail straightaway
+                if file_source == FileSource::Ts {
+                    return false;
+                } else {
+                    has_seen_number = true;
+                }
+            }
+
+            let is_eligible_character = if has_seen_number {
+                // as we've seen a number, now eligible characters can only contain numbers
+                c.is_numeric()
+            } else {
+                c.is_alphanumeric()
+            };
+            is_eligible_character || matches!(c, '_' | '$')
+        })
+    }
+
+    fn normalise_type_member(
+        &mut self,
+        string_information: StringInformation,
+        file_source: FileSource,
+    ) -> Cow<str> {
+        if string_information.starts_with_quote && self.can_remove_quotes(file_source) {
+            return Cow::Owned(self.raw_content().to_string());
+        }
+        self.normalise_string_literal(string_information)
+    }
+
+    fn normalise_string_literal(&self, string_information: StringInformation) -> Cow<'token, str> {
+        let literal = self.get_token().text_trimmed();
+        let preferred_quote = string_information.preferred_quote;
+
+        if !string_information.starts_with_quote {
             return Cow::Borrowed(literal);
         }
 
-        let polished_raw_content = self.normalize_string();
+        let polished_raw_content = self.normalize_string(&string_information);
 
         match polished_raw_content {
             Cow::Borrowed(raw_content) => {
-                let final_content = self.swap_quotes(raw_content);
+                let final_content = self.swap_quotes(raw_content, &string_information);
                 match final_content {
                     Cow::Borrowed(final_content) => Cow::Borrowed(final_content),
                     Cow::Owned(final_content) => Cow::Owned(final_content),
@@ -310,17 +381,15 @@ impl<'token> LiteralStringNormaliser<'token> {
     ///
     /// By default the formatter uses `\n` as a newline. The function replaces
     /// `\r\n` with `\n`,
-    fn normalize_string(&self) -> Cow<'token, str> {
-        let preferred_quote = self
-            .preferred_quote
-            .expect("You must compute the preferred quote style first");
+    fn normalize_string(&self, string_information: &StringInformation) -> Cow<'token, str> {
+        let preferred_quote = string_information.preferred_quote;
 
         let alternate_quote = preferred_quote.other();
         let mut reduced_string = String::new();
         let mut last_end = 0;
         let mut signal = CharSignal::None;
         let raw_content = self.raw_content();
-        let can_reduce_escapes = self.can_reduce_escapes();
+        let can_reduce_escapes = self.can_reduce_escapes(string_information);
 
         for (start, part) in raw_content.match_indices(CHARACTERS_THAT_COULD_KEEP_THE_ESCAPE) {
             if start - last_end >= 1 {
@@ -363,9 +432,7 @@ impl<'token> LiteralStringNormaliser<'token> {
                                         }
                                         _ => {
                                             reduced_string.push(alternate_quote.as_char());
-                                            signal = CharSignal::AlreadyPrinted(
-                                                alternate_quote.as_char(),
-                                            );
+                                            signal = AlreadyPrinted(alternate_quote.as_char());
                                         }
                                     }
                                 } else {
@@ -460,16 +527,16 @@ impl<'token> LiteralStringNormaliser<'token> {
         &content[1..content.len() - 1]
     }
 
-    fn swap_quotes<S: Into<&'token str>>(&self, content_to_use: S) -> Cow<'token, str> {
+    fn swap_quotes<S: Into<&'token str>>(
+        &self,
+        content_to_use: S,
+        string_information: &StringInformation,
+    ) -> Cow<'token, str> {
         let original_content = self.get_token().text_trimmed();
-        let preferred_quote = self
-            .preferred_quote
-            .expect("You must compute the preferred quote style first");
+        let preferred_quote = string_information.preferred_quote;
         let other_quote = preferred_quote.other().as_char();
 
-        let raw_content_has_quotes = self
-            .raw_content_has_quotes
-            .expect("You must compute the quotes in order to know this information");
+        let raw_content_has_quotes = string_information.raw_content_has_quotes;
 
         if raw_content_has_quotes {
             Cow::Borrowed(original_content)
@@ -489,8 +556,15 @@ impl<'token> LiteralStringNormaliser<'token> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::context::QuoteStyle;
     use crate::utils::quickcheck_utils::*;
+    use crate::utils::{FileSource, FormatLiteralStringToken};
     use quickcheck_macros::*;
+    use rome_js_factory::JsSyntaxTreeBuilder;
+    use rome_js_syntax::JsSyntaxKind::{JS_STRING_LITERAL, JS_STRING_LITERAL_EXPRESSION};
+    use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxToken};
+    use rome_rowan::AstNode;
+    use std::borrow::Cow;
 
     #[quickcheck]
     fn to_ascii_lowercase_cow_always_returns_same_value_as_string_to_lowercase(txt: AsciiString) {
@@ -511,18 +585,6 @@ mod tests {
         let txt = format!("{}A", txt); //guarantees at least one uppercase letter
         assert!(matches!(txt.to_ascii_lowercase_cow(), Cow::Owned(s) if s == txt.to_lowercase()));
     }
-}
-
-#[cfg(test)]
-mod string_literal_tests {
-    use super::LiteralStringNormaliser;
-    use crate::context::QuoteStyle;
-    use crate::utils::FormatLiteralStringToken;
-    use rome_js_factory::JsSyntaxTreeBuilder;
-    use rome_js_syntax::JsSyntaxKind::{JS_STRING_LITERAL, JS_STRING_LITERAL_EXPRESSION};
-    use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxToken};
-    use rome_rowan::AstNode;
-    use std::borrow::Cow;
 
     fn generate_syntax_token(input: &str) -> JsSyntaxToken {
         let mut tree_builder = JsSyntaxTreeBuilder::new();
@@ -538,27 +600,46 @@ mod string_literal_tests {
             .unwrap()
     }
 
-    fn assert_borrowed_token(input: &str, quote: QuoteStyle, as_directive: bool) {
+    enum AsToken {
+        Directive,
+        String,
+        Member,
+    }
+
+    impl AsToken {
+        fn into_token(self, token: &JsSyntaxToken) -> FormatLiteralStringToken {
+            match self {
+                AsToken::Directive => FormatLiteralStringToken::from_parent_directive(token),
+                AsToken::String => FormatLiteralStringToken::from_parent_expression(token),
+                AsToken::Member => FormatLiteralStringToken::from_parent_member(token),
+            }
+        }
+    }
+
+    fn assert_borrowed_token(
+        input: &str,
+        quote: QuoteStyle,
+        as_token: AsToken,
+        source: FileSource,
+    ) {
         let token = generate_syntax_token(input);
-        let string_token = if as_directive {
-            FormatLiteralStringToken::from_directive(&token)
-        } else {
-            FormatLiteralStringToken::from_string(&token)
-        };
+        let string_token = as_token.into_token(&token);
         let mut string_cleaner = LiteralStringNormaliser::new(&string_token, quote);
-        let content = string_cleaner.clean_text();
+        let content = string_cleaner.normalise_text(source);
         assert_eq!(content, Cow::Borrowed(input))
     }
 
-    fn assert_owned_token(input: &str, output: &str, quote: QuoteStyle, as_directive: bool) {
+    fn assert_owned_token(
+        input: &str,
+        output: &str,
+        quote: QuoteStyle,
+        as_token: AsToken,
+        source: FileSource,
+    ) {
         let token = generate_syntax_token(input);
-        let string_token = if as_directive {
-            FormatLiteralStringToken::from_directive(&token)
-        } else {
-            FormatLiteralStringToken::from_string(&token)
-        };
+        let string_token = as_token.into_token(&token);
         let mut string_cleaner = LiteralStringNormaliser::new(&string_token, quote);
-        let content = string_cleaner.clean_text();
+        let content = string_cleaner.normalise_text(source);
         let owned: Cow<str> = Cow::Owned(output.to_string());
         assert_eq!(content, owned)
     }
@@ -568,7 +649,7 @@ mod string_literal_tests {
         let quote = QuoteStyle::Double;
         let inputs = [r#""content""#, r#""content with single ' quote ""#];
         for input in inputs {
-            assert_borrowed_token(input, quote, false)
+            assert_borrowed_token(input, quote, AsToken::String, FileSource::Js)
         }
     }
 
@@ -583,7 +664,7 @@ mod string_literal_tests {
             (r#"" content \\' \" ""#, r#"" content \\' \" ""#),
         ];
         for (input, output) in inputs {
-            assert_owned_token(input, output, quote, false)
+            assert_owned_token(input, output, quote, AsToken::String, FileSource::Js)
         }
     }
 
@@ -592,7 +673,7 @@ mod string_literal_tests {
         let quote = QuoteStyle::Double;
         let inputs = [r#""use strict '""#];
         for input in inputs {
-            assert_borrowed_token(input, quote, false)
+            assert_borrowed_token(input, quote, AsToken::Directive, FileSource::Js)
         }
     }
 
@@ -601,7 +682,25 @@ mod string_literal_tests {
         let quote = QuoteStyle::Double;
         let inputs = [(r#"' use strict '"#, r#"" use strict ""#)];
         for (input, output) in inputs {
-            assert_owned_token(input, output, quote, false)
+            assert_owned_token(input, output, quote, AsToken::Directive, FileSource::Js)
+        }
+    }
+
+    #[test]
+    fn member_borrowed() {
+        let quote = QuoteStyle::Double;
+        let inputs = [r#""cant @ be moved""#, r#""1674""#, r#""33n""#];
+        for input in inputs {
+            assert_borrowed_token(input, quote, AsToken::Member, FileSource::Ts)
+        }
+    }
+
+    #[test]
+    fn member_owned() {
+        let quote = QuoteStyle::Double;
+        let inputs = [(r#""string""#, r#"string"#)];
+        for (input, output) in inputs {
+            assert_owned_token(input, output, quote, AsToken::Member, FileSource::Ts)
         }
     }
 }

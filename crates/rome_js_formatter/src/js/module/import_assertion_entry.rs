@@ -18,9 +18,10 @@ impl FormatNodeFields<JsImportAssertionEntry> for FormatNodeRule<JsImportAsserti
         let key = key?;
 
         let formatted_key = match key.kind() {
-            JsSyntaxKind::JS_STRING_LITERAL => {
-                formatted![formatter, [FormatLiteralStringToken::from_string(&key)]]?
-            }
+            JsSyntaxKind::JS_STRING_LITERAL => formatted![
+                formatter,
+                [FormatLiteralStringToken::from_parent_expression(&key)]
+            ]?,
             _ => formatted![formatter, [key.format()]]?,
         };
 
@@ -30,7 +31,7 @@ impl FormatNodeFields<JsImportAssertionEntry> for FormatNodeRule<JsImportAsserti
                 formatted_key,
                 colon_token.format(),
                 space_token(),
-                FormatLiteralStringToken::from_string(&value_token?)
+                FormatLiteralStringToken::from_parent_expression(&value_token?)
             ]
         ]
     }

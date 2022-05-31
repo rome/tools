@@ -13,7 +13,7 @@ impl FormatNodeFields<JsDirective> for FormatNodeRule<JsDirective> {
 
         format_with_semicolon(
             formatter,
-            FormatLiteralStringToken::from_directive(&value_token?).format(formatter)?,
+            FormatLiteralStringToken::from_parent_directive(&value_token?).format(formatter)?,
             semicolon_token,
         )
     }

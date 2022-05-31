@@ -15,7 +15,10 @@ impl FormatNodeFields<JsLiteralMemberName> for FormatNodeRule<JsLiteralMemberNam
 
         match value.kind() {
             JsSyntaxKind::JS_STRING_LITERAL => {
-                formatted![formatter, [FormatLiteralStringToken::from_string(&value)]]
+                formatted![
+                    formatter,
+                    [FormatLiteralStringToken::from_parent_expression(&value)]
+                ]
             }
             _ => formatted![formatter, [value.format()]],
         }

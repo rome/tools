@@ -17,8 +17,7 @@ use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory
 use rome_js_syntax::{
     JsAnyClassMemberName, JsAnyExpression, JsAnyFunction, JsAnyObjectMemberName, JsAnyStatement,
     JsInitializerClause, JsLanguage, JsLiteralMemberName, JsTemplateElement,
-    JsTemplateElementFields, Modifiers, TextSize, TsTemplateElement, TsTemplateElementFields,
-    TsType,
+    JsTemplateElementFields, Modifiers, TsTemplateElement, TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
@@ -428,96 +427,35 @@ impl From<JsLiteralMemberName> for MemberName {
     }
 }
 
-const QUOTES_TO_OMIT: [char; 2] = ['\"', '\''];
-
-#[derive(Eq, PartialEq)]
-pub(crate) enum MemberContext {
-    Type,
-    Member,
-}
-
-impl MemberContext {
-    /// We can change the text only if there alphanumeric or alphabetic characters, depending on the mode
-    fn text_can_be_replaced(&self, text_to_check: &str) -> bool {
-        // Text here is quoteless. If it's empty, it means it is an empty string and we can't
-        // do any transformation
-        if text_to_check.is_empty() {
-            return false;
-        }
-
-        let mut has_seen_number = false;
-        text_to_check.chars().enumerate().all(|(index, c)| {
-            if index == 0 && c.is_numeric() {
-                // In TypeScript, numbers like members have different meaning from numbers.
-                // Hence, if we see a number, we bail straightaway
-                if self == &MemberContext::Type {
-                    return false;
-                } else {
-                    has_seen_number = true;
-                }
-            }
-
-            let is_eligible_character = if has_seen_number {
-                // as we've seen a number, now eligible characters can only contain numbers
-                c.is_numeric()
-            } else {
-                c.is_alphanumeric()
-            };
-            is_eligible_character || matches!(c, '_' | '$')
-        })
-    }
-}
-
 /// Function used by the formatter, where we pass a complaint member and it returns a [FormatElement[
 /// where the text has its quotes removed.
 pub(crate) fn format_member_name<Member: Into<MemberName>>(
     member_name: Member,
-    formatter: &Formatter<JsFormatOptions>,
-    context: MemberContext,
+    formatter: &JsFormatter,
 ) -> FormatResult<FormatElement> {
-    fn replace_node(
-        name: JsSyntaxToken,
-        formatter: &Formatter<JsFormatOptions>,
-        context: MemberContext,
-    ) -> FormatResult<FormatElement> {
-        let text = name.text_trimmed();
-
-        if text.starts_with(QUOTES_TO_OMIT) && text.ends_with(QUOTES_TO_OMIT) {
-            let quote_less_text = &text[1..text.len() - 1];
-            if context.text_can_be_replaced(quote_less_text) {
-                Ok(formatter.format_replaced(
-                    &name,
-                    Token::from_syntax_token_cow_slice(
-                        Cow::Borrowed(quote_less_text),
-                        &name,
-                        // slide the offset of one as we removed a character from the beginning
-                        name.text_trimmed_range().start().add(TextSize::from(1)),
-                    )
-                    .into(),
-                ))
-            } else {
-                Ok(format_string_literal_token(name, formatter))
-            }
-        } else {
-            Ok(format_string_literal_token(name, formatter))
-        }
-    }
-
     let name = match member_name.into() {
         MemberName::Object(object) => match object {
-            JsAnyObjectMemberName::JsComputedMemberName(name) => name.format(formatter)?,
+            JsAnyObjectMemberName::JsComputedMemberName(name) => {
+                formatted![formatter, [name.format()]]?
+            }
             JsAnyObjectMemberName::JsLiteralMemberName(name) => {
-                replace_node(name.value()?, formatter, context)?
+                FormatLiteralStringToken::from_parent_member(&name.value()?).format(formatter)?
             }
         },
         MemberName::Class(class) => match class {
-            JsAnyClassMemberName::JsComputedMemberName(node) => node.format(formatter)?,
-            JsAnyClassMemberName::JsLiteralMemberName(node) => {
-                replace_node(node.value()?, formatter, context)?
+            JsAnyClassMemberName::JsComputedMemberName(node) => {
+                formatted![formatter, [node.format()]]?
             }
-            JsAnyClassMemberName::JsPrivateClassMemberName(node) => node.format(formatter)?,
+            JsAnyClassMemberName::JsLiteralMemberName(node) => {
+                FormatLiteralStringToken::from_parent_member(&node.value()?).format(formatter)?
+            }
+            JsAnyClassMemberName::JsPrivateClassMemberName(node) => {
+                formatted![formatter, [node.format()]]?
+            }
         },
-        MemberName::Literal(literal) => replace_node(literal.value()?, formatter, context)?,
+        MemberName::Literal(literal) => {
+            FormatLiteralStringToken::from_parent_member(&literal.value()?).format(formatter)?
+        }
     };
 
     Ok(name)
