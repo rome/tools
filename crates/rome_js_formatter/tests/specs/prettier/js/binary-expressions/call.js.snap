@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 182
 expression: call.js
-
 ---
 # Input
 ```js
@@ -78,38 +77,38 @@ expression: call.js
 ```js
 (
   aaaaaaaaaaaaaaaaaaaaaaaaa &&
-    bbbbbbbbbbbbbbbbbbbbbbbbb &&
-    ccccccccccccccccccccccccc &&
-    ddddddddddddddddddddddddd &&
-    eeeeeeeeeeeeeeeeeeeeeeeee
+  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+  ccccccccccccccccccccccccc &&
+  ddddddddddddddddddddddddd &&
+  eeeeeeeeeeeeeeeeeeeeeeeee
 )();
 
 (aa && bb && cc && dd && ee)();
 
 (
   aaaaaaaaaaaaaaaaaaaaaaaaa +
-    bbbbbbbbbbbbbbbbbbbbbbbbb +
-    ccccccccccccccccccccccccc +
-    ddddddddddddddddddddddddd +
-    eeeeeeeeeeeeeeeeeeeeeeeee
+  bbbbbbbbbbbbbbbbbbbbbbbbb +
+  ccccccccccccccccccccccccc +
+  ddddddddddddddddddddddddd +
+  eeeeeeeeeeeeeeeeeeeeeeeee
 )();
 
 (aa + bb + cc + dd + ee)();
 
 (
   aaaaaaaaaaaaaaaaaaaaaaaaa &&
-    bbbbbbbbbbbbbbbbbbbbbbbbb &&
-    ccccccccccccccccccccccccc &&
-    ddddddddddddddddddddddddd &&
-    eeeeeeeeeeeeeeeeeeeeeeeee
+  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+  ccccccccccccccccccccccccc &&
+  ddddddddddddddddddddddddd &&
+  eeeeeeeeeeeeeeeeeeeeeeeee
 )()()();
 
 (
   aaaaaaaaaaaaaaaaaaaaaaaaa &&
-    bbbbbbbbbbbbbbbbbbbbbbbbb &&
-    ccccccccccccccccccccccccc &&
-    ddddddddddddddddddddddddd &&
-    eeeeeeeeeeeeeeeeeeeeeeeee
+  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+  ccccccccccccccccccccccccc &&
+  ddddddddddddddddddddddddd &&
+  eeeeeeeeeeeeeeeeeeeeeeeee
 )(
   aaaaaaaaaaaaaaaaaaaaaaaaa &&
     bbbbbbbbbbbbbbbbbbbbbbbbb &&

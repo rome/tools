@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: binary.js
 ---
 # Input
@@ -40,9 +41,9 @@ room =
         ) => (
           (
             rowIndex === 0 ||
-              colIndex === 0 ||
-              rowIndex === height ||
-              colIndex === width
+            colIndex === 0 ||
+            rowIndex === height ||
+            colIndex === width
           ) ? 1 : 0
         ),
       )

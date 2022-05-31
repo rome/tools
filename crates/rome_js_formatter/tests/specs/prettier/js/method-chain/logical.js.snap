@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: logical.js
 ---
 # Input
@@ -42,14 +43,14 @@ const someLongVariableName = (
 
 (
   veryLongVeryLongVeryLong ||
-    anotherVeryLongVeryLongVeryLong ||
-    veryVeryVeryLongError
+  anotherVeryLongVeryLongVeryLong ||
+  veryVeryVeryLongError
 ).map((tickets) => TicketRecord.createFromSomeLongString());
 
 (
   veryLongVeryLongVeryLong ||
-    anotherVeryLongVeryLongVeryLong ||
-    veryVeryVeryLongError
+  anotherVeryLongVeryLongVeryLong ||
+  veryVeryVeryLongError
 ).map(
   (tickets) => TicketRecord.createFromSomeLongString(),
 ).filter((obj) => !!obj);

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: binaryish.js
 ---
 # Input
@@ -35,13 +36,13 @@ function f() {
 function f() {
   throw (
     property.isIdentifier() &&
-      FUNCTIONS[property.node.name] &&
-      (
-        object.isIdentifier(
-          JEST_GLOBAL,
-        ) || (callee.isMemberExpression() && shouldHoistExpression(object))
-      ) &&
-      FUNCTIONS[property.node.name](expr.get("arguments"))
+    FUNCTIONS[property.node.name] &&
+    (
+      object.isIdentifier(
+        JEST_GLOBAL,
+      ) || (callee.isMemberExpression() && shouldHoistExpression(object))
+    ) &&
+    FUNCTIONS[property.node.name](expr.get("arguments"))
   );
 
   throw chalk.bold(

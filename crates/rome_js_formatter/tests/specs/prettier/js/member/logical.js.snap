@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 182
 expression: logical.js
-
 ---
 # Input
 ```js
@@ -18,8 +17,8 @@ expression: logical.js
 
 (
   veryLongVeryLongVeryLong ||
-    anotherVeryLongVeryLongVeryLong ||
-    veryVeryVeryLongError
+  anotherVeryLongVeryLongVeryLong ||
+  veryVeryVeryLongError
 ).prop;
 
 ```

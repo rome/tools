@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 244
+assertion_line: 257
 expression: sequence_expression.js
 ---
 # Input
@@ -51,15 +51,13 @@ const f = () => (
 	____________third
 );
 
-(
-	____________first,
-		____________second,
-		____________third,
-		____________third,
-		____________third,
-		____________third,
-		____________third
-);
+(____________first,
+____________second,
+____________third,
+____________third,
+____________third,
+____________third,
+____________third);
 
 function a() {
 	return (
@@ -74,15 +72,13 @@ function a() {
 }
 
 const object = {
-	something: (
-		____________first,
-		____________second,
-		____________third,
-		____________third,
-		____________third,
-		____________third,
-		____________third
-	),
+	something: (____________first,
+	____________second,
+	____________third,
+	____________third,
+	____________third,
+	____________third,
+	____________third),
 };
 
 aLongIdentifierName,

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: comment.js
 ---
 # Input
@@ -110,15 +111,15 @@ foo[
 
 !(
   a +
-    a + // comment
-    a +
-    !(
-      b +
-        b +
-        b + // comment
-        b +
-        b
-    )
+  a + // comment
+  a +
+  !(
+    b +
+    b +
+    b + // comment
+    b +
+    b
+  )
 );
 
 ```
