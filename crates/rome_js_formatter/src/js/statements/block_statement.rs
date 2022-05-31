@@ -1,40 +1,44 @@
 use crate::prelude::*;
-
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsBlockStatement;
 
+use crate::formatter::TryFormatNodeListExtension;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
 impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
-    fn format_fields(
-        node: &JsBlockStatement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBlockStatementFields {
             l_curly_token,
             statements,
             r_curly_token,
         } = node.as_fields();
 
-        let stmts = formatter.format_list(&statements);
-
         if is_non_collapsable_empty_block(node) {
-            formatted![
-                formatter,
+            write!(
+                f,
                 [
                     l_curly_token.format(),
                     hard_line_break(),
                     r_curly_token.format()
                 ]
-            ]
+            )
         } else {
-            formatter
-                .delimited(&l_curly_token?, stmts, &r_curly_token?)
-                .block_indent()
-                .finish()
+            let format_statements = format_with(|f| {
+                f.join_with(&hard_line_break())
+                    .entries(statements.try_format_nodes())
+                    .finish()
+            });
+            write!(
+                f,
+                [
+                    f.delimited(&l_curly_token?, &format_statements, &r_curly_token?)
+                        .block_indent()
+                ]
+            )
         }
     }
 }

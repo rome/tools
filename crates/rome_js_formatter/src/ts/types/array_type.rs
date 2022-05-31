@@ -1,16 +1,17 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsArrayType, TsArrayTypeFields};
 
 impl FormatNodeFields<TsArrayType> for FormatNodeRule<TsArrayType> {
-    fn format_fields(node: &TsArrayType, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsArrayType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsArrayTypeFields {
             l_brack_token,
             element_type,
             r_brack_token,
         } = node.as_fields();
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 element_type.format(),
                 l_brack_token.format(),

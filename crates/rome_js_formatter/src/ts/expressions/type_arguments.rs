@@ -1,25 +1,24 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsTypeArguments, TsTypeArgumentsFields};
 
 impl FormatNodeFields<TsTypeArguments> for FormatNodeRule<TsTypeArguments> {
-    fn format_fields(
-        node: &TsTypeArguments,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsTypeArguments, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeArgumentsFields {
             l_angle_token,
             ts_type_argument_list,
             r_angle_token,
         } = node.as_fields();
 
-        formatter
-            .delimited(
+        write!(
+            f,
+            [f.delimited(
                 &l_angle_token?,
-                formatted![formatter, [ts_type_argument_list.format()]]?,
+                &ts_type_argument_list.format(),
                 &r_angle_token?,
             )
-            .soft_block_indent()
-            .finish()
+            .soft_block_indent()]
+        )
     }
 }

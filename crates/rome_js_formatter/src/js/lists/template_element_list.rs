@@ -5,14 +5,13 @@ use rome_js_syntax::JsTemplateElementList;
 impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &JsTemplateElementList,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        Ok(concat_elements(
-            formatter
-                .format_all(node.iter().formatted())?
-                .map(group_elements),
-        ))
+    fn format(node: &JsTemplateElementList, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut join = f.join();
+
+        for element in node {
+            join.entry(&group_elements(&element.format()));
+        }
+
+        join.finish()
     }
 }

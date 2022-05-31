@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsObjectAssignmentPatternShorthandProperty;
@@ -9,18 +10,16 @@ impl FormatNodeFields<JsObjectAssignmentPatternShorthandProperty>
 {
     fn format_fields(
         node: &JsObjectAssignmentPatternShorthandProperty,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectAssignmentPatternShorthandPropertyFields { identifier, init } =
             node.as_fields();
 
-        formatted![
-            formatter,
-            [
-                identifier.format()?,
-                init.format()
-                    .with_or_empty(|node| formatted![formatter, [space_token(), node]])
-            ]
-        ]
+        write!(f, [identifier.format()?,])?;
+
+        if let Some(init) = init {
+            write!(f, [space_token(), init.format()])?;
+        }
+        Ok(())
     }
 }

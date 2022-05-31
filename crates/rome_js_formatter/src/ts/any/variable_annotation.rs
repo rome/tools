@@ -7,15 +7,11 @@ impl FormatRule<TsAnyVariableAnnotation> for FormatTsAnyVariableAnnotation {
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyVariableAnnotation,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
         match node {
-            TsAnyVariableAnnotation::TsTypeAnnotation(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyVariableAnnotation::TsTypeAnnotation(node) => node.format().format(f),
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node) => node.format().format(f),
         }
     }
 }

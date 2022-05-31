@@ -1,6 +1,7 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use rome_formatter::{format_args, write};
 
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsExportDefaultExpressionClause;
 use rome_js_syntax::JsExportDefaultExpressionClauseFields;
@@ -10,21 +11,20 @@ impl FormatNodeFields<JsExportDefaultExpressionClause>
 {
     fn format_fields(
         node: &JsExportDefaultExpressionClause,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsExportDefaultExpressionClauseFields {
             default_token,
             expression,
             semicolon_token,
         } = node.as_fields();
 
-        let default_token = default_token.format();
-        let class = expression.format();
-
-        format_with_semicolon(
-            formatter,
-            formatted![formatter, [default_token, space_token(), class]]?,
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(default_token.format(), space_token(), expression.format()),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: self_closing.jsx
+---
+# Input
+<Foo />;
+
+<Foo           />;
+
+<LineWidthInput />;
+<IndentStyleSelect
+
+/>;
+<SourceTypeSelect
+
+/>;
+
+<CodeEditor
+
+/>
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+<Foo />;
+<Foo />;
+<LineWidthInput />;
+<IndentStyleSelect />;
+<SourceTypeSelect />;
+<CodeEditor />;
+

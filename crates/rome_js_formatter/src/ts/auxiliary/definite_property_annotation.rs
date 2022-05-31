@@ -1,19 +1,18 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::TsDefinitePropertyAnnotation;
 use rome_js_syntax::TsDefinitePropertyAnnotationFields;
 
 impl FormatNodeFields<TsDefinitePropertyAnnotation>
     for FormatNodeRule<TsDefinitePropertyAnnotation>
 {
-    fn format_fields(
-        node: &TsDefinitePropertyAnnotation,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsDefinitePropertyAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         let TsDefinitePropertyAnnotationFields {
             excl_token,
             type_annotation,
         } = node.as_fields();
-        formatted![formatter, [excl_token.format(), type_annotation.format()]]
+
+        write![f, [excl_token.format(), type_annotation.format()]]
     }
 }

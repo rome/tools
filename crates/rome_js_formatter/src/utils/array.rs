@@ -1,6 +1,7 @@
 use crate::prelude::*;
-
 use crate::AsFormat;
+use rome_formatter::FormatWithRule;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
     JsLanguage,
@@ -8,10 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstSeparatedList};
 
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
-pub(crate) fn format_array_node<N, I>(
-    node: &N,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement>
+pub(crate) fn format_array_node<N, I>(node: &N, f: &mut JsFormatter) -> FormatResult<()>
 where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,
     for<'a> I: ArrayNodeElement + AsFormat<'a>,
@@ -19,48 +17,48 @@ where
     // Specifically do not use format_separated as arrays need separators
     // inserted after holes regardless of the formatting since this makes a
     // semantic difference
+
+    let mut join = f.join_nodes_with_soft_line();
     let last_index = node.len().saturating_sub(1);
-    let results = node
-        .elements()
-        .enumerate()
-        .map(|(index, element)| {
-            let node = element.node()?;
-            let separator_mode = node.separator_mode();
 
-            let is_disallow = matches!(separator_mode, TrailingSeparatorMode::Disallow);
-            let is_force = matches!(separator_mode, TrailingSeparatorMode::Force);
+    for (index, element) in node.elements().enumerate() {
+        let node = element.node()?;
+        let separator_mode = node.separator_mode();
 
-            let formatted_element = formatted![formatter, [node.format()]]?;
-            let separator = if is_disallow {
-                // Trailing separators are disallowed, replace it with an empty element
-                if let Some(separator) = element.trailing_separator()? {
-                    formatter.format_replaced(separator, empty_element())
+        let is_disallow = matches!(separator_mode, TrailingSeparatorMode::Disallow);
+        let is_force = matches!(separator_mode, TrailingSeparatorMode::Force);
+
+        join.entry(
+            node.syntax(),
+            &format_with(|f| {
+                write!(f, [group_elements(&node.format())])?;
+
+                if is_disallow {
+                    // Trailing separators are disallowed, replace it with an empty element
+                    if let Some(separator) = element.trailing_separator()? {
+                        write!(f, [f.format_replaced(separator, &empty_element())])?;
+                    }
+                } else if is_force || index != last_index {
+                    // In forced separator mode or if this element is not the last in the list, print the separator
+                    match element.trailing_separator()? {
+                        Some(trailing) => write!(f, [trailing.format()])?,
+                        None => write!(f, [token(",")])?,
+                    };
+                } else if let Some(separator) = element.trailing_separator()? {
+                    write!(
+                        f,
+                        [f.format_replaced(separator, &if_group_breaks(&token(",")))]
+                    )?;
                 } else {
-                    empty_element()
-                }
-            } else if is_force || index != last_index {
-                // In forced separator mode or if this element is not the last in the list, print the separator
-                formatted![
-                    formatter,
-                    [&element
-                        .trailing_separator()
-                        .format()
-                        .or_format(|| token(","))]
-                ]?
-            } else if let Some(separator) = element.trailing_separator()? {
-                formatter.format_replaced(separator, if_group_breaks(token(",")))
-            } else {
-                if_group_breaks(token(","))
-            };
+                    write!(f, [if_group_breaks(&token(","))])?;
+                };
 
-            Ok((
-                node.syntax().clone(),
-                format_elements![group_elements(formatted_element), separator],
-            ))
-        })
-        .collect::<FormatResult<Vec<_>>>()?;
+                Ok(())
+            }),
+        );
+    }
 
-    Ok(join_elements_soft_line(results))
+    join.finish()
 }
 
 /// Determines if a trailing separator should be inserted after an array element

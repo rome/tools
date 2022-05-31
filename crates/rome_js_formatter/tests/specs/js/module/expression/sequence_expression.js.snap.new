@@ -1,0 +1,87 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: sequence_expression.js
+---
+# Input
+a,b
+
+const f = () => (
+    ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
+
+);
+
+(
+    ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
+
+)
+
+function a() {
+    return     ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
+}
+
+const object ={
+    something: (
+        ____________first, ____________second, ____________third, ____________third, ____________third, ____________third, ____________third
+    )
+
+}
+
+aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName;
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+a, b;
+const f = () => (
+	____________first,
+	____________second,
+	____________third,
+	____________third,
+	____________third,
+	____________third,
+	____________third
+);
+(
+	____________first,
+		____________second,
+		____________third,
+		____________third,
+		____________third,
+		____________third,
+		____________third
+);
+function a() {
+	return (
+		____________first,
+		____________second,
+		____________third,
+		____________third,
+		____________third,
+		____________third,
+		____________third
+	);
+}
+const object = {
+	something: (
+		____________first,
+		____________second,
+		____________third,
+		____________third,
+		____________third,
+		____________third,
+		____________third
+	),
+};
+aLongIdentifierName,
+	aLongIdentifierName,
+	aLongIdentifierName,
+	aLongIdentifierName;
+

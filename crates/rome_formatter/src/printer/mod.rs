@@ -71,7 +71,6 @@ impl<'a> Printer<'a> {
         args: PrintElementArgs,
     ) {
         match element {
-            FormatElement::Empty => {}
             FormatElement::Space => {
                 if self.state.line_width > 0 {
                     self.state.pending_space = true;
@@ -694,8 +693,6 @@ fn fits_element_on_line<'a, 'rest>(
     options: &PrinterOptions,
 ) -> Fits {
     match element {
-        FormatElement::Empty => {}
-
         FormatElement::Space => {
             if state.line_width > 0 {
                 state.pending_space = true;
@@ -905,7 +902,7 @@ impl<'a, 'rest> MeasureQueue<'a, 'rest> {
 mod tests {
     use crate::prelude::*;
     use crate::printer::{LineEnding, Printer, PrinterOptions};
-    use crate::{format_args, write, FormatContext, FormatState, LineWidth, Printed, VecBuffer};
+    use crate::{format_args, write, FormatState, LineWidth, Printed, VecBuffer};
 
     fn format(root: &dyn Format<()>) -> Printed {
         format_with_options(

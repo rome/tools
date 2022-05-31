@@ -1,14 +1,13 @@
 use crate::prelude::*;
+use rome_formatter::write;
+
 use crate::utils::FormatLiteralStringToken;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsImportAssertionEntryFields;
 use rome_js_syntax::{JsImportAssertionEntry, JsSyntaxKind};
 
 impl FormatNodeFields<JsImportAssertionEntry> for FormatNodeRule<JsImportAssertionEntry> {
-    fn format_fields(
-        node: &JsImportAssertionEntry,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsImportAssertionEntry, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportAssertionEntryFields {
             key,
             colon_token,
@@ -17,20 +16,21 @@ impl FormatNodeFields<JsImportAssertionEntry> for FormatNodeRule<JsImportAsserti
 
         let key = key?;
 
-        let formatted_key = match key.kind() {
+        match key.kind() {
             JsSyntaxKind::JS_STRING_LITERAL => {
-                formatted![formatter, [FormatLiteralStringToken::from_string(&key)]]?
+                write!(f, [FormatLiteralStringToken::from_string(&key)])?;
             }
-            _ => formatted![formatter, [key.format()]]?,
+            _ => {
+                write![f, [key.format()]]?;
+            }
         };
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
-                formatted_key,
                 colon_token.format(),
                 space_token(),
-                FormatLiteralStringToken::from_string(&value_token?)
+                FormatLiteralStringToken::from_string(&value_token?),
             ]
         ]
     }

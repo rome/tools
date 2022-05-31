@@ -5,7 +5,6 @@ use rome_js_syntax::{
     JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
-use std::fmt;
 use std::fmt::Debug;
 
 #[derive(Clone)]

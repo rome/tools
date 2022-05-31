@@ -1,5 +1,6 @@
 use super::{write, Arguments, FormatElement};
 use crate::format_element::List;
+use crate::formatter::FormatState;
 use crate::group_id::UniqueGroupIdBuilder;
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
@@ -12,7 +13,7 @@ use std::ops::{Deref, DerefMut};
 pub trait Buffer {
     type Context;
 
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()>;
+    fn write_element(&mut self, element: FormatElement);
 
     fn write_fmt(mut self: &mut Self, arguments: &Arguments<Self::Context>) -> FormatResult<()> {
         write(&mut self, arguments)
@@ -21,78 +22,45 @@ pub trait Buffer {
     fn state(&self) -> &FormatState<Self::Context>;
 
     fn state_mut(&mut self) -> &mut FormatState<Self::Context>;
+
+    /// Takes a snapshot of the Buffers state, excluding the formatter state.
+    fn snapshot(&mut self) -> BufferSnapshotId;
+
+    /// Restores the snapshot with the given id.
+    ///
+    /// ## Panics
+    /// If the passed snapshot id is a snapshot of another buffer OR
+    /// if the snapshot is restored out of order
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshotId);
+
+    /// Releases the snapshot with the given id
+    ///
+    /// ## Panics
+    /// If the passed snapshot id is a snapshot of another buffer OR
+    /// If the snapshot is restored out of order.
+    fn release_snapshot(&mut self, snapshot: BufferSnapshotId);
 }
 
-#[derive(Default)]
-pub struct FormatState<Context> {
-    context: Context,
-    group_id_builder: UniqueGroupIdBuilder,
-    // This is using a RefCell as it only exists in debug mode,
-    // the Formatter is still completely immutable in release builds
-    #[cfg(debug_assertions)]
-    pub printed_tokens: PrintedTokens,
-}
+/// Id of a buffer snapshot. What the meaning of the inner value is depends on the [Buffer] implementation.
+/// It can either be an index into a local store with all taken snapshots that stores additional values
+/// or it may be the length of the internal [FormatElement] buffer.
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub struct BufferSnapshotId(usize);
 
-impl<Context> fmt::Debug for FormatState<Context>
-where
-    Context: Debug,
-{
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.debug_struct("FormatContext")
-            .field("options", &self.context)
-            .finish()
-    }
-}
-
-impl<Context> FormatState<Context> {
-    pub fn new(context: Context) -> Self {
-        Self {
-            context,
-            group_id_builder: Default::default(),
-            #[cfg(debug_assertions)]
-            printed_tokens: Default::default(),
-        }
+impl BufferSnapshotId {
+    pub const fn new(id: usize) -> Self {
+        Self(id)
     }
 
-    /// Returns the [FormatContext] specifying how to format the current CST
-    pub fn context(&self) -> &Context {
-        &self.context
-    }
-
-    /// Creates a new group id that is unique to this document. The passed debug name is used in the
-    /// [std::fmt::Debug] of the document if this is a debug build.
-    /// The name is unused for production builds and has no meaning on the equality of two group ids.
-    pub fn group_id(&self, debug_name: &'static str) -> GroupId {
-        self.group_id_builder.group_id(debug_name)
-    }
-
-    /// Tracks the given token as formatted
-    #[inline]
-    pub fn track_token<L: Language>(&mut self, #[allow(unused_variables)] token: &SyntaxToken<L>) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.printed_tokens.track_token(token);
-            }
-        }
-    }
-
-    #[inline]
-    pub fn assert_formatted_all_tokens<L: Language>(
-        &self,
-        #[allow(unused_variables)] root: &SyntaxNode<L>,
-    ) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.printed_tokens.assert_all_tracked(root);
-            }
-        }
+    pub const fn value(&self) -> usize {
+        self.0
     }
 }
 
 impl<W: Buffer<Context = Context> + ?Sized, Context> Buffer for &mut W {
     type Context = Context;
 
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+    fn write_element(&mut self, element: FormatElement) {
         (**self).write_element(element)
     }
 
@@ -107,26 +75,38 @@ impl<W: Buffer<Context = Context> + ?Sized, Context> Buffer for &mut W {
     fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
         (**self).state_mut()
     }
+
+    fn snapshot(&mut self) -> BufferSnapshotId {
+        (**self).snapshot()
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshotId) {
+        (**self).restore_snapshot(snapshot)
+    }
+
+    fn release_snapshot(&mut self, snapshot: BufferSnapshotId) {
+        (**self).release_snapshot(snapshot)
+    }
 }
 
 // TODO use Smallvec internally
 #[derive(Debug)]
 pub struct VecBuffer<'a, Context> {
-    context: &'a mut FormatState<Context>,
+    state: &'a mut FormatState<Context>,
     elements: Vec<FormatElement>,
 }
 
 impl<'a, Context> VecBuffer<'a, Context> {
-    pub fn new(context: &'a mut FormatState<Context>) -> Self {
+    pub fn new(state: &'a mut FormatState<Context>) -> Self {
         Self {
-            context,
+            state,
             elements: vec![],
         }
     }
 
     pub fn with_capacity(capacity: usize, context: &'a mut FormatState<Context>) -> Self {
         Self {
-            context,
+            state: context,
             elements: Vec::with_capacity(capacity),
         }
     }
@@ -137,7 +117,7 @@ impl<'a, Context> VecBuffer<'a, Context> {
         buffer: &mut dyn Buffer<Context = Context>,
     ) -> super::FormatResult<()> {
         for element in self.drain(..) {
-            buffer.write_element(element)?;
+            buffer.write_element(element);
         }
 
         Ok(())
@@ -145,6 +125,15 @@ impl<'a, Context> VecBuffer<'a, Context> {
 
     pub fn into_document(self) -> Document {
         Document(self.elements)
+    }
+
+    pub fn into_element(mut self) -> FormatElement {
+        if self.len() == 1 {
+            // Safety: Guaranteed by len check above
+            self.elements.pop().unwrap()
+        } else {
+            FormatElement::List(List::new(self.elements))
+        }
     }
 
     pub fn into_vec(self) -> Vec<FormatElement> {
@@ -169,7 +158,7 @@ impl<Context> DerefMut for VecBuffer<'_, Context> {
 impl<Context> Buffer for VecBuffer<'_, Context> {
     type Context = Context;
 
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+    fn write_element(&mut self, element: FormatElement) {
         match element {
             FormatElement::List(list) => {
                 if self.elements.is_empty() {
@@ -178,18 +167,30 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
                     self.elements.extend(list.into_vec())
                 }
             }
-            FormatElement::Empty => {}
             element => self.elements.push(element),
         }
-        Ok(())
     }
 
     fn state(&self) -> &FormatState<Self::Context> {
-        self.context
+        self.state
     }
 
     fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        &mut self.context
+        &mut self.state
+    }
+
+    fn snapshot(&mut self) -> BufferSnapshotId {
+        BufferSnapshotId::new(self.elements.len())
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshotId) {
+        assert!(self.elements.len() >= snapshot.value());
+
+        self.elements.truncate(snapshot.value())
+    }
+
+    fn release_snapshot(&mut self, snapshot: BufferSnapshotId) {
+        assert!(self.elements.len() >= snapshot.value());
     }
 }
 
@@ -202,9 +203,7 @@ impl Document {
     }
 
     pub fn into_element(mut self) -> FormatElement {
-        if self.is_empty() {
-            FormatElement::Empty
-        } else if self.0.len() == 1 {
+        if self.0.len() == 1 {
             self.0.pop().unwrap()
         } else {
             FormatElement::List(List::new(self.0))

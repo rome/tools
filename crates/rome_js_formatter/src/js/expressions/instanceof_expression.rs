@@ -7,8 +7,8 @@ use rome_js_syntax::JsInstanceofExpression;
 impl FormatNodeFields<JsInstanceofExpression> for FormatNodeRule<JsInstanceofExpression> {
     fn format_fields(
         node: &JsInstanceofExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         format_binary_like_expression(
             JsAnyBinaryLikeExpression::JsInstanceofExpression(node.clone()),
             formatter,

@@ -7,27 +7,17 @@ impl FormatRule<TsAnyPropertySignatureModifier> for FormatTsAnyPropertySignature
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyPropertySignatureModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
         match node {
-            TsAnyPropertySignatureModifier::TsDeclareModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyPropertySignatureModifier::TsDeclareModifier(node) => node.format().format(f),
             TsAnyPropertySignatureModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
-            TsAnyPropertySignatureModifier::JsStaticModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyPropertySignatureModifier::TsOverrideModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyPropertySignatureModifier::TsAbstractModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyPropertySignatureModifier::JsStaticModifier(node) => node.format().format(f),
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(node) => node.format().format(f),
+            TsAnyPropertySignatureModifier::TsOverrideModifier(node) => node.format().format(f),
+            TsAnyPropertySignatureModifier::TsAbstractModifier(node) => node.format().format(f),
         }
     }
 }

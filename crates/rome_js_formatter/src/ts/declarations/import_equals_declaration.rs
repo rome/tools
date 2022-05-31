@@ -1,14 +1,12 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::TsImportEqualsDeclaration;
 use rome_js_syntax::TsImportEqualsDeclarationFields;
 
 impl FormatNodeFields<TsImportEqualsDeclaration> for FormatNodeRule<TsImportEqualsDeclaration> {
-    fn format_fields(
-        node: &TsImportEqualsDeclaration,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsImportEqualsDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImportEqualsDeclarationFields {
             import_token,
             type_token,
@@ -18,24 +16,23 @@ impl FormatNodeFields<TsImportEqualsDeclaration> for FormatNodeRule<TsImportEqua
             semicolon_token,
         } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            formatted![
-                formatter,
-                [
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
                     import_token.format(),
                     space_token(),
                     type_token
                         .format()
-                        .with_or_empty(|token| formatted![formatter, [token, space_token(),]]),
+                        .with_or_empty(|token, f| write![f, [token, space_token()]]),
                     id.format(),
                     space_token(),
                     eq_token.format(),
                     space_token(),
                     module_reference.format(),
-                ]
-            ]?,
-            semicolon_token,
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

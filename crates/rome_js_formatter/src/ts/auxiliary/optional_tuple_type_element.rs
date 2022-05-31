@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementFields};
 
 impl FormatNodeFields<TsOptionalTupleTypeElement> for FormatNodeRule<TsOptionalTupleTypeElement> {

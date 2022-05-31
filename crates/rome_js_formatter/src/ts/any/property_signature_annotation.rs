@@ -7,14 +7,12 @@ impl FormatRule<TsAnyPropertySignatureAnnotation> for FormatTsAnyPropertySignatu
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyPropertySignatureAnnotation,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
         match node {
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => node.format().format(f),
             TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
         }
     }

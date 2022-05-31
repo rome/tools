@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use rome_formatter::{format_args, write, Buffer, VecBuffer};
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
 use rome_rowan::AstNode;
 
@@ -27,32 +28,13 @@ impl Conditional {
         }
     }
 
-    fn into_format_element(
-        self,
-        formatter: &JsFormatter,
-        parent_is_conditional: bool,
-    ) -> FormatResult<FormatElement> {
-        let (head, body) = match self {
-            Conditional::Expression(_) => (
-                self.format_head(formatter)?,
-                self.format_body(formatter, parent_is_conditional)?,
-            ),
-            Conditional::Type(_) => (
-                self.format_head(formatter)?,
-                self.format_body(formatter, parent_is_conditional)?,
-            ),
-        };
-
-        formatted![formatter, [head, body]]
-    }
-
-    fn format_head(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format_head(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             Conditional::Expression(expr) => {
-                formatted![formatter, [expr.test()?.format(), space_token(),]]
+                write![f, [expr.test()?.format(), space_token(),]]
             }
-            Conditional::Type(t) => formatted![
-                formatter,
+            Conditional::Type(t) => write![
+                f,
                 [
                     t.check_type()?.format(),
                     space_token(),
@@ -86,64 +68,77 @@ impl Conditional {
         }
     }
 
-    fn format_body(
-        &self,
-        formatter: &JsFormatter,
-        parent_is_conditional: bool,
-    ) -> FormatResult<FormatElement> {
-        let mut left_or_right_is_conditional = false;
+    fn format_body(&self, f: &mut JsFormatter, parent_is_conditional: bool) -> FormatResult<()> {
         let consequent = self.consequent_to_conditional()?;
         let alternate = self.alternate_to_conditional()?;
+        let left_or_right_is_conditional = alternate.is_some() || consequent.is_some();
 
-        let consequent = if let Some(consequent) = consequent {
-            left_or_right_is_conditional = true;
-            let consequent = format_conditional(consequent, formatter, true)?;
-            self.format_with_consequent(formatter, Some(consequent))?
-        } else {
-            self.format_with_consequent(formatter, None)?
-        };
+        let format_consequent =
+            format_with(|f| self.format_with_consequent(f, consequent.as_ref()));
 
-        let alternate = if let Some(alternate) = alternate {
-            left_or_right_is_conditional = true;
-            let alternate = format_conditional(alternate, formatter, true)?;
-            self.format_with_alternate(formatter, Some(alternate))?
-        } else {
-            self.format_with_alternate(formatter, None)?
-        };
+        let format_alternate = format_with(|f| self.format_with_alternate(f, alternate.as_ref()));
 
         let body = if left_or_right_is_conditional || parent_is_conditional {
-            indent(formatted![
-                formatter,
-                [hard_line_break(), consequent, hard_line_break(), alternate]
-            ]?)
+            write!(
+                f,
+                [indent(&format_args![
+                    hard_line_break(),
+                    format_consequent,
+                    hard_line_break(),
+                    format_alternate
+                ])]
+            )?;
         } else {
-            group_elements(formatted![
-                formatter,
-                [space_token(), consequent, space_token(), alternate]
-            ]?)
+            write!(
+                f,
+                [group_elements(&format_args![
+                    space_token(),
+                    format_consequent,
+                    space_token(),
+                    format_alternate
+                ])]
+            )?;
         };
-        Ok(body)
+
+        Ok(())
     }
 
     fn format_with_consequent(
         &self,
-        formatter: &JsFormatter,
-        consequent: Option<FormatElement>,
-    ) -> FormatResult<FormatElement> {
-        match self {
-            Conditional::Expression(expr) => {
-                if let Some(consequent) = consequent {
-                    formatted![
-                        formatter,
-                        [
-                            expr.question_mark_token().format(),
-                            space_token(),
-                            consequent
+        f: &mut JsFormatter,
+        consequent: Option<&Conditional>,
+    ) -> FormatResult<()> {
+        match consequent {
+            Some(consequent) => {
+                let format_consequent = format_with(|f| format_conditional(consequent, f, true));
+
+                match self {
+                    Conditional::Expression(expr) => {
+                        write![
+                            f,
+                            [
+                                expr.question_mark_token().format(),
+                                space_token(),
+                                format_consequent
+                            ]
                         ]
-                    ]
-                } else {
-                    formatted![
-                        formatter,
+                    }
+                    Conditional::Type(ty) => {
+                        write![
+                            f,
+                            [
+                                ty.question_mark_token().format(),
+                                space_token(),
+                                format_consequent
+                            ]
+                        ]
+                    }
+                }
+            }
+            None => match self {
+                Conditional::Expression(expr) => {
+                    write![
+                        f,
                         [
                             expr.question_mark_token().format(),
                             space_token(),
@@ -151,16 +146,9 @@ impl Conditional {
                         ]
                     ]
                 }
-            }
-            Conditional::Type(ty) => {
-                if let Some(consequent) = consequent {
-                    formatted![
-                        formatter,
-                        [ty.question_mark_token().format(), space_token(), consequent]
-                    ]
-                } else {
-                    formatted![
-                        formatter,
+                Conditional::Type(ty) => {
+                    write![
+                        f,
                         [
                             ty.question_mark_token().format(),
                             space_token(),
@@ -168,50 +156,53 @@ impl Conditional {
                         ]
                     ]
                 }
-            }
+            },
         }
     }
 
     fn format_with_alternate(
         &self,
-        formatter: &JsFormatter,
-        alternate: Option<FormatElement>,
-    ) -> FormatResult<FormatElement> {
-        match self {
-            Conditional::Expression(expr) => {
-                if let Some(alternate) = alternate {
-                    formatted![
-                        formatter,
-                        [expr.colon_token().format(), space_token(), alternate]
-                    ]
-                } else {
-                    formatted![
-                        formatter,
-                        [
-                            expr.colon_token().format(),
-                            space_token(),
-                            expr.alternate().format()
+        f: &mut JsFormatter,
+        alternate: Option<&Conditional>,
+    ) -> FormatResult<()> {
+        match alternate {
+            Some(alternate) => {
+                let format_alternate = format_with(|f| format_conditional(alternate, f, true));
+
+                match self {
+                    Conditional::Expression(expr) => {
+                        write![
+                            f,
+                            [expr.colon_token().format(), space_token(), format_alternate]
                         ]
-                    ]
+                    }
+                    Conditional::Type(ty) => {
+                        write![
+                            f,
+                            [ty.colon_token().format(), space_token(), format_alternate]
+                        ]
+                    }
                 }
             }
-            Conditional::Type(ty) => {
-                if let Some(alternate) = alternate {
-                    formatted![
-                        formatter,
-                        [ty.colon_token().format(), space_token(), alternate]
+
+            None => match self {
+                Conditional::Expression(expr) => write![
+                    f,
+                    [
+                        expr.colon_token().format(),
+                        space_token(),
+                        expr.alternate().format()
                     ]
-                } else {
-                    formatted![
-                        formatter,
-                        [
-                            ty.colon_token().format(),
-                            space_token(),
-                            ty.false_type().format()
-                        ]
+                ],
+                Conditional::Type(ty) => write![
+                    f,
+                    [
+                        ty.colon_token().format(),
+                        space_token(),
+                        ty.false_type().format()
                     ]
-                }
-            }
+                ],
+            },
         }
     }
 }
@@ -224,9 +215,10 @@ impl Conditional {
 /// - [rome_js_syntax::TsConditionalType]
 /// - [rome_js_syntax::JsConditionalExpression]
 pub fn format_conditional(
-    conditional: Conditional,
-    formatter: &JsFormatter,
+    conditional: &Conditional,
+    f: &mut JsFormatter,
     parent_is_conditional: bool,
-) -> FormatResult<FormatElement> {
-    conditional.into_format_element(formatter, parent_is_conditional)
+) -> FormatResult<()> {
+    conditional.format_head(f)?;
+    conditional.format_body(f, parent_is_conditional)
 }

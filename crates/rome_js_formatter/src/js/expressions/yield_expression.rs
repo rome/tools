@@ -1,19 +1,17 @@
 use crate::prelude::*;
+use rome_formatter::{format_args, write};
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsYieldExpression;
 use rome_js_syntax::JsYieldExpressionFields;
 
 impl FormatNodeFields<JsYieldExpression> for FormatNodeRule<JsYieldExpression> {
-    fn format_fields(
-        node: &JsYieldExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsYieldExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsYieldExpressionFields {
             yield_token,
             argument,
         } = node.as_fields();
 
-        formatted![formatter, [yield_token.format(), argument.format()]]
+        write![f, [yield_token.format(), argument.format()]]
     }
 }

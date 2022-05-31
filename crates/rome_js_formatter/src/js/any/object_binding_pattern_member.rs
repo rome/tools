@@ -7,24 +7,20 @@ impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPat
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyObjectBindingPatternMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
         match node {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyObjectBindingPatternMember::JsIdentifierBinding(node) => node.format().format(f),
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => node.format().format(f),
         }
     }
 }

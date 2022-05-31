@@ -1,13 +1,11 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsFunctionType;
 use rome_js_syntax::TsFunctionTypeFields;
 
 impl FormatNodeFields<TsFunctionType> for FormatNodeRule<TsFunctionType> {
-    fn format_fields(
-        node: &TsFunctionType,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsFunctionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsFunctionTypeFields {
             parameters,
             fat_arrow_token,
@@ -15,8 +13,8 @@ impl FormatNodeFields<TsFunctionType> for FormatNodeRule<TsFunctionType> {
             return_type,
         } = node.as_fields();
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 type_parameters.format(),
                 parameters.format(),

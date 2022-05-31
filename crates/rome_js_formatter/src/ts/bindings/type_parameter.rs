@@ -1,29 +1,26 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsTypeParameter, TsTypeParameterFields};
 
 impl FormatNodeFields<TsTypeParameter> for FormatNodeRule<TsTypeParameter> {
-    fn format_fields(
-        node: &TsTypeParameter,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsTypeParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeParameterFields {
             name,
             constraint,
             default,
         } = node.as_fields();
 
-        formatted![
-            formatter,
-            [
-                name.format(),
-                constraint
-                    .format()
-                    .with_or_empty(|constraint| formatted![formatter, [space_token(), constraint]]),
-                default
-                    .format()
-                    .with_or_empty(|default| formatted![formatter, [space_token(), default]])
-            ]
-        ]
+        write!(f, [name.format()])?;
+
+        if let Some(constraint) = constraint {
+            write!(f, [space_token(), constraint.format()])?;
+        }
+
+        if let Some(default) = default {
+            write!(f, [space_token(), default.format()])?;
+        }
+
+        Ok(())
     }
 }

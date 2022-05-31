@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
+expression: arrow-function.js
+---
+# Input
+```js
+const x = () => [].includes(true) || "ontouchend" in document
+
+const y = () => [] in x
+
+```
+
+# Output
+```js
+const x = () => [].includes(true) || ("ontouchend" in document);
+const y = () => [] in x;
+
+```
+
+

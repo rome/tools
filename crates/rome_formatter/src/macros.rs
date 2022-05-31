@@ -232,7 +232,7 @@ macro_rules! best_fitting {
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
-    use crate::{write, FormatContext, FormatState, VecBuffer};
+    use crate::{write, FormatState, VecBuffer};
 
     struct TestFormat;
 

@@ -1,32 +1,26 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsAssignmentExpression;
 use rome_js_syntax::JsAssignmentExpressionFields;
 
 impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExpression> {
-    fn format_fields(
-        node: &JsAssignmentExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsAssignmentExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsAssignmentExpressionFields {
             left,
             operator_token,
             right,
         } = node.as_fields();
 
-        Ok(group_elements(formatted![
-            formatter,
-            [
+        write!(
+            f,
+            [group_elements(&format_args![
                 left.format(),
                 space_token(),
                 operator_token.format(),
                 line_suffix_boundary(),
-                group_elements(soft_line_indent_or_space(formatted![
-                    formatter,
-                    [right.format()]
-                ]?)),
-            ]
-        ]?))
+                group_elements(&soft_line_indent_or_space(&right.format())),
+            ])]
+        )
     }
 }

@@ -1,10 +1,11 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 
 impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
-    fn format_fields(node: &TsMappedType, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsMappedType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMappedTypeFields {
             l_curly_token,
             readonly_modifier,
@@ -20,40 +21,33 @@ impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
             r_curly_token,
         } = node.as_fields();
 
-        formatter
-            .delimited(
+        write!(
+            f,
+            [f.delimited(
                 &l_curly_token?,
-                format_with_semicolon(
-                    formatter,
-                    formatted![
-                        formatter,
-                        [
-                            readonly_modifier
-                                .format()
-                                .with_or_empty(|readonly| formatted![
-                                    formatter,
-                                    [readonly, space_token()]
-                                ]),
-                            l_brack_token.format(),
-                            property_name.format(),
-                            space_token(),
-                            in_token.format(),
-                            space_token(),
-                            keys_type.format(),
-                            as_clause.format().with_or_empty(|clause| formatted![
-                                formatter,
-                                [space_token(), clause]
-                            ]),
-                            r_brack_token.format(),
-                            optional_modifier.format(),
-                            mapped_type.format(),
-                        ]
-                    ]?,
-                    semicolon_token,
-                )?,
+                &FormatWithSemicolon::new(
+                    &format_args!(
+                        readonly_modifier
+                            .format()
+                            .with_or_empty(|readonly, f| write![f, [readonly, space_token()]]),
+                        l_brack_token.format(),
+                        property_name.format(),
+                        space_token(),
+                        in_token.format(),
+                        space_token(),
+                        keys_type.format(),
+                        as_clause
+                            .format()
+                            .with_or_empty(|clause, f| write![f, [space_token(), clause]]),
+                        r_brack_token.format(),
+                        optional_modifier.format(),
+                        mapped_type.format(),
+                    ),
+                    semicolon_token.as_ref(),
+                ),
                 &r_curly_token?,
             )
-            .block_indent()
-            .finish()
+            .block_indent()]
+        )
     }
 }

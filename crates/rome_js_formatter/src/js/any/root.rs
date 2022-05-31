@@ -5,11 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyRoot;
 impl FormatRule<JsAnyRoot> for FormatJsAnyRoot {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyRoot, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyRoot, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
         match node {
-            JsAnyRoot::JsScript(node) => formatted![formatter, [node.format()]],
-            JsAnyRoot::JsModule(node) => formatted![formatter, [node.format()]],
-            JsAnyRoot::JsExpressionSnipped(node) => formatted![formatter, [node.format()]],
+            JsAnyRoot::JsScript(node) => node.format().format(f),
+            JsAnyRoot::JsModule(node) => node.format().format(f),
+            JsAnyRoot::JsExpressionSnipped(node) => node.format().format(f),
         }
     }
 }

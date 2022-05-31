@@ -12,7 +12,7 @@ use crate::prelude::*;
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
-use rome_formatter::normalize_newlines;
+use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
@@ -20,11 +20,10 @@ use rome_js_syntax::{
     TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList};
+use rome_rowan::{AstNode, AstNodeList, SyntaxResult, SyntaxToken};
 use std::borrow::Cow;
 use std::fmt;
 
-use crate::options::{JsFormatOptions, QuoteStyle};
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
 
@@ -34,41 +33,67 @@ pub(crate) use string_utils::*;
 /// We can have two kind of separators: `,`, `;` or ASI.
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
 /// So here, we create - on purpose - an empty node.
-pub(crate) fn format_type_member_separator(
-    separator_token: Option<JsSyntaxToken>,
-    formatter: &JsFormatter,
-) -> FormatElement {
-    if let Some(separator) = separator_token {
-        formatter.format_replaced(&separator, empty_element())
-    } else {
-        empty_element()
+pub(crate) struct FormatTypeMemberSeparator<'a> {
+    token: Option<&'a JsSyntaxToken>,
+}
+
+impl<'a> FormatTypeMemberSeparator<'a> {
+    pub fn new(token: Option<&'a JsSyntaxToken>) -> Self {
+        Self { token }
+    }
+}
+
+impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        if let Some(separator) = self.token {
+            write!(f, [f.format_replaced(&separator, &empty_element())])
+        } else {
+            Ok(())
+        }
     }
 }
 
 /// Utility function to format the node [rome_js_syntax::JsInitializerClause]
-pub(crate) fn format_initializer_clause(
-    formatter: &JsFormatter,
-    initializer: Option<JsInitializerClause>,
-) -> FormatResult<FormatElement> {
-    formatted![
-        formatter,
-        [initializer
-            .format()
-            .with_or_empty(|initializer| { formatted![formatter, [space_token(), initializer]] })]
-    ]
+pub struct FormatInitializerClause<'a> {
+    initializer: Option<&'a JsInitializerClause>,
 }
 
-pub(crate) fn format_interpreter(
-    interpreter: Option<JsSyntaxToken>,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement> {
-    formatted![
-        formatter,
-        [interpreter.format().with_or(
-            |interpreter| formatted![formatter, [interpreter, empty_line()]],
-            empty_element,
-        )]
-    ]
+impl<'a> FormatInitializerClause<'a> {
+    pub fn new(initializer: Option<&'a JsInitializerClause>) -> Self {
+        Self { initializer }
+    }
+}
+
+impl Format<JsFormatContext> for FormatInitializerClause<'_> {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        if let Some(initializer) = self.initializer {
+            write!(f, [space_token(), initializer.format()])
+        } else {
+            Ok(())
+        }
+    }
+}
+
+pub struct FormatInterpreterToken<'a> {
+    token: Option<&'a JsSyntaxToken>,
+}
+
+impl<'a> FormatInterpreterToken<'a> {
+    pub fn new(interpreter_token: Option<&'a JsSyntaxToken>) -> Self {
+        Self {
+            token: interpreter_token,
+        }
+    }
+}
+
+impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        if let Some(interpreter) = self.token {
+            write!(f, [interpreter.format(), empty_line()])
+        } else {
+            Ok(())
+        }
+    }
 }
 
 /// Returns true if this node contains "printable" trivias: comments
@@ -124,18 +149,26 @@ pub(crate) fn has_leading_newline(node: &JsSyntaxNode) -> bool {
 ///
 /// This will place the head element inside a [hard_group_elements], but
 /// the body will broken out of flat printing if its a single statement
-pub(crate) fn format_head_body_statement(
-    formatter: &JsFormatter,
-    head: FormatElement,
-    body: JsAnyStatement,
-) -> FormatResult<FormatElement> {
-    if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-        formatted![formatter, [head, space_token(), body.format(),]]
-    } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
-        // Force semicolon insertion if the body is empty
-        formatted![formatter, [head, body.format(), token(";"),]]
-    } else {
-        formatted![formatter, [head, space_token(), body.format(),]]
+pub struct FormatBodyStatement<'a> {
+    body: &'a JsAnyStatement,
+}
+
+impl<'a> FormatBodyStatement<'a> {
+    pub fn new(statement: &'a JsAnyStatement) -> Self {
+        Self { body: statement }
+    }
+}
+
+impl Format<JsFormatContext> for FormatBodyStatement<'_> {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match self.body {
+            JsAnyStatement::JsEmptyStatement(body) => {
+                write!(f, [body.format(), token(";")])
+            }
+            body => {
+                write!(f, [space_token(), body.format()])
+            }
+        }
     }
 }
 
@@ -158,28 +191,29 @@ where
 }
 
 /// Utility to format
-pub(crate) fn format_template_chunk(
-    chunk: JsSyntaxToken,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement> {
+pub(crate) fn format_template_chunk(chunk: JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
     // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
     // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
-    Ok(formatter.format_replaced(
-        &chunk,
-        FormatElement::from(Token::from_syntax_token_cow_slice(
-            normalize_newlines(chunk.text_trimmed(), ['\r']),
+
+    write!(
+        f,
+        [f.format_replaced(
             &chunk,
-            chunk.text_trimmed_range().start(),
-        )),
-    ))
+            &syntax_token_cow_slice(
+                normalize_newlines(chunk.text_trimmed(), ['\r']),
+                &chunk,
+                chunk.text_trimmed_range().start(),
+            )
+        )]
+    )
 }
 
 /// Function to format template literals and template literal types
 pub(crate) fn format_template_literal(
     literal: TemplateElement,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement> {
-    literal.into_format_element(formatter)
+    formatter: &mut JsFormatter,
+) -> FormatResult<()> {
+    write!(formatter, [literal])
 }
 
 pub(crate) enum TemplateElement {
@@ -187,53 +221,60 @@ pub(crate) enum TemplateElement {
     Ts(TsTemplateElement),
 }
 
-impl TemplateElement {
-    pub fn into_format_element(self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+impl Format<JsFormatContext> for TemplateElement {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let expression_is_plain = self.is_plain_expression()?;
         let has_comments = self.has_comments();
         let should_hard_group = expression_is_plain && !has_comments;
 
-        let (dollar_curly_token, middle, r_curly_token) = match self {
-            TemplateElement::Js(template_element) => {
-                let JsTemplateElementFields {
-                    dollar_curly_token,
-                    expression,
-                    r_curly_token,
-                } = template_element.as_fields();
-
-                let dollar_curly_token = dollar_curly_token?;
-                let expression = formatted![formatter, [expression.format()]]?;
-                let r_curly_token = r_curly_token?;
-
-                (dollar_curly_token, expression, r_curly_token)
+        let content = format_with(|f| {
+            match self {
+                TemplateElement::Js(template) => {
+                    write!(f, [template.expression().format()])?;
+                }
+                TemplateElement::Ts(template) => {
+                    write!(f, [template.ty().format()])?;
+                }
             }
-            TemplateElement::Ts(template_element) => {
-                let TsTemplateElementFields {
-                    ty,
-                    r_curly_token,
-                    dollar_curly_token,
-                } = template_element.as_fields();
 
-                let dollar_curly_token = dollar_curly_token?;
-                let ty = formatted![formatter, [ty.format()]]?;
-                let r_curly_token = r_curly_token?;
-
-                (dollar_curly_token, ty, r_curly_token)
-            }
-        };
-
-        let middle = format_elements![middle, line_suffix_boundary()];
+            write!(f, [line_suffix_boundary()])
+        });
 
         if should_hard_group {
             write!(
-                formatter,
-                [dollar_curly_token.format(), middle, r_curly_token.format()]
-            )?;
+                f,
+                [
+                    self.dollar_curly_token().format(),
+                    content,
+                    self.r_curly_token().format()
+                ]
+            )
         } else {
-            formatter
-                .delimited(&dollar_curly_token, middle, &r_curly_token)
-                .soft_block_indent()
-                .finish()
+            write!(
+                f,
+                [f.delimited(
+                    &self.dollar_curly_token()?,
+                    &content,
+                    &self.r_curly_token()?
+                )
+                .soft_block_indent()]
+            )
+        }
+    }
+}
+
+impl TemplateElement {
+    fn dollar_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            TemplateElement::Js(template) => template.dollar_curly_token(),
+            TemplateElement::Ts(template) => template.dollar_curly_token(),
+        }
+    }
+
+    fn r_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            TemplateElement::Js(template) => template.r_curly_token(),
+            TemplateElement::Ts(template) => template.r_curly_token(),
         }
     }
 
@@ -362,27 +403,42 @@ impl FormatPrecedence {
 /// Format a some code followed by an optional semicolon, and performs
 /// semicolon insertion if it was missing in the input source and the
 /// preceeding element wasn't an unknown node
-pub(crate) fn format_with_semicolon(
-    formatter: &mut JsFormatter,
-    content: FormatElement,
-    semicolon: Option<JsSyntaxToken>,
-) -> FormatResult<()> {
-    let is_unknown = match content.last_element() {
-        Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
-        _ => false,
-    };
+pub struct FormatWithSemicolon<'a> {
+    content: &'a dyn Format<JsFormatContext>,
+    semicolon: Option<&'a JsSyntaxToken>,
+}
 
-    write!(
-        formatter,
-        [
-            content,
-            semicolon.format().or_format(if is_unknown {
-                |f| Ok(())
-            } else {
-                |f| write!(f, [token(";")])
-            })
-        ]
-    )
+impl<'a> FormatWithSemicolon<'a> {
+    pub fn new(
+        content: &'a dyn Format<JsFormatContext>,
+        semicolon: Option<&'a JsSyntaxToken>,
+    ) -> Self {
+        Self { content, semicolon }
+    }
+}
+
+impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
+
+        write!(buffer, [self.content])?;
+
+        let content = buffer.into_document().into_element();
+
+        let is_unknown = match content.last_element() {
+            Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
+            _ => false,
+        };
+
+        f.write_element(content);
+
+        if let Some(semicolon) = self.semicolon {
+            write!(f, [semicolon.format()])?;
+        } else if !is_unknown {
+            write!(f, [token(";")])?;
+        }
+        Ok(())
+    }
 }
 
 /// A call like expression is one of:

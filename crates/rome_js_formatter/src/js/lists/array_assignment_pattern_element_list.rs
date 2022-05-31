@@ -8,8 +8,8 @@ impl FormatRule<JsArrayAssignmentPatternElementList> for FormatJsArrayAssignment
 
     fn format(
         node: &JsArrayAssignmentPatternElementList,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         format_array_node(node, formatter)
     }
 }

@@ -5,11 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyReturnType;
 impl FormatRule<TsAnyReturnType> for FormatTsAnyReturnType {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyReturnType, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &TsAnyReturnType, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
         match node {
-            TsAnyReturnType::TsType(node) => formatted![formatter, [node.format()]],
-            TsAnyReturnType::TsPredicateReturnType(node) => formatted![formatter, [node.format()]],
-            TsAnyReturnType::TsAssertsReturnType(node) => formatted![formatter, [node.format()]],
+            TsAnyReturnType::TsType(node) => node.format().format(f),
+            TsAnyReturnType::TsPredicateReturnType(node) => node.format().format(f),
+            TsAnyReturnType::TsAssertsReturnType(node) => node.format().format(f),
         }
     }
 }

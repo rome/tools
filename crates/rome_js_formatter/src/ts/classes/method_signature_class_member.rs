@@ -1,15 +1,13 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsMethodSignatureClassMember, TsMethodSignatureClassMemberFields};
 
 impl FormatNodeFields<TsMethodSignatureClassMember>
     for FormatNodeRule<TsMethodSignatureClassMember>
 {
-    fn format_fields(
-        node: &TsMethodSignatureClassMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsMethodSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMethodSignatureClassMemberFields {
             modifiers,
             async_token,
@@ -21,24 +19,23 @@ impl FormatNodeFields<TsMethodSignatureClassMember>
             semicolon_token,
         } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            formatted![
-                formatter,
-                [
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
                     modifiers.format(),
                     async_token
                         .format()
-                        .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
+                        .with_or_empty(|token, f| write![f, [token, space_token()]]),
                     space_token(),
                     name.format(),
                     question_mark_token.format(),
                     type_parameters.format(),
                     parameters.format(),
                     return_type_annotation.format(),
-                ]
-            ]?,
-            semicolon_token,
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

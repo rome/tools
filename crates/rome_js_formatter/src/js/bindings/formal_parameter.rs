@@ -1,15 +1,13 @@
 use crate::prelude::*;
-use crate::utils::format_initializer_clause;
+use rome_formatter::{format_args, write};
 
+use crate::utils::FormatInitializerClause;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsFormalParameter;
 use rome_js_syntax::JsFormalParameterFields;
 
 impl FormatNodeFields<JsFormalParameter> for FormatNodeRule<JsFormalParameter> {
-    fn format_fields(
-        node: &JsFormalParameter,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsFormalParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let JsFormalParameterFields {
             binding,
             question_mark_token,
@@ -17,15 +15,13 @@ impl FormatNodeFields<JsFormalParameter> for FormatNodeRule<JsFormalParameter> {
             initializer,
         } = node.as_fields();
 
-        let initializer = format_initializer_clause(formatter, initializer)?;
-
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 binding.format(),
                 question_mark_token.format(),
                 type_annotation.format(),
-                initializer
+                FormatInitializerClause::new(initializer.as_ref())
             ]
         ]
     }

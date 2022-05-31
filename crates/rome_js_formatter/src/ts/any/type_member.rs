@@ -5,30 +5,16 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyTypeMember;
 impl FormatRule<TsAnyTypeMember> for FormatTsAnyTypeMember {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyTypeMember, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &TsAnyTypeMember, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
         match node {
-            TsAnyTypeMember::TsCallSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsPropertySignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsConstructSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsMethodSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsGetterSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsSetterSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsIndexSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::JsUnknownMember(node) => formatted![formatter, [node.format()]],
+            TsAnyTypeMember::TsCallSignatureTypeMember(node) => node.format().format(f),
+            TsAnyTypeMember::TsPropertySignatureTypeMember(node) => node.format().format(f),
+            TsAnyTypeMember::TsConstructSignatureTypeMember(node) => node.format().format(f),
+            TsAnyTypeMember::TsMethodSignatureTypeMember(node) => node.format().format(f),
+            TsAnyTypeMember::TsGetterSignatureTypeMember(node) => node.format().format(f),
+            TsAnyTypeMember::TsSetterSignatureTypeMember(node) => node.format().format(f),
+            TsAnyTypeMember::TsIndexSignatureTypeMember(node) => node.format().format(f),
+            TsAnyTypeMember::JsUnknownMember(node) => node.format().format(f),
         }
     }
 }

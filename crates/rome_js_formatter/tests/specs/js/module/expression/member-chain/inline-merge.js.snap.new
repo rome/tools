@@ -1,0 +1,38 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: inline-merge.js
+---
+# Input
+_.flatMap(this.visibilityHandlers, fn => fn())
+    .concat(this.record.resolved_legacy_visrules)
+    .filter(Boolean)
+
+Object
+    .keys(
+    availableLocales({
+        test: true
+    })
+)
+    .forEach(locale => {
+        // ...
+    });
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+_.flatMap(this.visibilityHandlers, (fn) => fn())
+	.concat(this.record.resolved_legacy_visrules)
+	.filter(Boolean);
+Object.keys(
+	availableLocales({
+		test: true,
+	},),
+).forEach((locale) => {
+	// ...
+},);
+

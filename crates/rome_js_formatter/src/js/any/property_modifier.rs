@@ -5,21 +5,12 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyPropertyModifier;
 impl FormatRule<JsAnyPropertyModifier> for FormatJsAnyPropertyModifier {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyPropertyModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyPropertyModifier, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
         match node {
-            JsAnyPropertyModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyPropertyModifier::JsStaticModifier(node) => formatted![formatter, [node.format()]],
-            JsAnyPropertyModifier::TsReadonlyModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyPropertyModifier::TsOverrideModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyPropertyModifier::TsAccessibilityModifier(node) => node.format().format(f),
+            JsAnyPropertyModifier::JsStaticModifier(node) => node.format().format(f),
+            JsAnyPropertyModifier::TsReadonlyModifier(node) => node.format().format(f),
+            JsAnyPropertyModifier::TsOverrideModifier(node) => node.format().format(f),
         }
     }
 }

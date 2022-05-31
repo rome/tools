@@ -1,16 +1,13 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsNumberLiteralExpression;
 use rome_js_syntax::JsNumberLiteralExpressionFields;
 
 impl FormatNodeFields<JsNumberLiteralExpression> for FormatNodeRule<JsNumberLiteralExpression> {
-    fn format_fields(
-        node: &JsNumberLiteralExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsNumberLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNumberLiteralExpressionFields { value_token } = node.as_fields();
 
-        formatted![formatter, [value_token.format()]]
+        write![f, [value_token.format()]]
     }
 }

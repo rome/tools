@@ -9,3 +9,4 @@ edition = "2021"
 rome_rowan = { path = "../rome_rowan" }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 cfg-if = "1.0.0"
+drop_bomb = "0.1.5"

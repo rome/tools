@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
+expression: issue-6259.ts
+---
+# Input
+```js
+const yesFrame = (
+    ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
+) => css`
+    ${ChatRoot}[data-frame="yes"] & {
+        ${css({}, ...args)}
+    }
+`
+
+```
+
+# Output
+```js
+const yesFrame = (
+  ...args: Interpolation<ThemedStyledProps<{ }, Theme>>[]
+) =>
+  css`
+    ${ChatRoot}[data-frame="yes"] & {
+        ${css({}, ...args)}
+    }
+`;
+
+```
+
+

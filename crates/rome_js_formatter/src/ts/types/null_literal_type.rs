@@ -1,13 +1,11 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsNullLiteralType, TsNullLiteralTypeFields};
 
 impl FormatNodeFields<TsNullLiteralType> for FormatNodeRule<TsNullLiteralType> {
-    fn format_fields(
-        node: &TsNullLiteralType,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsNullLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsNullLiteralTypeFields { literal_token } = node.as_fields();
-        formatted![formatter, [literal_token.format()]]
+        write![f, [literal_token.format()]]
     }
 }

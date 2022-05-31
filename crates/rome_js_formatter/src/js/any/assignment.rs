@@ -5,26 +5,16 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyAssignment;
 impl FormatRule<JsAnyAssignment> for FormatJsAnyAssignment {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyAssignment, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyAssignment::JsIdentifierAssignment(node) => formatted![formatter, [node.format()]],
-            JsAnyAssignment::JsStaticMemberAssignment(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyAssignment::JsComputedMemberAssignment(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyAssignment::JsParenthesizedAssignment(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyAssignment::TsNonNullAssertionAssignment(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyAssignment::TsAsAssignment(node) => formatted![formatter, [node.format()]],
-            JsAnyAssignment::TsTypeAssertionAssignment(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyAssignment::JsUnknownAssignment(node) => formatted![formatter, [node.format()]],
+            JsAnyAssignment::JsIdentifierAssignment(node) => node.format().format(f),
+            JsAnyAssignment::JsStaticMemberAssignment(node) => node.format().format(f),
+            JsAnyAssignment::JsComputedMemberAssignment(node) => node.format().format(f),
+            JsAnyAssignment::JsParenthesizedAssignment(node) => node.format().format(f),
+            JsAnyAssignment::TsNonNullAssertionAssignment(node) => node.format().format(f),
+            JsAnyAssignment::TsAsAssignment(node) => node.format().format(f),
+            JsAnyAssignment::TsTypeAssertionAssignment(node) => node.format().format(f),
+            JsAnyAssignment::JsUnknownAssignment(node) => node.format().format(f),
         }
     }
 }

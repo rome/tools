@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use rome_formatter::{format_args, write};
 use std::fmt;
 
 use crate::FormatNodeFields;
@@ -7,10 +8,7 @@ use rome_js_syntax::JsRegexLiteralExpression;
 use rome_js_syntax::JsRegexLiteralExpressionFields;
 
 impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLiteralExpression> {
-    fn format_fields(
-        node: &JsRegexLiteralExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsRegexLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsRegexLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
         let trimmed_raw_string = value_token.text_trimmed();
@@ -19,8 +17,9 @@ impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLitera
         let ends_with_slash = trimmed_raw_string.ends_with('/');
         // this means that we have a regex literal with no flags
         if ends_with_slash {
-            return formatted![formatter, [value_token.format()]];
+            return write!(f, [value_token.format()]);
         }
+
         // SAFETY: a valid regex literal must have a end slash
         let end_slash_pos = trimmed_raw_string.rfind('/').unwrap();
         let mut flag_char_vec = trimmed_raw_string[end_slash_pos + 1..]
@@ -29,7 +28,7 @@ impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLitera
         flag_char_vec.sort_unstable();
         let sorted_flag_string = flag_char_vec.iter().collect::<String>();
 
-        let sorted_regex_literal = Token::from_syntax_token_cow_slice(
+        let sorted_regex_literal = syntax_token_cow_slice(
             std::borrow::Cow::Owned(std::format!(
                 "{}{}",
                 &trimmed_raw_string[0..end_slash_pos + 1],
@@ -38,6 +37,7 @@ impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLitera
             &value_token,
             value_token.text_trimmed_range().start(),
         );
-        Ok(formatter.format_replaced(&value_token, sorted_regex_literal.into()))
+
+        write!(f, [f.format_replaced(&value_token, &sorted_regex_literal)])
     }
 }

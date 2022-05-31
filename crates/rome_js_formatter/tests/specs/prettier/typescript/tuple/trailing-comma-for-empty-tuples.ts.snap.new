@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
+expression: trailing-comma-for-empty-tuples.ts
+---
+# Input
+```js
+type Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong = []
+
+type Foo = Foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo extends [] ? Foo3 : Foo4;
+```
+
+# Output
+```js
+type Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong = [];
+type Foo = Foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo extends [] ? Foo3 : Foo4;
+
+```
+
+# Lines exceeding max width of 80 characters
+```
+    1: type Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong = [];
+    2: type Foo = Foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo extends [] ? Foo3 : Foo4;
+```
+

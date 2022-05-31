@@ -5,10 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::JsxAnyAttribute;
 impl FormatRule<JsxAnyAttribute> for FormatJsxAnyAttribute {
     type Context = JsFormatContext;
-    fn format(node: &JsxAnyAttribute, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &JsxAnyAttribute, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsxAnyAttribute::JsxAttribute(node) => formatted![formatter, [node.format()]],
-            JsxAnyAttribute::JsxSpreadAttribute(node) => formatted![formatter, [node.format()]],
+            JsxAnyAttribute::JsxAttribute(node) => node.format().format(f),
+            JsxAnyAttribute::JsxSpreadAttribute(node) => node.format().format(f),
         }
     }
 }

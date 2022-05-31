@@ -6,14 +6,13 @@ use rome_rowan::AstNodeList;
 impl FormatRule<TsTemplateElementList> for FormatTsTemplateElementList {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &TsTemplateElementList,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        Ok(concat_elements(
-            formatter
-                .format_all(node.iter().formatted())?
-                .map(group_elements),
-        ))
+    fn format(node: &TsTemplateElementList, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut join = f.join();
+
+        for item in node {
+            join.entry(&group_elements(&item.format()));
+        }
+
+        join.finish()
     }
 }

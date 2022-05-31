@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
+use rome_formatter::{format_args, write};
 
 use crate::FormatNodeFields;
 use rome_js_syntax::{
@@ -9,10 +10,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, SyntaxResult};
 
 impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesizedExpression> {
-    fn format_fields(
-        node: &JsParenthesizedExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsParenthesizedExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsParenthesizedExpressionFields {
             l_paren_token,
             expression,
@@ -24,32 +22,29 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         let expression = expression?;
 
         if is_simple_parenthesized_expression(node)? {
-            formatted![
-                formatter,
-                [
-                    if parenthesis_can_be_omitted {
-                        formatter.format_replaced(&l_paren_token?, empty_element())
-                    } else {
-                        formatted![formatter, [l_paren_token.format()]]?
-                    },
-                    expression.format(),
-                    if parenthesis_can_be_omitted {
-                        formatter.format_replaced(&r_paren_token?, empty_element())
-                    } else {
-                        formatted![formatter, [r_paren_token.format()]]?
-                    },
-                ]
-            ]
+            if parenthesis_can_be_omitted {
+                write!(f, [f.format_replaced(&l_paren_token?, &empty_element())])?;
+            } else {
+                write![f, [l_paren_token.format()]]?;
+            };
+
+            write![f, [expression.format(),]]?;
+
+            if parenthesis_can_be_omitted {
+                write!(f, [f.format_replaced(&r_paren_token?, &empty_element())])?;
+            } else {
+                write![f, [r_paren_token.format()]]?;
+            }
         } else if parenthesis_can_be_omitted {
             // we mimic the format delimited utility function
-            formatted![
-                formatter,
+            write![
+                f,
                 [
-                    formatter.format_replaced(&l_paren_token?, empty_element()),
-                    group_elements(formatted![formatter, [expression.format()]]?),
-                    formatter.format_replaced(&r_paren_token?, empty_element()),
+                    f.format_replaced(&l_paren_token?, &empty_element()),
+                    group_elements(&expression.format()),
+                    f.format_replaced(&r_paren_token?, &empty_element()),
                 ]
-            ]
+            ]?;
         }
         // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
         // add extra soft_block_indent, for example:
@@ -71,24 +66,25 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         // ```
         // this is what we want
         else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
-            formatted![
-                formatter,
+            write![
+                f,
                 [
                     l_paren_token.format(),
                     expression.format(),
                     r_paren_token.format(),
                 ]
-            ]
+            ]?;
         } else {
-            formatter
-                .delimited(
-                    &l_paren_token?,
-                    formatted![formatter, [expression.format()]]?,
-                    &r_paren_token?,
-                )
-                .soft_block_indent()
-                .finish()
+            write!(
+                f,
+                [
+                    f.delimited(&l_paren_token?, &expression.format(), &r_paren_token?,)
+                        .soft_block_indent()
+                ]
+            )?;
         }
+
+        Ok(())
     }
 }
 

@@ -1,6 +1,6 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsAnyClass;
 use rome_js_syntax::JsClassExportDefaultDeclaration;
 
@@ -9,8 +9,8 @@ impl FormatNodeFields<JsClassExportDefaultDeclaration>
 {
     fn format_fields(
         node: &JsClassExportDefaultDeclaration,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        formatted![formatter, [JsAnyClass::from(node.clone()).format()]]
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        write![f, [JsAnyClass::from(node.clone()).format()]]
     }
 }

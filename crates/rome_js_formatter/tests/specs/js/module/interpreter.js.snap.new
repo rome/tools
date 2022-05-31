@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: interpreter.js
+---
+# Input
+#!/usr/bin/env node
+console.log(1)
+
+console.log(1)
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+#!/usr/bin/env node
+
+console.log(1);
+console.log(1);
+

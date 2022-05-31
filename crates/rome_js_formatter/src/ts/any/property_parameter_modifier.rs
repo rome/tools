@@ -7,18 +7,14 @@ impl FormatRule<TsAnyPropertyParameterModifier> for FormatTsAnyPropertyParameter
     type Context = JsFormatContext;
     fn format(
         node: &TsAnyPropertyParameterModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
         match node {
             TsAnyPropertyParameterModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyPropertyParameterModifier::TsOverrideModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyPropertyParameterModifier::TsReadonlyModifier(node) => node.format().format(f),
+            TsAnyPropertyParameterModifier::TsOverrideModifier(node) => node.format().format(f),
         }
     }
 }

@@ -311,8 +311,8 @@ pub fn generate_formatter() {
                 impl FormatRule<#node_id> for #format_id {
                     type Context = JsFormatContext;
 
-                    fn format(node: &#node_id, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-                        Ok(formatter.format_list(node))
+                    fn format(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        f.join_with(&space_token()).entries(node.try_format_nodes()).finish()
                     }
                 }
             },
@@ -325,8 +325,8 @@ pub fn generate_formatter() {
                 impl FormatRule<#node_id> for #format_id {
                     type Context = JsFormatContext;
 
-                    fn format(node: &#node_id, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-                        verbatim_node(node.syntax()).format(formatter)
+                    fn format(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        verbatim_node(node.syntax()).format(f)
                     }
                 }
             },
@@ -338,8 +338,8 @@ pub fn generate_formatter() {
                     use rome_js_syntax::#node_id;
 
                     impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn format_fields(node: &#node_id, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-                            verbatim_node(node.syntax()).format(formatter)
+                        fn format_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                            verbatim_node(node.syntax()).format(f)
                         }
                     }
                 }
@@ -352,8 +352,8 @@ pub fn generate_formatter() {
                     use rome_js_syntax::#node_id;
 
                     impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn format_fields(node: &#node_id, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-                            unknown_node(node.syntax()).format(formatter)
+                        fn format_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                            unknown_node(node.syntax()).format(f)
                         }
                     }
                 }
@@ -364,7 +364,7 @@ pub fn generate_formatter() {
                     .into_iter()
                     .map(|variant| {
                         let variant = Ident::new(&variant, Span::call_site());
-                        quote! { #node_id::#variant(node) => formatted![formatter, [node.format()]], }
+                        quote! { #node_id::#variant(node) => node.format().format(f), }
                     })
                     .collect();
 
@@ -376,7 +376,7 @@ pub fn generate_formatter() {
                     impl FormatRule<#node_id> for #format_id {
                         type Context = JsFormatContext;
 
-                        fn format(node: &#node_id, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+                        fn format(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             match node {
                                 #( #match_arms )*
                             }
@@ -430,7 +430,7 @@ impl BoilerplateImpls {
                         }
                     }
 
-                    impl IntoFormat for rome_js_syntax::#node_id {
+                    impl IntoFormat<crate::JsFormatOptions> for rome_js_syntax::#node_id {
                         type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, FormatNodeRule<rome_js_syntax::#node_id>>;
 
                         fn into_format(self) -> Self::Format {
@@ -451,7 +451,7 @@ impl BoilerplateImpls {
                         }
                     }
 
-                    impl IntoFormat for rome_js_syntax::#node_id {
+                    impl IntoFormat<crate::JsFormatOptions> for rome_js_syntax::#node_id {
                         type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, #format_id>;
 
                         fn into_format(self) -> Self::Format {

@@ -1,14 +1,11 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsSetterObjectMember;
 use rome_js_syntax::JsSetterObjectMemberFields;
 
 impl FormatNodeFields<JsSetterObjectMember> for FormatNodeRule<JsSetterObjectMember> {
-    fn format_fields(
-        node: &JsSetterObjectMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsSetterObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSetterObjectMemberFields {
             set_token,
             name,
@@ -18,8 +15,8 @@ impl FormatNodeFields<JsSetterObjectMember> for FormatNodeRule<JsSetterObjectMem
             body,
         } = node.as_fields();
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 set_token.format(),
                 space_token(),

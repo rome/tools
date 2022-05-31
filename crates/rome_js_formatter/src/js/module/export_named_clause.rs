@@ -1,16 +1,13 @@
 use crate::prelude::*;
+use rome_formatter::{format_args, write};
 
-use crate::utils::format_with_semicolon;
-
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
 
 impl FormatNodeFields<JsExportNamedClause> for FormatNodeRule<JsExportNamedClause> {
-    fn format_fields(
-        node: &JsExportNamedClause,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsExportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedClauseFields {
             type_token,
             l_curly_token,
@@ -19,29 +16,25 @@ impl FormatNodeFields<JsExportNamedClause> for FormatNodeRule<JsExportNamedClaus
             semicolon_token,
         } = node.as_fields();
 
-        let specifiers = specifiers.format();
+        let content = format_with(move |f| {
+            if let Some(type_token) = &type_token {
+                write!(f, [type_token.format(), space_token()])?;
+            }
 
-        let list = formatter
-            .delimited(
-                &l_curly_token?,
-                formatted![formatter, [specifiers]]?,
-                &r_curly_token?,
+            write!(
+                f,
+                [f.delimited(
+                    l_curly_token.as_ref()?,
+                    &specifiers.format(),
+                    r_curly_token.as_ref()?
+                )
+                .soft_block_spaces()]
             )
-            .soft_block_spaces()
-            .finish()?;
+        });
 
-        format_with_semicolon(
-            formatter,
-            formatted![
-                formatter,
-                [
-                    type_token
-                        .format()
-                        .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
-                    list
-                ]
-            ]?,
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(&content, semicolon_token.as_ref())]
         )
     }
 }

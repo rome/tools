@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsObjectAssignmentPatternRest;
@@ -9,13 +10,13 @@ impl FormatNodeFields<JsObjectAssignmentPatternRest>
 {
     fn format_fields(
         node: &JsObjectAssignmentPatternRest,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectAssignmentPatternRestFields {
             dotdotdot_token,
             target,
         } = node.as_fields();
 
-        formatted![formatter, [dotdotdot_token.format(), target.format()?,]]
+        write!(f, [dotdotdot_token.format(), target.format()])
     }
 }

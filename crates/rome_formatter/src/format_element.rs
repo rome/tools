@@ -24,82 +24,12 @@ where
 
     builder.finish()
 }
-//
-// /// Specialized version of [join_elements] for joining SyntaxNodes separated by a space, soft
-// /// line break or empty line depending on the input file.
-// ///
-// /// This functions inspects the input source and separates consecutive elements with either
-// /// a [soft_line_break_or_space] or [empty_line] depending on how many line breaks were
-// /// separating the elements in the original file.
-// #[inline]
-// pub fn join_elements_soft_line<I, L>(elements: I) -> FormatElement
-// where
-//     I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
-//     L: Language,
-// {
-//     join_elements_with(elements, soft_line_break_or_space)
-// }
-//
-// /// Specialized version of [join_elements] for joining SyntaxNodes separated by one or more
-// /// line breaks depending on the input file.
-// ///
-// /// This functions inspects the input source and separates consecutive elements with either
-// /// a [hard_line_break] or [empty_line] depending on how many line breaks were separating the
-// /// elements in the original file.
-// #[inline]
-// pub fn join_elements_hard_line<I, L>(elements: I) -> FormatElement
-// where
-//     I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
-//     L: Language,
-// {
-//     join_elements_with(elements, hard_line_break)
-// }
-//
-// /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
-// pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
-//     // Count the newlines in the leading trivia of the next node
-//     if let Some(leading_trivia) = next_node.first_leading_trivia() {
-//         leading_trivia
-//             .pieces()
-//             .take_while(|piece| {
-//                 // Stop at the first comment piece, the comment printer
-//                 // will handle newlines between the comment and the node
-//                 !piece.is_comments()
-//             })
-//             .filter(|piece| piece.is_newline())
-//             .count()
-//     } else {
-//         0
-//     }
-// }
-//
-// #[inline]
-// pub fn join_elements_with<I, L>(elements: I, separator: fn() -> FormatElement) -> FormatElement
-// where
-//     I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
-//     L: Language,
-// {
-//     concat_elements(IntersperseFn::new(
-//         elements.into_iter(),
-//         |_, next_node, next_elem| {
-//             if next_elem.is_empty() {
-//                 empty_element()
-//             } else if get_lines_before(next_node) > 1 {
-//                 empty_line()
-//             } else {
-//                 separator()
-//             }
-//         },
-//     ))
-// }
 
 /// Language agnostic IR for formatting source code.
 ///
 /// Use the helper functions like [crate::space_token], [crate::soft_line_break] etc. defined in this file to create elements.
 #[derive(Clone, Eq, PartialEq)]
 pub enum FormatElement {
-    Empty,
-
     /// A space token, see [crate::space_token] for documentation.
     Space,
 
@@ -153,7 +83,7 @@ pub enum FormatElement {
     BestFitting(BestFitting),
 }
 
-#[derive(Clone, Eq, PartialEq)]
+#[derive(Clone, Copy, Eq, PartialEq, Debug)]
 pub enum VerbatimKind {
     Unknown,
     Suppressed,
@@ -202,7 +132,6 @@ impl Verbatim {
 impl Debug for FormatElement {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
         match self {
-            FormatElement::Empty => write!(fmt, "Empty"),
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(content) => content.fmt(fmt),
             FormatElement::Indent(content) => fmt.debug_tuple("Indent").field(content).finish(),
@@ -251,7 +180,7 @@ pub enum LineMode {
 }
 
 /// A token used to gather a list of elements; see [concat_elements] and [join_elements].
-#[derive(Clone, Eq, PartialEq)]
+#[derive(Clone, Default, Eq, PartialEq)]
 pub struct List {
     content: Vec<FormatElement>,
 }
@@ -516,19 +445,6 @@ pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) ->
     }
 }
 
-// TODO
-// Consider making `Format` `Options` not an associated type?
-// impl<L: Language> From<SyntaxTriviaPieceComments<L>> for Token {
-//     fn from(trivia: SyntaxTriviaPieceComments<L>) -> Self {
-//         let range = trivia.text_range();
-//         Token::from_syntax_token_cow_slice(
-//             normalize_newlines(trivia.text().trim(), LINE_TERMINATORS),
-//             &trivia.as_piece().token(),
-//             range.start(),
-//         )
-//     }
-// }
-
 impl Deref for Token {
     type Target = str;
     fn deref(&self) -> &Self::Target {
@@ -544,8 +460,11 @@ impl Deref for Token {
 
 impl FormatElement {
     /// Returns true if the element contains no content.
-    pub const fn is_empty(&self) -> bool {
-        matches!(self, FormatElement::Empty)
+    pub fn is_empty(&self) -> bool {
+        match self {
+            FormatElement::List(list) => list.is_empty(),
+            _ => false,
+        }
     }
 
     /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
@@ -557,7 +476,6 @@ impl FormatElement {
     /// lines if this element is part of a group and the group doesn't fit on a single line.
     pub fn will_break(&self) -> bool {
         match self {
-            FormatElement::Empty => false,
             FormatElement::Space => false,
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Indent(content) => content.will_break(),
@@ -597,7 +515,7 @@ impl FormatElement {
                         (FormatElement::List(list), content)
                     } else {
                         // No leading trivia
-                        (FormatElement::Empty, list.content)
+                        (FormatElement::List(List::default()), list.content)
                     };
 
                     let content_end = content
@@ -609,7 +527,7 @@ impl FormatElement {
                     let trailing = if trailing_start < content.len() {
                         FormatElement::List(List::new(content.split_off(trailing_start)))
                     } else {
-                        FormatElement::Empty
+                        FormatElement::List(List::default())
                     };
 
                     (leading, FormatElement::List(List::new(content)), trailing)
@@ -617,13 +535,17 @@ impl FormatElement {
                     // All leading trivia
                     (
                         FormatElement::List(list),
-                        FormatElement::Empty,
-                        FormatElement::Empty,
+                        FormatElement::List(List::default()),
+                        FormatElement::List(List::default()),
                     )
                 }
             }
             // Non-list elements are returned directly
-            _ => (FormatElement::Empty, self, FormatElement::Empty),
+            _ => (
+                FormatElement::List(List::default()),
+                self,
+                FormatElement::List(List::default()),
+            ),
         }
     }
 
@@ -636,7 +558,7 @@ impl FormatElement {
                 list.iter().rev().find_map(|element| element.last_element())
             }
 
-            FormatElement::Empty | FormatElement::Line(_) | FormatElement::Comment(_) => None,
+            FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
             FormatElement::Indent(indent) => indent.last_element(),
             FormatElement::Group(group) => group.content.last_element(),
@@ -667,12 +589,6 @@ impl From<List> for FormatElement {
 impl From<ConditionalGroupContent> for FormatElement {
     fn from(token: ConditionalGroupContent) -> Self {
         FormatElement::ConditionalGroupContent(token)
-    }
-}
-
-impl From<Option<FormatElement>> for FormatElement {
-    fn from(element: Option<FormatElement>) -> Self {
-        element.unwrap_or_else(|| FormatElement::Empty)
     }
 }
 

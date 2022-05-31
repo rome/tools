@@ -5,10 +5,7 @@ use rome_js_syntax::JsxOpeningElement;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
-    fn format_fields(
-        node: &JsxOpeningElement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsxOpeningElement, formatter: &mut JsFormatter) -> FormatResult<()> {
         verbatim_node(node.syntax()).format(formatter)
     }
 }

@@ -7,20 +7,20 @@ impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignm
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyObjectAssignmentPatternMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
         match node {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
                 node,
-            ) => formatted![formatter, [node.format()]],
+            ) => node.format().format(f),
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
             JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
         }
     }

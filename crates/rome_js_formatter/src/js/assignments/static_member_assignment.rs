@@ -1,22 +1,17 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsStaticMemberAssignment;
 use rome_js_syntax::JsStaticMemberAssignmentFields;
 
 impl FormatNodeFields<JsStaticMemberAssignment> for FormatNodeRule<JsStaticMemberAssignment> {
-    fn format_fields(
-        node: &JsStaticMemberAssignment,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsStaticMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStaticMemberAssignmentFields {
             object,
             dot_token,
             member,
         } = node.as_fields();
 
-        formatted![
-            formatter,
-            [object.format(), dot_token.format(), member.format(),]
-        ]
+        write![f, [object.format(), dot_token.format(), member.format(),]]
     }
 }

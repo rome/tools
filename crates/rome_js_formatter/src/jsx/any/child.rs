@@ -5,14 +5,14 @@ use crate::prelude::*;
 use rome_js_syntax::JsxAnyChild;
 impl FormatRule<JsxAnyChild> for FormatJsxAnyChild {
     type Context = JsFormatContext;
-    fn format(node: &JsxAnyChild, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &JsxAnyChild, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsxAnyChild::JsxElement(node) => formatted![formatter, [node.format()]],
-            JsxAnyChild::JsxSelfClosingElement(node) => formatted![formatter, [node.format()]],
-            JsxAnyChild::JsxText(node) => formatted![formatter, [node.format()]],
-            JsxAnyChild::JsxExpressionChild(node) => formatted![formatter, [node.format()]],
-            JsxAnyChild::JsxSpreadChild(node) => formatted![formatter, [node.format()]],
-            JsxAnyChild::JsxFragment(node) => formatted![formatter, [node.format()]],
+            JsxAnyChild::JsxElement(node) => node.format().format(f),
+            JsxAnyChild::JsxSelfClosingElement(node) => node.format().format(f),
+            JsxAnyChild::JsxText(node) => node.format().format(f),
+            JsxAnyChild::JsxExpressionChild(node) => node.format().format(f),
+            JsxAnyChild::JsxSpreadChild(node) => node.format().format(f),
+            JsxAnyChild::JsxFragment(node) => node.format().format(f),
         }
     }
 }

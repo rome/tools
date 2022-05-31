@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: as_assignment.ts
+---
+# Input
+let binding;
+
+(binding as boolean) = true;
+
+(binding.very.long.chain.of.static.members as VeryLongTypeName) = veryLongExpression();
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+let binding;
+(binding as boolean) = true;
+(binding.very.long.chain.of.static.members as VeryLongTypeName) =
+	veryLongExpression();
+

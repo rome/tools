@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{JsxText, JsxTextFields};
 use std::borrow::Cow;
 use std::fmt;
@@ -7,14 +8,16 @@ use std::ops::Range;
 use std::str::CharIndices;
 
 impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
-    fn format_fields(node: &JsxText, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxTextFields { value_token } = node.as_fields();
         let token = value_token?;
         let new_text = clean_jsx_text(token.text());
         let start = token.text_range().start();
-        let new_token = Token::from_syntax_token_cow_slice(new_text, &token, start);
 
-        Ok(formatter.format_replaced(&token, FormatElement::from(new_token)))
+        write!(
+            f,
+            [f.format_replaced(&token, &syntax_token_cow_slice(new_text, &token, start))]
+        )
     }
 }
 

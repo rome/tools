@@ -1,15 +1,13 @@
 use crate::prelude::*;
 
-use crate::utils::format_head_body_statement;
+use crate::utils::FormatBodyStatement;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsWhileStatement;
 use rome_js_syntax::JsWhileStatementFields;
 
 impl FormatNodeFields<JsWhileStatement> for FormatNodeRule<JsWhileStatement> {
-    fn format_fields(
-        node: &JsWhileStatement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsWhileStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsWhileStatementFields {
             while_token,
             l_paren_token,
@@ -18,24 +16,15 @@ impl FormatNodeFields<JsWhileStatement> for FormatNodeRule<JsWhileStatement> {
             body,
         } = node.as_fields();
 
-        format_head_body_statement(
-            formatter,
-            formatted![
-                formatter,
-                [
-                    while_token.format(),
-                    space_token(),
-                    formatter
-                        .delimited(
-                            &l_paren_token?,
-                            formatted![formatter, [test.format()]]?,
-                            &r_paren_token?,
-                        )
-                        .soft_block_indent()
-                        .finish()?,
-                ]
-            ]?,
-            body?,
+        write!(
+            f,
+            [
+                while_token.format(),
+                space_token(),
+                f.delimited(&l_paren_token?, &test.format(), &r_paren_token?,)
+                    .soft_block_indent(),
+                FormatBodyStatement::new(&body?)
+            ]
         )
     }
 }

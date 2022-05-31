@@ -1,14 +1,12 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::TsReadonlyModifier;
 use rome_js_syntax::TsReadonlyModifierFields;
 
 impl FormatNodeFields<TsReadonlyModifier> for FormatNodeRule<TsReadonlyModifier> {
-    fn format_fields(
-        node: &TsReadonlyModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsReadonlyModifier, f: &mut JsFormatter) -> FormatResult<()> {
         let TsReadonlyModifierFields { modifier_token } = node.as_fields();
-        formatted![formatter, [modifier_token.format()]]
+        write![f, [modifier_token.format()]]
     }
 }

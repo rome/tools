@@ -1,48 +1,57 @@
 use crate::generated::FormatTsUnionTypeVariantList;
 use crate::prelude::*;
-use rome_js_syntax::TsUnionTypeVariantList;
-use rome_rowan::AstSeparatedList;
+use rome_formatter::write;
+use rome_js_syntax::{JsLanguage, TsType, TsUnionTypeVariantList};
+use rome_rowan::{AstSeparatedElement, AstSeparatedList};
 
 impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &TsUnionTypeVariantList,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        let mut elements = Vec::with_capacity(node.len());
+    fn format(node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
-        for (index, item) in node.elements().enumerate() {
-            let ty = formatted![formatter, [item.node().format()]]?;
-            let separator = item.trailing_separator()?;
+        f.join()
+            .entries(
+                node.elements()
+                    .enumerate()
+                    .map(|(index, item)| FormatTypeVariant {
+                        last: index == last_index,
+                        element: item,
+                    }),
+            )
+            .finish()
+    }
+}
 
-            let separator = match separator {
-                Some(token) => {
-                    if index == last_index {
-                        formatter.format_replaced(token, empty_element())
-                    } else {
-                        formatted![
-                            formatter,
-                            [soft_line_break_or_space(), token.format(), space_token()]
-                        ]?
-                    }
-                }
-                None => {
-                    if index == last_index {
-                        empty_element()
-                    } else {
-                        formatted![
-                            formatter,
-                            [soft_line_break_or_space(), token("|"), space_token()]
-                        ]?
-                    }
-                }
-            };
+pub struct FormatTypeVariant {
+    pub last: bool,
+    pub element: AstSeparatedElement<JsLanguage, TsType>,
+}
 
-            elements.push(format_elements![group_elements(ty), separator]);
+impl Format<JsFormatContext> for FormatTypeVariant {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        write!(f, [group_elements(&self.element.node().format())])?;
+
+        let separator = self.element.trailing_separator()?;
+
+        match separator {
+            Some(token) => {
+                if self.last {
+                    write!(f, [f.format_replaced(token, &empty_element())])?;
+                } else {
+                    write![
+                        f,
+                        [soft_line_break_or_space(), token.format(), space_token()]
+                    ]?;
+                }
+            }
+            None => {
+                if !self.last {
+                    write![f, [soft_line_break_or_space(), token("|"), space_token()]]?;
+                }
+            }
         }
 
-        Ok(concat_elements(elements))
+        Ok(())
     }
 }

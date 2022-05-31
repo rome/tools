@@ -1,15 +1,18 @@
 use crate::prelude::*;
-use crate::{write, GroupId, TextRange, TextSize};
+use crate::{write, FormatWithRule, GroupId, TextRange, TextSize};
 use crate::{Buffer, VecBuffer};
-use rome_rowan::{Language, SyntaxToken, SyntaxTokenText, TextLen};
+use rome_rowan::{
+    AstNode, AstSeparatedList, Language, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTokenText,
+    TextLen,
+};
 use std::borrow::Cow;
+use std::cell::Cell;
 use std::marker::PhantomData;
 
 /// Format element that doesn't represent any content.
 ///
 /// Can be helpful if you need to return a `FormatElement` (e.g. in an else branch) but don't want
 /// to show any content.
-#[deprecated]
 pub const fn empty_element() -> Empty {
     Empty
 }
@@ -197,7 +200,8 @@ impl Line {
 
 impl<O> Format<O> for Line {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::Line(self.mode))
+        f.write_element(FormatElement::Line(self.mode));
+        Ok(())
     }
 }
 
@@ -248,7 +252,8 @@ pub struct StaticToken {
 
 impl<O> Format<O> for StaticToken {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::Token(Token::Static { text: self.text }))
+        f.write_element(FormatElement::Token(Token::Static { text: self.text }));
+        Ok(())
     }
 }
 
@@ -270,7 +275,8 @@ impl<O> Format<O> for DynamicToken<'_> {
         f.write_element(FormatElement::Token(Token::Dynamic {
             text: self.text.to_string().into_boxed_str(),
             source_position: self.position,
-        }))
+        }));
+        Ok(())
     }
 }
 
@@ -313,7 +319,9 @@ impl<L: Language, O> Format<O> for SyntaxTokenCowSlice<'_, L> {
                 text: text.to_string().into_boxed_str(),
                 source_position: self.start,
             })),
-        }
+        };
+
+        Ok(())
     }
 }
 
@@ -342,7 +350,9 @@ impl<O> Format<O> for SyntaxTokenTextSlice {
         f.write_element(FormatElement::Token(Token::SyntaxTokenSlice {
             slice: self.text.clone(),
             source_position: self.source_position,
-        }))
+        }));
+
+        Ok(())
     }
 }
 
@@ -385,7 +395,8 @@ impl<O> Format<O> for LineSuffix<'_, O> {
         write!(buffer, [self.content])?;
 
         let content = buffer.into_document().into_element();
-        f.write_element(FormatElement::LineSuffix(Box::new(content)))
+        f.write_element(FormatElement::LineSuffix(Box::new(content)));
+        Ok(())
     }
 }
 
@@ -421,7 +432,8 @@ pub struct LineSuffixBoundary;
 
 impl<O> Format<O> for LineSuffixBoundary {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::LineSuffixBoundary)
+        f.write_element(FormatElement::LineSuffixBoundary);
+        Ok(())
     }
 }
 
@@ -470,7 +482,8 @@ impl<O> Format<O> for Comment<'_, O> {
         write!(buffer, [self.content])?;
         let content = buffer.into_document().into_element();
 
-        f.write_element(FormatElement::Comment(Box::new(content)))
+        f.write_element(FormatElement::Comment(Box::new(content)));
+        Ok(())
     }
 }
 
@@ -497,7 +510,8 @@ pub struct Space;
 
 impl<O> Format<O> for Space {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::Space)
+        f.write_element(FormatElement::Space);
+        Ok(())
     }
 }
 
@@ -553,7 +567,8 @@ impl<O> Format<O> for Indent<'_, O> {
         }
 
         let content = buffer.into_document().into_element();
-        f.write_element(FormatElement::Indent(Box::new(content)))
+        f.write_element(FormatElement::Indent(Box::new(content)));
+        Ok(())
     }
 }
 
@@ -761,7 +776,7 @@ impl<O> Format<O> for BlockIndent<'_, O> {
 
         let content = buffer.into_document().into_element();
 
-        f.write_element(FormatElement::Indent(Box::new(content)))?;
+        f.write_element(FormatElement::Indent(Box::new(content)));
 
         match self.mode {
             IndentMode::Soft => write!(f, [soft_line_break()])?,
@@ -879,12 +894,12 @@ impl<O> Format<O> for GroupElements<'_, O> {
         let group = Group::new(content).with_id(self.options.group_id);
 
         if !leading.is_empty() {
-            f.write_element(leading)?;
+            f.write_element(leading);
         }
-        f.write_element(FormatElement::Group(group))?;
+        f.write_element(FormatElement::Group(group));
 
         if !trailing.is_empty() {
-            f.write_element(trailing)?;
+            f.write_element(trailing);
         }
 
         Ok(())
@@ -933,7 +948,8 @@ pub struct ExpandParent;
 
 impl<O> Format<O> for ExpandParent {
     fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
-        f.write_element(FormatElement::ExpandParent)
+        f.write_element(FormatElement::ExpandParent);
+        Ok(())
     }
 }
 
@@ -1185,7 +1201,8 @@ impl<O> Format<O> for IfGroupBreaks<'_, O> {
         let content = buffer.into_document().into_element();
         f.write_element(FormatElement::ConditionalGroupContent(
             ConditionalGroupContent::new(content, self.mode).with_group_id(self.group_id),
-        ))
+        ));
+        Ok(())
     }
 }
 
@@ -1247,6 +1264,78 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
     }
 }
 
+pub struct JoinNodesBuilder<'fmt, 'buf, Sep, O> {
+    result: super::FormatResult<()>,
+    separator: Sep,
+    fmt: &'fmt mut Formatter<'buf, O>,
+    has_elements: bool,
+}
+
+impl<'fmt, 'buf, Sep, O> JoinNodesBuilder<'fmt, 'buf, Sep, O>
+where
+    Sep: Format<O>,
+{
+    pub(super) fn new(separator: Sep, fmt: &'fmt mut Formatter<'buf, O>) -> Self {
+        Self {
+            result: Ok(()),
+            separator,
+            fmt,
+            has_elements: false,
+        }
+    }
+
+    pub fn entry<L: Language>(&mut self, node: &SyntaxNode<L>, content: &dyn Format<O>) {
+        self.result = self.result.and_then(|_| {
+            if self.has_elements {
+                if get_lines_before(node) > 1 {
+                    write!(self.fmt, [empty_line()])?;
+                } else {
+                    write!(self.fmt, [&self.separator])?;
+                }
+            }
+
+            self.has_elements = true;
+
+            write!(self.fmt, [content])
+        });
+    }
+
+    pub fn entries<L, F, I>(&mut self, entries: I) -> &mut Self
+    where
+        L: Language,
+        F: Format<O>,
+        I: IntoIterator<Item = (F, SyntaxNode<L>)>,
+    {
+        for (content, node) in entries {
+            self.entry(&node, &content)
+        }
+
+        self
+    }
+
+    pub fn finish(&mut self) -> FormatResult<()> {
+        self.result
+    }
+}
+
+/// Get the number of line breaks between two consecutive SyntaxNodes in the tree
+pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
+    // Count the newlines in the leading trivia of the next node
+    if let Some(leading_trivia) = next_node.first_leading_trivia() {
+        leading_trivia
+            .pieces()
+            .take_while(|piece| {
+                // Stop at the first comment piece, the comment printer
+                // will handle newlines between the comment and the node
+                !piece.is_comments()
+            })
+            .filter(|piece| piece.is_newline())
+            .count()
+    } else {
+        0
+    }
+}
+
 pub struct FillBuilder<'fmt, 'separator, 'buf, O> {
     result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, O>,
@@ -1302,15 +1391,43 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
 
             match items.len() {
                 0 => Ok(()),
-                1 => self.fmt.write_element(items.pop().unwrap()),
-                _ => self
-                    .fmt
-                    .write_element(FormatElement::Fill(List::new(items))),
+                1 => {
+                    self.fmt.write_element(items.pop().unwrap());
+                    Ok(())
+                }
+                _ => {
+                    self.fmt
+                        .write_element(FormatElement::Fill(List::new(items)));
+                    Ok(())
+                }
             }
         })
     }
 }
 
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum TrailingSeparator {
+    Allowed,
+    Disallowed,
+    Mandatory,
+}
+
+impl TrailingSeparator {
+    pub fn is_allowed(&self) -> bool {
+        matches!(self, TrailingSeparator::Allowed)
+    }
+    pub fn is_mandatory(&self) -> bool {
+        matches!(self, TrailingSeparator::Mandatory)
+    }
+}
+
+impl Default for TrailingSeparator {
+    fn default() -> Self {
+        TrailingSeparator::Allowed
+    }
+}
+
+#[derive(Copy, Clone)]
 pub struct FormatWith<O, T>
 where
     T: Fn(&mut Formatter<O>) -> FormatResult<()>,
@@ -1335,6 +1452,32 @@ where
     FormatWith {
         closure,
         options: PhantomData,
+    }
+}
+
+pub const fn format_once<T, O>(closure: T) -> FormatOnce<T, O>
+where
+    T: FnOnce(&mut Formatter<O>) -> FormatResult<()>,
+{
+    FormatOnce {
+        closure: Cell::new(Some(closure)),
+        options: PhantomData,
+    }
+}
+
+pub struct FormatOnce<T, O> {
+    closure: Cell<Option<T>>,
+    options: PhantomData<O>,
+}
+
+impl<T, O> Format<O> for FormatOnce<T, O>
+where
+    T: FnOnce(&mut Formatter<O>) -> FormatResult<()>,
+{
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
+        let closure = self.closure.take().expect("Tried to format once at least twice. This is not allowed. You may want to use format_with or .memoized instead");
+
+        (closure)(f)
     }
 }
 
@@ -1395,9 +1538,7 @@ impl ConcatBuilder {
 
     #[inline]
     pub fn finish(mut self) -> FormatElement {
-        if self.elements.is_empty() {
-            FormatElement::Empty
-        } else if self.elements.len() == 1 {
+        if self.elements.len() == 1 {
             // Safety: Guaranteed to succeed by the length check above
             self.elements.pop().unwrap()
         } else {

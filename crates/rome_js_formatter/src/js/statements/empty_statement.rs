@@ -1,11 +1,12 @@
 use crate::prelude::*;
+use rome_formatter::{format_args, write};
 
 use crate::FormatNodeFields;
 use rome_js_syntax::{JsEmptyStatement, JsEmptyStatementFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsEmptyStatement> for FormatNodeRule<JsEmptyStatement> {
-    fn format_fields(node: &JsEmptyStatement, formatter: &JsFormatter) -> FormatResult<()> {
+    fn format_fields(node: &JsEmptyStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsEmptyStatementFields { semicolon_token } = node.as_fields();
         let parent_kind = node.syntax().parent().map(|p| p.kind());
 
@@ -15,9 +16,9 @@ impl FormatNodeFields<JsEmptyStatement> for FormatNodeRule<JsEmptyStatement> {
                 | Some(JsSyntaxKind::JS_IF_STATEMENT)
                 | Some(JsSyntaxKind::JS_ELSE_CLAUSE)
         ) {
-            write!(f, [semicolon_token])
+            write!(f, [semicolon_token.format()])
         } else {
-            Ok(formatter.format_replaced(&semicolon_token?, empty_element()))
+            write!(f, [f.format_replaced(&semicolon_token?, &empty_element())])
         }
     }
 }

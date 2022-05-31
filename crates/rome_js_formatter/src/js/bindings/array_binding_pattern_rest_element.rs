@@ -1,6 +1,6 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsArrayBindingPatternRestElement;
 use rome_js_syntax::JsArrayBindingPatternRestElementFields;
 
@@ -9,13 +9,13 @@ impl FormatNodeFields<JsArrayBindingPatternRestElement>
 {
     fn format_fields(
         node: &JsArrayBindingPatternRestElement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsArrayBindingPatternRestElementFields {
             dotdotdot_token,
             pattern,
         } = node.as_fields();
 
-        formatted![formatter, [dotdotdot_token.format(), pattern.format(),]]
+        write![f, [dotdotdot_token.format(), pattern.format()]]
     }
 }

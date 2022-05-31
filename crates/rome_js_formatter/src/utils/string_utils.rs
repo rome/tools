@@ -1,6 +1,7 @@
 use crate::context::QuoteStyle;
 use crate::prelude::*;
 use crate::utils::string_utils::CharSignal::AlreadyPrinted;
+use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::JsSyntaxToken;
 use std::borrow::Cow;
 
@@ -61,21 +62,21 @@ impl<'token> FormatLiteralStringToken<'token> {
     }
 }
 
-impl Format for FormatLiteralStringToken<'_> {
-    type Context = JsFormatContext;
-
-    fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let chosen_quote_style = formatter.state().quote_style();
+impl Format<JsFormatContext> for FormatLiteralStringToken<'_> {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        let chosen_quote_style = f.context().quote_style();
         let token = self.token();
         let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
 
         let content = string_cleaner.clean_text();
 
-        Ok(formatter.format_replaced(
-            token,
-            Token::from_syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
-                .into(),
-        ))
+        write!(
+            f,
+            [f.format_replaced(
+                token,
+                &syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
+            )]
+        )
     }
 }
 
@@ -254,7 +255,7 @@ impl<'token> LiteralStringNormaliser<'token> {
             Cow::Owned(s) => {
                 // content is owned, meaning we allocated a new string,
                 // so we force replacing quotes, regardless
-                let final_content = format!(
+                let final_content = std::format!(
                     "{}{}{}",
                     preferred_quote.as_char(),
                     s.as_str(),
@@ -474,7 +475,7 @@ impl<'token> LiteralStringNormaliser<'token> {
         if raw_content_has_quotes {
             Cow::Borrowed(original_content)
         } else if original_content.starts_with(other_quote) {
-            Cow::Owned(format!(
+            Cow::Owned(std::format!(
                 "{}{}{}",
                 preferred_quote.as_char(),
                 content_to_use.into(),
@@ -508,7 +509,7 @@ mod tests {
 
     #[quickcheck]
     fn to_ascii_lowercase_cow_returns_owned_when_some_chars_are_not_lowercase(txt: AsciiString) {
-        let txt = format!("{}A", txt); //guarantees at least one uppercase letter
+        let txt = std::format!("{}A", txt); //guarantees at least one uppercase letter
         assert!(matches!(txt.to_ascii_lowercase_cow(), Cow::Owned(s) if s == txt.to_lowercase()));
     }
 }

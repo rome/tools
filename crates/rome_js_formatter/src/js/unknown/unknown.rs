@@ -5,7 +5,7 @@ use rome_js_syntax::JsUnknown;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsUnknown> for FormatNodeRule<JsUnknown> {
-    fn format_fields(node: &JsUnknown, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsUnknown, formatter: &mut JsFormatter) -> FormatResult<()> {
         unknown_node(node.syntax()).format(formatter)
     }
 }

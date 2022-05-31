@@ -1,6 +1,6 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsObjectBindingPatternProperty;
 use rome_js_syntax::JsObjectBindingPatternPropertyFields;
 
@@ -9,8 +9,8 @@ impl FormatNodeFields<JsObjectBindingPatternProperty>
 {
     fn format_fields(
         node: &JsObjectBindingPatternProperty,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectBindingPatternPropertyFields {
             member,
             colon_token,
@@ -18,16 +18,20 @@ impl FormatNodeFields<JsObjectBindingPatternProperty>
             init,
         } = node.as_fields();
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 member.format(),
                 colon_token.format(),
                 space_token(),
                 pattern.format(),
-                init.format()
-                    .with_or_empty(|node| formatted![formatter, [space_token(), node]]),
             ]
-        ]
+        ]?;
+
+        if let Some(init) = init {
+            write!(f, [space_token(), init.format()])?;
+        }
+
+        Ok(())
     }
 }

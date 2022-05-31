@@ -7,17 +7,15 @@ impl FormatRule<JsAnyNamedImportSpecifier> for FormatJsAnyNamedImportSpecifier {
     type Context = JsFormatContext;
     fn format(
         node: &JsAnyNamedImportSpecifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
         match node {
             JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node) => node.format().format(f),
             JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().format(f)
             }
         }
     }

@@ -37,10 +37,11 @@ pub mod prelude;
 pub mod printed_tokens;
 pub mod printer;
 
-use crate::formatter::Formatter;
+use crate::formatter::{FormatState, Formatter};
+use crate::prelude::syntax_token_cow_slice;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
-pub use buffer::{Buffer, FormatState, VecBuffer};
+pub use buffer::{Buffer, VecBuffer};
 pub use builders::{
     block_indent, comment, empty_element, empty_line, group_elements, group_elements_with_options,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, if_group_with_id_breaks,
@@ -52,8 +53,8 @@ pub use format_element::{
 };
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, TextRange, TextSize,
-    TokenAtOffset,
+    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxTriviaPieceComments,
+    TextRange, TextSize, TokenAtOffset,
 };
 use std::error::Error;
 use std::fmt;
@@ -973,4 +974,19 @@ pub fn format_sub_tree<
         sourcemap,
         verbatim_ranges,
     ))
+}
+
+impl<L: Language, O> Format<O> for SyntaxTriviaPieceComments<L> {
+    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
+        let range = self.text_range();
+
+        write!(
+            f,
+            [syntax_token_cow_slice(
+                normalize_newlines(self.text().trim(), LINE_TERMINATORS),
+                &self.as_piece().token(),
+                range.start()
+            )]
+        )
+    }
 }

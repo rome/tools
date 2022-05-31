@@ -5,31 +5,17 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyExportClause;
 impl FormatRule<JsAnyExportClause> for FormatJsAnyExportClause {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyExportClause, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyExportClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyExportClause::JsExportDefaultDeclarationClause(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyExportClause::JsExportDefaultExpressionClause(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyExportClause::JsExportNamedClause(node) => formatted![formatter, [node.format()]],
-            JsAnyExportClause::JsExportFromClause(node) => formatted![formatter, [node.format()]],
-            JsAnyExportClause::JsExportNamedFromClause(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyExportClause::JsAnyDeclarationClause(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyExportClause::TsExportAsNamespaceClause(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyExportClause::TsExportAssignmentClause(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyExportClause::TsExportDeclareClause(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyExportClause::JsExportDefaultDeclarationClause(node) => node.format().format(f),
+            JsAnyExportClause::JsExportDefaultExpressionClause(node) => node.format().format(f),
+            JsAnyExportClause::JsExportNamedClause(node) => node.format().format(f),
+            JsAnyExportClause::JsExportFromClause(node) => node.format().format(f),
+            JsAnyExportClause::JsExportNamedFromClause(node) => node.format().format(f),
+            JsAnyExportClause::JsAnyDeclarationClause(node) => node.format().format(f),
+            JsAnyExportClause::TsExportAsNamespaceClause(node) => node.format().format(f),
+            JsAnyExportClause::TsExportAssignmentClause(node) => node.format().format(f),
+            JsAnyExportClause::TsExportDeclareClause(node) => node.format().format(f),
         }
     }
 }

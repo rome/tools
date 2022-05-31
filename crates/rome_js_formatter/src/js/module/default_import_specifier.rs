@@ -1,22 +1,17 @@
 use crate::prelude::*;
+use rome_formatter::{format_args, write};
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsDefaultImportSpecifier;
 use rome_js_syntax::JsDefaultImportSpecifierFields;
 
 impl FormatNodeFields<JsDefaultImportSpecifier> for FormatNodeRule<JsDefaultImportSpecifier> {
-    fn format_fields(
-        node: &JsDefaultImportSpecifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsDefaultImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDefaultImportSpecifierFields {
             local_name,
             trailing_comma_token,
         } = node.as_fields();
 
-        formatted![
-            formatter,
-            [local_name.format(), trailing_comma_token.format()]
-        ]
+        write![f, [local_name.format(), trailing_comma_token.format()]]
     }
 }

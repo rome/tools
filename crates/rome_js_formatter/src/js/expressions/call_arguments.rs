@@ -1,16 +1,13 @@
 use crate::prelude::*;
 use crate::utils::{is_simple_expression, token_has_comments};
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsCallArgumentsFields;
 use rome_js_syntax::{JsAnyCallArgument, JsCallArguments};
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
 impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
-    fn format_fields(
-        node: &JsCallArguments,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCallArgumentsFields {
             l_paren_token,
             args,
@@ -18,8 +15,8 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         } = node.as_fields();
 
         if is_simple_function_arguments(node)? {
-            return formatted![
-                formatter,
+            return write![
+                f,
                 [
                     l_paren_token.format(),
                     args.format(),
@@ -28,14 +25,13 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
             ];
         }
 
-        formatter
-            .delimited(
-                &l_paren_token?,
-                formatted![formatter, [args.format()]]?,
-                &r_paren_token?,
-            )
-            .soft_block_indent()
-            .finish()
+        write!(
+            f,
+            [
+                f.delimited(&l_paren_token?, &args.format(), &r_paren_token?,)
+                    .soft_block_indent()
+            ]
+        )
     }
 }
 

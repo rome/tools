@@ -17,7 +17,7 @@ pub trait FormatOptional<O> {
     /// ## Examples
     ///
     /// ```
-    /// use rome_formatter::{FormatContext, write, format};
+    /// use rome_formatter::{write, format};
     /// use rome_formatter::prelude::*;
     /// use rome_rowan::TextSize;
     ///
@@ -35,7 +35,7 @@ pub trait FormatOptional<O> {
     ///     none_token.with_or_empty(|token, f| write!(f, [token]))
     /// ]).unwrap();
     ///
-    /// assert_eq!(FormatElement::Empty, none_formatted.into_format_element());
+    /// assert!(none_formatted.into_format_element().is_empty());
     ///
     /// let some_token = Some(MyFormat);
     /// assert_eq!(
@@ -356,7 +356,7 @@ where
             return match memory {
                 Ok(elements) => {
                     for element in elements {
-                        f.write_element(element.clone())?;
+                        f.write_element(element.clone());
                     }
 
                     Ok(())
@@ -372,7 +372,7 @@ where
             Ok(_) => {
                 let elements = buffer.into_vec();
                 for element in &elements {
-                    f.write_element(element.clone())?;
+                    f.write_element(element.clone());
                 }
 
                 *self.memory.borrow_mut() = Some(Ok(elements));

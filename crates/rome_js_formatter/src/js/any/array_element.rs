@@ -5,11 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayElement;
 impl FormatRule<JsAnyArrayElement> for FormatJsAnyArrayElement {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyArrayElement, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyArrayElement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyArrayElement::JsAnyExpression(node) => formatted![formatter, [node.format()]],
-            JsAnyArrayElement::JsSpread(node) => formatted![formatter, [node.format()]],
-            JsAnyArrayElement::JsArrayHole(node) => formatted![formatter, [node.format()]],
+            JsAnyArrayElement::JsAnyExpression(node) => node.format().format(f),
+            JsAnyArrayElement::JsSpread(node) => node.format().format(f),
+            JsAnyArrayElement::JsArrayHole(node) => node.format().format(f),
         }
     }
 }

@@ -1,13 +1,11 @@
 use crate::prelude::*;
-use crate::utils::format_type_member_separator;
+use crate::utils::FormatTypeMemberSeparator;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsGetterSignatureTypeMember, TsGetterSignatureTypeMemberFields};
 
 impl FormatNodeFields<TsGetterSignatureTypeMember> for FormatNodeRule<TsGetterSignatureTypeMember> {
-    fn format_fields(
-        node: &TsGetterSignatureTypeMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &TsGetterSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsGetterSignatureTypeMemberFields {
             get_token,
             name,
@@ -17,10 +15,8 @@ impl FormatNodeFields<TsGetterSignatureTypeMember> for FormatNodeRule<TsGetterSi
             separator_token,
         } = node.as_fields();
 
-        let separator = format_type_member_separator(separator_token, formatter);
-
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 get_token.format(),
                 space_token(),
@@ -28,7 +24,7 @@ impl FormatNodeFields<TsGetterSignatureTypeMember> for FormatNodeRule<TsGetterSi
                 l_paren_token.format(),
                 r_paren_token.format(),
                 type_annotation.format(),
-                separator
+                FormatTypeMemberSeparator::new(separator_token.as_ref())
             ]
         ]
     }

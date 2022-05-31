@@ -10,8 +10,8 @@ impl FormatNodeFields<JsUnknownNamedImportSpecifier>
 {
     fn format_fields(
         node: &JsUnknownNamedImportSpecifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         unknown_node(node.syntax()).format(formatter)
     }
 }
