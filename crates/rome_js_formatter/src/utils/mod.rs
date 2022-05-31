@@ -21,10 +21,8 @@ use rome_js_syntax::{
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
-use std::borrow::Cow;
-
-use crate::context::QuoteStyle;
 pub(crate) use simple::*;
+pub(crate) use string_utils::*;
 
 /// Utility function to format the separators of the nodes that belong to the unions
 /// of [rome_js_syntax::TsAnyTypeMember].
@@ -384,31 +382,6 @@ pub(crate) fn format_with_semicolon(
             })
         ]
     ]
-}
-
-pub(crate) fn format_string_literal_token(
-    token: JsSyntaxToken,
-    formatter: &Formatter<JsFormatContext>,
-) -> FormatElement {
-    let quoted = token.text_trimmed();
-    let (primary_quote_char, secondary_quote_char) = match formatter.context().quote_style() {
-        QuoteStyle::Double => ('"', '\''),
-        QuoteStyle::Single => ('\'', '"'),
-    };
-    let content =
-        if quoted.starts_with(secondary_quote_char) && !quoted.contains(primary_quote_char) {
-            let s = &quoted[1..quoted.len() - 1];
-            let s = format!("{}{}{}", primary_quote_char, s, primary_quote_char);
-            Cow::Owned(normalize_newlines(&s, ['\r']).into_owned())
-        } else {
-            normalize_newlines(quoted, ['\r'])
-        };
-
-    formatter.format_replaced(
-        &token,
-        Token::from_syntax_token_cow_slice(content, &token, token.text_trimmed_range().start())
-            .into(),
-    )
 }
 
 /// A call like expression is one of:
