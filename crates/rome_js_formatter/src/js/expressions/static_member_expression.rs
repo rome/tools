@@ -32,7 +32,7 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
             {
                 let mut buffer = VecBuffer::new(f.state_mut());
                 write![buffer, [object.format()]]?;
-                let formatted_object = buffer.into_document().into_element();
+                let formatted_object = buffer.into_element();
 
                 let (object_leading, object_content, object_trailing) =
                     formatted_object.split_trivia();

@@ -1,4 +1,4 @@
-use crate::formatter::TryFormatNodeListExtension;
+use crate::formatter::FormatNodeExtension;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
@@ -15,9 +15,13 @@ impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
         } = node.as_fields();
 
         let format_statements = format_with(|f| {
-            f.join_with(&hard_line_break())
-                .entries(statements.try_format_nodes())
-                .finish()
+            let mut join = f.join_nodes_with_hardline();
+
+            for stmt in &statements {
+                join.entry(stmt.syntax(), &stmt.format_or_verbatim());
+            }
+
+            join.finish()
         });
 
         write!(

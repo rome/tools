@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{write};
+use rome_formatter::write;
 
-use crate::formatter::TryFormatNodeListExtension;
+use crate::formatter::{FormatNodeExtension, FormatNodeOrVerbatim};
 use crate::utils::FormatInterpreterToken;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsModule;
@@ -24,9 +24,13 @@ impl FormatNodeFields<JsModule> for FormatNodeRule<JsModule> {
             ]
         ]?;
 
-        f.join_with(&hard_line_break())
-            .entries(items.try_format_nodes())
-            .finish()?;
+        let mut join = f.join_nodes_with_hardline();
+
+        for node in items.iter() {
+            join.entry(node.syntax(), &node.format_or_verbatim());
+        }
+
+        join.finish()?;
 
         write!(
             f,

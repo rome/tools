@@ -391,7 +391,7 @@ impl<O> Format<O> for LineSuffix<'_, O> {
         let mut buffer = VecBuffer::new(f.state_mut());
         write!(buffer, [self.content])?;
 
-        let content = buffer.into_document().into_element();
+        let content = buffer.into_element();
         f.write_element(FormatElement::LineSuffix(Box::new(content)));
         Ok(())
     }
@@ -477,7 +477,7 @@ impl<O> Format<O> for Comment<'_, O> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(buffer, [self.content])?;
-        let content = buffer.into_document().into_element();
+        let content = buffer.into_element();
 
         f.write_element(FormatElement::Comment(Box::new(content)));
         Ok(())
@@ -563,7 +563,7 @@ impl<O> Format<O> for Indent<'_, O> {
             return Ok(());
         }
 
-        let content = buffer.into_document().into_element();
+        let content = buffer.into_element();
         f.write_element(FormatElement::Indent(Box::new(content)));
         Ok(())
     }
@@ -771,7 +771,7 @@ impl<O> Format<O> for BlockIndent<'_, O> {
             return Ok(());
         }
 
-        let content = buffer.into_document().into_element();
+        let content = buffer.into_element();
 
         f.write_element(FormatElement::Indent(Box::new(content)));
 
@@ -885,7 +885,7 @@ impl<O> Format<O> for GroupElements<'_, O> {
 
         write!(buffer, [self.content])?;
 
-        let content = buffer.into_document().into_element();
+        let content = buffer.into_element();
 
         let (leading, content, trailing) = content.split_trivia();
         let group = Group::new(content).with_id(self.options.group_id);
@@ -1195,7 +1195,7 @@ impl<O> Format<O> for IfGroupBreaks<'_, O> {
             return Ok(());
         }
 
-        let content = buffer.into_document().into_element();
+        let content = buffer.into_element();
         f.write_element(FormatElement::ConditionalGroupContent(
             ConditionalGroupContent::new(content, self.mode).with_group_id(self.group_id),
         ));
@@ -1301,9 +1301,9 @@ where
     where
         L: Language,
         F: Format<O>,
-        I: IntoIterator<Item = (F, SyntaxNode<L>)>,
+        I: IntoIterator<Item = (SyntaxNode<L>, F)>,
     {
-        for (content, node) in entries {
+        for (node, content) in entries {
             self.entry(&node, &content)
         }
 
@@ -1370,7 +1370,7 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
             write!(buffer, [entry])?;
 
-            let item = buffer.into_document().into_element();
+            let item = buffer.into_element();
 
             if !item.is_empty() {
                 self.items.push(item);

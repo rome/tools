@@ -595,7 +595,7 @@ where
     buffer.write_fmt(arguments)?;
 
     Ok(Formatted {
-        root: buffer.into_document().into_element(),
+        root: buffer.into_element(),
         options: print_options,
     })
 }
@@ -614,7 +614,7 @@ pub fn format_node<O: FormatContext, L: Language, N: FormatWithRule<O, Item = Sy
 
         write!(&mut buffer, [root])?;
 
-        let document = buffer.into_document().into_element();
+        let document = buffer.into_element();
 
         state.assert_formatted_all_tokens(root.item());
 

@@ -32,7 +32,7 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
 
         write!(buffer, [self.member.format()])?;
 
-        let formatted_element = buffer.into_document().into_element();
+        let formatted_element = buffer.into_element();
 
         let is_verbatim = matches!(
             formatted_element.last_element(),

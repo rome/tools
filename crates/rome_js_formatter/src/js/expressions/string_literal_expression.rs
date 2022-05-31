@@ -25,7 +25,7 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
                 [FormatLiteralStringToken::from_string(&value_token)]
             )?;
 
-            let formatted_element = buffer.into_document().into_element();
+            let formatted_element = buffer.into_element();
 
             let (leading_trivia, content, trailing_trivia) = formatted_element.split_trivia();
 

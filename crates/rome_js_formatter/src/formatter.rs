@@ -627,8 +627,36 @@ impl Format<JsFormatContext> for FormatDelimited<'_> {
             [format_leading_trivia(open_token, TriviaPrintMode::Full)]
         )?;
 
-        let open_token_trailing_trivia = format_trailing_trivia(open_token);
-        let close_token_leading_trivia = format_leading_trivia(close_token, TriviaPrintMode::Trim);
+        let open_token_trailing_trivia = format_with(|f| {
+            let mut buffer = VecBuffer::new(f.state_mut());
+
+            write!(buffer, [format_trailing_trivia(open_token)])?;
+
+            let trivia = buffer.into_element();
+            if !trivia.is_empty() {
+                write!(f, [soft_line_break_or_space()])?;
+                f.write_element(trivia);
+            }
+
+            Ok(())
+        });
+
+        let close_token_leading_trivia = format_with(|f| {
+            let mut buffer = VecBuffer::new(f.state_mut());
+
+            write!(
+                buffer,
+                [format_leading_trivia(close_token, TriviaPrintMode::Trim)]
+            )?;
+            let trivia = buffer.into_element();
+
+            if !trivia.is_empty() {
+                f.write_element(trivia);
+                write!(f, [soft_line_break_or_space()])?;
+            }
+
+            Ok(())
+        });
 
         let delimited = format_with(|f| {
             write!(f, [FormatTrimmedToken::new(open_token)])?;
@@ -951,13 +979,13 @@ where
 }
 
 /// Formats a node or falls back to verbatim printing if formating this node fails.
-pub struct TryFormatNode<Node> {
-    node: Node,
+pub struct FormatNodeOrVerbatim<'a, Node> {
+    pub node: &'a Node,
 }
 
-impl<Node> Format<JsFormatContext> for TryFormatNode<Node>
+impl<'a, Node> Format<JsFormatContext> for FormatNodeOrVerbatim<'a, Node>
 where
-    for<'a> Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
+    Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
 {
     fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let snapshot = f.snapshot();
@@ -972,59 +1000,24 @@ where
 
                 // Lists that yield errors are formatted as they were unknown nodes.
                 // Doing so, the formatter formats the nodes/tokens as is.
-                // SAFETY: `FormatUnknownNode` always returns Ok
                 write!(f, [unknown_node(self.node.syntax())])
             }
         }
     }
 }
 
-/// It formats a list of nodes that are not separated. It's an ad-hoc function to
-/// format lists that implement [rome_js_syntax::AstNodeList].
-///
-/// The elements of the list are joined together using [join_elements_hard_line], which will
-/// end up separated by hard lines or empty lines.
-///
-/// If the formatter fails to format an element, said element gets printed verbatim.
-pub struct TryFormatNodesIterator<N> {
-    inner: AstNodeListIterator<JsLanguage, N>,
-}
-
-impl<N> Iterator for TryFormatNodesIterator<N>
-where
-    for<'a> N: AstNode<Language = JsLanguage> + AsFormat<'a>,
-{
-    type Item = TryFormatNode<N>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        let node = self.inner.next()?;
-
-        Some(TryFormatNode { node })
+pub trait FormatNodeExtension {
+    /// Formats a node or formats it as verbatim if formatting it fails.
+    fn format_or_verbatim(&self) -> FormatNodeOrVerbatim<Self>
+    where
+        for<'a> Self: AstNode<Language = JsLanguage> + AsFormat<'a>,
+        Self: Sized,
+    {
+        FormatNodeOrVerbatim { node: self }
     }
 }
 
-impl<N> FusedIterator for TryFormatNodesIterator<N> where
-    for<'a> N: AstNode<Language = JsLanguage> + AsFormat<'a>
-{
-}
-
-impl<N> ExactSizeIterator for TryFormatNodesIterator<N> where
-    for<'a> N: AstNode<Language = JsLanguage> + AsFormat<'a>
-{
-}
-
-pub trait TryFormatNodeListExtension<Node> {
-    fn try_format_nodes(&self) -> TryFormatNodesIterator<Node>;
-}
-
-impl<T> TryFormatNodeListExtension<T::Node> for T
-where
-    T: AstNodeList<Language = JsLanguage>,
-{
-    fn try_format_nodes(&self) -> TryFormatNodesIterator<T::Node> {
-        TryFormatNodesIterator { inner: self.iter() }
-    }
-}
+impl<T> FormatNodeExtension for T where for<'a> T: AsFormat<'a> + AstNode<Language = JsLanguage> {}
 
 /// Formats a token without its leading or trailing trivia
 ///

@@ -1,4 +1,4 @@
-use crate::formatter::TryFormatNodeListExtension;
+use crate::formatter::FormatNodeExtension;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
@@ -32,9 +32,11 @@ impl FormatNodeFields<JsCaseClause> for FormatNodeRule<JsCaseClause> {
         );
 
         let format_consequent = format_with(|f| {
-            f.join_with(&hard_line_break())
-                .entries(consequent.try_format_nodes())
-                .finish()
+            let mut join = f.join_nodes_with_hardline();
+            for stmt in &consequent {
+                join.entry(stmt.syntax(), &stmt.format_or_verbatim());
+            }
+            join.finish()
         });
 
         if consequent.is_empty() {

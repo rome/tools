@@ -22,7 +22,6 @@ use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, SyntaxResult};
 use std::borrow::Cow;
 
-
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
 
@@ -422,7 +421,7 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
 
         write!(buffer, [self.content])?;
 
-        let content = buffer.into_document().into_element();
+        let content = buffer.into_element();
 
         let is_unknown = match content.last_element() {
             Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),

@@ -1,8 +1,6 @@
 use super::{Buffer, Format, Formatter};
-
-// Ideally, a extern "C" { type Opaque } but the opaque features isn't stabilized.
-// Use an empty enum as an opaque type instead.
-enum Opaque {}
+use std::ffi::c_void;
+use std::marker::PhantomData;
 
 /// Stack allocated element that is pending for formatting
 ///
@@ -11,9 +9,10 @@ enum Opaque {}
 /// pointer of `Format::format` and stores it in `formatter.
 pub struct Argument<'fmt, O> {
     /// The value to format.
-    value: &'fmt Opaque,
+    value: *const c_void,
     /// The function pointer to `value`'s `Format::format` method
-    formatter: fn(&'fmt Opaque, &mut Formatter<'_, O>) -> super::FormatResult<()>,
+    formatter: fn(*const c_void, &mut Formatter<'_, O>) -> super::FormatResult<()>,
+    lifetime: PhantomData<&'fmt ()>,
 }
 
 impl<'fmt, O> Argument<'fmt, O> {
@@ -25,12 +24,14 @@ impl<'fmt, O> Argument<'fmt, O> {
         unsafe {
             Self {
                 // SAFETY: `mem::transmute` is safe because
-                // 1. `&'fmt F` keeps the lifetime it originated with `'fmt`
-                // 2. `&'fmt F` and `&'fmt Opaque` have the same memory layout
+                // 1. `lifetime` keeps the lifetime it originated with `'fmt`
+                // 2. `&'fmt F` and `*const c_void` have the same memory layout
                 value: std::mem::transmute(value),
                 // SAFETY: `mem::transmute` is safe because `fn(&F, &mut Formatter<'_>) -> Result`
-                // and `fn(&Opaque, &mut Formatter<'_> -> Result` have the same ABI
+                // and `fn(*const c_void, &mut Formatter<'_> -> Result` have the same ABI
                 formatter: std::mem::transmute(formatter),
+
+                lifetime: PhantomData,
             }
         }
     }
@@ -66,7 +67,6 @@ impl<O> Format<O> for Arguments<'_, O> {
 
 #[cfg(test)]
 mod tests {
-    use crate::buffer::Document;
     use crate::prelude::*;
     use crate::{format_args, write, FormatState, VecBuffer};
 
@@ -90,8 +90,8 @@ mod tests {
         .unwrap();
 
         assert_eq!(
-            buffer.into_document(),
-            Document::from_iter([
+            buffer.into_element(),
+            FormatElement::List(List::new(vec![
                 FormatElement::Token(Token::Static { text: "function" }),
                 FormatElement::Space,
                 FormatElement::Token(Token::Static { text: "a" }),
@@ -100,7 +100,7 @@ mod tests {
                     FormatElement::Token(Token::Static { text: "(" }),
                     FormatElement::Token(Token::Static { text: ")" }),
                 ]))))
-            ])
+            ]))
         );
     }
 }

@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::utils::FormatInterpreterToken;
-use rome_formatter::{write};
+use rome_formatter::write;
 
-use crate::formatter::TryFormatNodeListExtension;
+use crate::formatter::FormatNodeExtension;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsScript;
 use rome_js_syntax::JsScriptFields;
@@ -24,9 +24,13 @@ impl FormatNodeFields<JsScript> for FormatNodeRule<JsScript> {
             ]
         ]?;
 
-        f.join_with(&hard_line_break())
-            .entries(statements.try_format_nodes())
-            .finish()?;
+        let mut join = f.join_nodes_with_hardline();
+
+        for stmt in statements {
+            join.entry(stmt.syntax(), &stmt.format_or_verbatim());
+        }
+
+        join.finish()?;
 
         write![
             f,

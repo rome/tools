@@ -4,7 +4,6 @@ use crate::formatter::FormatState;
 
 use crate::FormatResult;
 
-use std::fmt;
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};
 
@@ -121,10 +120,6 @@ impl<'a, Context> VecBuffer<'a, Context> {
         Ok(())
     }
 
-    pub fn into_document(self) -> Document {
-        Document(self.elements)
-    }
-
     pub fn into_element(mut self) -> FormatElement {
         if self.len() == 1 {
             // Safety: Guaranteed by len check above
@@ -189,42 +184,5 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
 
     fn release_snapshot(&mut self, snapshot: BufferSnapshotId) {
         assert!(self.elements.len() >= snapshot.value());
-    }
-}
-
-#[derive(Clone, Eq, PartialEq)]
-pub struct Document(Vec<FormatElement>);
-
-impl Document {
-    pub fn into_vec(self) -> Vec<FormatElement> {
-        self.0
-    }
-
-    pub fn into_element(mut self) -> FormatElement {
-        if self.0.len() == 1 {
-            self.0.pop().unwrap()
-        } else {
-            FormatElement::List(List::new(self.0))
-        }
-    }
-}
-
-impl FromIterator<FormatElement> for Document {
-    fn from_iter<T: IntoIterator<Item = FormatElement>>(iter: T) -> Self {
-        Document(Vec::from_iter(iter))
-    }
-}
-
-impl fmt::Debug for Document {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.debug_list().entries(&self.0).finish()
-    }
-}
-
-impl Deref for Document {
-    type Target = [FormatElement];
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
     }
 }

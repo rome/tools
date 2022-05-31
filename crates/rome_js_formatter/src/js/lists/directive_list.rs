@@ -1,7 +1,6 @@
-use crate::formatter::TryFormatNodeListExtension;
 use crate::generated::FormatJsDirectiveList;
 use crate::prelude::*;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::JsDirectiveList;
 use rome_rowan::{AstNode, AstNodeList};
 
@@ -31,9 +30,13 @@ impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
             false
         };
 
-        f.join_with(&hard_line_break())
-            .entries(node.try_format_nodes())
-            .finish()?;
+        let mut join = f.join_nodes_with_hardline();
+
+        for directive in node {
+            join.entry(directive.syntax(), &directive.format());
+        }
+
+        join.finish()?;
 
         if need_extra_empty_line {
             write!(f, [empty_line()])

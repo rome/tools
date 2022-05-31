@@ -250,7 +250,7 @@ mod tests {
         write![&mut buffer, [TestFormat]].unwrap();
 
         assert_eq!(
-            buffer.into_document().into_element(),
+            buffer.into_element(),
             FormatElement::Token(Token::Static { text: "test" })
         );
     }
@@ -273,7 +273,7 @@ mod tests {
         .unwrap();
 
         assert_eq!(
-            buffer.into_document().into_element(),
+            buffer.into_element(),
             FormatElement::List(List::new(vec![
                 FormatElement::Token(Token::Static { text: "a" }),
                 FormatElement::Space,

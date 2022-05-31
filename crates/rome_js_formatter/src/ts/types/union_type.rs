@@ -41,7 +41,7 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
         let mut buffer = VecBuffer::new(f.state_mut());
         write!(buffer, [types.format()])?;
 
-        let types = buffer.into_document().into_element();
+        let types = buffer.into_element();
 
         // Push trailing comments for the union out of the group (and indent block),
         // so any potential line break doesn't influence the formatting of the type itself

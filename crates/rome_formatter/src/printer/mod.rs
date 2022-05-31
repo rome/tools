@@ -920,7 +920,7 @@ mod tests {
 
         write!(&mut buffer, [root]).unwrap();
 
-        Printer::new(options).print(&buffer.into_document().into_element())
+        Printer::new(options).print(&buffer.into_element())
     }
 
     #[test]
@@ -1137,7 +1137,7 @@ two lines`,
             .finish()
             .unwrap();
 
-        let document = buffer.into_document().into_element();
+        let document = buffer.into_element();
 
         let printed = Printer::new(PrinterOptions::default().with_print_width(LineWidth(10)))
             .print(&document);

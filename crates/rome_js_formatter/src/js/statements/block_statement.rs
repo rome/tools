@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsBlockStatement;
 
-use crate::formatter::TryFormatNodeListExtension;
+use crate::formatter::FormatNodeExtension;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
@@ -28,9 +28,13 @@ impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
             )
         } else {
             let format_statements = format_with(|f| {
-                f.join_with(&hard_line_break())
-                    .entries(statements.try_format_nodes())
-                    .finish()
+                let mut join = f.join_nodes_with_hardline();
+
+                for stmt in &statements {
+                    join.entry(stmt.syntax(), &stmt.format_or_verbatim())
+                }
+
+                join.finish()
             });
             write!(
                 f,
