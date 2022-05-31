@@ -6,10 +6,10 @@ use std::borrow::Cow;
 use std::cell::Cell;
 use std::marker::PhantomData;
 
-/// Format element that doesn't represent any content.
+/// A no-op element.
 ///
-/// Can be helpful if you need to return a `FormatElement` (e.g. in an else branch) but don't want
-/// to show any content.
+/// Doesn't write any content. Useful in combination with `format_replaced` to remove a token but
+/// still format its comments.
 pub const fn empty_element() -> Empty {
     Empty
 }
@@ -27,7 +27,7 @@ impl<O> Format<O> for Empty {
 /// It's omitted if the enclosing `Group` fits on a single line.
 /// A soft line break is identical to a hard line break when not enclosed inside of a `Group`.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// Soft line breaks are omitted if the enclosing `Group` fits on a single line
 ///
@@ -78,7 +78,7 @@ pub const fn soft_line_break() -> Line {
 /// A forced line break that are always printed. A hard line break forces any enclosing `Group`
 /// to be printed over multiple lines.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// It forces a line break, even if the enclosing `Group` would otherwise fit on a single line.
 /// ```
@@ -107,7 +107,7 @@ pub const fn hard_line_break() -> Line {
 /// A forced empty line. An empty line inserts enough line breaks in the output for
 /// the previous and next element to be separated by an empty line.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// ```
 /// use rome_formatter::{format, format_args};
@@ -135,7 +135,7 @@ pub const fn empty_line() -> Line {
 
 /// A line break if the enclosing `Group` doesn't fit on a single line, a space otherwise.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// The line breaks are emitted as spaces if the enclosing `Group` fits on a a single line:
 /// ```
@@ -204,11 +204,11 @@ impl<O> Format<O> for Line {
 /// Creates a token that gets written as is to the output. Make sure to properly escape the text if
 /// it's user generated (e.g. a string and not a language keyword).
 ///
-/// ## Line feeds
+/// # Line feeds
 /// Tokens may contain line breaks but they must use the line feeds (`\n`).
 /// The [crate::Printer] converts the line feed characters to the character specified in the [crate::PrinterOptions].
 ///
-/// ## Examples
+/// # Examples
 ///
 /// ```
 /// use rome_formatter::format;
@@ -274,6 +274,8 @@ impl<O> Format<O> for DynamicToken<'_> {
     }
 }
 
+/// String that is the same as in the input source text if `text` is [`Cow::Borrowed`] or
+/// some replaced content if `text` is [`Cow::Owned`].
 pub fn syntax_token_cow_slice<'a, L: Language>(
     text: Cow<'a, str>,
     token: &'a SyntaxToken<L>,
@@ -317,6 +319,7 @@ impl<L: Language, O> Format<O> for SyntaxTokenCowSlice<'_, L> {
     }
 }
 
+/// Copies a source text 1:1 into the output text.
 pub fn syntax_token_text_slice<L: Language>(
     token: &SyntaxToken<L>,
     range: TextRange,
@@ -350,7 +353,7 @@ fn debug_assert_no_newlines(text: &str) {
     debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
 }
 
-/// Push a [FormatElement] to the end of the current line
+/// Pushes some content to the end of the current line
 ///
 /// ## Examples
 ///
@@ -389,8 +392,8 @@ impl<O> Format<O> for LineSuffix<'_, O> {
     }
 }
 
-/// Inserts a boundary for line suffixes that forces to print all pending line suffixes. Helpful
-/// if a line sufix shouldn't pass a certain point.
+/// Inserts a boundary for line suffixes that forces the printer to print all pending line suffixes.
+/// Helpful if a line sufix shouldn't pass a certain point.
 ///
 /// ## Examples
 ///
@@ -425,7 +428,7 @@ impl<O> Format<O> for LineSuffixBoundary {
     }
 }
 
-/// Mark a [FormatElement] as being a piece of trivia
+/// Marks some content as a comment trivia.
 ///
 /// This does not directly influence how this content will be printed, but some
 /// parts of the formatter may chose to handle this element in a specific way
@@ -454,7 +457,7 @@ impl<O> Format<O> for LineSuffixBoundary {
 /// );
 /// ```
 #[inline]
-pub fn comment<O>(content: &dyn Format<O>) -> Comment<O> {
+pub const fn comment<O>(content: &dyn Format<O>) -> Comment<O> {
     Comment { content }
 }
 
@@ -476,7 +479,7 @@ impl<O> Format<O> for Comment<'_, O> {
 
 /// Inserts a single space. Allows to separate different tokens.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// ```
 /// use rome_formatter::format;
@@ -509,7 +512,7 @@ impl<O> Format<O> for Space {
 /// This helper should be used only in rare cases, instead you should rely more on
 /// [block_indent] and [soft_block_indent]
 ///
-/// ## Examples
+/// # Examples
 ///
 /// ```
 /// use rome_formatter::{format, format_args};
@@ -564,7 +567,7 @@ impl<O> Format<O> for Indent<'_, O> {
 ///
 /// Doesn't create an indention if the passed in content is [FormatElement.is_empty].
 ///
-/// ## Examples
+/// # Examples
 ///
 /// ```
 /// use rome_formatter::{format, format_args};
@@ -589,7 +592,7 @@ impl<O> Format<O> for Indent<'_, O> {
 /// );
 /// ```
 #[inline]
-pub fn block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
+pub const fn block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
     BlockIndent {
         content,
         mode: IndentMode::Block,
@@ -600,7 +603,7 @@ pub fn block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
 /// the indention level for the content by one if the enclosing group doesn't fit on a single line.
 /// Doesn't change the formatting if the enclosing group fits on a single line.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
@@ -654,7 +657,7 @@ pub fn block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
 /// );
 /// ```
 #[inline]
-pub fn soft_block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
+pub const fn soft_block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
     BlockIndent {
         content,
         mode: IndentMode::Soft,
@@ -667,7 +670,7 @@ pub fn soft_block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
 /// Line indents are used to break a single line of code, and therefore only insert a line
 /// break before the content and not after the content.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't
 /// fit on a single line. Otherwise, just inserts a space.
@@ -722,7 +725,7 @@ pub fn soft_block_indent<O>(content: &dyn Format<O>) -> BlockIndent<O> {
 /// );
 /// ```
 #[inline]
-pub fn soft_line_indent_or_space<O>(content: &dyn Format<O>) -> BlockIndent<O> {
+pub const fn soft_line_indent_or_space<O>(content: &dyn Format<O>) -> BlockIndent<O> {
     BlockIndent {
         content,
         mode: IndentMode::SoftLineOrSpace,
@@ -782,7 +785,7 @@ impl<O> Format<O> for BlockIndent<'_, O> {
 /// the configured line width, and thus it must print all its content on multiple lines,
 /// emitting line breaks for all line break kinds.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// `Group` that fits on a single line
 ///
@@ -922,7 +925,7 @@ impl<O> Format<O> for GroupElements<'_, O> {
 /// );
 /// ```
 ///
-/// ## Prettier
+/// # Prettier
 /// Equivalent to Prettier's `break_parent` IR element
 pub const fn expand_parent() -> ExpandParent {
     ExpandParent
@@ -945,7 +948,7 @@ impl<O> Format<O> for ExpandParent {
 ///
 /// If you're looking for a way to only print something if the `Group` fits on a single line see [if_group_fits_on_single_line].
 ///
-/// ## Examples
+/// # Examples
 ///
 /// Omits the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
@@ -1008,7 +1011,7 @@ impl<O> Format<O> for ExpandParent {
 /// );
 /// ```
 #[inline]
-pub fn if_group_breaks<O>(content: &dyn Format<O>) -> IfGroupBreaks<O> {
+pub const fn if_group_breaks<O>(content: &dyn Format<O>) -> IfGroupBreaks<O> {
     IfGroupBreaks {
         content,
         group_id: None,
@@ -1020,7 +1023,7 @@ pub fn if_group_breaks<O>(content: &dyn Format<O>) -> IfGroupBreaks<O> {
 /// is printed in multiline mode. The referred group must appear before this element in the document
 /// but doesn't have to one of its ancestors.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// Prints the trailing comma if the array group doesn't fit. The `group_id` is necessary
 /// because `fill` creates an implicit group around each item and tries to print the item in flat mode.
@@ -1083,7 +1086,7 @@ pub const fn if_group_with_id_breaks<O>(
 ///
 /// See [if_group_breaks] if you're looking for a way to print content only for groups spanning multiple lines.
 ///
-/// ## Examples
+/// # Examples
 ///
 /// Adds the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
@@ -1189,15 +1192,18 @@ impl<O> Format<O> for IfGroupBreaks<'_, O> {
     }
 }
 
+/// Builder to join together a sequence of content.
+/// See [Formatter::join]
 pub struct JoinBuilder<'fmt, 'joiner, 'buf, O> {
-    result: super::FormatResult<()>,
+    result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, O>,
     with: Option<&'joiner dyn Format<O>>,
     has_elements: bool,
 }
 
 impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
-    pub(crate) fn new(fmt: &'fmt mut Formatter<'buf, O>) -> Self {
+    /// Creates a new instance that joins the elements without a separator
+    pub(super) fn new(fmt: &'fmt mut Formatter<'buf, O>) -> Self {
         Self {
             result: Ok(()),
             fmt,
@@ -1206,7 +1212,8 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
         }
     }
 
-    pub(crate) fn with(fmt: &'fmt mut Formatter<'buf, O>, with: &'joiner dyn Format<O>) -> Self {
+    /// Creates a new instance that prints the passed separator between every two entries.
+    pub(super) fn with(fmt: &'fmt mut Formatter<'buf, O>, with: &'joiner dyn Format<O>) -> Self {
         Self {
             result: Ok(()),
             fmt,
@@ -1215,6 +1222,7 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
         }
     }
 
+    /// Adds a new entry to the join output.
     pub fn entry(&mut self, entry: &dyn Format<O>) -> &mut Self {
         self.result = self.result.and_then(|_| {
             if let Some(with) = &self.with {
@@ -1230,6 +1238,7 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
         self
     }
 
+    /// Adds the contents of an iterator of entries to the join output.
     pub fn entries<F, I>(&mut self, entries: I) -> &mut Self
     where
         F: Format<O>,
@@ -1242,23 +1251,24 @@ impl<'fmt, 'joiner, 'buf, O> JoinBuilder<'fmt, 'joiner, 'buf, O> {
         self
     }
 
-    pub fn finish(&mut self) -> super::FormatResult<()> {
+    /// Finishes the output and returns any error encountered.
+    pub fn finish(&mut self) -> FormatResult<()> {
         self.result
     }
 }
 
-pub struct JoinNodesBuilder<'fmt, 'buf, Sep, O> {
-    result: super::FormatResult<()>,
-    separator: Sep,
+/// Builder to join together nodes that ensures that nodes separated by empty lines continue
+/// to be separated by empty lines in the formatted output.
+pub struct JoinNodesBuilder<'fmt, 'buf, 'sep, O> {
+    result: FormatResult<()>,
+    /// The separator to insert between nodes. Either a soft or hard line break
+    separator: &'sep dyn Format<O>,
     fmt: &'fmt mut Formatter<'buf, O>,
     has_elements: bool,
 }
 
-impl<'fmt, 'buf, Sep, O> JoinNodesBuilder<'fmt, 'buf, Sep, O>
-where
-    Sep: Format<O>,
-{
-    pub(super) fn new(separator: Sep, fmt: &'fmt mut Formatter<'buf, O>) -> Self {
+impl<'fmt, 'buf, 'sep, O> JoinNodesBuilder<'fmt, 'buf, 'sep, O> {
+    pub(super) fn new(separator: &'sep dyn Format<O>, fmt: &'fmt mut Formatter<'buf, O>) -> Self {
         Self {
             result: Ok(()),
             separator,
@@ -1267,6 +1277,8 @@ where
         }
     }
 
+    /// Adds a new node with the specified formatted content to the output, respecting any new lines
+    /// that appear before the node in the input source.
     pub fn entry<L: Language>(&mut self, node: &SyntaxNode<L>, content: &dyn Format<O>) {
         self.result = self.result.and_then(|_| {
             let mut buffer = PreambleBuffer::new(
@@ -1292,6 +1304,7 @@ where
         });
     }
 
+    /// Adds an iterator of entries to the output. Each entry is a `(node, content)` tuple.
     pub fn entries<L, F, I>(&mut self, entries: I) -> &mut Self
     where
         L: Language,
@@ -1328,9 +1341,12 @@ pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
     }
 }
 
+/// Builder to fill as many elements as possible on a single line.
 pub struct FillBuilder<'fmt, 'separator, 'buf, O> {
     result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, O>,
+
+    /// The separator to use to join the elements
     separator: &'separator dyn Format<O>,
     items: Vec<FormatElement>,
 }
@@ -1348,6 +1364,7 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
         }
     }
 
+    /// Adds an iterator of entries to the fill output.
     pub fn entries<F, I>(&mut self, entries: I) -> &mut Self
     where
         F: Format<O>,
@@ -1360,6 +1377,7 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
         self
     }
 
+    /// Adds a new entry to the fill output.
     pub fn entry(&mut self, entry: &dyn Format<O>) -> &mut Self {
         self.result = self.result.and_then(|_| {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
@@ -1377,6 +1395,7 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
         self
     }
 
+    /// Finishes the output and returns any error encountered
     pub fn finish(&mut self) -> super::FormatResult<()> {
         self.result.and_then(|_| {
             let mut items = std::mem::take(&mut self.items);
@@ -1392,28 +1411,7 @@ impl<'a, 'separator, 'buf, O> FillBuilder<'a, 'separator, 'buf, O> {
     }
 }
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub enum TrailingSeparator {
-    Allowed,
-    Disallowed,
-    Mandatory,
-}
-
-impl TrailingSeparator {
-    pub fn is_allowed(&self) -> bool {
-        matches!(self, TrailingSeparator::Allowed)
-    }
-    pub fn is_mandatory(&self) -> bool {
-        matches!(self, TrailingSeparator::Mandatory)
-    }
-}
-
-impl Default for TrailingSeparator {
-    fn default() -> Self {
-        TrailingSeparator::Allowed
-    }
-}
-
+/// Utility for formatting some content with an inline lambda function.
 #[derive(Copy, Clone)]
 pub struct FormatWith<O, T>
 where
@@ -1432,6 +1430,41 @@ where
     }
 }
 
+/// Creates an object implementing `Format` that calls the passed closure to perform the formatting.
+///
+/// # Examples
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{SimpleFormatContext, format, write};
+/// use rome_rowan::TextSize;
+///
+/// struct MyFormat {
+///     items: Vec<&'static str>,
+/// }
+///
+/// impl Format<SimpleFormatContext> for MyFormat {
+///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+///         write!(f, [
+///             token("("),
+///             block_indent(&format_with(|f| {
+///                 let separator = space_token();
+///                 let mut join = f.join_with(&separator);
+///
+///                 for item in &self.items {
+///                     join.entry(&format_with(|f| write!(f, [dynamic_token(item, TextSize::default())])));
+///                 }
+///                 join.finish()
+///             })),
+///             token(")")
+///         ])
+///     }
+/// }
+///
+/// let formatted = format!(SimpleFormatContext::default(), [MyFormat { items: vec!["a", "b", "c"]}]).unwrap();
+///
+/// assert_eq!("(\n\ta b c\n)", formatted.print().as_code());
+/// ```
 pub const fn format_with<O, T>(closure: T) -> FormatWith<O, T>
 where
     T: Fn(&mut Formatter<O>) -> FormatResult<()>,
@@ -1442,6 +1475,42 @@ where
     }
 }
 
+/// Creates an inline `Format` object that can only be formatted once.
+///
+/// # Panics
+///
+/// Panics if the object gets formatted more than once.
+///
+/// # Example
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{SimpleFormatContext, format, write, Buffer};
+/// use rome_rowan::TextSize;
+///
+/// struct MyFormat {
+///     items: Vec<&'static str>,
+/// }
+///
+/// impl Format<SimpleFormatContext> for MyFormat {
+///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+///         // Some owned value that you want to format inside of a nested element
+///         let element = FormatElement::Comment(Box::new(FormatElement::Token(Token::Static { text: "test" })));
+///
+///         write!(f, [
+///             token("("),
+///             block_indent(&format_once(|f| {
+///                 f.write_element(element)
+///             })),
+///             token(")")
+///         ])
+///     }
+/// }
+///
+/// let formatted = format!(SimpleFormatContext::default(), [MyFormat { items: vec!["a", "b", "c"]}]).unwrap();
+///
+/// assert_eq!("(\n\ttest\n)", formatted.print().as_code());
+/// ```
 pub const fn format_once<T, O>(closure: T) -> FormatOnce<T, O>
 where
     T: FnOnce(&mut Formatter<O>) -> FormatResult<()>,
@@ -1465,71 +1534,5 @@ where
         let closure = self.closure.take().expect("Tried to format once at least twice. This is not allowed. You may want to use format_with or .memoized instead");
 
         (closure)(f)
-    }
-}
-
-#[derive(Default)]
-pub struct ConcatBuilder {
-    elements: Vec<FormatElement>,
-    size_hint: Option<usize>,
-}
-
-impl ConcatBuilder {
-    #[inline]
-    pub fn new() -> Self {
-        Self {
-            elements: vec![],
-            size_hint: None,
-        }
-    }
-
-    #[inline]
-    pub fn entry(&mut self, element: FormatElement) {
-        if element.is_empty() {
-            return;
-        }
-
-        if self.elements.is_empty() && self.size_hint.is_some() {
-            // SAFETY: Guaranteed by the `is_some` check above
-            let size_hint = self.size_hint.unwrap();
-
-            match element {
-                FormatElement::List(list) => {
-                    self.elements = list.into_vec();
-                    self.elements.reserve(size_hint - 1);
-                }
-                item => {
-                    self.elements.reserve(size_hint);
-                    self.elements.push(item);
-                }
-            }
-        } else {
-            match element {
-                FormatElement::List(list) => self.elements.extend(list.into_vec()),
-                item => self.elements.push(item),
-            }
-        }
-    }
-
-    #[inline]
-    pub fn size_hint(&mut self, hint: (usize, Option<usize>)) {
-        let (lower_bound, upper_bound) = hint;
-
-        if let Some(upper_bound) = upper_bound {
-            debug_assert!(lower_bound <= upper_bound, "Expected lower bound {lower_bound} to be less than or equal to upper bound {upper_bound}");
-            self.size_hint = Some(upper_bound);
-        } else {
-            self.size_hint = Some(lower_bound);
-        }
-    }
-
-    #[inline]
-    pub fn finish(mut self) -> FormatElement {
-        if self.elements.len() == 1 {
-            // Safety: Guaranteed to succeed by the length check above
-            self.elements.pop().unwrap()
-        } else {
-            FormatElement::List(List::new(self.elements))
-        }
     }
 }

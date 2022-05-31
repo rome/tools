@@ -6,9 +6,6 @@
 //! ## Formatting Traits
 //!
 //! * [Format]: Implemented by objects that can be formatted.
-//! * [IntoFormatElement]: The arguments passed to the `formatted[formatter, arg1, arg2]` must implement the.
-//!  [IntoFormatElement] trait. Its main difference to the [Format] trait is that it consumes self rather than borrowing it.
-//!  This module provides [IntoFormatElement] implementations for every object implementing [Format] and [FormatElement].
 //! * [FormatRule]: Rule that knows how to format an object of another type. Necessary in the situation where
 //!  it's necessary to implement [Format] on an object from another crate. This module defines the
 //!  [FormatRefWithRule] and [FormatOwnedWithRule] structs to pass an item with its corresponding rule.
@@ -17,9 +14,10 @@
 //!
 //! ## Formatting Macros
 //!
-//! This trait defines two macros to construct the IR.
-//! * [format_elements]: Allows concatenating multiple [FormatElement]s
-//! * [formatted]: Concatenates a sequence of [FormatElement]s and/or objects implementing [Format].
+//! This crate defines two macros to construct the IR. These are inspired by Rust's `fmt` macros
+//! * [`format!`]: Formats a formatable object
+//! * [`format_args!`]: Concatenates a sequence of Format objects.
+//! * [`write!`]: Writes a sequence of formatable objects into an output buffer.
 
 extern crate core;
 
@@ -37,8 +35,12 @@ pub mod prelude;
 pub mod printed_tokens;
 pub mod printer;
 
-use crate::formatter::{FormatState, Formatter};
+use crate::formatter::Formatter;
+use crate::group_id::UniqueGroupIdBuilder;
 use crate::prelude::syntax_token_cow_slice;
+
+#[cfg(debug_assertions)]
+use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{Buffer, BufferSnapshot, PreambleBuffer, VecBuffer};
@@ -46,15 +48,13 @@ pub use builders::{
     block_indent, comment, empty_element, empty_line, group_elements, group_elements_with_options,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, if_group_with_id_breaks,
     indent, line_suffix, soft_block_indent, soft_line_break, soft_line_break_or_space,
-    soft_line_indent_or_space, space_token, token, ConcatBuilder,
+    soft_line_indent_or_space, space_token, token,
 };
-pub use format_element::{
-    concat_elements, normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS,
-};
+pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxTriviaPieceComments,
-    TextRange, TextSize, TokenAtOffset,
+    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken,
+    SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
 use std::error::Error;
 use std::fmt;
@@ -93,7 +93,7 @@ impl FromStr for IndentStyle {
     }
 }
 
-impl fmt::Display for IndentStyle {
+impl std::fmt::Display for IndentStyle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             IndentStyle::Tab => std::write!(f, "Tab"),
@@ -133,8 +133,8 @@ pub enum ParseLineWidthError {
     TryFromIntError(LineWidthFromIntError),
 }
 
-impl fmt::Display for ParseLineWidthError {
-    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl std::fmt::Display for ParseLineWidthError {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::write!(fmt, "{self:?}")
     }
 }
@@ -332,7 +332,7 @@ pub enum FormatError {
 }
 
 impl fmt::Display for FormatError {
-    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             FormatError::MissingRequiredChild => fmt.write_str("missing required child"),
             FormatError::UnsupportedLanguage => fmt.write_str("language is not supported"),
@@ -573,24 +573,80 @@ where
     }
 }
 
-pub fn write<Context>(
-    output: &mut dyn Buffer<Context = Context>,
-    args: &Arguments<Context>,
-) -> FormatResult<()> {
+/// The `write` function takes a target buffer and an `Arguments` struct that can be precompiled with the `format_args!` macro.
+///
+/// The arguments will be formatted in-order into the output buffer provided.
+///
+/// # Examples
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
+///
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+///
+/// write(&mut buffer, format_args!(token("Hello World"))).unwrap();
+///
+/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+///
+/// assert_eq!("Hello World", formatted.print().as_code())
+/// ```
+///
+/// Please note that using [`write!`] might be preferable. Example:
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
+///
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+///
+/// write!(&mut buffer, [token("Hello World")]).unwrap();
+///
+/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+///
+/// assert_eq!("Hello World", formatted.print().as_code())
+/// ```
+///
+pub fn write<O>(output: &mut dyn Buffer<Context = O>, args: Arguments<O>) -> FormatResult<()> {
     let mut f = Formatter::new(output);
 
     f.write_fmt(args)
 }
 
-/// Creates the formatter IR for the passed in item
-/// Or use `format!` marco instead?
-pub fn format<Context>(context: Context, arguments: &Arguments<Context>) -> FormatResult<Formatted>
+/// The `format` function takes an [`Arguments`] struct and returns the resulting formatting IR.
+///
+/// The [`Arguments`] instance can be created with the [`format_args!`].
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format, format_args};
+///
+/// let formatted = format(SimpleFormatContext::default(), format_args!(token("test"))).unwrap();
+/// assert_eq!("test", formatted.print().as_code());
+/// ```
+///
+/// Please note that using [`format!`] might be preferable. Example:
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format};
+///
+/// let formatted = format!(SimpleFormatContext::default(), [token("test")]).unwrap();
+/// assert_eq!("test", formatted.print().as_code());
+/// ```
+pub fn format<Context>(options: Context, arguments: Arguments<Context>) -> FormatResult<Formatted>
 where
     Context: FormatContext,
 {
-    let print_options = context.as_print_options();
-    let mut state = FormatState::new(context);
-    let mut buffer = VecBuffer::new(&mut state);
+    let print_options = options.as_print_options();
+    let mut context = FormatState::new(options);
+    let mut buffer = VecBuffer::with_capacity(arguments.items().len(), &mut context);
 
     buffer.write_fmt(arguments)?;
 
@@ -988,5 +1044,78 @@ impl<L: Language, O> Format<O> for SyntaxTriviaPieceComments<L> {
                 range.start()
             )]
         )
+    }
+}
+
+/// This structure stores the state that is relevant for the formatting of the whole document.
+///
+/// This structure is different from [`Formatter`] in that the formatting infrastructure
+/// creates a new [`Formatter`] for every [`write`] call, whereas this structure stays alive
+/// for the whole process of formatting a root with [`format`].
+#[derive(Default)]
+pub struct FormatState<O> {
+    options: O,
+    group_id_builder: UniqueGroupIdBuilder,
+    // This is using a RefCell as it only exists in debug mode,
+    // the Formatter is still completely immutable in release builds
+    #[cfg(debug_assertions)]
+    pub printed_tokens: PrintedTokens,
+}
+
+impl<O> fmt::Debug for FormatState<O>
+where
+    O: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.debug_struct("FormatContext")
+            .field("options", &self.options)
+            .finish()
+    }
+}
+
+impl<O> FormatState<O> {
+    /// Creates a new state with the given language specific context
+    pub fn new(options: O) -> Self {
+        Self {
+            options,
+            group_id_builder: Default::default(),
+            #[cfg(debug_assertions)]
+            printed_tokens: Default::default(),
+        }
+    }
+
+    /// Returns the [FormatOptions] specifying how to format the current CST
+    pub fn context(&self) -> &O {
+        &self.options
+    }
+
+    /// Creates a new group id that is unique to this document. The passed debug name is used in the
+    /// [std::fmt::Debug] of the document if this is a debug build.
+    /// The name is unused for production builds and has no meaning on the equality of two group ids.
+    pub fn group_id(&self, debug_name: &'static str) -> GroupId {
+        self.group_id_builder.group_id(debug_name)
+    }
+
+    /// Tracks the given token as formatted
+    #[inline]
+    pub fn track_token<L: Language>(&mut self, #[allow(unused_variables)] token: &SyntaxToken<L>) {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                self.printed_tokens.track_token(token);
+            }
+        }
+    }
+
+    /// Asserts in debug builds that all tokens have been printed.
+    #[inline]
+    pub fn assert_formatted_all_tokens<L: Language>(
+        &self,
+        #[allow(unused_variables)] root: &SyntaxNode<L>,
+    ) {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                self.printed_tokens.assert_all_tracked(root);
+            }
+        }
     }
 }

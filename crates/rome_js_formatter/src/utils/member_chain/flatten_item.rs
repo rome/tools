@@ -160,9 +160,9 @@ impl Debug for FlattenItem {
 impl From<FlattenItem> for FormatElement {
     fn from(flatten_item: FlattenItem) -> Self {
         match flatten_item {
-            FlattenItem::StaticMember(_, formatted) => concat_elements(formatted),
-            FlattenItem::CallExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::ComputedExpression(_, formatted) => concat_elements(formatted),
+            FlattenItem::StaticMember(_, formatted) => FormatElement::from_iter(formatted),
+            FlattenItem::CallExpression(_, formatted) => FormatElement::from_iter(formatted),
+            FlattenItem::ComputedExpression(_, formatted) => FormatElement::from_iter(formatted),
             FlattenItem::Node(_, formatted) => formatted,
         }
     }

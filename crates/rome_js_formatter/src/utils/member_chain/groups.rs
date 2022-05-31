@@ -96,7 +96,9 @@ impl Groups {
     fn into_formatted_groups(self) -> Vec<FormatElement> {
         self.groups
             .into_iter()
-            .map(|group| concat_elements(group.into_iter().map(|flatten_item| flatten_item.into())))
+            .map(|group| {
+                FormatElement::from_iter(group.into_iter().map(|flatten_item| flatten_item.into()))
+            })
             .collect()
     }
 
@@ -127,7 +129,7 @@ impl Groups {
     /// It's up to the printer to decide which one to use.
     pub fn into_format_elements(self) -> FormatElement {
         let formatted_groups = self.into_formatted_groups();
-        concat_elements(formatted_groups)
+        FormatElement::from_iter(formatted_groups)
     }
 
     /// Filters the stack of [FlattenItem] and return only the ones that
@@ -233,7 +235,7 @@ impl HeadGroup {
     }
 
     pub fn into_format_element(self) -> FormatElement {
-        concat_elements(self.items.into_iter().map(FlattenItem::into))
+        FormatElement::from_iter(self.items.into_iter().map(FlattenItem::into))
     }
 
     pub fn expand_group(&mut self, group: Vec<FlattenItem>) {

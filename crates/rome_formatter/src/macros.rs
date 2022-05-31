@@ -1,8 +1,8 @@
-/// TODO consider adding JSX kind of support: `<group>{}</group>
+// TODO document macros
 #[macro_export]
 macro_rules! format_args {
     ($($value:expr),+ $(,)?) => {
-        &$crate::Arguments::new(&[
+        $crate::Arguments::new(&[
             $(
                 $crate::Argument::new(&$value)
             ),+
@@ -34,11 +34,11 @@ macro_rules! write {
 ///
 /// assert_eq!(
 ///     formatted.into_format_element(),
-///     format_elements![
+///     FormatElement::from_iter([
 ///         FormatElement::Token(Token::Static { text: "(" }),
 ///         FormatElement::Token(Token::Static { text: "a" }),
 ///         FormatElement::Token(Token::Static { text: ")" }),
-///     ]
+///     ])
 /// );
 /// ```
 #[macro_export]
@@ -46,80 +46,6 @@ macro_rules! format {
     ($context:expr, [$($arg:expr),+ $(,)?]) => {{
         ($crate::format($context, $crate::format_args!($($arg),+)))
     }}
-}
-
-/// The macro `format_elements` is a convenience macro to
-/// use when writing a list of tokens that should be at the same level
-/// without particular rule.
-///
-/// # Examples
-///
-/// Let's suppose you need to create tokens for the string `"foo": "bar"`,
-/// you would write:
-///
-/// ```rust
-/// use rome_formatter::prelude::*;
-///
-/// let element = format_elements![
-///     FormatElement::Token(Token::Static { text: "foo:" }),
-///     FormatElement::Space,
-///     FormatElement::Token(Token::Static { text: "bar" })
-/// ];
-/// ```
-///
-/// The macro can be also nested, although the macro needs to be decorated with the token you need.
-/// For example, let's try to format following string:
-///
-/// ```no_rust
-/// foo: { bar: lorem }
-/// ```
-/// You would write it like the following:
-///
-/// ```rust
-/// use rome_formatter::{FormatContext, Formatted};
-/// use rome_formatter::prelude::*;
-///
-/// let element = format_elements![
-///   FormatElement::Token(Token::Static { text: "foo:" }),
-///   FormatElement::Space,
-///   FormatElement::Token(Token::Static { text: "{" }),
-///   FormatElement::Space,
-///   FormatElement::Token(Token::Static { text: "bar:" }),
-///   FormatElement::Space,
-///   FormatElement::Token(Token::Static { text: "lorem" }),
-///   FormatElement::Space,
-///   FormatElement::Token(Token::Static { text: "}" }),
-/// ];
-/// assert_eq!(r#"foo: { bar: lorem }"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
-/// ```
-/// Or you can also create single element:
-/// ```
-/// use rome_formatter::{Formatted, FormatContext};
-/// use rome_formatter::prelude::*;
-///
-/// use rome_formatter::prelude::*;
-/// let element = format_elements![FormatElement::Token(Token::Static { text: "single" })];
-/// assert_eq!(r#"single"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
-/// ```
-#[macro_export]
-macro_rules! format_elements {
-
-    // called for things like format_tokens!["hey"]
-    ($element:expr) => {
-        {
-            use $crate::FormatElement;
-            FormatElement::from($element)
-        }
-    };
-
-    ( $( $element:expr ),+ $(,)?) => {{
-        use $crate::{FormatElement, concat_elements};
-        concat_elements([
-            $(
-                     FormatElement::from($element)
-            ),+
-        ])
-    }};
 }
 
 /// Provides multiple different alternatives and the printer picks the first one that fits.

@@ -1,4 +1,3 @@
-use crate::builders::ConcatBuilder;
 use crate::{GroupId, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
@@ -8,22 +7,6 @@ use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
 
 type Content = Box<FormatElement>;
-
-pub fn concat_elements<I>(elements: I) -> FormatElement
-where
-    I: IntoIterator<Item = FormatElement>,
-{
-    let elements = elements.into_iter();
-    let mut builder = ConcatBuilder::new();
-
-    builder.size_hint(elements.size_hint());
-
-    for element in elements {
-        builder.entry(element);
-    }
-
-    builder.finish()
-}
 
 /// Language agnostic IR for formatting source code.
 ///
@@ -583,6 +566,25 @@ impl From<Group> for FormatElement {
 impl From<List> for FormatElement {
     fn from(token: List) -> Self {
         FormatElement::List(token)
+    }
+}
+
+impl FromIterator<FormatElement> for FormatElement {
+    fn from_iter<T: IntoIterator<Item = FormatElement>>(iter: T) -> Self {
+        let iter = iter.into_iter();
+
+        let mut list = Vec::with_capacity(iter.size_hint().0);
+
+        for element in iter {
+            match element {
+                FormatElement::List(append) => {
+                    list.extend(append.content);
+                }
+                element => list.push(element),
+            }
+        }
+
+        FormatElement::from(List::new(list))
     }
 }
 
