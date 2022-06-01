@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectBindingPatternMember;
 impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPatternMember {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyObjectBindingPatternMember,
-        f: &mut Formatter<Self::Context>,
-    ) -> FormatResult<()> {
+    fn format(node: &JsAnyObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
                 node.format().format(f)

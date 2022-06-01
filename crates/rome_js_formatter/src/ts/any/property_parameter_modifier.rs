@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertyParameterModifier;
 impl FormatRule<TsAnyPropertyParameterModifier> for FormatTsAnyPropertyParameterModifier {
     type Context = JsFormatContext;
-    fn format(
-        node: &TsAnyPropertyParameterModifier,
-        f: &mut Formatter<Self::Context>,
-    ) -> FormatResult<()> {
+    fn format(node: &TsAnyPropertyParameterModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyPropertyParameterModifier::TsAccessibilityModifier(node) => {
                 node.format().format(f)

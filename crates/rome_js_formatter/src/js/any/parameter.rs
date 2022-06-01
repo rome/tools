@@ -5,7 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyParameter;
 impl FormatRule<JsAnyParameter> for FormatJsAnyParameter {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyParameter, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    fn format(node: &JsAnyParameter, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyParameter::JsAnyFormalParameter(node) => node.format().format(f),
             JsAnyParameter::JsRestParameter(node) => node.format().format(f),

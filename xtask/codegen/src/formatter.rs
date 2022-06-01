@@ -430,7 +430,7 @@ impl BoilerplateImpls {
                         }
                     }
 
-                    impl IntoFormat<crate::JsFormatOptions> for rome_js_syntax::#node_id {
+                    impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::#node_id {
                         type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, FormatNodeRule<rome_js_syntax::#node_id>>;
 
                         fn into_format(self) -> Self::Format {
@@ -451,7 +451,7 @@ impl BoilerplateImpls {
                         }
                     }
 
-                    impl IntoFormat<crate::JsFormatOptions> for rome_js_syntax::#node_id {
+                    impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::#node_id {
                         type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, #format_id>;
 
                         fn into_format(self) -> Self::Format {

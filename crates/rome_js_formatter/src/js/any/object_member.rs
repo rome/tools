@@ -5,7 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectMember;
 impl FormatRule<JsAnyObjectMember> for FormatJsAnyObjectMember {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyObjectMember, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    fn format(node: &JsAnyObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyObjectMember::JsPropertyObjectMember(node) => node.format().format(f),
             JsAnyObjectMember::JsMethodObjectMember(node) => node.format().format(f),

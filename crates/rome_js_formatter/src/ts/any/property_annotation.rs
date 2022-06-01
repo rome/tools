@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertyAnnotation;
 impl FormatRule<TsAnyPropertyAnnotation> for FormatTsAnyPropertyAnnotation {
     type Context = JsFormatContext;
-    fn format(
-        node: &TsAnyPropertyAnnotation,
-        f: &mut Formatter<Self::Context>,
-    ) -> FormatResult<()> {
+    fn format(node: &TsAnyPropertyAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyPropertyAnnotation::TsTypeAnnotation(node) => node.format().format(f),
             TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(node) => node.format().format(f),

@@ -5,7 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyTupleTypeElement;
 impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyTupleTypeElement, f: &mut Formatter<Self::Context>) -> FormatResult<()> {
+    fn format(node: &TsAnyTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => node.format().format(f),
             TsAnyTupleTypeElement::TsType(node) => node.format().format(f),

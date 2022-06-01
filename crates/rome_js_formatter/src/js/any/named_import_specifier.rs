@@ -5,10 +5,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyNamedImportSpecifier;
 impl FormatRule<JsAnyNamedImportSpecifier> for FormatJsAnyNamedImportSpecifier {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyNamedImportSpecifier,
-        f: &mut Formatter<Self::Context>,
-    ) -> FormatResult<()> {
+    fn format(node: &JsAnyNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(node) => {
                 node.format().format(f)
