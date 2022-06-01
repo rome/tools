@@ -1677,10 +1677,7 @@ impl FormatElement {
             FormatElement::Group(group) => group.content.will_break(),
             FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
-            FormatElement::Fill(fill) => {
-                fill.list.content.iter().any(FormatElement::will_break)
-                    || fill.separator.will_break()
-            }
+            FormatElement::Fill(fill) => fill.list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
             FormatElement::Comment(content) => content.will_break(),
