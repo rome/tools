@@ -2,10 +2,11 @@ use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::ConcatBuilder;
 use rome_js_syntax::{
-    JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxKind, JsSyntaxNode,
-    JsSyntaxToken,
+    JsAnyExpression, JsAnyLiteralExpression, JsAnyName, JsStaticMemberExpression,
+    JsStaticMemberExpressionFields, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::AstNode;
+use std::ops::Deref;
 
 impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMemberExpression> {
     fn format_fields(
@@ -15,7 +16,7 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
         let mut current = node.clone();
 
         while let Some(static_member_expression) =
-            JsStaticMemberExpression::cast(current.object()?.syntax().clone())
+            JsStaticMemberExpression::cast(current.object()?.into_syntax())
         {
             current = static_member_expression;
         }
@@ -29,14 +30,16 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
         let mut formatted = ConcatBuilder::default();
 
         let operator_token = operator_token?;
-        let formatted_object = format_member(object?.syntax().clone(), &operator_token, formatter);
+        let formatted_object =
+            FormatMemberStaticExpression::from_expression(object?, &operator_token)
+                .format(formatter)?;
 
         formatted.entry(formatted![
             formatter,
             [formatted_object, operator_token.format()]
         ]?);
 
-        let mut previous_member = member;
+        let mut previous_member = member?;
 
         while let Some(parent_static_member_expression) = current
             .syntax()
@@ -51,55 +54,100 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
 
             let operator_token = operator_token?;
 
-            let formatted_member = format_member(
-                previous_member?.syntax().clone(),
-                &operator_token,
-                formatter,
-            )?;
-
             formatted.entry(group_elements(formatted![
                 formatter,
-                [formatted_member, operator_token.format(),]
+                [
+                    FormatMemberStaticExpression::from_name(previous_member, &operator_token),
+                    operator_token.format(),
+                ]
             ]?));
 
-            previous_member = member;
+            previous_member = member?;
             current = parent_static_member_expression;
         }
 
-        formatted.entry(formatted![formatter, [previous_member.format()?,]]?);
+        formatted.entry(formatted![formatter, [previous_member.format(),]]?);
         Ok(group_elements(formatted.finish()))
     }
 }
 
-fn format_member(
-    member: JsSyntaxNode,
-    operator: &JsSyntaxToken,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement> {
-    let formatted_member = formatted![formatter, [member.format()]]?;
+enum FormatMemberStaticExpression<'t> {
+    JsAnyName(JsAnyName, &'t JsSyntaxToken),
+    JsAnyExpression(JsAnyExpression, &'t JsSyntaxToken),
+}
 
-    let is_object_number_literal = member.kind() == JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION;
+impl<'t> FormatMemberStaticExpression<'t> {
+    fn from_expression(node: JsAnyExpression, operator: &'t JsSyntaxToken) -> Self {
+        Self::JsAnyExpression(node, operator)
+    }
+    fn from_name(node: JsAnyName, operator: &'t JsSyntaxToken) -> Self {
+        Self::JsAnyName(node, operator)
+    }
 
-    let object_has_trailing_trivia = member
-        .last_trailing_trivia()
-        .map_or(false, |trivia| trivia.pieces().len() > 0);
+    fn is_number_literal_expression(&self) -> bool {
+        matches!(
+            self,
+            FormatMemberStaticExpression::JsAnyExpression(
+                JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+                ),
+                ..
+            )
+        )
+    }
 
-    let operator_has_leading_trivia = operator.leading_trivia().pieces().len() > 0;
+    fn syntax(&self) -> &JsSyntaxNode {
+        match self {
+            FormatMemberStaticExpression::JsAnyName(node, _) => node.syntax(),
+            FormatMemberStaticExpression::JsAnyExpression(node, _) => node.syntax(),
+        }
+    }
 
-    if is_object_number_literal && (object_has_trailing_trivia || operator_has_leading_trivia) {
-        let (object_leading, object_content, object_trailing) = formatted_member.split_trivia();
+    fn operator(&self) -> &JsSyntaxToken {
+        match self {
+            FormatMemberStaticExpression::JsAnyName(_, operator) => operator,
+            FormatMemberStaticExpression::JsAnyExpression(_, operator) => operator,
+        }
+    }
+}
 
-        Ok(formatted![
-            formatter,
-            [
-                object_leading,
-                token("("),
-                object_content,
-                token(")"),
-                object_trailing,
-            ]
-        ]?)
-    } else {
-        Ok(formatted_member)
+impl<'t> Deref for FormatMemberStaticExpression<'t> {
+    type Target = JsSyntaxNode;
+
+    fn deref(&self) -> &Self::Target {
+        self.syntax()
+    }
+}
+
+impl<'t> Format for FormatMemberStaticExpression<'t> {
+    type Context = JsFormatContext;
+
+    fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+        let formatted_member = formatted![formatter, [self.syntax().format()]]?;
+
+        let is_member_number_literal = self.is_number_literal_expression();
+
+        let object_has_trailing_trivia = self
+            .last_trailing_trivia()
+            .map_or(false, |trivia| trivia.pieces().len() > 0);
+
+        let operator_has_leading_trivia = self.operator().leading_trivia().pieces().len() > 0;
+
+        if is_member_number_literal && (object_has_trailing_trivia || operator_has_leading_trivia) {
+            let (object_leading, object_content, object_trailing) = formatted_member.split_trivia();
+
+            Ok(formatted![
+                formatter,
+                [
+                    object_leading,
+                    token("("),
+                    object_content,
+                    token(")"),
+                    object_trailing,
+                ]
+            ]?)
+        } else {
+            Ok(formatted_member)
+        }
     }
 }
