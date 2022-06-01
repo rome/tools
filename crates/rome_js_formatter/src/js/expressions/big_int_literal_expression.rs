@@ -19,7 +19,7 @@ impl FormatNodeFields<JsBigIntLiteralExpression> for FormatNodeRule<JsBigIntLite
             Cow::Owned(lowercase) => {
                 write!(
                     f,
-                    [f.format_replaced(
+                    [format_replaced(
                         &value_token,
                         &dynamic_token(&lowercase, value_token.text_trimmed_range().start())
                     )]

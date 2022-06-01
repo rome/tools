@@ -14,7 +14,7 @@ impl FormatNodeFields<TsTypeParameters> for FormatNodeRule<TsTypeParameters> {
         write!(
             f,
             [
-                f.delimited(&l_angle_token?, &items.format(), &r_angle_token?,)
+                format_delimited(&l_angle_token?, &items.format(), &r_angle_token?,)
                     .soft_block_indent()
             ]
         )

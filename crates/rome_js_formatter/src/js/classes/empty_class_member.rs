@@ -9,6 +9,6 @@ impl FormatNodeFields<JsEmptyClassMember> for FormatNodeRule<JsEmptyClassMember>
     fn format_fields(node: &JsEmptyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsEmptyClassMemberFields { semicolon_token } = node.as_fields();
 
-        write!(f, [f.format_replaced(&semicolon_token?, &empty_element())])
+        write!(f, [format_replaced(&semicolon_token?, &empty_element())])
     }
 }

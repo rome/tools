@@ -15,7 +15,7 @@ impl FormatNodeFields<JsConstructorParameters> for FormatNodeRule<JsConstructorP
         write!(
             f,
             [
-                f.delimited(&l_paren_token?, &parameters.format(), &r_paren_token?,)
+                format_delimited(&l_paren_token?, &parameters.format(), &r_paren_token?,)
                     .soft_block_indent()
             ]
         )

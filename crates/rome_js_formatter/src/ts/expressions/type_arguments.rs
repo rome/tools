@@ -13,7 +13,7 @@ impl FormatNodeFields<TsTypeArguments> for FormatNodeRule<TsTypeArguments> {
 
         write!(
             f,
-            [f.delimited(
+            [format_delimited(
                 &l_angle_token?,
                 &ts_type_argument_list.format(),
                 &r_angle_token?,

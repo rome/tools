@@ -16,7 +16,7 @@ impl FormatNodeFields<TsObjectType> for FormatNodeRule<TsObjectType> {
             write!(
                 f,
                 [
-                    f.delimited(&l_curly_token?, &members.format(), &r_curly_token?)
+                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?)
                         .block_indent()
                 ]
             )
@@ -24,7 +24,7 @@ impl FormatNodeFields<TsObjectType> for FormatNodeRule<TsObjectType> {
             write!(
                 f,
                 [
-                    f.delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
+                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
                         .soft_block_spaces()
                 ]
             )

@@ -72,7 +72,7 @@ impl Format<JsFormatContext> for FormatLiteralStringToken<'_> {
 
         write!(
             f,
-            [f.format_replaced(
+            [format_replaced(
                 token,
                 &syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
             )]

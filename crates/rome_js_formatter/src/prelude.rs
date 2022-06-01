@@ -3,7 +3,12 @@
 
 pub(crate) use crate::{
     AsFormat as _, FormatNodeRule, FormattedIterExt, JsFormatContext, JsFormatter,
-    JsFormatterExt as _,
 };
 pub use rome_formatter::prelude::*;
 pub use rome_rowan::{AstNode as _, AstNodeList as _, AstSeparatedList as _};
+
+pub use crate::builders::{
+    format_delimited, format_leading_trivia, format_or_verbatim, format_replaced,
+    format_suppressed_node, format_trailing_trivia, format_trimmed_token, format_unknown_node,
+    format_verbatim_node,
+};

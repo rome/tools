@@ -15,7 +15,7 @@ impl FormatNodeFields<JsArrayBindingPattern> for FormatNodeRule<JsArrayBindingPa
         write!(
             f,
             [
-                f.delimited(&l_brack_token?, &elements.format(), &r_brack_token?,)
+                format_delimited(&l_brack_token?, &elements.format(), &r_brack_token?,)
                     .soft_block_indent()
             ]
         )

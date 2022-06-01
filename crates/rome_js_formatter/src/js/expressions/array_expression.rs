@@ -21,8 +21,10 @@ impl FormatNodeFields<JsArrayExpression> for FormatNodeRule<JsArrayExpression> {
 
         write!(
             f,
-            [f.delimited(&l_brack_token?, &elements, &r_brack_token?)
-                .soft_block_indent_with_group_id(Some(group_id))]
+            [
+                format_delimited(&l_brack_token?, &elements, &r_brack_token?)
+                    .soft_block_indent_with_group_id(Some(group_id))
+            ]
         )
     }
 }

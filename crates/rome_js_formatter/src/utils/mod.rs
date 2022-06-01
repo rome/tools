@@ -43,7 +43,7 @@ impl<'a> FormatTypeMemberSeparator<'a> {
 impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
     fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(separator) = self.token {
-            write!(f, [f.format_replaced(separator, &empty_element())])
+            write!(f, [format_replaced(separator, &empty_element())])
         } else {
             Ok(())
         }
@@ -194,7 +194,7 @@ pub(crate) fn format_template_chunk(chunk: JsSyntaxToken, f: &mut JsFormatter) -
 
     write!(
         f,
-        [f.format_replaced(
+        [format_replaced(
             &chunk,
             &syntax_token_cow_slice(
                 normalize_newlines(chunk.text_trimmed(), ['\r']),
@@ -249,7 +249,7 @@ impl Format<JsFormatContext> for TemplateElement {
         } else {
             write!(
                 f,
-                [f.delimited(
+                [format_delimited(
                     &self.dollar_curly_token()?,
                     &content,
                     &self.r_curly_token()?

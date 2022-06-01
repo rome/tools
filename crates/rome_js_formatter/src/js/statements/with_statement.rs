@@ -21,7 +21,7 @@ impl FormatNodeFields<JsWithStatement> for FormatNodeRule<JsWithStatement> {
             [
                 with_token.format(),
                 space_token(),
-                f.delimited(&l_paren_token?, &object.format(), &r_paren_token?,)
+                format_delimited(&l_paren_token?, &object.format(), &r_paren_token?,)
                     .soft_block_indent(),
                 FormatBodyStatement::new(&body?)
             ]

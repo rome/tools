@@ -15,7 +15,7 @@ impl FormatNodeFields<JsCatchDeclaration> for FormatNodeRule<JsCatchDeclaration>
 
         write!(
             f,
-            [f.delimited(
+            [format_delimited(
                 &l_paren_token?,
                 &format_args![binding.format(), type_annotation.format()],
                 &r_paren_token?,

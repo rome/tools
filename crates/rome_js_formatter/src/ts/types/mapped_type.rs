@@ -23,7 +23,7 @@ impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
 
         write!(
             f,
-            [f.delimited(
+            [format_delimited(
                 &l_curly_token?,
                 &FormatWithSemicolon::new(
                     &format_args!(

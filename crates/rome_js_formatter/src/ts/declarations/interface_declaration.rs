@@ -34,7 +34,7 @@ impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDecl
         write!(
             f,
             [
-                f.delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
+                format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
                     .block_indent()
             ]
         )

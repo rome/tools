@@ -46,8 +46,7 @@ impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
 
         write!(
             f,
-            [f.delimited(&l_curly_token?, &members, &r_curly_token?,)
-                .soft_block_spaces()]
+            [format_delimited(&l_curly_token?, &members, &r_curly_token?,).soft_block_spaces()]
         )
     }
 }

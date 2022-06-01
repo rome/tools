@@ -57,8 +57,7 @@ fn format_if_element(
         [
             if_token.format(),
             space_token(),
-            f.delimited(&l_paren_token?, &test.format(), &r_paren_token?,)
-                .soft_block_indent(),
+            format_delimited(&l_paren_token?, &test.format(), &r_paren_token?,).soft_block_indent(),
         ]
     ]?;
 

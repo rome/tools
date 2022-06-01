@@ -16,7 +16,10 @@ impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
 
         write!(
             f,
-            [f.format_replaced(&token, &syntax_token_cow_slice(new_text, &token, start))]
+            [format_replaced(
+                &token,
+                &syntax_token_cow_slice(new_text, &token, start)
+            )]
         )
     }
 }

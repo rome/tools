@@ -1,4 +1,3 @@
-use crate::formatter::FormatTrimmedToken;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write, Buffer, VecBuffer};
@@ -22,10 +21,10 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
                     // group does not break
                     write!(
                         f,
-                        [f.format_replaced(
+                        [format_replaced(
                             &token,
                             &if_group_breaks(format_args!(
-                                FormatTrimmedToken::new(&token),
+                                format_trimmed_token(&token),
                                 space_token()
                             ))
                         )]

@@ -45,7 +45,7 @@ impl FormatNodeFields<JsForStatement> for FormatNodeRule<JsForStatement> {
                 [
                     for_token.format(),
                     space_token(),
-                    f.delimited(l_paren_token.as_ref()?, &condition, r_paren_token.as_ref()?,)
+                    format_delimited(l_paren_token.as_ref()?, &condition, r_paren_token.as_ref()?,)
                         .soft_block_indent(),
                 ]
             )?;

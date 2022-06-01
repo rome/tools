@@ -1,6 +1,7 @@
 use crate::generated::FormatJsAnyClass;
 use rome_formatter::write;
 
+use crate::builders::format_delimited;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyClass;
 use rome_rowan::AstNode;
@@ -48,7 +49,7 @@ impl FormatRule<JsAnyClass> for FormatJsAnyClass {
             f,
             [
                 space_token(),
-                f.delimited(&node.l_curly_token()?, &members, &node.r_curly_token()?)
+                format_delimited(&node.l_curly_token()?, &members, &node.r_curly_token()?)
                     .block_indent()
             ]
         ]

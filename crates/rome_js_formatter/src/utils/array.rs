@@ -36,7 +36,7 @@ where
                 if is_disallow {
                     // Trailing separators are disallowed, replace it with an empty element
                     if let Some(separator) = element.trailing_separator()? {
-                        write!(f, [f.format_replaced(separator, &empty_element())])?;
+                        write!(f, [format_replaced(separator, &empty_element())])?;
                     }
                 } else if is_force || index != last_index {
                     // In forced separator mode or if this element is not the last in the list, print the separator
@@ -47,7 +47,7 @@ where
                 } else if let Some(separator) = element.trailing_separator()? {
                     write!(
                         f,
-                        [f.format_replaced(separator, &if_group_breaks(token(",")))]
+                        [format_replaced(separator, &if_group_breaks(token(",")))]
                     )?;
                 } else {
                     write!(f, [if_group_breaks(token(","))])?;

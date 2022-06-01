@@ -23,7 +23,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
 
         if is_simple_parenthesized_expression(node)? {
             if parenthesis_can_be_omitted {
-                write!(f, [f.format_replaced(&l_paren_token?, &empty_element())])?;
+                write!(f, [format_replaced(&l_paren_token?, &empty_element())])?;
             } else {
                 write![f, [l_paren_token.format()]]?;
             };
@@ -31,7 +31,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
             write![f, [expression.format(),]]?;
 
             if parenthesis_can_be_omitted {
-                write!(f, [f.format_replaced(&r_paren_token?, &empty_element())])?;
+                write!(f, [format_replaced(&r_paren_token?, &empty_element())])?;
             } else {
                 write![f, [r_paren_token.format()]]?;
             }
@@ -40,9 +40,9 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
             write![
                 f,
                 [
-                    f.format_replaced(&l_paren_token?, &empty_element()),
+                    format_replaced(&l_paren_token?, &empty_element()),
                     group_elements(expression.format()),
-                    f.format_replaced(&r_paren_token?, &empty_element()),
+                    format_replaced(&r_paren_token?, &empty_element()),
                 ]
             ]?;
         }
@@ -78,7 +78,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
             write!(
                 f,
                 [
-                    f.delimited(&l_paren_token?, &expression.format(), &r_paren_token?,)
+                    format_delimited(&l_paren_token?, &expression.format(), &r_paren_token?,)
                         .soft_block_indent()
                 ]
             )?;

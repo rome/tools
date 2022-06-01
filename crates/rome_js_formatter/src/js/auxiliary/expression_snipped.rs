@@ -15,7 +15,7 @@ impl FormatNodeFields<JsExpressionSnipped> for FormatNodeRule<JsExpressionSnippe
             f,
             [
                 expression.format(),
-                f.format_replaced(&eof_token?, &empty_element()),
+                format_replaced(&eof_token?, &empty_element()),
             ]
         ]
     }

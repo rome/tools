@@ -8,11 +8,7 @@ pub mod prelude;
 mod ts;
 pub mod utils;
 
-use crate::formatter::{suppressed_node, FormatTrimmedToken};
 use crate::utils::has_formatter_suppressions;
-pub(crate) use formatter::{
-    format_leading_trivia, format_trailing_trivia, JsFormatter, JsFormatterExt,
-};
 use rome_formatter::prelude::*;
 use rome_formatter::write;
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
@@ -23,10 +19,16 @@ use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
+use crate::builders::{
+    format_leading_trivia, format_or_verbatim, format_suppressed_node, format_trailing_trivia,
+    format_trimmed_token, TriviaPrintMode,
+};
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
+
+pub(crate) type JsFormatter<'buf> = Formatter<'buf, JsFormatContext>;
 
 // Per Crate
 
@@ -183,7 +185,7 @@ where
     fn format(node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
         if has_formatter_suppressions(syntax) {
-            write!(f, [suppressed_node(syntax)])?;
+            write!(f, [format_suppressed_node(syntax)])?;
         } else {
             Self::format_fields(node, f)?;
         };
@@ -212,8 +214,8 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
         write!(
             f,
             [
-                format_leading_trivia(token, formatter::TriviaPrintMode::Full),
-                FormatTrimmedToken::new(token),
+                format_leading_trivia(token, TriviaPrintMode::Full),
+                format_trimmed_token(token),
                 format_trailing_trivia(token),
             ]
         )
@@ -473,6 +475,7 @@ function() {
 mod check_reformat;
 #[rustfmt::skip]
 mod generated;
+pub mod builders;
 pub mod context;
 
 #[cfg(test)]

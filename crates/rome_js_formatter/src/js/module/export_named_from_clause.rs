@@ -28,7 +28,7 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
             if has_leading_newline(specifiers.syntax()) {
                 write!(
                     f,
-                    [f.delimited(
+                    [format_delimited(
                         l_curly_token.as_ref()?,
                         &specifiers.format(),
                         r_curly_token.as_ref()?,
@@ -38,7 +38,7 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
             } else {
                 write!(
                     f,
-                    [f.delimited(
+                    [format_delimited(
                         l_curly_token.as_ref()?,
                         &specifiers.format(),
                         r_curly_token.as_ref()?,

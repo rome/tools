@@ -1,4 +1,3 @@
-use crate::formatter::FormatNodeExtension;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::write;
@@ -25,7 +24,7 @@ impl FormatNodeFields<JsStaticInitializationBlockClassMember>
             let mut join = f.join_nodes_with_hardline();
 
             for stmt in &statements {
-                join.entry(stmt.syntax(), &stmt.format_or_verbatim());
+                join.entry(stmt.syntax(), &format_or_verbatim(&stmt));
             }
 
             join.finish()
@@ -34,7 +33,7 @@ impl FormatNodeFields<JsStaticInitializationBlockClassMember>
         write!(
             f,
             [
-                f.delimited(&l_curly_token?, &format_statements, &r_curly_token?)
+                format_delimited(&l_curly_token?, &format_statements, &r_curly_token?)
                     .block_indent()
             ]
         )

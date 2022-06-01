@@ -15,7 +15,7 @@ impl FormatNodeFields<JsNamedImportSpecifiers> for FormatNodeRule<JsNamedImportS
         write!(
             f,
             [
-                f.delimited(&l_curly_token?, &specifiers.format(), &r_curly_token?,)
+                format_delimited(&l_curly_token?, &specifiers.format(), &r_curly_token?,)
                     .soft_block_spaces()
             ]
         )

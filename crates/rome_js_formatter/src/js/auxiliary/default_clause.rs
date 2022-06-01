@@ -1,6 +1,5 @@
-use crate::formatter::FormatNodeExtension;
 use crate::prelude::*;
-use crate::FormatNodeFields;
+use crate::{format_or_verbatim, FormatNodeFields};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
@@ -28,7 +27,7 @@ impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
             let mut join = f.join_nodes_with_hardline();
 
             for stmt in &consequent {
-                join.entry(stmt.syntax(), &stmt.format_or_verbatim());
+                join.entry(stmt.syntax(), &format_or_verbatim(&stmt));
             }
             join.finish()
         });

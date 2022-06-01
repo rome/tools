@@ -19,7 +19,7 @@ impl FormatNodeFields<JsObjectExpression> for FormatNodeRule<JsObjectExpression>
             write!(
                 f,
                 [
-                    f.delimited(&l_curly_token?, &members.format(), &r_curly_token?)
+                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?)
                         .soft_block_indent()
                 ]
             )
@@ -27,7 +27,7 @@ impl FormatNodeFields<JsObjectExpression> for FormatNodeRule<JsObjectExpression>
             write!(
                 f,
                 [
-                    f.delimited(&l_curly_token?, &members.format(), &r_curly_token?)
+                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?)
                         .block_indent()
                 ]
             )
@@ -35,7 +35,7 @@ impl FormatNodeFields<JsObjectExpression> for FormatNodeRule<JsObjectExpression>
             write!(
                 f,
                 [
-                    f.delimited(&l_curly_token?, &members.format(), &r_curly_token?)
+                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?)
                         .soft_block_spaces()
                 ]
             )

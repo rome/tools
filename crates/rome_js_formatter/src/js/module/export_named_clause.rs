@@ -23,7 +23,7 @@ impl FormatNodeFields<JsExportNamedClause> for FormatNodeRule<JsExportNamedClaus
 
             write!(
                 f,
-                [f.delimited(
+                [format_delimited(
                     l_curly_token.as_ref()?,
                     &specifiers.format(),
                     r_curly_token.as_ref()?
