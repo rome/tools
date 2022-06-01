@@ -14,13 +14,20 @@ pub enum SemanticEvent {
     /// - Variable Declarations
     /// - Import bindings
     /// - Functions parameters
-    DeclarationFound { range: TextRange },
+    DeclarationFound {
+        range: TextRange,
+    },
+
+    ScopeStarted {
+        range: TextRange,
+    },
 }
 
 impl SemanticEvent {
     pub fn range(&self) -> &TextRange {
         match self {
             SemanticEvent::DeclarationFound { range } => range,
+            SemanticEvent::ScopeStarted { range } => range,
         }
     }
 
@@ -81,10 +88,26 @@ impl SemanticEventExtractor {
     pub fn extract_from(&mut self, node: &JsSyntaxNode) {
         use rome_js_syntax::JsSyntaxKind::*;
         use SemanticEvent::*;
-        if let JS_IDENTIFIER_BINDING = node.kind() {
-            self.stash.push_back(DeclarationFound {
+
+        match node.kind() {
+            JS_IDENTIFIER_BINDING => self.stash.push_back(DeclarationFound {
                 range: node.text_range(),
-            })
+            }),
+
+            JS_BLOCK_STATEMENT
+            | JS_FUNCTION_BODY
+            | JS_FOR_OF_STATEMENT
+            | JS_FOR_IN_STATEMENT
+            | JS_ARROW_FUNCTION_EXPRESSION
+            | JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_GETTER_CLASS_MEMBER
+            | JS_SETTER_CLASS_MEMBER
+            | JS_CATCH_CLAUSE
+            | JS_FINALLY_CLAUSE => self.stash.push_back(ScopeStarted {
+                range: node.text_range(),
+            }),
+
+            _ => {}
         }
     }
 
