@@ -1,6 +1,5 @@
 use crate::prelude::*;
-
-use crate::utils::format_member_name;
+use crate::utils::FormatMemberName;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsMethodClassMember;
 use rome_js_syntax::JsMethodClassMemberFields;
@@ -31,7 +30,7 @@ impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMembe
                     .format()
                     .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
                 star_token.format(),
-                format_member_name(name?, formatter),
+                FormatMemberName::from(name?).format(formatter),
                 question_mark_token.format(),
                 type_parameters.format(),
                 parameters.format(),

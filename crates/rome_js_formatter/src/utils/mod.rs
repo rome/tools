@@ -403,60 +403,61 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
 ///
 /// Once merged, the enum is used to get specific members (the literal ones) and elide
 /// the quotes from them, when the algorithm sees fit
-pub(crate) enum MemberName {
+pub(crate) enum FormatMemberName {
     Object(JsAnyObjectMemberName),
     Class(JsAnyClassMemberName),
     Literal(JsLiteralMemberName),
 }
 
-impl From<JsAnyClassMemberName> for MemberName {
+impl From<JsAnyClassMemberName> for FormatMemberName {
     fn from(node: JsAnyClassMemberName) -> Self {
         Self::Class(node)
     }
 }
 
-impl From<JsAnyObjectMemberName> for MemberName {
+impl From<JsAnyObjectMemberName> for FormatMemberName {
     fn from(node: JsAnyObjectMemberName) -> Self {
         Self::Object(node)
     }
 }
 
-impl From<JsLiteralMemberName> for MemberName {
+impl From<JsLiteralMemberName> for FormatMemberName {
     fn from(literal: JsLiteralMemberName) -> Self {
         Self::Literal(literal)
     }
 }
 
-/// Function used by the formatter, where we pass a complaint member and it returns a [FormatElement[
-/// where the text has its quotes removed.
-pub(crate) fn format_member_name<Member: Into<MemberName>>(
-    member_name: Member,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement> {
-    let name = match member_name.into() {
-        MemberName::Object(object) => match object {
-            JsAnyObjectMemberName::JsComputedMemberName(name) => {
-                formatted![formatter, [name.format()]]?
-            }
-            JsAnyObjectMemberName::JsLiteralMemberName(name) => {
-                FormatLiteralStringToken::from_parent_member(&name.value()?).format(formatter)?
-            }
-        },
-        MemberName::Class(class) => match class {
-            JsAnyClassMemberName::JsComputedMemberName(node) => {
-                formatted![formatter, [node.format()]]?
-            }
-            JsAnyClassMemberName::JsLiteralMemberName(node) => {
-                FormatLiteralStringToken::from_parent_member(&node.value()?).format(formatter)?
-            }
-            JsAnyClassMemberName::JsPrivateClassMemberName(node) => {
-                formatted![formatter, [node.format()]]?
-            }
-        },
-        MemberName::Literal(literal) => {
-            FormatLiteralStringToken::from_parent_member(&literal.value()?).format(formatter)?
-        }
-    };
+impl Format for FormatMemberName {
+    type Context = JsFormatContext;
 
-    Ok(name)
+    fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+        let name = match self {
+            FormatMemberName::Object(object) => match object {
+                JsAnyObjectMemberName::JsComputedMemberName(name) => {
+                    formatted![formatter, [name.format()]]?
+                }
+                JsAnyObjectMemberName::JsLiteralMemberName(name) => {
+                    FormatLiteralStringToken::from_parent_member(&name.value()?)
+                        .format(formatter)?
+                }
+            },
+            FormatMemberName::Class(class) => match class {
+                JsAnyClassMemberName::JsComputedMemberName(node) => {
+                    formatted![formatter, [node.format()]]?
+                }
+                JsAnyClassMemberName::JsLiteralMemberName(node) => {
+                    FormatLiteralStringToken::from_parent_member(&node.value()?)
+                        .format(formatter)?
+                }
+                JsAnyClassMemberName::JsPrivateClassMemberName(node) => {
+                    formatted![formatter, [node.format()]]?
+                }
+            },
+            FormatMemberName::Literal(literal) => {
+                FormatLiteralStringToken::from_parent_member(&literal.value()?).format(formatter)?
+            }
+        };
+
+        Ok(name)
+    }
 }
