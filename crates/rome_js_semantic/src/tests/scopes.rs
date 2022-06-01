@@ -39,6 +39,19 @@ pub fn ok_scope_blocks() {
 /// ```js
 /// function f() {/*START SCOPE1*/ }
 /// ```
+///
+/// /// #### Scope End Assertion
+///
+/// Test if the attached token ends a scope.  
+/// Pattern: ```/*END <LABEL>*/```
+///
+/// Every scope end assertion will be tested if it matches a [SemanticEvent::ScopeEnded].
+/// This assertion also tests if the event and the assertion start scope matches.
+///
+/// Example:
+/// ```js
+/// function f() {/*START SCOPE1*/ }/*END SCOPE1*/
+/// ```
 fn assert(code: &str) {
     let r = rome_js_parser::parse(code, 0, SourceType::js_module());
 
