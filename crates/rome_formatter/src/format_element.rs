@@ -269,14 +269,14 @@ impl BestFitting {
     /// ## Safety
     /// The slice must contain at least two variants.
     #[doc(hidden)]
-    pub unsafe fn from_slice_unchecked(variants: &[FormatElement]) -> Self {
+    pub(crate) unsafe fn from_vec_unchecked(variants: Vec<FormatElement>) -> Self {
         debug_assert!(
             variants.len() >= 2,
             "Requires at least the least expanded and most expanded variants"
         );
 
         Self {
-            variants: Vec::from(variants).into_boxed_slice(),
+            variants: variants.into_boxed_slice(),
         }
     }
 

@@ -10,7 +10,7 @@ use std::marker::PhantomData;
 /// However, it doesn't store the pointer to `dyn Format`'s vtable, instead it statically resolves the function
 /// pointer of `Format::format` and stores it in `formatter`.
 #[derive(Copy, Clone)]
-pub struct Argument<'fmt, O> {
+pub struct Argument<'fmt, Context> {
     /// The value to format stored as a raw pointer where `lifetime` stores the value's lifetime.
     value: *const c_void,
 
@@ -18,15 +18,15 @@ pub struct Argument<'fmt, O> {
     lifetime: PhantomData<&'fmt ()>,
 
     /// The function pointer to `value`'s `Format::format` method
-    formatter: fn(*const c_void, &mut Formatter<'_, O>) -> FormatResult<()>,
+    formatter: fn(*const c_void, &mut Formatter<'_, Context>) -> FormatResult<()>,
 }
 
-impl<'fmt, O> Argument<'fmt, O> {
+impl<'fmt, Context> Argument<'fmt, Context> {
     /// Called by the [rome_formatter::format_args] macro. Creates a mono-morphed value for formatting
     /// an object.
     #[doc(hidden)]
     #[inline]
-    pub fn new<F: Format<O>>(value: &'fmt F) -> Self {
+    pub fn new<F: Format<Context>>(value: &'fmt F) -> Self {
         fn formatter<F: Format<O>, O>(
             ptr: *const c_void,
             fmt: &mut Formatter<O>,
@@ -38,14 +38,16 @@ impl<'fmt, O> Argument<'fmt, O> {
         Self {
             value: value as *const F as *const c_void,
             lifetime: PhantomData,
-            formatter: formatter::<F, O>,
+            formatter: formatter::<F, Context>,
         }
     }
+}
 
+impl<Context> Format<Context> for Argument<'_, Context> {
     /// Formats the value stored by this argument using the given formatter.
     #[inline]
-    pub(crate) fn format(&self, formatter: &mut Formatter<O>) -> super::FormatResult<()> {
-        (self.formatter)(self.value, formatter)
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        (self.formatter)(self.value, f)
     }
 }
 
@@ -66,33 +68,33 @@ impl<'fmt, O> Argument<'fmt, O> {
 ///
 /// assert_eq!("a b", formatted.print().as_code());
 /// ```
-pub struct Arguments<'fmt, O>(pub &'fmt [Argument<'fmt, O>]);
+pub struct Arguments<'fmt, Context>(pub &'fmt [Argument<'fmt, Context>]);
 
-impl<'fmt, O> Arguments<'fmt, O> {
+impl<'fmt, Context> Arguments<'fmt, Context> {
     #[doc(hidden)]
     #[inline]
-    pub fn new(arguments: &'fmt [Argument<'fmt, O>]) -> Self {
+    pub fn new(arguments: &'fmt [Argument<'fmt, Context>]) -> Self {
         Self(arguments)
     }
 
     /// Returns the arguments
     #[inline]
-    pub(super) fn items(&self) -> &'fmt [Argument<'fmt, O>] {
+    pub(super) fn items(&self) -> &'fmt [Argument<'fmt, Context>] {
         self.0
     }
 }
 
-impl<O> Copy for Arguments<'_, O> {}
+impl<Context> Copy for Arguments<'_, Context> {}
 
-impl<O> Clone for Arguments<'_, O> {
+impl<Context> Clone for Arguments<'_, Context> {
     fn clone(&self) -> Self {
         Self(self.0)
     }
 }
 
-impl<O> Format<O> for Arguments<'_, O> {
+impl<Context> Format<Context> for Arguments<'_, Context> {
     #[inline]
-    fn format(&self, formatter: &mut Formatter<O>) -> FormatResult<()> {
+    fn format(&self, formatter: &mut Formatter<Context>) -> FormatResult<()> {
         formatter.write_fmt(*self)
     }
 }

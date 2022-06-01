@@ -179,17 +179,22 @@ impl<'a, Context> VecBuffer<'a, Context> {
 
     /// Consumes the buffer and returns its content as a [`FormatElement`]
     pub fn into_element(mut self) -> FormatElement {
-        if self.len() == 1 {
-            // Safety: Guaranteed by len check above
-            self.elements.pop().unwrap()
-        } else {
-            FormatElement::List(List::new(self.elements))
-        }
+        self.take()
     }
 
     /// Consumes the buffer and returns the written [`FormatElement]`s as a vector.
     pub fn into_vec(self) -> Vec<FormatElement> {
         self.elements
+    }
+
+    /// Takes the elements without consuming self
+    pub fn take(&mut self) -> FormatElement {
+        if self.len() == 1 {
+            // Safety: Guaranteed by len check above
+            self.elements.pop().unwrap()
+        } else {
+            FormatElement::List(List::new(std::mem::take(&mut self.elements)))
+        }
     }
 }
 

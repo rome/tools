@@ -1,5 +1,8 @@
 use crate::prelude::*;
-use crate::{write, FormatContext, Formatted, GroupId, PreambleBuffer, TextRange, TextSize};
+use crate::{
+    format_element, write, Arguments, FormatContext, Formatted, GroupId, PreambleBuffer, TextRange,
+    TextSize,
+};
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
@@ -1686,5 +1689,67 @@ where
                     .write_element(FormatElement::Fill(List::new(items))),
             }
         })
+    }
+}
+
+/// The first variant is the most flat, and the last is the most expanded variant.
+/// See [`best_fitting!`] macro for a more in-detail documentation
+#[derive(Copy, Clone)]
+pub struct BestFitting<'a, Context> {
+    variants: Arguments<'a, Context>,
+}
+
+impl<'a, Context> BestFitting<'a, Context> {
+    /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
+    /// but it is to discourage people from using it because the printer will panic if
+    /// the slice doesn't contain at least the least and most expanded variants.
+    ///
+    /// You're looking for a way to create a `BestFitting` object, use the `best_fitting![least_expanded, most_expanded]` macro.
+    ///
+    /// ## Safety
+    /// The slice must contain at least two variants.
+    pub unsafe fn from_arguments_unchecked(variants: Arguments<'a, Context>) -> Self {
+        debug_assert!(
+            variants.0.len() >= 2,
+            "Requires at least the least expanded and most expanded variants"
+        );
+
+        Self { variants }
+    }
+}
+
+impl<Context> Format<Context> for BestFitting<'_, Context> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
+        let variants = self.variants.items();
+
+        let mut formatted_variants = Vec::with_capacity(variants.len());
+
+        for variant in variants {
+            write!(buffer, [variant])?;
+
+            formatted_variants.push(buffer.take());
+        }
+
+        // SAFETY: The constructor guarantees that there are always at least two variants. It's, therefore,
+        // safe to call into the unsafe `from_vec_unchecked` function
+        let element = unsafe {
+            FormatElement::BestFitting(format_element::BestFitting::from_vec_unchecked(
+                formatted_variants,
+            ))
+        };
+
+        f.write_element(element)?;
+
+        Ok(())
+    }
+}
+
+impl<Context> std::fmt::Debug for BestFitting<'_, Context>
+where
+    Context: std::fmt::Display + FormatContext + Default,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_tuple("BestFitting").field(&self.variants).finish()
     }
 }

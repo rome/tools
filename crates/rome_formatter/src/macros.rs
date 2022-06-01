@@ -11,7 +11,8 @@
 /// as seen below.
 ///
 /// ```rust
-/// use rome_formatter::{SimpleFormatContext, token, format, format_args};
+/// use rome_formatter::{SimpleFormatContext, format, format_args};
+/// use rome_formatter::prelude::*;
 ///
 /// let formatted = format!(SimpleFormatContext::default(), [
 ///     format_args!(token("Hello World"))
@@ -111,56 +112,61 @@ macro_rules! format {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth, format, format_args};
 /// use rome_formatter::prelude::*;
 ///
-/// let elements = format_elements![
-///   token("aVeryLongIdentifier"),
-///   best_fitting!(
-///     // Everything fits on a single line
-///     format_elements![
-///         token("("),
-///         group_elements(format_elements![
-///             token("["),
-///                 soft_block_indent(format_elements![
-///                 token("1,"),
-///                 soft_line_break_or_space(),
-///                 token("2,"),
-///                 soft_line_break_or_space(),
-///                 token("3"),
-///             ]),
-///             token("]")
-///         ]),
-///         token(")")
-///     ],
+/// let formatted = format!(
+///     SimpleFormatContext::default(),
+///     [
+///         token("aVeryLongIdentifier"),
+///         best_fitting!(
+///             // Everything fits on a single line
+///             format_args!(
+///                 token("("),
+///                 group_elements(format_args![
+///                     token("["),
+///                         soft_block_indent(format_args![
+///                         token("1,"),
+///                         soft_line_break_or_space(),
+///                         token("2,"),
+///                         soft_line_break_or_space(),
+///                         token("3"),
+///                     ]),
+///                     token("]")
+///                 ]),
+///                 token(")")
+///             ),
 ///
-///     // Breaks after `[`, but prints all elements on a single line
-///     format_elements![
-///         token("("),
-///         token("["),
-///         block_indent(token("1, 2, 3")),
-///         token("]"),
-///         token(")"),
-///     ],
+///             // Breaks after `[`, but prints all elements on a single line
+///             format_args!(
+///                 token("("),
+///                 token("["),
+///                 block_indent(token("1, 2, 3")),
+///                 token("]"),
+///                 token(")"),
+///             ),
 ///
-///     // Breaks after `[` and prints each element on a single line
-///     format_elements![
-///         token("("),
-///         block_indent(format_elements![
-///             token("["),
-///             block_indent(format_elements![
-///                 token("1,"),
-///                 hard_line_break(),
-///                 token("2,"),
-///                 hard_line_break(),
-///                 token("3"),
-///             ]),
-///             token("]"),
-///         ]),
-///         token(")")
+///             // Breaks after `[` and prints each element on a single line
+///             format_args!(
+///                 token("("),
+///                 block_indent(format_args![
+///                     token("["),
+///                     block_indent(format_args![
+///                         token("1,"),
+///                         hard_line_break(),
+///                         token("2,"),
+///                         hard_line_break(),
+///                         token("3"),
+///                     ]),
+///                     token("]"),
+///                 ]),
+///                 token(")")
+///             )
+///         )
 ///     ]
-///   )
-/// ];
+/// ).unwrap();
+///
+/// let elements = formatted.into_format_element();
 ///
 /// // Takes the first variant if everything fits on a single line
 /// assert_eq!(
@@ -202,10 +208,9 @@ macro_rules! format {
 #[macro_export]
 macro_rules! best_fitting {
     ($least_expanded:expr, $($tail:expr),+ $(,)?) => {{
-        let inner = unsafe {
-            $crate::format_element::BestFitting::from_slice_unchecked(&[$least_expanded, $($tail),+])
-        };
-        FormatElement::BestFitting(inner)
+        unsafe {
+            $crate::BestFitting::from_arguments_unchecked($crate::format_args!($least_expanded, $($tail),+))
+        }
     }}
 }
 
