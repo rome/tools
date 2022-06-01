@@ -220,20 +220,8 @@ pub(super) fn format_leading_trivia(
     token: &JsSyntaxToken,
     trim_mode: TriviaPrintMode,
 ) -> FormatElement {
-    // Checks whether the previous token has any trailing newline
-    let has_trailing_newline = token
-        .prev_token()
-        .and_then(|token| token.trailing_trivia().last())
-        .map_or(false, |trivia| trivia.is_newline());
-
-    format_leading_trivia_pieces(
-        token.leading_trivia().pieces(),
-        trim_mode,
-        has_trailing_newline,
-    )
-    .unwrap_or_else(|_| {
-        format_leading_trivia_with_skipped_tokens(token, trim_mode, has_trailing_newline)
-    })
+    format_leading_trivia_pieces(token.leading_trivia().pieces(), trim_mode, false)
+        .unwrap_or_else(|_| format_leading_trivia_with_skipped_tokens(token, trim_mode))
 }
 
 /// Formats the leading trivia of a token that has leading skipped trivia.
@@ -253,7 +241,6 @@ pub(super) fn format_leading_trivia(
 fn format_leading_trivia_with_skipped_tokens(
     token: &JsSyntaxToken,
     trim_mode: TriviaPrintMode,
-    has_trailing_newline: bool,
 ) -> FormatElement {
     let mut skipped_trivia_range: Option<TextRange> = None;
     // The leading trivia for the first skipped token trivia OR the leading trivia for the token
@@ -279,12 +266,8 @@ fn format_leading_trivia_with_skipped_tokens(
                 // Format the  collected leading trivia as the leading trivia of this "skipped token trivia"
                 skipped_trivia_range = Some(piece.text_range());
                 elements.push(
-                    format_leading_trivia_pieces(
-                        leading_trivia.drain(..),
-                        trim_mode,
-                        has_trailing_newline,
-                    )
-                    .expect("All skipped trivia pieces should have been filtered out"),
+                    format_leading_trivia_pieces(leading_trivia.drain(..), trim_mode, false)
+                        .expect("All skipped trivia pieces should have been filtered out"),
                 );
             }
 
