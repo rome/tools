@@ -484,8 +484,24 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"'\a'"#;
-        let syntax = SourceType::tsx();
+        let src = r#"
+        const AspectRatioBox = ({
+  aspectRatio,
+  children,
+  ...props
+}) => (
+  <div
+    className={`height: 0;
+  overflow: hidden;
+  padding-top: ${props => 100 / props.aspectRatio}%;
+  background: white;
+  position: relative;`}
+  >
+    <div>{children}</div>
+  </div>
+);
+        "#;
+        let syntax = SourceType::jsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
@@ -497,10 +513,5 @@ mod test {
             file_name: "quick_test",
             format_context: JsFormatContext::default(),
         });
-        assert_eq!(
-            result.as_code(),
-            r#""\a";
-"#
-        );
     }
 }
