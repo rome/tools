@@ -196,9 +196,9 @@ enum CharSignal {
 /// Struct of convenience used to manipulate the string. It saves some state in order to apply
 /// the normalise process.
 pub(crate) struct LiteralStringNormaliser<'token> {
+    /// The current token
     token: &'token FormatLiteralStringToken<'token>,
-    ///
-    ///
+    /// The quote that was set inside the configuration
     chosen_quote: QuoteStyle,
 }
 
