@@ -1,16 +1,15 @@
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-
+use rome_js_formatter::context::JsFormatContext;
 use rome_js_formatter::format_node;
-use rome_js_formatter::options::JsFormatOptions;
-use rome_js_parser::{parse, SourceType};
-use rome_js_syntax::JsSyntaxNode;
+use rome_js_parser::parse;
+use rome_js_syntax::{JsSyntaxNode, SourceType};
 
 pub struct CheckReformatParams<'a> {
     pub root: &'a JsSyntaxNode,
     pub text: &'a str,
     pub source_type: SourceType,
     pub file_name: &'a str,
-    pub format_options: JsFormatOptions,
+    pub format_context: JsFormatContext,
 }
 
 /// Perform a second pass of formatting on a file, printing a diff if the
@@ -21,7 +20,7 @@ pub fn check_reformat(params: CheckReformatParams) {
         text,
         source_type,
         file_name,
-        format_options,
+        format_context: format_options,
     } = params;
 
     let re_parse = parse(text, 0, source_type);

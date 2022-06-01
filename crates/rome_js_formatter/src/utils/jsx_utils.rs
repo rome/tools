@@ -1,8 +1,5 @@
-use crate::options::QuoteStyle;
-use crate::{
-    if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, Formatter,
-    JsFormatOptions,
-};
+use crate::context::QuoteStyle;
+use crate::{if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, JsFormatter};
 use rome_formatter::{format_elements, space_token, FormatElement};
 use rome_js_syntax::kind::JsSyntaxKind;
 use rome_js_syntax::{
@@ -24,8 +21,8 @@ use rome_rowan::SyntaxNode;
 ///    Wild Strawberries
 ///  </div>
 /// ```
-pub fn jsx_space(formatter: &Formatter<JsFormatOptions>) -> FormatElement {
-    let jsx_space = match formatter.options().quote_style {
+pub fn jsx_space(formatter: &JsFormatter) -> FormatElement {
+    let jsx_space = match formatter.context().quote_style() {
         QuoteStyle::Double => "{{\" \"}}",
         QuoteStyle::Single => "{{\' \'}}",
     };

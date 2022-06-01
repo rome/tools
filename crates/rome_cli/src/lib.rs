@@ -1,6 +1,6 @@
 use pico_args::Arguments;
-use rome_core::App;
 use rome_flags::FeatureFlags;
+use rome_service::App;
 
 mod commands;
 mod metrics;
@@ -21,9 +21,12 @@ pub struct CliSession<'app> {
 
 impl CliSession<'static> {
     pub fn from_env() -> Self {
+        let mut args = Arguments::from_env();
+        let no_colors = args.contains("--no-colors");
+
         Self {
-            app: App::from_env(),
-            args: Arguments::from_env(),
+            app: App::from_env(no_colors),
+            args,
         }
     }
 }
@@ -53,7 +56,7 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
 
     let result = match subcommand.as_deref() {
         // Print the help for the subcommand if it was called with `--help`
-        Some(cmd) if has_help => crate::commands::help::help(Some(cmd)),
+        Some(cmd) if has_help => crate::commands::help::help(session, Some(cmd)),
 
         Some("format") if !is_empty => crate::commands::format::format(session),
         Some("check") if !is_empty => crate::commands::check::check(session),
@@ -61,12 +64,12 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
 
         // Print the help for known commands called without any arguments, and exit with an error
         Some(cmd @ ("format" | "check" | "ci")) => {
-            crate::commands::help::help(Some(cmd))?;
+            crate::commands::help::help(session, Some(cmd))?;
             Err(Termination::EmptyArguments)
         }
 
         // Print the general help if no subcommand was specified / the subcommand is `help`
-        None | Some("help") => crate::commands::help::help(None),
+        None | Some("help") => crate::commands::help::help(session, None),
 
         Some(cmd) => Err(Termination::UnknownCommand {
             command: cmd.into(),

@@ -7,7 +7,7 @@ use rome_js_syntax::JsCatchDeclarationFields;
 impl FormatNodeFields<JsCatchDeclaration> for FormatNodeRule<JsCatchDeclaration> {
     fn format_fields(
         node: &JsCatchDeclaration,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsCatchDeclarationFields {
             l_paren_token,

@@ -7,7 +7,7 @@ use rome_js_syntax::JsSetterClassMemberFields;
 impl FormatNodeFields<JsSetterClassMember> for FormatNodeRule<JsSetterClassMember> {
     fn format_fields(
         node: &JsSetterClassMember,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsSetterClassMemberFields {
             modifiers,

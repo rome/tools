@@ -3,8 +3,8 @@ use crate::reporters::TestReporter;
 use rome_diagnostics::file::{FileId, SimpleFiles};
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{Diagnostic, Emitter, Severity};
-use rome_js_parser::{parse, Parse, SourceType};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode};
+use rome_js_parser::{parse, Parse};
+use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, SourceType};
 use rome_rowan::SyntaxKind;
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
@@ -82,7 +82,7 @@ pub(crate) struct TestCaseFile {
 
 impl TestCaseFile {
     pub(crate) fn parse(&self) -> Parse<JsAnyRoot> {
-        parse(&self.code, self.id, self.source_type.clone())
+        parse(&self.code, self.id, self.source_type)
     }
 
     pub(crate) fn name(&self) -> &str {
@@ -256,9 +256,18 @@ pub(crate) fn run_test_suite(
 
             scope.execute(move || {
                 let test_ref = test.as_ref();
-                let run_result = std::panic::catch_unwind(|| test_ref.run());
 
-                let outcome = run_result.unwrap_or_else(|panic| TestRunOutcome::Panicked(panic));
+                let outcome = match std::panic::catch_unwind(|| test_ref.run()) {
+                    Ok(result) => result,
+                    Err(panic) => {
+                        let err = panic
+                            .downcast_ref::<String>()
+                            .map(|x| x.to_string())
+                            .or_else(|| panic.downcast_ref::<&str>().map(|x| x.to_string()));
+                        tracing::warn!("Test [{}] panicked: {err:?}", test.name());
+                        TestRunOutcome::Panicked(panic)
+                    }
+                };
 
                 tx.send(TestRunResult {
                     test_case: test.name().to_owned(),

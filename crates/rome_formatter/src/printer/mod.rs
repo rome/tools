@@ -8,7 +8,6 @@ use crate::format_element::{
 use crate::intersperse::Intersperse;
 use crate::{hard_line_break, FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
-use crate::prelude::Line;
 use rome_rowan::TextSize;
 use std::iter::{once, Rev};
 
@@ -96,14 +95,34 @@ impl<'a> Printer<'a> {
                     self.state.pending_space = false;
                 }
 
+                // Insert source map markers before and after the token
+                //
+                // If the token has source position informations the start marker
+                // will use the start position of the original token, and the end
+                // marker will use that position + the text length of the token
+                //
+                // If the token has no source position (was created by the formatter)
+                // both the start and end marker will use the last known position
+                // in the input source (from state.source_position)
                 if let Some(source) = token.source_position() {
-                    self.state.source_markers.push(SourceMarker {
-                        source: *source,
-                        dest: TextSize::from(self.state.buffer.len() as u32),
-                    });
+                    self.state.source_position = *source;
                 }
 
+                self.state.source_markers.push(SourceMarker {
+                    source: self.state.source_position,
+                    dest: TextSize::of(&self.state.buffer),
+                });
+
                 self.print_str(token);
+
+                if token.source_position().is_some() {
+                    self.state.source_position += TextSize::of(&**token);
+                }
+
+                self.state.source_markers.push(SourceMarker {
+                    source: self.state.source_position,
+                    dest: TextSize::of(&self.state.buffer),
+                });
             }
 
             FormatElement::Group(Group { content, id }) => {
@@ -328,7 +347,6 @@ impl<'a> Printer<'a> {
         separator: &'a FormatElement,
         args: PrintElementArgs,
     ) {
-        const HARD_LINE_BREAK: &FormatElement = &FormatElement::Line(Line::new(LineMode::Hard));
         let empty_rest = ElementCallQueue::default();
 
         let mut items = content.iter();
@@ -381,7 +399,7 @@ impl<'a> Printer<'a> {
                 // Print the separator and then check again if the next item fits on the line now
                 self.print_all(
                     queue,
-                    &[HARD_LINE_BREAK],
+                    &[separator],
                     args.with_print_mode(PrintMode::Expanded),
                 );
 
@@ -470,6 +488,7 @@ impl<'a> Printer<'a> {
 struct PrinterState<'a> {
     buffer: String,
     source_markers: Vec<SourceMarker>,
+    source_position: TextSize,
     pending_indent: u16,
     pending_space: bool,
     measured_group_fits: bool,
@@ -1073,7 +1092,7 @@ two lines`,
     #[test]
     fn test_fill_breaks() {
         let document = fill_elements(
-            space_token(),
+            soft_line_break_or_space(),
             vec![
                 // These all fit on the same line together
                 format_elements![token("1"), token(",")],
@@ -1111,7 +1130,7 @@ two lines`,
             group_elements(format_elements![
                 token("["),
                 soft_block_indent(format_elements![fill_elements(
-                    token(" "),
+                    soft_line_break_or_space(),
                     vec![
                         format_elements![token("1"), token(",")],
                         format_elements![token("2"), token(",")],

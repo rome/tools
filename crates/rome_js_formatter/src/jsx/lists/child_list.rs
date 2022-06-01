@@ -1,18 +1,15 @@
 use crate::generated::FormatJsxChildList;
 use crate::prelude::*;
 use crate::utils::jsx_utils::contains_text;
-use crate::{FormatElement, Formatter, JsFormatter};
+use crate::{FormatElement, JsFormatter};
 use rome_formatter::{empty_element, fill_elements, FormatResult};
 use rome_js_syntax::JsxChildList;
 use std::ops::Deref;
 
 impl FormatRule<JsxChildList> for FormatJsxChildList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &JsxChildList,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsxChildList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let children = formatter
             .format_list(node)
             .into_iter()

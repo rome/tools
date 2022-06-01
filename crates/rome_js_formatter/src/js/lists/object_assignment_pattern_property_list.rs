@@ -6,11 +6,11 @@ use rome_js_syntax::{JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatte
 impl FormatRule<JsObjectAssignmentPatternPropertyList>
     for FormatJsObjectAssignmentPatternPropertyList
 {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         node: &JsObjectAssignmentPatternPropertyList,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         // The trailing separator is disallowed after a rest element
         let has_trailing_rest = match node.into_iter().last() {

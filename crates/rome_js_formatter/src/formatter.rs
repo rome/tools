@@ -1,9 +1,7 @@
 use crate::prelude::*;
-
+use crate::AsFormat;
 use rome_formatter::{normalize_newlines, FormatResult, GroupId, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
-
-use crate::{AsFormat, JsFormatOptions};
 use rome_rowan::{
     AstNode, AstNodeList, AstSeparatedList, Language, SyntaxNode, SyntaxTriviaPiece, TextRange,
 };
@@ -77,9 +75,9 @@ pub struct FormatVerbatimNode<'node> {
 }
 
 impl Format for FormatVerbatimNode<'_> {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
         let verbatim = format_verbatim_node_or_token(self.node, formatter);
         Ok(FormatElement::Verbatim(Verbatim::new_verbatim(
             verbatim,
@@ -100,9 +98,9 @@ pub struct FormatUnknownNode<'node> {
 }
 
 impl Format for FormatUnknownNode<'_> {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
         Ok(FormatElement::Verbatim(Verbatim::new_unknown(
             format_verbatim_node_or_token(self.node, formatter),
         )))
@@ -120,9 +118,9 @@ pub struct FormatSuppressedNode<'node> {
 }
 
 impl Format for FormatSuppressedNode<'_> {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(&self, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
+    fn format(&self, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
         formatted![
             formatter,
             [
@@ -139,7 +137,7 @@ impl Format for FormatSuppressedNode<'_> {
 
 fn format_verbatim_node_or_token(
     node: &JsSyntaxNode,
-    formatter: &Formatter<JsFormatOptions>,
+    formatter: &Formatter<JsFormatContext>,
 ) -> FormatElement {
     for token in node.descendants_tokens() {
         formatter.track_token(&token);
@@ -223,20 +221,8 @@ pub(super) fn format_leading_trivia(
     token: &JsSyntaxToken,
     trim_mode: TriviaPrintMode,
 ) -> FormatElement {
-    // Checks whether the previous token has any trailing newline
-    let has_trailing_newline = token
-        .prev_token()
-        .and_then(|token| token.trailing_trivia().last())
-        .map_or(false, |trivia| trivia.is_newline());
-
-    format_leading_trivia_pieces(
-        token.leading_trivia().pieces(),
-        trim_mode,
-        has_trailing_newline,
-    )
-    .unwrap_or_else(|_| {
-        format_leading_trivia_with_skipped_tokens(token, trim_mode, has_trailing_newline)
-    })
+    format_leading_trivia_pieces(token.leading_trivia().pieces(), trim_mode, false)
+        .unwrap_or_else(|_| format_leading_trivia_with_skipped_tokens(token, trim_mode))
 }
 
 /// Formats the leading trivia of a token that has leading skipped trivia.
@@ -256,7 +242,6 @@ pub(super) fn format_leading_trivia(
 fn format_leading_trivia_with_skipped_tokens(
     token: &JsSyntaxToken,
     trim_mode: TriviaPrintMode,
-    has_trailing_newline: bool,
 ) -> FormatElement {
     let mut skipped_trivia_range: Option<TextRange> = None;
     // The leading trivia for the first skipped token trivia OR the leading trivia for the token
@@ -282,12 +267,8 @@ fn format_leading_trivia_with_skipped_tokens(
                 // Format the  collected leading trivia as the leading trivia of this "skipped token trivia"
                 skipped_trivia_range = Some(piece.text_range());
                 elements.push(
-                    format_leading_trivia_pieces(
-                        leading_trivia.drain(..),
-                        trim_mode,
-                        has_trailing_newline,
-                    )
-                    .expect("All skipped trivia pieces should have been filtered out"),
+                    format_leading_trivia_pieces(leading_trivia.drain(..), trim_mode, false)
+                        .expect("All skipped trivia pieces should have been filtered out"),
                 );
             }
 
@@ -437,9 +418,11 @@ where
     Ok(concat_elements(elements.into_iter().rev()))
 }
 
+pub(crate) type JsFormatter = Formatter<JsFormatContext>;
+
 /// JS specific formatter extensions
-pub(crate) trait JsFormatter {
-    fn as_formatter(&self) -> &Formatter<JsFormatOptions>;
+pub(crate) trait JsFormatterExt {
+    fn as_formatter(&self) -> &Formatter<JsFormatContext>;
 
     #[must_use]
     fn delimited<'a, 'fmt>(
@@ -610,8 +593,8 @@ pub(crate) trait JsFormatter {
     }
 }
 
-impl JsFormatter for Formatter<JsFormatOptions> {
-    fn as_formatter(&self) -> &Formatter<JsFormatOptions> {
+impl JsFormatterExt for Formatter<JsFormatContext> {
+    fn as_formatter(&self) -> &Formatter<JsFormatContext> {
         self
     }
 }
@@ -626,7 +609,7 @@ pub struct FormatDelimited<'a, 'fmt> {
     content: FormatElement,
     close_token: &'a JsSyntaxToken,
     mode: DelimitedMode,
-    formatter: &'fmt Formatter<JsFormatOptions>,
+    formatter: &'fmt Formatter<JsFormatContext>,
 }
 
 impl<'a, 'fmt> FormatDelimited<'a, 'fmt> {
@@ -634,7 +617,7 @@ impl<'a, 'fmt> FormatDelimited<'a, 'fmt> {
         open_token: &'a JsSyntaxToken,
         content: FormatElement,
         close_token: &'a JsSyntaxToken,
-        formatter: &'fmt Formatter<JsFormatOptions>,
+        formatter: &'fmt Formatter<JsFormatContext>,
     ) -> Self {
         Self {
             open_token,

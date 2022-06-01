@@ -4,10 +4,10 @@ use crate::generated::FormatTsAnyVariableAnnotation;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyVariableAnnotation;
 impl FormatRule<TsAnyVariableAnnotation> for FormatTsAnyVariableAnnotation {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &TsAnyVariableAnnotation,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyVariableAnnotation::TsTypeAnnotation(node) => {

@@ -1,5 +1,5 @@
 use rome_formatter::IndentStyle;
-use rome_js_formatter::options::JsFormatOptions;
+use rome_service::{settings::WorkspaceSettings, workspace::UpdateSettingsParams};
 
 use crate::{
     traversal::{traverse, TraversalMode},
@@ -8,14 +8,13 @@ use crate::{
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    let options = parse_format_options(&mut session)?;
+    parse_format_options(&mut session)?;
 
     let is_write = session.args.contains("--write");
     let ignore_errors = session.args.contains("--skip-errors");
 
     traverse(
         TraversalMode::Format {
-            options,
             ignore_errors,
             write: is_write,
         },
@@ -23,10 +22,10 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     )
 }
 
-pub(crate) fn parse_format_options(
-    session: &mut CliSession,
-) -> Result<JsFormatOptions, Termination> {
-    let mut options = JsFormatOptions::default();
+/// Read the formatting options for the command line arguments and inject them
+/// into the workspace settings
+pub(crate) fn parse_format_options(session: &mut CliSession) -> Result<(), Termination> {
+    let mut settings = WorkspaceSettings::default();
 
     let size = session
         .args
@@ -46,10 +45,10 @@ pub(crate) fn parse_format_options(
 
     match indent_style {
         Some(IndentStyle::Tab) => {
-            options.indent_style = IndentStyle::Tab;
+            settings.format.indent_style = Some(IndentStyle::Tab);
         }
         Some(IndentStyle::Space(default_size)) => {
-            options.indent_style = IndentStyle::Space(size.unwrap_or(default_size));
+            settings.format.indent_style = Some(IndentStyle::Space(size.unwrap_or(default_size)));
         }
         None => {}
     }
@@ -63,7 +62,7 @@ pub(crate) fn parse_format_options(
         })?;
 
     if let Some(quote_style) = quote_style {
-        options.quote_style = quote_style;
+        settings.languages.javascript.format.quote_style = Some(quote_style);
     }
 
     let line_width = session
@@ -75,8 +74,13 @@ pub(crate) fn parse_format_options(
         })?;
 
     if let Some(line_width) = line_width {
-        options.line_width = line_width;
+        settings.format.line_width = Some(line_width);
     }
 
-    Ok(options)
+    session
+        .app
+        .workspace
+        .update_settings(UpdateSettingsParams { settings })?;
+
+    Ok(())
 }

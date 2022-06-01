@@ -26,7 +26,7 @@ use std::marker::PhantomData;
 /// You would write it like the following:
 ///
 /// ```rust
-/// use rome_formatter::{FormatOptions, Formatted};
+/// use rome_formatter::{FormatContext, Formatted};
 /// use rome_formatter::prelude::*;
 ///
 /// let element = format_elements![
@@ -44,7 +44,7 @@ use std::marker::PhantomData;
 /// ```
 /// Or you can also create single element:
 /// ```
-/// use rome_formatter::{Formatted, FormatOptions};
+/// use rome_formatter::{Formatted, FormatContext};
 /// use rome_formatter::prelude::*;
 ///
 /// use rome_formatter::prelude::*;
@@ -81,14 +81,14 @@ macro_rules! format_elements {
 /// you would write:
 ///
 /// ```rust
-/// use rome_formatter::FormatOptions;
+/// use rome_formatter::FormatContext;
 /// use rome_formatter::prelude::*;
 ///
 /// struct TestFormat;
 ///
 /// impl Format for TestFormat {
-///     type Options = ();
-///     fn format(&self, _: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
+///     type Context = ();
+///     fn format(&self, _: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
 ///         Ok(token("test"))
 ///     }
 /// }
@@ -122,7 +122,7 @@ macro_rules! format_elements {
 /// Or you can also create single element:
 /// ```
 /// use rome_formatter::prelude::*;
-/// use rome_formatter::FormatOptions;
+/// use rome_formatter::FormatContext;
 ///
 /// let formatter = Formatter::<()>::default();
 ///
@@ -315,8 +315,8 @@ mod tests {
     struct TestFormat;
 
     impl Format for TestFormat {
-        type Options = ();
-        fn format(&self, _: &Formatter<Self::Options>) -> FormatResult<FormatElement> {
+        type Context = ();
+        fn format(&self, _: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
             Ok(token("test"))
         }
     }

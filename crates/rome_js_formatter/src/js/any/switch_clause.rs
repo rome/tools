@@ -4,11 +4,8 @@ use crate::generated::FormatJsAnySwitchClause;
 use crate::prelude::*;
 use rome_js_syntax::JsAnySwitchClause;
 impl FormatRule<JsAnySwitchClause> for FormatJsAnySwitchClause {
-    type Options = JsFormatOptions;
-    fn format(
-        node: &JsAnySwitchClause,
-        formatter: &Formatter<Self::Options>,
-    ) -> FormatResult<FormatElement> {
+    type Context = JsFormatContext;
+    fn format(node: &JsAnySwitchClause, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnySwitchClause::JsCaseClause(node) => formatted![formatter, [node.format()]],
             JsAnySwitchClause::JsDefaultClause(node) => formatted![formatter, [node.format()]],

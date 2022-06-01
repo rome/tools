@@ -7,7 +7,7 @@ use rome_js_syntax::JsNewExpressionFields;
 impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
     fn format_fields(
         node: &JsNewExpression,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsNewExpressionFields {
             new_token,

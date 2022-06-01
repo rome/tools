@@ -108,9 +108,9 @@ const rootEpic = (
 const regex = new RegExp(
   "^\\s*" + // beginning of the line
     "name\\s*=\\s*" + // name =
-    '[\'"]' + // opening quotation mark
+    "['\"]" + // opening quotation mark
     escapeStringRegExp(target.name) + // target name
-    '[\'"]' + // closing quotation mark
+    "['\"]" + // closing quotation mark
     ",?$", // optional trailing comma
 );
 

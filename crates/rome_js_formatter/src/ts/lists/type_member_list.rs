@@ -4,12 +4,9 @@ use rome_js_syntax::TsTypeMemberList;
 use rome_rowan::AstNodeList;
 
 impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &TsTypeMemberList,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &TsTypeMemberList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 

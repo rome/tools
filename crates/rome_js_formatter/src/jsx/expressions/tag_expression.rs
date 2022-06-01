@@ -6,7 +6,7 @@ use rome_js_syntax::JsxTagExpression;
 impl FormatNodeFields<JsxTagExpression> for FormatNodeRule<JsxTagExpression> {
     fn format_fields(
         node: &JsxTagExpression,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let tag = formatted![formatter, [node.tag().format()]]?;
         Ok(match should_wrap_element_in_parens(node.syntax()) {

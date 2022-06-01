@@ -7,12 +7,9 @@ use rome_js_syntax::{
 };
 
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &JsAnyFunction,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsAnyFunction, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let mut tokens = vec![];
 
         tokens.push(formatted![

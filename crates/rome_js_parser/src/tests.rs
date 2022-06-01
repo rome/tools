@@ -1,9 +1,9 @@
-use crate::{parse, parse_module, Parse, SourceType};
+use crate::{parse, parse_module, Parse};
 use expect_test::expect_file;
 use rome_diagnostics::file::SimpleFile;
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{file::SimpleFiles, Emitter};
-use rome_js_syntax::{JsAnyRoot, JsLanguage, JsSyntaxKind};
+use rome_js_syntax::{JsAnyRoot, JsLanguage, JsSyntaxKind, SourceType};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, SyntaxKind, TextSize};
 use std::fmt::Debug;

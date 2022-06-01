@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyAssignmentPattern;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyAssignmentPattern;
 impl FormatRule<JsAnyAssignmentPattern> for FormatJsAnyAssignmentPattern {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyAssignmentPattern,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyAssignmentPattern::JsAnyAssignment(node) => formatted![formatter, [node.format()]],

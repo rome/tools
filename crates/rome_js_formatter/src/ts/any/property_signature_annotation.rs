@@ -4,10 +4,10 @@ use crate::generated::FormatTsAnyPropertySignatureAnnotation;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertySignatureAnnotation;
 impl FormatRule<TsAnyPropertySignatureAnnotation> for FormatTsAnyPropertySignatureAnnotation {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &TsAnyPropertySignatureAnnotation,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => {

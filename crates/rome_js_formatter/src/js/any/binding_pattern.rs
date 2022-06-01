@@ -4,11 +4,8 @@ use crate::generated::FormatJsAnyBindingPattern;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyBindingPattern;
 impl FormatRule<JsAnyBindingPattern> for FormatJsAnyBindingPattern {
-    type Options = JsFormatOptions;
-    fn format(
-        node: &JsAnyBindingPattern,
-        formatter: &Formatter<Self::Options>,
-    ) -> FormatResult<FormatElement> {
+    type Context = JsFormatContext;
+    fn format(node: &JsAnyBindingPattern, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyBindingPattern::JsAnyBinding(node) => formatted![formatter, [node.format()]],
             JsAnyBindingPattern::JsArrayBindingPattern(node) => {

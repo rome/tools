@@ -5,9 +5,10 @@ use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
 use rome_formatter::IndentStyle;
+use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
 use rome_js_formatter::format_node;
-use rome_js_formatter::options::JsFormatOptions;
-use rome_js_parser::{parse, LanguageVariant, SourceType};
+use rome_js_parser::parse;
+use rome_js_syntax::{LanguageVariant, SourceType};
 use serde_json::json;
 use std::io;
 use wasm_bindgen::prelude::*;
@@ -172,10 +173,13 @@ pub fn run(
         IndentStyle::Tab
     };
 
-    let options = JsFormatOptions {
+    let context = JsFormatContext {
         indent_style,
         line_width: options.line_width.try_into().unwrap_or_default(),
-        quote_style: options.quote_style.parse().unwrap_or_default(),
+        options: JsFormatOptions {
+            quote_style: options.quote_style.parse().unwrap_or_default(),
+        },
+        source_type,
     };
 
     let (cst, ast) = if output_json {
@@ -194,7 +198,7 @@ pub fn run(
         (format!("{:#?}", syntax), format!("{:#?}", parse.tree()))
     };
 
-    let formatted = format_node(options, &syntax).unwrap();
+    let formatted = format_node(context, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
 
     let root_element = formatted.into_format_element();

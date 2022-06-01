@@ -5,7 +5,7 @@ use rome_js_syntax::{JsxClosingElement, JsxClosingElementFields};
 impl FormatNodeFields<JsxClosingElement> for FormatNodeRule<JsxClosingElement> {
     fn format_fields(
         node: &JsxClosingElement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsxClosingElementFields {
             l_angle_token,

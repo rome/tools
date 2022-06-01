@@ -4,10 +4,10 @@ use crate::generated::FormatJsAnyObjectBindingPatternMember;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectBindingPatternMember;
 impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPatternMember {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     fn format(
         node: &JsAnyObjectBindingPatternMember,
-        formatter: &Formatter<Self::Options>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         match node {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {

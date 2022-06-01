@@ -1,15 +1,12 @@
 use crate::prelude::*;
 use crate::utils::jsx_utils::is_jsx_inside_arrow_function_inside_call_inside_expression_child;
 use crate::FormatNodeFields;
-use crate::{soft_block_indent, FormatElement, Formatter};
+use crate::{soft_block_indent, FormatElement};
 use rome_formatter::FormatResult;
 use rome_js_syntax::{JsxElement, JsxElementFields};
 
 impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
-    fn format_fields(
-        node: &JsxElement,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format_fields(node: &JsxElement, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let JsxElementFields {
             opening_element,
             children,

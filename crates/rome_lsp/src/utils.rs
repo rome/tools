@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::fmt::Display;
+use std::fmt::{Debug, Display};
 
 use crate::line_index::{LineCol, LineIndex};
 use rome_analyze::{ActionCategory, AnalyzerAction};
@@ -9,12 +9,10 @@ use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Applicability, Diagnostic, SuggestionChange};
 use rome_diagnostics::{CodeSuggestion, Severity};
+use rome_rowan::{TextRange, TextSize};
 use tower_lsp::jsonrpc::Error as LspError;
-use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::lsp_types::{self as lsp};
 use tracing::error;
-
-use rome_js_syntax::{TextRange, TextSize};
 
 pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp::Position {
     let line_col = line_index.line_col(offset);
@@ -182,24 +180,10 @@ fn print_markup(markup: &MarkupBuf) -> String {
 }
 
 /// Helper to create a [tower_lsp::jsonrpc::Error] from a message
-pub(crate) fn into_lsp_error(msg: impl Display) -> LspError {
+pub(crate) fn into_lsp_error(msg: impl Display + Debug) -> LspError {
     let mut error = LspError::internal_error();
     error!("Error: {}", msg);
-    error.data = Some(msg.to_string().into());
+    error.message = msg.to_string();
+    error.data = Some(format!("{msg:?}").into());
     error
-}
-
-/// Utility to spawn a task using [tokio::task::spawn_blocking] onto a thread intended
-/// for blocking or compute-heavy tasks. The provided task must return a [Result] and
-/// the result will be flattened to an [LspResult]
-pub(crate) async fn spawn_blocking_task<F, R, E>(f: F) -> LspResult<R>
-where
-    F: FnOnce() -> Result<R, E> + Send + 'static,
-    R: Send + 'static,
-    E: Display + Send + 'static,
-{
-    match tokio::task::spawn_blocking(f).await {
-        Ok(task_result) => task_result.map_err(into_lsp_error),
-        Err(_) => Err(LspError::internal_error()),
-    }
 }

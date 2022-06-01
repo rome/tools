@@ -3,12 +3,9 @@ use crate::prelude::*;
 use rome_js_syntax::JsModuleItemList;
 
 impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &JsModuleItemList,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsModuleItemList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         Ok(formatter.format_list_with_hard_line(node))
     }
 }

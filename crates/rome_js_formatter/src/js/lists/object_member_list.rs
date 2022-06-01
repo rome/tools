@@ -4,12 +4,9 @@ use rome_js_syntax::JsObjectMemberList;
 use rome_rowan::{AstNode, AstSeparatedList};
 
 impl FormatRule<JsObjectMemberList> for FormatJsObjectMemberList {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(
-        node: &JsObjectMemberList,
-        formatter: &Formatter<JsFormatOptions>,
-    ) -> FormatResult<FormatElement> {
+    fn format(node: &JsObjectMemberList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let members = formatter.format_separated(node, || token(","))?;
 
         Ok(join_elements_soft_line(

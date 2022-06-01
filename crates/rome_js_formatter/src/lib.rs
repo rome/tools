@@ -10,16 +10,20 @@ pub mod utils;
 
 use crate::formatter::suppressed_node;
 use crate::utils::has_formatter_suppressions;
-pub(crate) use formatter::{format_leading_trivia, format_trailing_trivia, JsFormatter};
+pub(crate) use formatter::{
+    format_leading_trivia, format_trailing_trivia, JsFormatter, JsFormatterExt,
+};
 use rome_formatter::prelude::*;
 use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
+use rome_js_syntax::{
+    JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+};
 use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
+use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
-use crate::options::JsFormatOptions;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -27,13 +31,13 @@ use std::marker::PhantomData;
 
 /// Used to get an object that knows how to format this object.
 pub trait AsFormat<'a> {
-    type Format: Format<Options = JsFormatOptions>;
+    type Format: Format<Context = JsFormatContext>;
 
     /// Returns an object that is able to format this object.
     fn format(&'a self) -> Self::Format;
 }
 
-/// Implement [AsFormat] for all types that have an associated [FormatRule].
+/// Implement [AsFormat] for references to types that implement [AsFormat].
 impl<'a, T> AsFormat<'a> for &'a T
 where
     T: AsFormat<'a>,
@@ -96,7 +100,7 @@ where
     }
 }
 
-/// Implement [AsFormat] for [Option] when `T` implements [AsFormat]
+/// Implement [IntoFormat] for [Option] when `T` implements [IntoFormat]
 ///
 /// Allows to call format on optional AST fields without having to unwrap the field first.
 impl<T> IntoFormat for Option<T>
@@ -169,9 +173,9 @@ where
     N: AstNode<Language = JsLanguage>,
     FormatNodeRule<N>: FormatNodeFields<N>,
 {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
-    fn format(node: &N, formatter: &Formatter<JsFormatOptions>) -> FormatResult<FormatElement> {
+    fn format(node: &N, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
         let syntax = node.syntax();
         let element = if has_formatter_suppressions(syntax) {
             suppressed_node(syntax).format(formatter)?
@@ -190,7 +194,7 @@ where
     /// Formats the node's fields.
     fn format_fields(
         item: &T,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement>;
 }
 
@@ -198,11 +202,11 @@ where
 pub struct FormatJsSyntaxToken;
 
 impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
-    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
 
     fn format(
         token: &JsSyntaxToken,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &Formatter<JsFormatContext>,
     ) -> FormatResult<FormatElement> {
         formatter.track_token(token);
 
@@ -242,18 +246,39 @@ impl IntoFormat for JsSyntaxToken {
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range(
-    options: JsFormatOptions,
+    context: JsFormatContext,
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    rome_formatter::format_range::<_, _, FormatJsSyntaxNode>(options, root, range)
+    rome_formatter::format_range::<_, _, FormatJsSyntaxNode, _>(
+        context,
+        root,
+        range,
+        is_range_formatting_root,
+    )
+}
+
+fn is_range_formatting_root(node: &JsSyntaxNode) -> bool {
+    let kind = node.kind();
+
+    // Do not format variable declaration nodes, format the whole statement instead
+    if matches!(kind, JsSyntaxKind::JS_VARIABLE_DECLARATION) {
+        return false;
+    }
+
+    JsAnyStatement::can_cast(kind)
+        || JsAnyDeclaration::can_cast(kind)
+        || matches!(
+            kind,
+            JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT
+        )
 }
 
 /// Formats a JavaScript (and its super languages) file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Formatted> {
-    rome_formatter::format_node(options, &root.format())
+pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Formatted> {
+    rome_formatter::format_node(context, &root.format())
 }
 
 /// Formats a single node within a file, supported by Rome.
@@ -266,8 +291,8 @@ pub fn format_node(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatResul
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
-    rome_formatter::format_sub_tree(options, &root.format())
+pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
+    rome_formatter::format_sub_tree(context, &root.format())
 }
 
 #[cfg(test)]
@@ -275,7 +300,7 @@ mod tests {
 
     use super::format_range;
 
-    use crate::options::JsFormatOptions;
+    use crate::context::JsFormatContext;
     use rome_formatter::IndentStyle;
     use rome_js_parser::parse_script;
     use rome_rowan::{TextRange, TextSize};
@@ -312,9 +337,9 @@ while(
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatOptions {
+            JsFormatContext {
                 indent_style: IndentStyle::Space(4),
-                ..JsFormatOptions::default()
+                ..JsFormatContext::default()
             },
             &tree.syntax(),
             TextRange::new(range_start, range_end),
@@ -322,12 +347,15 @@ while(
 
         let result = result.expect("range formatting failed");
         assert_eq!(
-            result.range(),
-            Some(TextRange::new(range_start + TextSize::from(2), range_end))
+            result.as_code(),
+            "function func() {\n        func( /* comment */ );\n\n        let array = [1, 2];\n    }\n\n    function func2() {\n        const no_format = () => {};\n    }"
         );
         assert_eq!(
-            result.as_code(),
-            "let array = [1, 2];\n    }\n\n    function func2() {\n        "
+            result.range(),
+            Some(TextRange::new(
+                range_start - TextSize::from(56),
+                range_end + TextSize::from(40)
+            ))
         );
     }
 
@@ -344,22 +372,98 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatOptions {
+            JsFormatContext {
                 indent_style: IndentStyle::Space(4),
-                ..JsFormatOptions::default()
+                ..JsFormatContext::default()
             },
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
 
         let result = result.expect("range formatting failed");
-        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
         // As a result of the indentation normalization, the number of spaces within
         // the object expression is currently rounded down from an odd indentation level
         assert_eq!(
             result.as_code(),
-            "const veryLongIdentifierToCauseALineBreak = {\n            veryLongKeyToCauseALineBreak: \"veryLongValueToCauseALineBreak\",\n        "
+            "const veryLongIdentifierToCauseALineBreak = {\n            veryLongKeyToCauseALineBreak: \"veryLongValueToCauseALineBreak\",\n        };"
         );
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(range_start, range_end + TextSize::from(1)))
+        );
+    }
+
+    #[test]
+    fn test_range_formatting_semicolon() {
+        let input = "
+    statement_1()
+    statement_2()
+    statement_3()
+";
+
+        let range_start = TextSize::try_from(input.find("statement_2").unwrap()).unwrap();
+        let range_end = range_start + TextSize::of("statement_2()");
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatContext {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatContext::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "statement_2();");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+    }
+
+    #[test]
+    fn test_range_formatting_expression() {
+        let input = "1 + 2 + 3 + 4 + 5";
+
+        let range_start = TextSize::try_from(input.find("3 + 4").unwrap()).unwrap();
+        let range_end = range_start + TextSize::of("3 + 4");
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatContext {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatContext::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "1 + 2 + 3 + 4 + 5;");
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(TextSize::from(0), TextSize::of(input)))
+        );
+    }
+
+    #[test]
+    fn test_range_formatting_whitespace() {
+        let input = "               ";
+
+        let range_start = TextSize::from(5);
+        let range_end = TextSize::from(5);
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatContext {
+                indent_style: IndentStyle::Space(4),
+                ..JsFormatContext::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.as_code(), "");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
     }
 }
 
@@ -367,13 +471,14 @@ function() {
 mod check_reformat;
 #[rustfmt::skip]
 mod generated;
-pub mod options;
+pub mod context;
 
 #[cfg(test)]
 mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::{format_node, JsFormatOptions};
-    use rome_js_parser::{parse, SourceType};
+    use crate::{format_node, JsFormatContext};
+    use rome_js_parser::parse;
+    use rome_js_syntax::SourceType;
 
     #[test]
     #[ignore]
@@ -397,8 +502,8 @@ mod test {
 );
         "#;
         let syntax = SourceType::jsx();
-        let tree = parse(src, 0, syntax.clone());
-        let result = format_node(JsFormatOptions::default(), &tree.syntax())
+        let tree = parse(src, 0, syntax);
+        let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
         check_reformat(CheckReformatParams {
@@ -406,9 +511,7 @@ mod test {
             text: result.as_code(),
             source_type: syntax,
             file_name: "quick_test",
-            format_options: JsFormatOptions::default(),
+            format_context: JsFormatContext::default(),
         });
-
-        println!("{}", result.as_code());
     }
 }

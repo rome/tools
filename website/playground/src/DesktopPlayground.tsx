@@ -1,10 +1,16 @@
 import { PlaygroundProps } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { createSetter, getLanguage } from "./utils";
+import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import ReactJson from "react-json-view";
+//@ts-ignore
+import SuccessIcon from "../assets/success.svg?component";
+//@ts-ignore
+import FailedIcon from "../assets/failed.svg?component";
+//@ts-ignore
+import CopyIcon from "../assets/copy.svg?component";
+import { useEffect, useState } from "react";
 
 export default function DesktopPlayground(
 	{
@@ -15,7 +21,35 @@ export default function DesktopPlayground(
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;
+	const [clipboardStatus, setClipboardStatus] = useState<
+		"success" | "failed" | "normal"
+	>("normal");
 	const language = getLanguage(isJsx, isTypeScript);
+
+	useEffect(
+		() => {
+			if (clipboardStatus !== "normal") {
+				setClipboardStatus("normal");
+			}
+		},
+		[formatter_ir],
+	);
+
+	const copyToClipboard = async () => {
+		if (!navigator.clipboard) {
+			setClipboardStatus("failed");
+			console.error(
+				"Your browser does not support clipboard, could not copy the text",
+			);
+		}
+		try {
+			await navigator.clipboard.writeText(formatter_ir);
+			setClipboardStatus("success");
+		} catch (err: any) {
+			setClipboardStatus("failed");
+			console.error(err.toString());
+		}
+	};
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
@@ -98,6 +132,11 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
+							<button className="bg-gray-300 px-2 py-2 text-white absolute right-0 top--1 mr-5 flex items-center rounded-md" onClick={copyToClipboard}>
+								{clipboardStatus === 'success' && <SuccessIcon style={{width: 16, height: 16, marginRight: 5}} />}
+								{clipboardStatus === 'failed' && <FailedIcon style={{width: 16, height: 16, marginRight: 5}} />}
+								<CopyIcon style={{width: 16, height: 16}} />
+							</button>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>

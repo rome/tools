@@ -4,11 +4,8 @@ use crate::generated::FormatJsAnyDeclaration;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyDeclaration;
 impl FormatRule<JsAnyDeclaration> for FormatJsAnyDeclaration {
-    type Options = JsFormatOptions;
-    fn format(
-        node: &JsAnyDeclaration,
-        formatter: &Formatter<Self::Options>,
-    ) -> FormatResult<FormatElement> {
+    type Context = JsFormatContext;
+    fn format(node: &JsAnyDeclaration, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         match node {
             JsAnyDeclaration::JsClassDeclaration(node) => formatted![formatter, [node.format()]],
             JsAnyDeclaration::JsFunctionDeclaration(node) => formatted![formatter, [node.format()]],

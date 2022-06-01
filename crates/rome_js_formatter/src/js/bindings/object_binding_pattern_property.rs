@@ -9,7 +9,7 @@ impl FormatNodeFields<JsObjectBindingPatternProperty>
 {
     fn format_fields(
         node: &JsObjectBindingPatternProperty,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsObjectBindingPatternPropertyFields {
             member,

@@ -5,7 +5,7 @@ use rome_js_syntax::{JsxOpeningElement, JsxOpeningElementFields};
 impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
     fn format_fields(
         node: &JsxOpeningElement,
-        formatter: &Formatter<JsFormatOptions>,
+        formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let JsxOpeningElementFields {
             l_angle_token,
