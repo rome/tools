@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::{TsIndexSignatureParameter, TsIndexSignatureParameterFields};
 
 impl FormatNodeFields<TsIndexSignatureParameter> for FormatNodeRule<TsIndexSignatureParameter> {

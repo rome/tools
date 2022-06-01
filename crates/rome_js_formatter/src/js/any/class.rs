@@ -1,5 +1,5 @@
 use crate::generated::FormatJsAnyClass;
-use rome_formatter::{write};
+use rome_formatter::write;
 
 use crate::prelude::*;
 use rome_js_syntax::JsAnyClass;

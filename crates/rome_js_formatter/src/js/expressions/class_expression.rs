@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::{JsAnyClass, JsClassExpression};
 
 impl FormatNodeFields<JsClassExpression> for FormatNodeRule<JsClassExpression> {

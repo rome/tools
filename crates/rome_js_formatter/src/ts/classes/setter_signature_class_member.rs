@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::{TsSetterSignatureClassMember, TsSetterSignatureClassMemberFields};
 
 impl FormatNodeFields<TsSetterSignatureClassMember>

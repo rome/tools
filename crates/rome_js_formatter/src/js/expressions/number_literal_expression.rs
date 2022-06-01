@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::JsNumberLiteralExpression;
 use rome_js_syntax::JsNumberLiteralExpressionFields;
 
