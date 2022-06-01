@@ -6,6 +6,6 @@ impl FormatRule<JsClassMemberList> for FormatJsClassMemberList {
     type Context = JsFormatContext;
 
     fn format(node: &JsClassMemberList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list_with_hard_line(node))
+        Ok(formatter.format_list(node))
     }
 }

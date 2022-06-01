@@ -21,10 +21,7 @@ impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
                 &l_curly_token?,
                 formatted![
                     formatter,
-                    [
-                        directives.format(),
-                        formatter.format_list_with_hard_line(&statements),
-                    ]
+                    [directives.format(), formatter.format_list(&statements),]
                 ]?,
                 &r_curly_token?,
             )

@@ -6,6 +6,6 @@ impl FormatRule<JsStatementList> for FormatJsStatementList {
     type Context = JsFormatContext;
 
     fn format(node: &JsStatementList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list_with_hard_line(node))
+        Ok(formatter.format_list(node))
     }
 }

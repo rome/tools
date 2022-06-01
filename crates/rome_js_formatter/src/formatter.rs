@@ -2,9 +2,7 @@ use crate::prelude::*;
 use crate::{AsFormat, JsFormatContext};
 use rome_formatter::{normalize_newlines, FormatResult, GroupId, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{
-    AstNode, AstNodeList, AstSeparatedList, Language, SyntaxNode, SyntaxTriviaPiece, TextRange,
-};
+use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece, TextRange};
 use std::iter::once;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]

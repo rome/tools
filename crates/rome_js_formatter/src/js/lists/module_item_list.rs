@@ -6,6 +6,6 @@ impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
     type Context = JsFormatContext;
 
     fn format(node: &JsModuleItemList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list_with_hard_line(node))
+        Ok(formatter.format_list(node))
     }
 }
