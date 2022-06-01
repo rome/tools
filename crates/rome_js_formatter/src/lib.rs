@@ -37,7 +37,7 @@ pub trait AsFormat<'a> {
     fn format(&'a self) -> Self::Format;
 }
 
-/// Implement [AsFormat] for all types that have an associated [FormatRule].
+/// Implement [AsFormat] for references to types that implement [AsFormat].
 impl<'a, T> AsFormat<'a> for &'a T
 where
     T: AsFormat<'a>,
@@ -100,7 +100,7 @@ where
     }
 }
 
-/// Implement [AsFormat] for [Option] when `T` implements [AsFormat]
+/// Implement [IntoFormat] for [Option] when `T` implements [IntoFormat]
 ///
 /// Allows to call format on optional AST fields without having to unwrap the field first.
 impl<T> IntoFormat for Option<T>
