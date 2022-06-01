@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::AsFormat;
 
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
     JsLanguage,
@@ -31,7 +31,7 @@ where
         join.entry(
             node.syntax(),
             &format_with(|f| {
-                write!(f, [group_elements(&node.format())])?;
+                write!(f, [group_elements(node.format())])?;
 
                 if is_disallow {
                     // Trailing separators are disallowed, replace it with an empty element
@@ -47,10 +47,10 @@ where
                 } else if let Some(separator) = element.trailing_separator()? {
                     write!(
                         f,
-                        [f.format_replaced(separator, &if_group_breaks(&token(",")))]
+                        [f.format_replaced(separator, &if_group_breaks(token(",")))]
                     )?;
                 } else {
-                    write!(f, [if_group_breaks(&token(","))])?;
+                    write!(f, [if_group_breaks(token(","))])?;
                 };
 
                 Ok(())

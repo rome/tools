@@ -35,12 +35,9 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         match node.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
-                [group_elements(&format_args![
+                [group_elements(format_args![
                     token("("),
-                    soft_block_indent(&format_args![
-                        binding.format(),
-                        if_group_breaks(&token(",")),
-                    ]),
+                    soft_block_indent(format_args![binding.format(), if_group_breaks(token(",")),]),
                     token(")"),
                 ])]
             )?,
@@ -100,7 +97,7 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         } else {
             write!(
                 f,
-                [group_elements(&soft_line_indent_or_space(
+                [group_elements(soft_line_indent_or_space(
                     &node.body().format()
                 ))]
             )?;

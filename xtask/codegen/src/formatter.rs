@@ -312,7 +312,7 @@ pub fn generate_formatter() {
                     type Context = JsFormatContext;
 
                     fn format(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
-                        f.join_with(&space_token()).entries(node.try_format_nodes()).finish()
+                        f.join_with(space_token()).entries(node.try_format_nodes()).finish()
                     }
                 }
             },

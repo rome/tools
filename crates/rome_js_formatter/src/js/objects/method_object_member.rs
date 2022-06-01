@@ -17,12 +17,13 @@ impl FormatNodeFields<JsMethodObjectMember> for FormatNodeRule<JsMethodObjectMem
             body,
         } = node.as_fields();
 
+        if let Some(async_token) = async_token {
+            write!(f, [async_token.format(), space_token()])?;
+        }
+
         write![
             f,
             [
-                async_token
-                    .format()
-                    .with_or_empty(|async_token, f| write![f, [async_token, space_token()]]),
                 star_token.format(),
                 name.format(),
                 type_parameters.format(),

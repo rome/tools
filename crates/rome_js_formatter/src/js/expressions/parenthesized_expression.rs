@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
-use rome_formatter::{write};
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::{
@@ -41,7 +41,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
                 f,
                 [
                     f.format_replaced(&l_paren_token?, &empty_element()),
-                    group_elements(&expression.format()),
+                    group_elements(expression.format()),
                     f.format_replaced(&r_paren_token?, &empty_element()),
                 ]
             ]?;

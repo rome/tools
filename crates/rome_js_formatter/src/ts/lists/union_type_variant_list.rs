@@ -30,7 +30,7 @@ pub struct FormatTypeVariant {
 
 impl Format<JsFormatContext> for FormatTypeVariant {
     fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        write!(f, [group_elements(&self.element.node().format())])?;
+        write!(f, [group_elements(self.element.node().format())])?;
 
         let separator = self.element.trailing_separator()?;
 

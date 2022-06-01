@@ -1,4 +1,29 @@
-// TODO document macros
+/// Constructs the parameters for other formatting macros.
+///
+/// This macro functions by taking a list of objects implementing [Format]. It canonicalize the
+/// arguments into a single type.
+///
+/// This macro produces a value of type [`Arguments`]. This value can be passed to
+/// the macros within [`rome_formatter`]. All other formatting macros ([`format!`],
+/// [`write!`]) are proxied through this one. This macro avoids heap allocations.
+///
+/// You can use the [`Arguments`] value that `format_args!` returns in  `Format` contexts
+/// as seen below.
+///
+/// ```rust
+/// use rome_formatter::{SimpleFormatContext, token, format, format_args};
+///
+/// let formatted = format!(SimpleFormatContext::default(), [
+///     format_args!(token("Hello World"))
+/// ]).unwrap();
+///
+/// assert_eq!("Hello World", formatted.print().as_code());
+/// ```
+///
+/// [`Format`]: crate::Format
+/// [`Arguments`]: crate::Arguments
+/// [`format!`]: crate::format
+/// [`write!`]: crate::write
 #[macro_export]
 macro_rules! format_args {
     ($($value:expr),+ $(,)?) => {
@@ -10,10 +35,39 @@ macro_rules! format_args {
     }
 }
 
+/// Writes formatted data into a buffer.
+///
+/// This macro accepts a 'buffer' and a list of format arguments. Each argument will be formatted
+/// and the result will be passed to the buffer. The writer may be any value with a `write_fmt` method;
+/// generally this comes from an implementation of the [`Buffer`] trait.
+///
+/// # Examples
+///
+/// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, VecBuffer, write};
+///
+/// fn main() -> FormatResult<()> {
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+///     let mut buffer = VecBuffer::new(&mut state);
+///     write!(&mut buffer, [token("Hello"), space_token()])?;
+///     write!(&mut buffer, [token("World")])?;
+///
+///     assert_eq!(
+///         buffer.into_element(),
+///         FormatElement::from_iter([
+///             FormatElement::Token(Token::Static { text: "Hello" }),
+///             FormatElement::Space,
+///             FormatElement::Token(Token::Static { text: "World" }),
+///         ])
+///     );
+///
+///     Ok(())
+/// }
+/// ```
 #[macro_export]
 macro_rules! write {
     ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
-        use $crate::Buffer;
         $dst.write_fmt($crate::format_args!($($arg),+))
     }}
 }

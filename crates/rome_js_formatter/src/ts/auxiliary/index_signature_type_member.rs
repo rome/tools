@@ -15,12 +15,13 @@ impl FormatNodeFields<TsIndexSignatureTypeMember> for FormatNodeRule<TsIndexSign
             separator_token,
         } = node.as_fields();
 
+        if let Some(readonly_token) = readonly_token {
+            write!(f, [readonly_token.format(), space_token()])?;
+        }
+
         write![
             f,
             [
-                readonly_token
-                    .format()
-                    .with_or_empty(|readonly_token, f| write![f, [readonly_token, space_token()]]),
                 l_brack_token.format(),
                 parameter.format(),
                 r_brack_token.format(),

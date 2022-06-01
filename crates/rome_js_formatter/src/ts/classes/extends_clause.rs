@@ -15,13 +15,13 @@ impl FormatNodeFields<TsExtendsClause> for FormatNodeRule<TsExtendsClause> {
 
         write!(
             f,
-            [group_elements(&format_args!(
-                if_group_breaks(&block_indent(&format_args![
+            [group_elements(format_args!(
+                if_group_breaks(block_indent(format_args![
                     &extends_token,
                     space_token(),
                     soft_block_indent(&types)
                 ])),
-                if_group_fits_on_single_line(&format_args![&extends_token, space_token(), &types]),
+                if_group_fits_on_line(format_args![&extends_token, space_token(), &types]),
             ))]
         )
     }

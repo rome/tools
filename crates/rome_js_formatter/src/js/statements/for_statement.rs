@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write};
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsAnyStatement;
@@ -61,6 +61,6 @@ impl FormatNodeFields<JsForStatement> for FormatNodeRule<JsForStatement> {
             }
         });
 
-        write!(f, [group_elements(&content)])
+        write!(f, [group_elements(content)])
     }
 }

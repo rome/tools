@@ -7,7 +7,7 @@ impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList
     type Context = JsFormatContext;
 
     fn format(node: &JsImportAssertionEntryList, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join_with(&soft_line_break_or_space())
+        f.join_with(soft_line_break_or_space())
             .entries(node.format_separated(token(",")))
             .finish()
     }

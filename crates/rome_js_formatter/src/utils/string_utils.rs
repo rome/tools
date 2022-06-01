@@ -1,7 +1,7 @@
 use crate::context::QuoteStyle;
 use crate::prelude::*;
 use crate::utils::string_utils::CharSignal::AlreadyPrinted;
-use rome_formatter::{format_args, write, Buffer};
+use rome_formatter::{write, Buffer};
 use rome_js_syntax::JsSyntaxToken;
 use std::borrow::Cow;
 

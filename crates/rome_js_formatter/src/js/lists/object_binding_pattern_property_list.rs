@@ -22,7 +22,7 @@ impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPat
             TrailingSeparator::Allowed
         };
 
-        f.join_with(&soft_line_break_or_space())
+        f.join_with(soft_line_break_or_space())
             .entries(node.format_separated_with_options(
                 token(","),
                 FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),

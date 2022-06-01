@@ -35,7 +35,7 @@ impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
         let has_newline = has_leading_newline(members.syntax());
 
         let members = format_with(|f| {
-            f.join_with(&if has_newline {
+            f.join_with(if has_newline {
                 hard_line_break()
             } else {
                 soft_line_break_or_space()

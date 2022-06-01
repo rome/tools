@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
 
@@ -35,10 +35,12 @@ impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement>
                 space_token(),
                 f.delimited(&l_paren_token?, &test.format(), &r_paren_token?,)
                     .soft_block_indent(),
-                semicolon_token
-                    .format()
-                    .or_format(|f| write!(f, [token(";")]))
             ]
-        ]
+        ]?;
+
+        match semicolon_token {
+            Some(semicolon_token) => write!(f, [semicolon_token.format()]),
+            None => write!(f, [token(";")]),
+        }
     }
 }

@@ -7,7 +7,7 @@ impl FormatRule<JsConstructorModifierList> for FormatJsConstructorModifierList {
     type Context = JsFormatContext;
 
     fn format(node: &JsConstructorModifierList, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join_with(&space_token())
+        f.join_with(space_token())
             .entries(node.iter().formatted())
             .finish()
     }

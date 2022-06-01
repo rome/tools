@@ -84,7 +84,7 @@ fn write_consequent_as_block(f: &mut JsFormatter, stmt: JsAnyStatement) -> Forma
         [
             space_token(),
             token("{"),
-            block_indent(&stmt.format()),
+            block_indent(stmt.format()),
             token("}"),
         ]
     ]

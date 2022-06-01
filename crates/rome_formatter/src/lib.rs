@@ -46,8 +46,8 @@ pub use arguments::{Argument, Arguments};
 pub use buffer::{Buffer, BufferSnapshot, PreambleBuffer, VecBuffer};
 pub use builders::{
     block_indent, comment, empty_element, empty_line, group_elements, group_elements_with_options,
-    hard_line_break, if_group_breaks, if_group_fits_on_single_line, if_group_with_id_breaks,
-    indent, line_suffix, soft_block_indent, soft_line_break, soft_line_break_or_space,
+    hard_line_break, if_group_breaks, if_group_fits_on_line, if_group_with_id_breaks, indent,
+    line_suffix, soft_block_indent, soft_line_break, soft_line_break_or_space,
     soft_line_indent_or_space, space_token, token,
 };
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
@@ -232,7 +232,7 @@ impl Formatted {
         Printer::new(self.options.clone()).print(&self.root)
     }
 
-    pub fn print_with_indent(&self, indent: u16) -> Printed {
+    pub fn print_with_indent(self, indent: u16) -> Printed {
         Printer::new(self.options.clone()).print_with_indent(&self.root, indent)
     }
 
@@ -432,6 +432,14 @@ where
     }
 }
 
+impl<Context> Format<Context> for () {
+    #[inline]
+    fn format(&self, _: &mut Formatter<Context>) -> FormatResult<()> {
+        // Intentionally left empty
+        Ok(())
+    }
+}
+
 /// Rule that knows how to format an object of type [T].
 ///
 /// Implementing [Format] on the object itself is preferred over implementing [FormatRule] but
@@ -473,7 +481,7 @@ pub trait FormatRule<T> {
 ///     formatted
 /// }
 /// ```
-pub trait FormatWithRule<O>: Format<O> {
+pub trait FormatWithRule<Context>: Format<Context> {
     type Item;
 
     /// Returns the associated item
@@ -609,7 +617,10 @@ where
 /// assert_eq!("Hello World", formatted.print().as_code())
 /// ```
 ///
-pub fn write<O>(output: &mut dyn Buffer<Context = O>, args: Arguments<O>) -> FormatResult<()> {
+pub fn write<Context>(
+    output: &mut dyn Buffer<Context = Context>,
+    args: Arguments<Context>,
+) -> FormatResult<()> {
     let mut f = Formatter::new(output);
 
     f.write_fmt(args)
@@ -1032,8 +1043,8 @@ pub fn format_sub_tree<
     ))
 }
 
-impl<L: Language, O> Format<O> for SyntaxTriviaPieceComments<L> {
-    fn format(&self, f: &mut Formatter<O>) -> FormatResult<()> {
+impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let range = self.text_range();
 
         write!(
@@ -1053,8 +1064,8 @@ impl<L: Language, O> Format<O> for SyntaxTriviaPieceComments<L> {
 /// creates a new [`Formatter`] for every [`write`] call, whereas this structure stays alive
 /// for the whole process of formatting a root with [`format`].
 #[derive(Default)]
-pub struct FormatState<O> {
-    options: O,
+pub struct FormatState<Context> {
+    context: Context,
     group_id_builder: UniqueGroupIdBuilder,
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
@@ -1062,31 +1073,36 @@ pub struct FormatState<O> {
     pub printed_tokens: PrintedTokens,
 }
 
-impl<O> fmt::Debug for FormatState<O>
+impl<Context> fmt::Debug for FormatState<Context>
 where
-    O: fmt::Debug,
+    Context: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("FormatContext")
-            .field("options", &self.options)
+            .field("options", &self.context)
             .finish()
     }
 }
 
-impl<O> FormatState<O> {
+impl<Context> FormatState<Context> {
     /// Creates a new state with the given language specific context
-    pub fn new(options: O) -> Self {
+    pub fn new(context: Context) -> Self {
         Self {
-            options,
+            context,
             group_id_builder: Default::default(),
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
     }
 
-    /// Returns the [FormatOptions] specifying how to format the current CST
-    pub fn context(&self) -> &O {
-        &self.options
+    /// Returns the context specifying how to format the current CST
+    pub fn context(&self) -> &Context {
+        &self.context
+    }
+
+    /// Returns a mutable reference to the context
+    pub fn context_mut(&mut self) -> &mut Context {
+        &mut self.context
     }
 
     /// Creates a new group id that is unique to this document. The passed debug name is used in the

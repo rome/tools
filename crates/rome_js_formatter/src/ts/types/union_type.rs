@@ -24,7 +24,7 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
                         f,
                         [f.format_replaced(
                             &token,
-                            &if_group_breaks(&format_args!(
+                            &if_group_breaks(format_args!(
                                 FormatTrimmedToken::new(&token),
                                 space_token()
                             ))
@@ -33,7 +33,7 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
                 }
                 None => write!(
                     f,
-                    [if_group_breaks(&format_args![token("|"), space_token()])]
+                    [if_group_breaks(format_args![token("|"), space_token()])]
                 ),
             }
         });
@@ -50,7 +50,7 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
         write![
             f,
             [
-                group_elements(&indent(&format_args![
+                group_elements(indent(format_args![
                     soft_line_break(),
                     format_leading_separator_token,
                     format_once(|f| {

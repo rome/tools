@@ -52,6 +52,6 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
             }
         });
 
-        write!(f, [group_elements(&content)])
+        write!(f, [group_elements(content)])
     }
 }

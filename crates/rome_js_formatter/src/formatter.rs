@@ -236,14 +236,14 @@ where
                         write![
                             f,
                             [
-                                line_suffix(&format_args![space_token(), comment_piece]),
+                                line_suffix(format_args![space_token(), comment_piece]),
                                 expand_parent()
                             ]
                         ]
                     }
                 });
 
-                write!(f, [comment(&content)])?;
+                write!(f, [comment(content)])?;
             }
         }
 
@@ -487,7 +487,7 @@ where
                 Ok(())
             });
 
-            write!(buffer, [comment(&format_content)])?;
+            write!(buffer, [comment(format_content)])?;
 
             line_count = 0;
             trim_mode = TriviaPrintMode::Full;
@@ -653,7 +653,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_> {
                 DelimitedMode::BlockIndent => {
                     write!(
                         f,
-                        [block_indent(&format_args![
+                        [block_indent(format_args![
                             open_token_trailing_trivia,
                             content, close_token_leading_trivia
                         ])]
@@ -661,7 +661,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_> {
                 }
                 DelimitedMode::SoftBlockIndent(_) => write!(
                     f,
-                    [soft_block_indent(&format_args![
+                    [soft_block_indent(format_args![
                         open_token_trailing_trivia,
                         content, close_token_leading_trivia
                     ])]
@@ -682,7 +682,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_> {
                         write!(
                             f,
                             [
-                                indent(&format_once(|f| {
+                                indent(format_once(|f| {
                                     write!(f, [soft_line_break_or_space()])?;
                                     f.write_element(content)
                                 }),),
@@ -703,7 +703,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_> {
             DelimitedMode::BlockIndent => write!(f, [delimited])?,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
                 match group_id {
-                    None => write!(f, [group_elements(&delimited)])?,
+                    None => write!(f, [group_elements(delimited)])?,
                     Some(group_id) => write!(
                         f,
                         [group_elements_with_options(

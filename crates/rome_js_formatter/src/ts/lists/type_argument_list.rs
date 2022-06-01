@@ -7,7 +7,7 @@ impl FormatRule<TsTypeArgumentList> for FormatTsTypeArgumentList {
     type Context = JsFormatContext;
 
     fn format(node: &TsTypeArgumentList, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join_with(&soft_line_break_or_space())
+        f.join_with(soft_line_break_or_space())
             .entries(
                 node.format_separated_with_options(
                     token(","),

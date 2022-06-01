@@ -24,7 +24,7 @@ impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType>
                         f,
                         [f.format_replaced(
                             &token,
-                            &if_group_breaks(&format_args!(
+                            &if_group_breaks(format_args!(
                                 FormatTrimmedToken::new(&token),
                                 space_token()
                             ))
@@ -33,14 +33,14 @@ impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType>
                 }
                 None => write!(
                     f,
-                    [if_group_breaks(&format_args![token("&"), space_token()])]
+                    [if_group_breaks(format_args![token("&"), space_token()])]
                 ),
             }
         });
 
         write!(
             f,
-            [group_elements(&indent(&format_args!(
+            [group_elements(indent(format_args!(
                 soft_line_break(),
                 leading_separator_token,
                 types.format()

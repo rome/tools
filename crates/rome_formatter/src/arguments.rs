@@ -1,5 +1,5 @@
 use super::{Buffer, Format, Formatter};
-use crate::FormatResult;
+use crate::{FormatContext, FormatResult, Formatted};
 use std::ffi::c_void;
 use std::marker::PhantomData;
 
@@ -97,6 +97,18 @@ impl<O> Format<O> for Arguments<'_, O> {
     }
 }
 
+impl<Context> std::fmt::Debug for Arguments<'_, Context>
+where
+    Context: Default + FormatContext,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match crate::format!(Context::default(), [self]) {
+            Ok(formatted) => Formatted::fmt(&formatted, f),
+            Err(err) => std::write!(f, "Err({err})"),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
@@ -104,11 +116,8 @@ mod tests {
 
     #[test]
     fn test_nesting() {
-        std::format_args!("test {}", "a");
-        // Format_arguments not very useful, but I guess the same as normal format_args
-
-        let mut state = FormatState::new(());
-        let mut buffer = VecBuffer::new(&mut state);
+        let mut context = FormatState::new(());
+        let mut buffer = VecBuffer::new(&mut context);
 
         write!(
             &mut buffer,
@@ -117,7 +126,7 @@ mod tests {
                 space_token(),
                 token("a"),
                 space_token(),
-                group_elements(&format_args!(token("("), token(")")))
+                group_elements(format_args!(token("("), token(")")))
             ]
         )
         .unwrap();

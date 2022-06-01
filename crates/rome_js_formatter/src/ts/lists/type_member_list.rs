@@ -12,7 +12,7 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
         let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 
-        f.join_with(&soft_line_break_or_space())
+        f.join_with(soft_line_break_or_space())
             .entries(items.enumerate().map(|(index, member)| TsTypeMemberItem {
                 last: index == last_index,
                 member,
@@ -41,7 +41,7 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
 
         write!(
             f,
-            [group_elements(&format_once(|f| {
+            [group_elements(format_once(|f| {
                 f.write_element(formatted_element)
             }))]
         )?;
@@ -50,7 +50,7 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
             // Children don't format the separator on purpose, so it's up to the parent - this node,
             // to decide to print their separator
             if self.last {
-                write!(f, [if_group_breaks(&token(";"))])?;
+                write!(f, [if_group_breaks(token(";"))])?;
             } else {
                 write!(f, [token(";")])?;
             }

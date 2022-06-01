@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write};
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsTryFinallyStatement;
@@ -14,18 +14,12 @@ impl FormatNodeFields<JsTryFinallyStatement> for FormatNodeRule<JsTryFinallyStat
             finally_clause,
         } = node.as_fields();
 
-        write![
-            f,
-            [
-                try_token.format(),
-                space_token(),
-                body.format(),
-                catch_clause
-                    .format()
-                    .with_or_empty(|catch_clause, f| write![f, [space_token(), catch_clause]]),
-                space_token(),
-                finally_clause.format()
-            ]
-        ]
+        write![f, [try_token.format(), space_token(), body.format(),]]?;
+
+        if let Some(catch_clause) = catch_clause {
+            write!(f, [space_token(), catch_clause.format()])?;
+        }
+
+        write!(f, [space_token(), finally_clause.format()])
     }
 }

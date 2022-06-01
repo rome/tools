@@ -24,11 +24,11 @@ impl FormatNodeFields<JsForInStatement> for FormatNodeRule<JsForInStatement> {
 
         write!(
             f,
-            [group_elements(&format_args!(
+            [group_elements(format_args!(
                 for_token,
                 space_token(),
                 l_paren_token.format(),
-                group_elements(&initializer),
+                group_elements(initializer),
                 space_token(),
                 in_token,
                 space_token(),

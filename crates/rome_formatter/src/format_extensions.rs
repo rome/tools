@@ -3,7 +3,6 @@ use std::cell::RefCell;
 use std::marker::PhantomData;
 
 use crate::{write, Buffer, VecBuffer};
-use rome_rowan::SyntaxResult;
 
 /// Utility trait used to simplify the formatting of optional objects that are formattable.
 ///
@@ -48,144 +47,13 @@ pub trait FormatOptional<O> {
     ///         ]
     ///     )
     /// );
-    fn with_or_empty<With>(
-        &self,
-        with: With,
-    ) -> FormatWithOr<With, fn(&mut Formatter<O>) -> FormatResult<()>, O>
-    where
-        With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>,
-    {
-        self.with_or(with, |_| Ok(()))
-    }
-
-    /// This function tries to format an optional formattable object as is. If the object is [None],
-    /// it calls the passed closure, which has to return a [crate::FormatElement]
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::prelude::*;
-    /// use rome_formatter::{write, format};
-    /// use rome_rowan::TextSize;
-    ///
-    /// struct MyFormat;
-    ///
-    /// impl Format<SimpleFormatContext> for MyFormat {
-    ///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-    ///         write!(f, [token("MyToken")])
-    ///     }
-    /// }
-    ///
-    /// let none_token: Option<MyFormat> = None;
-    ///
-    /// assert_eq!(
-    ///     format!(SimpleFormatContext::default(), [token(" other result")]),
-    ///     format!(
-    ///         SimpleFormatContext::default(),
-    ///         [none_token.or_format(|f| write!(f, [token(" other result")]))]
-    ///     )
-    /// );
-    fn or_format<Or>(&self, op: Or) -> OrFormat<Or, O>
-    where
-        Or: Fn(&mut Formatter<O>) -> FormatResult<()>,
-    {
-        self.with_or(|token, f| token.format(f), op)
-    }
-
-    /// If the object isn't [None], it will call the first closure which will accept formatted element.
-    ///
-    /// If the object is [None], the second closure will be called.
-    ///
-    /// Both closures have to return a [crate::FormatElement]. This function will make sure to wrap them into [Ok].
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::prelude::*;
-    /// use rome_formatter::{format, write};
-    /// use rome_rowan::TextSize;
-    ///
-    /// struct MyFormat;
-    ///
-    /// impl Format<SimpleFormatContext> for MyFormat {
-    ///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-    ///         write!(f, [token("MyToken")])
-    ///     }
-    /// }
-    ///
-    /// let none_token: Option<MyFormat> = None;
-    ///
-    /// assert_eq!(
-    ///     format!(SimpleFormatContext::default(), [token("empty")]),
-    ///     format!(
-    ///         SimpleFormatContext::default(),
-    ///         [
-    ///             // It writes the `or` result if called on `None`
-    ///             none_token.with_or(
-    ///                 |token, f| write!(f, [token]),
-    ///                 |f| write!(f, [token("empty")])
-    ///             )
-    ///         ]
-    ///     )
-    /// );
-    ///
-    /// assert_eq!(
-    ///     format!(SimpleFormatContext::default(), [space_token(), token("MyToken")]),
-    ///     format!(SimpleFormatContext::default(), [
-    ///         // Writes the first callback if called with `Some(value)`
-    ///         Some(MyFormat).with_or(
-    ///             |token, f| { write![f, [space_token(), token]]},
-    ///             |f| { write!(f, [token("empty")])}
-    ///         )
-    ///     ])
-    /// );
-    fn with_or<With, Or>(&self, with: With, op: Or) -> FormatWithOr<With, Or, O>
-    where
-        With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>,
-        Or: Fn(&mut Formatter<O>) -> FormatResult<()>;
-}
-
-/// Utility trait for formatting a formattable object with some additional content.
-pub trait FormatWith<O>: Format<O> {
-    /// Allows to chain a formattable object with another [elements](FormatElement)
-    ///
-    /// The function will decorate the result with [Ok]
-    ///
-    /// The formatted element is passed to the closure, which then can appended to additional elements.
-    /// This method is useful in case, for example, a token has to be chained with a space.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::prelude::*;
-    /// use rome_formatter::{write, format};
-    /// use rome_rowan::TextSize;
-    ///
-    /// struct MyFormat;
-    ///
-    /// impl Format<SimpleFormatContext> for MyFormat {
-    ///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-    ///         write!(f, [token("MyToken")])
-    ///     }
-    /// }
-    ///
-    /// assert_eq!(
-    ///     format!(SimpleFormatContext::default(), [token("MyToken"), space_token(), token("+")]),
-    ///     format!(SimpleFormatContext::default(), [
-    ///         MyFormat.with(|string_literal, f| {
-    ///             write!(f, [string_literal, space_token(), token("+")])
-    ///         })
-    ///     ])
-    /// )
-    fn with<With>(&self, with: With) -> FormatItemWith<With, O>
+    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, O>>
     where
         With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>;
 }
 
-pub struct FormatItemWith<'a, With, Options>
-where
-    With: Fn(&dyn Format<Options>, &mut Formatter<Options>) -> FormatResult<()>,
-{
+#[derive(Copy, Clone)]
+pub struct FormatItemWith<'a, With, Options> {
     with: With,
     inner: &'a dyn Format<Options>,
 }
@@ -199,72 +67,19 @@ where
     }
 }
 
-impl<F: Format<O>, O> FormatWith<O> for F {
-    fn with<With>(&self, with: With) -> FormatItemWith<With, O>
-    where
-        With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>,
-    {
-        FormatItemWith { with, inner: self }
-    }
-}
-
-impl<F: Format<O>, O> FormatOptional<O> for SyntaxResult<Option<F>> {
-    fn with_or<With, Or>(&self, with: With, op: Or) -> FormatWithOr<With, Or, O>
-    where
-        With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>,
-        Or: Fn(&mut Formatter<O>) -> FormatResult<()>,
-    {
-        match self {
-            Err(_) => FormatWithOr::With { inner: self, with },
-            Ok(Some(value)) => FormatWithOr::With { inner: value, with },
-            Ok(None) => FormatWithOr::Or(op),
-        }
+impl<With, Options> std::fmt::Debug for FormatItemWith<'_, With, Options> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_tuple("FormatItemWith").field(&"[closure]").finish()
     }
 }
 
 impl<F: Format<O>, O> FormatOptional<O> for Option<F> {
-    fn with_or<With, Or>(&self, with: With, op: Or) -> FormatWithOr<With, Or, O>
+    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, O>>
     where
         With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>,
-        Or: Fn(&mut Formatter<O>) -> FormatResult<()>,
     {
-        match self {
-            None => FormatWithOr::Or(op),
-            Some(value) => FormatWithOr::With { inner: value, with },
-        }
-    }
-}
-
-pub type OrFormat<'a, Or, Options> = FormatWithOr<
-    'a,
-    fn(&dyn Format<Options>, &mut Formatter<Options>) -> FormatResult<()>,
-    Or,
-    Options,
->;
-
-pub enum FormatWithOr<'a, With, Or, Options>
-where
-    With: Fn(&dyn Format<Options>, &mut Formatter<Options>) -> FormatResult<()>,
-    Or: Fn(&mut Formatter<Options>) -> FormatResult<()>,
-{
-    With {
-        inner: &'a dyn Format<Options>,
-        with: With,
-    },
-    Or(Or),
-}
-
-impl<'a, With, Or, Options> Format<Options> for FormatWithOr<'a, With, Or, Options>
-where
-    With: Fn(&dyn Format<Options>, &mut Formatter<Options>) -> FormatResult<()>,
-    Or: Fn(&mut Formatter<Options>) -> FormatResult<()>,
-{
-    #[inline]
-    fn format(&self, formatter: &mut Formatter<Options>) -> FormatResult<()> {
-        match self {
-            FormatWithOr::Or(op) => op(formatter),
-            FormatWithOr::With { inner, with } => with(inner, formatter),
-        }
+        self.as_ref()
+            .map(|value| FormatItemWith { inner: value, with })
     }
 }
 

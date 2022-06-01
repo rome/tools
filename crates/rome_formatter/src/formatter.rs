@@ -13,12 +13,12 @@ pub struct Formatter<'buf, Context> {
 }
 
 impl<'buf, Context> Formatter<'buf, Context> {
-    /// Creates a new context that uses the given formatter options
+    /// Creates a new context that uses the given formatter context
     pub fn new(buffer: &'buf mut (dyn Buffer<Context = Context> + 'buf)) -> Self {
         Self { buffer }
     }
 
-    /// Returns the [FormatOptions] specifying how to format the current CST
+    /// Returns the Context specifying how to format the current CST
     pub fn context(&self) -> &Context {
         self.state().context()
     }
@@ -30,7 +30,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
         self.state().group_id(debug_name)
     }
 
-    /// Concatenates multiple [Format].
+    /// Joins multiple [Format] together without any separator
     ///
     /// ## Examples
     ///
@@ -53,11 +53,11 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///     formatted.print().as_code()
     /// )
     /// ```
-    pub fn join<'a>(&'a mut self) -> JoinBuilder<'a, '_, 'buf, Context> {
+    pub fn join<'a>(&'a mut self) -> JoinBuilder<'a, 'buf, (), Context> {
         JoinBuilder::new(self)
     }
 
-    /// Joins the elements by placing a given separator between elements.
+    /// Joins the objects by placing the specified separator between every two items.
     ///
     /// ## Examples
     ///
@@ -68,7 +68,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::prelude::*;
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.join_with(&format_args!(token(","), space_token()))
+    ///     f.join_with(format_args!(token(","), space_token()))
     ///         .entry(&token("1"))
     ///         .entry(&token("2"))
     ///         .entry(&token("3"))
@@ -81,10 +81,13 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///     formatted.print().as_code()
     /// );
     /// ```
-    pub fn join_with<'a, 'joiner>(
+    pub fn join_with<'a, Joiner>(
         &'a mut self,
-        joiner: &'joiner dyn Format<Context>,
-    ) -> JoinBuilder<'a, 'joiner, 'buf, Context> {
+        joiner: Joiner,
+    ) -> JoinBuilder<'a, 'buf, Joiner, Context>
+    where
+        Joiner: Format<Context>,
+    {
         JoinBuilder::with(self, joiner)
     }
 
@@ -96,25 +99,21 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// separating the elements in the original file.
     pub fn join_nodes_with_soft_line<'a>(
         &'a mut self,
-    ) -> JoinNodesBuilder<'a, 'buf, 'static, Context> {
-        const SOFT_LINE_BREAK_OR_SPACE: Line = soft_line_break_or_space();
-        JoinNodesBuilder::new(&SOFT_LINE_BREAK_OR_SPACE, self)
+    ) -> JoinNodesBuilder<'a, 'buf, Line, Context> {
+        JoinNodesBuilder::new(soft_line_break_or_space(), self)
     }
 
-    /// Specialized version of [join_elements] for joining SyntaxNodes separated by one or more
+    /// Specialized version of [join_with] for joining SyntaxNodes separated by one or more
     /// line breaks depending on the input file.
     ///
     /// This functions inspects the input source and separates consecutive elements with either
     /// a [hard_line_break] or [empty_line] depending on how many line breaks were separating the
     /// elements in the original file.
-    pub fn join_nodes_with_hardline<'a>(
-        &'a mut self,
-    ) -> JoinNodesBuilder<'a, 'buf, 'static, Context> {
-        const HARD_LINE_BREAK: Line = hard_line_break();
-        JoinNodesBuilder::new(&HARD_LINE_BREAK, self)
+    pub fn join_nodes_with_hardline<'a>(&'a mut self) -> JoinNodesBuilder<'a, 'buf, Line, Context> {
+        JoinNodesBuilder::new(hard_line_break(), self)
     }
 
-    /// Concatenates a list of [FormatElement]s with spaces and line breaks to fit
+    /// Concatenates a list of [Format] objects with spaces and line breaks to fit
     /// them on as few lines as possible. Each element introduces a conceptual group. The printer
     /// first tries to print the item in flat mode but then prints it in expanded mode if it doesn't fit.
     ///
@@ -125,7 +124,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::{format, format_args};
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.fill(&soft_line_break_or_space())
+    ///     f.fill(soft_line_break_or_space())
     ///         .entry(&token("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
     ///         .entry(&token("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
     ///         .entry(&token("cccccccccccccccccccccccccccccc"))
@@ -138,10 +137,13 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///     formatted.print().as_code()
     /// )
     /// ```
-    pub fn fill<'a, 'with>(
+    pub fn fill<'a, Separator>(
         &'a mut self,
-        separator: &'with dyn Format<Context>,
-    ) -> FillBuilder<'a, 'with, 'buf, Context> {
+        separator: Separator,
+    ) -> FillBuilder<'a, 'buf, Separator, Context>
+    where
+        Separator: Format<Context>,
+    {
         FillBuilder::new(self, separator)
     }
 }
