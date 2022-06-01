@@ -49,7 +49,9 @@ pub fn is_jsx_whitespace_expression(child: JsxAnyChild) -> bool {
     false
 }
 
-pub fn contains_text(children: &JsxChildList) -> bool {
+/// Checks if the children of an element contain meaningful text. See [is_meaningful_jsx_text] for
+/// definition of meaningful JSX text.
+pub fn contains_meaningful_text(children: &JsxChildList) -> bool {
     for child in children {
         if let JsxAnyChild::JsxText(jsx_text) = child {
             if let Ok(token) = jsx_text.value_token() {
@@ -91,35 +93,6 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
     !has_newline
 }
 
-pub fn contains_tag(children: &JsxChildList) -> bool {
-    for child in children {
-        if matches!(
-            child,
-            JsxAnyChild::JsxElement(_)
-                | JsxAnyChild::JsxSelfClosingElement(_)
-                | JsxAnyChild::JsxFragment(_)
-        ) {
-            return true;
-        }
-    }
-
-    false
-}
-
-pub fn contains_multiple_expressions(children: &JsxChildList) -> bool {
-    let mut seen_expression = false;
-    for child in children {
-        if matches!(child, JsxAnyChild::JsxExpressionChild(_)) {
-            if seen_expression {
-                return true;
-            }
-            seen_expression = true;
-        }
-    }
-
-    false
-}
-
 pub enum WrapState {
     NoWrap,
     WrapOnBreak,
@@ -150,7 +123,7 @@ pub enum WrapState {
 ///  <Route path="/" component={<HomePage />} />
 /// ```
 ///
-pub fn should_wrap_element_in_parens(node: &SyntaxNode<JsLanguage>) -> WrapState {
+pub fn get_wrap_state(node: &SyntaxNode<JsLanguage>) -> WrapState {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
     let mut ancestors = node.ancestors().skip(1);
@@ -160,7 +133,7 @@ pub fn should_wrap_element_in_parens(node: &SyntaxNode<JsLanguage>) -> WrapState
         .map(|parent| {
             let kind = parent.kind();
             if kind == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION {
-                return should_wrap_element_in_parens(&parent);
+                return get_wrap_state(&parent);
             }
             // If our parent is one of the following kinds, we do not need to wrap
             // the element in parentheses.

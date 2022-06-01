@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::jsx_utils::{should_wrap_element_in_parens, WrapState};
+use crate::utils::jsx_utils::{get_wrap_state, WrapState};
 use crate::FormatNodeFields;
 use rome_js_syntax::JsxTagExpression;
 
@@ -9,7 +9,7 @@ impl FormatNodeFields<JsxTagExpression> for FormatNodeRule<JsxTagExpression> {
         formatter: &JsFormatter,
     ) -> FormatResult<FormatElement> {
         let tag = formatted![formatter, [node.tag().format()]]?;
-        Ok(match should_wrap_element_in_parens(node.syntax()) {
+        Ok(match get_wrap_state(node.syntax()) {
             WrapState::WrapOnBreak => group_elements(formatted![
                 formatter,
                 [
