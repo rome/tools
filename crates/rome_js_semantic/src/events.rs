@@ -2,7 +2,7 @@
 
 use std::collections::VecDeque;
 
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange};
+use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange, TextSize};
 use rome_rowan::syntax::Preorder;
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
@@ -14,12 +14,21 @@ pub enum SemanticEvent {
     /// - Variable Declarations
     /// - Import bindings
     /// - Functions parameters
-    DeclarationFound {
-        range: TextRange,
-    },
+    DeclarationFound { range: TextRange },
 
-    ScopeStarted {
+    /// Signifies that a new scope was started
+    /// Currently generated for:
+    /// - Blocks
+    /// - Function body
+    ScopeStarted { range: TextRange },
+
+    /// Signifies that a new scope was ended
+    /// Currently generated for:
+    /// - Blocks
+    /// - Function body
+    ScopeEnded {
         range: TextRange,
+        started_at: TextSize,
     },
 }
 
@@ -28,6 +37,7 @@ impl SemanticEvent {
         match self {
             SemanticEvent::DeclarationFound { range } => range,
             SemanticEvent::ScopeStarted { range } => range,
+            SemanticEvent::ScopeEnded { range, .. } => range,
         }
     }
 
@@ -60,9 +70,8 @@ impl SemanticEvent {
 /// let mut extractor = SemanticEventExtractor::new();
 /// for e in tree.syntax().preorder() {
 ///     match e {
-///         WalkEvent::Enter(node) => {
-///             extractor.extract_from(&node);
-///         }
+///         WalkEvent::Enter(node) => extractor.enter(&node),
+///         WalkEvent::Leave(node) => extractor.leave(&node),
 ///         _ => {}
 ///     }
 ///     
@@ -74,18 +83,24 @@ impl SemanticEvent {
 #[derive(Default)]
 pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
+    scopes: Vec<Scope>,
+}
+
+struct Scope {
+    started_at: TextSize,
 }
 
 impl SemanticEventExtractor {
     pub fn new() -> Self {
         Self {
             stash: VecDeque::new(),
+            scopes: vec![],
         }
     }
 
     /// See [SemanticEvent] for a more detailed description
-    /// of which ```SyntaxNode``` generated which events.
-    pub fn extract_from(&mut self, node: &JsSyntaxNode) {
+    /// of which ```SyntaxNode``` generates which events.
+    pub fn enter(&mut self, node: &JsSyntaxNode) {
         use rome_js_syntax::JsSyntaxKind::*;
         use SemanticEvent::*;
 
@@ -93,20 +108,18 @@ impl SemanticEventExtractor {
             JS_IDENTIFIER_BINDING => self.stash.push_back(DeclarationFound {
                 range: node.text_range(),
             }),
+            JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.push_scope(node.text_range()),
+            _ => {}
+        }
+    }
 
-            JS_BLOCK_STATEMENT
-            | JS_FUNCTION_BODY
-            | JS_FOR_OF_STATEMENT
-            | JS_FOR_IN_STATEMENT
-            | JS_ARROW_FUNCTION_EXPRESSION
-            | JS_CONSTRUCTOR_CLASS_MEMBER
-            | JS_GETTER_CLASS_MEMBER
-            | JS_SETTER_CLASS_MEMBER
-            | JS_CATCH_CLAUSE
-            | JS_FINALLY_CLAUSE => self.stash.push_back(ScopeStarted {
-                range: node.text_range(),
-            }),
+    /// See [SemanticEvent] for a more detailed description
+    /// of which ```SyntaxNode``` generates which events.
+    pub fn leave(&mut self, node: &JsSyntaxNode) {
+        use rome_js_syntax::JsSyntaxKind::*;
 
+        match node.kind() {
+            JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.pop_scope(node.text_range()),
             _ => {}
         }
     }
@@ -114,6 +127,22 @@ impl SemanticEventExtractor {
     /// Return any previous extracted [SemanticEvent].
     pub fn pop(&mut self) -> Option<SemanticEvent> {
         self.stash.pop_front()
+    }
+
+    fn push_scope(&mut self, range: TextRange) {
+        self.stash.push_back(SemanticEvent::ScopeStarted { range });
+        self.scopes.push(Scope {
+            started_at: range.start(),
+        });
+    }
+
+    fn pop_scope(&mut self, range: TextRange) {
+        if let Some(scope) = self.scopes.pop() {
+            self.stash.push_back(SemanticEvent::ScopeEnded {
+                range,
+                started_at: scope.started_at,
+            });
+        }
     }
 }
 
@@ -135,9 +164,11 @@ impl Iterator for SemanticEventIterator {
                 use rome_js_syntax::WalkEvent::*;
                 match self.iter.next() {
                     Some(Enter(node)) => {
-                        self.extractor.extract_from(&node);
+                        self.extractor.enter(&node);
                     }
-                    Some(_) => {}
+                    Some(Leave(node)) => {
+                        self.extractor.leave(&node);
+                    }
                     None => break None,
                 }
             }
