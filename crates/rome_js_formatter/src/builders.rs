@@ -50,31 +50,19 @@ pub struct FormatLeadingTrivia<'a> {
 
 impl Format<JsFormatContext> for FormatLeadingTrivia<'_> {
     fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        // Checks whether the previous token has any trailing newline
-        let has_trailing_newline = self
-            .token
-            .prev_token()
-            .and_then(|token| token.trailing_trivia().last())
-            .map_or(false, |trivia| trivia.is_newline());
-
         let snapshot = Formatter::snapshot(f);
 
         match write_leading_trivia_pieces(
             self.token.leading_trivia().pieces(),
             self.trim_mode,
-            has_trailing_newline,
+            false,
             f,
         ) {
             Ok(()) => Ok(()),
             Err(_) => {
                 f.restore_snapshot(snapshot);
 
-                write_leading_trivia_with_skipped_tokens(
-                    self.token,
-                    self.trim_mode,
-                    has_trailing_newline,
-                    f,
-                )
+                write_leading_trivia_with_skipped_tokens(self.token, self.trim_mode, f)
             }
         }
     }
@@ -200,7 +188,6 @@ where
 fn write_leading_trivia_with_skipped_tokens(
     token: &JsSyntaxToken,
     trim_mode: TriviaPrintMode,
-    has_trailing_newline: bool,
     f: &mut Formatter<JsFormatContext>,
 ) -> FormatResult<()> {
     let mut skipped_trivia_range: Option<TextRange> = None;
@@ -226,13 +213,8 @@ fn write_leading_trivia_with_skipped_tokens(
                 // Format the  collected leading trivia as the leading trivia of this "skipped token trivia"
                 skipped_trivia_range = Some(piece.text_range());
 
-                write_leading_trivia_pieces(
-                    leading_trivia.drain(..),
-                    trim_mode,
-                    has_trailing_newline,
-                    f,
-                )
-                .expect("All skipped trivia pieces should have been filtered out");
+                write_leading_trivia_pieces(leading_trivia.drain(..), trim_mode, false, f)
+                    .expect("All skipped trivia pieces should have been filtered out");
             }
 
             after_newline = false;
