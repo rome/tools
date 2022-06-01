@@ -64,11 +64,8 @@ fn assert(code: &str) {
 
     let mut event_by_range = HashMap::new();
     for event in semantic_events(r.syntax()) {
-        match &event {
-            SemanticEvent::DeclarationFound { range, .. } => {
-                event_by_range.insert(*range, event);
-            }
-            _ => {}
+        if let SemanticEvent::DeclarationFound { range, .. } = &event {
+            event_by_range.insert(*range, event);
         }
     }
 

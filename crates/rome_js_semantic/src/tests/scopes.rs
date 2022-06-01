@@ -111,7 +111,7 @@ fn assert(code: &str) {
 
     // Check every scope start assertion is ok
 
-    for (_, assertion_range) in &scope_start_assertions {
+    for assertion_range in scope_start_assertions.values() {
         if let Some(symbol) = events_by_range.get(&assertion_range.start()) {
             match symbol {
                 SemanticEvent::ScopeStarted { .. } => {
