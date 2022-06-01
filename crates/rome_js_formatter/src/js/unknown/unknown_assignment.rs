@@ -5,6 +5,6 @@ use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsUnknownAssignment> for FormatNodeRule<JsUnknownAssignment> {
     fn format_fields(node: &JsUnknownAssignment, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_verbatim_node(node.syntax()).format(formatter)
+        format_unknown_node(node.syntax()).format(formatter)
     }
 }
