@@ -12,3 +12,7 @@ pub use crate::builders::{
     format_suppressed_node, format_trailing_trivia, format_trimmed_token, format_unknown_node,
     format_verbatim_node,
 };
+
+pub use crate::separated::{
+    FormatAstSeparatedListExtension, FormatSeparatedOptions, TrailingSeparator,
+};

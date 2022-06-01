@@ -1,4 +1,3 @@
-use crate::formatter::FormatSeparatedExtension;
 use crate::generated::FormatJsNamedImportSpecifierList;
 use crate::prelude::*;
 use rome_js_syntax::JsNamedImportSpecifierList;

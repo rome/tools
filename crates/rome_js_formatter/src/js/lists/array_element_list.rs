@@ -2,7 +2,6 @@ use crate::prelude::*;
 use rome_formatter::GroupId;
 use std::convert::Infallible;
 
-use crate::formatter::{FormatSeparatedExtension, FormatSeparatedOptions};
 use crate::utils::array::format_array_node;
 
 use crate::generated::FormatJsArrayElementList;
@@ -29,10 +28,10 @@ impl FormatJsArrayElementList {
             // Using format_separated is valid in this case as can_print_fill does not allow holes
             return f
                 .fill(&soft_line_break_or_space())
-                .entries(node.format_separated_with_options(
-                    token(","),
-                    FormatSeparatedOptions::default().with_group_id(group_id),
-                ))
+                .entries(
+                    node.format_separated(token(","))
+                        .with_options(FormatSeparatedOptions::default().with_group_id(group_id)),
+                )
                 .finish();
         }
 

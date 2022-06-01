@@ -1,4 +1,3 @@
-use crate::formatter::{FormatSeparatedExtension, FormatSeparatedOptions, TrailingSeparator};
 use crate::generated::FormatJsParameterList;
 use crate::prelude::*;
 use rome_js_syntax::{JsAnyParameter, JsParameterList};
@@ -20,8 +19,7 @@ impl FormatRule<JsParameterList> for FormatJsParameterList {
         };
 
         f.join_with(soft_line_break_or_space())
-            .entries(node.format_separated_with_options(
-                token(","),
+            .entries(node.format_separated(token(",")).with_options(
                 FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),
             ))
             .finish()

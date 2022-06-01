@@ -1,4 +1,3 @@
-use crate::formatter::FormatSeparatedExtension;
 use crate::generated::FormatTsTupleTypeElementList;
 use crate::prelude::*;
 use rome_js_syntax::TsTupleTypeElementList;

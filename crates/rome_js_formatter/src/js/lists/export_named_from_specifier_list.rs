@@ -1,4 +1,3 @@
-use crate::formatter::FormatSeparatedExtension;
 use crate::generated::FormatJsExportNamedFromSpecifierList;
 use crate::prelude::*;
 use rome_js_syntax::JsExportNamedFromSpecifierList;

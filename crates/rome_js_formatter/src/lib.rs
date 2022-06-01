@@ -1,12 +1,11 @@
 //! Rome's official JavaScript formatter.
 
 mod cst;
-pub mod formatter;
 mod js;
 mod jsx;
-pub mod prelude;
+pub(crate) mod prelude;
 mod ts;
-pub mod utils;
+pub(crate) mod utils;
 
 use crate::utils::has_formatter_suppressions;
 use rome_formatter::prelude::*;
@@ -475,8 +474,9 @@ function() {
 mod check_reformat;
 #[rustfmt::skip]
 mod generated;
-pub mod builders;
+pub(crate) mod builders;
 pub mod context;
+pub(crate) mod separated;
 
 #[cfg(test)]
 mod test {

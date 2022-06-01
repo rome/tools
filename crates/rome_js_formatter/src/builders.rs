@@ -609,10 +609,6 @@ impl<'a, Content> FormatDelimited<'a, Content> {
     pub fn soft_block_indent_with_group_id(self, group_id: Option<GroupId>) -> Self {
         self.with_mode(DelimitedMode::SoftBlockIndent(group_id))
     }
-
-    pub fn soft_block_spaces_with_group_id(self, group_id: Option<GroupId>) -> Self {
-        self.with_mode(DelimitedMode::SoftBlockSpaces(group_id))
-    }
 }
 
 impl<Content> Format<JsFormatContext> for FormatDelimited<'_, Content>
