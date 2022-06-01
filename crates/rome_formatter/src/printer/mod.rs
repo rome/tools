@@ -1185,7 +1185,7 @@ two lines`,
                     token("["),
                     soft_block_indent(format_args!(
                         format_with(|f| f
-                            .join_with(&format_args!(token(","), soft_line_break_or_space()))
+                            .join_with(format_args!(token(","), soft_line_break_or_space()))
                             .entries(&self.items)
                             .finish()),
                         if_group_breaks(token(",")),

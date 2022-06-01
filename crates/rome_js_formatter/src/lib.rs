@@ -85,15 +85,15 @@ where
 /// Used to convert this object into an object that can be formatted.
 ///
 /// The difference to [AsFormat] is that this trait takes ownership of `self`.
-pub trait IntoFormat<O> {
-    type Format: Format<O>;
+pub trait IntoFormat<Context> {
+    type Format: Format<Context>;
 
     fn into_format(self) -> Self::Format;
 }
 
-impl<T, O> IntoFormat<O> for SyntaxResult<T>
+impl<T, Context> IntoFormat<Context> for SyntaxResult<T>
 where
-    T: IntoFormat<O>,
+    T: IntoFormat<Context>,
 {
     type Format = SyntaxResult<T::Format>;
 
@@ -105,9 +105,9 @@ where
 /// Implement [IntoFormat] for [Option] when `T` implements [IntoFormat]
 ///
 /// Allows to call format on optional AST fields without having to unwrap the field first.
-impl<T, O> IntoFormat<O> for Option<T>
+impl<T, Context> IntoFormat<Context> for Option<T>
 where
-    T: IntoFormat<O>,
+    T: IntoFormat<Context>,
 {
     type Format = Option<T::Format>;
 
@@ -119,10 +119,10 @@ where
 /// Formatting specific [Iterator] extensions
 pub trait FormattedIterExt {
     /// Converts every item to an object that knows how to format it.
-    fn formatted<O>(self) -> FormattedIter<Self, Self::Item, O>
+    fn formatted<Context>(self) -> FormattedIter<Self, Self::Item, Context>
     where
         Self: Iterator + Sized,
-        Self::Item: IntoFormat<O>,
+        Self::Item: IntoFormat<Context>,
     {
         FormattedIter {
             inner: self,
@@ -133,18 +133,18 @@ pub trait FormattedIterExt {
 
 impl<I> FormattedIterExt for I where I: Iterator {}
 
-pub struct FormattedIter<Iter, Item, O>
+pub struct FormattedIter<Iter, Item, Context>
 where
     Iter: Iterator<Item = Item>,
 {
     inner: Iter,
-    options: PhantomData<O>,
+    options: PhantomData<Context>,
 }
 
-impl<Iter, Item, O> Iterator for FormattedIter<Iter, Item, O>
+impl<Iter, Item, Context> Iterator for FormattedIter<Iter, Item, Context>
 where
     Iter: Iterator<Item = Item>,
-    Item: IntoFormat<O>,
+    Item: IntoFormat<Context>,
 {
     type Item = Item::Format;
 
@@ -153,17 +153,17 @@ where
     }
 }
 
-impl<Iter, Item, O> FusedIterator for FormattedIter<Iter, Item, O>
+impl<Iter, Item, Context> FusedIterator for FormattedIter<Iter, Item, Context>
 where
     Iter: FusedIterator<Item = Item>,
-    Item: IntoFormat<O>,
+    Item: IntoFormat<Context>,
 {
 }
 
-impl<Iter, Item, O> ExactSizeIterator for FormattedIter<Iter, Item, O>
+impl<Iter, Item, Context> ExactSizeIterator for FormattedIter<Iter, Item, Context>
 where
     Iter: Iterator<Item = Item> + ExactSizeIterator,
-    Item: IntoFormat<O>,
+    Item: IntoFormat<Context>,
 {
 }
 

@@ -716,12 +716,7 @@ where
                     None => write!(f, [group_elements(delimited)])?,
                     Some(group_id) => write!(
                         f,
-                        [group_elements_with_options(
-                            &delimited,
-                            GroupElementsOptions {
-                                group_id: Some(*group_id),
-                            },
-                        )]
+                        [group_elements(&delimited).with_group_id(Some(*group_id))]
                     )?,
                 }
             }

@@ -304,9 +304,9 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
 /// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
 /// assert_eq!("", formatted.print().as_code());
 /// ```
-pub struct PreambleBuffer<'buf, Preamble, O> {
+pub struct PreambleBuffer<'buf, Preamble, Context> {
     /// The wrapped buffer
-    inner: &'buf mut dyn Buffer<Context = O>,
+    inner: &'buf mut dyn Buffer<Context = Context>,
 
     /// The pre-amble to write once the first content gets written to this buffer.
     preamble: Preamble,
@@ -315,8 +315,8 @@ pub struct PreambleBuffer<'buf, Preamble, O> {
     empty: bool,
 }
 
-impl<'buf, Preamble, O> PreambleBuffer<'buf, Preamble, O> {
-    pub fn new(inner: &'buf mut dyn Buffer<Context = O>, preamble: Preamble) -> Self {
+impl<'buf, Preamble, Context> PreambleBuffer<'buf, Preamble, Context> {
+    pub fn new(inner: &'buf mut dyn Buffer<Context = Context>, preamble: Preamble) -> Self {
         Self {
             inner,
             preamble,

@@ -28,13 +28,8 @@ where
 
         write!(f, [group_elements(node.format())])?;
 
-        let format_trailing_separator = format_with(|f| {
-            if let Some(group_id) = self.options.group_id {
-                write!(f, [if_group_with_id_breaks(&self.separator, group_id)])
-            } else {
-                write!(f, [if_group_breaks(&self.separator)])
-            }
-        });
+        let format_trailing_separator =
+            if_group_breaks(&self.separator).with_group_id(self.options.group_id);
 
         // Reuse the existing trailing separator or create it if it wasn't in the
         // input source. Only print the last trailing token if the outer group breaks

@@ -8,7 +8,7 @@ use crate::{write, Buffer, VecBuffer};
 ///
 /// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::with_or]
 /// function.
-pub trait FormatOptional<O> {
+pub trait FormatOptional<Context> {
     /// This function tries to format an optional object. If the object is [None]
     /// an [empty token](crate::FormatElement::Empty) is created. If exists, the utility
     /// formats the object and passes it to the closure.
@@ -47,36 +47,36 @@ pub trait FormatOptional<O> {
     ///         ]
     ///     )
     /// );
-    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, O>>
+    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, Context>>
     where
-        With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>;
+        With: Fn(&dyn Format<Context>, &mut Formatter<Context>) -> FormatResult<()>;
 }
 
 #[derive(Copy, Clone)]
-pub struct FormatItemWith<'a, With, Options> {
+pub struct FormatItemWith<'a, With, Context> {
     with: With,
-    inner: &'a dyn Format<Options>,
+    inner: &'a dyn Format<Context>,
 }
 
-impl<'a, With, Options> Format<Options> for FormatItemWith<'a, With, Options>
+impl<'a, With, Context> Format<Context> for FormatItemWith<'a, With, Context>
 where
-    With: Fn(&dyn Format<Options>, &mut Formatter<Options>) -> FormatResult<()>,
+    With: Fn(&dyn Format<Context>, &mut Formatter<Context>) -> FormatResult<()>,
 {
-    fn format(&self, f: &mut Formatter<Options>) -> FormatResult<()> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         (self.with)(self.inner, f)
     }
 }
 
-impl<With, Options> std::fmt::Debug for FormatItemWith<'_, With, Options> {
+impl<With, Context> std::fmt::Debug for FormatItemWith<'_, With, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("FormatItemWith").field(&"[closure]").finish()
     }
 }
 
-impl<F: Format<O>, O> FormatOptional<O> for Option<F> {
-    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, O>>
+impl<F: Format<Context>, Context> FormatOptional<Context> for Option<F> {
+    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, Context>>
     where
-        With: Fn(&dyn Format<O>, &mut Formatter<O>) -> FormatResult<()>,
+        With: Fn(&dyn Format<Context>, &mut Formatter<Context>) -> FormatResult<()>,
     {
         self.as_ref()
             .map(|value| FormatItemWith { inner: value, with })
@@ -85,7 +85,7 @@ impl<F: Format<O>, O> FormatOptional<O> for Option<F> {
 
 /// Utility trait that allows memorizing the output of a [Format].
 /// Useful to avoid re-formatting the same object twice.
-pub trait MemoizeFormat<O> {
+pub trait MemoizeFormat<Context> {
     /// Returns a formattable object that memoizes the result of `Format` by cloning.
     /// Mainly useful if the same sub-tree can appear twice in the formatted output because it's
     /// used inside of `if_group_breaks` or `if_group_fits_single_line`.
@@ -131,26 +131,26 @@ pub trait MemoizeFormat<O> {
     /// );
     /// ```
     ///
-    fn memoized(self) -> Memoized<Self, O>
+    fn memoized(self) -> Memoized<Self, Context>
     where
-        Self: Sized + Format<O>,
+        Self: Sized + Format<Context>,
     {
         Memoized::new(self)
     }
 }
 
-impl<T, O> MemoizeFormat<O> for T where T: Format<O> {}
+impl<T, Context> MemoizeFormat<Context> for T where T: Format<Context> {}
 
 /// Memoizes the output of its inner [Format] to avoid re-formatting a potential expensive object.
-pub struct Memoized<F, O> {
+pub struct Memoized<F, Context> {
     inner: F,
     memory: RefCell<Option<FormatResult<Vec<FormatElement>>>>,
-    options: PhantomData<O>,
+    options: PhantomData<Context>,
 }
 
-impl<F, O> Memoized<F, O>
+impl<F, Context> Memoized<F, Context>
 where
-    F: Format<O>,
+    F: Format<Context>,
 {
     fn new(inner: F) -> Self {
         Self {
@@ -161,11 +161,11 @@ where
     }
 }
 
-impl<F, Options> Format<Options> for Memoized<F, Options>
+impl<F, Context> Format<Context> for Memoized<F, Context>
 where
-    F: Format<Options>,
+    F: Format<Context>,
 {
-    fn format(&self, f: &mut Formatter<Options>) -> FormatResult<()> {
+    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         // Cached
         if let Some(memory) = self.memory.borrow().as_ref() {
             return match memory {

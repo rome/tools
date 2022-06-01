@@ -17,7 +17,7 @@ impl FormatNodeFields<JsCatchDeclaration> for FormatNodeRule<JsCatchDeclaration>
             f,
             [format_delimited(
                 &l_paren_token?,
-                &format_args![binding.format(), type_annotation.format()],
+                format_args![binding.format(), type_annotation.format()],
                 &r_paren_token?,
             )
             .soft_block_indent()]

@@ -27,9 +27,9 @@ impl<'fmt, Context> Argument<'fmt, Context> {
     #[doc(hidden)]
     #[inline]
     pub fn new<F: Format<Context>>(value: &'fmt F) -> Self {
-        fn formatter<F: Format<O>, O>(
+        fn formatter<F: Format<Context>, Context>(
             ptr: *const c_void,
-            fmt: &mut Formatter<O>,
+            fmt: &mut Formatter<Context>,
         ) -> FormatResult<()> {
             // SAFETY: Safe because the 'fmt lifetime is captured by the 'lifetime' field.
             F::format(unsafe { &*(ptr as *const F) }, fmt)

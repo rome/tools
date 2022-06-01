@@ -148,7 +148,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     }
 }
 
-impl<Options> Formatter<'_, Options> {
+impl<Context> Formatter<'_, Context> {
     /// Take a snapshot of the state of the formatter
     #[inline]
     pub fn snapshot(&self) -> FormatterSnapshot {
@@ -171,8 +171,8 @@ impl<Options> Formatter<'_, Options> {
     }
 }
 
-impl<O> Buffer for Formatter<'_, O> {
-    type Context = O;
+impl<Context> Buffer for Formatter<'_, Context> {
+    type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         self.buffer.write_element(element)

@@ -45,10 +45,10 @@ use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{Buffer, BufferSnapshot, PreambleBuffer, VecBuffer};
 pub use builders::{
-    block_indent, comment, empty_element, empty_line, group_elements, group_elements_with_options,
-    hard_line_break, if_group_breaks, if_group_fits_on_line, if_group_with_id_breaks, indent,
-    line_suffix, soft_block_indent, soft_line_break, soft_line_break_or_space,
-    soft_line_indent_or_space, space_token, token, BestFitting,
+    block_indent, comment, empty_element, empty_line, group_elements, hard_line_break,
+    if_group_breaks, if_group_fits_on_line, indent, line_suffix, soft_block_indent,
+    soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
+    BestFitting,
 };
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
@@ -670,8 +670,12 @@ where
 /// Formats a syntax node file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node<O: FormatContext, L: Language, N: FormatWithRule<O, Item = SyntaxNode<L>>>(
-    context: O,
+pub fn format_node<
+    Context: FormatContext,
+    L: Language,
+    N: FormatWithRule<Context, Item = SyntaxNode<L>>,
+>(
+    context: Context,
     root: &N,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {

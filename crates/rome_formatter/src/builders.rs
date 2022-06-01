@@ -759,7 +759,7 @@ pub const fn soft_block_indent<Content>(content: Content) -> BlockIndent<Content
 ///         token("name"),
 ///         space_token(),
 ///         token("="),
-///         soft_line_indent_or_space(&format_args![
+///         soft_line_indent_or_space(format_args![
 ///             token("firstName"),
 ///             space_token(),
 ///             token("+"),
@@ -943,19 +943,24 @@ pub struct GroupElementsOptions {
     pub group_id: Option<GroupId>,
 }
 
-/// Creates a group with a specific id. Useful for cases where `if_group_breaks` and `if_group_fits_on_line`
-/// shouldn't refer to the direct parent group.
-pub const fn group_elements_with_options<Content>(
-    content: Content,
-    options: GroupElementsOptions,
-) -> GroupElements<Content> {
-    GroupElements { content, options }
-}
-
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub struct GroupElements<Content> {
     content: Content,
     options: GroupElementsOptions,
+}
+
+impl<Content> GroupElements<Content> {
+    /// Creates a group with a specific id. Useful for cases where `if_group_breaks` and `if_group_fits_on_line`
+    /// shouldn't refer to the direct parent group.
+    pub fn with_options(mut self, options: GroupElementsOptions) -> Self {
+        self.options = options;
+        self
+    }
+
+    pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
+        self.options.group_id = group_id;
+        self
+    }
 }
 
 impl<Content, Context> Format<Context> for GroupElements<Content>
@@ -1126,68 +1131,6 @@ pub const fn if_group_breaks<Content>(content: Content) -> IfGroupBreaks<Content
     }
 }
 
-/// Inserts some content that the printer only prints if the group with the specified `group_id`
-/// is printed in multiline mode. The referred group must appear before this element in the document
-/// but doesn't have to one of its ancestors.
-///
-/// # Examples
-///
-/// Prints the trailing comma if the array group doesn't fit. The `group_id` is necessary
-/// because `fill` creates an implicit group around each item and tries to print the item in flat mode.
-/// The item `[4]` in this example fits on a single line but the trailing comma should still be printed
-///
-/// ```
-/// use rome_formatter::{format, format_args, write, LineWidth};
-/// use rome_formatter::prelude::*;
-///
-/// let options = SimpleFormatContext {
-///     line_width: LineWidth::try_from(20).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
-///
-/// let formatted = format!(options, [format_with(|f| {
-///     let group_id = f.group_id("array");
-///
-///     write!(f, [
-///         group_elements_with_options(
-///             &format_args![
-///                 token("["),
-///                 soft_block_indent(format_with(|f| {
-///                     f.fill(soft_line_break_or_space())
-///                         .entry(&token("1,"))
-///                         .entry(&token("234568789,"))
-///                         .entry(&token("3456789,"))
-///                         .entry(&format_args!(
-///                             token("["),
-///                             soft_block_indent(token("4")),
-///                             token("]"),
-///                             if_group_with_id_breaks(token(","), group_id)
-///                         ))
-///                         .finish()
-///                 })),
-///                 token("]")
-///             ],
-///             GroupElementsOptions { group_id: Some(group_id) }
-///         )
-///     ])
-/// })]).unwrap();
-///
-/// assert_eq!(
-///     "[\n\t1, 234568789,\n\t3456789, [4],\n]",
-///     formatted.print().as_code()
-/// );
-/// ```
-pub const fn if_group_with_id_breaks<Content>(
-    content: Content,
-    group_id: GroupId,
-) -> IfGroupBreaks<Content> {
-    IfGroupBreaks {
-        content,
-        group_id: Some(group_id),
-        mode: PrintMode::Expanded,
-    }
-}
-
 /// Adds a conditional content specific for `Group`s that fit on a single line. The content isn't
 /// emitted for `Group`s spanning multiple lines.
 ///
@@ -1260,26 +1203,68 @@ pub const fn if_group_fits_on_line<Content>(flat_content: Content) -> IfGroupBre
     }
 }
 
-/// Inserts some content that the printer only prints if the group with the specified `group_id`
-/// is printed in flat mode.
-///
-#[inline]
-pub const fn if_group_with_id_fits_on_line<Content>(
-    flat_content: Content,
-    id: GroupId,
-) -> IfGroupBreaks<Content> {
-    IfGroupBreaks {
-        mode: PrintMode::Flat,
-        group_id: Some(id),
-        content: flat_content,
-    }
-}
-
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub struct IfGroupBreaks<Content> {
     content: Content,
     group_id: Option<GroupId>,
     mode: PrintMode,
+}
+
+impl<Content> IfGroupBreaks<Content> {
+    /// Inserts some content that the printer only prints if the group with the specified `group_id`
+    /// is printed in multiline mode. The referred group must appear before this element in the document
+    /// but doesn't have to one of its ancestors.
+    ///
+    /// # Examples
+    ///
+    /// Prints the trailing comma if the array group doesn't fit. The `group_id` is necessary
+    /// because `fill` creates an implicit group around each item and tries to print the item in flat mode.
+    /// The item `[4]` in this example fits on a single line but the trailing comma should still be printed
+    ///
+    /// ```
+    /// use rome_formatter::{format, format_args, write, LineWidth};
+    /// use rome_formatter::prelude::*;
+    ///
+    /// let options = SimpleFormatContext {
+    ///     line_width: LineWidth::try_from(20).unwrap(),
+    ///     ..SimpleFormatContext::default()
+    /// };
+    ///
+    /// let formatted = format!(options, [format_with(|f| {
+    ///     let group_id = f.group_id("array");
+    ///
+    ///     write!(f, [
+    ///         group_elements(
+    ///             format_args![
+    ///                 token("["),
+    ///                 soft_block_indent(format_with(|f| {
+    ///                     f.fill(soft_line_break_or_space())
+    ///                         .entry(&token("1,"))
+    ///                         .entry(&token("234568789,"))
+    ///                         .entry(&token("3456789,"))
+    ///                         .entry(&format_args!(
+    ///                             token("["),
+    ///                             soft_block_indent(token("4")),
+    ///                             token("]"),
+    ///                             if_group_breaks(token(",")).with_group_id(Some(group_id))
+    ///                         ))
+    ///                         .finish()
+    ///                 })),
+    ///                 token("]")
+    ///             ],
+    ///         ).with_group_id(Some(group_id))
+    ///     ])
+    /// })]).unwrap();
+    ///
+    /// assert_eq!(
+    ///     "[\n\t1, 234568789,\n\t3456789, [4],\n]",
+    ///     formatted.print().as_code()
+    /// );
+    /// ```
+    pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
+        self.group_id = group_id;
+        self
+    }
 }
 
 impl<Content, Context> Format<Context> for IfGroupBreaks<Content>
