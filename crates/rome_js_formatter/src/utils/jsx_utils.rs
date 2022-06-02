@@ -5,7 +5,7 @@ use rome_js_syntax::kind::JsSyntaxKind;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsLanguage, JsxAnyChild, JsxChildList,
 };
-use rome_rowan::SyntaxNode;
+use rome_rowan::{AstNodeList, SyntaxNode};
 
 /// Creates either a space using an expression child and a string literal,
 /// or a regular space, depending on whether the group breaks or not.
