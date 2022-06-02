@@ -5,7 +5,7 @@ mod js;
 mod jsx;
 pub(crate) mod prelude;
 mod ts;
-pub(crate) mod utils;
+pub mod utils;
 
 use crate::utils::has_formatter_suppressions;
 use rome_formatter::prelude::*;
