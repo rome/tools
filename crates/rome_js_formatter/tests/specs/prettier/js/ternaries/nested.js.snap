@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
+assertion_line: 182
 expression: nested.js
 ---
 # Input
@@ -133,10 +133,12 @@ const StorybookLoader = (
           ? <LoaderStorybook />
           : match.params.storyId === "deal-list"
             ? <DealListStory />
-            : <Message>
-              <Title>{"Missing story book"}</Title>
-              <Content><BackButton /></Content>
-            </Message>
+            : (
+              <Message>
+                <Title>{"Missing story book"}</Title>
+                <Content><BackButton /></Content>
+              </Message>
+            )
 );
 
 const message = (i % 3) === 0 && (i % 5) === 0

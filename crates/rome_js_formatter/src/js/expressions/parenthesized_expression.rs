@@ -4,7 +4,7 @@ use crate::utils::{is_simple_expression, FormatPrecedence};
 use crate::FormatNodeFields;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
-    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
+    JsParenthesizedExpressionFields, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -22,7 +22,6 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node)?;
 
         let expression = expression?;
-        let kind = expression.syntax().kind();
 
         if is_simple_parenthesized_expression(node)? {
             formatted![
