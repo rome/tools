@@ -49,7 +49,7 @@ macro_rules! format_args {
 /// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, VecBuffer, write};
 ///
 /// fn main() -> FormatResult<()> {
-/// let mut state = FormatState::new(SimpleFormatContext::default());
+///     let mut state = FormatState::new(SimpleFormatContext::default());
 ///     let mut buffer = VecBuffer::new(&mut state);
 ///     write!(&mut buffer, [token("Hello"), space_token()])?;
 ///     write!(&mut buffer, [token("World")])?;
@@ -70,6 +70,41 @@ macro_rules! format_args {
 macro_rules! write {
     ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
         $dst.write_fmt($crate::format_args!($($arg),+))
+    }}
+}
+
+/// Writes formatted data into the given buffer and prints all written elements for a quick and dirty debugging.
+///
+/// An example:
+///
+/// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{FormatState, VecBuffer};
+///
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+///
+/// dbg_write!(&mut buffer, [token("Hello")]).unwrap();
+/// // ^-- prints: [src/main.rs:7][0] = StaticToken("Hello")
+///
+/// assert_eq!(buffer.into_element(), FormatElement::Token(Token::Static { text: "Hello" }));
+/// ```
+///
+/// Note that the macro is intended as debugging tool and therefore you should avoid having
+/// uses of it in version control for long periods (other than in tests and similar). Format output
+/// from production code is better done with `[write!]`
+#[macro_export]
+macro_rules! dbg_write {
+    ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
+        let mut count = 0;
+        let mut inspect = $crate::Inspect::new($dst, |element: &FormatElement| {
+            std::eprintln!(
+                "[{}:{}][{}] = {element:?}",
+                std::file!(), std::line!(), count
+            );
+            count += 1;
+        });
+        inspect.write_fmt($crate::format_args!($($arg),+))
     }}
 }
 

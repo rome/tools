@@ -379,3 +379,56 @@ struct PreambleBufferSnapshot {
     inner: BufferSnapshot,
     empty: bool,
 }
+
+/// Buffer that allows you inspecting elements as they get written to the formatter.
+pub struct Inspect<'inner, Context, Inspector> {
+    inner: &'inner mut dyn Buffer<Context = Context>,
+    inspector: Inspector,
+}
+
+impl<'inner, Context, Inspector> Inspect<'inner, Context, Inspector> {
+    pub fn new(inner: &'inner mut dyn Buffer<Context = Context>, inspector: Inspector) -> Self {
+        Self { inner, inspector }
+    }
+}
+
+impl<'inner, Context, Inspector> Buffer for Inspect<'inner, Context, Inspector>
+where
+    Inspector: FnMut(&FormatElement),
+{
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        (self.inspector)(&element);
+        self.inner.write_element(element)
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        self.inner.snapshot()
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        self.inner.restore_snapshot(snapshot)
+    }
+}
+
+pub trait BufferExtensions: Buffer + Sized {
+    /// Returns a new buffer that calls the passed inspector for every element that gets written to the output
+    #[must_use]
+    fn inspect<F>(&mut self, inspector: F) -> Inspect<Self::Context, F>
+    where
+        F: FnMut(&FormatElement),
+    {
+        Inspect::new(self, inspector)
+    }
+}
+
+impl<T> BufferExtensions for T where T: Buffer {}
