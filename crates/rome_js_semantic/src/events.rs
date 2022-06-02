@@ -169,7 +169,13 @@ impl Iterator for SemanticEventIterator {
                     Some(Leave(node)) => {
                         self.extractor.leave(&node);
                     }
-                    None => break None,
+                    None => {
+                        if let Some(e) = self.extractor.pop() {
+                            break Some(e);
+                        } else {
+                            break None;
+                        }
+                    }
                 }
             }
         }

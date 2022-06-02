@@ -1,3 +1,4 @@
+use rome_js_semantic::SemanticEvent;
 use rome_js_syntax::SourceType;
 
 use crate::check_file_encoding;
@@ -66,7 +67,9 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 // We do the same below because TS classifies some string literals as symbols and we also
                 // filter them below.
                 let name = x.str(&code);
-                !name.contains('\"') && !name.contains('\'')
+                matches!(x, SemanticEvent::DeclarationFound { .. })
+                    && !name.contains('\"')
+                    && !name.contains('\'')
             })
             .collect();
         actual.sort_by_key(|x| x.range().start());
