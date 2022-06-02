@@ -11,6 +11,7 @@ use rome_rowan::{AstNode, SyntaxResult};
 use std::cmp::Ordering;
 use std::fmt::Debug;
 use std::iter::FusedIterator;
+use std::ops::Deref;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
 ///
@@ -132,14 +133,14 @@ pub(crate) fn format_binary_like_expression(
         flatten_items.flatten_binary_expression_right_hand_side(root, None)?;
     }
 
-    write!(
-        f,
-        [FlattenedExpression::Group {
-            current: JsAnyBinaryLikeLeftExpression::JsAnyExpression(current_node.into_expression()),
-            expressions: flatten_items.items,
-            parenthesized: false
-        }]
-    )
+    let group = FlattenedExpression::Group {
+        current: JsAnyBinaryLikeLeftExpression::JsAnyExpression(current_node.into_expression()),
+        expressions_start: flatten_items.current_group_start,
+        expressions_end: flatten_items.len(),
+        parenthesized: false,
+    };
+
+    group.write(f, &flatten_items)
 }
 
 /// Small wrapper to identify the operation of an expression and deduce their precedence
@@ -306,6 +307,17 @@ fn should_indent_if_parent_inlines(current_node: &JsAnyBinaryLikeLeftExpression)
 #[derive(Debug, Default)]
 struct FlattenItems {
     items: Vec<FlattenItem>,
+
+    /// Position into `items` where the next group starts.
+    current_group_start: usize,
+}
+
+impl Deref for FlattenItems {
+    type Target = [FlattenItem];
+
+    fn deref(&self) -> &Self::Target {
+        &self.items
+    }
 }
 
 impl FlattenItems {
@@ -369,7 +381,8 @@ impl FlattenItems {
         let mut left_item = FlattenItem::new(
             FlattenedExpression::Group {
                 current: left,
-                expressions: std::mem::take(&mut self.items),
+                expressions_start: self.current_group_start,
+                expressions_end: self.items.len(),
                 parenthesized: left_parenthesized,
             },
             Some(operator_token),
@@ -380,6 +393,7 @@ impl FlattenItems {
             left_item = left_item.with_terminator(TrailingTerminator::HardLineBreak);
         }
 
+        self.current_group_start = self.len();
         self.items.push(left_item);
 
         let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(binary_like_expression.right()?);
@@ -462,14 +476,17 @@ enum FlattenedExpression {
         /// The binary expression that should be formatted now
         current: JsAnyBinaryLikeLeftExpression,
 
-        /// The left hand side expression  the current node
-        expressions: Vec<FlattenItem>,
+        /// Start end/index into the flattened items array from where the left hand side expressions start
+        expressions_start: usize,
+        expressions_end: usize,
+
+        /// Whether to parenthesize the expression
         parenthesized: bool,
     },
 }
 
-impl Format<JsFormatContext> for FlattenedExpression {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+impl FlattenedExpression {
+    fn write(&self, f: &mut JsFormatter, items: &[FlattenItem]) -> FormatResult<()> {
         match self {
             FlattenedExpression::Right { parent } => {
                 let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(parent.right()?);
@@ -482,16 +499,17 @@ impl Format<JsFormatContext> for FlattenedExpression {
             }
             FlattenedExpression::Group {
                 current,
-                expressions: left_expressions,
+                expressions_start,
+                expressions_end,
                 parenthesized,
             } => {
-                // take format element
+                let expressions = &items[*expressions_start..*expressions_end];
                 let content = format_with(|f| {
-                    let can_hard_group = can_hard_group(&left_expressions);
+                    let can_hard_group = can_hard_group(expressions);
 
-                    let mut groups = left_expressions.iter().map(|group| {
+                    let mut groups = expressions.iter().map(|group| {
                         format_with(|f| {
-                            write!(f, [&group.expression])?;
+                            group.expression.write(f, items)?;
 
                             if let Some(operator) = &group.operator {
                                 write!(f, [space_token(), operator.format()])?;
