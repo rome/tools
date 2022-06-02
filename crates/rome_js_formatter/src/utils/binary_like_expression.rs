@@ -170,25 +170,26 @@ enum BinaryLikeOperator {
 /// first `foo && bar` is computed and its result is then computed against `|| lorem`.
 ///
 /// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
-fn format_with_or_without_parenthesis(
+fn needs_parens(
     parent_operator: BinaryLikeOperator,
-    node: &JsSyntaxNode,
-    formatted_node: FormatElement,
-    f: &mut JsFormatter,
-) -> FormatResult<(FormatElement, bool)> {
-    let compare_to = match JsAnyExpression::cast(node.clone()) {
-        Some(JsAnyExpression::JsLogicalExpression(logical)) => {
-            Some(BinaryLikeOperator::Logical(logical.operator()?))
-        }
-        Some(JsAnyExpression::JsBinaryExpression(binary)) => {
-            Some(BinaryLikeOperator::Binary(binary.operator()?))
-        }
-        Some(JsAnyExpression::JsInstanceofExpression(_)) => Some(BinaryLikeOperator::Instanceof),
-        Some(JsAnyExpression::JsInExpression(_)) => Some(BinaryLikeOperator::In),
+    node: &JsAnyBinaryLikeLeftExpression,
+) -> FormatResult<bool> {
+    let compare_to = match node {
+        JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => match expression {
+            JsAnyExpression::JsLogicalExpression(logical) => {
+                Some(BinaryLikeOperator::Logical(logical.operator()?))
+            }
+            JsAnyExpression::JsBinaryExpression(binary) => {
+                Some(BinaryLikeOperator::Binary(binary.operator()?))
+            }
+            JsAnyExpression::JsInstanceofExpression(_) => Some(BinaryLikeOperator::Instanceof),
+            JsAnyExpression::JsInExpression(_) => Some(BinaryLikeOperator::In),
+            _ => None,
+        },
         _ => None,
     };
 
-    let operation_is_higher = if let Some(compare_to) = compare_to {
+    let result = if let Some(compare_to) = compare_to {
         match (parent_operator, compare_to) {
             (
                 BinaryLikeOperator::Logical(previous_operation),
@@ -209,13 +210,35 @@ fn format_with_or_without_parenthesis(
         false
     };
 
-    let result = if operation_is_higher {
-        let (leading, content, trailing) = formatted_node.split_trivia();
-        let mut buffer = VecBuffer::new(f.state_mut());
+    Ok(result)
+}
 
-        buffer.write_element(leading)?;
+fn format_sub_expression<'a>(
+    parent_operator: BinaryLikeOperator,
+    sub_expression: &'a JsAnyBinaryLikeLeftExpression,
+) -> impl Format<JsFormatContext> + 'a {
+    format_with(move |f| {
+        if needs_parens(parent_operator, sub_expression)? {
+            write!(f, [format_parenthesized(sub_expression)])
+        } else {
+            write!(f, [sub_expression])
+        }
+    })
+}
+
+fn format_parenthesized<'a, Inner>(inner: Inner) -> impl Format<JsFormatContext>
+where
+    Inner: Format<JsFormatContext> + 'a,
+{
+    format_with(move |f| {
+        let mut buffer = VecBuffer::new(f.state_mut());
+        write!(buffer, [inner])?;
+        let formatted_node = buffer.into_element();
+        let (leading, content, trailing) = formatted_node.split_trivia();
+
+        f.write_element(leading)?;
         write![
-            buffer,
+            f,
             [group_elements(&format_args![
                 token("("),
                 soft_block_indent(&format_once(|f| {
@@ -224,14 +247,8 @@ fn format_with_or_without_parenthesis(
                 })),
                 token(")")
             ])]
-        ]?;
-
-        (buffer.into_element(), true)
-    } else {
-        (formatted_node, false)
-    };
-
-    Ok(result)
+        ]
+    })
 }
 
 /// It tells if the expression can be hard grouped
@@ -320,19 +337,20 @@ impl FlattenItems {
         parent_operator: Option<JsSyntaxToken>,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        let right = binary_like_expression.right()?;
+        let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(binary_like_expression.right()?);
         let has_comments = right.syntax().has_comments_direct();
 
         let mut buffer = VecBuffer::new(f.state_mut());
-        write!(buffer, [right.format()])?;
-        let right_formatted = buffer.into_element();
 
-        let (formatted_node, _) = format_with_or_without_parenthesis(
-            binary_like_expression.operator()?,
-            right.syntax(),
-            right_formatted,
-            f,
+        write!(
+            buffer,
+            [format_sub_expression(
+                binary_like_expression.operator()?,
+                &right
+            )]
         )?;
+
+        let formatted_node = buffer.into_element();
 
         let flatten_item =
             FlattenItem::regular(formatted_node, parent_operator, has_comments.into());
@@ -342,7 +360,7 @@ impl FlattenItems {
     }
 
     /// The left hand-side expression and the current operator cannot be flattened.
-    /// Format the left hand side by its own and potentially wrap it in parentheses before formatting
+    /// Format the left hand side on its own and potentially wrap it in parentheses before formatting
     /// the right-hand side of the current expression.
     fn format_new_binary_like_group(
         &mut self,
@@ -361,9 +379,14 @@ impl FlattenItems {
         let operator = binary_like_expression.operator()?;
         let operator_token = binary_like_expression.operator_token()?;
 
-        let left_formatted = self.take_format_element(left.syntax(), f)?;
-        let (left_formatted, _) =
-            format_with_or_without_parenthesis(operator, left.syntax(), left_formatted, f)?;
+        let mut left_formatted = self.take_format_element(left.syntax(), f)?;
+
+        if needs_parens(operator, &left)? {
+            let mut buffer = VecBuffer::new(f.state_mut());
+            let format_left = format_once(|f| f.write_element(left_formatted));
+            write!(buffer, [format_parenthesized(format_left)])?;
+            left_formatted = buffer.into_element();
+        }
 
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
         let mut left_item = FlattenItem::regular(
@@ -378,26 +401,30 @@ impl FlattenItems {
 
         self.items.push(left_item);
 
-        let right = binary_like_expression.right()?;
+        let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(binary_like_expression.right()?);
 
-        let mut buffer = VecBuffer::new(f.state_mut());
-        write!(buffer, [right.format()])?;
-        let formatted_node = buffer.into_element();
+        let parenthesized = needs_parens(operator, &right)?;
 
         // Format the right node
-        let (formatted_right, parenthesized) =
-            format_with_or_without_parenthesis(operator, right.syntax(), formatted_node, f)?;
+        let mut buffer = VecBuffer::new(f.state_mut());
+        write!(buffer, [format_sub_expression(operator, &right)])?;
+        let formatted_right = buffer.into_element();
 
         let parent_operator_has_comments = parent_operator
             .as_ref()
             .map(|operator| operator.has_leading_comments());
 
-        let mut right_item =
-            if !parenthesized && matches!(right, JsAnyExpression::JsLogicalExpression(_)) {
-                FlattenItem::group(formatted_right, parent_operator, Comments::NoComments)
-            } else {
-                FlattenItem::regular(formatted_right, parent_operator, Comments::NoComments)
-            };
+        let mut right_item = if !parenthesized
+            && matches!(
+                right,
+                JsAnyBinaryLikeLeftExpression::JsAnyExpression(
+                    JsAnyExpression::JsLogicalExpression(_)
+                )
+            ) {
+            FlattenItem::group(formatted_right, parent_operator, Comments::NoComments)
+        } else {
+            FlattenItem::regular(formatted_right, parent_operator, Comments::NoComments)
+        };
 
         // Format the parent operator
         if let Some(parent_operator_has_comments) = parent_operator_has_comments {
