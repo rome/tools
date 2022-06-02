@@ -23,7 +23,7 @@ impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
 
         let default = default_token.format();
         let colon = colon_token.format();
-        let statements = formatter.format_list_with_hard_line(&consequent);
+        let statements = formatter.format_list(&consequent);
 
         let formatted_cons = if statements.is_empty() {
             hard_line_break()

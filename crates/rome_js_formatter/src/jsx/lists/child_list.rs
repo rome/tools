@@ -10,10 +10,7 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
     type Context = JsFormatContext;
 
     fn format(node: &JsxChildList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let children = formatter
-            .format_list(node)
-            .into_iter()
-            .map(|(_, element)| element);
+        let children = formatter.format_all(node.iter().formatted())?;
 
         if contains_meaningful_jsx_text(node) {
             Ok(fill_elements(empty_element(), children))

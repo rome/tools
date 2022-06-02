@@ -2,9 +2,7 @@ use crate::prelude::*;
 use crate::AsFormat;
 use rome_formatter::{normalize_newlines, FormatResult, GroupId, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{
-    AstNode, AstNodeList, AstSeparatedList, Language, SyntaxNode, SyntaxTriviaPiece, TextRange,
-};
+use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece, TextRange};
 use std::iter::once;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -546,23 +544,14 @@ pub(crate) trait JsFormatterExt {
         Ok(result.into_iter())
     }
 
-    /// It formats a list of nodes that are not separated. Essentially a wrapper for [format_list] that
-    /// joins the result together with [join_elements_hard_line].
-    fn format_list_with_hard_line<List, Node>(&self, list: &List) -> FormatElement
-    where
-        List: AstNodeList<Language = JsLanguage, Node = Node>,
-        for<'a> Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
-    {
-        join_elements_hard_line(self.format_list(list))
-    }
-
     /// It formats a list of nodes that are not separated. It's an ad-hoc function to
     /// format lists that implement [rome_js_syntax::AstNodeList].
     ///
-    /// Returns a list of syntax nodes and format elements.
+    /// The elements of the list are joined together using [join_elements_hard_line], which will
+    /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    fn format_list<List, Node>(&self, list: &List) -> Vec<(SyntaxNode<JsLanguage>, FormatElement)>
+    fn format_list<List, Node>(&self, list: &List) -> FormatElement
     where
         List: AstNodeList<Language = JsLanguage, Node = Node>,
         for<'a> Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
@@ -589,7 +578,7 @@ pub(crate) trait JsFormatterExt {
             (module_item.syntax().clone(), elem)
         });
 
-        formatted_list.collect()
+        join_elements_hard_line(formatted_list)
     }
 }
 
