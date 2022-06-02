@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use crate::{
-    format_element, write, Arguments, FormatContext, Formatted, GroupId, PreambleBuffer, TextRange,
-    TextSize,
+    format_element, write, Arguments, FormatContext, GroupId, PreambleBuffer, TextRange, TextSize,
 };
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
@@ -1324,18 +1323,9 @@ where
     }
 }
 
-impl<Context, T> std::fmt::Debug for FormatWith<Context, T>
-where
-    T: Fn(&mut Formatter<Context>) -> FormatResult<()>,
-    Context: Default + FormatContext,
-{
+impl<Context, T> std::fmt::Debug for FormatWith<Context, T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match crate::format!(Context::default(), [&self]) {
-            Ok(formatted) => Formatted::fmt(&formatted, f),
-            Err(err) => {
-                std::write!(f, "Err({err})")
-            }
-        }
+        std::write!(f, "FormatWith({{formatter}})")
     }
 }
 
@@ -1732,7 +1722,7 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
         let mut formatted_variants = Vec::with_capacity(variants.len());
 
         for variant in variants {
-            write!(buffer, [variant])?;
+            buffer.write_fmt(Arguments::new(&[*variant]))?;
 
             formatted_variants.push(buffer.take());
         }

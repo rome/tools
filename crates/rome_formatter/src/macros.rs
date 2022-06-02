@@ -99,7 +99,7 @@ macro_rules! dbg_write {
         let mut count = 0;
         let mut inspect = $crate::Inspect::new($dst, |element: &FormatElement| {
             std::eprintln!(
-                "[{}:{}][{}] = {element:?}",
+                "[{}:{}][{}] = {element:#?}",
                 std::file!(), std::line!(), count
             );
             count += 1;

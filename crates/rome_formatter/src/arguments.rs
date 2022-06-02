@@ -1,5 +1,5 @@
 use super::{Buffer, Format, Formatter};
-use crate::{FormatContext, FormatResult, Formatted};
+use crate::FormatResult;
 use std::ffi::c_void;
 use std::marker::PhantomData;
 
@@ -9,7 +9,6 @@ use std::marker::PhantomData;
 /// This struct is similar to a dynamic dispatch (using `dyn Format`) because it stores a pointer to the value.
 /// However, it doesn't store the pointer to `dyn Format`'s vtable, instead it statically resolves the function
 /// pointer of `Format::format` and stores it in `formatter`.
-#[derive(Copy, Clone)]
 pub struct Argument<'fmt, Context> {
     /// The value to format stored as a raw pointer where `lifetime` stores the value's lifetime.
     value: *const c_void,
@@ -20,6 +19,13 @@ pub struct Argument<'fmt, Context> {
     /// The function pointer to `value`'s `Format::format` method
     formatter: fn(*const c_void, &mut Formatter<'_, Context>) -> FormatResult<()>,
 }
+
+impl<Context> Clone for Argument<'_, Context> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl<Context> Copy for Argument<'_, Context> {}
 
 impl<'fmt, Context> Argument<'fmt, Context> {
     /// Called by the [rome_formatter::format_args] macro. Creates a mono-morphed value for formatting
@@ -41,12 +47,10 @@ impl<'fmt, Context> Argument<'fmt, Context> {
             formatter: formatter::<F, Context>,
         }
     }
-}
 
-impl<Context> Format<Context> for Argument<'_, Context> {
     /// Formats the value stored by this argument using the given formatter.
     #[inline]
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+    pub(super) fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         (self.formatter)(self.value, f)
     }
 }
@@ -99,15 +103,9 @@ impl<Context> Format<Context> for Arguments<'_, Context> {
     }
 }
 
-impl<Context> std::fmt::Debug for Arguments<'_, Context>
-where
-    Context: Default + FormatContext,
-{
+impl<Context> std::fmt::Debug for Arguments<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match crate::format!(Context::default(), [self]) {
-            Ok(formatted) => Formatted::fmt(&formatted, f),
-            Err(err) => std::write!(f, "Err({err})"),
-        }
+        f.write_str("Arguments[...]")
     }
 }
 
