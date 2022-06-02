@@ -137,10 +137,28 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///     formatted.print().as_code()
     /// )
     /// ```
-    pub fn fill<'a, Separator>(
-        &'a mut self,
-        separator: Separator,
-    ) -> FillBuilder<'a, 'buf, Separator, Context>
+    ///
+    /// ```rust
+    /// use rome_formatter::prelude::*;
+    /// use rome_formatter::{format, format_args};
+    ///
+    /// let entries = vec![
+    ///     token("<b>Important: </b>"),
+    ///     token("Please do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you "),
+    ///     token("<em>will</em>"),
+    ///     token(" be reprimanded")
+    /// ];
+    ///
+    /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
+    ///     f.fill(soft_line_break()).entries(entries.iter()).finish()
+    /// })]).unwrap();
+    ///
+    /// assert_eq!(
+    ///     &std::format!("<b>Important: </b>\nPlease do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you \n<em>will</em> be reprimanded"),
+    ///     formatted.print().as_code()
+    /// )
+    /// ```
+    pub fn fill<'a, Separator>(&'a mut self, separator: Separator) -> FillBuilder<'a, 'buf, Context>
     where
         Separator: Format<Context>,
     {

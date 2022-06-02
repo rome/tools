@@ -158,8 +158,8 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::Fill(list) => {
-                self.print_fill(queue, list, args);
+            FormatElement::Fill(fill) => {
+                self.print_fill(queue, fill.list(), fill.separator(), args);
             }
 
             FormatElement::List(list) => {
@@ -343,10 +343,9 @@ impl<'a> Printer<'a> {
         &mut self,
         queue: &mut ElementCallQueue<'a>,
         content: &'a List,
+        separator: &'a FormatElement,
         args: PrintElementArgs,
     ) {
-        const SPACE: &FormatElement = &FormatElement::Space;
-        const HARD_LINE_BREAK: &FormatElement = &FormatElement::Line(LineMode::Hard);
         let empty_rest = ElementCallQueue::default();
 
         let mut items = content.iter();
@@ -382,7 +381,7 @@ impl<'a> Printer<'a> {
             // otherwise see if both contents fit on the line.
             let current_and_next_fit = current_fits
                 && fits_on_line(
-                    &[SPACE, next_item],
+                    &[separator, next_item],
                     args.with_print_mode(PrintMode::Flat),
                     &empty_rest,
                     self,
@@ -392,14 +391,14 @@ impl<'a> Printer<'a> {
                 // Print Space and next item on the same line
                 self.print_all(
                     queue,
-                    &[SPACE, next_item],
+                    &[separator, next_item],
                     args.with_print_mode(PrintMode::Flat),
                 );
             } else {
                 // Print the separator and then check again if the next item fits on the line now
                 self.print_all(
                     queue,
-                    &[HARD_LINE_BREAK],
+                    &[separator],
                     args.with_print_mode(PrintMode::Expanded),
                 );
 
@@ -739,13 +738,10 @@ fn fits_element_on_line<'a, 'rest>(
             queue.extend(list.iter().map(|t| PrintElementCall::new(t, args)))
         }
 
-        FormatElement::Fill(content) => {
-            const SPACE: &FormatElement = &FormatElement::Space;
-            queue.queue.0.extend(
-                Intersperse::new(content.iter().rev(), SPACE)
-                    .map(|t| PrintElementCall::new(t, args)),
-            )
-        }
+        FormatElement::Fill(fill) => queue.queue.0.extend(
+            Intersperse::new(fill.list().iter().rev(), fill.separator())
+                .map(|t| PrintElementCall::new(t, args)),
+        ),
 
         FormatElement::Token(token) => {
             state.line_width += state.pending_indent as usize * options.indent_string.len();

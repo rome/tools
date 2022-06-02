@@ -1608,22 +1608,29 @@ pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
 }
 
 /// Builder to fill as many elements as possible on a single line.
-pub struct FillBuilder<'fmt, 'buf, Separator, O> {
+pub struct FillBuilder<'fmt, 'buf, O> {
     result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, O>,
 
     /// The separator to use to join the elements
-    separator: Separator,
+    separator: FormatElement,
     items: Vec<FormatElement>,
 }
 
-impl<'a, 'buf, Separator, Context> FillBuilder<'a, 'buf, Separator, Context>
-where
-    Separator: Format<Context>,
-{
-    pub(crate) fn new(fmt: &'a mut Formatter<'buf, Context>, separator: Separator) -> Self {
+impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
+    pub(crate) fn new<Separator>(
+        fmt: &'a mut Formatter<'buf, Context>,
+        separator: Separator,
+    ) -> Self
+    where
+        Separator: Format<Context>,
+    {
+        let mut buffer = VecBuffer::new(fmt.state_mut());
+        let result = write!(buffer, [separator]);
+        let separator = buffer.into_element();
+
         Self {
-            result: Ok(()),
+            result,
             fmt,
             separator,
             items: vec![],
@@ -1669,9 +1676,13 @@ where
             match items.len() {
                 0 => Ok(()),
                 1 => self.fmt.write_element(items.pop().unwrap()),
-                _ => self
-                    .fmt
-                    .write_element(FormatElement::Fill(List::new(items))),
+                _ => self.fmt.write_element(FormatElement::Fill(Box::new(Fill {
+                    list: List::new(items),
+                    separator: std::mem::replace(
+                        &mut self.separator,
+                        FormatElement::List(List::default()),
+                    ),
+                }))),
             }
         })
     }
