@@ -1,0 +1,194 @@
+---
+source: crates/rome_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: noCompareNegZero.js
+---
+# Input
+```js
+x === 0;
+0 === x;
+x == 0;
+0 == x;
+x === '0';
+'0' === x;
+x == '0';
+'0' == x;
+x === '-0';
+'-0' === x;
+x == '-0';
+'-0' == x;
+x === -1;
+-1 === x;
+x < 0;
+0 < x;
+x <= 0;
+0 <= x;
+x > 0;
+0 > x;
+x >= 0;
+0 >= x;
+x != 0;
+0 != x;
+x !== 0;
+0 !== x;
+Object.is(x, -0);
+x || -0
+// invalid
+x === -0
+x == -0;
+-0 == x;
+x < -0;
+-0 < x;
+x <= -0;
+-0 <= x;
+x > -0;
+-0 > x;
+x >= -0;
+-0 >= x;
+x != -0;
+-0 != x;
+-0 !== x;
+```
+
+# Diagnostics
+```
+warning[noCompareNegZero]: Do not use the === operator to compare against -0.
+   ┌─ noCompareNegZero.js:30:1
+   │
+30 │ x === -0
+   │ -------- Do not use the === operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the == operator to compare against -0.
+   ┌─ noCompareNegZero.js:31:1
+   │
+31 │ x == -0;
+   │ ------- Do not use the == operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the == operator to compare against -0.
+   ┌─ noCompareNegZero.js:32:1
+   │
+32 │ -0 == x;
+   │ ------- Do not use the == operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the < operator to compare against -0.
+   ┌─ noCompareNegZero.js:33:1
+   │
+33 │ x < -0;
+   │ ------ Do not use the < operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the < operator to compare against -0.
+   ┌─ noCompareNegZero.js:34:1
+   │
+34 │ -0 < x;
+   │ ------ Do not use the < operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the <= operator to compare against -0.
+   ┌─ noCompareNegZero.js:35:1
+   │
+35 │ x <= -0;
+   │ ------- Do not use the <= operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the <= operator to compare against -0.
+   ┌─ noCompareNegZero.js:36:1
+   │
+36 │ -0 <= x;
+   │ ------- Do not use the <= operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the > operator to compare against -0.
+   ┌─ noCompareNegZero.js:37:1
+   │
+37 │ x > -0;
+   │ ------ Do not use the > operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the > operator to compare against -0.
+   ┌─ noCompareNegZero.js:38:1
+   │
+38 │ -0 > x;
+   │ ------ Do not use the > operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the >= operator to compare against -0.
+   ┌─ noCompareNegZero.js:39:1
+   │
+39 │ x >= -0;
+   │ ------- Do not use the >= operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the >= operator to compare against -0.
+   ┌─ noCompareNegZero.js:40:1
+   │
+40 │ -0 >= x;
+   │ ------- Do not use the >= operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the != operator to compare against -0.
+   ┌─ noCompareNegZero.js:41:1
+   │
+41 │ x != -0;
+   │ ------- Do not use the != operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the != operator to compare against -0.
+   ┌─ noCompareNegZero.js:42:1
+   │
+42 │ -0 != x;
+   │ ------- Do not use the != operator to compare against -0.
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the !== operator to compare against -0.
+   ┌─ noCompareNegZero.js:43:1
+   │
+43 │ -0 !== x;
+   │ -------- Do not use the !== operator to compare against -0.
+
+
+```
+
+
