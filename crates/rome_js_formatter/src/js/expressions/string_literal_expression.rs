@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::FormatLiteralStringToken;
+use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
 use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsStringLiteralExpression;
@@ -20,7 +20,8 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
         let needs_parenthesis = parent.and_then(JsExpressionStatement::cast).is_some();
 
         let formatted_element =
-            FormatLiteralStringToken::from_parent_expression(&value_token).format(formatter)?;
+            FormatLiteralStringToken::new(&value_token, StringLiteralParentKind::Expression)
+                .format(formatter)?;
         if needs_parenthesis {
             let (leading_trivia, content, trailing_trivia) = formatted_element.split_trivia();
             Ok(format_elements![
@@ -29,7 +30,7 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
                 trailing_trivia,
             ])
         } else {
-            Ok(formatted_element)
+            formatted![formatter, [formatted_element]]
         }
     }
 }

@@ -16,8 +16,9 @@ use rome_formatter::normalize_newlines;
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyClassMemberName, JsAnyExpression, JsAnyFunction, JsAnyObjectMemberName, JsAnyStatement,
-    JsInitializerClause, JsLanguage, JsLiteralMemberName, JsTemplateElement,
-    JsTemplateElementFields, Modifiers, TsTemplateElement, TsTemplateElementFields, TsType,
+    JsComputedMemberName, JsInitializerClause, JsLanguage, JsLiteralMemberName,
+    JsPrivateClassMemberName, JsTemplateElement, JsTemplateElementFields, Modifiers,
+    TsTemplateElement, TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
@@ -403,27 +404,37 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
 ///
 /// Once merged, the enum is used to get specific members (the literal ones) and elide
 /// the quotes from them, when the algorithm sees fit
+#[allow(clippy::enum_variant_names)]
 pub(crate) enum FormatMemberName {
-    Object(JsAnyObjectMemberName),
-    Class(JsAnyClassMemberName),
-    Literal(JsLiteralMemberName),
+    ComputedMemberName(JsComputedMemberName),
+    PrivateClassMemberName(JsPrivateClassMemberName),
+    LiteralMemberName(JsLiteralMemberName),
 }
 
 impl From<JsAnyClassMemberName> for FormatMemberName {
     fn from(node: JsAnyClassMemberName) -> Self {
-        Self::Class(node)
+        match node {
+            JsAnyClassMemberName::JsComputedMemberName(node) => Self::ComputedMemberName(node),
+            JsAnyClassMemberName::JsLiteralMemberName(node) => Self::LiteralMemberName(node),
+            JsAnyClassMemberName::JsPrivateClassMemberName(node) => {
+                Self::PrivateClassMemberName(node)
+            }
+        }
     }
 }
 
 impl From<JsAnyObjectMemberName> for FormatMemberName {
     fn from(node: JsAnyObjectMemberName) -> Self {
-        Self::Object(node)
+        match node {
+            JsAnyObjectMemberName::JsComputedMemberName(node) => Self::ComputedMemberName(node),
+            JsAnyObjectMemberName::JsLiteralMemberName(node) => Self::LiteralMemberName(node),
+        }
     }
 }
 
 impl From<JsLiteralMemberName> for FormatMemberName {
     fn from(literal: JsLiteralMemberName) -> Self {
-        Self::Literal(literal)
+        Self::LiteralMemberName(literal)
     }
 }
 
@@ -432,32 +443,18 @@ impl Format for FormatMemberName {
 
     fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let name = match self {
-            FormatMemberName::Object(object) => match object {
-                JsAnyObjectMemberName::JsComputedMemberName(name) => {
-                    formatted![formatter, [name.format()]]?
-                }
-                JsAnyObjectMemberName::JsLiteralMemberName(name) => {
-                    FormatLiteralStringToken::from_parent_member(&name.value()?)
-                        .format(formatter)?
-                }
-            },
-            FormatMemberName::Class(class) => match class {
-                JsAnyClassMemberName::JsComputedMemberName(node) => {
-                    formatted![formatter, [node.format()]]?
-                }
-                JsAnyClassMemberName::JsLiteralMemberName(node) => {
-                    FormatLiteralStringToken::from_parent_member(&node.value()?)
-                        .format(formatter)?
-                }
-                JsAnyClassMemberName::JsPrivateClassMemberName(node) => {
-                    formatted![formatter, [node.format()]]?
-                }
-            },
-            FormatMemberName::Literal(literal) => {
-                FormatLiteralStringToken::from_parent_member(&literal.value()?).format(formatter)?
+            FormatMemberName::ComputedMemberName(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            FormatMemberName::PrivateClassMemberName(node) => {
+                formatted![formatter, [node.format()]]
+            }
+            FormatMemberName::LiteralMemberName(literal) => {
+                FormatLiteralStringToken::new(&literal.value()?, StringLiteralParentKind::Member)
+                    .format(formatter)
             }
         };
 
-        Ok(name)
+        name
     }
 }

@@ -31,7 +31,7 @@ impl FormatNodeFields<TsMethodSignatureClassMember>
                         .format()
                         .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
                     space_token(),
-                    FormatMemberName::from(name?).format(formatter),
+                    FormatMemberName::from(name?),
                     question_mark_token.format(),
                     type_parameters.format(),
                     parameters.format(),

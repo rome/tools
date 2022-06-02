@@ -21,7 +21,7 @@ impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructor
             [
                 modifiers.format(),
                 space_token(),
-                FormatMemberName::from(name?).format(formatter),
+                FormatMemberName::from(name?),
                 parameters.format(),
                 space_token(),
                 body.format()

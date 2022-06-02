@@ -25,7 +25,7 @@ impl FormatNodeFields<TsPropertySignatureTypeMember>
             [
                 readonly_token.format(),
                 space_token(),
-                FormatMemberName::from(name?).format(formatter),
+                FormatMemberName::from(name?),
                 optional_token.format(),
                 type_annotation.format(),
                 separator

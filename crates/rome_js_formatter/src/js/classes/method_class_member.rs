@@ -30,7 +30,7 @@ impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMembe
                     .format()
                     .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
                 star_token.format(),
-                FormatMemberName::from(name?).format(formatter),
+                FormatMemberName::from(name?),
                 question_mark_token.format(),
                 type_parameters.format(),
                 parameters.format(),

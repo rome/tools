@@ -15,7 +15,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             value,
         } = node.as_fields();
 
-        let key = FormatMemberName::from(name?).format(formatter)?;
+        let key = FormatMemberName::from(name?);
         let colon = colon_token.format();
         let value = value.format();
         formatted![formatter, [key, colon, space_token(), value]]

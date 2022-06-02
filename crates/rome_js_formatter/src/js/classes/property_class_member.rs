@@ -24,7 +24,7 @@ impl FormatNodeFields<JsPropertyClassMember> for FormatNodeRule<JsPropertyClassM
                 [
                     modifiers.format(),
                     space_token(),
-                    FormatMemberName::from(name?).format(formatter),
+                    FormatMemberName::from(name?),
                     property_annotation.format(),
                     value
                         .format()

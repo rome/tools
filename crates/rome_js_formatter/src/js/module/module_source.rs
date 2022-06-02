@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::FormatLiteralStringToken;
+use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
 use rome_js_syntax::JsModuleSource;
 use rome_js_syntax::JsModuleSourceFields;
@@ -11,6 +11,12 @@ impl FormatNodeFields<JsModuleSource> for FormatNodeRule<JsModuleSource> {
     ) -> FormatResult<FormatElement> {
         let JsModuleSourceFields { value_token } = node.as_fields();
 
-        FormatLiteralStringToken::from_parent_expression(&value_token?).format(formatter)
+        formatted![
+            formatter,
+            [FormatLiteralStringToken::new(
+                &value_token?,
+                StringLiteralParentKind::Expression
+            )]
+        ]
     }
 }

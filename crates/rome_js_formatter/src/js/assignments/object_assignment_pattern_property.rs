@@ -21,7 +21,7 @@ impl FormatNodeFields<JsObjectAssignmentPatternProperty>
         formatted![
             formatter,
             [
-                FormatMemberName::from(member?).format(formatter),
+                FormatMemberName::from(member?),
                 colon_token.format(),
                 space_token(),
                 pattern.format(),

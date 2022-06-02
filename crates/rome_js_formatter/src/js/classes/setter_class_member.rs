@@ -26,7 +26,7 @@ impl FormatNodeFields<JsSetterClassMember> for FormatNodeRule<JsSetterClassMembe
                 space_token(),
                 set_token.format(),
                 space_token(),
-                FormatMemberName::from(name?).format(formatter),
+                FormatMemberName::from(name?),
                 l_paren_token.format(),
                 parameter.format(),
                 r_paren_token.format(),
