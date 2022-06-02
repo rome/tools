@@ -1311,7 +1311,7 @@ where
 /// Utility for formatting some content with an inline lambda function.
 #[derive(Copy, Clone)]
 pub struct FormatWith<Context, T> {
-    closure: T,
+    formatter: T,
     options: PhantomData<Context>,
 }
 
@@ -1320,7 +1320,7 @@ where
     T: Fn(&mut Formatter<Context>) -> FormatResult<()>,
 {
     fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        (self.closure)(f)
+        (self.formatter)(f)
     }
 }
 
@@ -1374,17 +1374,22 @@ where
 ///
 /// assert_eq!("(\n\ta b c\n)", formatted.print().as_code());
 /// ```
-pub const fn format_with<Context, T>(closure: T) -> FormatWith<Context, T>
+pub const fn format_with<Context, T>(formatter: T) -> FormatWith<Context, T>
 where
     T: Fn(&mut Formatter<Context>) -> FormatResult<()>,
 {
     FormatWith {
-        closure,
+        formatter,
         options: PhantomData,
     }
 }
 
 /// Creates an inline `Format` object that can only be formatted once.
+///
+/// This can be useful in situation where the borrow checker doesn't allow you to use [`format_with`]
+/// because the code formatting the content consumes the value and cloning the value is too expensive.
+/// An example of this is if you want to nest a `FormatElement` or non-cloneable `Iterator` inside of a
+/// `block_indent` as shown can see in the examples section.
 ///
 /// # Panics
 ///
@@ -1397,41 +1402,46 @@ where
 /// use rome_formatter::{SimpleFormatContext, format, write, Buffer};
 /// use rome_rowan::TextSize;
 ///
-/// struct MyFormat {
-///     items: Vec<&'static str>,
+/// struct MyFormat;
+///
+/// fn generate_values() -> impl Iterator<Item=StaticToken> {
+///     vec![token("1"), token("2"), token("3"), token("4")].into_iter()
 /// }
 ///
 /// impl Format<SimpleFormatContext> for MyFormat {
 ///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-///         // Some owned value that you want to format inside of a nested element
-///         let element = FormatElement::Comment(Box::new(FormatElement::Token(Token::Static { text: "test" })));
+///         let mut values = generate_values();
 ///
+///         let first = values.next();
+///
+///         // Formats the first item outside of the block and all other items inside of the block,
+///         // separated by line breaks
 ///         write!(f, [
-///             token("("),
+///             first,
 ///             block_indent(format_once(|f| {
-///                 f.write_element(element)
+///                 // Using format_with isn't possible here because the iterator gets consumed here
+///                 f.join_with(hard_line_break()).entries(values).finish()
 ///             })),
-///             token(")")
 ///         ])
 ///     }
 /// }
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [MyFormat { items: vec!["a", "b", "c"]}]).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), [MyFormat]).unwrap();
 ///
-/// assert_eq!("(\n\ttest\n)", formatted.print().as_code());
+/// assert_eq!("1\n\t2\n\t3\n\t4\n", formatted.print().as_code());
 /// ```
-pub const fn format_once<T, Context>(closure: T) -> FormatOnce<T, Context>
+pub const fn format_once<T, Context>(formatter: T) -> FormatOnce<T, Context>
 where
     T: FnOnce(&mut Formatter<Context>) -> FormatResult<()>,
 {
     FormatOnce {
-        closure: Cell::new(Some(closure)),
+        formatter: Cell::new(Some(formatter)),
         options: PhantomData,
     }
 }
 
 pub struct FormatOnce<T, Context> {
-    closure: Cell<Option<T>>,
+    formatter: Cell<Option<T>>,
     options: PhantomData<Context>,
 }
 
@@ -1440,23 +1450,23 @@ where
     T: FnOnce(&mut Formatter<Context>) -> FormatResult<()>,
 {
     fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        let closure = self.closure.take().expect("Tried to format once at least twice. This is not allowed. You may want to use format_with or .memoized instead");
+        let formatter = self.formatter.take().expect("Tried to format a `format_once` at least twice. This is not allowed. You may want to use `format_with` or `format.memoized` instead.");
 
-        (closure)(f)
+        (formatter)(f)
     }
 }
 
 impl<T, Context> std::fmt::Debug for FormatOnce<T, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::write!(f, "FormatOnce([closure])")
+        std::write!(f, "FormatOnce({{formatter}})")
     }
 }
 
 /// Builder to join together a sequence of content.
 /// See [Formatter::join]
-pub struct JoinBuilder<'fmt, 'buf, Joiner, O> {
+pub struct JoinBuilder<'fmt, 'buf, Joiner, Context> {
     result: FormatResult<()>,
-    fmt: &'fmt mut Formatter<'buf, O>,
+    fmt: &'fmt mut Formatter<'buf, Context>,
     with: Option<Joiner>,
     has_elements: bool,
 }
@@ -1476,7 +1486,7 @@ where
     }
 
     /// Creates a new instance that prints the passed separator between every two entries.
-    pub(super) fn with(fmt: &'fmt mut Formatter<'buf, Context>, with: Joiner) -> Self {
+    pub(super) fn with_separator(fmt: &'fmt mut Formatter<'buf, Context>, with: Joiner) -> Self {
         Self {
             result: Ok(()),
             fmt,
@@ -1522,11 +1532,11 @@ where
 
 /// Builder to join together nodes that ensures that nodes separated by empty lines continue
 /// to be separated by empty lines in the formatted output.
-pub struct JoinNodesBuilder<'fmt, 'buf, Separator, O> {
+pub struct JoinNodesBuilder<'fmt, 'buf, Separator, Context> {
     result: FormatResult<()>,
     /// The separator to insert between nodes. Either a soft or hard line break
     separator: Separator,
-    fmt: &'fmt mut Formatter<'buf, O>,
+    fmt: &'fmt mut Formatter<'buf, Context>,
     has_elements: bool,
 }
 
@@ -1608,9 +1618,9 @@ pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
 }
 
 /// Builder to fill as many elements as possible on a single line.
-pub struct FillBuilder<'fmt, 'buf, O> {
+pub struct FillBuilder<'fmt, 'buf, Context> {
     result: FormatResult<()>,
-    fmt: &'fmt mut Formatter<'buf, O>,
+    fmt: &'fmt mut Formatter<'buf, Context>,
 
     /// The separator to use to join the elements
     separator: FormatElement,

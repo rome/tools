@@ -156,6 +156,8 @@ impl<W: Buffer<Context = Context> + ?Sized, Context> Buffer for &mut W {
 }
 
 /// Vector backed [`Buffer`] implementation.
+///
+/// The buffer writes all elements into the internal elements buffer.
 #[derive(Debug)]
 pub struct VecBuffer<'a, Context> {
     state: &'a mut FormatState<Context>,
@@ -170,6 +172,7 @@ impl<'a, Context> VecBuffer<'a, Context> {
         }
     }
 
+    /// Creates a buffer with the specified capacity
     pub fn with_capacity(capacity: usize, context: &'a mut FormatState<Context>) -> Self {
         Self {
             state: context,
@@ -244,15 +247,19 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
 
     fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
         let position = snapshot.unwrap_position();
-        assert!(self.elements.len() >= position);
+        assert!(
+            self.elements.len() >= position,
+            r#"Outdated snapshot. This buffer contains fewer elements than at the time the snapshot was taken.
+Make sure that you take and restore the snapshot in order and that this snapshot belongs to the current buffer."#
+        );
 
-        self.elements.truncate(position)
+        self.elements.truncate(position);
     }
 }
 
-/// Buffer that writes a pre-amble before the first written content.
+/// This struct wraps an existing buffer and emits a preamble text when the first text is written.
 ///
-/// Useful to conditionally write some content.
+/// This can be useful if you, for example, want to write some content if what gets written next isn't empty.
 ///
 /// # Examples
 ///
@@ -311,7 +318,7 @@ pub struct PreambleBuffer<'buf, Preamble, Context> {
     /// The pre-amble to write once the first content gets written to this buffer.
     preamble: Preamble,
 
-    /// Whatever some content (including the pre-amble) has been written at this point.
+    /// Whether some content (including the pre-amble) has been written at this point.
     empty: bool,
 }
 

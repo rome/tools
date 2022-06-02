@@ -88,7 +88,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     where
         Joiner: Format<Context>,
     {
-        JoinBuilder::with(self, joiner)
+        JoinBuilder::with_separator(self, joiner)
     }
 
     /// Specialized version of [join_with] for joining SyntaxNodes separated by a space, soft
