@@ -71,33 +71,39 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
         // ");
         // ```
         // this is what we want
-        else if JsStringLiteralExpression::can_cast(kind) {
-            formatted![
-                formatter,
-                [
-                    l_paren_token.format(),
-                    expression.format(),
-                    r_paren_token.format(),
-                ]
-            ]
-        } else if let JsAnyExpression::JsxTagExpression(expression) = expression {
-            formatted![
-                formatter,
-                [
-                    formatter.format_replaced(&l_paren_token?, empty_element()),
-                    expression.format(),
-                    formatter.format_replaced(&r_paren_token?, empty_element())
-                ]
-            ]
-        } else {
-            formatter
-                .delimited(
-                    &l_paren_token?,
-                    formatted![formatter, [expression.format()]]?,
-                    &r_paren_token?,
-                )
-                .soft_block_indent()
-                .finish()
+        else {
+            match expression {
+                JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsStringLiteralExpression(_),
+                ) => {
+                    formatted![
+                        formatter,
+                        [
+                            l_paren_token.format(),
+                            expression.format(),
+                            r_paren_token.format(),
+                        ]
+                    ]
+                }
+                JsAnyExpression::JsxTagExpression(expression) => {
+                    formatted![
+                        formatter,
+                        [
+                            formatter.format_replaced(&l_paren_token?, empty_element()),
+                            expression.format(),
+                            formatter.format_replaced(&r_paren_token?, empty_element())
+                        ]
+                    ]
+                }
+                _ => formatter
+                    .delimited(
+                        &l_paren_token?,
+                        formatted![formatter, [expression.format()]]?,
+                        &r_paren_token?,
+                    )
+                    .soft_block_indent()
+                    .finish(),
+            }
         }
     }
 }

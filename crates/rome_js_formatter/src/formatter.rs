@@ -559,7 +559,7 @@ pub(crate) trait JsFormatterExt {
         let formatter = self.as_formatter();
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = formatter.snapshot();
-            let format = formatted![formatter, [module_item.format()]];
+            let format = module_item.format();
 
             let elem = match formatted![formatter, [format]] {
                 Ok(result) => result,
