@@ -1,14 +1,5 @@
-use crate::context::QuoteStyle;
-use crate::{
-    if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, JsFormatContext,
-    JsFormatter,
-};
-use rome_formatter::formatter::Formatter;
-use rome_formatter::{format_elements, space_token, Format, FormatElement, FormatResult};
 use rome_js_syntax::kind::JsSyntaxKind;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsLanguage, JsxAnyChild, JsxChildList,
-};
+use rome_js_syntax::{JsLanguage, JsxAnyChild, JsxChildList};
 use rome_rowan::{AstNodeList, SyntaxNode};
 
 /// Checks if the children of an element contain meaningful text. See [is_meaningful_jsx_text] for
