@@ -100,7 +100,7 @@ pub(crate) fn format_binary_like_expression(
     f: &mut JsFormatter,
 ) -> FormatResult<()> {
     let mut flatten_items = FlattenItems::default();
-    let current_node = expression.syntax().clone();
+    let current_node = expression.clone();
 
     let post_order_binary_like_expressions = PostorderIterator::new(expression);
     let mut left: Option<JsAnyBinaryLikeExpression> = None;
@@ -109,24 +109,16 @@ pub(crate) fn format_binary_like_expression(
         let parent_operator = parent.operator_token()?;
 
         if let Some(left) = left {
-            flatten_items.format_binary_expression_right_hand_side(
-                left,
-                Some(parent_operator),
-                f,
-            )?;
+            flatten_items.flatten_binary_expression_right_hand_side(left, Some(parent_operator))?;
         } else {
             // Leaf binary like expression. Format the left hand side.
             // The right hand side gets formatted when traversing upwards in the tree.
 
             let left = parent.left()?;
-
             let has_comments = left.syntax().has_comments_direct();
 
-            let mut buffer = VecBuffer::new(f.state_mut());
-            write!(buffer, [left])?;
-
-            flatten_items.items.push(FlattenItem::regular(
-                buffer.into_element(),
+            flatten_items.items.push(FlattenItem::new(
+                FlattenedExpression::Left { expression: left },
                 Some(parent_operator),
                 has_comments.into(),
             ));
@@ -137,11 +129,17 @@ pub(crate) fn format_binary_like_expression(
 
     // Format the top most binary like expression
     if let Some(root) = left {
-        flatten_items.format_binary_expression_right_hand_side(root, None, f)?;
+        flatten_items.flatten_binary_expression_right_hand_side(root, None)?;
     }
 
-    let element = flatten_items.take_format_element(&current_node, f)?;
-    f.write_element(element)
+    write!(
+        f,
+        [FlattenedExpression::Group {
+            current: JsAnyBinaryLikeLeftExpression::JsAnyExpression(current_node.into_expression()),
+            expressions: flatten_items.items,
+            parenthesized: false
+        }]
+    )
 }
 
 /// Small wrapper to identify the operation of an expression and deduce their precedence
@@ -254,11 +252,8 @@ where
 /// It tells if the expression can be hard grouped
 fn can_hard_group(flatten_nodes: &[FlattenItem]) -> bool {
     // We don't want to have 1 + 2 to break, for example.
-    // If there are any trailing comments, let's break.
-    flatten_nodes.len() <= 2
-        && flatten_nodes
-            .iter()
-            .all(|node| !node.has_comments() && !node.is_group())
+    // But if there are any trailing comments, break it.
+    flatten_nodes.len() <= 2 && flatten_nodes.iter().all(|node| !node.has_comments())
 }
 
 fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
@@ -294,8 +289,8 @@ fn should_not_indent_if_parent_indents(current_node: &JsSyntaxNode) -> bool {
 /// these cases the decide to actually break on a new line and indent it.
 ///
 /// This function checks what the parents adheres to this behaviour
-fn should_indent_if_parent_inlines(current_node: &JsSyntaxNode) -> bool {
-    let parent = current_node.parent();
+fn should_indent_if_parent_inlines(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
+    let parent = current_node.syntax().parent();
     let grand_parent = parent.as_ref().and_then(|p| p.parent());
 
     match (parent, grand_parent) {
@@ -315,18 +310,17 @@ struct FlattenItems {
 
 impl FlattenItems {
     /// Formats the right hand side of a binary like expression
-    fn format_binary_expression_right_hand_side(
+    fn flatten_binary_expression_right_hand_side(
         &mut self,
         expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        f: &mut JsFormatter,
     ) -> FormatResult<()> {
         let should_flatten = expression.can_flatten()?;
 
         if should_flatten {
-            self.flatten_right_hand_side(expression, parent_operator, f)
+            self.flatten_right_hand_side(expression, parent_operator)
         } else {
-            self.format_new_binary_like_group(expression, parent_operator, f)
+            self.flatten_new_binary_like_group(expression, parent_operator)
         }
     }
 
@@ -335,25 +329,17 @@ impl FlattenItems {
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        f: &mut JsFormatter,
     ) -> FormatResult<()> {
         let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(binary_like_expression.right()?);
         let has_comments = right.syntax().has_comments_direct();
 
-        let mut buffer = VecBuffer::new(f.state_mut());
-
-        write!(
-            buffer,
-            [format_sub_expression(
-                binary_like_expression.operator()?,
-                &right
-            )]
-        )?;
-
-        let formatted_node = buffer.into_element();
-
-        let flatten_item =
-            FlattenItem::regular(formatted_node, parent_operator, has_comments.into());
+        let flatten_item = FlattenItem::new(
+            FlattenedExpression::Right {
+                parent: binary_like_expression,
+            },
+            parent_operator,
+            has_comments.into(),
+        );
         self.items.push(flatten_item);
 
         Ok(())
@@ -362,11 +348,10 @@ impl FlattenItems {
     /// The left hand-side expression and the current operator cannot be flattened.
     /// Format the left hand side on its own and potentially wrap it in parentheses before formatting
     /// the right-hand side of the current expression.
-    fn format_new_binary_like_group(
+    fn flatten_new_binary_like_group(
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        f: &mut JsFormatter,
     ) -> FormatResult<()> {
         if let Some(last) = self.items.last_mut() {
             // Remove any line breaks and the trailing operator so that the operator/trailing aren't part
@@ -379,18 +364,14 @@ impl FlattenItems {
         let operator = binary_like_expression.operator()?;
         let operator_token = binary_like_expression.operator_token()?;
 
-        let mut left_formatted = self.take_format_element(left.syntax(), f)?;
-
-        if needs_parens(operator, &left)? {
-            let mut buffer = VecBuffer::new(f.state_mut());
-            let format_left = format_once(|f| f.write_element(left_formatted));
-            write!(buffer, [format_parenthesized(format_left)])?;
-            left_formatted = buffer.into_element();
-        }
-
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
-        let mut left_item = FlattenItem::regular(
-            left_formatted,
+        let left_parenthesized = needs_parens(operator, &left)?;
+        let mut left_item = FlattenItem::new(
+            FlattenedExpression::Group {
+                current: left,
+                expressions: std::mem::take(&mut self.items),
+                parenthesized: left_parenthesized,
+            },
             Some(operator_token),
             operator_has_trailing_comments.into(),
         );
@@ -403,28 +384,18 @@ impl FlattenItems {
 
         let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(binary_like_expression.right()?);
 
-        let parenthesized = needs_parens(operator, &right)?;
-
-        // Format the right node
-        let mut buffer = VecBuffer::new(f.state_mut());
-        write!(buffer, [format_sub_expression(operator, &right)])?;
-        let formatted_right = buffer.into_element();
-
+        // Flatten the right node
         let parent_operator_has_comments = parent_operator
             .as_ref()
             .map(|operator| operator.has_leading_comments());
 
-        let mut right_item = if !parenthesized
-            && matches!(
-                right,
-                JsAnyBinaryLikeLeftExpression::JsAnyExpression(
-                    JsAnyExpression::JsLogicalExpression(_)
-                )
-            ) {
-            FlattenItem::group(formatted_right, parent_operator, Comments::NoComments)
-        } else {
-            FlattenItem::regular(formatted_right, parent_operator, Comments::NoComments)
-        };
+        let mut right_item = FlattenItem::new(
+            FlattenedExpression::Right {
+                parent: binary_like_expression,
+            },
+            parent_operator,
+            Comments::NoComments,
+        );
 
         // Format the parent operator
         if let Some(parent_operator_has_comments) = parent_operator_has_comments {
@@ -445,91 +416,6 @@ impl FlattenItems {
         self.items.push(right_item);
 
         Ok(())
-    }
-
-    fn take_format_element(
-        &mut self,
-        current_node: &JsSyntaxNode,
-        f: &mut JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        let mut buffer = VecBuffer::new(f.state_mut());
-
-        write!(
-            buffer,
-            [format_once(|f| {
-                let can_hard_group = can_hard_group(&self.items);
-
-                let mut groups = self.items.drain(..).map(|group| {
-                    format_once(move |f| {
-                        // groups not like ["something &&", "something &&" ]
-                        // we want to add a space between them in case they don't break
-
-                        f.write_element(group.formatted)?;
-
-                        if let Some(operator) = group.operator {
-                            write!(f, [space_token(), operator.format()])?;
-                        }
-
-                        match group.terminator {
-                            TrailingTerminator::None => (),
-                            TrailingTerminator::HardLineBreak => write!(f, [hard_line_break()])?,
-                        };
-
-                        Ok(())
-                    })
-                });
-
-                if can_hard_group {
-                    // we bail early if group doesn't need to be broken. We don't need to do further checks
-                    f.join_with(&space_token()).entries(groups).finish()
-                } else if is_inside_parenthesis(current_node) {
-                    f.join_with(&soft_line_break_or_space())
-                        .entries(groups)
-                        .finish()
-                } else if should_not_indent_if_parent_indents(current_node) {
-                    write!(
-                        f,
-                        [group_elements(&format_once(|f| {
-                            f.join_with(&soft_line_break_or_space())
-                                .entries(groups)
-                                .finish()
-                        }))]
-                    )
-                } else if should_indent_if_parent_inlines(current_node) {
-                    // in order to correctly break, we need to check if the parent created a group
-                    // that breaks or not. In order to do that , we need to create two conditional groups
-                    // that behave differently depending on the situation
-                    write!(
-                        f,
-                        [soft_line_indent_or_space(&group_elements(&format_once(
-                            |f| {
-                                f.join_with(&soft_line_break_or_space())
-                                    .entries(groups)
-                                    .finish()
-                            }
-                        )))]
-                    )
-                } else {
-                    // if none of the previous conditions is met,
-                    // we take take out the first element from the rest of group, then we hard group the "head"
-                    // and we indent the rest of the groups in a new line
-                    write!(f, [groups.next().unwrap()])?;
-
-                    write!(
-                        f,
-                        [group_elements(&soft_line_indent_or_space(&format_once(
-                            |f| {
-                                f.join_with(&soft_line_break_or_space())
-                                    .entries(groups)
-                                    .finish()
-                            }
-                        )))]
-                    )
-                }
-            })]
-        )?;
-
-        Ok(buffer.into_element())
     }
 }
 
@@ -556,10 +442,134 @@ impl From<bool> for Comments {
     }
 }
 
+/// The left or right sub part of a binary expression.
+#[derive(Debug)]
+enum FlattenedExpression {
+    /// The right hand sie of a binary expression. Needs to format the parent operator and the right expression
+    Right {
+        /// The parent expression
+        parent: JsAnyBinaryLikeExpression,
+    },
+
+    /// The very first left hand side of a binary expression. Only formats the expression
+    Left {
+        /// The left hand side expression
+        expression: JsAnyBinaryLikeLeftExpression,
+    },
+
+    /// A group of expressions that can be grouped/printed together.
+    Group {
+        /// The binary expression that should be formatted now
+        current: JsAnyBinaryLikeLeftExpression,
+
+        /// The left hand side expression  the current node
+        expressions: Vec<FlattenItem>,
+        parenthesized: bool,
+    },
+}
+
+impl Format<JsFormatContext> for FlattenedExpression {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match self {
+            FlattenedExpression::Right { parent } => {
+                let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(parent.right()?);
+
+                write!(f, [format_sub_expression(parent.operator()?, &right)])?;
+                Ok(())
+            }
+            FlattenedExpression::Left { expression } => {
+                write!(f, [expression])
+            }
+            FlattenedExpression::Group {
+                current,
+                expressions: left_expressions,
+                parenthesized,
+            } => {
+                // take format element
+                let content = format_with(|f| {
+                    let can_hard_group = can_hard_group(&left_expressions);
+
+                    let mut groups = left_expressions.iter().map(|group| {
+                        format_with(|f| {
+                            write!(f, [&group.expression])?;
+
+                            if let Some(operator) = &group.operator {
+                                write!(f, [space_token(), operator.format()])?;
+                            }
+
+                            match &group.terminator {
+                                TrailingTerminator::None => (),
+                                TrailingTerminator::HardLineBreak => {
+                                    write!(f, [hard_line_break()])?
+                                }
+                            };
+
+                            Ok(())
+                        })
+                    });
+
+                    if can_hard_group {
+                        // we bail early if group doesn't need to be broken. We don't need to do further checks
+                        f.join_with(space_token()).entries(groups).finish()
+                    } else if is_inside_parenthesis(current.syntax()) {
+                        f.join_with(soft_line_break_or_space())
+                            .entries(groups)
+                            .finish()
+                    } else if should_not_indent_if_parent_indents(current.syntax()) {
+                        write!(
+                            f,
+                            [group_elements(&format_once(|f| {
+                                f.join_with(soft_line_break_or_space())
+                                    .entries(groups)
+                                    .finish()
+                            }))]
+                        )
+                    } else if should_indent_if_parent_inlines(current) {
+                        // in order to correctly break, we need to check if the parent created a group
+                        // that breaks or not. In order to do that , we need to create two conditional groups
+                        // that behave differently depending on the situation
+                        write!(
+                            f,
+                            [soft_line_indent_or_space(&group_elements(&format_once(
+                                |f| {
+                                    f.join_with(soft_line_break_or_space())
+                                        .entries(groups)
+                                        .finish()
+                                }
+                            )))]
+                        )
+                    } else {
+                        // if none of the previous conditions is met,
+                        // we take take out the first element from the rest of group, then we hard group the "head"
+                        // and we indent the rest of the groups in a new line
+                        write!(f, [groups.next().unwrap()])?;
+
+                        write!(
+                            f,
+                            [group_elements(&soft_line_indent_or_space(&format_once(
+                                |f| {
+                                    f.join_with(soft_line_break_or_space())
+                                        .entries(groups)
+                                        .finish()
+                                }
+                            )))]
+                        )
+                    }
+                });
+
+                if *parenthesized {
+                    write!(f, [format_parenthesized(content)])
+                } else {
+                    write!(f, [content])
+                }
+            }
+        }
+    }
+}
+
 #[derive(Debug)]
 struct FlattenItem {
-    kind: FlattenItemKind,
-    formatted: FormatElement,
+    expression: FlattenedExpression,
     operator: Option<JsSyntaxToken>,
     terminator: TrailingTerminator,
     comments: Comments,
@@ -572,36 +582,17 @@ enum TrailingTerminator {
 }
 
 impl FlattenItem {
-    fn regular(
-        formatted: FormatElement,
+    fn new(
+        expression: FlattenedExpression,
         operator: Option<JsSyntaxToken>,
         comments: Comments,
     ) -> Self {
         Self {
-            formatted,
+            expression,
             operator,
-            kind: FlattenItemKind::Regular,
             terminator: TrailingTerminator::None,
             comments,
         }
-    }
-
-    fn group(
-        formatted: FormatElement,
-        operator: Option<JsSyntaxToken>,
-        comments: Comments,
-    ) -> Self {
-        Self {
-            formatted,
-            comments,
-            operator,
-            terminator: TrailingTerminator::None,
-            kind: FlattenItemKind::Group,
-        }
-    }
-
-    fn is_group(&self) -> bool {
-        matches!(self.kind, FlattenItemKind::Group)
     }
 
     fn has_comments(&self) -> bool {
@@ -617,14 +608,6 @@ impl FlattenItem {
         self.comments = comments.into();
         self
     }
-}
-
-#[derive(Debug)]
-enum FlattenItemKind {
-    Regular,
-    /// Used when the right side of a binary/logical expression is another binary/logical.
-    /// When we have such cases we
-    Group,
 }
 
 /// The [PostorderIterator] visits every node twice. First on the way down to find the left most binary
@@ -781,6 +764,23 @@ impl JsAnyBinaryLikeExpression {
             JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.right(),
             JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => instanceof.right(),
             JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.object(),
+        }
+    }
+
+    fn into_expression(self) -> JsAnyExpression {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => {
+                JsAnyExpression::JsLogicalExpression(logical)
+            }
+            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => {
+                JsAnyExpression::JsBinaryExpression(binary)
+            }
+            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => {
+                JsAnyExpression::JsInstanceofExpression(instanceof)
+            }
+            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => {
+                JsAnyExpression::JsInExpression(in_expression)
+            }
         }
     }
 }
