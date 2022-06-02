@@ -16,13 +16,13 @@ impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
             r_curly_token,
         } = node.as_fields();
 
-        let format_cases = format_once(|f| {
+        let format_cases = format_with(|f| {
             if cases.is_empty() {
                 write!(f, [hard_line_break()])?;
             } else {
                 let mut join = f.join_nodes_with_hardline();
 
-                for case in cases {
+                for case in &cases {
                     join.entry(case.syntax(), &case.format());
                 }
 
