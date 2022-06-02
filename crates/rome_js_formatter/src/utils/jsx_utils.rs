@@ -51,8 +51,8 @@ pub fn is_jsx_whitespace_expression(child: JsxAnyChild) -> bool {
 
 /// Checks if the children of an element contain meaningful text. See [is_meaningful_jsx_text] for
 /// definition of meaningful JSX text.
-pub fn contains_meaningful_text(children: &JsxChildList) -> bool {
-    for child in children {
+pub fn contains_meaningful_jsx_text(children: &JsxChildList) -> bool {
+    children.iter().any(|child| {
         if let JsxAnyChild::JsxText(jsx_text) = child {
             if let Ok(token) = jsx_text.value_token() {
                 if is_meaningful_jsx_text(token.text()) {
@@ -60,9 +60,9 @@ pub fn contains_meaningful_text(children: &JsxChildList) -> bool {
                 }
             }
         }
-    }
 
-    false
+        false
+    })
 }
 
 pub static WHITESPACE: [char; 4] = [' ', '\n', '\t', '\r'];
@@ -93,36 +93,37 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
     !has_newline
 }
 
+/// Indicates that an element should always be wrapped in parentheses, should be wrapped
+/// only when it's line broken, or should not be wrapped at all.
 pub enum WrapState {
+    /// For a JSX element that is never wrapped in parentheses.
+    /// For instance, a JSX element that is another element's attribute
+    /// should never be wrapped:
+    /// ```jsx
+    ///  <Route path="/" component={<HomePage />} />
+    /// ```
     NoWrap,
+    /// For a JSX element that must be wrapped in parentheses when line broken.
+    /// For instance, a JSX element nested in a let binding is wrapped on line break:
+    /// ```jsx
+    ///  let component = <div> La Haine dir. Mathieu Kassovitz </div>;
+    ///
+    ///  let component = (
+    ///   <div> Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul </div>
+    ///  );
+    /// ```
     WrapOnBreak,
+    /// For a JSX element that must always be wrapped in parentheses.
+    /// For instance, a JSX element inside a static member expression
+    /// should always be wrapped:
+    /// ```jsx
+    /// (<div>Badlands</div>).property
+    /// ```
     AlwaysWrap,
 }
 
-/// Checks if a JSX Element should be wrapped in parentheses. Returns a WrapState which
-/// indicates that an element should always be wrapped in parentheses, should be wrapped
-/// only when it's line broken, or should not be wrapped at all.
-///
-/// For instance, an element nested in a let binding should be wrapped in parentheses
-/// when it is line broken:
-/// ```jsx
-///  let component = <div> La Haine dir. Mathieu Kassovitz </div>;
-///
-///  let component = (
-///   <div> Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul </div>
-///  );
-/// ```
-///
-/// An element inside a static member expression should always be wrapped:
-/// ```jsx
-/// (<div>Badlands</div>).property
-/// ```
-///
-/// An element that is another element's attribute should never be wrapped:
-/// ```jsx
-///  <Route path="/" component={<HomePage />} />
-/// ```
-///
+/// Checks if a JSX Element should be wrapped in parentheses. Returns a [WrapState] which
+/// indicates when the element should be wrapped in parentheses.
 pub fn get_wrap_state(node: &SyntaxNode<JsLanguage>) -> WrapState {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.

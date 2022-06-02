@@ -1,6 +1,6 @@
 use crate::generated::FormatJsxChildList;
 use crate::prelude::*;
-use crate::utils::jsx_utils::contains_meaningful_text;
+use crate::utils::jsx_utils::contains_meaningful_jsx_text;
 use crate::{FormatElement, JsFormatter};
 use rome_formatter::{empty_element, fill_elements, FormatResult};
 use rome_js_syntax::JsxChildList;
@@ -15,7 +15,7 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
             .into_iter()
             .map(|(_, element)| element);
 
-        if contains_meaningful_text(node) {
+        if contains_meaningful_jsx_text(node) {
             Ok(fill_elements(empty_element(), children))
         } else {
             Ok(join_elements(
