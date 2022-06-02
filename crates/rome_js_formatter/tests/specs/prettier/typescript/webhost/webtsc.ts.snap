@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: webtsc.ts
 ---
 # Input
@@ -156,9 +157,9 @@ namespace TypeScript.WebTsc {
             // [0xFF,0xFE] and [0xFE,0xFF] mean utf-16 (little or big endian), otherwise default to utf-8
             fileStream.Charset =
               bom.length >= 2 && (
-                (
-                  bom.charCodeAt(0) === 0xFF && bom.charCodeAt(1) === 0xFE
-                ) || (bom.charCodeAt(0) === 0xFE && bom.charCodeAt(1) === 0xFF)
+                (bom.charCodeAt(0) === 0xFF && bom.charCodeAt(1) === 0xFE) || (
+                  bom.charCodeAt(0) === 0xFE && bom.charCodeAt(1) === 0xFF
+                )
               ) ? "unicode" : "utf-8";
           }
           // ReadText method always strips byte order mark from resulting string

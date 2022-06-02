@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: nested.js
 ---
 # Input
@@ -104,12 +105,9 @@ a
 
 # Output
 ```js
-let icecream = what == "cone" ? (
-  p,
-) =>
-  !!p ? `here's your ${p} cone` : `just the empty cone for you` : (
-  p,
-) => `here's your ${p} ${what}`;
+let icecream = what == "cone" ? (p) =>
+  !!p ? `here's your ${p} cone` : `just the empty cone for you` : (p) =>
+  `here's your ${p} ${what}`;
 
 const value = condition1
   ? value1
@@ -119,9 +117,7 @@ const value = condition1
       ? value3
       : value4;
 
-const StorybookLoader = (
-  { match },
-) => (
+const StorybookLoader = ({ match }) => (
   match.params.storyId === "button"
     ? <ButtonStorybook />
     : match.params.storyId === "color"
@@ -199,6 +195,6 @@ a
 
 # Lines exceeding max width of 80 characters
 ```
-   68: const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+   63: const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
 ```
 

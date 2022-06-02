@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: break-parent.js
 ---
 # Input
@@ -42,12 +43,9 @@ true
         browsers: ["> 1%", "last 2 versions", "ie >= 11", "Firefox ESR"],
       },
     ),
-    require(
-      "postcss-url",
-    )({
-      url: (
-        url,
-      ) => url.startsWith("/") || /^[a-z]+:/.test(url) ? url : `/static/${url}`,
+    require("postcss-url")({
+      url: (url) =>
+        url.startsWith("/") || /^[a-z]+:/.test(url) ? url : `/static/${url}`,
     },),
   ],
 });

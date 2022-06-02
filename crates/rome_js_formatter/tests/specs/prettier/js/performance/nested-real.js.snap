@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: nested-real.js
 ---
 # Input
@@ -115,9 +116,9 @@ tap.test(
           callback(
             null,
             batches.filter(
-              (
-                batch,
-              ) => (batch.state !== "error" && batch.state !== "completed"),
+              (batch) => (
+                batch.state !== "error" && batch.state !== "completed"
+              ),
             ),
           );
         },
