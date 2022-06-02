@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsCallExpression, JsComputedMemberExpression, JsIdentifierExpression,
     JsImportCallExpression, JsNewExpression, JsStaticMemberExpression, JsSyntaxNode,
@@ -7,26 +8,26 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, SyntaxResult};
 use std::fmt::Debug;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 /// Data structure that holds the node with its formatted version
 pub(crate) enum FlattenItem {
     /// Holds onto a [rome_js_syntax::JsStaticMemberExpression]
-    StaticMember(JsStaticMemberExpression, Vec<FormatElement>),
+    StaticMember(JsStaticMemberExpression),
     /// Holds onto a [rome_js_syntax::JsCallExpression]
-    CallExpression(JsCallExpression, Vec<FormatElement>),
+    CallExpression(JsCallExpression),
     /// Holds onto a [rome_js_syntax::JsComputedMemberExpression]
-    ComputedExpression(JsComputedMemberExpression, Vec<FormatElement>),
+    ComputedMember(JsComputedMemberExpression),
     /// Any other node that are not  [rome_js_syntax::JsCallExpression] or [rome_js_syntax::JsStaticMemberExpression]
     /// Are tracked using this variant
-    Node(JsSyntaxNode, FormatElement),
+    Node(JsSyntaxNode),
 }
 
 impl FlattenItem {
     /// checks if the current node is a [rome_js_syntax::JsCallExpression],  [rome_js_syntax::JsImportExpression] or a [rome_js_syntax::JsNewExpression]
     pub fn is_loose_call_expression(&self) -> bool {
         match self {
-            FlattenItem::CallExpression(_, _) => true,
-            FlattenItem::Node(node, _) => {
+            FlattenItem::CallExpression(_) => true,
+            FlattenItem::Node(node) => {
                 JsImportCallExpression::can_cast(node.kind())
                     | JsNewExpression::can_cast(node.kind())
             }
@@ -36,36 +37,36 @@ impl FlattenItem {
 
     pub(crate) fn as_syntax(&self) -> &JsSyntaxNode {
         match self {
-            FlattenItem::StaticMember(node, _) => node.syntax(),
-            FlattenItem::CallExpression(node, _) => node.syntax(),
-            FlattenItem::ComputedExpression(node, _) => node.syntax(),
-            FlattenItem::Node(node, _) => node,
+            FlattenItem::StaticMember(node) => node.syntax(),
+            FlattenItem::CallExpression(node) => node.syntax(),
+            FlattenItem::ComputedMember(node) => node.syntax(),
+            FlattenItem::Node(node) => node,
         }
     }
 
     pub(crate) fn has_trailing_comments(&self) -> bool {
         match self {
-            FlattenItem::StaticMember(node, _) => node.syntax().has_trailing_comments(),
-            FlattenItem::CallExpression(node, _) => node.syntax().has_trailing_comments(),
-            FlattenItem::ComputedExpression(node, _) => node.syntax().has_trailing_comments(),
-            FlattenItem::Node(node, _) => node.has_trailing_comments(),
+            FlattenItem::StaticMember(node) => node.syntax().has_trailing_comments(),
+            FlattenItem::CallExpression(node) => node.syntax().has_trailing_comments(),
+            FlattenItem::ComputedMember(node) => node.syntax().has_trailing_comments(),
+            FlattenItem::Node(node) => node.has_trailing_comments(),
         }
     }
 
     pub fn is_computed_expression(&self) -> bool {
-        matches!(self, FlattenItem::ComputedExpression(..))
+        matches!(self, FlattenItem::ComputedMember(..))
     }
 
     pub(crate) fn is_this_expression(&self) -> bool {
         match self {
-            FlattenItem::Node(node, _) => JsThisExpression::can_cast(node.kind()),
+            FlattenItem::Node(node) => JsThisExpression::can_cast(node.kind()),
             _ => false,
         }
     }
 
     pub(crate) fn is_identifier_expression(&self) -> bool {
         match self {
-            FlattenItem::Node(node, _) => JsIdentifierExpression::can_cast(node.kind()),
+            FlattenItem::Node(node) => JsIdentifierExpression::can_cast(node.kind()),
             _ => false,
         }
     }
@@ -138,32 +139,42 @@ impl FlattenItem {
     }
 }
 
-impl Debug for FlattenItem {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Format<JsFormatContext> for FlattenItem {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
-            FlattenItem::StaticMember(_, formatted) => {
-                std::write!(f, "StaticMember: {:?}", formatted)
+            FlattenItem::StaticMember(static_member) => {
+                write![
+                    f,
+                    [
+                        static_member.operator_token().format(),
+                        static_member.member().format(),
+                    ]
+                ]
             }
-            FlattenItem::CallExpression(_, formatted) => {
-                std::write!(f, "CallExpression: {:?}", formatted)
+            FlattenItem::CallExpression(call_expression) => {
+                write!(
+                    f,
+                    [
+                        call_expression.optional_chain_token().format(),
+                        call_expression.type_arguments().format(),
+                        call_expression.arguments().format()
+                    ]
+                )
             }
-            FlattenItem::ComputedExpression(_, formatted) => {
-                std::write!(f, "ComputedExpression: {:?}", formatted)
+            FlattenItem::ComputedMember(computed_member) => {
+                write!(
+                    f,
+                    [
+                        computed_member.optional_chain_token().format(),
+                        computed_member.l_brack_token().format(),
+                        computed_member.member().format(),
+                        computed_member.r_brack_token().format(),
+                    ]
+                )
             }
-            FlattenItem::Node(node, formatted) => {
-                std::write!(f, "{:?} {:?}", node.kind(), formatted)
+            FlattenItem::Node(node) => {
+                write!(f, [node.format()])
             }
-        }
-    }
-}
-
-impl From<FlattenItem> for FormatElement {
-    fn from(flatten_item: FlattenItem) -> Self {
-        match flatten_item {
-            FlattenItem::StaticMember(_, formatted) => FormatElement::from_iter(formatted),
-            FlattenItem::CallExpression(_, formatted) => FormatElement::from_iter(formatted),
-            FlattenItem::ComputedExpression(_, formatted) => FormatElement::from_iter(formatted),
-            FlattenItem::Node(_, formatted) => formatted,
         }
     }
 }
