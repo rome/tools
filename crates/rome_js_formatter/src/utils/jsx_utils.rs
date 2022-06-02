@@ -1,53 +1,15 @@
 use crate::context::QuoteStyle;
-use crate::{if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, JsFormatter};
-use rome_formatter::{format_elements, space_token, FormatElement};
+use crate::{
+    if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, JsFormatContext,
+    JsFormatter,
+};
+use rome_formatter::formatter::Formatter;
+use rome_formatter::{format_elements, space_token, Format, FormatElement, FormatResult};
 use rome_js_syntax::kind::JsSyntaxKind;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsLanguage, JsxAnyChild, JsxChildList,
 };
 use rome_rowan::{AstNodeList, SyntaxNode};
-
-/// Creates either a space using an expression child and a string literal,
-/// or a regular space, depending on whether the group breaks or not.
-///
-/// ```jsx
-///  <div> Winter Light </div>;
-///
-///  <div>
-///    {" "}Winter Light
-///    Through A Glass Darkly
-///    The Silence
-///    Seventh Seal
-///    Wild Strawberries
-///  </div>
-/// ```
-pub fn jsx_space(formatter: &JsFormatter) -> FormatElement {
-    let jsx_space = match formatter.context().quote_style() {
-        QuoteStyle::Double => "{{\" \"}}",
-        QuoteStyle::Single => "{{\' \'}}",
-    };
-
-    format_elements![
-        if_group_breaks(format_elements![token(jsx_space), soft_line_break()]),
-        if_group_fits_on_single_line(space_token())
-    ]
-}
-
-/// Detects if the child is a JSX whitespace expression, i.e. `{" "}`
-pub fn is_jsx_whitespace_expression(child: JsxAnyChild) -> bool {
-    if let JsxAnyChild::JsxExpressionChild(expr_child) = child {
-        if let Some(JsAnyExpression::JsAnyLiteralExpression(
-            JsAnyLiteralExpression::JsStringLiteralExpression(string_literal_expr),
-        )) = expr_child.expression()
-        {
-            if let Ok(token) = string_literal_expr.value_token() {
-                return token.text() == " ";
-            }
-        }
-    }
-
-    false
-}
 
 /// Checks if the children of an element contain meaningful text. See [is_meaningful_jsx_text] for
 /// definition of meaningful JSX text.
@@ -77,6 +39,8 @@ pub static WHITESPACE: [char; 4] = [' ', '\n', '\t', '\r'];
 /// assert_eq!(is_meaningful_jsx_text("     \t\r   "), true);
 /// assert_eq!(is_meaningful_jsx_text("     \n\r   "), false);
 /// assert_eq!(is_meaningful_jsx_text("  Alien   "), true);
+/// assert_eq!(is_meaningful_jsx_text("\n  Alien   "), true);
+/// assert_eq!(is_meaningful_jsx_text("  Alien   \n"), true);
 /// assert_eq!(is_meaningful_jsx_text(""), true);
 /// ```
 pub fn is_meaningful_jsx_text(text: &str) -> bool {
