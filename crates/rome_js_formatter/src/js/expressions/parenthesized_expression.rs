@@ -5,7 +5,7 @@ use crate::utils::JsAnyBinaryLikeExpression;
 use crate::FormatNodeFields;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
-    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
+    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
