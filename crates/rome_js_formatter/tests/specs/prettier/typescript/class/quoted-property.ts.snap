@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 182
 expression: quoted-property.ts
-
 ---
 # Input
 ```js
@@ -15,7 +14,7 @@ class User {
 # Output
 ```js
 class User {
-  "username": string;
+  username: string;
 }
 
 ```
