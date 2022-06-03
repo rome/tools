@@ -18,16 +18,17 @@ The foundation of the formatter relies on two pillars:
 Import the `FormatNode` trait and implement it for your Node.
 
 ```rust
-use rome_js_formatter::{Format, FormatNode, FormatElement, format_elements, token};
+use rome_js_formatter::prelude::*;
+use rome_formatter::{write, format_args};
 
 struct Buzz {
  blast: String
 }
 
-impl FormatNode for Buzz {
- fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for Buzz {
+ fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
  	// implementation goes here
- 	format_elements![token("_"), blast.as_str(), token("_")]
+	 write!(f, [token("Hello"), dynamic_token(&self.blast)])
  }
 }
 
@@ -38,11 +39,28 @@ impl FormatNode for Buzz {
 1. if a token is mandatory and the AST has that information, please use that token instead, for example:
 
 	```rust
-	fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let l_paren_yes = &self.l_paren_token()?.format(); // yes
-		let l_paren_no = toke("("); // no
+	fn format_fields(node, f: &mut JsFormatter) -> FormatResult<()> {
+    write!(f, [node.l_paren_token().format()])?; // yes
+    write!(f, [token("(")])?; // no
 	}
 	```
 
- 1. for tokens that are not mandatory, use our helpers
- 1. do not attempt to "fix" the code. If you know a token/node is mandatory, return `None` instead
+2. for tokens that are not mandatory, use our helpers
+3. do not attempt to "fix" the code. If you know a token/node is mandatory, return `None` instead
+
+## Debugging formatter output
+
+You can use the `dbg_write!` macro to output the written IR elements to the console (similar to how the `dbg!` macro works).
+
+```rust
+dbg_write!(f, [
+	token("hello"),
+	space_token(),
+	token("world")
+])?;
+
+// Writes
+// [src/main.rs:1][0] = StaticToken("hello")
+// [src/main.rs:1][1] = Space
+// [src/main.rs:1][0] = StaticToken("world")
+```
