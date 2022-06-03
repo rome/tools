@@ -6,7 +6,6 @@ use rome_js_syntax::JsAnyExpression;
 use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
-use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextSize;
 
@@ -35,7 +34,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                         group_elements_with_options(
                             indent(soft_line_break_or_space()),
                             GroupElementsOptions {
-                                group_id: Some(group_id)
+                                group_id: Some(group_id),
                             }
                         ),
                         line_suffix_boundary(),
@@ -44,25 +43,30 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                     ]
                 ]
             }
-            PropertyObjectMemberLayoutMode::BreakAfterOperator => formatted![
-                formatter,
-                [
-                    group_elements(formatted![formatter, [name.format()]]?),
-                    colon_token.format(),
-                    space_token(),
-                    group_elements(formatted![
-                        formatter,
-                        [indent(soft_line_break_or_space()), value.format()]
-                    ]?),
+            PropertyObjectMemberLayoutMode::BreakAfterOperator => {
+                formatted![
+                    formatter,
+                    [
+                        group_elements(formatted![formatter, [name.format()]]?),
+                        colon_token.format(),
+                        space_token(),
+                        group_elements(formatted![
+                            formatter,
+                            [indent(formatted![
+                                formatter,
+                                [soft_line_break_or_space(), value.format()]
+                            ]?)]
+                        ]?),
+                    ]
                 ]
-            ],
+            }
             PropertyObjectMemberLayoutMode::NeverBreakAfterOperator => formatted![
                 formatter,
                 [
                     group_elements(formatted![formatter, [name.format()]]?),
                     colon_token.format(),
                     space_token(),
-                    value.format()
+                    value.format(),
                 ]
             ],
         };
@@ -71,9 +75,13 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
     }
 }
 
+/// Determines how a property object member should be formatted
 enum PropertyObjectMemberLayoutMode {
+    /// First break right-hand side, then after operator
     Fluid,
+    /// First break after operator, then the sides are broken independently on their own lines
     BreakAfterOperator,
+    /// First break right-hand side, then left-hand side
     NeverBreakAfterOperator,
 }
 
@@ -140,7 +148,7 @@ fn is_never_break_after_operator(
     has_short_key: bool,
 ) -> SyntaxResult<bool> {
     if let JsAnyExpression::JsCallExpression(call_expression) = &value {
-        if call_expression.callee()?.syntax().kind() == JsSyntaxKind::REQUIRE_KW {
+        if call_expression.callee()?.syntax().text() == "require" {
             return Ok(true);
         }
     }
