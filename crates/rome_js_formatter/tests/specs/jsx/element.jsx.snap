@@ -139,6 +139,10 @@ let component = (
 
 (<div>Badlands</div>).property;
 
+ let bar = <div>
+   {foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
+ </div>;
+
 =============================
 # Outputs
 ## Output 1
@@ -294,6 +298,18 @@ let component = (
 
 (<div>Badlands</div>).property;
 
+let bar = (
+	<div>
+		{foo(
+			() => (
+				<div>
+					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
+				</div>
+			),
+		)}
+	</div>
+);
+
 
 ## Lines exceeding width of 80 characters
 
@@ -302,4 +318,5 @@ let component = (
    57: 						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
    69: 						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
    95: 					className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
+  153: 					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
 

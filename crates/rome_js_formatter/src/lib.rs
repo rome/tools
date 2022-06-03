@@ -481,6 +481,7 @@ mod test {
     use rome_js_syntax::SourceType;
 
     #[test]
+    #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"

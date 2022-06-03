@@ -132,3 +132,7 @@ let component = (
 );
 
 (<div>Badlands</div>).property;
+
+ let bar = <div>
+   {foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
+ </div>;
