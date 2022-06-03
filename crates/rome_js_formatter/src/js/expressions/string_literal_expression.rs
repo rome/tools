@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::{write, Buffer, VecBuffer};
 
-use crate::utils::FormatLiteralStringToken;
+use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
 use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsStringLiteralExpression;
@@ -22,7 +22,10 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
             let mut buffer = VecBuffer::new(f.state_mut());
             write!(
                 buffer,
-                [FormatLiteralStringToken::from_string(&value_token)]
+                [FormatLiteralStringToken::new(
+                    &value_token,
+                    StringLiteralParentKind::Expression
+                )]
             )?;
 
             let formatted_element = buffer.into_element();
@@ -40,7 +43,13 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
                 })]
             )
         } else {
-            write!(f, [FormatLiteralStringToken::from_string(&value_token)])
+            write!(
+                f,
+                [FormatLiteralStringToken::new(
+                    &value_token,
+                    StringLiteralParentKind::Expression
+                )]
+            )
         }
     }
 }

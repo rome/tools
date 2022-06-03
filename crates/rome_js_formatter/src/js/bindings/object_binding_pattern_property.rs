@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::utils::FormatMemberName;
 use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::JsObjectBindingPatternProperty;
@@ -21,7 +22,7 @@ impl FormatNodeFields<JsObjectBindingPatternProperty>
         write![
             f,
             [
-                member.format(),
+                FormatMemberName::from(member?),
                 colon_token.format(),
                 space_token(),
                 pattern.format(),

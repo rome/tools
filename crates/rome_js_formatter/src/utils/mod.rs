@@ -14,9 +14,11 @@ pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
 use rome_formatter::{normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
+use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
-    JsTemplateElement, Modifiers, TsTemplateElement, TsType,
+    JsAnyClassMemberName, JsAnyExpression, JsAnyFunction, JsAnyObjectMemberName, JsAnyStatement,
+    JsComputedMemberName, JsInitializerClause, JsLanguage, JsLiteralMemberName,
+    JsPrivateClassMemberName, JsTemplateElement, Modifiers, TsTemplateElement, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, SyntaxResult};
@@ -450,4 +452,72 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
             | JsAnyExpression::JsImportCallExpression(_)
             | JsAnyExpression::JsCallExpression(_)
     )
+}
+
+/// Data structure used to merge into one the following nodes:
+///
+/// - [JsAnyObjectMemberName]
+/// - [JsAnyClassMemberName]
+/// - [JsLiteralMemberName]
+///
+/// Once merged, the enum is used to get specific members (the literal ones) and elide
+/// the quotes from them, when the algorithm sees fit
+#[allow(clippy::enum_variant_names)]
+pub(crate) enum FormatMemberName {
+    ComputedMemberName(JsComputedMemberName),
+    PrivateClassMemberName(JsPrivateClassMemberName),
+    LiteralMemberName(JsLiteralMemberName),
+}
+
+impl From<JsAnyClassMemberName> for FormatMemberName {
+    fn from(node: JsAnyClassMemberName) -> Self {
+        match node {
+            JsAnyClassMemberName::JsComputedMemberName(node) => Self::ComputedMemberName(node),
+            JsAnyClassMemberName::JsLiteralMemberName(node) => Self::LiteralMemberName(node),
+            JsAnyClassMemberName::JsPrivateClassMemberName(node) => {
+                Self::PrivateClassMemberName(node)
+            }
+        }
+    }
+}
+
+impl From<JsAnyObjectMemberName> for FormatMemberName {
+    fn from(node: JsAnyObjectMemberName) -> Self {
+        match node {
+            JsAnyObjectMemberName::JsComputedMemberName(node) => Self::ComputedMemberName(node),
+            JsAnyObjectMemberName::JsLiteralMemberName(node) => Self::LiteralMemberName(node),
+        }
+    }
+}
+
+impl From<JsLiteralMemberName> for FormatMemberName {
+    fn from(literal: JsLiteralMemberName) -> Self {
+        Self::LiteralMemberName(literal)
+    }
+}
+
+impl Format<JsFormatContext> for FormatMemberName {
+    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match self {
+            FormatMemberName::ComputedMemberName(node) => {
+                write![f, [node.format()]]
+            }
+            FormatMemberName::PrivateClassMemberName(node) => {
+                write![f, [node.format()]]
+            }
+            FormatMemberName::LiteralMemberName(literal) => {
+                let value = literal.value()?;
+
+                if value.kind() == JS_STRING_LITERAL {
+                    FormatLiteralStringToken::new(
+                        &literal.value()?,
+                        StringLiteralParentKind::Member,
+                    )
+                    .format(f)
+                } else {
+                    value.format().format(f)
+                }
+            }
+        }
+    }
 }

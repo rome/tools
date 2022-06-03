@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::FormatLiteralStringToken;
+use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::TsImportType;
@@ -26,7 +26,10 @@ impl FormatNodeFields<TsImportType> for FormatNodeRule<TsImportType> {
             [
                 import_token.format(),
                 l_paren_token.format(),
-                FormatLiteralStringToken::from_string(&argument_token?),
+                FormatLiteralStringToken::new(
+                    &argument_token?,
+                    StringLiteralParentKind::Expression
+                ),
                 r_paren_token.format(),
                 qualifier_clause.format(),
                 type_arguments.format(),

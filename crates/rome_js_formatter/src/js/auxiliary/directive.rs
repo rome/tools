@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{FormatLiteralStringToken, FormatWithSemicolon};
+use crate::utils::{FormatLiteralStringToken, FormatWithSemicolon, StringLiteralParentKind};
 use rome_formatter::write;
 
 use crate::FormatNodeFields;
@@ -16,7 +16,7 @@ impl FormatNodeFields<JsDirective> for FormatNodeRule<JsDirective> {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &FormatLiteralStringToken::from_directive(&value_token?),
+                &FormatLiteralStringToken::new(&value_token?, StringLiteralParentKind::Directive),
                 semicolon_token.as_ref()
             )]
         )

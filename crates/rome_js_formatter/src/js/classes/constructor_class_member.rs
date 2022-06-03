@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::utils::FormatMemberName;
 use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::JsConstructorClassMember;
@@ -18,7 +19,7 @@ impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructor
             [
                 modifiers.format(),
                 space_token(),
-                name.format(),
+                FormatMemberName::from(name?),
                 parameters.format(),
                 space_token(),
                 body.format()

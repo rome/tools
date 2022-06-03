@@ -485,6 +485,7 @@ mod test {
     use rome_js_parser::parse;
     use rome_js_syntax::SourceType;
 
+    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
