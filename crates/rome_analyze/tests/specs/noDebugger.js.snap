@@ -18,6 +18,13 @@ warning[noDebugger]: This is an unexpected use of the debugger operator.
 3 │ if (foo) debugger
   │          -------- This is an unexpected use of the debugger operator.
 
+Replace with whitespace
+    | @@ -1,3 +1,3 @@
+0 0 |   const test = { debugger: 1 }; test.debugger;
+1 1 |   
+2   | - if (foo) debugger
+  2 | + if (foo) ;
+
 
 ```
 

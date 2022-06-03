@@ -1,10 +1,11 @@
 use rome_console::markup;
-use rome_diagnostics::Severity;
-use rome_js_syntax::JsDebuggerStatement;
-use rome_rowan::AstNode;
+use rome_diagnostics::{Applicability, Severity};
+use rome_js_syntax::{JsAnyStatement, JsDebuggerStatement, T};
+use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::registry::{Rule, RuleDiagnostic};
-use crate::RuleCategory;
+use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::{ActionCategory, RuleCategory};
+use rome_js_factory::make;
 
 pub(crate) enum NoDebugger {}
 
@@ -27,6 +28,23 @@ impl Rule for NoDebugger {
                 "This is an unexpected use of the "<Emphasis>"debugger"</Emphasis>" operator."
             }
             .to_owned(),
+        })
+    }
+
+    fn action(
+        root: rome_js_syntax::JsAnyRoot,
+        node: &Self::Query,
+        _state: &Self::State,
+    ) -> Option<crate::registry::RuleAction> {
+        let root = root.replace_node(
+            JsAnyStatement::JsDebuggerStatement(node.clone()),
+            JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
+        )?;
+        Some(RuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            message: markup! { "Replace with whitespace" }.to_owned(),
+            root,
         })
     }
 }
