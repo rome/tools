@@ -63,20 +63,35 @@ impl Rule for NoCompareNegZero {
         node: &Self::Query,
         state: &Self::State,
     ) -> Option<crate::registry::RuleAction> {
-        let zero_token = SyntaxToken::new_detached(JsSyntaxKind::JS_NUMBER_LITERAL, "0", [], []);
         let root = if state.left_need_replaced && state.right_need_replaced {
-            let binary = node
-                .clone()
-                .with_left(JsAnyExpression::JsAnyLiteralExpression(
+            let binary = node.clone().replace_node(
+                node.left().ok()?,
+                JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
-                        make::js_number_literal_expression(zero_token.clone()),
+                        make::js_number_literal_expression(SyntaxToken::new_detached(
+                            JsSyntaxKind::JS_NUMBER_LITERAL,
+                            "0",
+                            [],
+                            [],
+                        )),
                     ),
-                ))
-                .with_right(JsAnyExpression::JsAnyLiteralExpression(
+                ),
+            )?;
+            // extract binary.right() as an extra variable because `binary.replace_node` will move ownership.
+            let binary_right = binary.right().ok()?;
+            let binary = binary.replace_node(
+                binary_right,
+                JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
-                        make::js_number_literal_expression(zero_token),
+                        make::js_number_literal_expression(SyntaxToken::new_detached(
+                            JsSyntaxKind::JS_NUMBER_LITERAL,
+                            "0",
+                            [],
+                            [],
+                        )),
                     ),
-                ));
+                ),
+            )?;
             root.replace_node(node.clone(), binary)?
         } else if state.left_need_replaced {
             root.replace_node(
