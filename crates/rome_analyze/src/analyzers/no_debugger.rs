@@ -1,6 +1,8 @@
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
-use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsDebuggerStatement, T, JsStatementList, JsModuleItemList};
+use rome_js_syntax::{
+    JsAnyRoot, JsAnyStatement, JsDebuggerStatement, JsModuleItemList, JsStatementList, T,
+};
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
