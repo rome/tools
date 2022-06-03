@@ -1,0 +1,41 @@
+---
+source: crates/rome_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: noSparseArray.js
+---
+# Input
+```js
+// valid
+var a = [ 1, 2, ];
+
+// invalid
+var a = [,];
+var a = [ 1,, 2];
+```
+
+# Diagnostics
+```
+warning[noSparseArray]: This array contains an empty slot.
+  ┌─ noSparseArray.js:5:9
+  │
+5 │ var a = [,];
+  │         --- This array contains an empty slot.
+
+Replace with undefined assignment
+
+
+```
+
+```
+warning[noSparseArray]: This array contains an empty slot.
+  ┌─ noSparseArray.js:6:9
+  │
+6 │ var a = [ 1,, 2];
+  │         -------- This array contains an empty slot.
+
+Replace with undefined assignment
+
+
+```
+
+

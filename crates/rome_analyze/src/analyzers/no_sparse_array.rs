@@ -2,11 +2,12 @@ use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyRoot, JsArrayExpression,
-    JsComputedMemberExpression, JsComputedMemberExpressionFields, JsStaticMemberExpression,
-    JsStaticMemberExpressionFields, JsUnaryExpression, JsUnaryOperator, T,
+    JsAnyArrayElement, JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyRoot,
+    JsArrayExpression, JsArrayHole, JsComputedMemberExpression, JsComputedMemberExpressionFields,
+    JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxKind, JsUnaryExpression,
+    JsUnaryOperator, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
+use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxElement};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
@@ -25,7 +26,7 @@ impl Rule for NoSparseArray {
         node.elements()
             .iter()
             .filter_map(|item| item.ok())
-            .position(|element| matches!(element, JsArrayHole))
+            .position(|element| matches!(element, JsAnyArrayElement::JsArrayHole(_),))
             .map(|_| ())
     }
 
@@ -41,16 +42,37 @@ impl Rule for NoSparseArray {
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
-        let root = root.replace_node(
-            JsAnyExpression::from(node.clone()),
-            JsAnyExpression::from(make::js_assignment_expression(
-                state.clone().try_into().ok()?,
-                make::token_decorated_with_space(T![=]),
-                JsAnyExpression::from(make::js_identifier_expression(
-                    make::js_reference_identifier(make::ident("undefined")),
-                )),
-            )),
-        )?;
+        let mut syntax = node.clone().into_syntax();
+        let hole_index_iter = syntax.children().enumerate().filter_map(|(i, a)| {
+            if matches!(a.kind(), JsSyntaxKind::JS_ARRAY_HOLE) {
+                Some(i)
+            } else {
+                None
+            }
+        });
+
+        let ident_expr =
+            make::js_identifier_expression(make::js_reference_identifier(make::ident("undefined")));
+        let ident_expr_syntax = ident_expr.into_syntax();
+        for index in hole_index_iter {
+            syntax = syntax.splice_slots(
+                index..=index,
+                [Some(SyntaxElement::Node(ident_expr_syntax.clone()))].into_iter(),
+            );
+        }
+
+        let root = root.replace_node(node.clone(), JsArrayExpression::unwrap_cast(syntax))?;
+        // syntax.splice_slots(range, replace_with)
+        // let root = root.replace_node(
+        //     JsAnyExpression::from(node.clone()),
+        //     JsAnyExpression::from(make::js_assignment_expression(
+        //         state.clone().try_into().ok()?,
+        //         make::token_decorated_with_space(T![=]),
+        //         JsAnyExpression::from(make::js_identifier_expression(
+        //             make::js_reference_identifier(make::ident("undefined")),
+        //         )),
+        //     )),
+        // )?;
 
         Some(RuleAction {
             category: ActionCategory::QuickFix,
