@@ -8,3 +8,5 @@ mod use_single_var_declarator;
 pub(crate) use use_single_var_declarator::UseSingleVarDeclarator;
 mod use_while;
 pub(crate) use use_while::UseWhile;
+mod valid_typeof;
+pub(crate) use valid_typeof::ValidTypeof;
