@@ -25,7 +25,7 @@ impl Rule for NoDebugger {
             severity: Severity::Warning,
             range: node.syntax().text_trimmed_range(),
             message: markup! {
-                "This is an unexpected use of the "<Emphasis>"debugger"</Emphasis>" operator."
+                "This is an unexpected use of the "<Emphasis>"debugger"</Emphasis>" statement."
             }
             .to_owned(),
         })
@@ -43,7 +43,7 @@ impl Rule for NoDebugger {
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with emptyStatement" }.to_owned(),
+            message: markup! { "Remove debugger statement" }.to_owned(),
             root,
         })
     }
