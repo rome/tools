@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::FormatLiteralStringToken;
+use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
 use rome_js_syntax::{TsStringLiteralType, TsStringLiteralTypeFields};
 
@@ -12,7 +12,10 @@ impl FormatNodeFields<TsStringLiteralType> for FormatNodeRule<TsStringLiteralTyp
 
         formatted![
             formatter,
-            [FormatLiteralStringToken::from_string(&literal_token?)]
+            [FormatLiteralStringToken::new(
+                &literal_token?,
+                StringLiteralParentKind::Expression
+            )]
         ]
     }
 }
