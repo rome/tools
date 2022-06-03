@@ -104,20 +104,33 @@ fn get_object_member_layout(
     let value = value?;
 
     let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as u32;
-    let has_short_key = name.range().len() < TextSize::from(text_width_for_break);
+    let is_name_short = name.range().len() < TextSize::from(text_width_for_break);
 
-    if is_break_after_operator(&value, has_short_key)? {
+    if is_break_after_operator(&value)? {
         return Ok(PropertyObjectMemberLayoutMode::BreakAfterOperator);
     }
 
-    if is_never_break_after_operator(&value, has_short_key)? {
+    if is_name_short {
+        return Ok(PropertyObjectMemberLayoutMode::NeverBreakAfterOperator);
+    } else {
+        if matches!(
+            value,
+            JsAnyExpression::JsAnyLiteralExpression(
+                JsAnyLiteralExpression::JsStringLiteralExpression(_)
+            )
+        ) {
+            return Ok(PropertyObjectMemberLayoutMode::BreakAfterOperator);
+        }
+    }
+
+    if is_never_break_after_operator(&value)? {
         return Ok(PropertyObjectMemberLayoutMode::NeverBreakAfterOperator);
     }
 
     Ok(PropertyObjectMemberLayoutMode::Fluid)
 }
 
-fn is_break_after_operator(value: &JsAnyExpression, has_short_key: bool) -> SyntaxResult<bool> {
+fn is_break_after_operator(value: &JsAnyExpression) -> SyntaxResult<bool> {
     if JsAnyBinaryLikeExpression::can_cast(value.syntax().kind()) {
         return Ok(true);
     }
@@ -132,32 +145,14 @@ fn is_break_after_operator(value: &JsAnyExpression, has_short_key: bool) -> Synt
         }
     }
 
-    if has_short_key {
-        return Ok(false);
-    }
-
-    if let JsAnyExpression::JsAnyLiteralExpression(
-        JsAnyLiteralExpression::JsStringLiteralExpression(_),
-    ) = &value
-    {
-        return Ok(true);
-    }
-
     Ok(false)
 }
 
-fn is_never_break_after_operator(
-    value: &JsAnyExpression,
-    has_short_key: bool,
-) -> SyntaxResult<bool> {
+fn is_never_break_after_operator(value: &JsAnyExpression) -> SyntaxResult<bool> {
     if let JsAnyExpression::JsCallExpression(call_expression) = &value {
         if call_expression.callee()?.syntax().text() == "require" {
             return Ok(true);
         }
-    }
-
-    if has_short_key {
-        return Ok(true);
     }
 
     if matches!(
