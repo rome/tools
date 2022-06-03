@@ -22,7 +22,7 @@ impl Rule for NoSparseArray {
     type State = ();
 
     fn run(node: &Self::Query) -> Option<Self::State> {
-        // We defer collect `JsHole` index until user want to fix this issue.
+        // We defer collect `JsHole` index until user want to apply code action.
         node.elements()
             .iter()
             .filter_map(|item| item.ok())
@@ -53,7 +53,7 @@ impl Rule for NoSparseArray {
                     None
                 }
             });
-
+            // syntax.
         for index in hole_index_iter {
             let ident_expr = make::js_identifier_expression(make::js_reference_identifier(
                 make::ident("undefined"),
@@ -79,7 +79,7 @@ impl Rule for NoSparseArray {
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with undefined assignment" }.to_owned(),
+            message: markup! { "Replace with undefined" }.to_owned(),
             root,
         })
     }

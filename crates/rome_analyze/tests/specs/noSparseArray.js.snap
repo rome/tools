@@ -6,62 +6,87 @@ expression: noSparseArray.js
 # Input
 ```js
 // valid
-var a = [ 1, 2, ];
+const a = [ 1, 2, ];
 
 // invalid
-var a = [/**test*/,];
-var a = [,,];
-var a = [1,,2];
+const b = [/**test*/,];
+const c = [,,];
+const d = [,,2];
+
+const e = [1,,2]
 ```
 
 # Diagnostics
 ```
 warning[noSparseArray]: This array contains an empty slot.
-  ┌─ noSparseArray.js:5:9
+  ┌─ noSparseArray.js:5:11
   │
-5 │ var a = [/**test*/,];
-  │         ------------ This array contains an empty slot.
+5 │ const b = [/**test*/,];
+  │           ------------ This array contains an empty slot.
 
-Replace with undefined assignment
-    | @@ -2,6 +2,6 @@
-1 1 |   var a = [ 1, 2, ];
+Replace with undefined
+    | @@ -2,7 +2,7 @@
+1 1 |   const a = [ 1, 2, ];
 2 2 |   
 3 3 |   // invalid
-4   | - var a = [/**test*/,];
-  4 | + var a = [/**test*/undefined,];
-5 5 |   var a = [,,];
-6 6 |   var a = [1,,2];
+4   | - const b = [/**test*/,];
+  4 | + const b = [/**test*/undefined,];
+5 5 |   const c = [,,];
+6 6 |   const d = [,,2];
+7 7 |   
 
 
 ```
 
 ```
 warning[noSparseArray]: This array contains an empty slot.
-  ┌─ noSparseArray.js:6:9
+  ┌─ noSparseArray.js:6:11
   │
-6 │ var a = [,,];
-  │         ---- This array contains an empty slot.
+6 │ const c = [,,];
+  │           ---- This array contains an empty slot.
 
-Replace with undefined assignment
-    | @@ -3,5 +3,5 @@
+Replace with undefined
+    | @@ -3,7 +3,7 @@
 2 2 |   
 3 3 |   // invalid
-4 4 |   var a = [/**test*/,];
-5   | - var a = [,,];
-  5 | + var a = [undefined,undefined,];
-6 6 |   var a = [1,,2];
+4 4 |   const b = [/**test*/,];
+5   | - const c = [,,];
+  5 | + const c = [undefined,undefined,];
+6 6 |   const d = [,,2];
+7 7 |   
+8 8 |   const e = [1,,2]
 
 
 ```
 
 ```
 warning[noSparseArray]: This array contains an empty slot.
-  ┌─ noSparseArray.js:7:9
+  ┌─ noSparseArray.js:7:11
   │
-7 │ var a = [1,,2];
-  │         ------ This array contains an empty slot.
+7 │ const d = [,,2];
+  │           ----- This array contains an empty slot.
 
-Replace with undefined assignment
+Replace with undefined
+    | @@ -4,6 +4,6 @@
+3 3 |   // invalid
+4 4 |   const b = [/**test*/,];
+5 5 |   const c = [,,];
+6   | - const d = [,,2];
+  6 | + const d = [undefined,undefined,2];
+7 7 |   
+8 8 |   const e = [1,,2]
+
+
+```
+
+```
+warning[noSparseArray]: This array contains an empty slot.
+  ┌─ noSparseArray.js:9:11
+  │
+9 │ const e = [1,,2]
+  │           ------ This array contains an empty slot.
+
+Replace with undefined
 
 
 ```
