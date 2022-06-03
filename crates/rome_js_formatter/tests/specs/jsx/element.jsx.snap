@@ -143,6 +143,10 @@ let component = (
    {foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
  </div>;
 
+<Component // here is a comment
+	className={bar} index={0} name="Component" // here is another comment
+></Component>;
+
 =============================
 # Outputs
 ## Output 1
@@ -309,6 +313,12 @@ let bar = (
 		)}
 	</div>
 );
+
+<Component // here is a comment
+	className={bar}
+	index={0}
+	name="Component" // here is another comment
+></Component>;
 
 
 ## Lines exceeding width of 80 characters

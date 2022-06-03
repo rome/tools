@@ -136,3 +136,7 @@ let component = (
  let bar = <div>
    {foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
  </div>;
+
+<Component // here is a comment
+	className={bar} index={0} name="Component" // here is another comment
+></Component>;
