@@ -43,7 +43,7 @@ impl Rule for NoDebugger {
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with whitespace" }.to_owned(),
+            message: markup! { "Replace with emptyStatement" }.to_owned(),
             root,
         })
     }
