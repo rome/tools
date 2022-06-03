@@ -1,3 +1,4 @@
+use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
 use crate::utils::jsx_utils::WHITESPACE;
 use crate::FormatNodeFields;
@@ -12,10 +13,19 @@ impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
     fn format_fields(node: &JsxText, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let JsxTextFields { value_token } = node.as_fields();
         let token = value_token?;
-        let (new_text, start) = clean_jsx_text(token.text(), token.text_range().start());
+        let (leading_whitespace_type, new_text, start, trailing_whitespace_type) =
+            clean_jsx_text(token.text(), token.text_range().start());
         let new_token = Token::from_syntax_token_cow_slice(new_text, &token, start);
+        let new_text = formatter.format_replaced(&token, FormatElement::from(new_token));
 
-        Ok(formatter.format_replaced(&token, FormatElement::from(new_token)))
+        formatted![
+            formatter,
+            [
+                leading_whitespace_type.format(formatter),
+                new_text,
+                trailing_whitespace_type.format(formatter)
+            ]
+        ]
     }
 }
 
@@ -87,6 +97,8 @@ impl<'a> TextCleaner<'a> {
 
     /// Tries to clean the text with the whitespace ranges. If we have no ranges, we return None
     /// because there's no cleaning to be done.
+    /// Does *not* add leading or trailing whitespace. Leading or trailing whitespace must be a JSX
+    /// space.
     fn clean_text(&self) -> Option<String> {
         if self.whitespace_ranges.is_empty() {
             return None;
@@ -94,10 +106,7 @@ impl<'a> TextCleaner<'a> {
 
         let mut char_indices = self.text.char_indices();
 
-        let mut output_string = match self.leading_whitespace_type {
-            None | Some(WhitespaceType::HasNewline) => String::new(),
-            Some(WhitespaceType::NoNewline) => " ".to_string(),
-        };
+        let mut output_string = String::new();
 
         if self.leading_whitespace_type.is_some() {
             for (_, c) in char_indices.by_ref() {
@@ -151,51 +160,25 @@ impl<'a> TextCleaner<'a> {
             }
         }
 
-        if matches!(
-            self.trailing_whitespace_type,
-            Some(WhitespaceType::NoNewline)
-        ) {
-            output_string.push(' ');
-        }
-
         Some(output_string)
     }
 }
 
-/// We cannot have this inside the TextCleaner because the text reference
-/// cannot be moved out of the struct, which it is via the Cow<str>
-fn get_trimmed_text(
-    text: &str,
-    leading_whitespace_type: Option<WhitespaceType>,
-    trailing_whitespace_type: Option<WhitespaceType>,
-) -> Cow<str> {
-    match (leading_whitespace_type, trailing_whitespace_type) {
-        (Some(WhitespaceType::HasNewline), Some(WhitespaceType::HasNewline)) => {
-            Cow::Borrowed(text.trim_matches(&WHITESPACE[..]))
-        }
-        (None, None) => Cow::Borrowed(text),
-        (Some(WhitespaceType::HasNewline), None) => {
-            Cow::Borrowed(text.trim_start_matches(&WHITESPACE[..]))
-        }
-        (None, Some(WhitespaceType::HasNewline)) => {
-            Cow::Borrowed(text.trim_end_matches(&WHITESPACE[..]))
-        }
-        (Some(WhitespaceType::NoNewline), Some(WhitespaceType::NoNewline)) => {
-            Cow::Owned(format!(" {} ", text.trim_matches(&WHITESPACE[..])))
-        }
-        (Some(WhitespaceType::NoNewline), _) => {
-            Cow::Owned(format!(" {}", text.trim_matches(&WHITESPACE[..])))
-        }
-        (_, Some(WhitespaceType::NoNewline)) => {
-            Cow::Owned(format!("{} ", text.trim_matches(&WHITESPACE[..])))
+impl Format for WhitespaceType {
+    type Context = JsFormatContext;
+
+    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
+        match self {
+            WhitespaceType::HasNewline => Ok(empty_element()),
+            WhitespaceType::NoNewline => JsxSpace::default().format(formatter),
         }
     }
 }
 
 /// Leading and trailing whitespace can either have newlines or not
 /// If whitespace has newlines, we normalize it to no spaces.
-/// If whitespace has no newlines, we normaliez it to a single space
-#[derive(Debug, Copy, Clone)]
+/// If whitespace has no newlines, we normalize it to a single space
+#[derive(Debug, Copy, Clone, PartialEq)]
 enum WhitespaceType {
     NoNewline,
     HasNewline,
@@ -245,9 +228,17 @@ fn get_trailing_whitespace_type(end_whitespace: &str) -> Option<WhitespaceType> 
     trailing_type
 }
 
-fn clean_jsx_text(text: &str, text_start: TextSize) -> (Cow<str>, TextSize) {
+fn clean_jsx_text(
+    text: &str,
+    text_start: TextSize,
+) -> (
+    Option<WhitespaceType>,
+    Cow<str>,
+    TextSize,
+    Option<WhitespaceType>,
+) {
     if text.is_empty() {
-        return (Cow::Borrowed(text), text_start);
+        return (None, Cow::Borrowed(text), text_start, None);
     }
 
     let text_cleaner = TextCleaner::build(text);
@@ -255,11 +246,7 @@ fn clean_jsx_text(text: &str, text_start: TextSize) -> (Cow<str>, TextSize) {
     let cleaned_text = if let Some(normalized_text) = text_cleaner.clean_text() {
         Cow::Owned(normalized_text)
     } else {
-        get_trimmed_text(
-            text_cleaner.text,
-            text_cleaner.leading_whitespace_type,
-            text_cleaner.trailing_whitespace_type,
-        )
+        Cow::Borrowed(text_cleaner.text.trim())
     };
 
     let start_idx: TextSize = text_cleaner
@@ -267,75 +254,148 @@ fn clean_jsx_text(text: &str, text_start: TextSize) -> (Cow<str>, TextSize) {
         .try_into()
         .expect("index is larger than 2^32 bits");
 
-    (cleaned_text, text_start + start_idx)
+    (
+        text_cleaner.leading_whitespace_type,
+        cleaned_text,
+        text_start + start_idx,
+        text_cleaner.trailing_whitespace_type,
+    )
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::jsx::auxiliary::text::clean_jsx_text;
+    use crate::jsx::auxiliary::text::{clean_jsx_text, WhitespaceType};
     use std::borrow::Cow;
 
     #[test]
     fn clean_jsx_text_works() {
-        assert_eq!((Cow::Borrowed(""), 0.into()), clean_jsx_text("", 0.into()));
         assert_eq!(
-            (Cow::Borrowed(" "), 1.into()),
+            (None, Cow::Borrowed(""), 0.into(), None),
+            clean_jsx_text("", 0.into())
+        );
+        assert_eq!(
+            (
+                Some(WhitespaceType::NoNewline),
+                Cow::Borrowed(""),
+                1.into(),
+                None
+            ),
             clean_jsx_text(" ", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo"), 0.into()),
+            (None, Cow::Borrowed("Foo"), 0.into(), None),
             clean_jsx_text("Foo", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed(" Foo"), 1.into()),
+            (
+                Some(WhitespaceType::NoNewline),
+                Cow::Borrowed("Foo"),
+                1.into(),
+                None
+            ),
             clean_jsx_text(" Foo", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo"), 1.into()),
+            (
+                Some(WhitespaceType::HasNewline),
+                Cow::Borrowed("Foo"),
+                1.into(),
+                None
+            ),
             clean_jsx_text("\nFoo", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed(" Foo"), 1.into()),
+            (
+                Some(WhitespaceType::NoNewline),
+                Cow::Borrowed("Foo"),
+                1.into(),
+                None
+            ),
             clean_jsx_text("\tFoo", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo"), 4.into()),
+            (
+                Some(WhitespaceType::HasNewline),
+                Cow::Borrowed("Foo"),
+                4.into(),
+                None
+            ),
             clean_jsx_text("\n \t Foo", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo"), 8.into()),
+            (
+                Some(WhitespaceType::HasNewline),
+                Cow::Borrowed("Foo"),
+                8.into(),
+                None
+            ),
             clean_jsx_text("\n \t \n \t\nFoo", 0.into())
         );
         assert_eq!(
-            (Cow::Owned(" Foo bar lorem".to_string()), 1.into()),
+            (
+                Some(WhitespaceType::NoNewline),
+                Cow::Borrowed("Foo bar lorem"),
+                1.into(),
+                None
+            ),
             clean_jsx_text(" Foo bar lorem", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo "), 0.into()),
+            (
+                None,
+                Cow::Borrowed("Foo"),
+                0.into(),
+                Some(WhitespaceType::NoNewline)
+            ),
             clean_jsx_text("Foo ", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo"), 0.into()),
+            (
+                None,
+                Cow::Borrowed("Foo"),
+                0.into(),
+                Some(WhitespaceType::HasNewline)
+            ),
             clean_jsx_text("Foo\n", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo "), 0.into()),
+            (
+                None,
+                Cow::Borrowed("Foo"),
+                0.into(),
+                Some(WhitespaceType::NoNewline)
+            ),
             clean_jsx_text("Foo\t", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo"), 0.into()),
+            (
+                None,
+                Cow::Borrowed("Foo"),
+                0.into(),
+                Some(WhitespaceType::HasNewline)
+            ),
             clean_jsx_text("Foo\t \n ", 0.into())
         );
         assert_eq!(
-            (Cow::Borrowed("Foo"), 0.into()),
+            (
+                None,
+                Cow::Borrowed("Foo"),
+                0.into(),
+                Some(WhitespaceType::HasNewline)
+            ),
             clean_jsx_text("Foo\n \t \n \t\n", 0.into())
         );
         assert_eq!(
-            (Cow::Owned("Foo Bar".to_string()), 0.into()),
+            (None, Cow::Owned("Foo Bar".to_string()), 0.into(), None),
             clean_jsx_text("Foo\n \t\t\n \tBar", 0.into())
         );
         assert_eq!(
-            (Cow::Owned("Foo Bar".to_string()), 7.into()),
+            (
+                Some(WhitespaceType::HasNewline),
+                Cow::Owned("Foo Bar".to_string()),
+                7.into(),
+                Some(WhitespaceType::HasNewline)
+            ),
             clean_jsx_text("\n \t\t\n \tFoo\n \t\t\n \tBar\n \t\t\n \t", 0.into())
         );
     }

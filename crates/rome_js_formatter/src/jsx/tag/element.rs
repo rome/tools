@@ -13,18 +13,19 @@ impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
             closing_element,
         } = node.as_fields();
 
-        let indent =
+        let expand_if_special_case =
             if is_jsx_inside_arrow_function_inside_call_inside_expression_child(node.syntax()) {
-                block_indent
+                expand_parent()
             } else {
-                soft_block_indent
+                empty_element()
             };
 
         Ok(group_elements(formatted![
             formatter,
             [
                 opening_element.format(),
-                indent(formatted![formatter, [children.format()]]?),
+                expand_if_special_case,
+                soft_block_indent(formatted![formatter, [children.format()]]?),
                 closing_element.format()
             ]
         ]?))

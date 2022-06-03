@@ -9,6 +9,7 @@ pub fn contains_meaningful_jsx_text(children: &JsxChildList) -> bool {
         if let JsxAnyChild::JsxText(jsx_text) = child {
             if let Ok(token) = jsx_text.value_token() {
                 if is_meaningful_jsx_text(token.text()) {
+                    println!("\"{}\" IS MEANINGFUL", token.text());
                     return true;
                 }
             }
@@ -125,9 +126,22 @@ pub fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
 ) -> bool {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
-    let mut ancestors = node.ancestors().skip(1);
+    let mut ancestors = node.ancestors().skip(2).peekable();
+
+    // This matching should work with or without parentheses around the JSX element
+    // therefore we ignore parenthesized expressions.
+    if ancestors
+        .peek()
+        .map(|a| a.kind() == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION)
+        .unwrap_or(false)
+    {
+        ancestors.next();
+    }
+
     let required_ancestors = [
         JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION,
+        JsSyntaxKind::JS_CALL_ARGUMENT_LIST,
+        JsSyntaxKind::JS_CALL_ARGUMENTS,
         JsSyntaxKind::JS_CALL_EXPRESSION,
         JsSyntaxKind::JSX_EXPRESSION_CHILD,
     ];

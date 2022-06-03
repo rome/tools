@@ -402,7 +402,6 @@ pub fn fill_elements<TSep: Into<FormatElement>>(
     let mut list: Vec<_> = elements.into_iter().collect();
     match list.len() {
         0 => empty_element(),
-        1 => list.pop().unwrap(),
         _ => FormatElement::Fill(Box::new(Fill {
             list: List::new(list),
             separator: separator.into(),

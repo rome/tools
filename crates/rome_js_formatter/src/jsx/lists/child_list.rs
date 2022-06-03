@@ -13,8 +13,10 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
         let children = formatter.format_all(node.iter().formatted())?;
 
         if contains_meaningful_jsx_text(node) {
+            println!("1");
             Ok(fill_elements(empty_element(), children))
         } else {
+            println!("2");
             Ok(join_elements(
                 soft_line_break(),
                 children.filter(|element| match element {
