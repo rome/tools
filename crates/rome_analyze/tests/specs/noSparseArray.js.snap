@@ -9,8 +9,9 @@ expression: noSparseArray.js
 var a = [ 1, 2, ];
 
 // invalid
-var a = [,];
-var a = [ 1,, 2];
+var a = [/**test*/,];
+var a = [,,];
+var a = [1,,2];
 ```
 
 # Diagnostics
@@ -18,10 +19,18 @@ var a = [ 1,, 2];
 warning[noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:5:9
   │
-5 │ var a = [,];
-  │         --- This array contains an empty slot.
+5 │ var a = [/**test*/,];
+  │         ------------ This array contains an empty slot.
 
 Replace with undefined assignment
+    | @@ -2,6 +2,6 @@
+1 1 |   var a = [ 1, 2, ];
+2 2 |   
+3 3 |   // invalid
+4   | - var a = [/**test*/,];
+  4 | + var a = [/**test*/undefined,];
+5 5 |   var a = [,,];
+6 6 |   var a = [1,,2];
 
 
 ```
@@ -30,8 +39,27 @@ Replace with undefined assignment
 warning[noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:6:9
   │
-6 │ var a = [ 1,, 2];
-  │         -------- This array contains an empty slot.
+6 │ var a = [,,];
+  │         ---- This array contains an empty slot.
+
+Replace with undefined assignment
+    | @@ -3,5 +3,5 @@
+2 2 |   
+3 3 |   // invalid
+4 4 |   var a = [/**test*/,];
+5   | - var a = [,,];
+  5 | + var a = [undefined,undefined,];
+6 6 |   var a = [1,,2];
+
+
+```
+
+```
+warning[noSparseArray]: This array contains an empty slot.
+  ┌─ noSparseArray.js:7:9
+  │
+7 │ var a = [1,,2];
+  │         ------ This array contains an empty slot.
 
 Replace with undefined assignment
 
