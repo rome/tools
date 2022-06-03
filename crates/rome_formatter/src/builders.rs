@@ -54,12 +54,12 @@ impl<Context> Format<Context> for Empty {
 /// use rome_formatter::{format, format_args, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let options = SimpleFormatContext {
+/// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(10).unwrap(),
 ///     ..SimpleFormatContext::default()
 /// };
 ///
-/// let elements = format!(options, [
+/// let elements = format!(context, [
 ///     group_elements(format_args![
 ///         token("a long word,"),
 ///         soft_line_break(),
@@ -163,12 +163,12 @@ pub const fn empty_line() -> Line {
 /// use rome_formatter::{format_args, format, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let options = SimpleFormatContext {
+/// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(10).unwrap(),
 ///     ..SimpleFormatContext::default()
 /// };
 ///
-/// let elements = format!(options, [
+/// let elements = format!(context, [
 ///     group_elements(format_args![
 ///         token("a long word,"),
 ///         soft_line_break_or_space(),
@@ -680,12 +680,12 @@ pub const fn block_indent<Content>(content: Content) -> BlockIndent<Content> {
 /// use rome_formatter::{format, format_args, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let options = SimpleFormatContext {
+/// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(10).unwrap(),
 ///     ..SimpleFormatContext::default()
 /// };
 ///
-/// let elements = format!(options, [
+/// let elements = format!(context, [
 ///     group_elements(format_args![
 ///         token("["),
 ///         soft_block_indent(format_args![
@@ -748,12 +748,12 @@ pub const fn soft_block_indent<Content>(content: Content) -> BlockIndent<Content
 /// use rome_formatter::{format, format_args, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let options = SimpleFormatContext {
+/// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(10).unwrap(),
 ///     ..SimpleFormatContext::default()
 /// };
 ///
-/// let elements = format!(options, [
+/// let elements = format!(context, [
 ///     group_elements(format_args![
 ///         token("name"),
 ///         space_token(),
@@ -905,12 +905,12 @@ where
 /// use rome_formatter::{format, format_args, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let options = SimpleFormatContext {
+/// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(20).unwrap(),
 ///     ..SimpleFormatContext::default()
 /// };
 ///
-/// let elements = format!(options, [
+/// let elements = format!(context, [
 ///     group_elements(format_args![
 ///         token("["),
 ///         soft_block_indent(format_args![
@@ -1092,12 +1092,12 @@ impl<Context> Format<Context> for ExpandParent {
 /// use rome_formatter::{format_args, format, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let options = SimpleFormatContext {
+/// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(20).unwrap(),
 ///     ..SimpleFormatContext::default()
 /// };
 ///
-/// let elements = format!(options, [
+/// let elements = format!(context, [
 ///     group_elements(format_args![
 ///         token("["),
 ///         soft_block_indent(format_args![
@@ -1168,12 +1168,12 @@ pub const fn if_group_breaks<Content>(content: Content) -> IfGroupBreaks<Content
 /// use rome_formatter::{format, format_args, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
-/// let options = SimpleFormatContext {
+/// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(20).unwrap(),
 ///     ..SimpleFormatContext::default()
 /// };
 ///
-/// let formatted = format!(options, [
+/// let formatted = format!(context, [
 ///     group_elements(format_args![
 ///         token("["),
 ///         soft_block_indent(format_args![
@@ -1224,12 +1224,12 @@ impl<Content> IfGroupBreaks<Content> {
     /// use rome_formatter::{format, format_args, write, LineWidth};
     /// use rome_formatter::prelude::*;
     ///
-    /// let options = SimpleFormatContext {
+    /// let context = SimpleFormatContext {
     ///     line_width: LineWidth::try_from(20).unwrap(),
     ///     ..SimpleFormatContext::default()
     /// };
     ///
-    /// let formatted = format!(options, [format_with(|f| {
+    /// let formatted = format!(context, [format_with(|f| {
     ///     let group_id = f.group_id("array");
     ///
     ///     write!(f, [
@@ -1311,7 +1311,7 @@ where
 #[derive(Copy, Clone)]
 pub struct FormatWith<Context, T> {
     formatter: T,
-    options: PhantomData<Context>,
+    context: PhantomData<Context>,
 }
 
 impl<Context, T> Format<Context> for FormatWith<Context, T>
@@ -1370,7 +1370,7 @@ where
 {
     FormatWith {
         formatter,
-        options: PhantomData,
+        context: PhantomData,
     }
 }
 
@@ -1444,13 +1444,13 @@ where
 {
     FormatOnce {
         formatter: Cell::new(Some(formatter)),
-        options: PhantomData,
+        context: PhantomData,
     }
 }
 
 pub struct FormatOnce<T, Context> {
     formatter: Cell<Option<T>>,
-    options: PhantomData<Context>,
+    context: PhantomData<Context>,
 }
 
 impl<T, Context> Format<Context> for FormatOnce<T, Context>

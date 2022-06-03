@@ -5,7 +5,7 @@ use crate::prelude::*;
 use crate::printed_tokens::PrintedTokens;
 use crate::{Arguments, Buffer, FormatState, GroupId};
 
-/// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
+/// Handles the formatting of a CST and stores the context how the CST should be formatted (user preferences).
 /// The formatter is passed to the [Format] implementation of every node in the CST so that they
 /// can use it to format their children.
 pub struct Formatter<'buf, Context> {

@@ -651,13 +651,13 @@ pub fn write<Context>(
 /// let formatted = format!(SimpleFormatContext::default(), [token("test")]).unwrap();
 /// assert_eq!("test", formatted.print().as_code());
 /// ```
-pub fn format<Context>(options: Context, arguments: Arguments<Context>) -> FormatResult<Formatted>
+pub fn format<Context>(context: Context, arguments: Arguments<Context>) -> FormatResult<Formatted>
 where
     Context: FormatContext,
 {
-    let print_options = options.as_print_options();
-    let mut context = FormatState::new(options);
-    let mut buffer = VecBuffer::with_capacity(arguments.items().len(), &mut context);
+    let print_options = context.as_print_options();
+    let mut state = FormatState::new(context);
+    let mut buffer = VecBuffer::with_capacity(arguments.items().len(), &mut state);
 
     buffer.write_fmt(arguments)?;
 
@@ -749,7 +749,7 @@ where
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range<Context, L, R, P>(
-    options: Context,
+    context: Context,
     root: &SyntaxNode<L>,
     mut range: TextRange,
     mut predicate: P,
@@ -899,7 +899,7 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_sub_tree(options, &FormatRefWithRule::<_, R>::new(common_root))?;
+    let formatted = format_sub_tree(context, &FormatRefWithRule::<_, R>::new(common_root))?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
@@ -1082,8 +1082,8 @@ where
     Context: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.debug_struct("FormatContext")
-            .field("options", &self.context)
+        f.debug_struct("FormatState")
+            .field("context", &self.context)
             .finish()
     }
 }
