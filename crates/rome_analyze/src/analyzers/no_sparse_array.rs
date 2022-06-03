@@ -1,3 +1,5 @@
+use std::iter::once;
+
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
@@ -7,7 +9,7 @@ use rome_js_syntax::{
     JsComputedMemberExpressionFields, JsStaticMemberExpression, JsStaticMemberExpressionFields,
     JsSyntaxKind, JsUnaryExpression, JsUnaryOperator, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxElement};
+use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxElement, SyntaxNode};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
@@ -41,36 +43,40 @@ impl Rule for NoSparseArray {
         })
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
-        let mut syntax = node.elements().clone().into_syntax();
-        let mut hole_index_iter = syntax
-            .children_with_tokens()
+    fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<RuleAction> {
+        let mut array_element_list = node.elements();
+        let hole_index_iter = array_element_list
+            .iter()
             .enumerate()
-            .filter_map(|(i, a)| {
-                if matches!(a.kind(), JsSyntaxKind::JS_ARRAY_HOLE) {
+            .filter_map(|(i, item)| {
+                if matches!(item, Ok(JsAnyArrayElement::JsArrayHole(_))) {
+                    println!("{}", i);
                     Some(i)
                 } else {
                     None
                 }
             });
-            // syntax.
+
         for index in hole_index_iter {
+            // println!("{}", index);
             let ident_expr = make::js_identifier_expression(make::js_reference_identifier(
                 make::ident("undefined"),
             ));
-            let ident_expr_syntax = ident_expr.into_syntax();
-            syntax = syntax.splice_slots(
-                index..=index,
-                [Some(SyntaxElement::Node(ident_expr_syntax.clone()))].into_iter(),
-            );
-        }
 
+            let n_element = array_element_list.iter().skip(index).next()?.ok()?;
+            array_element_list = array_element_list.replace_node(
+                n_element,
+                JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsIdentifierExpression(
+                    ident_expr,
+                )),
+            )?;
+        }
         let root = root
             .replace_node(
                 node.clone(),
                 make::js_array_expression(
                     node.l_brack_token().ok()?,
-                    JsArrayElementList::unwrap_cast(syntax),
+                    array_element_list,
                     node.r_brack_token().ok()?,
                 ),
             )

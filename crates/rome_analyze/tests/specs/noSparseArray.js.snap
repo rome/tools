@@ -11,9 +11,10 @@ const a = [ 1, 2, ];
 // invalid
 const b = [/**test*/,];
 const c = [,,];
-const d = [,,2];
+const d = [,2];
 
-const e = [1,,2]
+const e = [1,,]
+
 ```
 
 # Diagnostics
@@ -32,7 +33,7 @@ Replace with undefined
 4   | - const b = [/**test*/,];
   4 | + const b = [/**test*/undefined,];
 5 5 |   const c = [,,];
-6 6 |   const d = [,,2];
+6 6 |   const d = [,2];
 7 7 |   
 
 
@@ -52,9 +53,9 @@ Replace with undefined
 4 4 |   const b = [/**test*/,];
 5   | - const c = [,,];
   5 | + const c = [undefined,undefined,];
-6 6 |   const d = [,,2];
+6 6 |   const d = [,2];
 7 7 |   
-8 8 |   const e = [1,,2]
+8 8 |   const e = [1,,]
 
 
 ```
@@ -63,18 +64,18 @@ Replace with undefined
 warning[noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:7:11
   │
-7 │ const d = [,,2];
-  │           ----- This array contains an empty slot.
+7 │ const d = [,2];
+  │           ---- This array contains an empty slot.
 
 Replace with undefined
     | @@ -4,6 +4,6 @@
 3 3 |   // invalid
 4 4 |   const b = [/**test*/,];
 5 5 |   const c = [,,];
-6   | - const d = [,,2];
-  6 | + const d = [undefined,undefined,2];
+6   | - const d = [,2];
+  6 | + const d = [undefined,2];
 7 7 |   
-8 8 |   const e = [1,,2]
+8 8 |   const e = [1,,]
 
 
 ```
@@ -83,8 +84,8 @@ Replace with undefined
 warning[noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:9:11
   │
-9 │ const e = [1,,2]
-  │           ------ This array contains an empty slot.
+9 │ const e = [1,,]
+  │           ----- This array contains an empty slot.
 
 Replace with undefined
 
