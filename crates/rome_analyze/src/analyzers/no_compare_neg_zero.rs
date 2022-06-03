@@ -2,7 +2,7 @@ use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind, 
+    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind,
     JsUnaryExpressionFields, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, SyntaxToken};
