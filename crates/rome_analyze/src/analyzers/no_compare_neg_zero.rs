@@ -2,8 +2,7 @@ use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind,
-    JsUnaryExpressionFields, T, JsUnaryOperator,
+    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind, JsUnaryOperator,
 };
 use rome_rowan::{AstNode, AstNodeExt, SyntaxToken};
 
@@ -37,11 +36,7 @@ impl Rule for NoCompareNegZero {
         if is_left_neg_zero || is_right_neg_zero {
             // SAFETY: Because we know those T![>] | T![>=] | T![<] | T![<=] | T![==] | T![===] | T![!=] | T![!==] SyntaxKind will
             // always success in to_string, you could look at our test case `noCompareNegZero.js`
-            let operator_kind = op
-                .kind()
-                .to_string()
-                .map(|kind_string| kind_string)
-                .unwrap();
+            let operator_kind = op.kind().to_string().unwrap();
 
             Some(NoCompareNegZeroState {
                 operator_kind,
