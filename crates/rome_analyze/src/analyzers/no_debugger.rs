@@ -1,6 +1,6 @@
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
-use rome_js_syntax::{JsAnyStatement, JsDebuggerStatement, T};
+use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsDebuggerStatement, T, JsStatementList, JsModuleItemList};
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
@@ -36,10 +36,30 @@ impl Rule for NoDebugger {
         node: &Self::Query,
         _state: &Self::State,
     ) -> Option<crate::registry::RuleAction> {
-        let root = root.replace_node(
-            JsAnyStatement::JsDebuggerStatement(node.clone()),
-            JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
-        )?;
+        let prev_parent = node.syntax().parent()?;
+
+        let root = if JsStatementList::can_cast(prev_parent.kind())
+            || JsModuleItemList::can_cast(prev_parent.kind())
+        {
+            let index = prev_parent
+                .children()
+                .position(|slot| &slot == node.syntax())?;
+
+            let next_parent = prev_parent
+                .clone()
+                .splice_slots(index..=index, std::iter::empty());
+
+            // SAFETY: We know the kind of root is `JsAnyRoot` so cast `root.into_syntax()` will not panic
+            JsAnyRoot::unwrap_cast(
+                root.into_syntax()
+                    .replace_child(prev_parent.into(), next_parent.into())?,
+            )
+        } else {
+            root.replace_node(
+                JsAnyStatement::JsDebuggerStatement(node.clone()),
+                JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
+            )?
+        };
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
