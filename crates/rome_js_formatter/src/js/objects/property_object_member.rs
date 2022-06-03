@@ -20,12 +20,12 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             colon_token,
             value,
         } = node.as_fields();
-        let layout = get_object_member_layout(formatter, node)?;
+        let layout = property_object_member_layout(formatter, node)?;
 
         let name = formatted![formatter, [FormatMemberName::from(name?)]]?;
 
         let formatted = match layout {
-            PropertyObjectMemberLayoutMode::Fluid => {
+            PropertyObjectMemberLayout::Fluid => {
                 let group_id = formatter.group_id("property_object_member");
 
                 let value = formatted![formatter, [value.format()]]?;
@@ -46,7 +46,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                     ]
                 ]
             }
-            PropertyObjectMemberLayoutMode::BreakAfterOperator => {
+            PropertyObjectMemberLayout::BreakAfterOperator => {
                 formatted![
                     formatter,
                     [
@@ -63,7 +63,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                     ]
                 ]
             }
-            PropertyObjectMemberLayoutMode::NeverBreakAfterOperator => formatted![
+            PropertyObjectMemberLayout::NeverBreakAfterOperator => formatted![
                 formatter,
                 [
                     group_elements(name),
@@ -79,7 +79,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
 }
 
 /// Determines how a property object member should be formatted
-enum PropertyObjectMemberLayoutMode {
+enum PropertyObjectMemberLayout {
     /// First break right-hand side, then after operator
     Fluid,
     /// First break after operator, then the sides are broken independently on their own lines
@@ -90,10 +90,10 @@ enum PropertyObjectMemberLayoutMode {
 
 const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
-fn get_object_member_layout(
+fn property_object_member_layout(
     formatter: &JsFormatter,
     node: &JsPropertyObjectMember,
-) -> SyntaxResult<PropertyObjectMemberLayoutMode> {
+) -> SyntaxResult<PropertyObjectMemberLayout> {
     let JsPropertyObjectMemberFields {
         name,
         colon_token: _,
@@ -107,11 +107,11 @@ fn get_object_member_layout(
     let is_name_short = name.range().len() < TextSize::from(text_width_for_break);
 
     if is_break_after_operator(&value)? {
-        return Ok(PropertyObjectMemberLayoutMode::BreakAfterOperator);
+        return Ok(PropertyObjectMemberLayout::BreakAfterOperator);
     }
 
     if is_name_short {
-        return Ok(PropertyObjectMemberLayoutMode::NeverBreakAfterOperator);
+        return Ok(PropertyObjectMemberLayout::NeverBreakAfterOperator);
     } else {
         if matches!(
             value,
@@ -119,15 +119,15 @@ fn get_object_member_layout(
                 JsAnyLiteralExpression::JsStringLiteralExpression(_)
             )
         ) {
-            return Ok(PropertyObjectMemberLayoutMode::BreakAfterOperator);
+            return Ok(PropertyObjectMemberLayout::BreakAfterOperator);
         }
     }
 
     if is_never_break_after_operator(&value)? {
-        return Ok(PropertyObjectMemberLayoutMode::NeverBreakAfterOperator);
+        return Ok(PropertyObjectMemberLayout::NeverBreakAfterOperator);
     }
 
-    Ok(PropertyObjectMemberLayoutMode::Fluid)
+    Ok(PropertyObjectMemberLayout::Fluid)
 }
 
 fn is_break_after_operator(value: &JsAnyExpression) -> SyntaxResult<bool> {
