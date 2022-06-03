@@ -1,6 +1,6 @@
 use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
-use crate::utils::jsx_utils::WHITESPACE;
+use crate::utils::jsx_utils::JSX_WHITESPACE_CHARS;
 use crate::FormatNodeFields;
 use crate::{FormatElement, JsFormatter};
 use rome_formatter::{FormatResult, Token};
@@ -59,7 +59,7 @@ impl<'a> TextCleaner<'a> {
                 //
                 //  input:  "Yi  Yi"
                 //               ^
-                if !WHITESPACE.contains(&c) {
+                if !JSX_WHITESPACE_CHARS.contains(&c) {
                     // We push the range into the vector
                     whitespace_ranges.push(start..idx);
                     current_whitespace_range_start = None;
@@ -70,7 +70,7 @@ impl<'a> TextCleaner<'a> {
                 //
                 //  input: "Yi   Yi"
                 //            ^
-                if WHITESPACE.contains(&c) {
+                if JSX_WHITESPACE_CHARS.contains(&c) {
                     // We start a whitespace range
                     current_whitespace_range_start = Some(idx);
                 }
@@ -110,7 +110,7 @@ impl<'a> TextCleaner<'a> {
 
         if self.leading_whitespace_type.is_some() {
             for (_, c) in char_indices.by_ref() {
-                if !WHITESPACE.contains(&c) {
+                if !JSX_WHITESPACE_CHARS.contains(&c) {
                     output_string.push(c);
                     break;
                 }
@@ -154,7 +154,7 @@ impl<'a> TextCleaner<'a> {
                 //
                 // If the character is not whitespace, we push it on.
                 // If it is whitespace, it is trailing whitespace, so we ignore it.
-                if !WHITESPACE.contains(&c) {
+                if !JSX_WHITESPACE_CHARS.contains(&c) {
                     output_string.push(c)
                 }
             }
@@ -196,7 +196,7 @@ fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> (Option<Whites
     let mut start_idx = 0;
 
     for (i, c) in char_indices.by_ref() {
-        if !WHITESPACE.contains(&c) {
+        if !JSX_WHITESPACE_CHARS.contains(&c) {
             return (leading_type, i);
         }
         start_idx = i;
@@ -216,7 +216,7 @@ fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> (Option<Whites
 fn get_trailing_whitespace_type(end_whitespace: &str) -> Option<WhitespaceType> {
     let mut trailing_type = None;
     for c in end_whitespace.chars() {
-        if WHITESPACE.contains(&c) {
+        if JSX_WHITESPACE_CHARS.contains(&c) {
             if c == '\n' {
                 trailing_type = Some(WhitespaceType::HasNewline);
             } else if trailing_type.is_none() {
@@ -246,7 +246,7 @@ fn clean_jsx_text(
     let cleaned_text = if let Some(normalized_text) = text_cleaner.clean_text() {
         Cow::Owned(normalized_text)
     } else {
-        Cow::Borrowed(text_cleaner.text.trim_matches(&WHITESPACE[..]))
+        Cow::Borrowed(text_cleaner.text.trim_matches(&JSX_WHITESPACE_CHARS[..]))
     };
 
     let start_idx: TextSize = text_cleaner

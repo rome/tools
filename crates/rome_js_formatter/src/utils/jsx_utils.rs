@@ -18,7 +18,7 @@ pub fn contains_meaningful_jsx_text(children: &JsxChildList) -> bool {
     })
 }
 
-pub static WHITESPACE: [char; 4] = [' ', '\n', '\t', '\r'];
+pub static JSX_WHITESPACE_CHARS: [char; 4] = [' ', '\n', '\t', '\r'];
 
 /// Meaningful JSX text is defined to be text that has either non-whitespace
 /// characters, or does not contain a newline. Whitespace is defined as ASCII
@@ -38,7 +38,7 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
     let mut has_newline = false;
     for c in text.chars() {
         // If there is a non-whitespace character
-        if !WHITESPACE.contains(&c) {
+        if !JSX_WHITESPACE_CHARS.contains(&c) {
             return true;
         } else if c == '\n' {
             has_newline = true;
