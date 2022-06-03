@@ -26,11 +26,11 @@ impl TriviaPieceKind {
         matches!(self, TriviaPieceKind::Whitespace)
     }
 
-    pub const fn is_single_line_comment(self) -> bool {
+    pub const fn is_single_line_comment(&self) -> bool {
         matches!(self, TriviaPieceKind::SingleLineComment)
     }
 
-    pub const fn is_multiline_comment(self) -> bool {
+    pub const fn is_multiline_comment(&self) -> bool {
         matches!(self, TriviaPieceKind::MultiLineComment)
     }
 

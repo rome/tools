@@ -232,7 +232,7 @@ impl Formatted {
         Printer::new(self.options.clone()).print(&self.root)
     }
 
-    pub fn print_with_indent(self, indent: u16) -> Printed {
+    pub fn print_with_indent(&self, indent: u16) -> Printed {
         Printer::new(self.options.clone()).print_with_indent(&self.root, indent)
     }
 
