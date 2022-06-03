@@ -63,7 +63,22 @@ impl Rule for NoCompareNegZero {
         node: &Self::Query,
         state: &Self::State,
     ) -> Option<crate::registry::RuleAction> {
-        let root = if state.left_need_replaced {
+        let zero_token = SyntaxToken::new_detached(JsSyntaxKind::JS_NUMBER_LITERAL, "0", [], []);
+        let root = if state.left_need_replaced && state.right_need_replaced {
+            let binary = node
+                .clone()
+                .with_left(JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsNumberLiteralExpression(
+                        make::js_number_literal_expression(zero_token.clone()),
+                    ),
+                ))
+                .with_right(JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsNumberLiteralExpression(
+                        make::js_number_literal_expression(zero_token),
+                    ),
+                ));
+            root.replace_node(node.clone(), binary)?
+        } else if state.left_need_replaced {
             root.replace_node(
                 node.left().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
@@ -77,11 +92,7 @@ impl Rule for NoCompareNegZero {
                     ),
                 ),
             )?
-        } else {
-            root
-        };
-
-        let root = if state.right_need_replaced {
+        } else if state.right_need_replaced {
             root.replace_node(
                 node.right().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(

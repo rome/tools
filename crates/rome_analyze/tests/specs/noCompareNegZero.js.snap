@@ -50,7 +50,7 @@ x >= -0;
 x != -0;
 -0 != x;
 -0 !== x;
-
+-0 === -0;
 ```
 
 # Diagnostics
@@ -293,7 +293,7 @@ warning[noCompareNegZero]: Do not use the != operator to compare against -0.
    │ ------- Do not use the != operator to compare against -0.
 
 Replace -0 with 0
-      | @@ -40,6 +40,6 @@
+      | @@ -40,7 +40,7 @@
 39 39 |   -0 > x;
 40 40 |   x >= -0;
 41 41 |   -0 >= x;
@@ -301,6 +301,7 @@ Replace -0 with 0
    42 | + x != 0;
 43 43 |   -0 != x;
 44 44 |   -0 !== x;
+45 45 |   -0 === -0;
 
 
 ```
@@ -313,13 +314,14 @@ warning[noCompareNegZero]: Do not use the != operator to compare against -0.
    │ ------- Do not use the != operator to compare against -0.
 
 Replace -0 with 0
-      | @@ -41,5 +41,5 @@
+      | @@ -41,6 +41,6 @@
 40 40 |   x >= -0;
 41 41 |   -0 >= x;
 42 42 |   x != -0;
 43    | - -0 != x;
    43 | + 0 != x;
 44 44 |   -0 !== x;
+45 45 |   -0 === -0;
 
 
 ```
@@ -332,12 +334,31 @@ warning[noCompareNegZero]: Do not use the !== operator to compare against -0.
    │ -------- Do not use the !== operator to compare against -0.
 
 Replace -0 with 0
-      | @@ -42,4 +42,4 @@
+      | @@ -42,5 +42,5 @@
 41 41 |   -0 >= x;
 42 42 |   x != -0;
 43 43 |   -0 != x;
 44    | - -0 !== x;
    44 | + 0 !== x;
+45 45 |   -0 === -0;
+
+
+```
+
+```
+warning[noCompareNegZero]: Do not use the === operator to compare against -0.
+   ┌─ noCompareNegZero.js:46:1
+   │
+46 │ -0 === -0;
+   │ --------- Do not use the === operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -43,4 +43,4 @@
+42 42 |   x != -0;
+43 43 |   -0 != x;
+44 44 |   -0 !== x;
+45    | - -0 === -0;
+   45 | + 0=== 0;
 
 
 ```
