@@ -386,7 +386,7 @@ impl From<&SyntaxError> for FormatError {
 /// assert_eq!("test\n", formatted.print().as_code())
 /// ```
 pub trait Format<Context> {
-    /// Formats the object
+    /// Formats the object using the given formatter.
     fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()>;
 }
 

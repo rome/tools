@@ -1454,6 +1454,7 @@ impl<T, Context> std::fmt::Debug for FormatOnce<T, Context> {
 
 /// Builder to join together a sequence of content.
 /// See [Formatter::join]
+#[must_use = "must eventually call `finish()` on Format builders"]
 pub struct JoinBuilder<'fmt, 'buf, Joiner, Context> {
     result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, Context>,
@@ -1522,6 +1523,7 @@ where
 
 /// Builder to join together nodes that ensures that nodes separated by empty lines continue
 /// to be separated by empty lines in the formatted output.
+#[must_use = "must eventually call `finish()` on Format builders"]
 pub struct JoinNodesBuilder<'fmt, 'buf, Separator, Context> {
     result: FormatResult<()>,
     /// The separator to insert between nodes. Either a soft or hard line break
@@ -1608,6 +1610,7 @@ pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
 }
 
 /// Builder to fill as many elements as possible on a single line.
+#[must_use = "must eventually call `finish()` on Format builders"]
 pub struct FillBuilder<'fmt, 'buf, Context> {
     result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, Context>,

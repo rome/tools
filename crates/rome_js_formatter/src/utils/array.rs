@@ -9,7 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstSeparatedList};
 
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
-pub(crate) fn format_array_node<N, I>(node: &N, f: &mut JsFormatter) -> FormatResult<()>
+pub(crate) fn write_array_node<N, I>(node: &N, f: &mut JsFormatter) -> FormatResult<()>
 where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,
     for<'a> I: ArrayNodeElement + AsFormat<'a>,
@@ -36,7 +36,7 @@ where
                 if is_disallow {
                     // Trailing separators are disallowed, replace it with an empty element
                     if let Some(separator) = element.trailing_separator()? {
-                        write!(f, [format_replaced(separator, &empty_element())])?;
+                        write!(f, [format_replaced(separator, empty_element())])?;
                     }
                 } else if is_force || index != last_index {
                     // In forced separator mode or if this element is not the last in the list, print the separator
@@ -45,10 +45,7 @@ where
                         None => write!(f, [token(",")])?,
                     };
                 } else if let Some(separator) = element.trailing_separator()? {
-                    write!(
-                        f,
-                        [format_replaced(separator, &if_group_breaks(token(",")))]
-                    )?;
+                    write!(f, [format_replaced(separator, if_group_breaks(token(",")))])?;
                 } else {
                     write!(f, [if_group_breaks(token(","))])?;
                 };

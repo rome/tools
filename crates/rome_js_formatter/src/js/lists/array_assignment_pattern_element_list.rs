@@ -1,6 +1,6 @@
 use crate::generated::FormatJsArrayAssignmentPatternElementList;
 use crate::prelude::*;
-use crate::utils::array::format_array_node;
+use crate::utils::array::write_array_node;
 use rome_js_syntax::JsArrayAssignmentPatternElementList;
 
 impl FormatRule<JsArrayAssignmentPatternElementList> for FormatJsArrayAssignmentPatternElementList {
@@ -10,6 +10,6 @@ impl FormatRule<JsArrayAssignmentPatternElementList> for FormatJsArrayAssignment
         node: &JsArrayAssignmentPatternElementList,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_array_node(node, formatter)
+        write_array_node(node, formatter)
     }
 }

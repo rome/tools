@@ -37,7 +37,7 @@ impl Format<JsFormatContext> for FormatTypeVariant {
         match separator {
             Some(token) => {
                 if self.last {
-                    write!(f, [format_replaced(token, &empty_element())])?;
+                    write!(f, [format_replaced(token, empty_element())])?;
                 } else {
                     write![
                         f,

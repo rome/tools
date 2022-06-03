@@ -43,7 +43,7 @@ impl<'a> FormatTypeMemberSeparator<'a> {
 impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
     fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(separator) = self.token {
-            write!(f, [format_replaced(separator, &empty_element())])
+            write!(f, [format_replaced(separator, empty_element())])
         } else {
             Ok(())
         }

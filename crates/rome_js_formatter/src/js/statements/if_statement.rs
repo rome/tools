@@ -8,7 +8,7 @@ use rome_js_syntax::{JsElseClause, JsIfStatementFields};
 
 impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
     fn format_fields(node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut else_clause = format_if_element(f, None, node)?;
+        let mut else_clause = write_if_element(f, None, node)?;
 
         while let Some(clause) = else_clause.take() {
             let JsElseClauseFields {
@@ -18,13 +18,13 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
 
             match alternate? {
                 JsAnyStatement::JsIfStatement(stmt) => {
-                    let alternate = format_if_element(f, Some(else_token?), &stmt)?;
+                    let alternate = write_if_element(f, Some(else_token?), &stmt)?;
 
                     else_clause = alternate;
                 }
                 alternate => {
                     write![f, [space_token(), else_token.format()]]?;
-                    write_consequent_as_block(f, alternate)?;
+                    write_consequent_block(f, alternate)?;
                 }
             }
         }
@@ -34,7 +34,7 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
 }
 
 /// Format a single `else? if(test) consequent` element, returning the next else clause
-fn format_if_element(
+fn write_if_element(
     f: &mut JsFormatter,
     else_token: Option<JsSyntaxToken>,
     stmt: &JsIfStatement,
@@ -57,17 +57,17 @@ fn format_if_element(
         [
             if_token.format(),
             space_token(),
-            format_delimited(&l_paren_token?, &test.format(), &r_paren_token?,).soft_block_indent(),
+            format_delimited(&l_paren_token?, test.format(), &r_paren_token?,).soft_block_indent(),
         ]
     ]?;
 
-    write_consequent_as_block(f, consequent?)?;
+    write_consequent_block(f, consequent?)?;
 
     Ok(else_clause)
 }
 
 /// Wraps the statement into a block if its not already a JsBlockStatement
-fn write_consequent_as_block(f: &mut JsFormatter, stmt: JsAnyStatement) -> FormatResult<()> {
+fn write_consequent_block(f: &mut JsFormatter, stmt: JsAnyStatement) -> FormatResult<()> {
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
         return write![f, [space_token(), stmt.format()]];
     }

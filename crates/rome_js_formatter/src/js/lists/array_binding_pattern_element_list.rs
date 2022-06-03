@@ -1,6 +1,6 @@
 use crate::generated::FormatJsArrayBindingPatternElementList;
 use crate::prelude::*;
-use crate::utils::array::format_array_node;
+use crate::utils::array::write_array_node;
 use rome_js_syntax::JsArrayBindingPatternElementList;
 
 impl FormatRule<JsArrayBindingPatternElementList> for FormatJsArrayBindingPatternElementList {
@@ -10,6 +10,6 @@ impl FormatRule<JsArrayBindingPatternElementList> for FormatJsArrayBindingPatter
         node: &JsArrayBindingPatternElementList,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_array_node(node, formatter)
+        write_array_node(node, formatter)
     }
 }

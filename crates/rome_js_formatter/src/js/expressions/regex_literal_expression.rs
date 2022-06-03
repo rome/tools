@@ -37,6 +37,6 @@ impl FormatNodeFields<JsRegexLiteralExpression> for FormatNodeRule<JsRegexLitera
             value_token.text_trimmed_range().start(),
         );
 
-        write!(f, [format_replaced(&value_token, &sorted_regex_literal)])
+        write!(f, [format_replaced(&value_token, sorted_regex_literal)])
     }
 }

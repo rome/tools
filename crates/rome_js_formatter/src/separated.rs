@@ -40,7 +40,7 @@ where
                         // Use format_replaced instead of wrapping the result of format_token
                         // in order to remove only the token itself when the group doesn't break
                         // but still print its associated trivias unconditionally
-                        write!(f, [format_replaced(separator, &format_trailing_separator)])?;
+                        write!(f, [format_replaced(separator, format_trailing_separator)])?;
                     }
                     TrailingSeparator::Mandatory => {
                         write!(f, [separator.format()])?;
