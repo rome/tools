@@ -19,6 +19,7 @@ impl FormatNodeFields<JsxExpressionChild> for FormatNodeRule<JsxExpressionChild>
             r_curly_token,
         } = node.as_fields();
 
+        // If the expression child is just a string literal with one space in it, it's a JSX space
         if let Some(JsAnyExpression::JsAnyLiteralExpression(
             JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         )) = &expression
@@ -35,15 +36,12 @@ impl FormatNodeFields<JsxExpressionChild> for FormatNodeRule<JsxExpressionChild>
                     let space = formatter.format_replaced(&str_token, empty_element());
                     let r_curly = formatter.format_replaced(&r_curly_token?, empty_element());
 
-                    return formatted![
-                        formatter,
-                        [
-                            l_curly,
-                            space,
-                            JsxSpace::default().format(formatter),
-                            r_curly
-                        ]
-                    ];
+                    return Ok(format_elements![
+                        l_curly,
+                        space,
+                        JsxSpace::default().format(formatter)?,
+                        r_curly
+                    ]);
                 }
             }
         }

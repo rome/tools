@@ -399,9 +399,10 @@ pub fn fill_elements<TSep: Into<FormatElement>>(
     separator: TSep,
     elements: impl IntoIterator<Item = FormatElement>,
 ) -> FormatElement {
-    let mut list: Vec<_> = elements.into_iter().collect();
+    let list: Vec<_> = elements.into_iter().collect();
     match list.len() {
         0 => empty_element(),
+        //        1 => list.pop().unwrap(),
         _ => FormatElement::Fill(Box::new(Fill {
             list: List::new(list),
             separator: separator.into(),
@@ -1289,7 +1290,7 @@ impl List {
         Self { content }
     }
 
-    pub(crate) fn into_vec(self) -> Vec<FormatElement> {
+    pub fn into_vec(self) -> Vec<FormatElement> {
         self.content
     }
 }
@@ -1759,7 +1760,11 @@ impl FormatElement {
 
 impl From<Token> for FormatElement {
     fn from(token: Token) -> Self {
-        FormatElement::Token(token)
+        if token.deref() == "" {
+            empty_element()
+        } else {
+            FormatElement::Token(token)
+        }
     }
 }
 

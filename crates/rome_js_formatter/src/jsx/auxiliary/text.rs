@@ -246,7 +246,7 @@ fn clean_jsx_text(
     let cleaned_text = if let Some(normalized_text) = text_cleaner.clean_text() {
         Cow::Owned(normalized_text)
     } else {
-        Cow::Borrowed(text_cleaner.text.trim())
+        Cow::Borrowed(text_cleaner.text.trim_matches(&WHITESPACE[..]))
     };
 
     let start_idx: TextSize = text_cleaner

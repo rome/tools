@@ -9,7 +9,6 @@ pub fn contains_meaningful_jsx_text(children: &JsxChildList) -> bool {
         if let JsxAnyChild::JsxText(jsx_text) = child {
             if let Ok(token) = jsx_text.value_token() {
                 if is_meaningful_jsx_text(token.text()) {
-                    println!("\"{}\" IS MEANINGFUL", token.text());
                     return true;
                 }
             }

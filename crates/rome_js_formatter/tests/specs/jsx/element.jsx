@@ -122,3 +122,13 @@ function MapoTofuRecipe() {
 		<li>6 ounces of ground beef or pork</li>
 	</ul>
 }
+
+<Route path="/" component={<HomePage />} />;
+
+let component = <div> La Haine dir. Mathieu Kassovitz </div>;
+
+let component = (
+ <div> Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul </div>
+);
+
+(<div>Badlands</div>).property;
