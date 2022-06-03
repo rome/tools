@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::utils::FormatMemberName;
 use crate::utils::JsAnyBinaryLikeExpression;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsAnyExpression;
@@ -21,6 +22,8 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
         } = node.as_fields();
         let layout = get_object_member_layout(formatter, node)?;
 
+        let name = formatted![formatter, [FormatMemberName::from(name?)]]?;
+
         let formatted = match layout {
             PropertyObjectMemberLayoutMode::Fluid => {
                 let group_id = formatter.group_id("property_object_member");
@@ -29,7 +32,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                 formatted![
                     formatter,
                     [
-                        group_elements(formatted![formatter, [name.format()]]?),
+                        group_elements(name),
                         colon_token.format(),
                         group_elements_with_options(
                             indent(soft_line_break_or_space()),
@@ -47,7 +50,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                 formatted![
                     formatter,
                     [
-                        group_elements(formatted![formatter, [name.format()]]?),
+                        group_elements(name),
                         colon_token.format(),
                         space_token(),
                         group_elements(formatted![
@@ -63,7 +66,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             PropertyObjectMemberLayoutMode::NeverBreakAfterOperator => formatted![
                 formatter,
                 [
-                    group_elements(formatted![formatter, [name.format()]]?),
+                    group_elements(name),
                     colon_token.format(),
                     space_token(),
                     value.format(),
