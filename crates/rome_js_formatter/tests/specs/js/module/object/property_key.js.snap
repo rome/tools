@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: property_key.js
 ---
 # Input
@@ -22,8 +23,8 @@ Quote style: Double Quotes
 -----
 const foo = {
 	"foo-bar": true,
-	"bar": {
-		"lorem_ispsum": {
+	bar: {
+		lorem_ispsum: {
 			"lorem-ipsum": true,
 		},
 	},

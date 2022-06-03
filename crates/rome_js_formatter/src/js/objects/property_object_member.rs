@@ -1,5 +1,5 @@
 use crate::prelude::*;
-
+use crate::utils::FormatMemberName;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
@@ -15,7 +15,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             value,
         } = node.as_fields();
 
-        let key = name.format();
+        let key = FormatMemberName::from(name?);
         let colon = colon_token.format();
         let value = value.format();
         formatted![formatter, [key, colon, space_token(), value]]

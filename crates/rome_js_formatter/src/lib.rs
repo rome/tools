@@ -484,10 +484,8 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"
-          let bar = <div> the quick brown fox jumps over the lazy dog and into the frying pan and then into the fire </div>
-        "#;
-        let syntax = SourceType::jsx();
+        let src = r#"one.two.tree"#;
+        let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
@@ -499,5 +497,10 @@ mod test {
             file_name: "quick_test",
             format_context: JsFormatContext::default(),
         });
+        assert_eq!(
+            result.as_code(),
+            r#""\a";
+"#
+        );
     }
 }
