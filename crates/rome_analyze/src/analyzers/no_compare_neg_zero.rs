@@ -3,7 +3,7 @@ use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind,
-    JsUnaryExpressionFields, T,
+    JsUnaryExpressionFields, T, JsUnaryOperator,
 };
 use rome_rowan::{AstNode, AstNodeExt, SyntaxToken};
 
@@ -11,7 +11,7 @@ use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
 pub struct NoCompareNegZeroState {
-    operator_kind: String,
+    operator_kind: &'static str,
     left_need_replaced: bool,
     right_need_replaced: bool,
 }
@@ -25,14 +25,11 @@ impl Rule for NoCompareNegZero {
     type State = NoCompareNegZeroState;
 
     fn run(node: &Self::Query) -> Option<Self::State> {
-        let op = node.operator_token().ok()?;
-        if !matches!(
-            op.kind(),
-            T![>] | T![>=] | T![<] | T![<=] | T![==] | T![===] | T![!=] | T![!==]
-        ) {
+        if !node.is_comparison_operator() {
             return None;
         }
 
+        let op = node.operator_token().ok()?;
         let left = node.left().ok()?;
         let right = node.right().ok()?;
         let is_left_neg_zero = is_neg_zero(&left).unwrap_or(false);
@@ -43,7 +40,7 @@ impl Rule for NoCompareNegZero {
             let operator_kind = op
                 .kind()
                 .to_string()
-                .map(|kind_string| kind_string.to_string())
+                .map(|kind_string| kind_string)
                 .unwrap();
 
             Some(NoCompareNegZeroState {
@@ -119,21 +116,16 @@ impl Rule for NoCompareNegZero {
 fn is_neg_zero(node: &JsAnyExpression) -> Option<bool> {
     match node {
         JsAnyExpression::JsUnaryExpression(expr) => {
-            let JsUnaryExpressionFields {
-                operator_token,
-                argument,
-            } = expr.as_fields();
-            let operator_token = operator_token.ok()?;
-            if !matches!(operator_token.kind(), T![-]) {
+            if !matches!(expr.operator().ok()?, JsUnaryOperator::Minus) {
                 return Some(false);
             }
-            let argument = argument.ok()?;
+            let argument = expr.argument().ok()?;
 
             if let JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsNumberLiteralExpression(expr),
             ) = argument
             {
-                Some(&expr.text() == "0")
+                Some(expr.value_token().ok()?.text_trimmed() == "0")
             } else {
                 Some(false)
             }
