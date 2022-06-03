@@ -58,6 +58,17 @@ warning[noCompareNegZero]: Do not use the === operator to compare against -0.
 30 │ x === -0
    │ -------- Do not use the === operator to compare against -0.
 
+Replace -0 with 0
+      | @@ -27,7 +27,7 @@
+26 26 |   Object.is(x, -0);
+27 27 |   x || -0
+28 28 |   // invalid
+29    | - x === -0
+   29 | + x === 0
+30 30 |   x == -0;
+31 31 |   -0 == x;
+32 32 |   x < -0;
+
 
 ```
 
@@ -67,6 +78,17 @@ warning[noCompareNegZero]: Do not use the == operator to compare against -0.
    │
 31 │ x == -0;
    │ ------- Do not use the == operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -28,7 +28,7 @@
+27 27 |   x || -0
+28 28 |   // invalid
+29 29 |   x === -0
+30    | - x == -0;
+   30 | + x == 0;
+31 31 |   -0 == x;
+32 32 |   x < -0;
+33 33 |   -0 < x;
 
 
 ```
@@ -78,6 +100,17 @@ warning[noCompareNegZero]: Do not use the == operator to compare against -0.
 32 │ -0 == x;
    │ ------- Do not use the == operator to compare against -0.
 
+Replace -0 with 0
+      | @@ -29,7 +29,7 @@
+28 28 |   // invalid
+29 29 |   x === -0
+30 30 |   x == -0;
+31    | - -0 == x;
+   31 | + 0 == x;
+32 32 |   x < -0;
+33 33 |   -0 < x;
+34 34 |   x <= -0;
+
 
 ```
 
@@ -87,6 +120,17 @@ warning[noCompareNegZero]: Do not use the < operator to compare against -0.
    │
 33 │ x < -0;
    │ ------ Do not use the < operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -30,7 +30,7 @@
+29 29 |   x === -0
+30 30 |   x == -0;
+31 31 |   -0 == x;
+32    | - x < -0;
+   32 | + x < 0;
+33 33 |   -0 < x;
+34 34 |   x <= -0;
+35 35 |   -0 <= x;
 
 
 ```
@@ -98,6 +142,17 @@ warning[noCompareNegZero]: Do not use the < operator to compare against -0.
 34 │ -0 < x;
    │ ------ Do not use the < operator to compare against -0.
 
+Replace -0 with 0
+      | @@ -31,7 +31,7 @@
+30 30 |   x == -0;
+31 31 |   -0 == x;
+32 32 |   x < -0;
+33    | - -0 < x;
+   33 | + 0 < x;
+34 34 |   x <= -0;
+35 35 |   -0 <= x;
+36 36 |   x > -0;
+
 
 ```
 
@@ -107,6 +162,17 @@ warning[noCompareNegZero]: Do not use the <= operator to compare against -0.
    │
 35 │ x <= -0;
    │ ------- Do not use the <= operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -32,7 +32,7 @@
+31 31 |   -0 == x;
+32 32 |   x < -0;
+33 33 |   -0 < x;
+34    | - x <= -0;
+   34 | + x <= 0;
+35 35 |   -0 <= x;
+36 36 |   x > -0;
+37 37 |   -0 > x;
 
 
 ```
@@ -118,6 +184,17 @@ warning[noCompareNegZero]: Do not use the <= operator to compare against -0.
 36 │ -0 <= x;
    │ ------- Do not use the <= operator to compare against -0.
 
+Replace -0 with 0
+      | @@ -33,7 +33,7 @@
+32 32 |   x < -0;
+33 33 |   -0 < x;
+34 34 |   x <= -0;
+35    | - -0 <= x;
+   35 | + 0 <= x;
+36 36 |   x > -0;
+37 37 |   -0 > x;
+38 38 |   x >= -0;
+
 
 ```
 
@@ -127,6 +204,17 @@ warning[noCompareNegZero]: Do not use the > operator to compare against -0.
    │
 37 │ x > -0;
    │ ------ Do not use the > operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -34,7 +34,7 @@
+33 33 |   -0 < x;
+34 34 |   x <= -0;
+35 35 |   -0 <= x;
+36    | - x > -0;
+   36 | + x > 0;
+37 37 |   -0 > x;
+38 38 |   x >= -0;
+39 39 |   -0 >= x;
 
 
 ```
@@ -138,6 +226,17 @@ warning[noCompareNegZero]: Do not use the > operator to compare against -0.
 38 │ -0 > x;
    │ ------ Do not use the > operator to compare against -0.
 
+Replace -0 with 0
+      | @@ -35,7 +35,7 @@
+34 34 |   x <= -0;
+35 35 |   -0 <= x;
+36 36 |   x > -0;
+37    | - -0 > x;
+   37 | + 0 > x;
+38 38 |   x >= -0;
+39 39 |   -0 >= x;
+40 40 |   x != -0;
+
 
 ```
 
@@ -147,6 +246,17 @@ warning[noCompareNegZero]: Do not use the >= operator to compare against -0.
    │
 39 │ x >= -0;
    │ ------- Do not use the >= operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -36,7 +36,7 @@
+35 35 |   -0 <= x;
+36 36 |   x > -0;
+37 37 |   -0 > x;
+38    | - x >= -0;
+   38 | + x >= 0;
+39 39 |   -0 >= x;
+40 40 |   x != -0;
+41 41 |   -0 != x;
 
 
 ```
@@ -158,6 +268,17 @@ warning[noCompareNegZero]: Do not use the >= operator to compare against -0.
 40 │ -0 >= x;
    │ ------- Do not use the >= operator to compare against -0.
 
+Replace -0 with 0
+      | @@ -37,7 +37,7 @@
+36 36 |   x > -0;
+37 37 |   -0 > x;
+38 38 |   x >= -0;
+39    | - -0 >= x;
+   39 | + 0 >= x;
+40 40 |   x != -0;
+41 41 |   -0 != x;
+42 42 |   -0 !== x;
+
 
 ```
 
@@ -167,6 +288,16 @@ warning[noCompareNegZero]: Do not use the != operator to compare against -0.
    │
 41 │ x != -0;
    │ ------- Do not use the != operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -38,6 +38,6 @@
+37 37 |   -0 > x;
+38 38 |   x >= -0;
+39 39 |   -0 >= x;
+40    | - x != -0;
+   40 | + x != 0;
+41 41 |   -0 != x;
+42 42 |   -0 !== x;
 
 
 ```
@@ -178,6 +309,15 @@ warning[noCompareNegZero]: Do not use the != operator to compare against -0.
 42 │ -0 != x;
    │ ------- Do not use the != operator to compare against -0.
 
+Replace -0 with 0
+      | @@ -39,5 +39,5 @@
+38 38 |   x >= -0;
+39 39 |   -0 >= x;
+40 40 |   x != -0;
+41    | - -0 != x;
+   41 | + 0 != x;
+42 42 |   -0 !== x;
+
 
 ```
 
@@ -187,6 +327,14 @@ warning[noCompareNegZero]: Do not use the !== operator to compare against -0.
    │
 43 │ -0 !== x;
    │ -------- Do not use the !== operator to compare against -0.
+
+Replace -0 with 0
+      | @@ -40,4 +40,4 @@
+39 39 |   -0 >= x;
+40 40 |   x != -0;
+41 41 |   -0 != x;
+42    | - -0 !== x;
+   42 | + 0 !== x;
 
 
 ```
