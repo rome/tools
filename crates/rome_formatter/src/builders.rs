@@ -1390,7 +1390,6 @@ where
 /// ```
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{SimpleFormatContext, format, write, Buffer};
-/// use rome_rowan::TextSize;
 ///
 /// struct MyFormat;
 ///
@@ -1419,6 +1418,25 @@ where
 /// let formatted = format!(SimpleFormatContext::default(), [MyFormat]).unwrap();
 ///
 /// assert_eq!("1\n\t2\n\t3\n\t4\n", formatted.print().as_code());
+/// ```
+///
+/// Formatting the same value twice results in a panic.
+///
+/// ```panics
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{SimpleFormatContext, format, write, Buffer};
+/// use rome_rowan::TextSize;
+///
+/// let mut count = 0;
+///
+/// let value = format_once(|f| {
+///     write!(f, [dynamic_token(&std::format!("Formatted {count}."), TextSize::default())])
+/// });
+///
+/// format!(SimpleFormatContext::default(), [value]).expect("Formatting once works fine");
+///
+/// // Formatting the value more than once panics
+/// format!(SimpleFormatContext::default(), [value]);
 /// ```
 pub const fn format_once<T, Context>(formatter: T) -> FormatOnce<T, Context>
 where
