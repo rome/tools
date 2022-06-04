@@ -8,6 +8,7 @@ use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
 use rome_rowan::{AstNode, SyntaxResult};
+use unicode_width::UnicodeWidthStr;
 
 impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjectMember> {
     fn format_fields(
@@ -21,7 +22,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
         } = node.as_fields();
 
         let name = name?;
-        let default_name_width = name.text().chars().count();
+        let default_name_width = name.text().width();
 
         let (format_name, name_width) =
             FormatMemberName::from(name).format_member_name(formatter)?;

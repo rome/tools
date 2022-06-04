@@ -7,7 +7,7 @@ const neverBreakAfterColonObject = {
     ab: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     abc: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
 		'古今': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
-		'古体诗': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
+		a̐éö̲: 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
     "class-member": class MyClass { constructor() { console.log('class object constructor')}},
     "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-true": true,
     "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-false": false,
@@ -21,7 +21,8 @@ const neverBreakAfterColonObject = {
 
 const breakAfterColonObject = {
     'long-key-for-string': "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
-    'logical-expression-1': this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
+		'古体诗': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
+	  'logical-expression-1': this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
     "logical-expression-2": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
     "binary-expression-1": 13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
     "binary-expression-2": 1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,

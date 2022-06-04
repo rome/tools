@@ -4,6 +4,7 @@ use crate::utils::string_utils::CharSignal::AlreadyPrinted;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
+use unicode_width::UnicodeWidthStr;
 
 pub trait ToAsciiLowercaseCow {
     /// Returns the same value as String::to_lowercase. The only difference
@@ -86,7 +87,7 @@ impl<'token> FormatLiteralStringToken<'token> {
         let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
 
         let content = string_cleaner.normalise_text(formatter.context().source_type.into());
-        let normalized_text_width = content.chars().count();
+        let normalized_text_width = content.width();
 
         let element = formatter.format_replaced(
             token,
