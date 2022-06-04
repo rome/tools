@@ -7,8 +7,8 @@ use rome_js_syntax::JsAnyExpression;
 use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
-use rome_rowan::SyntaxResult;
 use rome_rowan::TextSize;
+use rome_rowan::{AstNode, SyntaxResult};
 
 impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjectMember> {
     fn format_fields(
@@ -21,9 +21,11 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             value,
         } = node.as_fields();
 
-        let (format_name, length) =
-            FormatMemberName::from(name.clone()?).format_member_name(formatter)?;
-        let name_length = length.unwrap_or(name?.range().len());
+        let name = name?;
+        let default_name_length = name.range().len();
+
+        let (format_name, length) = FormatMemberName::from(name).format_member_name(formatter)?;
+        let name_length = length.unwrap_or(default_name_length);
         let layout = property_object_member_layout(formatter, name_length, &value.clone()?)?;
 
         let formatted = match layout {
