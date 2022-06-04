@@ -42,7 +42,6 @@ where
             WalkEvent::Enter(node) => node,
             WalkEvent::Leave(_) => continue,
         };
-
         if let Some(range) = filter.range {
             if node.text_range().ordering(range).is_ne() {
                 iter.skip_subtree();

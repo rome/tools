@@ -48,7 +48,9 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
 
     rome_analyze::analyze(0, &root, filter, |event| {
         if let Some(mut diag) = event.diagnostic() {
+            // println!("{:?}", diag);
             if let Some(action) = event.action() {
+                println!("{}\n-----------------------", action.root);
                 diag.suggestions.push(action.into());
             }
 
@@ -61,6 +63,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
         }
     });
 
+    // println!("{:?}", diagnostics);
     let mut snapshot = String::new();
 
     writeln!(snapshot, "# Input").unwrap();
@@ -117,7 +120,6 @@ fn diagnostic_to_string(name: &str, source: &str, diag: Diagnostic) -> String {
 
 fn code_fix_to_string(source: &str, action: AnalyzerAction) -> String {
     let output = action.root.syntax().to_string();
-
     markup_to_string(markup! {
         {Diff { mode: DiffMode::Unified, left: source, right: &output }}
     })

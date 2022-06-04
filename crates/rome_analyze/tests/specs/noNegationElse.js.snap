@@ -1,0 +1,47 @@
+---
+source: crates/rome_analyze/tests/spec_tests.rs
+assertion_line: 99
+expression: noNegationElse.js
+---
+# Input
+```js
+// valid
+if (!true) {consequent;};
+true ? consequent : alternate;
+// invalid
+if (!true) {consequent} else {alternate}
+!condition ? consequent : alternate;
+```
+
+# Diagnostics
+```
+error[noNegationElse]: Invert blocks when performing a negation test.
+  ┌─ noNegationElse.js:5:1
+  │
+5 │ if (!true) {consequent} else {alternate}
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invert blocks when performing a negation test.
+
+Replace with strict equality
+
+
+```
+
+```
+error[noNegationElse]: Invert blocks when performing a negation test.
+  ┌─ noNegationElse.js:6:1
+  │
+6 │ !condition ? consequent : alternate;
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invert blocks when performing a negation test.
+
+Replace with strict equality
+    | @@ -3,4 +3,4 @@
+2 2 |   true ? consequent : alternate;
+3 3 |   // invalid
+4 4 |   if (!true) {consequent} else {alternate}
+5   | - !condition ? consequent : alternate;
+  5 | + condition ? alternate : consequent;
+
+
+```
+
+
