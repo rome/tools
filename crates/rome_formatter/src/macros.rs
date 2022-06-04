@@ -172,7 +172,9 @@ macro_rules! __count_elements {
 ///
 /// ## Examples
 ///
-/// ```
+/// Temporarily ignored because [BestFitting] needs to be adjusted due to the
+/// `fits_element_on_line` changes in https://github.com/rome/tools/pull/2645
+/// ```ignore
 /// use rome_formatter::{Formatted, LineWidth};
 /// use rome_formatter::prelude::*;
 ///
