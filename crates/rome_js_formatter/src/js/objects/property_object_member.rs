@@ -20,9 +20,10 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             colon_token,
             value,
         } = node.as_fields();
-        let layout = property_object_member_layout(formatter, node)?;
 
-        let name = formatted![formatter, [FormatMemberName::from(name?)]]?;
+        let format_name = FormatMemberName::from(name?);
+        let layout = property_object_member_layout(formatter, &format_name, &value.clone()?)?;
+        let name = formatted![formatter, [format_name]]?;
 
         let formatted = match layout {
             PropertyObjectMemberLayout::Fluid => {
@@ -92,38 +93,28 @@ const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 fn property_object_member_layout(
     formatter: &JsFormatter,
-    node: &JsPropertyObjectMember,
-) -> SyntaxResult<PropertyObjectMemberLayout> {
-    let JsPropertyObjectMemberFields {
-        name,
-        colon_token: _,
-        value,
-    } = node.as_fields();
-
-    let name = name?;
-    let value = value?;
-
+    name: &FormatMemberName,
+    value: &JsAnyExpression,
+) -> FormatResult<PropertyObjectMemberLayout> {
     let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as u32;
-    let is_name_short = name.range().len() < TextSize::from(text_width_for_break);
+    let is_name_short = name.len(formatter)? < TextSize::from(text_width_for_break);
 
-    if is_break_after_operator(&value)? {
+    if is_break_after_operator(value)? {
         return Ok(PropertyObjectMemberLayout::BreakAfterOperator);
     }
 
     if is_name_short {
         return Ok(PropertyObjectMemberLayout::NeverBreakAfterOperator);
-    } else {
-        if matches!(
-            value,
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(_)
-            )
-        ) {
-            return Ok(PropertyObjectMemberLayout::BreakAfterOperator);
-        }
+    } else if matches!(
+        value,
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(
+            _
+        ))
+    ) {
+        return Ok(PropertyObjectMemberLayout::BreakAfterOperator);
     }
 
-    if is_never_break_after_operator(&value)? {
+    if is_never_break_after_operator(value)? {
         return Ok(PropertyObjectMemberLayout::NeverBreakAfterOperator);
     }
 

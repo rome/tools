@@ -21,7 +21,7 @@ use rome_js_syntax::{
     TsTemplateElement, TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList};
+use rome_rowan::{AstNode, AstNodeList, TextSize};
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
@@ -430,6 +430,23 @@ impl From<JsAnyObjectMemberName> for FormatMemberName {
             JsAnyObjectMemberName::JsComputedMemberName(node) => Self::ComputedMemberName(node),
             JsAnyObjectMemberName::JsLiteralMemberName(node) => Self::LiteralMemberName(node),
         }
+    }
+}
+
+impl FormatMemberName {
+    pub fn len(&self, formatter: &JsFormatter) -> FormatResult<TextSize> {
+        let len = match self {
+            FormatMemberName::ComputedMemberName(node) => node.syntax().text_trimmed_range().len(),
+            FormatMemberName::PrivateClassMemberName(node) => {
+                node.syntax().text_trimmed_range().len()
+            }
+            FormatMemberName::LiteralMemberName(literal) => {
+                FormatLiteralStringToken::new(&literal.value()?, StringLiteralParentKind::Member)
+                    .normalise_len(formatter)
+            }
+        };
+
+        Ok(len)
     }
 }
 

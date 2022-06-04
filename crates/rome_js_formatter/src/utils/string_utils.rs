@@ -3,6 +3,7 @@ use crate::prelude::*;
 use crate::utils::string_utils::CharSignal::AlreadyPrinted;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{JsSyntaxToken, SourceType};
+use rome_rowan::TextSize;
 use std::borrow::Cow;
 
 pub trait ToAsciiLowercaseCow {
@@ -69,6 +70,20 @@ impl<'token> FormatLiteralStringToken<'token> {
 
     pub fn token(&self) -> &'token JsSyntaxToken {
         self.token
+    }
+
+    pub fn normalise_len(&self, formatter: &JsFormatter) -> TextSize {
+        let token = self.token();
+        // tokens that are don't hold any strings don't need to be processed any further
+        if token.kind() != JS_STRING_LITERAL {
+            return self.token.text_trimmed_range().len();
+        }
+        let chosen_quote_style = formatter.context().quote_style();
+        let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
+
+        let content = string_cleaner.normalise_text(formatter.context().source_type.into());
+
+        TextSize::from(content.len() as u32)
     }
 }
 
