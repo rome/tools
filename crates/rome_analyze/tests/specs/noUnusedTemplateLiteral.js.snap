@@ -24,7 +24,7 @@ error[noUnusedTemplateLiteral]: Do not use template literals if interpolation an
 8 │ const foo = `bar`;
   │             ^^^^^ Do not use template literals if interpolation and special-character handling are not needed.
 
-Replace with strict equality
+Replace with string literal
     | @@ -5,5 +5,5 @@
 4 4 |   const foo4 = `'bar'`
 5 5 |   
@@ -43,7 +43,7 @@ error[noUnusedTemplateLiteral]: Do not use template literals if interpolation an
 9 │ const foo1 = `bar `;
   │              ^^^^^^ Do not use template literals if interpolation and special-character handling are not needed.
 
-Replace with strict equality
+Replace with string literal
     | @@ -6,4 +6,4 @@
 5 5 |   
 6 6 |   //invalid
