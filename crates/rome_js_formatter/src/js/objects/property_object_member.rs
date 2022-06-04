@@ -7,7 +7,6 @@ use rome_js_syntax::JsAnyExpression;
 use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
-use rome_rowan::TextSize;
 use rome_rowan::{AstNode, SyntaxResult};
 
 impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjectMember> {
@@ -22,11 +21,12 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
         } = node.as_fields();
 
         let name = name?;
-        let default_name_length = name.range().len();
+        let default_name_width = name.text().chars().count();
 
-        let (format_name, length) = FormatMemberName::from(name).format_member_name(formatter)?;
-        let name_length = length.unwrap_or(default_name_length);
-        let layout = property_object_member_layout(formatter, name_length, &value.clone()?)?;
+        let (format_name, name_width) =
+            FormatMemberName::from(name).format_member_name(formatter)?;
+        let name_width = name_width.unwrap_or(default_name_width);
+        let layout = property_object_member_layout(formatter, name_width, &value.clone()?)?;
 
         let formatted = match layout {
             PropertyObjectMemberLayout::Fluid => {
@@ -126,11 +126,11 @@ const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 /// Returns the layout variant for an object member depending on value expression and name length
 fn property_object_member_layout(
     formatter: &JsFormatter,
-    name_len: TextSize,
+    name_width: usize,
     value: &JsAnyExpression,
 ) -> FormatResult<PropertyObjectMemberLayout> {
-    let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as u32;
-    let is_name_short = name_len < TextSize::from(text_width_for_break);
+    let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+    let is_name_short = name_width < text_width_for_break;
 
     if is_break_after_colon(value)? {
         return Ok(PropertyObjectMemberLayout::BreakAfterColon);

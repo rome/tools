@@ -21,7 +21,7 @@ use rome_js_syntax::{
     TsTemplateElement, TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList, TextSize};
+use rome_rowan::{AstNode, AstNodeList};
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
@@ -437,7 +437,7 @@ impl FormatMemberName {
     pub fn format_member_name(
         &self,
         formatter: &JsFormatter,
-    ) -> FormatResult<(FormatElement, Option<TextSize>)> {
+    ) -> FormatResult<(FormatElement, Option<usize>)> {
         match self {
             FormatMemberName::ComputedMemberName(node) => {
                 formatted![formatter, [node.format()]].map(|element| (element, None))

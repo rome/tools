@@ -6,6 +6,8 @@ const neverBreakAfterColonObject = {
     a: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     ab: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     abc: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
+		'古今': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
+		'古体诗': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
     "class-member": class MyClass { constructor() { console.log('class object constructor')}},
     "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-true": true,
     "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-false": false,
