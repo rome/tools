@@ -61,6 +61,6 @@ impl FormatNodeFields<JsForStatement> for FormatNodeRule<JsForStatement> {
             }
         });
 
-        write!(f, [group_elements(content)])
+        write!(f, [group_elements(&content)])
     }
 }

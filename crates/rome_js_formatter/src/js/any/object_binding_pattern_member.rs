@@ -5,19 +5,19 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectBindingPatternMember;
 impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPatternMember {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
-                node.format().format(f)
+                node.format().fmt(f)
             }
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(node) => {
-                node.format().format(f)
+                node.format().fmt(f)
             }
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node) => {
-                node.format().format(f)
+                node.format().fmt(f)
             }
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(node) => node.format().format(f),
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => node.format().format(f),
+            JsAnyObjectBindingPatternMember::JsIdentifierBinding(node) => node.format().fmt(f),
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => node.format().fmt(f),
         }
     }
 }

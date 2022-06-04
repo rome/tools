@@ -9,8 +9,8 @@ pub struct FormatJsSyntaxNode;
 impl rome_formatter::FormatRule<JsSyntaxNode> for FormatJsSyntaxNode {
     type Context = JsFormatContext;
 
-    fn format(node: &JsSyntaxNode, f: &mut JsFormatter) -> FormatResult<()> {
-        map_syntax_node!(node.clone(), node => node.format().format(f))
+    fn fmt(node: &JsSyntaxNode, f: &mut JsFormatter) -> FormatResult<()> {
+        map_syntax_node!(node.clone(), node => node.format().fmt(f))
     }
 }
 

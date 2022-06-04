@@ -5,12 +5,12 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyTupleTypeElement;
 impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &TsAnyTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => node.format().format(f),
-            TsAnyTupleTypeElement::TsType(node) => node.format().format(f),
-            TsAnyTupleTypeElement::TsRestTupleTypeElement(node) => node.format().format(f),
-            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(node) => node.format().format(f),
+            TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => node.format().fmt(f),
+            TsAnyTupleTypeElement::TsType(node) => node.format().fmt(f),
+            TsAnyTupleTypeElement::TsRestTupleTypeElement(node) => node.format().fmt(f),
+            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(node) => node.format().fmt(f),
         }
     }
 }

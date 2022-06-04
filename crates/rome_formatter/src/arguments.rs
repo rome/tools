@@ -38,7 +38,7 @@ impl<'fmt, Context> Argument<'fmt, Context> {
             fmt: &mut Formatter<Context>,
         ) -> FormatResult<()> {
             // SAFETY: Safe because the 'fmt lifetime is captured by the 'lifetime' field.
-            F::format(unsafe { &*(ptr as *const F) }, fmt)
+            F::fmt(unsafe { &*(ptr as *const F) }, fmt)
         }
 
         Self {
@@ -98,7 +98,7 @@ impl<Context> Clone for Arguments<'_, Context> {
 
 impl<Context> Format<Context> for Arguments<'_, Context> {
     #[inline]
-    fn format(&self, formatter: &mut Formatter<Context>) -> FormatResult<()> {
+    fn fmt(&self, formatter: &mut Formatter<Context>) -> FormatResult<()> {
         formatter.write_fmt(*self)
     }
 }
@@ -126,7 +126,7 @@ mod tests {
                 space_token(),
                 token("a"),
                 space_token(),
-                group_elements(format_args!(token("("), token(")")))
+                group_elements(&format_args!(token("("), token(")")))
             ]
         )
         .unwrap();

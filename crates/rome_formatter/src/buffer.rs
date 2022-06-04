@@ -273,7 +273,7 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 /// struct Preamble;
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
-///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
 ///         write!(f, [token("# heading"), hard_line_break()])
 ///     }
 /// }
@@ -300,7 +300,7 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 /// struct Preamble;
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
-///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
 ///         write!(f, [token("# heading"), hard_line_break()])
 ///     }
 /// }

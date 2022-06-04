@@ -9,7 +9,7 @@ use rome_rowan::AstNode;
 impl FormatRule<JsAnyClass> for FormatJsAnyClass {
     type Context = JsFormatContext;
 
-    fn format(node: &JsAnyClass, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyClass, f: &mut JsFormatter) -> FormatResult<()> {
         let abstract_token = node.abstract_token();
         let id = node.id();
         let extends = node.extends_clause();

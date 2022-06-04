@@ -68,7 +68,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::prelude::*;
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.join_with(format_args!(token(","), space_token()))
+    ///     f.join_with(&format_args!(token(","), space_token()))
     ///         .entry(&token("1"))
     ///         .entry(&token("2"))
     ///         .entry(&token("3"))

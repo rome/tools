@@ -5,12 +5,12 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyExternalModuleDeclarationBody;
 impl FormatRule<TsAnyExternalModuleDeclarationBody> for FormatTsAnyExternalModuleDeclarationBody {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyExternalModuleDeclarationBody, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &TsAnyExternalModuleDeclarationBody, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node) => {
-                node.format().format(f)
+                node.format().fmt(f)
             }
-            TsAnyExternalModuleDeclarationBody::TsModuleBlock(node) => node.format().format(f),
+            TsAnyExternalModuleDeclarationBody::TsModuleBlock(node) => node.format().fmt(f),
         }
     }
 }

@@ -6,6 +6,6 @@ use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsUnknownExpression> for FormatNodeRule<JsUnknownExpression> {
     fn format_fields(node: &JsUnknownExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).format(formatter)
+        format_unknown_node(node.syntax()).fmt(formatter)
     }
 }

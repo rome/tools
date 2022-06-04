@@ -5,10 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyModuleName;
 impl FormatRule<TsAnyModuleName> for FormatTsAnyModuleName {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyModuleName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &TsAnyModuleName, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyModuleName::TsIdentifierBinding(node) => node.format().format(f),
-            TsAnyModuleName::TsQualifiedModuleName(node) => node.format().format(f),
+            TsAnyModuleName::TsIdentifierBinding(node) => node.format().fmt(f),
+            TsAnyModuleName::TsQualifiedModuleName(node) => node.format().fmt(f),
         }
     }
 }

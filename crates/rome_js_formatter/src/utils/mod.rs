@@ -43,9 +43,9 @@ impl<'a> FormatTypeMemberSeparator<'a> {
 }
 
 impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(separator) = self.token {
-            write!(f, [format_replaced(separator, empty_element())])
+            write!(f, [format_replaced(separator, &empty_element())])
         } else {
             Ok(())
         }
@@ -64,7 +64,7 @@ impl<'a> FormatInitializerClause<'a> {
 }
 
 impl Format<JsFormatContext> for FormatInitializerClause<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(initializer) = self.initializer {
             write!(f, [space_token(), initializer.format()])
         } else {
@@ -86,7 +86,7 @@ impl<'a> FormatInterpreterToken<'a> {
 }
 
 impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(interpreter) = self.token {
             write!(f, [interpreter.format(), empty_line()])
         } else {
@@ -159,7 +159,7 @@ impl<'a> FormatBodyStatement<'a> {
 }
 
 impl Format<JsFormatContext> for FormatBodyStatement<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self.body {
             JsAnyStatement::JsEmptyStatement(body) => {
                 write!(f, [body.format(), token(";")])
@@ -221,7 +221,7 @@ pub(crate) enum TemplateElement {
 }
 
 impl Format<JsFormatContext> for TemplateElement {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let expression_is_plain = self.is_plain_expression()?;
         let has_comments = self.has_comments();
         let should_hard_group = expression_is_plain && !has_comments;
@@ -417,7 +417,7 @@ impl<'a> FormatWithSemicolon<'a> {
 }
 
 impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(buffer, [self.content])?;
@@ -497,7 +497,7 @@ impl From<JsLiteralMemberName> for FormatMemberName {
 }
 
 impl Format<JsFormatContext> for FormatMemberName {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             FormatMemberName::ComputedMemberName(node) => {
                 write![f, [node.format()]]
@@ -513,9 +513,9 @@ impl Format<JsFormatContext> for FormatMemberName {
                         &literal.value()?,
                         StringLiteralParentKind::Member,
                     )
-                    .format(f)
+                    .fmt(f)
                 } else {
-                    value.format().format(f)
+                    value.format().fmt(f)
                 }
             }
         }

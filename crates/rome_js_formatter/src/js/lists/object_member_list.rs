@@ -6,7 +6,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 impl FormatRule<JsObjectMemberList> for FormatJsObjectMemberList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsObjectMemberList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsObjectMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let mut join = f.join_nodes_with_soft_line();
 
         for (element, formatted) in node.elements().zip(node.format_separated(token(","))) {

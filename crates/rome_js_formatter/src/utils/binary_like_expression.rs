@@ -216,9 +216,9 @@ fn format_with_or_without_parenthesis(
         buffer.write_element(leading)?;
         write![
             buffer,
-            [group_elements(format_args![
+            [group_elements(&format_args![
                 token("("),
-                soft_block_indent(format_once(|f| {
+                soft_block_indent(&format_once(|f| {
                     f.write_element(content)?;
                     f.write_element(trailing)
                 })),
@@ -454,16 +454,16 @@ impl FlattenItems {
 
                 if can_hard_group {
                     // we bail early if group doesn't need to be broken. We don't need to do further checks
-                    f.join_with(space_token()).entries(groups).finish()
+                    f.join_with(&space_token()).entries(groups).finish()
                 } else if is_inside_parenthesis(current_node) {
-                    f.join_with(soft_line_break_or_space())
+                    f.join_with(&soft_line_break_or_space())
                         .entries(groups)
                         .finish()
                 } else if should_not_indent_if_parent_indents(current_node) {
                     write!(
                         f,
-                        [group_elements(format_once(|f| {
-                            f.join_with(soft_line_break_or_space())
+                        [group_elements(&format_once(|f| {
+                            f.join_with(&soft_line_break_or_space())
                                 .entries(groups)
                                 .finish()
                         }))]
@@ -474,9 +474,9 @@ impl FlattenItems {
                     // that behave differently depending on the situation
                     write!(
                         f,
-                        [soft_line_indent_or_space(&group_elements(format_once(
+                        [soft_line_indent_or_space(&group_elements(&format_once(
                             |f| {
-                                f.join_with(soft_line_break_or_space())
+                                f.join_with(&soft_line_break_or_space())
                                     .entries(groups)
                                     .finish()
                             }
@@ -490,9 +490,9 @@ impl FlattenItems {
 
                     write!(
                         f,
-                        [group_elements(soft_line_indent_or_space(&format_once(
+                        [group_elements(&soft_line_indent_or_space(&format_once(
                             |f| {
-                                f.join_with(soft_line_break_or_space())
+                                f.join_with(&soft_line_break_or_space())
                                     .entries(groups)
                                     .finish()
                             }
@@ -897,7 +897,7 @@ impl AstNode for JsAnyBinaryLikeLeftExpression {
 }
 
 impl Format<JsFormatContext> for JsAnyBinaryLikeLeftExpression {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
                 write![f, [expression.format()]]

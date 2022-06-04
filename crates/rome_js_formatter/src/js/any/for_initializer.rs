@@ -5,10 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyForInitializer;
 impl FormatRule<JsAnyForInitializer> for FormatJsAnyForInitializer {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyForInitializer, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyForInitializer, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyForInitializer::JsVariableDeclaration(node) => node.format().format(f),
-            JsAnyForInitializer::JsAnyExpression(node) => node.format().format(f),
+            JsAnyForInitializer::JsVariableDeclaration(node) => node.format().fmt(f),
+            JsAnyForInitializer::JsAnyExpression(node) => node.format().fmt(f),
         }
     }
 }

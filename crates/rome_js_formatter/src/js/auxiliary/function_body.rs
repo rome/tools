@@ -27,7 +27,7 @@ impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
             f,
             [format_delimited(
                 &l_curly_token?,
-                format_args![directives.format(), format_statements],
+                &format_args![directives.format(), format_statements],
                 &r_curly_token?,
             )
             .block_indent()]

@@ -293,7 +293,7 @@ fn format_groups(
     if groups.groups_should_break(calls_count)? {
         write!(
             f,
-            [indent(format_args!(
+            [indent(&format_args!(
                 hard_line_break(),
                 format_once(|f| {
                     f.write_element(groups.into_joined_hard_line_groups())?;

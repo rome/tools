@@ -6,7 +6,7 @@ use rome_rowan::AstSeparatedList;
 impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
     type Context = JsFormatContext;
 
-    fn format(node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
         // nodes and formatter are not aware of the source type (TSX vs TS), which means we can't
         // exactly pin point the exact case.
         //
@@ -19,7 +19,7 @@ impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
             TrailingSeparator::default()
         };
 
-        f.join_with(soft_line_break_or_space())
+        f.join_with(&soft_line_break_or_space())
             .entries(node.format_separated(token(",")).with_options(
                 FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),
             ))

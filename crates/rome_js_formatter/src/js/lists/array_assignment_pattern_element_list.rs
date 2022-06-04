@@ -6,7 +6,7 @@ use rome_js_syntax::JsArrayAssignmentPatternElementList;
 impl FormatRule<JsArrayAssignmentPatternElementList> for FormatJsArrayAssignmentPatternElementList {
     type Context = JsFormatContext;
 
-    fn format(
+    fn fmt(
         node: &JsArrayAssignmentPatternElementList,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {

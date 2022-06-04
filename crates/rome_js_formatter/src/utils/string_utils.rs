@@ -74,7 +74,7 @@ impl<'token> FormatLiteralStringToken<'token> {
 }
 
 impl Format<JsFormatContext> for FormatLiteralStringToken<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let token = self.token();
         debug_assert_eq!(token.kind(), JS_STRING_LITERAL);
 

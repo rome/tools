@@ -49,7 +49,7 @@ impl FormatNodeFields<JsCaseClause> for FormatNodeRule<JsCaseClause> {
             // no line break needed after because it is added by the indent in the switch statement
             write!(
                 f,
-                [indent(format_args![hard_line_break(), format_consequent])]
+                [indent(&format_args![hard_line_break(), format_consequent])]
             )
         }
     }

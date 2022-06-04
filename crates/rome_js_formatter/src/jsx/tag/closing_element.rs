@@ -5,6 +5,6 @@ use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsxClosingElement> for FormatNodeRule<JsxClosingElement> {
     fn format_fields(node: &JsxClosingElement, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_verbatim_node(node.syntax()).format(formatter)
+        format_verbatim_node(node.syntax()).fmt(formatter)
     }
 }

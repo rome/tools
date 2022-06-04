@@ -12,9 +12,9 @@ impl FormatNodeFields<JsLiteralExportName> for FormatNodeRule<JsLiteralExportNam
         let value = value?;
 
         if value.kind() == JS_STRING_LITERAL {
-            FormatLiteralStringToken::new(&value, StringLiteralParentKind::Expression).format(f)
+            FormatLiteralStringToken::new(&value, StringLiteralParentKind::Expression).fmt(f)
         } else {
-            value.format().format(f)
+            value.format().fmt(f)
         }
     }
 }

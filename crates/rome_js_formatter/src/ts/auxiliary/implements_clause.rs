@@ -16,13 +16,13 @@ impl FormatNodeFields<TsImplementsClause> for FormatNodeRule<TsImplementsClause>
 
         write!(
             f,
-            [group_elements(format_args![
-                if_group_breaks(block_indent(format_args![
+            [group_elements(&format_args![
+                if_group_breaks(&block_indent(&format_args![
                     &implements_token,
                     space_token(),
                     soft_block_indent(&types)
                 ])),
-                if_group_fits_on_line(format_args![&implements_token, space_token(), &types]),
+                if_group_fits_on_line(&format_args![&implements_token, space_token(), &types]),
             ])]
         )
     }

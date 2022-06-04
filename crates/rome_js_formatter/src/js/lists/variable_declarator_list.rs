@@ -9,12 +9,12 @@ use rome_rowan::AstSeparatedList;
 impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         let mut declarators = node.elements().enumerate().map(|(index, element)| {
             format_with(move |f| {
-                write!(f, [group_elements(element.node().format())])?;
+                write!(f, [group_elements(&element.node().format())])?;
 
                 match element.trailing_separator()? {
                     None => {
@@ -45,16 +45,16 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
 
             write!(f, [soft_line_break_or_space()])?;
 
-            f.join_with(soft_line_break_or_space())
+            f.join_with(&soft_line_break_or_space())
                 .entries(declarators)
                 .finish()
         });
 
         write!(
             f,
-            [group_elements(format_args!(
+            [group_elements(&format_args!(
                 leading_element,
-                indent(other_declarators)
+                indent(&other_declarators)
             ))]
         )
     }

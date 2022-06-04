@@ -7,7 +7,7 @@ use rome_rowan::AstSeparatedList;
 impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeElementList {
     type Context = JsFormatContext;
 
-    fn format(node: &TsIntersectionTypeElementList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &TsIntersectionTypeElementList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         f.join()

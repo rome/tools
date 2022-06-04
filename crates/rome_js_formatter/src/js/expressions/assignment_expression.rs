@@ -14,12 +14,12 @@ impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExp
 
         write!(
             f,
-            [group_elements(format_args![
+            [group_elements(&format_args![
                 left.format(),
                 space_token(),
                 operator_token.format(),
                 line_suffix_boundary(),
-                group_elements(soft_line_indent_or_space(&right.format())),
+                group_elements(&soft_line_indent_or_space(&right.format())),
             ])]
         )
     }

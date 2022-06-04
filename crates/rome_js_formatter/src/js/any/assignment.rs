@@ -5,16 +5,16 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyAssignment;
 impl FormatRule<JsAnyAssignment> for FormatJsAnyAssignment {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyAssignment::JsIdentifierAssignment(node) => node.format().format(f),
-            JsAnyAssignment::JsStaticMemberAssignment(node) => node.format().format(f),
-            JsAnyAssignment::JsComputedMemberAssignment(node) => node.format().format(f),
-            JsAnyAssignment::JsParenthesizedAssignment(node) => node.format().format(f),
-            JsAnyAssignment::TsNonNullAssertionAssignment(node) => node.format().format(f),
-            JsAnyAssignment::TsAsAssignment(node) => node.format().format(f),
-            JsAnyAssignment::TsTypeAssertionAssignment(node) => node.format().format(f),
-            JsAnyAssignment::JsUnknownAssignment(node) => node.format().format(f),
+            JsAnyAssignment::JsIdentifierAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::JsStaticMemberAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::JsComputedMemberAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::JsParenthesizedAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::TsNonNullAssertionAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::TsAsAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::TsTypeAssertionAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::JsUnknownAssignment(node) => node.format().fmt(f),
         }
     }
 }

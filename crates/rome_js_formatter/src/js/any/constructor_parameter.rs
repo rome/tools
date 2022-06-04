@@ -5,11 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyConstructorParameter;
 impl FormatRule<JsAnyConstructorParameter> for FormatJsAnyConstructorParameter {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyConstructorParameter, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyConstructorParameter, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyConstructorParameter::JsAnyFormalParameter(node) => node.format().format(f),
-            JsAnyConstructorParameter::JsRestParameter(node) => node.format().format(f),
-            JsAnyConstructorParameter::TsPropertyParameter(node) => node.format().format(f),
+            JsAnyConstructorParameter::JsAnyFormalParameter(node) => node.format().fmt(f),
+            JsAnyConstructorParameter::JsRestParameter(node) => node.format().fmt(f),
+            JsAnyConstructorParameter::TsPropertyParameter(node) => node.format().fmt(f),
         }
     }
 }

@@ -22,11 +22,11 @@ where
     for<'a> N: AstNode<Language = JsLanguage> + AsFormat<'a>,
     Separator: Format<JsFormatContext>,
 {
-    fn format(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let node = self.element.node()?;
         let separator = self.element.trailing_separator()?;
 
-        write!(f, [group_elements(node.format())])?;
+        write!(f, [group_elements(&node.format())])?;
 
         let format_trailing_separator =
             if_group_breaks(&self.separator).with_group_id(self.options.group_id);
@@ -40,7 +40,7 @@ where
                         // Use format_replaced instead of wrapping the result of format_token
                         // in order to remove only the token itself when the group doesn't break
                         // but still print its associated trivias unconditionally
-                        write!(f, [format_replaced(separator, format_trailing_separator)])?;
+                        write!(f, [format_replaced(separator, &format_trailing_separator)])?;
                     }
                     TrailingSeparator::Mandatory => {
                         write!(f, [separator.format()])?;

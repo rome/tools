@@ -13,7 +13,7 @@ impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType>
 
         write!(
             f,
-            [group_elements(indent(format_args!(
+            [group_elements(&indent(&format_args!(
                 soft_line_break(),
                 FormatTypeSetLeadingSeparator {
                     separator: "&",
@@ -31,7 +31,7 @@ pub(crate) struct FormatTypeSetLeadingSeparator<'a> {
 }
 
 impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match &self.leading_separator {
             Some(token) => {
                 // The SyntaxToken is converted into a FormatElement using
@@ -43,13 +43,13 @@ impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
                     f,
                     [format_replaced(
                         token,
-                        &if_group_breaks(format_args!(format_trimmed_token(token), space_token()))
+                        &if_group_breaks(&format_args!(format_trimmed_token(token), space_token()))
                     )]
                 )
             }
             None => write!(
                 f,
-                [if_group_breaks(format_args![
+                [if_group_breaks(&format_args![
                     token(self.separator),
                     space_token()
                 ])]

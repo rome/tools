@@ -7,7 +7,7 @@ use rome_rowan::{AstNode, AstNodeList};
 impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsDirectiveList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsDirectiveList, f: &mut JsFormatter) -> FormatResult<()> {
         if node.is_empty() {
             return Ok(());
         }

@@ -6,7 +6,7 @@ use rome_rowan::AstNode;
 impl FormatRule<JsxChildList> for FormatJsxChildList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_verbatim_node(node.syntax()).format(formatter)
+    fn fmt(node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
+        format_verbatim_node(node.syntax()).fmt(formatter)
     }
 }

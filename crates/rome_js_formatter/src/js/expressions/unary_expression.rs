@@ -69,9 +69,9 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
                     f,
                     [
                         operator_token.format(),
-                        group_elements(format_args![
+                        group_elements(&format_args![
                             token("("),
-                            soft_block_indent(argument.format()),
+                            soft_block_indent(&argument.format()),
                             token(")"),
                         ]),
                     ]

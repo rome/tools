@@ -5,16 +5,14 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertySignatureModifier;
 impl FormatRule<TsAnyPropertySignatureModifier> for FormatTsAnyPropertySignatureModifier {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyPropertySignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &TsAnyPropertySignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyPropertySignatureModifier::TsDeclareModifier(node) => node.format().format(f),
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(node) => {
-                node.format().format(f)
-            }
-            TsAnyPropertySignatureModifier::JsStaticModifier(node) => node.format().format(f),
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(node) => node.format().format(f),
-            TsAnyPropertySignatureModifier::TsOverrideModifier(node) => node.format().format(f),
-            TsAnyPropertySignatureModifier::TsAbstractModifier(node) => node.format().format(f),
+            TsAnyPropertySignatureModifier::TsDeclareModifier(node) => node.format().fmt(f),
+            TsAnyPropertySignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
+            TsAnyPropertySignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(node) => node.format().fmt(f),
+            TsAnyPropertySignatureModifier::TsOverrideModifier(node) => node.format().fmt(f),
+            TsAnyPropertySignatureModifier::TsAbstractModifier(node) => node.format().fmt(f),
         }
     }
 }

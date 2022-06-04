@@ -57,7 +57,7 @@ fn write_if_element(
         [
             if_token.format(),
             space_token(),
-            format_delimited(&l_paren_token?, test.format(), &r_paren_token?).soft_block_indent(),
+            format_delimited(&l_paren_token?, &test.format(), &r_paren_token?).soft_block_indent(),
         ]
     ]?;
 
@@ -83,7 +83,7 @@ fn write_consequent_block(f: &mut JsFormatter, stmt: JsAnyStatement) -> FormatRe
         [
             space_token(),
             token("{"),
-            block_indent(stmt.format()),
+            block_indent(&stmt.format()),
             token("}"),
         ]
     ]

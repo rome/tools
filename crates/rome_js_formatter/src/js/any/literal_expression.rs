@@ -5,14 +5,14 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyLiteralExpression;
 impl FormatRule<JsAnyLiteralExpression> for FormatJsAnyLiteralExpression {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyLiteralExpression::JsStringLiteralExpression(node) => node.format().format(f),
-            JsAnyLiteralExpression::JsNumberLiteralExpression(node) => node.format().format(f),
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(node) => node.format().format(f),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(node) => node.format().format(f),
-            JsAnyLiteralExpression::JsNullLiteralExpression(node) => node.format().format(f),
-            JsAnyLiteralExpression::JsRegexLiteralExpression(node) => node.format().format(f),
+            JsAnyLiteralExpression::JsStringLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsNumberLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsBigIntLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsBooleanLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsNullLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsRegexLiteralExpression(node) => node.format().fmt(f),
         }
     }
 }

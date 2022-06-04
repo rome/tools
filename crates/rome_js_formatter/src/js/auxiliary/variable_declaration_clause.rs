@@ -11,6 +11,6 @@ impl FormatNodeFields<JsVariableDeclarationClause> for FormatNodeRule<JsVariable
             semicolon_token,
         } = node.as_fields();
 
-        FormatWithSemicolon::new(&declaration.format(), semicolon_token.as_ref()).format(f)
+        FormatWithSemicolon::new(&declaration.format(), semicolon_token.as_ref()).fmt(f)
     }
 }

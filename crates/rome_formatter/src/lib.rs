@@ -371,7 +371,7 @@ impl From<&SyntaxError> for FormatError {
 /// struct Paragraph(String);
 ///
 /// impl Format<SimpleFormatContext> for Paragraph {
-///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
 ///         write!(f, [
 ///             hard_line_break(),
 ///             dynamic_token(&self.0, TextSize::from(0)),
@@ -387,15 +387,15 @@ impl From<&SyntaxError> for FormatError {
 /// ```
 pub trait Format<Context> {
     /// Formats the object using the given formatter.
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()>;
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()>;
 }
 
 impl<T, Context> Format<Context> for &T
 where
     T: ?Sized + Format<Context>,
 {
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        Format::format(&**self, f)
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        Format::fmt(&**self, f)
     }
 }
 
@@ -403,8 +403,8 @@ impl<T, Context> Format<Context> for &mut T
 where
     T: ?Sized + Format<Context>,
 {
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        Format::format(&**self, f)
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        Format::fmt(&**self, f)
     }
 }
 
@@ -412,9 +412,9 @@ impl<T, Context> Format<Context> for Option<T>
 where
     T: Format<Context>,
 {
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         match self {
-            Some(value) => value.format(f),
+            Some(value) => value.fmt(f),
             None => Ok(()),
         }
     }
@@ -424,9 +424,9 @@ impl<T, Context> Format<Context> for SyntaxResult<T>
 where
     T: Format<Context>,
 {
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         match self {
-            Ok(value) => value.format(f),
+            Ok(value) => value.fmt(f),
             Err(err) => Err(err.into()),
         }
     }
@@ -434,7 +434,7 @@ where
 
 impl<Context> Format<Context> for () {
     #[inline]
-    fn format(&self, _: &mut Formatter<Context>) -> FormatResult<()> {
+    fn fmt(&self, _: &mut Formatter<Context>) -> FormatResult<()> {
         // Intentionally left empty
         Ok(())
     }
@@ -453,7 +453,7 @@ impl<Context> Format<Context> for () {
 pub trait FormatRule<T> {
     type Context;
 
-    fn format(item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+    fn fmt(item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
 }
 
 /// Trait for an object that formats an object with a specified rule.
@@ -525,8 +525,8 @@ where
     R: FormatRule<T>,
 {
     #[inline]
-    fn format(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::format(self.item, f)
+    fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
+        R::fmt(self.item, f)
     }
 }
 
@@ -565,8 +565,8 @@ where
     R: FormatRule<T>,
 {
     #[inline]
-    fn format(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::format(&self.item, f)
+    fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
+        R::fmt(&self.item, f)
     }
 }
 
@@ -1048,7 +1048,7 @@ pub fn format_sub_tree<
 }
 
 impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let range = self.text_range();
 
         write!(

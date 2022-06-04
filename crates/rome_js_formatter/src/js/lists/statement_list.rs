@@ -5,7 +5,7 @@ use rome_js_syntax::JsStatementList;
 impl FormatRule<JsStatementList> for FormatJsStatementList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsStatementList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsStatementList, f: &mut JsFormatter) -> FormatResult<()> {
         let mut join = f.join_nodes_with_hardline();
 
         for statement in node.iter() {

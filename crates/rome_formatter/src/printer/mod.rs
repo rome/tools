@@ -562,7 +562,7 @@ impl Default for PrintElementArgs {
 }
 
 /// The Printer uses a stack that emulates recursion. E.g. recursively processing the elements:
-/// `indent(concat(string, string))` would result in the following call stack:
+/// `indent(&concat(string, string))` would result in the following call stack:
 ///
 /// ```plain
 /// print_element(indent, indent = 0);
@@ -937,11 +937,11 @@ mod tests {
     fn it_tracks_the_indent_for_each_token() {
         let formatted = format(&format_args!(
             token("a"),
-            soft_block_indent(format_args!(
+            soft_block_indent(&format_args!(
                 token("b"),
-                soft_block_indent(format_args!(
+                soft_block_indent(&format_args!(
                     token("c"),
-                    soft_block_indent(format_args!(token("d"), soft_line_break(), token("d"),)),
+                    soft_block_indent(&format_args!(token("d"), soft_line_break(), token("d"),)),
                     token("c"),
                 )),
                 token("b"),
@@ -972,7 +972,7 @@ a"#,
         let result = format_with_options(
             &format_args![
                 token("function main() {"),
-                block_indent(token("let x = `This is a multiline\nstring`;")),
+                block_indent(&token("let x = `This is a multiline\nstring`;")),
                 token("}"),
                 hard_line_break()
             ],
@@ -1005,9 +1005,9 @@ two lines`,
     }
     #[test]
     fn it_breaks_a_group_if_it_contains_a_hard_line_break() {
-        let result = format(&group_elements(format_args![
+        let result = format(&group_elements(&format_args![
             token("a"),
-            block_indent(token("b"))
+            block_indent(&token("b"))
         ]));
 
         assert_eq!("a\n  b\n", result.as_code())
@@ -1119,15 +1119,15 @@ two lines`,
             // This one fits on a line by itself,
             .entry(&format_args!(token("723493294"), token(",")))
             // fits without breaking
-            .entry(&group_elements(format_args!(
+            .entry(&group_elements(&format_args!(
                 token("["),
-                soft_block_indent(token("5")),
+                soft_block_indent(&token("5")),
                 token("],")
             )))
             // this one must be printed in expanded mode to fit
-            .entry(&group_elements(format_args!(
+            .entry(&group_elements(&format_args!(
                 token("["),
-                soft_block_indent(token("123456789")),
+                soft_block_indent(&token("123456789")),
                 token("]"),
             )))
             .finish()
@@ -1147,19 +1147,19 @@ two lines`,
     #[test]
     fn line_suffix_printed_at_end() {
         let printed = format(&format_args![
-            group_elements(format_args![
+            group_elements(&format_args![
                 token("["),
-                soft_block_indent(format_with(|f| {
+                soft_block_indent(&format_with(|f| {
                     f.fill(soft_line_break_or_space())
                         .entry(&format_args!(token("1"), token(",")))
                         .entry(&format_args!(token("2"), token(",")))
-                        .entry(&format_args!(token("3"), if_group_breaks(token(","))))
+                        .entry(&format_args!(token("3"), if_group_breaks(&token(","))))
                         .finish()
                 })),
                 token("]")
             ]),
             token(";"),
-            comment(line_suffix(format_args![
+            comment(&line_suffix(&format_args![
                 space_token(),
                 token("// trailing"),
                 space_token()
@@ -1174,17 +1174,17 @@ two lines`,
     }
 
     impl Format<()> for FormatArrayElements<'_> {
-        fn format(&self, f: &mut Formatter<()>) -> FormatResult<()> {
+        fn fmt(&self, f: &mut Formatter<()>) -> FormatResult<()> {
             write!(
                 f,
-                [group_elements(format_args!(
+                [group_elements(&format_args!(
                     token("["),
-                    soft_block_indent(format_args!(
+                    soft_block_indent(&format_args!(
                         format_with(|f| f
                             .join_with(format_args!(token(","), soft_line_break_or_space()))
                             .entries(&self.items)
                             .finish()),
-                        if_group_breaks(token(",")),
+                        if_group_breaks(&token(",")),
                     )),
                     token("]")
                 ))]

@@ -19,7 +19,7 @@ pub struct FormatTrimmedToken<'a> {
 }
 
 impl Format<JsFormatContext> for FormatTrimmedToken<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let trimmed_range = self.token.text_trimmed_range();
 
         write!(f, [syntax_token_text_slice(self.token, trimmed_range)])
@@ -49,7 +49,7 @@ pub struct FormatLeadingTrivia<'a> {
 }
 
 impl Format<JsFormatContext> for FormatLeadingTrivia<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let snapshot = Formatter::snapshot(f);
 
         match write_leading_trivia_pieces(
@@ -151,7 +151,7 @@ where
                 Ok(())
             });
 
-            write!(buffer, [comment(format_content)])?;
+            write!(buffer, [comment(&format_content)])?;
 
             line_count = 0;
             trim_mode = TriviaPrintMode::Full;
@@ -284,7 +284,7 @@ impl<I> Format<JsFormatContext> for FormatTrailingTriviaPieces<I>
 where
     I: Iterator<Item = SyntaxTriviaPiece<JsLanguage>> + Clone,
 {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let pieces = self.pieces.clone();
 
         for piece in pieces {
@@ -298,14 +298,14 @@ where
                         write![
                             f,
                             [
-                                line_suffix(format_args![space_token(), comment_piece]),
+                                line_suffix(&format_args![space_token(), comment_piece]),
                                 expand_parent()
                             ]
                         ]
                     }
                 });
 
-                write!(f, [comment(content)])?;
+                write!(f, [comment(&content)])?;
             }
         }
 
@@ -332,7 +332,7 @@ impl<'a, Node> Format<JsFormatContext> for FormatNodeOrVerbatim<'a, Node>
 where
     Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
 {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let snapshot = Formatter::snapshot(f);
 
         match write![f, [self.node.format()]] {
@@ -353,24 +353,21 @@ where
 ///
 /// This will print the trivia that belong to `token` to `content`;
 /// `token` is then marked as consumed by the formatter.
-pub const fn format_replaced<Content>(
-    token: &JsSyntaxToken,
-    content: Content,
-) -> FormatReplaced<Content> {
+pub const fn format_replaced<'a, 'content>(
+    token: &'a JsSyntaxToken,
+    content: &'content dyn Format<JsFormatContext>,
+) -> FormatReplaced<'a, 'content> {
     FormatReplaced { token, content }
 }
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct FormatReplaced<'a, Content> {
+#[derive(Copy, Clone)]
+pub struct FormatReplaced<'a, 'content> {
     token: &'a JsSyntaxToken,
-    content: Content,
+    content: &'content dyn Format<JsFormatContext>,
 }
 
-impl<Content> Format<JsFormatContext> for FormatReplaced<'_, Content>
-where
-    Content: Format<JsFormatContext>,
-{
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+impl Format<JsFormatContext> for FormatReplaced<'_, '_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
 
         write!(
@@ -409,7 +406,7 @@ pub struct FormatVerbatimNode<'node> {
     kind: VerbatimKind,
 }
 impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         for token in self.node.descendants_tokens() {
             f.state_mut().track_token(&token);
         }
@@ -499,7 +496,7 @@ pub struct FormatUnknownNode<'node> {
 }
 
 impl Format<JsFormatContext> for FormatUnknownNode<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         write!(
             f,
             [FormatVerbatimNode {
@@ -521,7 +518,7 @@ pub struct FormatSuppressedNode<'node> {
 }
 
 impl Format<JsFormatContext> for FormatSuppressedNode<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         // Insert a force a line break to ensure the suppression comment is on its own line
         // and correctly registers as a leading trivia on the opening token of this node
         write!(
@@ -542,11 +539,11 @@ impl Format<JsFormatContext> for FormatSuppressedNode<'_> {
 ///
 /// Calling this method is required to correctly handle the comments attached
 /// to the opening and closing tokens and insert them inside the group block
-pub const fn format_delimited<'a, Content>(
+pub const fn format_delimited<'a, 'content>(
     open_token: &'a JsSyntaxToken,
-    content: Content,
+    content: &'content dyn Format<JsFormatContext>,
     close_token: &'a JsSyntaxToken,
-) -> FormatDelimited<'a, Content> {
+) -> FormatDelimited<'a, 'content> {
     FormatDelimited {
         open_token,
         content,
@@ -555,15 +552,15 @@ pub const fn format_delimited<'a, Content>(
     }
 }
 
-#[derive(Copy, Clone, Eq, PartialEq, Debug)]
-pub struct FormatDelimited<'a, Content> {
+#[derive(Copy, Clone)]
+pub struct FormatDelimited<'a, 'content> {
     open_token: &'a JsSyntaxToken,
-    content: Content,
+    content: &'content dyn Format<JsFormatContext>,
     close_token: &'a JsSyntaxToken,
     mode: DelimitedMode,
 }
 
-impl<'a, Content> FormatDelimited<'a, Content> {
+impl FormatDelimited<'_, '_> {
     fn with_mode(mut self, mode: DelimitedMode) -> Self {
         self.mode = mode;
         self
@@ -593,11 +590,8 @@ impl<'a, Content> FormatDelimited<'a, Content> {
     }
 }
 
-impl<Content> Format<JsFormatContext> for FormatDelimited<'_, Content>
-where
-    Content: Format<JsFormatContext>,
-{
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let FormatDelimited {
             open_token,
             close_token,
@@ -645,7 +639,7 @@ where
                 DelimitedMode::BlockIndent => {
                     write!(
                         f,
-                        [block_indent(format_args![
+                        [block_indent(&format_args![
                             open_token_trailing_trivia,
                             content, close_token_leading_trivia
                         ])]
@@ -653,7 +647,7 @@ where
                 }
                 DelimitedMode::SoftBlockIndent(_) => write!(
                     f,
-                    [soft_block_indent(format_args![
+                    [soft_block_indent(&format_args![
                         open_token_trailing_trivia,
                         content, close_token_leading_trivia
                     ])]
@@ -674,7 +668,7 @@ where
                         write!(
                             f,
                             [
-                                indent(format_once(|f| {
+                                indent(&format_once(|f| {
                                     write!(f, [soft_line_break_or_space()])?;
                                     f.write_element(content)
                                 }),),
@@ -693,7 +687,7 @@ where
             DelimitedMode::BlockIndent => write!(f, [delimited])?,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
                 match group_id {
-                    None => write!(f, [group_elements(delimited)])?,
+                    None => write!(f, [group_elements(&delimited)])?,
                     Some(group_id) => write!(
                         f,
                         [group_elements(&delimited).with_group_id(Some(*group_id))]

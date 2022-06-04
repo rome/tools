@@ -181,7 +181,7 @@ where
 {
     type Context = JsFormatContext;
 
-    fn format(node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
         if has_formatter_suppressions(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
@@ -207,7 +207,7 @@ pub struct FormatJsSyntaxToken;
 impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
     type Context = JsFormatContext;
 
-    fn format(token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
         f.state_mut().track_token(token);
 
         write!(

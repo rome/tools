@@ -11,6 +11,6 @@ impl FormatNodeFields<JsUnknownImportAssertionEntry>
         node: &JsUnknownImportAssertionEntry,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).format(formatter)
+        format_unknown_node(node.syntax()).fmt(formatter)
     }
 }

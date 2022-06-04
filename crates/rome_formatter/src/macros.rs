@@ -158,9 +158,9 @@ macro_rules! format {
 ///             // Everything fits on a single line
 ///             format_args!(
 ///                 token("("),
-///                 group_elements(format_args![
+///                 group_elements(&format_args![
 ///                     token("["),
-///                         soft_block_indent(format_args![
+///                         soft_block_indent(&format_args![
 ///                         token("1,"),
 ///                         soft_line_break_or_space(),
 ///                         token("2,"),
@@ -176,7 +176,7 @@ macro_rules! format {
 ///             format_args!(
 ///                 token("("),
 ///                 token("["),
-///                 block_indent(token("1, 2, 3")),
+///                 block_indent(&token("1, 2, 3")),
 ///                 token("]"),
 ///                 token(")"),
 ///             ),
@@ -184,9 +184,9 @@ macro_rules! format {
 ///             // Breaks after `[` and prints each element on a single line
 ///             format_args!(
 ///                 token("("),
-///                 block_indent(format_args![
+///                 block_indent(&format_args![
 ///                     token("["),
-///                     block_indent(format_args![
+///                     block_indent(&format_args![
 ///                         token("1,"),
 ///                         hard_line_break(),
 ///                         token("2,"),
@@ -257,7 +257,7 @@ mod tests {
     struct TestFormat;
 
     impl Format<()> for TestFormat {
-        fn format(&self, f: &mut Formatter<()>) -> FormatResult<()> {
+        fn fmt(&self, f: &mut Formatter<()>) -> FormatResult<()> {
             write!(f, [token("test")])
         }
     }

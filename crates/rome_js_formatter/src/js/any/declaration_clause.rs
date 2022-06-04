@@ -5,19 +5,19 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyDeclarationClause;
 impl FormatRule<JsAnyDeclarationClause> for FormatJsAnyDeclarationClause {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyDeclarationClause::JsClassDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::JsFunctionDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::JsVariableDeclarationClause(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsEnumDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsTypeAliasDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsInterfaceDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsModuleDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsExternalModuleDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsGlobalDeclaration(node) => node.format().format(f),
-            JsAnyDeclarationClause::TsImportEqualsDeclaration(node) => node.format().format(f),
+            JsAnyDeclarationClause::JsClassDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::JsFunctionDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::JsVariableDeclarationClause(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsEnumDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsTypeAliasDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsInterfaceDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsModuleDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsExternalModuleDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsGlobalDeclaration(node) => node.format().fmt(f),
+            JsAnyDeclarationClause::TsImportEqualsDeclaration(node) => node.format().fmt(f),
         }
     }
 }

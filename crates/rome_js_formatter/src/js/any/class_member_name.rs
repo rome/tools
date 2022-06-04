@@ -5,11 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyClassMemberName;
 impl FormatRule<JsAnyClassMemberName> for FormatJsAnyClassMemberName {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyClassMemberName::JsLiteralMemberName(node) => node.format().format(f),
-            JsAnyClassMemberName::JsComputedMemberName(node) => node.format().format(f),
-            JsAnyClassMemberName::JsPrivateClassMemberName(node) => node.format().format(f),
+            JsAnyClassMemberName::JsLiteralMemberName(node) => node.format().fmt(f),
+            JsAnyClassMemberName::JsComputedMemberName(node) => node.format().fmt(f),
+            JsAnyClassMemberName::JsPrivateClassMemberName(node) => node.format().fmt(f),
         }
     }
 }

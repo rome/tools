@@ -40,7 +40,7 @@ impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
             // no line break needed after because it is added by the indent in the switch statement
             write!(
                 f,
-                [indent(format_args!(hard_line_break(), format_statements))]
+                [indent(&format_args!(hard_line_break(), format_statements))]
             )
         }
     }

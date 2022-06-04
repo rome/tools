@@ -26,7 +26,7 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
 
         let operator_token = operator_token?;
         let formatted_object =
-            FormatMemberStaticExpression::from_expression(object?, &operator_token).format(f)?;
+            FormatMemberStaticExpression::from_expression(object?, &operator_token).fmt(f)?;
 
         let content = format_once(|f| {
             write!(f, [formatted_object, operator_token.format()])?;
@@ -48,7 +48,7 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
 
                 write!(
                     f,
-                    [group_elements(format_args![
+                    [group_elements(&format_args![
                         FormatMemberStaticExpression::from_name(previous_member, &operator_token),
                         operator_token.format(),
                     ])]
@@ -61,7 +61,7 @@ impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMembe
             write!(f, [previous_member.format()])
         });
 
-        write!(f, [group_elements(content)])
+        write!(f, [group_elements(&content)])
     }
 }
 
@@ -126,7 +126,7 @@ impl Deref for FormatMemberStaticExpression<'_> {
 }
 
 impl Format<JsFormatContext> for FormatMemberStaticExpression<'_> {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let is_member_number_literal = self.is_number_literal_expression();
 
         let object_has_trailing_trivia = self

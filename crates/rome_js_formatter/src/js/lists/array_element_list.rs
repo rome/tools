@@ -12,7 +12,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsArrayElementList, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsArrayElementList, formatter: &mut JsFormatter) -> FormatResult<()> {
         Self::format_with_group_id(node, formatter, None)
     }
 }

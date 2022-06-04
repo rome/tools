@@ -9,7 +9,7 @@ use rome_js_syntax::{
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
     type Context = JsFormatContext;
 
-    fn format(node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(async_token) = node.async_token() {
             write!(f, [async_token.format(), space_token()])?;
         }
@@ -35,9 +35,12 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         match node.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
-                [group_elements(format_args![
+                [group_elements(&format_args![
                     token("("),
-                    soft_block_indent(format_args![binding.format(), if_group_breaks(token(",")),]),
+                    soft_block_indent(&format_args![
+                        binding.format(),
+                        if_group_breaks(&token(",")),
+                    ]),
                     token(")"),
                 ])]
             )?,
@@ -97,7 +100,7 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         } else {
             write!(
                 f,
-                [group_elements(soft_line_indent_or_space(
+                [group_elements(&soft_line_indent_or_space(
                     &node.body().format()
                 ))]
             )?;

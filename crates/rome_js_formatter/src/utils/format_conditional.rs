@@ -81,7 +81,7 @@ impl Conditional {
         let _body = if left_or_right_is_conditional || parent_is_conditional {
             write!(
                 f,
-                [indent(format_args![
+                [indent(&format_args![
                     hard_line_break(),
                     format_consequent,
                     hard_line_break(),
@@ -91,7 +91,7 @@ impl Conditional {
         } else {
             write!(
                 f,
-                [group_elements(format_args![
+                [group_elements(&format_args![
                     space_token(),
                     format_consequent,
                     space_token(),

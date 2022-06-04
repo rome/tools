@@ -29,11 +29,11 @@ impl FormatNodeFields<JsComputedMemberExpression> for FormatNodeRule<JsComputedM
             f,
             [
                 object.format(),
-                group_elements(format_args![
+                group_elements(&format_args![
                     optional_chain_token.format(),
                     l_brack_token.format(),
                     soft_line_break(),
-                    soft_block_indent(member.format()),
+                    soft_block_indent(&member.format()),
                     r_brack_token.format()
                 ]),
             ]
@@ -60,11 +60,11 @@ impl FormatNodeFields<JsComputedMemberExpression> for FormatNodeRule<JsComputedM
 
             write!(
                 f,
-                [group_elements(format_args![
+                [group_elements(&format_args![
                     optional_chain_token.format(),
                     l_brack_token.format(),
                     soft_line_break(),
-                    soft_block_indent(member.format()),
+                    soft_block_indent(&member.format()),
                     r_brack_token.format(),
                 ])]
             )?;

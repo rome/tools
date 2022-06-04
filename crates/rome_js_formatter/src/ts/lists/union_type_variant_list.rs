@@ -7,7 +7,7 @@ use rome_rowan::{AstSeparatedElement, AstSeparatedList};
 impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
     type Context = JsFormatContext;
 
-    fn format(node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         f.join()
@@ -29,15 +29,15 @@ pub struct FormatTypeVariant {
 }
 
 impl Format<JsFormatContext> for FormatTypeVariant {
-    fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        write!(f, [group_elements(self.element.node().format())])?;
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        write!(f, [group_elements(&self.element.node().format())])?;
 
         let separator = self.element.trailing_separator()?;
 
         match separator {
             Some(token) => {
                 if self.last {
-                    write!(f, [format_replaced(token, empty_element())])?;
+                    write!(f, [format_replaced(token, &empty_element())])?;
                 } else {
                     write![
                         f,

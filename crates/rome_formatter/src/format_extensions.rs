@@ -23,7 +23,7 @@ pub trait FormatOptional<Context> {
     /// struct MyFormat;
     ///
     /// impl Format<SimpleFormatContext> for MyFormat {
-    ///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+    ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
     ///         write!(f, [token("MyToken")])
     ///     }
     /// }
@@ -62,7 +62,7 @@ impl<'a, With, Context> Format<Context> for FormatItemWith<'a, With, Context>
 where
     With: Fn(&dyn Format<Context>, &mut Formatter<Context>) -> FormatResult<()>,
 {
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         (self.with)(self.inner, f)
     }
 }
@@ -107,7 +107,7 @@ pub trait MemoizeFormat<Context> {
     /// }
     ///
     /// impl Format<SimpleFormatContext> for MyFormat {
-    ///     fn format(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+    ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
     ///         let value = self.value.get();
     ///         self.value.set(value + 1);
     ///
@@ -165,7 +165,7 @@ impl<F, Context> Format<Context> for Memoized<F, Context>
 where
     F: Format<Context>,
 {
-    fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         // Cached
         if let Some(memory) = self.memory.borrow().as_ref() {
             return match memory {

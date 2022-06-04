@@ -41,7 +41,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
                 f,
                 [
                     format_replaced(&l_paren_token?, &empty_element()),
-                    group_elements(expression.format()),
+                    group_elements(&expression.format()),
                     format_replaced(&r_paren_token?, &empty_element()),
                 ]
             ]?;

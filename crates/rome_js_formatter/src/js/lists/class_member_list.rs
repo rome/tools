@@ -5,7 +5,7 @@ use rome_js_syntax::JsClassMemberList;
 impl FormatRule<JsClassMemberList> for FormatJsClassMemberList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsClassMemberList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsClassMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let mut join = f.join_nodes_with_hardline();
 
         for member in node {

@@ -5,17 +5,17 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyExportClause;
 impl FormatRule<JsAnyExportClause> for FormatJsAnyExportClause {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyExportClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(node: &JsAnyExportClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyExportClause::JsExportDefaultDeclarationClause(node) => node.format().format(f),
-            JsAnyExportClause::JsExportDefaultExpressionClause(node) => node.format().format(f),
-            JsAnyExportClause::JsExportNamedClause(node) => node.format().format(f),
-            JsAnyExportClause::JsExportFromClause(node) => node.format().format(f),
-            JsAnyExportClause::JsExportNamedFromClause(node) => node.format().format(f),
-            JsAnyExportClause::JsAnyDeclarationClause(node) => node.format().format(f),
-            JsAnyExportClause::TsExportAsNamespaceClause(node) => node.format().format(f),
-            JsAnyExportClause::TsExportAssignmentClause(node) => node.format().format(f),
-            JsAnyExportClause::TsExportDeclareClause(node) => node.format().format(f),
+            JsAnyExportClause::JsExportDefaultDeclarationClause(node) => node.format().fmt(f),
+            JsAnyExportClause::JsExportDefaultExpressionClause(node) => node.format().fmt(f),
+            JsAnyExportClause::JsExportNamedClause(node) => node.format().fmt(f),
+            JsAnyExportClause::JsExportFromClause(node) => node.format().fmt(f),
+            JsAnyExportClause::JsExportNamedFromClause(node) => node.format().fmt(f),
+            JsAnyExportClause::JsAnyDeclarationClause(node) => node.format().fmt(f),
+            JsAnyExportClause::TsExportAsNamespaceClause(node) => node.format().fmt(f),
+            JsAnyExportClause::TsExportAssignmentClause(node) => node.format().fmt(f),
+            JsAnyExportClause::TsExportDeclareClause(node) => node.format().fmt(f),
         }
     }
 }

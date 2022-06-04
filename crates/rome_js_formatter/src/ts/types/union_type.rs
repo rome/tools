@@ -33,7 +33,7 @@ impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
         write![
             f,
             [
-                group_elements(indent(format_args![
+                group_elements(&indent(&format_args![
                     soft_line_break(),
                     format_once(|f| {
                         f.write_element(leading_comments)?;
