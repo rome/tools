@@ -22,7 +22,7 @@ impl Format<JsFormatContext> for FormatTrimmedToken<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let trimmed_range = self.token.text_trimmed_range();
 
-        write!(f, [syntax_token_text_slice(self.token, trimmed_range)])
+        syntax_token_text_slice(self.token, trimmed_range).fmt(f)
     }
 }
 
@@ -305,7 +305,7 @@ where
                     }
                 });
 
-                write!(f, [comment(&content)])?;
+                comment(&content).fmt(f)?;
             }
         }
 
@@ -335,7 +335,7 @@ where
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let snapshot = Formatter::snapshot(f);
 
-        match write![f, [self.node.format()]] {
+        match self.node.format().fmt(f) {
             Ok(result) => Ok(result),
 
             Err(_) => {
@@ -343,7 +343,7 @@ where
 
                 // Lists that yield errors are formatted as they were unknown nodes.
                 // Doing so, the formatter formats the nodes/tokens as is.
-                write!(f, [format_unknown_node(self.node.syntax())])
+                format_unknown_node(self.node.syntax()).fmt(f)
             }
         }
     }
@@ -419,14 +419,12 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
             f: &mut JsFormatter,
             piece: SyntaxTriviaPiece<L>,
         ) -> FormatResult<()> {
-            write!(
-                f,
-                [syntax_token_cow_slice(
-                    normalize_newlines(piece.text(), LINE_TERMINATORS),
-                    &piece.token(),
-                    piece.text_range().start(),
-                )]
+            syntax_token_cow_slice(
+                normalize_newlines(piece.text(), LINE_TERMINATORS),
+                &piece.token(),
+                piece.text_range().start(),
             )
+            .fmt(f)
         }
 
         let mut buffer = VecBuffer::new(f.state_mut());
@@ -444,16 +442,11 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     write_trivia_token(f, leading_trivia)?;
                 }
 
-                write!(
-                    f,
-                    [dynamic_token(
-                        &normalize_newlines(
-                            &self.node.text_trimmed().to_string(),
-                            LINE_TERMINATORS
-                        ),
-                        self.node.text_trimmed_range().start()
-                    )]
-                )?;
+                dynamic_token(
+                    &normalize_newlines(&self.node.text_trimmed().to_string(), LINE_TERMINATORS),
+                    self.node.text_trimmed_range().start(),
+                )
+                .fmt(f)?;
 
                 // Clippy false positive: SkipWhile does not implement DoubleEndedIterator
                 #[allow(clippy::needless_collect)]
@@ -497,13 +490,11 @@ pub struct FormatUnknownNode<'node> {
 
 impl Format<JsFormatContext> for FormatUnknownNode<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        write!(
-            f,
-            [FormatVerbatimNode {
-                node: self.node,
-                kind: VerbatimKind::Unknown
-            }]
-        )
+        FormatVerbatimNode {
+            node: self.node,
+            kind: VerbatimKind::Unknown,
+        }
+        .fmt(f)
     }
 }
 
@@ -602,10 +593,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
         f.state_mut().track_token(open_token);
         f.state_mut().track_token(close_token);
 
-        write!(
-            f,
-            [format_leading_trivia(open_token, TriviaPrintMode::Full)]
-        )?;
+        format_leading_trivia(open_token, TriviaPrintMode::Full).fmt(f)?;
 
         let open_token_trailing_trivia = format_with(|f| {
             // Not really interested in the pre-amble, but want to know if it was written
@@ -617,7 +605,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
 
             if !trivia.is_empty() {
                 f.write_element(trivia)?;
-                write!(f, [soft_line_break_or_space()])?;
+                soft_line_break_or_space().fmt(f)?;
             }
 
             Ok(())
@@ -633,25 +621,19 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
         });
 
         let delimited = format_with(|f| {
-            write!(f, [format_trimmed_token(open_token)])?;
+            format_trimmed_token(open_token).fmt(f)?;
 
             match mode {
-                DelimitedMode::BlockIndent => {
-                    write!(
-                        f,
-                        [block_indent(&format_args![
-                            open_token_trailing_trivia,
-                            content, close_token_leading_trivia
-                        ])]
-                    )?;
-                }
-                DelimitedMode::SoftBlockIndent(_) => write!(
-                    f,
-                    [soft_block_indent(&format_args![
-                        open_token_trailing_trivia,
-                        content, close_token_leading_trivia
-                    ])]
-                )?,
+                DelimitedMode::BlockIndent => block_indent(&format_args![
+                    open_token_trailing_trivia,
+                    content, close_token_leading_trivia
+                ])
+                .fmt(f)?,
+                DelimitedMode::SoftBlockIndent(_) => soft_block_indent(&format_args![
+                    open_token_trailing_trivia,
+                    content, close_token_leading_trivia
+                ])
+                .fmt(f)?,
                 DelimitedMode::SoftBlockSpaces(_) => {
                     let mut buffer = VecBuffer::new(f.state_mut());
                     write!(
@@ -679,7 +661,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                 }
             };
 
-            write!(f, [format_trimmed_token(close_token)])
+            format_trimmed_token(close_token).fmt(f)
         });
 
         let _grouped = match mode {

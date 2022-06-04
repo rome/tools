@@ -1,10 +1,8 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::utils::has_leading_newline;
 use crate::FormatNodeFields;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
-use rome_rowan::AstNode;
 
 impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
     fn fmt_fields(node: &TsEnumDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
@@ -27,25 +25,10 @@ impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
                 enum_token.format(),
                 space_token(),
                 id.format(),
-                space_token()
+                space_token(),
+                format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
+                    .soft_block_spaces()
             ]
-        )?;
-
-        let has_newline = has_leading_newline(members.syntax());
-
-        let members = format_with(|f| {
-            f.join_with(&if has_newline {
-                hard_line_break()
-            } else {
-                soft_line_break_or_space()
-            })
-            .entries(members.format_separated(token(",")))
-            .finish()
-        });
-
-        write!(
-            f,
-            [format_delimited(&l_curly_token?, &members, &r_curly_token?,).soft_block_spaces()]
         )
     }
 }

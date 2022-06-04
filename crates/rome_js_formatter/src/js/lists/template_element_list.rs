@@ -9,7 +9,7 @@ impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
         let mut join = f.join();
 
         for element in node {
-            join.entry(&group_elements(&element.format()));
+            join.entry(&element.format());
         }
 
         join.finish()

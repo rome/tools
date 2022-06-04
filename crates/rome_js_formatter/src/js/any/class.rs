@@ -4,7 +4,6 @@ use rome_formatter::write;
 use crate::builders::format_delimited;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyClass;
-use rome_rowan::AstNode;
 
 impl FormatRule<JsAnyClass> for FormatJsAnyClass {
     type Context = JsFormatContext;
@@ -35,22 +34,16 @@ impl FormatRule<JsAnyClass> for FormatJsAnyClass {
             write!(f, [space_token(), implements_clause.format()])?;
         }
 
-        let members = format_with(|f| {
-            let mut join = f.join_nodes_with_hardline();
-
-            for member in node.members() {
-                join.entry(member.syntax(), &member.format());
-            }
-
-            join.finish()
-        });
-
         write![
             f,
             [
                 space_token(),
-                format_delimited(&node.l_curly_token()?, &members, &node.r_curly_token()?)
-                    .block_indent()
+                format_delimited(
+                    &node.l_curly_token()?,
+                    &node.members().format(),
+                    &node.r_curly_token()?
+                )
+                .block_indent()
             ]
         ]
     }

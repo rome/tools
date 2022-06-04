@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
-use rome_rowan::{AstNode, AstNodeList};
+use rome_rowan::AstNodeList;
 
 impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
     fn fmt_fields(node: &JsSwitchStatement, f: &mut JsFormatter) -> FormatResult<()> {
@@ -18,15 +18,9 @@ impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
 
         let format_cases = format_with(|f| {
             if cases.is_empty() {
-                write!(f, [hard_line_break()])?;
+                hard_line_break().fmt(f)?;
             } else {
-                let mut join = f.join_nodes_with_hardline();
-
-                for case in &cases {
-                    join.entry(case.syntax(), &case.format());
-                }
-
-                join.finish()?;
+                cases.format().fmt(f)?;
             }
 
             Ok(())

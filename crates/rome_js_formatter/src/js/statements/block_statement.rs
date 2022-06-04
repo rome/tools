@@ -33,19 +33,10 @@ impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
                 ]
             )
         } else {
-            let format_statements = format_with(|f| {
-                let mut join = f.join_nodes_with_hardline();
-
-                for stmt in &statements {
-                    join.entry(stmt.syntax(), &format_or_verbatim(&stmt))
-                }
-
-                join.finish()
-            });
             write!(
                 f,
                 [
-                    format_delimited(&l_curly_token?, &format_statements, &r_curly_token?)
+                    format_delimited(&l_curly_token?, &statements.format(), &r_curly_token?)
                         .block_indent()
                 ]
             )

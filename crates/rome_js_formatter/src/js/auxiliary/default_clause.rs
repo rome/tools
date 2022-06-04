@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::{format_or_verbatim, FormatNodeFields};
+use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
@@ -23,24 +23,18 @@ impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
             [default_token.format(), colon_token.format(), space_token()]
         )?;
 
-        let format_statements = format_with(|f| {
-            let mut join = f.join_nodes_with_hardline();
-
-            for stmt in &consequent {
-                join.entry(stmt.syntax(), &format_or_verbatim(&stmt));
-            }
-            join.finish()
-        });
-
         if consequent.is_empty() {
             write!(f, [hard_line_break()])
         } else if first_child_is_block_stmt {
-            write!(f, [space_token(), format_statements])
+            write!(f, [space_token(), consequent.format()])
         } else {
             // no line break needed after because it is added by the indent in the switch statement
             write!(
                 f,
-                [indent(&format_args!(hard_line_break(), format_statements))]
+                [indent(&format_args!(
+                    hard_line_break(),
+                    consequent.format()
+                ))]
             )
         }
     }

@@ -1,4 +1,4 @@
-use super::{format_args, write, Arguments, FormatElement};
+use super::{write, Arguments, FormatElement};
 use crate::format_element::List;
 use std::any::{Any, TypeId};
 
@@ -344,12 +344,16 @@ where
     type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        if self.empty {
-            write(self.inner, format_args!(self.preamble))?;
-            self.empty = false;
-        }
+        if element.is_empty() {
+            Ok(())
+        } else {
+            if self.empty {
+                write!(self.inner, [&self.preamble])?;
+                self.empty = false;
+            }
 
-        self.inner.write_element(element)
+            self.inner.write_element(element)
+        }
     }
 
     fn state(&self) -> &FormatState<Self::Context> {

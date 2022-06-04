@@ -22,11 +22,9 @@ impl FormatNodeFields<JsTemplate> for FormatNodeRule<JsTemplate> {
                 type_arguments.format(),
                 line_suffix_boundary(),
                 l_tick_token.format(),
+                elements.format(),
+                r_tick_token.format()
             ]
-        ]?;
-
-        f.join().entries(elements.iter().formatted()).finish()?;
-
-        write!(f, [r_tick_token.format()])
+        ]
     }
 }

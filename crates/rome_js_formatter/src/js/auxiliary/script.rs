@@ -23,17 +23,10 @@ impl FormatNodeFields<JsScript> for FormatNodeRule<JsScript> {
             ]
         ]?;
 
-        let mut join = f.join_nodes_with_hardline();
-
-        for stmt in statements {
-            join.entry(stmt.syntax(), &format_or_verbatim(&stmt));
-        }
-
-        join.finish()?;
-
         write![
             f,
             [
+                statements.format(),
                 format_replaced(&eof_token?, &empty_element()),
                 hard_line_break()
             ]

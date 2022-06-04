@@ -9,6 +9,8 @@ use crate::{write, Buffer, VecBuffer};
 /// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::with_or]
 /// function.
 pub trait FormatOptional<Context> {
+    type Target: Format<Context>;
+
     /// This function tries to format an optional object. If the object is [None]
     /// an [empty token](crate::FormatElement::Empty) is created. If exists, the utility
     /// formats the object and passes it to the closure.
@@ -47,39 +49,36 @@ pub trait FormatOptional<Context> {
     ///         ]
     ///     )
     /// );
-    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, Context>>
+    fn with_or_empty<With>(self, with: With) -> Option<FormatItemWith<With, Self::Target>>
     where
-        With: Fn(&dyn Format<Context>, &mut Formatter<Context>) -> FormatResult<()>;
+        With: Fn(&Self::Target, &mut Formatter<Context>) -> FormatResult<()>;
 }
 
-#[derive(Copy, Clone)]
-pub struct FormatItemWith<'a, With, Context> {
+#[derive(Copy, Clone, Debug)]
+pub struct FormatItemWith<With, Format> {
     with: With,
-    inner: &'a dyn Format<Context>,
+    inner: Format,
 }
 
-impl<'a, With, Context> Format<Context> for FormatItemWith<'a, With, Context>
+impl<With, F, Context> Format<Context> for FormatItemWith<With, F>
 where
-    With: Fn(&dyn Format<Context>, &mut Formatter<Context>) -> FormatResult<()>,
+    F: Format<Context>,
+    With: Fn(&F, &mut Formatter<Context>) -> FormatResult<()>,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        (self.with)(self.inner, f)
-    }
-}
-
-impl<With, Context> std::fmt::Debug for FormatItemWith<'_, With, Context> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_tuple("FormatItemWith").field(&"[closure]").finish()
+        (self.with)(&self.inner, f)
     }
 }
 
 impl<F: Format<Context>, Context> FormatOptional<Context> for Option<F> {
-    fn with_or_empty<With>(&self, with: With) -> Option<FormatItemWith<With, Context>>
+    type Target = F;
+
+    #[inline]
+    fn with_or_empty<With>(self, with: With) -> Option<FormatItemWith<With, F>>
     where
-        With: Fn(&dyn Format<Context>, &mut Formatter<Context>) -> FormatResult<()>,
+        With: Fn(&F, &mut Formatter<Context>) -> FormatResult<()>,
     {
-        self.as_ref()
-            .map(|value| FormatItemWith { inner: value, with })
+        self.map(|value| FormatItemWith { inner: value, with })
     }
 }
 

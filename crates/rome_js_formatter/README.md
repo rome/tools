@@ -39,7 +39,7 @@ impl Format for Buzz {
 1. if a token is mandatory and the AST has that information, please use that token instead, for example:
 
 	```rust
-	fn format_fields(node: Node, f: &mut JsFormatter) -> FormatResult<()> {
+	fn fmt_fields(node: Node, f: &mut JsFormatter) -> FormatResult<()> {
     write!(f, [node.l_paren_token().format()])?; // yes
     write!(f, [token("(")])?; // no
 	}

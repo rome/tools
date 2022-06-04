@@ -19,8 +19,8 @@ use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
 use crate::builders::{
-    format_leading_trivia, format_or_verbatim, format_suppressed_node, format_trailing_trivia,
-    format_trimmed_token, TriviaPrintMode,
+    format_leading_trivia, format_suppressed_node, format_trailing_trivia, format_trimmed_token,
+    TriviaPrintMode,
 };
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
