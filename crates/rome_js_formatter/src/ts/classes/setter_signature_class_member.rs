@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsSetterSignatureClassMember, TsSetterSignatureClassMemberFields};
 
 impl FormatNodeFields<TsSetterSignatureClassMember>
@@ -18,10 +18,10 @@ impl FormatNodeFields<TsSetterSignatureClassMember>
             semicolon_token,
         } = node.as_fields();
 
-        let setter = format_with(|f| {
-            write!(
-                f,
-                [
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
                     modifiers.format(),
                     space_token(),
                     set_token.format(),
@@ -30,13 +30,9 @@ impl FormatNodeFields<TsSetterSignatureClassMember>
                     l_paren_token.format(),
                     parameter.format(),
                     r_paren_token.format(),
-                ]
-            )
-        });
-
-        write!(
-            f,
-            [FormatWithSemicolon::new(&setter, semicolon_token.as_ref())]
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }
