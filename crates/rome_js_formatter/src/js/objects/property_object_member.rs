@@ -50,7 +50,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                     ]
                 ]
             }
-            PropertyObjectMemberLayout::BreakAfterOperator => {
+            PropertyObjectMemberLayout::BreakAfterColon => {
                 formatted![
                     formatter,
                     [
@@ -67,7 +67,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                     ]
                 ]
             }
-            PropertyObjectMemberLayout::NeverBreakAfterOperator => formatted![
+            PropertyObjectMemberLayout::NeverBreakAfterColon => formatted![
                 formatter,
                 [
                     group_elements(format_name),
@@ -84,16 +84,54 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
 
 /// Determines how a property object member should be formatted
 enum PropertyObjectMemberLayout {
-    /// First break right-hand side, then after operator
+    /// First break right-hand side, then after operator.
+    /// ```no_rust
+    /// {
+    ///   "array-key": [
+    ///     {
+    ///       "nested-key-1": 1,
+    ///       "nested-key-2": 2,
+    ///     },
+    ///   ],
+    ///   "function-call-key":
+    ///     functionCall(
+    ///         1,
+    ///         2,
+    ///         3,
+    ///     ),
+    /// }
+    /// ```
     Fluid,
-    /// First break after operator, then the sides are broken independently on their own lines
-    BreakAfterOperator,
-    /// First break right-hand side, then left-hand side
-    NeverBreakAfterOperator,
+    /// First break after operator, then the sides are broken independently on their own lines.
+    /// There is a soft line break after colon token.
+    /// ```no_rust
+    /// {
+    ///     "enough-long-key-to-break-line":
+    ///         1 + 2,
+    ///     "not-long-enough-key":
+    ///         "but long enough string to break line",
+    /// }
+    /// ```
+    BreakAfterColon,
+    /// First break right-hand side, then left-hand side. There are not any soft line breaks
+    /// between property name and property value
+    /// ```no_rust
+    /// {
+    ///     key1: "123",
+    ///     key2: 123,
+    ///     key3: class MyClass {
+    /// 	    constructor() {
+    /// 		    console.log("class object constructor");
+    /// 		}
+    /// 	},
+    /// }
+    /// ```
+    NeverBreakAfterColon,
 }
 
 const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
+/// Returns the layout variant for an object member depending on value expression and name length
 fn property_object_member_layout(
     formatter: &JsFormatter,
     name_len: TextSize,
@@ -102,29 +140,29 @@ fn property_object_member_layout(
     let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as u32;
     let is_name_short = name_len < TextSize::from(text_width_for_break);
 
-    if is_break_after_operator(value)? {
-        return Ok(PropertyObjectMemberLayout::BreakAfterOperator);
+    if is_break_after_colon(value)? {
+        return Ok(PropertyObjectMemberLayout::BreakAfterColon);
     }
 
     if is_name_short {
-        return Ok(PropertyObjectMemberLayout::NeverBreakAfterOperator);
+        return Ok(PropertyObjectMemberLayout::NeverBreakAfterColon);
     } else if matches!(
         value,
         JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(
             _
         ))
     ) {
-        return Ok(PropertyObjectMemberLayout::BreakAfterOperator);
+        return Ok(PropertyObjectMemberLayout::BreakAfterColon);
     }
 
-    if is_never_break_after_operator(value)? {
-        return Ok(PropertyObjectMemberLayout::NeverBreakAfterOperator);
+    if is_never_break_after_colon(value)? {
+        return Ok(PropertyObjectMemberLayout::NeverBreakAfterColon);
     }
 
     Ok(PropertyObjectMemberLayout::Fluid)
 }
 
-fn is_break_after_operator(value: &JsAnyExpression) -> SyntaxResult<bool> {
+fn is_break_after_colon(value: &JsAnyExpression) -> SyntaxResult<bool> {
     if JsAnyBinaryLikeExpression::can_cast(value.syntax().kind()) {
         return Ok(true);
     }
@@ -142,7 +180,7 @@ fn is_break_after_operator(value: &JsAnyExpression) -> SyntaxResult<bool> {
     Ok(false)
 }
 
-fn is_never_break_after_operator(value: &JsAnyExpression) -> SyntaxResult<bool> {
+fn is_never_break_after_colon(value: &JsAnyExpression) -> SyntaxResult<bool> {
     if let JsAnyExpression::JsCallExpression(call_expression) = &value {
         if call_expression.callee()?.syntax().text() == "require" {
             return Ok(true);

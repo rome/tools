@@ -1,4 +1,4 @@
-const neverBreakAfterOperatorObject = {
+const neverBreakAfterColonObject = {
     'this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-1': require(),
     x: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     url: "http://example.com/12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
@@ -17,7 +17,7 @@ const neverBreakAfterOperatorObject = {
     `,
 };
 
-const breakAfterOperator = {
+const breakAfterColonObject = {
     'long-key-for-string': "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     'logical-expression-1': this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
     "logical-expression-2": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
