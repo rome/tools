@@ -50,17 +50,17 @@ const a1 = {
 };
 
 const a2 = {
-  someKey:
-    (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName),
+  someKey: (
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName
+  ),
 };
 
 const a3 = {
-  someKey:
-    (
-      longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
-      longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
-      longLongLongLongLongLongLongLongLongLongLongLongLongLongName
-    ),
+  someKey: (
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName
+  ),
 };
 
 ```
