@@ -48,6 +48,7 @@ const breakAfterColonObject = {
 };
 
 const fluidObject = {
+	'this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line': orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
 		"11/01/2017 13:36": [
 			{
 				message: "test",

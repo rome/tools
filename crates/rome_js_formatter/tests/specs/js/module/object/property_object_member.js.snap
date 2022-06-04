@@ -53,6 +53,7 @@ const breakAfterColonObject = {
 };
 
 const fluidObject = {
+	'this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line': orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
 		"11/01/2017 13:36": [
 			{
 				message: "test",
@@ -186,6 +187,7 @@ const breakAfterColonObject = {
 };
 
 const fluidObject = {
+	'this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line': orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
 		"11/01/2017 13:36": [
 			{
 				message: "test",
@@ -248,4 +250,5 @@ const fluidObject = {
    64: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
    77: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
    79: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   89: 	'this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line': orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
 
