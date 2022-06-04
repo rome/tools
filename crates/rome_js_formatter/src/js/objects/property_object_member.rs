@@ -21,9 +21,10 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             value,
         } = node.as_fields();
 
-        let format_name = FormatMemberName::from(name?);
-        let layout = property_object_member_layout(formatter, &format_name, &value.clone()?)?;
-        let name = formatted![formatter, [format_name]]?;
+        let (format_name, length) =
+            FormatMemberName::from(name.clone()?).format_member_name(formatter)?;
+        let name_length = length.unwrap_or(name?.range().len());
+        let layout = property_object_member_layout(formatter, name_length, &value.clone()?)?;
 
         let formatted = match layout {
             PropertyObjectMemberLayout::Fluid => {
@@ -33,7 +34,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                 formatted![
                     formatter,
                     [
-                        group_elements(name),
+                        group_elements(format_name),
                         colon_token.format(),
                         group_elements_with_options(
                             indent(soft_line_break_or_space()),
@@ -51,7 +52,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                 formatted![
                     formatter,
                     [
-                        group_elements(name),
+                        group_elements(format_name),
                         colon_token.format(),
                         space_token(),
                         group_elements(formatted![
@@ -67,7 +68,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             PropertyObjectMemberLayout::NeverBreakAfterOperator => formatted![
                 formatter,
                 [
-                    group_elements(name),
+                    group_elements(format_name),
                     colon_token.format(),
                     space_token(),
                     value.format(),
@@ -93,11 +94,11 @@ const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 fn property_object_member_layout(
     formatter: &JsFormatter,
-    name: &FormatMemberName,
+    name_len: TextSize,
     value: &JsAnyExpression,
 ) -> FormatResult<PropertyObjectMemberLayout> {
     let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as u32;
-    let is_name_short = name.len(formatter)? < TextSize::from(text_width_for_break);
+    let is_name_short = name_len < TextSize::from(text_width_for_break);
 
     if is_break_after_operator(value)? {
         return Ok(PropertyObjectMemberLayout::BreakAfterOperator);

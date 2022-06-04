@@ -72,18 +72,30 @@ impl<'token> FormatLiteralStringToken<'token> {
         self.token
     }
 
-    pub fn normalise_len(&self, formatter: &JsFormatter) -> TextSize {
+    /// Returns the format element for the string literal
+    /// and the new text size if the string literal has been normalized
+    pub fn format_token(
+        &self,
+        formatter: &JsFormatter,
+    ) -> FormatResult<(FormatElement, Option<TextSize>)> {
         let token = self.token();
         // tokens that are don't hold any strings don't need to be processed any further
         if token.kind() != JS_STRING_LITERAL {
-            return self.token.text_trimmed_range().len();
+            return formatted![formatter, [self.token.format()]].map(|element| (element, None));
         }
         let chosen_quote_style = formatter.context().quote_style();
         let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
 
         let content = string_cleaner.normalise_text(formatter.context().source_type.into());
+        let normalized_text_size = TextSize::from(content.len() as u32);
 
-        TextSize::from(content.len() as u32)
+        let element = formatter.format_replaced(
+            token,
+            Token::from_syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
+                .into(),
+        );
+
+        Ok((element, Some(normalized_text_size)))
     }
 }
 
@@ -91,21 +103,7 @@ impl Format for FormatLiteralStringToken<'_> {
     type Context = JsFormatContext;
 
     fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let token = self.token();
-        // tokens that are don't hold any strings don't need to be processed any further
-        if token.kind() != JS_STRING_LITERAL {
-            return formatted![formatter, [self.token.format()]];
-        }
-        let chosen_quote_style = formatter.context().quote_style();
-        let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
-
-        let content = string_cleaner.normalise_text(formatter.context().source_type.into());
-
-        Ok(formatter.format_replaced(
-            token,
-            Token::from_syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
-                .into(),
-        ))
+        self.format_token(formatter).map(|result| result.0)
     }
 }
 

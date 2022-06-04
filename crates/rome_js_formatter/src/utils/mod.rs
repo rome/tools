@@ -434,19 +434,22 @@ impl From<JsAnyObjectMemberName> for FormatMemberName {
 }
 
 impl FormatMemberName {
-    pub fn len(&self, formatter: &JsFormatter) -> FormatResult<TextSize> {
-        let len = match self {
-            FormatMemberName::ComputedMemberName(node) => node.syntax().text_trimmed_range().len(),
+    pub fn format_member_name(
+        &self,
+        formatter: &JsFormatter,
+    ) -> FormatResult<(FormatElement, Option<TextSize>)> {
+        match self {
+            FormatMemberName::ComputedMemberName(node) => {
+                formatted![formatter, [node.format()]].map(|element| (element, None))
+            }
             FormatMemberName::PrivateClassMemberName(node) => {
-                node.syntax().text_trimmed_range().len()
+                formatted![formatter, [node.format()]].map(|element| (element, None))
             }
             FormatMemberName::LiteralMemberName(literal) => {
                 FormatLiteralStringToken::new(&literal.value()?, StringLiteralParentKind::Member)
-                    .normalise_len(formatter)
+                    .format_token(formatter)
             }
-        };
-
-        Ok(len)
+        }
     }
 }
 
@@ -460,19 +463,6 @@ impl Format for FormatMemberName {
     type Context = JsFormatContext;
 
     fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let name = match self {
-            FormatMemberName::ComputedMemberName(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            FormatMemberName::PrivateClassMemberName(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            FormatMemberName::LiteralMemberName(literal) => {
-                FormatLiteralStringToken::new(&literal.value()?, StringLiteralParentKind::Member)
-                    .format(formatter)
-            }
-        };
-
-        name
+        self.format_member_name(formatter).map(|result| result.0)
     }
 }
