@@ -85,7 +85,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
 /// Determines how a property object member should be formatted
 enum PropertyObjectMemberLayout {
     /// First break right-hand side, then after operator.
-    /// ```no_rust
+    /// ```js
     /// {
     ///   "array-key": [
     ///     {
@@ -104,7 +104,7 @@ enum PropertyObjectMemberLayout {
     Fluid,
     /// First break after operator, then the sides are broken independently on their own lines.
     /// There is a soft line break after colon token.
-    /// ```no_rust
+    /// ```js
     /// {
     ///     "enough-long-key-to-break-line":
     ///         1 + 2,
@@ -115,15 +115,13 @@ enum PropertyObjectMemberLayout {
     BreakAfterColon,
     /// First break right-hand side, then left-hand side. There are not any soft line breaks
     /// between property name and property value
-    /// ```no_rust
+    /// ```js
     /// {
     ///     key1: "123",
     ///     key2: 123,
     ///     key3: class MyClass {
-    /// 	    constructor() {
-    /// 		    console.log("class object constructor");
-    /// 		}
-    /// 	},
+    ///        constructor() {},
+    ///     },
     /// }
     /// ```
     NeverBreakAfterColon,
