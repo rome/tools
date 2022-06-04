@@ -1,0 +1,57 @@
+---
+source: crates/rome_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: noUnusedTemplateLiteral.js
+---
+# Input
+```js
+// valid
+const foo2 = `bar
+has newline`;
+const foo3 = `\"bar\"`
+const foo4 = `'bar'`
+
+//invalid
+const foo = `bar`;
+const foo1 = `bar `;
+```
+
+# Diagnostics
+```
+error[noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+  ┌─ noUnusedTemplateLiteral.js:8:13
+  │
+8 │ const foo = `bar`;
+  │             ^^^^^ Do not use template literals if interpolation and special-character handling are not needed.
+
+Replace with strict equality
+    | @@ -5,5 +5,5 @@
+4 4 |   const foo4 = `'bar'`
+5 5 |   
+6 6 |   //invalid
+7   | - const foo = `bar`;
+  7 | + const foo = "bar";
+8 8 |   const foo1 = `bar `;
+
+
+```
+
+```
+error[noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+  ┌─ noUnusedTemplateLiteral.js:9:14
+  │
+9 │ const foo1 = `bar `;
+  │              ^^^^^^ Do not use template literals if interpolation and special-character handling are not needed.
+
+Replace with strict equality
+    | @@ -6,4 +6,4 @@
+5 5 |   
+6 6 |   //invalid
+7 7 |   const foo = `bar`;
+8   | - const foo1 = `bar `;
+  8 | + const foo1 = "bar ";
+
+
+```
+
+
