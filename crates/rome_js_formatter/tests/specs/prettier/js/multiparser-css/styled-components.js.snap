@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: styled-components.js
 ---
 # Input
@@ -469,9 +470,7 @@ const bar = styled.div`
   width: 40px;
 
   ${
-  (
-    props,
-  ) =>
+  (props) =>
     (props.complete || props.inProgress) && css`
       border-color: rgba(var(--green-rgb), 0.15);
     `
@@ -485,9 +484,7 @@ const bar = styled.div`
     display: inline-flex;
 
     ${
-  (
-    props,
-  ) =>
+  (props) =>
     props.complete && css`
         background-color: var(--green);
         border-width: 7px;
@@ -495,9 +492,7 @@ const bar = styled.div`
 }
 
     ${
-  (
-    props,
-  ) =>
+  (props) =>
     (props.complete || props.inProgress) && css`
         border-color: var(--green);
       `
@@ -509,9 +504,7 @@ const A = styled.a`
   display: inline-block;
   color: #fff;
   ${
-  (
-    props,
-  ) =>
+  (props) =>
     props.a && css`
     display: none;
   `

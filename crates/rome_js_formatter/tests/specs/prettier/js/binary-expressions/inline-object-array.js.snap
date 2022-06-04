@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: inline-object-array.js
 ---
 # Input
@@ -159,9 +160,7 @@ this.steps =
   );
 
 this.steps =
-  (
-    steps && checkStep
-  ) || [
+  (steps && checkStep) || [
     {
       name: "mock-module",
       path: "/nux/mock-module",
