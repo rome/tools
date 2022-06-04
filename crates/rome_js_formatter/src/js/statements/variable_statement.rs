@@ -7,7 +7,7 @@ use rome_js_syntax::JsVariableStatement;
 use rome_js_syntax::JsVariableStatementFields;
 
 impl FormatNodeFields<JsVariableStatement> for FormatNodeRule<JsVariableStatement> {
-    fn format_fields(node: &JsVariableStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsVariableStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableStatementFields {
             declaration,
             semicolon_token,

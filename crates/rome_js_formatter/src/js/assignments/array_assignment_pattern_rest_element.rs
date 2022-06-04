@@ -8,7 +8,7 @@ use rome_js_syntax::JsArrayAssignmentPatternRestElementFields;
 impl FormatNodeFields<JsArrayAssignmentPatternRestElement>
     for FormatNodeRule<JsArrayAssignmentPatternRestElement>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsArrayAssignmentPatternRestElement,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

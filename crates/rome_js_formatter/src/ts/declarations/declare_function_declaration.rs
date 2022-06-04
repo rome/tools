@@ -8,7 +8,7 @@ use rome_js_syntax::TsDeclareFunctionDeclarationFields;
 impl FormatNodeFields<TsDeclareFunctionDeclaration>
     for FormatNodeRule<TsDeclareFunctionDeclaration>
 {
-    fn format_fields(node: &TsDeclareFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsDeclareFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsDeclareFunctionDeclarationFields {
             async_token,
             function_token,

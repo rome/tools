@@ -5,7 +5,7 @@ use rome_js_syntax::TsExternalModuleReference;
 use rome_js_syntax::TsExternalModuleReferenceFields;
 
 impl FormatNodeFields<TsExternalModuleReference> for FormatNodeRule<TsExternalModuleReference> {
-    fn format_fields(node: &TsExternalModuleReference, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsExternalModuleReference, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExternalModuleReferenceFields {
             require_token,
             l_paren_token,

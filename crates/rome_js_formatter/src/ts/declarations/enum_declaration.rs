@@ -7,7 +7,7 @@ use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
-    fn format_fields(node: &TsEnumDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsEnumDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsEnumDeclarationFields {
             const_token,
             enum_token,

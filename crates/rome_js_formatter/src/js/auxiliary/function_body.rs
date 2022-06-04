@@ -5,7 +5,7 @@ use rome_js_syntax::JsFunctionBody;
 use rome_js_syntax::JsFunctionBodyFields;
 
 impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
-    fn format_fields(node: &JsFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {
         let JsFunctionBodyFields {
             l_curly_token,
             directives,

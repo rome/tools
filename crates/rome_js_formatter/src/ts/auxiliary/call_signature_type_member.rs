@@ -5,7 +5,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsCallSignatureTypeMember, TsCallSignatureTypeMemberFields};
 
 impl FormatNodeFields<TsCallSignatureTypeMember> for FormatNodeRule<TsCallSignatureTypeMember> {
-    fn format_fields(node: &TsCallSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsCallSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsCallSignatureTypeMemberFields {
             type_parameters,
             parameters,

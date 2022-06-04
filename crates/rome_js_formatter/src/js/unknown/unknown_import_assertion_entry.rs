@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 impl FormatNodeFields<JsUnknownImportAssertionEntry>
     for FormatNodeRule<JsUnknownImportAssertionEntry>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsUnknownImportAssertionEntry,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {

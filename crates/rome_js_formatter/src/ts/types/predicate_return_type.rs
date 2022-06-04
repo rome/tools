@@ -5,7 +5,7 @@ use rome_js_syntax::TsPredicateReturnType;
 use rome_js_syntax::TsPredicateReturnTypeFields;
 
 impl FormatNodeFields<TsPredicateReturnType> for FormatNodeRule<TsPredicateReturnType> {
-    fn format_fields(node: &TsPredicateReturnType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsPredicateReturnType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsPredicateReturnTypeFields {
             parameter_name,
             is_token,

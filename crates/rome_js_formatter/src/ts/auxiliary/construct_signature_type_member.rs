@@ -8,10 +8,7 @@ use rome_js_syntax::{TsConstructSignatureTypeMember, TsConstructSignatureTypeMem
 impl FormatNodeFields<TsConstructSignatureTypeMember>
     for FormatNodeRule<TsConstructSignatureTypeMember>
 {
-    fn format_fields(
-        node: &TsConstructSignatureTypeMember,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
+    fn fmt_fields(node: &TsConstructSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsConstructSignatureTypeMemberFields {
             new_token,
             type_parameters,

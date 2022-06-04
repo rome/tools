@@ -4,7 +4,7 @@ use rome_js_syntax::JsxOpeningElement;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
-    fn format_fields(node: &JsxOpeningElement, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsxOpeningElement, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_verbatim_node(node.syntax()).fmt(formatter)
     }
 }

@@ -6,7 +6,7 @@ use rome_js_syntax::JsComputedMemberExpressionFields;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsComputedMemberExpression> for FormatNodeRule<JsComputedMemberExpression> {
-    fn format_fields(node: &JsComputedMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsComputedMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let mut current = node.clone();
 
         // Find the left most computed expression

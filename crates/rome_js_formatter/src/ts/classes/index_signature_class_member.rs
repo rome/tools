@@ -6,7 +6,7 @@ use rome_js_syntax::TsIndexSignatureClassMember;
 use rome_js_syntax::TsIndexSignatureClassMemberFields;
 
 impl FormatNodeFields<TsIndexSignatureClassMember> for FormatNodeRule<TsIndexSignatureClassMember> {
-    fn format_fields(node: &TsIndexSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsIndexSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsIndexSignatureClassMemberFields {
             modifiers,
             l_brack_token,

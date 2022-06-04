@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsTupleType, TsTupleTypeFields};
 
 impl FormatNodeFields<TsTupleType> for FormatNodeRule<TsTupleType> {
-    fn format_fields(node: &TsTupleType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsTupleType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTupleTypeFields {
             l_brack_token,
             elements,

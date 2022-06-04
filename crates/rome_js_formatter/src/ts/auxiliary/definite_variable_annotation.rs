@@ -7,7 +7,7 @@ use rome_js_syntax::TsDefiniteVariableAnnotationFields;
 impl FormatNodeFields<TsDefiniteVariableAnnotation>
     for FormatNodeRule<TsDefiniteVariableAnnotation>
 {
-    fn format_fields(node: &TsDefiniteVariableAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsDefiniteVariableAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         let TsDefiniteVariableAnnotationFields {
             excl_token,
             type_annotation,

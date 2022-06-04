@@ -8,7 +8,7 @@ use std::ops::Range;
 use std::str::CharIndices;
 
 impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
-    fn format_fields(node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxTextFields { value_token } = node.as_fields();
         let token = value_token?;
         let new_text = clean_jsx_text(token.text());

@@ -5,7 +5,7 @@ use rome_js_syntax::JsExpressionSnipped;
 use rome_js_syntax::JsExpressionSnippedFields;
 
 impl FormatNodeFields<JsExpressionSnipped> for FormatNodeRule<JsExpressionSnipped> {
-    fn format_fields(node: &JsExpressionSnipped, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsExpressionSnipped, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExpressionSnippedFields {
             expression,
             eof_token,

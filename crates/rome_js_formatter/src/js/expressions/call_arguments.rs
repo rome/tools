@@ -7,7 +7,7 @@ use rome_js_syntax::{JsAnyCallArgument, JsCallArguments};
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
 impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
-    fn format_fields(node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCallArgumentsFields {
             l_paren_token,
             args,

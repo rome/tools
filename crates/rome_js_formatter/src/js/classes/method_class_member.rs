@@ -6,7 +6,7 @@ use rome_js_syntax::JsMethodClassMember;
 use rome_js_syntax::JsMethodClassMemberFields;
 
 impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMember> {
-    fn format_fields(node: &JsMethodClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsMethodClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsMethodClassMemberFields {
             modifiers,
             async_token,

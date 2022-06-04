@@ -7,7 +7,7 @@ use rome_js_syntax::JsThrowStatement;
 use rome_js_syntax::JsThrowStatementFields;
 
 impl FormatNodeFields<JsThrowStatement> for FormatNodeRule<JsThrowStatement> {
-    fn format_fields(node: &JsThrowStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsThrowStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsThrowStatementFields {
             throw_token,
             argument,

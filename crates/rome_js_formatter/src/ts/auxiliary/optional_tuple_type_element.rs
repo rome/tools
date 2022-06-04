@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementFields};
 
 impl FormatNodeFields<TsOptionalTupleTypeElement> for FormatNodeRule<TsOptionalTupleTypeElement> {
-    fn format_fields(node: &TsOptionalTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsOptionalTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         let TsOptionalTupleTypeElementFields {
             ty,
             question_mark_token,

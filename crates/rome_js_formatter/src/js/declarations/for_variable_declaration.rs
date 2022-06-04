@@ -5,7 +5,7 @@ use rome_js_syntax::JsForVariableDeclaration;
 use rome_js_syntax::JsForVariableDeclarationFields;
 
 impl FormatNodeFields<JsForVariableDeclaration> for FormatNodeRule<JsForVariableDeclaration> {
-    fn format_fields(node: &JsForVariableDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsForVariableDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForVariableDeclarationFields {
             kind_token,
             declarator,

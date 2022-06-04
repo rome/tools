@@ -9,7 +9,7 @@ use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
 impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
-    fn format_fields(node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBlockStatementFields {
             l_curly_token,
             statements,

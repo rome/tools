@@ -7,7 +7,7 @@ use rome_js_syntax::JsStaticInitializationBlockClassMemberFields;
 impl FormatNodeFields<JsStaticInitializationBlockClassMember>
     for FormatNodeRule<JsStaticInitializationBlockClassMember>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsStaticInitializationBlockClassMember,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

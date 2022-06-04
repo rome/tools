@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsArrayType, TsArrayTypeFields};
 
 impl FormatNodeFields<TsArrayType> for FormatNodeRule<TsArrayType> {
-    fn format_fields(node: &TsArrayType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsArrayType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsArrayTypeFields {
             l_brack_token,
             element_type,

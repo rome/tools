@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsTypeofType, TsTypeofTypeFields};
 
 impl FormatNodeFields<TsTypeofType> for FormatNodeRule<TsTypeofType> {
-    fn format_fields(node: &TsTypeofType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsTypeofType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeofTypeFields {
             typeof_token,
             expression_name,

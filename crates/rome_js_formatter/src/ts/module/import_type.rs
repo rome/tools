@@ -6,7 +6,7 @@ use rome_js_syntax::TsImportType;
 use rome_js_syntax::TsImportTypeFields;
 
 impl FormatNodeFields<TsImportType> for FormatNodeRule<TsImportType> {
-    fn format_fields(node: &TsImportType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsImportType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImportTypeFields {
             typeof_token,
             import_token,

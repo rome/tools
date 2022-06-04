@@ -9,7 +9,7 @@ use rome_js_syntax::JsObjectAssignmentPatternPropertyFields;
 impl FormatNodeFields<JsObjectAssignmentPatternProperty>
     for FormatNodeRule<JsObjectAssignmentPatternProperty>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsObjectAssignmentPatternProperty,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

@@ -5,7 +5,7 @@ use rome_js_syntax::JsConstructorParameters;
 use rome_js_syntax::JsConstructorParametersFields;
 
 impl FormatNodeFields<JsConstructorParameters> for FormatNodeRule<JsConstructorParameters> {
-    fn format_fields(node: &JsConstructorParameters, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsConstructorParameters, f: &mut JsFormatter) -> FormatResult<()> {
         let JsConstructorParametersFields {
             l_paren_token,
             parameters,

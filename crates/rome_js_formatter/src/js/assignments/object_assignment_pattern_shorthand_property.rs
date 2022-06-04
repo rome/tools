@@ -8,7 +8,7 @@ use rome_js_syntax::JsObjectAssignmentPatternShorthandPropertyFields;
 impl FormatNodeFields<JsObjectAssignmentPatternShorthandProperty>
     for FormatNodeRule<JsObjectAssignmentPatternShorthandProperty>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsObjectAssignmentPatternShorthandProperty,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

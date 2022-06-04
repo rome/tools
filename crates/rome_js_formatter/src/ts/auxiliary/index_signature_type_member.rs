@@ -5,7 +5,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsIndexSignatureTypeMember, TsIndexSignatureTypeMemberFields};
 
 impl FormatNodeFields<TsIndexSignatureTypeMember> for FormatNodeRule<TsIndexSignatureTypeMember> {
-    fn format_fields(node: &TsIndexSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsIndexSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsIndexSignatureTypeMemberFields {
             readonly_token,
             l_brack_token,

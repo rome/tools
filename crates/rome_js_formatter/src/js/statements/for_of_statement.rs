@@ -7,7 +7,7 @@ use crate::FormatNodeFields;
 use rome_js_syntax::JsForOfStatementFields;
 
 impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
-    fn format_fields(node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForOfStatementFields {
             for_token,
             await_token,

@@ -6,7 +6,7 @@ use rome_js_syntax::JsDefaultImportSpecifier;
 use rome_js_syntax::JsDefaultImportSpecifierFields;
 
 impl FormatNodeFields<JsDefaultImportSpecifier> for FormatNodeRule<JsDefaultImportSpecifier> {
-    fn format_fields(node: &JsDefaultImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsDefaultImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDefaultImportSpecifierFields {
             local_name,
             trailing_comma_token,

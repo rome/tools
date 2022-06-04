@@ -186,7 +186,7 @@ where
         if has_formatter_suppressions(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
         } else {
-            Self::format_fields(node, f)?;
+            Self::fmt_fields(node, f)?;
         };
 
         Ok(())
@@ -198,7 +198,7 @@ where
     T: AstNode<Language = JsLanguage>,
 {
     /// Formats the node's fields.
-    fn format_fields(item: &T, f: &mut JsFormatter) -> FormatResult<()>;
+    fn fmt_fields(item: &T, f: &mut JsFormatter) -> FormatResult<()>;
 }
 
 /// Format implementation specific to JavaScript tokens.

@@ -6,7 +6,7 @@ use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
 
 impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjectMember> {
-    fn format_fields(node: &JsPropertyObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsPropertyObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPropertyObjectMemberFields {
             name,
             colon_token,

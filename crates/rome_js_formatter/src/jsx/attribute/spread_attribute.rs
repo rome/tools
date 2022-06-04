@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{JsxSpreadAttribute, JsxSpreadAttributeFields};
 
 impl FormatNodeFields<JsxSpreadAttribute> for FormatNodeRule<JsxSpreadAttribute> {
-    fn format_fields(node: &JsxSpreadAttribute, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsxSpreadAttribute, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxSpreadAttributeFields {
             l_curly_token,
             dotdotdot_token,

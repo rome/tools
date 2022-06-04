@@ -5,7 +5,7 @@ use rome_js_syntax::JsImportNamespaceClause;
 use rome_js_syntax::JsImportNamespaceClauseFields;
 
 impl FormatNodeFields<JsImportNamespaceClause> for FormatNodeRule<JsImportNamespaceClause> {
-    fn format_fields(node: &JsImportNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsImportNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportNamespaceClauseFields {
             type_token,
             star_token,

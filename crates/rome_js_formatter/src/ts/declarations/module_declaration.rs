@@ -5,7 +5,7 @@ use rome_js_syntax::TsModuleDeclaration;
 use rome_js_syntax::TsModuleDeclarationFields;
 
 impl FormatNodeFields<TsModuleDeclaration> for FormatNodeRule<TsModuleDeclaration> {
-    fn format_fields(node: &TsModuleDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsModuleDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsModuleDeclarationFields {
             module_or_namespace,
             name,

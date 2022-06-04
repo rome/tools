@@ -5,7 +5,7 @@ use rome_js_syntax::JsPrivateClassMemberName;
 use rome_js_syntax::JsPrivateClassMemberNameFields;
 
 impl FormatNodeFields<JsPrivateClassMemberName> for FormatNodeRule<JsPrivateClassMemberName> {
-    fn format_fields(node: &JsPrivateClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsPrivateClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPrivateClassMemberNameFields {
             hash_token,
             id_token,

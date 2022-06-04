@@ -6,7 +6,7 @@ use rome_js_syntax::JsAssignmentWithDefault;
 use rome_js_syntax::JsAssignmentWithDefaultFields;
 
 impl FormatNodeFields<JsAssignmentWithDefault> for FormatNodeRule<JsAssignmentWithDefault> {
-    fn format_fields(node: &JsAssignmentWithDefault, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsAssignmentWithDefault, f: &mut JsFormatter) -> FormatResult<()> {
         let JsAssignmentWithDefaultFields {
             pattern,
             eq_token,

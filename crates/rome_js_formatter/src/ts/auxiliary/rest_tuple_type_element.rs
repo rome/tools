@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsRestTupleTypeElement, TsRestTupleTypeElementFields};
 
 impl FormatNodeFields<TsRestTupleTypeElement> for FormatNodeRule<TsRestTupleTypeElement> {
-    fn format_fields(node: &TsRestTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsRestTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         let TsRestTupleTypeElementFields {
             dotdotdot_token,
             ty,

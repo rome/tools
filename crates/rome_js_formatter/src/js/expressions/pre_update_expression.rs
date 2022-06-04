@@ -6,7 +6,7 @@ use rome_js_syntax::JsPreUpdateExpression;
 use rome_js_syntax::JsPreUpdateExpressionFields;
 
 impl FormatNodeFields<JsPreUpdateExpression> for FormatNodeRule<JsPreUpdateExpression> {
-    fn format_fields(node: &JsPreUpdateExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsPreUpdateExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPreUpdateExpressionFields {
             operator_token,
             operand,

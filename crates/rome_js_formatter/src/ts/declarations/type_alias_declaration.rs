@@ -5,7 +5,7 @@ use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsTypeAliasDeclaration, TsTypeAliasDeclarationFields};
 
 impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDeclaration> {
-    fn format_fields(node: &TsTypeAliasDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsTypeAliasDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeAliasDeclarationFields {
             type_token,
             binding_identifier,

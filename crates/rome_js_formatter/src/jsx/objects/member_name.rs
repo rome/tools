@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{JsxMemberName, JsxMemberNameFields};
 
 impl FormatNodeFields<JsxMemberName> for FormatNodeRule<JsxMemberName> {
-    fn format_fields(node: &JsxMemberName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsxMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxMemberNameFields {
             object,
             dot_token,

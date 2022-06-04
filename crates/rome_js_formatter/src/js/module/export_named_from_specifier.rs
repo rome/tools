@@ -6,7 +6,7 @@ use rome_js_syntax::JsExportNamedFromSpecifier;
 use rome_js_syntax::JsExportNamedFromSpecifierFields;
 
 impl FormatNodeFields<JsExportNamedFromSpecifier> for FormatNodeRule<JsExportNamedFromSpecifier> {
-    fn format_fields(node: &JsExportNamedFromSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsExportNamedFromSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedFromSpecifierFields {
             type_token,
             source_name,

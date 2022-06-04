@@ -9,7 +9,7 @@ use rome_rowan::AstNode;
 use std::ops::Deref;
 
 impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMemberExpression> {
-    fn format_fields(node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let mut current = node.clone();
 
         while let Some(static_member_expression) =

@@ -7,7 +7,7 @@ use rome_js_syntax::TsNonNullAssertionExpressionFields;
 impl FormatNodeFields<TsNonNullAssertionExpression>
     for FormatNodeRule<TsNonNullAssertionExpression>
 {
-    fn format_fields(node: &TsNonNullAssertionExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsNonNullAssertionExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let TsNonNullAssertionExpressionFields {
             expression,
             excl_token,

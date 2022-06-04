@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsInferType, TsInferTypeFields};
 
 impl FormatNodeFields<TsInferType> for FormatNodeRule<TsInferType> {
-    fn format_fields(node: &TsInferType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsInferType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInferTypeFields {
             infer_token,
             type_parameter,

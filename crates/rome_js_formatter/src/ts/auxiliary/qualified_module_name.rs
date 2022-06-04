@@ -5,7 +5,7 @@ use rome_js_syntax::TsQualifiedModuleName;
 use rome_js_syntax::TsQualifiedModuleNameFields;
 
 impl FormatNodeFields<TsQualifiedModuleName> for FormatNodeRule<TsQualifiedModuleName> {
-    fn format_fields(node: &TsQualifiedModuleName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsQualifiedModuleName, f: &mut JsFormatter) -> FormatResult<()> {
         let TsQualifiedModuleNameFields {
             left,
             dot_token,

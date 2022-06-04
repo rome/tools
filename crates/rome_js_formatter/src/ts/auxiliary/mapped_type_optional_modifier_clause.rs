@@ -7,7 +7,7 @@ use rome_js_syntax::TsMappedTypeOptionalModifierClauseFields;
 impl FormatNodeFields<TsMappedTypeOptionalModifierClause>
     for FormatNodeRule<TsMappedTypeOptionalModifierClause>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &TsMappedTypeOptionalModifierClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

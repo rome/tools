@@ -6,7 +6,7 @@ use rome_js_syntax::{JsExportDefaultDeclarationClause, JsExportDefaultDeclaratio
 impl FormatNodeFields<JsExportDefaultDeclarationClause>
     for FormatNodeRule<JsExportDefaultDeclarationClause>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsExportDefaultDeclarationClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

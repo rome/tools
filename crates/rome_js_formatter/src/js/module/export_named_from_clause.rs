@@ -8,7 +8,7 @@ use rome_js_syntax::JsExportNamedFromClauseFields;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedFromClause> {
-    fn format_fields(node: &JsExportNamedFromClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsExportNamedFromClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedFromClauseFields {
             type_token,
             l_curly_token,

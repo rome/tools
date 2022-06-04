@@ -7,7 +7,7 @@ use rome_js_syntax::JsArrayBindingPatternRestElementFields;
 impl FormatNodeFields<JsArrayBindingPatternRestElement>
     for FormatNodeRule<JsArrayBindingPatternRestElement>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsArrayBindingPatternRestElement,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

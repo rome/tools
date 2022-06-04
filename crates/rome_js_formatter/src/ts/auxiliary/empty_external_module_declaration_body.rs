@@ -7,7 +7,7 @@ use rome_js_syntax::TsEmptyExternalModuleDeclarationBodyFields;
 impl FormatNodeFields<TsEmptyExternalModuleDeclarationBody>
     for FormatNodeRule<TsEmptyExternalModuleDeclarationBody>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &TsEmptyExternalModuleDeclarationBody,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

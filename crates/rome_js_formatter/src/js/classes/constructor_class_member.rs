@@ -6,7 +6,7 @@ use rome_js_syntax::JsConstructorClassMember;
 use rome_js_syntax::JsConstructorClassMemberFields;
 
 impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructorClassMember> {
-    fn format_fields(node: &JsConstructorClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsConstructorClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsConstructorClassMemberFields {
             modifiers,
             name,

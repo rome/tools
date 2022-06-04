@@ -6,7 +6,7 @@ use rome_js_syntax::TsExportAsNamespaceClause;
 use rome_js_syntax::TsExportAsNamespaceClauseFields;
 
 impl FormatNodeFields<TsExportAsNamespaceClause> for FormatNodeRule<TsExportAsNamespaceClause> {
-    fn format_fields(node: &TsExportAsNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsExportAsNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExportAsNamespaceClauseFields {
             as_token,
             namespace_token,

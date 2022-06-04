@@ -6,7 +6,7 @@ use rome_js_syntax::JsCallExpression;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsCallExpression> for FormatNodeRule<JsCallExpression> {
-    fn format_fields(node: &JsCallExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsCallExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_call_expression(node.syntax(), formatter)
     }
 }

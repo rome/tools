@@ -5,7 +5,7 @@ use rome_js_syntax::JsArrayBindingPattern;
 use rome_js_syntax::JsArrayBindingPatternFields;
 
 impl FormatNodeFields<JsArrayBindingPattern> for FormatNodeRule<JsArrayBindingPattern> {
-    fn format_fields(node: &JsArrayBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsArrayBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {
         let JsArrayBindingPatternFields {
             l_brack_token,
             elements,

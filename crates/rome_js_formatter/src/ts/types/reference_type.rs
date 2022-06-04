@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsReferenceType, TsReferenceTypeFields};
 
 impl FormatNodeFields<TsReferenceType> for FormatNodeRule<TsReferenceType> {
-    fn format_fields(node: &TsReferenceType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsReferenceType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsReferenceTypeFields {
             name,
             type_arguments,

@@ -6,7 +6,7 @@ use rome_js_syntax::TsImportEqualsDeclaration;
 use rome_js_syntax::TsImportEqualsDeclarationFields;
 
 impl FormatNodeFields<TsImportEqualsDeclaration> for FormatNodeRule<TsImportEqualsDeclaration> {
-    fn format_fields(node: &TsImportEqualsDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsImportEqualsDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImportEqualsDeclarationFields {
             import_token,
             type_token,

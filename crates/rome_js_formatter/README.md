@@ -26,7 +26,7 @@ struct Buzz {
 }
 
 impl Format for Buzz {
- fn format(&self, f: &mut JsFormatter) -> FormatResult<()> {
+ fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
  	// implementation goes here
 	 write!(f, [token("Hello"), dynamic_token(&self.blast)])
  }
@@ -39,7 +39,7 @@ impl Format for Buzz {
 1. if a token is mandatory and the AST has that information, please use that token instead, for example:
 
 	```rust
-	fn format_fields(node, f: &mut JsFormatter) -> FormatResult<()> {
+	fn format_fields(node: Node, f: &mut JsFormatter) -> FormatResult<()> {
     write!(f, [node.l_paren_token().format()])?; // yes
     write!(f, [token("(")])?; // no
 	}

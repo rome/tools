@@ -9,7 +9,7 @@ use rome_js_syntax::JsBigIntLiteralExpression;
 use rome_js_syntax::JsBigIntLiteralExpressionFields;
 
 impl FormatNodeFields<JsBigIntLiteralExpression> for FormatNodeRule<JsBigIntLiteralExpression> {
-    fn format_fields(node: &JsBigIntLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsBigIntLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBigIntLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
 

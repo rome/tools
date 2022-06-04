@@ -6,7 +6,7 @@ use rome_js_syntax::JsYieldExpression;
 use rome_js_syntax::JsYieldExpressionFields;
 
 impl FormatNodeFields<JsYieldExpression> for FormatNodeRule<JsYieldExpression> {
-    fn format_fields(node: &JsYieldExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsYieldExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsYieldExpressionFields {
             yield_token,
             argument,

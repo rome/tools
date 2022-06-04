@@ -5,7 +5,7 @@ use rome_js_syntax::JsRestParameter;
 use rome_js_syntax::JsRestParameterFields;
 
 impl FormatNodeFields<JsRestParameter> for FormatNodeRule<JsRestParameter> {
-    fn format_fields(node: &JsRestParameter, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsRestParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let JsRestParameterFields {
             dotdotdot_token,
             binding,

@@ -7,7 +7,7 @@ use rome_js_syntax::TsMappedTypeReadonlyModifierClauseFields;
 impl FormatNodeFields<TsMappedTypeReadonlyModifierClause>
     for FormatNodeRule<TsMappedTypeReadonlyModifierClause>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &TsMappedTypeReadonlyModifierClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

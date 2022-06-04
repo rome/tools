@@ -6,7 +6,7 @@ use crate::FormatNodeFields;
 use rome_js_syntax::TsTypeAssertionAssignment;
 
 impl FormatNodeFields<TsTypeAssertionAssignment> for FormatNodeRule<TsTypeAssertionAssignment> {
-    fn format_fields(node: &TsTypeAssertionAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsTypeAssertionAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeAssertionAssignmentFields {
             l_angle_token,
             ty,

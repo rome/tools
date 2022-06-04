@@ -6,7 +6,7 @@ use rome_js_syntax::JsArrayExpression;
 use rome_js_syntax::JsArrayExpressionFields;
 
 impl FormatNodeFields<JsArrayExpression> for FormatNodeRule<JsArrayExpression> {
-    fn format_fields(node: &JsArrayExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsArrayExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsArrayExpressionFields {
             l_brack_token,
             elements,

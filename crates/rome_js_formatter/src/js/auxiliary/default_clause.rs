@@ -6,7 +6,7 @@ use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
 
 impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
-    fn format_fields(node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDefaultClauseFields {
             default_token,
             colon_token,

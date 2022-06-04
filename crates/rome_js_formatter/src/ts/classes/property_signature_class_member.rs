@@ -8,10 +8,7 @@ use rome_js_syntax::{TsPropertySignatureClassMember, TsPropertySignatureClassMem
 impl FormatNodeFields<TsPropertySignatureClassMember>
     for FormatNodeRule<TsPropertySignatureClassMember>
 {
-    fn format_fields(
-        node: &TsPropertySignatureClassMember,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
+    fn fmt_fields(node: &TsPropertySignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsPropertySignatureClassMemberFields {
             modifiers,
             name,

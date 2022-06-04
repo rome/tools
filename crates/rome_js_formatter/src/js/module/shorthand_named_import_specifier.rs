@@ -7,10 +7,7 @@ use rome_js_syntax::JsShorthandNamedImportSpecifierFields;
 impl FormatNodeFields<JsShorthandNamedImportSpecifier>
     for FormatNodeRule<JsShorthandNamedImportSpecifier>
 {
-    fn format_fields(
-        node: &JsShorthandNamedImportSpecifier,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
+    fn fmt_fields(node: &JsShorthandNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsShorthandNamedImportSpecifierFields {
             type_token,
             local_name,

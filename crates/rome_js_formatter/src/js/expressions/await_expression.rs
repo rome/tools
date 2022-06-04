@@ -6,7 +6,7 @@ use rome_js_syntax::JsAwaitExpression;
 use rome_js_syntax::JsAwaitExpressionFields;
 
 impl FormatNodeFields<JsAwaitExpression> for FormatNodeRule<JsAwaitExpression> {
-    fn format_fields(node: &JsAwaitExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsAwaitExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsAwaitExpressionFields {
             await_token,
             argument,

@@ -5,7 +5,7 @@ use rome_js_syntax::JsTryStatement;
 use rome_js_syntax::JsTryStatementFields;
 
 impl FormatNodeFields<JsTryStatement> for FormatNodeRule<JsTryStatement> {
-    fn format_fields(node: &JsTryStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsTryStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsTryStatementFields {
             try_token,
             body,

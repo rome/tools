@@ -5,7 +5,7 @@ use rome_js_syntax::TsTemplateLiteralType;
 use rome_js_syntax::TsTemplateLiteralTypeFields;
 
 impl FormatNodeFields<TsTemplateLiteralType> for FormatNodeRule<TsTemplateLiteralType> {
-    fn format_fields(node: &TsTemplateLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsTemplateLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTemplateLiteralTypeFields {
             l_tick_token,
             elements,

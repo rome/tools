@@ -5,7 +5,7 @@ use rome_js_syntax::JsCatchDeclaration;
 use rome_js_syntax::JsCatchDeclarationFields;
 
 impl FormatNodeFields<JsCatchDeclaration> for FormatNodeRule<JsCatchDeclaration> {
-    fn format_fields(node: &JsCatchDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsCatchDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCatchDeclarationFields {
             l_paren_token,
             binding,

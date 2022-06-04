@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{JsAnyClass, JsClassDeclaration};
 
 impl FormatNodeFields<JsClassDeclaration> for FormatNodeRule<JsClassDeclaration> {
-    fn format_fields(node: &JsClassDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsClassDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         write![f, [JsAnyClass::from(node.clone()).format()]]
     }
 }

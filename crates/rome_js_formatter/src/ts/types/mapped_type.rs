@@ -5,7 +5,7 @@ use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 
 impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
-    fn format_fields(node: &TsMappedType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsMappedType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMappedTypeFields {
             l_curly_token,
             readonly_modifier,

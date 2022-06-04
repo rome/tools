@@ -6,7 +6,7 @@ use rome_js_syntax::JsLiteralMemberNameFields;
 use rome_js_syntax::{JsLiteralMemberName, JsSyntaxKind};
 
 impl FormatNodeFields<JsLiteralMemberName> for FormatNodeRule<JsLiteralMemberName> {
-    fn format_fields(node: &JsLiteralMemberName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsLiteralMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsLiteralMemberNameFields { value } = node.as_fields();
 
         let value = value?;

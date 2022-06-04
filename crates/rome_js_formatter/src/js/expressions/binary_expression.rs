@@ -5,7 +5,7 @@ use crate::FormatNodeFields;
 use rome_js_syntax::JsBinaryExpression;
 
 impl FormatNodeFields<JsBinaryExpression> for FormatNodeRule<JsBinaryExpression> {
-    fn format_fields(node: &JsBinaryExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsBinaryExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_binary_like_expression(
             JsAnyBinaryLikeExpression::JsBinaryExpression(node.clone()),
             formatter,

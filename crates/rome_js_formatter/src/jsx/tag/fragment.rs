@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{JsxFragment, JsxFragmentFields};
 
 impl FormatNodeFields<JsxFragment> for FormatNodeRule<JsxFragment> {
-    fn format_fields(node: &JsxFragment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsxFragment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxFragmentFields {
             opening_fragment,
             children,

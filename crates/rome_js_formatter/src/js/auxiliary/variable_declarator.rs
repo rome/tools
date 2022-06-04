@@ -6,7 +6,7 @@ use rome_js_syntax::JsVariableDeclarator;
 use rome_js_syntax::JsVariableDeclaratorFields;
 
 impl FormatNodeFields<JsVariableDeclarator> for FormatNodeRule<JsVariableDeclarator> {
-    fn format_fields(node: &JsVariableDeclarator, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsVariableDeclarator, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableDeclaratorFields {
             id,
             variable_annotation,

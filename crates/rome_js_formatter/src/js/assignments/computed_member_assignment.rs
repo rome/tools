@@ -6,7 +6,7 @@ use rome_js_syntax::JsComputedMemberAssignment;
 use rome_js_syntax::JsComputedMemberAssignmentFields;
 
 impl FormatNodeFields<JsComputedMemberAssignment> for FormatNodeRule<JsComputedMemberAssignment> {
-    fn format_fields(node: &JsComputedMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsComputedMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsComputedMemberAssignmentFields {
             object,
             l_brack_token,

@@ -5,7 +5,7 @@ use rome_js_syntax::TsFunctionType;
 use rome_js_syntax::TsFunctionTypeFields;
 
 impl FormatNodeFields<TsFunctionType> for FormatNodeRule<TsFunctionType> {
-    fn format_fields(node: &TsFunctionType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsFunctionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsFunctionTypeFields {
             parameters,
             fat_arrow_token,

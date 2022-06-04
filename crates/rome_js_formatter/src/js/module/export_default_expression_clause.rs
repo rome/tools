@@ -9,10 +9,7 @@ use rome_js_syntax::JsExportDefaultExpressionClauseFields;
 impl FormatNodeFields<JsExportDefaultExpressionClause>
     for FormatNodeRule<JsExportDefaultExpressionClause>
 {
-    fn format_fields(
-        node: &JsExportDefaultExpressionClause,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
+    fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportDefaultExpressionClauseFields {
             default_token,
             expression,

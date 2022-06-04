@@ -5,7 +5,7 @@ use rome_js_syntax::JsObjectBindingPattern;
 use rome_js_syntax::JsObjectBindingPatternFields;
 
 impl FormatNodeFields<JsObjectBindingPattern> for FormatNodeRule<JsObjectBindingPattern> {
-    fn format_fields(node: &JsObjectBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsObjectBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {
         let JsObjectBindingPatternFields {
             l_curly_token,
             properties,

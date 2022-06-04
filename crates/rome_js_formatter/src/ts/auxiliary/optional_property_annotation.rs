@@ -7,7 +7,7 @@ use rome_js_syntax::TsOptionalPropertyAnnotationFields;
 impl FormatNodeFields<TsOptionalPropertyAnnotation>
     for FormatNodeRule<TsOptionalPropertyAnnotation>
 {
-    fn format_fields(node: &TsOptionalPropertyAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsOptionalPropertyAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         let TsOptionalPropertyAnnotationFields {
             question_mark_token,
             type_annotation,

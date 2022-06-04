@@ -337,7 +337,7 @@ pub fn generate_formatter() {
                     use rome_js_syntax::#node_id;
 
                     impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn format_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        fn fmt_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             format_verbatim_node(node.syntax()).fmt(f)
                         }
                     }
@@ -351,7 +351,7 @@ pub fn generate_formatter() {
                     use rome_js_syntax::#node_id;
 
                     impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn format_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        fn fmt_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             format_unknown_node(node.syntax()).fmt(f)
                         }
                     }

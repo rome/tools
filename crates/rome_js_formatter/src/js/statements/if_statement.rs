@@ -7,7 +7,7 @@ use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
 
 impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
-    fn format_fields(node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let mut else_clause = write_if_element(f, None, node)?;
 
         while let Some(clause) = else_clause.take() {

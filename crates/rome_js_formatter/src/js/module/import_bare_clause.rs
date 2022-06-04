@@ -5,7 +5,7 @@ use rome_js_syntax::JsImportBareClause;
 use rome_js_syntax::JsImportBareClauseFields;
 
 impl FormatNodeFields<JsImportBareClause> for FormatNodeRule<JsImportBareClause> {
-    fn format_fields(node: &JsImportBareClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsImportBareClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportBareClauseFields { source, assertion } = node.as_fields();
 
         write!(f, [source.format()])?;

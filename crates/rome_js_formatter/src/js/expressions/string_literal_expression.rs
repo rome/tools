@@ -9,7 +9,7 @@ use rome_js_syntax::JsStringLiteralExpressionFields;
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLiteralExpression> {
-    fn format_fields(node: &JsStringLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsStringLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStringLiteralExpressionFields { value_token } = node.as_fields();
 
         let value_token = value_token?;

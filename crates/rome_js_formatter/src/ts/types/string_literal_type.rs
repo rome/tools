@@ -5,7 +5,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsStringLiteralType, TsStringLiteralTypeFields};
 
 impl FormatNodeFields<TsStringLiteralType> for FormatNodeRule<TsStringLiteralType> {
-    fn format_fields(node: &TsStringLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsStringLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsStringLiteralTypeFields { literal_token } = node.as_fields();
 
         write!(

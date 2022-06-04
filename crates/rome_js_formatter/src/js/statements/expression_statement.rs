@@ -7,7 +7,7 @@ use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsExpressionStatementFields;
 
 impl FormatNodeFields<JsExpressionStatement> for FormatNodeRule<JsExpressionStatement> {
-    fn format_fields(node: &JsExpressionStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsExpressionStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExpressionStatementFields {
             expression,
             semicolon_token,

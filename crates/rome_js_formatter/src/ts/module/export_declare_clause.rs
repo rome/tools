@@ -5,7 +5,7 @@ use rome_js_syntax::TsExportDeclareClause;
 use rome_js_syntax::TsExportDeclareClauseFields;
 
 impl FormatNodeFields<TsExportDeclareClause> for FormatNodeRule<TsExportDeclareClause> {
-    fn format_fields(node: &TsExportDeclareClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsExportDeclareClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExportDeclareClauseFields {
             declare_token,
             declaration,

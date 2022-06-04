@@ -8,10 +8,7 @@ use rome_js_syntax::JsExportNamedShorthandSpecifierFields;
 impl FormatNodeFields<JsExportNamedShorthandSpecifier>
     for FormatNodeRule<JsExportNamedShorthandSpecifier>
 {
-    fn format_fields(
-        node: &JsExportNamedShorthandSpecifier,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
+    fn fmt_fields(node: &JsExportNamedShorthandSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedShorthandSpecifierFields { type_token, name } = node.as_fields();
 
         if let Some(type_token) = type_token {

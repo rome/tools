@@ -7,7 +7,7 @@ use rome_js_syntax::{TsMethodSignatureClassMember, TsMethodSignatureClassMemberF
 impl FormatNodeFields<TsMethodSignatureClassMember>
     for FormatNodeRule<TsMethodSignatureClassMember>
 {
-    fn format_fields(node: &TsMethodSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsMethodSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMethodSignatureClassMemberFields {
             modifiers,
             async_token,

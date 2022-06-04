@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{JsxOpeningFragment, JsxOpeningFragmentFields};
 
 impl FormatNodeFields<JsxOpeningFragment> for FormatNodeRule<JsxOpeningFragment> {
-    fn format_fields(node: &JsxOpeningFragment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &JsxOpeningFragment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxOpeningFragmentFields {
             r_angle_token,
             l_angle_token,

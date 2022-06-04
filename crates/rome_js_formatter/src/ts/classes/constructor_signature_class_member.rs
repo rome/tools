@@ -8,7 +8,7 @@ use rome_js_syntax::TsConstructorSignatureClassMemberFields;
 impl FormatNodeFields<TsConstructorSignatureClassMember>
     for FormatNodeRule<TsConstructorSignatureClassMember>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &TsConstructorSignatureClassMember,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

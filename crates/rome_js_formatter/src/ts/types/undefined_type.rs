@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{TsUndefinedType, TsUndefinedTypeFields};
 
 impl FormatNodeFields<TsUndefinedType> for FormatNodeRule<TsUndefinedType> {
-    fn format_fields(node: &TsUndefinedType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsUndefinedType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsUndefinedTypeFields { undefined_token } = node.as_fields();
 
         write![f, [undefined_token.format()]]

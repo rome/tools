@@ -8,7 +8,7 @@ use rome_js_syntax::JsFunctionExportDefaultDeclaration;
 impl FormatNodeFields<JsFunctionExportDefaultDeclaration>
     for FormatNodeRule<JsFunctionExportDefaultDeclaration>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &JsFunctionExportDefaultDeclaration,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

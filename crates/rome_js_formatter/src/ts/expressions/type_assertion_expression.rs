@@ -5,7 +5,7 @@ use rome_js_syntax::TsTypeAssertionExpression;
 use rome_js_syntax::TsTypeAssertionExpressionFields;
 
 impl FormatNodeFields<TsTypeAssertionExpression> for FormatNodeRule<TsTypeAssertionExpression> {
-    fn format_fields(node: &TsTypeAssertionExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(node: &TsTypeAssertionExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeAssertionExpressionFields {
             l_angle_token,
             ty,
