@@ -53,7 +53,41 @@ const breakAfterColonObject = {
 };
 
 const fluidObject = {
-    "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line": orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
+		"11/01/2017 13:36": [
+			{
+				message: "test",
+				messageType: "SMS",
+				status: "Unknown",
+				created: "11/01/2017 13:36",
+			},
+			{
+				message: "test",
+				messageType: "Email",
+				status: "Unknown",
+				created: "11/01/2017 13:36",
+			},
+			{
+				message: "te",
+				messageType: "SMS",
+				status: "Unknown",
+				created: "09/01/2017 17:25",
+			},
+		],
+		render: withGraphQLQuery(
+			'node(1234567890){image{uri}}',
+			function(container, data) {
+				return (
+					<div>
+						<InlineBlock>
+							<img
+								src={data[1234567890].image.uri}
+								style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+							/>
+						</InlineBlock>
+					</div>
+				);
+			}
+		),
 };
 
 =============================
@@ -104,10 +138,9 @@ const breakAfterColonObject = {
 		{
 			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
 		} in "long-key",
-	"sequence-expression":
-		(
-			33333333333333331, "dsadsadasdsadas", 3, "dsadsadasdsadasdsadsadasdsadas", 5
-		),
+	"sequence-expression": (
+		33333333333333331, "dsadsadasdsadas", 3, "dsadsadasdsadasdsadsadasdsadas", 5
+	),
 	"conditional-expression-1":
 		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
 	"conditional-expression-2":
@@ -153,9 +186,42 @@ const breakAfterColonObject = {
 };
 
 const fluidObject = {
-	"this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line":
-		orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
-};
+		"11/01/2017 13:36": [
+			{
+				message: "test",
+				messageType: "SMS",
+				status: "Unknown",
+				created: "11/01/2017 13:36",
+			},
+			{
+				message: "test",
+				messageType: "Email",
+				status: "Unknown",
+				created: "11/01/2017 13:36",
+			},
+			{
+				message: "te",
+				messageType: "SMS",
+				status: "Unknown",
+				created: "09/01/2017 17:25",
+			},
+		],
+		render: withGraphQLQuery(
+			'node(1234567890){image{uri}}',
+			function(container, data) {
+				return (
+					<div>
+						<InlineBlock>
+							<img
+								src={data[1234567890].image.uri}
+								style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+							/>
+						</InlineBlock>
+					</div>
+				);
+}
+		),
+}
 
 
 ## Lines exceeding width of 80 characters
@@ -174,12 +240,12 @@ const fluidObject = {
    26: 		"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
    32: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
    34: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   48: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   50: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
-   59: 		this.state.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
-   61: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
-   63: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
-   65: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   78: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   80: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   47: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+   49: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   58: 		this.state.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
+   60: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
+   62: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
+   64: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
+   77: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+   79: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
 

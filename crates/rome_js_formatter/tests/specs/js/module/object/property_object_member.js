@@ -48,5 +48,39 @@ const breakAfterColonObject = {
 };
 
 const fluidObject = {
-    "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line": orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
+		"11/01/2017 13:36": [
+			{
+				message: "test",
+				messageType: "SMS",
+				status: "Unknown",
+				created: "11/01/2017 13:36",
+			},
+			{
+				message: "test",
+				messageType: "Email",
+				status: "Unknown",
+				created: "11/01/2017 13:36",
+			},
+			{
+				message: "te",
+				messageType: "SMS",
+				status: "Unknown",
+				created: "09/01/2017 17:25",
+			},
+		],
+		render: withGraphQLQuery(
+			'node(1234567890){image{uri}}',
+			function(container, data) {
+				return (
+					<div>
+						<InlineBlock>
+							<img
+								src={data[1234567890].image.uri}
+								style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+							/>
+						</InlineBlock>
+					</div>
+				);
+			}
+		),
 };

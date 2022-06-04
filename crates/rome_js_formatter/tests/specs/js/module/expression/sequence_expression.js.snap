@@ -73,16 +73,15 @@ function a() {
 }
 
 const object = {
-	something:
-		(
-			____________first,
-			____________second,
-			____________third,
-			____________third,
-			____________third,
-			____________third,
-			____________third
-		),
+	something: (
+		____________first,
+		____________second,
+		____________third,
+		____________third,
+		____________third,
+		____________third,
+		____________third
+	),
 };
 
 aLongIdentifierName,

@@ -92,13 +92,7 @@ enum PropertyObjectMemberLayout {
     ///       "nested-key-1": 1,
     ///       "nested-key-2": 2,
     ///     },
-    ///   ],
-    ///   "function-call-key":
-    ///     functionCall(
-    ///         1,
-    ///         2,
-    ///         3,
-    ///     ),
+    ///   ]
     /// }
     /// ```
     Fluid,
