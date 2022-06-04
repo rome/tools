@@ -72,16 +72,7 @@ const fluidObject = {
 		render: withGraphQLQuery(
 			'node(1234567890){image{uri}}',
 			function(container, data) {
-				return (
-					<div>
-						<InlineBlock>
-							<img
-								src={data[1234567890].image.uri}
-								style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
-							/>
-						</InlineBlock>
-					</div>
-				);
+				return 'image';
 			}
 		),
 };
