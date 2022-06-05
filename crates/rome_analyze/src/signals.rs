@@ -40,8 +40,11 @@ impl From<AnalyzerAction> for CodeSuggestion {
     fn from(action: AnalyzerAction) -> Self {
         // Only print the relevant subset of tokens
         let mut code = String::new();
-
+        let mut all = String::new();
+        println!("action_new_range: {:?}", action.new_range);
         for token in action.root.syntax().descendants_tokens() {
+            all.push_str(token.text());
+            // println!("range: {:?}, token: {}", token.text_range(), token.text());
             let range = token.text_range();
             if range
                 .intersect(action.new_range)
@@ -53,7 +56,6 @@ impl From<AnalyzerAction> for CodeSuggestion {
 
             code.push_str(token.text());
         }
-
         CodeSuggestion {
             substitution: SuggestionChange::String(code),
             span: FileSpan {

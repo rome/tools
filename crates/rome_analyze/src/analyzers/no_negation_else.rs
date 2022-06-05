@@ -47,6 +47,7 @@ impl Rule for NoNegationElse {
     }
 
     fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
+        println!("This is node_range: {:?}", node.range());
         Some(RuleDiagnostic {
             severity: Severity::Error,
             message: markup! {
@@ -114,7 +115,7 @@ impl Rule for NoNegationElse {
         }
         .unwrap();
         Some(RuleAction {
-            category: ActionCategory::QuickFix,
+            category: ActionCategory::Refactor,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with strict equality" }.to_owned(),
             root,

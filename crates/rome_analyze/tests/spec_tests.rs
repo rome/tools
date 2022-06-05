@@ -5,7 +5,7 @@ use std::{
 use rome_analyze::{AnalysisFilter, AnalyzerAction};
 use rome_console::{
     diff::{Diff, DiffMode},
-    fmt::{Formatter, Termcolor},
+    fmt::{Formatter, Termcolor, Display},
     markup, Markup,
 };
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
