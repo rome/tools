@@ -1,0 +1,77 @@
+---
+source: crates/rome_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: useBlockStatements.js
+---
+# Input
+```js
+// invalid
+if (x) x;
+if (x) {
+  x;
+} else y;
+if (x) {
+  x;
+} else if (y) y;
+for (;;);
+for (p in obj);
+for (x of xs);
+do;
+while (x);
+while (x);
+with (x);
+
+```
+
+# Diagnostics
+```
+error[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:2:8
+  │
+2 │ if (x) x;
+  │        ^^ Block statements are preferred in this position.
+
+Replace with strict equality
+
+
+```
+
+```
+error[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:5:8
+  │
+5 │ } else y;
+  │        ^^ Block statements are preferred in this position.
+
+Replace with strict equality
+
+
+```
+
+```
+error[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:6:1
+  │  
+6 │ ┌ if (x) {
+7 │ │   x;
+8 │ │ } else if (y) y;
+  │ └────────────────^ Block statements are preferred in this position.
+
+Replace with strict equality
+
+
+```
+
+```
+error[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:8:15
+  │
+8 │ } else if (y) y;
+  │               ^^ Block statements are preferred in this position.
+
+Replace with strict equality
+
+
+```
+
+
