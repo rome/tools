@@ -22,11 +22,11 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
         } = node.as_fields();
 
         let name = name?;
-        let default_name_width = name.text().width();
 
         let (format_name, name_width) =
-            FormatMemberName::from(name).format_member_name(formatter)?;
-        let name_width = name_width.unwrap_or(default_name_width);
+            FormatMemberName::from(name.clone()).format_member_name(formatter)?;
+        let name_width = name_width.unwrap_or_else(|| name.text().width());
+
         let layout = property_object_member_layout(formatter, name_width, &value.clone()?)?;
 
         let formatted = match layout {
@@ -125,6 +125,7 @@ enum PropertyObjectMemberLayout {
 const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 /// Returns the layout variant for an object member depending on value expression and name length
+/// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
 fn property_object_member_layout(
     formatter: &JsFormatter,
     name_width: usize,
