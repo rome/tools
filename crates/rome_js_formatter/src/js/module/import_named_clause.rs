@@ -28,13 +28,17 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
         // reference https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L173
 
         // https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L184-L209v,
-        // `standaloneSpecifiers` corresponding our `default_specifier` + part of `named_import`,
-        // `groupedSpecifiers` corresponding our `named_import`
-        // https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L216-L243
-        // According L216-L219 we know that `canBreak` will be true only if 
+        // `standaloneSpecifiers` corresponding our `JsDefaultImportSpecifier` + part of `JsNamespaceImportSpecifier`,
+        // `groupedSpecifiers` corresponding our `JsNamedImportSpecifiers`
+
+        //  Here we use an opposite way of thinking, we only thinking about the way that can not break
+        // That's to say
+        // 1. `default_specifier` need to be none.
+        // 2. length of `JsNamedImportSpecifiers` at least is one
+        // 3. Surrounding of the only `JsNamedImportSpecifiers` should not have any comments
         let formatted_named_import = if default_specifier.is_some() {
             // `can_break` is true.
-            named_import.format().format(formatter)
+            formatted![formatter, [named_import.format()]]
         } else {
             match named_import {
                 JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
@@ -46,7 +50,7 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                         Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_)) => {
                             let syntax_node = specifiers.syntax();
                             if syntax_node.has_comments_direct() {
-                                named_import.format().format(formatter)
+                                formatted![formatter, [named_import.format()]]
                             } else {
                                 let JsNamedImportSpecifiersFields {
                                     l_curly_token,
@@ -65,10 +69,10 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                                 ]
                             }
                         }
-                        _ => named_import.format().format(formatter),
+                        _ => formatted![formatter, [named_import.format()]],
                     }
                 }
-                _ => named_import.format().format(formatter),
+                _ => formatted![formatter, [named_import.format()]],
             }
         };
 
