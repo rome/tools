@@ -462,7 +462,6 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
 ///
 /// Once merged, the enum is used to get specific members (the literal ones) and elide
 /// the quotes from them, when the algorithm sees fit
-#[allow(clippy::enum_variant_names)]
 pub(crate) enum FormatMemberName {
     ComputedMemberName(JsComputedMemberName),
     PrivateClassMemberName(JsPrivateClassMemberName),

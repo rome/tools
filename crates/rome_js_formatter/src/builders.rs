@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use crate::TriviaPrintMode::Trim;
 use crate::{AsFormat, TextRange};
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};

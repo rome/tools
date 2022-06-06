@@ -723,10 +723,7 @@ fn fits_element_on_line<'a, 'rest>(
             args.with_incremented_indent(),
         )),
 
-        FormatElement::Group(group) => queue.enqueue(PrintElementCall::new(
-            &group.content,
-            args.with_print_mode(PrintMode::Flat),
-        )),
+        FormatElement::Group(group) => queue.enqueue(PrintElementCall::new(&group.content, args)),
 
         FormatElement::ConditionalGroupContent(conditional) => {
             if args.mode == conditional.mode {

@@ -32,9 +32,7 @@ module.exports =
     // ...
     {
       fragments: {
-        nodes: (
-          { solution_type, time_frame },
-        ) =>
+        nodes: ({ solution_type, time_frame }) =>
           Relay.QL`
         fragment on RelatedNode @relay(plural: true) {
           __typename
