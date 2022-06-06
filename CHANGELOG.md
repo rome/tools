@@ -15,7 +15,7 @@
   
   // formatted code
   let a = {
-    someething: 3
+    something: 3
   }
   let b = "cool ins't it";
   ```
