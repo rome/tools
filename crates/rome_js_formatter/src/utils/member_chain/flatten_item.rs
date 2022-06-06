@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::{
-    JsAnyExpression, JsCallExpression, JsComputedMemberExpression, JsIdentifierExpression,
-    JsImportCallExpression, JsNewExpression, JsStaticMemberExpression, JsSyntaxNode,
+    JsAnyExpression, JsCallExpression, JsCallExpressionFields, JsComputedMemberExpression,
+    JsComputedMemberExpressionFields, JsIdentifierExpression, JsImportCallExpression,
+    JsNewExpression, JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxNode,
     JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
@@ -143,32 +144,48 @@ impl Format<JsFormatContext> for FlattenItem {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             FlattenItem::StaticMember(static_member) => {
-                write![
-                    f,
-                    [
-                        static_member.operator_token().format(),
-                        static_member.member().format(),
-                    ]
-                ]
+                let JsStaticMemberExpressionFields {
+                    // Formatted as part of the previous item
+                    object: _,
+                    operator_token,
+                    member,
+                } = static_member.as_fields();
+                write![f, [operator_token.format(), member.format(),]]
             }
             FlattenItem::CallExpression(call_expression) => {
+                let JsCallExpressionFields {
+                    // Formatted as part of the previous item
+                    callee: _,
+                    optional_chain_token,
+                    type_arguments,
+                    arguments,
+                } = call_expression.as_fields();
+
                 write!(
                     f,
                     [
-                        call_expression.optional_chain_token().format(),
-                        call_expression.type_arguments().format(),
-                        call_expression.arguments().format()
+                        optional_chain_token.format(),
+                        type_arguments.format(),
+                        arguments.format()
                     ]
                 )
             }
             FlattenItem::ComputedMember(computed_member) => {
+                let JsComputedMemberExpressionFields {
+                    // Formatted as part of the previous item
+                    object: _,
+                    optional_chain_token,
+                    l_brack_token,
+                    member,
+                    r_brack_token,
+                } = computed_member.as_fields();
                 write!(
                     f,
                     [
-                        computed_member.optional_chain_token().format(),
-                        computed_member.l_brack_token().format(),
-                        computed_member.member().format(),
-                        computed_member.r_brack_token().format(),
+                        optional_chain_token.format(),
+                        l_brack_token.format(),
+                        member.format(),
+                        r_brack_token.format(),
                     ]
                 )
             }
