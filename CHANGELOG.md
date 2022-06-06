@@ -1,5 +1,32 @@
 # Rome changelog
 
+## 0.6.0
+
+- BREAKING CHANGES: the command `rome format --ci` has been removed, use `rome ci` instead.
+- Improved the compatibility with Prettier (check #2403 for more details):
+  - TypeScript's formatting is now in line with what Prettier does.
+  - Better formatting of string literals. The formatter now does a lot of cleaning:
+  ```js
+  // original code
+  let a = {
+    "something": 3
+  }
+  let b = "cool ins\'t it";
+  
+  // formatted code
+  let a = {
+    someething: 3
+  }
+  let b = "cool ins't it";
+  ```
+  - Better formatting of various statements
+  - Improved the performance of the formatting of averagely 20%! Check the [relative
+PR](https://github.com/rome/tools/pull/2634) if you're interested of what the team did.
+
+To reach a better compatibility with Prettier, the team had to review the foundation of our printer,
+which caused some regressions around how comments are printed. These are known issues that we
+plan to close by next release.
+
 ## 0.5.0
 
 - BREAKING CHANGES: the `format` command doesn't write on disk by default. Now the command prints on terminal.

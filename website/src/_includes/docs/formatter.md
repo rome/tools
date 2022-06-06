@@ -35,8 +35,6 @@ appear only for documents that Rome supports.
 
 ### Use the formatter with the CLI
 
-The only command that is supported is `format`.
-
 You can start by running the CLI with the `--help` flag:
 
 ```shell
@@ -55,7 +53,6 @@ USAGE:
 
 OPTIONS:
     --write                       Write the output of the formatter to the files instead of printing the diff to the console
-    --ci                          Enable CI mode, lock files and exit with an error if the formatter would modify them
     --skip-errors                 Skip over files containing syntax errors instead of returning an error
     --indent-style <tabs|space>   Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
     --indent-size <number>        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
