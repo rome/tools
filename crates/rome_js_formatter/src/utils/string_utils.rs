@@ -4,6 +4,7 @@ use crate::utils::string_utils::CharSignal::AlreadyPrinted;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
+use unicode_width::UnicodeWidthStr;
 
 pub trait ToAsciiLowercaseCow {
     /// Returns the same value as String::to_lowercase. The only difference
@@ -70,27 +71,39 @@ impl<'token> FormatLiteralStringToken<'token> {
     pub fn token(&self) -> &'token JsSyntaxToken {
         self.token
     }
+
+    /// Returns the format element for the string literal
+    /// and the new text width if the string literal has been normalized
+    pub fn format_token(
+        &self,
+        formatter: &JsFormatter,
+    ) -> FormatResult<(FormatElement, Option<usize>)> {
+        let token = self.token();
+        // tokens that are don't hold any strings don't need to be processed any further
+        if token.kind() != JS_STRING_LITERAL {
+            return formatted![formatter, [self.token.format()]].map(|element| (element, None));
+        }
+        let chosen_quote_style = formatter.context().quote_style();
+        let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
+
+        let content = string_cleaner.normalise_text(formatter.context().source_type.into());
+        let normalized_text_width = content.width();
+
+        let element = formatter.format_replaced(
+            token,
+            Token::from_syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
+                .into(),
+        );
+
+        Ok((element, Some(normalized_text_width)))
+    }
 }
 
 impl Format for FormatLiteralStringToken<'_> {
     type Context = JsFormatContext;
 
     fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let token = self.token();
-        // tokens that are don't hold any strings don't need to be processed any further
-        if token.kind() != JS_STRING_LITERAL {
-            return formatted![formatter, [self.token.format()]];
-        }
-        let chosen_quote_style = formatter.context().quote_style();
-        let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
-
-        let content = string_cleaner.normalise_text(formatter.context().source_type.into());
-
-        Ok(formatter.format_replaced(
-            token,
-            Token::from_syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
-                .into(),
-        ))
+        self.format_token(formatter).map(|result| result.0)
     }
 }
 

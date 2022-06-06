@@ -1,10 +1,11 @@
 use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
 
+use crate::utils::JsAnyBinaryLikeExpression;
 use crate::FormatNodeFields;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
-    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
+    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -155,22 +156,17 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
             let left = expression.left()?;
             let right = expression.right()?;
 
-            Ok(not_binaryish_expression(left.syntax()) && not_binaryish_expression(right.syntax()))
+            Ok(!JsAnyBinaryLikeExpression::can_cast(left.syntax().kind())
+                && !JsAnyBinaryLikeExpression::can_cast(right.syntax().kind()))
         }
 
         JsAnyExpression::JsLogicalExpression(expression) => {
             let left = expression.left()?;
             let right = expression.right()?;
 
-            Ok(not_binaryish_expression(left.syntax()) && not_binaryish_expression(right.syntax()))
+            Ok(!JsAnyBinaryLikeExpression::can_cast(left.syntax().kind())
+                && !JsAnyBinaryLikeExpression::can_cast(right.syntax().kind()))
         }
         _ => Ok(false),
     }
-}
-
-fn not_binaryish_expression(node: &JsSyntaxNode) -> bool {
-    !matches!(
-        node.kind(),
-        JsSyntaxKind::JS_BINARY_EXPRESSION | JsSyntaxKind::JS_LOGICAL_EXPRESSION
-    )
 }

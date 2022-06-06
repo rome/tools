@@ -433,6 +433,26 @@ impl From<JsAnyObjectMemberName> for FormatMemberName {
     }
 }
 
+impl FormatMemberName {
+    pub fn format_member_name(
+        &self,
+        formatter: &JsFormatter,
+    ) -> FormatResult<(FormatElement, Option<usize>)> {
+        match self {
+            FormatMemberName::ComputedMemberName(node) => {
+                formatted![formatter, [node.format()]].map(|element| (element, None))
+            }
+            FormatMemberName::PrivateClassMemberName(node) => {
+                formatted![formatter, [node.format()]].map(|element| (element, None))
+            }
+            FormatMemberName::LiteralMemberName(literal) => {
+                FormatLiteralStringToken::new(&literal.value()?, StringLiteralParentKind::Member)
+                    .format_token(formatter)
+            }
+        }
+    }
+}
+
 impl From<JsLiteralMemberName> for FormatMemberName {
     fn from(literal: JsLiteralMemberName) -> Self {
         Self::LiteralMemberName(literal)
@@ -443,19 +463,6 @@ impl Format for FormatMemberName {
     type Context = JsFormatContext;
 
     fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let name = match self {
-            FormatMemberName::ComputedMemberName(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            FormatMemberName::PrivateClassMemberName(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            FormatMemberName::LiteralMemberName(literal) => {
-                FormatLiteralStringToken::new(&literal.value()?, StringLiteralParentKind::Member)
-                    .format(formatter)
-            }
-        };
-
-        name
+        self.format_member_name(formatter).map(|result| result.0)
     }
 }
