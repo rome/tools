@@ -22,6 +22,8 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
             write!(f, [type_token.format(), space_token()])?;
         }
 
+        let is_default_specifier_empty = default_specifier.is_none();
+
         if let Some(default_specifier) = default_specifier {
             write!(f, [default_specifier.format(), space_token()])?;
         }
@@ -41,7 +43,7 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
         // 1. `default_specifier` need to be none.
         // 2. length of `JsNamedImportSpecifiers` at least is one
         // 3. Surrounding of the only `JsNamedImportSpecifiers` should not have any comments
-        let formatted_named_import = if default_specifier.is_some() {
+        if !is_default_specifier_empty {
             // `can_break` is true.
             write![f, [named_import.format()]]
         } else {
@@ -79,12 +81,11 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                 }
                 _ => write![f, [named_import.format()]],
             }
-        };
+        }?;
 
         write![
             f,
             [
-                formatted_named_import,
                 space_token(),
                 from_token.format(),
                 space_token(),
