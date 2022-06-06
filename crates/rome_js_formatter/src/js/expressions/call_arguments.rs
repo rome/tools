@@ -19,7 +19,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                 f,
                 [
                     l_paren_token.format(),
-                    args.format(),
+                    group_elements(&args.format()),
                     r_paren_token.format(),
                 ]
             ];
