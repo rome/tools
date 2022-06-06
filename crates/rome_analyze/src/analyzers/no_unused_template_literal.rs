@@ -87,7 +87,7 @@ fn can_convert_to_string_lit(node: &JsTemplate) -> bool {
             JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {
                 match chunk.template_chunk_token() {
                     Ok(token) => {
-                        // if token text has any SpecialCharacters
+                        // if token text has any special character
                         token
                             .text()
                             .chars()
