@@ -212,6 +212,8 @@ fn needs_parens(
     Ok(result)
 }
 
+// False positive, Removing the `+ 'a` lifetime fails to compile with `hidden type for `impl Trait` captures lifetime that does not appear in bounds`
+#[allow(clippy::needless_lifetimes)]
 fn format_sub_expression<'a>(
     parent_operator: BinaryLikeOperator,
     sub_expression: &'a JsAnyBinaryLikeLeftExpression,
