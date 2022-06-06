@@ -12,7 +12,7 @@ const neverBreakAfterColonObject = {
     ab: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     abc: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
 		'古今': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
-		'古体诗': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
+		a̐éö̲: 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
     "class-member": class MyClass { constructor() { console.log('class object constructor')}},
     "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-true": true,
     "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-false": false,
@@ -26,7 +26,8 @@ const neverBreakAfterColonObject = {
 
 const breakAfterColonObject = {
     'long-key-for-string': "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
-    'logical-expression-1': this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
+		'古体诗': 'https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about',
+	  'logical-expression-1': this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
     "logical-expression-2": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
     "binary-expression-1": 13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
     "binary-expression-2": 1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
@@ -101,7 +102,7 @@ const neverBreakAfterColonObject = {
 	ab: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
 	abc: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
 	古今: "https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about",
-	古体诗: "https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about",
+	a̐éö̲: "https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about",
 	"class-member": class MyClass {
 		constructor() {
 			console.log("class object constructor");
@@ -120,6 +121,8 @@ const neverBreakAfterColonObject = {
 const breakAfterColonObject = {
 	"long-key-for-string":
 		"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
+	古体诗:
+		"https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about",
 	"logical-expression-1":
 		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
 	"logical-expression-2":
@@ -223,20 +226,20 @@ const fluidObject = {
     7: 	ab: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     8: 	abc: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     9: 	古今: "https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about",
-   10: 	古体诗: "https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about",
+   10: 	a̐éö̲: "https://prettier.io/docs/en/rationale.html#what-prettier-is-concerned-about",
    16: 	"this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-true": true,
    17: 	"this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-boolean-false": false,
    18: 	number: 1232132132131231232132112321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321,
    19: 	"number-with-dot": 12321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321.12321321321312312321321,
    28: 		"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
-   34: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
-   36: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   49: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   51: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
-   60: 		this.state.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
-   62: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
-   64: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
-   66: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   79: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   81: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   36: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
+   38: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
+   51: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+   53: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   62: 		this.state.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
+   64: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
+   66: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
+   68: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
+   81: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+   83: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
 
