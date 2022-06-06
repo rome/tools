@@ -2,7 +2,6 @@ use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
 
-use rome_formatter::{format, Buffer};
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 use std::mem;
@@ -93,43 +92,25 @@ impl Groups {
         Ok(call_expressions_are_not_simple)
     }
 
-    fn into_formatted_groups(self) -> Vec<FormatElement> {
-        self.groups
-            .into_iter()
-            .map(|group| {
-                FormatElement::from_iter(group.into_iter().map(|flatten_item| flatten_item.into()))
-            })
-            .collect()
-    }
-
     /// Format groups on multiple lines
-    pub fn into_joined_hard_line_groups(self) -> FormatElement {
-        let elements = format!(
-            JsFormatContext::default(),
-            [format_once(|f| {
-                let formatted_groups = self.into_formatted_groups();
-
-                f.join_with(&hard_line_break())
-                    .entries(
-                        formatted_groups
-                            .into_iter()
-                            .map(|e| format_once(|f| f.write_element(e))),
-                    )
-                    .finish()
-            })]
-        )
-        .unwrap();
-
-        elements.into_format_element()
+    pub fn write_joined_with_hard_line_breaks(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join_with(hard_line_break())
+            .entries(
+                self.groups
+                    .iter()
+                    .map(|group| format_with(|f| f.join().entries(group.iter()).finish())),
+            )
+            .finish()
     }
 
     /// Creates two different versions of the formatted groups, one that goes in one line
     /// and the other one that goes on multiple lines.
     ///
     /// It's up to the printer to decide which one to use.
-    pub fn into_format_elements(self) -> FormatElement {
-        let formatted_groups = self.into_formatted_groups();
-        FormatElement::from_iter(formatted_groups)
+    pub fn write(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join()
+            .entries(self.groups.iter().flat_map(|group| group.iter()))
+            .finish()
     }
 
     /// Filters the stack of [FlattenItem] and return only the ones that
@@ -234,11 +215,13 @@ impl HeadGroup {
         &self.items
     }
 
-    pub fn into_format_element(self) -> FormatElement {
-        FormatElement::from_iter(self.items.into_iter().map(FlattenItem::into))
-    }
-
     pub fn expand_group(&mut self, group: Vec<FlattenItem>) {
         self.items.extend(group)
+    }
+}
+
+impl Format<JsFormatContext> for HeadGroup {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join().entries(self.items.iter()).finish()
     }
 }
