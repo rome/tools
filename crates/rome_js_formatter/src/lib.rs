@@ -1,20 +1,16 @@
 //! Rome's official JavaScript formatter.
 
 mod cst;
-pub mod formatter;
 mod js;
 mod jsx;
-pub mod prelude;
+pub(crate) mod prelude;
 mod ts;
 pub mod utils;
 
-use crate::formatter::suppressed_node;
 use crate::utils::has_formatter_suppressions;
-pub(crate) use formatter::{
-    format_leading_trivia, format_trailing_trivia, JsFormatter, JsFormatterExt,
-};
 use rome_formatter::prelude::*;
-use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
+use rome_formatter::write;
+use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
@@ -22,16 +18,22 @@ use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
+use crate::builders::{
+    format_leading_trivia, format_suppressed_node, format_trailing_trivia, format_trimmed_token,
+    TriviaPrintMode,
+};
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
+pub(crate) type JsFormatter<'buf> = Formatter<'buf, JsFormatContext>;
+
 // Per Crate
 
 /// Used to get an object that knows how to format this object.
 pub trait AsFormat<'a> {
-    type Format: Format<Context = JsFormatContext>;
+    type Format: Format<JsFormatContext>;
 
     /// Returns an object that is able to format this object.
     fn format(&'a self) -> Self::Format;
@@ -83,15 +85,15 @@ where
 /// Used to convert this object into an object that can be formatted.
 ///
 /// The difference to [AsFormat] is that this trait takes ownership of `self`.
-pub trait IntoFormat {
-    type Format: Format;
+pub trait IntoFormat<Context> {
+    type Format: Format<Context>;
 
     fn into_format(self) -> Self::Format;
 }
 
-impl<T> IntoFormat for SyntaxResult<T>
+impl<T, Context> IntoFormat<Context> for SyntaxResult<T>
 where
-    T: IntoFormat,
+    T: IntoFormat<Context>,
 {
     type Format = SyntaxResult<T::Format>;
 
@@ -103,9 +105,9 @@ where
 /// Implement [IntoFormat] for [Option] when `T` implements [IntoFormat]
 ///
 /// Allows to call format on optional AST fields without having to unwrap the field first.
-impl<T> IntoFormat for Option<T>
+impl<T, Context> IntoFormat<Context> for Option<T>
 where
-    T: IntoFormat,
+    T: IntoFormat<Context>,
 {
     type Format = Option<T::Format>;
 
@@ -117,28 +119,32 @@ where
 /// Formatting specific [Iterator] extensions
 pub trait FormattedIterExt {
     /// Converts every item to an object that knows how to format it.
-    fn formatted(self) -> FormattedIter<Self, Self::Item>
+    fn formatted<Context>(self) -> FormattedIter<Self, Self::Item, Context>
     where
         Self: Iterator + Sized,
-        Self::Item: IntoFormat,
+        Self::Item: IntoFormat<Context>,
     {
-        FormattedIter { inner: self }
+        FormattedIter {
+            inner: self,
+            options: PhantomData,
+        }
     }
 }
 
 impl<I> FormattedIterExt for I where I: Iterator {}
 
-pub struct FormattedIter<Iter, Item>
+pub struct FormattedIter<Iter, Item, Context>
 where
     Iter: Iterator<Item = Item>,
 {
     inner: Iter,
+    options: PhantomData<Context>,
 }
 
-impl<Iter, Item> Iterator for FormattedIter<Iter, Item>
+impl<Iter, Item, Context> Iterator for FormattedIter<Iter, Item, Context>
 where
     Iter: Iterator<Item = Item>,
-    Item: IntoFormat,
+    Item: IntoFormat<Context>,
 {
     type Item = Item::Format;
 
@@ -147,17 +153,17 @@ where
     }
 }
 
-impl<Iter, Item> FusedIterator for FormattedIter<Iter, Item>
+impl<Iter, Item, Context> FusedIterator for FormattedIter<Iter, Item, Context>
 where
     Iter: FusedIterator<Item = Item>,
-    Item: IntoFormat,
+    Item: IntoFormat<Context>,
 {
 }
 
-impl<Iter, Item> ExactSizeIterator for FormattedIter<Iter, Item>
+impl<Iter, Item, Context> ExactSizeIterator for FormattedIter<Iter, Item, Context>
 where
     Iter: Iterator<Item = Item> + ExactSizeIterator,
-    Item: IntoFormat,
+    Item: IntoFormat<Context>,
 {
 }
 
@@ -175,15 +181,15 @@ where
 {
     type Context = JsFormatContext;
 
-    fn format(node: &N, formatter: &Formatter<JsFormatContext>) -> FormatResult<FormatElement> {
+    fn fmt(node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
-        let element = if has_formatter_suppressions(syntax) {
-            suppressed_node(syntax).format(formatter)?
+        if has_formatter_suppressions(syntax) {
+            write!(f, [format_suppressed_node(syntax)])?;
         } else {
-            Self::format_fields(node, formatter)?
+            Self::fmt_fields(node, f)?;
         };
 
-        Ok(element)
+        Ok(())
     }
 }
 
@@ -192,10 +198,7 @@ where
     T: AstNode<Language = JsLanguage>,
 {
     /// Formats the node's fields.
-    fn format_fields(
-        item: &T,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement>;
+    fn fmt_fields(item: &T, f: &mut JsFormatter) -> FormatResult<()>;
 }
 
 /// Format implementation specific to JavaScript tokens.
@@ -204,17 +207,17 @@ pub struct FormatJsSyntaxToken;
 impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
     type Context = JsFormatContext;
 
-    fn format(
-        token: &JsSyntaxToken,
-        formatter: &Formatter<JsFormatContext>,
-    ) -> FormatResult<FormatElement> {
-        formatter.track_token(token);
+    fn fmt(token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
+        f.state_mut().track_token(token);
 
-        Ok(format_elements![
-            format_leading_trivia(token, formatter::TriviaPrintMode::Full),
-            Token::from(token),
-            format_trailing_trivia(token),
-        ])
+        write!(
+            f,
+            [
+                format_leading_trivia(token, TriviaPrintMode::Full),
+                format_trimmed_token(token),
+                format_trailing_trivia(token),
+            ]
+        )
     }
 }
 
@@ -226,7 +229,7 @@ impl<'a> AsFormat<'a> for JsSyntaxToken {
     }
 }
 
-impl IntoFormat for JsSyntaxToken {
+impl IntoFormat<JsFormatContext> for JsSyntaxToken {
     type Format = FormatOwnedWithRule<JsSyntaxToken, FormatJsSyntaxToken>;
 
     fn into_format(self) -> Self::Format {
@@ -237,7 +240,7 @@ impl IntoFormat for JsSyntaxToken {
 /// Formats a range within a file, supported by Rome
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatOptions], which
+/// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,
@@ -284,7 +287,7 @@ pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResul
 /// Formats a single node within a file, supported by Rome.
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatOptions], which
+/// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,
@@ -471,7 +474,9 @@ function() {
 mod check_reformat;
 #[rustfmt::skip]
 mod generated;
+pub(crate) mod builders;
 pub mod context;
+pub(crate) mod separated;
 
 #[cfg(test)]
 mod test {
@@ -480,11 +485,11 @@ mod test {
     use rome_js_parser::parse;
     use rome_js_syntax::SourceType;
 
-    #[test]
     #[ignore]
+    #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"one.two.tree"#;
+        let src = r#"if (true) {}"#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())

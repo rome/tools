@@ -5,26 +5,19 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectBindingPatternMember;
 impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPatternMember {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyObjectBindingPatternMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyObjectBindingPatternMember::JsIdentifierBinding(node) => node.format().fmt(f),
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => node.format().fmt(f),
         }
     }
 }

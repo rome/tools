@@ -1,15 +1,12 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
 
 impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
-    fn format_fields(
-        node: &JsDefaultClause,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDefaultClauseFields {
             default_token,
             colon_token,
@@ -21,18 +18,24 @@ impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
             Some(JsAnyStatement::JsBlockStatement(_))
         );
 
-        let default = default_token.format();
-        let colon = colon_token.format();
-        let statements = formatter.format_list(&consequent);
+        write!(
+            f,
+            [default_token.format(), colon_token.format(), space_token()]
+        )?;
 
-        let formatted_cons = if statements.is_empty() {
-            hard_line_break()
+        if consequent.is_empty() {
+            write!(f, [hard_line_break()])
         } else if first_child_is_block_stmt {
-            formatted![formatter, [space_token(), statements]]?
+            write!(f, [space_token(), consequent.format()])
         } else {
             // no line break needed after because it is added by the indent in the switch statement
-            indent(formatted![formatter, [hard_line_break(), statements]]?)
-        };
-        formatted![formatter, [default, colon, space_token(), formatted_cons]]
+            write!(
+                f,
+                [indent(&format_args!(
+                    hard_line_break(),
+                    consequent.format()
+                ))]
+            )
+        }
     }
 }

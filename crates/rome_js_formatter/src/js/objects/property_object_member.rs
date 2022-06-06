@@ -1,20 +1,19 @@
 use crate::prelude::*;
 
-use crate::utils::FormatMemberName;
-use crate::utils::JsAnyBinaryLikeExpression;
+use crate::utils::StringLiteralParentKind;
+use crate::utils::{FormatLiteralStringToken, JsAnyBinaryLikeExpression};
 use crate::FormatNodeFields;
-use rome_js_syntax::JsAnyExpression;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::JsPropertyObjectMember;
 use rome_js_syntax::JsPropertyObjectMemberFields;
+use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
+use rome_js_syntax::{JsAnyExpression, JsAnyObjectMemberName};
 use rome_rowan::{AstNode, SyntaxResult};
 use unicode_width::UnicodeWidthStr;
 
 impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjectMember> {
-    fn format_fields(
-        node: &JsPropertyObjectMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsPropertyObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPropertyObjectMemberFields {
             name,
             colon_token,
@@ -22,64 +21,73 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
         } = node.as_fields();
 
         let name = name?;
+        let value = value?;
+        let format_content = format_with(|f| {
+            let name_width = write_member_name(&name, f)?;
+            colon_token.format().fmt(f)?;
 
-        let (format_name, name_width) =
-            FormatMemberName::from(name.clone()).format_member_name(formatter)?;
-        let name_width = name_width.unwrap_or_else(|| name.text().width());
+            let layout = property_object_member_layout(f, name_width, &value)?;
+            match layout {
+                PropertyObjectMemberLayout::Fluid => {
+                    let group_id = f.group_id("property_object_member");
 
-        let layout = property_object_member_layout(formatter, name_width, &value.clone()?)?;
+                    let value = value.format().memoized();
 
-        let formatted = match layout {
-            PropertyObjectMemberLayout::Fluid => {
-                let group_id = formatter.group_id("property_object_member");
-
-                let value = formatted![formatter, [value.format()]]?;
-                formatted![
-                    formatter,
-                    [
-                        group_elements(format_name),
-                        colon_token.format(),
-                        group_elements_with_options(
-                            indent(soft_line_break_or_space()),
-                            GroupElementsOptions {
-                                group_id: Some(group_id),
-                            }
-                        ),
-                        line_suffix_boundary(),
-                        if_group_with_id_breaks(indent(value.clone()), group_id),
-                        if_group_with_id_fits_on_line(value, group_id),
+                    write![
+                        f,
+                        [
+                            group_elements(&indent(&soft_line_break_or_space()),)
+                                .with_group_id(Some(group_id)),
+                            line_suffix_boundary(),
+                            if_group_breaks(&indent(&value)).with_group_id(Some(group_id)),
+                            if_group_fits_on_line(&value).with_group_id(Some(group_id)),
+                        ]
                     ]
-                ]
-            }
-            PropertyObjectMemberLayout::BreakAfterColon => {
-                formatted![
-                    formatter,
-                    [
-                        group_elements(format_name),
-                        colon_token.format(),
-                        space_token(),
-                        group_elements(formatted![
-                            formatter,
-                            [indent(formatted![
-                                formatter,
-                                [soft_line_break_or_space(), value.format()]
-                            ]?)]
-                        ]?),
+                }
+                PropertyObjectMemberLayout::BreakAfterColon => {
+                    write![
+                        f,
+                        [
+                            space_token(),
+                            group_elements(&indent(&format_args![
+                                soft_line_break_or_space(),
+                                value.format()
+                            ])),
+                        ]
                     ]
-                ]
+                }
+                PropertyObjectMemberLayout::NeverBreakAfterColon => {
+                    write![f, [space_token(), value.format(),]]
+                }
             }
-            PropertyObjectMemberLayout::NeverBreakAfterColon => formatted![
-                formatter,
-                [
-                    group_elements(format_name),
-                    colon_token.format(),
-                    space_token(),
-                    value.format(),
-                ]
-            ],
-        };
+        });
 
-        Ok(group_elements(formatted?))
+        write!(f, [group_elements(&format_content)])
+    }
+}
+
+fn write_member_name(name: &JsAnyObjectMemberName, f: &mut JsFormatter) -> FormatResult<usize> {
+    match name {
+        name @ JsAnyObjectMemberName::JsLiteralMemberName(literal) => {
+            let value = literal.value()?;
+
+            if value.kind() == JS_STRING_LITERAL {
+                let format = FormatLiteralStringToken::new(&value, StringLiteralParentKind::Member);
+                let cleaned = format.clean_text(f.context());
+
+                cleaned.fmt(f)?;
+
+                Ok(cleaned.width())
+            } else {
+                name.format().fmt(f)?;
+
+                Ok(value.text_trimmed().width())
+            }
+        }
+        name => {
+            write!(f, [group_elements(&name.format())])?;
+            Ok(name.text().width())
+        }
     }
 }
 
@@ -135,25 +143,21 @@ fn property_object_member_layout(
     let is_name_short = name_width < text_width_for_break;
 
     if is_break_after_colon(value)? {
-        return Ok(PropertyObjectMemberLayout::BreakAfterColon);
-    }
-
-    if is_name_short {
-        return Ok(PropertyObjectMemberLayout::NeverBreakAfterColon);
+        Ok(PropertyObjectMemberLayout::BreakAfterColon)
+    } else if is_name_short {
+        Ok(PropertyObjectMemberLayout::NeverBreakAfterColon)
     } else if matches!(
         value,
         JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(
             _
         ))
     ) {
-        return Ok(PropertyObjectMemberLayout::BreakAfterColon);
+        Ok(PropertyObjectMemberLayout::BreakAfterColon)
+    } else if is_never_break_after_colon(value)? {
+        Ok(PropertyObjectMemberLayout::NeverBreakAfterColon)
+    } else {
+        Ok(PropertyObjectMemberLayout::Fluid)
     }
-
-    if is_never_break_after_colon(value)? {
-        return Ok(PropertyObjectMemberLayout::NeverBreakAfterColon);
-    }
-
-    Ok(PropertyObjectMemberLayout::Fluid)
 }
 
 fn is_break_after_colon(value: &JsAnyExpression) -> SyntaxResult<bool> {

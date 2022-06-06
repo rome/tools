@@ -103,6 +103,7 @@ impl fmt::Display for SyntaxTrivia {
     }
 }
 
+#[derive(Clone)]
 pub struct SyntaxTriviaPiecesIterator {
     pub(crate) raw: SyntaxTrivia,
     pub(crate) next_index: usize,

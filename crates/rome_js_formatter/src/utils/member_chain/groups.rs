@@ -1,13 +1,15 @@
 use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
+
+use rome_formatter::{format, Buffer};
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 use std::mem;
 
 #[derive(Clone)]
 /// Handles creation of groups while scanning the flatten items
-pub(crate) struct Groups<'f> {
+pub(crate) struct Groups {
     /// If the current group is inside an expression statement.
     ///
     /// This information is important when evaluating the break of the groups.
@@ -17,23 +19,22 @@ pub(crate) struct Groups<'f> {
     /// keeps track of the current group that is being created/updated
     current_group: Vec<FlattenItem>,
 
-    /// instance of the formatter
-    formatter: &'f JsFormatter,
-
     /// This is a threshold of when we should start breaking the groups
     ///
     /// By default, it's 2, meaning that we start breaking after the second group.
     cutoff: u8,
+
+    context: JsFormatContext,
 }
 
-impl<'f> Groups<'f> {
-    pub fn new(formatter: &'f JsFormatter, in_expression_statement: bool) -> Self {
+impl Groups {
+    pub fn new(in_expression_statement: bool, context: JsFormatContext) -> Self {
         Self {
-            formatter,
             in_expression_statement,
             groups: Vec::new(),
             current_group: Vec::new(),
             cutoff: 2,
+            context,
         }
     }
 
@@ -95,14 +96,31 @@ impl<'f> Groups<'f> {
     fn into_formatted_groups(self) -> Vec<FormatElement> {
         self.groups
             .into_iter()
-            .map(|group| concat_elements(group.into_iter().map(|flatten_item| flatten_item.into())))
+            .map(|group| {
+                FormatElement::from_iter(group.into_iter().map(|flatten_item| flatten_item.into()))
+            })
             .collect()
     }
 
     /// Format groups on multiple lines
     pub fn into_joined_hard_line_groups(self) -> FormatElement {
-        let formatted_groups = self.into_formatted_groups();
-        join_elements(hard_line_break(), formatted_groups)
+        let elements = format!(
+            JsFormatContext::default(),
+            [format_once(|f| {
+                let formatted_groups = self.into_formatted_groups();
+
+                f.join_with(&hard_line_break())
+                    .entries(
+                        formatted_groups
+                            .into_iter()
+                            .map(|e| format_once(|f| f.write_element(e))),
+                    )
+                    .finish()
+            })]
+        )
+        .unwrap();
+
+        elements.into_format_element()
     }
 
     /// Creates two different versions of the formatted groups, one that goes in one line
@@ -111,7 +129,7 @@ impl<'f> Groups<'f> {
     /// It's up to the printer to decide which one to use.
     pub fn into_format_elements(self) -> FormatElement {
         let formatted_groups = self.into_formatted_groups();
-        concat_elements(formatted_groups)
+        FormatElement::from_iter(formatted_groups)
     }
 
     /// Filters the stack of [FlattenItem] and return only the ones that
@@ -146,7 +164,7 @@ impl<'f> Groups<'f> {
     /// This is an heuristic needed to check when the first element of the group
     /// Should be part of the "head" or the "tail".
     fn should_not_wrap(&self, first_group: &HeadGroup) -> SyntaxResult<bool> {
-        let tab_with = self.formatter.context().tab_width();
+        let tab_with = self.context.tab_width();
         let has_computed_property = if self.groups.len() > 1 {
             // SAFETY: guarded by the previous check
             let group = &self.groups[0];
@@ -217,7 +235,7 @@ impl HeadGroup {
     }
 
     pub fn into_format_element(self) -> FormatElement {
-        concat_elements(self.items.into_iter().map(FlattenItem::into))
+        FormatElement::from_iter(self.items.into_iter().map(FlattenItem::into))
     }
 
     pub fn expand_group(&mut self, group: Vec<FlattenItem>) {

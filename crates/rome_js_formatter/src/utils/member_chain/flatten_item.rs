@@ -141,14 +141,18 @@ impl FlattenItem {
 impl Debug for FlattenItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            FlattenItem::StaticMember(_, formatted) => write!(f, "StaticMember: {:?}", formatted),
+            FlattenItem::StaticMember(_, formatted) => {
+                std::write!(f, "StaticMember: {:?}", formatted)
+            }
             FlattenItem::CallExpression(_, formatted) => {
-                write!(f, "CallExpression: {:?}", formatted)
+                std::write!(f, "CallExpression: {:?}", formatted)
             }
             FlattenItem::ComputedExpression(_, formatted) => {
-                write!(f, "ComputedExpression: {:?}", formatted)
+                std::write!(f, "ComputedExpression: {:?}", formatted)
             }
-            FlattenItem::Node(node, formatted) => write!(f, "{:?} {:?}", node.kind(), formatted),
+            FlattenItem::Node(node, formatted) => {
+                std::write!(f, "{:?} {:?}", node.kind(), formatted)
+            }
         }
     }
 }
@@ -156,9 +160,9 @@ impl Debug for FlattenItem {
 impl From<FlattenItem> for FormatElement {
     fn from(flatten_item: FlattenItem) -> Self {
         match flatten_item {
-            FlattenItem::StaticMember(_, formatted) => concat_elements(formatted),
-            FlattenItem::CallExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::ComputedExpression(_, formatted) => concat_elements(formatted),
+            FlattenItem::StaticMember(_, formatted) => FormatElement::from_iter(formatted),
+            FlattenItem::CallExpression(_, formatted) => FormatElement::from_iter(formatted),
+            FlattenItem::ComputedExpression(_, formatted) => FormatElement::from_iter(formatted),
             FlattenItem::Node(_, formatted) => formatted,
         }
     }

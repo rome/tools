@@ -1,167 +1,141 @@
-use crate::prelude::*;
-use crate::{ConcatBuilder, IntoFormatElement};
-use std::marker::PhantomData;
-
-/// The macro `format_elements` is a convenience macro to
-/// use when writing a list of tokens that should be at the same level
-/// without particular rule.
+/// Constructs the parameters for other formatting macros.
 ///
-/// # Examples
+/// This macro functions by taking a list of objects implementing [Format]. It canonicalize the
+/// arguments into a single type.
 ///
-/// Let's suppose you need to create tokens for the string `"foo": "bar"`,
-/// you would write:
+/// This macro produces a value of type [`Arguments`]. This value can be passed to
+/// the macros within [`rome_formatter`]. All other formatting macros ([`format!`],
+/// [`write!`]) are proxied through this one. This macro avoids heap allocations.
 ///
-/// ```rust
-/// use rome_formatter::prelude::*;
-///
-/// let element = format_elements![token("foo:"), space_token(), token("bar")];
-/// ```
-///
-/// The macro can be also nested, although the macro needs to be decorated with the token you need.
-/// For example, let's try to format following string:
-///
-/// ```no_rust
-/// foo: { bar: lorem }
-/// ```
-/// You would write it like the following:
+/// You can use the [`Arguments`] value that `format_args!` returns in  `Format` contexts
+/// as seen below.
 ///
 /// ```rust
-/// use rome_formatter::{FormatContext, Formatted};
+/// use rome_formatter::{SimpleFormatContext, format, format_args};
 /// use rome_formatter::prelude::*;
 ///
-/// let element = format_elements![
-///   token("foo:"),
-///   space_token(),
-///   token("{"),
-///   space_token(),
-///   token("bar:"),
-///   space_token(),
-///   token("lorem"),
-///   space_token(),
-///   token("}")
-/// ];
-/// assert_eq!(r#"foo: { bar: lorem }"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
-/// ```
-/// Or you can also create single element:
-/// ```
-/// use rome_formatter::{Formatted, FormatContext};
-/// use rome_formatter::prelude::*;
+/// let formatted = format!(SimpleFormatContext::default(), [
+///     format_args!(token("Hello World"))
+/// ]).unwrap();
 ///
-/// use rome_formatter::prelude::*;
-/// let element = format_elements![token("single")];
-/// assert_eq!(r#"single"#, Formatted::new(element, PrinterOptions::default()).print().as_code());
+/// assert_eq!("Hello World", formatted.print().as_code());
 /// ```
+///
+/// [`Format`]: crate::Format
+/// [`Arguments`]: crate::Arguments
+/// [`format!`]: crate::format
+/// [`write!`]: crate::write
 #[macro_export]
-macro_rules! format_elements {
-
-    // called for things like format_tokens!["hey"]
-    ($element:expr) => {
-        {
-            use $crate::FormatElement;
-            FormatElement::from($element)
-        }
-    };
-
-    ( $( $element:expr ),+ $(,)?) => {{
-        use $crate::{FormatElement, concat_elements};
-        concat_elements([
+macro_rules! format_args {
+    ($($value:expr),+ $(,)?) => {
+        $crate::Arguments::new(&[
             $(
-                     FormatElement::from($element)
+                $crate::Argument::new(&$value)
             ),+
         ])
-    }};
+    }
 }
 
-/// The macro `formatted` is a convenience macro to chain a list of [FormatElement] or objects
-/// that implement [IntoFormatElement] (which is implemented by all object implementing [Format]).
+/// Writes formatted data into a buffer.
+///
+/// This macro accepts a 'buffer' and a list of format arguments. Each argument will be formatted
+/// and the result will be passed to the buffer. The writer may be any value with a `write_fmt` method;
+/// generally this comes from an implementation of the [`Buffer`] trait.
 ///
 /// # Examples
 ///
-/// Let's suppose you need to create tokens for the string `"foo": "bar"`,
-/// you would write:
-///
 /// ```rust
-/// use rome_formatter::FormatContext;
 /// use rome_formatter::prelude::*;
+/// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, VecBuffer, write};
 ///
-/// struct TestFormat;
+/// fn main() -> FormatResult<()> {
+///     let mut state = FormatState::new(SimpleFormatContext::default());
+///     let mut buffer = VecBuffer::new(&mut state);
+///     write!(&mut buffer, [token("Hello"), space_token()])?;
+///     write!(&mut buffer, [token("World")])?;
 ///
-/// impl Format for TestFormat {
-///     type Context = ();
-///     fn format(&self, _: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-///         Ok(token("test"))
-///     }
+///     assert_eq!(
+///         buffer.into_element(),
+///         FormatElement::from_iter([
+///             FormatElement::Token(Token::Static { text: "Hello" }),
+///             FormatElement::Space,
+///             FormatElement::Token(Token::Static { text: "World" }),
+///         ])
+///     );
+///
+///     Ok(())
 /// }
-///
-/// let formatter = Formatter::default();
-///
-/// let formatted = formatted![
-///     &formatter,
-///     [
-///         token("a"),
-///         space_token(),
-///         token("simple"),
-///         space_token(),
-///         TestFormat
-///     ]
-///  ]
-///  .unwrap();
-///
-///  assert_eq!(
-///     formatted,
-///     concat_elements([
-///         token("a"),
-///         space_token(),
-///         token("simple"),
-///         space_token(),
-///         token("test")
-///     ])
-///  );
-/// ```
-///
-/// Or you can also create single element:
-/// ```
-/// use rome_formatter::prelude::*;
-/// use rome_formatter::FormatContext;
-///
-/// let formatter = Formatter::<()>::default();
-///
-/// let formatted = formatted![&formatter, [token("test")]].unwrap();
-///
-/// assert_eq!(formatted, token("test"));
 /// ```
 #[macro_export]
-macro_rules! formatted {
-
-    // called for things like formatted![formatter, [token("test")]]
-    ($formatter:expr, [$element:expr]) => {
-        {
-            $crate::IntoFormatElement::into_format_element($element, $formatter)
-        }
-    };
-
-    ($formatter:expr, [$($element:expr),+ $(,)?]) => {{
-        use $crate::macros::FormatBuilder;
-
-        const SIZE: usize = $crate::__count_elements!($($element),*);
-
-        let mut builder = FormatBuilder::new(SIZE);
-
-        $(
-                     builder.entry($element, $formatter);
-        )+
-
-        builder.finish()
-    }};
+macro_rules! write {
+    ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
+        $dst.write_fmt($crate::format_args!($($arg),+))
+    }}
 }
 
-// Helper macro that counts the count of elements passed
-#[doc(hidden)]
+/// Writes formatted data into the given buffer and prints all written elements for a quick and dirty debugging.
+///
+/// An example:
+///
+/// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{FormatState, VecBuffer};
+///
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+///
+/// dbg_write!(&mut buffer, [token("Hello")]).unwrap();
+/// // ^-- prints: [src/main.rs:7][0] = StaticToken("Hello")
+///
+/// assert_eq!(buffer.into_element(), FormatElement::Token(Token::Static { text: "Hello" }));
+/// ```
+///
+/// Note that the macro is intended as debugging tool and therefore you should avoid having
+/// uses of it in version control for long periods (other than in tests and similar). Format output
+/// from production code is better done with `[write!]`
 #[macro_export]
-macro_rules! __count_elements {
-    () => {0usize};
-    ($ex:expr) => {1usize};
-    ($_head:expr, $($tail:expr),* $(,)?) => {1usize + $crate::__count_elements!($($tail),*)};
+macro_rules! dbg_write {
+    ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
+        let mut count = 0;
+        let mut inspect = $crate::Inspect::new($dst, |element: &FormatElement| {
+            std::eprintln!(
+                "[{}:{}][{}] = {element:#?}",
+                std::file!(), std::line!(), count
+            );
+            count += 1;
+        });
+        inspect.write_fmt($crate::format_args!($($arg),+))
+    }}
+}
+
+/// Creates the Format IR for a value.
+///
+/// The first argument `format!` receives is the [FormatContext] that specify how elements must be formatted.
+/// Additional parameters passed get formatted by using their [Format] implementation.
+///
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::format;
+///
+/// let formatted = format!(SimpleFormatContext::default(), [token("("), token("a"), token(")")]).unwrap();
+///
+/// assert_eq!(
+///     formatted.into_format_element(),
+///     FormatElement::from_iter([
+///         FormatElement::Token(Token::Static { text: "(" }),
+///         FormatElement::Token(Token::Static { text: "a" }),
+///         FormatElement::Token(Token::Static { text: ")" }),
+///     ])
+/// );
+/// ```
+#[macro_export]
+macro_rules! format {
+    ($context:expr, [$($arg:expr),+ $(,)?]) => {{
+        ($crate::format($context, $crate::format_args!($($arg),+)))
+    }}
 }
 
 /// Provides multiple different alternatives and the printer picks the first one that fits.
@@ -172,59 +146,64 @@ macro_rules! __count_elements {
 ///
 /// ## Examples
 ///
-/// Temporarily ignored because [BestFitting] needs to be adjusted due to the
+///  Temporarily ignored because [BestFitting] needs to be adjusted due to the
 /// `fits_element_on_line` changes in https://github.com/rome/tools/pull/2645
 /// ```ignore
-/// use rome_formatter::{Formatted, LineWidth};
+/// use rome_formatter::{Formatted, LineWidth, format, format_args};
 /// use rome_formatter::prelude::*;
 ///
-/// let elements = format_elements![
-///   token("aVeryLongIdentifier"),
-///   best_fitting!(
-///     // Everything fits on a single line
-///     format_elements![
-///         token("("),
-///         group_elements(format_elements![
-///             token("["),
-///                 soft_block_indent(format_elements![
-///                 token("1,"),
-///                 soft_line_break_or_space(),
-///                 token("2,"),
-///                 soft_line_break_or_space(),
-///                 token("3"),
-///             ]),
-///             token("]")
-///         ]),
-///         token(")")
-///     ],
+/// let formatted = format!(
+///     SimpleFormatContext::default(),
+///     [
+///         token("aVeryLongIdentifier"),
+///         best_fitting!(
+///             // Everything fits on a single line
+///             format_args!(
+///                 token("("),
+///                 group_elements(&format_args![
+///                     token("["),
+///                         soft_block_indent(&format_args![
+///                         token("1,"),
+///                         soft_line_break_or_space(),
+///                         token("2,"),
+///                         soft_line_break_or_space(),
+///                         token("3"),
+///                     ]),
+///                     token("]")
+///                 ]),
+///                 token(")")
+///             ),
 ///
-///     // Breaks after `[`, but prints all elements on a single line
-///     format_elements![
-///         token("("),
-///         token("["),
-///         block_indent(token("1, 2, 3")),
-///         token("]"),
-///         token(")"),
-///     ],
+///             // Breaks after `[`, but prints all elements on a single line
+///             format_args!(
+///                 token("("),
+///                 token("["),
+///                 block_indent(&token("1, 2, 3")),
+///                 token("]"),
+///                 token(")"),
+///             ),
 ///
-///     // Breaks after `[` and prints each element on a single line
-///     format_elements![
-///         token("("),
-///         block_indent(format_elements![
-///             token("["),
-///             block_indent(format_elements![
-///                 token("1,"),
-///                 hard_line_break(),
-///                 token("2,"),
-///                 hard_line_break(),
-///                 token("3"),
-///             ]),
-///             token("]"),
-///         ]),
-///         token(")")
+///             // Breaks after `[` and prints each element on a single line
+///             format_args!(
+///                 token("("),
+///                 block_indent(&format_args![
+///                     token("["),
+///                     block_indent(&format_args![
+///                         token("1,"),
+///                         hard_line_break(),
+///                         token("2,"),
+///                         hard_line_break(),
+///                         token("3"),
+///                     ]),
+///                     token("]"),
+///                 ]),
+///                 token(")")
+///             )
+///         )
 ///     ]
-///   )
-/// ];
+/// ).unwrap();
+///
+/// let elements = formatted.into_format_element();
 ///
 /// // Takes the first variant if everything fits on a single line
 /// assert_eq!(
@@ -266,78 +245,45 @@ macro_rules! __count_elements {
 #[macro_export]
 macro_rules! best_fitting {
     ($least_expanded:expr, $($tail:expr),+ $(,)?) => {{
-        let inner = unsafe {
-            $crate::format_element::BestFitting::from_slice_unchecked(&[$least_expanded, $($tail),+])
-        };
-        FormatElement::BestFitting(inner)
-    }}
-}
-
-#[doc(hidden)]
-pub struct FormatBuilder<O> {
-    builder: ConcatBuilder,
-    result: Result<(), FormatError>,
-    options: PhantomData<O>,
-}
-
-impl<O> FormatBuilder<O> {
-    #[inline]
-    pub fn new(size: usize) -> Self {
-        let mut builder = ConcatBuilder::new();
-        builder.size_hint((size, Some(size)));
-
-        Self {
-            builder,
-            result: Ok(()),
-            options: PhantomData,
+        unsafe {
+            $crate::BestFitting::from_arguments_unchecked($crate::format_args!($least_expanded, $($tail),+))
         }
-    }
-
-    #[inline]
-    pub fn entry<T>(&mut self, element: T, formatter: &Formatter<O>)
-    where
-        T: IntoFormatElement<O>,
-    {
-        self.result = self.result.and_then(|_| {
-            self.builder.entry(element.into_format_element(formatter)?);
-            Ok(())
-        });
-    }
-
-    #[inline]
-    pub fn finish(self) -> FormatResult<FormatElement> {
-        self.result.map(|_| self.builder.finish())
-    }
+    }}
 }
 
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
+    use crate::{write, FormatState, VecBuffer};
 
     struct TestFormat;
 
-    impl Format for TestFormat {
-        type Context = ();
-        fn format(&self, _: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-            Ok(token("test"))
+    impl Format<()> for TestFormat {
+        fn fmt(&self, f: &mut Formatter<()>) -> FormatResult<()> {
+            write!(f, [token("test")])
         }
     }
 
     #[test]
     fn test_single_element() {
-        let formatter = Formatter::new(());
+        let mut state = FormatState::new(());
+        let mut buffer = VecBuffer::new(&mut state);
 
-        let formatted = formatted![&formatter, [TestFormat]].unwrap();
+        write![&mut buffer, [TestFormat]].unwrap();
 
-        assert_eq!(formatted, token("test"));
+        assert_eq!(
+            buffer.into_element(),
+            FormatElement::Token(Token::Static { text: "test" })
+        );
     }
 
     #[test]
     fn test_multiple_elements() {
-        let formatter = Formatter::new(());
+        let mut state = FormatState::new(());
+        let mut buffer = VecBuffer::new(&mut state);
 
-        let formatted = formatted![
-            &formatter,
+        write![
+            &mut buffer,
             [
                 token("a"),
                 space_token(),
@@ -349,14 +295,14 @@ mod tests {
         .unwrap();
 
         assert_eq!(
-            formatted,
-            concat_elements([
-                token("a"),
-                space_token(),
-                token("simple"),
-                space_token(),
-                token("test")
-            ])
+            buffer.into_element(),
+            FormatElement::List(List::new(vec![
+                FormatElement::Token(Token::Static { text: "a" }),
+                FormatElement::Space,
+                FormatElement::Token(Token::Static { text: "simple" }),
+                FormatElement::Space,
+                FormatElement::Token(Token::Static { text: "test" })
+            ]))
         );
     }
 }

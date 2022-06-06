@@ -6,13 +6,9 @@ use rome_rowan::AstNodeList;
 impl FormatRule<JsConstructorModifierList> for FormatJsConstructorModifierList {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &JsConstructorModifierList,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        Ok(join_elements(
-            space_token(),
-            formatter.format_all(node.iter().formatted())?,
-        ))
+    fn fmt(node: &JsConstructorModifierList, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join_with(&space_token())
+            .entries(node.iter().formatted())
+            .finish()
     }
 }

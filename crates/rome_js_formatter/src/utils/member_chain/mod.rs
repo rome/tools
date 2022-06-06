@@ -5,6 +5,7 @@ mod simple_argument;
 use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::groups::{Groups, HeadGroup};
+use rome_formatter::{format_args, write, Buffer, VecBuffer};
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsStaticMemberExpression,
 };
@@ -117,16 +118,13 @@ use rome_rowan::AstNode;
 /// ```
 ///
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js
-pub fn format_call_expression(
-    syntax_node: &JsSyntaxNode,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement> {
+pub fn format_call_expression(syntax_node: &JsSyntaxNode, f: &mut JsFormatter) -> FormatResult<()> {
     let mut flattened_items = vec![];
     let parent_is_expression_statement = syntax_node.parent().map_or(false, |parent| {
         JsExpressionStatement::can_cast(parent.kind())
     });
 
-    flatten_call_expression(&mut flattened_items, syntax_node.clone(), formatter)?;
+    flatten_call_expression(&mut flattened_items, syntax_node.clone(), f)?;
 
     // Count the number of CallExpression in the chain,
     // will be used later to decide on how to format it
@@ -146,8 +144,7 @@ pub fn format_call_expression(
 
     // `flattened_items` now contains only the nodes that should have a sequence of
     // `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
-    let mut rest_of_groups =
-        compute_groups(flattened_items, parent_is_expression_statement, formatter)?;
+    let mut rest_of_groups = compute_groups(flattened_items, parent_is_expression_statement, f)?;
 
     // Here we check if the first element of Groups::groups can be moved inside the head.
     // If so, then we extract it and concatenate it together with the head.
@@ -156,7 +153,7 @@ pub fn format_call_expression(
         head_group.expand_group(group_to_merge);
     }
 
-    format_groups(calls_count, head_group, rest_of_groups)
+    format_groups(calls_count, head_group, rest_of_groups, f)
 }
 
 /// Retrieves the index where we want to calculate the first group.
@@ -234,10 +231,10 @@ fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
 fn compute_groups(
     flatten_items: impl Iterator<Item = FlattenItem>,
     in_expression_statement: bool,
-    formatter: &JsFormatter,
+    f: &JsFormatter,
 ) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
-    let mut groups = Groups::new(formatter, in_expression_statement);
+    let mut groups = Groups::new(in_expression_statement, *f.context());
     for item in flatten_items {
         let has_trailing_comments = item.as_syntax().has_trailing_comments();
 
@@ -288,30 +285,31 @@ fn format_groups(
     calls_count: usize,
     head_group: HeadGroup,
     groups: Groups,
-) -> FormatResult<FormatElement> {
+    f: &mut JsFormatter,
+) -> FormatResult<()> {
     // TODO use Alternatives once available
+    f.write_element(head_group.into_format_element())?;
+
     if groups.groups_should_break(calls_count)? {
-        Ok(format_elements![
-            head_group.into_format_element(),
-            indent(format_elements![
+        write!(
+            f,
+            [indent(&format_args!(
                 hard_line_break(),
-                groups.into_joined_hard_line_groups()
-            ])
-        ])
+                format_once(|f| {
+                    f.write_element(groups.into_joined_hard_line_groups())?;
+                    Ok(())
+                })
+            ))]
+        )
     } else {
         let chain = groups.into_format_elements();
-
-        Ok(format_elements![
-            head_group.into_format_element(),
+        if !chain.is_empty() {
             // TODO This line suffix boundary shouldn't be needed but currently is because comments
             // can move over node boundaries. Follow up when re-working member chain formatting
-            if chain.is_empty() {
-                empty_element()
-            } else {
-                line_suffix_boundary()
-            },
-            chain
-        ])
+            write!(f, [line_suffix_boundary()])?;
+        }
+
+        f.write_element(chain)
     }
 }
 
@@ -320,61 +318,71 @@ fn format_groups(
 fn flatten_call_expression(
     queue: &mut Vec<FlattenItem>,
     node: JsSyntaxNode,
-    formatter: &JsFormatter,
+    f: &mut JsFormatter,
 ) -> FormatResult<()> {
     match node.kind() {
         JsSyntaxKind::JS_CALL_EXPRESSION => {
             let call_expression = JsCallExpression::cast(node).unwrap();
             let callee = call_expression.callee()?;
-            flatten_call_expression(queue, callee.syntax().clone(), formatter)?;
-            let formatted = vec![formatted![
-                formatter,
+            flatten_call_expression(queue, callee.syntax().clone(), f)?;
+
+            let mut buffer = VecBuffer::new(f.state_mut());
+            write!(
+                buffer,
                 [
                     call_expression.optional_chain_token().format(),
                     call_expression.type_arguments().format(),
                     call_expression.arguments().format()
                 ]
-            ]?];
+            )?;
 
-            queue.push(FlattenItem::CallExpression(call_expression, formatted));
+            queue.push(FlattenItem::CallExpression(
+                call_expression,
+                buffer.into_vec(),
+            ));
         }
         JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
             let static_member = JsStaticMemberExpression::cast(node).unwrap();
             let object = static_member.object()?;
-            flatten_call_expression(queue, object.syntax().clone(), formatter)?;
-            let formatted = vec![formatted![
-                formatter,
+            flatten_call_expression(queue, object.syntax().clone(), f)?;
+
+            let mut buffer = VecBuffer::new(f.state_mut());
+            let _formatted = write![
+                buffer,
                 [
                     static_member.operator_token().format(),
                     static_member.member().format(),
                 ]
-            ]?];
-            queue.push(FlattenItem::StaticMember(static_member, formatted));
+            ]?;
+            queue.push(FlattenItem::StaticMember(static_member, buffer.into_vec()));
         }
 
         JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
             let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
             let object = computed_expression.object()?;
-            flatten_call_expression(queue, object.syntax().clone(), formatter)?;
-            let formatted = vec![formatted!(
-                formatter,
+            flatten_call_expression(queue, object.syntax().clone(), f)?;
+
+            let mut buffer = VecBuffer::new(f.state_mut());
+            write!(
+                buffer,
                 [
                     computed_expression.optional_chain_token().format(),
                     computed_expression.l_brack_token().format(),
                     computed_expression.member().format(),
                     computed_expression.r_brack_token().format(),
                 ]
-            )?];
+            )?;
 
             queue.push(FlattenItem::ComputedExpression(
                 computed_expression,
-                formatted,
+                buffer.into_vec(),
             ));
         }
 
         _ => {
-            let formatted = formatted![formatter, [node.format()]]?;
-            queue.push(FlattenItem::Node(node, formatted));
+            let mut buffer = VecBuffer::new(f.state_mut());
+            write!(buffer, [node.format()])?;
+            queue.push(FlattenItem::Node(node, buffer.into_element()));
         }
     }
 

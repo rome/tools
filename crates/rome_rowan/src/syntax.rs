@@ -7,7 +7,8 @@ use std::fmt::Debug;
 
 pub use trivia::{
     SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline,
-    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, TriviaPiece, TriviaPieceKind,
+    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece,
+    TriviaPieceKind,
 };
 
 pub use element::SyntaxElement;
