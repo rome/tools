@@ -5,13 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsxAnyAttributeValue;
 impl FormatRule<JsxAnyAttributeValue> for FormatJsxAnyAttributeValue {
     type Context = JsFormatContext;
-    fn format(node: &JsxAnyAttributeValue, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsxAnyAttributeValue, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsxAnyAttributeValue::JsxAnyTag(node) => formatted![formatter, [node.format()]],
-            JsxAnyAttributeValue::JsxString(node) => formatted![formatter, [node.format()]],
-            JsxAnyAttributeValue::JsxExpressionAttributeValue(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsxAnyAttributeValue::JsxAnyTag(node) => node.format().fmt(f),
+            JsxAnyAttributeValue::JsxString(node) => node.format().fmt(f),
+            JsxAnyAttributeValue::JsxExpressionAttributeValue(node) => node.format().fmt(f),
         }
     }
 }

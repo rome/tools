@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: assignment2.ts
 ---
 # Input
@@ -37,16 +38,14 @@ const originalPrototype = originalConstructor.prototype as TComponent & Injectio
 
 # Output
 ```js
-const defaultMaskGetter = $parse(
-  attrs[directiveName],
-) as (scope: ng.IScope) => Mask;
+const defaultMaskGetter = $parse(attrs[directiveName]) as (
+  scope: ng.IScope,
+) => Mask;
 
 (this.configuration as any) =
   (this.editor as any) = (this.editorBody as any) = undefined;
 
-angular.module(
-  "foo",
-).directive(
+angular.module("foo").directive(
   "formIsolator",
   () => {
     return {
@@ -67,9 +66,9 @@ const extraRendererAttrs = (
   ) || Object.create(null)
 ) as FieldService.RendererAttributes;
 
-const annotate = (
-  angular.injector as any
-).$$annotate as (fn: Function) => string[];
+const annotate = (angular.injector as any).$$annotate as (
+  fn: Function,
+) => string[];
 
 const originalPrototype = originalConstructor.prototype as
   & TComponent

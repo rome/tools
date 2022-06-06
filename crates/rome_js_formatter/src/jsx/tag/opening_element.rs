@@ -1,12 +1,10 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{JsxOpeningElement, JsxOpeningElementFields};
 
 impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
-    fn format_fields(
-        node: &JsxOpeningElement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsxOpeningElement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxOpeningElementFields {
             l_angle_token,
             name,
@@ -16,8 +14,8 @@ impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
         } = node.as_fields();
 
         if attributes.is_empty() && type_arguments.is_none() {
-            formatted![
-                formatter,
+            write![
+                f,
                 [
                     l_angle_token.format(),
                     name.format(),
@@ -29,8 +27,8 @@ impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
                 ]
             ]
         } else {
-            formatted![
-                formatter,
+            write![
+                f,
                 [
                     l_angle_token.format(),
                     name.format(),

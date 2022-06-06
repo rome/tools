@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: mobx.js
 ---
 # Input
@@ -77,13 +78,11 @@ import { observable } from "mobx";
     return this.price * this.amount;
   }
 
-  @action handleDecrease = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => this.count--;
+  @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) =>
+    this.count--;
 
-  @action handleSomething = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => doSomething();
+  @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) =>
+    doSomething();
 }
 
 ```

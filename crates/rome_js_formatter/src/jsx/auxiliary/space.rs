@@ -1,6 +1,8 @@
 use crate::context::QuoteStyle;
-use crate::JsFormatContext;
+use crate::{JsFormatContext, JsFormatter};
+use rome_formatter::if_group_fits_on_line;
 use rome_formatter::prelude::*;
+use rome_formatter::{format_args, write};
 
 /// Creates either a space using an expression child and a string literal,
 /// or a regular space, depending on whether the group breaks or not.
@@ -19,18 +21,19 @@ use rome_formatter::prelude::*;
 #[derive(Default)]
 pub struct JsxSpace {}
 
-impl Format for JsxSpace {
-    type Context = JsFormatContext;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
+impl Format<JsFormatContext> for JsxSpace {
+    fn fmt(&self, formatter: &mut JsFormatter) -> FormatResult<()> {
         let jsx_space = match formatter.context().quote_style() {
             QuoteStyle::Double => "{\" \"}",
             QuoteStyle::Single => "{\' \'}",
         };
 
-        Ok(format_elements![
-            if_group_breaks(format_elements![token(jsx_space), soft_line_break()]),
-            if_group_fits_on_single_line(space_token())
-        ])
+        write![
+            formatter,
+            [
+                if_group_breaks(&format_args![token(jsx_space), soft_line_break()]),
+                if_group_fits_on_line(&space_token())
+            ]
+        ]
     }
 }

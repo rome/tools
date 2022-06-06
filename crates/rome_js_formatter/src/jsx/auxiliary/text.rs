@@ -2,29 +2,37 @@ use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
 use crate::utils::jsx_utils::JSX_WHITESPACE_CHARS;
 use crate::FormatNodeFields;
-use crate::{FormatElement, JsFormatter};
-use rome_formatter::{FormatResult, Token};
+use rome_formatter::{write, FormatResult};
 use rome_js_syntax::{JsxText, JsxTextFields, TextSize};
 use std::borrow::Cow;
+
 use std::ops::Range;
 use std::str::CharIndices;
 
 impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
-    fn format_fields(node: &JsxText, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxTextFields { value_token } = node.as_fields();
         let token = value_token?;
         let (leading_whitespace_type, new_text, start, trailing_whitespace_type) =
             clean_jsx_text(token.text(), token.text_range().start());
-        let new_token = Token::from_syntax_token_cow_slice(new_text, &token, start);
-        let new_text = formatter.format_replaced(&token, FormatElement::from(new_token));
+        if matches!(
+            leading_whitespace_type,
+            Some(WhitespaceType::HasNewline) | None
+        ) && new_text.is_empty()
+            && matches!(
+                trailing_whitespace_type,
+                Some(WhitespaceType::HasNewline) | None
+            )
+        {
+            return write![f, [format_replaced(&token, &empty_element())]];
+        }
 
-        formatted![
-            formatter,
-            [
-                leading_whitespace_type.format(formatter),
-                new_text,
-                trailing_whitespace_type.format(formatter)
-            ]
+        let new_token = syntax_token_cow_slice(new_text, &token, start);
+        let new_text = format_replaced(&token, &new_token);
+
+        write![
+            f,
+            [leading_whitespace_type, new_text, trailing_whitespace_type]
         ]
     }
 }
@@ -164,14 +172,16 @@ impl<'a> TextCleaner<'a> {
     }
 }
 
-impl Format for WhitespaceType {
-    type Context = JsFormatContext;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
+impl Format<JsFormatContext> for WhitespaceType {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
-            WhitespaceType::HasNewline => Ok(empty_element()),
-            WhitespaceType::NoNewline => JsxSpace::default().format(formatter),
+            WhitespaceType::NoNewline => {
+                write![f, [JsxSpace::default()]]?;
+            }
+            _ => {}
         }
+
+        Ok(())
     }
 }
 

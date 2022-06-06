@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 244
 expression: attributes.jsx
 ---
 # Input
@@ -66,7 +65,8 @@ Quote style: Double Quotes
 		fontSize: 12,
 		height: "40vh",
 		overflowY: "scroll",
-		fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+		fontFamily:
+			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 	}}
 />;
 
@@ -88,7 +88,8 @@ Quote style: Double Quotes
 		fontSize: 12,
 		height: "50vh",
 		overflowY: "scroll",
-		fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+		fontFamily:
+			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 	}}
 />;
 
@@ -116,6 +117,6 @@ let a = (
 
 ## Lines exceeding width of 80 characters
 
-    9: 		fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   31: 		fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   10: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   33: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 

@@ -1,20 +1,18 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsAssertsReturnType;
 use rome_js_syntax::TsAssertsReturnTypeFields;
 
 impl FormatNodeFields<TsAssertsReturnType> for FormatNodeRule<TsAssertsReturnType> {
-    fn format_fields(
-        node: &TsAssertsReturnType,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsAssertsReturnType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsAssertsReturnTypeFields {
             parameter_name,
             asserts_token,
             predicate,
         } = node.as_fields();
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 asserts_token.format(),
                 space_token(),

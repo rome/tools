@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: infer-type.ts
 ---
 # Input
@@ -16,9 +17,9 @@ type Unpacked<T> =
 
 # Output
 ```js
-type TestReturnType<
-  T extends (...args: any[]) => any,
-> = T extends (...args: any[]) => infer R ? R : any;
+type TestReturnType<T extends (...args: any[]) => any> = T extends (
+  ...args: any[]
+) => infer R ? R : any;
 
 type Unpacked<T> = T extends (infer U)[]
   ? U

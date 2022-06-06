@@ -1,12 +1,12 @@
 use crate::prelude::*;
+use crate::soft_block_indent;
 use crate::utils::jsx_utils::is_jsx_inside_arrow_function_inside_call_inside_expression_child;
 use crate::FormatNodeFields;
-use crate::{soft_block_indent, FormatElement};
-use rome_formatter::FormatResult;
+use rome_formatter::{format_args, write, FormatResult};
 use rome_js_syntax::{JsxElement, JsxElementFields};
 
 impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
-    fn format_fields(node: &JsxElement, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsxElement, formatter: &mut JsFormatter) -> FormatResult<()> {
         let JsxElementFields {
             opening_element,
             children,
@@ -14,20 +14,17 @@ impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
         } = node.as_fields();
 
         let expand_if_special_case =
-            if is_jsx_inside_arrow_function_inside_call_inside_expression_child(node.syntax()) {
-                expand_parent()
-            } else {
-                empty_element()
-            };
+            is_jsx_inside_arrow_function_inside_call_inside_expression_child(node.syntax())
+                .then(|| expand_parent());
 
-        Ok(group_elements(formatted![
+        write![
             formatter,
-            [
+            [group_elements(&format_args![
                 opening_element.format(),
                 expand_if_special_case,
-                soft_block_indent(formatted![formatter, [children.format()]]?),
+                soft_block_indent(&children.format()),
                 closing_element.format()
-            ]
-        ]?))
+            ])]
+        ]
     }
 }

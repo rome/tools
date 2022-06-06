@@ -1,12 +1,10 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{JsxSelfClosingElement, JsxSelfClosingElementFields};
 
 impl FormatNodeFields<JsxSelfClosingElement> for FormatNodeRule<JsxSelfClosingElement> {
-    fn format_fields(
-        node: &JsxSelfClosingElement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsxSelfClosingElement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxSelfClosingElementFields {
             l_angle_token,
             name,
@@ -16,8 +14,8 @@ impl FormatNodeFields<JsxSelfClosingElement> for FormatNodeRule<JsxSelfClosingEl
             r_angle_token,
         } = node.as_fields();
 
-        Ok(group_elements(formatted![
-            formatter,
+        write![
+            f,
             [
                 l_angle_token.format(),
                 name.format(),
@@ -28,6 +26,6 @@ impl FormatNodeFields<JsxSelfClosingElement> for FormatNodeRule<JsxSelfClosingEl
                 slash_token.format(),
                 r_angle_token.format()
             ]
-        ]?))
+        ]
     }
 }
