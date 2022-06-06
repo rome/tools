@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: call_expression.js
+---
+# Input
+
+useEffect(() => {
+
+}, [a, b])
+
+useMemo(() => {
+    return {
+        d, e
+    }
+}, [a, b])
+
+useMemo(() => {
+
+    } // some comment
+    ,
+    [a, b]
+)
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+useEffect(() => {}, [a, b]);
+
+useMemo(
+	() => {
+		return {
+			d,
+			e,
+		};
+	},
+	[a, b],
+);
+
+useMemo(
+	() => {}, // some comment
+	[a, b],
+);
+

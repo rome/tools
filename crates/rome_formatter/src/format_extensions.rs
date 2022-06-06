@@ -141,6 +141,7 @@ pub trait MemoizeFormat<Context> {
 impl<T, Context> MemoizeFormat<Context> for T where T: Format<Context> {}
 
 /// Memoizes the output of its inner [Format] to avoid re-formatting a potential expensive object.
+#[derive(Debug)]
 pub struct Memoized<F, Context> {
     inner: F,
     memory: RefCell<Option<FormatResult<Vec<FormatElement>>>>,

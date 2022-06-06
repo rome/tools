@@ -7,6 +7,7 @@ mod generated;
 pub mod expr_ext;
 pub mod modifier_ext;
 pub mod numbers;
+mod parameters_ext;
 pub mod source_type;
 pub mod stmt_ext;
 pub mod suppression;

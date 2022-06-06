@@ -472,10 +472,30 @@ impl<L: Language> SyntaxNode<L> {
         self.has_trailing_comments() || self.has_leading_comments()
     }
 
+    /// It checks if the current node has comments at the edges:
+    /// if first or last tokens contain comments (leading or trailing)
+    pub fn has_comments_at_the_edges(&self) -> bool {
+        self.first_token_has_comments() || self.last_token_has_comments()
+    }
+
     /// Whether the node contains trailing comments.
     pub fn has_trailing_comments(&self) -> bool {
         self.last_token()
             .map_or(false, |tok| tok.has_trailing_comments())
+    }
+
+    /// Whether the last token of a node has comments (leading or trailing)
+    pub fn last_token_has_comments(&self) -> bool {
+        self.last_token().map_or(false, |tok| {
+            tok.has_trailing_comments() || tok.has_leading_comments()
+        })
+    }
+
+    /// Whether the first token of a node has comments (leading or trailing)
+    pub fn first_token_has_comments(&self) -> bool {
+        self.first_token().map_or(false, |tok| {
+            tok.has_trailing_comments() || tok.has_leading_comments()
+        })
     }
 
     /// Whether the node contains leading comments.

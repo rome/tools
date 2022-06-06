@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::has_leading_newline;
+use crate::utils::node_has_leading_newline;
 use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::JsObjectExpression;
@@ -13,7 +13,7 @@ impl FormatNodeFields<JsObjectExpression> for FormatNodeRule<JsObjectExpression>
             r_curly_token,
         } = node.as_fields();
 
-        let has_newline = has_leading_newline(members.syntax());
+        let has_newline = node_has_leading_newline(members.syntax());
 
         if members.is_empty() {
             write!(

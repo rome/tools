@@ -215,8 +215,7 @@ Object.keys(props)
     (a, key) => {
       a[key] = props[key];
       return a;
-    },
-    {},
+    }, {},
   );
 
 point().x(4).y(3).z(6).plot();

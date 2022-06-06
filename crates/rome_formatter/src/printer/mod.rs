@@ -282,7 +282,6 @@ impl<'a> Printer<'a> {
                                 if fits_on_line(&[variant], args.with_print_mode(mode), queue, self)
                                 {
                                     self.state.measured_group_fits = true;
-
                                     queue.enqueue(PrintElementCall::new(
                                         variant,
                                         args.with_print_mode(mode),

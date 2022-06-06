@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: argument-list.js
 ---
 # Input
@@ -333,8 +334,7 @@ doThing(
 func(
   () => {
     thing();
-  },
-  { yes: true, no: 5 },
+  }, { yes: true, no: 5 },
 );
 
 doSomething(
