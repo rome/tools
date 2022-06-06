@@ -20,10 +20,10 @@
   let b = "cool ins't it";
   ```
   - Better formatting of various statements
-  - Improved the performance of the formatting of averagely 20%! Check the [relative
-PR](https://github.com/rome/tools/pull/2634) if you're interested of what the team did.
+  - Improved the performance of the formatter an average of 20%! Check the [relevant
+PR](https://github.com/rome/tools/pull/2634) if you're interested in what the team did.
 
-To reach a better compatibility with Prettier, the team had to review the foundation of our printer,
+To reach better compatibility with Prettier, the team had to revise the foundation of our printer,
 which caused some regressions around how comments are printed. These are known issues that we
 plan to close by next release.
 

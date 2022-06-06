@@ -1,6 +1,6 @@
 ## CI 
 
-Rome comes with a CI mode that allows run multiple CI checks jsut by 
+Rome comes with a CI mode that allows performing multiple CI checks just by 
 running one single command.
 
 This mode is only available via CLI.
