@@ -10,13 +10,12 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
 
     fn format(node: &JsxChildList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
         let mut flattened_children = Vec::new();
+        // Because fill printing cannot fill print nested lists, we flatten the formatted children.
+        // This is because fill printing uses print_all, so when it encounters a FormatElement::List,
+        // it prints the entire list at once.
         for child in formatter.format_all(node.iter().formatted())? {
             match child {
-                FormatElement::List(list) => {
-                    for item in list.into_vec() {
-                        flattened_children.push(item);
-                    }
-                }
+                FormatElement::List(list) => flattened_children.extend(list.into_vec()),
                 item => flattened_children.push(item),
             }
         }
