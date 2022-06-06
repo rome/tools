@@ -24,7 +24,7 @@ export const findByDate: Resolver<void, Recipe[], { date: Date }> = (
   { req },
 ) => {
   const repo = req.getRepository(Recipe);
-  return repo.find({ createDate: date },);
+  return repo.find({ createDate: date });
 };
 
 export const findByDate: Resolver<void, Recipe[], { date: Date }> = (
