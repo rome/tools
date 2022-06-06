@@ -119,7 +119,7 @@ pub(crate) fn format_binary_like_expression(
             let has_comments = left.syntax().has_comments_direct();
 
             flatten_items.items.push(FlattenItem::new(
-                FlattenedExpression::Left { expression: left },
+                FlattenedBinaryExpressionPart::Left { expression: left },
                 Some(parent_operator),
                 has_comments.into(),
             ));
@@ -133,7 +133,7 @@ pub(crate) fn format_binary_like_expression(
         flatten_items.flatten_binary_expression_right_hand_side(root, None)?;
     }
 
-    let group = FlattenedExpression::Group {
+    let group = FlattenedBinaryExpressionPart::Group {
         current: JsAnyBinaryLikeLeftExpression::JsAnyExpression(current_node.into_expression()),
         expressions_start: flatten_items.current_group_start,
         expressions_end: flatten_items.len(),
@@ -252,8 +252,7 @@ where
     })
 }
 
-/// It tells if the expression can be hard grouped
-fn can_hard_group(flatten_nodes: &[FlattenItem]) -> bool {
+fn keep_on_same_line(flatten_nodes: &[FlattenItem]) -> bool {
     // We don't want to have 1 + 2 to break, for example.
     // But if there are any trailing comments, break it.
     flatten_nodes.len() <= 2 && flatten_nodes.iter().all(|node| !node.has_comments())
@@ -348,7 +347,7 @@ impl FlattenItems {
         let has_comments = right.syntax().has_comments_direct();
 
         let flatten_item = FlattenItem::new(
-            FlattenedExpression::Right {
+            FlattenedBinaryExpressionPart::Right {
                 parent: binary_like_expression,
             },
             parent_operator,
@@ -381,7 +380,7 @@ impl FlattenItems {
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
         let left_parenthesized = needs_parens(operator, &left)?;
         let mut left_item = FlattenItem::new(
-            FlattenedExpression::Group {
+            FlattenedBinaryExpressionPart::Group {
                 current: left,
                 expressions_start: self.current_group_start,
                 expressions_end: self.items.len(),
@@ -406,7 +405,7 @@ impl FlattenItems {
             .map(|operator| operator.has_leading_comments());
 
         let mut right_item = FlattenItem::new(
-            FlattenedExpression::Right {
+            FlattenedBinaryExpressionPart::Right {
                 parent: binary_like_expression,
             },
             parent_operator,
@@ -460,8 +459,8 @@ impl From<bool> for Comments {
 
 /// The left or right sub part of a binary expression.
 #[derive(Debug)]
-enum FlattenedExpression {
-    /// The right hand sie of a binary expression. Needs to format the parent operator and the right expression
+enum FlattenedBinaryExpressionPart {
+    /// The right hand side of a binary expression. Needs to format the parent operator and the right expression
     Right {
         /// The parent expression
         parent: JsAnyBinaryLikeExpression,
@@ -487,19 +486,19 @@ enum FlattenedExpression {
     },
 }
 
-impl FlattenedExpression {
+impl FlattenedBinaryExpressionPart {
     fn write(&self, f: &mut JsFormatter, items: &[FlattenItem]) -> FormatResult<()> {
         match self {
-            FlattenedExpression::Right { parent } => {
+            FlattenedBinaryExpressionPart::Right { parent } => {
                 let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(parent.right()?);
 
                 write!(f, [format_sub_expression(parent.operator()?, &right)])?;
                 Ok(())
             }
-            FlattenedExpression::Left { expression } => {
+            FlattenedBinaryExpressionPart::Left { expression } => {
                 write!(f, [expression])
             }
-            FlattenedExpression::Group {
+            FlattenedBinaryExpressionPart::Group {
                 current,
                 expressions_start,
                 expressions_end,
@@ -507,7 +506,7 @@ impl FlattenedExpression {
             } => {
                 let expressions = &items[*expressions_start..*expressions_end];
                 let content = format_with(|f| {
-                    let can_hard_group = can_hard_group(expressions);
+                    let keep_on_same_line = keep_on_same_line(expressions);
 
                     let mut groups = expressions.iter().map(|group| {
                         format_with(|f| {
@@ -528,7 +527,7 @@ impl FlattenedExpression {
                         })
                     });
 
-                    if can_hard_group {
+                    if keep_on_same_line {
                         // we bail early if group doesn't need to be broken. We don't need to do further checks
                         f.join_with(space_token()).entries(groups).finish()
                     } else if is_inside_parenthesis(current.syntax()) {
@@ -545,9 +544,6 @@ impl FlattenedExpression {
                             }))]
                         )
                     } else if should_indent_if_parent_inlines(current) {
-                        // in order to correctly break, we need to check if the parent created a group
-                        // that breaks or not. In order to do that , we need to create two conditional groups
-                        // that behave differently depending on the situation
                         write!(
                             f,
                             [soft_line_indent_or_space(&group_elements(&format_once(
@@ -560,8 +556,11 @@ impl FlattenedExpression {
                         )
                     } else {
                         // if none of the previous conditions is met,
-                        // we take take out the first element from the rest of group, then we hard group the "head"
-                        // and we indent the rest of the groups in a new line
+                        // we take out the first element from the rest of the group
+                        // and indent the rest of the groups in a new line
+
+                        // SAFETY: Safe because `keep_on_same_line` returns `true` if this is a single
+                        // binary expression without any nested sub expressions.
                         write!(f, [groups.next().unwrap()])?;
 
                         write!(
@@ -589,7 +588,7 @@ impl FlattenedExpression {
 
 #[derive(Debug)]
 struct FlattenItem {
-    expression: FlattenedExpression,
+    expression: FlattenedBinaryExpressionPart,
     operator: Option<JsSyntaxToken>,
     terminator: TrailingTerminator,
     comments: Comments,
@@ -603,7 +602,7 @@ enum TrailingTerminator {
 
 impl FlattenItem {
     fn new(
-        expression: FlattenedExpression,
+        expression: FlattenedBinaryExpressionPart,
         operator: Option<JsSyntaxToken>,
         comments: Comments,
     ) -> Self {
