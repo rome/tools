@@ -20,7 +20,7 @@ impl Rule for NoUnusedTemplateLiteral {
     type State = ();
 
     fn run(node: &Self::Query) -> Option<Self::State> {
-        if node.tag().is_none() && can_convert_to_string_lit(node) {
+        if node.tag().is_none() && can_convert_to_string_literal(node) {
             Some(())
         } else {
             None
@@ -79,10 +79,12 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 }
 
-fn can_convert_to_string_lit(node: &JsTemplate) -> bool {
-    !node.elements().iter().any(|ele| {
-        // We want to test if any templateElement has violated rule that can convert to string literal
-        match ele {
+fn can_convert_to_string_literal(node: &JsTemplate) -> bool {
+    !node.elements().iter().any(|element| {
+        // We want to test if any templateElement has violated rule that can convert to string literal, rules are listed below
+        // 1. Variant of element is `JsTemplateElement`
+        // 2. Content of `ChunkElement` has any special characters, any of `\n`, `'`, `"`
+        match element {
             JsAnyTemplateElement::JsTemplateElement(_) => true,
             JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {
                 match chunk.template_chunk_token() {
