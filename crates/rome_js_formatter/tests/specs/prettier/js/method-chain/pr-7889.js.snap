@@ -21,7 +21,7 @@ const Profile2 = view.with({ name }).as((props) => (
 
 # Output
 ```js
-const Profile = view.with({ name: (state) => state.name },).as(
+const Profile = view.with({ name: (state) => state.name }).as(
   (props) => (
     <div>
     <h1>Hello, {props.name}</h1>
@@ -29,7 +29,7 @@ const Profile = view.with({ name: (state) => state.name },).as(
   ),
 );
 
-const Profile2 = view.with({ name },).as(
+const Profile2 = view.with({ name }).as(
   (props) => (
     <div>
     <h1>Hello, {props.name}</h1>

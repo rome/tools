@@ -72,7 +72,7 @@ expect(
 
 expect(
   () =>
-    asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" },),
+    asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
 ).toThrowError(/Required parameter/);
 
 expect(
@@ -81,7 +81,7 @@ expect(
 
 expect(
   () =>
-    asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" },),
+    asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
 ).not.toThrowError();
 
 const a = Observable.fromPromise(axiosInstance.post("/carts/mine")).map(
