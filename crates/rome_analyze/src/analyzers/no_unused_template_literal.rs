@@ -89,15 +89,15 @@ fn can_convert_to_string_literal(node: &JsTemplate) -> bool {
             JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {
                 match chunk.template_chunk_token() {
                     Ok(token) => {
-                        // if token text has any SpecialCharacters
+                        // if token text has any special character
                         token
                             .text()
                             .chars()
                             .any(|ch| matches!(ch, '\n' | '\'' | '"'))
                     }
                     Err(_) => {
-                        // if we found a error token, then just return true, which means this template literal can't convert to
-                        // string literal
+                        // if we found an error, then just return `true`, which means that this template literal can't be converted to
+                        // a string literal
                         true
                     }
                 }
