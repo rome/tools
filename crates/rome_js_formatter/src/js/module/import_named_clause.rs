@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsAnyNamedImport;
 use rome_js_syntax::JsAnyNamedImportSpecifier;
-use rome_formatter::write;
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
