@@ -94,8 +94,8 @@ fn can_convert_to_string_lit(node: &JsTemplate) -> bool {
                             .any(|ch| matches!(ch, '\n' | '\'' | '"'))
                     }
                     Err(_) => {
-                        // if we found a error token, then just return true, which means this template literal can't convert to
-                        // string literal
+                        // if we found an error, then just return `true`, which means that this template literal can't be converted to
+                        // a string literal
                         true
                     }
                 }
