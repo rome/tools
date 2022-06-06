@@ -1,6 +1,7 @@
 use crate::prelude::*;
+use crate::TriviaPrintMode::Trim;
 use crate::{AsFormat, TextRange};
-use rome_formatter::{format_args, write, GroupId, PreambleBuffer, VecBuffer};
+use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::syntax::SyntaxTriviaPiecesIterator;
 use rome_rowan::{AstNode, Language, SyntaxTriviaPiece};
@@ -353,31 +354,29 @@ where
 ///
 /// This will print the trivia that belong to `token` to `content`;
 /// `token` is then marked as consumed by the formatter.
-pub const fn format_replaced<'a, 'content>(
+pub fn format_replaced<'a, 'content>(
     token: &'a JsSyntaxToken,
-    content: &'content dyn Format<JsFormatContext>,
+    content: &'content impl Format<JsFormatContext>,
 ) -> FormatReplaced<'a, 'content> {
-    FormatReplaced { token, content }
+    FormatReplaced {
+        token,
+        content: Argument::new(content),
+    }
 }
 
 #[derive(Copy, Clone)]
 pub struct FormatReplaced<'a, 'content> {
     token: &'a JsSyntaxToken,
-    content: &'content dyn Format<JsFormatContext>,
+    content: Argument<'content, JsFormatContext>,
 }
 
 impl Format<JsFormatContext> for FormatReplaced<'_, '_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
 
-        write!(
-            f,
-            [
-                format_leading_trivia(self.token, TriviaPrintMode::Full),
-                &self.content,
-                format_trailing_trivia(self.token)
-            ]
-        )
+        format_leading_trivia(self.token, TriviaPrintMode::Full).fmt(f)?;
+        f.write_fmt(Arguments::from(&self.content))?;
+        format_trailing_trivia(self.token).fmt(f)
     }
 }
 
@@ -530,14 +529,14 @@ impl Format<JsFormatContext> for FormatSuppressedNode<'_> {
 ///
 /// Calling this method is required to correctly handle the comments attached
 /// to the opening and closing tokens and insert them inside the group block
-pub const fn format_delimited<'a, 'content>(
+pub fn format_delimited<'a, 'content>(
     open_token: &'a JsSyntaxToken,
-    content: &'content dyn Format<JsFormatContext>,
+    content: &'content impl Format<JsFormatContext>,
     close_token: &'a JsSyntaxToken,
 ) -> FormatDelimited<'a, 'content> {
     FormatDelimited {
         open_token,
-        content,
+        content: Argument::new(content),
         close_token,
         mode: DelimitedMode::SoftBlockIndent(None),
     }
@@ -546,7 +545,7 @@ pub const fn format_delimited<'a, 'content>(
 #[derive(Copy, Clone)]
 pub struct FormatDelimited<'a, 'content> {
     open_token: &'a JsSyntaxToken,
-    content: &'content dyn Format<JsFormatContext>,
+    content: Argument<'content, JsFormatContext>,
     close_token: &'a JsSyntaxToken,
     mode: DelimitedMode,
 }
@@ -623,15 +622,17 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
         let delimited = format_with(|f| {
             format_trimmed_token(open_token).fmt(f)?;
 
+            let format_content = format_with(|f| f.write_fmt(Arguments::from(content)));
+
             match mode {
                 DelimitedMode::BlockIndent => block_indent(&format_args![
                     open_token_trailing_trivia,
-                    content, close_token_leading_trivia
+                    format_content, close_token_leading_trivia
                 ])
                 .fmt(f)?,
                 DelimitedMode::SoftBlockIndent(_) => soft_block_indent(&format_args![
                     open_token_trailing_trivia,
-                    content, close_token_leading_trivia
+                    format_content, close_token_leading_trivia
                 ])
                 .fmt(f)?,
                 DelimitedMode::SoftBlockSpaces(_) => {
@@ -640,7 +641,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                         buffer,
                         [
                             open_token_trailing_trivia,
-                            content,
+                            format_content,
                             close_token_leading_trivia
                         ]
                     )?;

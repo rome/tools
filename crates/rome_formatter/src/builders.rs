@@ -1,5 +1,7 @@
 use crate::prelude::*;
-use crate::{format_element, write, Arguments, GroupId, PreambleBuffer, TextRange, TextSize};
+use crate::{
+    format_element, write, Argument, Arguments, GroupId, PreambleBuffer, TextRange, TextSize,
+};
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
@@ -403,19 +405,24 @@ fn debug_assert_no_newlines(text: &str) {
 /// );
 /// ```
 #[inline]
-pub const fn line_suffix<Context>(inner: &dyn Format<Context>) -> LineSuffix<Context> {
-    LineSuffix { content: inner }
+pub fn line_suffix<Content, Context>(inner: &Content) -> LineSuffix<Context>
+where
+    Content: Format<Context>,
+{
+    LineSuffix {
+        content: Argument::new(inner),
+    }
 }
 
 #[derive(Copy, Clone)]
 pub struct LineSuffix<'a, Context> {
-    content: &'a dyn Format<Context>,
+    content: Argument<'a, Context>,
 }
 
 impl<Context> Format<Context> for LineSuffix<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
-        write!(buffer, [&self.content])?;
+        buffer.write_fmt(Arguments::from(&self.content))?;
 
         let content = buffer.into_element();
         f.write_element(FormatElement::LineSuffix(Box::new(content)))
@@ -493,20 +500,25 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 /// );
 /// ```
 #[inline]
-pub const fn comment<Context>(content: &dyn Format<Context>) -> Comment<Context> {
-    Comment { content }
+pub fn comment<Content, Context>(content: &Content) -> Comment<Context>
+where
+    Content: Format<Context>,
+{
+    Comment {
+        content: Argument::new(content),
+    }
 }
 
 #[derive(Copy, Clone)]
 pub struct Comment<'a, Context> {
-    content: &'a dyn Format<Context>,
+    content: Argument<'a, Context>,
 }
 
 impl<Context> Format<Context> for Comment<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
-        write!(buffer, [&self.content])?;
+        buffer.write_fmt(Arguments::from(&self.content))?;
         let content = buffer.into_element();
 
         f.write_element(FormatElement::Comment(Box::new(content)))
@@ -579,20 +591,25 @@ impl<Context> Format<Context> for Space {
 /// );
 /// ```
 #[inline]
-pub const fn indent<Context>(content: &dyn Format<Context>) -> Indent<Context> {
-    Indent { content }
+pub fn indent<Content, Context>(content: &Content) -> Indent<Context>
+where
+    Content: Format<Context>,
+{
+    Indent {
+        content: Argument::new(content),
+    }
 }
 
 #[derive(Copy, Clone)]
 pub struct Indent<'a, Context> {
-    content: &'a dyn Format<Context>,
+    content: Argument<'a, Context>,
 }
 
 impl<Context> Format<Context> for Indent<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
-        write!(buffer, [&self.content])?;
+        buffer.write_fmt(Arguments::from(&self.content))?;
 
         if buffer.is_empty() {
             return Ok(());
@@ -641,9 +658,9 @@ impl<Context> std::fmt::Debug for Indent<'_, Context> {
 /// );
 /// ```
 #[inline]
-pub const fn block_indent<Context>(content: &dyn Format<Context>) -> BlockIndent<Context> {
+pub fn block_indent<Context>(content: &impl Format<Context>) -> BlockIndent<Context> {
     BlockIndent {
-        content,
+        content: Argument::new(content),
         mode: IndentMode::Block,
     }
 }
@@ -706,9 +723,9 @@ pub const fn block_indent<Context>(content: &dyn Format<Context>) -> BlockIndent
 /// );
 /// ```
 #[inline]
-pub const fn soft_block_indent<Context>(content: &dyn Format<Context>) -> BlockIndent<Context> {
+pub fn soft_block_indent<Context>(content: &impl Format<Context>) -> BlockIndent<Context> {
     BlockIndent {
-        content,
+        content: Argument::new(content),
         mode: IndentMode::Soft,
     }
 }
@@ -774,18 +791,16 @@ pub const fn soft_block_indent<Context>(content: &dyn Format<Context>) -> BlockI
 /// );
 /// ```
 #[inline]
-pub const fn soft_line_indent_or_space<Context>(
-    content: &dyn Format<Context>,
-) -> BlockIndent<Context> {
+pub fn soft_line_indent_or_space<Context>(content: &impl Format<Context>) -> BlockIndent<Context> {
     BlockIndent {
-        content,
+        content: Argument::new(content),
         mode: IndentMode::SoftLineOrSpace,
     }
 }
 
 #[derive(Copy, Clone)]
 pub struct BlockIndent<'a, Context> {
-    content: &'a dyn Format<Context>,
+    content: Argument<'a, Context>,
     mode: IndentMode,
 }
 
@@ -806,7 +821,7 @@ impl<Context> Format<Context> for BlockIndent<'_, Context> {
             IndentMode::SoftLineOrSpace => write!(buffer, [soft_line_break_or_space()])?,
         };
 
-        write!(buffer, [self.content])?;
+        buffer.write_fmt(Arguments::from(&self.content))?;
 
         // Don't create an indent if the content is empty
         if buffer.len() == 1 {
@@ -906,16 +921,16 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 /// );
 /// ```
 #[inline]
-pub const fn group_elements<Context>(content: &dyn Format<Context>) -> GroupElements<Context> {
+pub fn group_elements<Context>(content: &impl Format<Context>) -> GroupElements<Context> {
     GroupElements {
-        content,
+        content: Argument::new(content),
         group_id: None,
     }
 }
 
 #[derive(Copy, Clone)]
 pub struct GroupElements<'a, Context> {
-    content: &'a dyn Format<Context>,
+    content: Argument<'a, Context>,
     group_id: Option<GroupId>,
 }
 
@@ -930,7 +945,7 @@ impl<Context> Format<Context> for GroupElements<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
-        write!(buffer, [self.content])?;
+        buffer.write_fmt(Arguments::from(&self.content))?;
 
         let content = buffer.into_element();
 
@@ -1076,9 +1091,12 @@ impl<Context> Format<Context> for ExpandParent {
 /// );
 /// ```
 #[inline]
-pub const fn if_group_breaks<Context>(content: &dyn Format<Context>) -> IfGroupBreaks<Context> {
+pub fn if_group_breaks<Content, Context>(content: &Content) -> IfGroupBreaks<Context>
+where
+    Content: Format<Context>,
+{
     IfGroupBreaks {
-        content,
+        content: Argument::new(content),
         group_id: None,
         mode: PrintMode::Expanded,
     }
@@ -1148,19 +1166,20 @@ pub const fn if_group_breaks<Context>(content: &dyn Format<Context>) -> IfGroupB
 /// );
 /// ```
 #[inline]
-pub const fn if_group_fits_on_line<Context>(
-    flat_content: &dyn Format<Context>,
-) -> IfGroupBreaks<Context> {
+pub fn if_group_fits_on_line<Content, Context>(flat_content: &Content) -> IfGroupBreaks<Context>
+where
+    Content: Format<Context>,
+{
     IfGroupBreaks {
         mode: PrintMode::Flat,
         group_id: None,
-        content: flat_content,
+        content: Argument::new(flat_content),
     }
 }
 
 #[derive(Copy, Clone)]
 pub struct IfGroupBreaks<'a, Context> {
-    content: &'a dyn Format<Context>,
+    content: Argument<'a, Context>,
     group_id: Option<GroupId>,
     mode: PrintMode,
 }
@@ -1226,7 +1245,7 @@ impl<Context> Format<Context> for IfGroupBreaks<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
-        write!(buffer, [&self.content])?;
+        buffer.write_fmt(Arguments::from(&self.content))?;
 
         if buffer.is_empty() {
             return Ok(());
@@ -1264,6 +1283,7 @@ impl<Context, T> Format<Context> for FormatWith<Context, T>
 where
     T: Fn(&mut Formatter<Context>) -> FormatResult<()>,
 {
+    #[inline]
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         (self.formatter)(f)
     }
@@ -1403,6 +1423,7 @@ impl<T, Context> Format<Context> for FormatOnce<T, Context>
 where
     T: FnOnce(&mut Formatter<Context>) -> FormatResult<()>,
 {
+    #[inline]
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let formatter = self.formatter.take().expect("Tried to format a `format_once` at least twice. This is not allowed. You may want to use `format_with` or `format.memoized` instead.");
 
@@ -1689,7 +1710,7 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
         let mut formatted_variants = Vec::with_capacity(variants.len());
 
         for variant in variants {
-            buffer.write_fmt(Arguments::new(&[*variant]))?;
+            buffer.write_fmt(Arguments::from(&*variant))?;
 
             formatted_variants.push(buffer.take());
         }
