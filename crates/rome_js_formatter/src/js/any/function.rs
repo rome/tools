@@ -1,7 +1,7 @@
-use crate::prelude::*;
-
 use crate::generated::FormatJsAnyFunction;
+use crate::prelude::*;
 use crate::utils::is_simple_expression;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
@@ -9,56 +9,45 @@ use rome_js_syntax::{
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
     type Context = JsFormatContext;
 
-    fn format(node: &JsAnyFunction, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let mut tokens = vec![];
+    fn fmt(node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
+        if let Some(async_token) = node.async_token() {
+            write!(f, [async_token.format(), space_token()])?;
+        }
 
-        tokens.push(formatted![
-            formatter,
-            [node
-                .async_token()
-                .format()
-                .with_or_empty(|token| { formatted![formatter, [token, space_token()]] })]
-        ]?);
+        write!(
+            f,
+            [node.function_token().format(), node.star_token().format()]
+        )?;
 
-        tokens.push(formatted![formatter, [node.function_token().format()]]?);
-        tokens.push(formatted![formatter, [node.star_token().format()]]?);
-
-        tokens.push(match node {
-            JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
-            _ => formatted![
-                formatter,
-                [node
-                    .id()
-                    .format()
-                    .with_or(|id| formatted![formatter, [space_token(), id]], space_token,)]
-            ]?,
-        });
-
-        tokens.push(formatted![formatter, [node.type_parameters().format()]]?);
-
-        tokens.push(match node.parameters()? {
-            JsAnyArrowFunctionParameters::JsAnyBinding(binding) => group_elements(formatted![
-                formatter,
-                [
-                    token("("),
-                    soft_block_indent(formatted![
-                        formatter,
-                        [binding.format(), if_group_breaks(token(",")),]
-                    ]?),
-                    token(")"),
-                ]
-            ]?),
-            JsAnyArrowFunctionParameters::JsParameters(params) => {
-                formatted![formatter, [params.format()]]?
+        if !matches!(node, JsAnyFunction::JsArrowFunctionExpression(_)) {
+            match node.id()? {
+                Some(id) => {
+                    write!(f, [space_token(), id.format()])?;
+                }
+                None => {
+                    write!(f, [space_token()])?;
+                }
             }
-        });
+        }
 
-        tokens.push(formatted![
-            formatter,
-            [node.return_type_annotation().format()]
-        ]?);
+        write!(f, [node.type_parameters().format()])?;
 
-        tokens.push(space_token());
+        match node.parameters()? {
+            JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
+                f,
+                [group_elements(&format_args![
+                    token("("),
+                    soft_block_indent(&format_args![
+                        binding.format(),
+                        if_group_breaks(&token(",")),
+                    ]),
+                    token(")"),
+                ])]
+            )?,
+            JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,
+        }
+
+        write![f, [node.return_type_annotation().format(), space_token()]]?;
 
         // We create a new group for everything after the parameters. That way if the parameters
         // get broken, we don't line break the arrow and the body if they can fit on the same line.
@@ -73,10 +62,7 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         // The line break for `a + b` is not necessary
         //
         if let JsAnyFunction::JsArrowFunctionExpression(arrow) = node {
-            tokens.push(formatted![
-                formatter,
-                [arrow.fat_arrow_token().format(), space_token()]
-            ]?);
+            write![f, [arrow.fat_arrow_token().format(), space_token()]]?;
         }
 
         let body = node.body()?;
@@ -110,14 +96,16 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         };
 
         if body_has_soft_line_break {
-            tokens.push(formatted![formatter, [node.body().format()]]?);
+            write![f, [node.body().format()]]?;
         } else {
-            tokens.push(group_elements(soft_line_indent_or_space(formatted![
-                formatter,
-                [node.body().format()]
-            ]?)));
+            write!(
+                f,
+                [group_elements(&soft_line_indent_or_space(
+                    &node.body().format()
+                ))]
+            )?;
         }
 
-        Ok(concat_elements(tokens))
+        Ok(())
     }
 }

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: numbers-in-args.js
 ---
 # Input
@@ -22,13 +23,11 @@ expect(bifornCringerMoshedPerplexSawder.getLongArrayOfNumbers()).toEqual(
 
 # Output
 ```js
-expect(
-  bifornCringerMoshedPerplexSawder.getArrayOfNumbers(),
-).toEqual([1, 2, 3, 4, 5],);
+expect(bifornCringerMoshedPerplexSawder.getArrayOfNumbers()).toEqual([
+  1, 2, 3, 4, 5,
+],);
 
-expect(
-  bifornCringerMoshedPerplexSawder.getLongArrayOfNumbers(),
-).toEqual([
+expect(bifornCringerMoshedPerplexSawder.getLongArrayOfNumbers()).toEqual([
   66, 57, 45, 47, 33, 53, 82, 81, 76, 78, 10, 78, 15, 98, 24, 29, 32, 27, 28,
   76, 41, 65, 84, 35, 97, 90, 75, 24, 88, 45, 23, 75, 63, 86, 24, 39, 9, 51, 33,
   40, 58, 17, 49, 86, 63, 59, 97, 91, 98, 99, 5, 69, 51, 44, 34, 69, 17, 91, 27,

@@ -5,16 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertySignatureAnnotation;
 impl FormatRule<TsAnyPropertySignatureAnnotation> for FormatTsAnyPropertySignatureAnnotation {
     type Context = JsFormatContext;
-    fn format(
-        node: &TsAnyPropertySignatureAnnotation,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &TsAnyPropertySignatureAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => node.format().fmt(f),
             TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
         }
     }

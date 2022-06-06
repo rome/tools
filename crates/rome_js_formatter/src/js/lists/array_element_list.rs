@@ -2,8 +2,7 @@ use crate::prelude::*;
 use rome_formatter::GroupId;
 use std::convert::Infallible;
 
-use crate::formatter::FormatSeparatedOptions;
-use crate::utils::array::format_array_node;
+use crate::utils::array::write_array_node;
 
 use crate::generated::FormatJsArrayElementList;
 use crate::utils::has_formatter_trivia;
@@ -13,7 +12,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsArrayElementList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsArrayElementList, formatter: &mut JsFormatter) -> FormatResult<()> {
         Self::format_with_group_id(node, formatter, None)
     }
 }
@@ -22,21 +21,21 @@ impl FormatJsArrayElementList {
     /// Formats the array list with
     pub fn format_with_group_id(
         node: &JsArrayElementList,
-        formatter: &JsFormatter,
+        f: &mut JsFormatter,
         group_id: Option<GroupId>,
-    ) -> FormatResult<FormatElement> {
+    ) -> FormatResult<()> {
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
-            return Ok(fill_elements(
-                // Using format_separated is valid in this case as can_print_fill does not allow holes
-                formatter.format_separated_with_options(
-                    node,
-                    || token(","),
-                    FormatSeparatedOptions::default().with_group_id(group_id),
-                )?,
-            ));
+            // Using format_separated is valid in this case as can_print_fill does not allow holes
+            return f
+                .fill(soft_line_break_or_space())
+                .entries(
+                    node.format_separated(token(","))
+                        .with_options(FormatSeparatedOptions::default().with_group_id(group_id)),
+                )
+                .finish();
         }
 
-        format_array_node(node, formatter)
+        write_array_node(node, f)
     }
 }
 

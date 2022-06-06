@@ -5,23 +5,12 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyMethodSignatureModifier;
 impl FormatRule<TsAnyMethodSignatureModifier> for FormatTsAnyMethodSignatureModifier {
     type Context = JsFormatContext;
-    fn format(
-        node: &TsAnyMethodSignatureModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &TsAnyMethodSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyMethodSignatureModifier::JsStaticModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyMethodSignatureModifier::TsOverrideModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyMethodSignatureModifier::TsAbstractModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyMethodSignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
+            TsAnyMethodSignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
+            TsAnyMethodSignatureModifier::TsOverrideModifier(node) => node.format().fmt(f),
+            TsAnyMethodSignatureModifier::TsAbstractModifier(node) => node.format().fmt(f),
         }
     }
 }

@@ -64,7 +64,7 @@ impl FormatContext for JsFormatContext {
         self.indent_style
     }
 
-    fn line_with(&self) -> LineWidth {
+    fn line_width(&self) -> LineWidth {
         self.line_width
     }
 

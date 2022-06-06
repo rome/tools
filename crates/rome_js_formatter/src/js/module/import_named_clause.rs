@@ -1,17 +1,14 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
 use rome_js_syntax::JsAnyNamedImport;
 use rome_js_syntax::JsAnyNamedImportSpecifier;
+use rome_formatter::write;
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
 impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClause> {
-    fn format_fields(
-        node: &JsImportNamedClause,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportNamedClauseFields {
             type_token,
             default_specifier,
@@ -20,6 +17,14 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
             source,
             assertion,
         } = node.as_fields();
+
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space_token()])?;
+        }
+
+        if let Some(default_specifier) = default_specifier {
+            write!(f, [default_specifier.format(), space_token()])?;
+        }
 
         let named_import = named_import?;
 
@@ -38,7 +43,7 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
         // 3. Surrounding of the only `JsNamedImportSpecifiers` should not have any comments
         let formatted_named_import = if default_specifier.is_some() {
             // `can_break` is true.
-            formatted![formatter, [named_import.format()]]
+            write![f, [named_import.format()]]
         } else {
             match named_import {
                 JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
@@ -50,15 +55,15 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                         Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_)) => {
                             let syntax_node = specifiers.syntax();
                             if syntax_node.has_comments_direct() {
-                                formatted![formatter, [named_import.format()]]
+                                write![f, [named_import.format()]]
                             } else {
                                 let JsNamedImportSpecifiersFields {
                                     l_curly_token,
                                     specifiers: _,
                                     r_curly_token,
                                 } = specifiers.as_fields();
-                                formatted![
-                                    formatter,
+                                write![
+                                    f,
                                     [
                                         l_curly_token.format(),
                                         space_token(),
@@ -69,31 +74,28 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                                 ]
                             }
                         }
-                        _ => formatted![formatter, [named_import.format()]],
+                        _ => write![f, [named_import.format()]],
                     }
                 }
-                _ => formatted![formatter, [named_import.format()]],
+                _ => write![f, [named_import.format()]],
             }
         };
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
-                type_token
-                    .format()
-                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
-                default_specifier
-                    .format()
-                    .with_or_empty(|specifier| formatted![formatter, [specifier, space_token()]]),
                 formatted_named_import,
                 space_token(),
                 from_token.format(),
                 space_token(),
                 source.format(),
-                assertion
-                    .format()
-                    .with_or_empty(|assertion| formatted![formatter, [space_token(), assertion]])
             ]
-        ]
+        ]?;
+
+        if let Some(assertion) = assertion {
+            write!(f, [space_token(), assertion.format()])?;
+        }
+
+        Ok(())
     }
 }

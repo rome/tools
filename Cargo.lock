@@ -1418,6 +1418,7 @@ dependencies = [
  "similar-asserts",
  "tests_macros",
  "tracing",
+ "unicode-width",
 ]
 
 [[package]]

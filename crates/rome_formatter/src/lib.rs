@@ -6,9 +6,6 @@
 //! ## Formatting Traits
 //!
 //! * [Format]: Implemented by objects that can be formatted.
-//! * [IntoFormatElement]: The arguments passed to the `formatted[formatter, arg1, arg2]` must implement the.
-//!  [IntoFormatElement] trait. Its main difference to the [Format] trait is that it consumes self rather than borrowing it.
-//!  This module provides [IntoFormatElement] implementations for every object implementing [Format] and [FormatElement].
 //! * [FormatRule]: Rule that knows how to format an object of another type. Necessary in the situation where
 //!  it's necessary to implement [Format] on an object from another crate. This module defines the
 //!  [FormatRefWithRule] and [FormatOwnedWithRule] structs to pass an item with its corresponding rule.
@@ -17,12 +14,15 @@
 //!
 //! ## Formatting Macros
 //!
-//! This trait defines two macros to construct the IR.
-//! * [format_elements]: Allows concatenating multiple [FormatElement]s
-//! * [formatted]: Concatenates a sequence of [FormatElement]s and/or objects implementing [Format].
+//! This crate defines two macros to construct the IR. These are inspired by Rust's `fmt` macros
+//! * [`format!`]: Formats a formatable object
+//! * [`format_args!`]: Concatenates a sequence of Format objects.
+//! * [`write!`]: Writes a sequence of formatable objects into an output buffer.
 
 extern crate core;
 
+mod arguments;
+mod buffer;
 mod builders;
 pub mod format_element;
 mod format_extensions;
@@ -36,20 +36,25 @@ pub mod printed_tokens;
 pub mod printer;
 
 use crate::formatter::Formatter;
+use crate::group_id::UniqueGroupIdBuilder;
+use crate::prelude::syntax_token_cow_slice;
+
+#[cfg(debug_assertions)]
+use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
-pub use builders::ConcatBuilder;
-pub use format_element::{
-    block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
-    group_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
-    join_elements, join_elements_hard_line, join_elements_soft_line, join_elements_with,
-    line_suffix, normalize_newlines, soft_block_indent, soft_line_break, soft_line_break_or_space,
-    soft_line_indent_or_space, space_token, token, FormatElement, Token, Verbatim,
-    LINE_TERMINATORS,
+pub use arguments::{Argument, Arguments};
+pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
+pub use builders::{
+    block_indent, comment, empty_element, empty_line, group_elements, hard_line_break,
+    if_group_breaks, if_group_fits_on_line, indent, line_suffix, soft_block_indent,
+    soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
+    BestFitting,
 };
+pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, TextRange, TextSize,
-    TokenAtOffset,
+    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken,
+    SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
 use std::error::Error;
 use std::fmt;
@@ -88,11 +93,11 @@ impl FromStr for IndentStyle {
     }
 }
 
-impl fmt::Display for IndentStyle {
+impl std::fmt::Display for IndentStyle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            IndentStyle::Tab => write!(f, "Tab"),
-            IndentStyle::Space(size) => write!(f, "Spaces, size: {}", size),
+            IndentStyle::Tab => std::write!(f, "Tab"),
+            IndentStyle::Space(size) => std::write!(f, "Spaces, size: {}", size),
         }
     }
 }
@@ -128,9 +133,9 @@ pub enum ParseLineWidthError {
     TryFromIntError(LineWidthFromIntError),
 }
 
-impl fmt::Display for ParseLineWidthError {
-    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(fmt, "{self:?}")
+impl std::fmt::Display for ParseLineWidthError {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::write!(fmt, "{self:?}")
     }
 }
 
@@ -175,10 +180,32 @@ pub trait FormatContext {
     fn indent_style(&self) -> IndentStyle;
 
     /// What's the max width of a line. Defaults to 80.
-    fn line_with(&self) -> LineWidth;
+    fn line_width(&self) -> LineWidth;
 
     /// Derives the print options from the these format options
     fn as_print_options(&self) -> PrinterOptions;
+}
+
+#[derive(Debug, Default)]
+pub struct SimpleFormatContext {
+    pub indent_style: IndentStyle,
+    pub line_width: LineWidth,
+}
+
+impl FormatContext for SimpleFormatContext {
+    fn indent_style(&self) -> IndentStyle {
+        self.indent_style
+    }
+
+    fn line_width(&self) -> LineWidth {
+        self.line_width
+    }
+
+    fn as_print_options(&self) -> PrinterOptions {
+        PrinterOptions::default()
+            .with_indent(self.indent_style)
+            .with_print_width(self.line_width)
+    }
 }
 
 /// Lightweight sourcemap marker between source and output tokens
@@ -190,7 +217,7 @@ pub struct SourceMarker {
     pub dest: TextSize,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Formatted {
     root: FormatElement,
     options: PrinterOptions,
@@ -305,7 +332,7 @@ pub enum FormatError {
 }
 
 impl fmt::Display for FormatError {
-    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             FormatError::MissingRequiredChild => fmt.write_str("missing required child"),
             FormatError::UnsupportedLanguage => fmt.write_str("language is not supported"),
@@ -337,135 +364,79 @@ impl From<&SyntaxError> for FormatError {
 /// Implementing `Format` for a custom struct
 ///
 /// ```
-/// use rome_formatter::{format, FormatContext, IndentStyle, LineWidth};
+/// use rome_formatter::{format, write, IndentStyle, LineWidth};
 /// use rome_formatter::prelude::*;
 /// use rome_rowan::TextSize;
 ///
 /// struct Paragraph(String);
 ///
-/// impl Format for Paragraph {
-///     type Context = Context;
-///
-///     fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-///         formatted![
-///             formatter,
-///             [
-///                 hard_line_break(),
-///                 FormatElement::from(Token::new_dynamic(self.0.clone(), TextSize::from(0))),
-///                 hard_line_break(),
-///             ]
-///         ]
-///     }
-/// }
-///
-/// struct Context;
-///
-/// impl FormatContext for Context {
-///     fn indent_style(&self) -> IndentStyle {
-///         IndentStyle::Tab
-///     }
-///
-///     fn line_with(&self) -> LineWidth {
-///         LineWidth::default()
-///     }
-///
-///     fn as_print_options(&self) -> PrinterOptions {
-///         PrinterOptions::default()
+/// impl Format<SimpleFormatContext> for Paragraph {
+///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+///         write!(f, [
+///             hard_line_break(),
+///             dynamic_token(&self.0, TextSize::from(0)),
+///             hard_line_break(),
+///         ])
 ///     }
 /// }
 ///
 /// let paragraph = Paragraph(String::from("test"));
-/// let printed = format(Context, &paragraph).unwrap().print();
+/// let formatted = format!(SimpleFormatContext::default(), [paragraph]).unwrap();
 ///
-/// assert_eq!("test\n", printed.as_code())
+/// assert_eq!("test\n", formatted.print().as_code())
 /// ```
-pub trait Format {
-    /// Type of the formatter options.
-    type Context;
-
-    /// Formats the object
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement>;
+pub trait Format<Context> {
+    /// Formats the object using the given formatter.
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()>;
 }
 
-impl<T> Format for &T
+impl<T, Context> Format<Context> for &T
 where
-    T: ?Sized + Format,
+    T: ?Sized + Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-        Format::format(&**self, formatter)
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        Format::fmt(&**self, f)
     }
 }
 
-impl<T> Format for &mut T
+impl<T, Context> Format<Context> for &mut T
 where
-    T: ?Sized + Format,
+    T: ?Sized + Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-        Format::format(&**self, formatter)
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        Format::fmt(&**self, f)
     }
 }
 
-impl<T> Format for Option<T>
+impl<T, Context> Format<Context> for Option<T>
 where
-    T: Format,
+    T: Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         match self {
-            Some(value) => value.format(formatter),
-            None => Ok(empty_element()),
+            Some(value) => value.fmt(f),
+            None => Ok(()),
         }
     }
 }
 
-impl<T> Format for SyntaxResult<T>
+impl<T, Context> Format<Context> for SyntaxResult<T>
 where
-    T: Format,
+    T: Format<Context>,
 {
-    type Context = T::Context;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         match self {
-            Ok(value) => value.format(formatter),
+            Ok(value) => value.fmt(f),
             Err(err) => Err(err.into()),
         }
     }
 }
 
-/// Implemented by traits that can be converted to a `FormatElement`.
-///
-/// This is similar to [Format] but with the difference that it consumes `self`, allowing it to also
-/// be implemented on [FormatElement].format_elements.rs
-pub trait IntoFormatElement<O> {
-    fn into_format_element(self, formatter: &Formatter<O>) -> FormatResult<FormatElement>;
-}
-
-impl<O> IntoFormatElement<O> for FormatElement {
+impl<Context> Format<Context> for () {
     #[inline]
-    fn into_format_element(self, _: &Formatter<O>) -> FormatResult<FormatElement> {
-        Ok(self)
-    }
-}
-
-impl<O> IntoFormatElement<O> for FormatResult<FormatElement> {
-    #[inline]
-    fn into_format_element(self, _: &Formatter<O>) -> FormatResult<FormatElement> {
-        self
-    }
-}
-
-impl<T, O> IntoFormatElement<O> for T
-where
-    T: Format<Context = O>,
-{
-    #[inline]
-    fn into_format_element(self, formatter: &Formatter<O>) -> FormatResult<FormatElement> {
-        self.format(formatter)
+    fn fmt(&self, _: &mut Formatter<Context>) -> FormatResult<()> {
+        // Intentionally left empty
+        Ok(())
     }
 }
 
@@ -482,7 +453,7 @@ where
 pub trait FormatRule<T> {
     type Context;
 
-    fn format(item: &T, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement>;
+    fn fmt(item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
 }
 
 /// Trait for an object that formats an object with a specified rule.
@@ -495,24 +466,22 @@ pub trait FormatRule<T> {
 /// ## Examples
 ///
 /// This can be useful if you want to format a `SyntaxNode` inside rome_formatter.. `SyntaxNode` doesn't implement [Format]
-/// itself but the language agnostic crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
+/// itself but the language specific crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
 /// implement [FormatWithRule].
 ///
 /// ```
 /// use rome_formatter::prelude::*;
-/// use rome_formatter::{FormatContext, FormatWithRule};
+/// use rome_formatter::{format, Formatted, FormatWithRule};
 /// use rome_rowan::{Language, SyntaxNode};
-/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>, Context=()>>(node: F) -> FormatResult<FormatElement> {
-///     let formatter = Formatter::default();
-///
-///     let formatted = node.format(&formatter);
+/// fn format_node<L: Language, F: FormatWithRule<SimpleFormatContext, Item=SyntaxNode<L>>>(node: F) -> FormatResult<Formatted> {
+///     let formatted = format!(SimpleFormatContext::default(), [node]);
 ///     let _syntax = node.item();
 ///
 ///     // Do something with syntax
 ///     formatted
 /// }
 /// ```
-pub trait FormatWithRule: Format {
+pub trait FormatWithRule<Context>: Format<Context> {
     type Item;
 
     /// Returns the associated item
@@ -540,7 +509,7 @@ where
     }
 }
 
-impl<T, R> FormatWithRule for FormatRefWithRule<'_, T, R>
+impl<T, R> FormatWithRule<R::Context> for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
@@ -551,15 +520,13 @@ where
     }
 }
 
-impl<T, R> Format for FormatRefWithRule<'_, T, R>
+impl<T, R> Format<R::Context> for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
-    type Context = R::Context;
-
     #[inline]
-    fn format(&self, formatter: &Formatter<R::Context>) -> FormatResult<FormatElement> {
-        R::format(self.item, formatter)
+    fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
+        R::fmt(self.item, f)
     }
 }
 
@@ -593,19 +560,17 @@ where
     }
 }
 
-impl<T, R> Format for FormatOwnedWithRule<T, R>
+impl<T, R> Format<R::Context> for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    type Context = R::Context;
-
     #[inline]
-    fn format(&self, formatter: &Formatter<R::Context>) -> FormatResult<FormatElement> {
-        R::format(&self.item, formatter)
+    fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
+        R::fmt(&self.item, f)
     }
 }
 
-impl<T, R> FormatWithRule for FormatOwnedWithRule<T, R>
+impl<T, R> FormatWithRule<R::Context> for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
@@ -616,18 +581,89 @@ where
     }
 }
 
-/// Formats any value that implements [Format].
+/// The `write` function takes a target buffer and an `Arguments` struct that can be precompiled with the `format_args!` macro.
 ///
-/// Please note that [format_node] is preferred to format a [JsSyntaxNode]
-pub fn format<C: FormatContext>(
-    options: C,
-    root: &dyn Format<Context = C>,
-) -> FormatResult<Formatted> {
-    tracing::trace_span!("format").in_scope(move || {
-        let printer_options = options.as_print_options();
-        let formatter = Formatter::new(options);
-        let element = root.format(&formatter)?;
-        Ok(Formatted::new(element, printer_options))
+/// The arguments will be formatted in-order into the output buffer provided.
+///
+/// # Examples
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
+///
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+///
+/// write(&mut buffer, format_args!(token("Hello World"))).unwrap();
+///
+/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+///
+/// assert_eq!("Hello World", formatted.print().as_code())
+/// ```
+///
+/// Please note that using [`write!`] might be preferable. Example:
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
+///
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+///
+/// write!(&mut buffer, [token("Hello World")]).unwrap();
+///
+/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+///
+/// assert_eq!("Hello World", formatted.print().as_code())
+/// ```
+///
+pub fn write<Context>(
+    output: &mut dyn Buffer<Context = Context>,
+    args: Arguments<Context>,
+) -> FormatResult<()> {
+    let mut f = Formatter::new(output);
+
+    f.write_fmt(args)
+}
+
+/// The `format` function takes an [`Arguments`] struct and returns the resulting formatting IR.
+///
+/// The [`Arguments`] instance can be created with the [`format_args!`].
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format, format_args};
+///
+/// let formatted = format(SimpleFormatContext::default(), format_args!(token("test"))).unwrap();
+/// assert_eq!("test", formatted.print().as_code());
+/// ```
+///
+/// Please note that using [`format!`] might be preferable. Example:
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format};
+///
+/// let formatted = format!(SimpleFormatContext::default(), [token("test")]).unwrap();
+/// assert_eq!("test", formatted.print().as_code());
+/// ```
+pub fn format<Context>(context: Context, arguments: Arguments<Context>) -> FormatResult<Formatted>
+where
+    Context: FormatContext,
+{
+    let print_options = context.as_print_options();
+    let mut state = FormatState::new(context);
+    let mut buffer = VecBuffer::with_capacity(arguments.items().len(), &mut state);
+
+    buffer.write_fmt(arguments)?;
+
+    Ok(Formatted {
+        root: buffer.into_element(),
+        options: print_options,
     })
 }
 
@@ -635,21 +671,25 @@ pub fn format<C: FormatContext>(
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format_node<
-    C: FormatContext,
+    Context: FormatContext,
     L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
+    N: FormatWithRule<Context, Item = SyntaxNode<L>>,
 >(
-    options: C,
+    context: Context,
     root: &N,
 ) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let printer_options = options.as_print_options();
-        let formatter = Formatter::new(options);
-        let element = formatted![&formatter, [root]]?;
+        let print_options = context.as_print_options();
+        let mut state = FormatState::new(context);
+        let mut buffer = VecBuffer::new(&mut state);
 
-        formatter.assert_formatted_all_tokens(root.item());
+        write!(&mut buffer, [root])?;
 
-        Ok(Formatted::new(element, printer_options))
+        let document = buffer.into_element();
+
+        state.assert_formatted_all_tokens(root.item());
+
+        Ok(Formatted::new(document, print_options))
     })
 }
 
@@ -709,7 +749,7 @@ where
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range<Context, L, R, P>(
-    options: Context,
+    context: Context,
     root: &SyntaxNode<L>,
     mut range: TextRange,
     mut predicate: P,
@@ -859,7 +899,7 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_sub_tree(options, &FormatRefWithRule::<_, R>::new(common_root))?;
+    let formatted = format_sub_tree(context, &FormatRefWithRule::<_, R>::new(common_root))?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
@@ -941,7 +981,7 @@ where
 pub fn format_sub_tree<
     C: FormatContext,
     L: Language,
-    N: FormatWithRule<Item = SyntaxNode<L>, Context = C>,
+    N: FormatWithRule<C, Item = SyntaxNode<L>>,
 >(
     context: C,
     root: &N,
@@ -1005,4 +1045,97 @@ pub fn format_sub_tree<
         sourcemap,
         verbatim_ranges,
     ))
+}
+
+impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        let range = self.text_range();
+
+        write!(
+            f,
+            [syntax_token_cow_slice(
+                normalize_newlines(self.text().trim(), LINE_TERMINATORS),
+                &self.as_piece().token(),
+                range.start()
+            )]
+        )
+    }
+}
+
+/// This structure stores the state that is relevant for the formatting of the whole document.
+///
+/// This structure is different from [`Formatter`] in that the formatting infrastructure
+/// creates a new [`Formatter`] for every [`write`] call, whereas this structure stays alive
+/// for the whole process of formatting a root with [`format`].
+#[derive(Default)]
+pub struct FormatState<Context> {
+    context: Context,
+    group_id_builder: UniqueGroupIdBuilder,
+    // This is using a RefCell as it only exists in debug mode,
+    // the Formatter is still completely immutable in release builds
+    #[cfg(debug_assertions)]
+    pub printed_tokens: PrintedTokens,
+}
+
+impl<Context> fmt::Debug for FormatState<Context>
+where
+    Context: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.debug_struct("FormatState")
+            .field("context", &self.context)
+            .finish()
+    }
+}
+
+impl<Context> FormatState<Context> {
+    /// Creates a new state with the given language specific context
+    pub fn new(context: Context) -> Self {
+        Self {
+            context,
+            group_id_builder: Default::default(),
+            #[cfg(debug_assertions)]
+            printed_tokens: Default::default(),
+        }
+    }
+
+    /// Returns the context specifying how to format the current CST
+    pub fn context(&self) -> &Context {
+        &self.context
+    }
+
+    /// Returns a mutable reference to the context
+    pub fn context_mut(&mut self) -> &mut Context {
+        &mut self.context
+    }
+
+    /// Creates a new group id that is unique to this document. The passed debug name is used in the
+    /// [std::fmt::Debug] of the document if this is a debug build.
+    /// The name is unused for production builds and has no meaning on the equality of two group ids.
+    pub fn group_id(&self, debug_name: &'static str) -> GroupId {
+        self.group_id_builder.group_id(debug_name)
+    }
+
+    /// Tracks the given token as formatted
+    #[inline]
+    pub fn track_token<L: Language>(&mut self, #[allow(unused_variables)] token: &SyntaxToken<L>) {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                self.printed_tokens.track_token(token);
+            }
+        }
+    }
+
+    /// Asserts in debug builds that all tokens have been printed.
+    #[inline]
+    pub fn assert_formatted_all_tokens<L: Language>(
+        &self,
+        #[allow(unused_variables)] root: &SyntaxNode<L>,
+    ) {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                self.printed_tokens.assert_all_tracked(root);
+            }
+        }
+    }
 }

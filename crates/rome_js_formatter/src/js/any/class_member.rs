@@ -5,38 +5,22 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyClassMember;
 impl FormatRule<JsAnyClassMember> for FormatJsAnyClassMember {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyClassMember, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyClassMember::JsConstructorClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::JsPropertyClassMember(node) => formatted![formatter, [node.format()]],
-            JsAnyClassMember::JsMethodClassMember(node) => formatted![formatter, [node.format()]],
-            JsAnyClassMember::JsGetterClassMember(node) => formatted![formatter, [node.format()]],
-            JsAnyClassMember::JsSetterClassMember(node) => formatted![formatter, [node.format()]],
-            JsAnyClassMember::TsConstructorSignatureClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::TsPropertySignatureClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::TsMethodSignatureClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::TsGetterSignatureClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::TsSetterSignatureClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::TsIndexSignatureClassMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyClassMember::JsEmptyClassMember(node) => formatted![formatter, [node.format()]],
-            JsAnyClassMember::JsUnknownMember(node) => formatted![formatter, [node.format()]],
+            JsAnyClassMember::JsConstructorClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsStaticInitializationBlockClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsPropertyClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsMethodClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsGetterClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsSetterClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::TsConstructorSignatureClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::TsPropertySignatureClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::TsMethodSignatureClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::TsGetterSignatureClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::TsSetterSignatureClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::TsIndexSignatureClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsEmptyClassMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsUnknownMember(node) => node.format().fmt(f),
         }
     }
 }

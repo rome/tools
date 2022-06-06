@@ -1,6 +1,8 @@
 use std::collections::{BTreeMap, HashMap};
 
-use super::*;
+use crate::semantic_events;
+use crate::SemanticEvent;
+
 use rome_console::{ConsoleExt, EnvConsole};
 use rome_diagnostics::{file::SimpleFile, Applicability, Diagnostic};
 use rome_js_syntax::JsSyntaxToken;
@@ -62,10 +64,8 @@ fn assert(code: &str) {
 
     let mut event_by_range = HashMap::new();
     for event in semantic_events(r.syntax()) {
-        match &event {
-            SemanticEvent::DeclarationFound { range, .. } => {
-                event_by_range.insert(*range, event);
-            }
+        if let SemanticEvent::DeclarationFound { range, .. } = &event {
+            event_by_range.insert(*range, event);
         }
     }
 
@@ -91,6 +91,9 @@ fn assert(code: &str) {
             match symbol {
                 SemanticEvent::DeclarationFound { .. } => {
                     // No need to check anything on declarations
+                }
+                _ => {
+                    error_declaration_assertion_not_attached_to_a_declaration(code, assertion_range)
                 }
             }
         } else {
