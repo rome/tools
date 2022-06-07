@@ -660,7 +660,7 @@ impl SyntaxSlots {
         let len = parent.green().slots().len() as i32;
         Self {
             front_next_position: 0,
-            back_next_position: len - 1,
+            back_next_position: len,
             parent,
         }
     }
