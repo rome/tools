@@ -55,6 +55,7 @@ mod check {
     }
 
     #[test]
+    #[ignore = "lint errors are disabled until the linter is stable"]
     fn lint_error() {
         let mut fs = MemoryFileSystem::default();
 
