@@ -15,7 +15,7 @@ impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
 
         let expand_if_special_case =
             is_jsx_inside_arrow_function_inside_call_inside_expression_child(node.syntax())
-                .then(|| expand_parent());
+                .then(expand_parent);
 
         write![
             formatter,

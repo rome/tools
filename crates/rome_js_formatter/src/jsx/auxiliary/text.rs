@@ -5,7 +5,6 @@ use crate::FormatNodeFields;
 use rome_formatter::{write, FormatResult};
 use rome_js_syntax::{JsxText, JsxTextFields, TextSize};
 use std::borrow::Cow;
-
 use std::ops::Range;
 use std::str::CharIndices;
 
@@ -174,11 +173,8 @@ impl<'a> TextCleaner<'a> {
 
 impl Format<JsFormatContext> for WhitespaceType {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        match self {
-            WhitespaceType::NoNewline => {
-                write![f, [JsxSpace::default()]]?;
-            }
-            _ => {}
+        if self == &WhitespaceType::NoNewline {
+            write![f, [JsxSpace::default()]]?;
         }
 
         Ok(())
