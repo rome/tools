@@ -312,7 +312,7 @@ impl<'src> Lexer<'src> {
             ReLexContext::BinaryOperator => self.re_lex_binary_operator(),
             ReLexContext::TypeArgumentLessThan => self.re_lex_type_argument_less_than(),
             ReLexContext::JsxIdentifier => self.re_lex_jsx_identifier(old_position),
-            ReLexContext::JsxChild => self.lex_jsx_child_token(),
+            ReLexContext::JsxChild if !self.is_eof() => self.lex_jsx_child_token(),
             _ => self.current(),
         };
 
