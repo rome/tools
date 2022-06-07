@@ -368,11 +368,6 @@ impl<'s> Parser<'s> {
         self.events.truncate(self.events.len() - amount);
     }
 
-    /// Make a new error builder with warning severity
-    pub fn warning_builder(&self, message: &str) -> Diagnostic {
-        Diagnostic::warning(self.file_id, "SyntaxError", message)
-    }
-
     /// Bump and add an error event
     pub fn err_and_bump(&mut self, err: impl ToDiagnostic, unknown_syntax_kind: JsSyntaxKind) {
         let m = self.start();
