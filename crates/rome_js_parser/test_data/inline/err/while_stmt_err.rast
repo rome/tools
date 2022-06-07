@@ -101,35 +101,35 @@ JsModule {
       0: R_CURLY@50..51 "}" [] []
   3: EOF@51..52 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `'('` but instead found `true`
+error[SyntaxError]: expected `(` but instead found `true`
   ┌─ while_stmt_err.js:1:7
   │
 1 │ while true {}
   │       ^^^^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead found `{`
+error[SyntaxError]: expected `)` but instead found `{`
   ┌─ while_stmt_err.js:1:12
   │
 1 │ while true {}
   │            ^ unexpected
 
 --
-error[SyntaxError]: expected `'('` but instead found `{`
+error[SyntaxError]: expected `(` but instead found `{`
   ┌─ while_stmt_err.js:2:7
   │
 2 │ while {}
   │       ^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead found `{`
+error[SyntaxError]: expected `)` but instead found `{`
   ┌─ while_stmt_err.js:3:13
   │
 3 │ while (true {}
   │             ^ unexpected
 
 --
-error[SyntaxError]: expected `'('` but instead found `true`
+error[SyntaxError]: expected `(` but instead found `true`
   ┌─ while_stmt_err.js:4:7
   │
 4 │ while true) }
