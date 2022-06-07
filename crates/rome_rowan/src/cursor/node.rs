@@ -650,14 +650,17 @@ impl From<SyntaxElement> for SyntaxSlot {
 /// Iterator over a node's slots
 #[derive(Debug, Clone)]
 pub(crate) struct SyntaxSlots {
-    next_position: u32,
+    front_next_position: u32,
+    back_next_position: i32,
     parent: SyntaxNode,
 }
 
 impl SyntaxSlots {
     fn new(parent: SyntaxNode) -> Self {
+        let len = parent.green().slots().len() as i32;
         Self {
-            next_position: 0,
+            front_next_position: 0,
+            back_next_position: len - 1,
             parent,
         }
     }
@@ -689,10 +692,10 @@ impl Iterator for SyntaxSlots {
 
     fn next(&mut self) -> Option<Self::Item> {
         let mut slots = self.parent.green().slots();
-        let current_position = self.next_position as usize;
+        let current_position = self.front_next_position as usize;
         if current_position < slots.len() {
             let next_slot = slots.nth(current_position);
-            self.next_position += 1;
+            self.front_next_position += 1;
             next_slot.map(|slot| self.map_slot(slot, current_position as u32))
         } else {
             None
@@ -706,7 +709,7 @@ impl Iterator for SyntaxSlots {
         let mut slots = self.parent.green().slots();
         let slots_len = slots.len() as usize;
 
-        if (self.next_position as usize) < slots_len {
+        if (self.front_next_position as usize) < slots_len {
             let position = slots_len - 1;
             slots
                 .nth(position)
@@ -718,7 +721,7 @@ impl Iterator for SyntaxSlots {
     }
 
     fn nth(&mut self, n: usize) -> Option<Self::Item> {
-        self.next_position += n as u32;
+        self.front_next_position += n as u32;
         self.next()
     }
 
@@ -734,6 +737,25 @@ impl ExactSizeIterator for SyntaxSlots {
 }
 
 impl FusedIterator for SyntaxSlots {}
+
+impl DoubleEndedIterator for SyntaxSlots {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        let mut slots = self.parent.green().slots();
+        let current_position = self.back_next_position;
+        if current_position >= 0 {
+            let previous_slot = slots.nth(current_position as usize);
+            self.back_next_position -= 1;
+            previous_slot.map(|slot| self.map_slot(slot, current_position as u32))
+        } else {
+            None
+        }
+    }
+
+    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
+        self.back_next_position -= n as i32;
+        self.next_back()
+    }
+}
 
 /// Iterator to visit a node's slots in pre-order.
 pub(crate) struct SlotsPreorder {

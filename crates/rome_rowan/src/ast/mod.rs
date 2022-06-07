@@ -187,6 +187,12 @@ impl<L: Language, N: AstNode<Language = L>> ExactSizeIterator for AstNodeListIte
 
 impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstNodeListIterator<L, N> {}
 
+impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator for AstNodeListIterator<L, N> {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        Some(Self::slot_to_node(&self.inner.next_back()?))
+    }
+}
+
 #[derive(Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
@@ -313,6 +319,24 @@ where
     }
 }
 
+impl<L, N> DoubleEndedIterator for AstSeparatorIterator<L, N>
+where
+    L: Language,
+    N: AstNode<Language = L>,
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        loop {
+            let element = self.inner.next_back()?;
+
+            match element.trailing_separator {
+                Ok(Some(separator)) => return Some(Ok(separator)),
+                Err(missing) => return Some(Err(missing)),
+                _ => {}
+            }
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct AstSeparatedListElementsIterator<L: Language, N> {
     slots: SyntaxSlots<L>,
@@ -364,6 +388,39 @@ impl<L: Language, N: AstNode<Language = L>> FusedIterator
 {
 }
 
+impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
+    for AstSeparatedListElementsIterator<L, N>
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        let slot = self.slots.next_back();
+
+        // we should find the separator first
+        let separator = match slot {
+            Some(SyntaxSlot::Empty) => Err(
+                SyntaxError::MissingRequiredChild,
+            ),
+            Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
+            // End of list, no trailing separator
+            None => Ok(None),
+            Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
+        };
+
+        // then we should find the node
+        let node = match self.slots.next_back()? {
+            // The node for this element is missing if the next child is a token instead of a node.
+            SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+            // Missing element
+            SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
+            SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
+        };
+
+        Some(AstSeparatedElement {
+            node,
+            trailing_separator: separator,
+        })
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct AstSeparatedListNodesIterator<L: Language, N> {
     inner: AstSeparatedListElementsIterator<L, N>,
@@ -377,6 +434,14 @@ impl<L: Language, N: AstNode<Language = L>> Iterator for AstSeparatedListNodesIt
 }
 
 impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstSeparatedListNodesIterator<L, N> {}
+
+impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
+    for AstSeparatedListNodesIterator<L, N>
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.inner.next_back().map(|element| element.node)
+    }
+}
 
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
@@ -592,6 +657,57 @@ mod tests {
             ],
         );
         assert_eq!(list.trailing_separator(), None);
+    }
+
+    #[test]
+    fn separated_list_backwards_with_empty_separator() {
+        let list = build_list(vec![
+            (Some(1), Some(",")),
+            (Some(2), Some(",")),
+            (Some(3), Some(",")),
+            (Some(4), None),
+        ]);
+
+        assert_eq!(list.len(), 4);
+        assert!(!list.is_empty());
+        assert_eq!(list.separators().count(), 3);
+
+        let mut iter = list.elements();
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "4");
+        assert_eq!(element.trailing_separator(), Ok(None));
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "3");
+        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "2");
+        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "1");
+        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
+        // we test next_back once we consumed the whole iterator
+        let element = iter.next_back();
+        assert_eq!(element, None);
+    }
+
+    #[test]
+    fn separated_list_backwards_with_separator() {
+        let list = build_list(vec![(Some(1), Some(",")), (Some(2), Some(","))]);
+
+        assert_eq!(list.len(), 2);
+        assert!(!list.is_empty());
+        assert_eq!(list.separators().count(), 2);
+
+        let mut iter = list.elements();
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "2");
+        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "1");
+        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
+        // we test next_back once we consumed the whole iterator
+        let element = iter.next_back();
+        assert_eq!(element, None);
     }
 
     #[test]

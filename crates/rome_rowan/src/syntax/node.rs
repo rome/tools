@@ -750,3 +750,9 @@ impl<'a, L: Language> ExactSizeIterator for SyntaxSlots<L> {
         self.raw.len()
     }
 }
+
+impl<L: Language> DoubleEndedIterator for SyntaxSlots<L> {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.raw.next_back().map(SyntaxSlot::from)
+    }
+}
