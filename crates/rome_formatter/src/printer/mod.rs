@@ -272,17 +272,20 @@ impl<'a> Printer<'a> {
                                 // Test if this variant fits and if so, use it. Otherwise try the next
                                 // variant.
 
-                                if fits_on_line(
-                                    &[variant],
-                                    args.with_print_mode(PrintMode::Expanded),
-                                    queue,
-                                    self,
-                                ) {
+                                // Try to fit only the first variant on a single line
+                                let mode = if index == 0 {
+                                    PrintMode::Flat
+                                } else {
+                                    PrintMode::Expanded
+                                };
+
+                                if fits_on_line(&[variant], args.with_print_mode(mode), queue, self)
+                                {
                                     self.state.measured_group_fits = true;
 
                                     queue.enqueue(PrintElementCall::new(
                                         variant,
-                                        args.with_print_mode(PrintMode::Expanded),
+                                        args.with_print_mode(mode),
                                     ));
                                     return;
                                 }
