@@ -726,6 +726,20 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 //   "use strict"; // not a directive
 // }
 //
+//
+// test directives_redundant
+// // SCRIPT
+// function test() {
+//   "use strict";
+//   function inner_a() {
+//     "use strict";
+//   }
+//   function inner_b() {
+//     function inner_inner() {
+//       "use strict";
+//     }
+//   }
+// }
 /// Parses the directives and returns
 /// * The marker for the following statement list. May already contain a parsed out expression statement
 /// * A checkpoint containing the previous strict mode
