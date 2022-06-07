@@ -8,7 +8,11 @@ You can use the linter via our [VS Code extension] or by downloading our CLI dir
 > This is a temporary choice to allow people to play with our formatter. This will change in the near future.
 
 
-> WARNING: this command is experimental for the time being won't do anything
+### Use the formatter via VSCode extension
+
+The feature is opt-in, and you'd need to enable the following options:
+- `analysis.enableDiagnostics` 
+- `analysis.enableCodeActions` 
 
 ### Use the formatter via CLI
 

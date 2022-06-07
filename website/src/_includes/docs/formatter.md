@@ -16,7 +16,7 @@ Our formatter is really strict and has support for only a few options:
 - quantity of spaces, applied only if you choose spaces as indent style;
 - line width, which is the number of characters that fit in a single line; **Rome's default is `80`**
 
-### VSCode extension
+### Use the formatter via VSCode extension
 
 The extension allows you to change the default [formatter options](#formatter-options).
 
