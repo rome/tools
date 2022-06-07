@@ -11,7 +11,7 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
         if contains_meaningful_jsx_text(node) {
             formatter
                 .fill(soft_line_break())
-                .entries(node.iter().formatted())
+                .flatten_entries(node.iter().formatted())
                 .finish()
         } else {
             formatter

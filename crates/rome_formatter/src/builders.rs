@@ -1638,6 +1638,43 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
         self
     }
 
+    /// Adds an iterator of entries to the fill output, flattening any [FormatElement::List]
+    /// entries by adding the list's elements to the fill output.
+    pub fn flatten_entries<F, I>(&mut self, entries: I) -> &mut Self
+    where
+        F: Format<Context>,
+        I: IntoIterator<Item = F>,
+    {
+        for entry in entries {
+            self.flatten_entry(&entry);
+        }
+
+        self
+    }
+
+    /// Adds a new entry to the fill output. If the entry is a [FormatElement::List],
+    /// then adds the list's entries to the fill output instead of the list itself.
+    pub fn flatten_entry(&mut self, entry: &dyn Format<Context>) -> &mut Self {
+        self.result = self.result.and_then(|_| {
+            let mut buffer = VecBuffer::new(self.fmt.state_mut());
+            write!(buffer, [entry])?;
+
+            let item = buffer.into_element();
+
+            if !item.is_empty() {
+                if let FormatElement::List(items) = item {
+                    self.items.extend(items.to_vec())
+                } else {
+                    self.items.push(item);
+                }
+            }
+
+            Ok(())
+        });
+
+        self
+    }
+
     /// Adds a new entry to the fill output.
     pub fn entry(&mut self, entry: &dyn Format<Context>) -> &mut Self {
         self.result = self.result.and_then(|_| {

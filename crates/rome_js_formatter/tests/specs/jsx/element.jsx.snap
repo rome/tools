@@ -194,12 +194,16 @@ function Tabs() {
 					style={{
 						fontSize: 12,
 						height: "100vh",
-						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+						fontFamily:
+							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 					}}
 				/>
 			</TabPanel>
 			<TabPanel>
-				<SettingsMenu setPlaygroundState={setPlaygroundState} settings={settings} />
+				<SettingsMenu
+					setPlaygroundState={setPlaygroundState}
+					settings={settings}
+				/>
 			</TabPanel>
 			<TabPanel>
 				<h1>Rome</h1>
@@ -211,7 +215,8 @@ function Tabs() {
 						fontSize: 12,
 						height: "40vh",
 						overflowY: "scroll",
-						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+						fontFamily:
+							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 					}}
 				/>
 				<h1>Prettier</h1>
@@ -223,7 +228,8 @@ function Tabs() {
 						fontSize: 12,
 						height: "50vh",
 						overflowY: "scroll",
-						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+						fontFamily:
+							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 					}}
 				/>
 			</TabPanel>
@@ -324,9 +330,9 @@ let bar = (
 ## Lines exceeding width of 80 characters
 
     5: 		The films of Wong Kar-Wai exemplify the synthesis of French New Wave cinema—specifically the unrelenting experimental technique and fascination with American/western culture—with more conventional melodramatic, romantic narratives.
-   40: 						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   57: 						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   69: 						fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   95: 					className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
-  153: 					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
+   41: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   62: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   75: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  101: 					className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
+  159: 					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
 
