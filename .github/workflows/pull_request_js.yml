@@ -15,7 +15,7 @@ env:
 
 jobs:
   format-js:
-    name: Format JS Files
+    name: Check JS Files
     runs-on: ubuntu-latest
     steps:
       - name: Install Rome
