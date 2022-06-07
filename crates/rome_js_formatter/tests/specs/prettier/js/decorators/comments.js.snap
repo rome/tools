@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: comments.js
-
 ---
 # Input
 ```js
@@ -49,7 +47,9 @@ var x = 100;
   // test
   b: '2'
 })
-class X {}
+class X {
+
+}
 
 @NgModule({
   // Imports.
@@ -69,7 +69,7 @@ export class AppModule {}
 // B
 @Bar()
 // C
-export class Bar {}
+export class Bar{}
 
 ```
 

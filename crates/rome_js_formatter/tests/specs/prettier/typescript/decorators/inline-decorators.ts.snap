@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: inline-decorators.ts
-
 ---
 # Input
 ```js
@@ -71,16 +69,16 @@ class Class2 {
     @d2(foo)
     @d3.bar
     @d4.baz()
-  method1() {}
+    method1() {}
 
   @d1
-  method2() {}
+    method2() {}
 
   @d2(foo)
-  method3() {}
+    method3() {}
 
   @d3.bar
-  method4() {}
+    method4() {}
 }
 
 class Class3 {
@@ -89,14 +87,14 @@ class Class3 {
   @d3.bar fieldC;
   @d4.baz() fieldD;
 
-  constructor(
-    @d1 private x: number,
-    @d2(foo) private y: number,
-    @d3('foo') private z: number,
-    @d4({
+  constructor (
+        @d1 private x: number,
+        @d2(foo) private y: number,
+        @d3('foo') private z: number,
+        @d4({
             x: string
         }) private a: string,
-  ) {}
+    ) {}
 }
 
 @decorated class Foo {}
@@ -106,11 +104,13 @@ class Bar {
 }
 
 class MyContainerComponent {
-  @ContentChildren(MyComponent) components: QueryListSomeBigName<
-    MyComponentThat
-  >;
+  @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 }
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   47:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+```
 

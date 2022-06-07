@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: decorators-comments.ts
-
 ---
 # Input
 ```js
@@ -55,32 +53,32 @@ class Something3 {
 ```js
 class Foo1 {
   @foo
-  // comment
-  async method() {}
+    // comment
+    async method() {}
 }
 
 class Foo2 {
   @foo
-  // comment
-  private method() {}
+    // comment
+    private method() {}
 }
 
 class Foo3 {
   @foo
-  // comment
-  *method() {}
+    // comment
+    *method() {}
 }
 
 class Foo4 {
   @foo
-  // comment
-  async *method() {}
+    // comment
+    async *method() {}
 }
 
 class Something {
   @foo()
-  // comment
-  readonly property: Array<string>;
+    // comment
+    readonly property: Array<string>
 }
 
 class Something2 {

@@ -63,11 +63,7 @@ class Test {
 	@readonly
 	prop: string;
 
-	constructor(
-		@param test,
-		@readonly private other,
-		@aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last,
-	) {}
+	constructor(@param test, @readonly private other, @aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last) {}
 
 	method(@param a) {}
 
@@ -86,13 +82,30 @@ export class Test {}
 @test // first decorator
 // Leading comment before class
 class Test2 {
+
+
+
+
+
 	/*
 	 * Leading multiline comment
 	 */
 
+
+
 	@test /* trailing multiline comment
 	 for decorator */ @anotherDecorator()
-	// leading comment
+
+
+
+
+		// leading comment
 	prop: string;
+
 }
+
+
+## Lines exceeding width of 80 characters
+
+    6: 	constructor(@param test, @readonly private other, @aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last) {}
 

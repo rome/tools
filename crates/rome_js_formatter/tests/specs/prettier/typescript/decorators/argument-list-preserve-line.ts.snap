@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: argument-list-preserve-line.ts
-
 ---
 # Input
 ```js
@@ -26,13 +24,16 @@ class Foo {
 ```js
 class Foo {
   constructor(
-    @inject(Bar)
-    private readonly bar: IBar,
-    @inject(MyProcessor)
-    private readonly myProcessor: IMyProcessor,
-    @inject(InjectionTypes.AnotherThing)
-    private readonly anotherThing: IAnotherThing | undefined,
-  ) {}
+        @inject(Bar)
+        private readonly bar: IBar,
+
+        @inject(MyProcessor)
+        private readonly myProcessor: IMyProcessor,
+
+        @inject(InjectionTypes.AnotherThing)
+
+        private readonly anotherThing: IAnotherThing | undefined,
+    ) { }
 }
 
 ```

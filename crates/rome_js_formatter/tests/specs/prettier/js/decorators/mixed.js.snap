@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: mixed.js
-
 ---
 # Input
 ```js
@@ -23,7 +21,8 @@ export default class MyComponent {
 @foo
 export default class MyComponent {
   @task
-  *foo() {}
+  *foo() {
+  }
 }
 
 ```

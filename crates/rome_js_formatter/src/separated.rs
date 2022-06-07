@@ -46,8 +46,8 @@ where
                         write!(f, [separator.format()])?;
                     }
                     TrailingSeparator::Disallowed => {
-                        // A trailing separator was present where it wasn't allowed, opt out of formatting
-                        return Err(FormatError::MissingRequiredChild);
+                        // A trailing separator was present where it isn't allowed, opt out of formatting
+                        return Err(FormatError::SyntaxError);
                     }
                 }
             } else {
