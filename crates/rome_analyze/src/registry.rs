@@ -39,8 +39,8 @@ impl_registry_builders!(
     NoDelete,
     NoDoubleEquals,
     UseSingleVarDeclarator,
+    UseValidTypeof,
     UseWhile,
-    ValidTypeof,
     // Assists
     FlipBinExp,
 );

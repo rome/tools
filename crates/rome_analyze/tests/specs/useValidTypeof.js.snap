@@ -1,6 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-expression: validTypeof.js
+expression: useValidTypeof.js
 ---
 # Input
 ```js
@@ -26,8 +26,8 @@ typeof foo == -5
 
 # Diagnostics
 ```
-error[validTypeof]: Invalid typeof comparison value
-  ┌─ validTypeof.js:7:1
+error[useValidTypeof]: Invalid typeof comparison value
+  ┌─ useValidTypeof.js:7:1
   │
 7 │ typeof foo === "strnig"
   │ ^^^^^^^^^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -36,8 +36,8 @@ error[validTypeof]: Invalid typeof comparison value
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-  ┌─ validTypeof.js:8:1
+error[useValidTypeof]: Invalid typeof comparison value
+  ┌─ useValidTypeof.js:8:1
   │
 8 │ typeof foo == "undefimed"
   │ ^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -46,8 +46,8 @@ error[validTypeof]: Invalid typeof comparison value
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-  ┌─ validTypeof.js:9:1
+error[useValidTypeof]: Invalid typeof comparison value
+  ┌─ useValidTypeof.js:9:1
   │
 9 │ typeof bar != "nunber"
   │ ^^^^^^^^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -56,8 +56,8 @@ error[validTypeof]: Invalid typeof comparison value
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-   ┌─ validTypeof.js:10:1
+error[useValidTypeof]: Invalid typeof comparison value
+   ┌─ useValidTypeof.js:10:1
    │
 10 │ typeof bar !== "fucntion"
    │ ^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -66,8 +66,8 @@ error[validTypeof]: Invalid typeof comparison value
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-   ┌─ validTypeof.js:13:1
+error[useValidTypeof]: Invalid typeof comparison value
+   ┌─ useValidTypeof.js:13:1
    │
 13 │ typeof foo === undefined
    │ ^^^^^^^^^^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -87,8 +87,8 @@ Compare the result of `typeof` with a valid type name
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-   ┌─ validTypeof.js:14:1
+error[useValidTypeof]: Invalid typeof comparison value
+   ┌─ useValidTypeof.js:14:1
    │
 14 │ typeof bar == Object
    │ ^^^^^^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -108,8 +108,8 @@ Compare the result of `typeof` with a valid type name
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-   ┌─ validTypeof.js:15:1
+error[useValidTypeof]: Invalid typeof comparison value
+   ┌─ useValidTypeof.js:15:1
    │
 15 │ typeof foo === baz
    │ ^^^^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -118,8 +118,8 @@ error[validTypeof]: Invalid typeof comparison value
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-   ┌─ validTypeof.js:16:1
+error[useValidTypeof]: Invalid typeof comparison value
+   ┌─ useValidTypeof.js:16:1
    │
 16 │ typeof foo == 5
    │ ^^^^^^^^^^^^^^^ Invalid typeof comparison value
@@ -128,8 +128,8 @@ error[validTypeof]: Invalid typeof comparison value
 ```
 
 ```
-error[validTypeof]: Invalid typeof comparison value
-   ┌─ validTypeof.js:17:1
+error[useValidTypeof]: Invalid typeof comparison value
+   ┌─ useValidTypeof.js:17:1
    │
 17 │ typeof foo == -5
    │ ^^^^^^^^^^^^^^^^ Invalid typeof comparison value

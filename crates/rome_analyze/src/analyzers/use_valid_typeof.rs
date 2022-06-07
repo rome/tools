@@ -12,10 +12,10 @@ use crate::{
     ActionCategory, RuleCategory,
 };
 
-pub(crate) enum ValidTypeof {}
+pub(crate) enum UseValidTypeof {}
 
-impl Rule for ValidTypeof {
-    const NAME: &'static str = "validTypeof";
+impl Rule for UseValidTypeof {
+    const NAME: &'static str = "useValidTypeof";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsBinaryExpression;
