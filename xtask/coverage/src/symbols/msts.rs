@@ -3,7 +3,6 @@ use rome_js_syntax::SourceType;
 
 use crate::check_file_encoding;
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
-use crate::util::decode_maybe_utf16_string;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 

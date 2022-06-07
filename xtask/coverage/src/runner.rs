@@ -269,7 +269,7 @@ pub(crate) fn run_test_suite(
                     _ => {}
                 }
 
-                let _ = writeln!(stacktrace, "");
+                let _ = writeln!(stacktrace);
             }
         }
 
@@ -315,7 +315,7 @@ pub(crate) fn run_test_suite(
                             .downcast_ref::<String>()
                             .map(|x| x.to_string())
                             .or_else(|| panic.downcast_ref::<&str>().map(|x| x.to_string()))
-                            .unwrap_or("".to_string());
+                            .unwrap_or_else(|| "".to_string());
                         tracing::error!(
                             panic = error.as_str(),
                             name = test.name(),
