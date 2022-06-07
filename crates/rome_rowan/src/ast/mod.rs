@@ -417,10 +417,9 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
                         Err(SyntaxError::MissingRequiredChild),
                     ),
                 }
-                // Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
             }
             None => {
-                // then we should find the node
+                // there wasn't any separator, let's try to go back and see if we find
                 let node = match self.slots.next_back()? {
                     // The node for this element is missing if the next child is a token instead of a node.
                     SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
@@ -432,25 +431,6 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
                 (node, Ok(None))
             }
         };
-        // we should find the separator first
-        // let separator = match slot {
-        //     Some(SyntaxSlot::Empty) => Err(
-        //         SyntaxError::MissingRequiredChild,
-        //     ),
-        //     Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
-        //     // End of list, no trailing separator
-        //     None => Ok(None),
-        //     Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
-        // };
-        //
-        // // then we should find the node
-        // let node = match self.slots.next_back()? {
-        //     // The node for this element is missing if the next child is a token instead of a node.
-        //     SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
-        //     // Missing element
-        //     SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
-        //     SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
-        // };
 
         Some(AstSeparatedElement {
             node,
