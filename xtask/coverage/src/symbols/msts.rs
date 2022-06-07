@@ -3,6 +3,7 @@ use rome_js_syntax::SourceType;
 
 use crate::check_file_encoding;
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use crate::util::decode_maybe_utf16_string;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
@@ -54,7 +55,19 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 s
             })
         } else {
-            std::fs::read_to_string(&full_path).unwrap()
+            match std::fs::read_to_string(&full_path) {
+                Ok(code) => code,
+                Err(_) => {
+                    return TestRunOutcome::IncorrectlyErrored {
+                        files: TestCaseFiles::single(
+                            self.name.clone(),
+                            "".to_string(),
+                            SourceType::tsx(),
+                        ),
+                        errors: vec![],
+                    }
+                }
+            }
         };
 
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
