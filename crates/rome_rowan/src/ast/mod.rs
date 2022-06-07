@@ -394,25 +394,63 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
     fn next_back(&mut self) -> Option<Self::Item> {
         let slot = self.slots.next_back();
 
-        // we should find the separator first
-        let separator = match slot {
-            Some(SyntaxSlot::Empty) => Err(
-                SyntaxError::MissingRequiredChild,
-            ),
-            Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
-            // End of list, no trailing separator
-            None => Ok(None),
-            Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
-        };
+        let (node, separator) = match slot {
+            Some(slot) => {
+                match slot {
+                    // we haven't found a token, which means that the last separator is not present
+                    SyntaxSlot::Node(node) => (Ok(N::unwrap_cast(node)), Ok(None)),
+                    // separator found, now let's check if we find a node
+                    SyntaxSlot::Token(separator) => {
+                        // then we should find the node
+                        let node = match self.slots.next_back()? {
+                            // The node for this element is missing if the next child is a token instead of a node.
+                            SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+                            // Missing element
+                            SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
+                            SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
+                        };
 
-        // then we should find the node
-        let node = match self.slots.next_back()? {
-            // The node for this element is missing if the next child is a token instead of a node.
-            SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
-            // Missing element
-            SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
-            SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
+                        (node, Ok(Some(separator)))
+                    }
+                    SyntaxSlot::Empty => (
+                        Err(SyntaxError::MissingRequiredChild),
+                        Err(SyntaxError::MissingRequiredChild),
+                    ),
+                }
+                // Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
+            }
+            None => {
+                // then we should find the node
+                let node = match self.slots.next_back()? {
+                    // The node for this element is missing if the next child is a token instead of a node.
+                    SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+                    // Missing element
+                    SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
+                    SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
+                };
+
+                (node, Ok(None))
+            }
         };
+        // we should find the separator first
+        // let separator = match slot {
+        //     Some(SyntaxSlot::Empty) => Err(
+        //         SyntaxError::MissingRequiredChild,
+        //     ),
+        //     Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
+        //     // End of list, no trailing separator
+        //     None => Ok(None),
+        //     Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
+        // };
+        //
+        // // then we should find the node
+        // let node = match self.slots.next_back()? {
+        //     // The node for this element is missing if the next child is a token instead of a node.
+        //     SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+        //     // Missing element
+        //     SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
+        //     SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
+        // };
 
         Some(AstSeparatedElement {
             node,

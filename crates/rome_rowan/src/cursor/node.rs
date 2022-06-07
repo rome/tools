@@ -651,16 +651,15 @@ impl From<SyntaxElement> for SyntaxSlot {
 #[derive(Debug, Clone)]
 pub(crate) struct SyntaxSlots {
     front_next_position: u32,
-    back_next_position: i32,
+    back_next_position: u32,
     parent: SyntaxNode,
 }
 
 impl SyntaxSlots {
     fn new(parent: SyntaxNode) -> Self {
-        let len = parent.green().slots().len() as i32;
         Self {
             front_next_position: 0,
-            back_next_position: len,
+            back_next_position: 0,
             parent,
         }
     }
@@ -741,10 +740,10 @@ impl FusedIterator for SyntaxSlots {}
 impl DoubleEndedIterator for SyntaxSlots {
     fn next_back(&mut self) -> Option<Self::Item> {
         let mut slots = self.parent.green().slots();
-        let current_position = self.back_next_position;
-        if current_position >= 0 {
-            let previous_slot = slots.nth(current_position as usize);
-            self.back_next_position -= 1;
+        let current_position = self.back_next_position as usize;
+        if current_position < slots.len() {
+            let previous_slot = slots.nth_back(current_position as usize);
+            self.back_next_position += 1;
             previous_slot.map(|slot| self.map_slot(slot, current_position as u32))
         } else {
             None
@@ -752,7 +751,7 @@ impl DoubleEndedIterator for SyntaxSlots {
     }
 
     fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
-        self.back_next_position -= n as i32;
+        self.back_next_position += n as u32;
         self.next_back()
     }
 }
