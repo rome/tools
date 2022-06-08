@@ -2,14 +2,25 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
-import { IndentStyle, PlaygroundState, QuoteStyle, SourceType, TreeStyle } from "./types";
+import {
+	IndentStyle,
+	PlaygroundState,
+	QuoteStyle,
+	SourceType,
+	TreeStyle,
+} from "./types";
 
-export function classNames(...classes: (string | undefined | boolean)[]): string {
+export function classNames(
+	...classes: (string | undefined | boolean)[]
+): string {
 	return classes.filter(Boolean).join(" ");
 }
 
 // Define general type for useWindowSize hook, which includes width and height
-interface Size { width: number | undefined; height: number | undefined }
+interface Size {
+	width: number | undefined;
+	height: number | undefined;
+}
 
 // Hook
 export function useWindowSize(): Size {
@@ -18,7 +29,7 @@ export function useWindowSize(): Size {
 	const [windowSize, setWindowSize] = useState<Size>({
 		width: undefined,
 		height: undefined,
-	});
+	},);
 	useEffect(
 		() => {
 			// Handler to call on window resize
@@ -45,16 +56,20 @@ export function usePlaygroundState(): [
 	const searchParams = new URLSearchParams(window.location.search);
 	const [playgroundState, setPlaygroundState] = useState(
 		() => ({
-			code: window.location.hash !== "#" ? decodeCode(
-				window.location.hash.substring(1),
-			) : "",
+			code:
+				window.location.hash !== "#" ? decodeCode(
+					window.location.hash.substring(1),
+				) : "",
 			lineWidth: parseInt(searchParams.get("lineWidth") ?? "80"),
-			indentStyle: (searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
-			quoteStyle: (searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
+			indentStyle:
+				(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
+			quoteStyle:
+				(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
 			indentWidth: parseInt(searchParams.get("indentWidth") ?? "2"),
 			isTypeScript: searchParams.get("typescript") === "true",
 			isJsx: searchParams.get("jsx") === "true",
-			sourceType: (searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
+			sourceType:
+				(searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
 			treeStyle: TreeStyle.Json,
 		}),
 	);
@@ -67,7 +82,7 @@ export function usePlaygroundState(): [
 				...options,
 				typescript: isTypeScript.toString(),
 				jsx: isJsx.toString(),
-			}).toString();
+			},).toString();
 			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}#${encodeCode(
 				code,
 			)}`;
@@ -112,7 +127,10 @@ export function formatWithPrettier(
 		// @ts-ignore
 		let debug = prettier.__debug;
 		const document = debug.printToDoc(code, prettierOptions);
-		const formattedCode = debug.printDocToString(document, prettierOptions).formatted;
+		const formattedCode = debug.printDocToString(
+			document,
+			prettierOptions,
+		).formatted;
 		const ir = debug.formatDoc(
 			document,
 			{ parser: "babel", plugins: [parserBabel] },

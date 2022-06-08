@@ -5,17 +5,12 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyExportNamedSpecifier;
 impl FormatRule<JsAnyExportNamedSpecifier> for FormatJsAnyExportNamedSpecifier {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyExportNamedSpecifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyExportNamedSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
-            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(node) => node.format().fmt(f),
         }
     }
 }

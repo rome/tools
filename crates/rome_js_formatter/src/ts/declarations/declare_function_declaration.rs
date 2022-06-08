@@ -1,16 +1,14 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsDeclareFunctionDeclaration;
 use rome_js_syntax::TsDeclareFunctionDeclarationFields;
 
 impl FormatNodeFields<TsDeclareFunctionDeclaration>
     for FormatNodeRule<TsDeclareFunctionDeclaration>
 {
-    fn format_fields(
-        node: &TsDeclareFunctionDeclaration,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsDeclareFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsDeclareFunctionDeclarationFields {
             async_token,
             function_token,
@@ -21,15 +19,14 @@ impl FormatNodeFields<TsDeclareFunctionDeclaration>
             semicolon_token,
         } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            formatted![
-                formatter,
+        let declaration = format_with(|f| {
+            if let Some(async_token) = &async_token {
+                write!(f, [async_token.format(), space_token()])?;
+            }
+
+            write!(
+                f,
                 [
-                    async_token.format().with_or_empty(|async_token| formatted![
-                        formatter,
-                        [async_token, space_token()]
-                    ]),
                     function_token.format(),
                     space_token(),
                     id.format(),
@@ -37,8 +34,15 @@ impl FormatNodeFields<TsDeclareFunctionDeclaration>
                     parameters.format(),
                     return_type_annotation.format(),
                 ]
-            ]?,
-            semicolon_token,
+            )
+        });
+
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &declaration,
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

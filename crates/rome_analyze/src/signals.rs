@@ -6,7 +6,7 @@ use rome_diagnostics::{
     Applicability, CodeSuggestion, Diagnostic, SubDiagnostic, SuggestionChange, SuggestionStyle,
 };
 use rome_js_syntax::{JsAnyRoot, TextRange};
-use rome_rowan::{AstNode, Language, SyntaxNode};
+use rome_rowan::{AstNode, Direction, Language, SyntaxNode};
 
 use crate::{categories::ActionCategory, registry::Rule};
 
@@ -41,7 +41,7 @@ impl From<AnalyzerAction> for CodeSuggestion {
         // Only print the relevant subset of tokens
         let mut code = String::new();
 
-        for token in action.root.syntax().descendants_tokens() {
+        for token in action.root.syntax().descendants_tokens(Direction::Next) {
             let range = token.text_range();
             if range
                 .intersect(action.new_range)
@@ -140,11 +140,11 @@ fn find_diff_range<L>(prev: &SyntaxNode<L>, next: &SyntaxNode<L>) -> Option<(Tex
 where
     L: Language,
 {
-    let prev_tokens = prev.descendants_tokens();
-    let next_tokens = next.descendants_tokens();
+    let prev_tokens = prev.descendants_tokens(Direction::Next);
+    let next_tokens = next.descendants_tokens(Direction::Next);
     let mut tokens = prev_tokens.zip(next_tokens);
 
-    let range_start = (&mut tokens).find_map(|(prev_token, next_token)| {
+    let range_start = tokens.find_map(|(prev_token, next_token)| {
         debug_assert_eq!(
             prev_token.text_range().start(),
             next_token.text_range().start(),
@@ -157,12 +157,21 @@ where
         }
     });
 
+    let prev_tokens = prev.descendants_tokens(Direction::Prev);
+    let next_tokens = next.descendants_tokens(Direction::Prev);
+    let mut tokens = prev_tokens.zip(next_tokens);
+
     let range_end = tokens.find_map(|(prev_token, next_token)| {
-        if prev_token == next_token {
-            Some((
-                prev_token.text_range().start(),
-                next_token.text_range().start(),
-            ))
+        // This compares the texts instead of the tokens themselves, since the
+        // implementation of PartialEq for SyntaxToken compares the text offset
+        // of the tokens (which may be different since we're starting from the
+        // end of the file, after the edited section)
+        // It should still be rather efficient though as identical tokens will
+        // reuse the same underlying green node after an edit, so the equality
+        // check can stop at doing a pointer + length equality without having
+        // to actually check the content of the string
+        if prev_token.text() != next_token.text() {
+            Some((prev_token.text_range().end(), next_token.text_range().end()))
         } else {
             None
         }
@@ -185,5 +194,68 @@ where
         // `Some(_)`, then `range_end` will also necessarily return `None` as
         // there as not items left to inspect
         (None, Some(_)) => unreachable!(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use rome_js_factory::make;
+    use rome_js_syntax::{JsAnyExpression, JsAnyStatement, TextRange, TextSize, T};
+    use rome_rowan::AstNode;
+
+    use super::find_diff_range;
+
+    #[test]
+    fn diff_range() {
+        let before = make::js_if_statement(
+            make::token(T![if]),
+            make::token(T!['(']),
+            JsAnyExpression::JsIdentifierExpression(make::js_identifier_expression(
+                make::js_reference_identifier(make::ident("test")),
+            )),
+            make::token(T![')']),
+            JsAnyStatement::JsExpressionStatement(
+                make::js_expression_statement(JsAnyExpression::JsIdentifierExpression(
+                    make::js_identifier_expression(make::js_reference_identifier(make::ident(
+                        "consequent",
+                    ))),
+                ))
+                .with_semicolon_token(make::token(T![;]))
+                .build(),
+            ),
+        )
+        .with_else_clause(make::js_else_clause(
+            make::token(T![else]),
+            JsAnyStatement::JsExpressionStatement(
+                make::js_expression_statement(JsAnyExpression::JsIdentifierExpression(
+                    make::js_identifier_expression(make::js_reference_identifier(make::ident(
+                        "alternate",
+                    ))),
+                ))
+                .with_semicolon_token(make::token(T![;]))
+                .build(),
+            ),
+        ))
+        .build();
+
+        let consequent = before.consequent().unwrap();
+        let else_clause = before.else_clause().unwrap();
+        let alternate = else_clause.alternate().unwrap();
+
+        let after = before
+            .clone()
+            .with_consequent(alternate)
+            .with_else_clause(Some(else_clause.with_alternate(consequent)));
+
+        let diff = find_diff_range(before.syntax(), after.syntax())
+            .expect("failed to calculate diff range");
+
+        let start = TextSize::of("if(test)");
+        let end = TextSize::of("if(test)consequent;elsealternate");
+
+        assert_eq!(
+            diff,
+            (TextRange::new(start, end), TextRange::new(start, end))
+        );
     }
 }

@@ -54,7 +54,19 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 s
             })
         } else {
-            std::fs::read_to_string(&full_path).unwrap()
+            match std::fs::read_to_string(&full_path) {
+                Ok(code) => code,
+                Err(_) => {
+                    return TestRunOutcome::IncorrectlyErrored {
+                        files: TestCaseFiles::single(
+                            self.name.clone(),
+                            "".to_string(),
+                            SourceType::tsx(),
+                        ),
+                        errors: vec![],
+                    }
+                }
+            }
         };
 
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());

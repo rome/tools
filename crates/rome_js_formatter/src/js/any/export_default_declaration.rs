@@ -5,23 +5,18 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyExportDefaultDeclaration;
 impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDeclaration {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyExportDefaultDeclaration,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyExportDefaultDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
             JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
             JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node) => node.format().fmt(f),
         }
     }
 }

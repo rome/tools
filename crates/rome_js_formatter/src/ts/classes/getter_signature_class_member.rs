@@ -1,15 +1,14 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use rome_formatter::{format_args, write};
+
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
 use rome_js_syntax::{TsGetterSignatureClassMember, TsGetterSignatureClassMemberFields};
 
 impl FormatNodeFields<TsGetterSignatureClassMember>
     for FormatNodeRule<TsGetterSignatureClassMember>
 {
-    fn format_fields(
-        node: &TsGetterSignatureClassMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsGetterSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsGetterSignatureClassMemberFields {
             modifiers,
             get_token,
@@ -20,11 +19,10 @@ impl FormatNodeFields<TsGetterSignatureClassMember>
             semicolon_token,
         } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            formatted![
-                formatter,
-                [
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
                     modifiers.format(),
                     space_token(),
                     get_token.format(),
@@ -33,9 +31,9 @@ impl FormatNodeFields<TsGetterSignatureClassMember>
                     l_paren_token.format(),
                     r_paren_token.format(),
                     return_type.format(),
-                ]
-            ]?,
-            semicolon_token,
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

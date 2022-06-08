@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: conditional-types.ts
 ---
 # Input
@@ -25,16 +26,8 @@ export type UnwrappedResultRow<T> = {
 ```js
 export type UnwrappedResultRow<T> = {
   [P in keyof T]: (
-    T[P] extends Req<
-      infer a
-    > ? (
-      a
-    ) : (
-      T[P] extends Opt<
-        infer b
-      > ? (
-        b
-      ) : (
+    T[P] extends Req<infer a> ? (a) : (
+      T[P] extends Opt<infer b> ? (b) : (
         // TEST
         never
       )

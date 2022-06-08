@@ -5,17 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyVariableAnnotation;
 impl FormatRule<TsAnyVariableAnnotation> for FormatTsAnyVariableAnnotation {
     type Context = JsFormatContext;
-    fn format(
-        node: &TsAnyVariableAnnotation,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &TsAnyVariableAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyVariableAnnotation::TsTypeAnnotation(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyVariableAnnotation::TsTypeAnnotation(node) => node.format().fmt(f),
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node) => node.format().fmt(f),
         }
     }
 }
