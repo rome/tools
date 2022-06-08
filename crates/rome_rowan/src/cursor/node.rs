@@ -650,7 +650,9 @@ impl From<SyntaxElement> for SyntaxSlot {
 /// Iterator over a node's slots
 #[derive(Debug, Clone)]
 pub(crate) struct SyntaxSlots {
+    // current consuming position tracked from the front
     front_next_position: u32,
+    // current consuming position tracked from the back
     back_next_position: u32,
     parent: SyntaxNode,
 }
@@ -684,12 +686,22 @@ impl SyntaxSlots {
             )),
         }
     }
+
+    /// Checks if the front position is less than the back position.
+    /// When [false], it means that the iterator can't be consumed anymore and it has to return [None]
+    fn assert_can_consume(&self) -> bool {
+        ((self.front_next_position + self.back_next_position) as usize)
+            < self.parent.green().slots().len()
+    }
 }
 
 impl Iterator for SyntaxSlots {
     type Item = SyntaxSlot;
 
     fn next(&mut self) -> Option<Self::Item> {
+        if !self.assert_can_consume() {
+            return None;
+        }
         let mut slots = self.parent.green().slots();
         let current_position = self.front_next_position as usize;
         if current_position < slots.len() {
@@ -739,6 +751,9 @@ impl FusedIterator for SyntaxSlots {}
 
 impl DoubleEndedIterator for SyntaxSlots {
     fn next_back(&mut self) -> Option<Self::Item> {
+        if !self.assert_can_consume() {
+            return None;
+        }
         let mut slots = self.parent.green().slots();
         let current_position = self.back_next_position as usize;
         if current_position < slots.len() {

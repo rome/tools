@@ -755,4 +755,8 @@ impl<L: Language> DoubleEndedIterator for SyntaxSlots<L> {
     fn next_back(&mut self) -> Option<Self::Item> {
         self.raw.next_back().map(SyntaxSlot::from)
     }
+
+    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
+        self.raw.nth_back(n).map(SyntaxSlot::from)
+    }
 }

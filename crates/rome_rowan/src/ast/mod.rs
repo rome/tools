@@ -392,44 +392,86 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
     for AstSeparatedListElementsIterator<L, N>
 {
     fn next_back(&mut self) -> Option<Self::Item> {
-        let slot = self.slots.next_back();
+        let first_slot = self.slots.next_back();
+        let mut slots = self.slots.clone().rev().peekable();
+        let second_slot = slots.peek();
 
-        let (node, separator) = match slot {
-            Some(slot) => {
-                match slot {
-                    // we haven't found a token, which means that the last separator is not present
-                    SyntaxSlot::Node(node) => (Ok(N::unwrap_cast(node)), Ok(None)),
-                    // separator found, now let's check if we find a node
-                    SyntaxSlot::Token(separator) => {
-                        // then we should find the node
-                        let node = match self.slots.next_back()? {
-                            // The node for this element is missing if the next child is a token instead of a node.
-                            SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
-                            // Missing element
-                            SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
-                            SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
-                        };
-
-                        (node, Ok(Some(separator)))
-                    }
-                    SyntaxSlot::Empty => (
-                        Err(SyntaxError::MissingRequiredChild),
-                        Err(SyntaxError::MissingRequiredChild),
-                    ),
-                }
+        let (node, separator) = match (first_slot, second_slot) {
+            // case where the list ends with "1,"
+            (Some(SyntaxSlot::Token(separator)), Some(SyntaxSlot::Node(_))) => {
+                // SAFETY: both unwraps are checked by the previous match
+                let node = self.slots.next_back().unwrap().into_node().unwrap();
+                (Ok(N::unwrap_cast(node)), Ok(Some(separator)))
             }
-            None => {
-                // there wasn't any separator, let's try to go back and see if we find
-                let node = match self.slots.next_back()? {
-                    // The node for this element is missing if the next child is a token instead of a node.
-                    SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
-                    // Missing element
-                    SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
-                    SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
-                };
 
-                (node, Ok(None))
+            // case where the list ends with ",1"
+            // we dont consume the separator, we assume that we are at the end of the list and the
+            // separator is omitted
+            (Some(SyntaxSlot::Node(node)), Some(SyntaxSlot::Token(_))) => {
+                (Ok(N::unwrap_cast(node)), Ok(None))
             }
+
+            // case where the list ends with "1 1"
+            (Some(SyntaxSlot::Node(_)), Some(SyntaxSlot::Node(node))) => {
+                panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node);
+            }
+
+            // case where the list ends with ", ,"
+            (Some(SyntaxSlot::Token(_)), Some(SyntaxSlot::Token(token))) => {
+                panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token);
+            }
+
+            // case where the list ends with "(missing sep) ,"
+            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Token(_))) => {
+                // SAFETY: both unwraps are checked by the previous match
+                let separator = self.slots.next_back().unwrap().into_token().unwrap();
+                (Err(SyntaxError::MissingRequiredChild), Ok(Some(separator)))
+                // panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token);
+            }
+
+            // case where the list ends with "(missing node) (missing sep)"
+            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Empty)) => (
+                Err(SyntaxError::MissingRequiredChild),
+                Err(SyntaxError::MissingRequiredChild),
+            ),
+
+            // case where the list ends with "1 (missing sep)"
+            (Some(SyntaxSlot::Node(node)), Some(SyntaxSlot::Empty)) => (
+                Ok(N::unwrap_cast(node)),
+                Err(SyntaxError::MissingRequiredChild),
+            ),
+            // case where the list ends with "EMPTY ,"
+            (Some(SyntaxSlot::Token(separator)), Some(SyntaxSlot::Empty)) => {
+                self.slots.next_back();
+                (Err(SyntaxError::MissingRequiredChild), Ok(Some(separator)))
+            }
+
+            // case where the list ends with "EMPTY 1"
+            (Some(SyntaxSlot::Node(node)), None) => (
+                Ok(N::unwrap_cast(node)),
+                Err(SyntaxError::MissingRequiredChild),
+            ),
+
+            // case where the list ends with "EMPTY (missing sep)"
+            (Some(SyntaxSlot::Empty), None) => (
+                Err(SyntaxError::MissingRequiredChild),
+                Err(SyntaxError::MissingRequiredChild),
+            ),
+
+            // case where the list ends with "1 (missing sep)"
+            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Node(_))) => {
+                // SAFETY: covered by the previous match
+                let node = self.slots.next_back().unwrap().into_node().unwrap();
+                (Ok(N::unwrap_cast(node)), Ok(None))
+            }
+
+            (None, _) => {
+                return None;
+            }
+
+            _ => unreachable!(
+                "We should not reach this point. If so, there are some edge case not handled"
+            ),
         };
 
         Some(AstSeparatedElement {
@@ -603,27 +645,60 @@ mod tests {
         SeparatedExpressionList::new(node.into_list())
     }
 
-    fn assert_elements<'a>(
-        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>,
+    fn map_elements<'a>(
+        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>
+            + DoubleEndedIterator,
         expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
+        revert: bool,
+    ) -> (
+        Vec<(Option<f64>, Option<String>)>,
+        Vec<(Option<f64>, Option<String>)>,
     ) {
-        let actual = actual.map(|element| {
-            (
-                element.node.ok().map(|n| n.text().parse::<f64>().unwrap()),
-                element
-                    .trailing_separator
-                    .ok()
-                    .flatten()
-                    .map(|separator| separator.text().to_string()),
-            )
-        });
+        let actual: Vec<_> = if revert {
+            actual.rev().collect()
+        } else {
+            actual.collect()
+        };
+        let actual = actual
+            .into_iter()
+            .map(|element| {
+                (
+                    element.node.ok().map(|n| n.text().parse::<f64>().unwrap()),
+                    element
+                        .trailing_separator
+                        .ok()
+                        .flatten()
+                        .map(|separator| separator.text().to_string()),
+                )
+            })
+            .collect::<Vec<_>>();
 
         let expected = expected
             .into_iter()
             .map(|(value, separator)| (value, separator.map(|sep| sep.to_string())))
             .collect::<Vec<_>>();
 
-        assert_eq!(actual.collect::<Vec<_>>(), expected);
+        (actual, expected)
+    }
+
+    fn assert_elements<'a>(
+        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>
+            + DoubleEndedIterator,
+        expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
+    ) {
+        let (actual, expected) = map_elements(actual, expected, false);
+
+        assert_eq!(actual, expected);
+    }
+
+    fn assert_rev_elements<'a>(
+        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>
+            + DoubleEndedIterator,
+        expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
+    ) {
+        let (actual, expected) = map_elements(actual, expected, true);
+
+        assert_eq!(actual, expected);
     }
 
     fn assert_nodes(
@@ -648,6 +723,7 @@ mod tests {
 
         assert_nodes(list.iter(), vec![]);
         assert_elements(list.elements(), vec![]);
+        assert_rev_elements(list.elements(), vec![]);
         assert_eq!(list.trailing_separator(), None);
     }
 
@@ -672,6 +748,15 @@ mod tests {
                 (Some(2.), Some(",")),
                 (Some(3.), Some(",")),
                 (Some(4.), None),
+            ],
+        );
+        assert_rev_elements(
+            list.elements(),
+            vec![
+                (Some(4.), None),
+                (Some(3.), Some(",")),
+                (Some(2.), Some(",")),
+                (Some(1.), Some(",")),
             ],
         );
         assert_eq!(list.trailing_separator(), None);
@@ -729,6 +814,31 @@ mod tests {
     }
 
     #[test]
+    fn double_iterator_meet_at_middle() {
+        let list = build_list(vec![
+            (Some(1), Some(",")),
+            (Some(2), Some(",")),
+            (Some(3), Some(",")),
+            (Some(4), None),
+        ]);
+
+        let mut iter = list.elements();
+
+        let element = iter.next().unwrap();
+        assert_eq!(element.node().unwrap().text(), "1");
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "4");
+
+        let element = iter.next().unwrap();
+        assert_eq!(element.node().unwrap().text(), "2");
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "3");
+
+        assert!(iter.next().is_none()); // line 701
+        assert!(iter.next_back().is_none());
+    }
+
+    #[test]
     fn separated_with_trailing() {
         // list(1, 2, 3, 4,)
         let list = build_list(vec![
@@ -752,6 +862,15 @@ mod tests {
                 (Some(4.), Some(",")),
             ],
         );
+        assert_rev_elements(
+            list.elements(),
+            vec![
+                (Some(4.), Some(",")),
+                (Some(3.), Some(",")),
+                (Some(2.), Some(",")),
+                (Some(1.), Some(",")),
+            ],
+        );
         assert!(list.trailing_separator().is_some());
     }
 
@@ -767,6 +886,11 @@ mod tests {
         assert_elements(
             list.elements(),
             vec![(Some(1.), Some(",")), (None, Some(","))],
+        );
+
+        assert_rev_elements(
+            list.elements(),
+            vec![(None, Some(",")), (Some(1.), Some(","))],
         );
     }
 
@@ -787,6 +911,15 @@ mod tests {
                 (Some(3.), None),
             ],
         );
+
+        assert_rev_elements(
+            list.elements(),
+            vec![
+                // missing first element
+                (Some(3.), None),
+                (None, Some(",")),
+            ],
+        );
     }
 
     #[test]
@@ -801,6 +934,11 @@ mod tests {
         assert_elements(
             list.elements(),
             vec![(Some(1.), None), (Some(2.), Some(","))],
+        );
+
+        assert_rev_elements(
+            list.elements(),
+            vec![(Some(2.), Some(",")), (Some(1.), None)],
         );
     }
 
