@@ -14,6 +14,7 @@ const c = [,,];
 const d = [,2];
 
 const e = [1,,]
+const f = [1,,2]
 
 ```
 
@@ -68,7 +69,7 @@ warning[noSparseArray]: This array contains an empty slot.
   │           ---- This array contains an empty slot.
 
 Replace with undefined
-    | @@ -4,6 +4,6 @@
+    | @@ -4,7 +4,7 @@
 3 3 |   // invalid
 4 4 |   const b = [/**test*/,];
 5 5 |   const c = [,,];
@@ -76,6 +77,7 @@ Replace with undefined
   6 | + const d = [undefined,2];
 7 7 |   
 8 8 |   const e = [1,,]
+9 9 |   const f = [1,,2]
 
 
 ```
@@ -88,12 +90,31 @@ warning[noSparseArray]: This array contains an empty slot.
   │           ----- This array contains an empty slot.
 
 Replace with undefined
-    | @@ -6,4 +6,4 @@
+    | @@ -6,5 +6,5 @@
 5 5 |   const c = [,,];
 6 6 |   const d = [,2];
 7 7 |   
 8   | - const e = [1,,]
   8 | + const e = [1,undefined,]
+9 9 |   const f = [1,,2]
+
+
+```
+
+```
+warning[noSparseArray]: This array contains an empty slot.
+   ┌─ noSparseArray.js:10:11
+   │
+10 │ const f = [1,,2]
+   │           ------ This array contains an empty slot.
+
+Replace with undefined
+      | @@ -7,4 +7,4 @@
+ 6  6 |   const d = [,2];
+ 7  7 |   
+ 8  8 |   const e = [1,,]
+ 9    | - const f = [1,,2]
+    9 | + const f = [1,undefined,2]
 
 
 ```
