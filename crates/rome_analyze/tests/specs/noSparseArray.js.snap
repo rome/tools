@@ -88,6 +88,12 @@ warning[noSparseArray]: This array contains an empty slot.
   │           ----- This array contains an empty slot.
 
 Replace with undefined
+    | @@ -6,4 +6,4 @@
+5 5 |   const c = [,,];
+6 6 |   const d = [,2];
+7 7 |   
+8   | - const e = [1,,]
+  8 | + const e = [1,undefined,]
 
 
 ```
