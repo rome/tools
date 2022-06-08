@@ -1,4 +1,4 @@
-use rome_rowan::{Language, SyntaxNode, SyntaxToken, TextSize};
+use rome_rowan::{Direction, Language, SyntaxNode, SyntaxToken, TextSize};
 use std::collections::BTreeSet;
 
 /// Tracks the ranges of the formatted (including replaced or tokens formatted as verbatim) tokens.
@@ -29,7 +29,7 @@ impl PrintedTokens {
     /// ## Panics
     /// If any descendant token of `root` hasn't been tracked
     pub fn assert_all_tracked<L: Language>(&self, root: &SyntaxNode<L>) {
-        let mut descendants = root.descendants_tokens();
+        let mut descendants = root.descendants_tokens(Direction::Next);
         let mut offsets = self.offsets.iter();
 
         loop {

@@ -413,7 +413,7 @@ mod tests {
         // as NodeOrToken
 
         let eq_token = node
-            .descendants_with_tokens()
+            .descendants_with_tokens(Direction::Next)
             .find(|x| x.kind() == RawLanguageKind::EQUAL_TOKEN)
             .unwrap();
 

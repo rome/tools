@@ -3,7 +3,7 @@ use crate::{AsFormat, TextRange};
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::syntax::SyntaxTriviaPiecesIterator;
-use rome_rowan::{AstNode, Language, SyntaxTriviaPiece};
+use rome_rowan::{AstNode, Direction, Language, SyntaxTriviaPiece};
 
 /// Formats a token without its leading or trailing trivia
 ///
@@ -405,7 +405,7 @@ pub struct FormatVerbatimNode<'node> {
 }
 impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        for token in self.node.descendants_tokens() {
+        for token in self.node.descendants_tokens(Direction::Next) {
             f.state_mut().track_token(&token);
         }
 
