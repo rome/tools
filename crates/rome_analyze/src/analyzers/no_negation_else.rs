@@ -77,7 +77,6 @@ impl Rule for NoNegationElse {
                 _ => None,
             },
             JsAnyStatement::JsIfStatement(stmt) => {
-                // replace test
                 let next_stmt = stmt
                     .clone()
                     .replace_node(stmt.test().ok()?, state.argument().ok()?)?;
