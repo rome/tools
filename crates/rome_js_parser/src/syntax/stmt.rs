@@ -726,7 +726,8 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 //   "use strict"; // not a directive
 // }
 //
-// test_err directives_err
+//
+// test directives_redundant
 // // SCRIPT
 // function test() {
 //   "use strict";
@@ -772,30 +773,13 @@ pub(crate) fn parse_directives(p: &mut Parser) -> (Marker, Option<EnableStrictMo
 
         let directive_text = p.source(directive_range);
 
-        if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
-            if let Some(strict) = p.state.strict() {
-                let mut err = p.warning_builder("Redundant strict mode declaration");
+        let directive_is_use_strict =
+            directive_text == "\"use strict\"" || directive_text == "'use strict'";
 
-                match strict {
-                    StrictModeState::Explicit(prev_range) => {
-                        err = err.secondary(prev_range, "strict mode is previous declared here");
-                    }
-                    StrictModeState::Module => {
-                        err = err.footer_note("modules are always strict mode");
-                    }
-                    StrictModeState::Class(prev_range) => {
-                        err = err.secondary(prev_range, "class bodies are always strict mode");
-                    }
-                }
-
-                err = err.primary(directive_range, "this declaration is redundant");
-                p.error(err);
-            } else if strict_mode_snapshot.is_none() {
-                strict_mode_snapshot = Some(
-                    EnableStrictMode(StrictModeState::Explicit(directive_range))
-                        .apply(&mut p.state),
-                );
-            }
+        if directive_is_use_strict && strict_mode_snapshot.is_none() {
+            strict_mode_snapshot = Some(
+                EnableStrictMode(StrictModeState::Explicit(directive_range)).apply(&mut p.state),
+            );
         }
 
         directive.complete(p, JS_DIRECTIVE);
