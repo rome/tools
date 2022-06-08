@@ -237,9 +237,14 @@ macro_rules! format {
 ///   complexity if used in nested structures.
 ///
 /// ## Prettier
-/// This IR is similar to Prettier's `ConditionalGroupContent` IR. It provides the same functionality but
+/// This IR is similar to Prettier's `ConditionalGroupContent` IR. It provides similar functionality but
 /// differs in that Prettier automatically wraps each variant in a `Group`. Rome doesn't do so.
 /// You can wrap the variant content in a group if you want to use soft line breaks.
+/// Unlike in Prettier, a variant (except the first) will be considered to fit if it can be printed without
+/// overflowing the current line with all of its inner groups expanded. Those inner groups could still end
+/// up being printed in flat mode if they fit on the line while printing. But there is currently no way
+/// to enforce that a specific group inside a variant must be flat when measuring if that variant fits.
+///
 #[macro_export]
 macro_rules! best_fitting {
     ($least_expanded:expr, $($tail:expr),+ $(,)?) => {{
