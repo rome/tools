@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: dynamic_imports.js
-
 ---
 # Input
 ```js
@@ -30,11 +28,11 @@ wrap(
 
 # Output
 ```js
-import( /* Hello */ "something");
+import(/* Hello */ "something");
 
-import("something" /* Hello */ );
+import("something" /* Hello */);
 
-import( /* Hello */ "something" /* Hello */ );
+import(/* Hello */ "something" /* Hello */);
 
 import("something" /* Hello */ + "else");
 
@@ -44,7 +42,7 @@ import(
   /* Hello */
 );
 
-wrap(import( /* Hello */ "something"));
+wrap(import(/* Hello */ "something"));
 
 ```
 

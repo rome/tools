@@ -18,12 +18,10 @@ use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
-use crate::builders::{
-    format_leading_trivia, format_suppressed_node, format_trailing_trivia, format_trimmed_token,
-    TriviaPrintMode,
-};
+use crate::builders::{format_suppressed_node, format_trimmed_token};
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
+use crate::trivia::{format_leading_trivia, format_trailing_trivia, TriviaPrintMode};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -351,7 +349,7 @@ while(
         let result = result.expect("range formatting failed");
         assert_eq!(
             result.as_code(),
-            "function func() {\n        func( /* comment */ );\n\n        let array = [1, 2];\n    }\n\n    function func2() {\n        const no_format = () => {};\n    }"
+            "function func() {\n        func(/* comment */);\n\n        let array = [1, 2];\n    }\n\n    function func2() {\n        const no_format = () => {};\n    }"
         );
         assert_eq!(
             result.range(),
@@ -477,6 +475,7 @@ mod generated;
 pub(crate) mod builders;
 pub mod context;
 pub(crate) mod separated;
+mod trivia;
 
 #[cfg(test)]
 mod test {
@@ -485,27 +484,27 @@ mod test {
     use rome_js_parser::parse;
     use rome_js_syntax::SourceType;
 
-    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"if (true) {}"#;
-        let syntax = SourceType::tsx();
+        let src = r#"type B8  = /*1*/ (& C);
+type B9  = (/*1*/ & C);
+type B10 = /*1*/ & /*2*/ C;"#;
+        let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
-        check_reformat(CheckReformatParams {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            format_context: JsFormatContext::default(),
-        });
+        // check_reformat(CheckReformatParams {
+        //     root: &tree.syntax(),
+        //     text: result.as_code(),
+        //     source_type: syntax,
+        //     file_name: "quick_test",
+        //     format_context: JsFormatContext::default(),
+        // });
         assert_eq!(
             result.as_code(),
-            r#""\a";
-"#
+            "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
         );
     }
 }

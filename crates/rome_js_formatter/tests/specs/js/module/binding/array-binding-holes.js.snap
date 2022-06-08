@@ -13,5 +13,5 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-function foo([foo, /* not used */ , /* not used */ ]) {}
+function foo([foo, /* not used */ , /* not used */]) {}
 

@@ -42,9 +42,9 @@ ${
   a // comment
 }
 
-${b /* comment */ }
+${b /* comment */}
 
-${ /* comment */ c /* comment */ }
+${ /* comment */ c /* comment */}
 
 ${
   // comment

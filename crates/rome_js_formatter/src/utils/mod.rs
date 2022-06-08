@@ -50,7 +50,7 @@ impl<'a> FormatTypeMemberSeparator<'a> {
 impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(separator) = self.token {
-            write!(f, [format_replaced(separator, &empty_element())])
+            format_removed(separator).fmt(f)
         } else {
             Ok(())
         }

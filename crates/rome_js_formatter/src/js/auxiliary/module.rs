@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
+use crate::builders::format_removed;
 use crate::utils::FormatInterpreterToken;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsModule;
@@ -27,7 +28,7 @@ impl FormatNodeFields<JsModule> for FormatNodeRule<JsModule> {
             f,
             [
                 items.format(),
-                format_replaced(&eof_token?, &empty_element()),
+                format_removed(&eof_token?),
                 hard_line_break()
             ]
         )

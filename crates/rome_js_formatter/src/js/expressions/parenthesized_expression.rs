@@ -2,6 +2,7 @@ use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
 use rome_formatter::write;
 
+use crate::builders::format_removed;
 use crate::utils::JsAnyBinaryLikeExpression;
 use crate::FormatNodeFields;
 use rome_js_syntax::{
@@ -24,7 +25,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
 
         if is_simple_parenthesized_expression(node)? {
             if parenthesis_can_be_omitted {
-                write!(f, [format_replaced(&l_paren_token?, &empty_element())])?;
+                write!(f, [format_removed(&l_paren_token?)])?;
             } else {
                 write![f, [l_paren_token.format()]]?;
             };
@@ -32,7 +33,7 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
             write![f, [expression.format(),]]?;
 
             if parenthesis_can_be_omitted {
-                write!(f, [format_replaced(&r_paren_token?, &empty_element())])?;
+                write!(f, [format_removed(&r_paren_token?)])?;
             } else {
                 write![f, [r_paren_token.format()]]?;
             }
@@ -41,9 +42,9 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
             write![
                 f,
                 [
-                    format_replaced(&l_paren_token?, &empty_element()),
+                    format_removed(&l_paren_token?),
                     group_elements(&expression.format()),
-                    format_replaced(&r_paren_token?, &empty_element()),
+                    format_removed(&r_paren_token?),
                 ]
             ]?;
         }

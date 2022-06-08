@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: comment.ts
-
 ---
 # Input
 ```js
@@ -13,7 +11,7 @@ a
 
 # Output
 ```js
-export function match(): string /* the matching pattern */ ;
+export function match(): string /* the matching pattern */;
 a;
 
 ```

@@ -1,3 +1,4 @@
+use crate::builders::format_only_if_breaks;
 use crate::prelude::*;
 use crate::AsFormat;
 use rome_formatter::{write, GroupId};
@@ -40,7 +41,9 @@ where
                         // Use format_replaced instead of wrapping the result of format_token
                         // in order to remove only the token itself when the group doesn't break
                         // but still print its associated trivias unconditionally
-                        write!(f, [format_replaced(separator, &format_trailing_separator)])?;
+                        format_only_if_breaks(separator, &separator.format())
+                            .with_group_id(self.options.group_id)
+                            .fmt(f)?;
                     }
                     TrailingSeparator::Mandatory => {
                         write!(f, [separator.format()])?;

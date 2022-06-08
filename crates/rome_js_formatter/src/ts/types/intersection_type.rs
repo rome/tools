@@ -1,3 +1,4 @@
+use crate::builders::format_only_if_breaks;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
@@ -41,9 +42,13 @@ impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
                 // group does not break
                 write!(
                     f,
-                    [format_replaced(
+                    // Complicated: Space depends on whatever it prints the break variant and if there's a trailing comment
+                    // if breaks: Fine as is, because it takes the kind of the current token
+                    // if flat: Needs to do format_removed which formats the comments in place and uses the previous token to decide on spacing
+                    // format_if_breaks(token, content) -> Could handle this logic.
+                    [format_only_if_breaks(
                         token,
-                        &if_group_breaks(&format_args!(format_trimmed_token(token), space_token()))
+                        &format_args!(token.format(), space_token())
                     )]
                 )
             }

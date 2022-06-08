@@ -24,6 +24,7 @@ extern crate core;
 mod arguments;
 mod buffer;
 mod builders;
+mod comments;
 pub mod format_element;
 mod format_extensions;
 pub mod formatter;
@@ -50,10 +51,11 @@ pub use builders::{
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
+pub use comments::CommentKind;
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken,
+    Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken,
     SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
 use std::error::Error;
@@ -1064,6 +1066,10 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
 pub struct FormatState<Context> {
     context: Context,
     group_id_builder: UniqueGroupIdBuilder,
+
+    last_trailing_comment_kind: Option<CommentKind>,
+    last_token: Option<RawSyntaxKind>,
+
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
@@ -1077,6 +1083,10 @@ where
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("FormatState")
             .field("context", &self.context)
+            .field(
+                "last_trailing_comment_kind",
+                &self.last_trailing_comment_kind,
+            )
             .finish()
     }
 }
@@ -1087,9 +1097,32 @@ impl<Context> FormatState<Context> {
         Self {
             context,
             group_id_builder: Default::default(),
+            last_trailing_comment_kind: None,
+            last_token: None,
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
+    }
+
+    pub fn take_last_trailing_comment_kind(&mut self) -> Option<CommentKind> {
+        self.last_trailing_comment_kind.take()
+    }
+
+    pub fn last_trailing_comment_kind(&self) -> Option<CommentKind> {
+        self.last_trailing_comment_kind
+    }
+
+    pub fn set_last_trailing_comment(&mut self, kind: Option<CommentKind>) {
+        dbg!(kind);
+        self.last_trailing_comment_kind = kind;
+    }
+
+    pub fn last_token(&self) -> Option<RawSyntaxKind> {
+        self.last_token
+    }
+
+    pub fn set_last_token(&mut self, token: RawSyntaxKind) {
+        self.last_token = Some(token);
     }
 
     /// Returns the context specifying how to format the current CST
