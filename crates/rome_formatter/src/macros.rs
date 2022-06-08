@@ -236,15 +236,20 @@ macro_rules! format {
 /// * The worst case complexity is that the printer tires each variant. This can result in quadratic
 ///   complexity if used in nested structures.
 ///
-/// ## Prettier
-/// This IR is similar to Prettier's `ConditionalGroupContent` IR. It provides similar functionality but
+/// ## Behavior
+/// This IR is similar to Prettier's `conditionalGroup`. It provides similar functionality but
 /// differs in that Prettier automatically wraps each variant in a `Group`. Rome doesn't do so.
 /// You can wrap the variant content in a group if you want to use soft line breaks.
-/// Unlike in Prettier, a variant (except the first) will be considered to fit if it can be printed without
+/// Unlike in Prettier, the printer will try to fit **only the first variant** in [`Flat`] mode,
+/// then it will try to fit the rest of the variants in [`Expanded`] mode.
+///
+/// A variant that is measured in [`Expanded`] mode will be considered to fit if it can be printed without
 /// overflowing the current line with all of its inner groups expanded. Those inner groups could still end
 /// up being printed in flat mode if they fit on the line while printing. But there is currently no way
 /// to enforce that a specific group inside a variant must be flat when measuring if that variant fits.
 ///
+/// [`Flat`]: crate::format_element::PrintMode::Flat
+/// [`Expanded`]: crate::format_element::PrintMode::Expanded
 #[macro_export]
 macro_rules! best_fitting {
     ($least_expanded:expr, $($tail:expr),+ $(,)?) => {{
@@ -310,10 +315,11 @@ mod tests {
     }
 
     #[test]
-    fn best_fitting_groups() {
+    fn best_fitting_variants_print_as_lists() {
         use crate::prelude::*;
         use crate::{format, format_args, Formatted};
 
+        // The second variant below should be selected when printing at a width of 30
         let formatted_best_fitting = format!(
             SimpleFormatContext::default(),
             [
@@ -356,6 +362,8 @@ mod tests {
         )
         .unwrap();
 
+        // This matches the IR above except that the `best_fitting` was replaced with
+        // the contents of its second variant.
         let formatted_normal_list = format!(
             SimpleFormatContext::default(),
             [
@@ -408,6 +416,8 @@ mod tests {
         .as_code()
         .to_string();
 
+        // The variant that "fits" will print its contents as if it were a normal list
+        // outside of a BestFitting element.
         assert_eq!(best_fitting_code, normal_list_code);
     }
 }
