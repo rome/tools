@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use std::cell::RefCell;
 use std::marker::PhantomData;
+use std::rc::Rc;
 
 use crate::{write, Buffer, VecBuffer};
 
@@ -118,15 +119,15 @@ pub trait MemoizeFormat<Context> {
     ///
     /// // Calls `format` for everytime the object gets formatted
     /// assert_eq!(
-    ///     format!(SimpleFormatContext::default(), [token("Formatted 1 times."), token("Formatted 2 times.")]),
-    ///     format!(SimpleFormatContext::default(), [normal, normal])
+    ///     "Formatted 1 times. Formatted 2 times.",
+    ///     format!(SimpleFormatContext::default(), [normal, space_token(), normal]).unwrap().print().as_code()
     /// );
     ///
     /// // Memoized memoizes the result and calls `format` only once.
     /// let memoized = normal.memoized();
     /// assert_eq!(
-    ///     format!(SimpleFormatContext::default(), [token("Formatted 3 times."), token("Formatted 3 times.")]),
-    ///     format![SimpleFormatContext::default(), [memoized, memoized]]
+    ///     "Formatted 3 times. Formatted 3 times.",
+    ///     format![SimpleFormatContext::default(), [memoized, space_token(), memoized]].unwrap().print().as_code()
     /// );
     /// ```
     ///
@@ -144,7 +145,7 @@ impl<T, Context> MemoizeFormat<Context> for T where T: Format<Context> {}
 #[derive(Debug)]
 pub struct Memoized<F, Context> {
     inner: F,
-    memory: RefCell<Option<FormatResult<Vec<FormatElement>>>>,
+    memory: RefCell<Option<FormatResult<Rc<FormatElement>>>>,
     options: PhantomData<Context>,
 }
 
@@ -170,9 +171,7 @@ where
         if let Some(memory) = self.memory.borrow().as_ref() {
             return match memory {
                 Ok(elements) => {
-                    for element in elements {
-                        f.write_element(element.clone())?;
-                    }
+                    f.write_element(FormatElement::Rc(elements.clone()))?;
 
                     Ok(())
                 }
@@ -185,12 +184,10 @@ where
 
         match result {
             Ok(_) => {
-                let elements = buffer.into_vec();
-                for element in &elements {
-                    f.write_element(element.clone())?;
-                }
-
-                *self.memory.borrow_mut() = Some(Ok(elements));
+                let elements = buffer.into_element();
+                let reference = Rc::new(elements);
+                f.write_element(FormatElement::Rc(reference.clone()))?;
+                *self.memory.borrow_mut() = Some(Ok(reference));
 
                 Ok(())
             }
