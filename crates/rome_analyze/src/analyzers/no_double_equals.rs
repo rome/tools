@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression, T};
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
@@ -33,26 +33,32 @@ impl Rule for NoDoubleEquals {
     }
 
     fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            message: markup! {
-                "Do not use the "{op.text_trimmed()}" operator"
-            }
-            .to_owned(),
-            range: op.text_trimmed_range(),
-        })
+        let text_trimmed = op.text_trimmed();
+        let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
+
+        Some(
+            RuleDiagnostic::warning(markup! {
+                "Use "<Emphasis>{suggestion}</Emphasis>" instead of "<Emphasis>{text_trimmed}</Emphasis>
+            })
+            .primary(op.text_trimmed_range(), markup! {
+                <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against null"
+            })
+            .footer_note(markup! {
+                "Using "<Emphasis>{suggestion}</Emphasis>" may be unsafe if you are relying on type coercion"
+            })
+            .summary(format!("Use {suggestion} instead of {text_trimmed}\n{text_trimmed} is only allowed when comparing against null"))
+        )
     }
 
     fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
-        let root = root.replace_token(
-            op.clone(),
-            make::token(if op.kind() == EQ2 { T![===] } else { T![!==] }),
-        )?;
+        let suggestion = if op.kind() == EQ2 { T![===] } else { T![!==] };
+        let root = root.replace_token(op.clone(), make::token(suggestion))?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with strict equality" }.to_owned(),
+            message: markup! { "Use "<Emphasis>{suggestion.to_string().unwrap()}</Emphasis> }
+                .to_owned(),
             root,
         })
     }

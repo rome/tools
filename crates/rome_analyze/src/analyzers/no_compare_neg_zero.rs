@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind, JsUnaryOperator,
@@ -49,14 +49,12 @@ impl Rule for NoCompareNegZero {
     }
 
     fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            range: node.syntax().text_trimmed_range(),
-            message: markup! {
+        Some(
+            RuleDiagnostic::warning(markup! {
                 "Do not use the "{state.operator_kind}" operator to compare against -0."
-            }
-            .to_owned(),
-        })
+            })
+            .primary(node.range(), ""),
+        )
     }
     fn action(
         root: rome_js_syntax::JsAnyRoot,

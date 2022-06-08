@@ -1,7 +1,7 @@
 use std::iter;
 
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyRoot, JsModuleItemList, JsStatementList, JsSyntaxToken, JsVariableDeclarationFields,
@@ -44,14 +44,7 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            range: node.syntax().text_trimmed_range(),
-            message: markup! {
-                "Declare variables separately."
-            }
-            .to_owned(),
-        })
+        Some(RuleDiagnostic::warning("Declare variables separately").primary(node.range(), ""))
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {

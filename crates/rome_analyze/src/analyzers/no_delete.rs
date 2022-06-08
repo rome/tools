@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyRoot,
@@ -31,14 +31,13 @@ impl Rule for NoDelete {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            range: node.syntax().text_trimmed_range(),
-            message: markup! {
+        Some(
+            RuleDiagnostic::warning(markup! {
                 "This is an unexpected use of the "<Emphasis>"delete"</Emphasis>" operator."
-            }
-            .to_owned(),
-        })
+            })
+            .primary(node.range(), "")
+            .summary("This is an unexpected use of the `delete` operator.\nReplace this expression with an `undefined` assignment")
+        )
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {

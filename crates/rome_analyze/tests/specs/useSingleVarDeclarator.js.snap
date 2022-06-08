@@ -13,13 +13,13 @@ function test() {
 
 # Diagnostics
 ```
-warning[useSingleVarDeclarator]: Declare variables separately.
+warning[useSingleVarDeclarator]: Declare variables separately
   ┌─ useSingleVarDeclarator.js:3:2
   │
 3 │     let foo, bar;
-  │     ------------- Declare variables separately.
+  │     -------------
 
-Break out into multiple declarations
+Safe fix: Break out into multiple declarations
     | @@ -1,4 +1,5 @@
 0 0 |   function test() {
 1 1 |   	// Comment

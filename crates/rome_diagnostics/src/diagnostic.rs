@@ -16,6 +16,7 @@ pub struct Diagnostic {
     pub severity: Severity,
     pub code: Option<String>,
     pub title: MarkupBuf,
+    pub summary: Option<String>,
     pub tag: Option<DiagnosticTag>,
 
     pub primary: Option<SubDiagnostic>,
@@ -64,6 +65,7 @@ impl Diagnostic {
             code,
             severity,
             title: markup!({ title }).to_owned(),
+            summary: None,
             primary: None,
             tag: None,
             children: vec![],
@@ -75,6 +77,12 @@ impl Diagnostic {
     /// Overwrites the severity of this diagnostic.
     pub fn severity(mut self, severity: Severity) -> Self {
         self.severity = severity;
+        self
+    }
+
+    /// Set an explicit plain-text summary for this diagnostic.
+    pub fn summary(mut self, summary: impl Into<String>) -> Self {
+        self.summary = Some(summary.into());
         self
     }
 

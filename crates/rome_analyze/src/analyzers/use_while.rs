@@ -1,8 +1,8 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::AstNodeExt;
 
 use crate::{
     registry::{JsRuleAction, Rule, RuleDiagnostic},
@@ -45,14 +45,16 @@ impl Rule for UseWhile {
     }
 
     fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            message: markup! {
-                "Use a while loop instead of a for loop"
-            }
-            .to_owned(),
-            range: node.range(),
-        })
+        // SAFETY: These tokens have been checked for errors in `run` already
+        let for_range = node.for_token().unwrap().text_trimmed_range();
+        let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();
+
+        Some(
+            RuleDiagnostic::warning(markup! {
+                "Use "<Emphasis>"while"</Emphasis>" loops instead of "<Emphasis>"for"</Emphasis>" loops."
+            })
+                .primary(for_range.cover(r_paren_range), ""),
+        )
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
