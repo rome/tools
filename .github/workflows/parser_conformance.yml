@@ -5,7 +5,9 @@ on:
     branches:
       - main
     paths:
-      - 'crates/rome_js**/*'
+      - 'crates/rome_js_syntax/*'
+      - 'crates/rome_js_factory/*'
+      - 'crates/rome_js_parser/*'
       - 'crates/rome_rowan/*'
       - 'xtask/codegen/*'
       - 'xtask/coverage/*'
