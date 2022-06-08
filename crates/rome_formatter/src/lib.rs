@@ -321,8 +321,9 @@ pub type FormatResult<F> = Result<F, FormatError>;
 #[derive(Debug, PartialEq, Copy, Clone)]
 /// Series of errors encountered during formatting
 pub enum FormatError {
-    /// Node is missing and it should be required for a correct formatting
-    MissingRequiredChild,
+    /// In case a node can't be formatted because it either misses a require child element or
+    /// a child is present that should not (e.g. a trailing comma after a rest element).
+    SyntaxError,
 
     /// In case our formatter doesn't know how to format a certain language
     UnsupportedLanguage,
@@ -334,7 +335,7 @@ pub enum FormatError {
 impl fmt::Display for FormatError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            FormatError::MissingRequiredChild => fmt.write_str("missing required child"),
+            FormatError::SyntaxError => fmt.write_str("syntax error"),
             FormatError::UnsupportedLanguage => fmt.write_str("language is not supported"),
             FormatError::CapabilityDisabled => fmt.write_str("formatting capability is disabled"),
         }
@@ -352,7 +353,7 @@ impl From<SyntaxError> for FormatError {
 impl From<&SyntaxError> for FormatError {
     fn from(syntax_error: &SyntaxError) -> Self {
         match syntax_error {
-            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
+            SyntaxError::MissingRequiredChild => FormatError::SyntaxError,
         }
     }
 }

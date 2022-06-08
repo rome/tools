@@ -33,9 +33,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
             })
         });
 
-        let leading_element = declarators
-            .next()
-            .ok_or(FormatError::MissingRequiredChild)?;
+        let leading_element = declarators.next().ok_or(FormatError::SyntaxError)?;
 
         let other_declarators = format_once(|f| {
             if node.len() == 1 {

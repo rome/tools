@@ -105,7 +105,7 @@ where
         }
 
         if piece.is_skipped() {
-            return Err(FormatError::MissingRequiredChild);
+            return Err(FormatError::SyntaxError);
         }
 
         if piece.is_newline() {
@@ -158,7 +158,7 @@ where
         } else if piece.is_newline() && trim_mode == TriviaPrintMode::Full {
             line_count += 1;
         } else if piece.is_skipped() {
-            return Err(FormatError::MissingRequiredChild);
+            return Err(FormatError::SyntaxError);
         }
     }
 
