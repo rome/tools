@@ -324,20 +324,12 @@ pub enum FormatError {
     /// In case a node can't be formatted because it either misses a require child element or
     /// a child is present that should not (e.g. a trailing comma after a rest element).
     SyntaxError,
-
-    /// In case our formatter doesn't know how to format a certain language
-    UnsupportedLanguage,
-
-    /// When the ability to format the current file has been turned off on purpose
-    CapabilityDisabled,
 }
 
 impl fmt::Display for FormatError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             FormatError::SyntaxError => fmt.write_str("syntax error"),
-            FormatError::UnsupportedLanguage => fmt.write_str("language is not supported"),
-            FormatError::CapabilityDisabled => fmt.write_str("formatting capability is disabled"),
         }
     }
 }
