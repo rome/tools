@@ -21,7 +21,7 @@ use rome_js_syntax::{
     JsPrivateClassMemberName, JsTemplateElement, Modifiers, TsTemplateElement, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList, SyntaxResult};
+use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
@@ -100,7 +100,7 @@ impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
 pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
     let mut line_count = 0;
 
-    for token in node.descendants_tokens() {
+    for token in node.descendants_tokens(Direction::Next) {
         for trivia in token.leading_trivia().pieces() {
             if trivia.is_comments() {
                 return true;
