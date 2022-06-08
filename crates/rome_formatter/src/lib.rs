@@ -483,7 +483,7 @@ pub trait FormatRule<T> {
 /// ```
 pub trait FormatWithRule<Context>: Format<Context> {
     type Item;
-    // small formatter change
+
     /// Returns the associated item
     fn item(&self) -> &Self::Item;
 }
