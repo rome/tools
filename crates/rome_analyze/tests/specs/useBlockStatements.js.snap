@@ -32,6 +32,13 @@ error[useBlockStatements]: Block statements are preferred in this position.
   │        ^^ Block statements are preferred in this position.
 
 Replace with strict equality
+    | @@ -1,5 +1,5 @@
+0 0 |   // invalid
+1   | - if (x) x;
+  1 | + if (x) {x;}
+2 2 |   if (x) {
+3 3 |     x;
+4 4 |   } else y;
 
 
 ```
@@ -44,6 +51,15 @@ error[useBlockStatements]: Block statements are preferred in this position.
   │        ^^ Block statements are preferred in this position.
 
 Replace with strict equality
+    | @@ -2,7 +2,7 @@
+1 1 |   if (x) x;
+2 2 |   if (x) {
+3 3 |     x;
+4   | - } else y;
+  4 | + } else {y;}
+5 5 |   if (x) {
+6 6 |     x;
+7 7 |   } else if (y) y;
 
 
 ```
@@ -70,6 +86,15 @@ error[useBlockStatements]: Block statements are preferred in this position.
   │               ^^ Block statements are preferred in this position.
 
 Replace with strict equality
+    | @@ -5,7 +5,7 @@
+4 4 |   } else y;
+5 5 |   if (x) {
+6 6 |     x;
+7   | - } else if (y) y;
+  7 | + } else if (y) {y;}
+8 8 |   for (;;);
+9 9 |   for (p in obj);
+10 10 |   for (x of xs);
 
 
 ```
