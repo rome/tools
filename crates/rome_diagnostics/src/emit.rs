@@ -142,7 +142,6 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         }
 
         for suggestion in &self.d.suggestions {
-            // println!("suggestion: {:?}", suggestion);
             match suggestion.style {
                 SuggestionStyle::Full => {
                     let old = self

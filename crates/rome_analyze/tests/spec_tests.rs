@@ -5,7 +5,7 @@ use std::{
 use rome_analyze::{AnalysisFilter, AnalyzerAction};
 use rome_console::{
     diff::{Diff, DiffMode},
-    fmt::{Display, Formatter, Termcolor},
+    fmt::{Formatter, Termcolor},
     markup, Markup,
 };
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
@@ -49,7 +49,6 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     rome_analyze::analyze(0, &root, filter, |event| {
         if let Some(mut diag) = event.diagnostic() {
             if let Some(action) = event.action() {
-                println!("{}\n-----------------------", action.root);
                 diag.suggestions.push(action.into());
             }
 
