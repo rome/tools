@@ -645,15 +645,14 @@ mod tests {
         SeparatedExpressionList::new(node.into_list())
     }
 
+    type MappedElement = Vec<(Option<f64>, Option<String>)>;
+
     fn map_elements<'a>(
         actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>
             + DoubleEndedIterator,
         expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
         revert: bool,
-    ) -> (
-        Vec<(Option<f64>, Option<String>)>,
-        Vec<(Option<f64>, Option<String>)>,
-    ) {
+    ) -> (MappedElement, MappedElement) {
         let actual: Vec<_> = if revert {
             actual.rev().collect()
         } else {
