@@ -24,7 +24,7 @@ use rome_formatter::IndentStyle;
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_service::{
-    workspace::{FeatureName, FileGuard, OpenFileParams, SupportsFeatureParams},
+    workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
     Workspace,
 };
 
@@ -400,8 +400,15 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         )
         .with_file_id_and_code(file_id, "IO")?;
 
+        let is_format = matches!(ctx.mode, TraversalMode::Format { .. });
+        let filter = if is_format {
+            RuleCategories::SYNTAX
+        } else {
+            RuleCategories::SYNTAX | RuleCategories::LINT
+        };
+
         let diagnostics = file_guard
-            .pull_diagnostics()
+            .pull_diagnostics(filter)
             .with_file_id_and_code(file_id, "Lint")?;
 
         let has_errors = diagnostics
@@ -430,7 +437,10 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             _ => {}
         }
 
-        let result = if diagnostics.is_empty() {
+        // In format mode the diagnostics have already been checked for errors
+        // at this point, so they can just be dropped now since we don't want
+        // to print syntax warnings for the format command
+        let result = if diagnostics.is_empty() || is_format {
             None
         } else {
             Some(Message::Diagnostics {

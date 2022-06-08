@@ -215,7 +215,7 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
 
-        Ok(linter(&params.path, parse))
+        Ok(linter(&params.path, parse, params.categories))
     }
 
     /// Retrieves the list of code actions available for a given cursor
