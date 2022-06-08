@@ -1,5 +1,9 @@
 # Rome changelog
 
+## 0.6.1
+
+Fixes a regression introduced in the `rome format` command ([#2670](https://github.com/rome/tools/issues/2670))
+
 ## 0.6.0
 
 ### Formatter
