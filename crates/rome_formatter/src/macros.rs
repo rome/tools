@@ -303,4 +303,106 @@ mod tests {
             ]))
         );
     }
+
+    #[test]
+    fn best_fitting_groups() {
+        use crate::prelude::*;
+        use crate::{format, format_args, Formatted};
+
+        let formatted_best_fitting = format!(
+            SimpleFormatContext::default(),
+            [
+                token("aVeryLongIdentifier"),
+                soft_line_break_or_space(),
+                best_fitting!(
+                    format_args!(token(
+                        "Something that will not fit on a 30 character print width."
+                    ),),
+                    format_args![
+                        token("Start"),
+                        soft_line_break(),
+                        &group_elements(&soft_block_indent(&format_args![
+                            token("1,"),
+                            soft_line_break_or_space(),
+                            token("2,"),
+                            soft_line_break_or_space(),
+                            token("3"),
+                        ])),
+                        soft_line_break_or_space(),
+                        &soft_block_indent(&format_args![
+                            token("1,"),
+                            soft_line_break_or_space(),
+                            token("2,"),
+                            soft_line_break_or_space(),
+                            group_elements(&format_args!(
+                                token("A,"),
+                                soft_line_break_or_space(),
+                                token("B")
+                            )),
+                            soft_line_break_or_space(),
+                            token("3")
+                        ]),
+                        soft_line_break_or_space(),
+                        token("End")
+                    ],
+                    format_args!(token("Most"), hard_line_break(), token("Expanded"))
+                )
+            ]
+        )
+        .unwrap();
+
+        let formatted_normal_list = format!(
+            SimpleFormatContext::default(),
+            [
+                token("aVeryLongIdentifier"),
+                soft_line_break_or_space(),
+                format_args![
+                    token("Start"),
+                    soft_line_break(),
+                    &group_elements(&soft_block_indent(&format_args![
+                        token("1,"),
+                        soft_line_break_or_space(),
+                        token("2,"),
+                        soft_line_break_or_space(),
+                        token("3"),
+                    ])),
+                    soft_line_break_or_space(),
+                    &soft_block_indent(&format_args![
+                        token("1,"),
+                        soft_line_break_or_space(),
+                        token("2,"),
+                        soft_line_break_or_space(),
+                        group_elements(&format_args!(
+                            token("A,"),
+                            soft_line_break_or_space(),
+                            token("B")
+                        )),
+                        soft_line_break_or_space(),
+                        token("3")
+                    ]),
+                    soft_line_break_or_space(),
+                    token("End")
+                ],
+            ]
+        )
+        .unwrap();
+
+        let best_fitting_code = Formatted::new(
+            formatted_best_fitting.into_format_element(),
+            PrinterOptions::default().with_print_width(30.try_into().unwrap()),
+        )
+        .print()
+        .as_code()
+        .to_string();
+
+        let normal_list_code = Formatted::new(
+            formatted_normal_list.into_format_element(),
+            PrinterOptions::default().with_print_width(30.try_into().unwrap()),
+        )
+        .print()
+        .as_code()
+        .to_string();
+
+        assert_eq!(best_fitting_code, normal_list_code);
+    }
 }
