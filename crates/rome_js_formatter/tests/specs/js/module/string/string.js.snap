@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 244
+assertion_line: 257
 expression: string.js
 ---
 # Input
@@ -94,7 +94,7 @@ c?.[d];
 
 let a = {
 	// leading comment
-	"type": "bar",
+	type: "bar",
 	// trailing comment
 };
 
@@ -168,7 +168,7 @@ c?.[d];
 
 let a = {
 	// leading comment
-	'type': 'bar',
+	type: 'bar',
 	// trailing comment
 };
 

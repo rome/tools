@@ -21,7 +21,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> 
             quote! { #(#cs)* }
         }
     });
-    let punctuation_strings = punctuation_values.clone().map(|name| name.to_string());
+    let punctuation_strings = grammar.punct.iter().map(|(token, _name)| token);
 
     let punctuation = grammar
         .punct

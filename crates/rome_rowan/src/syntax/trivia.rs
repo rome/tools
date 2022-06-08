@@ -517,6 +517,7 @@ pub struct SyntaxTrivia<L: Language> {
     _p: PhantomData<L>,
 }
 
+#[derive(Clone)]
 pub struct SyntaxTriviaPiecesIterator<L: Language> {
     iter: cursor::SyntaxTriviaPiecesIterator,
     _p: PhantomData<L>,

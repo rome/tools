@@ -44,7 +44,8 @@ const a = classnames({
 },);
 
 const b = classnames({
-  "some-prop": this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
+  "some-prop":
+    this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
 },);
 
 const c = classnames({
@@ -64,7 +65,8 @@ const f = classnames({
 },);
 
 const g = classnames({
-  "some-prop": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
+  "some-prop":
+    longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
 },);
 
 const h = {
@@ -75,9 +77,4 @@ ipsum`,
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    6:   "some-prop": this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
-   26:   "some-prop": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
-```
 

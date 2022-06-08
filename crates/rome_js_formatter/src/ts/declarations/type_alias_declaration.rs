@@ -1,13 +1,11 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsTypeAliasDeclaration, TsTypeAliasDeclarationFields};
 
 impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDeclaration> {
-    fn format_fields(
-        node: &TsTypeAliasDeclaration,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsTypeAliasDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeAliasDeclarationFields {
             type_token,
             binding_identifier,
@@ -17,11 +15,10 @@ impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDecl
             semicolon_token,
         } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            formatted![
-                formatter,
-                [
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
                     type_token.format(),
                     space_token(),
                     binding_identifier.format(),
@@ -30,9 +27,9 @@ impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDecl
                     eq_token.format(),
                     space_token(),
                     ty.format(),
-                ]
-            ]?,
-            semicolon_token,
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

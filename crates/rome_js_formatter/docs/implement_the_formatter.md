@@ -32,7 +32,7 @@ This will automatically build and open a browser tab to the documentation.
 1. Use the `*Fields` struct to extract all the tokens/nodes
    ```rust
     impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
-   		fn format_fields(node: &JsExportDefaultExpressionClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+   		fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression,
@@ -45,7 +45,7 @@ This will automatically build and open a browser tab to the documentation.
    using the `_`
    ```rust
    impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
-   		fn format_fields(node: &JsExportDefaultExpressionClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+   		fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression: _,
@@ -55,30 +55,32 @@ This will automatically build and open a browser tab to the documentation.
    }
    ```
    The reason why we want to promote this pattern is because we want to make explicit when a token/node is excluded;
-3. Use the APIs provided by `format_element.rs` and `formatter` and `format_extensions.rs`.
-   1. `formatter_element.rs` exposes a series of utilities to craft the formatter IR; please refer to their internal
+3. Use the APIs provided by `builders.rs`, `formetter` and `format_extensions.rs`.
+   1. `builders.rs` exposes a series of utilities to craft the formatter IR; please refer to their internal
    documentation to understand what the utilities are for;
    2. `formatter` exposes a set of functions to help to format some recurring patterns; please refer to their internal
    documentation to understand how to use them and when;
-   3. `format_traits.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
+   3. `format_extensions.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
    that are exposed based on its type. If you have a good IDE support, this feature will help you. For example:
    ```rust
       impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
-   			fn format_fields(node: &JsExportDefaultExpressionClause, formatter: &Formatter) -> FormatResult<FormatElement> {
+   			fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression, // it's a mandatory node
                 semicolon_token, // this is not a mandatory node
             } = node.as_fields();
             let element = expression.format();
-            let element = expression.format().with(|element| {
-                formatted![formatter, element , space_token()]
-            })?;
-            let semicolon = semicolon_token.format().format_or(|| space_token())?;
-            let semicolon = semicolon_token.format();
-            let semicolon = semicolon_token.format().with_or_empty(formatter, |semicolon_element| {
-                formatted![formatter, semicolon_element, space_token()]
-            })?;
+
+   					if let Some(expression) = &expression? {
+   						write!(f, [expression.format(), space_token()])?;
+   					}
+
+   					if let Some(semicolon) = &semicolon_token {
+   						write!(f, [semicolon.format()])?;
+   					} else {
+   						write!(f, [space_token()])?;
+   					}
         }
    }
    ```

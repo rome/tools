@@ -1,6 +1,6 @@
 use std::ffi::OsStr;
 
-use rome_analyze::AnalyzerAction;
+use rome_analyze::{AnalyzerAction, RuleCategories};
 use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
@@ -69,7 +69,7 @@ impl std::fmt::Display for Mime {
 
 type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
-type Lint = fn(&RomePath, AnyParse) -> Vec<Diagnostic>;
+type Lint = fn(&RomePath, AnyParse, RuleCategories) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange) -> Vec<AnalyzerAction>;
 type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;
 type FormatRange =

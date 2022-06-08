@@ -2,3 +2,4 @@ import somethingSuperLongsomethingSuperLong from 'somethingSuperLongsomethingSup
 import {somethingSuperLongsomethingSuperLong1} from 'somethingSuperLongsomethingSuperLongsomethingSuperLong'
 import a, {somethingSuperLongsomethingSuperLong2} from 'somethingSuperLongsomethingSuperLongsomethingSuperLong'
 import {a2, somethingSuperLongsomethingSuperLong3} from 'somethingSuperLongsomethingSuperLongsomethingSuperLong'
+import {somethingSuperLongsomethingSuperLoooooooooooooooooooooooooooooooooooooooooooong} from 'source'

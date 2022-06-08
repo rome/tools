@@ -23,7 +23,9 @@ const reviewStepIndicator = document.querySelector(".form-steps .review");
 const progressFillContainer = document.querySelector(".progress-fill");
 const progressContainer = document.querySelector(".progress");
 const progressLoading = document.querySelector(".progress-loading");
-const progressFillText = document.querySelector(".progress-fill .progress-text");
+const progressFillText = document.querySelector(
+	".progress-fill .progress-text",
+);
 const progressTotalText = document.querySelector(".progress > .progress-text");
 const donationCount = document.querySelector(".donation-count");
 
@@ -63,28 +65,26 @@ function loadStripe() {
 	}
 
 	loadingStripePromise =
-		new Promise(
-			(resolve, reject) => {
-				const script = document.createElement("script");
-				script.src = "https://js.stripe.com/v3/";
+		new Promise((resolve, reject) => {
+			const script = document.createElement("script");
+			script.src = "https://js.stripe.com/v3/";
 
-				script.onload =
-					() => {
-						loadingStripePromise = undefined;
-						loadedStripe = true;
-						resolve();
-					};
+			script.onload =
+				() => {
+					loadingStripePromise = undefined;
+					loadedStripe = true;
+					resolve();
+				};
 
-				script.onerror =
-					(err) => {
-						loadingStripePromise = undefined;
-						addErrorToast("while loading the Stripe API", err);
-						reject(err);
-					};
+			script.onerror =
+				(err) => {
+					loadingStripePromise = undefined;
+					addErrorToast("while loading the Stripe API", err);
+					reject(err);
+				};
 
-				document.head.appendChild(script);
-			},
-		);
+			document.head.appendChild(script);
+		},);
 
 	return loadingStripePromise;
 }
@@ -138,7 +138,7 @@ async function wrapFetch(opts, attempt = 0) {
 					},
 					2_000,
 				);
-			});
+			},);
 		}
 
 		if (res.status !== 200) {
@@ -328,7 +328,9 @@ document.addEventListener(
 		// Select active step
 		const focusableElements = detailsForm.hidden ? reviewFormFocusableElements : detailsFormFocusableElements;
 		const firstFocusableElement = focusableElements[0];
-		const lastFocusableElement = focusableElements[focusableElements.length - 1];
+		const lastFocusableElement = focusableElements[
+			focusableElements.length - 1
+		];
 
 		let focusElement;
 
@@ -409,13 +411,12 @@ reviewForm.addEventListener(
 					localStorage.setItem("checkout-tier", selectedTier.name);
 					stripe.redirectToCheckout({ sessionId: res.id });
 					return new Promise(() => {});
-				});
+				},);
 			},
-		})
-			.then(() => {
-				checkoutButton.textContent = oldCheckoutButtonText;
-				checkoutButton.disabled = false;
-			});
+		},).then(() => {
+			checkoutButton.textContent = oldCheckoutButtonText;
+			checkoutButton.disabled = false;
+		},);
 	},
 );
 
@@ -625,7 +626,9 @@ function buildTierButton(tier) {
 	already.classList.add("already");
 	if (tier.count > 0 && tier.type === "personal") {
 		already.textContent =
-			`${tier.count.toLocaleString()} ${tier.count === 1 ? "person" : "people"} selected this tier`;
+			`${tier.count.toLocaleString()} ${
+				tier.count === 1 ? "person" : "people"
+			} selected this tier`;
 	}
 	headerRight.appendChild(already);
 
@@ -706,7 +709,7 @@ function processStats(res, interactive) {
 
 			requestAnimationFrame(() => {
 				progressFillContainer.style.width = `${percent}%`;
-			});
+			},);
 		}
 
 		if (typeof IntersectionObserver === "undefined") {
@@ -758,7 +761,7 @@ wrapFetch({
 		localStorage.setItem("stats", JSON.stringify(res));
 		processStats(res, true);
 	},
-});
+},);
 
 window.addEventListener(
 	"error",

@@ -26,3 +26,4 @@ num_cpus = "1.13.1"
 atty = "0.2.14"
 tracing = "0.1.34"
 tracing-subscriber = { version = "0.3.11", features = ["env-filter", "std"] }
+backtrace = "0.3.65"

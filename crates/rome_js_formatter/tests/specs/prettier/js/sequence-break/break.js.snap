@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
+assertion_line: 182
 expression: break.js
 ---
 # Input
@@ -23,11 +23,7 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
 
 # Output
 ```js
-const f = (
-  argument1,
-  argument2,
-  argument3,
-) => (
+const f = (argument1, argument2, argument3) => (
   doSomethingWithArgument(argument1),
   doSomethingWithArgument(argument2),
   argument1
