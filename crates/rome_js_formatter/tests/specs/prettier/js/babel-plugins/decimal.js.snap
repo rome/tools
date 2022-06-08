@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: decimal.js
 ---
 # Input
@@ -127,7 +126,7 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
 9 │ ({ 0m: 0, .1m() {}, get 0.2m(){}, set 3m(_){}, async 4m() {}, *.5m() {} });
   │           ^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-error[SyntaxError]: expected `')'` but instead found `0.2m`
+error[SyntaxError]: expected `)` but instead found `0.2m`
   ┌─ decimal.js:9:25
   │
 9 │ ({ 0m: 0, .1m() {}, get 0.2m(){}, set 3m(_){}, async 4m() {}, *.5m() {} });

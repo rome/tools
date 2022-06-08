@@ -178,7 +178,7 @@ error[SyntaxError]: expected a statement but instead found 'else'
   │           ^^^^ Expected a statement here
 
 --
-error[SyntaxError]: expected `'('` but instead found `else`
+error[SyntaxError]: expected `(` but instead found `else`
   ┌─ if_stmt_err.js:3:4
   │
 3 │ if else {}

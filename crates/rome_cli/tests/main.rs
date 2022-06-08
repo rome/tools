@@ -55,6 +55,7 @@ mod check {
     }
 
     #[test]
+    #[ignore = "lint errors are disabled until the linter is stable"]
     fn lint_error() {
         let mut fs = MemoryFileSystem::default();
 
@@ -244,6 +245,41 @@ mod format {
         assert_eq!(content, FORMATTED);
 
         assert_eq!(console.buffer.len(), 1);
+    }
+
+    // Ensures lint warnings are not printed in format mode
+    #[test]
+    fn lint_warning() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("format.js");
+        fs.insert(file_path.into(), LINT_ERROR.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, LINT_ERROR);
+
+        // The console buffer is expected to contain the following message:
+        // 0: "Formatter would have printed the following content"
+        // 1: "Compared 1 files"
+        assert_eq!(console.buffer.len(), 2, "console {:#?}", console.buffer);
     }
 
     #[test]

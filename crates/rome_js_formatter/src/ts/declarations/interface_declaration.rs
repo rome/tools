@@ -1,12 +1,11 @@
 use crate::prelude::*;
+
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
 impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDeclaration> {
-    fn format_fields(
-        node: &TsInterfaceDeclaration,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsInterfaceDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInterfaceDeclarationFields {
             interface_token,
             id,
@@ -17,27 +16,27 @@ impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDecl
             r_curly_token,
         } = node.as_fields();
 
-        let members = formatter
-            .delimited(
-                &l_curly_token?,
-                formatted![formatter, [members.format()]]?,
-                &r_curly_token?,
-            )
-            .block_indent()
-            .finish()?;
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 interface_token.format(),
                 space_token(),
                 id.format(),
                 type_parameters.format(),
                 space_token(),
-                extends_clause
-                    .format()
-                    .with_or_empty(|extends| formatted![formatter, [extends, space_token()]]),
-                members
             ]
-        ]
+        ]?;
+
+        if let Some(extends_clause) = extends_clause {
+            write!(f, [extends_clause.format(), space_token()])?;
+        }
+
+        write!(
+            f,
+            [
+                format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
+                    .block_indent()
+            ]
+        )
     }
 }

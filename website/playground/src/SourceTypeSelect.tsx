@@ -10,7 +10,14 @@ interface Props {
 }
 
 export default function SourceTypeSelect(
-	{ setIsTypeScript, isTypeScript, setIsJsx, isJsx, setSourceType, sourceType }: Props,
+	{
+		setIsTypeScript,
+		isTypeScript,
+		setIsJsx,
+		isJsx,
+		setSourceType,
+		sourceType,
+	}: Props,
 ) {
 	return (
 		<div className="p-5 sm:pr-0 sm:pt-0">
@@ -54,7 +61,7 @@ export default function SourceTypeSelect(
 								setIsTypeScript(e.target.checked);
 							}}
 							className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded disabled:opacity-30"
-							disabled={sourceType == SourceType.Script}
+							disabled={sourceType === SourceType.Script}
 						/>
 					</div>
 					<div className="ml-1 text-sm">
@@ -76,7 +83,7 @@ export default function SourceTypeSelect(
 							checked={isJsx}
 							onChange={(e) => setIsJsx(e.target.checked)}
 							className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded disabled:opacity-30"
-							disabled={sourceType == SourceType.Script}
+							disabled={sourceType === SourceType.Script}
 						/>
 					</div>
 					<div className="ml-1 text-sm">

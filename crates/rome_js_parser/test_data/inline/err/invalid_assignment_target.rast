@@ -243,7 +243,7 @@ error[SyntaxError]: Invalid assignment to `++a`
   │  ^^^ This expression cannot be assigned to
 
 --
-error[SyntaxError]: expected `')'` but instead found `;`
+error[SyntaxError]: expected `)` but instead found `;`
   ┌─ invalid_assignment_target.js:3:7
   │
 3 │ (a = b;

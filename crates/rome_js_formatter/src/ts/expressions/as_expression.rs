@@ -1,21 +1,19 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsAsExpression;
 use rome_js_syntax::TsAsExpressionFields;
 
 impl FormatNodeFields<TsAsExpression> for FormatNodeRule<TsAsExpression> {
-    fn format_fields(
-        node: &TsAsExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsAsExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let TsAsExpressionFields {
             ty,
             as_token,
             expression,
         } = node.as_fields();
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 expression.format(),
                 space_token(),

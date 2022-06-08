@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: comment.js
 ---
 # Input
@@ -108,9 +109,11 @@ this.doWriteConfiguration(
 .then(
   () => null,
   (error) => {
-    return options.donotNotifyError ? TPromise.wrapError(
+    return options.donotNotifyError ? TPromise.wrapError(error) : this.onError(
       error,
-    ) : this.onError(error, target, value);
+      target,
+      value,
+    );
   },
 );
 

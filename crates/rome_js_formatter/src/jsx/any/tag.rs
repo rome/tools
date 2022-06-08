@@ -5,11 +5,11 @@ use crate::prelude::*;
 use rome_js_syntax::JsxAnyTag;
 impl FormatRule<JsxAnyTag> for FormatJsxAnyTag {
     type Context = JsFormatContext;
-    fn format(node: &JsxAnyTag, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsxAnyTag, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsxAnyTag::JsxElement(node) => formatted![formatter, [node.format()]],
-            JsxAnyTag::JsxSelfClosingElement(node) => formatted![formatter, [node.format()]],
-            JsxAnyTag::JsxFragment(node) => formatted![formatter, [node.format()]],
+            JsxAnyTag::JsxElement(node) => node.format().fmt(f),
+            JsxAnyTag::JsxSelfClosingElement(node) => node.format().fmt(f),
+            JsxAnyTag::JsxFragment(node) => node.format().fmt(f),
         }
     }
 }

@@ -46,7 +46,7 @@ impl Rule for UseWhile {
 
     fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
-            severity: Severity::Error,
+            severity: Severity::Warning,
             message: markup! {
                 "Use a while loop instead of a for loop"
             }

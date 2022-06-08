@@ -1,15 +1,15 @@
 use crate::prelude::*;
 use std::cell::RefCell;
+use std::marker::PhantomData;
 
-use crate::IntoFormatElement;
-use rome_rowan::SyntaxResult;
+use crate::{write, Buffer, VecBuffer};
 
 /// Utility trait used to simplify the formatting of optional objects that are formattable.
 ///
 /// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::with_or]
 /// function.
-pub trait FormatOptional {
-    type Context;
+pub trait FormatOptional<Context> {
+    type Target: Format<Context>;
 
     /// This function tries to format an optional object. If the object is [None]
     /// an [empty token](crate::FormatElement::Empty) is created. If exists, the utility
@@ -18,282 +18,80 @@ pub trait FormatOptional {
     /// ## Examples
     ///
     /// ```
+    /// use rome_formatter::{write, format};
     /// use rome_formatter::prelude::*;
     /// use rome_rowan::TextSize;
     ///
     /// struct MyFormat;
     ///
-    /// impl Format for MyFormat {
-    ///     type Context = ();
-    ///
-    ///     fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-    ///         Ok(token("MyToken"))
+    /// impl Format<SimpleFormatContext> for MyFormat {
+    ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+    ///         write!(f, [token("MyToken")])
     ///     }
     /// }
-    ///
-    /// let formatter = Formatter::default();
     ///
     /// let none_token: Option<MyFormat> = None;
     /// // Returns `empty_element()` for a `None` value
-    /// let none_result = none_token.with_or_empty(|token| token);
-    /// assert_eq!(Ok(empty_element()), formatted![&formatter, [none_result]]);
+    /// let none_formatted = format!(SimpleFormatContext::default(), [
+    ///     none_token.with_or_empty(|token, f| write!(f, [token]))
+    /// ]).unwrap();
+    ///
+    /// assert!(none_formatted.into_format_element().is_empty());
     ///
     /// let some_token = Some(MyFormat);
-    /// let some_result = some_token.with_or_empty(|token| {
-    ///     formatted![&formatter, [space_token(), token]]
-    /// });
-    /// assert_eq!(formatted![&formatter, [space_token(), token("MyToken")]], formatted![&formatter, [some_result]]);
-    fn with_or_empty<With, WithResult>(
-        &self,
-        with: With,
-    ) -> FormatWithOr<With, fn() -> FormatElement, WithResult, FormatElement, Self::Context>
+    /// assert_eq!(
+    ///     format![SimpleFormatContext::default(), [space_token(), token("MyToken")]],
+    ///     format!(
+    ///         SimpleFormatContext::default(), [
+    ///             some_token.with_or_empty(|token, f| {
+    ///                 write!(f, [space_token(), token])
+    ///             })
+    ///         ]
+    ///     )
+    /// );
+    fn with_or_empty<With>(self, with: With) -> Option<FormatItemWith<With, Self::Target>>
     where
-        With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement<Self::Context>,
-    {
-        self.with_or(with, empty_element)
-    }
-
-    /// This function tries to format an optional formattable object as is. If the object is [None],
-    /// it calls the passed closure, which has to return a [crate::FormatElement]
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::prelude::*;
-    /// use rome_rowan::TextSize;
-    ///
-    /// struct MyFormat;
-    ///
-    /// impl Format for MyFormat {
-    ///     type Context = ();
-    ///     fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-    ///         Ok(token("MyToken"))
-    ///     }
-    /// }
-    ///
-    /// let formatter = Formatter::default();
-    /// let none_token: Option<MyFormat> = None;
-    /// let result = none_token.or_format(|| token(" other result"));
-    ///
-    /// assert_eq!(Ok(token(" other result")), formatted![&formatter, [result]]);
-    fn or_format<Or, OrResult>(&self, op: Or) -> OrFormat<Or, OrResult, Self::Context>
-    where
-        Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement<Self::Context>,
-    {
-        self.with_or(|token| token, op)
-    }
-
-    /// If the object isn't [None], it will call the first closure which will accept formatted element.
-    ///
-    /// If the object is [None], the second closure will be called.
-    ///
-    /// Both closures have to return a [crate::FormatElement]. This function will make sure to wrap them into [Ok].
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::prelude::*;
-    /// use rome_rowan::TextSize;
-    ///
-    /// struct MyFormat;
-    ///
-    /// impl Format for MyFormat {
-    ///     type Context = ();
-    ///     fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-    ///         Ok(token("MyToken"))
-    ///     }
-    /// }
-    ///
-    /// let formatter = Formatter::default();
-    /// let none_token: Option<MyFormat> = None;
-    ///
-    /// // It returns the `or` result if called on `None`
-    /// let none_result = none_token.with_or(|token| token, || {
-    ///     token("empty")
-    /// });
-    /// assert_eq!(Ok(token("empty")), formatted![&formatter, [none_result]]);
-    ///
-    /// // Returns the result of the first callback when called with `Some(value)`
-    /// let some_result = Some(MyFormat).with_or(|token| {
-    ///     formatted![&formatter, [space_token(), token]]
-    /// }, || empty_element());
-    ///
-    /// assert_eq!(formatted![&formatter, [space_token(), token("MyToken")]], formatted![&formatter, [some_result]]);
-    fn with_or<With, Or, WithResult, OrResult>(
-        &self,
-        with: With,
-        op: Or,
-    ) -> FormatWithOr<With, Or, WithResult, OrResult, Self::Context>
-    where
-        With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement<Self::Context>,
-        Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement<Self::Context>;
+        With: Fn(&Self::Target, &mut Formatter<Context>) -> FormatResult<()>;
 }
 
-/// Utility trait for formatting a formattable object with some additional content.
-pub trait FormatWith: Format {
-    /// Allows to chain a formattable object with another [elements](FormatElement)
-    ///
-    /// The function will decorate the result with [Ok]
-    ///
-    /// The formatted element is passed to the closure, which then can appended to additional elements.
-    /// This method is useful in case, for example, a token has to be chained with a space.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::prelude::*;
-    /// use rome_rowan::TextSize;
-    ///
-    /// struct MyFormat;
-    ///
-    /// impl Format for MyFormat {
-    ///     type Context = ();
-    ///     fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-    ///         Ok(token("MyToken"))
-    ///     }
-    /// }
-    ///
-    /// let formatter = Formatter::default();
-    ///
-    /// let result = MyFormat.with(|string_literal| {
-    ///     formatted![&formatter, [string_literal, space_token(), token("+")]]
-    /// });
-    ///
-    /// assert_eq!(formatted![&formatter, [token("MyToken"), space_token(), token("+")]], formatted![&formatter, [result]])
-    fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult, Self::Context>
-    where
-        With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement<Self::Context>;
-}
-
-pub struct FormatItemWith<'a, With, WithResult, Context>
-where
-    With: Fn(FormatElement) -> WithResult,
-    WithResult: IntoFormatElement<Context>,
-{
+#[derive(Copy, Clone, Debug)]
+pub struct FormatItemWith<With, Format> {
     with: With,
-    inner: &'a dyn Format<Context = Context>,
+    inner: Format,
 }
 
-impl<'a, With, WithResult, Context> Format for FormatItemWith<'a, With, WithResult, Context>
+impl<With, F, Context> Format<Context> for FormatItemWith<With, F>
 where
-    With: Fn(FormatElement) -> WithResult,
-    WithResult: IntoFormatElement<Context>,
+    F: Format<Context>,
+    With: Fn(&F, &mut Formatter<Context>) -> FormatResult<()>,
 {
-    type Context = Context;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-        let element = self.inner.format(formatter)?;
-
-        (self.with)(element).into_format_element(formatter)
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        (self.with)(&self.inner, f)
     }
 }
 
-impl<F: Format> FormatWith for F {
-    fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult, F::Context>
-    where
-        With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement<F::Context>,
-    {
-        FormatItemWith { with, inner: self }
-    }
-}
-
-impl<F: Format> FormatOptional for SyntaxResult<Option<F>> {
-    type Context = F::Context;
-
-    fn with_or<With, Or, WithResult, OrResult>(
-        &self,
-        with: With,
-        op: Or,
-    ) -> FormatWithOr<With, Or, WithResult, OrResult, Self::Context>
-    where
-        With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement<Self::Context>,
-        Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement<Self::Context>,
-    {
-        match self {
-            Err(_) => FormatWithOr::With { inner: self, with },
-            Ok(Some(value)) => FormatWithOr::With { inner: value, with },
-            Ok(None) => FormatWithOr::Or(op),
-        }
-    }
-}
-
-impl<F: Format> FormatOptional for Option<F> {
-    type Context = F::Context;
-
-    fn with_or<With, Or, WithResult, OrResult>(
-        &self,
-        with: With,
-        op: Or,
-    ) -> FormatWithOr<With, Or, WithResult, OrResult, Self::Context>
-    where
-        With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatElement<Self::Context>,
-        Or: Fn() -> OrResult,
-        OrResult: IntoFormatElement<Self::Context>,
-    {
-        match self {
-            None => FormatWithOr::Or(op),
-            Some(value) => FormatWithOr::With { inner: value, with },
-        }
-    }
-}
-
-pub type OrFormat<'a, Or, OrResult, Context> =
-    FormatWithOr<'a, fn(FormatElement) -> FormatElement, Or, FormatElement, OrResult, Context>;
-
-pub enum FormatWithOr<'a, With, Or, WithResult, OrResult, Context>
-where
-    With: Fn(FormatElement) -> WithResult,
-    Or: Fn() -> OrResult,
-    WithResult: IntoFormatElement<Context>,
-    OrResult: IntoFormatElement<Context>,
-{
-    With {
-        inner: &'a dyn Format<Context = Context>,
-        with: With,
-    },
-    Or(Or),
-}
-
-impl<'a, With, Or, WithResult, OrResult, Context> Format
-    for FormatWithOr<'a, With, Or, WithResult, OrResult, Context>
-where
-    With: Fn(FormatElement) -> WithResult,
-    Or: Fn() -> OrResult,
-    WithResult: IntoFormatElement<Context>,
-    OrResult: IntoFormatElement<Context>,
-{
-    type Context = Context;
+impl<F: Format<Context>, Context> FormatOptional<Context> for Option<F> {
+    type Target = F;
 
     #[inline]
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
-        match self {
-            FormatWithOr::Or(op) => op().into_format_element(formatter),
-            FormatWithOr::With { inner, with } => {
-                with(inner.format(formatter)?).into_format_element(formatter)
-            }
-        }
+    fn with_or_empty<With>(self, with: With) -> Option<FormatItemWith<With, F>>
+    where
+        With: Fn(&F, &mut Formatter<Context>) -> FormatResult<()>,
+    {
+        self.map(|value| FormatItemWith { inner: value, with })
     }
 }
 
 /// Utility trait that allows memorizing the output of a [Format].
 /// Useful to avoid re-formatting the same object twice.
-pub trait MemoizeFormat {
+pub trait MemoizeFormat<Context> {
     /// Returns a formattable object that memoizes the result of `Format` by cloning.
     /// Mainly useful if the same sub-tree can appear twice in the formatted output because it's
     /// used inside of `if_group_breaks` or `if_group_fits_single_line`.
     ///
     /// ```
     /// use std::cell::Cell;
-    /// use rome_formatter::FormatContext;
+    /// use rome_formatter::{format, write};
     /// use rome_formatter::prelude::*;
     /// use rome_rowan::TextSize;
     ///
@@ -307,72 +105,98 @@ pub trait MemoizeFormat {
     ///     }
     /// }
     ///
-    /// impl Format for MyFormat {
-    ///     type Context = ();
-    ///     fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
+    /// impl Format<SimpleFormatContext> for MyFormat {
+    ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
     ///         let value = self.value.get();
     ///         self.value.set(value + 1);
     ///
-    ///         Ok(FormatElement::from(Token::new_dynamic(format!("Formatted {value} times."), TextSize::from(0))))
+    ///         write!(f, [dynamic_token(&std::format!("Formatted {value} times."), TextSize::from(0))])
     ///     }
     /// }
     ///
-    /// let formatter = Formatter::default();
     /// let normal = MyFormat::new();
     ///
     /// // Calls `format` for everytime the object gets formatted
     /// assert_eq!(
-    ///     Ok(format_elements![token("Formatted 1 times."), token("Formatted 2 times.")]),
-    ///     formatted![&formatter, [&normal, &normal]]
+    ///     format!(SimpleFormatContext::default(), [token("Formatted 1 times."), token("Formatted 2 times.")]),
+    ///     format!(SimpleFormatContext::default(), [normal, normal])
     /// );
     ///
     /// // Memoized memoizes the result and calls `format` only once.
     /// let memoized = normal.memoized();
     /// assert_eq!(
-    ///     Ok(format_elements![token("Formatted 3 times."), token("Formatted 3 times.")]),
-    ///     formatted![&formatter, [&memoized, &memoized]]
+    ///     format!(SimpleFormatContext::default(), [token("Formatted 3 times."), token("Formatted 3 times.")]),
+    ///     format![SimpleFormatContext::default(), [memoized, memoized]]
     /// );
     /// ```
     ///
-    fn memoized(self) -> Memoized<Self>
+    fn memoized(self) -> Memoized<Self, Context>
     where
-        Self: Sized + Format,
+        Self: Sized + Format<Context>,
     {
         Memoized::new(self)
     }
 }
 
-impl<F> MemoizeFormat for F where F: Format {}
+impl<T, Context> MemoizeFormat<Context> for T where T: Format<Context> {}
 
 /// Memoizes the output of its inner [Format] to avoid re-formatting a potential expensive object.
-pub struct Memoized<F> {
+pub struct Memoized<F, Context> {
     inner: F,
-    memory: RefCell<Option<FormatResult<FormatElement>>>,
+    memory: RefCell<Option<FormatResult<Vec<FormatElement>>>>,
+    options: PhantomData<Context>,
 }
 
-impl<F: Format> Memoized<F> {
+impl<F, Context> Memoized<F, Context>
+where
+    F: Format<Context>,
+{
     fn new(inner: F) -> Self {
         Self {
             inner,
             memory: RefCell::new(None),
+            options: PhantomData,
         }
     }
 }
 
-impl<F> Format for Memoized<F>
+impl<F, Context> Format<Context> for Memoized<F, Context>
 where
-    F: Format,
+    F: Format<Context>,
 {
-    type Context = F::Context;
-
-    fn format(&self, formatter: &Formatter<Self::Context>) -> FormatResult<FormatElement> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        // Cached
         if let Some(memory) = self.memory.borrow().as_ref() {
-            return memory.clone();
+            return match memory {
+                Ok(elements) => {
+                    for element in elements {
+                        f.write_element(element.clone())?;
+                    }
+
+                    Ok(())
+                }
+                Err(err) => Err(*err),
+            };
         }
+        let mut buffer = VecBuffer::new(f.state_mut());
 
-        let formatted = self.inner.format(formatter);
-        *self.memory.borrow_mut() = Some(formatted.clone());
+        let result = write!(buffer, [self.inner]);
 
-        formatted
+        match result {
+            Ok(_) => {
+                let elements = buffer.into_vec();
+                for element in &elements {
+                    f.write_element(element.clone())?;
+                }
+
+                *self.memory.borrow_mut() = Some(Ok(elements));
+
+                Ok(())
+            }
+            Err(err) => {
+                *self.memory.borrow_mut() = Some(Err(err));
+                Err(err)
+            }
+        }
     }
 }

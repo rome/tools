@@ -5,10 +5,9 @@ use rome_js_syntax::JsCallArgumentList;
 impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsCallArgumentList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        Ok(join_elements(
-            soft_line_break_or_space(),
-            formatter.format_separated(node, || token(","))?,
-        ))
+    fn fmt(node: &JsCallArgumentList, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join_with(&soft_line_break_or_space())
+            .entries(node.format_separated(token(",")))
+            .finish()
     }
 }

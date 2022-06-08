@@ -1,7 +1,7 @@
 use crate::prelude::*;
-
-use rome_js_syntax::JsAnyStatement;
+use rome_formatter::{write, Buffer};
 use rome_js_syntax::JsBlockStatement;
+use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
 
 use crate::FormatNodeFields;
 use rome_js_syntax::JsBlockStatementFields;
@@ -9,32 +9,37 @@ use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
 impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
-    fn format_fields(
-        node: &JsBlockStatement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBlockStatementFields {
             l_curly_token,
             statements,
             r_curly_token,
         } = node.as_fields();
 
-        let stmts = formatter.format_list(&statements);
-
         if is_non_collapsable_empty_block(node) {
-            formatted![
-                formatter,
+            for stmt in statements
+                .iter()
+                .filter_map(|stmt| JsEmptyStatement::cast(stmt.into_syntax()))
+            {
+                f.state_mut().track_token(&stmt.semicolon_token()?)
+            }
+
+            write!(
+                f,
                 [
                     l_curly_token.format(),
                     hard_line_break(),
                     r_curly_token.format()
                 ]
-            ]
+            )
         } else {
-            formatter
-                .delimited(&l_curly_token?, stmts, &r_curly_token?)
-                .block_indent()
-                .finish()
+            write!(
+                f,
+                [
+                    format_delimited(&l_curly_token?, &statements.format(), &r_curly_token?)
+                        .block_indent()
+                ]
+            )
         }
     }
 }
@@ -80,10 +85,9 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
     // }
     // ```
     if !block.statements().is_empty()
-        && block
-            .statements()
-            .iter()
-            .any(|s| !matches!(s, JsAnyStatement::JsEmptyStatement(_)))
+        && block.statements().iter().any(|s| {
+            !matches!(s, JsAnyStatement::JsEmptyStatement(_)) || s.syntax().has_comments_direct()
+        })
     {
         return false;
     }

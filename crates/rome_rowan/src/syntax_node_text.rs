@@ -2,7 +2,7 @@ use std::fmt;
 
 use crate::{
     cursor::{SyntaxNode, SyntaxToken},
-    TextRange, TextSize,
+    Direction, TextRange, TextSize,
 };
 
 #[derive(Clone)]
@@ -118,7 +118,7 @@ impl SyntaxNodeText {
     fn tokens_with_ranges(&self) -> impl Iterator<Item = (SyntaxToken, TextRange)> {
         let text_range = self.range;
         self.node
-            .descendants_with_tokens()
+            .descendants_with_tokens(Direction::Next)
             .filter_map(|element| element.into_token())
             .filter_map(move |token| {
                 let token_range = token.text_range();

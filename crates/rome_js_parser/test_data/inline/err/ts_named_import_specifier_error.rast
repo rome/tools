@@ -257,7 +257,7 @@ error[SyntaxError]: expected `as` but instead found `}`
   │                              ^ unexpected
 
 --
-error[SyntaxError]: expected `'}'` but instead the file ends
+error[SyntaxError]: expected `}` but instead the file ends
   ┌─ ts_named_import_specifier_error.ts:6:1
   │
 6 │ 

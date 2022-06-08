@@ -171,7 +171,7 @@ error[SyntaxError]: expected `,` but instead found `bar`
   │               ^^^ unexpected
 
 --
-error[SyntaxError]: expected `'}'` but instead the file ends
+error[SyntaxError]: expected `}` but instead the file ends
   ┌─ object_expr_err.js:4:1
   │
 4 │ 

@@ -5,22 +5,15 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayBindingPatternElement;
 impl FormatRule<JsAnyArrayBindingPatternElement> for FormatJsAnyArrayBindingPatternElement {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyArrayBindingPatternElement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyArrayBindingPatternElement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyArrayBindingPatternElement::JsArrayHole(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyArrayBindingPatternElement::JsArrayHole(node) => node.format().fmt(f),
+            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(node) => node.format().fmt(f),
             JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
             JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
         }
     }

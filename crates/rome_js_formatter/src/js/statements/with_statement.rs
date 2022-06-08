@@ -1,15 +1,13 @@
 use crate::prelude::*;
-use crate::utils::format_head_body_statement;
+use rome_formatter::write;
 
+use crate::utils::FormatBodyStatement;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsWithStatement;
 use rome_js_syntax::JsWithStatementFields;
 
 impl FormatNodeFields<JsWithStatement> for FormatNodeRule<JsWithStatement> {
-    fn format_fields(
-        node: &JsWithStatement,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsWithStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsWithStatementFields {
             with_token,
             l_paren_token,
@@ -18,24 +16,15 @@ impl FormatNodeFields<JsWithStatement> for FormatNodeRule<JsWithStatement> {
             body,
         } = node.as_fields();
 
-        format_head_body_statement(
-            formatter,
-            formatted![
-                formatter,
-                [
-                    with_token.format(),
-                    space_token(),
-                    formatter
-                        .delimited(
-                            &l_paren_token?,
-                            formatted![formatter, [object.format()]]?,
-                            &r_paren_token?,
-                        )
-                        .soft_block_indent()
-                        .finish()?,
-                ]
-            ]?,
-            body?,
+        write!(
+            f,
+            [
+                with_token.format(),
+                space_token(),
+                format_delimited(&l_paren_token?, &object.format(), &r_paren_token?,)
+                    .soft_block_indent(),
+                FormatBodyStatement::new(&body?)
+            ]
         )
     }
 }
