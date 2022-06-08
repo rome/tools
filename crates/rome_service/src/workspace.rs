@@ -61,6 +61,8 @@ use rome_js_syntax::{TextRange, TextSize};
 
 use crate::{settings::WorkspaceSettings, RomeError};
 
+pub use rome_analyze::RuleCategories;
+
 pub(crate) mod server;
 
 pub struct SupportsFeatureParams {
@@ -99,6 +101,7 @@ pub struct CloseFileParams {
 
 pub struct PullDiagnosticsParams {
     pub path: RomePath,
+    pub categories: RuleCategories,
 }
 
 pub struct PullActionsParams {
@@ -196,9 +199,13 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn pull_diagnostics(&self) -> Result<Vec<Diagnostic>, RomeError> {
+    pub fn pull_diagnostics(
+        &self,
+        categories: RuleCategories,
+    ) -> Result<Vec<Diagnostic>, RomeError> {
         self.workspace.pull_diagnostics(PullDiagnosticsParams {
             path: self.path.clone(),
+            categories,
         })
     }
 
