@@ -47,7 +47,6 @@ impl Rule for NoNegationElse {
     }
 
     fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
-        println!("This is node_range: {:?}", node.range());
         Some(RuleDiagnostic {
             severity: Severity::Error,
             message: markup! {

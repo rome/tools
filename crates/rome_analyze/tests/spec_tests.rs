@@ -48,7 +48,6 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
 
     rome_analyze::analyze(0, &root, filter, |event| {
         if let Some(mut diag) = event.diagnostic() {
-            // println!("{:?}", diag);
             if let Some(action) = event.action() {
                 println!("{}\n-----------------------", action.root);
                 diag.suggestions.push(action.into());
@@ -63,7 +62,6 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
         }
     });
 
-    // println!("{:?}", diagnostics);
     let mut snapshot = String::new();
 
     writeln!(snapshot, "# Input").unwrap();
