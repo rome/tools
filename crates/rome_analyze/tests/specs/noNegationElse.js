@@ -8,3 +8,5 @@ if (!true) {
   alternate;
 }
 !condition ? consequent : alternate;
+
+let a = !test ? c : d;
