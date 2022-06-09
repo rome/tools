@@ -26,7 +26,7 @@ warning[noSparseArray]: This array contains an empty slot.
 5 │ const b = [/**test*/,];
   │           ------------ This array contains an empty slot.
 
-Replace with undefined
+Replace hole with undefined
     | @@ -2,7 +2,7 @@
 1 1 |   const a = [ 1, 2, ];
 2 2 |   
@@ -47,7 +47,7 @@ warning[noSparseArray]: This array contains an empty slot.
 6 │ const c = [,,];
   │           ---- This array contains an empty slot.
 
-Replace with undefined
+Replace hole with undefined
     | @@ -3,7 +3,7 @@
 2 2 |   
 3 3 |   // invalid
@@ -68,7 +68,7 @@ warning[noSparseArray]: This array contains an empty slot.
 7 │ const d = [,2];
   │           ---- This array contains an empty slot.
 
-Replace with undefined
+Replace hole with undefined
     | @@ -4,7 +4,7 @@
 3 3 |   // invalid
 4 4 |   const b = [/**test*/,];
@@ -89,7 +89,7 @@ warning[noSparseArray]: This array contains an empty slot.
 9 │ const e = [1,,]
   │           ----- This array contains an empty slot.
 
-Replace with undefined
+Replace hole with undefined
     | @@ -6,5 +6,5 @@
 5 5 |   const c = [,,];
 6 6 |   const d = [,2];
@@ -108,7 +108,7 @@ warning[noSparseArray]: This array contains an empty slot.
 10 │ const f = [1,,2]
    │           ------ This array contains an empty slot.
 
-Replace with undefined
+Replace hole with undefined
       | @@ -7,4 +7,4 @@
  6  6 |   const d = [,2];
  7  7 |   

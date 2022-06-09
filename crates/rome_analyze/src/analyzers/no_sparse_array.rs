@@ -45,7 +45,6 @@ impl Rule for NoSparseArray {
             .enumerate()
             .filter_map(|(i, item)| {
                 if matches!(item, Ok(JsAnyArrayElement::JsArrayHole(_))) {
-                    println!("{}", i);
                     Some(i)
                 } else {
                     None
