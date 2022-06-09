@@ -30,7 +30,6 @@ impl Rule for NoSparseArray {
                     None
                 }
             })
-        // .map(|_| ())
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
@@ -45,46 +44,38 @@ impl Rule for NoSparseArray {
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<JsRuleAction> {
-        let mut array_element_list = node.elements();
-        let hole_index_iter = array_element_list
-            .iter()
-            .enumerate()
-            .filter_map(|(i, item)| {
-                if matches!(item, Ok(JsAnyArrayElement::JsArrayHole(_))) {
-                    Some(i)
+        let mut final_array_element_list = node.elements();
+
+        for (i, item) in final_array_element_list.iter().enumerate() {
+            if matches!(item, Ok(JsAnyArrayElement::JsArrayHole(_))) {
+                let undefine_indent = if i == 0 {
+                    make::ident("undefined")
                 } else {
-                    None
-                }
-            });
-
-        for index in hole_index_iter {
-            let undefine_indent = if index == 0 {
-                make::ident("undefined")
-            } else {
-                make::ident("undefined")
-                    .with_leading_trivia(std::iter::once((TriviaPieceKind::Whitespace, " ")))
-            };
-            let ident_expr =
-                make::js_identifier_expression(make::js_reference_identifier(undefine_indent));
-
-            let n_element = array_element_list.iter().nth(index)?.ok()?;
-            array_element_list = array_element_list.replace_node(
-                n_element,
-                JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsIdentifierExpression(
-                    ident_expr,
-                )),
-            )?;
+                    make::ident("undefined")
+                        .with_leading_trivia(std::iter::once((TriviaPieceKind::Whitespace, " ")))
+                };
+                let ident_expr =
+                    make::js_identifier_expression(make::js_reference_identifier(undefine_indent));
+                // Why we need to use `final_array_element_list.iter().nth(i)` instead of `item`, because every time we
+                // call `replace_node` the previous iteration `item` is not the descent child of current `final_array_element_list` any more.
+                let n_element = final_array_element_list.iter().nth(i)?.ok()?;
+                final_array_element_list = final_array_element_list.replace_node(
+                    n_element,
+                    JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsIdentifierExpression(
+                        ident_expr,
+                    )),
+                )?;
+            }
         }
-        let root = root
-            .replace_node(
-                node.clone(),
-                make::js_array_expression(
-                    node.l_brack_token().ok()?,
-                    array_element_list,
-                    node.r_brack_token().ok()?,
-                ),
-            )
-            .unwrap();
+
+        let root = root.replace_node(
+            node.clone(),
+            make::js_array_expression(
+                node.l_brack_token().ok()?,
+                final_array_element_list,
+                node.r_brack_token().ok()?,
+            ),
+        )?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
