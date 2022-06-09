@@ -154,7 +154,7 @@ error[SyntaxError]: A `break` statement can only be used within an enclosing ite
   │        ^^^^^
 
 --
-error[SyntaxError]: expected `')'` but instead found `continue`
+error[SyntaxError]: expected `)` but instead found `continue`
   ┌─ do_while_no_continue_break.js:1:15
   │
 1 │ do { } break (continue)
@@ -209,7 +209,7 @@ error[SyntaxError]: A `continue` statement can only be used within an enclosing 
   │        ^^^^^^^^
 
 --
-error[SyntaxError]: expected `')'` but instead found `break`
+error[SyntaxError]: expected `)` but instead found `break`
   ┌─ do_while_no_continue_break.js:2:18
   │
 2 │ do { } continue (break)

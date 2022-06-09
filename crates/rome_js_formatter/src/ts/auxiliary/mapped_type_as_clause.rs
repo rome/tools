@@ -1,22 +1,12 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsMappedTypeAsClause, TsMappedTypeAsClauseFields};
 
 impl FormatNodeFields<TsMappedTypeAsClause> for FormatNodeRule<TsMappedTypeAsClause> {
-    fn format_fields(
-        node: &TsMappedTypeAsClause,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsMappedTypeAsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMappedTypeAsClauseFields { as_token, ty } = node.as_fields();
 
-        formatted![
-            formatter,
-            [
-                as_token
-                    .format()
-                    .with(|as_token| { formatted![formatter, [as_token, space_token()]] }),
-                ty.format()
-            ]
-        ]
+        write![f, [as_token.format(), space_token(), ty.format()]]
     }
 }

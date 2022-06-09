@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: lit-html.js
 ---
 # Input
@@ -171,9 +172,7 @@ function HelloWorld() {
   return html`
     <h3>Bar List</h3>
     ${bars.map(
-    (
-      bar,
-    ) =>
+    (bar) =>
       html`
        <p>${bar}</p>
     `,
@@ -222,6 +221,6 @@ ${foo}:${bar};
 
 # Lines exceeding max width of 80 characters
 ```
-   84: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
+   82: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
 ```
 

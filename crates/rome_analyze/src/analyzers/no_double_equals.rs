@@ -34,7 +34,7 @@ impl Rule for NoDoubleEquals {
 
     fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
-            severity: Severity::Error,
+            severity: Severity::Warning,
             message: markup! {
                 "Do not use the "{op.text_trimmed()}" operator"
             }

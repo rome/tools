@@ -7,6 +7,7 @@ use crate::utils;
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use parking_lot::RwLock;
+use rome_analyze::RuleCategories;
 use rome_diagnostics::file::FileId;
 use rome_fs::RomePath;
 use rome_service::workspace;
@@ -93,9 +94,10 @@ impl Session {
         let workspace_settings = self.config.read().get_workspace_settings();
 
         let diagnostics = if workspace_settings.analysis.enable_diagnostics {
-            let diagnostics = self
-                .workspace
-                .pull_diagnostics(PullDiagnosticsParams { path: rome_path })?;
+            let diagnostics = self.workspace.pull_diagnostics(PullDiagnosticsParams {
+                path: rome_path,
+                categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+            })?;
 
             diagnostics
                 .into_iter()

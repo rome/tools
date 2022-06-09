@@ -18,7 +18,7 @@ pub(crate) struct RuleRegistry {
 
 /// Utility macro for implementing the `with_filter` method of [RuleRegistry]
 macro_rules! impl_registry_builders {
-    ( $( $rule:ident ),* ) => {
+    ( $( $rule:ident, )* ) => {
         impl RuleRegistry {
             pub(crate) fn with_filter(filter: &AnalysisFilter) -> Self {
                 let mut rules: Vec<RegistryRule> = Vec::new();
@@ -41,7 +41,7 @@ impl_registry_builders!(
     UseWhile,
     NoNegationElse,
     // Assists
-    FlipBinExp
+    FlipBinExp,
 );
 
 impl RuleRegistry {

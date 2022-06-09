@@ -1,16 +1,17 @@
 use crate::prelude::*;
-use crate::utils::format_with_semicolon;
+use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::TsConstructorSignatureClassMember;
 use rome_js_syntax::TsConstructorSignatureClassMemberFields;
 
 impl FormatNodeFields<TsConstructorSignatureClassMember>
     for FormatNodeRule<TsConstructorSignatureClassMember>
 {
-    fn format_fields(
+    fn fmt_fields(
         node: &TsConstructorSignatureClassMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsConstructorSignatureClassMemberFields {
             modifiers,
             name,
@@ -18,18 +19,17 @@ impl FormatNodeFields<TsConstructorSignatureClassMember>
             semicolon_token,
         } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            formatted![
-                formatter,
-                [
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
                     modifiers.format(),
                     space_token(),
                     name.format(),
                     parameters.format(),
-                ]
-            ]?,
-            semicolon_token,
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

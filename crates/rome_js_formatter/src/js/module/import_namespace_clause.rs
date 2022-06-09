@@ -1,14 +1,11 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsImportNamespaceClause;
 use rome_js_syntax::JsImportNamespaceClauseFields;
 
 impl FormatNodeFields<JsImportNamespaceClause> for FormatNodeRule<JsImportNamespaceClause> {
-    fn format_fields(
-        node: &JsImportNamespaceClause,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsImportNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportNamespaceClauseFields {
             type_token,
             star_token,
@@ -19,12 +16,13 @@ impl FormatNodeFields<JsImportNamespaceClause> for FormatNodeRule<JsImportNamesp
             assertion,
         } = node.as_fields();
 
-        formatted![
-            formatter,
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space_token()])?;
+        }
+
+        write![
+            f,
             [
-                type_token
-                    .format()
-                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
                 star_token.format(),
                 space_token(),
                 as_token.format(),
@@ -34,10 +32,13 @@ impl FormatNodeFields<JsImportNamespaceClause> for FormatNodeRule<JsImportNamesp
                 from_token.format(),
                 space_token(),
                 source.format(),
-                assertion
-                    .format()
-                    .with_or_empty(|assertion| formatted![formatter, [space_token(), assertion]])
             ]
-        ]
+        ]?;
+
+        if let Some(assertion) = assertion {
+            write!(f, [space_token(), assertion.format()])?;
+        }
+
+        Ok(())
     }
 }

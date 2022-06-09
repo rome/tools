@@ -5,29 +5,14 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyLiteralExpression;
 impl FormatRule<JsAnyLiteralExpression> for FormatJsAnyLiteralExpression {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyLiteralExpression,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyLiteralExpression::JsStringLiteralExpression(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyLiteralExpression::JsNumberLiteralExpression(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyLiteralExpression::JsNullLiteralExpression(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyLiteralExpression::JsStringLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsNumberLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsBigIntLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsBooleanLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsNullLiteralExpression(node) => node.format().fmt(f),
+            JsAnyLiteralExpression::JsRegexLiteralExpression(node) => node.format().fmt(f),
         }
     }
 }
