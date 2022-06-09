@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: fsharp_style_pipeline_operator.js
-
 ---
 # Input
 ```js
@@ -228,7 +226,7 @@ error[SyntaxError]: Expected an expression for the left hand side of the `>` ope
 28 │ const f = (x) => (x |> (y) => y + 1)
    │                      ^ This operator requires a left hand side value
 
-error[SyntaxError]: expected `')'` but instead found `=>`
+error[SyntaxError]: expected `)` but instead found `=>`
    ┌─ fsharp_style_pipeline_operator.js:28:28
    │
 28 │ const f = (x) => (x |> (y) => y + 1)
@@ -274,7 +272,7 @@ error[SyntaxError]: Expected an expression for the left hand side of the `>` ope
 39 │   |> (y => (y + 1 |> (z) => z * y))
    │                    ^ This operator requires a left hand side value
 
-error[SyntaxError]: expected `')'` but instead found `=>`
+error[SyntaxError]: expected `)` but instead found `=>`
    ┌─ fsharp_style_pipeline_operator.js:39:26
    │
 39 │   |> (y => (y + 1 |> (z) => z * y))
@@ -292,7 +290,7 @@ error[SyntaxError]: Expected an expression for the left hand side of the `>` ope
 44 │       return (y + 1 |> (z) => z * y);
    │                      ^ This operator requires a left hand side value
 
-error[SyntaxError]: expected `')'` but instead found `=>`
+error[SyntaxError]: expected `)` but instead found `=>`
    ┌─ fsharp_style_pipeline_operator.js:44:28
    │
 44 │       return (y + 1 |> (z) => z * y);

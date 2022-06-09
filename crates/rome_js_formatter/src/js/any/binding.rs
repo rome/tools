@@ -5,10 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyBinding;
 impl FormatRule<JsAnyBinding> for FormatJsAnyBinding {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyBinding, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyBinding, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyBinding::JsIdentifierBinding(node) => formatted![formatter, [node.format()]],
-            JsAnyBinding::JsUnknownBinding(node) => formatted![formatter, [node.format()]],
+            JsAnyBinding::JsIdentifierBinding(node) => node.format().fmt(f),
+            JsAnyBinding::JsUnknownBinding(node) => node.format().fmt(f),
         }
     }
 }

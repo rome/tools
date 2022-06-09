@@ -5,17 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyIndexSignatureModifier;
 impl FormatRule<TsAnyIndexSignatureModifier> for FormatTsAnyIndexSignatureModifier {
     type Context = JsFormatContext;
-    fn format(
-        node: &TsAnyIndexSignatureModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &TsAnyIndexSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyIndexSignatureModifier::JsStaticModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            TsAnyIndexSignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
+            TsAnyIndexSignatureModifier::TsReadonlyModifier(node) => node.format().fmt(f),
         }
     }
 }

@@ -5,10 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyCallArgument;
 impl FormatRule<JsAnyCallArgument> for FormatJsAnyCallArgument {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyCallArgument, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyCallArgument, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyCallArgument::JsAnyExpression(node) => formatted![formatter, [node.format()]],
-            JsAnyCallArgument::JsSpread(node) => formatted![formatter, [node.format()]],
+            JsAnyCallArgument::JsAnyExpression(node) => node.format().fmt(f),
+            JsAnyCallArgument::JsSpread(node) => node.format().fmt(f),
         }
     }
 }

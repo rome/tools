@@ -1,44 +1,61 @@
 use crate::generated::FormatTsTypeMemberList;
 use crate::prelude::*;
-use rome_js_syntax::TsTypeMemberList;
+use rome_formatter::{write, Buffer, VecBuffer};
+use rome_js_syntax::{TsAnyTypeMember, TsTypeMemberList};
+
 use rome_rowan::AstNodeList;
 
 impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
     type Context = JsFormatContext;
 
-    fn format(node: &TsTypeMemberList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &TsTypeMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 
-        let items = items
-            .enumerate()
-            .map(|(index, element)| {
-                let formatted_element = formatted![formatter, [element.format()]]?;
+        f.join_with(&soft_line_break_or_space())
+            .entries(items.enumerate().map(|(index, member)| TsTypeMemberItem {
+                last: index == last_index,
+                member,
+            }))
+            .finish()
+    }
+}
 
-                let is_verbatim = matches!(
-                    formatted_element.last_element(),
-                    Some(FormatElement::Verbatim(_))
-                );
+struct TsTypeMemberItem {
+    last: bool,
+    member: TsAnyTypeMember,
+}
 
-                let separator = if !is_verbatim {
-                    // Children don't format the separator on purpose, so it's up to the parent - this node,
-                    // to decide to print their separator
-                    if index == last_index {
-                        if_group_breaks(token(";"))
-                    } else {
-                        token(";")
-                    }
-                } else {
-                    empty_element()
-                };
+impl Format<JsFormatContext> for TsTypeMemberItem {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
 
-                Ok(format_elements![
-                    group_elements(formatted_element),
-                    separator
-                ])
-            })
-            .collect::<FormatResult<Vec<_>>>()?;
+        write!(buffer, [self.member.format()])?;
 
-        Ok(join_elements(soft_line_break_or_space(), items))
+        let formatted_element = buffer.into_element();
+
+        let is_verbatim = matches!(
+            formatted_element.last_element(),
+            Some(FormatElement::Verbatim(_))
+        );
+
+        write!(
+            f,
+            [group_elements(&format_once(|f| {
+                f.write_element(formatted_element)
+            }))]
+        )?;
+
+        if !is_verbatim {
+            // Children don't format the separator on purpose, so it's up to the parent - this node,
+            // to decide to print their separator
+            if self.last {
+                write!(f, [if_group_breaks(&token(";"))])?;
+            } else {
+                write!(f, [token(";")])?;
+            }
+        }
+
+        Ok(())
     }
 }

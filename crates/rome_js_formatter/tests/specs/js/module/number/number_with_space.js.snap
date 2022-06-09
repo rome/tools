@@ -1,6 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-expression: number-with-space.js
+assertion_line: 257
+expression: number_with_space.js
 ---
 # Input
 123 .toString

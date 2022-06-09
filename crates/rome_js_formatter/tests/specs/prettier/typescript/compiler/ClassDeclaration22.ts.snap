@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 182
 expression: ClassDeclaration22.ts
-
 ---
 # Input
 ```js
@@ -16,8 +15,8 @@ class C {
 # Output
 ```js
 class C {
-  "foo"();
-  "bar"() {}
+  foo();
+  bar() {}
 }
 
 ```

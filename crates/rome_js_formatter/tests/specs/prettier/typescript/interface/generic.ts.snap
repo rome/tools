@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: generic.ts
 ---
 # Input
@@ -17,10 +18,10 @@ interface Foo<
 
 # Output
 ```js
-interface Foo<
-  FOOOOOOOOOOOOOOOOOOOOOOOOOO,
-  FOOOOOOOOOOOOOOOOOOOOOOO,
-> extends Foo {}
+interface Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOO>
+  extends
+    Foo
+{}
 
 interface Foo<
   FOOOOOOOOOOOOOOOOOOOOOOOOOO,

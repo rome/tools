@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: binaryish.js
 ---
 # Input
@@ -37,9 +38,9 @@ function f() {
     property.isIdentifier() &&
       FUNCTIONS[property.node.name] &&
       (
-        object.isIdentifier(
-          JEST_GLOBAL,
-        ) || (callee.isMemberExpression() && shouldHoistExpression(object))
+        object.isIdentifier(JEST_GLOBAL) || (
+          callee.isMemberExpression() && shouldHoistExpression(object)
+        )
       ) &&
       FUNCTIONS[property.node.name](expr.get("arguments"))
   );
@@ -52,9 +53,9 @@ function f() {
     )
   );
 
-  return !filePath.includes(
-    coverageDirectory,
-  ) && !filePath.endsWith(`.${SNAPSHOT_EXTENSION}`);
+  return !filePath.includes(coverageDirectory) && !filePath.endsWith(
+    `.${SNAPSHOT_EXTENSION}`,
+  );
 }
 
 ```
