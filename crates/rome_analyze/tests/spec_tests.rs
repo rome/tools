@@ -2,7 +2,7 @@ use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
 };
 
-use rome_analyze::{AnalysisFilter, AnalyzerAction};
+use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never};
 use rome_console::{
     diff::{Diff, DiffMode},
     fmt::{Formatter, Termcolor},
@@ -53,12 +53,14 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             }
 
             diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
-            return;
+            return ControlFlow::Continue(());
         }
 
         if let Some(action) = event.action() {
             code_fixes.push(code_fix_to_string(&input_code, action));
         }
+
+        ControlFlow::<Never>::Continue(())
     });
 
     let mut snapshot = String::new();

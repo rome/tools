@@ -15,8 +15,8 @@ use crate::{
 };
 
 use super::{
-    ChangeFileParams, CloseFileParams, FeatureName, FormatFileParams, FormatOnTypeParams,
-    FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
+    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
+    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
     PullDiagnosticsParams, SupportsFeatureParams, UpdateSettingsParams,
 };
 
@@ -283,5 +283,16 @@ impl Workspace for WorkspaceServer {
         }
 
         formatter(&params.path, parse, settings, params.offset)
+    }
+
+    fn fix_file(&self, params: super::FixFileParams) -> Result<FixFileResult, RomeError> {
+        let capabilities = self.features.get_capabilities(&params.path);
+        let fix_all = capabilities
+            .fix_all
+            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+
+        let parse = self.get_parse(params.path.clone())?;
+
+        Ok(fix_all(&params.path, parse))
     }
 }
