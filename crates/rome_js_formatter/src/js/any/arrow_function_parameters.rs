@@ -5,17 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyArrowFunctionParameters;
 impl FormatRule<JsAnyArrowFunctionParameters> for FormatJsAnyArrowFunctionParameters {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyArrowFunctionParameters,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyArrowFunctionParameters, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyArrowFunctionParameters::JsParameters(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyArrowFunctionParameters::JsAnyBinding(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyArrowFunctionParameters::JsParameters(node) => node.format().fmt(f),
+            JsAnyArrowFunctionParameters::JsAnyBinding(node) => node.format().fmt(f),
         }
     }
 }

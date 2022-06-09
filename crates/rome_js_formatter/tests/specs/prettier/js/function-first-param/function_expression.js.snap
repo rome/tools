@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: function_expression.js
 ---
 # Input
@@ -48,9 +49,7 @@ beep.boop().baz(
 );
 
 //https://github.com/prettier/prettier/issues/2984
-db.collection(
-  "indexOptionDefault",
-).createIndex(
+db.collection("indexOptionDefault").createIndex(
   { a: 1 },
   {
     indexOptionDefaults: true,

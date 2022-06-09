@@ -1,11 +1,12 @@
-mod no_delete;
-mod no_double_equals;
-mod no_sparse_array;
-mod use_single_var_declarator;
-mod use_while;
+//! Generated file, do not edit by hand, see `xtask/codegen`
 
-pub(crate) use no_delete::NoDelete;
-pub(crate) use no_double_equals::NoDoubleEquals;
-pub(crate) use no_sparse_array::NoSparseArray;
-pub(crate) use use_single_var_declarator::UseSingleVarDeclarator;
+mod use_while;
 pub(crate) use use_while::UseWhile;
+mod no_sparse_array;
+pub(crate) use no_sparse_array::NoSparseArray;
+mod no_delete;
+pub(crate) use no_delete::NoDelete;
+mod no_double_equals;
+pub(crate) use no_double_equals::NoDoubleEquals;
+mod use_single_var_declarator;
+pub(crate) use use_single_var_declarator::UseSingleVarDeclarator;

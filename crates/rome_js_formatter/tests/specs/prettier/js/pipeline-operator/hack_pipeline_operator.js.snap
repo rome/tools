@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: hack_pipeline_operator.js
-
 ---
 # Input
 ```js
@@ -580,7 +578,7 @@ error[SyntaxError]: Expected an expression for the left hand side of the `>` ope
 44 │     |> (yield %)
    │      ^ This operator requires a left hand side value
 
-error[SyntaxError]: expected `')'` but instead found `%`
+error[SyntaxError]: expected `)` but instead found `%`
    ┌─ hack_pipeline_operator.js:44:15
    │
 44 │     |> (yield %)

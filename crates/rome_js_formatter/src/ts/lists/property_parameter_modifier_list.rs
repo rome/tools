@@ -6,13 +6,9 @@ use rome_js_syntax::TsPropertyParameterModifierList;
 impl FormatRule<TsPropertyParameterModifierList> for FormatTsPropertyParameterModifierList {
     type Context = JsFormatContext;
 
-    fn format(
-        node: &TsPropertyParameterModifierList,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        Ok(join_elements(
-            space_token(),
-            formatter.format_all(sort_modifiers_by_precedence(node).into_iter().formatted())?,
-        ))
+    fn fmt(node: &TsPropertyParameterModifierList, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join_with(&space_token())
+            .entries(sort_modifiers_by_precedence(node).into_iter().formatted())
+            .finish()
     }
 }

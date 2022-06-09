@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: bind_parens.js
-
 ---
 # Input
 ```js
@@ -125,7 +123,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │       An explicit or implicit semicolon is expected here...
   │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `')'` but instead found `:`
+error[SyntaxError]: expected `)` but instead found `:`
   ┌─ bind_parens.js:2:8
   │
 2 │ a || (b::c);
@@ -296,7 +294,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │  An explicit or implicit semicolon is expected here...
    │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `')'` but instead found `:`
+error[SyntaxError]: expected `)` but instead found `:`
    ┌─ bind_parens.js:29:5
    │
 29 │ (b.c::d).e;
@@ -344,7 +342,7 @@ error[SyntaxError]: expected `=>` but instead found `.`
 30 │ (b::c::d).e;
    │          ^ unexpected
 
-error[SyntaxError]: expected `')'` but instead found `:`
+error[SyntaxError]: expected `)` but instead found `:`
    ┌─ bind_parens.js:31:7
    │
 31 │ new (a::b)();
@@ -356,13 +354,13 @@ error[SyntaxError]: expected `,` but instead found `:`
 32 │ new f(a::b);
    │        ^ unexpected
 
-error[SyntaxError]: expected `']'` but instead found `:`
+error[SyntaxError]: expected `]` but instead found `:`
    ┌─ bind_parens.js:33:4
    │
 33 │ f[a::b];
    │    ^ unexpected
 
-error[SyntaxError]: expected `']'` but instead found `:`
+error[SyntaxError]: expected `]` but instead found `:`
    ┌─ bind_parens.js:34:4
    │
 34 │ f[a::b()];

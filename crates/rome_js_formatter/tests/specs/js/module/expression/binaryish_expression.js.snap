@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: binaryish_expression.js
 ---
 # Input
@@ -12,11 +13,10 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-(
-	(2 > (4 + (4 * 24 % 3) << 23) instanceof Number) in data
-) || (
-	(
-		(a in status) instanceof String + 15
-	) && foo && bar && (lorem instanceof String)
+((2 > (4 + (4 * 24 % 3) << 23) instanceof Number) in data) || (
+	((a in status) instanceof String + 15) &&
+		foo &&
+		bar &&
+		(lorem instanceof String)
 );
 

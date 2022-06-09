@@ -5,7 +5,7 @@ use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinar
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoDoubleEquals {}
@@ -34,7 +34,7 @@ impl Rule for NoDoubleEquals {
 
     fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
-            severity: Severity::Error,
+            severity: Severity::Warning,
             message: markup! {
                 "Do not use the "{op.text_trimmed()}" operator"
             }
@@ -43,13 +43,13 @@ impl Rule for NoDoubleEquals {
         })
     }
 
-    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
         let root = root.replace_token(
             op.clone(),
             make::token(if op.kind() == EQ2 { T![===] } else { T![!==] }),
         )?;
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with strict equality" }.to_owned(),

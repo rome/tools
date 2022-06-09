@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-10277.js
 ---
 # Input
@@ -10,9 +11,7 @@ expression: issue-10277.js
 
 # Output
 ```js
-(
-  (fold) => fold
-)(
+((fold) => fold)(
   (fmap) => (algebra) => function doFold(v) {
     return algebra(fmap(doFold)(v));
   },

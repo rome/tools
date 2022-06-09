@@ -116,12 +116,12 @@ fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
     format!("{tree:#?}")
 }
 
-fn lint(rome_path: &RomePath, parse: AnyParse) -> Vec<Diagnostic> {
+fn lint(rome_path: &RomePath, parse: AnyParse, categories: RuleCategories) -> Vec<Diagnostic> {
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
 
     let filter = AnalysisFilter {
-        categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+        categories,
         ..AnalysisFilter::default()
     };
 
@@ -139,7 +139,11 @@ fn lint(rome_path: &RomePath, parse: AnyParse) -> Vec<Diagnostic> {
     diagnostics
 }
 
-fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> Vec<AnalyzerAction> {
+fn code_actions(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    range: TextRange,
+) -> Vec<AnalyzerAction<JsLanguage>> {
     let tree = parse.tree();
 
     let mut actions = Vec::new();

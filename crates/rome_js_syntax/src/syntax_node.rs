@@ -5,7 +5,7 @@
 //!
 //! This is a simple wrapper around the `rowan` crate which does most of the heavy lifting and is language agnostic.
 
-use crate::JsSyntaxKind;
+use crate::{JsAnyRoot, JsSyntaxKind};
 use rome_rowan::Language;
 #[cfg(feature = "serde")]
 use serde_crate::Serialize;
@@ -17,6 +17,7 @@ pub struct JsLanguage;
 
 impl Language for JsLanguage {
     type Kind = JsSyntaxKind;
+    type Root = JsAnyRoot;
 }
 
 pub type JsSyntaxNode = rome_rowan::SyntaxNode<JsLanguage>;

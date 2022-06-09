@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: indent-after-paren.js
 ---
 # Input
@@ -527,10 +528,10 @@ const decorated = (arg, ignoreRequestError) => {
   return (
     typeof arg === "string" || (
       arg && arg.valueOf && typeof arg.valueOf() === "string"
-    ) ? $delegate(
+    ) ? $delegate(arg, ignoreRequestError) : handleAsyncOperations(
       arg,
       ignoreRequestError,
-    ) : handleAsyncOperations(arg, ignoreRequestError)
+    )
   ).foo();
 };
 

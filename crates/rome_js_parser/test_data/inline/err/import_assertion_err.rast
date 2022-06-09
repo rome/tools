@@ -500,7 +500,7 @@ error[SyntaxError]: Duplicate assertion keys are not allowed
   │                                      First use of the key `type`
 
 --
-error[SyntaxError]: expected `'{'` but instead found `;`
+error[SyntaxError]: expected `{` but instead found `;`
   ┌─ import_assertion_err.js:7:18
   │
 7 │ import "x" assert;
@@ -528,7 +528,7 @@ error[SyntaxError]: expected `string literal` but instead found `1`
   │                                                                                ^ unexpected
 
 --
-error[SyntaxError]: expected `'{'` but instead the file ends
+error[SyntaxError]: expected `{` but instead the file ends
    ┌─ import_assertion_err.js:10:1
    │
 10 │ 

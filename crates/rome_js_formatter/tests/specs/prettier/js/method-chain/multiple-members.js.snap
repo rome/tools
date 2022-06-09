@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: multiple-members.js
 ---
 # Input
@@ -92,9 +93,10 @@ wrapper
 
 wrapper
   .find("SomewhatLongNodeName")
-  .prop(
-    "longPropFunctionName",
-  )("argument", "second argument that pushes this group past 80 characters")
+  .prop("longPropFunctionName")(
+    "argument",
+    "second argument that pushes this group past 80 characters",
+  )
   .then(function () {
     doSomething();
   },);

@@ -5,10 +5,10 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnySwitchClause;
 impl FormatRule<JsAnySwitchClause> for FormatJsAnySwitchClause {
     type Context = JsFormatContext;
-    fn format(node: &JsAnySwitchClause, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnySwitchClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnySwitchClause::JsCaseClause(node) => formatted![formatter, [node.format()]],
-            JsAnySwitchClause::JsDefaultClause(node) => formatted![formatter, [node.format()]],
+            JsAnySwitchClause::JsCaseClause(node) => node.format().fmt(f),
+            JsAnySwitchClause::JsDefaultClause(node) => node.format().fmt(f),
         }
     }
 }

@@ -11,7 +11,9 @@ interface Props {
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
 }
 
-export default function TreeView({ tree, treeStyle, setPlaygroundState }: Props) {
+export default function TreeView(
+	{ tree, treeStyle, setPlaygroundState }: Props,
+) {
 	return (
 		<div className="overflow-scroll">
 			<TreeStyleSelect

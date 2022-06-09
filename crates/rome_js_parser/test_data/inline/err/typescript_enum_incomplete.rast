@@ -30,7 +30,7 @@ JsModule {
       5: (empty)
   3: EOF@8..9 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `'}'` but instead the file ends
+error[SyntaxError]: expected `}` but instead the file ends
   ┌─ typescript_enum_incomplete.ts:2:1
   │
 2 │ 

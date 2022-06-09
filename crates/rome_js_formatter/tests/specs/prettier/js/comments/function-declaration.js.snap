@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: function-declaration.js
 ---
 # Input
@@ -75,9 +76,7 @@ function b() {} // comment
 function c( /* comment */ argA, argB, argC) {} // comment
 call(( /*object*/ row) => {});
 KEYPAD_NUMBERS.map(
-  (
-    num,
-  ) => (
+  (num) => (
     // Buttons 0-9
     <div />
   ),

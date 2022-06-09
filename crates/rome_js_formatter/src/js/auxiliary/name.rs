@@ -1,13 +1,13 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsName;
 use rome_js_syntax::JsNameFields;
 
 impl FormatNodeFields<JsName> for FormatNodeRule<JsName> {
-    fn format_fields(node: &JsName, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNameFields { value_token } = node.as_fields();
 
-        formatted![formatter, [value_token.format()]]
+        write![f, [value_token.format()]]
     }
 }
