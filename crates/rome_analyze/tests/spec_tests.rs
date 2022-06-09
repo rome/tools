@@ -122,7 +122,6 @@ where
     L: Language,
 {
     let output = action.root.syntax().to_string();
-
     markup_to_string(markup! {
         {Diff { mode: DiffMode::Unified, left: source, right: &output }}
     })

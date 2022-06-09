@@ -39,6 +39,7 @@ impl_registry_builders!(
     UseWhile,
     NoDelete,
     NoDoubleEquals,
+    NoNegationElse,
     NoCompareNegZero,
     UseValidTypeof,
     UseSingleVarDeclarator,
