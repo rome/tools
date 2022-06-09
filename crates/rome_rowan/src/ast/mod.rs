@@ -404,16 +404,10 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
                 (Ok(N::unwrap_cast(node)), Ok(Some(separator)))
             }
 
-            // case where the list ends with ",1"
-            // we dont consume the separator, we assume that we are at the end of the list and the
-            // separator is omitted
-            (Some(SyntaxSlot::Node(node)), Some(SyntaxSlot::Token(_))) => {
-                (Ok(N::unwrap_cast(node)), Ok(None))
-            }
-
-            // case where the list ends with "1 1"
-            (Some(SyntaxSlot::Node(_)), Some(SyntaxSlot::Node(node))) => {
-                panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node);
+            // case where the list ends with "EMPTY ,"
+            (Some(SyntaxSlot::Token(separator)), Some(SyntaxSlot::Empty)) => {
+                self.slots.next_back();
+                (Err(SyntaxError::MissingRequiredChild), Ok(Some(separator)))
             }
 
             // case where the list ends with ", ,"
@@ -421,30 +415,18 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
                 panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token);
             }
 
-            // case where the list ends with "(missing sep) ,"
-            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Token(_))) => {
-                // SAFETY: both unwraps are checked by the previous match
-                let separator = self.slots.next_back().unwrap().into_token().unwrap();
-                (Err(SyntaxError::MissingRequiredChild), Ok(Some(separator)))
-                // panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token);
+            // case where the list ends with ",1"
+            // we dont consume the separator, we assume that we are at the end of the list and the
+            // separator is omitted
+            (Some(SyntaxSlot::Node(node)), Some(SyntaxSlot::Token(_))) => {
+                (Ok(N::unwrap_cast(node)), Ok(None))
             }
-
-            // case where the list ends with "(missing node) (missing sep)"
-            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Empty)) => (
-                Err(SyntaxError::MissingRequiredChild),
-                Err(SyntaxError::MissingRequiredChild),
-            ),
 
             // case where the list ends with "1 (missing sep)"
             (Some(SyntaxSlot::Node(node)), Some(SyntaxSlot::Empty)) => (
                 Ok(N::unwrap_cast(node)),
                 Err(SyntaxError::MissingRequiredChild),
             ),
-            // case where the list ends with "EMPTY ,"
-            (Some(SyntaxSlot::Token(separator)), Some(SyntaxSlot::Empty)) => {
-                self.slots.next_back();
-                (Err(SyntaxError::MissingRequiredChild), Ok(Some(separator)))
-            }
 
             // case where the list ends with "EMPTY 1"
             (Some(SyntaxSlot::Node(node)), None) => (
@@ -452,11 +434,17 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
                 Err(SyntaxError::MissingRequiredChild),
             ),
 
+            // case where the list ends with "1 1"
+            (Some(SyntaxSlot::Node(_)), Some(SyntaxSlot::Node(node))) => {
+                panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node);
+            }
+
+            // case where the list ends with "(missing node) (missing sep)"
             // case where the list ends with "EMPTY (missing sep)"
-            (Some(SyntaxSlot::Empty), None) => (
-                Err(SyntaxError::MissingRequiredChild),
-                Err(SyntaxError::MissingRequiredChild),
-            ),
+            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Empty))
+            | (Some(SyntaxSlot::Empty), None) => {
+                panic!("Malformed separated list, separator and node are both missing");
+            }
 
             // case where the list ends with "1 (missing sep)"
             (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Node(_))) => {
@@ -762,57 +750,6 @@ mod tests {
     }
 
     #[test]
-    fn separated_list_backwards_with_empty_separator() {
-        let list = build_list(vec![
-            (Some(1), Some(",")),
-            (Some(2), Some(",")),
-            (Some(3), Some(",")),
-            (Some(4), None),
-        ]);
-
-        assert_eq!(list.len(), 4);
-        assert!(!list.is_empty());
-        assert_eq!(list.separators().count(), 3);
-
-        let mut iter = list.elements();
-        let element = iter.next_back().unwrap();
-        assert_eq!(element.node().unwrap().text(), "4");
-        assert_eq!(element.trailing_separator(), Ok(None));
-        let element = iter.next_back().unwrap();
-        assert_eq!(element.node().unwrap().text(), "3");
-        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
-        let element = iter.next_back().unwrap();
-        assert_eq!(element.node().unwrap().text(), "2");
-        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
-        let element = iter.next_back().unwrap();
-        assert_eq!(element.node().unwrap().text(), "1");
-        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
-        // we test next_back once we consumed the whole iterator
-        let element = iter.next_back();
-        assert_eq!(element, None);
-    }
-
-    #[test]
-    fn separated_list_backwards_with_separator() {
-        let list = build_list(vec![(Some(1), Some(",")), (Some(2), Some(","))]);
-
-        assert_eq!(list.len(), 2);
-        assert!(!list.is_empty());
-        assert_eq!(list.separators().count(), 2);
-
-        let mut iter = list.elements();
-        let element = iter.next_back().unwrap();
-        assert_eq!(element.node().unwrap().text(), "2");
-        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
-        let element = iter.next_back().unwrap();
-        assert_eq!(element.node().unwrap().text(), "1");
-        assert_eq!(element.trailing_separator().unwrap().unwrap().text(), ",");
-        // we test next_back once we consumed the whole iterator
-        let element = iter.next_back();
-        assert_eq!(element, None);
-    }
-
-    #[test]
     fn double_iterator_meet_at_middle() {
         let list = build_list(vec![
             (Some(1), Some(",")),
@@ -833,7 +770,7 @@ mod tests {
         let element = iter.next_back().unwrap();
         assert_eq!(element.node().unwrap().text(), "3");
 
-        assert!(iter.next().is_none()); // line 701
+        assert!(iter.next().is_none());
         assert!(iter.next_back().is_none());
     }
 
