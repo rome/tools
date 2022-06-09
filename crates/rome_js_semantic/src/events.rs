@@ -112,12 +112,9 @@ impl SemanticEventExtractor {
         match node.kind() {
             JS_IDENTIFIER_BINDING => self.stash.push_back(DeclarationFound {
                 range: node.text_range(),
-                scope_started_at: self
-                    .scopes
-                    .last()
-                    .map(|x| x.started_at)
-                    .unwrap_or_else(|| TextSize::of("")),
+                scope_started_at: self.current_scope_start(),
             }),
+
             JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
             | JS_ARROW_FUNCTION_EXPRESSION
@@ -131,26 +128,24 @@ impl SemanticEventExtractor {
                 self.push_scope(node.text_range());
             }
             JS_TRY_STATEMENT => {
-                let range = node
+                if let Some(range) = node
                     .clone()
                     .cast::<JsTryStatement>()
-                    .unwrap()
-                    .body()
-                    .unwrap()
-                    .syntax()
-                    .text_range();
-                self.push_scope(range);
+                    .and_then(|x| x.body().ok())
+                    .map(|x| x.syntax().text_range())
+                {
+                    self.push_scope(range);
+                }
             }
             JS_TRY_FINALLY_STATEMENT => {
-                let range = node
+                if let Some(range) = node
                     .clone()
                     .cast::<JsTryFinallyStatement>()
-                    .unwrap()
-                    .body()
-                    .unwrap()
-                    .syntax()
-                    .text_range();
-                self.push_scope(range);
+                    .and_then(|x| x.body().ok())
+                    .map(|x| x.syntax().text_range())
+                {
+                    self.push_scope(range);
+                }
             }
             JS_CATCH_CLAUSE | JS_FINALLY_CLAUSE => {
                 self.push_scope(node.text_range());
@@ -178,32 +173,39 @@ impl SemanticEventExtractor {
                 self.pop_scope(node.text_range());
             }
             JS_TRY_STATEMENT => {
-                let range = node
+                if let Some(range) = node
                     .clone()
                     .cast::<JsTryStatement>()
-                    .unwrap()
-                    .body()
-                    .unwrap()
-                    .syntax()
-                    .text_range();
-                self.pop_scope(range);
+                    .and_then(|x| x.body().ok())
+                    .map(|x| x.syntax().text_range())
+                {
+                    self.pop_scope(range);
+                }
             }
             JS_TRY_FINALLY_STATEMENT => {
-                let range = node
+                if let Some(range) = node
                     .clone()
                     .cast::<JsTryFinallyStatement>()
-                    .unwrap()
-                    .body()
-                    .unwrap()
-                    .syntax()
-                    .text_range();
-                self.pop_scope(range);
+                    .and_then(|x| x.body().ok())
+                    .map(|x| x.syntax().text_range())
+                {
+                    self.pop_scope(range);
+                }
             }
             JS_CATCH_CLAUSE | JS_FINALLY_CLAUSE => {
                 self.pop_scope(node.text_range());
             }
             _ => {}
         }
+    }
+
+    fn current_scope_start(&self) -> TextSize {
+        let started_at = self.scopes.last().map(|x| x.started_at);
+
+        // We should always have, at least, the global scope
+        debug_assert!(started_at.is_some());
+
+        started_at.unwrap_or_else(|| TextSize::of(""))
     }
 
     /// Return any previous extracted [SemanticEvent].

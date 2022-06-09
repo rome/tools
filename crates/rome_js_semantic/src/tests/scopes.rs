@@ -3,7 +3,7 @@ use std::collections::{BTreeMap, HashMap};
 use crate::{assert_semantics, semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
 use rome_diagnostics::{file::SimpleFile, Applicability, Diagnostic};
-use rome_js_syntax::{JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
+use rome_js_syntax::{SourceType, TextRange, TextSize, WalkEvent};
 use rome_rowan::{Direction, NodeOrToken};
 
 use super::{extract_scope_assertion, ScopeAssertionType};
