@@ -1,4 +1,4 @@
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{Rule, RuleAction, RuleDiagnostic, JsRuleAction};
 use crate::{ActionCategory, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
@@ -49,7 +49,7 @@ impl Rule for NoNegationElse {
         })
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
         let root = match node {
             JsAnyCondition::JsConditionalExpression(expr) => {
                 let mut next_expr = expr
