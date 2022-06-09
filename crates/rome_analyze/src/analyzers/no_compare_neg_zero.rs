@@ -62,7 +62,7 @@ impl Rule for NoCompareNegZero {
         root: rome_js_syntax::JsAnyRoot,
         node: &Self::Query,
         state: &Self::State,
-    ) -> Option<crate::registry::RuleAction> {
+    ) -> Option<crate::registry::JsRuleAction> {
         let root = if state.left_need_replaced && state.right_need_replaced {
             let binary = node.clone().replace_node(
                 node.left().ok()?,
