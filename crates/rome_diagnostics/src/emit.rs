@@ -77,6 +77,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
             .files
             .source(self.d.file_id)
             .ok_or_else(|| io::Error::new(io::ErrorKind::NotFound, "file not found"))?;
+
         let locus = if let Some(label) = &self.d.primary {
             Locus::FileLocation {
                 name,
@@ -142,7 +143,6 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         }
 
         for suggestion in &self.d.suggestions {
-            // println!("suggestion: {:?}", suggestion);
             match suggestion.style {
                 SuggestionStyle::Full => {
                     let old = self

@@ -1,17 +1,10 @@
-use std::iter;
-
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsAnyStatement, JsBinaryExpression,
-    JsBooleanLiteralExpression, JsConditionalExpression, JsConditionalExpressionFields,
-    JsIfStatement, JsUnaryExpression, T,
-};
-use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeExt, SyntaxResult};
+use rome_js_syntax::{JsAnyExpression, JsAnyRoot, JsAnyStatement, JsUnaryExpression};
+use rome_rowan::{AstNode, AstNodeExt};
 
 pub(crate) enum NoNegationElse {}
 
@@ -46,8 +39,7 @@ impl Rule for NoNegationElse {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
-        println!("This is node_range: {:?}", node.range());
+    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
             severity: Severity::Error,
             message: markup! {
@@ -62,13 +54,6 @@ impl Rule for NoNegationElse {
         let root = match node {
             JsAnyStatement::JsExpressionStatement(stmt) => match stmt.expression() {
                 Ok(JsAnyExpression::JsConditionalExpression(expr)) => {
-                    // let JsConditionalExpressionFields {
-                    //     test,
-                    //     question_mark_token,
-                    //     consequent,
-                    //     colon_token,
-                    //     alternate,
-                    // } = expr.as_fields();
                     let mut next_expr = expr
                         .clone()
                         .replace_node(expr.test().ok()?, state.argument().ok()?)?;
@@ -92,11 +77,10 @@ impl Rule for NoNegationElse {
                 _ => None,
             },
             JsAnyStatement::JsIfStatement(stmt) => {
-                // replace test
                 let next_stmt = stmt
                     .clone()
                     .replace_node(stmt.test().ok()?, state.argument().ok()?)?;
-                let  next_stmt = next_stmt.clone().replace_node(
+                let next_stmt = next_stmt.clone().replace_node(
                     next_stmt.else_clause()?,
                     make::js_else_clause(
                         stmt.else_clause()?.else_token().ok()?,
@@ -107,13 +91,10 @@ impl Rule for NoNegationElse {
                     next_stmt.consequent().ok()?,
                     stmt.else_clause()?.alternate().ok()?,
                 )?;
-                let root =
-                    root.replace_node(node.clone(), JsAnyStatement::JsIfStatement(next_stmt));
-                root
+                root.replace_node(node.clone(), JsAnyStatement::JsIfStatement(next_stmt))
             }
             _ => unreachable!(),
-        }
-        .unwrap();
+        }?;
         Some(RuleAction {
             category: ActionCategory::Refactor,
             applicability: Applicability::MaybeIncorrect,
@@ -121,12 +102,6 @@ impl Rule for NoNegationElse {
             root,
         })
     }
-}
-
-#[derive(Debug)]
-pub enum IfStatementOrConditionalExpression {
-    JsConditionalExpression(JsConditionalExpression),
-    JsIfStatement(JsIfStatement),
 }
 
 fn is_negation(node: &JsAnyExpression) -> Option<bool> {
