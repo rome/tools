@@ -102,7 +102,7 @@ fn assert(code: &str, test_name: &str) {
     let mut declarations_assertions = BTreeMap::new();
     let mut scope_start_assertions = BTreeMap::new();
 
-    for node in r.syntax().preorder_with_tokens() {
+    for node in r.syntax().preorder_with_tokens(rome_rowan::Direction::Next) {
         if let WalkEvent::Enter(NodeOrToken::Token(token)) = node {
             let pieces = token
                 .leading_trivia()
