@@ -5,16 +5,19 @@ use rome_diagnostics::{
     file::{FileId, FileSpan},
     Applicability, CodeSuggestion, Diagnostic, SubDiagnostic, SuggestionChange, SuggestionStyle,
 };
-use rome_js_syntax::{JsAnyRoot, TextRange};
+use rome_js_syntax::TextRange;
 use rome_rowan::{AstNode, Direction, Language, SyntaxNode};
 
-use crate::{categories::ActionCategory, registry::Rule};
+use crate::{
+    categories::ActionCategory,
+    registry::{LanguageRoot, Rule, RuleLanguage, RuleRoot},
+};
 
 /// Event raised by the analyzer when a [Rule](crate::registry::Rule)
 /// emits a diagnostic, a code action, or both
-pub trait AnalyzerSignal {
+pub trait AnalyzerSignal<L: Language> {
     fn diagnostic(&self) -> Option<Diagnostic>;
-    fn action(&self) -> Option<AnalyzerAction>;
+    fn action(&self) -> Option<AnalyzerAction<L>>;
 }
 
 /// Code Action object returned by the analyzer, generated from a [RuleAction](crate::registry::RuleAction)
@@ -23,7 +26,7 @@ pub trait AnalyzerSignal {
 /// This struct can be converted into a [CodeSuggestion] and injected into
 /// a diagnostic emitted by the same signal
 #[derive(Debug, PartialEq, Eq)]
-pub struct AnalyzerAction {
+pub struct AnalyzerAction<L: Language> {
     pub rule_name: &'static str,
     pub file_id: FileId,
     pub category: ActionCategory,
@@ -33,11 +36,14 @@ pub struct AnalyzerAction {
     pub original_range: TextRange,
     /// Range of the new document that differs from the original document
     pub new_range: TextRange,
-    pub root: JsAnyRoot,
+    pub root: LanguageRoot<L>,
 }
 
-impl From<AnalyzerAction> for CodeSuggestion {
-    fn from(action: AnalyzerAction) -> Self {
+impl<L> From<AnalyzerAction<L>> for CodeSuggestion
+where
+    L: Language,
+{
+    fn from(action: AnalyzerAction<L>) -> Self {
         // Only print the relevant subset of tokens
         let mut code = String::new();
 
@@ -71,7 +77,7 @@ impl From<AnalyzerAction> for CodeSuggestion {
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
 pub(crate) struct RuleSignal<'a, R: Rule> {
     file_id: FileId,
-    root: &'a JsAnyRoot,
+    root: &'a RuleRoot<R>,
     node: R::Query,
     state: R::State,
     _rule: PhantomData<R>,
@@ -80,10 +86,10 @@ pub(crate) struct RuleSignal<'a, R: Rule> {
 impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
     pub(crate) fn new_boxed(
         file_id: FileId,
-        root: &'a JsAnyRoot,
+        root: &'a RuleRoot<R>,
         node: R::Query,
         state: R::State,
-    ) -> Box<dyn AnalyzerSignal + 'a> {
+    ) -> Box<dyn AnalyzerSignal<RuleLanguage<R>> + 'a> {
         Box::new(Self {
             file_id,
             root,
@@ -94,7 +100,7 @@ impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
     }
 }
 
-impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
+impl<'a, R: Rule> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R> {
     fn diagnostic(&self) -> Option<Diagnostic> {
         R::diagnostic(&self.node, &self.state).map(|diag| Diagnostic {
             file_id: self.file_id,
@@ -116,7 +122,7 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
         })
     }
 
-    fn action(&self) -> Option<AnalyzerAction> {
+    fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
         R::action(self.root.clone(), &self.node, &self.state).and_then(|action| {
             let (original_range, new_range) =
                 find_diff_range(self.root.syntax(), action.root.syntax())?;

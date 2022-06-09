@@ -10,7 +10,7 @@ use rome_console::{
 };
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
 use rome_js_parser::parse;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, Language};
 
 tests_macros::gen_tests! {"tests/specs/**/*.js", crate::run_test, "module"}
 
@@ -115,7 +115,10 @@ fn diagnostic_to_string(name: &str, source: &str, diag: Diagnostic) -> String {
     text
 }
 
-fn code_fix_to_string(source: &str, action: AnalyzerAction) -> String {
+fn code_fix_to_string<L>(source: &str, action: AnalyzerAction<L>) -> String
+where
+    L: Language,
+{
     let output = action.root.syntax().to_string();
 
     markup_to_string(markup! {

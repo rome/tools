@@ -1,4 +1,4 @@
-use crate::raw_language::RawLanguageKind::{COMMA_TOKEN, LITERAL_EXPRESSION};
+use crate::raw_language::RawLanguageKind::{COMMA_TOKEN, LITERAL_EXPRESSION, ROOT};
 ///! Provides a sample language implementation that is useful in API explanation or tests
 use crate::{
     AstNode, AstSeparatedList, Language, ParsedChildren, RawNodeSlots, RawSyntaxKind,
@@ -11,6 +11,7 @@ pub struct RawLanguage;
 
 impl Language for RawLanguage {
     type Kind = RawLanguageKind;
+    type Root = RawLanguageRoot;
 }
 
 #[doc(hidden)]
@@ -56,6 +57,39 @@ impl SyntaxKind for RawLanguageKind {
         assert!(raw.0 < RawLanguageKind::__LAST as u16);
 
         unsafe { std::mem::transmute::<u16, RawLanguageKind>(raw.0) }
+    }
+}
+
+#[doc(hidden)]
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct RawLanguageRoot {
+    node: SyntaxNode<RawLanguage>,
+}
+
+impl AstNode for RawLanguageRoot {
+    type Language = RawLanguage;
+
+    fn can_cast(kind: RawLanguageKind) -> bool {
+        kind == ROOT
+    }
+
+    fn cast(syntax: SyntaxNode<RawLanguage>) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        if syntax.kind() == ROOT {
+            Some(RawLanguageRoot { node: syntax })
+        } else {
+            None
+        }
+    }
+
+    fn syntax(&self) -> &SyntaxNode<RawLanguage> {
+        &self.node
+    }
+
+    fn into_syntax(self) -> SyntaxNode<RawLanguage> {
+        self.node
     }
 }
 

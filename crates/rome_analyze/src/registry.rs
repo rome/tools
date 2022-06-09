@@ -1,7 +1,8 @@
 use rome_console::MarkupBuf;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, TextRange};
-use rome_rowan::{AstNode, SyntaxNode};
+use rome_js_syntax::JsLanguage;
+use rome_js_syntax::TextRange;
+use rome_rowan::{AstNode, Language, SyntaxNode};
 
 use crate::{
     analyzers::*,
@@ -12,16 +13,16 @@ use crate::{
 };
 
 /// The rule registry holds type-erased instances of all active analysis rules
-pub(crate) struct RuleRegistry {
-    rules: Vec<RegistryRule>,
+pub(crate) struct RuleRegistry<L: Language> {
+    rules: Vec<RegistryRule<L>>,
 }
 
 /// Utility macro for implementing the `with_filter` method of [RuleRegistry]
 macro_rules! impl_registry_builders {
     ( $( $rule:ident, )* ) => {
-        impl RuleRegistry {
+        impl RuleRegistry<JsLanguage> {
             pub(crate) fn with_filter(filter: &AnalysisFilter) -> Self {
-                let mut rules: Vec<RegistryRule> = Vec::new();
+                let mut rules: Vec<RegistryRule<JsLanguage>> = Vec::new();
 
                 $( if filter.categories.contains($rule::CATEGORY.into()) && filter.rules.map_or(true, |rules| rules.contains(&$rule::NAME)) {
                     rules.push(run::<$rule>);
@@ -43,14 +44,23 @@ impl_registry_builders!(
     FlipBinExp,
 );
 
-impl RuleRegistry {
+pub(crate) type RuleLanguage<R> = NodeLanguage<<R as Rule>::Query>;
+pub(crate) type NodeLanguage<N> = <N as AstNode>::Language;
+
+pub(crate) type RuleRoot<R> = LanguageRoot<RuleLanguage<R>>;
+pub(crate) type LanguageRoot<L> = <L as Language>::Root;
+
+impl<L> RuleRegistry<L>
+where
+    L: Language,
+{
     // Run all rules known to the registry associated with nodes of type N
     pub(crate) fn analyze(
         &self,
         file_id: FileId,
-        root: &JsAnyRoot,
-        node: JsSyntaxNode,
-        callback: &mut impl FnMut(&dyn AnalyzerSignal),
+        root: &LanguageRoot<L>,
+        node: SyntaxNode<L>,
+        callback: &mut impl FnMut(&dyn AnalyzerSignal<L>),
     ) {
         for rule in &self.rules {
             if let Some(event) = (rule)(file_id, root, &node) {
@@ -61,15 +71,18 @@ impl RuleRegistry {
 }
 
 /// Representation of a single rule in the registry as a generic function pointer
-type RegistryRule =
-    for<'a> fn(FileId, &'a JsAnyRoot, &'a JsSyntaxNode) -> Option<Box<dyn AnalyzerSignal + 'a>>;
+type RegistryRule<L> = for<'a> fn(
+    FileId,
+    &'a LanguageRoot<L>,
+    &'a SyntaxNode<L>,
+) -> Option<Box<dyn AnalyzerSignal<L> + 'a>>;
 
 /// Generic implementation of RegistryRule for any rule type R
 fn run<'a, R: Rule + 'static>(
     file_id: FileId,
-    root: &'a JsAnyRoot,
+    root: &'a RuleRoot<R>,
     node: &'a SyntaxNode<<R::Query as AstNode>::Language>,
-) -> Option<Box<dyn AnalyzerSignal + 'a>> {
+) -> Option<Box<dyn AnalyzerSignal<RuleLanguage<R>> + 'a>> {
     if !<R::Query>::can_cast(node.kind()) {
         return None;
     }
@@ -115,7 +128,11 @@ pub(crate) trait Rule {
     /// from a signal raised by `run`
     ///
     /// The default implementation returns None
-    fn action(_root: JsAnyRoot, _node: &Self::Query, _state: &Self::State) -> Option<RuleAction> {
+    fn action(
+        _root: RuleRoot<Self>,
+        _node: &Self::Query,
+        _state: &Self::State,
+    ) -> Option<RuleAction<RuleLanguage<Self>>> {
         None
     }
 }
@@ -128,9 +145,11 @@ pub struct RuleDiagnostic {
 }
 
 /// Code Action object returned by a single analysis rule
-pub struct RuleAction {
+pub struct RuleAction<L: Language> {
     pub category: ActionCategory,
     pub applicability: Applicability,
     pub message: MarkupBuf,
-    pub root: JsAnyRoot,
+    pub root: LanguageRoot<L>,
 }
+
+pub type JsRuleAction = RuleAction<JsLanguage>;
