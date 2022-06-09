@@ -40,6 +40,7 @@ impl_registry_builders!(
     NoDelete,
     NoDoubleEquals,
     NoNegationElse,
+    NoCompareNegZero,
     UseValidTypeof,
     UseSingleVarDeclarator,
     // Assists
