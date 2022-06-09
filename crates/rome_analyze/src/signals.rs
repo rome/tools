@@ -59,7 +59,6 @@ where
 
             code.push_str(token.text());
         }
-
         CodeSuggestion {
             substitution: SuggestionChange::String(code),
             span: FileSpan {
