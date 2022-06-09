@@ -57,7 +57,7 @@ use rome_analyze::AnalyzerAction;
 use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
-use rome_js_syntax::{TextRange, TextSize};
+use rome_js_syntax::{JsLanguage, TextRange, TextSize};
 
 use crate::{settings::WorkspaceSettings, RomeError};
 
@@ -151,7 +151,10 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(&self, params: PullActionsParams) -> Result<Vec<AnalyzerAction>, RomeError>;
+    fn pull_actions(
+        &self,
+        params: PullActionsParams,
+    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError>;
 
     /// Runs the given file through the formatter using the provided options
     /// and returns the resulting source code
@@ -209,7 +212,10 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn pull_actions(&self, range: TextRange) -> Result<Vec<AnalyzerAction>, RomeError> {
+    pub fn pull_actions(
+        &self,
+        range: TextRange,
+    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError> {
         self.workspace.pull_actions(PullActionsParams {
             path: self.path.clone(),
             range,

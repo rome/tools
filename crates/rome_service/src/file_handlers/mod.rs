@@ -4,7 +4,7 @@ use rome_analyze::{AnalyzerAction, RuleCategories};
 use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
-use rome_js_syntax::{TextRange, TextSize};
+use rome_js_syntax::{JsLanguage, TextRange, TextSize};
 
 use crate::{settings::SettingsHandle, workspace::server::AnyParse, RomeError};
 
@@ -70,7 +70,7 @@ impl std::fmt::Display for Mime {
 type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
 type Lint = fn(&RomePath, AnyParse, RuleCategories) -> Vec<Diagnostic>;
-type CodeActions = fn(&RomePath, AnyParse, TextRange) -> Vec<AnalyzerAction>;
+type CodeActions = fn(&RomePath, AnyParse, TextRange) -> Vec<AnalyzerAction<JsLanguage>>;
 type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;
 type FormatRange =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;

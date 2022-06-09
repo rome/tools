@@ -139,7 +139,11 @@ fn lint(rome_path: &RomePath, parse: AnyParse, categories: RuleCategories) -> Ve
     diagnostics
 }
 
-fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> Vec<AnalyzerAction> {
+fn code_actions(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    range: TextRange,
+) -> Vec<AnalyzerAction<JsLanguage>> {
     let tree = parse.tree();
 
     let mut actions = Vec::new();
