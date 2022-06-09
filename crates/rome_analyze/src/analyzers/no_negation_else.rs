@@ -1,4 +1,4 @@
-use crate::registry::{Rule, RuleAction, RuleDiagnostic, JsRuleAction};
+use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
