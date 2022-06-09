@@ -14,7 +14,10 @@ pub enum SemanticEvent {
     /// - Variable Declarations
     /// - Import bindings
     /// - Functions parameters
-    DeclarationFound { range: TextRange },
+    DeclarationFound {
+        range: TextRange,
+        scope_started_at: TextSize,
+    },
 
     /// Signifies that a new scope was started
     /// Currently generated for:
@@ -35,7 +38,7 @@ pub enum SemanticEvent {
 impl SemanticEvent {
     pub fn range(&self) -> &TextRange {
         match self {
-            SemanticEvent::DeclarationFound { range } => range,
+            SemanticEvent::DeclarationFound { range, .. } => range,
             SemanticEvent::ScopeStarted { range } => range,
             SemanticEvent::ScopeEnded { range, .. } => range,
         }
@@ -107,7 +110,13 @@ impl SemanticEventExtractor {
         match node.kind() {
             JS_IDENTIFIER_BINDING => self.stash.push_back(DeclarationFound {
                 range: node.text_range(),
+                scope_started_at: self
+                    .scopes
+                    .last()
+                    .map(|x| x.started_at)
+                    .unwrap_or_else(|| TextSize::of("")),
             }),
+            JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range()),
             JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.push_scope(node.text_range()),
             _ => {}
         }
@@ -119,6 +128,7 @@ impl SemanticEventExtractor {
         use rome_js_syntax::JsSyntaxKind::*;
 
         match node.kind() {
+            JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
             JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.pop_scope(node.text_range()),
             _ => {}
         }
