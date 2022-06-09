@@ -5,7 +5,7 @@ use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyRoot, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
-    JsUnaryExpression,
+    JsUnaryExpression, JsUnaryOperator,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
@@ -96,7 +96,7 @@ impl Rule for NoNegationElse {
 fn is_negation(node: &JsAnyExpression) -> Option<bool> {
     match node {
         JsAnyExpression::JsUnaryExpression(expr) => {
-            Some(expr.operator_token().ok()?.text_trimmed() == "!")
+            Some(expr.operator().ok()? == JsUnaryOperator::LogicalNot)
         }
         _ => Some(false),
     }
