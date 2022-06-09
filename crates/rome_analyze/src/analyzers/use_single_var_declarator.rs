@@ -11,7 +11,7 @@ use rome_rowan::{AstNode, AstNodeExt, AstNodeList, AstNodeListExt, AstSeparatedL
 
 use crate::{ActionCategory, RuleCategory};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 
 pub(crate) enum UseSingleVarDeclarator {}
 
@@ -54,8 +54,7 @@ impl Rule for UseSingleVarDeclarator {
         })
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
-        let node = node.clone();
+    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
         let (kind, declarators, semicolon_token) = state;
 
         let prev_parent = JsStatementList::cast(node.syntax().parent()?)?;
@@ -91,7 +90,7 @@ impl Rule for UseSingleVarDeclarator {
             }),
         );
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Break out into multiple declarations" }.to_owned(),

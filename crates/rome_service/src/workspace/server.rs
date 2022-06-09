@@ -5,6 +5,7 @@ use rome_analyze::AnalyzerAction;
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
+use rome_js_syntax::JsLanguage;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
 
 use crate::{
@@ -220,7 +221,10 @@ impl Workspace for WorkspaceServer {
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(&self, params: PullActionsParams) -> Result<Vec<AnalyzerAction>, RomeError> {
+    fn pull_actions(
+        &self,
+        params: PullActionsParams,
+    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError> {
         let capabilities = self.features.get_capabilities(&params.path);
         let code_actions = capabilities
             .code_actions

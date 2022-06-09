@@ -5,7 +5,7 @@ use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFi
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::{
-    registry::{Rule, RuleAction, RuleDiagnostic},
+    registry::{JsRuleAction, Rule, RuleDiagnostic},
     ActionCategory, RuleCategory,
 };
 
@@ -55,7 +55,7 @@ impl Rule for UseWhile {
         })
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -79,7 +79,7 @@ impl Rule for UseWhile {
             )),
         )?;
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use a while loop" }.to_owned(),

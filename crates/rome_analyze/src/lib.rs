@@ -1,7 +1,8 @@
+use registry::LanguageRoot;
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
     suppression::{has_suppressions_category, SuppressionCategory},
-    JsAnyRoot, TextRange, WalkEvent,
+    JsLanguage, TextRange, WalkEvent,
 };
 use rome_rowan::AstNode;
 
@@ -30,9 +31,13 @@ pub struct AnalysisFilter<'a> {
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
 /// then call the `callback` when an analysis rule emits a diagnostic or action
-pub fn analyze<B>(file_id: FileId, root: &JsAnyRoot, filter: AnalysisFilter, mut callback: B)
-where
-    B: FnMut(&dyn AnalyzerSignal),
+pub fn analyze<B>(
+    file_id: FileId,
+    root: &LanguageRoot<JsLanguage>,
+    filter: AnalysisFilter,
+    mut callback: B,
+) where
+    B: FnMut(&dyn AnalyzerSignal<JsLanguage>),
 {
     let registry = RuleRegistry::with_filter(&filter);
 
