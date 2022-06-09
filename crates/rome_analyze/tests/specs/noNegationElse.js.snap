@@ -15,11 +15,13 @@ if (!true) {
   alternate;
 }
 !condition ? consequent : alternate;
+
+let a = !test ? c : d;
 ```
 
 # Diagnostics
 ```
-error[noNegationElse]: Invert blocks when performing a negation test.
+warning[noNegationElse]: Invert blocks when performing a negation test.
   ┌─ noNegationElse.js:5:1
   │  
 5 │ ┌ if (!true) {
@@ -27,10 +29,10 @@ error[noNegationElse]: Invert blocks when performing a negation test.
 7 │ │ } else {
 8 │ │   alternate;
 9 │ │ }
-  │ └─^ Invert blocks when performing a negation test.
+  │ └─' Invert blocks when performing a negation test.
 
-Replace with strict equality
-    | @@ -2,9 +2,9 @@
+Exchange alternate and consequent of the node
+    | @@ -2,10 +2,10 @@
 1 1 |   if (!true) {consequent;};
 2 2 |   true ? consequent : alternate;
 3 3 |   // invalid
@@ -43,24 +45,45 @@ Replace with strict equality
 7   | -   alternate;
 8 8 |   }
 9 9 |   !condition ? consequent : alternate;
+10 10 |   
 
 
 ```
 
 ```
-error[noNegationElse]: Invert blocks when performing a negation test.
+warning[noNegationElse]: Invert blocks when performing a negation test.
    ┌─ noNegationElse.js:10:1
    │
 10 │ !condition ? consequent : alternate;
-   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invert blocks when performing a negation test.
+   │ ----------------------------------- Invert blocks when performing a negation test.
 
-Replace with strict equality
-      | @@ -7,4 +7,4 @@
+Exchange alternate and consequent of the node
+      | @@ -7,6 +7,6 @@
  6  6 |   } else {
  7  7 |     alternate;
  8  8 |   }
  9    | - !condition ? consequent : alternate;
     9 | + condition ? alternate : consequent;
+10 10 |   
+11 11 |   let a = !test ? c : d;
+
+
+```
+
+```
+warning[noNegationElse]: Invert blocks when performing a negation test.
+   ┌─ noNegationElse.js:12:9
+   │
+12 │ let a = !test ? c : d;
+   │         ------------- Invert blocks when performing a negation test.
+
+Exchange alternate and consequent of the node
+      | @@ -9,4 +9,4 @@
+ 8  8 |   }
+ 9  9 |   !condition ? consequent : alternate;
+10 10 |   
+11    | - let a = !test ? c : d;
+   11 | + let a = test ? d : c;
 
 
 ```

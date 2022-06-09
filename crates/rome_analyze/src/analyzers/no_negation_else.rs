@@ -40,7 +40,7 @@ impl Rule for NoNegationElse {
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
-            severity: Severity::Error,
+            severity: Severity::Warning,
             message: markup! {
                 "Invert blocks when performing a negation test."
             }
@@ -85,9 +85,9 @@ impl Rule for NoNegationElse {
             }
         }?;
         Some(RuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with strict equality" }.to_owned(),
+            message: markup! { "Exchange alternate and consequent of the node" }.to_owned(),
             root,
         })
     }
