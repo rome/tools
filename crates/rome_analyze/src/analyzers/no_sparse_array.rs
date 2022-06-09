@@ -6,7 +6,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{Rule, RuleAction, RuleDiagnostic, JsRuleAction};
 use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoSparseArray {}
@@ -38,7 +38,7 @@ impl Rule for NoSparseArray {
         })
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<JsRuleAction> {
         let mut array_element_list = node.elements();
         let hole_index_iter = array_element_list
             .iter()
