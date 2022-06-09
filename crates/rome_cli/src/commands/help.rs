@@ -11,10 +11,13 @@ const MAIN: Markup = markup! {
 "Rome CLI v"{VERSION}"
 
 "<Emphasis>"COMMANDS:"</Emphasis>"
-- "<Emphasis>"check"</Emphasis>"
-- "<Emphasis>"ci"</Emphasis>"
-- "<Emphasis>"format"</Emphasis>"
-- "<Emphasis>"help"</Emphasis>"
+    - "<Emphasis>"check"</Emphasis>"
+    - "<Emphasis>"ci"</Emphasis>"
+    - "<Emphasis>"format"</Emphasis>"
+    - "<Emphasis>"help"</Emphasis>"
+
+"<Emphasis>"OPTIONS:"</Emphasis>"
+    "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
 "
 };
 
@@ -25,6 +28,9 @@ const CHECK: Markup = markup! {
     rome check <INPUTS...>
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
+
+"<Emphasis>"OPTIONS:"</Emphasis>"
+    "<Dim>"--apply"</Dim>"                       Apply safe fixes
 "
 };
 

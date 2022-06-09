@@ -6,7 +6,11 @@ use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_syntax::{JsLanguage, TextRange, TextSize};
 
-use crate::{settings::SettingsHandle, workspace::server::AnyParse, RomeError};
+use crate::{
+    settings::SettingsHandle,
+    workspace::{server::AnyParse, FixFileResult},
+    RomeError,
+};
 
 use self::{javascript::JsFileHandler, json::JsonFileHandler, unknown::UnknownFileHandler};
 
@@ -71,6 +75,7 @@ type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
 type Lint = fn(&RomePath, AnyParse, RuleCategories) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange) -> Vec<AnalyzerAction<JsLanguage>>;
+type FixAll = fn(&RomePath, AnyParse) -> FixFileResult;
 type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;
 type FormatRange =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;
@@ -82,6 +87,7 @@ pub(crate) struct Capabilities {
     pub(crate) debug_print: Option<DebugPrint>,
     pub(crate) lint: Option<Lint>,
     pub(crate) code_actions: Option<CodeActions>,
+    pub(crate) fix_all: Option<FixAll>,
     pub(crate) format: Option<Format>,
     pub(crate) format_range: Option<FormatRange>,
     pub(crate) format_on_type: Option<FormatOnType>,
@@ -109,6 +115,7 @@ pub(crate) trait ExtensionHandler {
             format: None,
             lint: None,
             code_actions: None,
+            fix_all: None,
             format_range: None,
             format_on_type: None,
         }

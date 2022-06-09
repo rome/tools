@@ -126,6 +126,17 @@ pub struct FormatOnTypeParams {
     pub indent_style: IndentStyle,
 }
 
+pub struct FixFileParams {
+    pub path: RomePath,
+}
+
+pub struct FixFileResult {
+    /// New source code for the file with all fixes applied
+    pub code: String,
+    /// List of all the rules applied to the file with their associated text range
+    pub rules: Vec<(&'static str, TextRange)>,
+}
+
 pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Checks whether a certain feature is supported for a file at a given path
     fn supports_feature(&self, params: SupportsFeatureParams) -> bool;
@@ -166,6 +177,9 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Runs a "block" ending at the specified character of an open document
     /// through the formatter
     fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, RomeError>;
+
+    /// Return the content of the file with all safe code actions applied
+    fn fix_file(&self, params: FixFileParams) -> Result<FixFileResult, RomeError>;
 }
 
 /// Convenience function for constructing a server instance of [Workspace]
@@ -250,6 +264,12 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
             path: self.path.clone(),
             indent_style,
             offset,
+        })
+    }
+
+    pub fn fix_file(&self) -> Result<FixFileResult, RomeError> {
+        self.workspace.fix_file(FixFileParams {
+            path: self.path.clone(),
         })
     }
 }
