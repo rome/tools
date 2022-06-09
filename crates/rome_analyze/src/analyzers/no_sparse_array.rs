@@ -1,15 +1,10 @@
-use std::iter::once;
-
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyArrayElement, JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyRoot,
-    JsArrayElementList, JsArrayExpression, JsArrayHole, JsComputedMemberExpression,
-    JsComputedMemberExpressionFields, JsStaticMemberExpression, JsStaticMemberExpressionFields,
-    JsSyntaxKind, JsUnaryExpression, JsUnaryOperator, T,
+    JsAnyArrayElement, JsAnyExpression, JsAnyRoot, JsArrayExpression, TriviaPieceKind,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxElement, SyntaxNode};
+use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
@@ -50,7 +45,6 @@ impl Rule for NoSparseArray {
             .enumerate()
             .filter_map(|(i, item)| {
                 if matches!(item, Ok(JsAnyArrayElement::JsArrayHole(_))) {
-                    println!("{}", i);
                     Some(i)
                 } else {
                     None
@@ -58,12 +52,16 @@ impl Rule for NoSparseArray {
             });
 
         for index in hole_index_iter {
-            // println!("{}", index);
-            let ident_expr = make::js_identifier_expression(make::js_reference_identifier(
-                make::ident("undefined"),
-            ));
+            let undefine_indent = if index == 0 {
+                make::ident("undefined")
+            } else {
+                make::ident("undefined")
+                    .with_leading_trivia(std::iter::once((TriviaPieceKind::Whitespace, " ")))
+            };
+            let ident_expr =
+                make::js_identifier_expression(make::js_reference_identifier(undefine_indent));
 
-            let n_element = array_element_list.iter().skip(index).next()?.ok()?;
+            let n_element = array_element_list.iter().nth(index)?.ok()?;
             array_element_list = array_element_list.replace_node(
                 n_element,
                 JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsIdentifierExpression(
@@ -85,7 +83,7 @@ impl Rule for NoSparseArray {
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with undefined" }.to_owned(),
+            message: markup! { "Replace hole with undefined" }.to_owned(),
             root,
         })
     }
