@@ -36,11 +36,12 @@ macro_rules! impl_registry_builders {
 
 impl_registry_builders!(
     // Analyzers
+    UseWhile,
     NoDelete,
     NoDoubleEquals,
-    UseSingleVarDeclarator,
+    NoCompareNegZero,
     UseValidTypeof,
-    UseWhile,
+    UseSingleVarDeclarator,
     // Assists
     FlipBinExp,
 );
