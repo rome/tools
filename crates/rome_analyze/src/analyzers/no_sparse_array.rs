@@ -84,7 +84,7 @@ impl Rule for NoSparseArray {
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with undefined" }.to_owned(),
+            message: markup! { "Replace hole with undefined" }.to_owned(),
             root,
         })
     }
