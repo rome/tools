@@ -191,13 +191,13 @@ fn extract_declaration_assert(
         .trim_end_matches("*/")
         .trim()
         .to_string();
-    let mut parts = parts.split(" ");
+    let mut parts = parts.split(' ');
 
     let decl = parts.next().unwrap();
     let mut scope = None;
 
     for part in parts {
-        if part.starts_with("@") {
+        if part.starts_with('@') {
             scope = Some(part.trim_start_matches('@').to_string());
         }
     }

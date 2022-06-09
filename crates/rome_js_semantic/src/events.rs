@@ -3,9 +3,7 @@
 use std::collections::VecDeque;
 
 use rome_js_syntax::{
-    JsAnyFunctionBody, JsArrowFunctionExpression, JsConstructorClassMember, JsFunctionDeclaration,
-    JsGetterClassMember, JsLanguage, JsSetterClassMember, JsSyntaxNode, JsTryFinallyStatement,
-    JsTryStatement, TextRange, TextSize,
+    JsLanguage, JsSyntaxNode, JsTryFinallyStatement, JsTryStatement, TextRange, TextSize,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast};
 
