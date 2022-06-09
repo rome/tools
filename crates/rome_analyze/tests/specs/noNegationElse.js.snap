@@ -1,6 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 97
+assertion_line: 96
 expression: noNegationElse.js
 ---
 # Input
@@ -52,7 +52,7 @@ error[noNegationElse]: Invert blocks when performing a negation test.
    ┌─ noNegationElse.js:10:1
    │
 10 │ !condition ? consequent : alternate;
-   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invert blocks when performing a negation test.
+   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invert blocks when performing a negation test.
 
 Replace with strict equality
       | @@ -7,4 +7,4 @@

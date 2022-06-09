@@ -55,6 +55,7 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
+        let node = node.clone();
         let (kind, declarators, semicolon_token) = state;
 
         let prev_parent = JsStatementList::cast(node.syntax().parent()?)?;
