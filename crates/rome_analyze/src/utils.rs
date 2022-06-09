@@ -71,8 +71,6 @@
 // 	return lengthA - lengthB;
 // }
 
-use std::borrow::Cow;
-
 // test(
 // 	"naturalCompare",
 // 	(t) => {
@@ -88,13 +86,21 @@ use std::borrow::Cow;
 // 	},
 // );
 ///
+
+use std::borrow::Cow;
+
+
 /// ```rust
 /// use rome_analyze::natural_compare;
-/// // assert_eq!(natural_compare("1", "2", false), -1);
-/// assert_eq!(natural_compare("100", "2", false), 2);
-/// assert_eq!(natural_compare("-100", "2", false), -5);
-/// //assert_eq!(natural_compare("007", "8", false), -1);
-/// assert_eq!(natural_compare("007", "7", false), -2);
+/// assert_eq!(natural_compare("1", "2", true), -1);
+/// assert_eq!(natural_compare("100", "2", true), 2);
+/// assert_eq!(natural_compare("-100", "2", true), -5);
+/// assert_eq!(natural_compare("007", "8", true), -1);
+/// assert_eq!(natural_compare("007", "7", true), 2);
+/// assert_eq!(natural_compare("test1", "9000", true), 59);
+/// assert_eq!(natural_compare("1testrome", "2t", true), -1);
+/// assert_eq!(natural_compare("1test", "1TEST", true), 0);
+/// assert_eq!(natural_compare("1test", "1TEST", false), 32);
 /// ```
 pub fn natural_compare(a: &str, b: &str, intensive: bool) -> i32 {
     let mut a = Cow::Borrowed(a);
@@ -122,14 +128,22 @@ pub fn natural_compare(a: &str, b: &str, intensive: bool) -> i32 {
             let mut iter_start_a = a_iter.clone();
             let mut iter_start_b = b_iter.clone();
 
-            while char_code_a as u32 == 48 && !matches!(iter_start_a.size_hint().1, Some(1)) {
+            while char_code_a as u32 == 48 {
+                let next_char = iter_start_a.next();
+                if matches!(iter_start_a.size_hint().1, Some(0)) {
+                    break;
+                }
                 // SAFETY: we check `iter_start_a` is some before we begin the new iteration
-                char_code_a = iter_start_a.next().unwrap();
+                char_code_a = next_char.unwrap();
             }
 
-            while char_code_b as u32 == 48 && !matches!(iter_start_b.size_hint().1, Some(1)) {
+            while char_code_b as u32 == 48 {
+                let next_char = iter_start_b.next();
+                if matches!(iter_start_b.size_hint().1, Some(0)) {
+                    break;
+                }
                 // SAFETY: we check `iter_start_b` is some before we begin the new iteration
-                char_code_b = iter_start_b.next().unwrap();
+                char_code_b = next_char.unwrap();
             }
 
             let mut iter_end_a = iter_start_a.clone();
@@ -152,12 +166,18 @@ pub fn natural_compare(a: &str, b: &str, intensive: bool) -> i32 {
                 - (len_b - iter_end_b.size_hint().1.unwrap()) as i32
                 + (len_b - iter_start_b.size_hint().1.unwrap()) as i32;
 
-            if difference != 0{
+            if difference != 0 {
                 return difference;
             }
-
+            
+            let mut start_a_char = char_code_a;
+            let mut start_b_char = char_code_b;
+            // println!("{}{}", start_a_char, start_b_char);
             while iter_start_a.size_hint().1.unwrap() > iter_end_a.size_hint().1.unwrap() {
-                difference = iter_start_a.next().unwrap() as i32 - iter_start_b.next().unwrap() as i32;
+                difference = start_a_char as i32 - start_b_char as i32;
+                    // iter_start_a.next().unwrap() as i32 - iter_start_b.next().unwrap() as i32;
+                start_a_char = iter_start_a.next().unwrap();
+                start_b_char = iter_start_b.next().unwrap();
                 if difference != 0 {
                     return difference;
                 }
