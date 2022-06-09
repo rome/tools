@@ -6,7 +6,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic, JsRuleAction};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoSparseArray {}
@@ -22,9 +22,15 @@ impl Rule for NoSparseArray {
         // We defer collect `JsHole` index until user want to apply code action.
         node.elements()
             .iter()
-            .filter_map(|item| item.ok())
-            .position(|element| matches!(element, JsAnyArrayElement::JsArrayHole(_),))
-            .map(|_| ())
+            // .filter_map(|item| item.ok())
+            .find_map(|element| {
+                if matches!(element.ok()?, JsAnyArrayElement::JsArrayHole(_),) {
+                    Some(())
+                } else {
+                    None
+                }
+            })
+        // .map(|_| ())
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
@@ -80,7 +86,7 @@ impl Rule for NoSparseArray {
             )
             .unwrap();
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace hole with undefined" }.to_owned(),
