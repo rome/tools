@@ -48,6 +48,10 @@ const breakAfterColonObject = {
     c: 13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
     d: '321321312312ddddddddddddddddddddddd312312312312' instanceof Object ? {} : {},
     g: {'long-key': '123123213123213123edwqdqwdasdasdsaewqewqewqdas'} in 'long-key',
+    blablah:
+        "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
+        "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
+        "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf",
 };
 
 const fluidObject = {
@@ -78,4 +82,7 @@ const fluidObject = {
 				return 'image';
 			}
 		),
+    loadNext: (stateIsOK && hasNext) || {
+        skipNext: true,
+    },
 };

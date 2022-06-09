@@ -7,6 +7,7 @@ use rome_js_syntax::{
     JsSyntaxKind, JsSyntaxKind::*, JsSyntaxNode, JsSyntaxToken,
 };
 
+use crate::utils::is_break_after_colon;
 use rome_rowan::{AstNode, SyntaxResult};
 use std::cmp::Ordering;
 use std::fmt::Debug;
@@ -278,13 +279,19 @@ fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
 ///
 /// There are some cases where the indentation is done by the parent, so if the parent is already doing
 /// the indentation, then there's no need to do a second indentation.
-fn should_not_indent_if_parent_indents(current_node: &JsSyntaxNode) -> bool {
-    let parent_kind = current_node.parent().map(|parent| parent.kind());
+fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
+    let parent_kind = current_node.syntax().parent().map(|parent| parent.kind());
 
-    matches!(
-        parent_kind,
-        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
-    )
+    match parent_kind {
+        Some(JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER) => current_node
+            .as_expression()
+            .and_then(|expression| is_break_after_colon(expression).ok())
+            .unwrap_or(false),
+        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION) => {
+            true
+        }
+        _ => false,
+    }
 }
 
 /// There are other cases where the parent decides to inline the the element; in
@@ -534,7 +541,7 @@ impl FlattenedBinaryExpressionPart {
                         f.join_with(soft_line_break_or_space())
                             .entries(groups)
                             .finish()
-                    } else if should_not_indent_if_parent_indents(current.syntax()) {
+                    } else if should_not_indent_if_parent_indents(current) {
                         write!(
                             f,
                             [group_elements(&format_once(|f| {
@@ -860,6 +867,23 @@ impl AstNode for JsAnyBinaryLikeExpression {
 }
 
 impl JsAnyBinaryLikeExpression {
+    /// Determines if a binary like expression should be inline or not.
+    pub fn should_inline(&self) -> bool {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical_expression) => {
+                match logical_expression.right() {
+                    Ok(JsAnyExpression::JsObjectExpression(object_expression)) => {
+                        object_expression.members().iter().count() > 0
+                    }
+                    Ok(JsAnyExpression::JsArrayExpression(array_expression)) => {
+                        array_expression.elements().iter().count() > 0
+                    }
+                    _ => false,
+                }
+            }
+            _ => false,
+        }
+    }
     /// Determines if a binary like expression should be flattened or not. As a rule of thumb, an expression
     /// can be flattened if it is of the same kind as the left-hand side sub-expression and uses the same operator.
     fn can_flatten(&self) -> SyntaxResult<bool> {
