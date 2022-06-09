@@ -37,7 +37,7 @@ impl Rule for NoDebugger {
         root: rome_js_syntax::JsAnyRoot,
         node: &Self::Query,
         _state: &Self::State,
-    ) -> Option<crate::registry::RuleAction> {
+    ) -> Option<crate::registry::JsRuleAction> {
         let prev_parent = node.syntax().parent()?;
 
         let root = if JsStatementList::can_cast(prev_parent.kind())
