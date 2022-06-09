@@ -8,10 +8,13 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::{
-    registry::{Rule, RuleAction, RuleDiagnostic},
+    registry::{JsRuleAction, Rule, RuleDiagnostic},
     ActionCategory, RuleCategory,
 };
 
+/// This rule verifies the result of `typeof $expr` unary expressions is being
+/// compared to valid values, either string literals containing valid type
+/// names or other `typeof` expressions
 pub(crate) enum UseValidTypeof {}
 
 impl Rule for UseValidTypeof {
@@ -127,7 +130,7 @@ impl Rule for UseValidTypeof {
 
     fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
-            severity: Severity::Error,
+            severity: Severity::Warning,
             message: markup! {
                 "Invalid typeof comparison value"
             }
@@ -136,7 +139,7 @@ impl Rule for UseValidTypeof {
         })
     }
 
-    fn action(root: JsAnyRoot, _node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, _node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
         let (expr, type_name) = state.as_ref()?;
 
         let root = root.replace_node(
@@ -146,7 +149,7 @@ impl Rule for UseValidTypeof {
             )),
         )?;
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Compare the result of `typeof` with a valid type name" }.to_owned(),
