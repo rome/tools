@@ -1,5 +1,6 @@
 use std::collections::{BTreeMap, HashMap};
 
+use crate::assert_semantics;
 use crate::semantic_events;
 use crate::SemanticEvent;
 
@@ -15,46 +16,25 @@ use rome_rowan::NodeOrToken;
 use super::extract_scope_assertion;
 use super::ScopeAssertionType;
 
-#[test]
-pub fn ok_variable_declaration() {
-    assert(
-        r#"import a/*#A*/ from 'a';
-let a/*#B*/ = 1;
-function f(a/*#C*/) {}
-(a/*#D*/) => {}
-class A {
-    constructor(a/*#E*/) {}
-    set prop(a/*#F*/) {}
-    f(a/*#G*/) {}
-}
-"#,
-    );
-}
-
-#[test]
-pub fn ok_variable_declaration_scope() {
-    assert("/*START GLOBAL*/ let b/*#b @GLOBAL*/ = 1;");
-    assert("if (true) {/*START A*/ let b/*#b @A*/ = 1;}");
-    assert("function f() {/*START A*/ let b/*#b @A*/ = 1;}");
-    assert("for (const a of []) {/*START A*/ let b/*#b @A*/ = 1;}");
-    assert("for (const a in []) {/*START A*/ let b/*#b @A*/ = 1;}");
-    assert("() => {/*START A*/ let b/*#b @A*/ = 1;}");
-
-    assert("class A { constructor () {/*START A*/ let b/*#b @A*/ = 1;} }");
-    assert("class A { get name() {/*START A*/ let b/*#b @A*/ = 1;} }");
-    assert("class A { set name(v) {/*START A*/ let b/*#b @A*/ = 1;} }");
-
-    assert("try {/*START A*/ let b/*#b1 @A*/ = 1;} catch(e) {/*START B*/ let b/*#b2 @B*/ = 1;} finally {/*START C*/ let b/*#b3 @C*/ = 1;}");
-}
-
-#[test]
-pub fn ok_variable_declaration_with_inner_scope() {
-    assert(
-        r#"
-function f() {/*START SCOPE1*/
+assert_semantics! {
+    ok_declaration_import, "/*START GLOBAL*/ import a/*#a @GLOBAL*/ from 'a'",
+    ok_declaration_at_global_scope, "/*START GLOBAL*/ let b/*#b @GLOBAL*/ = 1;",
+    ok_declaration_if, ";if/*START A*/ (true) { let b/*#b @A*/ = 1; }",
+    ok_declaration_function, ";function/*START A*/ f(a/*#a @A*/) { let b/*#b @A*/ = 1; }",
+    ok_declaration_arrow_function, ";(/*START A*/ a/*#a @A*/) => { let b/*#b @A*/ = 1; }",
+    ok_declaration_at_for, ";for/*START A */ (let a/*#a @A*/;;) { let b/*#b @A*/ = 1; }",
+    ok_declaration_at_for_of, ";for/*START A */ (const a/*#a @A*/ of []) { let b/*#b @A*/ = 1; }",
+    ok_declaration_at_for_in, ";for/*START A */ (const a/*#a @A*/ in []) { let b/*#b @A*/ = 1; }",
+    ok_declaration_class_constructor, ";class A { constructor/*START A*/ (a/*#a @A*/) { let b/*#b @A*/ = 1; } }",
+    ok_declaration_class_getter, ";class A { get/*START A*/ name() { let b/*#b @A*/ = 1;} }",
+    ok_declaration_class_setter, ";class A { set/*START A*/ name(a/*#a @A*/) { let b/*#b @A*/ = 1;} }",
+    ok_declaration_try_catch, ";try {/*START A*/ let a/*#a @A*/ = 1;} catch/*START B*/ (b) { let b/*#b @B*/ = 1; }",
+    ok_declaration_try_catch_finally, ";try {/*START A*/ let a/*#a @A*/ = 1;} catch/*START B*/ (b) { let b/*#b @B*/ = 1; } finally/*START C*/ { let c/*#c @C*/ = 1; }",
+    ok_declaration_with_inner_scopes, r#";
+function/*START SCOPE1*/ f() {
     let a/*#a1 @SCOPE1*/ = 1;
     console.log(a);
-    if (true) {/*START SCOPE2*/
+    if/*START SCOPE2*/ (true) {
         let a/*#a2 @SCOPE2*/ = 2;
         console.log(a);
     }
@@ -62,7 +42,6 @@ function f() {/*START SCOPE1*/
 }
 f();
 "#,
-    );
 }
 
 /// This method helps testing the extraction of semantic events from parsed trees. It does this
@@ -89,7 +68,7 @@ f();
 /// ```js
 /// function f() {/*START FSCOPE*/let a/*#A @FSCOPE*/ = 1;}
 /// ```
-fn assert(code: &str) {
+fn assert(code: &str, test_name: &str) {
     let r = rome_js_parser::parse(code, 0, SourceType::js_module());
 
     if r.has_errors() {
@@ -132,7 +111,12 @@ fn assert(code: &str) {
             for piece in pieces {
                 let text = piece.text();
                 if text.contains('#') {
-                    extract_declaration_assert(&token, &mut declarations_assertions, code);
+                    extract_declaration_assert(
+                        &token,
+                        &mut declarations_assertions,
+                        code,
+                        test_name,
+                    );
                 } else if text.contains("/*START") {
                     extract_scope_assertion(
                         &token,
@@ -159,18 +143,30 @@ fn assert(code: &str) {
                         match scope_start_assertions.get(&scope) {
                             Some(scope_start_range) => {
                                 if scope_start_range.start() != *scope_started_at {
-                                    error_declaration_pointing_to_unknown_scope(code, token_range);
+                                    error_declaration_pointing_to_unknown_scope(
+                                        code,
+                                        token_range,
+                                        test_name,
+                                    );
                                 }
                                 assert_eq!(scope_start_range.start(), *scope_started_at);
                             }
-                            None => error_declaration_pointing_to_unknown_scope(code, token_range),
+                            None => error_declaration_pointing_to_unknown_scope(
+                                code,
+                                token_range,
+                                test_name,
+                            ),
                         }
                     }
                 }
-                _ => error_declaration_assertion_not_attached_to_a_declaration(code, token_range),
+                _ => error_declaration_assertion_not_attached_to_a_declaration(
+                    code,
+                    token_range,
+                    test_name,
+                ),
             }
         } else {
-            error_declaration_assertion_not_attached_to_a_declaration(code, token_range);
+            error_declaration_assertion_not_attached_to_a_declaration(code, token_range, test_name);
         }
     }
 }
@@ -184,6 +180,7 @@ fn extract_declaration_assert(
     token: &JsSyntaxToken,
     declarations_assertions: &mut BTreeMap<String, DeclarationAssertion>,
     code: &str,
+    test_name: &str,
 ) {
     let trivia = token.trailing_trivia();
     let text = trivia.text();
@@ -216,7 +213,7 @@ fn extract_declaration_assert(
     // If there is already an assertion with the same name. Suggest a rename
 
     if let Some(old) = old {
-        let files = SimpleFile::new(std::file!().to_string(), code.into());
+        let files = SimpleFile::new(test_name.to_string(), code.into());
         let d = Diagnostic::error(0, "", "Assertion label conflict.")
             .primary(
                 token.text_range(),
@@ -236,6 +233,7 @@ fn extract_declaration_assert(
 fn error_declaration_assertion_not_attached_to_a_declaration(
     code: &str,
     assertion_range: TextRange,
+    test_name: &str,
 ) {
     let mut fix = code[assertion_range]
         .split("/*#")
@@ -243,7 +241,7 @@ fn error_declaration_assertion_not_attached_to_a_declaration(
         .unwrap()
         .to_string();
     fix.push(' ');
-    let files = SimpleFile::new(std::file!().to_string(), code.into());
+    let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
         0,
         "",
@@ -261,8 +259,12 @@ fn error_declaration_assertion_not_attached_to_a_declaration(
     });
 }
 
-fn error_declaration_pointing_to_unknown_scope(code: &str, assertion_range: TextRange) {
-    let files = SimpleFile::new(std::file!().to_string(), code.into());
+fn error_declaration_pointing_to_unknown_scope(
+    code: &str,
+    assertion_range: TextRange,
+    test_name: &str,
+) {
+    let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
         0,
         "",

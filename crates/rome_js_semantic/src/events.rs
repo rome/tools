@@ -2,8 +2,12 @@
 
 use std::collections::VecDeque;
 
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange, TextSize};
-use rome_rowan::syntax::Preorder;
+use rome_js_syntax::{
+    JsAnyFunctionBody, JsArrowFunctionExpression, JsConstructorClassMember, JsFunctionDeclaration,
+    JsGetterClassMember, JsLanguage, JsSetterClassMember, JsSyntaxNode, JsTryFinallyStatement,
+    JsTryStatement, TextRange, TextSize,
+};
+use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast};
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
@@ -117,7 +121,42 @@ impl SemanticEventExtractor {
                     .unwrap_or_else(|| TextSize::of("")),
             }),
             JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range()),
-            JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.push_scope(node.text_range()),
+            JS_FUNCTION_DECLARATION
+            | JS_ARROW_FUNCTION_EXPRESSION
+            | JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_GETTER_CLASS_MEMBER
+            | JS_SETTER_CLASS_MEMBER
+            | JS_IF_STATEMENT
+            | JS_FOR_OF_STATEMENT
+            | JS_FOR_IN_STATEMENT
+            | JS_FOR_STATEMENT => {
+                self.push_scope(node.text_range());
+            }
+            JS_TRY_STATEMENT => {
+                let range = node
+                    .clone()
+                    .cast::<JsTryStatement>()
+                    .unwrap()
+                    .body()
+                    .unwrap()
+                    .syntax()
+                    .text_range();
+                self.push_scope(range);
+            }
+            JS_TRY_FINALLY_STATEMENT => {
+                let range = node
+                    .clone()
+                    .cast::<JsTryFinallyStatement>()
+                    .unwrap()
+                    .body()
+                    .unwrap()
+                    .syntax()
+                    .text_range();
+                self.push_scope(range);
+            }
+            JS_CATCH_CLAUSE | JS_FINALLY_CLAUSE => {
+                self.push_scope(node.text_range());
+            }
             _ => {}
         }
     }
@@ -129,7 +168,42 @@ impl SemanticEventExtractor {
 
         match node.kind() {
             JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
-            JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.pop_scope(node.text_range()),
+            JS_FUNCTION_DECLARATION
+            | JS_ARROW_FUNCTION_EXPRESSION
+            | JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_GETTER_CLASS_MEMBER
+            | JS_SETTER_CLASS_MEMBER
+            | JS_IF_STATEMENT
+            | JS_FOR_OF_STATEMENT
+            | JS_FOR_IN_STATEMENT
+            | JS_FOR_STATEMENT => {
+                self.pop_scope(node.text_range());
+            }
+            JS_TRY_STATEMENT => {
+                let range = node
+                    .clone()
+                    .cast::<JsTryStatement>()
+                    .unwrap()
+                    .body()
+                    .unwrap()
+                    .syntax()
+                    .text_range();
+                self.pop_scope(range);
+            }
+            JS_TRY_FINALLY_STATEMENT => {
+                let range = node
+                    .clone()
+                    .cast::<JsTryFinallyStatement>()
+                    .unwrap()
+                    .body()
+                    .unwrap()
+                    .syntax()
+                    .text_range();
+                self.pop_scope(range);
+            }
+            JS_CATCH_CLAUSE | JS_FINALLY_CLAUSE => {
+                self.pop_scope(node.text_range());
+            }
             _ => {}
         }
     }

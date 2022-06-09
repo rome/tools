@@ -8,6 +8,18 @@ use rome_rowan::SyntaxTriviaPiece;
 pub mod declarations;
 pub mod scopes;
 
+#[macro_export]
+macro_rules! assert_semantics {
+    ($($name:ident, $code:expr,)*) => {
+        $(
+            #[test]
+            pub fn $name() {
+                assert($code, stringify!($name));
+            }
+        )*
+    };
+}
+
 enum ScopeAssertionType {
     Start,
     End,

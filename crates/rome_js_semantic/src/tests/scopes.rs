@@ -1,6 +1,6 @@
 use std::collections::{BTreeMap, HashMap};
 
-use crate::{semantic_events, SemanticEvent};
+use crate::{assert_semantics, semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
 use rome_diagnostics::{file::SimpleFile, Applicability, Diagnostic};
 use rome_js_syntax::{JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
@@ -8,20 +8,19 @@ use rome_rowan::{Direction, NodeOrToken};
 
 use super::{extract_scope_assertion, ScopeAssertionType};
 
-#[test]
-pub fn ok_scope_blocks() {
-    assert("/*START GLOBAL*//*END GLOBAL*/");
-    assert("if (true) {/*START A*/ }/*END A*/");
-    assert("function f() {/*START A*/ }/*END A*/");
-    assert("for (const a of []) {/*START A*/ }/*END A*/");
-    assert("for (const a in []) {/*START A*/ }/*END A*/");
-    assert("() => {/*START A*/ }/*END A*/");
-
-    assert("class A { constructor () {/*START A*/ }/*END A*/ }");
-    assert("class A { get name() {/*START A*/ }/*END A*/ }");
-    assert("class A { set name(v) {/*START A*/ }/*END A*/ }");
-
-    assert("try {/*START A*/ }/*END A*/ catch(e) {/*START B*/ }/*END B*/ finally {/*START C*/ }/*END C*/");
+assert_semantics! {
+    ok_scope_global, "/*START GLOBAL*//*END GLOBAL*/",
+    ok_scope_if, ";if/*START A*/ (true) { }/*END A*/",
+    ok_scope_function, ";function/*START A*/ f() {}/*END A*/",
+    ok_scope_for, ";for/*START A*/ (;;) {}/*END A*/",
+    ok_scope_for_of, ";for/*START A*/ (const a of []) {}/*END A*/",
+    ok_scope_for_in, ";for/*START A*/ (const a in []) {}/*END A*/",
+    ok_scope_arrow_function, ";(/*START A*/) => {}/*END A*/",
+    ok_scope_class_constructor, ";class A { constructor/*START A*/ () {}/*END A*/ }",
+    ok_scope_class_getter, ";class A { get/*START A*/ name() {}/*END A*/ }",
+    ok_scope_class_setter, ";class A { set/*START A*/ name(v) {}/*END A*/ }",
+    ok_scope_try_catch, ";try {/*START A*/}/*END A*/ catch/*START B*/ (e) {}/*END B*/",
+    ok_scope_try_catch_finally, ";try {/*START A*/}/*END A*/ catch/*START B*/ (e) {}/*END B*/ finally/*START C*/ {}/*END C*/",
 }
 
 /// This method helps testing scope resolution. It does this
@@ -55,11 +54,11 @@ pub fn ok_scope_blocks() {
 /// ```js
 /// function f() {/*START SCOPE1*/ }/*END SCOPE1*/
 /// ```
-fn assert(code: &str) {
+fn assert(code: &str, test_name: &str) {
     let r = rome_js_parser::parse(code, 0, SourceType::js_module());
 
     if r.has_errors() {
-        let files = SimpleFile::new(std::file!().to_string(), code.into());
+        let files = SimpleFile::new(test_name.to_string(), code.into());
         let mut console = EnvConsole::new(false);
         for diag in r.diagnostics() {
             console.log(markup! {
@@ -85,6 +84,8 @@ fn assert(code: &str) {
             _ => {}
         }
     }
+
+    println!("events_by_range: {:?}", events_by_range);
 
     // Extract assertions inside comments
 
@@ -120,6 +121,9 @@ fn assert(code: &str) {
         }
     }
 
+    println!("scope_start_assertions: {:?}", scope_start_assertions);
+    println!("scope_end_assertions: {:?}", scope_end_assertions);
+
     // Check every scope start assertion is ok
 
     for assertion_range in scope_start_assertions.values() {
@@ -132,6 +136,7 @@ fn assert(code: &str) {
                     code,
                     *assertion_range,
                     ScopeAssertionType::Start,
+                    test_name,
                 )
             }
         } else {
@@ -139,6 +144,7 @@ fn assert(code: &str) {
                 code,
                 *assertion_range,
                 ScopeAssertionType::Start,
+                test_name,
             );
         }
     }
@@ -154,6 +160,7 @@ fn assert(code: &str) {
                     error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
                         code,
                         &scope_end_assertion_range,
+                        test_name,
                     );
                     continue;
                 }
@@ -163,22 +170,30 @@ fn assert(code: &str) {
             // At least one of the events should be a scope start starting
             // where we expect
             let e = events.iter().find(|event| match event {
-                SemanticEvent::ScopeEnded { started_at, .. }
-                    if *started_at == scope_start_assertions_range.start() =>
-                {
-                    true
+                SemanticEvent::ScopeEnded { started_at, .. } => {
+                    println!(
+                        "started_at: {:?} scope_start_assertions_range: {:?}",
+                        started_at, scope_start_assertions_range
+                    );
+                    *started_at == scope_start_assertions_range.start()
                 }
                 _ => false,
             });
 
             if e.is_none() {
-                todo!()
+                error_scope_end_assertion_points_to_the_wrong_scope_start(
+                    code,
+                    &scope_end_assertion_range,
+                    &scope_start_assertions_range,
+                    test_name,
+                );
             }
         } else {
             error_scope_assertion_not_attached_to_a_scope_event(
                 code,
                 scope_end_assertion_range,
                 ScopeAssertionType::End,
+                test_name,
             );
         }
     }
@@ -188,6 +203,7 @@ fn error_scope_assertion_not_attached_to_a_scope_event(
     code: &str,
     assertion_range: TextRange,
     assertion_type: ScopeAssertionType,
+    file_name: &str,
 ) {
     let trim_start = match assertion_type {
         ScopeAssertionType::Start => "/*START",
@@ -200,7 +216,7 @@ fn error_scope_assertion_not_attached_to_a_scope_event(
         .unwrap()
         .to_string();
     fix.push(' ');
-    let files = SimpleFile::new(std::file!().to_string(), code.into());
+    let files = SimpleFile::new(file_name.to_string(), code.into());
     let d = Diagnostic::error(
         0,
         "",
@@ -229,8 +245,9 @@ fn error_scope_assertion_not_attached_to_a_scope_event(
 fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
     code: &str,
     range: &TextRange,
+    file_name: &str,
 ) {
-    let files = SimpleFile::new(std::file!().to_string(), code.into());
+    let files = SimpleFile::new(file_name.to_string(), code.into());
     let d = Diagnostic::error(0, "", "Scope start assertion not found.").primary(
         range,
         "This scope end assertion points to a non-existing scope start assertion.",
@@ -241,4 +258,25 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
         {d.display(&files)}
     });
     panic!("Scope start assertion not found.");
+}
+
+fn error_scope_end_assertion_points_to_the_wrong_scope_start(
+    code: &str,
+    range: &TextRange,
+    same_name_range: &TextRange,
+    file_name: &str,
+) {
+    let files = SimpleFile::new(file_name.to_string(), code.into());
+    let d = Diagnostic::error(0, "", "Wrong scope start")
+        .primary(
+            range,
+            "This scope end assertion points to the wrong scope start.",
+        )
+        .secondary(same_name_range, "This assertion has the same label");
+
+    let mut console = EnvConsole::new(false);
+    console.log(markup! {
+        {d.display(&files)}
+    });
+    panic!("Wrong scope start");
 }
