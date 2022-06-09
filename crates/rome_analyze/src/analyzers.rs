@@ -1,11 +1,14 @@
-mod no_debugger;
-mod no_delete;
-mod no_double_equals;
-mod use_single_var_declarator;
-mod use_while;
+//! Generated file, do not edit by hand, see `xtask/codegen`
 
+mod no_debugger;
 pub(crate) use no_debugger::NoDebugger;
-pub(crate) use no_delete::NoDelete;
-pub(crate) use no_double_equals::NoDoubleEquals;
-pub(crate) use use_single_var_declarator::UseSingleVarDeclarator;
+mod use_while;
 pub(crate) use use_while::UseWhile;
+mod no_delete;
+pub(crate) use no_delete::NoDelete;
+mod no_double_equals;
+pub(crate) use no_double_equals::NoDoubleEquals;
+mod use_valid_typeof;
+pub(crate) use use_valid_typeof::UseValidTypeof;
+mod use_single_var_declarator;
+pub(crate) use use_single_var_declarator::UseSingleVarDeclarator;

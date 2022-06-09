@@ -100,7 +100,7 @@ error[SyntaxError]: expected a function body but instead found ')'
   │               ^ Expected a function body here
 
 --
-error[SyntaxError]: expected `'}'` but instead the file ends
+error[SyntaxError]: expected `}` but instead the file ends
   ┌─ function_broken.js:2:1
   │
 2 │ 

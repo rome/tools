@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-4125.js
 ---
 # Input
@@ -178,9 +179,7 @@ somePromise
   .catch((err) => handleError(err));
 
 // you can still force multi-line chaining with a comment:
-const sha256_2 = (
-  data,
-) =>
+const sha256_2 = (data) =>
   crypto // breakme
   .createHash("sha256").update(data).digest("hex");
 
@@ -207,7 +206,7 @@ function palindrome(a, b) {
 d3
   .select("body")
   .selectAll("p")
-  .data([1, 2, 3],)
+  .data([1, 2, 3])
   .enter()
   .style("color", "white");
 
@@ -233,7 +232,7 @@ db.branch(
   db.table("users").filter({ email }).count(),
   db
     .table("users")
-    .filter({ email: "a@b.com" },)
+    .filter({ email: "a@b.com" })
     .count(),
   db.table("users").insert({ email }),
   db.table("users").filter({ email }),
@@ -263,7 +262,7 @@ function HelloWorld() {
     dataType: "json",
   },).then(
     (data) => {
-      this.setState({ isLoading: false },);
+      this.setState({ isLoading: false });
       this.initWidget(data);
     },
     (data) => {
@@ -278,9 +277,7 @@ action$
   .map((action) => action.payload.query)
   .filter((q) => !!q)
   .switchMap(
-    (
-      q,
-    ) =>
+    (q) =>
       Observable.timer(800)
         // debounce
         .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
@@ -315,7 +312,7 @@ const a3 = x.d("").e(`${123}`).f(g);
 const a4 = x
   .h(i.j)
   .k(l())
-  .m([n, o],);
+  .m([n, o]);
 class X {
   y() {
     const j = x
@@ -330,7 +327,7 @@ class X {
 // should break when call expressions get complex
 x
   .a()
-  .b([c, [d, [e]]],)
+  .b([c, [d, [e]]])
   .f();
 x
   .a()

@@ -87,9 +87,13 @@ impl TriviaPiece {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct SyntaxTriviaPieceNewline<L: Language>(SyntaxTriviaPiece<L>);
+#[derive(Debug, Clone)]
 pub struct SyntaxTriviaPieceWhitespace<L: Language>(SyntaxTriviaPiece<L>);
+#[derive(Debug, Clone)]
 pub struct SyntaxTriviaPieceComments<L: Language>(SyntaxTriviaPiece<L>);
+#[derive(Debug, Clone)]
 pub struct SyntaxTriviaPieceSkipped<L: Language>(SyntaxTriviaPiece<L>);
 
 impl<L: Language> SyntaxTriviaPieceNewline<L> {
@@ -517,6 +521,7 @@ pub struct SyntaxTrivia<L: Language> {
     _p: PhantomData<L>,
 }
 
+#[derive(Clone)]
 pub struct SyntaxTriviaPiecesIterator<L: Language> {
     iter: cursor::SyntaxTriviaPiecesIterator,
     _p: PhantomData<L>,

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: nested.js
 ---
 # Input
@@ -19,9 +20,9 @@ const getAccountCount = async () =>
 const getAccountCount = async () =>
   (
     await (
-      await (
-        await focusOnSection(BOOKMARKED_PROJECTS_SECTION_NAME)
-      ).findItem("My bookmarks")
+      await (await focusOnSection(BOOKMARKED_PROJECTS_SECTION_NAME)).findItem(
+        "My bookmarks",
+      )
     ).getChildren()
   ).length;
 

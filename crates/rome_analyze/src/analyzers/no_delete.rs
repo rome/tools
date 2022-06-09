@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoDelete {}
@@ -41,7 +41,7 @@ impl Rule for NoDelete {
         })
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
         let root = root.replace_node(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
@@ -53,7 +53,7 @@ impl Rule for NoDelete {
             )),
         )?;
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with undefined assignment" }.to_owned(),

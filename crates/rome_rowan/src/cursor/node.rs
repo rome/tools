@@ -238,11 +238,12 @@ impl SyntaxNode {
     }
 
     pub fn first_token(&self) -> Option<SyntaxToken> {
-        self.descendants_with_tokens().find_map(|x| x.into_token())
+        self.descendants_with_tokens(Direction::Next)
+            .find_map(|x| x.into_token())
     }
 
     pub fn last_token(&self) -> Option<SyntaxToken> {
-        PreorderWithTokens::reverse(self.clone())
+        PreorderWithTokens::new(self.clone(), Direction::Prev)
             .filter_map(|event| match event {
                 WalkEvent::Enter(it) => Some(it),
                 WalkEvent::Leave(_) => None,
@@ -279,11 +280,15 @@ impl SyntaxNode {
     }
 
     #[inline]
-    pub fn descendants_with_tokens(&self) -> impl Iterator<Item = SyntaxElement> {
-        self.preorder_with_tokens().filter_map(|event| match event {
-            WalkEvent::Enter(it) => Some(it),
-            WalkEvent::Leave(_) => None,
-        })
+    pub fn descendants_with_tokens(
+        &self,
+        direction: Direction,
+    ) -> impl Iterator<Item = SyntaxElement> {
+        self.preorder_with_tokens(direction)
+            .filter_map(|event| match event {
+                WalkEvent::Enter(it) => Some(it),
+                WalkEvent::Leave(_) => None,
+            })
     }
 
     #[inline]
@@ -292,8 +297,8 @@ impl SyntaxNode {
     }
 
     #[inline]
-    pub fn preorder_with_tokens(&self) -> PreorderWithTokens {
-        PreorderWithTokens::new(self.clone())
+    pub fn preorder_with_tokens(&self, direction: Direction) -> PreorderWithTokens {
+        PreorderWithTokens::new(self.clone(), direction)
     }
 
     pub(crate) fn preorder_slots(&self) -> SlotsPreorder {
@@ -427,7 +432,7 @@ impl fmt::Debug for SyntaxNode {
 
 impl fmt::Display for SyntaxNode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.preorder_with_tokens()
+        self.preorder_with_tokens(Direction::Next)
             .filter_map(|event| match event {
                 WalkEvent::Enter(NodeOrToken::Token(token)) => Some(token),
                 _ => None,
@@ -557,22 +562,12 @@ pub(crate) struct PreorderWithTokens {
 }
 
 impl PreorderWithTokens {
-    fn new(start: SyntaxNode) -> PreorderWithTokens {
+    fn new(start: SyntaxNode, direction: Direction) -> PreorderWithTokens {
         let next = Some(WalkEvent::Enter(start.clone().into()));
         PreorderWithTokens {
             start: start.into(),
             next,
-            direction: Direction::Next,
-            skip_subtree: false,
-        }
-    }
-
-    fn reverse(start: SyntaxNode) -> PreorderWithTokens {
-        let next = Some(WalkEvent::Enter(start.clone().into()));
-        PreorderWithTokens {
-            start: start.into(),
-            next,
-            direction: Direction::Prev,
+            direction,
             skip_subtree: false,
         }
     }

@@ -62,14 +62,14 @@ error[SyntaxError]: `enum` statements must have a name
   │ ^^^^
 
 --
-error[SyntaxError]: expected `'{'` but instead found `;`
+error[SyntaxError]: expected `{` but instead found `;`
   ┌─ enum_no_l_curly.ts:1:5
   │
 1 │ enum;
   │     ^ unexpected
 
 --
-error[SyntaxError]: expected `'{'` but instead found `;`
+error[SyntaxError]: expected `{` but instead found `;`
   ┌─ enum_no_l_curly.ts:2:7
   │
 2 │ enum A;

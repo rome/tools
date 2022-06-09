@@ -141,7 +141,7 @@ error[SyntaxError]: expected an expression but instead found '}'
   │                ^ Expected an expression here
 
 --
-error[SyntaxError]: expected `'}'` but instead found `a`
+error[SyntaxError]: expected `}` but instead found `a`
   ┌─ template_literal.js:2:14
   │
 2 │ let b = `${a a}`

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
+assertion_line: 182
 expression: issues.js
 ---
 # Input
@@ -92,10 +92,7 @@ throw new ProcessSystemError({
 },);
 
 // Missing one level of indentation because of the comment
-const rootEpic = (
-  actions,
-  store,
-) => (
+const rootEpic = (actions, store) => (
   combineEpics(...epics)(actions, store)
     // Log errors and continue.
     .catch((err, stream) => {
@@ -160,6 +157,6 @@ foo(
 
 # Lines exceeding max width of 80 characters
 ```
-   35: import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
+   32: import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
 ```
 

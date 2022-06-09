@@ -5,30 +5,16 @@ use crate::prelude::*;
 use rome_js_syntax::TsAnyTypeMember;
 impl FormatRule<TsAnyTypeMember> for FormatTsAnyTypeMember {
     type Context = JsFormatContext;
-    fn format(node: &TsAnyTypeMember, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &TsAnyTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyTypeMember::TsCallSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsPropertySignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsConstructSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsMethodSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsGetterSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsSetterSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::TsIndexSignatureTypeMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            TsAnyTypeMember::JsUnknownMember(node) => formatted![formatter, [node.format()]],
+            TsAnyTypeMember::TsCallSignatureTypeMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::TsPropertySignatureTypeMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::TsConstructSignatureTypeMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::TsMethodSignatureTypeMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::TsGetterSignatureTypeMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::TsSetterSignatureTypeMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::TsIndexSignatureTypeMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::JsUnknownMember(node) => node.format().fmt(f),
         }
     }
 }

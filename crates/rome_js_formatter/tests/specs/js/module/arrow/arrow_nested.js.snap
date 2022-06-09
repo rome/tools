@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: arrow_nested.js
 ---
 # Input
@@ -39,19 +40,10 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-Seq(
-	typeDef.interface.groups,
-).forEach(
-	(
-		group,
-	) =>
-		Seq(
-			group.members,
-		).forEach(
-			(
-				member,
-				memberName,
-			) =>
+Seq(typeDef.interface.groups).forEach(
+	(group) =>
+		Seq(group.members).forEach(
+			(member, memberName) =>
 				markdownDoc(
 					member.doc,
 					{
@@ -62,14 +54,9 @@ Seq(
 		),
 );
 
-const promiseFromCallback = (
-	fn,
-) =>
+const promiseFromCallback = (fn) =>
 	new Promise(
-		(
-			resolve,
-			reject,
-		) =>
+		(resolve, reject) =>
 			fn((err, result) => {
 				if (err) {
 					return reject(err);

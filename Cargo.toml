@@ -10,3 +10,6 @@ members = [
 	"xtask/coverage",
 ]
 
+[profile.release-with-debug]
+inherits = "release"
+debug = true

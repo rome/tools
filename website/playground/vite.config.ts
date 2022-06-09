@@ -6,4 +6,4 @@ import svgr from "@honkhonk/vite-plugin-svgr";
 export default defineConfig({
 	base: process.env.BASE_URL,
 	plugins: [react(), svgr()],
-});
+},);

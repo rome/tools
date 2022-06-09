@@ -14,10 +14,10 @@ function App() {
 			init()
 				.then(() => {
 					setLoadingState(LoadingState.Success);
-				})
+				},)
 				.catch(() => {
 					setLoadingState(LoadingState.Error);
-				});
+				},);
 		},
 		[],
 	);

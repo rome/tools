@@ -126,7 +126,7 @@ error[SyntaxError]: expected `,` but instead found `}`
   │                    ^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead the file ends
+error[SyntaxError]: expected `)` but instead the file ends
   ┌─ class_member_method_parameters.js:2:1
   │
 2 │ 
