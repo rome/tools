@@ -8,6 +8,9 @@
 )]
 #![deny(unsafe_code)]
 
+#[doc(hidden)]
+pub mod macros;
+
 #[allow(unsafe_code)]
 pub mod cursor;
 #[allow(unsafe_code)]
