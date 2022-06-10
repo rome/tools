@@ -1,4 +1,6 @@
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -9,10 +11,11 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoDebugger {}
+declare_rule! {
+    pub(crate) NoDebugger = "noDebugger"
+}
 
 impl Rule for NoDebugger {
-    const NAME: &'static str = "noDebugger";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsDebuggerStatement;

@@ -1,25 +1,26 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    JsAnyRoot, JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize,
+    JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize,
 };
 use rome_rowan::AstNodeExt;
 use std::fmt::Write;
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoMultipleSpacesInRegularExpressionLiterals {}
+declare_rule! {
+    pub(crate) NoMultipleSpacesInRegularExpressionLiterals = "noMultipleSpacesInRegularExpressionLiterals"
+}
 
 impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
-    const NAME: &'static str = "noMultipleSpacesInRegularExpressionLiterals";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsRegexLiteralExpression;
     type State = Vec<(usize, usize)>;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
-        let value_token = n.value_token().ok()?;
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let value_token = ctx.query().value_token().ok()?;
         let trimmed_text = value_token.text_trimmed();
         let mut range_list = vec![];
         let mut continue_white_space = false;
@@ -45,8 +46,8 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
-        let value_token = node.value_token().ok()?;
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let value_token = ctx.query().value_token().ok()?;
         let value_token_range = value_token.text_trimmed_range();
         // SAFETY: We know diagnostic will be sended only if the `range_list` is not empty
         // first and last continuous whitespace range of `range_list`
@@ -64,8 +65,8 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
-        let trimmed_token = node.value_token().ok()?;
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let trimmed_token = ctx.query().value_token().ok()?;
         let trimmed_token_string = trimmed_token.text_trimmed();
         let mut normalized_string_token = String::new();
         let mut previous_start = 0;
@@ -85,7 +86,7 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
             [],
             [],
         );
-        let root = root
+        let root = ctx.root()
             .replace_token(trimmed_token, next_trimmed_token)
             .unwrap();
         Some(JsRuleAction {

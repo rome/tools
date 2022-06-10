@@ -1,4 +1,6 @@
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -10,13 +12,11 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-/// This rule verifies the result of `typeof $expr` unary expressions is being
-/// compared to valid values, either string literals containing valid type
-/// names or other `typeof` expressions
-pub(crate) enum UseValidTypeof {}
+declare_rule! {
+    pub(crate) UseValidTypeof = "useValidTypeof"
+}
 
 impl Rule for UseValidTypeof {
-    const NAME: &'static str = "useValidTypeof";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsBinaryExpression;

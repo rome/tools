@@ -1,5 +1,5 @@
 use rome_analyze::{
-    AnalysisFilter, Analyzer, AnalyzerSignal, ControlFlow, LanguageRoot, RuleAction,
+    AnalysisFilter, Analyzer, AnalyzerSignal, ControlFlow, LanguageRoot, MetadataIter, RuleAction,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
@@ -14,6 +14,12 @@ mod registry;
 use crate::registry::build_registry;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
+
+/// Return an iterator over the name and documentation of all the rules
+/// implemented by the JS analyzer
+pub fn metadata() -> MetadataIter<JsLanguage> {
+    build_registry(&AnalysisFilter::default()).metadata()
+}
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,

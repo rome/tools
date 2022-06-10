@@ -1,40 +1,41 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, T};
+use rome_js_syntax::{ JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, T};
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
 use crate::JsRuleAction;
 
-pub(crate) enum UseSelfClosingElements {}
+declare_rule! {
+    pub(crate) UseSelfClosingElements = "useSelfClosingElements"
+}
 
 impl Rule for UseSelfClosingElements {
-    const NAME: &'static str = "useSelfClosingElements";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsxElement;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
-        if n.children().is_empty() {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        if ctx.query().children().is_empty() {
             Some(())
         } else {
             None
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::warning(
-            node.range(),
+            ctx.query().range(),
             markup! {
                 "JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing."
             },
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
-        let open_element = node.opening_element().ok()?;
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let open_element = ctx.query().opening_element().ok()?;
         let JsxOpeningElementFields {
             l_angle_token,
             name,
@@ -80,8 +81,8 @@ impl Rule for UseSelfClosingElements {
                 self_closing_element_builder.with_type_arguments(type_arguments);
         }
         let self_closing_element = self_closing_element_builder.build();
-        let root = root.replace_node(
-            JsxAnyTag::JsxElement(node.clone()),
+        let root = ctx.root().replace_node(
+            JsxAnyTag::JsxElement(ctx.query().clone()),
             JsxAnyTag::JsxSelfClosingElement(self_closing_element),
         )?;
         Some(JsRuleAction {
