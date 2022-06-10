@@ -7,7 +7,7 @@ use rome_js_syntax::{
     JsSyntaxNode, JsSyntaxToken,
 };
 
-use rome_rowan::{declare_union, AstNode, SyntaxResult};
+use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::cmp::Ordering;
 use std::fmt::Debug;
 use std::iter::FusedIterator;
@@ -724,7 +724,7 @@ impl Iterator for PostorderIterator {
 
 impl FusedIterator for PostorderIterator {}
 
-declare_union! {
+declare_node_union! {
     pub(crate) JsAnyBinaryLikeExpression = JsLogicalExpression | JsBinaryExpression | JsInstanceofExpression | JsInExpression
 }
 
@@ -830,7 +830,7 @@ impl JsAnyBinaryLikeExpression {
     }
 }
 
-declare_union! {
+declare_node_union! {
     JsAnyBinaryLikeLeftExpression = JsAnyExpression | JsPrivateName
 }
 

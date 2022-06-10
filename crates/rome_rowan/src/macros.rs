@@ -5,13 +5,13 @@ use crate::{AstNode, Language};
 /// # Example
 ///
 /// ```ignore
-/// declare_union! {
+/// declare_node_union! {
 ///     /// Matches an if statement or a conditional expression
 ///     pub(crate) JsAnyConditional = JsIfStatement | JsConditionalExpression
 /// }
 /// ```
 #[macro_export]
-macro_rules! declare_union {
+macro_rules! declare_node_union {
     ( $( #[$attr:meta] )* $vis:vis $name:ident = $( $variant:ident )|* ) => {
         $( #[$attr] )*
         #[allow(clippy::enum_variant_names)]
@@ -87,9 +87,9 @@ macro_rules! declare_union {
     };
 }
 
-/// This trait is implemented for tuples of AstNode types of size 1 to 9 if all
-/// node types share the same associated language (which is then aliased as the
-/// `Language` associated type on [UnionLanguage] itself)
+/// This trait is implemented for tuples of AstNode types of size 1 to 12 if
+/// all node types share the same associated language (which is then aliased as
+/// the `Language` associated type on [UnionLanguage] itself)
 pub trait UnionLanguage {
     type Language: Language;
 }
@@ -102,15 +102,11 @@ macro_rules! impl_union_language {
         {
             type Language = <$head as AstNode>::Language;
         }
+
+        impl_union_language!( $( $rest ),* );
     };
+
+    () => {};
 }
 
-impl_union_language!(T1);
-impl_union_language!(T1, T2);
-impl_union_language!(T1, T2, T3);
-impl_union_language!(T1, T2, T3, T4);
-impl_union_language!(T1, T2, T3, T4, T5);
-impl_union_language!(T1, T2, T3, T4, T5, T6);
-impl_union_language!(T1, T2, T3, T4, T5, T6, T7);
-impl_union_language!(T1, T2, T3, T4, T5, T6, T7, T8);
-impl_union_language!(T1, T2, T3, T4, T5, T6, T7, T8, T9);
+impl_union_language!(T00, T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11);
