@@ -7,7 +7,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic, JsRuleAction};
+use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoUnusedTemplateLiteral {}
