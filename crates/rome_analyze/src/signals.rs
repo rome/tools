@@ -164,37 +164,42 @@ where
 
     let prev_tokens = prev.descendants_tokens(Direction::Prev);
     let next_tokens = next.descendants_tokens(Direction::Prev);
-    let mut tokens = prev_tokens.zip(next_tokens);
+    let tokens = prev_tokens.zip(next_tokens);
 
-    let range_end = tokens.find_map(|(prev_token, next_token)| {
-        // This compares the texts instead of the tokens themselves, since the
-        // implementation of PartialEq for SyntaxToken compares the text offset
-        // of the tokens (which may be different since we're starting from the
-        // end of the file, after the edited section)
-        // It should still be rather efficient though as identical tokens will
-        // reuse the same underlying green node after an edit, so the equality
-        // check can stop at doing a pointer + length equality without having
-        // to actually check the content of the string
-        if prev_token.text() != next_token.text() {
-            Some((prev_token.text_range().end(), next_token.text_range().end()))
-        } else {
-            None
-        }
-    });
+    let range_end = tokens
+        .take_while(|(prev_token, next_token)| {
+            let prev_range = prev_token.text_range();
+            let next_range = next_token.text_range();
+
+            if let Some(range_start) = range_start {
+                if prev_range.start() < range_start || next_range.start() < range_start {
+                    return false;
+                }
+            }
+
+            // This compares the texts instead of the tokens themselves, since the
+            // implementation of PartialEq for SyntaxToken compares the text offset
+            // of the tokens (which may be different since we're starting from the
+            // end of the file, after the edited section)
+            // It should still be rather efficient though as identical tokens will
+            // reuse the same underlying green node after an edit, so the equality
+            // check can stop at doing a pointer + length equality without having
+            // to actually check the content of the string
+            prev_token.text() == next_token.text()
+        })
+        .last()
+        .map(|(prev_token, next_token)| {
+            (
+                prev_token.text_range().start(),
+                next_token.text_range().start(),
+            )
+        });
 
     match (range_start, range_end) {
-        (Some(start), Some((prev_end, next_end))) => {
-            // Ensure the end of the new range ends is higher or equal to the
-            // start, the value of next_end may sometimes cross the start if
-            // the diff only removed some tokens as both search iterations stop
-            // after the first difference
-            let next_end = next_end.max(start);
-
-            Some((
-                TextRange::new(start, prev_end),
-                TextRange::new(start, next_end),
-            ))
-        }
+        (Some(start), Some((prev_end, next_end))) => Some((
+            TextRange::new(start, prev_end),
+            TextRange::new(start, next_end),
+        )),
         (Some(start), None) => Some((
             TextRange::new(start, prev.text_range().end()),
             TextRange::new(start, next.text_range().end()),
@@ -308,7 +313,7 @@ mod tests {
             .expect("failed to calculate diff range");
 
         let start = TextSize::of("statement1;");
-        let end = TextSize::of("statement1;statement2");
+        let end = TextSize::of("statement1;statement2;");
 
         assert_eq!(
             diff,
