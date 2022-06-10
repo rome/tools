@@ -8,6 +8,8 @@ mod no_double_equals;
 pub(crate) use no_double_equals::NoDoubleEquals;
 mod no_negation_else;
 pub(crate) use no_negation_else::NoNegationElse;
+mod use_single_case_statement;
+pub(crate) use use_single_case_statement::UseSingleCaseStatement;
 mod use_single_var_declarator;
 pub(crate) use use_single_var_declarator::UseSingleVarDeclarator;
 mod use_valid_typeof;

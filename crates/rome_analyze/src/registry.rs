@@ -40,6 +40,7 @@ impl_registry_builders!(
     NoDelete,
     NoDoubleEquals,
     NoNegationElse,
+    UseSingleCaseStatement,
     UseSingleVarDeclarator,
     UseValidTypeof,
     UseWhile,
