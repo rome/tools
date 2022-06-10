@@ -1,6 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 98
 expression: noDebugger.js
 ---
 # Input
@@ -67,11 +67,13 @@ warning[noDebugger]: This is an unexpected use of the debugger statement.
   │   --------- This is an unexpected use of the debugger statement.
 
 Remove debugger statement
-    | @@ -6,5 +6,4 @@
+    | @@ -5,6 +5,5 @@
+4 4 |   debugger;
 5 5 |   
 6 6 |   function test() {
-7 7 |     let a = 3;
+7   | -   let a = 3;
 8   | -   debugger;
+  7 | +   let a = 3;;
 9 8 |   }
 
 
