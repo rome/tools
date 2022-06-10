@@ -20,16 +20,13 @@ impl Rule for NoSparseArray {
 
     fn run(node: &Self::Query) -> Option<Self::State> {
         // We defer collect `JsHole` index until user want to apply code action.
-        node.elements()
-            .iter()
-            // .filter_map(|item| item.ok())
-            .find_map(|element| {
-                if matches!(element.ok()?, JsAnyArrayElement::JsArrayHole(_),) {
-                    Some(())
-                } else {
-                    None
-                }
-            })
+        node.elements().iter().find_map(|element| {
+            if matches!(element.ok()?, JsAnyArrayElement::JsArrayHole(_),) {
+                Some(())
+            } else {
+                None
+            }
+        })
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
