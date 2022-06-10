@@ -42,15 +42,19 @@ fn generate_module(name: &'static str, entries: &mut Vec<String>) -> Result<()> 
             rule_name.push(char);
         }
 
-        entries.push(rule_name.clone());
+        let index = entries.binary_search(&rule_name).unwrap_err();
+        entries.insert(index, rule_name.clone());
 
         let module_name = format_ident!("{}", file_name);
         let rule_name = format_ident!("{}", rule_name);
 
-        rules.push(quote! {
-            mod #module_name;
-            pub(crate) use #module_name::#rule_name;
-        });
+        rules.insert(
+            index,
+            quote! {
+                mod #module_name;
+                pub(crate) use #module_name::#rule_name;
+            },
+        );
     }
 
     let tokens = xtask::reformat(quote! {
