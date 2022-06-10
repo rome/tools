@@ -392,74 +392,29 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
     for AstSeparatedListElementsIterator<L, N>
 {
     fn next_back(&mut self) -> Option<Self::Item> {
-        let first_slot = self.slots.next_back();
-        let mut slots = self.slots.clone().rev().peekable();
-        let second_slot = slots.peek();
+        let first_slot = self.slots.next_back()?;
 
-        let (node, separator) = match (first_slot, second_slot) {
-            // case where the list ends with "1,"
-            (Some(SyntaxSlot::Token(separator)), Some(SyntaxSlot::Node(_))) => {
-                // SAFETY: both unwraps are checked by the previous match
-                let node = self.slots.next_back().unwrap().into_node().unwrap();
-                (Ok(N::unwrap_cast(node)), Ok(Some(separator)))
+        let separator = match first_slot {
+            SyntaxSlot::Node(node) => {
+                // if we fallback here, it means that we are at the end of the iterator
+                // which means that we don't have the optional separator and
+                // we have only a node, we bail early.
+                return Some(AstSeparatedElement {
+                    node: Ok(N::unwrap_cast(node)),
+                    trailing_separator: Ok(None),
+                });
             }
+            SyntaxSlot::Token(token) => Ok(Some(token)),
+            SyntaxSlot::Empty => Ok(None),
+        };
 
-            // case where the list ends with "EMPTY ,"
-            (Some(SyntaxSlot::Token(separator)), Some(SyntaxSlot::Empty)) => {
-                self.slots.next_back();
-                (Err(SyntaxError::MissingRequiredChild), Ok(Some(separator)))
+        let node = match self.slots.next_back() {
+            None => panic!("Malformed separated list, expected a node but found none"),
+            Some(SyntaxSlot::Empty) => Err(SyntaxError::MissingRequiredChild),
+            Some(SyntaxSlot::Token(token)) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+            Some(SyntaxSlot::Node(node)) => {
+                Ok(N::unwrap_cast(node))
             }
-
-            // case where the list ends with ", ,"
-            (Some(SyntaxSlot::Token(_)), Some(SyntaxSlot::Token(token))) => {
-                panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token);
-            }
-
-            // case where the list ends with ",1"
-            // we dont consume the separator, we assume that we are at the end of the list and the
-            // separator is omitted
-            (Some(SyntaxSlot::Node(node)), Some(SyntaxSlot::Token(_))) => {
-                (Ok(N::unwrap_cast(node)), Ok(None))
-            }
-
-            // case where the list ends with "1 (missing sep)"
-            (Some(SyntaxSlot::Node(node)), Some(SyntaxSlot::Empty)) => (
-                Ok(N::unwrap_cast(node)),
-                Err(SyntaxError::MissingRequiredChild),
-            ),
-
-            // case where the list ends with "EMPTY 1"
-            (Some(SyntaxSlot::Node(node)), None) => (
-                Ok(N::unwrap_cast(node)),
-                Err(SyntaxError::MissingRequiredChild),
-            ),
-
-            // case where the list ends with "1 1"
-            (Some(SyntaxSlot::Node(_)), Some(SyntaxSlot::Node(node))) => {
-                panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node);
-            }
-
-            // case where the list ends with "(missing node) (missing sep)"
-            // case where the list ends with "EMPTY (missing sep)"
-            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Empty))
-            | (Some(SyntaxSlot::Empty), None) => {
-                panic!("Malformed separated list, separator and node are both missing");
-            }
-
-            // case where the list ends with "1 (missing sep)"
-            (Some(SyntaxSlot::Empty), Some(SyntaxSlot::Node(_))) => {
-                // SAFETY: covered by the previous match
-                let node = self.slots.next_back().unwrap().into_node().unwrap();
-                (Ok(N::unwrap_cast(node)), Ok(None))
-            }
-
-            (None, _) => {
-                return None;
-            }
-
-            _ => unreachable!(
-                "We should not reach this point. If so, there are some edge case not handled"
-            ),
         };
 
         Some(AstSeparatedElement {

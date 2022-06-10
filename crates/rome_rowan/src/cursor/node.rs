@@ -650,9 +650,13 @@ impl From<SyntaxElement> for SyntaxSlot {
 /// Iterator over a node's slots
 #[derive(Debug, Clone)]
 pub(crate) struct SyntaxSlots {
-    // current consuming position tracked from the front
+    /// Current consuming position tracked from the front
     front_next_position: u32,
-    // current consuming position tracked from the back
+    /// Current consuming position tracked from the back
+    /// **The index is from the end of the iterator!**
+    /// The API uses [`nth_back`] to retrieve the item:
+    ///
+    /// [nth_back]: https://doc.rust-lang.org/std/iter/trait.DoubleEndedIterator.html#method.nth_back
     back_next_position: u32,
     parent: SyntaxNode,
 }
