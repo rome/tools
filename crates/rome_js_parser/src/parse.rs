@@ -133,7 +133,7 @@ pub fn parse_common(
 /// ```
 /// use rome_js_parser::parse_script;
 /// use rome_js_syntax::{JsSyntaxToken, SourceType, JsSyntaxList, JsComputedMemberExpression};
-/// use rome_rowan::AstNode;
+/// use rome_rowan::{AstNode, Direction};
 ///
 /// let parse = parse_script("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
@@ -154,7 +154,7 @@ pub fn parse_common(
 /// assert_eq!(prop.syntax().text(), "2");
 ///
 /// // Util has a function for yielding all tokens of a node.
-/// let tokens = untyped_expr_node.descendants_tokens().map(|token| token.text_trimmed().to_string()).collect::<Vec<_>>();
+/// let tokens = untyped_expr_node.descendants_tokens(Direction::Next).map(|token| token.text_trimmed().to_string()).collect::<Vec<_>>();
 ///
 /// assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
 /// ```

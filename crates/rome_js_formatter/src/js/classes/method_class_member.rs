@@ -1,14 +1,12 @@
 use crate::prelude::*;
 use crate::utils::FormatMemberName;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsMethodClassMember;
 use rome_js_syntax::JsMethodClassMemberFields;
 
 impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMember> {
-    fn format_fields(
-        node: &JsMethodClassMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsMethodClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsMethodClassMemberFields {
             modifiers,
             async_token,
@@ -21,14 +19,15 @@ impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMembe
             body,
         } = node.as_fields();
 
-        formatted![
-            formatter,
+        write![f, [modifiers.format(), space_token(),]]?;
+
+        if let Some(async_token) = async_token {
+            write!(f, [async_token.format(), space_token()])?;
+        }
+
+        write!(
+            f,
             [
-                modifiers.format(),
-                space_token(),
-                async_token
-                    .format()
-                    .with_or_empty(|token| formatted![formatter, [token, space_token()]]),
                 star_token.format(),
                 FormatMemberName::from(name?),
                 question_mark_token.format(),
@@ -38,6 +37,6 @@ impl FormatNodeFields<JsMethodClassMember> for FormatNodeRule<JsMethodClassMembe
                 space_token(),
                 body.format()
             ]
-        ]
+        )
     }
 }

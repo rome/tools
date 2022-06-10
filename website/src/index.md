@@ -8,5 +8,7 @@ layout: layouts/homepage.liquid
 {% include docs/getting-started.md %}
 {% include docs/status.md %}
 {% include docs/formatter.md %}
+{% include docs/linter.md %}
+{% include docs/ci.md %}
 {% include docs/philosophy.md %}
 {% include docs/_old_diagnostic-anatomy.md %}

@@ -10,6 +10,7 @@ use rome_js_syntax::SourceType;
 use rome_js_syntax::TextRange;
 use rome_js_syntax::WalkEvent;
 use rome_markup::markup;
+use rome_rowan::Direction;
 use rome_rowan::NodeOrToken;
 
 #[test]
@@ -73,7 +74,7 @@ fn assert(code: &str) {
 
     let mut declarations_assertions = BTreeMap::new();
 
-    for node in r.syntax().preorder_with_tokens() {
+    for node in r.syntax().preorder_with_tokens(Direction::Next) {
         if let WalkEvent::Enter(NodeOrToken::Token(token)) = node {
             let trivia = token.trailing_trivia();
             let text = trivia.text();

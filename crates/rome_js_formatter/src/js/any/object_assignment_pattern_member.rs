@@ -5,23 +5,18 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectAssignmentPatternMember;
 impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignmentPatternMember {
     type Context = JsFormatContext;
-    fn format(
-        node: &JsAnyObjectAssignmentPatternMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyObjectAssignmentPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
                 node,
-            ) => formatted![formatter, [node.format()]],
+            ) => node.format().fmt(f),
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(node) => {
-                formatted![formatter, [node.format()]]
+                node.format().fmt(f)
             }
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node) => {
-                formatted![formatter, [node.format()]]
-            }
+            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node) => node.format().fmt(f),
         }
     }
 }

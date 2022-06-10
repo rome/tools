@@ -4,7 +4,7 @@ use crate::{semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
 use rome_diagnostics::{file::SimpleFile, Applicability, Diagnostic, Severity};
 use rome_js_syntax::{JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
-use rome_rowan::NodeOrToken;
+use rome_rowan::{Direction, NodeOrToken};
 
 #[test]
 pub fn ok_scope_blocks() {
@@ -86,7 +86,7 @@ fn assert(code: &str) {
     let mut scope_start_assertions = BTreeMap::new();
     let mut scope_end_assertions = BTreeMap::new();
 
-    for node in r.syntax().preorder_with_tokens() {
+    for node in r.syntax().preorder_with_tokens(Direction::Next) {
         if let WalkEvent::Enter(NodeOrToken::Token(token)) = node {
             let trivia = token.trailing_trivia();
             let text = trivia.text();

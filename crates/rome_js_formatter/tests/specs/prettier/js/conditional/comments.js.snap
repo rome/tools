@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: comments.js
 ---
 # Input
@@ -143,9 +144,7 @@ const extractTextPluginOptions3 = shouldUseRelativeAssetPaths ? {
   publicPath: Array(cssFilename.split("/").length).join("../"),
 } : {};
 
-const {
-  configureStore,
-} = process.env.NODE_ENV === "production" ? require(
+const { configureStore } = process.env.NODE_ENV === "production" ? require(
   "./configureProdStore",
 ) : require("./configureDevStore"); // a // b
 

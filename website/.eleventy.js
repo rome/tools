@@ -25,7 +25,7 @@ const isProduction = process.env.ELEVENTY_ENV === "production";
 
 module.exports =
 	function (eleventyConfig) {
-		eleventyConfig.addPassthroughCopy({ "static": "." });
+		eleventyConfig.addPassthroughCopy({ static: "." });
 		eleventyConfig.setUseGitIgnore(false);
 
 		eleventyConfig.setLiquidOptions({ cache: true });
@@ -55,11 +55,10 @@ module.exports =
 				permalinkAttrs: (slug) => ({ "aria-label": slug }),
 				slugify: (title) => {
 					return encodeURIComponent(
-						String(title)
-							.trim()
-							.toLowerCase()
-							.replace(/[^a-zA-Z\s0-9]/g, "")
-							.replace(/\s+/g, "-"),
+						String(title).trim().toLowerCase().replace(
+							/[^a-zA-Z\s0-9]/g,
+							"",
+						).replace(/\s+/g, "-"),
 					);
 				},
 			},
@@ -72,31 +71,29 @@ module.exports =
 			"tagList",
 			function (collection) {
 				let tagSet = new Set();
-				collection
-					.getAll()
-					.forEach(function (item) {
-						if ("tags" in item.data) {
-							let tags = item.data.tags;
+				collection.getAll().forEach(function (item) {
+					if ("tags" in item.data) {
+						let tags = item.data.tags;
 
-							tags =
-								tags.filter(function (item) {
-									switch (item) {
-										// This list should match the `filter` list in tags.liquid
-										case "all":
-										case "nav":
-										case "post":
-										case "posts":
-											return false;
-									}
+						tags =
+							tags.filter(function (item) {
+								switch (item) {
+									// This list should match the `filter` list in tags.liquid
+									case "all":
+									case "nav":
+									case "post":
+									case "posts":
+										return false;
+								}
 
-									return true;
-								});
+								return true;
+							},);
 
-							for (const tag of tags) {
-								tagSet.add(tag);
-							}
+						for (const tag of tags) {
+							tagSet.add(tag);
 						}
-					});
+					}
+				},);
 
 				// Returning an array in addCollection works in Eleventy 0.5.3
 				return [...tagSet];
@@ -194,11 +191,9 @@ module.exports =
 			"blogSummary",
 			(val) => {
 				const lines = val.split("<!-- DESCRIPTION_END -->")[0].split("\n");
-				return lines
-					.filter((line) => {
-						return line.startsWith("<p>");
-					})
-					.join("\n");
+				return lines.filter((line) => {
+					return line.startsWith("<p>");
+				},).join("\n");
 			},
 		);
 
@@ -251,7 +246,7 @@ module.exports =
 					},
 				},
 			},
-		});
+		},);
 
 		return {
 			dir: { input: "src", output: "build" },

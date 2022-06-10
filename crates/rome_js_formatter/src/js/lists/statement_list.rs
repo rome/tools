@@ -5,7 +5,13 @@ use rome_js_syntax::JsStatementList;
 impl FormatRule<JsStatementList> for FormatJsStatementList {
     type Context = JsFormatContext;
 
-    fn format(node: &JsStatementList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(node))
+    fn fmt(node: &JsStatementList, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut join = f.join_nodes_with_hardline();
+
+        for statement in node.iter() {
+            join.entry(statement.syntax(), &format_or_verbatim(&statement));
+        }
+
+        join.finish()
     }
 }

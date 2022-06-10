@@ -187,7 +187,7 @@ impl<L: Language, N: AstNode<Language = L>> ExactSizeIterator for AstNodeListIte
 
 impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstNodeListIterator<L, N> {}
 
-#[derive(Clone)]
+#[derive(Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct AstSeparatedElement<L: Language, N> {
@@ -203,12 +203,20 @@ impl<L: Language, N: AstNode<Language = L>> AstSeparatedElement<L, N> {
         }
     }
 
+    pub fn into_node(self) -> SyntaxResult<N> {
+        self.node
+    }
+
     pub fn trailing_separator(&self) -> SyntaxResult<Option<&SyntaxToken<L>>> {
         match &self.trailing_separator {
             Ok(Some(sep)) => Ok(Some(sep)),
             Ok(_) => Ok(None),
             Err(err) => Err(*err),
         }
+    }
+
+    pub fn into_trailing_separator(self) -> SyntaxResult<Option<SyntaxToken<L>>> {
+        self.trailing_separator
     }
 }
 

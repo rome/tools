@@ -5,19 +5,15 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectMember;
 impl FormatRule<JsAnyObjectMember> for FormatJsAnyObjectMember {
     type Context = JsFormatContext;
-    fn format(node: &JsAnyObjectMember, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+    fn fmt(node: &JsAnyObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyObjectMember::JsPropertyObjectMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyObjectMember::JsMethodObjectMember(node) => formatted![formatter, [node.format()]],
-            JsAnyObjectMember::JsGetterObjectMember(node) => formatted![formatter, [node.format()]],
-            JsAnyObjectMember::JsSetterObjectMember(node) => formatted![formatter, [node.format()]],
-            JsAnyObjectMember::JsShorthandPropertyObjectMember(node) => {
-                formatted![formatter, [node.format()]]
-            }
-            JsAnyObjectMember::JsSpread(node) => formatted![formatter, [node.format()]],
-            JsAnyObjectMember::JsUnknownMember(node) => formatted![formatter, [node.format()]],
+            JsAnyObjectMember::JsPropertyObjectMember(node) => node.format().fmt(f),
+            JsAnyObjectMember::JsMethodObjectMember(node) => node.format().fmt(f),
+            JsAnyObjectMember::JsGetterObjectMember(node) => node.format().fmt(f),
+            JsAnyObjectMember::JsSetterObjectMember(node) => node.format().fmt(f),
+            JsAnyObjectMember::JsShorthandPropertyObjectMember(node) => node.format().fmt(f),
+            JsAnyObjectMember::JsSpread(node) => node.format().fmt(f),
+            JsAnyObjectMember::JsUnknownMember(node) => node.format().fmt(f),
         }
     }
 }

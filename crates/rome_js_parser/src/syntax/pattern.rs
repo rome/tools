@@ -262,7 +262,7 @@ fn validate_rest_pattern(
                 .primary(
                     rest.range(p),
                     &format!(
-                    "Move the rest element to the end of the pattern, right before the closing {}",
+                    "Move the rest element to the end of the pattern, right before the closing '{}'",
                     end_token.to_string().unwrap(),
                 ),
                 ),

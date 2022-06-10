@@ -72,6 +72,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
             .files
             .name(self.d.file_id)
             .ok_or_else(|| io::Error::new(io::ErrorKind::NotFound, "file not found"))?;
+
         let source_file = self
             .files
             .source(self.d.file_id)
