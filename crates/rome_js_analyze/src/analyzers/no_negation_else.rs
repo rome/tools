@@ -1,5 +1,4 @@
-use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -8,6 +7,8 @@ use rome_js_syntax::{
     JsUnaryExpression, JsUnaryOperator,
 };
 use rome_rowan::{AstNode, AstNodeExt};
+
+use crate::JsRuleAction;
 
 pub(crate) enum NoNegationElse {}
 
@@ -82,7 +83,7 @@ impl Rule for NoNegationElse {
                 root.replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
             }
         }?;
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Exchange alternate and consequent of the node" }.to_owned(),

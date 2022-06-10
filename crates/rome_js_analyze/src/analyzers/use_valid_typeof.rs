@@ -1,3 +1,4 @@
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -7,10 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::{
-    registry::{JsRuleAction, Rule, RuleDiagnostic},
-    ActionCategory, RuleCategory,
-};
+use crate::JsRuleAction;
 
 /// This rule verifies the result of `typeof $expr` unary expressions is being
 /// compared to valid values, either string literals containing valid type

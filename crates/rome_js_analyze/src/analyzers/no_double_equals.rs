@@ -1,3 +1,4 @@
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -5,8 +6,7 @@ use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinar
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
-use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use crate::JsRuleAction;
 
 pub(crate) enum NoDoubleEquals {}
 
