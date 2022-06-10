@@ -21,7 +21,7 @@ pub use token::SyntaxToken;
 
 use std::fmt;
 
-use crate::RawSyntaxKind;
+use crate::{AstNode, RawSyntaxKind};
 
 /// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
@@ -40,6 +40,7 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
     type Kind: SyntaxKind;
+    type Root: AstNode<Language = Self> + Clone + Eq + fmt::Debug;
 }
 
 /// A list of `SyntaxNode`s and/or `SyntaxToken`s

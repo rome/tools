@@ -8,6 +8,16 @@ pub fn ident(text: &str) -> JsSyntaxToken {
     JsSyntaxToken::new_detached(JsSyntaxKind::IDENT, text, [], [])
 }
 
+/// Create a new string literal token with no attached trivia
+pub fn js_string_literal(text: &str) -> JsSyntaxToken {
+    JsSyntaxToken::new_detached(
+        JsSyntaxKind::JS_STRING_LITERAL,
+        &format!("\"{text}\""),
+        [],
+        [],
+    )
+}
+
 /// Create a new token with the specified syntax kind and no attached trivia
 pub fn token(kind: JsSyntaxKind) -> JsSyntaxToken {
     if let Some(text) = kind.to_string() {
