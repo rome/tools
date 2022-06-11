@@ -75,14 +75,13 @@ a(
   ],
 );
 
-exports.examples =
-  [
-    {
-      render: withGraphQLQuery(
-        "node(1234567890){image{uri}}",
-        function (container, data) {
-          return (
-            <div>
+exports.examples = [
+  {
+    render: withGraphQLQuery(
+      "node(1234567890){image{uri}}",
+      function (container, data) {
+        return (
+          <div>
             <InlineBlock>
               <img
                 src={data[1234567890].image.uri}
@@ -90,11 +89,11 @@ exports.examples =
               />
             </InlineBlock>
           </div>
-          );
-        },
-      ),
-    },
-  ];
+        );
+      },
+    ),
+  },
+];
 
 someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
   [],
@@ -136,6 +135,6 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
 ```
     2:   SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong,
     5:       SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong: 1,
-   31: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
+   30: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
 ```
 

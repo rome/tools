@@ -21,8 +21,9 @@ function a() {
 function a() {
   function b() {
     queryThenMutateDOM(() => {
-      title =
-        SomeThing.call(root, "someLongStringThatPushesThisTextReallyFar")[0];
+      title = SomeThing.call(root, "someLongStringThatPushesThisTextReallyFar")[
+        0
+      ];
     },);
   }
 }

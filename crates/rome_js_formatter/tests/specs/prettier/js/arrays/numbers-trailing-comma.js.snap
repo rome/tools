@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: numbers-trailing-comma.js
-
 ---
 # Input
 ```js
@@ -16,12 +14,14 @@ c = [
 # Output
 ```js
 // --------------- print-width -------------------------------------------------
-c =
-  [
-    66, 66, 57, 45, 47, 33, 53, 82, 81, 76, 66, 57, 45, 47, 33, 53, 82, 81,
-    223323,
-  ];
+c = [
+  66, 66, 57, 45, 47, 33, 53, 82, 81, 76, 66, 57, 45, 47, 33, 53, 82, 81, 223323,
+];
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3:   66, 66, 57, 45, 47, 33, 53, 82, 81, 76, 66, 57, 45, 47, 33, 53, 82, 81, 223323,
+```
 

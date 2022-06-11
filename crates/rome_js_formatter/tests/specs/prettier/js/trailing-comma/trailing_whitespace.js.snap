@@ -62,17 +62,15 @@ foo(
   // Comment
 );
 
-o =
-  {
-    state,
-    // Comment
-  };
+o = {
+  state,
+  // Comment
+};
 
-o =
-  {
-    state,
-    // Comment
-  };
+o = {
+  state,
+  // Comment
+};
 
 function supersupersupersuperLongF(
   supersupersupersuperLongA,
