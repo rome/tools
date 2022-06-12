@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 use crate::utils::object::write_member_name;
-use crate::utils::JsAnyBinaryLikeExpression;
+use crate::utils::{has_leading_newline, JsAnyBinaryLikeExpression};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAssignmentExpression, JsPropertyObjectMember,
@@ -166,6 +166,10 @@ impl JsAnyAssignmentLike {
 }
 
 pub(crate) fn is_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> {
+    if has_leading_newline(right.syntax()) && right.syntax().has_leading_comments() {
+        return Ok(true);
+    }
+
     if JsAnyBinaryLikeExpression::cast(right.syntax().clone())
         .map_or(false, |expression| !expression.should_inline())
     {

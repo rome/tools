@@ -84,17 +84,19 @@ f3 = (
   a = b, //comment
 ) => {};
 
-f4 = () => {}; // Comment
+f4 =
+  // Comment
+  () => {};
 
 f5 =
-// Comment
+  // Comment
 
-() => {};
+  () => {};
 
 f6 = /* comment */
-// Comment
+  // Comment
 
-() => {};
+  () => {};
 
 let f1 = (
   a =
