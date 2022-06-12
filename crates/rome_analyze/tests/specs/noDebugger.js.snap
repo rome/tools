@@ -67,13 +67,11 @@ warning[noDebugger]: This is an unexpected use of the debugger statement.
   │   --------- This is an unexpected use of the debugger statement.
 
 Remove debugger statement
-    | @@ -5,6 +5,5 @@
-4 4 |   debugger;
+    | @@ -6,5 +6,4 @@
 5 5 |   
 6 6 |   function test() {
-7   | -   let a = 3;
+7 7 |     let a = 3;
 8   | -   debugger;
-  7 | +   let a = 3;;
 9 8 |   }
 
 
