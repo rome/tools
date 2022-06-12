@@ -94,6 +94,7 @@ impl AstNode for RawLanguageRoot {
 }
 
 #[doc(hidden)]
+#[derive(Eq, PartialEq, Debug)]
 pub struct LiteralExpression {
     node: SyntaxNode<RawLanguage>,
 }
