@@ -40,10 +40,12 @@ macro_rules! impl_registry_builders {
 impl_registry_builders!(
     // Analyzers
     NoCompareNegZero,
+    NoDebugger,
     NoDelete,
     NoDoubleEquals,
     NoNegationElse,
     NoSparseArray,
+    NoUnusedTemplateLiteral,
     UseSingleCaseStatement,
     UseSingleVarDeclarator,
     UseValidTypeof,
