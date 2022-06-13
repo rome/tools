@@ -60,7 +60,7 @@ error[SyntaxError]: An index signature must have a type annotation
 1 │ type A = { [key: string] };
   │                          ^
 
-error[SyntaxError]: expected `']'` but instead found `,`
+error[SyntaxError]: expected `]` but instead found `,`
   ┌─ index-signature.ts:4:13
   │
 4 │   [a: string, b: string]: string;
@@ -84,7 +84,7 @@ error[SyntaxError]: expected a statement but instead found '}'
 5 │ };
   │ ^ Expected a statement here
 
-error[SyntaxError]: expected `']'` but instead found `,`
+error[SyntaxError]: expected `]` but instead found `,`
   ┌─ index-signature.ts:7:13
   │
 7 │   [a: string, b: string, c: string]: string;
@@ -108,7 +108,7 @@ error[SyntaxError]: expected a statement but instead found '}'
 8 │ };
   │ ^ Expected a statement here
 
-error[SyntaxError]: expected `']'` but instead found `,`
+error[SyntaxError]: expected `]` but instead found `,`
    ┌─ index-signature.ts:11:41
    │
 11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
@@ -132,7 +132,7 @@ error[SyntaxError]: expected a statement but instead found '}'
 12 │ }
    │ ^ Expected a statement here
 
-error[SyntaxError]: expected `']'` but instead found `,`
+error[SyntaxError]: expected `]` but instead found `,`
    ┌─ index-signature.ts:13:58
    │
 13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
@@ -156,7 +156,7 @@ error[SyntaxError]: expected a statement but instead found '}'
 13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
    │                                                                                                    ^ Expected a statement here
 
-error[SyntaxError]: expected `']'` but instead found `,`
+error[SyntaxError]: expected `]` but instead found `,`
    ┌─ index-signature.ts:14:58
    │
 14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }

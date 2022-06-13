@@ -1,14 +1,18 @@
 use crate::prelude::*;
+use rome_formatter::{format_args, write, Buffer, VecBuffer};
 
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
-    JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,
-    JsSyntaxKind, JsSyntaxKind::*, JsSyntaxNode, JsSyntaxToken,
+    JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator, JsPrivateName, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::{AstNode, SyntaxResult};
+
+use crate::utils::is_break_after_colon;
+use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::cmp::Ordering;
 use std::fmt::Debug;
 use std::iter::FusedIterator;
+use std::ops::Deref;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
 ///
@@ -95,10 +99,10 @@ use std::iter::FusedIterator;
 /// which is what we wanted since the beginning!
 pub(crate) fn format_binary_like_expression(
     expression: JsAnyBinaryLikeExpression,
-    formatter: &JsFormatter,
-) -> FormatResult<FormatElement> {
+    f: &mut JsFormatter,
+) -> FormatResult<()> {
     let mut flatten_items = FlattenItems::default();
-    let current_node = expression.syntax().clone();
+    let current_node = expression.clone();
 
     let post_order_binary_like_expressions = PostorderIterator::new(expression);
     let mut left: Option<JsAnyBinaryLikeExpression> = None;
@@ -107,22 +111,16 @@ pub(crate) fn format_binary_like_expression(
         let parent_operator = parent.operator_token()?;
 
         if let Some(left) = left {
-            flatten_items.format_binary_expression_right_hand_side(
-                left,
-                Some(parent_operator),
-                formatter,
-            )?;
+            flatten_items.flatten_binary_expression_right_hand_side(left, Some(parent_operator))?;
         } else {
             // Leaf binary like expression. Format the left hand side.
             // The right hand side gets formatted when traversing upwards in the tree.
 
             let left = parent.left()?;
-
             let has_comments = left.syntax().has_comments_direct();
-            let formatted = formatted![formatter, [left]]?;
 
-            flatten_items.items.push(FlattenItem::regular(
-                formatted,
+            flatten_items.items.push(FlattenItem::new(
+                FlattenedBinaryExpressionPart::Left { expression: left },
                 Some(parent_operator),
                 has_comments.into(),
             ));
@@ -133,10 +131,17 @@ pub(crate) fn format_binary_like_expression(
 
     // Format the top most binary like expression
     if let Some(root) = left {
-        flatten_items.format_binary_expression_right_hand_side(root, None, formatter)?;
+        flatten_items.flatten_binary_expression_right_hand_side(root, None)?;
     }
 
-    flatten_items.take_format_element(&current_node, formatter)
+    let group = FlattenedBinaryExpressionPart::Group {
+        current: JsAnyBinaryLikeLeftExpression::JsAnyExpression(current_node.into_expression()),
+        expressions_start: flatten_items.current_group_start,
+        expressions_end: flatten_items.len(),
+        parenthesized: false,
+    };
+
+    group.write(f, &flatten_items)
 }
 
 /// Small wrapper to identify the operation of an expression and deduce their precedence
@@ -165,25 +170,26 @@ enum BinaryLikeOperator {
 /// first `foo && bar` is computed and its result is then computed against `|| lorem`.
 ///
 /// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
-fn format_with_or_without_parenthesis(
+fn needs_parens(
     parent_operator: BinaryLikeOperator,
-    node: &JsSyntaxNode,
-    formatted_node: FormatElement,
-    formatter: &JsFormatter,
-) -> FormatResult<(FormatElement, bool)> {
-    let compare_to = match JsAnyExpression::cast(node.clone()) {
-        Some(JsAnyExpression::JsLogicalExpression(logical)) => {
-            Some(BinaryLikeOperator::Logical(logical.operator()?))
-        }
-        Some(JsAnyExpression::JsBinaryExpression(binary)) => {
-            Some(BinaryLikeOperator::Binary(binary.operator()?))
-        }
-        Some(JsAnyExpression::JsInstanceofExpression(_)) => Some(BinaryLikeOperator::Instanceof),
-        Some(JsAnyExpression::JsInExpression(_)) => Some(BinaryLikeOperator::In),
+    node: &JsAnyBinaryLikeLeftExpression,
+) -> FormatResult<bool> {
+    let compare_to = match node {
+        JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => match expression {
+            JsAnyExpression::JsLogicalExpression(logical) => {
+                Some(BinaryLikeOperator::Logical(logical.operator()?))
+            }
+            JsAnyExpression::JsBinaryExpression(binary) => {
+                Some(BinaryLikeOperator::Binary(binary.operator()?))
+            }
+            JsAnyExpression::JsInstanceofExpression(_) => Some(BinaryLikeOperator::Instanceof),
+            JsAnyExpression::JsInExpression(_) => Some(BinaryLikeOperator::In),
+            _ => None,
+        },
         _ => None,
     };
 
-    let operation_is_higher = if let Some(compare_to) = compare_to {
+    let result = if let Some(compare_to) = compare_to {
         match (parent_operator, compare_to) {
             (
                 BinaryLikeOperator::Logical(previous_operation),
@@ -204,39 +210,53 @@ fn format_with_or_without_parenthesis(
         false
     };
 
-    let result = if operation_is_higher {
-        let (leading, content, trailing) = formatted_node.split_trivia();
-        let formatted = formatted![
-            formatter,
-            [
-                leading,
-                group_elements(formatted![
-                    formatter,
-                    [
-                        token("("),
-                        soft_block_indent(formatted![formatter, [content, trailing]]?),
-                        token(")")
-                    ]
-                ]?)
-            ]
-        ]?;
-
-        (formatted, true)
-    } else {
-        (formatted_node, false)
-    };
-
     Ok(result)
 }
 
-/// It tells if the expression can be hard grouped
-fn can_hard_group(flatten_nodes: &[FlattenItem]) -> bool {
+// False positive, Removing the `+ 'a` lifetime fails to compile with `hidden type for `impl Trait` captures lifetime that does not appear in bounds`
+#[allow(clippy::needless_lifetimes)]
+fn format_sub_expression<'a>(
+    parent_operator: BinaryLikeOperator,
+    sub_expression: &'a JsAnyBinaryLikeLeftExpression,
+) -> impl Format<JsFormatContext> + 'a {
+    format_with(move |f| {
+        if needs_parens(parent_operator, sub_expression)? {
+            write!(f, [format_parenthesized(sub_expression)])
+        } else {
+            write!(f, [sub_expression])
+        }
+    })
+}
+
+fn format_parenthesized<'a, Inner>(inner: Inner) -> impl Format<JsFormatContext>
+where
+    Inner: Format<JsFormatContext> + 'a,
+{
+    format_with(move |f| {
+        let mut buffer = VecBuffer::new(f.state_mut());
+        write!(buffer, [inner])?;
+        let formatted_node = buffer.into_element();
+        let (leading, content, trailing) = formatted_node.split_trivia();
+
+        f.write_element(leading)?;
+        write![
+            f,
+            [group_elements(&format_args![
+                token("("),
+                soft_block_indent(&format_once(|f| {
+                    f.write_element(content)?;
+                    f.write_element(trailing)
+                })),
+                token(")")
+            ])]
+        ]
+    })
+}
+
+fn keep_on_same_line(flatten_nodes: &[FlattenItem]) -> bool {
     // We don't want to have 1 + 2 to break, for example.
-    // If there are any trailing comments, let's break.
-    flatten_nodes.len() <= 2
-        && flatten_nodes
-            .iter()
-            .all(|node| !node.has_comments() && !node.is_group())
+    // But if there are any trailing comments, break it.
+    flatten_nodes.len() <= 2 && flatten_nodes.iter().all(|node| !node.has_comments())
 }
 
 fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
@@ -259,21 +279,27 @@ fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
 ///
 /// There are some cases where the indentation is done by the parent, so if the parent is already doing
 /// the indentation, then there's no need to do a second indentation.
-fn should_not_indent_if_parent_indents(current_node: &JsSyntaxNode) -> bool {
-    let parent_kind = current_node.parent().map(|parent| parent.kind());
+fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
+    let parent_kind = current_node.syntax().parent().map(|parent| parent.kind());
 
-    matches!(
-        parent_kind,
-        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
-    )
+    match parent_kind {
+        Some(JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER) => current_node
+            .as_expression()
+            .and_then(|expression| is_break_after_colon(expression).ok())
+            .unwrap_or(false),
+        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION) => {
+            true
+        }
+        _ => false,
+    }
 }
 
 /// There are other cases where the parent decides to inline the the element; in
 /// these cases the decide to actually break on a new line and indent it.
 ///
 /// This function checks what the parents adheres to this behaviour
-fn should_indent_if_parent_inlines(current_node: &JsSyntaxNode) -> bool {
-    let parent = current_node.parent();
+fn should_indent_if_parent_inlines(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
+    let parent = current_node.syntax().parent();
     let grand_parent = parent.as_ref().and_then(|p| p.parent());
 
     match (parent, grand_parent) {
@@ -289,22 +315,32 @@ fn should_indent_if_parent_inlines(current_node: &JsSyntaxNode) -> bool {
 #[derive(Debug, Default)]
 struct FlattenItems {
     items: Vec<FlattenItem>,
+
+    /// Position into `items` where the next group starts.
+    current_group_start: usize,
+}
+
+impl Deref for FlattenItems {
+    type Target = [FlattenItem];
+
+    fn deref(&self) -> &Self::Target {
+        &self.items
+    }
 }
 
 impl FlattenItems {
     /// Formats the right hand side of a binary like expression
-    fn format_binary_expression_right_hand_side(
+    fn flatten_binary_expression_right_hand_side(
         &mut self,
         expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &JsFormatter,
     ) -> FormatResult<()> {
         let should_flatten = expression.can_flatten()?;
 
         if should_flatten {
-            self.flatten_right_hand_side(expression, parent_operator, formatter)
+            self.flatten_right_hand_side(expression, parent_operator)
         } else {
-            self.format_new_binary_like_group(expression, parent_operator, formatter)
+            self.flatten_new_binary_like_group(expression, parent_operator)
         }
     }
 
@@ -313,34 +349,29 @@ impl FlattenItems {
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &JsFormatter,
     ) -> FormatResult<()> {
-        let right = binary_like_expression.right()?;
+        let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(binary_like_expression.right()?);
         let has_comments = right.syntax().has_comments_direct();
-        let right_formatted = formatted![formatter, [right.format()]]?;
 
-        let (formatted_node, _) = format_with_or_without_parenthesis(
-            binary_like_expression.operator()?,
-            right.syntax(),
-            right_formatted,
-            formatter,
-        )?;
-
-        let flatten_item =
-            FlattenItem::regular(formatted_node, parent_operator, has_comments.into());
+        let flatten_item = FlattenItem::new(
+            FlattenedBinaryExpressionPart::Right {
+                parent: binary_like_expression,
+            },
+            parent_operator,
+            has_comments.into(),
+        );
         self.items.push(flatten_item);
 
         Ok(())
     }
 
     /// The left hand-side expression and the current operator cannot be flattened.
-    /// Format the left hand side by its own and potentially wrap it in parentheses before formatting
+    /// Format the left hand side on its own and potentially wrap it in parentheses before formatting
     /// the right-hand side of the current expression.
-    fn format_new_binary_like_group(
+    fn flatten_new_binary_like_group(
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        formatter: &JsFormatter,
     ) -> FormatResult<()> {
         if let Some(last) = self.items.last_mut() {
             // Remove any line breaks and the trailing operator so that the operator/trailing aren't part
@@ -353,13 +384,15 @@ impl FlattenItems {
         let operator = binary_like_expression.operator()?;
         let operator_token = binary_like_expression.operator_token()?;
 
-        let left_formatted = self.take_format_element(left.syntax(), formatter)?;
-        let (left_formatted, _) =
-            format_with_or_without_parenthesis(operator, left.syntax(), left_formatted, formatter)?;
-
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
-        let mut left_item = FlattenItem::regular(
-            left_formatted,
+        let left_parenthesized = needs_parens(operator, &left)?;
+        let mut left_item = FlattenItem::new(
+            FlattenedBinaryExpressionPart::Group {
+                current: left,
+                expressions_start: self.current_group_start,
+                expressions_end: self.items.len(),
+                parenthesized: left_parenthesized,
+            },
             Some(operator_token),
             operator_has_trailing_comments.into(),
         );
@@ -368,28 +401,23 @@ impl FlattenItems {
             left_item = left_item.with_terminator(TrailingTerminator::HardLineBreak);
         }
 
+        self.current_group_start = self.len();
         self.items.push(left_item);
 
-        let right = binary_like_expression.right()?;
+        let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(binary_like_expression.right()?);
 
-        // Format the right node
-        let (formatted_right, parenthesized) = format_with_or_without_parenthesis(
-            operator,
-            right.syntax(),
-            formatted![formatter, [right.format()]]?,
-            formatter,
-        )?;
-
+        // Flatten the right node
         let parent_operator_has_comments = parent_operator
             .as_ref()
             .map(|operator| operator.has_leading_comments());
 
-        let mut right_item =
-            if !parenthesized && matches!(right, JsAnyExpression::JsLogicalExpression(_)) {
-                FlattenItem::group(formatted_right, parent_operator, Comments::NoComments)
-            } else {
-                FlattenItem::regular(formatted_right, parent_operator, Comments::NoComments)
-            };
+        let mut right_item = FlattenItem::new(
+            FlattenedBinaryExpressionPart::Right {
+                parent: binary_like_expression,
+            },
+            parent_operator,
+            Comments::NoComments,
+        );
 
         // Format the parent operator
         if let Some(parent_operator_has_comments) = parent_operator_has_comments {
@@ -410,69 +438,6 @@ impl FlattenItems {
         self.items.push(right_item);
 
         Ok(())
-    }
-
-    fn take_format_element(
-        &mut self,
-        current_node: &JsSyntaxNode,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
-        let can_hard_group = can_hard_group(&self.items);
-        let len = self.items.len();
-
-        let mut groups = self
-            .items
-            .drain(..)
-            .enumerate()
-            // groups not like ["something &&", "something &&" ]
-            // we want to add a space between them in case they don't break
-            .map(|(index, element)| {
-                let operator = match &element.operator {
-                    Some(operator) => {
-                        // SAFETY: `syntax_token.format` never returns MissingToken.
-                        formatted![formatter, [space_token(), operator.format()]].unwrap()
-                    }
-                    None => empty_element(),
-                };
-
-                let terminator = match &element.terminator {
-                    // the last element doesn't need a space
-                    TrailingTerminator::None if index + 1 == len => empty_element(),
-                    TrailingTerminator::None => empty_element(),
-                    TrailingTerminator::HardLineBreak => hard_line_break(),
-                };
-
-                format_elements![element.formatted, operator, terminator]
-            });
-
-        if can_hard_group {
-            // we bail early if group doesn't need to be broken. We don't need to do further checks
-            return Ok(join_elements(space_token(), groups));
-        }
-
-        let formatted = if is_inside_parenthesis(current_node) {
-            join_elements(soft_line_break_or_space(), groups)
-        } else if should_not_indent_if_parent_indents(current_node) {
-            group_elements(join_elements(soft_line_break_or_space(), groups))
-        } else if should_indent_if_parent_inlines(current_node) {
-            // in order to correctly break, we need to check if the parent created a group
-            // that breaks or not. In order to do that , we need to create two conditional groups
-            // that behave differently depending on the situation
-            soft_line_indent_or_space(group_elements(join_elements(
-                soft_line_break_or_space(),
-                groups,
-            )))
-        } else {
-            // if none of the previous conditions is met,
-            // we take take out the first element from the rest of group, then we hard group the "head"
-            // and we indent the rest of the groups in a new line
-            let head = groups.next().unwrap();
-            let rest = join_elements(soft_line_break_or_space(), groups);
-
-            format_elements![head, group_elements(soft_line_indent_or_space(rest))]
-        };
-
-        Ok(formatted)
     }
 }
 
@@ -499,10 +464,138 @@ impl From<bool> for Comments {
     }
 }
 
+/// The left or right sub part of a binary expression.
+#[derive(Debug)]
+enum FlattenedBinaryExpressionPart {
+    /// The right hand side of a binary expression. Needs to format the parent operator and the right expression
+    Right {
+        /// The parent expression
+        parent: JsAnyBinaryLikeExpression,
+    },
+
+    /// The very first left hand side of a binary expression. Only formats the expression
+    Left {
+        /// The left hand side expression
+        expression: JsAnyBinaryLikeLeftExpression,
+    },
+
+    /// A group of expressions that can be grouped/printed together.
+    Group {
+        /// The binary expression that should be formatted now
+        current: JsAnyBinaryLikeLeftExpression,
+
+        /// Start end/index into the flattened items array from where the left hand side expressions start
+        expressions_start: usize,
+        expressions_end: usize,
+
+        /// Whether to parenthesize the expression
+        parenthesized: bool,
+    },
+}
+
+impl FlattenedBinaryExpressionPart {
+    fn write(&self, f: &mut JsFormatter, items: &[FlattenItem]) -> FormatResult<()> {
+        match self {
+            FlattenedBinaryExpressionPart::Right { parent } => {
+                let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(parent.right()?);
+
+                write!(f, [format_sub_expression(parent.operator()?, &right)])?;
+                Ok(())
+            }
+            FlattenedBinaryExpressionPart::Left { expression } => {
+                write!(f, [expression])
+            }
+            FlattenedBinaryExpressionPart::Group {
+                current,
+                expressions_start,
+                expressions_end,
+                parenthesized,
+            } => {
+                let expressions = &items[*expressions_start..*expressions_end];
+                let content = format_with(|f| {
+                    let keep_on_same_line = keep_on_same_line(expressions);
+
+                    let mut groups = expressions.iter().map(|group| {
+                        format_with(|f| {
+                            group.expression.write(f, items)?;
+
+                            if let Some(operator) = &group.operator {
+                                write!(f, [space_token(), operator.format()])?;
+                            }
+
+                            match &group.terminator {
+                                TrailingTerminator::None => (),
+                                TrailingTerminator::HardLineBreak => {
+                                    write!(f, [hard_line_break()])?
+                                }
+                            };
+
+                            Ok(())
+                        })
+                    });
+
+                    if keep_on_same_line {
+                        // we bail early if group doesn't need to be broken. We don't need to do further checks
+                        f.join_with(space_token()).entries(groups).finish()
+                    } else if is_inside_parenthesis(current.syntax()) {
+                        f.join_with(soft_line_break_or_space())
+                            .entries(groups)
+                            .finish()
+                    } else if should_not_indent_if_parent_indents(current) {
+                        write!(
+                            f,
+                            [group_elements(&format_once(|f| {
+                                f.join_with(soft_line_break_or_space())
+                                    .entries(groups)
+                                    .finish()
+                            }))]
+                        )
+                    } else if should_indent_if_parent_inlines(current) {
+                        write!(
+                            f,
+                            [soft_line_indent_or_space(&group_elements(&format_once(
+                                |f| {
+                                    f.join_with(soft_line_break_or_space())
+                                        .entries(groups)
+                                        .finish()
+                                }
+                            )))]
+                        )
+                    } else {
+                        // if none of the previous conditions is met,
+                        // we take out the first element from the rest of the group
+                        // and indent the rest of the groups in a new line
+
+                        // SAFETY: Safe because `keep_on_same_line` returns `true` if this is a single
+                        // binary expression without any nested sub expressions.
+                        write!(f, [groups.next().unwrap()])?;
+
+                        write!(
+                            f,
+                            [group_elements(&soft_line_indent_or_space(&format_once(
+                                |f| {
+                                    f.join_with(soft_line_break_or_space())
+                                        .entries(groups)
+                                        .finish()
+                                }
+                            )))]
+                        )
+                    }
+                });
+
+                if *parenthesized {
+                    write!(f, [format_parenthesized(content)])
+                } else {
+                    write!(f, [content])
+                }
+            }
+        }
+    }
+}
+
 #[derive(Debug)]
 struct FlattenItem {
-    kind: FlattenItemKind,
-    formatted: FormatElement,
+    expression: FlattenedBinaryExpressionPart,
     operator: Option<JsSyntaxToken>,
     terminator: TrailingTerminator,
     comments: Comments,
@@ -515,36 +608,17 @@ enum TrailingTerminator {
 }
 
 impl FlattenItem {
-    fn regular(
-        formatted: FormatElement,
+    fn new(
+        expression: FlattenedBinaryExpressionPart,
         operator: Option<JsSyntaxToken>,
         comments: Comments,
     ) -> Self {
         Self {
-            formatted,
+            expression,
             operator,
-            kind: FlattenItemKind::Regular,
             terminator: TrailingTerminator::None,
             comments,
         }
-    }
-
-    fn group(
-        formatted: FormatElement,
-        operator: Option<JsSyntaxToken>,
-        comments: Comments,
-    ) -> Self {
-        Self {
-            formatted,
-            comments,
-            operator,
-            terminator: TrailingTerminator::None,
-            kind: FlattenItemKind::Group,
-        }
-    }
-
-    fn is_group(&self) -> bool {
-        matches!(self.kind, FlattenItemKind::Group)
     }
 
     fn has_comments(&self) -> bool {
@@ -560,14 +634,6 @@ impl FlattenItem {
         self.comments = comments.into();
         self
     }
-}
-
-#[derive(Debug)]
-enum FlattenItemKind {
-    Regular,
-    /// Used when the right side of a binary/logical expression is another binary/logical.
-    /// When we have such cases we
-    Group,
 }
 
 /// The [PostorderIterator] visits every node twice. First on the way down to find the left most binary
@@ -665,13 +731,8 @@ impl Iterator for PostorderIterator {
 
 impl FusedIterator for PostorderIterator {}
 
-#[allow(clippy::enum_variant_names)]
-#[derive(Debug, Clone)]
-pub(crate) enum JsAnyBinaryLikeExpression {
-    JsLogicalExpression(JsLogicalExpression),
-    JsBinaryExpression(JsBinaryExpression),
-    JsInstanceofExpression(JsInstanceofExpression),
-    JsInExpression(JsInExpression),
+declare_node_union! {
+    pub(crate) JsAnyBinaryLikeExpression = JsLogicalExpression | JsBinaryExpression | JsInstanceofExpression | JsInExpression
 }
 
 impl JsAnyBinaryLikeExpression {
@@ -726,64 +787,43 @@ impl JsAnyBinaryLikeExpression {
             JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.object(),
         }
     }
-}
 
-impl AstNode for JsAnyBinaryLikeExpression {
-    type Language = JsLanguage;
-    fn can_cast(kind: JsSyntaxKind) -> bool
-    where
-        Self: Sized,
-    {
-        matches!(
-            kind,
-            JS_BINARY_EXPRESSION
-                | JS_LOGICAL_EXPRESSION
-                | JS_INSTANCEOF_EXPRESSION
-                | JS_IN_EXPRESSION
-        )
-    }
-
-    fn cast(syntax: JsSyntaxNode) -> Option<Self>
-    where
-        Self: Sized,
-    {
-        match syntax.kind() {
-            JS_BINARY_EXPRESSION => {
-                JsBinaryExpression::cast(syntax).map(JsAnyBinaryLikeExpression::JsBinaryExpression)
-            }
-            JS_LOGICAL_EXPRESSION => JsLogicalExpression::cast(syntax)
-                .map(JsAnyBinaryLikeExpression::JsLogicalExpression),
-            JS_INSTANCEOF_EXPRESSION => JsInstanceofExpression::cast(syntax)
-                .map(JsAnyBinaryLikeExpression::JsInstanceofExpression),
-            JS_IN_EXPRESSION => {
-                JsInExpression::cast(syntax).map(JsAnyBinaryLikeExpression::JsInExpression)
-            }
-            _ => None,
-        }
-    }
-
-    fn syntax(&self) -> &JsSyntaxNode {
+    fn into_expression(self) -> JsAnyExpression {
         match self {
-            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.syntax(),
-            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.syntax(),
-            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => instanceof.syntax(),
-            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.syntax(),
-        }
-    }
-
-    fn into_syntax(self) -> JsSyntaxNode {
-        match self {
-            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.into_syntax(),
-            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.into_syntax(),
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => {
+                JsAnyExpression::JsLogicalExpression(logical)
+            }
+            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => {
+                JsAnyExpression::JsBinaryExpression(binary)
+            }
             JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => {
-                instanceof.into_syntax()
+                JsAnyExpression::JsInstanceofExpression(instanceof)
             }
-            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.into_syntax(),
+            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => {
+                JsAnyExpression::JsInExpression(in_expression)
+            }
         }
     }
 }
 
 impl JsAnyBinaryLikeExpression {
+    /// Determines if a binary like expression should be inline or not.
+    pub fn should_inline(&self) -> bool {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical_expression) => {
+                match logical_expression.right() {
+                    Ok(JsAnyExpression::JsObjectExpression(object_expression)) => {
+                        object_expression.members().iter().count() > 0
+                    }
+                    Ok(JsAnyExpression::JsArrayExpression(array_expression)) => {
+                        array_expression.elements().iter().count() > 0
+                    }
+                    _ => false,
+                }
+            }
+            _ => false,
+        }
+    }
     /// Determines if a binary like expression should be flattened or not. As a rule of thumb, an expression
     /// can be flattened if it is of the same kind as the left-hand side sub-expression and uses the same operator.
     fn can_flatten(&self) -> SyntaxResult<bool> {
@@ -814,10 +854,8 @@ impl JsAnyBinaryLikeExpression {
     }
 }
 
-#[derive(Debug)]
-enum JsAnyBinaryLikeLeftExpression {
-    JsAnyExpression(JsAnyExpression),
-    JsPrivateName(JsPrivateName),
+declare_node_union! {
+    JsAnyBinaryLikeLeftExpression = JsAnyExpression | JsPrivateName
 }
 
 impl JsAnyBinaryLikeLeftExpression {
@@ -829,67 +867,16 @@ impl JsAnyBinaryLikeLeftExpression {
     }
 }
 
-impl AstNode for JsAnyBinaryLikeLeftExpression {
-    type Language = JsLanguage;
-    fn can_cast(kind: JsSyntaxKind) -> bool
-    where
-        Self: Sized,
-    {
-        JsAnyExpression::can_cast(kind) || JsPrivateName::can_cast(kind)
-    }
-
-    fn cast(syntax: JsSyntaxNode) -> Option<Self>
-    where
-        Self: Sized,
-    {
-        if syntax.kind() == JS_PRIVATE_NAME {
-            JsPrivateName::cast(syntax).map(|name| name.into())
-        } else {
-            JsAnyExpression::cast(syntax).map(|expr| expr.into())
-        }
-    }
-
-    fn syntax(&self) -> &JsSyntaxNode {
-        match self {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression.syntax(),
-            JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => private_name.syntax(),
-        }
-    }
-
-    fn into_syntax(self) -> JsSyntaxNode {
-        match self {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression.into_syntax(),
-            JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
-                private_name.into_syntax()
-            }
-        }
-    }
-}
-
-impl Format for JsAnyBinaryLikeLeftExpression {
-    type Context = JsFormatContext;
-
-    fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
+impl Format<JsFormatContext> for JsAnyBinaryLikeLeftExpression {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                formatted![formatter, [expression.format()]]
+                write![f, [expression.format()]]
             }
             JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
-                formatted![formatter, [private_name.format()]]
+                write![f, [private_name.format()]]
             }
         }
-    }
-}
-
-impl From<JsAnyExpression> for JsAnyBinaryLikeLeftExpression {
-    fn from(expression: JsAnyExpression) -> Self {
-        JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression)
-    }
-}
-
-impl From<JsPrivateName> for JsAnyBinaryLikeLeftExpression {
-    fn from(private_name: JsPrivateName) -> Self {
-        JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name)
     }
 }
 

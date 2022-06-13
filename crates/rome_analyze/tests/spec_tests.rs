@@ -2,7 +2,7 @@ use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
 };
 
-use rome_analyze::{AnalysisFilter, AnalyzerAction};
+use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never};
 use rome_console::{
     diff::{Diff, DiffMode},
     fmt::{Formatter, Termcolor},
@@ -10,7 +10,7 @@ use rome_console::{
 };
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
 use rome_js_parser::parse;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, Language};
 
 tests_macros::gen_tests! {"tests/specs/**/*.js", crate::run_test, "module"}
 
@@ -53,12 +53,14 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             }
 
             diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
-            return;
+            return ControlFlow::Continue(());
         }
 
         if let Some(action) = event.action() {
             code_fixes.push(code_fix_to_string(&input_code, action));
         }
+
+        ControlFlow::<Never>::Continue(())
     });
 
     let mut snapshot = String::new();
@@ -115,9 +117,11 @@ fn diagnostic_to_string(name: &str, source: &str, diag: Diagnostic) -> String {
     text
 }
 
-fn code_fix_to_string(source: &str, action: AnalyzerAction) -> String {
+fn code_fix_to_string<L>(source: &str, action: AnalyzerAction<L>) -> String
+where
+    L: Language,
+{
     let output = action.root.syntax().to_string();
-
     markup_to_string(markup! {
         {Diff { mode: DiffMode::Unified, left: source, right: &output }}
     })

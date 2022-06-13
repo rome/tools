@@ -187,7 +187,13 @@ impl<L: Language, N: AstNode<Language = L>> ExactSizeIterator for AstNodeListIte
 
 impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstNodeListIterator<L, N> {}
 
-#[derive(Clone)]
+impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator for AstNodeListIterator<L, N> {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        Some(Self::slot_to_node(&self.inner.next_back()?))
+    }
+}
+
+#[derive(Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct AstSeparatedElement<L: Language, N> {
@@ -203,12 +209,20 @@ impl<L: Language, N: AstNode<Language = L>> AstSeparatedElement<L, N> {
         }
     }
 
+    pub fn into_node(self) -> SyntaxResult<N> {
+        self.node
+    }
+
     pub fn trailing_separator(&self) -> SyntaxResult<Option<&SyntaxToken<L>>> {
         match &self.trailing_separator {
             Ok(Some(sep)) => Ok(Some(sep)),
             Ok(_) => Ok(None),
             Err(err) => Err(*err),
         }
+    }
+
+    pub fn into_trailing_separator(self) -> SyntaxResult<Option<SyntaxToken<L>>> {
+        self.trailing_separator
     }
 }
 
@@ -305,6 +319,24 @@ where
     }
 }
 
+impl<L, N> DoubleEndedIterator for AstSeparatorIterator<L, N>
+where
+    L: Language,
+    N: AstNode<Language = L>,
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        loop {
+            let element = self.inner.next_back()?;
+
+            match element.trailing_separator {
+                Ok(Some(separator)) => return Some(Ok(separator)),
+                Err(missing) => return Some(Err(missing)),
+                _ => {}
+            }
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct AstSeparatedListElementsIterator<L: Language, N> {
     slots: SyntaxSlots<L>,
@@ -356,6 +388,42 @@ impl<L: Language, N: AstNode<Language = L>> FusedIterator
 {
 }
 
+impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
+    for AstSeparatedListElementsIterator<L, N>
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        let first_slot = self.slots.next_back()?;
+
+        let separator = match first_slot {
+            SyntaxSlot::Node(node) => {
+                // if we fallback here, it means that we are at the end of the iterator
+                // which means that we don't have the optional separator and
+                // we have only a node, we bail early.
+                return Some(AstSeparatedElement {
+                    node: Ok(N::unwrap_cast(node)),
+                    trailing_separator: Ok(None),
+                });
+            }
+            SyntaxSlot::Token(token) => Ok(Some(token)),
+            SyntaxSlot::Empty => Ok(None),
+        };
+
+        let node = match self.slots.next_back() {
+            None => panic!("Malformed separated list, expected a node but found none"),
+            Some(SyntaxSlot::Empty) => Err(SyntaxError::MissingRequiredChild),
+            Some(SyntaxSlot::Token(token)) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+            Some(SyntaxSlot::Node(node)) => {
+                Ok(N::unwrap_cast(node))
+            }
+        };
+
+        Some(AstSeparatedElement {
+            node,
+            trailing_separator: separator,
+        })
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct AstSeparatedListNodesIterator<L: Language, N> {
     inner: AstSeparatedListElementsIterator<L, N>,
@@ -369,6 +437,14 @@ impl<L: Language, N: AstNode<Language = L>> Iterator for AstSeparatedListNodesIt
 }
 
 impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstSeparatedListNodesIterator<L, N> {}
+
+impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
+    for AstSeparatedListNodesIterator<L, N>
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.inner.next_back().map(|element| element.node)
+    }
+}
 
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
@@ -512,27 +588,59 @@ mod tests {
         SeparatedExpressionList::new(node.into_list())
     }
 
-    fn assert_elements<'a>(
-        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>,
+    type MappedElement = Vec<(Option<f64>, Option<String>)>;
+
+    fn map_elements<'a>(
+        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>
+            + DoubleEndedIterator,
         expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
-    ) {
-        let actual = actual.map(|element| {
-            (
-                element.node.ok().map(|n| n.text().parse::<f64>().unwrap()),
-                element
-                    .trailing_separator
-                    .ok()
-                    .flatten()
-                    .map(|separator| separator.text().to_string()),
-            )
-        });
+        revert: bool,
+    ) -> (MappedElement, MappedElement) {
+        let actual: Vec<_> = if revert {
+            actual.rev().collect()
+        } else {
+            actual.collect()
+        };
+        let actual = actual
+            .into_iter()
+            .map(|element| {
+                (
+                    element.node.ok().map(|n| n.text().parse::<f64>().unwrap()),
+                    element
+                        .trailing_separator
+                        .ok()
+                        .flatten()
+                        .map(|separator| separator.text().to_string()),
+                )
+            })
+            .collect::<Vec<_>>();
 
         let expected = expected
             .into_iter()
             .map(|(value, separator)| (value, separator.map(|sep| sep.to_string())))
             .collect::<Vec<_>>();
 
-        assert_eq!(actual.collect::<Vec<_>>(), expected);
+        (actual, expected)
+    }
+
+    fn assert_elements<'a>(
+        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>
+            + DoubleEndedIterator,
+        expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
+    ) {
+        let (actual, expected) = map_elements(actual, expected, false);
+
+        assert_eq!(actual, expected);
+    }
+
+    fn assert_rev_elements<'a>(
+        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>
+            + DoubleEndedIterator,
+        expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
+    ) {
+        let (actual, expected) = map_elements(actual, expected, true);
+
+        assert_eq!(actual, expected);
     }
 
     fn assert_nodes(
@@ -557,6 +665,7 @@ mod tests {
 
         assert_nodes(list.iter(), vec![]);
         assert_elements(list.elements(), vec![]);
+        assert_rev_elements(list.elements(), vec![]);
         assert_eq!(list.trailing_separator(), None);
     }
 
@@ -583,7 +692,41 @@ mod tests {
                 (Some(4.), None),
             ],
         );
+        assert_rev_elements(
+            list.elements(),
+            vec![
+                (Some(4.), None),
+                (Some(3.), Some(",")),
+                (Some(2.), Some(",")),
+                (Some(1.), Some(",")),
+            ],
+        );
         assert_eq!(list.trailing_separator(), None);
+    }
+
+    #[test]
+    fn double_iterator_meet_at_middle() {
+        let list = build_list(vec![
+            (Some(1), Some(",")),
+            (Some(2), Some(",")),
+            (Some(3), Some(",")),
+            (Some(4), None),
+        ]);
+
+        let mut iter = list.elements();
+
+        let element = iter.next().unwrap();
+        assert_eq!(element.node().unwrap().text(), "1");
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "4");
+
+        let element = iter.next().unwrap();
+        assert_eq!(element.node().unwrap().text(), "2");
+        let element = iter.next_back().unwrap();
+        assert_eq!(element.node().unwrap().text(), "3");
+
+        assert!(iter.next().is_none());
+        assert!(iter.next_back().is_none());
     }
 
     #[test]
@@ -610,6 +753,15 @@ mod tests {
                 (Some(4.), Some(",")),
             ],
         );
+        assert_rev_elements(
+            list.elements(),
+            vec![
+                (Some(4.), Some(",")),
+                (Some(3.), Some(",")),
+                (Some(2.), Some(",")),
+                (Some(1.), Some(",")),
+            ],
+        );
         assert!(list.trailing_separator().is_some());
     }
 
@@ -625,6 +777,11 @@ mod tests {
         assert_elements(
             list.elements(),
             vec![(Some(1.), Some(",")), (None, Some(","))],
+        );
+
+        assert_rev_elements(
+            list.elements(),
+            vec![(None, Some(",")), (Some(1.), Some(","))],
         );
     }
 
@@ -645,6 +802,15 @@ mod tests {
                 (Some(3.), None),
             ],
         );
+
+        assert_rev_elements(
+            list.elements(),
+            vec![
+                // missing first element
+                (Some(3.), None),
+                (None, Some(",")),
+            ],
+        );
     }
 
     #[test]
@@ -659,6 +825,11 @@ mod tests {
         assert_elements(
             list.elements(),
             vec![(Some(1.), None), (Some(2.), Some(","))],
+        );
+
+        assert_rev_elements(
+            list.elements(),
+            vec![(Some(2.), Some(",")), (Some(1.), None)],
         );
     }
 

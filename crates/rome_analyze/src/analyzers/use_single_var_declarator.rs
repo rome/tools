@@ -1,17 +1,17 @@
 use std::iter;
 
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsStatementList, JsSyntaxToken, JsVariableDeclarationFields,
+    JsAnyRoot, JsModuleItemList, JsStatementList, JsSyntaxToken, JsVariableDeclarationFields,
     JsVariableDeclaratorList, JsVariableStatement, JsVariableStatementFields,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, AstNodeListExt, AstSeparatedList};
+use rome_rowan::{AstNode, AstSeparatedList};
 
 use crate::{ActionCategory, RuleCategory};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 
 pub(crate) enum UseSingleVarDeclarator {}
 
@@ -44,26 +44,28 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            range: node.syntax().text_trimmed_range(),
-            message: markup! {
-                "Declare variables separately."
-            }
-            .to_owned(),
-        })
+        Some(RuleDiagnostic::warning(
+            node.range(),
+            "Declare variables separately",
+        ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
         let (kind, declarators, semicolon_token) = state;
 
-        let prev_parent = JsStatementList::cast(node.syntax().parent()?)?;
+        let prev_parent = node.syntax().parent()?;
+        if !JsStatementList::can_cast(prev_parent.kind())
+            && !JsModuleItemList::can_cast(prev_parent.kind())
+        {
+            return None;
+        }
+
         let index = prev_parent
-            .iter()
-            .position(|slot| slot.syntax() == node.syntax())?;
+            .children()
+            .position(|slot| &slot == node.syntax())?;
 
         let mut is_first = true;
-        let next_parent = prev_parent.clone().splice(
+        let next_parent = prev_parent.clone().splice_slots(
             index..=index,
             declarators.iter().filter_map(|declarator| {
                 let declarator = declarator.ok()?;
@@ -86,15 +88,18 @@ impl Rule for UseSingleVarDeclarator {
                     builder = builder.with_semicolon_token(semicolon_token.clone());
                 }
 
-                Some(JsAnyStatement::from(builder.build()))
+                Some(Some(builder.build().into_syntax().into()))
             }),
         );
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
-            applicability: Applicability::MaybeIncorrect,
+            applicability: Applicability::Always,
             message: markup! { "Break out into multiple declarations" }.to_owned(),
-            root: root.replace_node_discard_trivia(prev_parent, next_parent)?,
+            root: JsAnyRoot::unwrap_cast(
+                root.into_syntax()
+                    .replace_child(prev_parent.into(), next_parent.into())?,
+            ),
         })
     }
 }

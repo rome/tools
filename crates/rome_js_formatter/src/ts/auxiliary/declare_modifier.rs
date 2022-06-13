@@ -1,14 +1,12 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsDeclareModifier;
 use rome_js_syntax::TsDeclareModifierFields;
 
 impl FormatNodeFields<TsDeclareModifier> for FormatNodeRule<TsDeclareModifier> {
-    fn format_fields(
-        node: &TsDeclareModifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsDeclareModifier, f: &mut JsFormatter) -> FormatResult<()> {
         let TsDeclareModifierFields { modifier_token } = node.as_fields();
-        formatted![formatter, [modifier_token.format()]]
+        write![f, [modifier_token.format()]]
     }
 }

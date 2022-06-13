@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-3122.ts
 ---
 # Input
@@ -17,20 +18,20 @@ export const findByDate: Resolver<void, Recipe[], { date: Date }> =
 
 # Output
 ```js
-export const findByDate: Resolver<
-  void,
-  Recipe[],
-  { date: Date }
-> = (_, { date }, { req }) => {
+export const findByDate: Resolver<void, Recipe[], { date: Date }> = (
+  _,
+  { date },
+  { req },
+) => {
   const repo = req.getRepository(Recipe);
-  return repo.find({ createDate: date },);
+  return repo.find({ createDate: date });
 };
 
-export const findByDate: Resolver<
-  void,
-  Recipe[],
-  { date: Date }
-> = (_, { date }, { req }) => Recipe.find({ createDate: date });
+export const findByDate: Resolver<void, Recipe[], { date: Date }> = (
+  _,
+  { date },
+  { req },
+) => Recipe.find({ createDate: date });
 
 ```
 

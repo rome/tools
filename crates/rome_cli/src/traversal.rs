@@ -24,7 +24,7 @@ use rome_formatter::IndentStyle;
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_service::{
-    workspace::{FeatureName, FileGuard, OpenFileParams, SupportsFeatureParams},
+    workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
     Workspace,
 };
 
@@ -93,6 +93,11 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
         TraversalMode::Check | TraversalMode::CI { .. } => {
             console.log(rome_console::markup! {
                 <Info>"Checked "{count}" files in "{duration}</Info>
+            });
+        }
+        TraversalMode::Fix => {
+            console.log(rome_console::markup! {
+                <Info>"Fixed "{count}" files in "{duration}</Info>
             });
         }
         TraversalMode::Format { write: false, .. } => {
@@ -248,6 +253,7 @@ fn print_messages_to_console(
 pub(crate) enum TraversalMode {
     Check,
     CI,
+    Fix,
     Format { ignore_errors: bool, write: bool },
 }
 
@@ -306,7 +312,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
         match self.mode {
-            TraversalMode::Check => self.can_lint(rome_path),
+            TraversalMode::Check | TraversalMode::Fix => self.can_lint(rome_path),
             TraversalMode::CI { .. } => self.can_lint(rome_path) || self.can_format(rome_path),
             TraversalMode::Format { .. } => self.can_format(rome_path),
         }
@@ -322,13 +328,14 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 /// traversal function returns Err or panics)
 fn handle_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) {
     match catch_unwind(move || process_file(ctx, path, file_id)) {
-        Ok(Ok(None)) => {
+        Ok(Ok(FileStatus::Success)) => {
             ctx.processed.fetch_add(1, Ordering::Relaxed);
         }
-        Ok(Ok(Some(msg))) => {
+        Ok(Ok(FileStatus::Message(msg))) => {
             ctx.processed.fetch_add(1, Ordering::Relaxed);
             ctx.push_message(msg);
         }
+        Ok(Ok(FileStatus::Ignored)) => {}
         Ok(Err(err)) => {
             ctx.skipped.fetch_add(1, Ordering::Relaxed);
             ctx.push_message(err);
@@ -352,14 +359,22 @@ fn handle_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) {
     }
 }
 
+enum FileStatus {
+    Success,
+    Message(Message),
+    Ignored,
+}
+
 /// The return type for [process_file], with the following semantics:
-/// - `Ok(None)` means the operation was successful (the file is added to the
-///   `processed` counter)
-/// - `Ok(Some(_))` means the operation was successful but a message still
+/// - `Ok(Success)` means the operation was successful (the file is added to
+///   the `processed` counter)
+/// - `Ok(Message(_))` means the operation was successful but a message still
 ///   needs to be printed (eg. the diff when not in CI or write mode)
+/// - `Ok(Ignored)` means the file was ignored (the file is not added to the
+///   `processed` or `skipped` counters)
 /// - `Err(_)` means the operation failed and the file should be added to the
-///   skipped counter
-type FileResult = Result<Option<Message>, Message>;
+///   `skipped` counter
+type FileResult = Result<FileStatus, Message>;
 
 /// This function performs the actual processing: it reads the file from disk
 /// and parse it; analyze and / or format it; then it either fails if error
@@ -371,7 +386,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let rome_path = RomePath::new(path, file_id);
         let can_format = ctx.can_format(&rome_path);
         let can_handle = match ctx.mode {
-            TraversalMode::Check => ctx.can_lint(&rome_path),
+            TraversalMode::Check | TraversalMode::Fix => ctx.can_lint(&rome_path),
             TraversalMode::CI { .. } => ctx.can_lint(&rome_path) || can_format,
             TraversalMode::Format { .. } => can_format,
         };
@@ -400,8 +415,31 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         )
         .with_file_id_and_code(file_id, "IO")?;
 
+        if let TraversalMode::Fix = ctx.mode {
+            let fixed = file_guard
+                .fix_file()
+                .with_file_id_and_code(file_id, "Lint")?;
+
+            if fixed.code != input {
+                file.set_content(fixed.code.as_bytes())
+                    .with_file_id(file_id)?;
+
+                return Ok(FileStatus::Success);
+            }
+
+            // If the file isn't changed, do not increment the "fixed files" counter
+            return Ok(FileStatus::Ignored);
+        }
+
+        let is_format = matches!(ctx.mode, TraversalMode::Format { .. });
+        let filter = if is_format {
+            RuleCategories::SYNTAX
+        } else {
+            RuleCategories::SYNTAX | RuleCategories::LINT
+        };
+
         let diagnostics = file_guard
-            .pull_diagnostics()
+            .pull_diagnostics(filter)
             .with_file_id_and_code(file_id, "Lint")?;
 
         let has_errors = diagnostics
@@ -430,10 +468,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             _ => {}
         }
 
-        let result = if diagnostics.is_empty() {
-            None
+        // In format mode the diagnostics have already been checked for errors
+        // at this point, so they can just be dropped now since we don't want
+        // to print syntax warnings for the format command
+        let result = if diagnostics.is_empty() || is_format {
+            FileStatus::Success
         } else {
-            Some(Message::Diagnostics {
+            FileStatus::Message(Message::Diagnostics {
                 name: path.display().to_string(),
                 content: input.clone(),
                 diagnostics,
@@ -453,7 +494,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         if can_format {
             let write = match ctx.mode {
                 // In check mode do not run the formatter and return the result immediately
-                TraversalMode::Check => return Ok(result),
+                TraversalMode::Check | TraversalMode::Fix => return Ok(result),
                 TraversalMode::CI => false,
                 TraversalMode::Format { write, .. } => write,
             };
@@ -470,11 +511,11 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     // Returning the diff message will discard the content of
                     // diagnostics, meaning those would not be printed so they
                     // have to be manually sent through the console channel
-                    if let Some(msg) = result {
+                    if let FileStatus::Message(msg) = result {
                         ctx.messages.send(msg).ok();
                     }
 
-                    return Ok(Some(Message::Diff {
+                    return Ok(FileStatus::Message(Message::Diff {
                         file_name: path.display().to_string(),
                         old: input,
                         new: output,

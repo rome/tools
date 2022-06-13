@@ -328,13 +328,18 @@ impl<L: Language> SyntaxNode<L> {
         self.raw.descendants().map(SyntaxNode::from)
     }
 
-    pub fn descendants_tokens(&self) -> impl Iterator<Item = SyntaxToken<L>> {
-        self.descendants_with_tokens()
+    pub fn descendants_tokens(&self, direction: Direction) -> impl Iterator<Item = SyntaxToken<L>> {
+        self.descendants_with_tokens(direction)
             .filter_map(|x| x.as_token().cloned())
     }
 
-    pub fn descendants_with_tokens(&self) -> impl Iterator<Item = SyntaxElement<L>> {
-        self.raw.descendants_with_tokens().map(NodeOrToken::from)
+    pub fn descendants_with_tokens(
+        &self,
+        direction: Direction,
+    ) -> impl Iterator<Item = SyntaxElement<L>> {
+        self.raw
+            .descendants_with_tokens(direction)
+            .map(NodeOrToken::from)
     }
 
     /// Traverse the subtree rooted at the current node (including the current
@@ -348,9 +353,9 @@ impl<L: Language> SyntaxNode<L> {
 
     /// Traverse the subtree rooted at the current node (including the current
     /// node) in preorder, including tokens.
-    pub fn preorder_with_tokens(&self) -> PreorderWithTokens<L> {
+    pub fn preorder_with_tokens(&self, direction: Direction) -> PreorderWithTokens<L> {
         PreorderWithTokens {
-            raw: self.raw.preorder_with_tokens(),
+            raw: self.raw.preorder_with_tokens(direction),
             _p: PhantomData,
         }
     }
@@ -458,7 +463,7 @@ impl<L: Language> SyntaxNode<L> {
     /// Whether the node contains any comments. This function checks
     /// **all the descendants** of the current node.
     pub fn has_comments_descendants(&self) -> bool {
-        self.descendants_tokens()
+        self.descendants_tokens(Direction::Next)
             .any(|tok| tok.has_trailing_comments() || tok.has_leading_comments())
     }
 
@@ -743,5 +748,15 @@ impl<'a, L: Language> FusedIterator for SyntaxSlots<L> {}
 impl<'a, L: Language> ExactSizeIterator for SyntaxSlots<L> {
     fn len(&self) -> usize {
         self.raw.len()
+    }
+}
+
+impl<L: Language> DoubleEndedIterator for SyntaxSlots<L> {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.raw.next_back().map(SyntaxSlot::from)
+    }
+
+    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
+        self.raw.nth_back(n).map(SyntaxSlot::from)
     }
 }

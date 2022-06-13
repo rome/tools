@@ -51,7 +51,7 @@ JsModule {
       0: SEMICOLON@8..9 ";" [] []
   3: EOF@9..10 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `')'` but instead found `=`
+error[SyntaxError]: expected `)` but instead found `=`
   ┌─ assign_expr_left.js:1:3
   │
 1 │ ( = foo);

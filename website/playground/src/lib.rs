@@ -1,6 +1,6 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
-use rome_analyze::AnalysisFilter;
+use rome_analyze::{AnalysisFilter, ControlFlow, Never};
 use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
@@ -225,6 +225,8 @@ pub fn run(
                     .emit_with_writer(&diag, &mut errors)
                     .unwrap();
             }
+
+            ControlFlow::<Never>::Continue(())
         },
     );
 

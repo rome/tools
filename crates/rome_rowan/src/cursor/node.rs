@@ -238,11 +238,12 @@ impl SyntaxNode {
     }
 
     pub fn first_token(&self) -> Option<SyntaxToken> {
-        self.descendants_with_tokens().find_map(|x| x.into_token())
+        self.descendants_with_tokens(Direction::Next)
+            .find_map(|x| x.into_token())
     }
 
     pub fn last_token(&self) -> Option<SyntaxToken> {
-        PreorderWithTokens::reverse(self.clone())
+        PreorderWithTokens::new(self.clone(), Direction::Prev)
             .filter_map(|event| match event {
                 WalkEvent::Enter(it) => Some(it),
                 WalkEvent::Leave(_) => None,
@@ -279,11 +280,15 @@ impl SyntaxNode {
     }
 
     #[inline]
-    pub fn descendants_with_tokens(&self) -> impl Iterator<Item = SyntaxElement> {
-        self.preorder_with_tokens().filter_map(|event| match event {
-            WalkEvent::Enter(it) => Some(it),
-            WalkEvent::Leave(_) => None,
-        })
+    pub fn descendants_with_tokens(
+        &self,
+        direction: Direction,
+    ) -> impl Iterator<Item = SyntaxElement> {
+        self.preorder_with_tokens(direction)
+            .filter_map(|event| match event {
+                WalkEvent::Enter(it) => Some(it),
+                WalkEvent::Leave(_) => None,
+            })
     }
 
     #[inline]
@@ -292,8 +297,8 @@ impl SyntaxNode {
     }
 
     #[inline]
-    pub fn preorder_with_tokens(&self) -> PreorderWithTokens {
-        PreorderWithTokens::new(self.clone())
+    pub fn preorder_with_tokens(&self, direction: Direction) -> PreorderWithTokens {
+        PreorderWithTokens::new(self.clone(), direction)
     }
 
     pub(crate) fn preorder_slots(&self) -> SlotsPreorder {
@@ -427,7 +432,7 @@ impl fmt::Debug for SyntaxNode {
 
 impl fmt::Display for SyntaxNode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.preorder_with_tokens()
+        self.preorder_with_tokens(Direction::Next)
             .filter_map(|event| match event {
                 WalkEvent::Enter(NodeOrToken::Token(token)) => Some(token),
                 _ => None,
@@ -557,22 +562,12 @@ pub(crate) struct PreorderWithTokens {
 }
 
 impl PreorderWithTokens {
-    fn new(start: SyntaxNode) -> PreorderWithTokens {
+    fn new(start: SyntaxNode, direction: Direction) -> PreorderWithTokens {
         let next = Some(WalkEvent::Enter(start.clone().into()));
         PreorderWithTokens {
             start: start.into(),
             next,
-            direction: Direction::Next,
-            skip_subtree: false,
-        }
-    }
-
-    fn reverse(start: SyntaxNode) -> PreorderWithTokens {
-        let next = Some(WalkEvent::Enter(start.clone().into()));
-        PreorderWithTokens {
-            start: start.into(),
-            next,
-            direction: Direction::Prev,
+            direction,
             skip_subtree: false,
         }
     }
@@ -655,14 +650,22 @@ impl From<SyntaxElement> for SyntaxSlot {
 /// Iterator over a node's slots
 #[derive(Debug, Clone)]
 pub(crate) struct SyntaxSlots {
-    next_position: u32,
+    /// Current consuming position tracked from the front
+    front_next_position: u32,
+    /// Current consuming position tracked from the back
+    /// **The index is from the end of the iterator!**
+    /// The API uses [`nth_back`] to retrieve the item:
+    ///
+    /// [nth_back]: https://doc.rust-lang.org/std/iter/trait.DoubleEndedIterator.html#method.nth_back
+    back_next_position: u32,
     parent: SyntaxNode,
 }
 
 impl SyntaxSlots {
     fn new(parent: SyntaxNode) -> Self {
         Self {
-            next_position: 0,
+            front_next_position: 0,
+            back_next_position: 0,
             parent,
         }
     }
@@ -687,17 +690,27 @@ impl SyntaxSlots {
             )),
         }
     }
+
+    /// Checks if the front position is less than the back position.
+    /// When [false], it means that the iterator can't be consumed anymore and it has to return [None]
+    fn assert_can_consume(&self) -> bool {
+        ((self.front_next_position + self.back_next_position) as usize)
+            < self.parent.green().slots().len()
+    }
 }
 
 impl Iterator for SyntaxSlots {
     type Item = SyntaxSlot;
 
     fn next(&mut self) -> Option<Self::Item> {
+        if !self.assert_can_consume() {
+            return None;
+        }
         let mut slots = self.parent.green().slots();
-        let current_position = self.next_position as usize;
+        let current_position = self.front_next_position as usize;
         if current_position < slots.len() {
             let next_slot = slots.nth(current_position);
-            self.next_position += 1;
+            self.front_next_position += 1;
             next_slot.map(|slot| self.map_slot(slot, current_position as u32))
         } else {
             None
@@ -711,7 +724,7 @@ impl Iterator for SyntaxSlots {
         let mut slots = self.parent.green().slots();
         let slots_len = slots.len() as usize;
 
-        if (self.next_position as usize) < slots_len {
+        if (self.front_next_position as usize) < slots_len {
             let position = slots_len - 1;
             slots
                 .nth(position)
@@ -723,7 +736,7 @@ impl Iterator for SyntaxSlots {
     }
 
     fn nth(&mut self, n: usize) -> Option<Self::Item> {
-        self.next_position += n as u32;
+        self.front_next_position += n as u32;
         self.next()
     }
 
@@ -739,6 +752,28 @@ impl ExactSizeIterator for SyntaxSlots {
 }
 
 impl FusedIterator for SyntaxSlots {}
+
+impl DoubleEndedIterator for SyntaxSlots {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        if !self.assert_can_consume() {
+            return None;
+        }
+        let mut slots = self.parent.green().slots();
+        let current_position = self.back_next_position as usize;
+        if current_position < slots.len() {
+            let previous_slot = slots.nth_back(current_position as usize);
+            self.back_next_position += 1;
+            previous_slot.map(|slot| self.map_slot(slot, current_position as u32))
+        } else {
+            None
+        }
+    }
+
+    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
+        self.back_next_position += n as u32;
+        self.next_back()
+    }
+}
 
 /// Iterator to visit a node's slots in pre-order.
 pub(crate) struct SlotsPreorder {

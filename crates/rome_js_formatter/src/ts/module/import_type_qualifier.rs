@@ -1,15 +1,13 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsImportTypeQualifier;
 use rome_js_syntax::TsImportTypeQualifierFields;
 
 impl FormatNodeFields<TsImportTypeQualifier> for FormatNodeRule<TsImportTypeQualifier> {
-    fn format_fields(
-        node: &TsImportTypeQualifier,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &TsImportTypeQualifier, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImportTypeQualifierFields { dot_token, right } = node.as_fields();
 
-        formatted![formatter, [dot_token.format(), right.format(),]]
+        write![f, [dot_token.format(), right.format()]]
     }
 }

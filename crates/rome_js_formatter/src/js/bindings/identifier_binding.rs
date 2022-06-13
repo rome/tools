@@ -1,16 +1,13 @@
 use crate::prelude::*;
-
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsIdentifierBinding;
 use rome_js_syntax::JsIdentifierBindingFields;
 
 impl FormatNodeFields<JsIdentifierBinding> for FormatNodeRule<JsIdentifierBinding> {
-    fn format_fields(
-        node: &JsIdentifierBinding,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsIdentifierBinding, f: &mut JsFormatter) -> FormatResult<()> {
         let JsIdentifierBindingFields { name_token } = node.as_fields();
 
-        formatted![formatter, [name_token.format()]]
+        write![f, [name_token.format()]]
     }
 }

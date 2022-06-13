@@ -6,7 +6,7 @@ mod diagnostic;
 mod emit;
 mod suggestion;
 
-pub use diagnostic::{Diagnostic, SubDiagnostic};
+pub use diagnostic::{Diagnostic, Footer, SubDiagnostic};
 pub use emit::{DiagnosticHeader, Emitter};
 pub use file::Span;
 pub use suggestion::*;

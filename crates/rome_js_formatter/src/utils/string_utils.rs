@@ -4,6 +4,7 @@ use crate::utils::string_utils::CharSignal::AlreadyPrinted;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
+use unicode_width::UnicodeWidthStr;
 
 pub trait ToAsciiLowercaseCow {
     /// Returns the same value as String::to_lowercase. The only difference
@@ -67,30 +68,59 @@ impl<'token> FormatLiteralStringToken<'token> {
         Self { token, parent_kind }
     }
 
-    pub fn token(&self) -> &'token JsSyntaxToken {
+    fn token(&self) -> &'token JsSyntaxToken {
         self.token
+    }
+
+    pub fn clean_text(&self, context: &JsFormatContext) -> CleanedStringLiteralText {
+        let token = self.token();
+        debug_assert_eq!(token.kind(), JS_STRING_LITERAL);
+
+        let chosen_quote_style = context.quote_style();
+        let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
+
+        let content = string_cleaner.normalise_text(context.source_type.into());
+        let normalized_text_width = content.width();
+
+        CleanedStringLiteralText {
+            text: content,
+            width: normalized_text_width,
+            token,
+        }
     }
 }
 
-impl Format for FormatLiteralStringToken<'_> {
-    type Context = JsFormatContext;
+pub struct CleanedStringLiteralText<'a> {
+    token: &'a JsSyntaxToken,
+    text: Cow<'a, str>,
+    width: usize,
+}
 
-    fn format(&self, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        let token = self.token();
-        // tokens that are don't hold any strings don't need to be processed any further
-        if token.kind() != JS_STRING_LITERAL {
-            return formatted![formatter, [self.token.format()]];
-        }
-        let chosen_quote_style = formatter.context().quote_style();
-        let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
+impl CleanedStringLiteralText<'_> {
+    pub fn width(&self) -> usize {
+        self.width
+    }
+}
 
-        let content = string_cleaner.normalise_text(formatter.context().source_type.into());
+impl Format<JsFormatContext> for CleanedStringLiteralText<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        format_replaced(
+            self.token,
+            &syntax_token_cow_slice(
+                self.text.clone(),
+                self.token,
+                self.token.text_trimmed_range().start(),
+            ),
+        )
+        .fmt(f)
+    }
+}
 
-        Ok(formatter.format_replaced(
-            token,
-            Token::from_syntax_token_cow_slice(content, token, token.text_trimmed_range().start())
-                .into(),
-        ))
+impl Format<JsFormatContext> for FormatLiteralStringToken<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        let cleaned = self.clean_text(f.context());
+
+        cleaned.fmt(f)
     }
 }
 
@@ -209,7 +239,7 @@ impl<'token> LiteralStringNormaliser<'token> {
         }
     }
 
-    pub fn normalise_text(&mut self, file_source: SourceFileKind) -> Cow<str> {
+    fn normalise_text(&mut self, file_source: SourceFileKind) -> Cow<'token, str> {
         let string_information = self.token.compute_string_information(self.chosen_quote);
         match self.token.parent_kind {
             StringLiteralParentKind::Expression => {
@@ -234,7 +264,7 @@ impl<'token> LiteralStringNormaliser<'token> {
         }
     }
 
-    fn normalise_directive(&mut self, string_information: &StringInformation) -> Cow<str> {
+    fn normalise_directive(&mut self, string_information: &StringInformation) -> Cow<'token, str> {
         let content = self.normalize_string(string_information);
         match content {
             Cow::Borrowed(content) => self.swap_quotes(content, string_information),
@@ -280,7 +310,7 @@ impl<'token> LiteralStringNormaliser<'token> {
         &mut self,
         string_information: StringInformation,
         file_source: SourceFileKind,
-    ) -> Cow<str> {
+    ) -> Cow<'token, str> {
         if self.can_remove_quotes(file_source) {
             return Cow::Owned(self.raw_content().to_string());
         }
@@ -302,7 +332,7 @@ impl<'token> LiteralStringNormaliser<'token> {
             Cow::Owned(s) => {
                 // content is owned, meaning we allocated a new string,
                 // so we force replacing quotes, regardless
-                let final_content = format!(
+                let final_content = std::format!(
                     "{}{}{}",
                     preferred_quote.as_char(),
                     s.as_str(),
@@ -518,7 +548,7 @@ impl<'token> LiteralStringNormaliser<'token> {
         if raw_content_has_quotes {
             Cow::Borrowed(original_content)
         } else if original_content.starts_with(other_quote) {
-            Cow::Owned(format!(
+            Cow::Owned(std::format!(
                 "{}{}{}",
                 preferred_quote.as_char(),
                 content_to_use.into(),
@@ -559,7 +589,7 @@ mod tests {
 
     #[quickcheck]
     fn to_ascii_lowercase_cow_returns_owned_when_some_chars_are_not_lowercase(txt: AsciiString) {
-        let txt = format!("{}A", txt); //guarantees at least one uppercase letter
+        let txt = std::format!("{}A", txt); //guarantees at least one uppercase letter
         assert!(matches!(txt.to_ascii_lowercase_cow(), Cow::Owned(s) if s == txt.to_lowercase()));
     }
 

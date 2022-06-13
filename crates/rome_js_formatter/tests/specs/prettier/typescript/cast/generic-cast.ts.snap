@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: generic-cast.ts
 ---
 # Input
@@ -102,9 +103,7 @@ function y() {
       | undefined
   >someExistingConfigMap.mergeDeep(fallbackOptions);
 
-  const stillTooLong3 = <
-    Immutable.Map<string>
-  >someExistingConfigMap.mergeDeep(
+  const stillTooLong3 = <Immutable.Map<string>>someExistingConfigMap.mergeDeep(
     fallbackOptions.someMethodWithLongName(param1, param2),
   );
 
@@ -125,9 +124,9 @@ function y() {
     fallbackOptions.someMethodWithLongName(param1, param2),
   );
 
-  const testObjLiteral = <
-    Immutable.Map<string, any>
-  >{ property1: "myPropertyVal" };
+  const testObjLiteral = <Immutable.Map<string, any>>{
+    property1: "myPropertyVal",
+  };
 
   const testObjLiteral2 = <
     Immutable.Map<
@@ -143,9 +142,9 @@ function y() {
     >
   >{ property1: "myPropertyVal" };
 
-  const testArrayLiteral = <
-    Immutable.Map<string, any>
-  >["first", "second", "third"];
+  const testArrayLiteral = <Immutable.Map<string, any>>[
+    "first", "second", "third",
+  ];
 
   const testArrayLiteral2 = <
     Immutable.Map<
@@ -174,9 +173,9 @@ function x() {
   const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
   const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
 
-  const breakAfterCast = <
-    PermissionsChecker<any> | undefined
-  >(<any>permissions)[receiverType];
+  const breakAfterCast = <PermissionsChecker<any> | undefined>(
+    <any>permissions
+  )[receiverType];
 
   const stillTooLong = <
     PermissionsChecker<object> | undefined | number | string | boolean
@@ -192,9 +191,7 @@ function x() {
       | never
   >(<any>permissions)[receiverType];
 
-  const stillTooLong3 = <
-    PermissionsChecker<object> | undefined
-  >(
+  const stillTooLong3 = <PermissionsChecker<object> | undefined>(
     <any>permissions.someMethodWithLongName(parameter1, parameter2)
   )[receiverTypeLongName];
 
@@ -206,13 +203,13 @@ function x() {
       | boolean
       | null
       | never
-  >(
-    <any>permissions.someMethodWithLongName(parameter1, parameter2)
-  )[receiverTypeLongName];
+  >(<any>permissions.someMethodWithLongName(parameter1, parameter2))[
+    receiverTypeLongName
+  ];
 
-  const testObjLiteral = <
-    PermissionsChecker<any> | undefined
-  >{ prop1: "myPropVal" };
+  const testObjLiteral = <PermissionsChecker<any> | undefined>{
+    prop1: "myPropVal",
+  };
 
   const testObjLiteral2 = <
       | PermissionsChecker<object>
@@ -225,9 +222,9 @@ function x() {
       | object
   >{ prop1: "myPropVal" };
 
-  const testArrayLiteral = <
-    PermissionsChecker<any> | undefined
-  >["first", "second", "third"];
+  const testArrayLiteral = <PermissionsChecker<any> | undefined>[
+    "first", "second", "third",
+  ];
 
   const testArrayLiteral2 = <
       | PermissionsChecker<object>

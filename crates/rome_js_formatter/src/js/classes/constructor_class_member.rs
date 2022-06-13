@@ -1,14 +1,12 @@
 use crate::prelude::*;
 use crate::utils::FormatMemberName;
 use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsConstructorClassMember;
 use rome_js_syntax::JsConstructorClassMemberFields;
 
 impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructorClassMember> {
-    fn format_fields(
-        node: &JsConstructorClassMember,
-        formatter: &JsFormatter,
-    ) -> FormatResult<FormatElement> {
+    fn fmt_fields(node: &JsConstructorClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsConstructorClassMemberFields {
             modifiers,
             name,
@@ -16,8 +14,8 @@ impl FormatNodeFields<JsConstructorClassMember> for FormatNodeRule<JsConstructor
             body,
         } = node.as_fields();
 
-        formatted![
-            formatter,
+        write![
+            f,
             [
                 modifiers.format(),
                 space_token(),

@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyRoot,
@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoDelete {}
@@ -31,17 +31,15 @@ impl Rule for NoDelete {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            range: node.syntax().text_trimmed_range(),
-            message: markup! {
+        Some(
+            RuleDiagnostic::warning(node.range(), markup! {
                 "This is an unexpected use of the "<Emphasis>"delete"</Emphasis>" operator."
-            }
-            .to_owned(),
-        })
+            })
+            .summary("This is an unexpected use of the `delete` operator.\nReplace this expression with an `undefined` assignment")
+        )
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
         let root = root.replace_node(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
@@ -53,7 +51,7 @@ impl Rule for NoDelete {
             )),
         )?;
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with undefined assignment" }.to_owned(),

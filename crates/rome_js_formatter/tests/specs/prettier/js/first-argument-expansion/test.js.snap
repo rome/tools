@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: test.js
 ---
 # Input
@@ -129,9 +130,7 @@ setTimeout(
   500,
 );
 
-[
-  "a", "b", "c",
-].reduce(
+["a", "b", "c"].reduce(
   function (item, thing) {
     return thing + " " + item;
   },

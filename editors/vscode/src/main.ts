@@ -1,5 +1,10 @@
 import { ExtensionContext, Uri, window, workspace } from "vscode";
-import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from "vscode-languageclient/node";
+import {
+	LanguageClient,
+	LanguageClientOptions,
+	ServerOptions,
+	TransportKind,
+} from "vscode-languageclient/node";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
