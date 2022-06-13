@@ -49,12 +49,12 @@ impl Rule for UseWhile {
         let for_range = node.for_token().unwrap().text_trimmed_range();
         let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();
 
-        Some(
-            RuleDiagnostic::warning(markup! {
+        Some(RuleDiagnostic::warning(
+            for_range.cover(r_paren_range),
+            markup! {
                 "Use "<Emphasis>"while"</Emphasis>" loops instead of "<Emphasis>"for"</Emphasis>" loops."
-            })
-                .primary(for_range.cover(r_paren_range), ""),
-        )
+            },
+        ))
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {

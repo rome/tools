@@ -44,7 +44,10 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic::warning("Declare variables separately").primary(node.range(), ""))
+        Some(RuleDiagnostic::warning(
+            node.range(),
+            "Declare variables separately",
+        ))
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {

@@ -39,12 +39,12 @@ impl Rule for NoNegationElse {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(
-            RuleDiagnostic::warning(markup! {
+        Some(RuleDiagnostic::warning(
+            node.range(),
+            markup! {
                 "Invert blocks when performing a negation test."
-            })
-            .primary(node.range(), ""),
-        )
+            },
+        ))
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {

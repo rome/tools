@@ -37,16 +37,16 @@ impl Rule for NoDoubleEquals {
         let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
 
         Some(
-            RuleDiagnostic::warning(markup! {
+            RuleDiagnostic::warning(op.text_trimmed_range(),markup! {
                 "Use "<Emphasis>{suggestion}</Emphasis>" instead of "<Emphasis>{text_trimmed}</Emphasis>
             })
-            .primary(op.text_trimmed_range(), markup! {
-                <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against null"
+            .primary( markup! {
+                <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against "<Emphasis>"null"</Emphasis>
             })
             .footer_note(markup! {
                 "Using "<Emphasis>{suggestion}</Emphasis>" may be unsafe if you are relying on type coercion"
             })
-            .summary(format!("Use {suggestion} instead of {text_trimmed}\n{text_trimmed} is only allowed when comparing against null"))
+            .summary(format!("Use {suggestion} instead of {text_trimmed}.\n{text_trimmed} is only allowed when comparing against `null`"))
         )
     }
 
@@ -57,6 +57,8 @@ impl Rule for NoDoubleEquals {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
+            // SAFETY: `suggestion` can only be JsSyntaxKind::EQ3 or JsSyntaxKind::NEQ2,
+            // the implementation of `to_string` for these two variants always returns Some
             message: markup! { "Use "<Emphasis>{suggestion.to_string().unwrap()}</Emphasis> }
                 .to_owned(),
             root,

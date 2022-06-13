@@ -143,18 +143,15 @@ impl Rule for UseValidTypeof {
     }
 
     fn diagnostic(_: &Self::Query, (err, _): &Self::State) -> Option<RuleDiagnostic> {
-        let diag = RuleDiagnostic::warning("Invalid `typeof` comparison value");
+        const TITLE: &str = "Invalid `typeof` comparison value";
+
         Some(match err {
-            TypeofError::InvalidLiteral(range, literal) => diag
-                .primary(range, "not a valid type name")
-                .summary(format!(
-                    "Invalid `typeof` comparison value: \"{literal}\" is not a valid type name"
-                )),
-            TypeofError::InvalidExpression(range) => {
-                diag.primary(range, "not a string literal").summary(
-                    "Invalid `typeof` comparison value: this expression is not a string literal",
-                )
-            }
+            TypeofError::InvalidLiteral(range, literal) => RuleDiagnostic::warning(range, TITLE)
+                .primary("not a valid type name")
+                .summary(format!("{TITLE}: \"{literal}\" is not a valid type name")),
+            TypeofError::InvalidExpression(range) => RuleDiagnostic::warning(range, TITLE)
+                .primary("not a string literal")
+                .summary(format!("{TITLE}: this expression is not a string literal",)),
         })
     }
 

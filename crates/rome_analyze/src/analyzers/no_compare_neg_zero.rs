@@ -49,12 +49,12 @@ impl Rule for NoCompareNegZero {
     }
 
     fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(
-            RuleDiagnostic::warning(markup! {
+        Some(RuleDiagnostic::warning(
+            node.range(),
+            markup! {
                 "Do not use the "{state.operator_kind}" operator to compare against -0."
-            })
-            .primary(node.range(), ""),
-        )
+            },
+        ))
     }
     fn action(
         root: rome_js_syntax::JsAnyRoot,

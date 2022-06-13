@@ -151,10 +151,11 @@ pub(crate) trait Rule {
 /// Diagnostic object returned by a single analysis rule
 pub struct RuleDiagnostic {
     severity: Severity,
+    span: TextRange,
     title: MarkupBuf,
     summary: Option<String>,
     tag: Option<DiagnosticTag>,
-    primary: Option<(Severity, MarkupBuf, TextRange)>,
+    primary: Option<MarkupBuf>,
     secondaries: Vec<(Severity, MarkupBuf, TextRange)>,
     footers: Vec<Footer>,
 }
@@ -164,9 +165,10 @@ pub struct RuleDiagnostic {
 impl RuleDiagnostic {
     /// Creates a new [`RuleDiagnostic`] with a severity and title that will be
     /// used in a builder-like way to modify labels.
-    fn new(severity: Severity, title: impl Display) -> Self {
+    fn new(severity: Severity, span: impl Span, title: impl Display) -> Self {
         Self {
             severity,
+            span: span.as_range(),
             title: markup!({ title }).to_owned(),
             summary: None,
             tag: None,
@@ -177,23 +179,23 @@ impl RuleDiagnostic {
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Error` severity.
-    pub(crate) fn error(title: impl Display) -> Self {
-        Self::new(Severity::Error, title)
+    pub(crate) fn error(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Error, span, title)
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Warning` severity.
-    pub(crate) fn warning(title: impl Display) -> Self {
-        Self::new(Severity::Warning, title)
+    pub(crate) fn warning(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Warning, span, title)
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Help` severity.
-    pub(crate) fn help(title: impl Display) -> Self {
-        Self::new(Severity::Help, title)
+    pub(crate) fn help(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Help, span, title)
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Note` severity.
-    pub(crate) fn note(title: impl Display) -> Self {
-        Self::new(Severity::Note, title)
+    pub(crate) fn note(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Note, span, title)
     }
 
     /// Set an explicit plain-text summary for this diagnostic.
@@ -246,8 +248,8 @@ impl RuleDiagnostic {
     }
 
     /// Attaches a primary label to this [`RuleDiagnostic`].
-    pub fn primary(mut self, span: impl Span, msg: impl Display) -> Self {
-        self.primary = Some((self.severity, markup!({ msg }).to_owned(), span.as_range()));
+    pub fn primary(mut self, msg: impl Display) -> Self {
+        self.primary = Some(markup!({ msg }).to_owned());
         self
     }
 
@@ -286,12 +288,12 @@ impl RuleDiagnostic {
             title: self.title,
             summary: self.summary,
             tag: self.tag,
-            primary: self.primary.map(|(severity, msg, range)| SubDiagnostic {
-                severity,
-                msg,
+            primary: Some(SubDiagnostic {
+                severity: self.severity,
+                msg: self.primary.unwrap_or_default(),
                 span: FileSpan {
                     file: file_id,
-                    range,
+                    range: self.span,
                 },
             }),
             children: self

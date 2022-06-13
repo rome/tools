@@ -31,12 +31,12 @@ impl Rule for UseSingleCaseStatement {
     }
 
     fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
-        Some(
-            RuleDiagnostic::warning(markup! {
+        Some(RuleDiagnostic::warning(
+            n.consequent().range(),
+            markup! {
                 "A switch case should only have a single statement. If you want more, then wrap it in a block."
-            })
-            .primary(n.consequent().range(), "")
-        )
+            },
+        ))
     }
 
     fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {

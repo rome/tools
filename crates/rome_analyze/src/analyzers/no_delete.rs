@@ -32,10 +32,9 @@ impl Rule for NoDelete {
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
         Some(
-            RuleDiagnostic::warning(markup! {
+            RuleDiagnostic::warning(node.range(), markup! {
                 "This is an unexpected use of the "<Emphasis>"delete"</Emphasis>" operator."
             })
-            .primary(node.range(), "")
             .summary("This is an unexpected use of the `delete` operator.\nReplace this expression with an `undefined` assignment")
         )
     }
