@@ -2,9 +2,10 @@ use crate::prelude::*;
 use crate::utils::is_simple_expression;
 use rome_formatter::{format_args, write};
 
+use crate::builders::format_inserted;
 use crate::FormatNodeFields;
-use rome_js_syntax::JsPreUpdateOperator;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
+use rome_js_syntax::{JsPreUpdateOperator, JsSyntaxKind};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
 impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
@@ -59,9 +60,9 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
                     f,
                     [
                         operator_token.format(),
-                        token("("),
+                        format_inserted(JsSyntaxKind::L_PAREN),
                         argument.format(),
-                        token(")"),
+                        format_inserted(JsSyntaxKind::R_PAREN),
                     ]
                 ]
             } else {
@@ -70,9 +71,9 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
                     [
                         operator_token.format(),
                         group_elements(&format_args![
-                            token("("),
+                            format_inserted(JsSyntaxKind::L_PAREN),
                             soft_block_indent(&argument.format()),
-                            token(")"),
+                            format_inserted(JsSyntaxKind::R_PAREN),
                         ]),
                     ]
                 ]

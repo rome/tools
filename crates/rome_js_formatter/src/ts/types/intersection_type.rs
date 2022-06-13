@@ -1,8 +1,8 @@
-use crate::builders::format_only_if_breaks;
+use crate::builders::{format_inserted, format_only_if_breaks};
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::TsIntersectionTypeFields;
+use rome_js_syntax::{JsSyntaxKind, TsIntersectionTypeFields};
 use rome_js_syntax::{JsSyntaxToken, TsIntersectionType};
 
 impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType> {
@@ -17,7 +17,7 @@ impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType>
             [group_elements(&indent(&format_args!(
                 soft_line_break(),
                 FormatTypeSetLeadingSeparator {
-                    separator: "&",
+                    separator: JsSyntaxKind::AMP,
                     leading_separator: leading_separator_token.as_ref()
                 },
                 types.format()
@@ -27,7 +27,7 @@ impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType>
 }
 
 pub(crate) struct FormatTypeSetLeadingSeparator<'a> {
-    pub(crate) separator: &'static str,
+    pub(crate) separator: JsSyntaxKind,
     pub(crate) leading_separator: Option<&'a JsSyntaxToken>,
 }
 
@@ -55,7 +55,7 @@ impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
             None => write!(
                 f,
                 [if_group_breaks(&format_args![
-                    token(self.separator),
+                    format_inserted(self.separator),
                     space_token()
                 ])]
             ),

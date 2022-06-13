@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, CommentKind};
+use rome_formatter::{format_args, write, CommentKind, CommentStyle};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxToken};
-use rome_rowan::{SyntaxTriviaPiece, SyntaxTriviaPieceComments};
+use rome_rowan::{Language, SyntaxTriviaPiece, SyntaxTriviaPieceComments};
 
 /// Formats the leading trivia (comments, skipped token trivia) of a token
 pub fn format_leading_trivia(
@@ -66,7 +66,7 @@ pub(crate) fn write_leading_trivia<I>(
     token: &JsSyntaxToken,
     options: LeadingTriviaOptions,
     f: &mut JsFormatter,
-) -> FormatResult<Vec<Comment>>
+) -> FormatResult<Vec<rome_formatter::Comment<JsLanguage>>>
 where
     I: IntoIterator<Item = SyntaxTriviaPiece<JsLanguage>>,
 {
@@ -76,10 +76,7 @@ where
 
     while let Some(piece) = pieces.next() {
         if let Some(comment) = piece.as_comments() {
-            comments.push(Comment {
-                lines_before,
-                piece: comment,
-            });
+            comments.push(rome_formatter::Comment::leading(comment, lines_before));
             lines_before = 0;
         } else if piece.is_newline() {
             lines_before += 1;
@@ -133,10 +130,7 @@ where
                     comments.clear();
                     lines_before = 0;
                 } else if let Some(comment) = piece.as_comments() {
-                    comments.push(Comment {
-                        piece: comment,
-                        lines_before,
-                    });
+                    comments.push(rome_formatter::Comment::leading(comment, lines_before));
                     lines_before = 0;
                 } else if piece.is_newline() {
                     lines_before += 1;
@@ -150,7 +144,7 @@ where
             // The start is the first comment that is preceded by a line break.
             let first_token_leading_comment = comments
                 .iter()
-                .position(|comment| comment.lines_before > 0)
+                .position(|comment| comment.lines_before() > 0)
                 .unwrap_or(comments.len());
 
             // Everything before the start position are trailing comments of the last skipped token
@@ -190,35 +184,8 @@ where
     Ok(comments)
 }
 
-#[derive(Debug, Clone)]
-pub(crate) struct Comment {
-    lines_before: u32,
-    piece: SyntaxTriviaPieceComments<JsLanguage>,
-}
-
-impl Comment {
-    pub fn trailing(piece: SyntaxTriviaPieceComments<JsLanguage>) -> Self {
-        Self {
-            lines_before: 0,
-            piece,
-        }
-    }
-
-    pub fn kind(&self) -> CommentKind {
-        if self.piece.text().starts_with("/*") {
-            if self.piece.has_newline() {
-                CommentKind::Block
-            } else {
-                CommentKind::InlineBlock
-            }
-        } else {
-            CommentKind::Line
-        }
-    }
-}
-
 struct FormatLeadingComments<'a> {
-    comments: &'a [Comment],
+    comments: &'a [rome_formatter::Comment<JsLanguage>],
     trim_mode: TriviaPrintMode,
     lines_before_token: u32,
 }
@@ -226,24 +193,24 @@ struct FormatLeadingComments<'a> {
 impl Format<JsFormatContext> for FormatLeadingComments<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         for (index, comment) in self.comments.iter().enumerate() {
-            let is_line_comment = comment.kind().is_line();
+            let is_line_comment = JsCommentStyle.get_comment_kind(comment.piece()).is_line();
             let lines_after = self
                 .comments
                 .get(index + 1)
-                .map(|comment| comment.lines_before)
+                .map(|comment| comment.lines_before())
                 .unwrap_or_else(|| match self.trim_mode {
                     TriviaPrintMode::Full => self.lines_before_token,
                     TriviaPrintMode::Trim => 0,
                 });
 
             let format_content = format_with(|f| {
-                if comment.lines_before > 0 && index == 0 {
+                if comment.lines_before() > 0 && index == 0 {
                     write!(f, [hard_line_break()])?;
                 } else {
                     write!(f, [space_token()])?;
                 };
 
-                write!(f, [&comment.piece])?;
+                write!(f, [comment.piece()])?;
 
                 if is_line_comment {
                     match lines_after {
@@ -271,14 +238,14 @@ impl Format<JsFormatContext> for FormatLeadingComments<'_> {
     }
 }
 
-fn needs_space_between_comments_and_token(
-    comments: &[Comment],
+pub(crate) fn needs_space_between_comments_and_token(
+    comments: &[rome_formatter::Comment<JsLanguage>],
     token: JsSyntaxKind,
     last_trailing_kind: Option<CommentKind>,
 ) -> bool {
     let last_comment_kind = comments
         .last()
-        .map(|comment| comment.kind())
+        .map(|comment| JsCommentStyle.get_comment_kind(comment.piece()))
         .or(last_trailing_kind);
 
     if let Some(last) = last_comment_kind {
@@ -293,6 +260,7 @@ fn needs_space_between_comments_and_token(
                 | JsSyntaxKind::R_PAREN
                 | JsSyntaxKind::COMMA
                 | JsSyntaxKind::SEMICOLON
+                | JsSyntaxKind::DOT
                 | JsSyntaxKind::EOF => false,
                 _ => true,
             }
@@ -307,7 +275,7 @@ pub fn format_trailing_trivia(token: &JsSyntaxToken) -> impl Format<JsFormatCont
     let comments = token
         .trailing_trivia()
         .pieces()
-        .filter_map(|piece| piece.as_comments().map(Comment::trailing));
+        .filter_map(|piece| piece.as_comments().map(rome_formatter::Comment::trailing));
     FormatTrailingTrivia::new(comments, Some(token.kind()))
 }
 
@@ -328,39 +296,34 @@ impl<I> FormatTrailingTrivia<I> {
 
 impl<I> Format<JsFormatContext> for FormatTrailingTrivia<I>
 where
-    I: Iterator<Item = Comment> + Clone,
+    I: Iterator<Item = rome_formatter::Comment<JsLanguage>> + Clone,
 {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let comments = self.comments.clone();
         let mut last_kind = None;
 
         for (index, comment) in comments.enumerate() {
-            let kind = comment.kind();
+            let kind = JsCommentStyle.get_comment_kind(comment.piece());
             last_kind = Some(kind);
             let is_single_line = kind.is_line();
 
             let content = format_with(|f| {
                 if !is_single_line {
-                    // Only write a leading space if this isn't the first trailing comment OR
-                    // the comment isn't after a group start token.
-                    if index > 0
-                        || !matches!(
-                            self.token_kind,
-                            Some(
-                                JsSyntaxKind::L_PAREN
-                                    | JsSyntaxKind::L_BRACK
-                                    | JsSyntaxKind::L_CURLY
+                    match self.token_kind {
+                        Some(token) if JsCommentStyle.is_group_start_token(token) && index == 0 => {
+                            (
+                            // Don't write a space if this is a group start token and it isn't the first trailing comment
                             )
-                        )
-                    {
-                        space_token().fmt(f)?;
+                        }
+                        //  Write a space for all other cases
+                        _ => space_token().fmt(f)?,
                     }
-                    comment.piece.fmt(f)?;
+                    comment.piece().fmt(f)?;
                 } else {
                     write![
                         f,
                         [
-                            line_suffix(&format_args![space_token(), comment.piece]),
+                            line_suffix(&format_args![space_token(), comment.piece()]),
                             expand_parent()
                         ]
                     ]?;
@@ -372,9 +335,46 @@ where
             rome_formatter::comment(&content).fmt(f)?;
         }
 
-        dbg!(last_kind);
         f.state_mut().set_last_trailing_comment(last_kind);
 
         Ok(())
+    }
+}
+
+pub struct JsCommentStyle;
+
+impl CommentStyle for JsCommentStyle {
+    type Language = JsLanguage;
+
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind {
+        if comment.text().starts_with("/*") {
+            if comment.has_newline() {
+                CommentKind::Block
+            } else {
+                CommentKind::InlineBlock
+            }
+        } else {
+            CommentKind::Line
+        }
+    }
+
+    fn is_group_start_token(&self, kind: <Self::Language as Language>::Kind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::L_PAREN | JsSyntaxKind::L_BRACK | JsSyntaxKind::L_CURLY
+        )
+    }
+
+    fn is_group_end_token(&self, kind: <Self::Language as Language>::Kind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::R_BRACK
+                | JsSyntaxKind::R_CURLY
+                | JsSyntaxKind::R_PAREN
+                | JsSyntaxKind::COMMA
+                | JsSyntaxKind::SEMICOLON
+                | JsSyntaxKind::DOT
+                | JsSyntaxKind::EOF
+        )
     }
 }

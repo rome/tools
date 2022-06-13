@@ -51,7 +51,7 @@ pub use builders::{
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
-pub use comments::CommentKind;
+pub use comments::{Comment, CommentKind, CommentStyle};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
@@ -1113,7 +1113,6 @@ impl<Context> FormatState<Context> {
     }
 
     pub fn set_last_trailing_comment(&mut self, kind: Option<CommentKind>) {
-        dbg!(kind);
         self.last_trailing_comment_kind = kind;
     }
 

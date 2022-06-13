@@ -28,6 +28,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
 
+use crate::builders::format_inserted;
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
 
@@ -167,7 +168,7 @@ impl Format<JsFormatContext> for FormatBodyStatement<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self.body {
             JsAnyStatement::JsEmptyStatement(body) => {
-                write!(f, [body.format(), token(";")])
+                write!(f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)])
             }
             body => {
                 write!(f, [space_token(), body.format()])
@@ -439,7 +440,7 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
         if let Some(semicolon) = self.semicolon {
             write!(f, [semicolon.format()])?;
         } else if !is_unknown {
-            write!(f, [token(";")])?;
+            format_inserted(JsSyntaxKind::SEMICOLON).fmt(f)?;
         }
         Ok(())
     }

@@ -1,11 +1,11 @@
 use crate::prelude::*;
 use crate::AsFormat;
 
-use crate::builders::format_only_if_breaks;
+use crate::builders::{format_inserted, format_only_if_breaks};
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
-    JsLanguage,
+    JsLanguage, JsSyntaxKind,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -43,12 +43,12 @@ where
                     // In forced separator mode or if this element is not the last in the list, print the separator
                     match element.trailing_separator()? {
                         Some(trailing) => write!(f, [trailing.format()])?,
-                        None => write!(f, [token(",")])?,
+                        None => format_inserted(JsSyntaxKind::COMMA).fmt(f)?,
                     };
                 } else if let Some(separator) = element.trailing_separator()? {
                     write!(f, [format_only_if_breaks(separator, &separator.format())])?;
                 } else {
-                    write!(f, [if_group_breaks(&token(","))])?;
+                    write!(f, [if_group_breaks(&format_inserted(JsSyntaxKind::COMMA))])?;
                 };
 
                 Ok(())

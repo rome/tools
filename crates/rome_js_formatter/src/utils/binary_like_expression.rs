@@ -242,12 +242,12 @@ where
         write![
             f,
             [group_elements(&format_args![
-                token("("),
+                format_inserted(JsSyntaxKind::L_PAREN),
                 soft_block_indent(&format_once(|f| {
                     f.write_element(content)?;
                     f.write_element(trailing)
                 })),
-                token(")")
+                format_inserted(JsSyntaxKind::R_PAREN)
             ])]
         ]
     })

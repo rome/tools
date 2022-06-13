@@ -1,9 +1,10 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
+use crate::builders::format_inserted;
 use crate::generated::FormatJsVariableDeclaratorList;
 use crate::AsFormat;
-use rome_js_syntax::JsVariableDeclaratorList;
+use rome_js_syntax::{JsSyntaxKind, JsVariableDeclaratorList};
 use rome_rowan::AstSeparatedList;
 
 impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
@@ -19,7 +20,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
                 match element.trailing_separator()? {
                     None => {
                         if index != last_index {
-                            write!(f, [token(",")])?;
+                            format_inserted(JsSyntaxKind::COMMA).fmt(f)?;
                         }
                     }
                     Some(separator) => {

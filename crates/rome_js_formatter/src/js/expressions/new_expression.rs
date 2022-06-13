@@ -1,8 +1,9 @@
+use crate::builders::format_inserted;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::write;
-use rome_js_syntax::JsNewExpression;
 use rome_js_syntax::JsNewExpressionFields;
+use rome_js_syntax::{JsNewExpression, JsSyntaxKind};
 
 impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
     fn fmt_fields(node: &JsNewExpression, f: &mut JsFormatter) -> FormatResult<()> {
@@ -28,7 +29,10 @@ impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
                 write!(f, [arguments.format()])
             }
             None => {
-                write!(f, [token("()")])
+                write!(
+                    f,
+                    [format_inserted(JsSyntaxKind::L_PAREN).with_content(&token("()"))]
+                )
             }
         }
     }
