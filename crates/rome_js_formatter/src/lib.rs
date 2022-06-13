@@ -9,19 +9,18 @@ pub mod utils;
 
 use crate::utils::has_formatter_suppressions;
 use rome_formatter::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{write, CommentKind, CommentStyle};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
+use rome_rowan::{AstNode, SyntaxTriviaPieceComments};
 
-use crate::builders::{format_suppressed_node, format_trimmed_token};
+use crate::builders::{format_leading_trivia, format_suppressed_node, format_trailing_trivia};
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
-use crate::trivia::{format_leading_trivia, format_trailing_trivia, TriviaPrintMode};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -211,7 +210,7 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
         write!(
             f,
             [
-                format_leading_trivia(token, TriviaPrintMode::Full),
+                format_leading_trivia(token),
                 format_trimmed_token(token),
                 format_trailing_trivia(token),
             ]
@@ -294,6 +293,45 @@ pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResul
 /// It returns a [Formatted] result
 pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
     rome_formatter::format_sub_tree(context, &root.format())
+}
+
+#[derive(Copy, Clone, Debug)]
+pub struct JsCommentStyle;
+
+impl CommentStyle for JsCommentStyle {
+    type Language = JsLanguage;
+
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind {
+        if comment.text().starts_with("/*") {
+            if comment.has_newline() {
+                CommentKind::Block
+            } else {
+                CommentKind::InlineBlock
+            }
+        } else {
+            CommentKind::Line
+        }
+    }
+
+    fn is_group_start_token(&self, kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::L_PAREN | JsSyntaxKind::L_BRACK | JsSyntaxKind::L_CURLY
+        )
+    }
+
+    fn is_group_end_token(&self, kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::R_BRACK
+                | JsSyntaxKind::R_CURLY
+                | JsSyntaxKind::R_PAREN
+                | JsSyntaxKind::COMMA
+                | JsSyntaxKind::SEMICOLON
+                | JsSyntaxKind::DOT
+                | JsSyntaxKind::EOF
+        )
+    }
 }
 
 #[cfg(test)]
@@ -475,7 +513,6 @@ mod generated;
 pub(crate) mod builders;
 pub mod context;
 pub(crate) mod separated;
-mod trivia;
 
 #[cfg(test)]
 mod test {
@@ -484,6 +521,7 @@ mod test {
     use rome_js_parser::parse;
     use rome_js_syntax::SourceType;
 
+    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
@@ -495,13 +533,13 @@ type B10 = /*1*/ & /*2*/ C;"#;
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
-        // check_reformat(CheckReformatParams {
-        //     root: &tree.syntax(),
-        //     text: result.as_code(),
-        //     source_type: syntax,
-        //     file_name: "quick_test",
-        //     format_context: JsFormatContext::default(),
-        // });
+        check_reformat(CheckReformatParams {
+            root: &tree.syntax(),
+            text: result.as_code(),
+            source_type: syntax,
+            file_name: "quick_test",
+            format_context: JsFormatContext::default(),
+        });
         assert_eq!(
             result.as_code(),
             "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"

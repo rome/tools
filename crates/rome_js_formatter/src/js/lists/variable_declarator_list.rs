@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
-use crate::builders::format_inserted;
 use crate::generated::FormatJsVariableDeclaratorList;
 use crate::AsFormat;
 use rome_js_syntax::{JsSyntaxKind, JsVariableDeclaratorList};

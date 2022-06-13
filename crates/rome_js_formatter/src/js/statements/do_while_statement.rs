@@ -1,4 +1,3 @@
-use crate::builders::format_inserted;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::write;

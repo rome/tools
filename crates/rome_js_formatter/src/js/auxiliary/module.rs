@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::builders::format_removed;
 use crate::utils::FormatInterpreterToken;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsModule;

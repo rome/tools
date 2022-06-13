@@ -2,7 +2,6 @@ use crate::prelude::*;
 use crate::utils::is_simple_expression;
 use rome_formatter::{format_args, write};
 
-use crate::builders::format_inserted;
 use crate::FormatNodeFields;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
 use rome_js_syntax::{JsPreUpdateOperator, JsSyntaxKind};

@@ -3,7 +3,6 @@ use crate::prelude::*;
 use rome_formatter::{write, Buffer, VecBuffer};
 use rome_js_syntax::{JsSyntaxKind, TsAnyTypeMember, TsTypeMemberList};
 
-use crate::builders::format_inserted;
 use rome_rowan::AstNodeList;
 
 impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {

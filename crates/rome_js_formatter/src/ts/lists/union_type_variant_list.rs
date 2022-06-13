@@ -1,4 +1,3 @@
-use crate::builders::format_inserted;
 use crate::generated::FormatTsUnionTypeVariantList;
 use crate::prelude::*;
 use rome_formatter::write;

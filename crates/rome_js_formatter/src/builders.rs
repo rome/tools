@@ -1,37 +1,12 @@
 use crate::prelude::*;
-use crate::trivia::{
-    needs_space_between_comments_and_token, write_leading_trivia, FormatTrailingTrivia,
-    JsCommentStyle, LeadingTriviaOptions,
+use crate::{AsFormat, JsCommentStyle};
+use rome_formatter::token::{
+    format_token_trailing_trivia, FormatInserted, FormatLeadingTrivia, FormatOnlyIfBreaks,
+    FormatRemoved, FormatReplaced, TriviaPrintMode,
 };
-use crate::{AsFormat, TriviaPrintMode};
-use rome_formatter::{
-    format_args, write, Argument, Arguments, CommentKind, CommentStyle, GroupId, PreambleBuffer,
-    VecBuffer,
-};
+use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, Direction, Language, RawSyntaxKind, SyntaxKind, SyntaxTriviaPiece};
-
-/// Formats a token without its leading or trailing trivia
-///
-/// ## Warning
-/// It's your responsibility to format leading or trailing comments and skipped trivia.
-pub const fn format_trimmed_token(token: &JsSyntaxToken) -> FormatTrimmedToken {
-    FormatTrimmedToken { token }
-}
-#[derive(Debug, Eq, PartialEq, Copy, Clone)]
-pub struct FormatTrimmedToken<'a> {
-    token: &'a JsSyntaxToken,
-}
-
-impl Format<JsFormatContext> for FormatTrimmedToken<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        f.state_mut().set_last_token(self.token.kind().to_raw());
-
-        let trimmed_range = self.token.text_trimmed_range();
-
-        syntax_token_text_slice(self.token, trimmed_range).fmt(f)
-    }
-}
+use rome_rowan::{AstNode, Direction, Language, SyntaxTriviaPiece};
 
 /// Formats a node using its [`AsFormat`] implementation but falls back to printing the node as
 /// it is in the source document if the formatting returns an [`FormatError`].
@@ -69,138 +44,20 @@ where
     }
 }
 
-pub const fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<'static> {
-    FormatInserted {
+pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsCommentStyle> {
+    FormatInserted::new(
         kind,
-        content: None,
-    }
-}
-
-pub struct FormatInserted<'a> {
-    kind: JsSyntaxKind,
-    content: Option<Argument<'a, JsFormatContext>>,
-}
-
-impl<'a> FormatInserted<'a> {
-    pub fn with_content<Content>(mut self, content: &'a Content) -> Self
-    where
-        Content: Format<JsFormatContext>,
-    {
-        self.content = Some(Argument::new(content));
-        self
-    }
-}
-
-impl Format<JsFormatContext> for FormatInserted<'_> {
-    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        f.state_mut().set_last_token(self.kind.to_raw());
-
-        if needs_space_between_comments_and_token(
-            &[],
-            self.kind,
-            f.state_mut().take_last_trailing_comment_kind(),
-        ) {
-            space_token().fmt(f)?;
-        }
-
-        match &self.content {
-            None => token(self.kind.to_string().expect("Expected a punctuation token")).fmt(f),
-            Some(content) => f.write_fmt(Arguments::from(content)),
-        }
-    }
+        kind.to_string().expect("Expected a punctuation token"),
+        JsCommentStyle,
+    )
 }
 
 /// Formats the leading and trailing trivia of a removed token.
 ///
 /// Formats all leading and trailing comments up to the first line break or skipped token trivia as a trailing
 /// comment of the previous token. The remaining trivia is then printed as leading trivia of the next token.
-pub const fn format_removed(token: &JsSyntaxToken) -> FormatRemoved {
-    FormatRemoved {
-        token,
-        track: true,
-        last_token: None,
-        last_trailing_comment: None,
-    }
-}
-
-/// Formats the trivia of a token that is present in the source text but should be omitted in the
-/// formatted output
-pub struct FormatRemoved<'a> {
-    token: &'a JsSyntaxToken,
-    track: bool,
-    last_token: Option<RawSyntaxKind>,
-    last_trailing_comment: Option<CommentKind>,
-}
-
-impl Format<JsFormatContext> for FormatRemoved<'_> {
-    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let last_token = if self.track {
-            let last = f.state().last_token();
-            f.state_mut().track_token(self.token);
-            last
-        } else {
-            self.last_token
-        };
-
-        let last_token = last_token.map(JsSyntaxKind::from_raw);
-
-        let mut pieces = self
-            .token
-            .leading_trivia()
-            .pieces()
-            .chain(self.token.trailing_trivia().pieces())
-            .peekable();
-
-        let mut comments = vec![];
-        // Collect all comments up to the first new line or skipped token trivia
-        // These comments become the trailing comments of the previous token.
-        while let Some(piece) = pieces.peek() {
-            if let Some(comment) = piece.as_comments() {
-                comments.push(comment);
-            } else if piece.is_newline() || piece.is_skipped() {
-                break;
-            }
-
-            pieces.next();
-        }
-
-        if !comments.is_empty() {
-            let trailing_comments = comments
-                .iter()
-                .map(|piece| rome_formatter::Comment::trailing(piece.clone()));
-
-            FormatTrailingTrivia::new(trailing_comments, last_token).fmt(f)?;
-        };
-
-        let trailing_comment_kind = f
-            .state_mut()
-            .take_last_trailing_comment_kind()
-            .or(self.last_trailing_comment);
-
-        // TODO: If the last comment written by leading trivia is an inline comment, force the next token
-        // to print a trailing comment.
-        let next_token_leading_comments = write_leading_trivia(
-            pieces,
-            self.token,
-            LeadingTriviaOptions {
-                ..Default::default()
-            },
-            f,
-        )?;
-
-        // Set kind to last of trailing comments & leading comments
-
-        // Track the kind of the last comment so that the leading trivia formatting of the next token
-        // can insert a leading whitespace if necessary
-        f.state_mut().set_last_trailing_comment(
-            next_token_leading_comments
-                .last()
-                .map(|c| JsCommentStyle.get_comment_kind(c.piece()))
-                .or(trailing_comment_kind),
-        );
-
-        Ok(())
-    }
+pub const fn format_removed(token: &JsSyntaxToken) -> FormatRemoved<JsCommentStyle> {
+    FormatRemoved::new(token, JsCommentStyle)
 }
 
 /// Print out a `token` from the original source with a different `content`.
@@ -210,80 +67,29 @@ impl Format<JsFormatContext> for FormatRemoved<'_> {
 pub fn format_replaced<'a, 'content>(
     token: &'a JsSyntaxToken,
     content: &'content impl Format<JsFormatContext>,
-) -> FormatReplaced<'a, 'content> {
-    FormatReplaced {
-        token,
-        content: Argument::new(content),
-    }
-}
-
-#[derive(Copy, Clone)]
-pub struct FormatReplaced<'a, 'content> {
-    token: &'a JsSyntaxToken,
-    content: Argument<'content, JsFormatContext>,
-}
-
-impl Format<JsFormatContext> for FormatReplaced<'_, '_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        f.state_mut().track_token(self.token);
-
-        format_leading_trivia(self.token, TriviaPrintMode::Full).fmt(f)?;
-        f.write_fmt(Arguments::from(&self.content))?;
-        format_trailing_trivia(self.token).fmt(f)
-    }
+) -> FormatReplaced<'a, 'content, JsCommentStyle, JsFormatContext> {
+    FormatReplaced::new(token, content, JsCommentStyle)
 }
 
 /// Formats the given token only if the group does break and otherwise retains the tokens trivia.
 pub fn format_only_if_breaks<'a, 'content, Content>(
     token: &'a JsSyntaxToken,
     content: &'content Content,
-) -> FormatOnlyIfBreaks<'a, 'content>
+) -> FormatOnlyIfBreaks<'a, 'content, JsCommentStyle, JsFormatContext>
 where
     Content: Format<JsFormatContext>,
 {
-    FormatOnlyIfBreaks {
-        token,
-        content: Argument::new(content),
-        group_id: None,
-    }
+    FormatOnlyIfBreaks::new(token, content, JsCommentStyle)
 }
 
-pub struct FormatOnlyIfBreaks<'a, 'content> {
-    token: &'a JsSyntaxToken,
-    content: Argument<'content, JsFormatContext>,
-    group_id: Option<GroupId>,
+/// Formats the leading trivia (comments, skipped token trivia) of a token
+pub fn format_leading_trivia(token: &JsSyntaxToken) -> FormatLeadingTrivia<JsCommentStyle> {
+    FormatLeadingTrivia::new(token, JsCommentStyle)
 }
 
-impl FormatOnlyIfBreaks<'_, '_> {
-    pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
-        self.group_id = group_id;
-        self
-    }
-}
-
-impl Format<JsFormatContext> for FormatOnlyIfBreaks<'_, '_> {
-    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        // Store the last token and last trailing comment before formatting the content which will override the
-        // state
-        // Is it safe to set `last_trailing_comment` only in the format removed because format removed may set it to true
-        // but it's false for the "break" case. Ignorable, because it's after a new line break in that case?
-        let last_token = f.state().last_token();
-        let last_trailing_comment = f.state_mut().last_trailing_comment_kind();
-        write!(
-            f,
-            [
-                if_group_breaks(&Arguments::from(&self.content)).with_group_id(self.group_id),
-                // Print the trivia otherwise
-                if_group_fits_on_line(&FormatRemoved {
-                    token: self.token,
-                    last_token,
-                    last_trailing_comment,
-                    track: false,
-                })
-                .with_group_id(self.group_id)
-            ]
-        )
-    }
+/// Formats the trailing trivia (comments) of a token
+pub fn format_trailing_trivia(token: &JsSyntaxToken) -> impl Format<JsFormatContext> {
+    format_token_trailing_trivia(token, JsCommentStyle)
 }
 
 /// "Formats" a node according to its original formatting in the source text. Being able to format
@@ -498,7 +304,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
         f.state_mut().track_token(open_token);
         f.state_mut().track_token(close_token);
 
-        format_leading_trivia(open_token, TriviaPrintMode::Full).fmt(f)?;
+        format_leading_trivia(open_token).fmt(f)?;
 
         let open_token_trailing_trivia = format_with(|f| {
             // Not really interested in the pre-amble, but want to know if it was written
@@ -521,7 +327,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
 
             write!(
                 buffer,
-                [format_leading_trivia(close_token, TriviaPrintMode::Trim)]
+                [format_leading_trivia(close_token).with_trim_mode(TriviaPrintMode::Trim)]
             )
         });
 

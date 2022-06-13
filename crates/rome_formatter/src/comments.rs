@@ -63,22 +63,8 @@ impl CommentKind {
     pub const fn is_inline_block(&self) -> bool {
         matches!(self, CommentKind::InlineBlock)
     }
-}
 
-pub trait CommentStyle {
-    type Language: Language;
-
-    /// Returns the kind of the comment
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
-
-    /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are
-    /// * left parentheses: `(`, `[`, `{`
-    fn is_group_start_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
-
-    /// Returns `true` if a token with the passed `kind` marks the end of a group. Common group end tokens are:
-    /// * right parentheses: `)`, `]`, `}`
-    /// * end of statement token: `;`
-    /// * element separator: `,` or `.`.
-    /// * end of file token: `EOF`
-    fn is_group_end_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
+    pub const fn is_inline(&self) -> bool {
+        matches!(self, CommentKind::InlineBlock | CommentKind::Block)
+    }
 }

@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::builders::format_inserted;
 use crate::FormatNodeFields;
 use rome_js_syntax::{JsAnyStatement, JsLabeledStatement};
 use rome_js_syntax::{JsLabeledStatementFields, JsSyntaxKind};

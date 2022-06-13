@@ -35,10 +35,12 @@ pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
+pub mod token;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
 use crate::prelude::syntax_token_cow_slice;
+use std::any::TypeId;
 
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
@@ -46,17 +48,17 @@ use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
 pub use builders::{
-    block_indent, comment, empty_element, empty_line, group_elements, hard_line_break,
+    block_indent, comment, empty_line, get_lines_before, group_elements, hard_line_break,
     if_group_breaks, if_group_fits_on_line, indent, line_suffix, soft_block_indent,
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
-pub use comments::{Comment, CommentKind, CommentStyle};
+pub use comments::{Comment, CommentKind};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken,
-    SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
+    Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxKind, SyntaxNode, SyntaxResult,
+    SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
 use std::error::Error;
 use std::fmt;
@@ -1067,8 +1069,11 @@ pub struct FormatState<Context> {
     context: Context,
     group_id_builder: UniqueGroupIdBuilder,
 
-    last_trailing_comment_kind: Option<CommentKind>,
-    last_token: Option<RawSyntaxKind>,
+    /// `true` if there's a trailing inline comment before the next token (including its trivia).
+    trailing_inline_comment: bool,
+
+    /// The kind of the last formatted token
+    last_token_kind: Option<LastTokenKind>,
 
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
@@ -1083,10 +1088,8 @@ where
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("FormatState")
             .field("context", &self.context)
-            .field(
-                "last_trailing_comment_kind",
-                &self.last_trailing_comment_kind,
-            )
+            .field("has_trailing_inline_comment", &self.trailing_inline_comment)
+            .field("last_token_kind", &self.last_token_kind)
             .finish()
     }
 }
@@ -1097,31 +1100,37 @@ impl<Context> FormatState<Context> {
         Self {
             context,
             group_id_builder: Default::default(),
-            last_trailing_comment_kind: None,
-            last_token: None,
+            trailing_inline_comment: false,
+            last_token_kind: None,
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
     }
 
-    pub fn take_last_trailing_comment_kind(&mut self) -> Option<CommentKind> {
-        self.last_trailing_comment_kind.take()
+    /// Returns true if there's a trailing inline comment before the next token or the next token's comments.
+    pub fn has_trailing_inline_comment(&self) -> bool {
+        self.trailing_inline_comment
     }
 
-    pub fn last_trailing_comment_kind(&self) -> Option<CommentKind> {
-        self.last_trailing_comment_kind
+    /// Sets whether there is a trailing inline comment before the next token or the next token's trivia.
+    pub fn set_trailing_inline_comment(&mut self, has_comment: bool) {
+        self.trailing_inline_comment = has_comment;
     }
 
-    pub fn set_last_trailing_comment(&mut self, kind: Option<CommentKind>) {
-        self.last_trailing_comment_kind = kind;
+    /// Returns the kind of the last formatted token.
+    pub fn last_token_kind(&self) -> Option<LastTokenKind> {
+        self.last_token_kind
     }
 
-    pub fn last_token(&self) -> Option<RawSyntaxKind> {
-        self.last_token
-    }
+    /// Sets the kind of the last formatted token.
+    pub fn set_last_token_kind<Kind: SyntaxKind + 'static>(&mut self, kind: Kind) {
+        // Reset the last comment kind before token because we've now seen a token.
 
-    pub fn set_last_token(&mut self, token: RawSyntaxKind) {
-        self.last_token = Some(token);
+        self.trailing_inline_comment = false;
+        self.last_token_kind = Some(LastTokenKind {
+            kind_type: TypeId::of::<Kind>(),
+            kind: kind.to_raw(),
+        });
     }
 
     /// Returns the context specifying how to format the current CST
@@ -1132,6 +1141,25 @@ impl<Context> FormatState<Context> {
     /// Returns a mutable reference to the context
     pub fn context_mut(&mut self) -> &mut Context {
         &mut self.context
+    }
+
+    pub fn snapshot(&self) -> FormatStateSnapshot {
+        FormatStateSnapshot {
+            trailing_inline_comment: self.trailing_inline_comment,
+            last_token_kind: self.last_token_kind,
+            #[cfg(debug_assertions)]
+            printed_tokens: self.printed_tokens.clone(),
+        }
+    }
+
+    pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
+        self.trailing_inline_comment = snapshot.trailing_inline_comment;
+        self.last_token_kind = snapshot.last_token_kind;
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                self.printed_tokens = snapshot.printed_tokens;
+            }
+        }
     }
 
     /// Creates a new group id that is unique to this document. The passed debug name is used in the
@@ -1163,4 +1191,45 @@ impl<Context> FormatState<Context> {
             }
         }
     }
+}
+
+#[derive(Eq, PartialEq, Debug, Copy, Clone)]
+pub struct LastTokenKind {
+    kind_type: TypeId,
+    kind: RawSyntaxKind,
+}
+
+impl LastTokenKind {
+    pub fn as_language<L: Language + 'static>(&self) -> Option<L::Kind> {
+        if self.kind_type == TypeId::of::<L::Kind>() {
+            Some(L::Kind::from_raw(self.kind))
+        } else {
+            None
+        }
+    }
+}
+
+pub struct FormatStateSnapshot {
+    trailing_inline_comment: bool,
+    last_token_kind: Option<LastTokenKind>,
+    #[cfg(debug_assertions)]
+    printed_tokens: PrintedTokens,
+}
+
+pub trait CommentStyle: Copy {
+    type Language: Language;
+
+    /// Returns the kind of the comment
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
+
+    /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are
+    /// * left parentheses: `(`, `[`, `{`
+    fn is_group_start_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
+
+    /// Returns `true` if a token with the passed `kind` marks the end of a group. Common group end tokens are:
+    /// * right parentheses: `)`, `]`, `}`
+    /// * end of statement token: `;`
+    /// * element separator: `,` or `.`.
+    /// * end of file token: `EOF`
+    fn is_group_end_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
 }

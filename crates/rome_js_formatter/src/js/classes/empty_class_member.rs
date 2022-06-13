@@ -1,6 +1,5 @@
 use crate::prelude::*;
 
-use crate::builders::format_removed;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsEmptyClassMember;
 use rome_js_syntax::JsEmptyClassMemberFields;

@@ -2,7 +2,6 @@ use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
 use rome_formatter::write;
 
-use crate::builders::format_removed;
 use crate::utils::JsAnyBinaryLikeExpression;
 use crate::FormatNodeFields;
 use rome_js_syntax::{

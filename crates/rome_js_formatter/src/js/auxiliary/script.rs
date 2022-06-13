@@ -2,7 +2,6 @@ use crate::prelude::*;
 use crate::utils::FormatInterpreterToken;
 use rome_formatter::write;
 
-use crate::builders::format_removed;
 use crate::FormatNodeFields;
 use rome_js_syntax::JsScript;
 use rome_js_syntax::JsScriptFields;

@@ -1,4 +1,3 @@
-use crate::builders::format_inserted;
 use crate::prelude::*;
 use crate::FormatNodeFields;
 use rome_formatter::write;
@@ -31,7 +30,10 @@ impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
             None => {
                 write!(
                     f,
-                    [format_inserted(JsSyntaxKind::L_PAREN).with_content(&token("()"))]
+                    [
+                        format_inserted(JsSyntaxKind::L_PAREN),
+                        format_inserted(JsSyntaxKind::R_PAREN)
+                    ]
                 )
             }
         }

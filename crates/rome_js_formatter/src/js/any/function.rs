@@ -1,4 +1,3 @@
-use crate::builders::format_inserted;
 use crate::generated::FormatJsAnyFunction;
 use crate::prelude::*;
 use crate::utils::is_simple_expression;

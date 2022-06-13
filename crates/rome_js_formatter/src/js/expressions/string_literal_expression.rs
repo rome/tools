@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::{write, Buffer, VecBuffer};
 
-use crate::builders::format_inserted;
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
 use rome_js_syntax::JsStringLiteralExpression;
