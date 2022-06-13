@@ -2,10 +2,8 @@
 
 use std::collections::VecDeque;
 
-use rome_js_syntax::{
-    JsLanguage, JsSyntaxNode, JsTryFinallyStatement, JsTryStatement, TextRange, TextSize,
-};
-use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast};
+use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange, TextSize};
+use rome_rowan::syntax::Preorder;
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
@@ -121,33 +119,12 @@ impl SemanticEventExtractor {
             | JS_CONSTRUCTOR_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_SETTER_CLASS_MEMBER
-            | JS_IF_STATEMENT
+            | JS_BLOCK_STATEMENT
+            | JS_FOR_STATEMENT
             | JS_FOR_OF_STATEMENT
             | JS_FOR_IN_STATEMENT
-            | JS_FOR_STATEMENT => {
-                self.push_scope(node.text_range());
-            }
-            JS_TRY_STATEMENT => {
-                if let Some(range) = node
-                    .clone()
-                    .cast::<JsTryStatement>()
-                    .and_then(|x| x.body().ok())
-                    .map(|x| x.syntax().text_range())
-                {
-                    self.push_scope(range);
-                }
-            }
-            JS_TRY_FINALLY_STATEMENT => {
-                if let Some(range) = node
-                    .clone()
-                    .cast::<JsTryFinallyStatement>()
-                    .and_then(|x| x.body().ok())
-                    .map(|x| x.syntax().text_range())
-                {
-                    self.push_scope(range);
-                }
-            }
-            JS_CATCH_CLAUSE | JS_FINALLY_CLAUSE => {
+            | JS_CATCH_CLAUSE
+            | JS_FUNCTION_BODY => {
                 self.push_scope(node.text_range());
             }
             _ => {}
@@ -166,33 +143,12 @@ impl SemanticEventExtractor {
             | JS_CONSTRUCTOR_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_SETTER_CLASS_MEMBER
-            | JS_IF_STATEMENT
+            | JS_BLOCK_STATEMENT
+            | JS_FOR_STATEMENT
             | JS_FOR_OF_STATEMENT
             | JS_FOR_IN_STATEMENT
-            | JS_FOR_STATEMENT => {
-                self.pop_scope(node.text_range());
-            }
-            JS_TRY_STATEMENT => {
-                if let Some(range) = node
-                    .clone()
-                    .cast::<JsTryStatement>()
-                    .and_then(|x| x.body().ok())
-                    .map(|x| x.syntax().text_range())
-                {
-                    self.pop_scope(range);
-                }
-            }
-            JS_TRY_FINALLY_STATEMENT => {
-                if let Some(range) = node
-                    .clone()
-                    .cast::<JsTryFinallyStatement>()
-                    .and_then(|x| x.body().ok())
-                    .map(|x| x.syntax().text_range())
-                {
-                    self.pop_scope(range);
-                }
-            }
-            JS_CATCH_CLAUSE | JS_FINALLY_CLAUSE => {
+            | JS_CATCH_CLAUSE
+            | JS_FUNCTION_BODY => {
                 self.pop_scope(node.text_range());
             }
             _ => {}
