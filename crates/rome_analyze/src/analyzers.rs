@@ -6,6 +6,8 @@ mod no_delete;
 pub(crate) use no_delete::NoDelete;
 mod no_double_equals;
 pub(crate) use no_double_equals::NoDoubleEquals;
+mod no_implicit_boolean;
+pub(crate) use no_implicit_boolean::NoImplicitBoolean;
 mod no_negation_else;
 pub(crate) use no_negation_else::NoNegationElse;
 mod use_single_case_statement;

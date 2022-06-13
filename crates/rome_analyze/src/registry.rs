@@ -39,6 +39,7 @@ impl_registry_builders!(
     NoCompareNegZero,
     NoDelete,
     NoDoubleEquals,
+    NoImplicitBoolean,
     NoNegationElse,
     UseSingleCaseStatement,
     UseSingleVarDeclarator,
