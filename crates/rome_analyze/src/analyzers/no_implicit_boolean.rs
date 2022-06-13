@@ -43,7 +43,7 @@ impl Rule for NoImplicitBoolean {
             initializer: _,
         } = n.as_fields();
 
-        let name = name.ok()?.clone();
+        let name = name.ok()?;
         // we use this variable for constructing `JsxAnyAttributeName` without clone the name, so we pre compute the type here.
         let is_jsx_name = matches!(name, JsxAnyAttributeName::JsxName(_));
 
