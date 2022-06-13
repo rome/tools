@@ -23,9 +23,9 @@ warning[noDebugger]: This is an unexpected use of the debugger statement.
   ┌─ noDebugger.js:3:10
   │
 3 │ if (foo) debugger
-  │          -------- This is an unexpected use of the debugger statement.
+  │          --------
 
-Remove debugger statement
+Suggested fix: Remove debugger statement
     | @@ -1,6 +1,6 @@
 0 0 |   const test = { debugger: 1 }; test.debugger;
 1 1 |   
@@ -43,9 +43,9 @@ warning[noDebugger]: This is an unexpected use of the debugger statement.
   ┌─ noDebugger.js:5:1
   │
 5 │ debugger;
-  │ --------- This is an unexpected use of the debugger statement.
+  │ ---------
 
-Remove debugger statement
+Suggested fix: Remove debugger statement
     | @@ -2,8 +2,6 @@
 1 1 |   
 2 2 |   if (foo) debugger
@@ -64,9 +64,9 @@ warning[noDebugger]: This is an unexpected use of the debugger statement.
   ┌─ noDebugger.js:9:3
   │
 9 │   debugger;
-  │   --------- This is an unexpected use of the debugger statement.
+  │   ---------
 
-Remove debugger statement
+Suggested fix: Remove debugger statement
     | @@ -6,5 +6,4 @@
 5 5 |   
 6 6 |   function test() {

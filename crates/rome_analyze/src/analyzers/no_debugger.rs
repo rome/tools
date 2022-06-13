@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_syntax::{
     JsAnyRoot, JsAnyStatement, JsDebuggerStatement, JsModuleItemList, JsStatementList, T,
 };
