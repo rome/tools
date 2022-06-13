@@ -153,7 +153,9 @@ pub(crate) fn diagnostic_to_lsp(
         }),
         diagnostic.code.map(lsp::NumberOrString::String),
         Some("rome".into()),
-        print_markup(&diagnostic.title),
+        diagnostic
+            .summary
+            .unwrap_or_else(|| print_markup(&diagnostic.title)),
         related_information,
         diagnostic.tag.map(|tag| {
             let mut result = Vec::new();

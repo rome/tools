@@ -2,7 +2,7 @@
 //! using `codespan`.
 
 use crate::{file::Files, Diagnostic};
-use crate::{SuggestionChange, SuggestionStyle};
+use crate::{Applicability, SuggestionChange, SuggestionStyle};
 use rome_console::Markup;
 use rome_console::{
     codespan::{Codespan, Label, LabelStyle, Locus, Severity, WithSeverity},
@@ -143,6 +143,13 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         }
 
         for suggestion in &self.d.suggestions {
+            let applicability = match suggestion.applicability {
+                Applicability::Always => "Safe fix",
+                Applicability::MaybeIncorrect
+                | Applicability::HasPlaceholders
+                | Applicability::Unspecified => "Suggested fix",
+            };
+
             match suggestion.style {
                 SuggestionStyle::Full => {
                     let old = self
@@ -165,7 +172,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                     buffer.replace_range(Range::<usize>::from(range), &new);
 
                     fmt.write_markup(markup! {
-                        <Info>{suggestion.msg}</Info>"\n"
+                        <Info>{applicability}": "{suggestion.msg}</Info>"\n"
                         {Diff { mode: DiffMode::Unified, left: old, right: &buffer }}
                     })?;
                 }
@@ -186,12 +193,12 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                     };
 
                     fmt.write_markup(markup! {
-                        <Info>{suggestion.msg}": `"{replacement}"`"</Info>"\n"
+                        <Info>{applicability}": "{suggestion.msg}"\n`"{replacement}"`"</Info>"\n"
                     })?;
                 }
                 SuggestionStyle::HideCode => {
                     fmt.write_markup(markup! {
-                        <Info>{suggestion.msg}</Info>"\n"
+                        <Info>{applicability}": "{suggestion.msg}</Info>"\n"
                     })?;
                 }
                 SuggestionStyle::DontShow => {}
@@ -283,7 +290,7 @@ labore et dolore magna aliqua";
                 <Info>"2"</Info>" "<Info>"│"</Info>" consectetur "<Error>"adipiscing elit"</Error>",\n"
             "  "<Info>"│"</Info>                   "             "<Error>"^^^^^^^^^^^^^^^"</Error>" "<Error>"label"</Error>"\n"
             "\n"
-            <Info>"suggestion"</Info>"\n"
+            <Info>"Safe fix: suggestion"</Info>"\n"
             "    | "<Info>"@@ -1,4 +1,5 @@"</Info>"\n"
             "0 0 |   Lorem ipsum dolor sit amet,\n"
             "1   | "<Error>"- consectetur adipiscing elit,"</Error>"\n"

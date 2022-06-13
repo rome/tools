@@ -18,9 +18,9 @@ warning[noDelete]: This is an unexpected use of the delete operator.
   ┌─ noDelete.js:2:1
   │
 2 │ delete a.b;
-  │ ---------- This is an unexpected use of the delete operator.
+  │ ----------
 
-Replace with undefined assignment
+Suggested fix: Replace with undefined assignment
     | @@ -1,5 +1,5 @@
 0 0 |   delete a;
 1   | - delete a.b;
@@ -37,9 +37,9 @@ warning[noDelete]: This is an unexpected use of the delete operator.
   ┌─ noDelete.js:3:1
   │
 3 │ delete a?.b;
-  │ ----------- This is an unexpected use of the delete operator.
+  │ -----------
 
-Replace with undefined assignment
+Suggested fix: Replace with undefined assignment
     | @@ -1,5 +1,5 @@
 0 0 |   delete a;
 1 1 |   delete a.b;
@@ -56,9 +56,9 @@ warning[noDelete]: This is an unexpected use of the delete operator.
   ┌─ noDelete.js:4:1
   │
 4 │ delete a["b"];
-  │ ------------- This is an unexpected use of the delete operator.
+  │ -------------
 
-Replace with undefined assignment
+Suggested fix: Replace with undefined assignment
     | @@ -1,5 +1,5 @@
 0 0 |   delete a;
 1 1 |   delete a.b;

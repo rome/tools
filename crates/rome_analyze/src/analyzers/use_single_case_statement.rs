@@ -1,7 +1,7 @@
 use std::iter;
 
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyRoot, JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
@@ -31,14 +31,12 @@ impl Rule for UseSingleCaseStatement {
     }
 
     fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            message: markup! {
-                "A switch case should only have a single statement."
-            }
-            .to_owned(),
-            range: n.consequent().syntax().text_trimmed_range(),
-        })
+        Some(RuleDiagnostic::warning(
+            n.consequent().range(),
+            markup! {
+                "A switch case should only have a single statement. If you want more, then wrap it in a block."
+            },
+        ))
     }
 
     fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
