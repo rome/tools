@@ -7,7 +7,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoUnusedTemplateLiteral {}
@@ -38,7 +38,7 @@ impl Rule for NoUnusedTemplateLiteral {
         })
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<RuleAction> {
+    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
         // join all template content
         let inner_content = node
             .elements()
