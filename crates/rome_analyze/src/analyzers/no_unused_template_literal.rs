@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{
