@@ -3,11 +3,12 @@ use rome_formatter::{format_args, write, Buffer, VecBuffer};
 
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
-    JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,
-    JsSyntaxKind, JsSyntaxKind::*, JsSyntaxNode, JsSyntaxToken,
+    JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator, JsPrivateName, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken,
 };
 
-use rome_rowan::{AstNode, SyntaxResult};
+use crate::utils::is_break_after_colon;
+use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::cmp::Ordering;
 use std::fmt::Debug;
 use std::iter::FusedIterator;
@@ -278,13 +279,19 @@ fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
 ///
 /// There are some cases where the indentation is done by the parent, so if the parent is already doing
 /// the indentation, then there's no need to do a second indentation.
-fn should_not_indent_if_parent_indents(current_node: &JsSyntaxNode) -> bool {
-    let parent_kind = current_node.parent().map(|parent| parent.kind());
+fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
+    let parent_kind = current_node.syntax().parent().map(|parent| parent.kind());
 
-    matches!(
-        parent_kind,
-        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
-    )
+    match parent_kind {
+        Some(JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER) => current_node
+            .as_expression()
+            .and_then(|expression| is_break_after_colon(expression).ok())
+            .unwrap_or(false),
+        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION) => {
+            true
+        }
+        _ => false,
+    }
 }
 
 /// There are other cases where the parent decides to inline the the element; in
@@ -534,7 +541,7 @@ impl FlattenedBinaryExpressionPart {
                         f.join_with(soft_line_break_or_space())
                             .entries(groups)
                             .finish()
-                    } else if should_not_indent_if_parent_indents(current.syntax()) {
+                    } else if should_not_indent_if_parent_indents(current) {
                         write!(
                             f,
                             [group_elements(&format_once(|f| {
@@ -724,13 +731,8 @@ impl Iterator for PostorderIterator {
 
 impl FusedIterator for PostorderIterator {}
 
-#[allow(clippy::enum_variant_names)]
-#[derive(Debug, Clone)]
-pub(crate) enum JsAnyBinaryLikeExpression {
-    JsLogicalExpression(JsLogicalExpression),
-    JsBinaryExpression(JsBinaryExpression),
-    JsInstanceofExpression(JsInstanceofExpression),
-    JsInExpression(JsInExpression),
+declare_node_union! {
+    pub(crate) JsAnyBinaryLikeExpression = JsLogicalExpression | JsBinaryExpression | JsInstanceofExpression | JsInExpression
 }
 
 impl JsAnyBinaryLikeExpression {
@@ -804,62 +806,24 @@ impl JsAnyBinaryLikeExpression {
     }
 }
 
-impl AstNode for JsAnyBinaryLikeExpression {
-    type Language = JsLanguage;
-    fn can_cast(kind: JsSyntaxKind) -> bool
-    where
-        Self: Sized,
-    {
-        matches!(
-            kind,
-            JS_BINARY_EXPRESSION
-                | JS_LOGICAL_EXPRESSION
-                | JS_INSTANCEOF_EXPRESSION
-                | JS_IN_EXPRESSION
-        )
-    }
-
-    fn cast(syntax: JsSyntaxNode) -> Option<Self>
-    where
-        Self: Sized,
-    {
-        match syntax.kind() {
-            JS_BINARY_EXPRESSION => {
-                JsBinaryExpression::cast(syntax).map(JsAnyBinaryLikeExpression::JsBinaryExpression)
-            }
-            JS_LOGICAL_EXPRESSION => JsLogicalExpression::cast(syntax)
-                .map(JsAnyBinaryLikeExpression::JsLogicalExpression),
-            JS_INSTANCEOF_EXPRESSION => JsInstanceofExpression::cast(syntax)
-                .map(JsAnyBinaryLikeExpression::JsInstanceofExpression),
-            JS_IN_EXPRESSION => {
-                JsInExpression::cast(syntax).map(JsAnyBinaryLikeExpression::JsInExpression)
-            }
-            _ => None,
-        }
-    }
-
-    fn syntax(&self) -> &JsSyntaxNode {
-        match self {
-            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.syntax(),
-            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.syntax(),
-            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => instanceof.syntax(),
-            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.syntax(),
-        }
-    }
-
-    fn into_syntax(self) -> JsSyntaxNode {
-        match self {
-            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.into_syntax(),
-            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.into_syntax(),
-            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => {
-                instanceof.into_syntax()
-            }
-            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.into_syntax(),
-        }
-    }
-}
-
 impl JsAnyBinaryLikeExpression {
+    /// Determines if a binary like expression should be inline or not.
+    pub fn should_inline(&self) -> bool {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical_expression) => {
+                match logical_expression.right() {
+                    Ok(JsAnyExpression::JsObjectExpression(object_expression)) => {
+                        object_expression.members().iter().count() > 0
+                    }
+                    Ok(JsAnyExpression::JsArrayExpression(array_expression)) => {
+                        array_expression.elements().iter().count() > 0
+                    }
+                    _ => false,
+                }
+            }
+            _ => false,
+        }
+    }
     /// Determines if a binary like expression should be flattened or not. As a rule of thumb, an expression
     /// can be flattened if it is of the same kind as the left-hand side sub-expression and uses the same operator.
     fn can_flatten(&self) -> SyntaxResult<bool> {
@@ -890,10 +854,8 @@ impl JsAnyBinaryLikeExpression {
     }
 }
 
-#[derive(Debug)]
-enum JsAnyBinaryLikeLeftExpression {
-    JsAnyExpression(JsAnyExpression),
-    JsPrivateName(JsPrivateName),
+declare_node_union! {
+    JsAnyBinaryLikeLeftExpression = JsAnyExpression | JsPrivateName
 }
 
 impl JsAnyBinaryLikeLeftExpression {
@@ -901,43 +863,6 @@ impl JsAnyBinaryLikeLeftExpression {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => Some(expression),
             JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => None,
-        }
-    }
-}
-
-impl AstNode for JsAnyBinaryLikeLeftExpression {
-    type Language = JsLanguage;
-    fn can_cast(kind: JsSyntaxKind) -> bool
-    where
-        Self: Sized,
-    {
-        JsAnyExpression::can_cast(kind) || JsPrivateName::can_cast(kind)
-    }
-
-    fn cast(syntax: JsSyntaxNode) -> Option<Self>
-    where
-        Self: Sized,
-    {
-        if syntax.kind() == JS_PRIVATE_NAME {
-            JsPrivateName::cast(syntax).map(|name| name.into())
-        } else {
-            JsAnyExpression::cast(syntax).map(|expr| expr.into())
-        }
-    }
-
-    fn syntax(&self) -> &JsSyntaxNode {
-        match self {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression.syntax(),
-            JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => private_name.syntax(),
-        }
-    }
-
-    fn into_syntax(self) -> JsSyntaxNode {
-        match self {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression.into_syntax(),
-            JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
-                private_name.into_syntax()
-            }
         }
     }
 }
@@ -952,18 +877,6 @@ impl Format<JsFormatContext> for JsAnyBinaryLikeLeftExpression {
                 write![f, [private_name.format()]]
             }
         }
-    }
-}
-
-impl From<JsAnyExpression> for JsAnyBinaryLikeLeftExpression {
-    fn from(expression: JsAnyExpression) -> Self {
-        JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression)
-    }
-}
-
-impl From<JsPrivateName> for JsAnyBinaryLikeLeftExpression {
-    fn from(private_name: JsPrivateName) -> Self {
-        JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name)
     }
 }
 
