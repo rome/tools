@@ -25,9 +25,9 @@ warning[noImplicitBoolean]: Use explicit boolean values for boolean JSX props.
   ┌─ noImplicitBoolean.jsx:9:8
   │
 9 │ <input disabled />;
-  │        -------- Use explicit boolean values for boolean JSX props.
+  │        --------
 
-Add explicit `true` literal for this attribute
+Safe fix: Add explicit `true` literal for this attribute
     | @@ -6,6 +6,6 @@
 5 5 |   <input disabled="false" />;
 6 6 |   
@@ -45,9 +45,9 @@ warning[noImplicitBoolean]: Use explicit boolean values for boolean JSX props.
    ┌─ noImplicitBoolean.jsx:10:8
    │
 10 │ <input accept/** some comment */ />;
-   │        ------ Use explicit boolean values for boolean JSX props.
+   │        ------
 
-Add explicit `true` literal for this attribute
+Safe fix: Add explicit `true` literal for this attribute
       | @@ -7,5 +7,5 @@
  6  6 |   
  7  7 |   //invalid
@@ -64,9 +64,9 @@ warning[noImplicitBoolean]: Use explicit boolean values for boolean JSX props.
    ┌─ noImplicitBoolean.jsx:11:28
    │
 11 │ <input /** some comment */ accept />;
-   │                            ------ Use explicit boolean values for boolean JSX props.
+   │                            ------
 
-Add explicit `true` literal for this attribute
+Safe fix: Add explicit `true` literal for this attribute
       | @@ -8,4 +8,4 @@
  7  7 |   //invalid
  8  8 |   <input disabled />;
