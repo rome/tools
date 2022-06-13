@@ -51,14 +51,14 @@ switch (foo) {
 
 # Diagnostics
 ```
-warning[useSingleCaseStatement]: A switch case should only have a single statement.
+warning[useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
   ┌─ useSingleCaseStatement.js:4:9
   │  
 4 │ ┌         let foo = '';
 5 │ │         foo;
-  │ └────────────' A switch case should only have a single statement.
+  │ └────────────'
 
-Wrap the statements in a block
+Suggested fix: Wrap the statements in a block
     | @@ -1,8 +1,9 @@
 0 0 |   switch (foo) {
 1 1 |       case true:
@@ -75,14 +75,14 @@ Wrap the statements in a block
 ```
 
 ```
-warning[useSingleCaseStatement]: A switch case should only have a single statement.
+warning[useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
    ┌─ useSingleCaseStatement.js:11:9
    │  
 11 │ ┌         let foo = '';
 12 │ │         foo;
-   │ └────────────' A switch case should only have a single statement.
+   │ └────────────'
 
-Wrap the statements in a block
+Suggested fix: Wrap the statements in a block
       | @@ -7,9 +7,10 @@
  6  6 |   
  7  7 |   switch (foo) {
@@ -100,14 +100,14 @@ Wrap the statements in a block
 ```
 
 ```
-warning[useSingleCaseStatement]: A switch case should only have a single statement.
+warning[useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
    ┌─ useSingleCaseStatement.js:17:9
    │  
 17 │ ┌         let foo = '';
 18 │ │         foo;
-   │ └────────────' A switch case should only have a single statement.
+   │ └────────────'
 
-Wrap the statements in a block
+Suggested fix: Wrap the statements in a block
       | @@ -13,9 +13,10 @@
 12 12 |   }
 13 13 |   
@@ -125,14 +125,14 @@ Wrap the statements in a block
 ```
 
 ```
-warning[useSingleCaseStatement]: A switch case should only have a single statement.
+warning[useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
    ┌─ useSingleCaseStatement.js:24:9
    │  
 24 │ ┌         let foo = '';
 25 │ │         foo;
-   │ └────────────' A switch case should only have a single statement.
+   │ └────────────'
 
-Wrap the statements in a block
+Suggested fix: Wrap the statements in a block
       | @@ -20,9 +20,10 @@
 19 19 |   
 20 20 |   switch (foo) {

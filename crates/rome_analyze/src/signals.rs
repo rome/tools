@@ -3,7 +3,7 @@ use std::marker::PhantomData;
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
     file::{FileId, FileSpan},
-    Applicability, CodeSuggestion, Diagnostic, SubDiagnostic, SuggestionChange, SuggestionStyle,
+    Applicability, CodeSuggestion, Diagnostic, SuggestionChange, SuggestionStyle,
 };
 use rome_js_syntax::TextRange;
 use rome_rowan::{AstNode, Direction, Language, SyntaxNode};
@@ -101,24 +101,8 @@ impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
 
 impl<'a, R: Rule> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R> {
     fn diagnostic(&self) -> Option<Diagnostic> {
-        R::diagnostic(&self.node, &self.state).map(|diag| Diagnostic {
-            file_id: self.file_id,
-            severity: diag.severity,
-            code: Some(R::NAME.into()),
-            title: diag.message.clone(),
-            tag: None,
-            primary: Some(SubDiagnostic {
-                severity: diag.severity,
-                msg: diag.message,
-                span: FileSpan {
-                    file: self.file_id,
-                    range: diag.range,
-                },
-            }),
-            children: Vec::new(),
-            suggestions: Vec::new(),
-            footers: Vec::new(),
-        })
+        R::diagnostic(&self.node, &self.state)
+            .map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {

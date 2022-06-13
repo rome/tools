@@ -1,7 +1,7 @@
 use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyRoot, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
@@ -39,14 +39,12 @@ impl Rule for NoNegationElse {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            message: markup! {
+        Some(RuleDiagnostic::warning(
+            node.range(),
+            markup! {
                 "Invert blocks when performing a negation test."
-            }
-            .to_owned(),
-            range: node.range(),
-        })
+            },
+        ))
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
