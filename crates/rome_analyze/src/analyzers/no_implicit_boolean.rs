@@ -2,10 +2,10 @@ use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsxAnyAttributeName, JsxAnyAttributeValue,
-    JsxAttribute, JsxAttributeFields, JsxName, JsxNamespaceName, T,
+    JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsSyntaxToken, JsxAnyAttributeName,
+    JsxAnyAttributeValue, JsxAttribute, JsxAttributeFields, JsxName, JsxNamespaceName, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, SyntaxElement};
+use rome_rowan::{AstNode, AstNodeExt, SyntaxElement, TriviaPiece};
 
 use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
@@ -43,11 +43,16 @@ impl Rule for NoImplicitBoolean {
         let is_jsx_name = matches!(name, JsxAnyAttributeName::JsxName(_));
         let mut name_syntax = name.into_syntax();
 
-        let trailing_trivia = name_syntax.last_trailing_trivia().map(|trivia| {
-            trivia
-                .pieces()
-                .map(|p| (p.kind(), p.text()))
-        });
+        let mut close_curly_token = String::from("}");
+        let mut trailing = Vec::new();
+        if let Some(trivia) = name_syntax.last_trailing_trivia() {
+            for piece in trivia.pieces() {
+				trailing.push(TriviaPiece::new(piece.kind(), piece.text_len()));
+				close_curly_token += piece.text();
+			}
+        }
+        let trailing_trivia = name_syntax.last_trailing_trivia().map(|trivia| {});
+        println!("{:?}", trailing_trivia);
         let next_last_token = name_syntax
             .last_token()
             .map(|tok| tok.with_trailing_trivia(std::iter::empty()))?;
@@ -75,7 +80,7 @@ impl Rule for NoImplicitBoolean {
                     make::js_boolean_literal_expression(make::token(T![true])),
                 ),
             ),
-            make::token(JsSyntaxKind::R_CURLY),
+            JsSyntaxToken::new_detached(JsSyntaxKind::R_CURLY, &close_curly_token, [], trailing),
         );
         let next_attr = make::jsx_attribute(next_name).with_initializer(
             make::jsx_attribute_initializer_clause(

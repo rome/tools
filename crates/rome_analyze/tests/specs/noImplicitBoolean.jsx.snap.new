@@ -33,7 +33,7 @@ Add explicit `true` literal for this attribute
 6 6 |   
 7 7 |   //invalid
 8   | - <input disabled />;
-  8 | + <input disabled={true}/>;
+  8 | + <input disabled={true} />;
 9 9 |   <input accept/** some comment */ />;
 10 10 |   <input /** some comment */ accept />;
 
@@ -53,7 +53,7 @@ Add explicit `true` literal for this attribute
  7  7 |   //invalid
  8  8 |   <input disabled />;
  9    | - <input accept/** some comment */ />;
-    9 | + <input accept={true}/>;
+    9 | + <input accept={true}/** some comment */ />;
 10 10 |   <input /** some comment */ accept />;
 
 
@@ -72,7 +72,7 @@ Add explicit `true` literal for this attribute
  8  8 |   <input disabled />;
  9  9 |   <input accept/** some comment */ />;
 10    | - <input /** some comment */ accept />;
-   10 | + <input /** some comment */ accept={true}/>;
+   10 | + <input /** some comment */ accept={true} />;
 
 
 ```
