@@ -8,6 +8,51 @@ use rome_js_syntax::{
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
+pub(crate) fn format_assignment_like(
+    assignment_like: JsAnyAssignmentLike,
+    f: &mut JsFormatter,
+) -> FormatResult<()> {
+    let right = assignment_like.right()?;
+    let format_content = format_with(|f| {
+        let is_left_short = assignment_like.write_left(f)?;
+        assignment_like.write_operator(f)?;
+
+        let layout = assignment_like.layout(is_left_short)?;
+        match layout {
+            AssignmentLikeLayout::Fluid => {
+                let group_id = f.group_id("assignment_like");
+
+                let right = right.format().memoized();
+
+                write![
+                    f,
+                    [
+                        group_elements(&indent(&soft_line_break_or_space()),)
+                            .with_group_id(Some(group_id)),
+                        line_suffix_boundary(),
+                        if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
+                        if_group_fits_on_line(&right).with_group_id(Some(group_id)),
+                    ]
+                ]
+            }
+            AssignmentLikeLayout::BreakAfterOperator => {
+                write![
+                    f,
+                    [group_elements(&indent(&format_args![
+                        soft_line_break_or_space(),
+                        right.format()
+                    ])),]
+                ]
+            }
+            AssignmentLikeLayout::NeverBreakAfterOperator => {
+                write![f, [space_token(), right.format(),]]
+            }
+        }
+    });
+
+    write!(f, [group_elements(&format_content)])
+}
+
 declare_node_union! {
     pub(crate) JsAnyAssignmentLike = JsPropertyObjectMember | JsAssignmentExpression
 }
@@ -49,54 +94,6 @@ pub(crate) enum AssignmentLikeLayout {
     /// }
     /// ```
     NeverBreakAfterOperator,
-}
-
-pub(crate) fn format_assignment_like(
-    assignment_like: JsAnyAssignmentLike,
-    f: &mut JsFormatter,
-) -> FormatResult<()> {
-    let right = assignment_like.right()?;
-    let format_content = format_with(|f| {
-        let is_left_short = assignment_like.write_left(f)?;
-        assignment_like.write_operator(f)?;
-
-        let layout = assignment_like.layout(is_left_short)?;
-        match layout {
-            AssignmentLikeLayout::Fluid => {
-                let group_id = f.group_id("assignment_like");
-
-                let right = right.format().memoized();
-
-                write![
-                    f,
-                    [
-                        group_elements(&indent(&soft_line_break_or_space()),)
-                            .with_group_id(Some(group_id)),
-                        line_suffix_boundary(),
-                        if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
-                        if_group_fits_on_line(&right).with_group_id(Some(group_id)),
-                    ]
-                ]
-            }
-            AssignmentLikeLayout::BreakAfterOperator => {
-                write![
-                    f,
-                    [
-                        space_token(),
-                        group_elements(&indent(&format_args![
-                            soft_line_break_or_space(),
-                            right.format()
-                        ])),
-                    ]
-                ]
-            }
-            AssignmentLikeLayout::NeverBreakAfterOperator => {
-                write![f, [space_token(), right.format(),]]
-            }
-        }
-    });
-
-    write!(f, [group_elements(&format_content)])
 }
 
 impl JsAnyAssignmentLike {
