@@ -23,14 +23,13 @@ impl Rule for NoDebugger {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            range: node.syntax().text_trimmed_range(),
-            message: markup! {
+        Some(RuleDiagnostic::warning(
+            node.syntax().text_trimmed_range(),
+            markup! {
                 "This is an unexpected use of the "<Emphasis>"debugger"</Emphasis>" statement."
             }
             .to_owned(),
-        })
+        ))
     }
 
     fn action(
