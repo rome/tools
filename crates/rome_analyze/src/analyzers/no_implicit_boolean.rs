@@ -38,33 +38,38 @@ impl Rule for NoImplicitBoolean {
     }
 
     fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
-        let JsxAttributeFields { name, initializer } = n.as_fields();
-        let name = name.ok()?.clone();
-        let is_jsx_name = matches!(name, JsxAnyAttributeName::JsxName(_));
-        let mut name_syntax = name.into_syntax();
+        let JsxAttributeFields {
+            name,
+            initializer: _,
+        } = n.as_fields();
 
+        let name = name.ok()?.clone();
+        // we use this variable for constructing `JsxAnyAttributeName` without clone the name, so we pre compute the type here.
+        let is_jsx_name = matches!(name, JsxAnyAttributeName::JsxName(_));
+
+        let mut name_syntax = name.into_syntax();
+        
+        // we need to move trailing_trivia of name_syntax to close_curly_token
+        // <div disabled /**test*/ /> ->    <div disabled={true}/**test*/ />
         let mut close_curly_token = String::from("}");
         let mut trailing = Vec::new();
         if let Some(trivia) = name_syntax.last_trailing_trivia() {
             for piece in trivia.pieces() {
-				trailing.push(TriviaPiece::new(piece.kind(), piece.text_len()));
-				close_curly_token += piece.text();
-			}
+                trailing.push(TriviaPiece::new(piece.kind(), piece.text_len()));
+                close_curly_token += piece.text();
+            }
         }
-        let trailing_trivia = name_syntax.last_trailing_trivia().map(|trivia| {});
-        println!("{:?}", trailing_trivia);
-        let next_last_token = name_syntax
+        let last_token_of_name_syntax = name_syntax.last_token()?;
+        // drop the trailing trivia of name_syntax, at CST level it means
+        // clean the trailing trivia of last token of name_syntax
+        let next_last_token_of_name_syntax = name_syntax
             .last_token()
             .map(|tok| tok.with_trailing_trivia(std::iter::empty()))?;
-        // name_syntax = name_syntax.splice_slots(
-        //     token_length - 1..=token_length - 1,
-        //     std::iter::once(Some(SyntaxElement::Token(last_token))),
-        // );
-        let last_token = name_syntax.last_token()?;
+
         name_syntax = name_syntax
             .replace_child(
-                SyntaxElement::Token(last_token),
-                SyntaxElement::Token(next_last_token),
+                SyntaxElement::Token(last_token_of_name_syntax),
+                SyntaxElement::Token(next_last_token_of_name_syntax),
             )
             .unwrap();
         let next_name = match is_jsx_name {
@@ -89,18 +94,6 @@ impl Rule for NoImplicitBoolean {
             ),
         );
         let next_attr = next_attr.build();
-        // let next_attr =
-        // let next_attr =
-        //     n.clone().with_initializer(Some(make::jsx_attribute_initializer_clause(
-        //         make::token(T![=]),
-        //         JsxAnyAttributeValue::JsxExpressionAttributeValue(attr_value),
-        //     )));
-        // next_attr.replace_node_discard_trivia(prev_node, next_node)
-
-        // next_attr_syntax.children_with_tokens().position(|item| {
-
-        // });
-        // next_attr.tri
 
         let root = root.replace_node_discard_trivia(n.clone(), next_attr)?;
         Some(JsRuleAction {
