@@ -2,6 +2,8 @@
 
 mod no_compare_neg_zero;
 pub(crate) use no_compare_neg_zero::NoCompareNegZero;
+mod no_debugger;
+pub(crate) use no_debugger::NoDebugger;
 mod no_delete;
 pub(crate) use no_delete::NoDelete;
 mod no_double_equals;
