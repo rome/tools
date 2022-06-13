@@ -45,6 +45,7 @@ impl_registry_builders!(
     NoNegationElse,
     UseSingleCaseStatement,
     UseSingleVarDeclarator,
+    UseSortedSpecifiers,
     UseValidTypeof,
     UseWhile,
     // Assists

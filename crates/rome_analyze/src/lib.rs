@@ -12,9 +12,8 @@ mod assists;
 mod categories;
 mod registry;
 mod signals;
-mod utils;
+pub mod utils;
 
-pub use utils::natural_compare;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 use crate::registry::{LanguageRoot, RuleRegistry};

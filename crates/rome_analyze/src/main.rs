@@ -3,8 +3,8 @@ fn main() {
     // vec.sort();
     // println!("{:?}", vec);
 
-    use rome_analyze::natural_compare;
-    assert_eq!(natural_compare("1", "2", false), -1);
+    // use rome_analyze::natural_compare;
+    // assert_eq!(natural_compare("1", "2", false), -1);
     // assert_eq!(natural_compare("100", "2", true), 2);
     // assert_eq!(natural_compare("-100", "2", true), -5);
     // assert_eq!(natural_compare("007", "8", true), -1);

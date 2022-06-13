@@ -1,198 +1,104 @@
-// export function naturalCompare(
-// 	a: string,
-// 	b: string,
-// 	insensitive: boolean = true,
-// ): number {
-// 	if (insensitive) {
-// 		a = a.toLowerCase();
-// 		b = b.toLowerCase();
-// 	}
-
-// 	const lengthA = a.length;
-// 	const lengthB = b.length;
-
-// 	let aIndex: number = 0;
-// 	let bIndex: number = 0;
-
-// 	while (aIndex < lengthA && bIndex < lengthB) {
-// 		let charCodeA = a.charCodeAt(aIndex);
-// 		let charCodeB = b.charCodeAt(bIndex);
-
-// 		if (isDigit(charCodeA)) {
-// 			if (!isDigit(charCodeB)) {
-// 				return charCodeA - charCodeB;
-// 			}
-
-// 			let numStartA = aIndex;
-// 			let numStartB = bIndex;
-
-// 			while (charCodeA === 48 && ++numStartA < lengthA) {
-// 				charCodeA = a.charCodeAt(numStartA);
-// 			}
-// 			while (charCodeB === 48 && ++numStartB < lengthB) {
-// 				charCodeB = b.charCodeAt(numStartB);
-// 			}
-
-// 			let numEndA = numStartA;
-// 			let numEndB = numStartB;
-
-// 			while (numEndA < lengthA && isDigit(a.charCodeAt(numEndA))) {
-// 				++numEndA;
-// 			}
-// 			while (numEndB < lengthB && isDigit(b.charCodeAt(numEndB))) {
-// 				++numEndB;
-// 			}
-
-// 			let difference = numEndA - numStartA - numEndB + numStartB; // numA length - numB length
-// 			if (difference) {
-// 				return difference;
-// 			}
-
-// 			while (numStartA < numEndA) {
-// 				difference = a.charCodeAt(numStartA++) - b.charCodeAt(numStartB++);
-// 				if (difference) {
-// 					return difference;
-// 				}
-// 			}
-
-// 			aIndex = numEndA;
-// 			bIndex = numEndB;
-// 			continue;
-// 		}
-
-// 		if (charCodeA !== charCodeB) {
-// 			return charCodeA - charCodeB;
-// 		}
-
-// 		++aIndex;
-// 		++bIndex;
-// 	}
-
-// 	return lengthA - lengthB;
-// }
-
-// test(
-// 	"naturalCompare",
-// 	(t) => {
-// 		t.is(naturalCompare("1", "2"), -1);
-// 		t.is(naturalCompare("100", "2"), 2);
-// 		t.is(naturalCompare("-100", "2"), -5);
-// 		t.is(naturalCompare("007", "8"), -1);
-// 		t.is(naturalCompare("007", "7"), 2);
-// 		t.is(naturalCompare("test1", "9000"), 59);
-// 		t.is(naturalCompare("1testrome", "2t"), -1);
-// 		t.is(naturalCompare("1test", "1TEST"), 0);
-// 		t.is(naturalCompare("1test", "1TEST", false), 32);
-// 	},
-// );
 ///
-
-use std::borrow::Cow;
-
-
+/// # Example
 /// ```rust
-/// use rome_analyze::natural_compare;
-/// assert_eq!(natural_compare("1", "2", true), -1);
-/// assert_eq!(natural_compare("100", "2", true), 2);
-/// assert_eq!(natural_compare("-100", "2", true), -5);
-/// assert_eq!(natural_compare("007", "8", true), -1);
-/// assert_eq!(natural_compare("007", "7", true), 2);
-/// assert_eq!(natural_compare("test1", "9000", true), 59);
-/// assert_eq!(natural_compare("1testrome", "2t", true), -1);
-/// assert_eq!(natural_compare("1test", "1TEST", true), 0);
-/// assert_eq!(natural_compare("1test", "1TEST", false), 32);
+/// use rome_analyze::utils::natural_compare;
+/// fn main() {
+///     assert_eq!(natural_compare("1", "2", true), -1);
+///     assert_eq!(natural_compare("100", "2", true), 2);
+///     assert_eq!(natural_compare("-100", "2", true), -5);
+///     assert_eq!(natural_compare("007", "8", true), -1);
+///     assert_eq!(natural_compare("007", "7", true), 2);
+///     assert_eq!(natural_compare("test1", "9000", true), 59);
+///     assert_eq!(natural_compare("1testrome", "2t", true), -1);
+///     assert_eq!(natural_compare("1test", "1TEST", true), 0);
+///     assert_eq!(natural_compare("1test", "1TEST", false), 32);
+/// }
 /// ```
+///
 pub fn natural_compare(a: &str, b: &str, intensive: bool) -> i32 {
-    let mut a = Cow::Borrowed(a);
-    let mut b = Cow::Borrowed(b);
-    if intensive {
-        a = Cow::Owned(a.to_lowercase());
-        b = Cow::Owned(b.to_lowercase());
-    }
+    let (a, b): (Vec<char>, Vec<char>) = if intensive {
+        (
+            a.to_lowercase().chars().collect(),
+            b.to_lowercase().chars().collect(),
+        )
+    } else {
+        (a.chars().collect(), b.chars().collect())
+    };
+
     let len_a = a.len();
     let len_b = b.len();
 
-    let mut a_iter = a.chars();
-    let mut b_iter = b.chars();
+    let mut a_index = 0usize;
+    let mut b_index = 0usize;
 
-    while !matches!(a_iter.size_hint().1, Some(0)) && !matches!(b_iter.size_hint().1, Some(0)) {
-        // SAFETY: we check `a_iter` is some and `b_iter` is some before we begin the new iteration
-        let mut char_code_a = a_iter.next().unwrap();
-        let mut char_code_b = b_iter.next().unwrap();
+    while a_index < len_a && b_index < len_b {
+        let mut char_code_a = a[a_index];
+        let mut char_code_b = b[b_index];
 
         if char_code_a.is_ascii_digit() {
             if !char_code_b.is_ascii_digit() {
                 return char_code_a as i32 - char_code_b as i32;
             }
 
-            let mut iter_start_a = a_iter.clone();
-            let mut iter_start_b = b_iter.clone();
+            let mut num_start_a = a_index;
+            let mut num_start_b = b_index;
 
             while char_code_a as u32 == 48 {
-                let next_char = iter_start_a.next();
-                if matches!(iter_start_a.size_hint().1, Some(0)) {
+                num_start_a += 1;
+                if num_start_a >= len_a {
                     break;
                 }
-                // SAFETY: we check `iter_start_a` is some before we begin the new iteration
-                char_code_a = next_char.unwrap();
+                char_code_a = a[num_start_a];
             }
 
             while char_code_b as u32 == 48 {
-                let next_char = iter_start_b.next();
-                if matches!(iter_start_b.size_hint().1, Some(0)) {
+                num_start_b += 1;
+                if num_start_b >= len_b {
                     break;
                 }
-                // SAFETY: we check `iter_start_b` is some before we begin the new iteration
-                char_code_b = next_char.unwrap();
+                char_code_b = b[num_start_b];
             }
 
-            let mut iter_end_a = iter_start_a.clone();
-            let mut iter_end_b = iter_start_b.clone();
-
-            while !matches!(iter_end_a.size_hint().1, Some(0))
-                && iter_end_a.clone().next().unwrap().is_ascii_digit()
-            {
-                iter_end_a.next();
+            println!("{}", char_code_a);
+            println!("{}", char_code_b);
+            let mut num_end_a = num_start_a;
+            let mut num_end_b = num_start_b;
+            while num_end_a < len_a && a[num_end_a].is_ascii_digit() {
+                num_end_a += 1;
             }
 
-            while !matches!(iter_end_b.size_hint().1, Some(0))
-                && iter_end_b.clone().next().unwrap().is_ascii_digit()
-            {
-                iter_end_b.next();
+            while num_end_b < len_b && b[num_end_b].is_ascii_digit() {
+                num_end_b += 1;
             }
 
-            let mut difference = (len_a - iter_end_a.size_hint().1.unwrap()) as i32
-                - (len_a - iter_start_a.size_hint().1.unwrap()) as i32
-                - (len_b - iter_end_b.size_hint().1.unwrap()) as i32
-                + (len_b - iter_start_b.size_hint().1.unwrap()) as i32;
-
+            println!("{}, {}", num_end_a, num_end_b);
+            let mut difference =
+                num_end_a as i32 - num_start_a as i32 - num_end_b as i32 + num_start_b as i32;
+            println!("{}", difference);
             if difference != 0 {
                 return difference;
             }
-            
-            let mut start_a_char = char_code_a;
-            let mut start_b_char = char_code_b;
-            // println!("{}{}", start_a_char, start_b_char);
-            while iter_start_a.size_hint().1.unwrap() > iter_end_a.size_hint().1.unwrap() {
-                difference = start_a_char as i32 - start_b_char as i32;
-                    // iter_start_a.next().unwrap() as i32 - iter_start_b.next().unwrap() as i32;
-                start_a_char = iter_start_a.next().unwrap();
-                start_b_char = iter_start_b.next().unwrap();
+
+            while num_start_a < num_end_a {
+                difference = a[num_start_a] as i32 - b[num_start_b] as i32;
+                num_start_a += 1;
+                num_start_b += 1;
                 if difference != 0 {
                     return difference;
                 }
             }
 
-            a_iter = iter_end_a;
-            b_iter = iter_end_b;
+            a_index = num_end_a;
+            b_index = num_end_b;
             continue;
         }
 
         if char_code_a != char_code_b {
             return char_code_a as i32 - char_code_b as i32;
         }
-        a_iter.next();
-        b_iter.next();
+
+        a_index += 1;
+        b_index += 1;
     }
-    len_a as i32 - len_b as i32
+    return len_a as i32 - len_b as i32;
 }
