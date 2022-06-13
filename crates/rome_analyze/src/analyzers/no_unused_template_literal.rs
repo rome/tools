@@ -28,14 +28,10 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 
     fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Error,
-            message: markup! {
-                "Do not use template literals if interpolation and special-character handling are not needed."
-            }
-            .to_owned(),
-            range: node.range(),
-        })
+        Some(RuleDiagnostic::warning(node.range(),markup! {
+            "Do not use template literals if interpolation and special-character handling are not needed."
+        }
+        .to_owned() ) )
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
