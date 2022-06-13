@@ -44,6 +44,7 @@ impl_registry_builders!(
     NoDelete,
     NoDoubleEquals,
     NoNegationElse,
+    NoSparseArray,
     NoUnusedTemplateLiteral,
     UseSingleCaseStatement,
     UseSingleVarDeclarator,
