@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsSyntaxToken, JsxAnyAttributeName,
@@ -27,14 +27,13 @@ impl Rule for NoImplicitBoolean {
     }
 
     fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            message: markup! {
+        Some(RuleDiagnostic::warning(
+            n.range(),
+            markup! {
                 "Use explicit boolean values for boolean JSX props."
             }
             .to_owned(),
-            range: n.range(),
-        })
+        ))
     }
 
     fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
