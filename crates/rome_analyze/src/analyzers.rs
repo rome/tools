@@ -10,6 +10,8 @@ mod no_double_equals;
 pub(crate) use no_double_equals::NoDoubleEquals;
 mod no_negation_else;
 pub(crate) use no_negation_else::NoNegationElse;
+mod no_unused_template_literal;
+pub(crate) use no_unused_template_literal::NoUnusedTemplateLiteral;
 mod use_single_case_statement;
 pub(crate) use use_single_case_statement::UseSingleCaseStatement;
 mod use_single_var_declarator;
