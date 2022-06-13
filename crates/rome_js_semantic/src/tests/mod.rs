@@ -4,7 +4,7 @@ pub mod scopes;
 
 #[macro_export]
 macro_rules! assert_semantics {
-    ($($name:ident, $code:expr,)*) => {
+    ($(#[$attr:meta])* $($name:ident, $code:expr,)*) => {
         $(
             #[test]
             pub fn $name() {
