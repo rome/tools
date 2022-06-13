@@ -1,5 +1,5 @@
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyArrayElement, JsAnyExpression, JsAnyRoot, JsArrayExpression, TriviaPieceKind,
@@ -33,14 +33,13 @@ impl Rule for NoSparseArray {
     }
 
     fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Warning,
-            range: node.syntax().text_trimmed_range(),
-            message: markup! {
+        Some(RuleDiagnostic::warning(
+            node.syntax().text_trimmed_range(),
+markup! {
                 "This "<Emphasis>"array"</Emphasis>" contains an "<Emphasis>"empty slot"</Emphasis>"."
             }
-            .to_owned(),
-        })
+            .to_owned()
+        ))
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<JsRuleAction> {
