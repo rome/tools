@@ -48,7 +48,7 @@ impl Rule for NoImplicitBoolean {
         let is_jsx_name = matches!(name, JsxAnyAttributeName::JsxName(_));
 
         let mut name_syntax = name.into_syntax();
-        
+
         // we need to move trailing_trivia of name_syntax to close_curly_token
         // <div disabled /**test*/ /> ->    <div disabled={true}/**test*/ />
         let mut close_curly_token = String::from("}");
