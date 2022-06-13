@@ -20,3 +20,19 @@ export {
   fooo, // comment
   barr, // comment
 };
+
+const foooo = "";
+const barrr = "";
+export {
+  foooo,
+  // comment
+  barrr as baz,
+} from "foo";
+
+const fooooo = "";
+const barrrr = "";
+export {
+  fooooo,
+  // comment
+  barrrr as bazz,
+};

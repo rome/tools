@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: static-private.js
+---
+# Input
+```js
+class Foo {
+  static accessor #bar;
+}
+
+```
+
+# Output
+```js
+class Foo {
+  static accessor;
+  #bar;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+  ┌─ static-private.js:2:3
+  │
+2 │   static accessor #bar;
+  │   ^^^^^^^^^^^^^^^
+
+
+```
+
+

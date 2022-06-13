@@ -92,10 +92,16 @@ fn transform_file_name(input: &str) -> String {
             | "static"
             | "yield"
             | "type"
+            | "super"
+            | "typeof"
     );
+
+    let is_number = result.as_str().parse::<u32>().is_ok();
 
     if is_keyword {
         result.push('_');
+    } else if is_number {
+        result = "_".to_string() + &result;
     }
 
     result
@@ -247,6 +253,7 @@ impl syn::parse::Parse for Arguments {
 #[proc_macro_error]
 pub fn gen_tests(input: TokenStream) -> TokenStream {
     let args = syn::parse_macro_input!(input as Arguments);
+
     match args.gen() {
         Ok(tokens) => tokens,
         Err(e) => abort!(e, "{}", e),
