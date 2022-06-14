@@ -2,8 +2,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, JsxAnyTag, JsxElement,
-    JsxElementFields, JsxOpeningElementFields, T,
+    JsAnyRoot, JsxAnyTag, JsxElement, JsxOpeningElementFields, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
 
