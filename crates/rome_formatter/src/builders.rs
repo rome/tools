@@ -930,19 +930,29 @@ impl<Context> Format<Context> for GroupElements<'_, Context> {
 
         buffer.write_fmt(Arguments::from(&self.content))?;
 
-        let content = buffer.into_element();
+        let mut content = buffer.into_vec();
 
-        let (leading, content, trailing) = content.split_trivia();
+        // Move the leading comments out of the group to prevent that a leading line comment expands the
+        // token's enclosing group.
+        //
+        // ```javascript
+        // /* a comment */
+        // [1]
+        // ```
+        //
+        // The `/* a comment */` belongs to the `[` group token that is part of a group wrapping the whole
+        // `[1]` expression. It's important that the comment `/* a comment */` gets moved out of the group element
+        // to avoid that the `[1]` group expands because of the line break inserted by the comment.
+        let leading_end = content
+            .iter()
+            .position(|element| !matches!(element, FormatElement::Comment(_)))
+            .unwrap_or(content.len());
+
+        f.write_elements(content.drain(..leading_end))?;
+
         let group = Group::new(content).with_id(self.group_id);
 
-        if !leading.is_empty() {
-            f.write_element(leading)?;
-        }
         f.write_element(FormatElement::Group(group))?;
-
-        if !trailing.is_empty() {
-            f.write_element(trailing)?;
-        }
 
         Ok(())
     }
