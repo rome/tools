@@ -203,10 +203,10 @@ impl ParseSeparatedList for TsTypeParameterList {
 // function foo<out T>() {}
 
 // test tsx type_parameter_modifier_tsx
-// <in T></in>
-// // <out T></out>
-// // <in out T></in>
-// // <out in T></out>
+// <in T></in>;
+// <out T></out>;
+// <in out T></in>;
+// <out in T></out>;
 // //<in T extends={true}></in>
 // //<out T extends={true}></out>
 // //<in out T extends={true}></in>
