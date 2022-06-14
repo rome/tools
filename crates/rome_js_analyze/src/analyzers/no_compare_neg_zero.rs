@@ -1,3 +1,4 @@
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -6,8 +7,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, SyntaxToken};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use crate::JsRuleAction;
 
 pub struct NoCompareNegZeroState {
     operator_kind: &'static str,
@@ -60,7 +60,7 @@ impl Rule for NoCompareNegZero {
         root: rome_js_syntax::JsAnyRoot,
         node: &Self::Query,
         state: &Self::State,
-    ) -> Option<crate::registry::JsRuleAction> {
+    ) -> Option<JsRuleAction> {
         let root = if state.left_need_replaced && state.right_need_replaced {
             let binary = node.clone().replace_node(
                 node.left().ok()?,
@@ -123,7 +123,7 @@ impl Rule for NoCompareNegZero {
             root
         };
 
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
             message: markup! { "Replace -0 with 0" }.to_owned(),

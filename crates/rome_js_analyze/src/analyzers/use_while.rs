@@ -1,13 +1,11 @@
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::AstNodeExt;
 
-use crate::{
-    registry::{JsRuleAction, Rule, RuleDiagnostic},
-    ActionCategory, RuleCategory,
-};
+use crate::JsRuleAction;
 
 pub(crate) enum UseWhile {}
 

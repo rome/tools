@@ -1,13 +1,13 @@
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
+use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyRoot, JsAnyStatement, JsDebuggerStatement, JsModuleItemList, JsStatementList, T,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
-use rome_js_factory::make;
+use crate::JsRuleAction;
 
 pub(crate) enum NoDebugger {}
 
@@ -36,7 +36,7 @@ impl Rule for NoDebugger {
         root: rome_js_syntax::JsAnyRoot,
         node: &Self::Query,
         _state: &Self::State,
-    ) -> Option<crate::registry::JsRuleAction> {
+    ) -> Option<JsRuleAction> {
         let prev_parent = node.syntax().parent()?;
 
         let root = if JsStatementList::can_cast(prev_parent.kind())
@@ -61,7 +61,7 @@ impl Rule for NoDebugger {
                 JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
             )?
         };
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Remove debugger statement" }.to_owned(),

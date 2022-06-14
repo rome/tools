@@ -1,3 +1,4 @@
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -7,8 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
 
-use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use crate::JsRuleAction;
 
 pub(crate) enum NoUnusedTemplateLiteral {}
 
@@ -66,7 +66,7 @@ impl Rule for NoUnusedTemplateLiteral {
                 ),
             ),
         )?;
-        Some(RuleAction {
+        Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with string literal" }.to_owned(),

@@ -3,38 +3,31 @@ use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::file::FileSpan;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{Diagnostic, DiagnosticTag, Footer, Span, SubDiagnostic};
-use rome_js_syntax::JsLanguage;
-use rome_js_syntax::TextRange;
-use rome_rowan::{AstNode, Language, SyntaxNode};
+use rome_rowan::{AstNode, Language, SyntaxNode, TextRange};
 
 use crate::{
-    analyzers::*,
-    assists::*,
     categories::{ActionCategory, RuleCategory},
     signals::{AnalyzerSignal, RuleSignal},
-    AnalysisFilter, ControlFlow,
+    ControlFlow,
 };
 
 /// The rule registry holds type-erased instances of all active analysis rules
-pub(crate) struct RuleRegistry<L: Language> {
+pub struct RuleRegistry<L: Language> {
     rules: Vec<RegistryRule<L>>,
 }
 
-/// Utility macro for implementing the `with_filter` method of [RuleRegistry]
-macro_rules! impl_registry_builders {
-    ( $( $rule:ident, )* ) => {
-        impl RuleRegistry<JsLanguage> {
-            pub(crate) fn with_filter(filter: &AnalysisFilter) -> Self {
-                let mut rules: Vec<RegistryRule<JsLanguage>> = Vec::new();
+impl<L: Language> RuleRegistry<L> {
+    pub fn empty() -> Self {
+        Self { rules: Vec::new() }
+    }
 
-                $( if filter.categories.contains($rule::CATEGORY.into()) && filter.rules.map_or(true, |rules| rules.contains(&$rule::NAME)) {
-                    rules.push(run::<$rule>);
-                } )*
-
-                Self { rules }
-            }
-        }
-    };
+    pub fn push<R>(&mut self)
+    where
+        R: Rule + 'static,
+        R::Query: AstNode<Language = L>,
+    {
+        self.rules.push(run::<R>);
+    }
 }
 
 impl_registry_builders!(
@@ -60,7 +53,7 @@ pub(crate) type RuleLanguage<R> = NodeLanguage<<R as Rule>::Query>;
 pub(crate) type NodeLanguage<N> = <N as AstNode>::Language;
 
 pub(crate) type RuleRoot<R> = LanguageRoot<RuleLanguage<R>>;
-pub(crate) type LanguageRoot<L> = <L as Language>::Root;
+pub type LanguageRoot<L> = <L as Language>::Root;
 
 impl<L> RuleRegistry<L>
 where
@@ -111,7 +104,7 @@ fn run<'a, R: Rule + 'static>(
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
-pub(crate) trait Rule {
+pub trait Rule {
     /// The name of this rule, displayed in the diagnostics it emits
     const NAME: &'static str;
     /// The category this rule belong to, this is used for broadly filtering
@@ -184,22 +177,22 @@ impl RuleDiagnostic {
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Error` severity.
-    pub(crate) fn error(span: impl Span, title: impl Display) -> Self {
+    pub fn error(span: impl Span, title: impl Display) -> Self {
         Self::new(Severity::Error, span, title)
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Warning` severity.
-    pub(crate) fn warning(span: impl Span, title: impl Display) -> Self {
+    pub fn warning(span: impl Span, title: impl Display) -> Self {
         Self::new(Severity::Warning, span, title)
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Help` severity.
-    pub(crate) fn help(span: impl Span, title: impl Display) -> Self {
+    pub fn help(span: impl Span, title: impl Display) -> Self {
         Self::new(Severity::Help, span, title)
     }
 
     /// Creates a new [`RuleDiagnostic`] with the `Note` severity.
-    pub(crate) fn note(span: impl Span, title: impl Display) -> Self {
+    pub fn note(span: impl Span, title: impl Display) -> Self {
         Self::new(Severity::Note, span, title)
     }
 
@@ -326,5 +319,3 @@ pub struct RuleAction<L: Language> {
     pub message: MarkupBuf,
     pub root: LanguageRoot<L>,
 }
-
-pub type JsRuleAction = RuleAction<JsLanguage>;

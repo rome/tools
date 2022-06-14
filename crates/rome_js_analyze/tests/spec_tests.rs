@@ -46,7 +46,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
 
-    rome_analyze::analyze(0, &root, filter, |event| {
+    rome_js_analyze::analyze(0, &root, filter, |event| {
         if let Some(mut diag) = event.diagnostic() {
             if let Some(action) = event.action() {
                 diag.suggestions.push(action.into());
