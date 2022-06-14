@@ -1,0 +1,81 @@
+---
+source: crates/rome_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: useSelfClosingElements.jsx
+---
+# Input
+```js
+// valid
+<div />;
+<div>child</div>;
+<Component />;
+<Component>child</Component>;
+<Foo.bar />;
+<Foo.bar>child</Foo.bar>;
+
+// invalid
+<div></div>;
+<Component></Component>;
+<Foo.bar></Foo.bar>;
+
+```
+
+# Diagnostics
+```
+warning[useSelfClosingElements]: Use while loops instead of for loops.
+   ┌─ useSelfClosingElements.jsx:10:1
+   │
+10 │ <div></div>;
+   │ -----------
+
+Suggested fix: Use a SelfClosingElement instead
+      | @@ -7,6 +7,6 @@
+ 6  6 |   <Foo.bar>child</Foo.bar>;
+ 7  7 |   
+ 8  8 |   // invalid
+ 9    | - <div></div>;
+    9 | + <div/>;
+10 10 |   <Component></Component>;
+11 11 |   <Foo.bar></Foo.bar>;
+
+
+```
+
+```
+warning[useSelfClosingElements]: Use while loops instead of for loops.
+   ┌─ useSelfClosingElements.jsx:11:1
+   │
+11 │ <Component></Component>;
+   │ -----------------------
+
+Suggested fix: Use a SelfClosingElement instead
+      | @@ -8,5 +8,5 @@
+ 7  7 |   
+ 8  8 |   // invalid
+ 9  9 |   <div></div>;
+10    | - <Component></Component>;
+   10 | + <Component/>;
+11 11 |   <Foo.bar></Foo.bar>;
+
+
+```
+
+```
+warning[useSelfClosingElements]: Use while loops instead of for loops.
+   ┌─ useSelfClosingElements.jsx:12:1
+   │
+12 │ <Foo.bar></Foo.bar>;
+   │ -------------------
+
+Suggested fix: Use a SelfClosingElement instead
+      | @@ -9,4 +9,4 @@
+ 8  8 |   // invalid
+ 9  9 |   <div></div>;
+10 10 |   <Component></Component>;
+11    | - <Foo.bar></Foo.bar>;
+   11 | + <Foo.bar/>;
+
+
+```
+
+

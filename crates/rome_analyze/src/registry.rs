@@ -46,6 +46,7 @@ impl_registry_builders!(
     NoNegationElse,
     NoSparseArray,
     NoUnusedTemplateLiteral,
+    UseSelfClosingElements,
     UseSingleCaseStatement,
     UseSingleVarDeclarator,
     UseValidTypeof,
