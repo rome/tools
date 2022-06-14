@@ -578,10 +578,10 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
 
             write!(buffer, [format_trailing_trivia(open_token)])?;
 
-            let trivia = buffer.into_element();
+            let trivia = buffer.into_vec();
 
             if !trivia.is_empty() {
-                f.write_element(trivia)?;
+                f.write_elements(trivia)?;
                 soft_line_break_or_space().fmt(f)?;
             }
 
@@ -614,28 +614,29 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                 ])
                 .fmt(f)?,
                 DelimitedMode::SoftBlockSpaces(_) => {
-                    let mut buffer = VecBuffer::new(f.state_mut());
-                    write!(
-                        buffer,
-                        [
-                            open_token_trailing_trivia,
-                            format_content,
-                            close_token_leading_trivia
-                        ]
-                    )?;
-                    let content = buffer.into_element();
+                    let mut is_empty = true;
 
-                    if !content.is_empty() {
+                    let format_content = format_once(|f| {
+                        let mut buffer = f.inspect(|element| {
+                            if !element.is_empty() {
+                                is_empty = false
+                            }
+                        });
+
                         write!(
-                            f,
+                            buffer,
                             [
-                                indent(&format_once(|f| {
-                                    write!(f, [soft_line_break_or_space()])?;
-                                    f.write_element(content)
-                                }),),
-                                soft_line_break_or_space()
+                                open_token_trailing_trivia,
+                                format_content,
+                                close_token_leading_trivia
                             ]
-                        )?;
+                        )
+                    });
+
+                    soft_line_indent_or_space(&format_content).fmt(f)?;
+
+                    if !is_empty {
+                        soft_line_break_or_space().fmt(f)?;
                     }
                 }
             };

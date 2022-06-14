@@ -1,5 +1,3 @@
-use std::fmt::Write;
-
 use anyhow::{Context, Ok, Result};
 use quote::{format_ident, quote};
 use xtask::{glue::fs2, project_root};
@@ -15,7 +13,7 @@ pub fn generate_analyzer() -> Result<()> {
 }
 
 fn generate_module(name: &'static str, entries: &mut Vec<String>) -> Result<()> {
-    let path = project_root().join("crates/rome_analyze/src").join(name);
+    let path = project_root().join("crates/rome_js_analyze/src").join(name);
 
     let mut rules = Vec::new();
     for entry in fs2::read_dir(path)? {
@@ -63,7 +61,7 @@ fn generate_module(name: &'static str, entries: &mut Vec<String>) -> Result<()> 
 
     fs2::write(
         project_root()
-            .join("crates/rome_analyze/src")
+            .join("crates/rome_js_analyze/src")
             .join(format!("{name}.rs")),
         tokens,
     )?;
@@ -72,41 +70,35 @@ fn generate_module(name: &'static str, entries: &mut Vec<String>) -> Result<()> 
 }
 
 fn update_registry_builder(analyzers: Vec<String>, assists: Vec<String>) -> Result<()> {
-    let path = project_root().join("crates/rome_analyze/src/registry.rs");
+    let path = project_root().join("crates/rome_js_analyze/src/registry.rs");
 
-    let mut content = fs2::read_to_string(&path)?;
+    let rules: Vec<_> = analyzers
+        .into_iter()
+        .chain(assists)
+        .map(|rule| {
+            let rule = format_ident!("{}", rule);
+            quote! {
+                if filter.match_rule::<#rule>() {
+                    rules.push::<#rule>();
+                }
+            }
+        })
+        .collect();
 
-    // For now the builder is generated registry.rs using a macro invocation,
-    // so it gets generated using a simple string find and replace. Eventually
-    // the builders will be moved to language-specific crates and the whole file /
-    // module will be generated instead
-    let start_index = content
-        .find("impl_registry_builders!(")
-        .context("could not find start of impl_registry_builders macro")?;
-    let end_index = content[start_index..]
-        .find(");")
-        .context("could not find end of impl_registry_builders macro")?;
+    let tokens = xtask::reformat(quote! {
+        use rome_analyze::{AnalysisFilter, RuleRegistry};
+        use rome_js_syntax::JsLanguage;
 
-    let mut builder_macro = String::new();
+        use crate::{analyzers::*, assists::*};
 
-    writeln!(builder_macro, "impl_registry_builders!(")?;
-    writeln!(builder_macro, "    // Analyzers")?;
+        pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage> {
+            let mut rules = RuleRegistry::empty();
+            #( #rules )*
+            rules
+        }
+    })?;
 
-    for analyzer in analyzers {
-        writeln!(builder_macro, "    {analyzer},")?;
-    }
-
-    writeln!(builder_macro, "    // Assists")?;
-
-    for assist in assists {
-        writeln!(builder_macro, "    {assist},")?;
-    }
-
-    write!(builder_macro, ");")?;
-
-    let range = start_index..(start_index + end_index + 2);
-    content.replace_range(range, &builder_macro);
-    fs2::write(path, &content)?;
+    fs2::write(path, tokens)?;
 
     Ok(())
 }

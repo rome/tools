@@ -1,0 +1,35 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: computed-members.ts
+---
+# Input
+```js
+enum A {
+  [i++],
+}
+
+const bar = "bar"
+enum B {
+  [bar] = 2,
+}
+
+const foo = () => "foo";
+enum C {
+  [foo()] = 2,
+}
+
+```
+
+# Output
+```js
+enum A { [i++] }
+
+const bar = "bar";
+enum B { [bar] = 2 }
+
+const foo = () => "foo";
+enum C { [foo()] = 2 }
+
+```
+
+

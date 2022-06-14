@@ -7,7 +7,7 @@ func(
   aReallyLongArgumentsListToForceItToBreak,
   {
     // comment
-  }
+  },
 );
 
 func({
@@ -15,15 +15,15 @@ func({
 });
 
 func(
-  {} // comment
+  {}, // comment
 );
 
 func(
-  {}
+  {},
   // comment
 );
 
 func(
   // comment
-  {}
+  {},
 );

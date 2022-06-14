@@ -1,32 +1,32 @@
 type f1 = (
-  currentRequest: { a: number }
+  currentRequest: { a: number },
   // TODO this is a very very very very long comment that makes it go > 80 columns
 ) => number;
 
 f2 = (
-  currentRequest: { a: number }
+  currentRequest: { a: number },
   // TODO this is a very very very very long comment that makes it go > 80 columns
 ): number => {};
 
 f3 = (
-  currentRequest: { a: number }
+  currentRequest: { a: number },
   // TODO this is a very very very very long comment that makes it go > 80 columns
 ) => {};
 
 f4 = function (
-  currentRequest: { a: number }
+  currentRequest: { a: number },
   // TODO this is a very very very very long comment that makes it go > 80 columns
 ) {};
 
 class X {
   f(
-    currentRequest: { a: number }
+    currentRequest: { a: number },
     // TODO this is a very very very very long comment that makes it go > 80 columns
   ) {}
 }
 
 function f5(
-  a: number
+  a: number,
   // some comment here
 ): number {
   return a + 1;
@@ -35,7 +35,7 @@ function f5(
 var x = {
   getSectionMode(
     pageMetaData: PageMetaData,
-    sectionMetaData: SectionMetaData
+    sectionMetaData: SectionMetaData,
     /* $FlowFixMe This error was exposed while converting keyMirror
      * to keyMirrorRecursive */
   ): $Enum<SectionMode> {},
@@ -44,7 +44,7 @@ var x = {
 class X2 {
   getSectionMode(
     pageMetaData: PageMetaData,
-    sectionMetaData: SectionMetaData = ["unknown"]
+    sectionMetaData: SectionMetaData = ["unknown"],
     /* $FlowFixMe This error was exposed while converting keyMirror
      * to keyMirrorRecursive */
   ): $Enum<SectionMode> {}

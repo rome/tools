@@ -7,7 +7,7 @@ graphql(
       }
     }
     ${fragments.all}
-  `
+  `,
 );
 
 const veryLongVariableNameToMakeTheLineBreak = graphql(
@@ -19,5 +19,5 @@ const veryLongVariableNameToMakeTheLineBreak = graphql(
       }
     }
     ${fragments.all}
-  `
+  `,
 );

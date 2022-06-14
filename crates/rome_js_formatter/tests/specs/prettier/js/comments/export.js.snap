@@ -27,6 +27,24 @@ export {
   barr, // comment
 }
 
+const foooo = ''
+const barrr = ''
+export {
+  foooo,
+
+  barrr as  // comment
+		 baz,
+} from 'foo'
+
+const fooooo = ''
+const barrrr = ''
+export {
+  fooooo,
+
+  barrrr as  // comment
+		 bazz,
+}
+
 ```
 
 # Output
@@ -51,6 +69,20 @@ const barr = "";
 export {
   fooo, // comment
   barr, // comment
+};
+
+const foooo = "";
+const barrr = "";
+export {
+  foooo,
+  barrr as baz, // comment
+} from "foo";
+
+const fooooo = "";
+const barrrr = "";
+export {
+  fooooo,
+  barrrr as bazz, // comment
 };
 
 ```
