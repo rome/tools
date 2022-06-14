@@ -7,6 +7,6 @@
 <Foo.bar>child</Foo.bar>;
 
 // invalid
-<div></div>;
+<div               ></div>;
 <Component></Component>;
 <Foo.bar></Foo.bar>;
