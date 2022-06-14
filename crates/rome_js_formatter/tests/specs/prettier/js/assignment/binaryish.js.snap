@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: binaryish.js
-
 ---
 # Input
 ```js
@@ -10,11 +8,6 @@ const computedDescriptionLines = (showConfirm &&
   descriptionLinesConfirming) ||
   (focused && !loading && descriptionLinesFocused) ||
   descriptionLines;
-
-const computedDescriptionLines2 = (showConfirm && // comment
-  descriptionLinesConfirming) || // comment
-  (focused && !loading && descriptionLinesFocused) || // comment
-  descriptionLines // comment
 
 computedDescriptionLines = (focused &&
   !loading &&
@@ -29,14 +22,6 @@ const computedDescriptionLines =
   (showConfirm && descriptionLinesConfirming) ||
   (focused && !loading && descriptionLinesFocused) ||
   descriptionLines;
-
-const computedDescriptionLines2 =
-  (
-    showConfirm && // comment
-    descriptionLinesConfirming
-  ) || // comment
-  (focused && !loading && descriptionLinesFocused) || // comment
-  descriptionLines; // comment
 
 computedDescriptionLines =
   (focused && !loading && descriptionLinesFocused) || descriptionLines;

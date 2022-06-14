@@ -69,7 +69,7 @@ db.branch(
   db.table("users").filter({ email }).count(),
   db.table("users").filter({ email: "a@b.com" }).count(),
   db.table("users").insert({ email }),
-  db.table("users").filter({ email })
+  db.table("users").filter({ email }),
 );
 
 sandbox.stub(config, "get").withArgs("env").returns("dev");
@@ -103,7 +103,7 @@ function HelloWorld() {
       (data) => {
         this.logImpression("foo_fetch_error", data);
         Flash.error(I18n.t("offline_identity.foo_issue"));
-      }
+      },
     );
 }
 
@@ -120,9 +120,9 @@ action$
           ajax
             .getJSON(`https://api.github.com/search/users?q=${q}`)
             .map((res) => res.items)
-            .map(receiveUsers)
-        )
-      )
+            .map(receiveUsers),
+        ),
+      ),
   );
 
 window.FooClient.setVars({

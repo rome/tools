@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: basic.js
+---
+# Input
+```js
+class Foo {
+  accessor bar;
+}
+
+```
+
+# Output
+```js
+class Foo {
+  accessor;
+  bar;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+  ┌─ basic.js:2:3
+  │
+2 │   accessor bar;
+  │   ^^^^^^^^
+
+
+```
+
+

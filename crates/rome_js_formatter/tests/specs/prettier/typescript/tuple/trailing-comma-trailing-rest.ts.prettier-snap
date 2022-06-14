@@ -4,5 +4,5 @@ type ValidateArgs = [
   },
   string,
   string,
-  ...string[]
+  ...string[],
 ];

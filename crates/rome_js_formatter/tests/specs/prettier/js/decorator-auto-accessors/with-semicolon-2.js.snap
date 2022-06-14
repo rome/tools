@@ -1,0 +1,35 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: with-semicolon-2.js
+---
+# Input
+```js
+class C {
+  accessor clicked = "value";
+  *foo() {}
+}
+
+```
+
+# Output
+```js
+class C {
+  accessor;
+  clicked = "value";
+  *foo() {}
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+  ┌─ with-semicolon-2.js:2:3
+  │
+2 │   accessor clicked = "value";
+  │   ^^^^^^^^
+
+
+```
+
+

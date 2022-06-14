@@ -79,6 +79,6 @@ const Query: FunctionComponent<QueryProps> = ({
   children(
     useQuery(
       { type, resource, payload },
-      { ...options, withDeclarativeSideEffectsSupport: true }
-    )
+      { ...options, withDeclarativeSideEffectsSupport: true },
+    ),
   );
