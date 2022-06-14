@@ -531,20 +531,36 @@ pub(crate) fn format_separated_for_call_arguments<S: Format<JsFormatContext>, I>
     separated: I,
     number_of_elements: usize,
     f: &mut JsFormatter,
+    join_with_space: bool,
 ) -> FormatResult<()>
 where
     I: Iterator<Item = S>,
     S: std::fmt::Debug,
 {
     let mut iterator = separated.enumerate();
-    let mut join_with = f.join_with(soft_line_break_or_space());
-    for (index, element) in iterator.by_ref() {
-        if index == number_of_elements - 1 {
-            join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
-        } else {
-            join_with.entry(&element);
-        }
-    }
+    if join_with_space {
+        let mut join_with = f.join_with(soft_line_break_or_space());
 
-    join_with.finish()
+        for (index, element) in iterator.by_ref() {
+            if index == number_of_elements - 1 {
+                join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
+            } else {
+                join_with.entry(&element);
+            }
+        }
+
+        join_with.finish()
+    } else {
+        let mut join_with = f.join_with(space_token());
+
+        for (index, element) in iterator.by_ref() {
+            if index == number_of_elements - 1 {
+                join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
+            } else {
+                join_with.entry(&element);
+            }
+        }
+
+        join_with.finish()
+    }
 }

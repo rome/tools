@@ -40,6 +40,23 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         let r_paren = close_delimiter.as_token_fmt().memoized();
         let r_trailing_trivia = close_delimiter.as_trailing_trivia_fmt().memoized();
 
+        // if the function has simple arguments, don't do any particular formatting and delegate/
+        // the formatting of the arguments to the list itself
+        // if is_simple_function_arguments(node)? {
+        //     return write!(
+        //         f,
+        //         [
+        //             l_leading_trivia,
+        //             l_paren,
+        //             l_trailing_trivia,
+        //             &args.format(),
+        //             r_leading_trivia,
+        //             r_paren,
+        //             r_trailing_trivia,
+        //         ]
+        //     );
+        // }
+
         // particular formatting for hooks
         if is_react_hook_with_deps_array(&args)? {
             let mut list = args.elements();
@@ -51,7 +68,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
             // SAFETY: function is_react_hook_with_deps_array checks if there aren't any
             // comments. If there are comments, we don't fall in this branch of the condition,
             // so it's safe to not print them
-            write!(
+            return write!(
                 f,
                 [
                     &l_paren,
@@ -70,28 +87,27 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                     }),
                     &r_paren
                 ]
-            )?;
-            return Ok(());
+            );
         }
-
-        // We finished the "simple cases", we now need to use `best_fitting`.
-        // We now need to allocate a new vector with cached nodes, this is needed because
-        // we can't attempt to print the same node twice without incur in "printed token twice" errors.
-        // We also disallow the trailing separator, we are interested in doing it manually.
-        let separated: Vec<_> = args
-            .format_separated(token(","))
-            .with_options(
-                FormatSeparatedOptions::default().with_trailing_separator(TrailingSeparator::Elide),
-            )
-            .map(|e| e.memoized())
-            .collect();
 
         let should_group_first_argument = should_group_first_argument(&args)?;
         let should_group_last_argument = should_group_last_argument(&args)?;
 
-        dbg!(should_group_last_argument, should_group_first_argument);
         // if the first or last groups needs grouping, then we prepare some special formatting
         if should_group_first_argument || should_group_last_argument {
+            // We finished the "simple cases", we now need to use `best_fitting`.
+            // We now need to allocate a new vector with cached nodes, this is needed because
+            // we can't attempt to print the same node twice without incur in "printed token twice" errors.
+            // We also disallow the trailing separator, we are interested in doing it manually.
+            let separated: Vec<_> = args
+                .format_separated(token(","))
+                .with_options(
+                    FormatSeparatedOptions::default()
+                        .with_trailing_separator(TrailingSeparator::Elide),
+                )
+                .map(|e| e.memoized())
+                .collect();
+
             let formatted = format_with(|f| {
                 // `should_group_first_argument` and `should_group_last_argument` are mutually exclusive
                 // which means that if one is `false`, then the other is `true`.
@@ -175,6 +191,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                                                 separated.iter(),
                                                 separated.len(),
                                                 f,
+                                                false,
                                             )
                                         }),
                                         r_leading_trivia,
@@ -202,6 +219,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                                 separated.iter(),
                                 separated.len(),
                                 f,
+                                false,
                             )
                         })]),
                         r_leading_trivia,
@@ -213,6 +231,14 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                 ]]
             )
         } else {
+            let separated: Vec<_> = args
+                .format_separated(token(","))
+                .with_options(
+                    FormatSeparatedOptions::default()
+                        .with_trailing_separator(TrailingSeparator::Elide),
+                )
+                .map(|e| e.memoized())
+                .collect();
             write!(
                 f,
                 [group_elements(&format_args![
@@ -225,17 +251,16 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                             &format_with(|f| {
                                 format_separated_for_call_arguments(
                                     separated.iter(),
-                                    separated.len(),
+                                    args.len(),
                                     f,
+                                    false,
                                 )
                             }),
                         ]),
                         soft_line_break(),
                     ]),
                     &if_group_fits_on_line(&format_args![&format_with(|f| {
-                        f.join_with(&space_token())
-                            .entries(separated.iter())
-                            .finish()
+                        format_separated_for_call_arguments(separated.iter(), args.len(), f, true)
                     }),]),
                     r_leading_trivia,
                     r_paren,

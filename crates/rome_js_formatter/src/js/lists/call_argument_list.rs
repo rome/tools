@@ -16,9 +16,9 @@ impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
                         .with_trailing_separator(TrailingSeparator::Elide),
                 )
                 .map(|e| e.memoized());
-            format_separated_for_call_arguments(separated, node.len(), f)
+            format_separated_for_call_arguments(separated, node.len(), f, false)
         });
 
-        dbg_write!(f, [&group_elements(&soft_block_indent(&args))])
+        write!(f, [&group_elements(&soft_block_indent(&args))])
     }
 }
