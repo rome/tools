@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
-    format_args, write, Argument, Arguments, Comment, CommentStyle, FormatContext, GroupId,
-    LastTokenKind,
+    format_args, write, Argument, Arguments, CommentStyle, FormatContext, GroupId, LastTokenKind,
+    SourceComment,
 };
 use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPiece};
 
@@ -141,7 +141,7 @@ where
         while let Some(piece) = pieces.peek() {
             if let Some(comment) = piece.as_comments() {
                 is_last_inline = style.get_comment_kind(&comment).is_inline();
-                trailing_comments.push(Comment::trailing(comment));
+                trailing_comments.push(SourceComment::trailing(comment));
             } else if piece.is_newline() || piece.is_skipped() {
                 break;
             }
@@ -368,7 +368,7 @@ where
 }
 
 fn needs_space_between_comments_and_token<S: CommentStyle>(
-    comments: &[Comment<S::Language>],
+    comments: &[SourceComment<S::Language>],
     current_token_kind: <S::Language as Language>::Kind,
     has_trailing_inline_comment: bool,
     style: S,
@@ -397,7 +397,7 @@ fn write_leading_trivia<I, S, C>(
     token: &SyntaxToken<S::Language>,
     options: LeadingTriviaOptions<S>,
     f: &mut Formatter<C>,
-) -> FormatResult<Vec<Comment<S::Language>>>
+) -> FormatResult<Vec<SourceComment<S::Language>>>
 where
     I: IntoIterator<Item = SyntaxTriviaPiece<S::Language>>,
     S: CommentStyle,
@@ -408,7 +408,7 @@ where
 
     while let Some(piece) = pieces.next() {
         if let Some(comment) = piece.as_comments() {
-            comments.push(Comment::leading(comment, lines_before));
+            comments.push(SourceComment::leading(comment, lines_before));
             lines_before = 0;
         } else if piece.is_newline() {
             lines_before += 1;
@@ -465,7 +465,7 @@ where
                     comments.clear();
                     lines_before = 0;
                 } else if let Some(comment) = piece.as_comments() {
-                    comments.push(Comment::leading(comment, lines_before));
+                    comments.push(SourceComment::leading(comment, lines_before));
                     lines_before = 0;
                 } else if piece.is_newline() {
                     lines_before += 1;
@@ -524,7 +524,7 @@ struct FormatLeadingComments<'a, S>
 where
     S: CommentStyle,
 {
-    comments: &'a [Comment<S::Language>],
+    comments: &'a [SourceComment<S::Language>],
     options: LeadingTriviaOptions<S>,
     lines_before_token: u32,
 }
@@ -587,7 +587,7 @@ where
 #[derive(Debug, Copy, Clone)]
 pub struct FormatTrailingTrivia<I, S: CommentStyle>
 where
-    I: Iterator<Item = Comment<S::Language>> + Clone,
+    I: Iterator<Item = SourceComment<S::Language>> + Clone,
 {
     /// The comments to format
     comments: I,
@@ -603,21 +603,21 @@ where
 pub fn format_token_trailing_trivia<S>(
     token: &SyntaxToken<S::Language>,
     style: S,
-) -> FormatTrailingTrivia<impl Iterator<Item = Comment<S::Language>> + Clone, S>
+) -> FormatTrailingTrivia<impl Iterator<Item = SourceComment<S::Language>> + Clone, S>
 where
     S: CommentStyle,
 {
     let comments = token
         .trailing_trivia()
         .pieces()
-        .filter_map(|piece| piece.as_comments().map(Comment::trailing));
+        .filter_map(|piece| piece.as_comments().map(SourceComment::trailing));
 
     FormatTrailingTrivia::new(comments, token.kind(), style)
 }
 
 impl<I, S: CommentStyle> FormatTrailingTrivia<I, S>
 where
-    I: Iterator<Item = Comment<S::Language>> + Clone,
+    I: Iterator<Item = SourceComment<S::Language>> + Clone,
 {
     pub fn new(comments: I, token_kind: <S::Language as Language>::Kind, style: S) -> Self {
         Self {
@@ -638,7 +638,7 @@ where
 
 impl<I, S: CommentStyle, C> Format<C> for FormatTrailingTrivia<I, S>
 where
-    I: Iterator<Item = Comment<S::Language>> + Clone,
+    I: Iterator<Item = SourceComment<S::Language>> + Clone,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         let comments = self.comments.clone();

@@ -39,7 +39,7 @@ pub enum CommentKind {
 }
 
 #[derive(Debug, Clone)]
-pub struct Comment<L: Language> {
+pub struct SourceComment<L: Language> {
     /// The number of lines appearing before this comment
     lines_before: u32,
 
@@ -47,7 +47,7 @@ pub struct Comment<L: Language> {
     piece: SyntaxTriviaPieceComments<L>,
 }
 
-impl<L: Language> Comment<L> {
+impl<L: Language> SourceComment<L> {
     /// Creates a new trailing comment. A trailing comment always has 0 lines before.
     pub fn trailing(piece: SyntaxTriviaPieceComments<L>) -> Self {
         Self {
