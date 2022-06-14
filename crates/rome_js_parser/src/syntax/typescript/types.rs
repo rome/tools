@@ -204,12 +204,12 @@ impl ParseSeparatedList for TsTypeParameterList {
 
 // test tsx type_parameter_modifier_tsx
 // <in T></in>;
-// // <out T></out>;
-// // <in out T></in>;
-// // <out in T></out>;
-// //<in T extends={true}></in>
-// //<out T extends={true}></out>
-// //<in out T extends={true}></in>
+// <out T></out>;
+// <in out T></in>;
+// <out in T></out>;
+// <in T extends={true}></in>;
+// <out T extends={true}></out>;
+// <in out T extends={true}></in>;
 
 // test ts type_parameter_modifier
 // type Foo<in T> = T
@@ -233,26 +233,12 @@ impl ParseSeparatedList for TsTypeParameterList {
 // declare interface Foo<out T> {}
 
 
-// fn parse_ts_type_parameter_modifier(
-//     p: &mut Parser,
-//     could_use_parameter_modifier: bool,
-// ) -> ParsedSyntax {
-//     let m = p.start();
-    
-//     if !has_any_modifier {
-//         m.abandon(p);
-//         return Absent;
-//     }
-//     Present(m.complete(p, TS_TYPE_PARAMETER_MODIFIER))
-// }
 
 fn parse_ts_type_parameter(p: &mut Parser, could_use_parameter_modifier: bool) -> ParsedSyntax {
     let m = p.start();
     // parse_ts_type_parameter_modifier(p, could_use_parameter_modifier).ok();
-    let mut has_any_modifier = false;
     // try to eat `in` modifier
     if p.at(T![in]) {
-        has_any_modifier = true;
         if could_use_parameter_modifier {
             p.bump(T![in]);
         } else {
@@ -266,7 +252,6 @@ fn parse_ts_type_parameter(p: &mut Parser, could_use_parameter_modifier: bool) -
     }
 
     if p.at(T![out]) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
-        has_any_modifier = true;
         if could_use_parameter_modifier {
             p.bump(T![out]);
         } else {

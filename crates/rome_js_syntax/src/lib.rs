@@ -53,7 +53,7 @@ impl JsSyntaxKind {
     /// Returns `true` for any contextual (await) or non-contextual keyword
     #[inline]
     pub const fn is_keyword(self) -> bool {
-        (self as u16) <= (JsSyntaxKind::OF_KW as u16)
+        (self as u16) <= (JsSyntaxKind::OUT_KW as u16)
             && (self as u16) >= (JsSyntaxKind::BREAK_KW as u16)
     }
 
