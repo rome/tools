@@ -24,6 +24,7 @@ pub struct AnalysisFilter<'a> {
 }
 
 impl AnalysisFilter<'_> {
+    /// Return `true` if the rule `R` matches this filter
     pub fn match_rule<R: Rule>(&self) -> bool {
         self.categories.contains(R::CATEGORY.into())
             && self.rules.map_or(true, |rules| rules.contains(&R::NAME))
@@ -58,6 +59,10 @@ pub enum Never {}
 /// a size of 1 as it still need to store a discriminant)
 pub type ControlFlow<B = Never> = ops::ControlFlow<B>;
 
+/// The [Analyzer] is intended is an executor for a set of rules contained in a
+/// [RuleRegistry]: these rules can query the syntax tree and emit [AnalyzerSignal]
+/// objects in response to a query match, with a signal being a generic object
+/// containing a diagnostic, a code action or both.
 pub struct Analyzer<L: Language> {
     registry: RuleRegistry<L>,
     has_suppressions: fn(&SyntaxNode<L>) -> bool,
