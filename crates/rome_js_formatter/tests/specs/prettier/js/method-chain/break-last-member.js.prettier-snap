@@ -8,7 +8,7 @@ superSupersuperSupersuperSupersuperSupersuperSuperLong
 
 expect(
   findDOMNode(component.instance()).getElementsByClassName(styles.inner)[0]
-    .style.paddingRight
+    .style.paddingRight,
 ).toBe("1000px");
 
 const {

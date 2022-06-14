@@ -8,14 +8,14 @@ longArgNamesWithComments(
   longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong2,
 
   /* Hello World */
-  longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong3
+  longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong3,
 );
 
 shortArgNames(
   short,
 
   short2,
-  short3
+  short3,
 );
 
 comments(
@@ -34,7 +34,7 @@ comments(
   /* Long Long Long Long Long Comment */
   // Long Long Long Long Long Comment
 
-  short3
+  short3,
   // More comments
 );
 
@@ -43,7 +43,7 @@ differentArgTypes(
     return true;
   },
 
-  isTrue ? doSomething() : 12
+  isTrue ? doSomething() : 12,
 );
 
 moreArgTypes(
@@ -60,31 +60,31 @@ moreArgTypes(
     // Hello world again
     { name: "Hello World", age: 34 },
 
-    oneThing + anotherThing
+    oneThing + anotherThing,
 
     // Comment
-  )
+  ),
 );
 
 evenMoreArgTypes(
   doSomething(
     { name: "Hello World", age: 34 },
 
-    true
+    true,
   ),
 
   14,
 
   1 + 2 - 90 / 80,
 
-  !98 * 60 - 90
+  !98 * 60 - 90,
 );
 
 foo.apply(
   null,
 
   // Array here
-  [1, 2]
+  [1, 2],
 );
 
 bar.on(
@@ -92,7 +92,7 @@ bar.on(
 
   () => {
     doStuff();
-  }
+  },
 );
 
 foo(
@@ -101,7 +101,7 @@ foo(
   /* function here */
   function doSomething() {
     return true;
-  }
+  },
 );
 
 doSomething.apply(
@@ -109,7 +109,7 @@ doSomething.apply(
 
   // Comment
 
-  ["Hello world 1", "Hello world 2", "Hello world 3"]
+  ["Hello world 1", "Hello world 2", "Hello world 3"],
 );
 
 doAnotherThing(
@@ -118,7 +118,7 @@ doAnotherThing(
   {
     solution_type,
     time_frame,
-  }
+  },
 );
 
 stuff.doThing(
@@ -127,7 +127,7 @@ stuff.doThing(
   -1,
   {
     accept: (node) => doSomething(node),
-  }
+  },
 );
 
 doThing(
@@ -137,7 +137,7 @@ doThing(
   true,
   {
     decline: (creditCard) => takeMoney(creditCard),
-  }
+  },
 );
 
 func(
@@ -145,7 +145,7 @@ func(
     thing();
   },
 
-  { yes: true, no: 5 }
+  { yes: true, no: 5 },
 );
 
 doSomething(
@@ -156,7 +156,7 @@ doSomething(
   /* Comment */
 
   // This is important
-  { helloWorld, someImportantStuff }
+  { helloWorld, someImportantStuff },
 );
 
 function foo(
@@ -173,5 +173,5 @@ function foo(
   nine,
   ten,
 
-  eleven
+  eleven,
 ) {}

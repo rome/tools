@@ -5,7 +5,7 @@ let example = [
 ];
 
 foo(
-  {}
+  {},
   // Comment
 );
 
@@ -22,14 +22,14 @@ o = {
 
 function supersupersupersuperLongF(
   supersupersupersuperLongA,
-  supersupersupersuperLongB
+  supersupersupersuperLongB,
   // Comment
 ) {
   a;
 }
 function supersupersupersuperLongF(
   supersupersupersuperLongA,
-  supersupersupersuperLongB
+  supersupersupersuperLongB,
   // Comment
 ) {
   a;

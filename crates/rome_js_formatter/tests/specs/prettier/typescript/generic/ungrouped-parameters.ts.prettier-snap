@@ -1,5 +1,5 @@
 function filterTooltipWithFoo<F extends Field>(
-  oldEncoding: Encoding<F>
+  oldEncoding: Encoding<F>,
 ): {
   customTooltipWithoutAggregatedField?:
     | StringFieldDefWithCondition<F>

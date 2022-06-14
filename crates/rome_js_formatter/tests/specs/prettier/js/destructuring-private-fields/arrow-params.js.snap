@@ -1,0 +1,60 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: arrow-params.js
+---
+# Input
+```js
+class C {
+  #x = 1;
+  #p = ({ #x: x }) => {}
+}
+
+```
+
+# Output
+```js
+class C {
+  #x = 1;
+  #p = ({ #x: x })
+  => {
+}
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '#x'
+  ┌─ arrow-params.js:3:11
+  │
+3 │   #p = ({ #x: x }) => {}
+  │           ^^ Expected a property, a shorthand property, a getter, a setter, or a method here
+
+error[SyntaxError]: expected `,` but instead found `:`
+  ┌─ arrow-params.js:3:13
+  │
+3 │   #p = ({ #x: x }) => {}
+  │             ^ unexpected
+
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+  ┌─ arrow-params.js:3:3
+  │
+3 │   #p = ({ #x: x }) => {}
+  │   ^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '=>'
+  ┌─ arrow-params.js:3:20
+  │
+3 │   #p = ({ #x: x }) => {}
+  │                    ^^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a statement but instead found '}'
+  ┌─ arrow-params.js:4:1
+  │
+4 │ }
+  │ ^ Expected a statement here
+
+
+```
+
+

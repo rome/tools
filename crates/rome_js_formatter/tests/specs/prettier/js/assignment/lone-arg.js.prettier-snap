@@ -11,7 +11,7 @@ const bifornCringerMoshedPerplexSawderGlyphsHa =
 
 if (true) {
   node.id = this.flowParseTypeAnnotatableIdentifier(
-    /*allowPrimitiveOverride*/ true
+    /*allowPrimitiveOverride*/ true,
   );
 }
 

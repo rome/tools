@@ -34,7 +34,7 @@ class Class3 {
     @d4({
       x: string,
     })
-    private a: string
+    private a: string,
   ) {}
 }
 

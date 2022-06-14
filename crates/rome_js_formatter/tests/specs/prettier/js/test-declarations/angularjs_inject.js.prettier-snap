@@ -16,7 +16,7 @@ it("does something really long and complicated so I have to write a very long na
 
 it("does something really long and complicated so I have to write a very long name for the test", inject((
   $fooServiceLongName,
-  $barServiceLongName
+  $barServiceLongName,
 ) => {
   // code
 }));
