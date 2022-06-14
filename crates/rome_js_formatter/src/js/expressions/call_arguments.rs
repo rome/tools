@@ -40,23 +40,6 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         let r_paren = close_delimiter.as_token_fmt().memoized();
         let r_trailing_trivia = close_delimiter.as_trailing_trivia_fmt().memoized();
 
-        // if the function has simple arguments, don't do any particular formatting and delegate/
-        // the formatting of the arguments to the list itself
-        // if is_simple_function_arguments(node)? {
-        //     return write!(
-        //         f,
-        //         [
-        //             l_leading_trivia,
-        //             l_paren,
-        //             l_trailing_trivia,
-        //             &args.format(),
-        //             r_leading_trivia,
-        //             r_paren,
-        //             r_trailing_trivia,
-        //         ]
-        //     );
-        // }
-
         // particular formatting for hooks
         if is_react_hook_with_deps_array(&args)? {
             let mut list = args.elements();
@@ -371,7 +354,7 @@ fn should_group_last_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
             true
         };
 
-        Ok(!last.syntax().has_comments_at_the_edges()
+        Ok(!last.syntax().has_comments_direct()
             && can_group_argument(last.syntax())?
             && check_with_penultimate)
     } else {

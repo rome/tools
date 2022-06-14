@@ -1,11 +1,9 @@
 tap.test(
-	"RecordImport.advance",
-	(t) => {
+	"RecordImport.advance", (t) => {
 		mockFS(
 			(callback) => {
 				batch.setResults(
-					[fs.createReadStream(dataFile)],
-					(err) => {
+					[fs.createReadStream(dataFile)], (err) => {
 						getBatches(
 							(err, batches) => {
 								checkStates(batches, ["started"]);

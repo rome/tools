@@ -183,7 +183,7 @@ where
         if has_formatter_suppressions(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
         } else {
-            Self::fmt_fields(node, f)?;
+            dbg_write!(f, [format_with(|f| { Self::fmt_fields(node, f) })])?;
         };
 
         Ok(())
@@ -526,91 +526,11 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        tap.test("RecordImport.advance", (t) => {
-    const checkStates = (batches, states) => {
-        t.equal(batches.length, states.length);
-        for (const batch of batches) {
-            t.equal(batch.state, states.shift());
-            t.ok(batch.getCurState().name(i18n));
-        }
-    };
 
-    const batch = init.getRecordBatch();
-    const dataFile = path.resolve(process.cwd(), "testData", "default.json");
-
-    const getBatches = (callback) => {
-        RecordImport.find({}, "", {}, (err, batches) => {
-            callback(null, batches.filter((batch) => (batch.state !== "error" &&
-                batch.state !== "completed")));
-        });
-    };
-
-    mockFS((callback) => {
-        batch.setResults([fs.createReadStream(dataFile)], (err) => {
-            t.error(err, "Error should be empty.");
-            t.equal(batch.results.length, 6, "Check number of results");
-            for (const result of batch.results) {
-                t.equal(result.result, "unknown");
-                t.ok(result.data);
-                t.equal(result.data.lang, "en");
-            }
-
-            getBatches((err, batches) => {
-                checkStates(batches, ["started"]);
-
-                RecordImport.advance((err) => {
-                    t.error(err, "Error should be empty.");
-
-                    getBatches((err, batches) => {
-                        checkStates(batches, ["process.completed"]);
-
-                        // Need to manually move to the next step
-                        batch.importRecords((err) => {
-                            t.error(err, "Error should be empty.");
-
-                            getBatches((err, batches) => {
-                                checkStates(batches, ["import.completed"]);
-
-                                RecordImport.advance((err) => {
-                                    t.error(err, "Error should be empty.");
-
-                                    getBatches((err, batches) => {
-                                        checkStates(batches,
-                                            ["similarity.sync.completed"]);
-
-                                        RecordImport.advance((err) => {
-                                            t.error(err,
-                                                "Error should be empty.");
-
-                                            t.ok(batch.getCurState()
-                                                .name(i18n));
-
-                                            getBatches((err, batches) => {
-                                                checkStates(batches, []);
-                                                t.end();
-                                                callback();
-                                            });
-                                        });
-
-                                        t.ok(batch.getCurState().name(i18n));
-                                    });
-                                });
-
-                                t.ok(batch.getCurState().name(i18n));
-                            });
-                        });
-
-                        t.ok(batch.getCurState().name(i18n));
-                    });
-                });
-
-                t.ok(batch.getCurState().name(i18n));
-            });
-        });
-    });
-});
-
-        "#;
+      Observable.timer(800) // debounce
+        
+    
+"#;
         // let src = r#"useEffect(() => { hey; }, [1, 4])"#;
 
         let syntax = SourceType::tsx();
