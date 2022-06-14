@@ -84,7 +84,7 @@ macro_rules! write {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// dbg_write!(&mut buffer, [token("Hello")]).unwrap();
+/// dbg_write!(buffer, [token("Hello")]).unwrap();
 /// // ^-- prints: [src/main.rs:7][0] = StaticToken("Hello")
 ///
 /// assert_eq!(buffer.into_element(), FormatElement::Token(Token::Static { text: "Hello" }));
@@ -96,8 +96,9 @@ macro_rules! write {
 #[macro_export]
 macro_rules! dbg_write {
     ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
+        use $crate::BufferExtensions;
         let mut count = 0;
-        let mut inspect = $crate::Inspect::new($dst, |element: &FormatElement| {
+        let mut inspect = $dst.inspect(|element: &FormatElement| {
             std::eprintln!(
                 "[{}:{}][{}] = {element:#?}",
                 std::file!(), std::line!(), count
