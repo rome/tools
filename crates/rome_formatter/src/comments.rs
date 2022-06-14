@@ -3,14 +3,38 @@ use rome_rowan::{Language, SyntaxTriviaPieceComments};
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 pub enum CommentKind {
     /// An inline comment that can appear between any two tokens and doesn't contain any line breaks.
-    /// For example, a `/* test */` comment in JavaScript.
+    ///
+    /// ## Examples
+    ///
+    /// ### JavaScript:
+    ///
+    /// ```javascript
+    /// a /* test */
+    /// ```
     InlineBlock,
 
     /// A block comment that can appear between any two tokens and contains at least one line break.
-    /// For example, a `/* first line\nmore content on the second line */` comment in JavaScript.
+    ///
+    /// ## Examples
+    ///
+    /// ### JavaScript
+    ///
+    /// ```javascript
+    /// /* first line
+    ///  * more content on the second line
+    ///  */
+    /// ```
     Block,
 
-    /// A line comment that appears at the end of the line. For example the `// test` comment in JavaScript.
+    /// A line comment that appears at the end of the line.
+    ///
+    /// ## Examples
+    ///
+    /// ### JavaScript
+    ///
+    /// ```javascript
+    /// a // test
+    /// ```
     Line,
 }
 
@@ -64,6 +88,20 @@ impl CommentKind {
         matches!(self, CommentKind::InlineBlock)
     }
 
+    /// Returns `true` for comments that can appear inline between any two tokens.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use rome_formatter::CommentKind;
+    ///
+    /// // Block and InlineBlock comments can appear inline
+    /// assert!(CommentKind::Block.is_inline());
+    /// assert!(CommentKind::InlineBlock.is_inline());
+    ///
+    /// // But not line comments
+    /// assert!(!CommentKind::Line.is_inline())
+    /// ```
     pub const fn is_inline(&self) -> bool {
         matches!(self, CommentKind::InlineBlock | CommentKind::Block)
     }

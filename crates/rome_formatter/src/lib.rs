@@ -1069,8 +1069,8 @@ pub struct FormatState<Context> {
     context: Context,
     group_id_builder: UniqueGroupIdBuilder,
 
-    /// `true` if there's a trailing inline comment before the next token (including its trivia).
-    trailing_inline_comment: bool,
+    /// `true` if the last formatted output is an inline comment that may need a space between the next token or comment.
+    last_content_inline_comment: bool,
 
     /// The kind of the last formatted token
     last_token_kind: Option<LastTokenKind>,
@@ -1088,7 +1088,10 @@ where
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("FormatState")
             .field("context", &self.context)
-            .field("has_trailing_inline_comment", &self.trailing_inline_comment)
+            .field(
+                "has_trailing_inline_comment",
+                &self.last_content_inline_comment,
+            )
             .field("last_token_kind", &self.last_token_kind)
             .finish()
     }
@@ -1100,21 +1103,24 @@ impl<Context> FormatState<Context> {
         Self {
             context,
             group_id_builder: Default::default(),
-            trailing_inline_comment: false,
+            last_content_inline_comment: false,
             last_token_kind: None,
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
     }
 
-    /// Returns true if there's a trailing inline comment before the next token or the next token's comments.
-    pub fn has_trailing_inline_comment(&self) -> bool {
-        self.trailing_inline_comment
+    /// Returns `true` if the last written content is an inline comment with no trailing whitespace.
+    ///
+    /// The formatting of the next content may need to insert a whitespace to separate the
+    /// inline comment from the next content.
+    pub fn is_last_content_inline_comment(&self) -> bool {
+        self.last_content_inline_comment
     }
 
-    /// Sets whether there is a trailing inline comment before the next token or the next token's trivia.
-    pub fn set_trailing_inline_comment(&mut self, has_comment: bool) {
-        self.trailing_inline_comment = has_comment;
+    /// Sets whether the last written content is an inline comment that has no trailing whitespace.
+    pub fn set_last_content_is_inline_comment(&mut self, has_comment: bool) {
+        self.last_content_inline_comment = has_comment;
     }
 
     /// Returns the kind of the last formatted token.
@@ -1122,11 +1128,11 @@ impl<Context> FormatState<Context> {
         self.last_token_kind
     }
 
-    /// Sets the kind of the last formatted token.
+    /// Sets the kind of the last formatted token and sets `last_content_inline_comment` to `false`.
     pub fn set_last_token_kind<Kind: SyntaxKind + 'static>(&mut self, kind: Kind) {
         // Reset the last comment kind before token because we've now seen a token.
+        self.last_content_inline_comment = false;
 
-        self.trailing_inline_comment = false;
         self.last_token_kind = Some(LastTokenKind {
             kind_type: TypeId::of::<Kind>(),
             kind: kind.to_raw(),
@@ -1145,7 +1151,7 @@ impl<Context> FormatState<Context> {
 
     pub fn snapshot(&self) -> FormatStateSnapshot {
         FormatStateSnapshot {
-            trailing_inline_comment: self.trailing_inline_comment,
+            last_content_inline_comment: self.last_content_inline_comment,
             last_token_kind: self.last_token_kind,
             #[cfg(debug_assertions)]
             printed_tokens: self.printed_tokens.clone(),
@@ -1153,7 +1159,7 @@ impl<Context> FormatState<Context> {
     }
 
     pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
-        self.trailing_inline_comment = snapshot.trailing_inline_comment;
+        self.last_content_inline_comment = snapshot.last_content_inline_comment;
         self.last_token_kind = snapshot.last_token_kind;
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
@@ -1210,19 +1216,20 @@ impl LastTokenKind {
 }
 
 pub struct FormatStateSnapshot {
-    trailing_inline_comment: bool,
+    last_content_inline_comment: bool,
     last_token_kind: Option<LastTokenKind>,
     #[cfg(debug_assertions)]
     printed_tokens: PrintedTokens,
 }
 
+/// Defines how to format comments for a specific [Language].
 pub trait CommentStyle: Copy {
     type Language: Language;
 
     /// Returns the kind of the comment
     fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
 
-    /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are
+    /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are:
     /// * left parentheses: `(`, `[`, `{`
     fn is_group_start_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
 

@@ -65,7 +65,7 @@ where
     S: CommentStyle + 'static,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
-        let has_trailing_inline_comment = f.state().has_trailing_inline_comment();
+        let has_trailing_inline_comment = f.state().is_last_content_inline_comment();
 
         // Insert a space if the previous token has any trailing comments and this is not a group
         // end token
@@ -107,7 +107,7 @@ where
 
         let last = f.state().last_token_kind();
 
-        let has_trailing_inline_comment = f.state().has_trailing_inline_comment();
+        let has_trailing_inline_comment = f.state().is_last_content_inline_comment();
         write_removed_token_trivia(self.token, last, has_trailing_inline_comment, self.style, f)
     }
 }
@@ -171,7 +171,7 @@ where
     // * there's no leading comment and the last trailing comment is an inline comment
     // * there's neither leading nor trailing comment, in which case the last comment written
     //   is the comment from the previous token
-    f.state_mut().set_trailing_inline_comment(
+    f.state_mut().set_last_content_is_inline_comment(
         next_token_leading_comments
             .last()
             .map(|c| style.get_comment_kind(c.piece()).is_inline())
@@ -274,7 +274,7 @@ where
         // Is it safe to set `last_trailing_comment` only in the format removed because format removed may set it to true
         // but it's false for the "break" case. Ignorable, because it's after a new line break in that case?
         let last_token = f.state().last_token_kind();
-        let has_trailing_inline_comment = f.state_mut().has_trailing_inline_comment();
+        let has_trailing_inline_comment = f.state_mut().is_last_content_inline_comment();
 
         write!(
             f,
@@ -353,7 +353,7 @@ where
             f,
         )?;
 
-        let has_trailing_inline_comment = f.state_mut().has_trailing_inline_comment();
+        let has_trailing_inline_comment = f.state_mut().is_last_content_inline_comment();
         if needs_space_between_comments_and_token(
             &leading_comments,
             self.token.kind(),
@@ -675,7 +675,7 @@ where
         }
 
         f.state_mut()
-            .set_trailing_inline_comment(last_inline_comment);
+            .set_last_content_is_inline_comment(last_inline_comment);
 
         Ok(())
     }

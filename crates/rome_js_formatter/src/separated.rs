@@ -35,7 +35,7 @@ where
                     TrailingSeparator::Allowed => {
                         // Use format_replaced instead of wrapping the result of format_token
                         // in order to remove only the token itself when the group doesn't break
-                        // but still print its associated trivias unconditionally
+                        // but still print its associated trivia unconditionally
                         format_only_if_breaks(separator, &separator.format())
                             .with_group_id(self.options.group_id)
                             .fmt(f)?;

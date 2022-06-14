@@ -1,6 +1,6 @@
-// import {
-//     func, // trailing comma removal
-// } from 'module';
+import {
+    func, // trailing comma removal
+} from 'module';
 
 
 expression(/* block comment */);
@@ -64,3 +64,10 @@ function name(very, long, list, of_parameters, to, insert, a_break, in_the, para
 	[
 		3 /* trailing num */ , /* trailing sep */
 	];
+
+function test /* spacing before parentheses*/ () {}
+
+a /* before member */.test;
+statement /* comment */;
+
+/* EOF comment */
