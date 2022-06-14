@@ -43,3 +43,16 @@ export * from "hey"
 export * as something_bad_will_happen from "something_bad_might_not_happen"
 
 export * as something_bad_will_happen from "something_bad_might_not_happen" assert { "type": "json", "type2": "json3"}
+
+
+// this one should switch to use single quotes
+("content '' \"\"\" ");
+
+// this one should switch to use double quotes
+('content \'\' " ');
+
+// you should keep all the character as they are
+("content \\' \\' ");
+
+// you should remove the escape
+("content \'\' ")

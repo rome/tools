@@ -1,11 +1,12 @@
 use pico_args::Arguments;
-use rome_core::App;
 use rome_flags::FeatureFlags;
+use rome_service::App;
 
 mod commands;
 mod metrics;
 mod panic;
 mod termination;
+mod traversal;
 
 pub use panic::setup_panic_handler;
 pub use termination::Termination;
@@ -20,9 +21,12 @@ pub struct CliSession<'app> {
 
 impl CliSession<'static> {
     pub fn from_env() -> Self {
+        let mut args = Arguments::from_env();
+        let no_colors = args.contains("--no-colors");
+
         Self {
-            app: App::from_env(),
-            args: Arguments::from_env(),
+            app: App::from_env(no_colors),
+            args,
         }
     }
 }
@@ -50,31 +54,31 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
     // True if the command line did not contain any arguments beside the subcommand
     let is_empty = session.args.clone().finish().is_empty();
 
-    match subcommand.as_deref() {
+    let result = match subcommand.as_deref() {
         // Print the help for the subcommand if it was called with `--help`
-        Some(cmd) if has_help => crate::commands::help::help(Some(cmd)),
+        Some(cmd) if has_help => crate::commands::help::help(session, Some(cmd)),
 
-        Some("format") if !is_empty => {
-            let result = crate::commands::format::format(session);
-
-            if has_metrics {
-                crate::metrics::print_metrics();
-            }
-
-            result
-        }
+        Some("check") if !is_empty => crate::commands::check::check(session),
+        Some("ci") if !is_empty => crate::commands::ci::ci(session),
+        Some("format") if !is_empty => crate::commands::format::format(session),
 
         // Print the help for known commands called without any arguments, and exit with an error
-        Some(cmd @ "format") => {
-            crate::commands::help::help(Some(cmd))?;
+        Some(cmd @ ("check" | "ci" | "format")) => {
+            crate::commands::help::help(session, Some(cmd))?;
             Err(Termination::EmptyArguments)
         }
 
         // Print the general help if no subcommand was specified / the subcommand is `help`
-        None | Some("help") => crate::commands::help::help(None),
+        None | Some("help") => crate::commands::help::help(session, None),
 
         Some(cmd) => Err(Termination::UnknownCommand {
             command: cmd.into(),
         }),
+    };
+
+    if has_metrics {
+        crate::metrics::print_metrics();
     }
+
+    result
 }

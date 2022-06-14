@@ -1,12 +1,15 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsReferenceType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsReferenceType, TsReferenceTypeFields};
 
-impl FormatNode for TsReferenceType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.name().format(formatter)?;
-        let type_arguments = self.type_arguments().format_or_empty(formatter)?;
-        Ok(format_elements![name, type_arguments])
+impl FormatNodeFields<TsReferenceType> for FormatNodeRule<TsReferenceType> {
+    fn fmt_fields(node: &TsReferenceType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsReferenceTypeFields {
+            name,
+            type_arguments,
+        } = node.as_fields();
+
+        write![f, [name.format(), type_arguments.format()]]
     }
 }

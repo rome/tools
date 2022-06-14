@@ -1,29 +1,28 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedFromSpecifier;
 use rome_js_syntax::JsExportNamedFromSpecifierFields;
 
-impl FormatNode for JsExportNamedFromSpecifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsExportNamedFromSpecifier> for FormatNodeRule<JsExportNamedFromSpecifier> {
+    fn fmt_fields(node: &JsExportNamedFromSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedFromSpecifierFields {
             type_token,
             source_name,
             export_as,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token.format_with_or_empty(formatter, |type_token| {
-            format_elements![type_token, space_token()]
-        })?;
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space_token()])?;
+        }
 
-        let source_name = source_name.format(formatter)?;
+        write!(f, [source_name.format()])?;
 
-        let export_as = export_as.format_with_or_empty(formatter, |export_as| {
-            format_elements![space_token(), export_as]
-        })?;
+        if let Some(export_as) = export_as {
+            write!(f, [space_token(), export_as.format()])?;
+        }
 
-        Ok(format_elements![type_token, source_name, export_as])
+        Ok(())
     }
 }

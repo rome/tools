@@ -2,17 +2,18 @@
 //! using `codespan`.
 
 use crate::{file::Files, Diagnostic};
-use crate::{SuggestionChange, SuggestionStyle};
+use crate::{Applicability, SuggestionChange, SuggestionStyle};
+use rome_console::Markup;
 use rome_console::{
     codespan::{Codespan, Label, LabelStyle, Locus, Severity, WithSeverity},
     diff::{Diff, DiffMode},
     fmt::{Display, Formatter, Termcolor},
     markup, MarkupBuf,
 };
-use rome_rowan::{TextRange, TextSize};
 use rome_text_edit::apply_indels;
 use std::borrow::Cow;
 use std::io;
+use std::ops::Range;
 use termcolor::{ColorChoice, StandardStream, WriteColor};
 
 /// The emitter is responsible for emitting
@@ -71,6 +72,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
             .files
             .name(self.d.file_id)
             .ok_or_else(|| io::Error::new(io::ErrorKind::NotFound, "file not found"))?;
+
         let source_file = self
             .files
             .source(self.d.file_id)
@@ -97,7 +99,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                 },
                 severity: self.d.severity,
                 code: self.d.code.as_deref().filter(|code| !code.is_empty()),
-                title: &self.d.title,
+                title: markup! { {self.d.title} },
             }}
             "\n"
         })?;
@@ -141,6 +143,13 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         }
 
         for suggestion in &self.d.suggestions {
+            let applicability = match suggestion.applicability {
+                Applicability::Always => "Safe fix",
+                Applicability::MaybeIncorrect
+                | Applicability::HasPlaceholders
+                | Applicability::Unspecified => "Suggested fix",
+            };
+
             match suggestion.style {
                 SuggestionStyle::Full => {
                     let old = self
@@ -159,16 +168,12 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                         SuggestionChange::String(string) => Cow::Borrowed(string),
                     };
 
-                    let new = format!(
-                        "{}{}{}",
-                        &old[TextRange::new(TextSize::from(0u32), range.start())],
-                        new,
-                        &old[TextRange::new(range.end(), TextSize::of(old))],
-                    );
+                    let mut buffer = old.to_string();
+                    buffer.replace_range(Range::<usize>::from(range), &new);
 
                     fmt.write_markup(markup! {
-                        <Info>{suggestion.msg}</Info>"\n"
-                        {Diff { mode: DiffMode::Unified, left: old, right: &new }}
+                        <Info>{applicability}": "{suggestion.msg}</Info>"\n"
+                        {Diff { mode: DiffMode::Unified, left: old, right: &buffer }}
                     })?;
                 }
                 SuggestionStyle::Inline => {
@@ -188,12 +193,12 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                     };
 
                     fmt.write_markup(markup! {
-                        <Info>{suggestion.msg}": `"{replacement}"`"</Info>"\n"
+                        <Info>{applicability}": "{suggestion.msg}"\n`"{replacement}"`"</Info>"\n"
                     })?;
                 }
                 SuggestionStyle::HideCode => {
                     fmt.write_markup(markup! {
-                        <Info>{suggestion.msg}</Info>"\n"
+                        <Info>{applicability}": "{suggestion.msg}</Info>"\n"
                     })?;
                 }
                 SuggestionStyle::DontShow => {}
@@ -236,7 +241,7 @@ pub struct DiagnosticHeader<'a> {
     pub locus: Option<Locus<'a>>,
     pub severity: Severity,
     pub code: Option<&'a str>,
-    pub title: &'a str,
+    pub title: Markup<'a>,
 }
 
 impl<'a> Display for DiagnosticHeader<'a> {
@@ -285,7 +290,7 @@ labore et dolore magna aliqua";
                 <Info>"2"</Info>" "<Info>"│"</Info>" consectetur "<Error>"adipiscing elit"</Error>",\n"
             "  "<Info>"│"</Info>                   "             "<Error>"^^^^^^^^^^^^^^^"</Error>" "<Error>"label"</Error>"\n"
             "\n"
-            <Info>"suggestion"</Info>"\n"
+            <Info>"Safe fix: suggestion"</Info>"\n"
             "    | "<Info>"@@ -1,4 +1,5 @@"</Info>"\n"
             "0 0 |   Lorem ipsum dolor sit amet,\n"
             "1   | "<Error>"- consectetur adipiscing elit,"</Error>"\n"

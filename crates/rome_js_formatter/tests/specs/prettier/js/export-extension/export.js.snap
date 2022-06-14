@@ -21,28 +21,30 @@ export * as ns from "mod";
 export
 v;
 from;
-"mod";
+("mod");
 export
 a, * as
 b;
 from;
-"mod";
+("mod");
 export
 c, { foo };
 from;
-"mod";
+("mod");
 export * as d
 ,
 {
   bar;
 }
 from;
-"mod";
-export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+("mod");
+export {
+  fooooooooooooooooooooooooooooooooooooooooooooooooo,
+} from "fooooooooooooooooooooooooooooo";
 export
 Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr };
 from;
-"barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+("barrrrrrrrrrrrrrrrrrrrrrrrrrrr");
 export {
   foooooooooooooooooooooooooooooooooooooooooooooo,
   fooooooooooooooooooooooooooooooooooooooooooooooo,
@@ -181,8 +183,4 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   22: export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
-```
 

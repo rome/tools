@@ -1,13 +1,22 @@
-use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsTupleType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsTupleType, TsTupleTypeFields};
 
-impl FormatNode for TsTupleType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.format_delimited_soft_block_indent(
-            &self.l_brack_token()?,
-            self.elements().format(formatter)?,
-            &self.r_brack_token()?,
+impl FormatNodeFields<TsTupleType> for FormatNodeRule<TsTupleType> {
+    fn fmt_fields(node: &TsTupleType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsTupleTypeFields {
+            l_brack_token,
+            elements,
+            r_brack_token,
+        } = node.as_fields();
+
+        write!(
+            f,
+            [
+                format_delimited(&l_brack_token?, &elements.format(), &r_brack_token?,)
+                    .soft_block_indent()
+            ]
         )
     }
 }

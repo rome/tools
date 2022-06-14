@@ -1,44 +1,24 @@
-use crate::{
-    concat_elements, empty_element, format_elements, soft_line_break_or_space, space_token, token,
-    Format, FormatElement, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::generated::FormatTsIntersectionTypeElementList;
+use crate::prelude::*;
+use crate::ts::lists::union_type_variant_list::FormatTypeVariant;
 use rome_js_syntax::TsIntersectionTypeElementList;
 use rome_rowan::AstSeparatedList;
 
-impl Format for TsIntersectionTypeElementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let mut elements = Vec::with_capacity(self.len());
-        let last_index = self.len().saturating_sub(1);
+impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeElementList {
+    type Context = JsFormatContext;
 
-        for (index, item) in self.elements().enumerate() {
-            let ty = item.node()?;
-            let separator = item.trailing_separator()?;
+    fn fmt(node: &TsIntersectionTypeElementList, f: &mut JsFormatter) -> FormatResult<()> {
+        let last_index = node.len().saturating_sub(1);
 
-            let separator = match separator {
-                Some(token) => {
-                    if index == last_index {
-                        formatter.format_replaced(token, empty_element())
-                    } else {
-                        format_elements![
-                            soft_line_break_or_space(),
-                            token.format(formatter)?,
-                            space_token()
-                        ]
-                    }
-                }
-                None => {
-                    if index == last_index {
-                        empty_element()
-                    } else {
-                        format_elements![soft_line_break_or_space(), token("&"), space_token()]
-                    }
-                }
-            };
-
-            elements.push(format_elements![ty.format(formatter)?, separator])
-        }
-
-        Ok(concat_elements(elements))
+        f.join()
+            .entries(
+                node.elements()
+                    .enumerate()
+                    .map(|(index, item)| FormatTypeVariant {
+                        last: index == last_index,
+                        element: item,
+                    }),
+            )
+            .finish()
     }
 }

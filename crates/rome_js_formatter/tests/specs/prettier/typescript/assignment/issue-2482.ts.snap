@@ -15,14 +15,15 @@ export function countriesReceived(countries: Array<Country>): CountryActionType 
 
 # Output
 ```js
-export function countriesReceived(countries: Array<Country>): CountryActionType {
-  return { type: ActionTypes.COUNTRIES_RECEIVED, countries: countries };
+export function countriesReceived(
+  countries: Array<Country>,
+): CountryActionType {
+  return {
+    type: ActionTypes.COUNTRIES_RECEIVED,
+    countries: countries,
+  };
 }
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: export function countriesReceived(countries: Array<Country>): CountryActionType {
-```
 

@@ -1,15 +1,12 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsAssertsCondition;
 use rome_js_syntax::TsAssertsConditionFields;
 
-impl FormatNode for TsAssertsCondition {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let TsAssertsConditionFields { is_token, ty } = self.as_fields();
-        Ok(format_elements![
-            is_token.format(formatter)?,
-            space_token(),
-            ty.format(formatter)?
-        ])
+impl FormatNodeFields<TsAssertsCondition> for FormatNodeRule<TsAssertsCondition> {
+    fn fmt_fields(node: &TsAssertsCondition, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsAssertsConditionFields { is_token, ty } = node.as_fields();
+        write![f, [is_token.format(), space_token(), ty.format()]]
     }
 }

@@ -1,14 +1,20 @@
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-
-use crate::utils::format_string_literal_token;
+use crate::prelude::*;
+use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
+use crate::FormatNodeFields;
 use rome_js_syntax::JsLiteralExportName;
 use rome_js_syntax::JsLiteralExportNameFields;
+use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 
-impl FormatNode for JsLiteralExportName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsLiteralExportNameFields { value } = self.as_fields();
+impl FormatNodeFields<JsLiteralExportName> for FormatNodeRule<JsLiteralExportName> {
+    fn fmt_fields(node: &JsLiteralExportName, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsLiteralExportNameFields { value } = node.as_fields();
 
-        Ok(format_string_literal_token(value?, formatter))
+        let value = value?;
+
+        if value.kind() == JS_STRING_LITERAL {
+            FormatLiteralStringToken::new(&value, StringLiteralParentKind::Expression).fmt(f)
+        } else {
+            value.format().fmt(f)
+        }
     }
 }

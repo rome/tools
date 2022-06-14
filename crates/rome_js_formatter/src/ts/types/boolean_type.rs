@@ -1,9 +1,12 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsBooleanType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsBooleanType, TsBooleanTypeFields};
 
-impl FormatNode for TsBooleanType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.boolean_token().format(formatter)
+impl FormatNodeFields<TsBooleanType> for FormatNodeRule<TsBooleanType> {
+    fn fmt_fields(node: &TsBooleanType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsBooleanTypeFields { boolean_token } = node.as_fields();
+
+        write![f, [boolean_token.format()]]
     }
 }

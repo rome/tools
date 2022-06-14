@@ -1,13 +1,11 @@
-use crate::format_traits::FormatOptional;
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode,
-    Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
-impl FormatNode for TsInterfaceDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDeclaration> {
+    fn fmt_fields(node: &TsInterfaceDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInterfaceDeclarationFields {
             interface_token,
             id,
@@ -16,26 +14,29 @@ impl FormatNode for TsInterfaceDeclaration {
             members,
             l_curly_token,
             r_curly_token,
-        } = self.as_fields();
-        let interface = interface_token.format(formatter)?;
-        let id = id.format(formatter)?;
-        let type_parameters = type_parameters.format_or_empty(formatter)?;
-        let extends = extends_clause.format_with_or_empty(formatter, |extends| {
-            format_elements![extends, space_token()]
-        })?;
-        let members = formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            members.format(formatter)?,
-            &r_curly_token?,
-        )?;
-        Ok(hard_group_elements(format_elements![
-            interface,
-            space_token(),
-            id,
-            type_parameters,
-            space_token(),
-            extends,
-            members
-        ]))
+        } = node.as_fields();
+
+        write![
+            f,
+            [
+                interface_token.format(),
+                space_token(),
+                id.format(),
+                type_parameters.format(),
+                space_token(),
+            ]
+        ]?;
+
+        if let Some(extends_clause) = extends_clause {
+            write!(f, [extends_clause.format(), space_token()])?;
+        }
+
+        write!(
+            f,
+            [
+                format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
+                    .block_indent()
+            ]
+        )
     }
 }

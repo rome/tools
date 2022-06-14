@@ -1,11 +1,12 @@
-use crate::formatter::verbatim_node;
-use crate::{Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
+use crate::generated::FormatJsxChildList;
+use crate::prelude::*;
 use rome_js_syntax::JsxChildList;
 use rome_rowan::AstNode;
 
-impl Format for JsxChildList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        verbatim_node(self.syntax()).format(formatter)
+impl FormatRule<JsxChildList> for FormatJsxChildList {
+    type Context = JsFormatContext;
+
+    fn fmt(node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
+        format_verbatim_node(node.syntax()).fmt(formatter)
     }
 }

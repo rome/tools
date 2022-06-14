@@ -1,17 +1,20 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsMappedTypeReadonlyModifierClause;
 use rome_js_syntax::TsMappedTypeReadonlyModifierClauseFields;
 
-impl FormatNode for TsMappedTypeReadonlyModifierClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsMappedTypeReadonlyModifierClause>
+    for FormatNodeRule<TsMappedTypeReadonlyModifierClause>
+{
+    fn fmt_fields(
+        node: &TsMappedTypeReadonlyModifierClause,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsMappedTypeReadonlyModifierClauseFields {
             operator_token,
             readonly_token,
-        } = self.as_fields();
-        Ok(format_elements![
-            operator_token.format(formatter)?,
-            readonly_token.format(formatter)?
-        ])
+        } = node.as_fields();
+        write![f, [operator_token.format(), readonly_token.format()]]
     }
 }

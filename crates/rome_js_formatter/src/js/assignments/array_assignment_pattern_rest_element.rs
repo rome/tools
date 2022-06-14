@@ -1,19 +1,22 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsArrayAssignmentPatternRestElement;
 use rome_js_syntax::JsArrayAssignmentPatternRestElementFields;
 
-impl FormatNode for JsArrayAssignmentPatternRestElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsArrayAssignmentPatternRestElement>
+    for FormatNodeRule<JsArrayAssignmentPatternRestElement>
+{
+    fn fmt_fields(
+        node: &JsArrayAssignmentPatternRestElement,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsArrayAssignmentPatternRestElementFields {
             dotdotdot_token,
             pattern,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            dotdotdot_token.format(formatter)?,
-            pattern.format(formatter)?
-        ])
+        write!(f, [dotdotdot_token.format(), pattern.format()])
     }
 }

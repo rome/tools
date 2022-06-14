@@ -14,15 +14,12 @@ const [
 
 # Output
 ```js
-const [width = nextWidth, height = nextHeight, baseline = nextBaseline] = measureText(
-  nextText,
-  getFontString(element),
-);
+const [
+  width = nextWidth,
+  height = nextHeight,
+  baseline = nextBaseline,
+] = measureText(nextText, getFontString(element));
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const [width = nextWidth, height = nextHeight, baseline = nextBaseline] = measureText(
-```
 

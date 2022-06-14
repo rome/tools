@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: arrow_call.js
 ---
 # Input
@@ -65,18 +66,22 @@ expect(() => asyncRequest({ url: "/test-endpoint" })).toThrowError(
   /Required parameter/,
 );
 
-expect(() => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" })).toThrowError(
-  /Required parameter/,
-);
-
 expect(
-  () => asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
+  () => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" }),
 ).toThrowError(/Required parameter/);
 
-expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
+expect(
+  () =>
+    asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
+).toThrowError(/Required parameter/);
 
 expect(
-  () => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
+  () => asyncRequest({ type: "foo", url: "/test-endpoint" }),
+).not.toThrowError();
+
+expect(
+  () =>
+    asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
 ).not.toThrowError();
 
 const a = Observable.fromPromise(axiosInstance.post("/carts/mine")).map(
@@ -102,10 +107,6 @@ promise.then(
 
 # Lines exceeding max width of 80 characters
 ```
-   18: expect(() => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" })).toThrowError(
-   23:   () => asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
-   26: expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
-   29:   () => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
-   48:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+   52:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 ```
 

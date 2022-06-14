@@ -53,7 +53,16 @@ require(
     "some_project/circle",
     "some_project/star",
   ],
-  function ($, Context, EventLogger, Square, Rectangle, Triangle, Circle, Star) {
+  function (
+    $,
+    Context,
+    EventLogger,
+    Square,
+    Rectangle,
+    Triangle,
+    Circle,
+    Star,
+  ) {
     console.log("some code");
   },
 );
@@ -69,16 +78,20 @@ define(
     "some_project/circle",
     "some_project/star",
   ],
-  function ($, Context, EventLogger, Square, Rectangle, Triangle, Circle, Star) {
+  function (
+    $,
+    Context,
+    EventLogger,
+    Square,
+    Rectangle,
+    Triangle,
+    Circle,
+    Star,
+  ) {
     console.log("some code");
   },
 );
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   12:   function ($, Context, EventLogger, Square, Rectangle, Triangle, Circle, Star) {
-   28:   function ($, Context, EventLogger, Square, Rectangle, Triangle, Circle, Star) {
-```
 

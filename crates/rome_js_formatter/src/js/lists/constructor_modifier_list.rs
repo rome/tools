@@ -1,13 +1,14 @@
-use crate::{join_elements, space_token, Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
+use crate::generated::FormatJsConstructorModifierList;
+use crate::prelude::*;
 use rome_js_syntax::JsConstructorModifierList;
 use rome_rowan::AstNodeList;
 
-impl Format for JsConstructorModifierList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(join_elements(
-            space_token(),
-            formatter.format_all(self.iter())?,
-        ))
+impl FormatRule<JsConstructorModifierList> for FormatJsConstructorModifierList {
+    type Context = JsFormatContext;
+
+    fn fmt(node: &JsConstructorModifierList, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join_with(&space_token())
+            .entries(node.iter().formatted())
+            .finish()
     }
 }

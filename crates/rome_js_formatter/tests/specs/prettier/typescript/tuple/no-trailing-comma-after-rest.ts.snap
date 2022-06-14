@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: no-trailing-comma-after-rest.ts
-
 ---
 # Input
 ```js
@@ -19,7 +17,14 @@ type ValidateArgs = [
 
 # Output
 ```js
-type ValidateArgs = [{ [key: string]: any }, string, string, ...string[]];
+type ValidateArgs = [
+  {
+    [key: string]: any;
+  },
+  string,
+  string,
+  ...string[],
+];
 
 ```
 

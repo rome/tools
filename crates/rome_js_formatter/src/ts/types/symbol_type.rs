@@ -1,9 +1,12 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsSymbolType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsSymbolType, TsSymbolTypeFields};
 
-impl FormatNode for TsSymbolType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.symbol_token().format(formatter)
+impl FormatNodeFields<TsSymbolType> for FormatNodeRule<TsSymbolType> {
+    fn fmt_fields(node: &TsSymbolType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsSymbolTypeFields { symbol_token } = node.as_fields();
+
+        write![f, [symbol_token.format()]]
     }
 }

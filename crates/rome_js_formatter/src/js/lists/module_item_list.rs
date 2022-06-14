@@ -1,8 +1,17 @@
-use crate::{Format, FormatElement, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::generated::FormatJsModuleItemList;
+use crate::prelude::*;
 use rome_js_syntax::JsModuleItemList;
-impl Format for JsModuleItemList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(self.clone()))
+
+impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
+    type Context = JsFormatContext;
+
+    fn fmt(node: &JsModuleItemList, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut join = f.join_nodes_with_hardline();
+
+        for module_item in node {
+            join.entry(module_item.syntax(), &format_or_verbatim(&module_item));
+        }
+
+        join.finish()
     }
 }

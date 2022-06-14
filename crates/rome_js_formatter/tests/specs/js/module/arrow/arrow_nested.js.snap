@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: arrow_nested.js
 ---
 # Input
@@ -56,14 +57,12 @@ Seq(typeDef.interface.groups).forEach(
 const promiseFromCallback = (fn) =>
 	new Promise(
 		(resolve, reject) =>
-			fn(
-				(err, result) => {
-					if (err) {
-						return reject(err);
-					}
-					return resolve(result);
-				},
-			),
+			fn((err, result) => {
+				if (err) {
+					return reject(err);
+				}
+				return resolve(result);
+			},),
 	);
 
 runtimeAgent.getProperties(

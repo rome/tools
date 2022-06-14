@@ -1,10 +1,14 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
+use rome_analyze::{AnalysisFilter, ControlFlow, Never};
 use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
-use rome_js_formatter::{format_node, FormatOptions, IndentStyle};
-use rome_js_parser::{parse, LanguageVariant, SourceType};
+use rome_formatter::IndentStyle;
+use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
+use rome_js_formatter::format_node;
+use rome_js_parser::parse;
+use rome_js_syntax::{LanguageVariant, SourceType};
 use serde_json::json;
 use std::io;
 use wasm_bindgen::prelude::*;
@@ -109,16 +113,37 @@ fn clean_up_json(json: serde_json::Value) -> serde_json::Value {
         s => s,
     }
 }
+#[wasm_bindgen]
+pub struct PlaygroundFormatOptions {
+    line_width: u16,
+    indent_width: Option<u8>, // If None, we use tabs
+    quote_style: String,
+}
+
+#[wasm_bindgen]
+impl PlaygroundFormatOptions {
+    #[wasm_bindgen(constructor)]
+    pub fn new(
+        line_width: u16,
+        indent_width: Option<u8>, // If None, we use tabs
+        quote_style: String,
+    ) -> Self {
+        Self {
+            line_width,
+            indent_width,
+            quote_style,
+        }
+    }
+}
 
 #[wasm_bindgen]
 pub fn run(
     code: String,
-    line_width: u16,
-    indent_width: Option<u8>, // If None, we use tabs
-    quote_style: String,
+    options: PlaygroundFormatOptions,
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
+    output_json: bool,
 ) -> RomeOutput {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
@@ -142,28 +167,38 @@ pub fn run(
     let parse = parse(&code, main_file_id, source_type);
     let syntax = parse.syntax();
 
-    let indent_style = if let Some(width) = indent_width {
+    let indent_style = if let Some(width) = options.indent_width {
         IndentStyle::Space(width)
     } else {
         IndentStyle::Tab
     };
 
-    let options = FormatOptions {
+    let context = JsFormatContext {
         indent_style,
-        line_width: line_width.try_into().unwrap_or_default(),
-        quote_style: quote_style.parse().unwrap_or_default(),
+        line_width: options.line_width.try_into().unwrap_or_default(),
+        options: JsFormatOptions {
+            quote_style: options.quote_style.parse().unwrap_or_default(),
+        },
+        source_type,
     };
 
-    let cst_json = serde_json::to_value(&syntax)
-        .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" }));
+    let (cst, ast) = if output_json {
+        let cst_json = clean_up_json(
+            serde_json::to_value(&syntax)
+                .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" })),
+        );
 
-    let ast_json = serde_json::to_value(&parse.tree())
-        .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" }));
+        let ast_json = clean_up_json(
+            serde_json::to_value(&parse.tree())
+                .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" })),
+        );
 
-    let cst_json = clean_up_json(cst_json);
-    let ast_json = clean_up_json(ast_json);
+        (cst_json.to_string(), ast_json.to_string())
+    } else {
+        (format!("{:#?}", syntax), format!("{:#?}", parse.tree()))
+    };
 
-    let formatted = format_node(options, &syntax).unwrap();
+    let formatted = format_node(context, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
 
     let root_element = formatted.into_format_element();
@@ -176,9 +211,28 @@ pub fn run(
             .unwrap();
     }
 
+    rome_analyze::analyze(
+        main_file_id,
+        &parse.tree(),
+        AnalysisFilter::default(),
+        |signal| {
+            if let Some(mut diag) = signal.diagnostic() {
+                if let Some(action) = signal.action() {
+                    diag.suggestions.push(action.into());
+                }
+
+                Emitter::new(&simple_files)
+                    .emit_with_writer(&diag, &mut errors)
+                    .unwrap();
+            }
+
+            ControlFlow::<Never>::Continue(())
+        },
+    );
+
     RomeOutput {
-        cst: cst_json.to_string(),
-        ast: ast_json.to_string(),
+        cst,
+        ast,
         formatted_code,
         formatter_ir,
         errors: String::from_utf8(errors.0).unwrap(),

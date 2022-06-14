@@ -1,39 +1,40 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
 
-use crate::utils::format_with_semicolon;
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-
+use crate::utils::FormatWithSemicolon;
+use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
 
-impl FormatNode for JsExportNamedClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsExportNamedClause> for FormatNodeRule<JsExportNamedClause> {
+    fn fmt_fields(node: &JsExportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedClauseFields {
             type_token,
             l_curly_token,
             specifiers,
             r_curly_token,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let content = format_with(move |f| {
+            if let Some(type_token) = &type_token {
+                write!(f, [type_token.format(), space_token()])?;
+            }
 
-        let specifiers = specifiers.format(formatter)?;
+            write!(
+                f,
+                [format_delimited(
+                    l_curly_token.as_ref()?,
+                    &specifiers.format(),
+                    r_curly_token.as_ref()?
+                )
+                .soft_block_spaces()]
+            )
+        });
 
-        let list = formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            specifiers,
-            &r_curly_token?,
-        )?;
-
-        format_with_semicolon(
-            formatter,
-            format_elements![type_token, list],
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(&content, semicolon_token.as_ref())]
         )
     }
 }

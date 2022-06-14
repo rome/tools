@@ -1,17 +1,13 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::FormatBodyStatement;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsForOfStatement;
 
-use crate::format_traits::FormatOptional;
-
-use crate::utils::format_head_body_statement;
-use crate::{
-    format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
-    Formatter, JsFormatter,
-};
+use crate::FormatNodeFields;
 use rome_js_syntax::JsForOfStatementFields;
 
-impl FormatNode for JsForOfStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
+    fn fmt_fields(node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForOfStatementFields {
             for_token,
             await_token,
@@ -21,34 +17,25 @@ impl FormatNode for JsForOfStatement {
             expression,
             r_paren_token,
             body,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let for_token = for_token.format(formatter)?;
-        let await_token = await_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let initializer = initializer.format(formatter)?;
-        let of_token = of_token.format(formatter)?;
-        let expression = expression.format(formatter)?;
-
-        format_head_body_statement(
-            formatter,
-            format_elements![
-                for_token,
+        write!(
+            f,
+            [group_elements(&format_args![
+                for_token.format(),
                 space_token(),
-                await_token,
-                formatter.format_delimited_soft_block_indent(
-                    &l_paren_token?,
-                    format_elements![
-                        initializer,
-                        soft_line_break_or_space(),
-                        of_token,
-                        soft_line_break_or_space(),
-                        expression,
-                    ],
-                    &r_paren_token?
-                )?,
-            ],
-            body?,
+                await_token
+                    .format()
+                    .with_or_empty(|token, f| write![f, [token, space_token()]]),
+                l_paren_token.format(),
+                group_elements(&initializer.format()),
+                space_token(),
+                of_token.format(),
+                space_token(),
+                expression.format(),
+                r_paren_token.format(),
+                FormatBodyStatement::new(&body?)
+            ])]
         )
     }
 }

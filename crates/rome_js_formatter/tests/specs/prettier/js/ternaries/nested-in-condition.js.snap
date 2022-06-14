@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
+assertion_line: 182
 expression: nested-in-condition.js
 ---
 # Input
@@ -48,7 +48,9 @@ const value = (bifornCringerMoshedPerplexSawder
 ```js
 $var =
   (
-    ($number % 10) >= 2 && (($number % 100) < 10 || ($number % 100) >= 20) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
+    ($number % 10) >= 2 && (
+      ($number % 100) < 10 || ($number % 100) >= 20
+    ) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
   ) ? anodyneCondosMalateOverateRetinol : averredBathersBoxroomBuggyNurl;
 
 const value = (
@@ -86,7 +88,6 @@ const value = (
 
 # Lines exceeding max width of 80 characters
 ```
-    3:     ($number % 10) >= 2 && (($number % 100) < 10 || ($number % 100) >= 20) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
-    7:   bifornCringerMoshedPerplexSawder ? askTrovenaBeenaDependsRowans : glimseGlyphsHazardNoopsTieTie
+    9:   bifornCringerMoshedPerplexSawder ? askTrovenaBeenaDependsRowans : glimseGlyphsHazardNoopsTieTie
 ```
 

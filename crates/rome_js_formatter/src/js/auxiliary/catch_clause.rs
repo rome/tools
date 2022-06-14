@@ -1,37 +1,23 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsCatchClause;
 use rome_js_syntax::JsCatchClauseFields;
 
-impl FormatNode for JsCatchClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsCatchClause> for FormatNodeRule<JsCatchClause> {
+    fn fmt_fields(node: &JsCatchClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCatchClauseFields {
             catch_token,
             declaration,
             body,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        declaration.format_with_or(
-            formatter,
-            |declaration| {
-                Ok(format_elements![
-                    catch_token.format(formatter)?,
-                    space_token(),
-                    declaration,
-                    space_token(),
-                    body.format(formatter)?
-                ])
-            },
-            || {
-                Ok(format_elements![
-                    catch_token.format(formatter)?,
-                    space_token(),
-                    body.format(formatter)?
-                ])
-            },
-        )
+        write!(f, [catch_token.format(), space_token()])?;
+
+        if let Some(declaration) = declaration {
+            write![f, [declaration.format(), space_token()]]?;
+        }
+
+        write!(f, [body.format()])
     }
 }

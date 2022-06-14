@@ -1,13 +1,14 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyBinding;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyBinding;
-impl Format for JsAnyBinding {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsIdentifierBinding(node) => node.format(formatter),
-            Self::JsUnknownBinding(node) => node.format(formatter),
+impl FormatRule<JsAnyBinding> for FormatJsAnyBinding {
+    type Context = JsFormatContext;
+    fn fmt(node: &JsAnyBinding, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsAnyBinding::JsIdentifierBinding(node) => node.format().fmt(f),
+            JsAnyBinding::JsUnknownBinding(node) => node.format().fmt(f),
         }
     }
 }

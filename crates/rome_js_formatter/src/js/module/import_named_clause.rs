@@ -1,13 +1,14 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::JsAnyNamedImport;
+use rome_js_syntax::JsAnyNamedImportSpecifier;
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
+use rome_js_syntax::JsNamedImportSpecifiersFields;
 
-impl FormatNode for JsImportNamedClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClause> {
+    fn fmt_fields(node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportNamedClauseFields {
             type_token,
             default_specifier,
@@ -15,30 +16,87 @@ impl FormatNode for JsImportNamedClause {
             from_token,
             source,
             assertion,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space_token()])?;
+        }
 
-        let source = source.format(formatter)?;
+        let is_default_specifier_empty = default_specifier.is_none();
 
-        let default = default_specifier.format_with_or_empty(formatter, |specifier| {
-            format_elements![specifier, space_token()]
-        })?;
-        let from = from_token.format(formatter)?;
-        let name = named_import.format(formatter)?;
-        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            format_elements![space_token(), assertion]
-        })?;
-        Ok(format_elements![
-            type_token,
-            default,
-            name,
-            space_token(),
-            from,
-            space_token(),
-            source,
-            assertion
-        ])
+        if let Some(default_specifier) = default_specifier {
+            write!(f, [default_specifier.format(), space_token()])?;
+        }
+
+        let named_import = named_import?;
+
+        // can_break implementation, return `format_element` instead of boolean to reduce enum conversion overhead.
+        // if `can_break` is true we just use the previous format strategy, otherwise we use the new format strategy.
+        // reference https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L173
+
+        // https://github.com/prettier/prettier/blob/5b113e71b1808d6916f446c3aa49c3c53e3bdb98/src/language-js/print/module.js#L184-L209v,
+        // `standaloneSpecifiers` corresponding our `JsDefaultImportSpecifier` + part of `JsNamespaceImportSpecifier`,
+        // `groupedSpecifiers` corresponding our `JsNamedImportSpecifiers`
+
+        //  Here we use an opposite way of thinking, we only thinking about the way that can not break
+        // That's to say
+        // 1. `default_specifier` need to be none.
+        // 2. length of `JsNamedImportSpecifiers` at least is one
+        // 3. Surrounding of the only `JsNamedImportSpecifiers` should not have any comments
+        if !is_default_specifier_empty {
+            // `can_break` is true.
+            write![f, [named_import.format()]]
+        } else {
+            match named_import {
+                JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
+                    if specifiers.specifiers().len() == 1 =>
+                {
+                    // SAFETY: we know that the `specifiers.specifiers().len() == 1`, so unwrap `iter().next()` is safe.
+                    let first_specifier = specifiers.specifiers().iter().next().unwrap();
+                    match first_specifier {
+                        Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_)) => {
+                            let syntax_node = specifiers.syntax();
+                            if syntax_node.has_comments_direct() {
+                                write![f, [named_import.format()]]
+                            } else {
+                                let JsNamedImportSpecifiersFields {
+                                    l_curly_token,
+                                    specifiers: _,
+                                    r_curly_token,
+                                } = specifiers.as_fields();
+                                write![
+                                    f,
+                                    [
+                                        l_curly_token.format(),
+                                        space_token(),
+                                        first_specifier.format(),
+                                        space_token(),
+                                        r_curly_token.format()
+                                    ]
+                                ]
+                            }
+                        }
+                        _ => write![f, [named_import.format()]],
+                    }
+                }
+                _ => write![f, [named_import.format()]],
+            }
+        }?;
+
+        write![
+            f,
+            [
+                space_token(),
+                from_token.format(),
+                space_token(),
+                source.format(),
+            ]
+        ]?;
+
+        if let Some(assertion) = assertion {
+            write!(f, [space_token(), assertion.format()])?;
+        }
+
+        Ok(())
     }
 }

@@ -2,6 +2,7 @@ use crate::cursor::SyntaxToken;
 use crate::green::GreenTrivia;
 use crate::TriviaPiece;
 use std::fmt;
+use std::iter::FusedIterator;
 use text_size::{TextRange, TextSize};
 
 #[derive(PartialEq, Eq, Clone, Hash)]
@@ -102,6 +103,7 @@ impl fmt::Display for SyntaxTrivia {
     }
 }
 
+#[derive(Clone)]
 pub struct SyntaxTriviaPiecesIterator {
     pub(crate) raw: SyntaxTrivia,
     pub(crate) next_index: usize,
@@ -128,6 +130,8 @@ impl Iterator for SyntaxTriviaPiecesIterator {
         (len, Some(len))
     }
 }
+
+impl FusedIterator for SyntaxTriviaPiecesIterator {}
 
 impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
     fn next_back(&mut self) -> Option<Self::Item> {

@@ -1,14 +1,15 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyAssignmentPattern;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyAssignmentPattern;
-impl Format for JsAnyAssignmentPattern {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsAnyAssignment(node) => node.format(formatter),
-            Self::JsArrayAssignmentPattern(node) => node.format(formatter),
-            Self::JsObjectAssignmentPattern(node) => node.format(formatter),
+impl FormatRule<JsAnyAssignmentPattern> for FormatJsAnyAssignmentPattern {
+    type Context = JsFormatContext;
+    fn fmt(node: &JsAnyAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsAnyAssignmentPattern::JsAnyAssignment(node) => node.format().fmt(f),
+            JsAnyAssignmentPattern::JsArrayAssignmentPattern(node) => node.format().fmt(f),
+            JsAnyAssignmentPattern::JsObjectAssignmentPattern(node) => node.format().fmt(f),
         }
     }
 }

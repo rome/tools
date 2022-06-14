@@ -46,13 +46,19 @@ it('should group messages with same created time', () => {
 ```js
 export default (store) => {
   return callApi(endpoint, schema).then(
-    (response) => next(actionWith({ response, type: successType })),
+    (response) =>
+      next(
+        actionWith({
+          response,
+          type: successType,
+        },),
+      ),
     (error) =>
       next(
         actionWith({
           type: failureType,
           error: error.message || "Something bad happened",
-        }),
+        },),
       ),
   );
 };
@@ -117,7 +123,7 @@ it(
           created: "11/01/2017 13:37",
         },
       ],
-    });
+    },);
   },
 );
 

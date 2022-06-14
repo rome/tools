@@ -1,45 +1,46 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatTsType;
+use crate::prelude::*;
 use rome_js_syntax::TsType;
-impl Format for TsType {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsAnyType(node) => node.format(formatter),
-            Self::TsUnknownType(node) => node.format(formatter),
-            Self::TsNumberType(node) => node.format(formatter),
-            Self::TsBooleanType(node) => node.format(formatter),
-            Self::TsBigintType(node) => node.format(formatter),
-            Self::TsStringType(node) => node.format(formatter),
-            Self::TsSymbolType(node) => node.format(formatter),
-            Self::TsVoidType(node) => node.format(formatter),
-            Self::TsUndefinedType(node) => node.format(formatter),
-            Self::TsNeverType(node) => node.format(formatter),
-            Self::TsParenthesizedType(node) => node.format(formatter),
-            Self::TsReferenceType(node) => node.format(formatter),
-            Self::TsArrayType(node) => node.format(formatter),
-            Self::TsTupleType(node) => node.format(formatter),
-            Self::TsTypeofType(node) => node.format(formatter),
-            Self::TsImportType(node) => node.format(formatter),
-            Self::TsTypeOperatorType(node) => node.format(formatter),
-            Self::TsIndexedAccessType(node) => node.format(formatter),
-            Self::TsMappedType(node) => node.format(formatter),
-            Self::TsObjectType(node) => node.format(formatter),
-            Self::TsNonPrimitiveType(node) => node.format(formatter),
-            Self::TsThisType(node) => node.format(formatter),
-            Self::TsNumberLiteralType(node) => node.format(formatter),
-            Self::TsBigIntLiteralType(node) => node.format(formatter),
-            Self::TsStringLiteralType(node) => node.format(formatter),
-            Self::TsNullLiteralType(node) => node.format(formatter),
-            Self::TsBooleanLiteralType(node) => node.format(formatter),
-            Self::TsTemplateLiteralType(node) => node.format(formatter),
-            Self::TsInferType(node) => node.format(formatter),
-            Self::TsIntersectionType(node) => node.format(formatter),
-            Self::TsUnionType(node) => node.format(formatter),
-            Self::TsFunctionType(node) => node.format(formatter),
-            Self::TsConstructorType(node) => node.format(formatter),
-            Self::TsConditionalType(node) => node.format(formatter),
+impl FormatRule<TsType> for FormatTsType {
+    type Context = JsFormatContext;
+    fn fmt(node: &TsType, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            TsType::TsAnyType(node) => node.format().fmt(f),
+            TsType::TsUnknownType(node) => node.format().fmt(f),
+            TsType::TsNumberType(node) => node.format().fmt(f),
+            TsType::TsBooleanType(node) => node.format().fmt(f),
+            TsType::TsBigintType(node) => node.format().fmt(f),
+            TsType::TsStringType(node) => node.format().fmt(f),
+            TsType::TsSymbolType(node) => node.format().fmt(f),
+            TsType::TsVoidType(node) => node.format().fmt(f),
+            TsType::TsUndefinedType(node) => node.format().fmt(f),
+            TsType::TsNeverType(node) => node.format().fmt(f),
+            TsType::TsParenthesizedType(node) => node.format().fmt(f),
+            TsType::TsReferenceType(node) => node.format().fmt(f),
+            TsType::TsArrayType(node) => node.format().fmt(f),
+            TsType::TsTupleType(node) => node.format().fmt(f),
+            TsType::TsTypeofType(node) => node.format().fmt(f),
+            TsType::TsImportType(node) => node.format().fmt(f),
+            TsType::TsTypeOperatorType(node) => node.format().fmt(f),
+            TsType::TsIndexedAccessType(node) => node.format().fmt(f),
+            TsType::TsMappedType(node) => node.format().fmt(f),
+            TsType::TsObjectType(node) => node.format().fmt(f),
+            TsType::TsNonPrimitiveType(node) => node.format().fmt(f),
+            TsType::TsThisType(node) => node.format().fmt(f),
+            TsType::TsNumberLiteralType(node) => node.format().fmt(f),
+            TsType::TsBigIntLiteralType(node) => node.format().fmt(f),
+            TsType::TsStringLiteralType(node) => node.format().fmt(f),
+            TsType::TsNullLiteralType(node) => node.format().fmt(f),
+            TsType::TsBooleanLiteralType(node) => node.format().fmt(f),
+            TsType::TsTemplateLiteralType(node) => node.format().fmt(f),
+            TsType::TsInferType(node) => node.format().fmt(f),
+            TsType::TsIntersectionType(node) => node.format().fmt(f),
+            TsType::TsUnionType(node) => node.format().fmt(f),
+            TsType::TsFunctionType(node) => node.format().fmt(f),
+            TsType::TsConstructorType(node) => node.format().fmt(f),
+            TsType::TsConditionalType(node) => node.format().fmt(f),
         }
     }
 }

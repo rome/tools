@@ -1,21 +1,24 @@
-use crate::utils::{format_string_literal_token, format_with_semicolon};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::{FormatLiteralStringToken, FormatWithSemicolon, StringLiteralParentKind};
+use rome_formatter::write;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsDirective;
 use rome_js_syntax::JsDirectiveFields;
 
-impl FormatNode for JsDirective {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsDirective> for FormatNodeRule<JsDirective> {
+    fn fmt_fields(node: &JsDirective, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDirectiveFields {
             value_token,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            format_string_literal_token(value_token?, formatter),
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &FormatLiteralStringToken::new(&value_token?, StringLiteralParentKind::Directive),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

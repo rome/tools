@@ -1,15 +1,12 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{JsxAttribute, JsxAttributeFields};
 
-impl FormatNode for JsxAttribute {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsxAttributeFields { name, initializer } = self.as_fields();
+impl FormatNodeFields<JsxAttribute> for FormatNodeRule<JsxAttribute> {
+    fn fmt_fields(node: &JsxAttribute, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsxAttributeFields { name, initializer } = node.as_fields();
 
-        Ok(format_elements![
-            name.format(formatter)?,
-            initializer.format_or_empty(formatter)?
-        ])
+        write![f, [name.format(), initializer.format()]]
     }
 }

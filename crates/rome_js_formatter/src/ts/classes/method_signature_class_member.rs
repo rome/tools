@@ -1,13 +1,13 @@
-use crate::utils::format_with_semicolon;
-use crate::{
-    format_elements, format_traits::FormatOptional, hard_group_elements, space_token, Format,
-    FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::{FormatMemberName, FormatWithSemicolon};
+use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsMethodSignatureClassMember, TsMethodSignatureClassMemberFields};
 
-impl FormatNode for TsMethodSignatureClassMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsMethodSignatureClassMember>
+    for FormatNodeRule<TsMethodSignatureClassMember>
+{
+    fn fmt_fields(node: &TsMethodSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMethodSignatureClassMemberFields {
             modifiers,
             async_token,
@@ -17,28 +17,25 @@ impl FormatNode for TsMethodSignatureClassMember {
             parameters,
             return_type_annotation,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let async_token = async_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let name = name.format(formatter)?;
-        let type_parameters = type_parameters.format_or_empty(formatter)?;
-        let parameters = parameters.format(formatter)?;
-        let return_type_annotation = return_type_annotation.format_or_empty(formatter)?;
-
-        Ok(hard_group_elements(format_with_semicolon(
-            formatter,
-            format_elements![
-                modifiers.format(formatter)?,
-                async_token,
-                space_token(),
-                name,
-                question_mark_token.format_or_empty(formatter)?,
-                type_parameters,
-                parameters,
-                return_type_annotation,
-            ],
-            semicolon_token,
-        )?))
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
+                    modifiers.format(),
+                    async_token
+                        .format()
+                        .with_or_empty(|token, f| write![f, [token, space_token()]]),
+                    space_token(),
+                    FormatMemberName::from(name?),
+                    question_mark_token.format(),
+                    type_parameters.format(),
+                    parameters.format(),
+                    return_type_annotation.format(),
+                ),
+                semicolon_token.as_ref()
+            )]
+        )
     }
 }

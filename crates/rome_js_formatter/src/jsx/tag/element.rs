@@ -1,10 +1,10 @@
-use crate::formatter::verbatim_node;
-use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::JsxElement;
 use rome_rowan::AstNode;
 
-impl FormatNode for JsxElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        verbatim_node(self.syntax()).format(formatter)
+impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
+    fn fmt_fields(node: &JsxElement, formatter: &mut JsFormatter) -> FormatResult<()> {
+        format_verbatim_node(node.syntax()).fmt(formatter)
     }
 }

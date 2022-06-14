@@ -1,29 +1,26 @@
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsImportAssertion;
 use rome_js_syntax::JsImportAssertionFields;
 
-impl FormatNode for JsImportAssertion {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsImportAssertion> for FormatNodeRule<JsImportAssertion> {
+    fn fmt_fields(node: &JsImportAssertion, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportAssertionFields {
             assert_token,
             l_curly_token,
             assertions,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let assert_token = assert_token.format(formatter)?;
-        let assertions = assertions.format(formatter)?;
+        write![f, [assert_token.format(), space_token()]]?;
 
-        let result = formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            assertions,
-            &r_curly_token?,
-        )?;
-
-        Ok(format_elements![assert_token, space_token(), result])
+        write!(
+            f,
+            [
+                format_delimited(&l_curly_token?, &assertions.format(), &r_curly_token?,)
+                    .soft_block_spaces()
+            ]
+        )
     }
 }

@@ -1,15 +1,16 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatTsAnyTupleTypeElement;
+use crate::prelude::*;
 use rome_js_syntax::TsAnyTupleTypeElement;
-impl Format for TsAnyTupleTypeElement {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsNamedTupleTypeElement(node) => node.format(formatter),
-            Self::TsType(node) => node.format(formatter),
-            Self::TsRestTupleTypeElement(node) => node.format(formatter),
-            Self::TsOptionalTupleTypeElement(node) => node.format(formatter),
+impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
+    type Context = JsFormatContext;
+    fn fmt(node: &TsAnyTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => node.format().fmt(f),
+            TsAnyTupleTypeElement::TsType(node) => node.format().fmt(f),
+            TsAnyTupleTypeElement::TsRestTupleTypeElement(node) => node.format().fmt(f),
+            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(node) => node.format().fmt(f),
         }
     }
 }

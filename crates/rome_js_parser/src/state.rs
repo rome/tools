@@ -1,6 +1,7 @@
-use crate::{Language, Parser, SourceType};
+use crate::Parser;
 use bitflags::bitflags;
 use indexmap::IndexMap;
+use rome_js_syntax::{Language, SourceType};
 use rome_rowan::{TextRange, TextSize};
 use std::collections::HashSet;
 use std::ops::{Deref, DerefMut, Range};

@@ -18,22 +18,21 @@ this.firebase.object(`/shops/${shopLocation.shop}`)
 
 # Output
 ```js
-this.firebase
-  .object(`/shops/${shopLocation.shop}`)
-  // keep distance info
-  .first(
-    (shop: ShopQueryResult, index: number, source: Observable<ShopQueryResult>): any => {
-      // add distance to result
-      const s = shop;
-      s.distance = shopLocation.distance;
-      return s;
-    },
-  );
+this.firebase.object(`/shops/${shopLocation.shop}`)
+// keep distance info
+.first(
+  (
+    shop: ShopQueryResult,
+    index: number,
+    source: Observable<ShopQueryResult>,
+  ): any => {
+    // add distance to result
+    const s = shop;
+    s.distance = shopLocation.distance;
+    return s;
+  },
+);
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    5:     (shop: ShopQueryResult, index: number, source: Observable<ShopQueryResult>): any => {
-```
 

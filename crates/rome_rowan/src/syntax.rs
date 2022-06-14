@@ -7,12 +7,13 @@ use std::fmt::Debug;
 
 pub use trivia::{
     SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline,
-    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, TriviaPiece, TriviaPieceKind,
+    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece,
+    TriviaPieceKind,
 };
 
 pub use element::SyntaxElement;
 pub use node::{
-    Preorder, PreorderWithTokens, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
+    Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
 };
 pub(crate) use node::{SyntaxSlot, SyntaxSlots};
 
@@ -20,7 +21,7 @@ pub use token::SyntaxToken;
 
 use std::fmt;
 
-use crate::RawSyntaxKind;
+use crate::{AstNode, RawSyntaxKind};
 
 /// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
@@ -39,6 +40,7 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
     type Kind: SyntaxKind;
+    type Root: AstNode<Language = Self> + Clone + Eq + fmt::Debug;
 }
 
 /// A list of `SyntaxNode`s and/or `SyntaxToken`s
@@ -77,6 +79,10 @@ impl<L: Language> SyntaxList<L> {
 
     pub fn node(&self) -> &SyntaxNode<L> {
         &self.list
+    }
+
+    pub fn into_node(self) -> SyntaxNode<L> {
+        self.list
     }
 }
 
@@ -408,7 +414,7 @@ mod tests {
         // as NodeOrToken
 
         let eq_token = node
-            .descendants_with_tokens()
+            .descendants_with_tokens(Direction::Next)
             .find(|x| x.kind() == RawLanguageKind::EQUAL_TOKEN)
             .unwrap();
 

@@ -79,11 +79,18 @@ class InMemoryAppender extends log4javascript.Appender
     ICachedLogMessageProvider
 {}
 
-class Foo extends Immutable.Record({ ipaddress: "" }) {
+class Foo extends Immutable.Record({
+  ipaddress: "",
+},) {
   ipaddress: string;
 }
 
-export class VisTimelineComponent implements AfterViewInit, OnChanges, OnDestroy {}
+export class VisTimelineComponent
+  implements
+    AfterViewInit,
+    OnChanges,
+    OnDestroy
+{}
 export class VisTimelineComponent2
   implements
     AfterViewInit,
@@ -94,8 +101,4 @@ export class VisTimelineComponent2
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   40: export class VisTimelineComponent implements AfterViewInit, OnChanges, OnDestroy {}
-```
 

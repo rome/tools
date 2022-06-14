@@ -8,6 +8,9 @@
 )]
 #![deny(unsafe_code)]
 
+#[doc(hidden)]
+pub mod macros;
+
 #[allow(unsafe_code)]
 pub mod cursor;
 #[allow(unsafe_code)]
@@ -24,8 +27,6 @@ mod cow_mut;
 pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
-#[allow(unsafe_code)]
-mod sll;
 mod syntax_factory;
 mod syntax_token_text;
 mod tree_builder;
@@ -36,9 +37,9 @@ pub use crate::{
     ast::*,
     green::RawSyntaxKind,
     syntax::{
-        Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
-        SyntaxNodeChildren, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments, TriviaPiece,
-        TriviaPieceKind,
+        Language, SendNode, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList,
+        SyntaxNode, SyntaxNodeChildren, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+        TriviaPiece, TriviaPieceKind,
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,
@@ -48,3 +49,11 @@ pub use crate::{
 };
 
 pub(crate) use crate::green::{GreenNode, GreenNodeData, GreenToken, GreenTokenData};
+
+pub fn check_live() -> Option<String> {
+    if cursor::has_live() || green::has_live() {
+        Some(countme::get_all().to_string())
+    } else {
+        None
+    }
+}

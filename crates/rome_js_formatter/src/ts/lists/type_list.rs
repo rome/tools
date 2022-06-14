@@ -1,16 +1,19 @@
-use crate::formatter::TrailingSeparator;
-use crate::{
-    join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::generated::FormatTsTypeList;
+use crate::prelude::*;
 use rome_js_syntax::TsTypeList;
 
-impl Format for TsTypeList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatRule<TsTypeList> for FormatTsTypeList {
+    type Context = JsFormatContext;
+
+    fn fmt(node: &TsTypeList, f: &mut JsFormatter) -> FormatResult<()> {
         // the grouping will be applied by the parent
-        Ok(join_elements(
-            soft_line_break_or_space(),
-            formatter.format_separated(self, || token(","), TrailingSeparator::Disallowed)?,
-        ))
+        f.join_with(&soft_line_break_or_space())
+            .entries(
+                node.format_separated(token(",")).with_options(
+                    FormatSeparatedOptions::default()
+                        .with_trailing_separator(TrailingSeparator::Disallowed),
+                ),
+            )
+            .finish()
     }
 }

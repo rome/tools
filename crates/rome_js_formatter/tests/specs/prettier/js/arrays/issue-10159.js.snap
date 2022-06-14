@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: issue-10159.js
 ---
 # Input
@@ -27,14 +26,15 @@ expression: issue-10159.js
   }
 }
 {
-  for (const srcPath of [123, 123_123_123, 123_123_123_1, 13_123_3123_31_4321]) {
+  for (const srcPath of [
+    123,
+    123_123_123,
+    123_123_123_1,
+    13_123_3123_31_4321,
+  ]) {
   }
 }
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   14:   for (const srcPath of [123, 123_123_123, 123_123_123_1, 13_123_3123_31_4321]) {
-```
 

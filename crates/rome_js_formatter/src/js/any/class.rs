@@ -1,54 +1,50 @@
-use crate::format_traits::FormatOptional;
-use crate::{
-    format_elements, join_elements_hard_line, space_token, FormatElement, Formatter, JsFormatter,
-};
-use crate::{hard_group_elements, Format};
-use rome_formatter::FormatResult;
+use crate::generated::FormatJsAnyClass;
+use rome_formatter::write;
+
+use crate::builders::format_delimited;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyClass;
-use rome_rowan::AstNode;
 
-impl Format for JsAnyClass {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let abstract_token = self
-            .abstract_token()
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+impl FormatRule<JsAnyClass> for FormatJsAnyClass {
+    type Context = JsFormatContext;
 
-        let id = self
-            .id()
-            .format_with_or_empty(formatter, |id| format_elements![space_token(), id])?;
+    fn fmt(node: &JsAnyClass, f: &mut JsFormatter) -> FormatResult<()> {
+        let abstract_token = node.abstract_token();
+        let id = node.id();
+        let extends = node.extends_clause();
+        let implements_clause = node.implements_clause();
 
-        let type_parameters = self.type_parameters().format_or_empty(formatter)?;
+        if let Some(abstract_token) = abstract_token {
+            write!(f, [abstract_token.format(), space_token()])?;
+        }
 
-        let extends = self
-            .extends_clause()
-            .format_with_or_empty(formatter, |extends_clause| {
-                format_elements![space_token(), extends_clause]
-            })?;
+        write!(f, [node.class_token().format()])?;
 
-        let implements_clause = self
-            .implements_clause()
-            .format_with_or_empty(formatter, |implements_clause| {
-                format_elements![space_token(), implements_clause]
-            })?;
+        if let Some(id) = id? {
+            write!(f, [space_token(), id.format()])?;
+        }
 
-        Ok(hard_group_elements(format_elements![
-            abstract_token,
-            self.class_token().format(formatter)?,
-            id,
-            type_parameters,
-            extends,
-            implements_clause,
-            space_token(),
-            formatter.format_delimited_block_indent(
-                &self.l_curly_token()?,
-                join_elements_hard_line(
-                    self.members()
-                        .into_iter()
-                        .map(|node| node.syntax().clone())
-                        .zip(formatter.format_all(self.members())?)
-                ),
-                &self.r_curly_token()?
-            )?
-        ]))
+        write!(f, [node.type_parameters().format()])?;
+
+        if let Some(extends) = extends {
+            write!(f, [space_token(), extends.format()])?;
+        }
+
+        if let Some(implements_clause) = implements_clause {
+            write!(f, [space_token(), implements_clause.format()])?;
+        }
+
+        write![
+            f,
+            [
+                space_token(),
+                format_delimited(
+                    &node.l_curly_token()?,
+                    &node.members().format(),
+                    &node.r_curly_token()?
+                )
+                .block_indent()
+            ]
+        ]
     }
 }

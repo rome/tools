@@ -1,14 +1,11 @@
-use crate::format_traits::{FormatOptional, FormatWith};
-use crate::formatter::TrailingSeparator;
-use crate::{
-    format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
-    FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
+
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 
-impl FormatNode for TsEnumDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
+    fn fmt_fields(node: &TsEnumDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsEnumDeclarationFields {
             const_token,
             enum_token,
@@ -16,24 +13,22 @@ impl FormatNode for TsEnumDeclaration {
             members,
             l_curly_token,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let const_token = const_token.format_with_or_empty(formatter, |const_token| {
-            format_elements![const_token, space_token()]
-        })?;
-        let enum_token = enum_token.format_with(formatter, |enum_token| {
-            format_elements![enum_token, space_token()]
-        })?;
-        let id = id.format_with(formatter, |id| format_elements![id, space_token()])?;
+        if let Some(const_token) = const_token {
+            write!(f, [const_token.format(), space_token()])?;
+        }
 
-        let members =
-            formatter.format_separated(&members, || token(","), TrailingSeparator::default())?;
-        let list = formatter.format_delimited_soft_block_spaces(
-            &l_curly_token?,
-            join_elements(soft_line_break_or_space(), members),
-            &r_curly_token?,
-        )?;
-
-        Ok(format_elements![const_token, enum_token, id, list])
+        write!(
+            f,
+            [
+                enum_token.format(),
+                space_token(),
+                id.format(),
+                space_token(),
+                format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
+                    .soft_block_spaces()
+            ]
+        )
     }
 }

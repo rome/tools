@@ -1,24 +1,25 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsExtendsClause;
 use rome_js_syntax::JsExtendsClauseFields;
 
-impl FormatNode for JsExtendsClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsExtendsClause> for FormatNodeRule<JsExtendsClause> {
+    fn fmt_fields(node: &JsExtendsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExtendsClauseFields {
             extends_token,
             super_class,
             type_arguments,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            extends_token.format(formatter)?,
-            space_token(),
-            super_class.format(formatter)?,
-            type_arguments.format_or_empty(formatter)?,
-        ])
+        write![
+            f,
+            [
+                extends_token.format(),
+                space_token(),
+                super_class.format(),
+                type_arguments.format(),
+            ]
+        ]
     }
 }

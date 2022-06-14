@@ -1,29 +1,18 @@
-use crate::cursor::{free, GreenElement, NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
-use crate::{Direction, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
+use crate::cursor::{NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
+use crate::green::GreenElementRef;
+use crate::{
+    green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText, WalkEvent,
+};
 use std::hash::{Hash, Hasher};
-use std::{fmt, iter, ptr};
+use std::rc::Rc;
+use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
 
-#[derive(Debug)]
+use super::{GreenElement, NodeKind, WeakGreenElement};
+
+#[derive(Clone, Debug)]
 pub(crate) struct SyntaxToken {
-    ptr: ptr::NonNull<NodeData>,
-}
-
-impl Clone for SyntaxToken {
-    #[inline]
-    fn clone(&self) -> Self {
-        self.data().inc_rc();
-        SyntaxToken { ptr: self.ptr }
-    }
-}
-
-impl Drop for SyntaxToken {
-    #[inline]
-    fn drop(&mut self) {
-        if self.data().dec_rc() {
-            unsafe { free(self.ptr) }
-        }
-    }
+    ptr: Rc<NodeData>,
 }
 
 impl SyntaxToken {
@@ -33,15 +22,32 @@ impl SyntaxToken {
         index: u32,
         offset: TextSize,
     ) -> SyntaxToken {
-        let mutable = parent.data().mutable;
-        let green = GreenElement::Token { ptr: green.into() };
         SyntaxToken {
-            ptr: NodeData::new(Some(parent), index, offset, green, mutable),
+            ptr: NodeData::new(
+                NodeKind::Child {
+                    green: WeakGreenElement::new(GreenElementRef::Token(green)),
+                    parent: parent.ptr,
+                },
+                index,
+                offset,
+            ),
+        }
+    }
+
+    pub(crate) fn new_detached(green: GreenToken) -> SyntaxToken {
+        SyntaxToken {
+            ptr: NodeData::new(
+                NodeKind::Root {
+                    green: GreenElement::Token(green),
+                },
+                0,
+                TextSize::from(0),
+            ),
         }
     }
 
     #[inline]
-    pub(super) fn green(&self) -> &GreenTokenData {
+    pub(crate) fn green(&self) -> &GreenTokenData {
         match self.data().green().as_token() {
             Some(token) => token,
             None => {
@@ -55,7 +61,12 @@ impl SyntaxToken {
 
     #[inline]
     pub(super) fn data(&self) -> &NodeData {
-        unsafe { self.ptr.as_ref() }
+        self.ptr.as_ref()
+    }
+
+    #[inline]
+    pub(super) fn into_green(self) -> green::GreenElement {
+        self.ptr.into_green()
     }
 
     #[inline]
@@ -131,27 +142,72 @@ impl SyntaxToken {
     }
 
     pub fn next_token(&self) -> Option<SyntaxToken> {
-        match self.next_sibling_or_token() {
-            Some(element) => element.first_token(),
-            None => self
-                .ancestors()
-                .find_map(|it| it.next_sibling_or_token())
-                .and_then(|element| element.first_token()),
-        }
+        self.next_token_impl(Direction::Next)
     }
+
     pub fn prev_token(&self) -> Option<SyntaxToken> {
-        match self.prev_sibling_or_token() {
-            Some(element) => element.last_token(),
-            None => self
-                .ancestors()
-                .find_map(|it| it.prev_sibling_or_token())
-                .and_then(|element| element.last_token()),
+        self.next_token_impl(Direction::Prev)
+    }
+
+    /// Returns the token preceding or following this token depending on the passed `direction`.
+    fn next_token_impl(&self, direction: Direction) -> Option<SyntaxToken> {
+        let mut current: WalkEvent<SyntaxElement> =
+            WalkEvent::Leave(SyntaxElement::Token(self.clone()));
+
+        loop {
+            current = match current {
+                WalkEvent::Enter(element) => match element {
+                    SyntaxElement::Token(token) => break Some(token),
+                    SyntaxElement::Node(node) => {
+                        let first_child = match direction {
+                            Direction::Next => node.first_child_or_token(),
+                            Direction::Prev => node.last_child_or_token(),
+                        };
+
+                        match first_child {
+                            // If node is empty, leave parent
+                            None => WalkEvent::Leave(SyntaxElement::Node(node)),
+                            // Otherwise traverse full sub-tree
+                            Some(child) => WalkEvent::Enter(child),
+                        }
+                    }
+                },
+                WalkEvent::Leave(element) => {
+                    let mut current_element = element;
+
+                    loop {
+                        // Only traverse the left (pref) / right (next) siblings of the parent
+                        // to avoid traversing into the same children again.
+                        let sibling = match direction {
+                            Direction::Next => current_element.next_sibling_or_token(),
+                            Direction::Prev => current_element.prev_sibling_or_token(),
+                        };
+
+                        match sibling {
+                            // Traverse all children of the sibling
+                            Some(sibling) => break WalkEvent::Enter(sibling),
+                            None => {
+                                match current_element.parent() {
+                                    Some(node) => {
+                                        current_element = SyntaxElement::Node(node);
+                                    }
+                                    None => {
+                                        return None; // Reached root, no token found
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    pub fn detach(&self) {
-        assert!(self.data().mutable, "immutable tree: {}", self);
-        self.data().detach()
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn detach(self) -> Self {
+        Self {
+            ptr: self.ptr.detach(),
+        }
     }
 
     #[inline]

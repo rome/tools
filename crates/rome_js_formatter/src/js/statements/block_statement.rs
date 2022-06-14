@@ -1,33 +1,45 @@
-use crate::{
-    format_elements, hard_line_break, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
-
-use rome_js_syntax::JsAnyStatement;
+use crate::prelude::*;
+use rome_formatter::{write, Buffer};
 use rome_js_syntax::JsBlockStatement;
+use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
-impl FormatNode for JsBlockStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
+    fn fmt_fields(node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBlockStatementFields {
             l_curly_token,
             statements,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let stmts = formatter.format_list(statements);
+        if is_non_collapsable_empty_block(node) {
+            for stmt in statements
+                .iter()
+                .filter_map(|stmt| JsEmptyStatement::cast(stmt.into_syntax()))
+            {
+                f.state_mut().track_token(&stmt.semicolon_token()?)
+            }
 
-        if is_non_collapsable_empty_block(self) {
-            Ok(format_elements![
-                l_curly_token.format(formatter)?,
-                hard_line_break(),
-                r_curly_token.format(formatter)?
-            ])
+            write!(
+                f,
+                [
+                    l_curly_token.format(),
+                    hard_line_break(),
+                    r_curly_token.format()
+                ]
+            )
         } else {
-            formatter.format_delimited_block_indent(&l_curly_token?, stmts, &r_curly_token?)
+            write!(
+                f,
+                [
+                    format_delimited(&l_curly_token?, &statements.format(), &r_curly_token?)
+                        .block_indent()
+                ]
+            )
         }
     }
 }
@@ -73,10 +85,9 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
     // }
     // ```
     if !block.statements().is_empty()
-        && block
-            .statements()
-            .iter()
-            .any(|s| !matches!(s, JsAnyStatement::JsEmptyStatement(_)))
+        && block.statements().iter().any(|s| {
+            !matches!(s, JsAnyStatement::JsEmptyStatement(_)) || s.syntax().has_comments_direct()
+        })
     {
         return false;
     }

@@ -1,22 +1,16 @@
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsInitializerClause;
 use rome_js_syntax::JsInitializerClauseFields;
 
-impl FormatNode for JsInitializerClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsInitializerClause> for FormatNodeRule<JsInitializerClause> {
+    fn fmt_fields(node: &JsInitializerClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsInitializerClauseFields {
             eq_token,
             expression,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            hard_group_elements(eq_token.format(formatter)?),
-            space_token(),
-            expression.format(formatter)?
-        ])
+        write![f, [eq_token.format(), space_token(), expression.format()]]
     }
 }

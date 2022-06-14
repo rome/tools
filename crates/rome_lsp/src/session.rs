@@ -1,13 +1,21 @@
 use crate::config::Config;
 use crate::config::CONFIGURATION_SECTION;
 
-use crate::{documents::Document, handlers, url_interner::UrlInterner};
+use crate::documents::Document;
+use crate::url_interner::UrlInterner;
+use crate::utils;
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use parking_lot::RwLock;
-use rome_analyze::{AnalysisServer, FileId};
-use std::{collections::HashMap, error::Error, fmt::Display};
-use tower_lsp::jsonrpc::Error as LspError;
+use rome_analyze::RuleCategories;
+use rome_diagnostics::file::FileId;
+use rome_fs::RomePath;
+use rome_service::workspace;
+use rome_service::workspace::PullDiagnosticsParams;
+use rome_service::workspace::UpdateSettingsParams;
+use rome_service::RomeError;
+use rome_service::Workspace;
+use std::collections::HashMap;
 use tower_lsp::lsp_types;
 use tracing::{error, trace};
 
@@ -21,37 +29,9 @@ pub(crate) struct Session {
     /// the configuration of the LSP
     pub(crate) config: RwLock<Config>,
 
+    pub(crate) workspace: Box<dyn Workspace>,
     documents: RwLock<HashMap<lsp_types::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
-}
-
-#[derive(Debug)]
-pub(crate) enum SessionError {
-    DocumentNotFound { url: lsp_types::Url },
-}
-
-impl Display for SessionError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            SessionError::DocumentNotFound { url } => {
-                write!(f, "Document not found: {}", url)
-            }
-        }
-    }
-}
-
-impl Error for SessionError {}
-
-impl From<SessionError> for LspError {
-    fn from(err: SessionError) -> Self {
-        match err {
-            SessionError::DocumentNotFound { .. } => {
-                let mut error = LspError::internal_error();
-                error.data = Some(err.to_string().into());
-                error
-            }
-        }
-    }
 }
 
 impl Session {
@@ -63,6 +43,7 @@ impl Session {
         Self {
             client,
             client_capabilities,
+            workspace: workspace::server(),
             documents,
             url_interner,
             config,
@@ -72,14 +53,12 @@ impl Session {
     /// Get a [`Document`] matching the provided [`lsp_types::Url`]
     ///
     /// If document does not exist, result is [SessionError::DocumentNotFound]
-    pub(crate) fn document(&self, url: &lsp_types::Url) -> Result<Document, SessionError> {
+    pub(crate) fn document(&self, url: &lsp_types::Url) -> Result<Document, RomeError> {
         self.documents
             .read()
             .get(url)
             .cloned()
-            .ok_or_else(|| SessionError::DocumentNotFound {
-                url: url.to_owned(),
-            })
+            .ok_or(RomeError::NotFound)
     }
 
     /// Set the [`Document`] for the provided [`lsp_types::Url`]
@@ -94,47 +73,45 @@ impl Session {
         self.documents.write().remove(url);
     }
 
-    /// Get the version for [`Document`] matching the url. Should increase with every edit.
-    pub(crate) fn document_version(&self, url: &lsp_types::Url) -> Result<i32, SessionError> {
-        self.document(url).map(|d| d.version)
-    }
-
     /// Return the unique [FileId] associated with the url for this [Session].
     /// This will assign a new FileId if there isn't one for the provided url.
     pub(crate) fn file_id(&self, url: lsp_types::Url) -> FileId {
         self.url_interner.write().intern(url)
     }
 
+    pub(crate) fn file_path(&self, url: &lsp_types::Url) -> RomePath {
+        let file_id = self.file_id(url.clone());
+        RomePath::new(url.path(), file_id)
+    }
+
     /// Computes diagnostics for the file matching the provided url and publishes
     /// them to the client. Called from [`handlers::text_document`] when a file's
     /// contents changes.
     pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> anyhow::Result<()> {
+        let rome_path = self.file_path(&url);
         let doc = self.document(&url)?;
 
         let workspace_settings = self.config.read().get_workspace_settings();
 
         let diagnostics = if workspace_settings.analysis.enable_diagnostics {
-            let file_id = doc.file_id();
-            let mut analysis_server = AnalysisServer::default();
-            analysis_server.set_file_text(file_id, doc.text);
+            let diagnostics = self.workspace.pull_diagnostics(PullDiagnosticsParams {
+                path: rome_path,
+                categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+            })?;
 
-            let handle = tokio::task::spawn_blocking(move || {
-                handlers::analysis::diagnostics(analysis_server, file_id)
-            });
-
-            handle.await??
+            diagnostics
+                .into_iter()
+                .filter_map(|d| utils::diagnostic_to_lsp(d, &url, &doc.line_index))
+                .collect()
         } else {
             // Sending empty vector clears published diagnostics
             vec![]
         };
 
-        let version = self.document_version(&url)?;
+        self.client
+            .publish_diagnostics(url, diagnostics, Some(doc.version))
+            .await;
 
-        if version == doc.version {
-            self.client
-                .publish_diagnostics(url, diagnostics, Some(doc.version))
-                .await;
-        }
         Ok(())
     }
 
@@ -144,8 +121,7 @@ impl Session {
             .documents
             .read()
             .keys()
-            .cloned()
-            .map(|url| self.update_diagnostics(url))
+            .map(|url| self.update_diagnostics(url.clone()))
             .collect();
 
         while let Some(result) = futures.next().await {
@@ -186,13 +162,22 @@ impl Session {
 
         if let Ok(configurations) = configurations {
             configurations.into_iter().next().and_then(|configuration| {
-                self.config
-                    .write()
+                let mut config = self.config.write();
+
+                config
                     .set_workspace_settings(configuration)
                     .map_err(|err| {
                         error!("Cannot set workspace settings: {}", err);
                     })
-                    .ok()
+                    .ok()?;
+
+                self.workspace
+                    .update_settings(UpdateSettingsParams {
+                        settings: config.as_workspace_settings(),
+                    })
+                    .ok()?;
+
+                Some(())
             });
         } else {
             trace!("Cannot read configuration from the client");

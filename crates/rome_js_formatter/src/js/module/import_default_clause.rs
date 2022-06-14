@@ -1,38 +1,38 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsImportDefaultClause;
 use rome_js_syntax::JsImportDefaultClauseFields;
 
-impl FormatNode for JsImportDefaultClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsImportDefaultClause> for FormatNodeRule<JsImportDefaultClause> {
+    fn fmt_fields(node: &JsImportDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportDefaultClauseFields {
             type_token,
             local_name,
             from_token,
             source,
             assertion,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let local_name = local_name.format(formatter)?;
-        let from = from_token.format(formatter)?;
-        let source = source.format(formatter)?;
-        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            format_elements![space_token(), assertion]
-        })?;
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space_token()])?;
+        }
 
-        Ok(format_elements![
-            type_token,
-            local_name,
-            space_token(),
-            from,
-            space_token(),
-            source,
-            assertion
-        ])
+        write![
+            f,
+            [
+                local_name.format(),
+                space_token(),
+                from_token.format(),
+                space_token(),
+                source.format(),
+            ]
+        ]?;
+
+        if let Some(assertion) = assertion {
+            write!(f, [space_token(), assertion.format()])?;
+        }
+
+        Ok(())
     }
 }

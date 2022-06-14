@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: break.js
 ---
 # Input
@@ -56,7 +57,7 @@ h(
   f(
     g(() => {
       a;
-    }),
+    },),
   ),
 );
 
@@ -89,9 +90,9 @@ const mapChargeItems = fp.flow(
   (l) => Immutable.Range(l).toMap(),
 );
 
-expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLongRange(
-  new LongLongLongRange([0, 0], [0, 0]),
-);
+expect(
+  new LongLongLongLongLongRange([0, 0], [0, 0]),
+).toEqualAtomLongLongLongLongRange(new LongLongLongRange([0, 0], [0, 0]));
 
 ["red", "white", "blue", "black", "hotpink", "rebeccapurple"].reduce(
   (allColors, color) => {
@@ -102,8 +103,4 @@ expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLon
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   38: expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLongRange(
-```
 

@@ -1,11 +1,11 @@
-use rome_js_parser::{parse, ModuleKind, SourceType};
-use rome_rowan::SyntaxKind;
-
 use crate::runner::create_unknown_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
+use rome_js_parser::parse;
+use rome_js_syntax::{ModuleKind, SourceType};
+use rome_rowan::SyntaxKind;
 use std::path::Path;
 
 const OK_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/jsx/basic";
@@ -36,11 +36,7 @@ impl TestCase for BabelJsxTestCase {
 
     fn run(&self) -> TestRunOutcome {
         let source_type = SourceType::jsx().with_module_kind(ModuleKind::Script);
-        let files = TestCaseFiles::single(
-            self.name().to_string(),
-            self.code.clone(),
-            source_type.clone(),
-        );
+        let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
         let result = parse(&self.code, 0, source_type);
 
         if result.diagnostics().is_empty() {

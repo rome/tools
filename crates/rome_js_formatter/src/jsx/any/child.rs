@@ -1,17 +1,18 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsxAnyChild;
+use crate::prelude::*;
 use rome_js_syntax::JsxAnyChild;
-impl Format for JsxAnyChild {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsxElement(node) => node.format(formatter),
-            Self::JsxSelfClosingElement(node) => node.format(formatter),
-            Self::JsxText(node) => node.format(formatter),
-            Self::JsxExpressionChild(node) => node.format(formatter),
-            Self::JsxSpreadChild(node) => node.format(formatter),
-            Self::JsxFragment(node) => node.format(formatter),
+impl FormatRule<JsxAnyChild> for FormatJsxAnyChild {
+    type Context = JsFormatContext;
+    fn fmt(node: &JsxAnyChild, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsxAnyChild::JsxElement(node) => node.format().fmt(f),
+            JsxAnyChild::JsxSelfClosingElement(node) => node.format().fmt(f),
+            JsxAnyChild::JsxText(node) => node.format().fmt(f),
+            JsxAnyChild::JsxExpressionChild(node) => node.format().fmt(f),
+            JsxAnyChild::JsxSpreadChild(node) => node.format().fmt(f),
+            JsxAnyChild::JsxFragment(node) => node.format().fmt(f),
         }
     }
 }

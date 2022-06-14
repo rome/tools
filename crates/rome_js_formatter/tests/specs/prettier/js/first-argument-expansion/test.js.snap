@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: test.js
 ---
 # Input
@@ -210,10 +211,10 @@ func(
   () => {
     thing();
   },
-  something(longArgumentName, anotherLongArgumentName) ? someOtherThing() : somethingElse(
-    true,
-    0,
-  ),
+  something(
+    longArgumentName,
+    anotherLongArgumentName,
+  ) ? someOtherThing() : somethingElse(true, 0),
 );
 
 func(
@@ -319,8 +320,4 @@ func(
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   89:   something(longArgumentName, anotherLongArgumentName) ? someOtherThing() : somethingElse(
-```
 

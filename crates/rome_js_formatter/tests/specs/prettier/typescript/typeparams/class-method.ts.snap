@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: class-method.ts
 ---
 # Input
@@ -132,7 +133,7 @@ export class Thing3 implements OtherThing {
       return someVar.method();
     }
     return false;
-  });
+  },);
 }
 
 export class Thing4 implements OtherThing {
@@ -162,7 +163,13 @@ export class Thing7 implements OtherThing {
 export class Thing8 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType) =>
-      <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall(),
+      <Provider<Opts>>type.doSomething(
+        withArgs,
+        soIt,
+        does,
+        not,
+        fit,
+      ).extraCall(),
   );
 }
 
@@ -214,7 +221,7 @@ export class Thing14 implements OtherThing {
       return someVar.method();
     }
     return false;
-  });
+  },);
 }
 
 export class Thing15 implements OtherThing {
@@ -252,7 +259,13 @@ export class Thing18 implements OtherThing {
 export class Thing19 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType) {
-      return <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall();
+      return <Provider<Opts>>type.doSomething(
+        withArgs,
+        soIt,
+        does,
+        not,
+        fit,
+      ).extraCall();
     },
   );
 }
@@ -288,9 +301,4 @@ const appIDs = createSelector(
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   57:       <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall(),
-  147:       return <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall();
-```
 

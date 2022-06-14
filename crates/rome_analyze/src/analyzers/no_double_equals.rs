@@ -1,34 +1,69 @@
-use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression};
-use rome_rowan::SyntaxResult;
+use rome_console::markup;
+use rome_diagnostics::Applicability;
+use rome_js_factory::make;
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression, T};
+use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
+use rome_rowan::{AstNodeExt, SyntaxResult};
 
-use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
+use crate::{ActionCategory, RuleCategory};
 
-pub const ANALYZER: Analyzer = Analyzer {
-    name: "noDoubleEquals",
-    action_categories: &[],
-    analyze,
-};
+pub(crate) enum NoDoubleEquals {}
 
-fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
-    ctx.query_nodes::<JsBinaryExpression>()
-        .filter_map(|n| {
-            let op = n.operator_token().ok()?;
+impl Rule for NoDoubleEquals {
+    const NAME: &'static str = "noDoubleEquals";
+    const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-            if !matches!(op.kind(), EQ2 | NEQ) {
-                return None;
-            }
+    type Query = JsBinaryExpression;
+    type State = JsSyntaxToken;
 
-            // TODO: Implement SyntaxResult helpers to make this cleaner
-            if is_null_literal(n.left()) || is_null_literal(n.right()) {
-                return None;
-            }
+    fn run(n: &Self::Query) -> Option<Self::State> {
+        let op = n.operator_token().ok()?;
 
-            let message = format!("Do not use the {} operator", op.text_trimmed());
-            let signal = ctx.error(op.text_trimmed_range(), message).into_signal();
-            Some(signal)
+        if !matches!(op.kind(), EQ2 | NEQ) {
+            return None;
+        }
+
+        // TODO: Implement SyntaxResult helpers to make this cleaner
+        if is_null_literal(n.left()) || is_null_literal(n.right()) {
+            return None;
+        }
+
+        Some(op)
+    }
+
+    fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
+        let text_trimmed = op.text_trimmed();
+        let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
+
+        Some(
+            RuleDiagnostic::warning(op.text_trimmed_range(),markup! {
+                "Use "<Emphasis>{suggestion}</Emphasis>" instead of "<Emphasis>{text_trimmed}</Emphasis>
+            })
+            .primary( markup! {
+                <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against "<Emphasis>"null"</Emphasis>
+            })
+            .footer_note(markup! {
+                "Using "<Emphasis>{suggestion}</Emphasis>" may be unsafe if you are relying on type coercion"
+            })
+            .summary(format!("Use {suggestion} instead of {text_trimmed}.\n{text_trimmed} is only allowed when comparing against `null`"))
+        )
+    }
+
+    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
+        let suggestion = if op.kind() == EQ2 { T![===] } else { T![!==] };
+        let root = root.replace_token(op.clone(), make::token(suggestion))?;
+
+        Some(JsRuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            // SAFETY: `suggestion` can only be JsSyntaxKind::EQ3 or JsSyntaxKind::NEQ2,
+            // the implementation of `to_string` for these two variants always returns Some
+            message: markup! { "Use "<Emphasis>{suggestion.to_string().unwrap()}</Emphasis> }
+                .to_owned(),
+            root,
         })
-        .collect()
+    }
 }
 
 fn is_null_literal(res: SyntaxResult<JsAnyExpression>) -> bool {

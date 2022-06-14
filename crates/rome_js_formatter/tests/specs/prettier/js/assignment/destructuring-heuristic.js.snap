@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: destructuring-heuristic.js
 ---
 # Input
@@ -39,9 +40,14 @@ expression: destructuring-heuristic.js
 ```js
 {
   {
-    const { id, static: isStatic, method: isMethod, methodId, getId, setId } = privateNamesMap.get(
-      name,
-    );
+    const {
+      id,
+      static: isStatic,
+      method: isMethod,
+      methodId,
+      getId,
+      setId,
+    } = privateNamesMap.get(name);
 
     const { id1, method: isMethod1, methodId1 } = privateNamesMap.get(name);
 
@@ -49,17 +55,14 @@ expression: destructuring-heuristic.js
       bifornCringerMoshedPerplexSawder,
     );
 
-    const { id3, method: isMethod3, methodId3 } = anodyneCondosMalateOverateRetinol.get(
-      bifornCringerMoshedPerplexSawder,
-    );
+    const {
+      id3,
+      method: isMethod3,
+      methodId3,
+    } = anodyneCondosMalateOverateRetinol.get(bifornCringerMoshedPerplexSawder);
   }
 }
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    3:     const { id, static: isStatic, method: isMethod, methodId, getId, setId } = privateNamesMap.get(
-   13:     const { id3, method: isMethod3, methodId3 } = anodyneCondosMalateOverateRetinol.get(
-```
 

@@ -1,11 +1,10 @@
-use crate::formatter::verbatim_node;
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::JsxOpeningElement;
 use rome_rowan::AstNode;
 
-impl FormatNode for JsxOpeningElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        verbatim_node(self.syntax()).format(formatter)
+impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
+    fn fmt_fields(node: &JsxOpeningElement, formatter: &mut JsFormatter) -> FormatResult<()> {
+        format_verbatim_node(node.syntax()).fmt(formatter)
     }
 }

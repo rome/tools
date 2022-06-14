@@ -1,13 +1,11 @@
-use crate::format_traits::FormatOptional;
-use crate::utils::format_with_semicolon;
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::FormatWithSemicolon;
+use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsTypeAliasDeclaration, TsTypeAliasDeclarationFields};
 
-impl FormatNode for TsTypeAliasDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsTypeAliasDeclaration> for FormatNodeRule<TsTypeAliasDeclaration> {
+    fn fmt_fields(node: &TsTypeAliasDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeAliasDeclarationFields {
             type_token,
             binding_identifier,
@@ -15,27 +13,23 @@ impl FormatNode for TsTypeAliasDeclaration {
             eq_token,
             ty,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token.format(formatter)?;
-        let binding_identifier = binding_identifier.format(formatter)?;
-        let type_parameters = type_parameters.format_or_empty(formatter)?;
-        let equal_token = eq_token.format(formatter)?;
-        let ty = ty.format(formatter)?;
-
-        Ok(hard_group_elements(format_with_semicolon(
-            formatter,
-            format_elements![
-                type_token,
-                space_token(),
-                binding_identifier,
-                type_parameters,
-                space_token(),
-                equal_token,
-                space_token(),
-                ty,
-            ],
-            semicolon_token,
-        )?))
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
+                    type_token.format(),
+                    space_token(),
+                    binding_identifier.format(),
+                    type_parameters.format(),
+                    space_token(),
+                    eq_token.format(),
+                    space_token(),
+                    ty.format(),
+                ),
+                semicolon_token.as_ref()
+            )]
+        )
     }
 }

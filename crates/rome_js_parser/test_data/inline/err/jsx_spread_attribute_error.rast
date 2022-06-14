@@ -266,7 +266,7 @@ error[SyntaxError]: Comma operator isn't a valid value for a JSX spread argument
   │        ^^^^^^^^^^
 
 --
-error[SyntaxError]: expected `'{'` but instead found `...`
+error[SyntaxError]: expected `{` but instead found `...`
   ┌─ jsx_spread_attribute_error.jsx:3:4
   │
 3 │ <a ...obj} />;
@@ -280,7 +280,7 @@ error[SyntaxError]: expected `...` but instead found `obj`
   │     ^^^ unexpected
 
 --
-error[SyntaxError]: expected `'}'` but instead found `invalidProp`
+error[SyntaxError]: expected `}` but instead found `invalidProp`
   ┌─ jsx_spread_attribute_error.jsx:8:7
   │
 8 │       invalidProp="HelloWorld"

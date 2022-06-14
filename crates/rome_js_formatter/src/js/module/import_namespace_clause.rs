@@ -1,13 +1,11 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsImportNamespaceClause;
 use rome_js_syntax::JsImportNamespaceClauseFields;
 
-impl FormatNode for JsImportNamespaceClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsImportNamespaceClause> for FormatNodeRule<JsImportNamespaceClause> {
+    fn fmt_fields(node: &JsImportNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportNamespaceClauseFields {
             type_token,
             star_token,
@@ -16,31 +14,31 @@ impl FormatNode for JsImportNamespaceClause {
             from_token,
             source,
             assertion,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space_token()])?;
+        }
 
-        let star = star_token.format(formatter)?;
-        let as_token = as_token.format(formatter)?;
-        let local_name = local_name.format(formatter)?;
-        let source = source.format(formatter)?;
-        let from = from_token.format(formatter)?;
-        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            format_elements![space_token(), assertion]
-        })?;
-        Ok(format_elements![
-            type_token,
-            star,
-            space_token(),
-            as_token,
-            space_token(),
-            local_name,
-            space_token(),
-            from,
-            space_token(),
-            source,
-            assertion
-        ])
+        write![
+            f,
+            [
+                star_token.format(),
+                space_token(),
+                as_token.format(),
+                space_token(),
+                local_name.format(),
+                space_token(),
+                from_token.format(),
+                space_token(),
+                source.format(),
+            ]
+        ]?;
+
+        if let Some(assertion) = assertion {
+            write!(f, [space_token(), assertion.format()])?;
+        }
+
+        Ok(())
     }
 }

@@ -1,37 +1,35 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
 
-use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::utils::{FormatMemberName, FormatWithSemicolon};
+use crate::FormatNodeFields;
 use rome_js_syntax::JsPropertyClassMember;
 use rome_js_syntax::JsPropertyClassMemberFields;
 
-impl FormatNode for JsPropertyClassMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsPropertyClassMember> for FormatNodeRule<JsPropertyClassMember> {
+    fn fmt_fields(node: &JsPropertyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPropertyClassMemberFields {
             modifiers,
             name,
             property_annotation,
             value,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let property_annotation = property_annotation.format_or_empty(formatter)?;
-
-        let init =
-            value.format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
-
-        format_with_semicolon(
-            formatter,
-            format_elements![
-                modifiers.format(formatter)?,
-                space_token(),
-                name.format(formatter)?,
-                property_annotation,
-                init,
-            ],
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
+                    modifiers.format(),
+                    space_token(),
+                    FormatMemberName::from(name?),
+                    property_annotation.format(),
+                    value
+                        .format()
+                        .with_or_empty(|node, f| write![f, [space_token(), node]]),
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

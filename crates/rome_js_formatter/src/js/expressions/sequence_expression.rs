@@ -1,56 +1,109 @@
-use rome_formatter::{concat_elements, FormatResult};
+use crate::prelude::*;
+use crate::FormatNodeFields;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
-use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields};
+use rome_formatter::{format_args, write};
+use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-impl FormatNode for JsSequenceExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let mut current = self.clone();
+impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpression> {
+    fn fmt_fields(node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        let content = format_with(|f| {
+            let mut current = node.clone();
+            let parent = current.syntax().parent();
 
-        // Find the left most sequence expression
-        while let Some(sequence_expression) =
-            JsSequenceExpression::cast(current.left()?.syntax().clone())
-        {
-            current = sequence_expression;
-        }
+            let has_already_indentation = parent.map_or(false, |parent| {
+                // Return statement already does the indentation for us
+                // Arrow function body can't have a sequence expression unless it's parenthesized, otherwise
+                // would be a syntax error
+                if matches!(parent.kind(), JsSyntaxKind::JS_RETURN_STATEMENT) {
+                    true
+                } else if matches!(parent.kind(), JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION) {
+                    // In case we are inside a sequence expression, we have to go up a level and see the great parent.
+                    // Arrow function body and return statements applying indentation for us, so we signal the
+                    // sequence expression to not add other indentation levels
+                    let great_parent = parent.parent().map(|gp| gp.kind());
 
-        // Format the left most sequence expression
-        let JsSequenceExpressionFields {
-            left,
-            comma_token,
-            right,
-        } = current.as_fields();
+                    matches!(
+                        great_parent,
+                        Some(
+                            JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+                                | JsSyntaxKind::JS_RETURN_STATEMENT
+                                | JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER
+                        )
+                    )
+                } else {
+                    false
+                }
+            });
 
-        let mut formatted = vec![
-            left.format(formatter)?,
-            comma_token.format(formatter)?,
-            space_token(),
-            right.format(formatter)?,
-        ];
+            // Find the left most sequence expression
+            while let Some(sequence_expression) =
+                JsSequenceExpression::cast(current.left()?.syntax().clone())
+            {
+                current = sequence_expression;
+            }
 
-        // Traverse upwards again and concatenate the sequence expression until we find the first non-sequence expression
-        while let Some(parent) = current.syntax().parent() {
-            if let Some(parent_sequence) = JsSequenceExpression::cast(parent) {
+            // Format the left most sequence expression
+            let JsSequenceExpressionFields {
+                left,
+                comma_token,
+                right,
+            } = current.as_fields();
+
+            write![f, [left.format()?, comma_token.format()?]]?;
+
+            let mut previous_right = right;
+
+            // Traverse upwards again and concatenate the sequence expression until we find the first non-sequence expression
+            while let Some(parent_sequence) = current
+                .syntax()
+                .parent()
+                .and_then(JsSequenceExpression::cast)
+            {
                 let JsSequenceExpressionFields {
                     left: _left,
                     comma_token,
                     right,
                 } = parent_sequence.as_fields();
 
-                formatted.push(format_elements![
-                    comma_token.format(formatter)?,
-                    space_token(),
-                    right.format(formatter)?
-                ]);
-
+                if has_already_indentation {
+                    write![
+                        f,
+                        [
+                            soft_line_break_or_space(),
+                            previous_right.format()?,
+                            comma_token.format()?,
+                        ]
+                    ]?;
+                } else {
+                    write![
+                        f,
+                        [indent(&format_args![
+                            soft_line_break_or_space(),
+                            previous_right.format()?,
+                            comma_token.format()?,
+                        ])]
+                    ]?;
+                }
+                previous_right = right;
                 current = parent_sequence;
-            } else {
-                break;
             }
-        }
 
-        Ok(concat_elements(formatted))
+            if has_already_indentation {
+                write![f, [soft_line_break_or_space(), previous_right.format()?,]]?;
+            } else {
+                write![
+                    f,
+                    [indent(&format_args![
+                        soft_line_break_or_space(),
+                        previous_right.format(),
+                    ])]
+                ]?;
+            }
+
+            Ok(())
+        });
+
+        write!(f, [group_elements(&content)])
     }
 }

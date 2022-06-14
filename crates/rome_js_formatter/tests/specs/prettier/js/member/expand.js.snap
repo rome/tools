@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: expand.js
 ---
 # Input
@@ -54,12 +53,10 @@ const promises = [
   promise
     .resolve()
     .then(console.log)
-    .catch(
-      (err) => {
-        console.log(err);
-        return null;
-      },
-    ),
+    .catch((err) => {
+      console.log(err);
+      return null;
+    },),
   redis.fetch(),
   other.fetch(),
 ];
@@ -70,12 +67,10 @@ const promises2 = [
     .veryLongFunctionCall()
     .veryLongFunctionCall()
     .then(console.log)
-    .catch(
-      (err) => {
-        console.log(err);
-        return null;
-      },
-    ),
+    .catch((err) => {
+      console.log(err);
+      return null;
+    },),
   redis.fetch(),
   other.fetch(),
 ];
@@ -83,17 +78,17 @@ const promises2 = [
 window.FooClient.setVars({
   locale: getFooLocale({ page }),
   authorizationToken: data.token,
-}).initVerify("foo_container");
+},).initVerify("foo_container");
 
 window.something.FooClient.setVars({
   locale: getFooLocale({ page }),
   authorizationToken: data.token,
-}).initVerify("foo_container");
+},).initVerify("foo_container");
 
 window.FooClient.something.setVars({
   locale: getFooLocale({ page }),
   authorizationToken: data.token,
-}).initVerify("foo_container");
+},).initVerify("foo_container");
 
 ```
 

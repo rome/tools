@@ -1,21 +1,23 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::format_elements;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{JsxFragment, JsxFragmentFields};
 
-impl FormatNode for JsxFragment {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsxFragment> for FormatNodeRule<JsxFragment> {
+    fn fmt_fields(node: &JsxFragment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxFragmentFields {
             opening_fragment,
             children,
             closing_fragment,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let children = children.format(formatter)?;
-        Ok(format_elements![
-            opening_fragment.format(formatter)?,
-            children,
-            closing_fragment.format(formatter)?
-        ])
+        write![
+            f,
+            [
+                opening_fragment.format(),
+                children.format(),
+                closing_fragment.format()
+            ]
+        ]
     }
 }

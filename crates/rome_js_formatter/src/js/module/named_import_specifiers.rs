@@ -1,19 +1,23 @@
-use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsNamedImportSpecifiers;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
-impl FormatNode for JsNamedImportSpecifiers {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsNamedImportSpecifiers> for FormatNodeRule<JsNamedImportSpecifiers> {
+    fn fmt_fields(node: &JsNamedImportSpecifiers, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNamedImportSpecifiersFields {
             l_curly_token,
             specifiers,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let specifiers = specifiers.format(formatter)?;
-
-        formatter.format_delimited_soft_block_spaces(&l_curly_token?, specifiers, &r_curly_token?)
+        write!(
+            f,
+            [
+                format_delimited(&l_curly_token?, &specifiers.format(), &r_curly_token?,)
+                    .soft_block_spaces()
+            ]
+        )
     }
 }

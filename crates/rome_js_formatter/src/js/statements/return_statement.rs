@@ -1,46 +1,44 @@
-use crate::utils::format_with_semicolon;
-use crate::{
-    empty_element, format_elements, group_elements, soft_block_indent, space_token, token, Format,
-    FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
-use rome_js_syntax::{JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
-use rome_rowan::AstNode;
+use crate::prelude::*;
+use crate::utils::FormatWithSemicolon;
+use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
+use rome_js_syntax::{JsAnyExpression, JsReturnStatement, JsReturnStatementFields};
 
-impl FormatNode for JsReturnStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
+    fn fmt_fields(node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsReturnStatementFields {
             return_token,
             argument,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let return_token = return_token.format(formatter)?;
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_with(|f| {
+                    write!(f, [return_token.format()])?;
 
-        let argument = if let Some(argument) = argument {
-            if matches!(
-                argument.syntax().kind(),
-                JsSyntaxKind::JS_SEQUENCE_EXPRESSION
-            ) {
-                format_elements![
-                    space_token(),
-                    group_elements(format_elements![
-                        token("("),
-                        soft_block_indent(argument.format(formatter)?),
-                        token(")")
-                    ]),
-                ]
-            } else {
-                format_elements![space_token(), argument.format(formatter)?]
-            }
-        } else {
-            empty_element()
-        };
+                    if let Some(argument) = &argument {
+                        write!(f, [space_token()])?;
 
-        format_with_semicolon(
-            formatter,
-            format_elements![return_token, argument],
-            semicolon_token,
+                        if let JsAnyExpression::JsSequenceExpression(_expression) = argument {
+                            write![
+                                f,
+                                [group_elements(&format_args![
+                                    token("("),
+                                    soft_block_indent(&argument.format()),
+                                    token(")")
+                                ])]
+                            ]?;
+                        } else {
+                            write![f, [argument.format()]]?;
+                        }
+                    }
+
+                    Ok(())
+                }),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

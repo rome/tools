@@ -1,9 +1,12 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsTypeParameterName;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsTypeParameterName, TsTypeParameterNameFields};
 
-impl FormatNode for TsTypeParameterName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.ident_token().format(formatter)
+impl FormatNodeFields<TsTypeParameterName> for FormatNodeRule<TsTypeParameterName> {
+    fn fmt_fields(node: &TsTypeParameterName, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsTypeParameterNameFields { ident_token } = node.as_fields();
+
+        write![f, [ident_token.format()]]
     }
 }

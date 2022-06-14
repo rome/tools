@@ -1,32 +1,36 @@
+use crate::prelude::*;
 use crate::utils::{is_simple_expression, token_has_comments};
-use crate::{format_elements, hard_group_elements, Format, JsFormatter};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsCallArgumentsFields;
 use rome_js_syntax::{JsAnyCallArgument, JsCallArguments};
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
-impl FormatNode for JsCallArguments {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
+    fn fmt_fields(node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCallArgumentsFields {
             l_paren_token,
             args,
             r_paren_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        if is_simple_function_arguments(self)? {
-            return Ok(hard_group_elements(format_elements![
-                l_paren_token.format(formatter)?,
-                args.format(formatter)?,
-                r_paren_token.format(formatter)?,
-            ]));
+        if is_simple_function_arguments(node)? {
+            return write![
+                f,
+                [
+                    l_paren_token.format(),
+                    group_elements(&args.format()),
+                    r_paren_token.format(),
+                ]
+            ];
         }
 
-        formatter.format_delimited_soft_block_indent(
-            &l_paren_token?,
-            args.format(formatter)?,
-            &r_paren_token?,
+        write!(
+            f,
+            [
+                format_delimited(&l_paren_token?, &args.format(), &r_paren_token?,)
+                    .soft_block_indent()
+            ]
         )
     }
 }
@@ -40,16 +44,22 @@ fn is_simple_function_arguments(node: &JsCallArguments) -> SyntaxResult<bool> {
         r_paren_token,
     } = node.as_fields();
 
-    if token_has_comments(l_paren_token?) || token_has_comments(r_paren_token?) {
+    if token_has_comments(&l_paren_token?) || token_has_comments(&r_paren_token?) {
         return Ok(false);
     }
 
-    if args.syntax_list().len() > 1 {
+    if args.len() > 1 {
         return Ok(false);
     }
 
-    for item in args {
-        match item {
+    for item in args.elements() {
+        if let Some(separator) = item.trailing_separator()? {
+            if token_has_comments(separator) {
+                return Ok(false);
+            }
+        }
+
+        match item.node() {
             Ok(JsAnyCallArgument::JsAnyExpression(expr)) => {
                 if !is_simple_expression(expr)? {
                     return Ok(false);

@@ -1,9 +1,12 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsAnyType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsAnyType, TsAnyTypeFields};
 
-impl FormatNode for TsAnyType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.any_token().format(formatter)
+impl FormatNodeFields<TsAnyType> for FormatNodeRule<TsAnyType> {
+    fn fmt_fields(node: &TsAnyType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsAnyTypeFields { any_token } = node.as_fields();
+
+        write![f, [any_token.format()]]
     }
 }

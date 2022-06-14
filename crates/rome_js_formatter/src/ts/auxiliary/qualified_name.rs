@@ -1,20 +1,17 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::TsQualifiedName;
 use rome_js_syntax::TsQualifiedNameFields;
 
-impl FormatNode for TsQualifiedName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsQualifiedName> for FormatNodeRule<TsQualifiedName> {
+    fn fmt_fields(node: &TsQualifiedName, f: &mut JsFormatter) -> FormatResult<()> {
         let TsQualifiedNameFields {
             left,
             dot_token,
             right,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            left.format(formatter)?,
-            dot_token.format(formatter)?,
-            right.format(formatter)?,
-        ])
+        write![f, [left.format(), dot_token.format(), right.format(),]]
     }
 }

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: extends_implements.ts
 ---
 # Input
@@ -137,11 +138,9 @@ class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstract
     Interface8
 {}
 
-class ImplementsInterfaceAndExtendsAbstractClass1<Foo> extends FOOOOOOOOOOOOOOOOO
-  implements
-    FOOOOOOOOOOOOOOOOO,
-    BARRRRRRRRRR
-{}
+class ImplementsInterfaceAndExtendsAbstractClass1<
+  Foo,
+> extends FOOOOOOOOOOOOOOOOO implements FOOOOOOOOOOOOOOOOO, BARRRRRRRRRR {}
 
 class Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOOOOOO>
   implements
@@ -174,6 +173,5 @@ class ImplementsInterfaceClassWithComments1<
    25: class ExtendsAbstractClassAndImplementsInterfaces3 extends AAAAAAAAAAAAAAbstractClass
    37: class ExtendsAbstractClassAndImplementsInterfaces4 extends AAAAAAAAAAAAAAbstractClass<
    47: class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstractClass<
-   67: class ImplementsInterfaceAndExtendsAbstractClass1<Foo> extends FOOOOOOOOOOOOOOOOO
 ```
 

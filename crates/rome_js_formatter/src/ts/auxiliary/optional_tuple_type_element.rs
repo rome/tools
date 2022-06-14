@@ -1,15 +1,16 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementFields};
 
-impl FormatNode for TsOptionalTupleTypeElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsOptionalTupleTypeElement> for FormatNodeRule<TsOptionalTupleTypeElement> {
+    fn fmt_fields(node: &TsOptionalTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         let TsOptionalTupleTypeElementFields {
             ty,
             question_mark_token,
-        } = self.as_fields();
-        let ty = ty.format(formatter)?;
-        let question_mark = question_mark_token.format(formatter)?;
-        Ok(format_elements![ty, question_mark])
+        } = node.as_fields();
+        let ty = ty.format();
+        let question_mark = question_mark_token.format();
+        write![f, [ty, question_mark]]
     }
 }

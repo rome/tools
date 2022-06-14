@@ -1,9 +1,9 @@
-use crate::documents::Document;
+use crate::session::Session;
 use anyhow::Result;
-use rome_js_parser::parse;
+use rome_service::workspace::GetSyntaxTreeParams;
 use serde::{Deserialize, Serialize};
-use tower_lsp::lsp_types::TextDocumentIdentifier;
-use tracing::{info, trace};
+use tower_lsp::lsp_types::{TextDocumentIdentifier, Url};
+use tracing::info;
 
 pub const SYNTAX_TREE_REQUEST: &str = "rome/syntaxTree";
 
@@ -13,14 +13,10 @@ pub struct SyntaxTreePayload {
     pub text_document: TextDocumentIdentifier,
 }
 
-pub fn syntax_tree(document: Document) -> Result<String> {
+pub(crate) fn syntax_tree(session: &Session, url: &Url) -> Result<String> {
     info!("Showing syntax tree");
-    trace!("Showing syntax tree for: {:?}", document);
-    let text = &document.text;
-    let file_id = document.file_id();
-    let source_type = document.get_source_type();
-    let parse_result = parse(text, file_id, source_type);
-    let cst = format!("{:#?}", parse_result.tree());
-
-    Ok(cst)
+    let rome_path = session.file_path(url);
+    Ok(session
+        .workspace
+        .get_syntax_tree(GetSyntaxTreeParams { path: rome_path })?)
 }

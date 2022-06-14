@@ -1,21 +1,23 @@
-use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsConstructorParameters;
 use rome_js_syntax::JsConstructorParametersFields;
 
-impl FormatNode for JsConstructorParameters {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsConstructorParameters> for FormatNodeRule<JsConstructorParameters> {
+    fn fmt_fields(node: &JsConstructorParameters, f: &mut JsFormatter) -> FormatResult<()> {
         let JsConstructorParametersFields {
             l_paren_token,
             parameters,
             r_paren_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        formatter.format_delimited_soft_block_indent(
-            &l_paren_token?,
-            parameters.format(formatter)?,
-            &r_paren_token?,
+        write!(
+            f,
+            [
+                format_delimited(&l_paren_token?, &parameters.format(), &r_paren_token?,)
+                    .soft_block_indent()
+            ]
         )
     }
 }

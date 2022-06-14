@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: generic.ts
 ---
 # Input
@@ -17,7 +18,10 @@ interface Foo<
 
 # Output
 ```js
-interface Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOO> extends Foo {}
+interface Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOO>
+  extends
+    Foo
+{}
 
 interface Foo<
   FOOOOOOOOOOOOOOOOOOOOOOOOOO,
@@ -27,8 +31,4 @@ interface Foo<
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: interface Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOO> extends Foo {}
-```
 

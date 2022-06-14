@@ -20,11 +20,15 @@ if (VeryVeryVeryVeryVeryVeryVeryVeryLong === VeryVeryVeryVeryVeryVeryVeryVeryLon
 if (this.hasPlugin("dynamicImports") && this.lookahead().type) {
 }
 
-if (this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft) {
+if (
+  this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft
+) {
 }
 
 if (
-  this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.right
+  this.hasPlugin(
+    "dynamicImports",
+  ) && this.lookahead().type === tt.parenLeft.right
 ) {
 }
 
@@ -35,9 +39,4 @@ if (
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    4: if (this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft) {
-    8:   this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.right
-```
 

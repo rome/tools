@@ -1,29 +1,35 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
 use rome_js_syntax::JsNewExpression;
 use rome_js_syntax::JsNewExpressionFields;
 
-impl FormatNode for JsNewExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
+    fn fmt_fields(node: &JsNewExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNewExpressionFields {
             new_token,
             callee,
             type_arguments,
             arguments,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let arguments =
-            arguments.format_or(formatter, || format_elements![token("("), token(")")])?;
+        write![
+            f,
+            [
+                new_token.format(),
+                space_token(),
+                callee.format(),
+                type_arguments.format(),
+            ]
+        ]?;
 
-        Ok(format_elements![
-            new_token.format(formatter)?,
-            space_token(),
-            callee.format(formatter)?,
-            type_arguments.format_or_empty(formatter)?,
-            arguments,
-        ])
+        match arguments {
+            Some(arguments) => {
+                write!(f, [arguments.format()])
+            }
+            None => {
+                write!(f, [token("()")])
+            }
+        }
     }
 }

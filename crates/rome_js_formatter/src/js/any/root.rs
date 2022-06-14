@@ -1,14 +1,15 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnyRoot;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyRoot;
-impl Format for JsAnyRoot {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsScript(node) => node.format(formatter),
-            Self::JsModule(node) => node.format(formatter),
-            Self::JsExpressionSnipped(node) => node.format(formatter),
+impl FormatRule<JsAnyRoot> for FormatJsAnyRoot {
+    type Context = JsFormatContext;
+    fn fmt(node: &JsAnyRoot, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsAnyRoot::JsScript(node) => node.format().fmt(f),
+            JsAnyRoot::JsModule(node) => node.format().fmt(f),
+            JsAnyRoot::JsExpressionSnipped(node) => node.format().fmt(f),
         }
     }
 }

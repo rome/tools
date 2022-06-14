@@ -89,11 +89,6 @@ pub(crate) fn ts_set_accessor_return_type_error(
         .primary(type_annotation.range(p), "")
 }
 
-pub(crate) fn ts_type_assertion_on_new_expr(p: &Parser, type_expr: &CompletedMarker) -> Diagnostic {
-    p.err_builder("Type assertions cannot be used at 'new' expressions.")
-        .primary(type_expr.range(p), "")
-}
-
 pub(crate) fn expected_ts_type(p: &Parser, range: TextRange) -> Diagnostic {
     expected_node("type", range).to_diagnostic(p)
 }

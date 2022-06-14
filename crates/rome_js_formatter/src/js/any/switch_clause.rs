@@ -1,13 +1,14 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::generated::FormatJsAnySwitchClause;
+use crate::prelude::*;
 use rome_js_syntax::JsAnySwitchClause;
-impl Format for JsAnySwitchClause {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsCaseClause(node) => node.format(formatter),
-            Self::JsDefaultClause(node) => node.format(formatter),
+impl FormatRule<JsAnySwitchClause> for FormatJsAnySwitchClause {
+    type Context = JsFormatContext;
+    fn fmt(node: &JsAnySwitchClause, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsAnySwitchClause::JsCaseClause(node) => node.format().fmt(f),
+            JsAnySwitchClause::JsDefaultClause(node) => node.format().fmt(f),
         }
     }
 }

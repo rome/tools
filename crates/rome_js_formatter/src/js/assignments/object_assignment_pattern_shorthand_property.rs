@@ -1,18 +1,25 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsObjectAssignmentPatternShorthandProperty;
 use rome_js_syntax::JsObjectAssignmentPatternShorthandPropertyFields;
 
-impl FormatNode for JsObjectAssignmentPatternShorthandProperty {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsObjectAssignmentPatternShorthandProperty>
+    for FormatNodeRule<JsObjectAssignmentPatternShorthandProperty>
+{
+    fn fmt_fields(
+        node: &JsObjectAssignmentPatternShorthandProperty,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectAssignmentPatternShorthandPropertyFields { identifier, init } =
-            self.as_fields();
+            node.as_fields();
 
-        let init_node =
-            init.format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
-        Ok(format_elements![identifier.format(formatter)?, init_node])
+        write!(f, [identifier.format()?,])?;
+
+        if let Some(init) = init {
+            write!(f, [space_token(), init.format()])?;
+        }
+        Ok(())
     }
 }

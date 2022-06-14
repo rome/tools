@@ -1,25 +1,26 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsFunctionBody;
 use rome_js_syntax::JsFunctionBodyFields;
 
-impl FormatNode for JsFunctionBody {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
+    fn fmt_fields(node: &JsFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {
         let JsFunctionBodyFields {
             l_curly_token,
             directives,
             statements,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            format_elements![
-                directives.format(formatter)?,
-                formatter.format_list(statements),
-            ],
-            &r_curly_token?,
+        write!(
+            f,
+            [format_delimited(
+                &l_curly_token?,
+                &format_args![directives.format(), statements.format()],
+                &r_curly_token?,
+            )
+            .block_indent()]
         )
     }
 }

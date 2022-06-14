@@ -1,12 +1,13 @@
-use crate::utils::format_with_semicolon;
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::FormatWithSemicolon;
+use crate::FormatNodeFields;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsSetterSignatureClassMember, TsSetterSignatureClassMemberFields};
 
-impl FormatNode for TsSetterSignatureClassMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsSetterSignatureClassMember>
+    for FormatNodeRule<TsSetterSignatureClassMember>
+{
+    fn fmt_fields(node: &TsSetterSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsSetterSignatureClassMemberFields {
             modifiers,
             set_token,
@@ -15,27 +16,23 @@ impl FormatNode for TsSetterSignatureClassMember {
             parameter,
             r_paren_token,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let set_token = set_token.format(formatter)?;
-        let name = name.format(formatter)?;
-        let l_paren_token = l_paren_token.format(formatter)?;
-        let parameters = parameter.format(formatter)?;
-        let r_paren_token = r_paren_token.format(formatter)?;
-
-        Ok(hard_group_elements(format_with_semicolon(
-            formatter,
-            format_elements![
-                modifiers.format(formatter)?,
-                space_token(),
-                set_token,
-                space_token(),
-                name,
-                l_paren_token,
-                parameters,
-                r_paren_token,
-            ],
-            semicolon_token,
-        )?))
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
+                    modifiers.format(),
+                    space_token(),
+                    set_token.format(),
+                    space_token(),
+                    name.format(),
+                    l_paren_token.format(),
+                    parameter.format(),
+                    r_paren_token.format(),
+                ),
+                semicolon_token.as_ref()
+            )]
+        )
     }
 }

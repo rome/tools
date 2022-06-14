@@ -1,13 +1,14 @@
+use crate::generated::FormatJsMethodModifierList;
+use crate::prelude::*;
 use crate::utils::sort_modifiers_by_precedence;
-use crate::{join_elements, space_token, Format, FormatElement, Formatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::JsMethodModifierList;
 
-impl Format for JsMethodModifierList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(join_elements(
-            space_token(),
-            formatter.format_all(sort_modifiers_by_precedence(self))?,
-        ))
+impl FormatRule<JsMethodModifierList> for FormatJsMethodModifierList {
+    type Context = JsFormatContext;
+
+    fn fmt(node: &JsMethodModifierList, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join_with(&space_token())
+            .entries(sort_modifiers_by_precedence(node).into_iter().formatted())
+            .finish()
     }
 }

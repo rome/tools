@@ -2053,6 +2053,7 @@ impl AstNode for CssAnyFunction {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAnyFunction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2081,6 +2082,7 @@ impl AstNode for CssAtKeyframes {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtKeyframes {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2113,6 +2115,7 @@ impl AstNode for CssAtKeyframesBody {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtKeyframesBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2146,6 +2149,7 @@ impl AstNode for CssAtMedia {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMedia {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2185,6 +2189,7 @@ impl AstNode for CssAtMediaQuery {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQuery {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2223,6 +2228,7 @@ impl AstNode for CssAtMediaQueryConsequent {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQueryConsequent {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2253,6 +2259,7 @@ impl AstNode for CssAtMediaQueryFeature {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQueryFeature {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2286,6 +2293,7 @@ impl AstNode for CssAtMediaQueryFeatureBoolean {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQueryFeatureBoolean {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2314,6 +2322,7 @@ impl AstNode for CssAtMediaQueryFeatureCompare {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQueryFeatureCompare {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2341,6 +2350,7 @@ impl AstNode for CssAtMediaQueryFeaturePlain {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQueryFeaturePlain {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2371,6 +2381,7 @@ impl AstNode for CssAtMediaQueryFeatureRange {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQueryFeatureRange {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2412,6 +2423,7 @@ impl AstNode for CssAtMediaQueryRange {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAtMediaQueryRange {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2452,6 +2464,7 @@ impl AstNode for CssAttribute {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2492,6 +2505,7 @@ impl AstNode for CssAttributeMatcher {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAttributeMatcher {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2545,6 +2559,7 @@ impl AstNode for CssAttributeMeta {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAttributeMeta {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2577,6 +2592,7 @@ impl AstNode for CssAttributeModifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAttributeModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2602,6 +2618,7 @@ impl AstNode for CssAttributeName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAttributeName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2627,6 +2644,7 @@ impl AstNode for CssAttributeSelectorPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssAttributeSelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2653,6 +2671,7 @@ impl AstNode for CssBlock {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssBlock {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2686,6 +2705,7 @@ impl AstNode for CssClassSelectorPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssClassSelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2712,6 +2732,7 @@ impl AstNode for CssCombinatorSelectorPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssCombinatorSelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2751,6 +2772,7 @@ impl AstNode for CssCustomProperty {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssCustomProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2779,6 +2801,7 @@ impl AstNode for CssDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2817,6 +2840,7 @@ impl AstNode for CssDeclarationImportant {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssDeclarationImportant {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2846,6 +2870,7 @@ impl AstNode for CssDimension {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssDimension {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2872,6 +2897,7 @@ impl AstNode for CssIdSelectorPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssIdSelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2898,6 +2924,7 @@ impl AstNode for CssIdentifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssIdentifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2926,6 +2953,7 @@ impl AstNode for CssKeyframesBlock {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssKeyframesBlock {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2960,6 +2988,7 @@ impl AstNode for CssKeyframesSelector {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssKeyframesSelector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2990,6 +3019,7 @@ impl AstNode for CssNumber {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssNumber {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3018,6 +3048,7 @@ impl AstNode for CssParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3046,6 +3077,7 @@ impl AstNode for CssPercentage {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssPercentage {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3075,6 +3107,7 @@ impl AstNode for CssPseudoClassSelectorPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssPseudoClassSelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3108,6 +3141,7 @@ impl AstNode for CssPseudoClassSelectorPatternParameters {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssPseudoClassSelectorPatternParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3141,6 +3175,7 @@ impl AstNode for CssRatio {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssRatio {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3170,6 +3205,7 @@ impl AstNode for CssRule {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssRule {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3196,6 +3232,7 @@ impl AstNode for CssSelector {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssSelector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3221,6 +3258,7 @@ impl AstNode for CssSimpleFunction {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssSimpleFunction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3255,6 +3293,7 @@ impl AstNode for CssString {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3283,6 +3322,7 @@ impl AstNode for CssTypeSelectorPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssTypeSelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3308,6 +3348,7 @@ impl AstNode for CssUniversalSelectorPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssUniversalSelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3333,6 +3374,7 @@ impl AstNode for CssVarFunction {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssVarFunction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3368,6 +3410,7 @@ impl AstNode for CssVarFunctionValue {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssVarFunctionValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3451,6 +3494,14 @@ impl AstNode for CssAnyAtMediaQueryFeatureType {
             CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureRange(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureBoolean(it) => it.syntax,
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureCompare(it) => it.syntax,
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeaturePlain(it) => it.syntax,
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureRange(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for CssAnyAtMediaQueryFeatureType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3517,6 +3568,12 @@ impl AstNode for CssAnyAtMediaQueryType {
             CssAnyAtMediaQueryType::CssIdentifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            CssAnyAtMediaQueryType::CssAtMediaQueryFeature(it) => it.syntax,
+            CssAnyAtMediaQueryType::CssIdentifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for CssAnyAtMediaQueryType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3561,6 +3618,12 @@ impl AstNode for CssAnyAtRule {
         match self {
             CssAnyAtRule::CssAtKeyframes(it) => &it.syntax,
             CssAnyAtRule::CssAtMedia(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            CssAnyAtRule::CssAtKeyframes(it) => it.syntax,
+            CssAnyAtRule::CssAtMedia(it) => it.syntax,
         }
     }
 }
@@ -3614,6 +3677,12 @@ impl AstNode for CssAnyRule {
         match self {
             CssAnyRule::CssRule(it) => &it.syntax,
             CssAnyRule::CssAnyAtRule(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            CssAnyRule::CssRule(it) => it.syntax,
+            CssAnyRule::CssAnyAtRule(it) => it.into_syntax(),
         }
     }
 }
@@ -3734,6 +3803,17 @@ impl AstNode for CssAnySelectorPattern {
             CssAnySelectorPattern::CssUniversalSelectorPattern(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            CssAnySelectorPattern::CssAttributeSelectorPattern(it) => it.syntax,
+            CssAnySelectorPattern::CssClassSelectorPattern(it) => it.syntax,
+            CssAnySelectorPattern::CssCombinatorSelectorPattern(it) => it.syntax,
+            CssAnySelectorPattern::CssIdSelectorPattern(it) => it.syntax,
+            CssAnySelectorPattern::CssPseudoClassSelectorPattern(it) => it.syntax,
+            CssAnySelectorPattern::CssTypeSelectorPattern(it) => it.syntax,
+            CssAnySelectorPattern::CssUniversalSelectorPattern(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for CssAnySelectorPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3824,6 +3904,17 @@ impl AstNode for CssAnyValue {
             CssAnyValue::CssNumber(it) => &it.syntax,
             CssAnyValue::CssRatio(it) => &it.syntax,
             CssAnyValue::CssString(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            CssAnyValue::CssAnyFunction(it) => it.syntax,
+            CssAnyValue::CssCustomProperty(it) => it.syntax,
+            CssAnyValue::CssDimension(it) => it.syntax,
+            CssAnyValue::CssIdentifier(it) => it.syntax,
+            CssAnyValue::CssNumber(it) => it.syntax,
+            CssAnyValue::CssRatio(it) => it.syntax,
+            CssAnyValue::CssString(it) => it.syntax,
         }
     }
 }
@@ -4131,6 +4222,7 @@ impl AstNode for CssUnknown {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for CssUnknown {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4175,6 +4267,7 @@ impl AstNode for CssAnySelectorPatternList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssAnySelectorPatternList {
@@ -4193,6 +4286,7 @@ impl AstNodeList for CssAnySelectorPatternList {
     type Language = Language;
     type Node = CssAnySelectorPattern;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAnySelectorPatternList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4240,6 +4334,7 @@ impl AstNode for CssAtKeyframesItemList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssAtKeyframesItemList {
@@ -4258,6 +4353,7 @@ impl AstNodeList for CssAtKeyframesItemList {
     type Language = Language;
     type Node = CssKeyframesBlock;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAtKeyframesItemList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4305,6 +4401,7 @@ impl AstNode for CssAtMediaQueryList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssAtMediaQueryList {
@@ -4323,6 +4420,7 @@ impl AstSeparatedList for CssAtMediaQueryList {
     type Language = Language;
     type Node = CssAtMediaQuery;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAtMediaQueryList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4370,6 +4468,7 @@ impl AstNode for CssAttributeList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssAttributeList {
@@ -4388,6 +4487,7 @@ impl AstNodeList for CssAttributeList {
     type Language = Language;
     type Node = CssAttribute;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAttributeList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4435,6 +4535,7 @@ impl AstNode for CssDeclarationList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssDeclarationList {
@@ -4453,6 +4554,7 @@ impl AstNodeList for CssDeclarationList {
     type Language = Language;
     type Node = CssDeclaration;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssDeclarationList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4500,6 +4602,7 @@ impl AstNode for CssKeyframesSelectorList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssKeyframesSelectorList {
@@ -4518,6 +4621,7 @@ impl AstSeparatedList for CssKeyframesSelectorList {
     type Language = Language;
     type Node = CssKeyframesSelector;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssKeyframesSelectorList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4565,6 +4669,7 @@ impl AstNode for CssParameterList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssParameterList {
@@ -4583,6 +4688,7 @@ impl AstNodeList for CssParameterList {
     type Language = Language;
     type Node = CssParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4630,6 +4736,7 @@ impl AstNode for CssRoot {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssRoot {
@@ -4648,6 +4755,7 @@ impl AstNodeList for CssRoot {
     type Language = Language;
     type Node = CssAnyRule;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssRoot {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4695,6 +4803,7 @@ impl AstNode for CssSelectorList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
 impl Serialize for CssSelectorList {
@@ -4713,6 +4822,7 @@ impl AstSeparatedList for CssSelectorList {
     type Language = Language;
     type Node = CssSelector;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssSelectorList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

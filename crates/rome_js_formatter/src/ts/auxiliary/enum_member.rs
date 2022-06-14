@@ -1,13 +1,19 @@
-use crate::utils::format_initializer_clause;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsEnumMember;
+use crate::prelude::*;
+use crate::utils::FormatInitializerClause;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsEnumMember, TsEnumMemberFields};
 
-impl FormatNode for TsEnumMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.name().format(formatter)?;
-        let initializer = format_initializer_clause(formatter, self.initializer())?;
+impl FormatNodeFields<TsEnumMember> for FormatNodeRule<TsEnumMember> {
+    fn fmt_fields(node: &TsEnumMember, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsEnumMemberFields { name, initializer } = node.as_fields();
 
-        Ok(format_elements![name, initializer])
+        write!(
+            f,
+            [
+                name.format(),
+                FormatInitializerClause::new(initializer.as_ref())
+            ]
+        )
     }
 }

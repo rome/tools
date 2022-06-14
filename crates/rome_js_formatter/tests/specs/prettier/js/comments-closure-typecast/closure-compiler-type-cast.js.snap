@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: closure-compiler-type-cast.js
-
 ---
 # Input
 ```js
@@ -77,7 +75,7 @@ let inlineComment = /* some comment */ (
 );
 
 let object = {
-  key: (someReallyLongFunctionCall(withLots, ofArguments)), /* some comment */
+  key: /* some comment */ (someReallyLongFunctionCall(withLots, ofArguments)),
 };
 
 // preserve parens only for type casts
@@ -91,7 +89,7 @@ functionCall(
 );
 
 function returnValue() {
-  return (["hello", "you"]); /** @type {!Array.<string>} */
+  return /** @type {!Array.<string>} */ (["hello", "you"]);
 }
 
 // Only numberOrString is typecast
@@ -123,13 +121,19 @@ const style = /** @type {{
   marginLeft: number,
   marginRight: number,
   marginBottom: number,
-}} */ ({ width, height, ...margins });
+}} */ ({
+  width,
+  height,
+  ...margins,
+});
 
 const style2 = /**
  * @type {{
  *   width: number,
  * }}
-*/ ({ width });
+*/ ({
+  width,
+});
 
 ```
 

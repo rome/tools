@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: method_types.ts
 ---
 # Input
@@ -50,29 +49,29 @@ abstract class Test {
 # Output
 ```js
 interface foo1 {
-  bar3( /* baz */ ); /* foo */ // bat
-  bar?( /* baz */ ); /* foo */ /* bar */ /* bat */
-  bar2( /* baz */ ); /* foo */ /* bat */
+  bar3 /* foo */ ( /* baz */ ); // bat
+  bar /* foo */ ? /* bar */ ( /* baz */ ) /* bat */ ;
+  bar2 /* foo */ ( /* baz */ ) /* bat */ ;
 }
 
 interface foo2 {
-  bar?(bar: /* baz */ string): string; /* foo */ /* bar */ /* bat */
+  bar /* foo */ ? /* bar */ (bar: /* baz */ string): /* bat */ string;
 }
 
 interface foo3 {
-  /* foo */ ( /* bar */ ): string; /* baz */
+  /* foo */ ( /* bar */ ): /* baz */ string;
 }
 
 interface foo4 {
-  /* foo */ (bar: /* bar */ string): string; /* baz */
+  /* foo */ (bar: /* bar */ string): /* baz */ string;
 }
 
 interface foo5 {
-  /* foo */ new (a: /* baz */ string): string; /* bar */ /* bat */
+  /* foo */ new /* bar */ (a: /* baz */ string): /* bat */ string;
 }
 
 interface foo6 {
-  /* foo */ new ( /* baz */ ): string; /* bar */ /* bat */
+  /* foo */ new /* bar */ ( /* baz */ ): /* bat */ string;
 }
 
 type foo7 = /* foo */ ( /* bar */ ) /* baz */ => void;

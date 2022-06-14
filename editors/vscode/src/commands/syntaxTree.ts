@@ -79,9 +79,10 @@ class SyntaxTreeProvider
 		}
 	}
 
-	provideTextDocumentContent(uri: Uri, token: CancellationToken): ProviderResult<
-		string
-	> {
+	provideTextDocumentContent(
+		uri: Uri,
+		token: CancellationToken,
+	): ProviderResult<string> {
 		let documentUri = this.session.editor.document.uri.toString();
 		// if the document is already cached, we show it
 		const document = this.documents.get(documentUri);
@@ -93,16 +94,16 @@ class SyntaxTreeProvider
 		};
 
 		// send request to the server and store its content in the cache if successful
-		return this.session.client
-			.sendRequest(syntaxTreeRequest, params, token)
-			.then(
-				(result) => {
-					const document = new SyntaxTreeDocument(uri, result);
-					this.documents.set(documentUri, document);
+		return this.session.client.sendRequest(
+			syntaxTreeRequest,
+			params,
+			token,
+		).then((result) => {
+			const document = new SyntaxTreeDocument(uri, result);
+			this.documents.set(documentUri, document);
 
-					return document.value;
-				},
-			);
+			return document.value;
+		},);
 	}
 
 	dispose(): any {
@@ -113,9 +114,10 @@ class SyntaxTreeProvider
 		return this.eventEmitter.event;
 	}
 
-	provideDocumentLinks(document: TextDocument, token: CancellationToken): ProviderResult<
-		DocumentLink[]
-	> {
+	provideDocumentLinks(
+		document: TextDocument,
+		token: CancellationToken,
+	): ProviderResult<DocumentLink[]> {
 		const doc = this.documents.get(document.uri.toString());
 		if (doc) {
 			return [];

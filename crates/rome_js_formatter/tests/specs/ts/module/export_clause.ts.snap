@@ -32,7 +32,10 @@ Quote style: Double Quotes
 -----
 export type A = string;
 
-export enum B { A, B }
+export enum B {
+	A,
+	B,
+}
 
 export interface C {}
 

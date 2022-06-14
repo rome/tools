@@ -98,15 +98,15 @@ checksum = "cdb031dd78e28731d87d56cc8ffef4a8f36ca26c38fe2de700543e627f8a464a"
 
 [[package]]
 name = "backtrace"
-version = "0.3.63"
+version = "0.3.65"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "321629d8ba6513061f26707241fa9bc89524ff1cd7a915a97ef0c62c666ce1b6"
+checksum = "11a17d453482a265fd5f8479f2a3f405566e6ca627837aaddb85af8b1ab8ef61"
 dependencies = [
  "addr2line",
  "cc",
  "cfg-if",
  "libc",
- "miniz_oxide",
+ "miniz_oxide 0.5.3",
  "object",
  "rustc-demangle",
 ]
@@ -236,6 +236,11 @@ name = "countme"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "03746e0c6dd9b5d2d9132ffe0bede35fb5f815604fd371bb42599fd37bc8e483"
+dependencies = [
+ "dashmap 4.0.2",
+ "once_cell",
+ "rustc-hash",
+]
 
 [[package]]
 name = "crc32fast"
@@ -384,6 +389,16 @@ dependencies = [
 
 [[package]]
 name = "dashmap"
+version = "4.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e77a43b28d0668df09411cb0bc9a8c2adc40f9a048afe863e05fd43251e8e39c"
+dependencies = [
+ "cfg-if",
+ "num_cpus",
+]
+
+[[package]]
+name = "dashmap"
 version = "5.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4c8858831f7781322e539ea39e72449c46b059638250c14344fec8d0aa6e539c"
@@ -472,7 +487,7 @@ dependencies = [
  "cfg-if",
  "crc32fast",
  "libc",
- "miniz_oxide",
+ "miniz_oxide 0.4.4",
 ]
 
 [[package]]
@@ -880,6 +895,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "matchers"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8263075bb86c5a1b1427b5ae862e8889656f126e9f77c484496e8b47cf5c5558"
+dependencies = [
+ "regex-automata",
+]
+
+[[package]]
 name = "matches"
 version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -908,6 +932,15 @@ checksum = "a92518e98c078586bc6c934028adcca4c92a53d6a958196de835170a01d84e4b"
 dependencies = [
  "adler",
  "autocfg",
+]
+
+[[package]]
+name = "miniz_oxide"
+version = "0.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f5c75688da582b8ffc1f1799e9db273f32133c49e048f614d22ec3256773ccc"
+dependencies = [
+ "adler",
 ]
 
 [[package]]
@@ -969,9 +1002,9 @@ checksum = "830b246a0e5f20af87141b25c173cd1b609bd7779a4617d6ec582abaf90870f3"
 
 [[package]]
 name = "object"
-version = "0.27.1"
+version = "0.28.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67ac1d3f9a1d3616fd9a60c8d74296f22406a238b6a72f5cc1e6f314df4ffbf9"
+checksum = "e42c982f2d955fac81dd7e1d0e1426a7d702acd9c98d19ab01083a6a0328c424"
 dependencies = [
  "memchr",
 ]
@@ -1221,6 +1254,9 @@ name = "regex-automata"
 version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6c230d73fb8d8c1b9c0b3135c5142a8acee3a0558fb8db5cf1cb65f8d7862132"
+dependencies = [
+ "regex-syntax",
+]
 
 [[package]]
 name = "regex-syntax"
@@ -1256,12 +1292,16 @@ dependencies = [
 name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
- "anyhow",
+ "bitflags",
+ "countme",
+ "insta",
+ "rome_console",
  "rome_diagnostics",
+ "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
- "tracing",
+ "tests_macros",
 ]
 
 [[package]]
@@ -1275,12 +1315,11 @@ dependencies = [
  "pico-args",
  "rayon",
  "rome_console",
- "rome_core",
  "rome_diagnostics",
  "rome_flags",
+ "rome_formatter",
  "rome_fs",
- "rome_js_formatter",
- "rome_js_parser",
+ "rome_service",
  "thiserror",
  "tracing",
  "tracing-subscriber",
@@ -1290,6 +1329,7 @@ dependencies = [
 name = "rome_console"
 version = "0.0.0"
 dependencies = [
+ "atty",
  "lazy_static",
  "rome_markup",
  "similar",
@@ -1300,11 +1340,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_core"
-version = "0.0.0"
+name = "rome_css_factory"
+version = "0.1.0"
 dependencies = [
- "rome_console",
- "rome_fs",
+ "rome_css_syntax",
+ "rome_rowan",
 ]
 
 [[package]]
@@ -1312,7 +1352,6 @@ name = "rome_css_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1339,6 +1378,7 @@ dependencies = [
 name = "rome_formatter"
 version = "0.1.0"
 dependencies = [
+ "cfg-if",
  "rome_rowan",
  "tracing",
 ]
@@ -1355,29 +1395,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_js_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_js_formatter"
 version = "0.0.0"
 dependencies = [
- "cfg-if",
+ "countme",
  "ctor",
  "iai",
  "insta",
  "parking_lot",
  "quickcheck",
  "quickcheck_macros",
- "rome_core",
  "rome_diagnostics",
  "rome_formatter",
  "rome_fs",
+ "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
+ "rome_service",
  "serde",
  "serde_json",
  "similar",
  "similar-asserts",
  "tests_macros",
  "tracing",
+ "unicode-width",
 ]
 
 [[package]]
@@ -1392,6 +1442,7 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rome_diagnostics",
+ "rome_js_factory",
  "rome_js_syntax",
  "rome_rowan",
  "smallvec",
@@ -1400,11 +1451,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_semantic"
+version = "0.3.0"
+dependencies = [
+ "rome_console",
+ "rome_diagnostics",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_markup",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_js_syntax"
 version = "0.1.4"
 dependencies = [
+ "rome_js_factory",
  "rome_rowan",
  "serde",
+]
+
+[[package]]
+name = "rome_json_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_json_syntax",
+ "rome_rowan",
 ]
 
 [[package]]
@@ -1412,7 +1484,6 @@ name = "rome_json_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1424,15 +1495,18 @@ dependencies = [
  "indexmap",
  "parking_lot",
  "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
  "rome_flags",
+ "rome_formatter",
  "rome_fs",
  "rome_js_formatter",
- "rome_js_parser",
- "rome_js_syntax",
+ "rome_rowan",
+ "rome_service",
  "serde",
  "serde_json",
  "tokio",
+ "tower",
  "tower-lsp",
  "tracing",
  "tracing-subscriber",
@@ -1452,9 +1526,13 @@ dependencies = [
 name = "rome_playground"
 version = "0.0.0"
 dependencies = [
+ "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
+ "rome_formatter",
  "rome_js_formatter",
  "rome_js_parser",
+ "rome_js_syntax",
  "serde_json",
  "wasm-bindgen",
 ]
@@ -1472,7 +1550,22 @@ dependencies = [
  "serde",
  "serde_json",
  "text-size",
- "thiserror",
+]
+
+[[package]]
+name = "rome_service"
+version = "0.0.0"
+dependencies = [
+ "dashmap 5.2.0",
+ "rome_analyze",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_formatter",
+ "rome_fs",
+ "rome_js_formatter",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_rowan",
 ]
 
 [[package]]
@@ -1881,8 +1974,10 @@ dependencies = [
  "futures-util",
  "pin-project",
  "pin-project-lite",
+ "tokio",
  "tower-layer",
  "tower-service",
+ "tracing",
 ]
 
 [[package]]
@@ -1900,7 +1995,7 @@ dependencies = [
  "async-trait",
  "auto_impl",
  "bytes",
- "dashmap",
+ "dashmap 5.2.0",
  "futures",
  "httparse",
  "log",
@@ -1933,11 +2028,12 @@ checksum = "360dfd1d6d30e05fda32ace2c8c70e9c0a9da713275777f5a4dbb8a1893930c6"
 
 [[package]]
 name = "tracing"
-version = "0.1.31"
+version = "0.1.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f6c650a8ef0cd2dd93736f033d21cbd1224c5a967aa0c258d00fcf7dafef9b9f"
+checksum = "5d0ecdcb44a79f0fe9844f0c4f33a342cbcbb5117de8001e6ba0dc2351327d09"
 dependencies = [
  "cfg-if",
+ "log",
  "pin-project-lite",
  "tracing-attributes",
  "tracing-core",
@@ -1977,14 +2073,18 @@ dependencies = [
 
 [[package]]
 name = "tracing-subscriber"
-version = "0.3.6"
+version = "0.3.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77be66445c4eeebb934a7340f227bfe7b338173d3f8c00a60a5a58005c9faecf"
+checksum = "4bc28f93baff38037f64e6f43d34cfa1605f27a49c34e8a04c5e78b0babf2596"
 dependencies = [
  "ansi_term",
+ "lazy_static",
+ "matchers",
+ "regex",
  "sharded-slab",
  "smallvec",
  "thread_local",
+ "tracing",
  "tracing-core",
  "tracing-log",
 ]
@@ -2307,7 +2407,9 @@ dependencies = [
  "itertools",
  "pico-args",
  "regex",
+ "rome_analyze",
  "rome_diagnostics",
+ "rome_formatter",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
@@ -2339,6 +2441,7 @@ version = "0.0.0"
 dependencies = [
  "ascii_table",
  "atty",
+ "backtrace",
  "colored",
  "indicatif",
  "num_cpus",
@@ -2347,11 +2450,14 @@ dependencies = [
  "regex",
  "rome_diagnostics",
  "rome_js_parser",
+ "rome_js_semantic",
  "rome_js_syntax",
  "rome_rowan",
  "serde",
  "serde_json",
  "serde_yaml",
+ "tracing",
+ "tracing-subscriber",
  "walkdir",
  "xtask",
  "yastl",

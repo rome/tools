@@ -1,3 +1,4 @@
+use crate::green::GreenElement;
 use crate::syntax::element::SyntaxElement;
 use crate::syntax::SyntaxTrivia;
 use crate::{
@@ -6,11 +7,11 @@ use crate::{
 };
 #[cfg(feature = "serde")]
 use serde_crate::Serialize;
-use std::fmt;
+use std::any::TypeId;
 use std::fmt::{Debug, Formatter};
-use std::iter::FusedIterator;
+use std::iter::{self, FusedIterator};
 use std::marker::PhantomData;
-use std::ops::Range;
+use std::{fmt, ops};
 use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -22,6 +23,31 @@ pub struct SyntaxNode<L: Language> {
 impl<L: Language> SyntaxNode<L> {
     pub(crate) fn new_root(green: GreenNode) -> SyntaxNode<L> {
         SyntaxNode::from(cursor::SyntaxNode::new_root(green))
+    }
+
+    /// Create a new detached (root) node from a syntax kind and an iterator of slots
+    ///
+    /// In general this function should not be used directly but through the
+    /// type-checked factory function / builders generated from the grammar of
+    /// the corresponding language (eg. `rome_js_factory::make`)
+    pub fn new_detached<I>(kind: L::Kind, slots: I) -> SyntaxNode<L>
+    where
+        I: IntoIterator<Item = Option<SyntaxElement<L>>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        SyntaxNode::from(cursor::SyntaxNode::new_root(GreenNode::new(
+            kind.to_raw(),
+            slots.into_iter().map(|slot| {
+                slot.map(|element| match element {
+                    NodeOrToken::Node(node) => GreenElement::Node(node.green_node()),
+                    NodeOrToken::Token(token) => GreenElement::Token(token.green_token()),
+                })
+            }),
+        )))
+    }
+
+    fn green_node(&self) -> GreenNode {
+        self.raw.green().to_owned()
     }
 
     /// Returns the element stored in the slot with the given index. Returns [None] if the slot is empty.
@@ -39,9 +65,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the text of all descendants tokens combined, including all trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -67,9 +93,9 @@ impl<L: Language> SyntaxNode<L> {
     /// All other trivia is included.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -93,9 +119,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the range corresponding for the text of all descendants tokens combined, including all trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -123,9 +149,9 @@ impl<L: Language> SyntaxNode<L> {
     /// All other trivia is included.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -151,9 +177,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the leading trivia of the [first_token](SyntaxNode::first_token), or [None] if the node does not have any descendant tokens.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -172,7 +198,7 @@ impl<L: Language> SyntaxNode<L> {
     /// assert!(trivia.is_some());
     /// assert_eq!("\n\t ", trivia.unwrap().text());
     ///
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {});
     /// let trivia = node.first_leading_trivia();
     /// assert!(trivia.is_none());
     /// ```
@@ -183,9 +209,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the trailing trivia of the  [last_token](SyntaxNode::last_token), or [None] if the node does not have any descendant tokens.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -204,7 +230,7 @@ impl<L: Language> SyntaxNode<L> {
     /// assert!(trivia.is_some());
     /// assert_eq!(" \t\t", trivia.unwrap().text());
     ///
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {});
     /// let trivia = node.last_trailing_trivia();
     /// assert!(trivia.is_none());
     /// ```
@@ -214,6 +240,12 @@ impl<L: Language> SyntaxNode<L> {
 
     pub fn parent(&self) -> Option<SyntaxNode<L>> {
         self.raw.parent().map(Self::from)
+    }
+
+    /// Returns the index of this node inside of its parent
+    #[inline]
+    fn index(&self) -> usize {
+        self.raw.index()
     }
 
     pub fn ancestors(&self) -> impl Iterator<Item = SyntaxNode<L>> {
@@ -296,13 +328,18 @@ impl<L: Language> SyntaxNode<L> {
         self.raw.descendants().map(SyntaxNode::from)
     }
 
-    pub fn descendants_tokens(&self) -> impl Iterator<Item = SyntaxToken<L>> {
-        self.descendants_with_tokens()
+    pub fn descendants_tokens(&self, direction: Direction) -> impl Iterator<Item = SyntaxToken<L>> {
+        self.descendants_with_tokens(direction)
             .filter_map(|x| x.as_token().cloned())
     }
 
-    pub fn descendants_with_tokens(&self) -> impl Iterator<Item = SyntaxElement<L>> {
-        self.raw.descendants_with_tokens().map(NodeOrToken::from)
+    pub fn descendants_with_tokens(
+        &self,
+        direction: Direction,
+    ) -> impl Iterator<Item = SyntaxElement<L>> {
+        self.raw
+            .descendants_with_tokens(direction)
+            .map(NodeOrToken::from)
     }
 
     /// Traverse the subtree rooted at the current node (including the current
@@ -316,9 +353,9 @@ impl<L: Language> SyntaxNode<L> {
 
     /// Traverse the subtree rooted at the current node (including the current
     /// node) in preorder, including tokens.
-    pub fn preorder_with_tokens(&self) -> PreorderWithTokens<L> {
+    pub fn preorder_with_tokens(&self, direction: Direction) -> PreorderWithTokens<L> {
         PreorderWithTokens {
-            raw: self.raw.preorder_with_tokens(),
+            raw: self.raw.preorder_with_tokens(direction),
             _p: PhantomData,
         }
     }
@@ -356,20 +393,67 @@ impl<L: Language> SyntaxNode<L> {
         SyntaxNode::from(self.raw.clone_subtree())
     }
 
-    pub fn clone_for_update(&self) -> SyntaxNode<L> {
-        SyntaxNode::from(self.raw.clone_for_update())
+    /// Return a new version of this node detached from its parent node
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn detach(self) -> Self {
+        Self {
+            raw: self.raw.detach(),
+            _p: PhantomData,
+        }
     }
 
-    pub fn detach(&self) {
-        self.raw.detach()
+    /// Return a clone of this node with the specified range of slots replaced
+    /// with the elements of the provided iterator
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn splice_slots<R, I>(self, range: R, replace_with: I) -> Self
+    where
+        R: ops::RangeBounds<usize>,
+        I: IntoIterator<Item = Option<SyntaxElement<L>>>,
+    {
+        Self {
+            raw: self.raw.splice_slots(
+                range,
+                replace_with
+                    .into_iter()
+                    .map(|element| element.map(cursor::SyntaxElement::from)),
+            ),
+            _p: PhantomData,
+        }
     }
 
-    pub fn splice_children(&self, to_delete: Range<usize>, to_insert: Vec<SyntaxElement<L>>) {
-        let to_insert = to_insert
-            .into_iter()
-            .map(cursor::SyntaxElement::from)
-            .collect::<Vec<_>>();
-        self.raw.splice_children(to_delete, to_insert)
+    /// Return a new version of this node with the element `prev_elem` replaced with `next_elem`
+    ///
+    /// `prev_elem` can be a direct child of this node, or an indirect child through any descendant node
+    ///
+    /// Returns `None` if `prev_elem` is not a descendant of this node
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn replace_child(
+        self,
+        prev_elem: SyntaxElement<L>,
+        next_elem: SyntaxElement<L>,
+    ) -> Option<Self> {
+        let (depth, prev_parent, index) = match prev_elem {
+            NodeOrToken::Node(prev_node) => (
+                prev_node
+                    .ancestors()
+                    .position(move |node| node == self)?
+                    .checked_sub(1)?,
+                prev_node.parent()?,
+                prev_node.index(),
+            ),
+            NodeOrToken::Token(prev_token) => (
+                prev_token.ancestors().position(move |node| node == self)?,
+                prev_token.parent()?,
+                prev_token.index(),
+            ),
+        };
+
+        let next_parent = prev_parent.splice_slots(index..=index, iter::once(Some(next_elem)));
+
+        match depth {
+            0 => Some(next_parent),
+            index => next_parent.ancestors().nth(index),
+        }
     }
 
     pub fn into_list(self) -> SyntaxList<L> {
@@ -379,7 +463,7 @@ impl<L: Language> SyntaxNode<L> {
     /// Whether the node contains any comments. This function checks
     /// **all the descendants** of the current node.
     pub fn has_comments_descendants(&self) -> bool {
-        self.descendants_tokens()
+        self.descendants_tokens(Direction::Next)
             .any(|tok| tok.has_trailing_comments() || tok.has_leading_comments())
     }
 
@@ -398,6 +482,25 @@ impl<L: Language> SyntaxNode<L> {
     pub fn has_leading_comments(&self) -> bool {
         self.first_token()
             .map_or(false, |tok| tok.has_leading_comments())
+    }
+}
+
+impl<L> SyntaxNode<L>
+where
+    L: Language + 'static,
+{
+    /// Create a [Send] + [Sync] handle to this node
+    ///
+    /// Returns `None` if self is not a root node
+    pub fn as_send(&self) -> Option<SendNode> {
+        if self.parent().is_none() {
+            Some(SendNode {
+                language: TypeId::of::<L>(),
+                green: self.green_node(),
+            })
+        } else {
+            None
+        }
     }
 }
 
@@ -455,6 +558,31 @@ impl<L: Language> From<cursor::SyntaxNode> for SyntaxNode<L> {
         SyntaxNode {
             raw,
             _p: PhantomData,
+        }
+    }
+}
+
+/// Language-agnostic representation of the root node of a syntax tree, can be
+/// sent or shared between threads
+#[derive(Clone)]
+pub struct SendNode {
+    language: TypeId,
+    green: GreenNode,
+}
+
+impl SendNode {
+    /// Downcast this handle back into a [SyntaxNode]
+    ///
+    /// Returns `None` if the specified language `L` is not the one this node
+    /// was created with
+    pub fn into_node<L>(self) -> Option<SyntaxNode<L>>
+    where
+        L: Language + 'static,
+    {
+        if TypeId::of::<L>() == self.language {
+            Some(SyntaxNode::new_root(self.green))
+        } else {
+            None
         }
     }
 }
@@ -620,5 +748,15 @@ impl<'a, L: Language> FusedIterator for SyntaxSlots<L> {}
 impl<'a, L: Language> ExactSizeIterator for SyntaxSlots<L> {
     fn len(&self) -> usize {
         self.raw.len()
+    }
+}
+
+impl<L: Language> DoubleEndedIterator for SyntaxSlots<L> {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.raw.next_back().map(SyntaxSlot::from)
+    }
+
+    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
+        self.raw.nth_back(n).map(SyntaxSlot::from)
     }
 }

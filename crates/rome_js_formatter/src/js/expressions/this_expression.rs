@@ -1,13 +1,14 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsThisExpression;
 use rome_js_syntax::JsThisExpressionFields;
 
-impl FormatNode for JsThisExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsThisExpressionFields { this_token } = self.as_fields();
+impl FormatNodeFields<JsThisExpression> for FormatNodeRule<JsThisExpression> {
+    fn fmt_fields(node: &JsThisExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsThisExpressionFields { this_token } = node.as_fields();
 
-        this_token.format(formatter)
+        write![f, [this_token.format()]]
     }
 }

@@ -13,7 +13,7 @@ pub(crate) mod single_token_parse_recovery;
 use drop_bomb::DebugDropBomb;
 use rome_js_syntax::{
     JsSyntaxKind::{self},
-    TextRange,
+    SourceType, TextRange,
 };
 use std::num::NonZeroU32;
 
@@ -368,11 +368,6 @@ impl<'s> Parser<'s> {
         self.events.truncate(self.events.len() - amount);
     }
 
-    /// Make a new error builder with warning severity
-    pub fn warning_builder(&self, message: &str) -> Diagnostic {
-        Diagnostic::warning(self.file_id, "SyntaxError", message)
-    }
-
     /// Bump and add an error event
     pub fn err_and_bump(&mut self, err: impl ToDiagnostic, unknown_syntax_kind: JsSyntaxKind) {
         let m = self.start();
@@ -388,7 +383,7 @@ impl<'s> Parser<'s> {
 
     /// Whether the code we are parsing is a module
     pub fn is_module(&self) -> bool {
-        self.source_type.module_kind.is_module()
+        self.source_type.module_kind().is_module()
     }
 }
 
@@ -615,14 +610,14 @@ pub struct Checkpoint {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Parser, SourceType};
-    use rome_js_syntax::JsSyntaxKind;
+    use crate::Parser;
+    use rome_js_syntax::{JsSyntaxKind, SourceType};
     use rome_rowan::AstNode;
 
     #[test]
     fn example() {
         use crate::syntax::expr::parse_expression_snipped;
-        use crate::{process, LosslessTreeSink, Parser, SourceType};
+        use crate::{process, LosslessTreeSink, Parser};
         use rome_js_syntax::{JsAnyExpression, JsExpressionSnipped};
 
         let source = "(void b)";

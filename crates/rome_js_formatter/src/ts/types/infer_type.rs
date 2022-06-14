@@ -1,11 +1,17 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsInferType;
+use crate::prelude::*;
+use crate::FormatNodeFields;
+use rome_formatter::write;
+use rome_js_syntax::{TsInferType, TsInferTypeFields};
 
-impl FormatNode for TsInferType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let infer = self.infer_token().format(formatter)?;
-        let type_parameter = self.type_parameter().format(formatter)?;
-        Ok(format_elements![infer, space_token(), type_parameter])
+impl FormatNodeFields<TsInferType> for FormatNodeRule<TsInferType> {
+    fn fmt_fields(node: &TsInferType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsInferTypeFields {
+            infer_token,
+            type_parameter,
+        } = node.as_fields();
+        write![
+            f,
+            [infer_token.format(), space_token(), type_parameter.format()]
+        ]
     }
 }

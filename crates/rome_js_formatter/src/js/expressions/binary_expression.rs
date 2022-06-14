@@ -1,12 +1,13 @@
+use crate::prelude::*;
 use crate::utils::{format_binary_like_expression, JsAnyBinaryLikeExpression};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+
+use crate::FormatNodeFields;
 use rome_js_syntax::JsBinaryExpression;
 
-impl FormatNode for JsBinaryExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsBinaryExpression> for FormatNodeRule<JsBinaryExpression> {
+    fn fmt_fields(node: &JsBinaryExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_binary_like_expression(
-            JsAnyBinaryLikeExpression::JsBinaryExpression(self.clone()),
+            JsAnyBinaryLikeExpression::JsBinaryExpression(node.clone()),
             formatter,
         )
     }
