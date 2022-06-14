@@ -26,10 +26,9 @@ pub fn analyze<B>(
 ) -> Option<B> {
     let registry = build_registry(&filter);
 
-    let analyzer = Analyzer {
-        registry,
-        has_suppressions: |node| has_suppressions_category(SuppressionCategory::Lint, node),
-    };
+    let analyzer = Analyzer::new(registry, |node| {
+        has_suppressions_category(SuppressionCategory::Lint, node)
+    });
 
     analyzer.analyze(file_id, root, filter.range, callback)
 }

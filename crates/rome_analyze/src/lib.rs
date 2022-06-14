@@ -59,11 +59,20 @@ pub enum Never {}
 pub type ControlFlow<B = Never> = ops::ControlFlow<B>;
 
 pub struct Analyzer<L: Language> {
-    pub registry: RuleRegistry<L>,
-    pub has_suppressions: fn(&SyntaxNode<L>) -> bool,
+    registry: RuleRegistry<L>,
+    has_suppressions: fn(&SyntaxNode<L>) -> bool,
 }
 
 impl<L: Language> Analyzer<L> {
+    /// Create a new instance of the analyzer from a registry instance, and a
+    /// language-specific suppression parser
+    pub fn new(registry: RuleRegistry<L>, has_suppressions: fn(&SyntaxNode<L>) -> bool) -> Self {
+        Self {
+            registry,
+            has_suppressions,
+        }
+    }
+
     /// Run the analyzer on the provided `root`: this process will use the given `filter`
     /// to selectively restrict analysis to specific rules / a specific source range,
     /// then call the `callback` when an analysis rule emits a diagnostic or action
