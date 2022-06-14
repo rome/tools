@@ -22,7 +22,7 @@ expression: useSelfClosingElements.jsx
 
 # Diagnostics
 ```
-warning[useSelfClosingElements]: Use while loops instead of for loops.
+warning[useSelfClosingElements]: JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.
    ┌─ useSelfClosingElements.jsx:10:1
    │
 10 │ <div></div>;
@@ -42,7 +42,7 @@ Suggested fix: Use a SelfClosingElement instead
 ```
 
 ```
-warning[useSelfClosingElements]: Use while loops instead of for loops.
+warning[useSelfClosingElements]: JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.
    ┌─ useSelfClosingElements.jsx:11:1
    │
 11 │ <Component></Component>;
@@ -61,7 +61,7 @@ Suggested fix: Use a SelfClosingElement instead
 ```
 
 ```
-warning[useSelfClosingElements]: Use while loops instead of for loops.
+warning[useSelfClosingElements]: JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.
    ┌─ useSelfClosingElements.jsx:12:1
    │
 12 │ <Foo.bar></Foo.bar>;

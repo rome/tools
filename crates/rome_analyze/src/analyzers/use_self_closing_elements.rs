@@ -21,7 +21,7 @@ impl Rule for UseSelfClosingElements {
     type State = ();
 
     fn run(n: &Self::Query) -> Option<Self::State> {
-        if n.children().len() == 0 {
+        if n.children().is_empty() {
             Some(())
         } else {
             None
