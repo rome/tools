@@ -10,7 +10,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@35..37 "A" [] [Whitespace(" ")],
                             },
@@ -52,7 +52,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@58..59 "A" [] [],
                             },
@@ -91,7 +91,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@78..79 "A" [] [],
                             },
@@ -101,7 +101,7 @@ JsModule {
                         COMMA@79..81 "," [] [Whitespace(" ")],
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@81..82 "B" [] [],
                             },
@@ -135,7 +135,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@94..96 "A" [] [Whitespace(" ")],
                             },

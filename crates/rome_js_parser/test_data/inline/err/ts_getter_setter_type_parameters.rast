@@ -25,7 +25,7 @@ JsModule {
                             items: TsTypeParameterList [
                                 TsTypeParameter {
                                     in_modifier_token: missing (optional),
-                                    out_modfier_token: missing (optional),
+                                    out_modifier_token: missing (optional),
                                     name: TsTypeParameterName {
                                         ident_token: IDENT@20..21 "A" [] [],
                                     },
@@ -66,7 +66,7 @@ JsModule {
                             items: TsTypeParameterList [
                                 TsTypeParameter {
                                     in_modifier_token: missing (optional),
-                                    out_modfier_token: missing (optional),
+                                    out_modifier_token: missing (optional),
                                     name: TsTypeParameterName {
                                         ident_token: IDENT@38..39 "A" [] [],
                                     },

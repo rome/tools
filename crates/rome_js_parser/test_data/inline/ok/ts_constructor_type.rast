@@ -119,7 +119,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@114..115 "A" [] [],
                             },
@@ -129,7 +129,7 @@ JsModule {
                         COMMA@115..117 "," [] [Whitespace(" ")],
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@117..118 "B" [] [],
                             },
@@ -200,7 +200,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@165..166 "A" [] [],
                             },
@@ -210,7 +210,7 @@ JsModule {
                         COMMA@166..168 "," [] [Whitespace(" ")],
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@168..169 "B" [] [],
                             },

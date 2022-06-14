@@ -11590,14 +11590,14 @@ impl TsTypeParameter {
     pub fn as_fields(&self) -> TsTypeParameterFields {
         TsTypeParameterFields {
             in_modifier_token: self.in_modifier_token(),
-            out_modfier_token: self.out_modfier_token(),
+            out_modifier_token: self.out_modifier_token(),
             name: self.name(),
             constraint: self.constraint(),
             default: self.default(),
         }
     }
     pub fn in_modifier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn out_modfier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn out_modifier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn name(&self) -> SyntaxResult<TsTypeParameterName> {
         support::required_node(&self.syntax, 2usize)
     }
@@ -11618,7 +11618,7 @@ impl Serialize for TsTypeParameter {
 #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeParameterFields {
     pub in_modifier_token: Option<SyntaxToken>,
-    pub out_modfier_token: Option<SyntaxToken>,
+    pub out_modifier_token: Option<SyntaxToken>,
     pub name: SyntaxResult<TsTypeParameterName>,
     pub constraint: Option<TsTypeConstraintClause>,
     pub default: Option<TsDefaultTypeClause>,
@@ -23742,8 +23742,8 @@ impl std::fmt::Debug for TsTypeParameter {
                 &support::DebugOptionalElement(self.in_modifier_token()),
             )
             .field(
-                "out_modfier_token",
-                &support::DebugOptionalElement(self.out_modfier_token()),
+                "out_modifier_token",
+                &support::DebugOptionalElement(self.out_modifier_token()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(

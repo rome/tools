@@ -12,7 +12,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: IN_KW@9..12 "in" [] [Whitespace(" ")],
-                        out_modfier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@12..13 "T" [] [],
                         },
@@ -41,7 +41,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@28..31 "out" [] [],
                         },
@@ -70,7 +70,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@48..52 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@48..52 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@52..53 "T" [] [],
                         },
@@ -99,7 +99,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: IN_KW@68..71 "in" [] [Whitespace(" ")],
-                        out_modfier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@71..74 "out" [] [],
                         },
@@ -128,7 +128,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@89..93 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@89..93 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@93..96 "out" [] [],
                         },
@@ -157,7 +157,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: IN_KW@111..114 "in" [] [Whitespace(" ")],
-                        out_modfier_token: OUT_KW@114..118 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@114..118 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@118..121 "out" [] [],
                         },
@@ -186,7 +186,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: IN_KW@136..139 "in" [] [Whitespace(" ")],
-                        out_modfier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@139..140 "X" [] [],
                         },
@@ -196,7 +196,7 @@ JsModule {
                     COMMA@140..142 "," [] [Whitespace(" ")],
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@142..146 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@142..146 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@146..147 "Y" [] [],
                         },
@@ -238,7 +238,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@167..171 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@167..171 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@171..172 "X" [] [],
                         },
@@ -248,7 +248,7 @@ JsModule {
                     COMMA@172..174 "," [] [Whitespace(" ")],
                     TsTypeParameter {
                         in_modifier_token: IN_KW@174..177 "in" [] [Whitespace(" ")],
-                        out_modfier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@177..178 "Y" [] [],
                         },
@@ -290,7 +290,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@198..202 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@198..202 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@202..203 "X" [] [],
                         },
@@ -300,7 +300,7 @@ JsModule {
                     COMMA@203..205 "," [] [Whitespace(" ")],
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@205..209 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@205..209 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@209..211 "Y" [] [Whitespace(" ")],
                         },
@@ -354,7 +354,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: IN_KW@247..250 "in" [] [Whitespace(" ")],
-                        out_modfier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@250..251 "T" [] [],
                         },
@@ -381,7 +381,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@266..270 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@266..270 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@270..271 "T" [] [],
                         },
@@ -412,7 +412,7 @@ JsModule {
                         items: TsTypeParameterList [
                             TsTypeParameter {
                                 in_modifier_token: IN_KW@301..304 "in" [] [Whitespace(" ")],
-                                out_modfier_token: missing (optional),
+                                out_modifier_token: missing (optional),
                                 name: TsTypeParameterName {
                                     ident_token: IDENT@304..305 "T" [] [],
                                 },
@@ -442,7 +442,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@320..324 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@320..324 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@324..325 "T" [] [],
                         },
@@ -468,7 +468,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: IN_KW@344..347 "in" [] [Whitespace(" ")],
-                        out_modfier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@347..348 "T" [] [],
                         },
@@ -493,7 +493,7 @@ JsModule {
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modfier_token: OUT_KW@367..371 "out" [] [Whitespace(" ")],
+                        out_modifier_token: OUT_KW@367..371 "out" [] [Whitespace(" ")],
                         name: TsTypeParameterName {
                             ident_token: IDENT@371..372 "T" [] [],
                         },
@@ -521,7 +521,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: IN_KW@395..398 "in" [] [Whitespace(" ")],
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@398..399 "T" [] [],
                             },
@@ -551,7 +551,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: OUT_KW@422..426 "out" [] [Whitespace(" ")],
+                            out_modifier_token: OUT_KW@422..426 "out" [] [Whitespace(" ")],
                             name: TsTypeParameterName {
                                 ident_token: IDENT@426..427 "T" [] [],
                             },
@@ -580,7 +580,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: IN_KW@454..457 "in" [] [Whitespace(" ")],
-                            out_modfier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@457..458 "T" [] [],
                             },
@@ -608,7 +608,7 @@ JsModule {
                     items: TsTypeParameterList [
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
-                            out_modfier_token: OUT_KW@485..489 "out" [] [Whitespace(" ")],
+                            out_modifier_token: OUT_KW@485..489 "out" [] [Whitespace(" ")],
                             name: TsTypeParameterName {
                                 ident_token: IDENT@489..490 "T" [] [],
                             },

@@ -5,5 +5,4 @@ mod index_signature_parameter;
 mod property_parameter;
 mod this_parameter;
 mod type_parameter;
-mod type_parameter_modifier;
 mod type_parameters;

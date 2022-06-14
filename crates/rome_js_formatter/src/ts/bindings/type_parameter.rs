@@ -9,8 +9,10 @@ impl FormatNodeFields<TsTypeParameter> for FormatNodeRule<TsTypeParameter> {
             name,
             constraint,
             default,
+            in_modifier_token,
+            out_modifier_token,
         } = node.as_fields();
-
+        write!(f, [in_modifier_token.format(), out_modifier_token.format()])?;
         write!(f, [name.format()])?;
 
         if let Some(constraint) = constraint {
