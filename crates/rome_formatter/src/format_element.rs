@@ -216,7 +216,7 @@ impl Fill {
 /// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
 #[derive(Clone, PartialEq, Eq)]
 pub struct Group {
-    pub(crate) content: Content,
+    pub(crate) content: Box<[FormatElement]>,
     pub(crate) id: Option<GroupId>,
 }
 
@@ -234,9 +234,9 @@ impl Debug for Group {
 }
 
 impl Group {
-    pub fn new(content: FormatElement) -> Self {
+    pub fn new(content: Vec<FormatElement>) -> Self {
         Self {
-            content: Box::new(content),
+            content: content.into_boxed_slice(),
             id: None,
         }
     }
@@ -480,7 +480,7 @@ impl FormatElement {
             FormatElement::Space => false,
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Indent(content) => content.will_break(),
-            FormatElement::Group(group) => group.content.will_break(),
+            FormatElement::Group(group) => group.content.iter().any(FormatElement::will_break),
             FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
             FormatElement::Fill(fill) => fill.list.content.iter().any(FormatElement::will_break),
@@ -565,7 +565,11 @@ impl FormatElement {
             FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
             FormatElement::Indent(indent) => indent.last_element(),
-            FormatElement::Group(group) => group.content.last_element(),
+            FormatElement::Group(group) => group
+                .content
+                .iter()
+                .rev()
+                .find_map(FormatElement::last_element),
 
             _ => Some(self),
         }

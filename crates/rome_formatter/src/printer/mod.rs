@@ -129,7 +129,11 @@ impl<'a> Printer<'a> {
                     PrintMode::Flat if self.state.measured_group_fits => {
                         // A parent group has already verified that this group fits on a single line
                         // Thus, just continue in flat mode
-                        queue.enqueue(PrintElementCall::new(content.as_ref(), args));
+                        queue.extend(
+                            content
+                                .iter()
+                                .map(|element| PrintElementCall::new(element, args)),
+                        );
                         PrintMode::Flat
                     }
                     // The printer is either in expanded mode or it's necessary to re-measure if the group fits
@@ -139,15 +143,16 @@ impl<'a> Printer<'a> {
                         // print the group in "flat" mode, otherwise continue in expanded mode
 
                         let flat_args = args.with_print_mode(PrintMode::Flat);
-                        if fits_on_line(&[content], flat_args, queue, self) {
-                            queue.enqueue(PrintElementCall::new(content, flat_args));
+                        if fits_on_line(content.iter(), flat_args, queue, self) {
+                            queue.extend(
+                                content.iter().map(|e| PrintElementCall::new(e, flat_args)),
+                            );
                             self.state.measured_group_fits = true;
                             PrintMode::Flat
                         } else {
-                            queue.enqueue(PrintElementCall::new(
-                                content,
-                                args.with_print_mode(PrintMode::Expanded),
-                            ));
+                            queue.extend(content.iter().map(|e| {
+                                PrintElementCall::new(e, args.with_print_mode(PrintMode::Expanded))
+                            }));
                             PrintMode::Expanded
                         }
                     }
@@ -279,7 +284,7 @@ impl<'a> Printer<'a> {
                                     PrintMode::Expanded
                                 };
 
-                                if fits_on_line(&[variant], args.with_print_mode(mode), queue, self)
+                                if fits_on_line([variant], args.with_print_mode(mode), queue, self)
                                 {
                                     self.state.measured_group_fits = true;
 
@@ -362,7 +367,7 @@ impl<'a> Printer<'a> {
         };
 
         let mut current_fits = fits_on_line(
-            &[current_content],
+            [current_content],
             args.with_print_mode(PrintMode::Flat),
             &empty_rest,
             self,
@@ -384,7 +389,7 @@ impl<'a> Printer<'a> {
             // otherwise see if both contents fit on the line.
             let current_and_next_fit = current_fits
                 && fits_on_line(
-                    &[separator, next_item],
+                    [separator, next_item],
                     args.with_print_mode(PrintMode::Flat),
                     &empty_rest,
                     self,
@@ -406,7 +411,7 @@ impl<'a> Printer<'a> {
                 );
 
                 let next_fits = fits_on_line(
-                    &[next_item],
+                    [next_item],
                     args.with_print_mode(PrintMode::Flat),
                     &empty_rest,
                     self,
@@ -626,12 +631,16 @@ impl<'a> ElementCallQueue<'a> {
 /// Tests if it's possible to print the content of the queue up to the first hard line break
 /// or the end of the document on a single line without exceeding the line width.
 #[must_use = "Only determines if content fits on a single line but doesn't print it"]
-fn fits_on_line<'a>(
-    elements: &[&'a FormatElement],
+fn fits_on_line<'a, I>(
+    elements: I,
     args: PrintElementArgs,
     queue: &ElementCallQueue<'a>,
     printer: &mut Printer<'a>,
-) -> bool {
+) -> bool
+where
+    I: IntoIterator<Item = &'a FormatElement>,
+    I::IntoIter: DoubleEndedIterator,
+{
     let shared_buffer = std::mem::take(&mut printer.state.measure_queue);
     debug_assert!(shared_buffer.is_empty());
 
@@ -641,7 +650,7 @@ fn fits_on_line<'a>(
 
     measure_queue.extend(
         elements
-            .iter()
+            .into_iter()
             .map(|element| PrintElementCall::new(element, args)),
     );
 
@@ -726,7 +735,9 @@ fn fits_element_on_line<'a, 'rest>(
             args.with_incremented_indent(),
         )),
 
-        FormatElement::Group(group) => queue.enqueue(PrintElementCall::new(&group.content, args)),
+        FormatElement::Group(group) => {
+            queue.extend(group.content.iter().map(|e| PrintElementCall::new(e, args)))
+        }
 
         FormatElement::ConditionalGroupContent(conditional) => {
             if args.mode == conditional.mode {
