@@ -531,10 +531,10 @@ impl<'t> OpenDelimiter<'t> {
 
             write!(buffer, [format_trailing_trivia(self.open_token)])?;
 
-            let trivia = buffer.into_element();
+            let trivia = buffer.into_vec();
 
             if !trivia.is_empty() {
-                f.write_element(trivia)?;
+                f.write_elements(trivia)?;
                 soft_line_break_or_space().fmt(f)?;
             }
 
