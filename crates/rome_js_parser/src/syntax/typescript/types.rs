@@ -204,9 +204,9 @@ impl ParseSeparatedList for TsTypeParameterList {
 
 // test tsx type_parameter_modifier_tsx
 // <in T></in>;
-// <out T></out>;
-// <in out T></in>;
-// <out in T></out>;
+// // <out T></out>;
+// // <in out T></in>;
+// // <out in T></out>;
 // //<in T extends={true}></in>
 // //<out T extends={true}></out>
 // //<in out T extends={true}></in>
@@ -231,11 +231,24 @@ impl ParseSeparatedList for TsTypeParameterList {
 // declare class Foo<out T> {}
 // declare interface Foo<in T> {}
 // declare interface Foo<out T> {}
-fn parse_ts_type_parameter_modifier(
-    p: &mut Parser,
-    could_use_parameter_modifier: bool,
-) -> ParsedSyntax {
+
+
+// fn parse_ts_type_parameter_modifier(
+//     p: &mut Parser,
+//     could_use_parameter_modifier: bool,
+// ) -> ParsedSyntax {
+//     let m = p.start();
+    
+//     if !has_any_modifier {
+//         m.abandon(p);
+//         return Absent;
+//     }
+//     Present(m.complete(p, TS_TYPE_PARAMETER_MODIFIER))
+// }
+
+fn parse_ts_type_parameter(p: &mut Parser, could_use_parameter_modifier: bool) -> ParsedSyntax {
     let m = p.start();
+    // parse_ts_type_parameter_modifier(p, could_use_parameter_modifier).ok();
     let mut has_any_modifier = false;
     // try to eat `in` modifier
     if p.at(T![in]) {
@@ -264,16 +277,6 @@ fn parse_ts_type_parameter_modifier(
             p.bump(T![out]);
         }
     }
-    if !has_any_modifier {
-        m.abandon(p);
-        return Absent;
-    }
-    Present(m.complete(p, TS_TYPE_PARAMETER_MODIFIER))
-}
-
-fn parse_ts_type_parameter(p: &mut Parser, could_use_parameter_modifier: bool) -> ParsedSyntax {
-    let m = p.start();
-    parse_ts_type_parameter_modifier(p, could_use_parameter_modifier).ok();
     let name = parse_ts_type_parameter_name(p);
     parse_ts_type_constraint_clause(p).ok();
     parse_ts_default_type_clause(p).ok();

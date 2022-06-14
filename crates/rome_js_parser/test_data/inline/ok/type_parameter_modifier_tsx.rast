@@ -32,17 +32,17 @@ JsModule {
                     },
                 },
             },
-            semicolon_token: missing (optional),
+            semicolon_token: SEMICOLON@11..12 ";" [] [],
         },
     ],
-    eof_token: EOF@11..161 "" [Newline("\n"), Comments("// <out T></out>"), Newline("\n"), Comments("// <in out T></in>"), Newline("\n"), Comments("// <out in T></out>"), Newline("\n"), Comments("//<in T extends={true ..."), Newline("\n"), Comments("//<out T extends={tru ..."), Newline("\n"), Comments("//<in out T extends={ ..."), Newline("\n")] [],
+    eof_token: EOF@12..165 "" [Newline("\n"), Comments("// <out T></out>;"), Newline("\n"), Comments("// <in out T></in>;"), Newline("\n"), Comments("// <out in T></out>;"), Newline("\n"), Comments("//<in T extends={true ..."), Newline("\n"), Comments("//<out T extends={tru ..."), Newline("\n"), Comments("//<in out T extends={ ..."), Newline("\n")] [],
 }
 
-0: JS_MODULE@0..161
+0: JS_MODULE@0..165
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..11
-    0: JS_EXPRESSION_STATEMENT@0..11
+  2: JS_MODULE_ITEM_LIST@0..12
+    0: JS_EXPRESSION_STATEMENT@0..12
       0: JSX_TAG_EXPRESSION@0..11
         0: JSX_ELEMENT@0..11
           0: JSX_OPENING_ELEMENT@0..6
@@ -63,5 +63,5 @@ JsModule {
             2: JSX_NAME@8..10
               0: JSX_IDENT@8..10 "in" [] []
             3: R_ANGLE@10..11 ">" [] []
-      1: (empty)
-  3: EOF@11..161 "" [Newline("\n"), Comments("// <out T></out>"), Newline("\n"), Comments("// <in out T></in>"), Newline("\n"), Comments("// <out in T></out>"), Newline("\n"), Comments("//<in T extends={true ..."), Newline("\n"), Comments("//<out T extends={tru ..."), Newline("\n"), Comments("//<in out T extends={ ..."), Newline("\n")] []
+      1: SEMICOLON@11..12 ";" [] []
+  3: EOF@12..165 "" [Newline("\n"), Comments("// <out T></out>;"), Newline("\n"), Comments("// <in out T></in>;"), Newline("\n"), Comments("// <out in T></out>;"), Newline("\n"), Comments("//<in T extends={true ..."), Newline("\n"), Comments("//<out T extends={tru ..."), Newline("\n"), Comments("//<in out T extends={ ..."), Newline("\n")] []

@@ -6008,20 +6008,26 @@ pub fn ts_type_operator_type(operator_token_token: SyntaxToken, ty: TsType) -> T
 pub fn ts_type_parameter(name: TsTypeParameterName) -> TsTypeParameterBuilder {
     TsTypeParameterBuilder {
         name,
-        modifier: None,
+        in_modifier_token: None,
+        out_modfier_token: None,
         constraint: None,
         default: None,
     }
 }
 pub struct TsTypeParameterBuilder {
     name: TsTypeParameterName,
-    modifier: Option<TsTypeParameterModifier>,
+    in_modifier_token: Option<SyntaxToken>,
+    out_modfier_token: Option<SyntaxToken>,
     constraint: Option<TsTypeConstraintClause>,
     default: Option<TsDefaultTypeClause>,
 }
 impl TsTypeParameterBuilder {
-    pub fn with_modifier(mut self, modifier: TsTypeParameterModifier) -> Self {
-        self.modifier = Some(modifier);
+    pub fn with_in_modifier_token(mut self, in_modifier_token: SyntaxToken) -> Self {
+        self.in_modifier_token = Some(in_modifier_token);
+        self
+    }
+    pub fn with_out_modfier_token(mut self, out_modfier_token: SyntaxToken) -> Self {
+        self.out_modfier_token = Some(out_modfier_token);
         self
     }
     pub fn with_constraint(mut self, constraint: TsTypeConstraintClause) -> Self {
@@ -6036,42 +6042,15 @@ impl TsTypeParameterBuilder {
         TsTypeParameter::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_TYPE_PARAMETER,
             [
-                self.modifier
-                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                self.in_modifier_token
+                    .map(|token| SyntaxElement::Token(token)),
+                self.out_modfier_token
+                    .map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.constraint
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.default
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
-            ],
-        ))
-    }
-}
-pub fn ts_type_parameter_modifier() -> TsTypeParameterModifierBuilder {
-    TsTypeParameterModifierBuilder {
-        in_token: None,
-        out_token: None,
-    }
-}
-pub struct TsTypeParameterModifierBuilder {
-    in_token: Option<SyntaxToken>,
-    out_token: Option<SyntaxToken>,
-}
-impl TsTypeParameterModifierBuilder {
-    pub fn with_in_token(mut self, in_token: SyntaxToken) -> Self {
-        self.in_token = Some(in_token);
-        self
-    }
-    pub fn with_out_token(mut self, out_token: SyntaxToken) -> Self {
-        self.out_token = Some(out_token);
-        self
-    }
-    pub fn build(self) -> TsTypeParameterModifier {
-        TsTypeParameterModifier::unwrap_cast(SyntaxNode::new_detached(
-            JsSyntaxKind::TS_TYPE_PARAMETER_MODIFIER,
-            [
-                self.in_token.map(|token| SyntaxElement::Token(token)),
-                self.out_token.map(|token| SyntaxElement::Token(token)),
             ],
         ))
     }

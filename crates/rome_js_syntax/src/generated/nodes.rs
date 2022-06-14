@@ -11589,22 +11589,22 @@ impl TsTypeParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsTypeParameterFields {
         TsTypeParameterFields {
-            modifier: self.modifier(),
+            in_modifier_token: self.in_modifier_token(),
+            out_modfier_token: self.out_modfier_token(),
             name: self.name(),
             constraint: self.constraint(),
             default: self.default(),
         }
     }
-    pub fn modifier(&self) -> Option<TsTypeParameterModifier> {
-        support::node(&self.syntax, 0usize)
-    }
+    pub fn in_modifier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn out_modfier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn name(&self) -> SyntaxResult<TsTypeParameterName> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn constraint(&self) -> Option<TsTypeConstraintClause> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 3usize) }
+    pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 4usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsTypeParameter {
@@ -11617,45 +11617,11 @@ impl Serialize for TsTypeParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeParameterFields {
-    pub modifier: Option<TsTypeParameterModifier>,
+    pub in_modifier_token: Option<SyntaxToken>,
+    pub out_modfier_token: Option<SyntaxToken>,
     pub name: SyntaxResult<TsTypeParameterName>,
     pub constraint: Option<TsTypeConstraintClause>,
     pub default: Option<TsDefaultTypeClause>,
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsTypeParameterModifier {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsTypeParameterModifier {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> TsTypeParameterModifierFields {
-        TsTypeParameterModifierFields {
-            in_token: self.in_token(),
-            out_token: self.out_token(),
-        }
-    }
-    pub fn in_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn out_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-}
-#[cfg(feature = "serde")]
-impl Serialize for TsTypeParameterModifier {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        self.as_fields().serialize(serializer)
-    }
-}
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
-pub struct TsTypeParameterModifierFields {
-    pub in_token: Option<SyntaxToken>,
-    pub out_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParameterName {
@@ -23771,7 +23737,14 @@ impl AstNode for TsTypeParameter {
 impl std::fmt::Debug for TsTypeParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsTypeParameter")
-            .field("modifier", &support::DebugOptionalElement(self.modifier()))
+            .field(
+                "in_modifier_token",
+                &support::DebugOptionalElement(self.in_modifier_token()),
+            )
+            .field(
+                "out_modfier_token",
+                &support::DebugOptionalElement(self.out_modfier_token()),
+            )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "constraint",
@@ -23786,36 +23759,6 @@ impl From<TsTypeParameter> for SyntaxNode {
 }
 impl From<TsTypeParameter> for SyntaxElement {
     fn from(n: TsTypeParameter) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TsTypeParameterModifier {
-    type Language = Language;
-    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMETER_MODIFIER }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-    fn into_syntax(self) -> SyntaxNode { self.syntax }
-}
-impl std::fmt::Debug for TsTypeParameterModifier {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsTypeParameterModifier")
-            .field("in_token", &support::DebugOptionalElement(self.in_token()))
-            .field(
-                "out_token",
-                &support::DebugOptionalElement(self.out_token()),
-            )
-            .finish()
-    }
-}
-impl From<TsTypeParameterModifier> for SyntaxNode {
-    fn from(n: TsTypeParameterModifier) -> SyntaxNode { n.syntax }
-}
-impl From<TsTypeParameterModifier> for SyntaxElement {
-    fn from(n: TsTypeParameterModifier) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsTypeParameterName {
     type Language = Language;
@@ -32412,11 +32355,6 @@ impl std::fmt::Display for TsTypeOperatorType {
     }
 }
 impl std::fmt::Display for TsTypeParameter {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TsTypeParameterModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

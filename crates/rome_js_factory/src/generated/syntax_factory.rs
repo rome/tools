@@ -9253,10 +9253,17 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             TS_TYPE_PARAMETER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsTypeParameterModifier::can_cast(element.kind()) {
+                    if element.kind() == T![in] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![out] {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9290,32 +9297,6 @@ impl SyntaxFactory for JsSyntaxFactory {
                     );
                 }
                 slots.into_node(TS_TYPE_PARAMETER, children)
-            }
-            TS_TYPE_PARAMETER_MODIFIER => {
-                let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
-                let mut current_element = elements.next();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![in] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![out] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if current_element.is_some() {
-                    return RawSyntaxNode::new(
-                        TS_TYPE_PARAMETER_MODIFIER.to_unknown(),
-                        children.into_iter().map(Some),
-                    );
-                }
-                slots.into_node(TS_TYPE_PARAMETER_MODIFIER, children)
             }
             TS_TYPE_PARAMETER_NAME => {
                 let mut elements = (&children).into_iter();
