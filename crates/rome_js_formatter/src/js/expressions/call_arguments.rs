@@ -1,6 +1,8 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
 use crate::prelude::*;
-use crate::utils::{format_separated_for_call_arguments, is_simple_expression, token_has_comments};
+use crate::utils::{
+    fmt_arguments_multi_line, fmt_arguments_one_line, is_simple_expression, token_has_comments,
+};
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
@@ -39,6 +41,23 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         let r_leading_trivia = close_delimiter.as_leading_trivia_fmt().memoized();
         let r_paren = close_delimiter.as_token_fmt().memoized();
         let r_trailing_trivia = close_delimiter.as_trailing_trivia_fmt().memoized();
+
+        if args.len() == 0 {
+            return write!(
+                f,
+                [
+                    l_leading_trivia,
+                    l_paren,
+                    group_elements(&format_args![
+                        l_trailing_trivia,
+                        args.format(),
+                        r_leading_trivia,
+                    ]),
+                    r_paren,
+                    r_trailing_trivia
+                ]
+            );
+        }
 
         // particular formatting for hooks
         if is_react_hook_with_deps_array(&args)? {
@@ -170,11 +189,10 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                                     &soft_block_indent(&format_args![
                                         &l_trailing_trivia,
                                         format_with(|f| {
-                                            format_separated_for_call_arguments(
+                                            fmt_arguments_multi_line(
                                                 separated.iter(),
                                                 separated.len(),
                                                 f,
-                                                false,
                                             )
                                         }),
                                         r_leading_trivia,
@@ -198,12 +216,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                         l_paren,
                         l_trailing_trivia,
                         group_elements(&format_args![format_with(|f| {
-                            format_separated_for_call_arguments(
-                                separated.iter(),
-                                separated.len(),
-                                f,
-                                false,
-                            )
+                            fmt_arguments_multi_line(separated.iter(), separated.len(), f)
                         })]),
                         r_leading_trivia,
                         r_paren,
@@ -224,31 +237,28 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                 .collect();
             write!(
                 f,
-                [group_elements(&format_args![
+                [
                     l_leading_trivia,
-                    l_paren,
-                    l_trailing_trivia,
-                    &if_group_breaks(&format_args![
-                        indent(&format_args![
+                    &group_elements(&format_args![
+                        l_paren,
+                        l_trailing_trivia,
+                        &if_group_breaks(&format_args![
+                            indent(&format_args![
+                                soft_line_break(),
+                                &format_with(|f| {
+                                    fmt_arguments_multi_line(separated.iter(), args.len(), f)
+                                }),
+                            ]),
                             soft_line_break(),
-                            &format_with(|f| {
-                                format_separated_for_call_arguments(
-                                    separated.iter(),
-                                    args.len(),
-                                    f,
-                                    false,
-                                )
-                            }),
                         ]),
-                        soft_line_break(),
-                    ]),
-                    &if_group_fits_on_line(&format_args![&format_with(|f| {
-                        format_separated_for_call_arguments(separated.iter(), args.len(), f, true)
-                    }),]),
-                    r_leading_trivia,
-                    r_paren,
+                        &if_group_fits_on_line(&format_args![&format_with(|f| {
+                            fmt_arguments_one_line(separated.iter(), args.len(), f)
+                        }),]),
+                        r_leading_trivia,
+                        r_paren,
+                    ],),
                     r_trailing_trivia
-                ]),]
+                ]
             )
         }
     }

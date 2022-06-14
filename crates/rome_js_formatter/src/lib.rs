@@ -183,7 +183,7 @@ where
         if has_formatter_suppressions(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
         } else {
-            dbg_write!(f, [format_with(|f| { Self::fmt_fields(node, f) })])?;
+            Self::fmt_fields(node, f)?;
         };
 
         Ok(())
@@ -526,8 +526,12 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
+export class Thing implements OtherThing {
+  do: (type: Type) => Provider<Prop> = memoize(
+    (type: ObjectType): Provider<Opts> => {},
+  );
+}
 
-      Observable.timer(800) // debounce
         
     
 "#;
