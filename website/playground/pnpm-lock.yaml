@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@honkhonk/vite-plugin-svgr': ^1.1.0
   '@tailwindcss/forms': ^0.4.0
-  '@types/prettier': ^2.4.3
+  '@types/prettier': ^2.6.3
   '@types/react': ^17.0.33
   '@types/react-dom': ^17.0.10
   '@types/react-tabs': ^2.3.4
@@ -11,7 +11,7 @@ specifiers:
   '@vitejs/plugin-react': ^1.0.7
   autoprefixer: ^10.4.2
   postcss: ^8.4.6
-  prettier: ^2.6.2
+  prettier: ^2.7.0
   react: ^17.0.2
   react-dom: ^17.0.2
   react-json-view: ^1.21.3
@@ -23,7 +23,7 @@ specifiers:
 
 dependencies:
   '@uiw/react-textarea-code-editor': 1.4.16_sfoxds7t5ydpegc3knd667wn6m
-  prettier: 2.6.2
+  prettier: 2.7.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-json-view: 1.21.3_xd63vgjm47lzoal5ybyqmsdesy
@@ -32,7 +32,7 @@ dependencies:
 devDependencies:
   '@honkhonk/vite-plugin-svgr': 1.1.0_vite@2.7.13
   '@tailwindcss/forms': 0.4.1_tailwindcss@3.0.19
-  '@types/prettier': 2.4.4
+  '@types/prettier': 2.6.3
   '@types/react': 17.0.39
   '@types/react-dom': 17.0.11
   '@types/react-tabs': 2.3.4
@@ -566,8 +566,8 @@ packages:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
     dev: false
 
-  /@types/prettier/2.4.4:
-    resolution: {integrity: sha512-ReVR2rLTV1kvtlWFyuot+d1pkpG2Fw/XKE3PDAdj57rbM97ttSp9JZ2UsP+2EHTylra9cUf6JA7tGwW1INzUrA==}
+  /@types/prettier/2.6.3:
+    resolution: {integrity: sha512-ymZk3LEC/fsut+/Q5qejp6R9O1rMxz3XaRHDV6kX8MrGAhOSPqVARbDi+EZvInBpw+BnCX3TD240byVkOfQsHg==}
     dev: true
 
   /@types/prop-types/15.7.4:
@@ -2646,8 +2646,8 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /prettier/2.6.2:
-    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
+  /prettier/2.7.0:
+    resolution: {integrity: sha512-nwoX4GMFgxoPC6diHvSwmK/4yU8FFH3V8XWtLQrbj4IBsK2pkYhG4kf/ljF/haaZ/aii+wNJqISrCDPgxGWDVQ==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: false

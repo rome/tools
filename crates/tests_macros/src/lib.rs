@@ -60,7 +60,7 @@ fn transform_file_name(input: &str) -> String {
     let mut result = String::new();
     for char in input.chars() {
         match char {
-            '-' | '.' => {
+            '-' | '.' | '@' | '+' => {
                 result.push('_');
             }
             char if char.is_uppercase() => {
