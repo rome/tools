@@ -15,7 +15,7 @@ require([
   Rectangle,
   Triangle,
   Circle,
-  Star
+  Star,
 ) {
   console.log("some code");
 });
@@ -37,7 +37,7 @@ define([
   Rectangle,
   Triangle,
   Circle,
-  Star
+  Star,
 ) {
   console.log("some code");
 });

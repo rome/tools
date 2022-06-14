@@ -13,7 +13,7 @@ class Foo {
     nine,
     ten,
 
-    eleven
+    eleven,
   ) {}
 }
 
@@ -31,7 +31,7 @@ function foo(
   nine,
   ten,
 
-  eleven
+  eleven,
 ) {}
 
 call((a, b) => {});
@@ -53,8 +53,8 @@ call(
     nine,
     ten,
 
-    eleven
-  ) => {}
+    eleven,
+  ) => {},
 );
 
 function test({
@@ -89,7 +89,7 @@ function test({ one, two, three, four }, $a) {}
 function test(
   { one, two, three, four },
 
-  $a
+  $a,
 ) {}
 
 function foo(...rest) {}
@@ -104,7 +104,7 @@ function foo(one, ...rest) {}
 
 f(
   superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLong,
-  ...args
+  ...args,
 );
 
 it("does something really long and complicated so I have to write a very long name for the test", function (done, foo) {

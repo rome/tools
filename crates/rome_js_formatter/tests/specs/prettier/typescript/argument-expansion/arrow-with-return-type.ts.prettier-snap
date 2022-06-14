@@ -7,7 +7,7 @@ longfunctionWithCall12(
   foo,
   (thing: string): complex<type<something>> => {
     code();
-  }
+  },
 );
 
 longfunctionWithCallBack(
@@ -15,7 +15,7 @@ longfunctionWithCallBack(
   foobarbazblablablablabla,
   (thing: string): complex<type<something>> => {
     code();
-  }
+  },
 );
 
 longfunctionWithCallBack(
@@ -23,18 +23,18 @@ longfunctionWithCallBack(
   foobarbazblablabla,
   (thing: string): complex<type<something>> => {
     code();
-  }
+  },
 );
 
 longfunctionWithCall1(
   "bla",
   foo,
   (
-    thing: string
+    thing: string,
   ): complex<
     type<`
 `>
   > => {
     code();
-  }
+  },
 );

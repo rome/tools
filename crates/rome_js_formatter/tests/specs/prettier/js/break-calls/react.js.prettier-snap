@@ -49,7 +49,7 @@ function MyComponent(props) {
     // We need to disable the eslint warning here,
     // because of some complicated reason.
     // eslint-disable line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   return null;
@@ -58,7 +58,7 @@ function MyComponent(props) {
 function Comp1() {
   const { firstName, lastName } = useMemo(
     () => parseFullName(fullName),
-    [fullName]
+    [fullName],
   );
 }
 
@@ -77,7 +77,7 @@ function Comp2() {
       props.value,
       props.value,
       props.value,
-    ]
+    ],
   );
 }
 
@@ -85,7 +85,7 @@ function Comp3() {
   const { firstName, lastName } = useMemo(
     (aaa, bbb, ccc, ddd, eee, fff, ggg, hhh, iii, jjj, kkk) =>
       func(aaa, bbb, ccc, ddd, eee, fff, ggg, hhh, iii, jjj, kkk),
-    [foo, bar, baz]
+    [foo, bar, baz],
   );
 }
 
@@ -97,7 +97,7 @@ function Comp4() {
       (foo && baz(foo) + bar(foo) + foo && bar && baz) ||
       baz ||
       (foo && baz(foo) + bar(foo)),
-    [foo, bar, baz]
+    [foo, bar, baz],
   );
 }
 

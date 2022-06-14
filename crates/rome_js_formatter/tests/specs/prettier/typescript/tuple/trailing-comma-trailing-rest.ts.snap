@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: no-trailing-comma-after-rest.ts
+expression: trailing-comma-trailing-rest.ts
 ---
 # Input
 ```js

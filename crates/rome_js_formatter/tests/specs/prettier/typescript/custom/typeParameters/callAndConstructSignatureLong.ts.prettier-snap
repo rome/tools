@@ -2,12 +2,12 @@ interface Interface {
   <
     Voila,
     InViewHumbleVaudevillianVeteran,
-    CastVicariouslyAsBothVictimAndVillainByTheVicissitudesOfFate
+    CastVicariouslyAsBothVictimAndVillainByTheVicissitudesOfFate,
   >(): V;
   new <
     ThisVisage,
     NoMereVeneerOfVanity,
     IsAVestigeOfTheVoxPopuliNowVacant,
-    Vanished
+    Vanished,
   >(): V;
 }
