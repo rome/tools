@@ -46,11 +46,11 @@ impl Rule for UseSelfClosingElements {
             attributes,
             r_angle_token,
         } = open_element.as_fields();
-		// check if previous `open_element` have a whitespace before `>`
+        // check if previous `open_element` have a whitespace before `>`
         let need_extra_whitespace = if let Some(last_attribute) = attributes.last() {
             let trailing = last_attribute.syntax().last_trailing_trivia();
             if let Some(trailing) = trailing {
-                !trailing.text().ends_with(" ")
+                !trailing.text().ends_with(' ')
             } else {
                 true
             }
@@ -58,7 +58,7 @@ impl Rule for UseSelfClosingElements {
             let name = name.clone().ok()?;
             let trailing = name.syntax().last_trailing_trivia();
             if let Some(trailing) = trailing {
-                !trailing.text().ends_with(" ")
+                !trailing.text().ends_with(' ')
             } else {
                 true
             }
