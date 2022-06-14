@@ -2,10 +2,10 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsSyntaxToken, JsxAnyAttributeValue,
-    JsxAttribute, JsxAttributeFields, T,
+    JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute,
+    JsxAttributeFields, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, TriviaPiece};
+use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
@@ -49,14 +49,6 @@ impl Rule for NoImplicitBoolean {
 
         // we need to move trailing_trivia of name_syntax to close_curly_token
         // <div disabled /**test*/ /> ->    <div disabled={true}/**test*/ />
-        let mut close_curly_token = String::from("}");
-        let mut trailing = Vec::new();
-        if let Some(trivia) = name_syntax.last_trailing_trivia() {
-            for piece in trivia.pieces() {
-                trailing.push(TriviaPiece::new(piece.kind(), piece.text_len()));
-                close_curly_token += piece.text();
-            }
-        }
         let last_token_of_name_syntax = name_syntax.last_token()?;
         // drop the trailing trivia of name_syntax, at CST level it means
         // clean the trailing trivia of last token of name_syntax
@@ -75,7 +67,7 @@ impl Rule for NoImplicitBoolean {
                     make::js_boolean_literal_expression(make::token(T![true])),
                 ),
             ),
-            JsSyntaxToken::new_detached(JsSyntaxKind::R_CURLY, &close_curly_token, [], trailing),
+            make::token(JsSyntaxKind::R_CURLY),
         );
         let next_attr = make::jsx_attribute(next_name).with_initializer(
             make::jsx_attribute_initializer_clause(
