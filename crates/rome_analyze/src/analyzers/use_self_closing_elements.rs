@@ -48,35 +48,35 @@ impl Rule for UseSelfClosingElements {
             attributes,
             r_angle_token,
         } = open_element.as_fields();
-        let test = if let Some(last_attribute) = attributes.last() {
+        let need_extra_whitespace = if let Some(last_attribute) = attributes.last() {
             let trailing = last_attribute.syntax().last_trailing_trivia();
             if let Some(trailing) = trailing {
-                trailing.text().ends_with(" ")
+                !trailing.text().ends_with(" ")
             } else {
-                false
+                true
             }
         } else {
             let name = name.clone().ok()?;
             let trailing = name.syntax().last_trailing_trivia();
             if let Some(trailing) = trailing {
-                trailing.text().ends_with(" ")
+                !trailing.text().ends_with(" ")
             } else {
-                false
+                true
             }
         };
-        let self_closing_element = make::jsx_self_closing_element(
+        let self_closing_element_builder = make::jsx_self_closing_element(
             l_angle_token.ok()?,
             name.ok()?,
             attributes,
-            if test {
-                make::token(T![/])
-            } else {
+            if need_extra_whitespace {
                 make::token(T![/])
                     .with_leading_trivia(std::iter::once((TriviaPieceKind::Whitespace, " ")))
+            } else {
+                make::token(T![/])
             },
             r_angle_token.ok()?,
         );
-        let self_closing_element = self_closing_element.build();
+        let self_closing_element = self_closing_element_builder.build();
         let root = root.replace_node(
             JsxAnyTag::JsxElement(node.clone()),
             JsxAnyTag::JsxSelfClosingElement(self_closing_element),
