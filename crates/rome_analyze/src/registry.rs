@@ -43,6 +43,7 @@ impl_registry_builders!(
     NoDebugger,
     NoDelete,
     NoDoubleEquals,
+    NoImplicitBoolean,
     NoNegationElse,
     NoSparseArray,
     NoUnusedTemplateLiteral,
