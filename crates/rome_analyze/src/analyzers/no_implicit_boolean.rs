@@ -2,10 +2,10 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsSyntaxToken, JsxAnyAttributeName,
-    JsxAnyAttributeValue, JsxAttribute, JsxAttributeFields, JsxName, JsxNamespaceName, T,
+    JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsSyntaxToken, JsxAnyAttributeValue,
+    JsxAttribute, JsxAttributeFields, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, SyntaxElement, TriviaPiece};
+use rome_rowan::{AstNode, AstNodeExt, TriviaPiece};
 
 use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
@@ -44,9 +44,8 @@ impl Rule for NoImplicitBoolean {
 
         let name = name.ok()?;
         // we use this variable for constructing `JsxAnyAttributeName` without clone the name, so we pre compute the type here.
-        let is_jsx_name = matches!(name, JsxAnyAttributeName::JsxName(_));
 
-        let mut name_syntax = name.into_syntax();
+        let name_syntax = name.syntax();
 
         // we need to move trailing_trivia of name_syntax to close_curly_token
         // <div disabled /**test*/ /> ->    <div disabled={true}/**test*/ />
@@ -61,22 +60,14 @@ impl Rule for NoImplicitBoolean {
         let last_token_of_name_syntax = name_syntax.last_token()?;
         // drop the trailing trivia of name_syntax, at CST level it means
         // clean the trailing trivia of last token of name_syntax
-        let next_last_token_of_name_syntax = name_syntax
-            .last_token()
-            .map(|tok| tok.with_trailing_trivia(std::iter::empty()))?;
+        let next_last_token_of_name_syntax = last_token_of_name_syntax
+            .clone()
+            .with_trailing_trivia(std::iter::empty());
 
-        name_syntax = name_syntax
-            .replace_child(
-                SyntaxElement::Token(last_token_of_name_syntax),
-                SyntaxElement::Token(next_last_token_of_name_syntax),
-            )
-            .unwrap();
-        let next_name = match is_jsx_name {
-            true => JsxAnyAttributeName::JsxName(JsxName::unwrap_cast(name_syntax)),
-            false => {
-                JsxAnyAttributeName::JsxNamespaceName(JsxNamespaceName::unwrap_cast(name_syntax))
-            }
-        };
+        let next_name = name.replace_token_discard_trivia(
+            last_token_of_name_syntax,
+            next_last_token_of_name_syntax,
+        )?;
         let attr_value = make::jsx_expression_attribute_value(
             make::token(JsSyntaxKind::L_CURLY),
             rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
@@ -94,7 +85,7 @@ impl Rule for NoImplicitBoolean {
         );
         let next_attr = next_attr.build();
 
-        let root = root.replace_node_discard_trivia(n.clone(), next_attr)?;
+        let root = root.replace_node(n.clone(), next_attr)?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
