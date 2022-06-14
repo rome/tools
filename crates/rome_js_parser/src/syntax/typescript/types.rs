@@ -232,8 +232,6 @@ impl ParseSeparatedList for TsTypeParameterList {
 // declare interface Foo<in T> {}
 // declare interface Foo<out T> {}
 
-
-
 fn parse_ts_type_parameter(p: &mut Parser, could_use_parameter_modifier: bool) -> ParsedSyntax {
     let m = p.start();
     // parse_ts_type_parameter_modifier(p, could_use_parameter_modifier).ok();
