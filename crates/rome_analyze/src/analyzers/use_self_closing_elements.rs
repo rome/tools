@@ -2,9 +2,9 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsxAnyTag, JsxElement, JsxOpeningElementFields, TriviaPieceKind, T,
+    JsAnyRoot, JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, TriviaPieceKind, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
+use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
 use crate::{
     registry::{JsRuleAction, Rule, RuleDiagnostic},
@@ -46,7 +46,18 @@ impl Rule for UseSelfClosingElements {
             attributes,
             r_angle_token,
         } = open_element.as_fields();
+        let mut r_angle_token = r_angle_token.ok()?;
+        let mut leading_trivia = vec![];
+        let mut slash_token = String::new();
+
+        for trivia in r_angle_token.trailing_trivia().pieces() {
+            leading_trivia.push(TriviaPiece::new(trivia.kind(), trivia.text_len()));
+            slash_token.push_str(trivia.text());
+        }
+        r_angle_token = r_angle_token.with_leading_trivia(std::iter::empty());
         // check if previous `open_element` have a whitespace before `>`
+        // this step make sure we could convert <div></div> -> <div />
+        // <div test="some""></div> -> <div test="some" />
         let need_extra_whitespace = if let Some(last_attribute) = attributes.last() {
             let trailing = last_attribute.syntax().last_trailing_trivia();
             if let Some(trailing) = trailing {
@@ -63,17 +74,20 @@ impl Rule for UseSelfClosingElements {
                 true
             }
         };
+
+        if leading_trivia.is_empty() && need_extra_whitespace {
+            slash_token.push(' ');
+            leading_trivia.push(TriviaPiece::whitespace(1));
+        }
+
+        slash_token += "/";
+
         let self_closing_element_builder = make::jsx_self_closing_element(
             l_angle_token.ok()?,
             name.ok()?,
             attributes,
-            if need_extra_whitespace {
-                make::token(T![/])
-                    .with_leading_trivia(std::iter::once((TriviaPieceKind::Whitespace, " ")))
-            } else {
-                make::token(T![/])
-            },
-            r_angle_token.ok()?,
+            JsSyntaxToken::new_detached(T![/], &slash_token, leading_trivia, []),
+            r_angle_token,
         );
         let self_closing_element = self_closing_element_builder.build();
         let root = root.replace_node(

@@ -11,6 +11,7 @@
 <Component></Component>;
 <Foo.bar></Foo.bar>;
 <div
+
 ></div>;
 
 <div ></div> /* comment */;
