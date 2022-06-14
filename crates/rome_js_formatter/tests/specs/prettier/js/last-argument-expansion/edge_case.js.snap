@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: edge_case.js
 ---
 # Input
@@ -78,11 +79,12 @@ a(
 exports.examples =
   [
     {
-      render: withGraphQLQuery(
-        "node(1234567890){image{uri}}",
-        function (container, data) {
-          return (
-            <div>
+      render: withGraphQLQuery("node(1234567890){image{uri}}", function (
+        container,
+        data,
+      ) {
+        return (
+          <div>
             <InlineBlock>
               <img
                 src={data[1234567890].image.uri}
@@ -90,45 +92,44 @@ exports.examples =
               />
             </InlineBlock>
           </div>
-          );
-        },
-      ),
+        );
+      }),
     },
   ];
 
-someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
-  [],
-  // comment
-  [],
-],);
-
-(function webpackUniversalModuleDefinition() {})(
-  this,
-  function (__WEBPACK_EXTERNAL_MODULE_85__, __WEBPACK_EXTERNAL_MODULE_115__) {
-    return /******/ (function (modules) {
-      // webpackBootstrap
-      /******/
-    })
-    /************************************************************************/
-    /******/ (
-      [
-        /* 0 */
-        /***/ function (module, exports, __webpack_require__) {
-          /***/
-        },
-        /* 1 */
-        /***/ function (module, exports, __webpack_require__) {
-          /***/
-        },
-        /* 2 */
-        /***/ function (module, exports, __webpack_require__) {
-          /***/
-        },
-        /******/
-      ],
-    );
-  },
+someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a(
+  [
+    [],
+    // comment
+    [],
+  ],
 );
+
+(function webpackUniversalModuleDefinition() {})(this, function (
+  __WEBPACK_EXTERNAL_MODULE_85__,
+  __WEBPACK_EXTERNAL_MODULE_115__,
+) {
+  return /******/ (function (modules) {
+    // webpackBootstrap
+    /******/
+  })
+  /************************************************************************/
+  /******/ ([
+    /* 0 */
+    /***/ function (module, exports, __webpack_require__) {
+      /***/
+    },
+    /* 1 */
+    /***/ function (module, exports, __webpack_require__) {
+      /***/
+    },
+    /* 2 */
+    /***/ function (module, exports, __webpack_require__) {
+      /***/
+    },
+    /******/
+  ]);
+});
 
 ```
 
@@ -136,6 +137,6 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
 ```
     2:   SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong,
     5:       SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong: 1,
-   31: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
+   31: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a(
 ```
 

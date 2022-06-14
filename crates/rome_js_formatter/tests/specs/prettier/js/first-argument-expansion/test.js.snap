@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: test.js
 ---
 # Input
@@ -122,68 +123,41 @@ func((args) => {
 
 # Output
 ```js
-setTimeout(
-  function () {
-    thing();
-  },
-  500,
-);
+setTimeout(function () {
+  thing();
+}, 500);
 
-["a", "b", "c"].reduce(
-  function (item, thing) {
-    return thing + " " + item;
-  },
-  "letters:",
-);
+["a", "b", "c"].reduce(function (item, thing) {
+  return thing + " " + item;
+}, "letters:");
 
-func(
-  () => {
-    thing();
-  },
-  identifier,
-);
+func(() => {
+  thing();
+}, identifier);
 
-func(
-  function () {
-    thing();
-  },
-  this.props.timeout * 1000,
-);
+func(function () {
+  thing();
+}, this.props.timeout * 1000);
 
-func(
-  (that) => {
-    thing();
-  },
-  this.props.getTimeout(),
-);
+func((that) => {
+  thing();
+}, this.props.getTimeout());
 
-func(
-  () => {
-    thing();
-  },
-  true,
-);
+func(() => {
+  thing();
+}, true);
 
-func(
-  () => {
-    thing();
-  },
-  null,
-);
+func(() => {
+  thing();
+}, null);
 
-func(
-  () => {
-    thing();
-  },
-  undefined,
-);
+func(() => {
+  thing();
+}, undefined);
 
-func(
-  () => {
-    thing();
-  },
-  /regex.*?/,
-);
+func(() => {
+  thing();
+}, /regex.*?/);
 
 func(
   () => {
@@ -235,25 +209,21 @@ compose(
   (b) => b * b,
 );
 
-somthing.reduce(
-  function (item, thing) {
-    return thing.blah = item;
-  }, {},
-);
+somthing.reduce(function (item, thing) {
+  return thing.blah = item;
+}, {});
 
-somthing.reduce(
-  function (item, thing) {
-    return thing.push(item);
-  },
-  [],
-);
+somthing.reduce(function (item, thing) {
+  return thing.push(item);
+}, []);
 
-reallyLongLongLongLongLongLongLongLongLongLongLongLongLongLongMethod(
-  (f, g, h) => {
-    return f.pop();
-  },
-  true,
-);
+reallyLongLongLongLongLongLongLongLongLongLongLongLongLongLongMethod((
+  f,
+  g,
+  h,
+) => {
+  return f.pop();
+}, true);
 
 // Don't do the rest of these
 
@@ -265,11 +235,9 @@ func(
   false,
 );
 
-func(
-  () => {
-    thing();
-  }, { yes: true, cats: 5 },
-);
+func(() => {
+  thing();
+}, { yes: true, cats: 5 });
 
 compose(
   (a) => {
@@ -300,13 +268,10 @@ setTimeout(
   500,
 );
 
-setTimeout(
-  /* blip */
-  function () {
-    thing();
-  },
-  500,
-);
+setTimeout( /* blip */
+function () {
+  thing();
+}, 500);
 
 func(
   (args) => {

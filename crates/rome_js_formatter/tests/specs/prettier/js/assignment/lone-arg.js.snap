@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: lone-arg.js
 ---
 # Input
@@ -33,7 +34,7 @@ let vgChannel = pointPositionDefaultRef({
   model,
   defaultPos,
   channel,
-},)();
+})();
 
 let vgChannel2 = pointPositionDefaultRef({ model, defaultPos, channel })();
 

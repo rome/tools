@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: computed.js
 ---
 # Input
@@ -17,12 +18,9 @@ nock(/test/)
 ```js
 nock(/test/)
   .matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")
-  .reply(
-    200,
-    {
-      foo: "bar",
-    },
-  );
+  .reply(200, {
+    foo: "bar",
+  });
 
 ```
 

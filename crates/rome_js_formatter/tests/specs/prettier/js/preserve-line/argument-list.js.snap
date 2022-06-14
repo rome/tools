@@ -245,7 +245,7 @@ comments(
   // Long Long Long Long Long Comment
 
   short3,
-  // More comments
+// More comments
 );
 
 differentArgTypes(
@@ -267,7 +267,7 @@ moreArgTypes(
     // Hello world again
     { name: "Hello World", age: 34 },
     oneThing + anotherThing,
-    // Comment
+  // Comment
   ),
 );
 
@@ -303,36 +303,24 @@ doSomething.apply(
   ["Hello world 1", "Hello world 2", "Hello world 3"],
 );
 
-doAnotherThing(
-  "node",
-  {
-    solution_type,
-    time_frame,
-  },
-);
+doAnotherThing("node", {
+  solution_type,
+  time_frame,
+});
 
-stuff.doThing(
-  someStuff,
-  -1,
-  {
-    accept: (node) => doSomething(node),
-  },
-);
+stuff.doThing(someStuff, -1, {
+  accept: (node) => doSomething(node),
+});
 
-doThing(
-  someOtherStuff,
-  // This is important
-  true,
-  {
-    decline: (creditCard) => takeMoney(creditCard),
-  },
-);
+doThing(someOtherStuff,
+// This is important
+true, {
+  decline: (creditCard) => takeMoney(creditCard),
+});
 
-func(
-  () => {
-    thing();
-  }, { yes: true, no: 5 },
-);
+func(() => {
+  thing();
+}, { yes: true, no: 5 });
 
 doSomething(
   { tomorrow: maybe, today: never[always] },
