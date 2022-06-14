@@ -1,7 +1,8 @@
-use rome_analyze::{analyze, AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleCategories};
+use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleCategories};
 use rome_diagnostics::{Applicability, Diagnostic};
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
+use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatOptions, QuoteStyle};
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;

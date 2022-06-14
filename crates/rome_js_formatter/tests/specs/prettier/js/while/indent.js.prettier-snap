@@ -23,7 +23,7 @@ if (
     someVeryLongArgA,
     someVeryLongArgB,
     someVeryLongArgC,
-    someVeryLongArgD
+    someVeryLongArgD,
   )
 ) {
 }
@@ -32,7 +32,7 @@ while (
     someVeryLongArgA,
     someVeryLongArgB,
     someVeryLongArgC,
-    someVeryLongArgD
+    someVeryLongArgD,
   )
 ) {}
 do {} while (
@@ -40,7 +40,7 @@ do {} while (
     someVeryLongArgA,
     someVeryLongArgB,
     someVeryLongArgC,
-    someVeryLongArgD
+    someVeryLongArgD,
   )
 );
 

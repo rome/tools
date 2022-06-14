@@ -1,0 +1,58 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: member-expression.js
+---
+# Input
+```js
+(@deco class Foo {}).name;
+(@deco class {}).name;
+
+```
+
+# Output
+```js
+(
+@deco class Foo {}
+).name
+(
+@deco class {}
+).name
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `)` but instead found `@`
+  ┌─ member-expression.js:1:2
+  │
+1 │ (@deco class Foo {}).name;
+  │  ^ unexpected
+
+error[SyntaxError]: expected a statement but instead found ').name'
+  ┌─ member-expression.js:1:20
+  │
+1 │ (@deco class Foo {}).name;
+  │                    ^^^^^^ Expected a statement here
+
+error[SyntaxError]: expected `)` but instead found `@`
+  ┌─ member-expression.js:2:2
+  │
+2 │ (@deco class {}).name;
+  │  ^ unexpected
+
+error[SyntaxError]: class declarations must have a name
+  ┌─ member-expression.js:2:8
+  │
+2 │ (@deco class {}).name;
+  │        ^^^^^^
+
+error[SyntaxError]: expected a statement but instead found ').name'
+  ┌─ member-expression.js:2:16
+  │
+2 │ (@deco class {}).name;
+  │                ^^^^^^ Expected a statement here
+
+
+```
+
+

@@ -1,6 +1,7 @@
 use crate::BenchmarkSummary;
 use criterion::black_box;
-use rome_analyze::{analyze, AnalysisFilter, ControlFlow, Never};
+use rome_analyze::{AnalysisFilter, ControlFlow, Never};
+use rome_js_analyze::analyze;
 use rome_js_syntax::JsAnyRoot;
 use std::fmt::{Display, Formatter};
 use std::time::Duration;

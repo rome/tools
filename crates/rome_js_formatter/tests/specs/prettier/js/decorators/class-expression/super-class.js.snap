@@ -1,0 +1,74 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: super-class.js
+---
+# Input
+```js
+class Foo extends (@deco class Foo {}){}
+
+class Foo extends (@deco class {}){}
+
+```
+
+# Output
+```js
+class Foo extends (@deco class Foo {}
+)
+{
+}
+
+class Foo extends (@deco class {}
+)
+{
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `)` but instead found `@`
+  ┌─ super-class.js:1:20
+  │
+1 │ class Foo extends (@deco class Foo {}){}
+  │                    ^ unexpected
+
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+  ┌─ super-class.js:1:32
+  │
+1 │ class Foo extends (@deco class Foo {}){}
+  │                                ^^^
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
+  ┌─ super-class.js:1:36
+  │
+1 │ class Foo extends (@deco class Foo {}){}
+  │                                    ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a statement but instead found ')'
+  ┌─ super-class.js:1:38
+  │
+1 │ class Foo extends (@deco class Foo {}){}
+  │                                      ^ Expected a statement here
+
+error[SyntaxError]: expected `)` but instead found `@`
+  ┌─ super-class.js:3:20
+  │
+3 │ class Foo extends (@deco class {}){}
+  │                    ^ unexpected
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
+  ┌─ super-class.js:3:32
+  │
+3 │ class Foo extends (@deco class {}){}
+  │                                ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a statement but instead found ')'
+  ┌─ super-class.js:3:34
+  │
+3 │ class Foo extends (@deco class {}){}
+  │                                  ^ Expected a statement here
+
+
+```
+
+

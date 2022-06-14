@@ -24,7 +24,7 @@ const regex = new RegExp(
     "['\"]" + // opening quotation mark
     escapeStringRegExp(target.name) + // target name
     "['\"]" + // closing quotation mark
-    ",?$" // optional trailing comma
+    ",?$", // optional trailing comma
 );
 
 // The comment is moved and doesn't trigger the eslint rule anymore
@@ -63,6 +63,6 @@ const result = asyncExecute("non_existing_command", /* args */ []);
 
 // The closing paren is printed on the same line as the comment
 foo(
-  {}
+  {},
   // Hi
 );

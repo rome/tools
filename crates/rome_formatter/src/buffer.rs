@@ -391,7 +391,7 @@ pub struct Inspect<'inner, Context, Inspector> {
 }
 
 impl<'inner, Context, Inspector> Inspect<'inner, Context, Inspector> {
-    pub fn new(inner: &'inner mut dyn Buffer<Context = Context>, inspector: Inspector) -> Self {
+    fn new(inner: &'inner mut dyn Buffer<Context = Context>, inspector: Inspector) -> Self {
         Self { inner, inspector }
     }
 }
@@ -432,6 +432,18 @@ pub trait BufferExtensions: Buffer + Sized {
         F: FnMut(&FormatElement),
     {
         Inspect::new(self, inspector)
+    }
+
+    /// Writes a sequence of elements into this buffer.
+    fn write_elements<I>(&mut self, elements: I) -> FormatResult<()>
+    where
+        I: IntoIterator<Item = FormatElement>,
+    {
+        for element in elements {
+            self.write_element(element)?;
+        }
+
+        Ok(())
     }
 }
 

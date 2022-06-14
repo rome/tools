@@ -211,7 +211,7 @@ pub fn run(
             .unwrap();
     }
 
-    rome_analyze::analyze(
+    rome_js_analyze::analyze(
         main_file_id,
         &parse.tree(),
         AnalysisFilter::default(),

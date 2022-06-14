@@ -21,7 +21,7 @@ a.then(
     aLongIdentifierName,
     aLongIdentifierName,
     aLongIdentifierName
-  )
+  ),
 );
 for (
   aLongIdentifierName = 0,

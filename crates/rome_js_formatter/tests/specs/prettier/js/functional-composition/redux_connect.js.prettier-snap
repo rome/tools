@@ -1,5 +1,5 @@
 const ArtistInput = connect(
   mapStateToProps,
   mapDispatchToProps,
-  mergeProps
+  mergeProps,
 )(Component);
