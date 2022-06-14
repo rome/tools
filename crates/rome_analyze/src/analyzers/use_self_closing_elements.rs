@@ -50,7 +50,7 @@ impl Rule for UseSelfClosingElements {
         let mut leading_trivia = vec![];
         let mut slash_token = String::new();
 
-        for trivia in r_angle_token.trailing_trivia().pieces() {
+        for trivia in r_angle_token.leading_trivia().pieces() {
             leading_trivia.push(TriviaPiece::new(trivia.kind(), trivia.text_len()));
             slash_token.push_str(trivia.text());
         }
