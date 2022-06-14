@@ -12,6 +12,37 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Disallow implicit `true` values on JSX boolean attributes
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <input disabled />
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```jsx
+    /// <input disabled={false} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled={''} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled={0} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled={undefined} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled='false' />
+    ///```
     pub(crate) NoImplicitBoolean = "noImplicitBoolean"
 }
 

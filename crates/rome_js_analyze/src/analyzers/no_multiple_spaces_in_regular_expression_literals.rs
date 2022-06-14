@@ -1,15 +1,62 @@
-use rome_analyze::{declare_rule, context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{
-    JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize,
-};
+use rome_js_syntax::{JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize};
 use rome_rowan::AstNodeExt;
 use std::fmt::Write;
 
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Disallow unclear usage of multiple space characters in regular expression literals
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// /   /
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// /  foo/
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// /foo   /
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// /foo  bar/
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// /foo   bar    baz/
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// /foo [ba]r  b(a|z)/
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// /foo {2}bar/
+    ///```
+    ///
+    /// ```js
+    /// /foo bar baz/
+    ///```
+    ///
+    /// ```js
+    /// /foo bar	baz/
+    ///```
+    ///
+    /// ```js
+    /// /foo /
+    ///```
     pub(crate) NoMultipleSpacesInRegularExpressionLiterals = "noMultipleSpacesInRegularExpressionLiterals"
 }
 
@@ -86,7 +133,8 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
             [],
             [],
         );
-        let root = ctx.root()
+        let root = ctx
+            .root()
             .replace_token(trimmed_token, next_trimmed_token)
             .unwrap();
         Some(JsRuleAction {

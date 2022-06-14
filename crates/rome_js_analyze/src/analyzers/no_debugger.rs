@@ -12,6 +12,22 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Disallow the use of `debugger`
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// debugger;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const test = { debugger: 1 };
+    /// test.debugger;
+    ///```
     pub(crate) NoDebugger = "noDebugger"
 }
 

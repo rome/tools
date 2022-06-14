@@ -14,6 +14,28 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Disallow the use of the `delete` operator
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// const arr = [['a','b','c'], [1, 2, 3]];
+    /// delete arr[0][2];
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const obj = {a: {b: {c: 123}}};
+    /// delete obj.a.b.c;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const foo = new Set([1,2,3]);
+    /// foo.delete(1);
+    ///```
     pub(crate) NoDelete = "noDelete"
 }
 

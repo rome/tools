@@ -14,6 +14,33 @@ use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Enforces case clauses have a single statement, emits a quick fix wrapping
+    /// the statements in a block
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// switch (foo) {
+    ///     case true:
+    ///     case false:
+    ///         let foo = '';
+    ///         foo;
+    /// }
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// switch (foo) {
+    ///     case true:
+    ///     case false: {
+    ///         let foo = '';
+    ///         foo;
+    ///     }
+    /// }
+    /// ```
     pub(crate) UseSingleCaseStatement = "useSingleCaseStatement"
 }
 

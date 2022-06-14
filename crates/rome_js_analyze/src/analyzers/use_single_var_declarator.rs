@@ -15,6 +15,21 @@ use rome_rowan::{AstNode, AstSeparatedList};
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Disallow multiple variable declarations in the same variable statement
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// let foo, bar;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// for (let i = 0, x = 1; i < arr.length; i++) {}
+    /// ```
     pub(crate) UseSingleVarDeclarator = "useSingleVarDeclarator"
 }
 

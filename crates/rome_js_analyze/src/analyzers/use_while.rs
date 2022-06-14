@@ -10,6 +10,18 @@ use rome_rowan::AstNodeExt;
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Enforce the use of `while` loops instead of `for` loops when the
+    /// initializer and update expressions are not needed
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// for (; x.running;) {
+    ///     x.step();
+    /// }
+    /// ```
     pub(crate) UseWhile = "useWhile"
 }
 

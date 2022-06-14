@@ -13,6 +13,63 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// This rule verifies the result of `typeof $expr` unary expressions is being
+    /// compared to valid values, either string literals containing valid type
+    /// names or other `typeof` expressions
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo === "strnig"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo == "undefimed"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof bar != "nunber"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof bar !== "fucntion"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo === undefined
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof bar == Object
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo === baz
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo == 5
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo == -5
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// typeof foo === "string"
+    /// ```
+    ///
+    /// ```js
+    /// typeof bar == "undefined"
+    /// ```
+    ///
+    /// ```js
+    /// typeof bar === typeof qux
+    /// ```
     pub(crate) UseValidTypeof = "useValidTypeof"
 }
 

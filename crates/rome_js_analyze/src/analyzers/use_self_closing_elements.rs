@@ -1,13 +1,58 @@
-use rome_analyze::{declare_rule, context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{ JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, T};
+use rome_js_syntax::{JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, T};
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
 use crate::JsRuleAction;
 
 declare_rule! {
+    /// Prevent extra closing tags for components without children
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// <div></div>
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// <Component></Component>
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// <Foo.bar></Foo.bar>
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// <div />
+    ///```
+    ///
+    /// ```js
+    /// <div>child</div>
+    ///```
+    ///
+    /// ```js
+    /// <Component />
+    ///```
+    ///
+    /// ```js
+    /// <Component>child</Component>
+    ///```
+    ///
+    /// ```js
+    /// <Foo.bar />
+    ///```
+    ///
+    /// ```js
+    /// <Foo.bar>child</Foo.bar>
+    ///```
     pub(crate) UseSelfClosingElements = "useSelfClosingElements"
 }
 

@@ -8,6 +8,34 @@ use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateEleme
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
 
 declare_rule! {
+    /// Disallow template literals if interpolation and special-character handling are not needed
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// const foo = `bar`
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const foo = `bar `
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const foo = `bar
+    /// has newline`;
+    /// ```
+    ///
+    /// ```js
+    /// const foo = `"bar"`
+    /// ```
+    ///
+    /// ```js
+    /// const foo = `'bar'`
+    /// ```
     pub(crate) NoUnusedTemplateLiteral = "noUnusedTemplateLiteral"
 }
 
