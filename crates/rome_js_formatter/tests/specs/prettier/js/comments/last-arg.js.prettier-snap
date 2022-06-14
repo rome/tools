@@ -9,7 +9,7 @@ class Foo {
     lol /*string*/,
     lol2 /*string*/,
     lol3 /*string*/,
-    lol4 /*string*/
+    lol4 /*string*/,
   ) /*string*/ {}
 
   // prettier-ignore

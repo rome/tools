@@ -6,7 +6,7 @@
     timelines,
     everyCommitTimestamps,
     A.sort(ordDate),
-    A.head
+    A.head,
   );
 
   pipe(
@@ -16,9 +16,9 @@
       flow(
         // add a descriptive comment here
         publishServiceEvent(analytics),
-        TE.mapLeft(nackFromError)
-      )
-    )
+        TE.mapLeft(nackFromError),
+      ),
+    ),
   )()
     .then(messageResponse(logger, msg))
     .catch((err) => {
@@ -26,8 +26,8 @@
         pipe(
           // add a descriptive comment here
           O.fromNullable(err.stack),
-          O.getOrElse(constant(err.message))
-        )
+          O.getOrElse(constant(err.message)),
+        ),
       );
       process.exit(1);
     });
@@ -35,7 +35,7 @@
   pipe(
     // add a descriptive comment here
     Changelog.timestampOfFirstCommit([[commit]]),
-    O.toUndefined
+    O.toUndefined,
   );
 
   chain(
@@ -43,7 +43,7 @@
       // add a descriptive comment here
       getUploadUrl,
       E.mapLeft(Errors.unknownError),
-      TE.fromEither
-    )
+      TE.fromEither,
+    ),
   );
 })();

@@ -1,5 +1,5 @@
 class loooooooooooooooooooong1 extends foooooooo(
-  foooooooo(foooooooo(foooooooo(foooooooo(foooooooo(foooooooo(foooooooo()))))))
+  foooooooo(foooooooo(foooooooo(foooooooo(foooooooo(foooooooo(foooooooo())))))),
 ) {}
 
 class loooooooooooooooooooong2 extends function (make, model, year, owner) {

@@ -1,6 +1,6 @@
 type FieldLayoutWith<
   T extends string,
-  S extends unknown = { width: string }
+  S extends unknown = { width: string },
 > = {
   type: T;
   code: string;
@@ -21,7 +21,7 @@ type FieldLayoutWith<S extends unknown = { width: string }> = {
 
 type FieldLayoutWith<
   T extends stringggggggggggg,
-  T extends stringggggggggggg
+  T extends stringggggggggggg,
 > = {
   type: T;
   code: string;
@@ -30,7 +30,7 @@ type FieldLayoutWith<
 
 type FieldLayoutWith<
   T extends stringggggggggggg,
-  S = stringggggggggggggggggg
+  S = stringggggggggggggggggg,
 > = {
   type: T;
   code: string;

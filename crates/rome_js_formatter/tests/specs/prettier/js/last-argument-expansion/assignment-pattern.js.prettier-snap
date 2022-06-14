@@ -4,5 +4,5 @@ bob.doL(
     b = () => {
       console.log;
     },
-  }) => something.else.else({})
+  }) => something.else.else({}),
 );

@@ -6,7 +6,7 @@ const formatData = pipe(
   })),
   groupBy(prop("nodeId")),
   map(mergeAll),
-  values
+  values,
 );
 
 export const setProp = (y) => ({

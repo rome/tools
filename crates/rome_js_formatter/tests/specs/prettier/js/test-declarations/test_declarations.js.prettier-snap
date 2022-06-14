@@ -130,46 +130,46 @@ it.only(
   10,
   () => {
     console.log("hello!");
-  }
+  },
 );
 
 it.only.only(
   "does something really long and complicated so I have to write a very long name for the test",
   () => {
     console.log("hello!");
-  }
+  },
 );
 
 it.only.only(
   "does something really long and complicated so I have to write a very long name for the test",
   (a, b, c) => {
     console.log("hello!");
-  }
+  },
 );
 
 xskip(
   "does something really long and complicated so I have to write a very long name for the test",
-  () => {}
+  () => {},
 );
 
 test.describe.only.parallel(
   "does something really long and complicated so I have to write a very long name for the test",
-  () => {}
+  () => {},
 );
 
 test.describe.parallel.serial(
   "does something really long and complicated so I have to write a very long name for the testThis is a very",
-  () => {}
+  () => {},
 );
 
 test.serial(
   "does something really long and complicated so I have to write a very long name for the test",
-  () => {}
+  () => {},
 );
 
 test.describe.dummy.serial(
   "does something really long and complicated so I have to write a very long name for the test",
-  () => {}
+  () => {},
 );
 
 // timeout
@@ -191,5 +191,5 @@ it("succeeds if the test finishes in time", () =>
 it(
   "succeeds if the test finishes in time",
   () => new Promise((resolve) => setTimeout(resolve, 10)),
-  250
+  250,
 );

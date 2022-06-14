@@ -29,5 +29,5 @@ expect(
       var bar = "foo";
     };
     bar;
-  }
+  },
 ).toThrow(ReferenceError);

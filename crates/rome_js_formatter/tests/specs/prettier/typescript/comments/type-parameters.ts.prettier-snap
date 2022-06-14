@@ -19,13 +19,13 @@ function foo<
 >() {}
 interface Foo {
   <
-    A // comment
+    A, // comment
   >(
-    arg
+    arg,
   ): any;
 }
 type T = <
   // comment
 >(
-  arg
+  arg,
 ) => any;
