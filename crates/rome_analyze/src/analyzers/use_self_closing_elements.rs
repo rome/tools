@@ -1,9 +1,7 @@
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyRoot, JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, TriviaPieceKind, T,
-};
+use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, T};
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
 use crate::{
