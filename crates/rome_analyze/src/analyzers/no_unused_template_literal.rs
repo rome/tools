@@ -2,11 +2,10 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsAnyTemplateElement, JsTemplate,
-};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate};
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
 
+use crate::context::{JsRuleContext, RuleContext};
 use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
@@ -19,41 +18,46 @@ impl Rule for NoUnusedTemplateLiteral {
     type Query = JsTemplate;
     type State = ();
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
-        if node.tag().is_none() && can_convert_to_string_literal(node) {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query();
+
+        if ctx.query().tag().is_none() && can_convert_to_string_literal(node) {
             Some(())
         } else {
             None
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic::warning(node.range(),markup! {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        Some(RuleDiagnostic::warning(ctx.query().range(),markup! {
             "Do not use template literals if interpolation and special-character handling are not needed."
         }
         .to_owned() ) )
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+
         // join all template content
-        let inner_content = node
-            .elements()
-            .iter()
-            .fold(String::from("\""), |mut acc, cur| {
-                match cur {
-                    JsAnyTemplateElement::JsTemplateChunkElement(ele) => {
-                        // Safety: if `ele.template_chunk_token()` is `Err` variant, [can_convert_to_string_lit] should return false,
-                        // thus `run` will return None
-                        acc += ele.template_chunk_token().unwrap().text();
-                        acc
+        let inner_content =
+            ctx.query()
+                .elements()
+                .iter()
+                .fold(String::from("\""), |mut acc, cur| {
+                    match cur {
+                        JsAnyTemplateElement::JsTemplateChunkElement(ele) => {
+                            // Safety: if `ele.template_chunk_token()` is `Err` variant, [can_convert_to_string_lit] should return false,
+                            // thus `run` will return None
+                            acc += ele.template_chunk_token().unwrap().text();
+                            acc
+                        }
+                        JsAnyTemplateElement::JsTemplateElement(_) => {
+                            // Because we know if TemplateLit has any `JsTemplateElement` will return `None` in `run` function
+                            unreachable!()
+                        }
                     }
-                    JsAnyTemplateElement::JsTemplateElement(_) => {
-                        // Because we know if TemplateLit has any `JsTemplateElement` will return `None` in `run` function
-                        unreachable!()
-                    }
-                }
-            });
-        let root = root.replace_node(
+                });
+        let root = ctx.root().clone().replace_node(
             JsAnyExpression::JsTemplate(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(

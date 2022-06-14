@@ -2,11 +2,12 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
+    JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
 };
 use rome_rowan::AstNodeExt;
 
 use crate::{
+    context::{JsRuleContext, RuleContext},
     registry::{JsRuleAction, Rule},
     ActionCategory, RuleCategory,
 };
@@ -20,21 +21,24 @@ impl Rule for FlipBinExp {
     type Query = JsBinaryExpression;
     type State = JsSyntaxKind;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let JsBinaryExpressionFields {
             left,
             operator_token: _,
             right,
-        } = node.as_fields();
+        } = ctx.query().as_fields();
 
         // Ensure the node doesn't have any syntax error
         left.ok()?;
         right.ok()?;
 
-        invert_op(node.operator().ok()?)
+        invert_op(ctx.query().operator().ok()?)
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let root = ctx.root();
+
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;
         let new_node = node.clone().replace_node(prev_left, new_left)?;
@@ -51,7 +55,7 @@ impl Rule for FlipBinExp {
             category: ActionCategory::Refactor,
             applicability: Applicability::Always,
             message: markup! { "Flip Binary Expression" }.to_owned(),
-            root: root.replace_node(node.clone(), new_node)?,
+            root: root.clone().replace_node(node.clone(), new_node)?,
         })
     }
 }

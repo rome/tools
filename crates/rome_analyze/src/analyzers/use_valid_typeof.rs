@@ -2,12 +2,13 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression,
-    JsBinaryExpressionFields, JsBinaryOperator, JsUnaryOperator, TextRange,
+    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryExpressionFields,
+    JsBinaryOperator, JsUnaryOperator, TextRange,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::{
+    context::{JsRuleContext, RuleContext},
     registry::{JsRuleAction, Rule, RuleDiagnostic},
     ActionCategory, RuleCategory,
 };
@@ -24,15 +25,15 @@ impl Rule for UseValidTypeof {
     type Query = JsBinaryExpression;
     type State = (TypeofError, Option<(JsAnyExpression, JsTypeName)>);
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let JsBinaryExpressionFields {
             left,
             operator_token: _,
             right,
-        } = n.as_fields();
+        } = ctx.query().as_fields();
 
         if !matches!(
-            n.operator().ok()?,
+            ctx.query().operator().ok()?,
             JsBinaryOperator::Equality
                 | JsBinaryOperator::StrictEquality
                 | JsBinaryOperator::Inequality
@@ -142,7 +143,7 @@ impl Rule for UseValidTypeof {
         Some((TypeofError::InvalidExpression(range), None))
     }
 
-    fn diagnostic(_: &Self::Query, (err, _): &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, (err, _): &Self::State) -> Option<RuleDiagnostic> {
         const TITLE: &str = "Invalid `typeof` comparison value";
 
         Some(match err {
@@ -155,14 +156,10 @@ impl Rule for UseValidTypeof {
         })
     }
 
-    fn action(
-        root: JsAnyRoot,
-        _node: &Self::Query,
-        (_, suggestion): &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, (_, suggestion): &Self::State) -> Option<JsRuleAction> {
         let (expr, type_name) = suggestion.as_ref()?;
 
-        let root = root.replace_node(
+        let root = ctx.root().clone().replace_node(
             expr.clone(),
             JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(
                 make::js_string_literal_expression(make::js_string_literal(type_name.as_str())),

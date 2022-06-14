@@ -1,13 +1,11 @@
+use crate::context::{JsRuleContext, RuleContext};
+use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
+use crate::{ActionCategory, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyArrayElement, JsAnyExpression, JsAnyRoot, JsArrayExpression, TriviaPieceKind,
-};
+use rome_js_syntax::{JsAnyArrayElement, JsAnyExpression, JsArrayExpression, TriviaPieceKind};
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
-
-use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoSparseArray {}
 
@@ -18,9 +16,9 @@ impl Rule for NoSparseArray {
     type Query = JsArrayExpression;
     type State = ();
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         // We defer collect `JsHole` index until user want to apply code action.
-        node.elements().iter().find_map(|element| {
+        ctx.query().elements().iter().find_map(|element| {
             if matches!(element.ok()?, JsAnyArrayElement::JsArrayHole(_),) {
                 Some(())
             } else {
@@ -29,18 +27,18 @@ impl Rule for NoSparseArray {
         })
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::warning(
-            node.syntax().text_trimmed_range(),
-markup! {
+            ctx.query().syntax().text_trimmed_range(),
+        markup! {
                 "This "<Emphasis>"array"</Emphasis>" contains an "<Emphasis>"empty slot"</Emphasis>"."
             }
             .to_owned()
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<JsRuleAction> {
-        let mut final_array_element_list = node.elements();
+    fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
+        let mut final_array_element_list = ctx.query().elements();
 
         for (i, item) in final_array_element_list.iter().enumerate() {
             if matches!(item, Ok(JsAnyArrayElement::JsArrayHole(_))) {
@@ -64,7 +62,9 @@ markup! {
             }
         }
 
-        let root = root.replace_node(
+        let node = ctx.query();
+
+        let root = ctx.root().clone().replace_node(
             node.clone(),
             make::js_array_expression(
                 node.l_brack_token().ok()?,

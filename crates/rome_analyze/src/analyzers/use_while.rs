@@ -1,10 +1,11 @@
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
+use rome_js_syntax::{JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::AstNodeExt;
 
 use crate::{
+    context::{JsRuleContext, RuleContext},
     registry::{JsRuleAction, Rule, RuleDiagnostic},
     ActionCategory, RuleCategory,
 };
@@ -18,7 +19,7 @@ impl Rule for UseWhile {
     type Query = JsForStatement;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -29,7 +30,7 @@ impl Rule for UseWhile {
             update,
             r_paren_token,
             body,
-        } = n.as_fields();
+        } = ctx.query().as_fields();
 
         if l_paren_token.is_err()
             || initializer.is_some()
@@ -44,7 +45,9 @@ impl Rule for UseWhile {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+
         // SAFETY: These tokens have been checked for errors in `run` already
         let for_range = node.for_token().unwrap().text_trimmed_range();
         let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();
@@ -57,7 +60,7 @@ impl Rule for UseWhile {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -68,10 +71,10 @@ impl Rule for UseWhile {
             update: _,
             r_paren_token,
             body,
-        } = node.as_fields();
+        } = ctx.query().as_fields();
 
-        let root = root.replace_node(
-            JsAnyStatement::from(node.clone()),
+        let root = ctx.root().clone().replace_node(
+            JsAnyStatement::from(ctx.query().clone()),
             JsAnyStatement::from(make::js_while_statement(
                 make::token_decorated_with_space(T![while]),
                 l_paren_token.ok()?,

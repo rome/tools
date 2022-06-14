@@ -1,10 +1,11 @@
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression, T};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, T};
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
+use crate::context::{JsRuleContext, RuleContext};
 use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
@@ -17,8 +18,9 @@ impl Rule for NoDoubleEquals {
     type Query = JsBinaryExpression;
     type State = JsSyntaxToken;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
-        let op = n.operator_token().ok()?;
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query();
+        let op = ctx.query().operator_token().ok()?;
 
         if !matches!(op.kind(), EQ2 | NEQ) {
             return None;
@@ -32,7 +34,7 @@ impl Rule for NoDoubleEquals {
         Some(op)
     }
 
-    fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, op: &Self::State) -> Option<RuleDiagnostic> {
         let text_trimmed = op.text_trimmed();
         let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
 
@@ -50,9 +52,12 @@ impl Rule for NoDoubleEquals {
         )
     }
 
-    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
         let suggestion = if op.kind() == EQ2 { T![===] } else { T![!==] };
-        let root = root.replace_token(op.clone(), make::token(suggestion))?;
+        let root = ctx
+            .root()
+            .clone()
+            .replace_token(op.clone(), make::token(suggestion))?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

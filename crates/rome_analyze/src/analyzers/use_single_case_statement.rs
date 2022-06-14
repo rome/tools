@@ -4,10 +4,11 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
+    JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
+use crate::context::{JsRuleContext, RuleContext};
 use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
@@ -22,30 +23,31 @@ impl Rule for UseSingleCaseStatement {
     type Query = JsCaseClause;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
-        if n.consequent().len() > 1 {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        if ctx.query().consequent().len() > 1 {
             Some(())
         } else {
             None
         }
     }
 
-    fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::warning(
-            n.consequent().range(),
+            ctx.query().consequent().range(),
             markup! {
                 "A switch case should only have a single statement. If you want more, then wrap it in a block."
             },
         ))
     }
 
-    fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let JsCaseClauseFields {
             case_token,
             colon_token,
             consequent,
             ..
-        } = n.as_fields();
+        } = ctx.query().as_fields();
+        let n = ctx.query();
 
         // Move the trailing trivia of the colon token to the opening bracket token,
         // this ensure comments stay in the right place
@@ -102,7 +104,9 @@ impl Rule for UseSingleCaseStatement {
             node
         };
 
-        let root = root
+        let root = ctx
+            .root()
+            .clone()
             .replace_node(n.clone(), node)
             .expect("failed to replace node");
 

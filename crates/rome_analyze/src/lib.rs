@@ -1,5 +1,6 @@
 use std::ops;
 
+use context::RuleContextServiceBag;
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
     suppression::{has_suppressions_category, SuppressionCategory},
@@ -10,12 +11,15 @@ use rome_rowan::AstNode;
 mod analyzers;
 mod assists;
 mod categories;
+mod context;
 mod registry;
 mod signals;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 use crate::registry::{LanguageRoot, RuleRegistry};
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
+
+pub(crate) type LanguageOfRule<TRule> = <<TRule as registry::Rule>::Query as AstNode>::Language;
 
 /// Allows filtering the list of rules that will be executed in a run of the analyzer,
 /// and at what source code range signals (diagnostics or actions) may be raised
@@ -66,7 +70,8 @@ pub fn analyze<B>(
     filter: AnalysisFilter,
     mut callback: impl FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B>,
 ) -> Option<B> {
-    let registry = RuleRegistry::with_filter(&filter);
+    let services = RuleContextServiceBag::new(root.clone());
+    let registry = RuleRegistry::new(services, &filter);
 
     let mut iter = root.syntax().preorder();
     while let Some(event) = iter.next() {

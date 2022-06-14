@@ -6,6 +6,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, SyntaxToken};
 
+use crate::context::{JsRuleContext, RuleContext};
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 
@@ -23,7 +24,8 @@ impl Rule for NoCompareNegZero {
     type Query = JsBinaryExpression;
     type State = NoCompareNegZeroState;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query();
         if !node.is_comparison_operator() {
             return None;
         }
@@ -48,19 +50,19 @@ impl Rule for NoCompareNegZero {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::warning(
-            node.range(),
+            ctx.query().range(),
             markup! {
                 "Do not use the "{state.operator_kind}" operator to compare against -0."
             },
         ))
     }
     fn action(
-        root: rome_js_syntax::JsAnyRoot,
-        node: &Self::Query,
+        ctx: &RuleContext<Self>,
         state: &Self::State,
     ) -> Option<crate::registry::JsRuleAction> {
+        let node = ctx.query();
         let root = if state.left_need_replaced && state.right_need_replaced {
             let binary = node.clone().replace_node(
                 node.left().ok()?,
@@ -90,9 +92,9 @@ impl Rule for NoCompareNegZero {
                     ),
                 ),
             )?;
-            root.replace_node(node.clone(), binary)?
+            ctx.root().clone().replace_node(node.clone(), binary)?
         } else if state.left_need_replaced {
-            root.replace_node(
+            ctx.root().clone().replace_node(
                 node.left().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -106,7 +108,7 @@ impl Rule for NoCompareNegZero {
                 ),
             )?
         } else if state.right_need_replaced {
-            root.replace_node(
+            ctx.root().clone().replace_node(
                 node.right().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -120,7 +122,7 @@ impl Rule for NoCompareNegZero {
                 ),
             )?
         } else {
-            root
+            ctx.root().clone()
         };
 
         Some(RuleAction {

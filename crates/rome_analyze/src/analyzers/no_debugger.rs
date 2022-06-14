@@ -5,6 +5,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
+use crate::context::{JsRuleContext, RuleContext};
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 use rome_js_factory::make;
@@ -18,13 +19,13 @@ impl Rule for NoDebugger {
     type Query = JsDebuggerStatement;
     type State = ();
 
-    fn run(_: &Self::Query) -> Option<Self::State> {
+    fn run(_: &RuleContext<Self>) -> Option<Self::State> {
         Some(())
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::warning(
-            node.syntax().text_trimmed_range(),
+            ctx.query().syntax().text_trimmed_range(),
             markup! {
                 "This is an unexpected use of the "<Emphasis>"debugger"</Emphasis>" statement."
             }
@@ -33,10 +34,10 @@ impl Rule for NoDebugger {
     }
 
     fn action(
-        root: rome_js_syntax::JsAnyRoot,
-        node: &Self::Query,
+        ctx: &RuleContext<Self>,
         _state: &Self::State,
     ) -> Option<crate::registry::JsRuleAction> {
+        let node = ctx.query();
         let prev_parent = node.syntax().parent()?;
 
         let root = if JsStatementList::can_cast(prev_parent.kind())
@@ -52,11 +53,13 @@ impl Rule for NoDebugger {
 
             // SAFETY: We know the kind of root is `JsAnyRoot` so cast `root.into_syntax()` will not panic
             JsAnyRoot::unwrap_cast(
-                root.into_syntax()
+                ctx.root()
+                    .clone()
+                    .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             )
         } else {
-            root.replace_node(
+            ctx.root().clone().replace_node(
                 JsAnyStatement::JsDebuggerStatement(node.clone()),
                 JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
             )?

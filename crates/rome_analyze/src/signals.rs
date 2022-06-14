@@ -10,7 +10,9 @@ use rome_rowan::{AstNode, Direction, Language, SyntaxNode};
 
 use crate::{
     categories::ActionCategory,
-    registry::{LanguageRoot, Rule, RuleLanguage, RuleRoot},
+    context::{LanguageSpecificServiceBag, RuleContext},
+    registry::{LanguageRoot, Rule, RuleLanguage},
+    LanguageOfRule,
 };
 
 /// Event raised by the analyzer when a [Rule](crate::registry::Rule)
@@ -74,51 +76,62 @@ where
 }
 
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
-pub(crate) struct RuleSignal<'a, R: Rule> {
+pub(crate) struct RuleSignal<'a, R>
+where
+    R: Rule,
+    LanguageOfRule<R>: LanguageSpecificServiceBag,
+{
     file_id: FileId,
-    root: &'a RuleRoot<R>,
-    node: R::Query,
+    root: LanguageRoot<LanguageOfRule<R>>,
+    ctx: RuleContext<R>,
     state: R::State,
-    _rule: PhantomData<R>,
+    phantom: PhantomData<&'a R>,
 }
 
-impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
+impl<'a, R> RuleSignal<'a, R>
+where
+    R: Rule + 'static,
+    LanguageOfRule<R>: LanguageSpecificServiceBag,
+{
     pub(crate) fn new_boxed(
         file_id: FileId,
-        root: &'a RuleRoot<R>,
-        node: R::Query,
+        root: LanguageRoot<LanguageOfRule<R>>,
+        ctx: RuleContext<R>,
         state: R::State,
     ) -> Box<dyn AnalyzerSignal<RuleLanguage<R>> + 'a> {
         Box::new(Self {
             file_id,
             root,
-            node,
+            ctx,
             state,
-            _rule: PhantomData,
+            phantom: PhantomData,
         })
     }
 }
 
-impl<'a, R: Rule> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R> {
+impl<'a, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R>
+where
+    R: Rule,
+    LanguageOfRule<R>: LanguageSpecificServiceBag,
+{
     fn diagnostic(&self) -> Option<Diagnostic> {
-        R::diagnostic(&self.node, &self.state)
-            .map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
+        let diag = R::diagnostic(&self.ctx, &self.state)?;
+        Some(diag.into_diagnostic(self.file_id, R::NAME))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
-        R::action(self.root.clone(), &self.node, &self.state).and_then(|action| {
-            let (original_range, new_range) =
-                find_diff_range(self.root.syntax(), action.root.syntax())?;
-            Some(AnalyzerAction {
-                rule_name: R::NAME,
-                file_id: self.file_id,
-                category: action.category,
-                applicability: action.applicability,
-                message: action.message,
-                original_range,
-                new_range,
-                root: action.root,
-            })
+        let action = R::action(&self.ctx, &self.state)?;
+        let (original_range, new_range) =
+            find_diff_range(self.root.syntax(), action.root.syntax())?;
+        Some(AnalyzerAction {
+            rule_name: R::NAME,
+            file_id: self.file_id,
+            category: action.category,
+            applicability: action.applicability,
+            message: action.message,
+            original_range,
+            new_range,
+            root: action.root,
         })
     }
 }

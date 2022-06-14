@@ -1,10 +1,11 @@
+use crate::context::{JsRuleContext, RuleContext};
 use crate::registry::{JsRuleAction, Rule, RuleAction, RuleDiagnostic};
 use crate::{ActionCategory, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyRoot, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
+    JsAnyExpression, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
     JsUnaryExpression, JsUnaryOperator,
 };
 use rome_rowan::{AstNode, AstNodeExt};
@@ -18,8 +19,8 @@ impl Rule for NoNegationElse {
     type Query = JsAnyCondition;
     type State = JsUnaryExpression;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
-        match n {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        match ctx.query() {
             JsAnyCondition::JsConditionalExpression(expr) => {
                 if is_negation(&expr.test().ok()?).unwrap_or(false) {
                     Some(expr.test().ok()?.as_js_unary_expression().unwrap().clone())
@@ -38,17 +39,18 @@ impl Rule for NoNegationElse {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::warning(
-            node.range(),
+            ctx.query().range(),
             markup! {
                 "Invert blocks when performing a negation test."
             },
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
-        let root = match node {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let root = match ctx.query() {
             JsAnyCondition::JsConditionalExpression(expr) => {
                 let mut next_expr = expr
                     .clone()
@@ -59,7 +61,7 @@ impl Rule for NoNegationElse {
                 next_expr = next_expr
                     .clone()
                     .replace_node(next_expr.consequent().ok()?, expr.alternate().ok()?)?;
-                root.replace_node(
+                ctx.root().clone().replace_node(
                     node.clone(),
                     JsAnyCondition::JsConditionalExpression(next_expr),
                 )
@@ -79,7 +81,9 @@ impl Rule for NoNegationElse {
                     next_stmt.consequent().ok()?,
                     stmt.else_clause()?.alternate().ok()?,
                 )?;
-                root.replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
+                ctx.root()
+                    .clone()
+                    .replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
             }
         }?;
         Some(RuleAction {
