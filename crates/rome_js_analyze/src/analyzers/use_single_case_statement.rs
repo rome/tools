@@ -1,5 +1,6 @@
 use std::iter;
 
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -8,8 +9,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
-use crate::registry::{JsRuleAction, Rule, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use crate::JsRuleAction;
 
 /// Enforces case clauses have a single statement, emits a quick fix wrapping
 /// the statements in a block

@@ -5,8 +5,7 @@ use rome_diagnostics::{
     file::{FileId, FileSpan},
     Applicability, CodeSuggestion, Diagnostic, SuggestionChange, SuggestionStyle,
 };
-use rome_js_syntax::TextRange;
-use rome_rowan::{AstNode, Direction, Language, SyntaxNode};
+use rome_rowan::{AstNode, Direction, Language, SyntaxNode, TextRange};
 
 use crate::{
     categories::ActionCategory,
