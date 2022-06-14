@@ -65,11 +65,11 @@ where
     S: CommentStyle + 'static,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
-        let has_trailing_inline_comment = f.state().is_last_content_inline_comment();
+        let is_last_content_inline_content = f.state().is_last_content_inline_comment();
 
         // Insert a space if the previous token has any trailing comments and this is not a group
         // end token
-        if has_trailing_inline_comment && !self.style.is_group_end_token(self.token.kind) {
+        if is_last_content_inline_content && !self.style.is_group_end_token(self.token.kind) {
             space_token().fmt(f)?;
         }
 
@@ -107,8 +107,14 @@ where
 
         let last = f.state().last_token_kind();
 
-        let has_trailing_inline_comment = f.state().is_last_content_inline_comment();
-        write_removed_token_trivia(self.token, last, has_trailing_inline_comment, self.style, f)
+        let is_last_content_inline_comment = f.state().is_last_content_inline_comment();
+        write_removed_token_trivia(
+            self.token,
+            last,
+            is_last_content_inline_comment,
+            self.style,
+            f,
+        )
     }
 }
 
@@ -116,7 +122,7 @@ where
 fn write_removed_token_trivia<C, S>(
     token: &SyntaxToken<S::Language>,
     last_token: Option<LastTokenKind>,
-    has_trailing_inline_comment: bool,
+    is_last_content_inline_comment: bool,
     style: S,
     f: &mut Formatter<C>,
 ) -> FormatResult<()>
@@ -136,7 +142,7 @@ where
     // become if the document gets formatted a second time).
     let has_trailing_inline_comment = if let Some(last_token) = last_token {
         let mut trailing_comments = vec![];
-        let mut is_last_inline = has_trailing_inline_comment;
+        let mut is_last_inline = is_last_content_inline_comment;
 
         while let Some(piece) = pieces.peek() {
             if let Some(comment) = piece.as_comments() {
@@ -153,7 +159,7 @@ where
 
         is_last_inline
     } else {
-        has_trailing_inline_comment
+        is_last_content_inline_comment
     };
 
     let next_token_leading_comments = write_leading_trivia(
@@ -274,7 +280,7 @@ where
         // Is it safe to set `last_trailing_comment` only in the format removed because format removed may set it to true
         // but it's false for the "break" case. Ignorable, because it's after a new line break in that case?
         let last_token = f.state().last_token_kind();
-        let has_trailing_inline_comment = f.state_mut().is_last_content_inline_comment();
+        let is_last_content_inline_comment = f.state_mut().is_last_content_inline_comment();
 
         write!(
             f,
@@ -285,7 +291,7 @@ where
                     write_removed_token_trivia(
                         self.token,
                         last_token,
-                        has_trailing_inline_comment,
+                        is_last_content_inline_comment,
                         self.style,
                         f,
                     )
@@ -353,11 +359,11 @@ where
             f,
         )?;
 
-        let has_trailing_inline_comment = f.state_mut().is_last_content_inline_comment();
+        let is_last_content_inline_comment = f.state_mut().is_last_content_inline_comment();
         if needs_space_between_comments_and_token(
             &leading_comments,
             self.token.kind(),
-            has_trailing_inline_comment,
+            is_last_content_inline_comment,
             self.style,
         ) {
             comment(&space_token()).fmt(f)?;
