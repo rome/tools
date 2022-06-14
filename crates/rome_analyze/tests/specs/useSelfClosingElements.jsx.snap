@@ -17,6 +17,11 @@ expression: useSelfClosingElements.jsx
 <div               ></div>;
 <Component></Component>;
 <Foo.bar></Foo.bar>;
+<div
+></div>;
+
+<div ></div> /* comment */;
+/* comment */ <div ></div>;
 
 ```
 
@@ -29,7 +34,7 @@ warning[useSelfClosingElements]: JSX elements without children should be marked 
    │ --------------------------
 
 Suggested fix: Use a SelfClosingElement instead
-      | @@ -7,6 +7,6 @@
+      | @@ -7,7 +7,7 @@
  6  6 |   <Foo.bar>child</Foo.bar>;
  7  7 |   
  8  8 |   // invalid
@@ -37,6 +42,7 @@ Suggested fix: Use a SelfClosingElement instead
     9 | + <div               />;
 10 10 |   <Component></Component>;
 11 11 |   <Foo.bar></Foo.bar>;
+12 12 |   <div
 
 
 ```
@@ -49,13 +55,15 @@ warning[useSelfClosingElements]: JSX elements without children should be marked 
    │ -----------------------
 
 Suggested fix: Use a SelfClosingElement instead
-      | @@ -8,5 +8,5 @@
+      | @@ -8,7 +8,7 @@
  7  7 |   
  8  8 |   // invalid
  9  9 |   <div               ></div>;
 10    | - <Component></Component>;
    10 | + <Component />;
 11 11 |   <Foo.bar></Foo.bar>;
+12 12 |   <div
+13 13 |   ></div>;
 
 
 ```
@@ -68,12 +76,76 @@ warning[useSelfClosingElements]: JSX elements without children should be marked 
    │ -------------------
 
 Suggested fix: Use a SelfClosingElement instead
-      | @@ -9,4 +9,4 @@
+      | @@ -9,7 +9,7 @@
  8  8 |   // invalid
  9  9 |   <div               ></div>;
 10 10 |   <Component></Component>;
 11    | - <Foo.bar></Foo.bar>;
    11 | + <Foo.bar />;
+12 12 |   <div
+13 13 |   ></div>;
+14 14 |   
+
+
+```
+
+```
+warning[useSelfClosingElements]: JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.
+   ┌─ useSelfClosingElements.jsx:13:1
+   │  
+13 │ ┌ <div
+14 │ │ ></div>;
+   │ └───────'
+
+Suggested fix: Use a SelfClosingElement instead
+      | @@ -10,8 +10,8 @@
+ 9  9 |   <div               ></div>;
+10 10 |   <Component></Component>;
+11 11 |   <Foo.bar></Foo.bar>;
+12    | - <div
+13    | - ></div>;
+   12 | + <div /
+   13 | + >;
+14 14 |   
+15 15 |   <div ></div> /* comment */;
+16 16 |   /* comment */ <div ></div>;
+
+
+```
+
+```
+warning[useSelfClosingElements]: JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.
+   ┌─ useSelfClosingElements.jsx:16:1
+   │
+16 │ <div ></div> /* comment */;
+   │ ------------
+
+Suggested fix: Use a SelfClosingElement instead
+      | @@ -13,5 +13,5 @@
+12 12 |   <div
+13 13 |   ></div>;
+14 14 |   
+15    | - <div ></div> /* comment */;
+   15 | + <div /> /* comment */;
+16 16 |   /* comment */ <div ></div>;
+
+
+```
+
+```
+warning[useSelfClosingElements]: JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.
+   ┌─ useSelfClosingElements.jsx:17:15
+   │
+17 │ /* comment */ <div ></div>;
+   │               ------------
+
+Suggested fix: Use a SelfClosingElement instead
+      | @@ -14,4 +14,4 @@
+13 13 |   ></div>;
+14 14 |   
+15 15 |   <div ></div> /* comment */;
+16    | - /* comment */ <div ></div>;
+   16 | + /* comment */ <div />;
 
 
 ```

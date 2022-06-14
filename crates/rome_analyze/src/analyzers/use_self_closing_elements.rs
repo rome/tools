@@ -39,8 +39,6 @@ impl Rule for UseSelfClosingElements {
 
     fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
         let open_element = node.opening_element().ok()?;
-        // let need_extra_whitespace = open_element.syntax().preorder_with_tokens(rome_rowan::Direction::Next).rev();
-        // println!("{:?}", need_extra_whitespace.map(|t| t.text().to_string()));
         let JsxOpeningElementFields {
             l_angle_token,
             name,
@@ -48,6 +46,7 @@ impl Rule for UseSelfClosingElements {
             attributes,
             r_angle_token,
         } = open_element.as_fields();
+		// check if previous `open_element` have a whitespace before `>`
         let need_extra_whitespace = if let Some(last_attribute) = attributes.last() {
             let trailing = last_attribute.syntax().last_trailing_trivia();
             if let Some(trailing) = trailing {
