@@ -7,7 +7,6 @@ use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
-
 use crate::JsRuleAction;
 
 pub(crate) enum NoUnusedTemplateLiteral {}

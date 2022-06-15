@@ -3,8 +3,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression,
-    JsBinaryExpressionFields, JsBinaryOperator, JsUnaryOperator, TextRange,
+    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryExpressionFields,
+    JsBinaryOperator, JsUnaryOperator, TextRange,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 

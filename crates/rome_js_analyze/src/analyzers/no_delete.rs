@@ -3,8 +3,9 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsComputedMemberExpression, JsComputedMemberExpressionFields, JsStaticMemberExpression,
-    JsStaticMemberExpressionFields, JsUnaryExpression, JsUnaryOperator, T,
+    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsComputedMemberExpression,
+    JsComputedMemberExpressionFields, JsStaticMemberExpression, JsStaticMemberExpressionFields,
+    JsUnaryExpression, JsUnaryOperator, T,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 

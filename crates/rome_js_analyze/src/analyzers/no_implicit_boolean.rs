@@ -3,8 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyLiteralExpression, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute,
-    JsxAttributeFields, T,
+    JsAnyLiteralExpression, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute, JsxAttributeFields, T,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
