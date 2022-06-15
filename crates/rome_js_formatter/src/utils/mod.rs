@@ -548,27 +548,3 @@ where
 
     join_with.finish()
 }
-
-/// This function is in charge to format the call arguments.
-pub(crate) fn fmt_arguments_one_line<S: Format<JsFormatContext>, I>(
-    separated: I,
-    number_of_elements: usize,
-    f: &mut JsFormatter,
-) -> FormatResult<()>
-where
-    I: Iterator<Item = S>,
-    S: std::fmt::Debug,
-{
-    let mut iterator = separated.enumerate();
-    let mut join_with = f.join_with(space_token());
-
-    for (index, element) in iterator.by_ref() {
-        if index == number_of_elements - 1 {
-            join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
-        } else {
-            join_with.entry(&element);
-        }
-    }
-
-    join_with.finish()
-}

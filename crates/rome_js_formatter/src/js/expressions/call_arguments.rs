@@ -1,6 +1,6 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
 use crate::prelude::*;
-use crate::utils::{fmt_arguments_multi_line, fmt_arguments_one_line, is_call_like_expression};
+use crate::utils::{fmt_arguments_multi_line, is_call_like_expression};
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsSyntaxKind::JS_EMPTY_STATEMENT;
@@ -22,10 +22,6 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
 
         let l_paren_token = l_paren_token?;
         let r_paren_token = r_paren_token?;
-
-        // we create open a close delimiters
-        let open_delimiter = format_open_delimiter(&l_paren_token);
-        let close_delimiter = format_close_delimiter(&r_paren_token);
 
         // we now extracts the formatted version of trivias and tokens of the delimiters
 
@@ -70,6 +66,10 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
             );
         }
 
+        // we create open a close delimiters
+        let open_delimiter = format_open_delimiter(&l_paren_token);
+        let close_delimiter = format_close_delimiter(&r_paren_token);
+
         // tokens on the left
         let l_leading_trivia = open_delimiter.as_leading_trivia_fmt();
         let l_paren = open_delimiter.as_token_fmt();
@@ -83,20 +83,21 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         let should_group_first_argument = should_group_first_argument(&args)?;
         let should_group_last_argument = should_group_last_argument(&args)?;
 
-        // We finished the "simple cases", we now need to use `best_fitting`.
-        // We now need to allocate a new vector with cached nodes, this is needed because
-        // we can't attempt to print the same node twice without incur in "printed token twice" errors.
-        // We also disallow the trailing separator, we are interested in doing it manually.
-        let separated: Vec<_> = args
-            .format_separated(token(","))
-            .with_options(
-                FormatSeparatedOptions::default().with_trailing_separator(TrailingSeparator::Elide),
-            )
-            .map(|e| e.memoized())
-            .collect();
-
         // if the first or last groups needs grouping, then we prepare some special formatting
         if should_group_first_argument || should_group_last_argument {
+            // We finished the "simple cases", we now need to use `best_fitting`.
+            // We now need to allocate a new vector with cached nodes, this is needed because
+            // we can't attempt to print the same node twice without incur in "printed token twice" errors.
+            // We also disallow the trailing separator, we are interested in doing it manually.
+            let separated: Vec<_> = args
+                .format_separated(token(","))
+                .with_options(
+                    FormatSeparatedOptions::default()
+                        .with_trailing_separator(TrailingSeparator::Elide),
+                )
+                .map(|e| e.memoized())
+                .collect();
+
             // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
             // print each version first
             // tokens on the left
@@ -220,19 +221,13 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                     &group_elements(&format_args![
                         l_paren,
                         l_trailing_trivia,
-                        // TODO: check if soft_line_block works here
-                        &if_group_breaks(&format_args![
-                            indent(&format_args![
-                                soft_line_break(),
-                                &format_with(|f| {
-                                    fmt_arguments_multi_line(separated.iter(), args.len(), f)
-                                }),
-                            ]),
-                            soft_line_break(),
-                        ]),
-                        &if_group_fits_on_line(&format_args![&format_with(|f| {
-                            fmt_arguments_one_line(separated.iter(), args.len(), f)
-                        }),]),
+                        &soft_block_indent(&format_with(|f| {
+                            let separated = args.format_separated(token(",")).with_options(
+                                FormatSeparatedOptions::default()
+                                    .with_trailing_separator(TrailingSeparator::Elide),
+                            );
+                            fmt_arguments_multi_line(separated, args.len(), f)
+                        }),),
                         r_leading_trivia,
                         r_paren,
                     ],),
