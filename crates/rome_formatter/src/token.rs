@@ -761,26 +761,31 @@ where
     S: CommentStyle,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
-        for (index, comment) in self.comments.iter().enumerate() {
-            if f.state().is_comment_formatted(comment.piece()) {
-                continue;
-            }
+        if self.comments.is_empty() {
+            return Ok(());
+        }
 
-            let is_line_comment = self
-                .options
-                .style
-                .get_comment_kind(comment.piece())
-                .is_line();
-            let lines_after = self
-                .comments
-                .get(index + 1)
-                .map(|comment| comment.lines_before())
-                .unwrap_or_else(|| match self.options.trim_mode {
-                    TriviaPrintMode::Full => self.lines_before_token,
-                    TriviaPrintMode::Trim => 0,
-                });
+        let format_comments = format_with(|f| {
+            for (index, comment) in self.comments.iter().enumerate() {
+                if f.state().is_comment_formatted(comment.piece()) {
+                    continue;
+                }
 
-            let format_content = format_with(|f| {
+                let is_line_comment = self
+                    .options
+                    .style
+                    .get_comment_kind(comment.piece())
+                    .is_line();
+
+                let lines_after = self
+                    .comments
+                    .get(index + 1)
+                    .map(|comment| comment.lines_before())
+                    .unwrap_or_else(|| match self.options.trim_mode {
+                        TriviaPrintMode::Full => self.lines_before_token,
+                        TriviaPrintMode::Trim => 0,
+                    });
+
                 if comment.lines_before() > 0 && index == 0 {
                     write!(f, [hard_line_break()])?;
                 } else {
@@ -804,14 +809,11 @@ where
                         _ => write!(f, [empty_line()])?,
                     }
                 };
+            }
+            Ok(())
+        });
 
-                Ok(())
-            });
-
-            write!(f, [crate::comment(&format_content)])?;
-        }
-
-        Ok(())
+        write!(f, [comments(&format_comments).leading(true)])
     }
 }
 
@@ -884,16 +886,19 @@ where
         let comments = self.comments.clone();
         let mut last_inline_comment = false;
 
-        for (index, comment) in comments.enumerate() {
-            if !self.skip_formatted_check && f.state().is_comment_formatted(comment.piece()) {
-                continue;
-            }
+        let mut comments = comments.enumerate().peekable();
+        let is_empty = comments.peek().is_none();
 
-            let kind = self.style.get_comment_kind(comment.piece());
-            last_inline_comment = kind.is_inline();
-            let is_single_line = kind.is_line();
+        let format_comments = format_once(|f| {
+            for (index, comment) in comments {
+                if !self.skip_formatted_check && f.state().is_comment_formatted(comment.piece()) {
+                    continue;
+                }
 
-            let content = format_with(|f| {
+                let kind = self.style.get_comment_kind(comment.piece());
+                last_inline_comment = kind.is_inline();
+                let is_single_line = kind.is_line();
+
                 if !is_single_line {
                     match self.token_kind {
                         // Don't write a space if this is a group start token and it isn't the first trailing comment
@@ -911,15 +916,16 @@ where
                         ]
                     ]?;
                 }
+            }
 
-                Ok(())
-            });
+            Ok(())
+        });
 
-            crate::comment(&content).fmt(f)?;
+        if !is_empty {
+            crate::comments(&format_comments).fmt(f)?;
+            f.state_mut()
+                .set_last_content_is_inline_comment(last_inline_comment);
         }
-
-        f.state_mut()
-            .set_last_content_is_inline_comment(last_inline_comment);
 
         Ok(())
     }
