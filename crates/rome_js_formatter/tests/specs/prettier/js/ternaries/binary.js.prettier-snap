@@ -12,6 +12,6 @@ room = room.map((row, rowIndex) =>
     rowIndex === height ||
     colIndex === width
       ? 1
-      : 0
-  )
+      : 0,
+  ),
 );

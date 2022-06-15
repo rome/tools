@@ -2,8 +2,8 @@ all_verylongcall_verylongcall_verylongcall_verylongcall_verylongcall(
   (
     a,
 
-    b
+    b,
   ) => {
     console.log();
-  }
+  },
 );

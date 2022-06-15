@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: definite.ts
-
 ---
 # Input
 ```js
@@ -10,7 +8,7 @@ class MyComponent {
 ngModel!: ng.INgModelController;
 }
 
-const x!: string
+const x!: string = '';
 
 var y!: MyComponent
 
@@ -22,7 +20,7 @@ class MyComponent {
   ngModel!: ng.INgModelController;
 }
 
-const x!: string;
+const x!: string = '';
 
 var y!: MyComponent;
 
@@ -30,11 +28,11 @@ var y!: MyComponent;
 
 # Errors
 ```
-error[SyntaxError]: Const var declarations must have an initialized value
-  ┌─ definite.ts:5:7
+error[SyntaxError]: Declarations with initializers cannot also have definite assignment assertions.
+  ┌─ definite.ts:5:18
   │
-5 │ const x!: string
-  │       ^ this variable needs to be initialized
+5 │ const x!: string = '';
+  │        --------- ^^^^
 
 
 ```

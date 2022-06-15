@@ -11,7 +11,7 @@ var getStateCode = R.pipeK(
   get("user"),
   get("address"),
   get("state"),
-  R.compose(Maybe.of, R.toUpper)
+  R.compose(Maybe.of, R.toUpper),
 );
 
 getStateCode('{"user":{"address":{"state":"ny"}}}');

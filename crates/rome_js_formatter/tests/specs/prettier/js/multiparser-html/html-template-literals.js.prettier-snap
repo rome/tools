@@ -12,7 +12,7 @@ setFoo(
   html`<div>one</div>
     <div>two</div>
     <div>three</div>`,
-  secondArgument
+  secondArgument,
 );
 
 setFoo(
@@ -21,12 +21,12 @@ setFoo(
     </div>
     <div>two</div>
     <div>three</div>`,
-  secondArgument
+  secondArgument,
 );
 
 setFoo(
   html`<div>
     <div>nested</div>
   </div>`,
-  secondArgument
+  secondArgument,
 );

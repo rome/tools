@@ -1,0 +1,55 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: blank-line-between-specifiers.js
+---
+# Input
+```js
+export {
+  // a
+  foo1,
+
+  // b
+  bar1,
+  baz1,
+} from "mod";
+
+const foo2 = 1;
+const bar2 = 1;
+const baz2 = 1;
+
+export {
+  // a
+  foo2,
+
+  // b
+  bar2,
+  baz2,
+};
+
+```
+
+# Output
+```js
+export {
+  // a
+  foo1,
+  // b
+  bar1,
+  baz1,
+} from "mod";
+
+const foo2 = 1;
+const bar2 = 1;
+const baz2 = 1;
+
+export {
+  // a
+  foo2,
+  // b
+  bar2,
+  baz2,
+};
+
+```
+
+

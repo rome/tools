@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: arguments.js
+---
+# Input
+```js
+console.log(@deco class Foo {})
+console.log(@deco class {})
+
+```
+
+# Output
+```js
+console.log(@deco class Foo {});
+console.log(@deco class {});
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an expression but instead found '@deco class Foo {}'
+  ┌─ arguments.js:1:13
+  │
+1 │ console.log(@deco class Foo {})
+  │             ^^^^^^^^^^^^^^^^^^ Expected an expression here
+
+error[SyntaxError]: expected an expression but instead found '@deco class {}'
+  ┌─ arguments.js:2:13
+  │
+2 │ console.log(@deco class {})
+  │             ^^^^^^^^^^^^^^ Expected an expression here
+
+
+```
+
+

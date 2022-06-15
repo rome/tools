@@ -3,5 +3,5 @@ export const enviromentProdValues: EnvironmentValues =
     {
       apiURL: "/api",
     },
-    enviromentBaseValues
+    enviromentBaseValues,
   );

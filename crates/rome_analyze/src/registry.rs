@@ -1,58 +1,40 @@
-use rome_console::MarkupBuf;
+use rome_console::fmt::Display;
+use rome_console::{markup, MarkupBuf};
+use rome_diagnostics::file::FileSpan;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
-use rome_js_syntax::JsLanguage;
-use rome_js_syntax::TextRange;
-use rome_rowan::{AstNode, Language, SyntaxNode};
+use rome_diagnostics::{Diagnostic, DiagnosticTag, Footer, Span, SubDiagnostic};
+use rome_rowan::{AstNode, Language, SyntaxNode, TextRange};
 
 use crate::{
-    analyzers::*,
-    assists::*,
     categories::{ActionCategory, RuleCategory},
     signals::{AnalyzerSignal, RuleSignal},
-    AnalysisFilter, ControlFlow,
+    ControlFlow,
 };
 
 /// The rule registry holds type-erased instances of all active analysis rules
-pub(crate) struct RuleRegistry<L: Language> {
+pub struct RuleRegistry<L: Language> {
     rules: Vec<RegistryRule<L>>,
 }
 
-/// Utility macro for implementing the `with_filter` method of [RuleRegistry]
-macro_rules! impl_registry_builders {
-    ( $( $rule:ident, )* ) => {
-        impl RuleRegistry<JsLanguage> {
-            pub(crate) fn with_filter(filter: &AnalysisFilter) -> Self {
-                let mut rules: Vec<RegistryRule<JsLanguage>> = Vec::new();
+impl<L: Language> RuleRegistry<L> {
+    pub fn empty() -> Self {
+        Self { rules: Vec::new() }
+    }
 
-                $( if filter.categories.contains($rule::CATEGORY.into()) && filter.rules.map_or(true, |rules| rules.contains(&$rule::NAME)) {
-                    rules.push(run::<$rule>);
-                } )*
-
-                Self { rules }
-            }
-        }
-    };
+    pub fn push<R>(&mut self)
+    where
+        R: Rule + 'static,
+        R::Query: AstNode<Language = L>,
+    {
+        self.rules.push(run::<R>);
+    }
 }
-
-impl_registry_builders!(
-    // Analyzers
-    NoCompareNegZero,
-    NoDelete,
-    NoDoubleEquals,
-    NoNegationElse,
-    UseSingleCaseStatement,
-    UseSingleVarDeclarator,
-    UseValidTypeof,
-    UseWhile,
-    // Assists
-    FlipBinExp,
-);
 
 pub(crate) type RuleLanguage<R> = NodeLanguage<<R as Rule>::Query>;
 pub(crate) type NodeLanguage<N> = <N as AstNode>::Language;
 
 pub(crate) type RuleRoot<R> = LanguageRoot<RuleLanguage<R>>;
-pub(crate) type LanguageRoot<L> = <L as Language>::Root;
+pub type LanguageRoot<L> = <L as Language>::Root;
 
 impl<L> RuleRegistry<L>
 where
@@ -103,7 +85,7 @@ fn run<'a, R: Rule + 'static>(
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
-pub(crate) trait Rule {
+pub trait Rule {
     /// The name of this rule, displayed in the diagnostics it emits
     const NAME: &'static str;
     /// The category this rule belong to, this is used for broadly filtering
@@ -147,9 +129,168 @@ pub(crate) trait Rule {
 
 /// Diagnostic object returned by a single analysis rule
 pub struct RuleDiagnostic {
-    pub severity: Severity,
-    pub range: TextRange,
-    pub message: MarkupBuf,
+    severity: Severity,
+    span: TextRange,
+    title: MarkupBuf,
+    summary: Option<String>,
+    tag: Option<DiagnosticTag>,
+    primary: Option<MarkupBuf>,
+    secondaries: Vec<(Severity, MarkupBuf, TextRange)>,
+    footers: Vec<Footer>,
+}
+
+// Some of these methods aren't used by anything yet
+#[allow(dead_code)]
+impl RuleDiagnostic {
+    /// Creates a new [`RuleDiagnostic`] with a severity and title that will be
+    /// used in a builder-like way to modify labels.
+    fn new(severity: Severity, span: impl Span, title: impl Display) -> Self {
+        Self {
+            severity,
+            span: span.as_range(),
+            title: markup!({ title }).to_owned(),
+            summary: None,
+            tag: None,
+            primary: None,
+            secondaries: Vec::new(),
+            footers: Vec::new(),
+        }
+    }
+
+    /// Creates a new [`RuleDiagnostic`] with the `Error` severity.
+    pub fn error(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Error, span, title)
+    }
+
+    /// Creates a new [`RuleDiagnostic`] with the `Warning` severity.
+    pub fn warning(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Warning, span, title)
+    }
+
+    /// Creates a new [`RuleDiagnostic`] with the `Help` severity.
+    pub fn help(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Help, span, title)
+    }
+
+    /// Creates a new [`RuleDiagnostic`] with the `Note` severity.
+    pub fn note(span: impl Span, title: impl Display) -> Self {
+        Self::new(Severity::Note, span, title)
+    }
+
+    /// Set an explicit plain-text summary for this diagnostic.
+    pub fn summary(mut self, summary: impl Into<String>) -> Self {
+        self.summary = Some(summary.into());
+        self
+    }
+
+    /// Marks this diagnostic as deprecated code, which will
+    /// be displayed in the language server.
+    ///
+    /// This does not have any influence on the diagnostic rendering.
+    pub fn deprecated(mut self) -> Self {
+        self.tag = if matches!(self.tag, Some(DiagnosticTag::Unnecessary)) {
+            Some(DiagnosticTag::Both)
+        } else {
+            Some(DiagnosticTag::Deprecated)
+        };
+        self
+    }
+
+    /// Marks this diagnostic as unnecessary code, which will
+    /// be displayed in the language server.
+    ///
+    /// This does not have any influence on the diagnostic rendering.
+    pub fn unnecessary(mut self) -> Self {
+        self.tag = if matches!(self.tag, Some(DiagnosticTag::Deprecated)) {
+            Some(DiagnosticTag::Both)
+        } else {
+            Some(DiagnosticTag::Unnecessary)
+        };
+        self
+    }
+
+    /// Attaches a label to this [`RuleDiagnostic`], that will point to another file
+    /// that is provided.
+    pub fn label_in_file(mut self, severity: Severity, span: impl Span, msg: impl Display) -> Self {
+        self.secondaries
+            .push((severity, markup!({ msg }).to_owned(), span.as_range()));
+        self
+    }
+
+    /// Attaches a label to this [`RuleDiagnostic`].
+    ///
+    /// The given span has to be in the file that was provided while creating this [`RuleDiagnostic`].
+    pub fn label(mut self, severity: Severity, span: impl Span, msg: impl Display) -> Self {
+        self.secondaries
+            .push((severity, markup!({ msg }).to_owned(), span.as_range()));
+        self
+    }
+
+    /// Attaches a primary label to this [`RuleDiagnostic`].
+    pub fn primary(mut self, msg: impl Display) -> Self {
+        self.primary = Some(markup!({ msg }).to_owned());
+        self
+    }
+
+    /// Attaches a secondary label to this [`RuleDiagnostic`].
+    pub fn secondary(self, span: impl Span, msg: impl Display) -> Self {
+        self.label(Severity::Note, span, msg)
+    }
+
+    /// Adds a footer to this [`RuleDiagnostic`], which will be displayed under the actual error.
+    pub fn footer(mut self, severity: Severity, msg: impl Display) -> Self {
+        self.footers.push(Footer {
+            msg: markup!({ msg }).to_owned(),
+            severity,
+        });
+        self
+    }
+
+    /// Adds a footer to this [`RuleDiagnostic`], with the `Help` severity.
+    pub fn footer_help(self, msg: impl Display) -> Self {
+        self.footer(Severity::Help, msg)
+    }
+
+    /// Adds a footer to this [`RuleDiagnostic`], with the `Note` severity.
+    pub fn footer_note(self, msg: impl Display) -> Self {
+        self.footer(Severity::Note, msg)
+    }
+
+    /// Convert this [`RuleDiagnostic`] into an instance of [`Diagnostic`] by
+    /// injecting the name of the rule that emitted it and the ID of the file
+    /// the rule was being run on
+    pub(crate) fn into_diagnostic(self, file_id: FileId, code: &'static str) -> Diagnostic {
+        Diagnostic {
+            file_id,
+            severity: self.severity,
+            code: Some(code.into()),
+            title: self.title,
+            summary: self.summary,
+            tag: self.tag,
+            primary: Some(SubDiagnostic {
+                severity: self.severity,
+                msg: self.primary.unwrap_or_default(),
+                span: FileSpan {
+                    file: file_id,
+                    range: self.span,
+                },
+            }),
+            children: self
+                .secondaries
+                .into_iter()
+                .map(|(severity, msg, range)| SubDiagnostic {
+                    severity,
+                    msg,
+                    span: FileSpan {
+                        file: file_id,
+                        range,
+                    },
+                })
+                .collect(),
+            suggestions: Vec::new(),
+            footers: self.footers,
+        }
+    }
 }
 
 /// Code Action object returned by a single analysis rule
@@ -159,5 +300,3 @@ pub struct RuleAction<L: Language> {
     pub message: MarkupBuf,
     pub root: LanguageRoot<L>,
 }
-
-pub type JsRuleAction = RuleAction<JsLanguage>;

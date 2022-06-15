@@ -12,12 +12,12 @@ _.a(a)
   .a();
 
 _.a(
-  a
+  a,
 ) /* very very very very very very very long such that it is longer than 80 columns */
   .a();
 
 _.a(
-  a
+  a,
 ) /* very very very very very very very long such that it is longer than 80 columns */
   .a();
 
@@ -48,7 +48,7 @@ this.doWriteConfiguration(target, value, options) // queue up writes to prevent 
       return options.donotNotifyError
         ? TPromise.wrapError(error)
         : this.onError(error, target, value);
-    }
+    },
   );
 
 ret = __DEV__

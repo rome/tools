@@ -238,9 +238,8 @@ fn compute_source_type_from_path_or_extension(
         SourceType::d_ts().with_module_kind(ModuleKind::Script)
     } else {
         match extension {
-            "js" | "mjs" => SourceType::js_module(),
             "cjs" => SourceType::js_module().with_module_kind(ModuleKind::Script),
-            "jsx" => SourceType::jsx(),
+            "js" | "mjs" | "jsx" => SourceType::jsx(),
             "ts" | "mts" => SourceType::ts(),
             "cts" => SourceType::ts().with_module_kind(ModuleKind::Script),
             "tsx" => SourceType::tsx(),
