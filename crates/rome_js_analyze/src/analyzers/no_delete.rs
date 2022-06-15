@@ -32,7 +32,9 @@ impl Rule for NoDelete {
         MemberExpression::try_from(argument).ok()
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query_result();
+        
         Some(
             RuleDiagnostic::warning(node.range(), markup! {
                 "This is an unexpected use of the "<Emphasis>"delete"</Emphasis>" operator."

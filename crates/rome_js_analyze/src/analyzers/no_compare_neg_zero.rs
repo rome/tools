@@ -50,7 +50,9 @@ impl Rule for NoCompareNegZero {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query_result();
+        
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {

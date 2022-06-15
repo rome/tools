@@ -118,7 +118,7 @@ pub trait Rule {
     /// from a signal raised by `run`
     ///
     /// The default implementation returns None
-    fn diagnostic(_node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         None
     }
 

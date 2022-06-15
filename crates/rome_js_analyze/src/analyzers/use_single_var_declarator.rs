@@ -44,7 +44,9 @@ impl Rule for UseSingleVarDeclarator {
         Some((kind, declarators, semicolon_token))
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query_result();
+        
         Some(RuleDiagnostic::warning(
             node.range(),
             "Declare variables separately",

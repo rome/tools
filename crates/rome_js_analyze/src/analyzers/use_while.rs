@@ -42,7 +42,9 @@ impl Rule for UseWhile {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query_result();
+        
         // SAFETY: These tokens have been checked for errors in `run` already
         let for_range = node.for_token().unwrap().text_trimmed_range();
         let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();

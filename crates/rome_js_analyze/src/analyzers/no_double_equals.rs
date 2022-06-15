@@ -35,7 +35,7 @@ impl Rule for NoDoubleEquals {
         Some(op)
     }
 
-    fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, op: &Self::State) -> Option<RuleDiagnostic> {
         let text_trimmed = op.text_trimmed();
         let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
 

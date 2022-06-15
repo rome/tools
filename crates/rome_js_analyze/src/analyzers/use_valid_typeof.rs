@@ -142,7 +142,7 @@ impl Rule for UseValidTypeof {
         Some((TypeofError::InvalidExpression(range), None))
     }
 
-    fn diagnostic(_: &Self::Query, (err, _): &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, (err, _): &Self::State) -> Option<RuleDiagnostic> {
         const TITLE: &str = "Invalid `typeof` comparison value";
 
         Some(match err {

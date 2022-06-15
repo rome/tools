@@ -31,7 +31,9 @@ impl Rule for UseSingleCaseStatement {
         }
     }
 
-    fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let n = ctx.query_result();
+
         Some(RuleDiagnostic::warning(
             n.consequent().range(),
             markup! {
