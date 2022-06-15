@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: arrow_call.js
 ---
 # Input
@@ -52,14 +53,11 @@ const testResults = results.testResults.map(
   (testResult) => formatResult(testResult, formatter, reporter),
 );
 
-it(
-  "mocks regexp instances",
-  () => {
-    expect(
-      () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
-    ).not.toThrow();
-  },
-);
+it("mocks regexp instances", () => {
+  expect(
+    () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
+  ).not.toThrow();
+});
 
 expect(() => asyncRequest({ url: "/test-endpoint" })).toThrowError(
   /Required parameter/,
@@ -106,6 +104,6 @@ promise.then(
 
 # Lines exceeding max width of 80 characters
 ```
-   52:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+   49:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 ```
 

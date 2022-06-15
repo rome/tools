@@ -284,12 +284,9 @@ foo.apply(
   [1, 2],
 );
 
-bar.on(
-  "readable",
-  () => {
-    doStuff();
-  },
-);
+bar.on("readable", () => {
+  doStuff();
+});
 
 foo(
   ["A, B"],

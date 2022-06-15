@@ -31,18 +31,12 @@ Quote style: Double Quotes
 -----
 useEffect(() => {}, [a, b]);
 
-useMemo(
-	() => {
-		return {
-			d,
-			e,
-		};
-	},
-	[a, b],
-);
+useMemo(() => {
+	return {
+		d,
+		e,
+	};
+}, [a, b]);
 
-useMemo(
-	() => {}, // some comment
-	[a, b],
-);
+useMemo(() => {}, [a, b]); // some comment
 

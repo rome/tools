@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: function-calls.js
 ---
 # Input
@@ -43,12 +44,9 @@ a(
   a("long-nested-value", "long-nested-value2", "long-nested-value3"),
 );
 
-a.b().c(
-  {
-    d,
-  },
-  () => {},
-);
+a.b().c({
+  d,
+}, () => {});
 
 ```
 

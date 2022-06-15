@@ -296,13 +296,10 @@ window.FooClient.setVars({
   authorizationToken: data.token,
 },).initVerify("foo_container");
 
-it(
-  "gets triggered by mouseenter",
-  () => {
-    const wrapper = shallow(<CalendarDay />);
-    wrapper.dive().find(Button).prop();
-  },
-);
+it("gets triggered by mouseenter", () => {
+  const wrapper = shallow(<CalendarDay />);
+  wrapper.dive().find(Button).prop();
+});
 
 const a1 = x.a(true).b(null).c(123);
 const a2 = x.d("").e(``).f(g);
