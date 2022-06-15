@@ -17,9 +17,66 @@ pub trait RuleMeta {
     const DOCS: &'static str;
 }
 
+/// This macro is used to declare an analyzer rule type, and implement the
+/// [RuleMeta] trait for it
+///
+/// # Example
+///
+/// The macro itself expect the following syntax:
+/// ```ignore
+/// declare_rule! {
+///     /// Documentation
+///     pub(crate) ExampleRule = "ruleName"
+/// }
+/// ```
+///
+/// # Documentation
+///
+/// The doc-comment for the rule is mandatory and is used to generate the
+/// documentation page for the rule on the website.
+///
+/// Importantly, the tool used to generate those pages also runs tests on the
+/// code blocks included in the documentation written in languages supported by
+/// the Rome toolchain (JavaScript, JSX, TypeScript, ...) similar to how
+/// `rustdoc` generates tests from code blocks written in Rust. Because code
+/// blocks in Rust doc-comments are assumed to be written in Rust by default
+/// the language of the test must be explicitly specified, for instance:
+///
+/// ```ignore
+/// declare_rule! {
+///     /// Disallow the use of `var`
+///     ///
+///     /// ### Valid
+///     ///
+///     /// ```js
+///     /// let a, b;
+///     /// ```
+///     pub(crate) NoVar = "noVar"
+/// }
+/// ```
+///
+/// Additionally, it's possible to declare that a test should emit a diagnostic
+/// by adding `expect_diagnostic` to the language metadata:
+///
+/// ```ignore
+/// declare_rule! {
+///     /// Disallow the use of `var`
+///     ///
+///     /// ### Invalid
+///     ///
+///     /// ```js,expect_diagnostic
+///     /// var a, b;
+///     /// ```
+///     pub(crate) NoVar = "noVar"
+/// }
+/// ```
+///
+/// This will cause the documentation generator to ensure the rule does emit
+/// exactly one diagnostic for this code, and to include a snapshot for the
+/// diagnostic in the resulting documentation page
 #[macro_export]
 macro_rules! declare_rule {
-    ( $( #[doc = $doc:literal] )* $vis:vis $id:ident = $name:literal ) => {
+    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident = $name:literal ) => {
         $( #[doc = $doc] )*
         $vis enum $id {}
 

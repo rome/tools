@@ -17,8 +17,8 @@ pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
 /// Return an iterator over the name and documentation of all the rules
 /// implemented by the JS analyzer
-pub fn metadata() -> MetadataIter<JsLanguage> {
-    build_registry(&AnalysisFilter::default()).metadata()
+pub fn metadata(filter: AnalysisFilter) -> MetadataIter<JsLanguage> {
+    build_registry(&filter).metadata()
 }
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`

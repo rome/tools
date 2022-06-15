@@ -1,4 +1,11 @@
-use std::{fmt::Write as _, io::Write as _, path::Path, slice};
+use std::{
+    fmt::Write as _,
+    io::{self, Write as _},
+    ops::Range,
+    path::Path,
+    slice,
+    str::{self, FromStr},
+};
 
 use pulldown_cmark::{escape::escape_html, CodeBlockKind, Event, LinkType, Options, Parser, Tag};
 use rome_console::{
@@ -8,15 +15,25 @@ use rome_console::{
 use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use xtask::{glue::fs2, *};
 
-use rome_analyze::{AnalysisFilter, ControlFlow};
+use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories};
 use rome_js_analyze::{analyze, metadata};
-use rome_js_syntax::SourceType;
+use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/src/docs/lint/rules");
 
-    // Clear the rules directory
-    fs2::remove_dir_all(&root)?;
+    // Clear the rules directory ignoring "not found" errors
+    if let Err(err) = fs2::remove_dir_all(&root) {
+        let is_not_found = err
+            .source()
+            .and_then(|err| err.downcast_ref::<io::Error>())
+            .map_or(false, |err| matches!(err.kind(), io::ErrorKind::NotFound));
+
+        if !is_not_found {
+            return Err(err);
+        }
+    }
+
     fs2::create_dir_all(&root)?;
 
     // Content of the index page
@@ -44,7 +61,12 @@ fn main() -> Result<()> {
     // failure instead of just the first one
     let mut errors = Vec::new();
 
-    for (name, docs) in metadata() {
+    let filter = AnalysisFilter {
+        categories: RuleCategories::LINT,
+        ..AnalysisFilter::default()
+    };
+
+    for (name, docs) in metadata(filter) {
         match generate_rule(&root, name, docs) {
             Ok(summary) => {
                 writeln!(index, "<div class=\"rule\">")?;
@@ -92,13 +114,8 @@ fn generate_rule(root: &Path, name: &'static str, docs: &'static str) -> Result<
     writeln!(content, "# {name}")?;
     writeln!(content)?;
 
-    let summary = if !docs.is_empty() {
-        parse_documentation(name, docs, &mut content)?
-    } else {
-        // Default content if the rule has no documentation
-        writeln!(content, "MISSING DOCUMENTATION")?;
-        String::from("MISSING DOCUMENTATION")
-    };
+    let range = parse_documentation(name, docs, &mut content)?;
+    let summary = str::from_utf8(&content[range])?.to_string();
 
     fs2::write(root.join(format!("{name}.md")), content)?;
 
@@ -111,72 +128,59 @@ fn parse_documentation(
     name: &'static str,
     docs: &'static str,
     content: &mut Vec<u8>,
-) -> Result<String> {
-    let mut options = Options::empty();
-    options.insert(Options::ENABLE_HEADING_ATTRIBUTES);
+) -> Result<Range<usize>> {
+    let options = Options::empty();
     let parser = Parser::new_ext(docs, options);
 
-    // Content of the first paragraph of documentation, used as a short summary
-    // of what the rule does in the rules index
-    let mut summary = String::new();
-    let mut is_summary = true;
+    // Range of the first paragraph of documentation in the resulting content,
+    // used as a short summary of what the rule does in the rules index
+    let summary_start = content.len();
+    let mut summary_end = None;
 
     // Tracks the content of the current code block if it's using a
     // language supported for analysis
     let mut language = None;
 
-    // Tracks whether the current section of documentation is expected to
-    // contain failing or passing tests
-    let mut section = SectionKind::None;
-
-    enum SectionKind {
-        None,
-        Invalid,
-        Valid,
-    }
-
     for event in parser {
         match event {
             // CodeBlock-specific handling
             Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(meta))) => {
-                // If this is a `valid` or `invalid` section, track the content
-                // of code blocks to pass them through the analyzer
-                if !matches!(section, SectionKind::None) {
-                    match meta.as_ref() {
-                        "js" | "javascript" => {
-                            language = Some((SourceType::js_module(), String::new()));
-                        }
-                        "jsx" => {
-                            language = Some((SourceType::jsx(), String::new()));
-                        }
+                // Track the content of code blocks to pass them through the analyzer
+                let test = CodeBlockTest::from_str(meta.as_ref())?;
 
-                        // TODO: Should all language names be explicitly
-                        // supported, of silently ignore unknown languages ?
-                        other => bail!("unsupported code block language {other:?}"),
+                // Erase the lintdoc-specific attributes in the output by
+                // re-generating the language ID from the source type
+                write!(content, "```")?;
+                if !meta.is_empty() {
+                    match test.source_type.language() {
+                        Language::JavaScript => write!(content, "js")?,
+                        Language::TypeScript { .. } => write!(content, "ts")?,
+                    }
+                    match test.source_type.variant() {
+                        LanguageVariant::Standard => {}
+                        LanguageVariant::Jsx => write!(content, "x")?,
                     }
                 }
+                writeln!(content)?;
 
-                writeln!(content, "```{meta}")?;
+                language = Some((test, String::new()));
             }
 
             Event::End(Tag::CodeBlock(_)) => {
                 writeln!(content, "```")?;
                 writeln!(content)?;
 
-                if let Some((source_type, block)) = language.take() {
-                    let should_fail = matches!(section, SectionKind::Invalid);
-
-                    if should_fail {
+                if let Some((test, block)) = language.take() {
+                    if test.expect_diagnostic {
                         write!(
                             content,
                             "{{% raw %}}<pre class=\"language-text\"><code class=\"language-text\">"
                         )?;
                     }
 
-                    assert_lint(name, source_type, &block, should_fail, content)
-                        .context("snapshot test failed")?;
+                    assert_lint(name, &test, &block, content).context("snapshot test failed")?;
 
-                    if should_fail {
+                    if test.expect_diagnostic {
                         writeln!(content, "</code></pre>{{% endraw %}}")?;
                         writeln!(content)?;
                     }
@@ -184,10 +188,6 @@ fn parse_documentation(
             }
 
             Event::Text(text) => {
-                if is_summary {
-                    write!(summary, "{text}")?;
-                }
-
                 if let Some((_, block)) = &mut language {
                     write!(block, "{text}")?;
                 }
@@ -196,18 +196,8 @@ fn parse_documentation(
             }
 
             // Other markdown events are emitted as-is
-            Event::Start(Tag::Heading(level, fragment, _)) => {
+            Event::Start(Tag::Heading(level, ..)) => {
                 write!(content, "{} ", "#".repeat(level as usize))?;
-
-                match fragment {
-                    Some("valid") => {
-                        section = SectionKind::Valid;
-                    }
-                    Some("invalid") => {
-                        section = SectionKind::Invalid;
-                    }
-                    _ => {}
-                }
             }
             Event::End(Tag::Heading(..)) => {
                 writeln!(content)?;
@@ -217,7 +207,9 @@ fn parse_documentation(
             Event::Start(Tag::Paragraph) => {}
             Event::End(Tag::Paragraph) => {
                 // Stop the summary at the first paragraph end
-                is_summary = false;
+                if summary_end.is_none() {
+                    summary_end = Some(content.len());
+                }
 
                 writeln!(content)?;
                 writeln!(content)?;
@@ -225,19 +217,11 @@ fn parse_documentation(
 
             Event::Code(text) => {
                 write!(content, "`{text}`")?;
-
-                if is_summary {
-                    write!(summary, "`{text}`")?;
-                }
             }
 
             Event::Start(Tag::Link(kind, _, _)) => {
                 assert_eq!(kind, LinkType::Inline, "unimplemented link type");
                 write!(content, "[")?;
-
-                if is_summary {
-                    write!(summary, "[")?;
-                }
             }
             Event::End(Tag::Link(_, url, title)) => {
                 write!(content, "]({url}")?;
@@ -245,21 +229,9 @@ fn parse_documentation(
                     write!(content, " \"{title}\"")?;
                 }
                 write!(content, ")")?;
-
-                if is_summary {
-                    write!(summary, "]({url}")?;
-                    if !title.is_empty() {
-                        write!(summary, " \"{title}\"")?;
-                    }
-                    write!(summary, ")")?;
-                }
             }
 
             Event::SoftBreak => {
-                if is_summary {
-                    writeln!(summary)?;
-                }
-
                 writeln!(content)?;
             }
 
@@ -270,28 +242,81 @@ fn parse_documentation(
         }
     }
 
-    Ok(summary)
+    Ok(summary_start..summary_end.unwrap_or(content.len()))
+}
+
+struct CodeBlockTest {
+    source_type: SourceType,
+    expect_diagnostic: bool,
+}
+
+impl FromStr for CodeBlockTest {
+    type Err = xtask::Error;
+
+    fn from_str(input: &str) -> Result<Self> {
+        // This is based on the parsing logic for code block languages in `rustdoc`:
+        // https://github.com/rust-lang/rust/blob/6ac8adad1f7d733b5b97d1df4e7f96e73a46db42/src/librustdoc/html/markdown.rs#L873
+        let tokens = input
+            .split(|c| c == ',' || c == ' ' || c == '\t')
+            .map(str::trim)
+            .filter(|token| !token.is_empty());
+
+        let mut test = CodeBlockTest {
+            source_type: SourceType::default(),
+            expect_diagnostic: false,
+        };
+
+        for token in tokens {
+            match token {
+                // Determine the language, using the same list of extensions as `compute_source_type_from_path_or_extension`
+                "cjs" => {
+                    test.source_type = SourceType::js_module().with_module_kind(ModuleKind::Script);
+                }
+                "js" | "mjs" | "jsx" => {
+                    test.source_type = SourceType::jsx();
+                }
+                "ts" | "mts" => {
+                    test.source_type = SourceType::ts();
+                }
+                "cts" => {
+                    test.source_type = SourceType::ts().with_module_kind(ModuleKind::Script);
+                }
+                "tsx" => {
+                    test.source_type = SourceType::tsx();
+                }
+
+                // Other attributes
+                "expect_diagnostic" => {
+                    test.expect_diagnostic = true;
+                }
+
+                _ => {
+                    bail!("unknown code block attribute {token:?}")
+                }
+            }
+        }
+
+        Ok(test)
+    }
 }
 
 /// Parse and analyze the provided code block, and asserts that it emits
-/// exactly zero or one diagnostic depending on the value of `should_fail`.
+/// exactly zero or one diagnostic depending on the value of `expect_diagnostic`.
 /// That diagnostic is then emitted as text into the `content` buffer
 fn assert_lint(
     name: &'static str,
-    source_type: SourceType,
+    test: &CodeBlockTest,
     code: &str,
-    should_fail: bool,
     content: &mut Vec<u8>,
 ) -> Result<()> {
     let file = SimpleFile::new(format!("{name}.js"), code.into());
 
-    // TODO: Emit markup as HTML
     let mut write = HTML(content);
     let mut diagnostic_count = 0;
 
     let mut write_diagnostic = |diag: Diagnostic| {
         // Fail the test if the analysis returns more diagnostics than expected
-        if should_fail {
+        if test.expect_diagnostic {
             ensure!(
                 diagnostic_count == 0,
                 "analysis returned multiple diagnostics"
@@ -308,7 +333,7 @@ fn assert_lint(
         Ok(())
     };
 
-    let parse = rome_js_parser::parse(code, 0, source_type);
+    let parse = rome_js_parser::parse(code, 0, test.source_type);
 
     if parse.has_errors() {
         for diag in parse.into_diagnostics() {
@@ -344,7 +369,7 @@ fn assert_lint(
         }
     }
 
-    if should_fail {
+    if test.expect_diagnostic {
         // Fail the test if the analysis didn't emit any diagnostic
         ensure!(diagnostic_count == 1, "analysis returned no diagnostics");
     }

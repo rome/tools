@@ -10,7 +10,7 @@ use std::{
 
 pub use crate::glue::{pushd, pushenv};
 
-pub use anyhow::{anyhow, bail, ensure, Context as _, Result};
+pub use anyhow::{anyhow, bail, ensure, Context as _, Error, Result};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Mode {
