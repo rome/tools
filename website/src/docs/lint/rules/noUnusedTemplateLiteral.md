@@ -24,7 +24,7 @@ const foo = `bar`
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace with string literal</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const foo = `bar`</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const foo = "bar"</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const foo = &quot;bar&quot;</span>
 
 </code></pre>{% endraw %}
 
@@ -41,7 +41,7 @@ const foo = `bar `
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace with string literal</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const foo = `bar `</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const foo = "bar "</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const foo = &quot;bar &quot;</span>
 
 </code></pre>{% endraw %}
 

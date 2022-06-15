@@ -18,35 +18,35 @@ eleventyNavigation:
 	<a href="/docs/lint/rules/noCompareNegZero">noCompareNegZero</a>
 	<a class="header-anchor" href="#noCompareNegZero"></a>
 </h3>
-Disallow comparing against `-0`
+Disallow comparing against <code>-0</code>
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDebugger">
 	<a href="/docs/lint/rules/noDebugger">noDebugger</a>
 	<a class="header-anchor" href="#noDebugger"></a>
 </h3>
-Disallow the use of `debugger`
+Disallow the use of <code>debugger</code>
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDelete">
 	<a href="/docs/lint/rules/noDelete">noDelete</a>
 	<a class="header-anchor" href="#noDelete"></a>
 </h3>
-Disallow the use of the `delete` operator
+Disallow the use of the <code>delete</code> operator
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDoubleEquals">
 	<a href="/docs/lint/rules/noDoubleEquals">noDoubleEquals</a>
 	<a class="header-anchor" href="#noDoubleEquals"></a>
 </h3>
-Require the use of `===` and `!==`
+Require the use of <code>===</code> and <code>!==</code>
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noImplicitBoolean">
 	<a href="/docs/lint/rules/noImplicitBoolean">noImplicitBoolean</a>
 	<a class="header-anchor" href="#noImplicitBoolean"></a>
 </h3>
-Disallow implicit `true` values on JSX boolean attributes
+Disallow implicit <code>true</code> values on JSX boolean attributes
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
@@ -60,7 +60,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 	<a href="/docs/lint/rules/noNegationElse">noNegationElse</a>
 	<a class="header-anchor" href="#noNegationElse"></a>
 </h3>
-Disallow negation in the condition of an `if` statement if it has an `else` clause
+Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noSparseArray">
@@ -103,16 +103,16 @@ Disallow multiple variable declarations in the same variable statement
 	<a href="/docs/lint/rules/useValidTypeof">useValidTypeof</a>
 	<a class="header-anchor" href="#useValidTypeof"></a>
 </h3>
-This rule verifies the result of `typeof $expr` unary expressions is being
+This rule verifies the result of <code>typeof $expr</code> unary expressions is being
 compared to valid values, either string literals containing valid type
-names or other `typeof` expressions
+names or other <code>typeof</code> expressions
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useWhile">
 	<a href="/docs/lint/rules/useWhile">useWhile</a>
 	<a class="header-anchor" href="#useWhile"></a>
 </h3>
-Enforce the use of `while` loops instead of `for` loops when the
+Enforce the use of <code>while</code> loops instead of <code>for</code> loops when the
 initializer and update expressions are not needed
 </div>
 </section>

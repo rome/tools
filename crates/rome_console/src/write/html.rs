@@ -1,4 +1,7 @@
-use std::{fmt, io};
+use std::{
+    fmt,
+    io::{self, Write as _},
+};
 
 use crate::{fmt::MarkupElements, MarkupElement};
 
@@ -14,13 +17,13 @@ where
 {
     fn write_str(&mut self, elements: &MarkupElements, content: &str) -> io::Result<()> {
         push_styles(&mut self.0, elements)?;
-        self.0.write_all(content.as_bytes())?;
+        EscapeAdapter(&mut self.0).write_all(content.as_bytes())?;
         pop_styles(&mut self.0, elements)
     }
 
     fn write_fmt(&mut self, elements: &MarkupElements, content: fmt::Arguments) -> io::Result<()> {
         push_styles(&mut self.0, elements)?;
-        self.0.write_fmt(content)?;
+        EscapeAdapter(&mut self.0).write_fmt(content)?;
         pop_styles(&mut self.0, elements)
     }
 }
@@ -105,4 +108,45 @@ fn pop_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Resul
     });
 
     result
+}
+
+/// Adapter wrapping a type implementing [io::Write] and adding HTML special
+/// characters escaping to the written byte sequence
+struct EscapeAdapter<W>(W);
+
+impl<W: io::Write> io::Write for EscapeAdapter<W> {
+    fn write(&mut self, mut buf: &[u8]) -> io::Result<usize> {
+        let mut bytes = 0;
+
+        const HTML_ESCAPES: [u8; 4] = [b'"', b'&', b'<', b'>'];
+        while let Some(idx) = buf.iter().position(|b| HTML_ESCAPES.contains(b)) {
+            let (before, after) = buf.split_at(idx);
+
+            self.0.write_all(before)?;
+            bytes += before.len();
+
+            // SAFETY: Because of the above `position` match we know the buffer
+            // contains at least the matching byte
+            let (byte, after) = after.split_first().unwrap();
+            match *byte {
+                b'"' => self.0.write_all(b"&quot;")?,
+                b'&' => self.0.write_all(b"&amp;")?,
+                b'<' => self.0.write_all(b"&lt;")?,
+                b'>' => self.0.write_all(b"&gt;")?,
+                _ => unreachable!(),
+            }
+
+            // Only 1 byte of the input was written
+            bytes += 1;
+            buf = after;
+        }
+
+        self.0.write_all(buf)?;
+        bytes += buf.len();
+        Ok(bytes)
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        self.0.flush()
+    }
 }

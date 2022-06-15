@@ -1,13 +1,12 @@
 use std::{
     fmt::Write as _,
     io::{self, Write as _},
-    ops::Range,
     path::Path,
     slice,
     str::{self, FromStr},
 };
 
-use pulldown_cmark::{escape::escape_html, CodeBlockKind, Event, LinkType, Options, Parser, Tag};
+use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
 use rome_console::{
     fmt::{Formatter, HTML},
     markup,
@@ -37,7 +36,7 @@ fn main() -> Result<()> {
     fs2::create_dir_all(&root)?;
 
     // Content of the index page
-    let mut index = String::new();
+    let mut index = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
     writeln!(index, "layout: layouts/page.liquid")?;
@@ -74,7 +73,9 @@ fn main() -> Result<()> {
                 writeln!(index, "	<a href=\"/docs/lint/rules/{name}\">{name}</a>")?;
                 writeln!(index, "	<a class=\"header-anchor\" href=\"#{name}\"></a>")?;
                 writeln!(index, "</h3>")?;
-                escape_html(&mut index, &summary)?;
+
+                write_html(&mut index, summary.into_iter())?;
+
                 writeln!(index, "\n</div>")?;
             }
             Err(err) => {
@@ -101,7 +102,11 @@ fn main() -> Result<()> {
 }
 
 /// Generates the documentation page for a single lint rule
-fn generate_rule(root: &Path, name: &'static str, docs: &'static str) -> Result<String> {
+fn generate_rule(
+    root: &Path,
+    name: &'static str,
+    docs: &'static str,
+) -> Result<Vec<Event<'static>>> {
     let mut content = Vec::new();
 
     // Write the header for this lint rule
@@ -114,8 +119,7 @@ fn generate_rule(root: &Path, name: &'static str, docs: &'static str) -> Result<
     writeln!(content, "# {name}")?;
     writeln!(content)?;
 
-    let range = parse_documentation(name, docs, &mut content)?;
-    let summary = str::from_utf8(&content[range])?.to_string();
+    let summary = parse_documentation(name, docs, &mut content)?;
 
     fs2::write(root.join(format!("{name}.md")), content)?;
 
@@ -128,20 +132,27 @@ fn parse_documentation(
     name: &'static str,
     docs: &'static str,
     content: &mut Vec<u8>,
-) -> Result<Range<usize>> {
-    let options = Options::empty();
-    let parser = Parser::new_ext(docs, options);
+) -> Result<Vec<Event<'static>>> {
+    let parser = Parser::new(docs);
 
-    // Range of the first paragraph of documentation in the resulting content,
-    // used as a short summary of what the rule does in the rules index
-    let summary_start = content.len();
-    let mut summary_end = None;
+    // Parser events for the first paragraph of documentation in the resulting
+    // content, used as a short summary of what the rule does in the rules page
+    let mut summary = Vec::new();
+    let mut is_summary = false;
 
     // Tracks the content of the current code block if it's using a
     // language supported for analysis
     let mut language = None;
 
     for event in parser {
+        if is_summary {
+            if matches!(event, Event::End(Tag::Paragraph)) {
+                is_summary = false;
+            } else {
+                summary.push(event.clone());
+            }
+        }
+
         match event {
             // CodeBlock-specific handling
             Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(meta))) => {
@@ -204,13 +215,12 @@ fn parse_documentation(
                 writeln!(content)?;
             }
 
-            Event::Start(Tag::Paragraph) => {}
-            Event::End(Tag::Paragraph) => {
-                // Stop the summary at the first paragraph end
-                if summary_end.is_none() {
-                    summary_end = Some(content.len());
+            Event::Start(Tag::Paragraph) => {
+                if summary.is_empty() && !is_summary {
+                    is_summary = true;
                 }
-
+            }
+            Event::End(Tag::Paragraph) => {
                 writeln!(content)?;
                 writeln!(content)?;
             }
@@ -242,7 +252,7 @@ fn parse_documentation(
         }
     }
 
-    Ok(summary_start..summary_end.unwrap_or(content.len()))
+    Ok(summary)
 }
 
 struct CodeBlockTest {
