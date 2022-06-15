@@ -38,7 +38,9 @@ impl Rule for NoUnusedTemplateLiteral {
         .to_owned() ) )
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+
         // join all template content
         let inner_content = node
             .elements()
@@ -57,7 +59,7 @@ impl Rule for NoUnusedTemplateLiteral {
                     }
                 }
             });
-        let root = root.replace_node(
+        let root = ctx.root().clone().replace_node(
             JsAnyExpression::JsTemplate(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(

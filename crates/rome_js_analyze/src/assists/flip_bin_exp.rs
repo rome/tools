@@ -34,7 +34,9 @@ impl Rule for FlipBinExp {
         invert_op(node.operator().ok()?)
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;
         let new_node = node.clone().replace_node(prev_left, new_left)?;
@@ -51,7 +53,7 @@ impl Rule for FlipBinExp {
             category: ActionCategory::Refactor,
             applicability: Applicability::Always,
             message: markup! { "Flip Binary Expression" }.to_owned(),
-            root: root.replace_node(node.clone(), new_node)?,
+            root: ctx.root().clone().replace_node(node.clone(), new_node)?,
         })
     }
 }

@@ -43,7 +43,9 @@ markup! {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+
         let mut final_array_element_list = node.elements();
 
         for (i, item) in final_array_element_list.iter().enumerate() {
@@ -68,7 +70,7 @@ markup! {
             }
         }
 
-        let root = root.replace_node(
+        let root = ctx.root().clone().replace_node(
             node.clone(),
             make::js_array_expression(
                 node.l_brack_token().ok()?,

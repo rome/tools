@@ -155,14 +155,12 @@ impl Rule for UseValidTypeof {
         })
     }
 
-    fn action(
-        root: JsAnyRoot,
-        _node: &Self::Query,
-        (_, suggestion): &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, (_, suggestion): &Self::State) -> Option<JsRuleAction> {
+        let root = ctx.root();
+
         let (expr, type_name) = suggestion.as_ref()?;
 
-        let root = root.replace_node(
+        let root = root.clone().replace_node(
             expr.clone(),
             JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(
                 make::js_string_literal_expression(make::js_string_literal(type_name.as_str())),

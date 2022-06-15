@@ -118,7 +118,8 @@ pub trait Rule {
     /// from a signal raised by `run`
     ///
     /// The default implementation returns None
-    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+    #[allow(unused)]
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         None
     }
 
@@ -126,10 +127,10 @@ pub trait Rule {
     /// from a signal raised by `run`
     ///
     /// The default implementation returns None
+    #[allow(unused)]
     fn action(
-        _root: RuleRoot<Self>,
-        _node: &Self::Query,
-        _state: &Self::State,
+        ctx: &RuleContext<Self>,
+        state: &Self::State,
     ) -> Option<RuleAction<RuleLanguage<Self>>> {
         None
     }

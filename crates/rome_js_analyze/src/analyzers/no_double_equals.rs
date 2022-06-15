@@ -53,9 +53,9 @@ impl Rule for NoDoubleEquals {
         )
     }
 
-    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
         let suggestion = if op.kind() == EQ2 { T![===] } else { T![!==] };
-        let root = root.replace_token(op.clone(), make::token(suggestion))?;
+        let root = ctx.root().clone().replace_token(op.clone(), make::token(suggestion))?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

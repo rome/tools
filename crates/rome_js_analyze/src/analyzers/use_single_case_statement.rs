@@ -42,7 +42,9 @@ impl Rule for UseSingleCaseStatement {
         ))
     }
 
-    fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let n = ctx.query_result();
+
         let JsCaseClauseFields {
             case_token,
             colon_token,
@@ -105,7 +107,7 @@ impl Rule for UseSingleCaseStatement {
             node
         };
 
-        let root = root
+        let root = ctx.root().clone()
             .replace_node(n.clone(), node)
             .expect("failed to replace node");
 

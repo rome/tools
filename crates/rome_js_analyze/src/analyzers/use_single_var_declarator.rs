@@ -53,7 +53,9 @@ impl Rule for UseSingleVarDeclarator {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+
         let (kind, declarators, semicolon_token) = state;
 
         let prev_parent = node.syntax().parent()?;
@@ -100,7 +102,7 @@ impl Rule for UseSingleVarDeclarator {
             applicability: Applicability::Always,
             message: markup! { "Break out into multiple declarations" }.to_owned(),
             root: JsAnyRoot::unwrap_cast(
-                root.into_syntax()
+                ctx.root().clone().into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             ),
         })

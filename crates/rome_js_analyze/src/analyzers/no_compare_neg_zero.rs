@@ -60,11 +60,11 @@ impl Rule for NoCompareNegZero {
             },
         ))
     }
-    fn action(
-        root: rome_js_syntax::JsAnyRoot,
-        node: &Self::Query,
+   fn action(ctx: &RuleContext<Self>,
         state: &Self::State,
     ) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+        let root = ctx.root();
         let root = if state.left_need_replaced && state.right_need_replaced {
             let binary = node.clone().replace_node(
                 node.left().ok()?,
@@ -94,9 +94,9 @@ impl Rule for NoCompareNegZero {
                     ),
                 ),
             )?;
-            root.replace_node(node.clone(), binary)?
+            root.clone().replace_node(node.clone(), binary)?
         } else if state.left_need_replaced {
-            root.replace_node(
+            root.clone().replace_node(
                 node.left().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -110,7 +110,7 @@ impl Rule for NoCompareNegZero {
                 ),
             )?
         } else if state.right_need_replaced {
-            root.replace_node(
+            root.clone().replace_node(
                 node.right().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -124,7 +124,7 @@ impl Rule for NoCompareNegZero {
                 ),
             )?
         } else {
-            root
+            root.clone()
         };
 
         Some(JsRuleAction {

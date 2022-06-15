@@ -57,7 +57,9 @@ impl Rule for UseWhile {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -70,7 +72,7 @@ impl Rule for UseWhile {
             body,
         } = node.as_fields();
 
-        let root = root.replace_node(
+        let root = ctx.root().clone().replace_node(
             JsAnyStatement::from(node.clone()),
             JsAnyStatement::from(make::js_while_statement(
                 make::token_decorated_with_space(T![while]),

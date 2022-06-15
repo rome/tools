@@ -34,11 +34,11 @@ impl Rule for NoDebugger {
         ))
     }
 
-    fn action(
-        root: rome_js_syntax::JsAnyRoot,
-        node: &Self::Query,
-        _state: &Self::State,
+   fn action(ctx: &RuleContext<Self>,
+        _: &Self::State,
     ) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+
         let prev_parent = node.syntax().parent()?;
 
         let root = if JsStatementList::can_cast(prev_parent.kind())
@@ -54,11 +54,11 @@ impl Rule for NoDebugger {
 
             // SAFETY: We know the kind of root is `JsAnyRoot` so cast `root.into_syntax()` will not panic
             JsAnyRoot::unwrap_cast(
-                root.into_syntax()
+                ctx.root().clone().into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             )
         } else {
-            root.replace_node(
+            ctx.root().clone().replace_node(
                 JsAnyStatement::JsDebuggerStatement(node.clone()),
                 JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
             )?

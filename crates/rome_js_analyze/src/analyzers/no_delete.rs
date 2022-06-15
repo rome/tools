@@ -43,8 +43,10 @@ impl Rule for NoDelete {
         )
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
-        let root = root.replace_node(
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query_result();
+
+        let root = ctx.root().clone().replace_node(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
                 state.clone().try_into().ok()?,

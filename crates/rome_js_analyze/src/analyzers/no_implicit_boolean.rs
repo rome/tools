@@ -40,7 +40,9 @@ impl Rule for NoImplicitBoolean {
         ))
     }
 
-    fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let n = ctx.query_result();
+
         let JsxAttributeFields {
             name,
             initializer: _,
@@ -81,7 +83,7 @@ impl Rule for NoImplicitBoolean {
         );
         let next_attr = next_attr.build();
 
-        let root = root.replace_node(n.clone(), next_attr)?;
+        let root = ctx.root().clone().replace_node(n.clone(), next_attr)?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
