@@ -35,6 +35,9 @@ pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage
     if filter.match_rule::<UseSingleVarDeclarator>() {
         rules.push::<UseSingleVarDeclarator>();
     }
+    if filter.match_rule::<UseSortedSpecifiers>() {
+        rules.push::<UseSortedSpecifiers>();
+    }
     if filter.match_rule::<UseValidTypeof>() {
         rules.push::<UseValidTypeof>();
     }

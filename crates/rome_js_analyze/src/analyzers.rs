@@ -20,6 +20,8 @@ mod use_single_case_statement;
 pub(crate) use use_single_case_statement::UseSingleCaseStatement;
 mod use_single_var_declarator;
 pub(crate) use use_single_var_declarator::UseSingleVarDeclarator;
+mod use_sorted_specifiers;
+pub(crate) use use_sorted_specifiers::UseSortedSpecifiers;
 mod use_valid_typeof;
 pub(crate) use use_valid_typeof::UseValidTypeof;
 mod use_while;
