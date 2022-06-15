@@ -1,4 +1,4 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -18,7 +18,9 @@ impl Rule for NoSparseArray {
     type Query = JsArrayExpression;
     type State = ();
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query_result();
+
         // We defer collect `JsHole` index until user want to apply code action.
         node.elements().iter().find_map(|element| {
             if matches!(element.ok()?, JsAnyArrayElement::JsArrayHole(_),) {

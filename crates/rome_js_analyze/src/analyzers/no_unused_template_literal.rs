@@ -1,3 +1,4 @@
+use rome_analyze::context::RuleContext;
 use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -18,7 +19,9 @@ impl Rule for NoUnusedTemplateLiteral {
     type Query = JsTemplate;
     type State = ();
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query_result();
+
         if node.tag().is_none() && can_convert_to_string_literal(node) {
             Some(())
         } else {

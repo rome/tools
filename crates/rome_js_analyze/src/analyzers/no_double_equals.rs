@@ -1,3 +1,4 @@
+use rome_analyze::context::RuleContext;
 use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -17,7 +18,9 @@ impl Rule for NoDoubleEquals {
     type Query = JsBinaryExpression;
     type State = JsSyntaxToken;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query_result();
+
         let op = n.operator_token().ok()?;
 
         if !matches!(op.kind(), EQ2 | NEQ) {

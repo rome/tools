@@ -1,4 +1,4 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -19,7 +19,9 @@ impl Rule for NoImplicitBoolean {
     type Query = JsxAttribute;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query_result();
+
         match n.initializer() {
             Some(_) => None,
             None => Some(()),

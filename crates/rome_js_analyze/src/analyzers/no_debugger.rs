@@ -1,4 +1,4 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -18,7 +18,7 @@ impl Rule for NoDebugger {
     type Query = JsDebuggerStatement;
     type State = ();
 
-    fn run(_: &Self::Query) -> Option<Self::State> {
+    fn run(_: &RuleContext<Self>) -> Option<Self::State> {
         Some(())
     }
 

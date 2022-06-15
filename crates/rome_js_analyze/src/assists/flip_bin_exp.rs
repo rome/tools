@@ -1,4 +1,4 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -18,7 +18,9 @@ impl Rule for FlipBinExp {
     type Query = JsBinaryExpression;
     type State = JsSyntaxKind;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query_result();
+
         let JsBinaryExpressionFields {
             left,
             operator_token: _,

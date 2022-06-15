@@ -1,12 +1,10 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use crate::JsRuleAction;
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::AstNodeExt;
-
-use crate::JsRuleAction;
-
 pub(crate) enum UseWhile {}
 
 impl Rule for UseWhile {
@@ -16,7 +14,9 @@ impl Rule for UseWhile {
     type Query = JsForStatement;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query_result();
+
         let JsForStatementFields {
             for_token: _,
             l_paren_token,

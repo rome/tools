@@ -1,6 +1,6 @@
 use std::iter;
 
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -25,7 +25,9 @@ impl Rule for UseSingleVarDeclarator {
         Option<JsSyntaxToken>,
     );
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query_result();
+
         let JsVariableStatementFields {
             declaration,
             semicolon_token,
