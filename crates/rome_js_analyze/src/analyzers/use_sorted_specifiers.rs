@@ -43,16 +43,22 @@ impl Rule for UseSortedSpecifiers {
                                 // I use `vector collect` instead of `iter().is_sorted_by` because `iter().is_sorted_by` is not stable now
                                 // reference https://github.com/rust-lang/rust/issues/53485
                                 let specifier_vec = specifiers.iter().collect::<Vec<_>>();
+                                println!("{:#?}", specifier_vec);
                                 let (sorted_specifier_vec, has_error) =
                                     sort_specifier_vec(specifier_vec);
-                                // println!("{:#?}", sorted_specifier_vec);
+                                println!("{:#?}", sorted_specifier_vec);
                                 if has_error {
                                     return None;
                                 }
                                 let has_diff = specifiers
                                     .iter()
                                     .zip(sorted_specifier_vec.iter())
-                                    .any(|(a, b)| a == *b);
+                                    .any(|(a, b)| {
+                                        // SAFETY: if any specifier has `Err` would early return because we use `has_error` checked above
+                                        let a = a.unwrap();
+                                        let b = b.clone().unwrap();
+                                        a.to_string() != b.to_string()
+                                    });
                                 if has_diff {
                                     Some(
                                         sorted_specifier_vec

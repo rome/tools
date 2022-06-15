@@ -6,7 +6,7 @@ expression: useSortedSpecifiers.js
 # Input
 ```js
 // invalid
-import { b/**some comment */, a, c, D } from "mod";
+import { b/**some comment */, a, c, D   } from "mod";
 import { b as A, a as C, B } from "mod";
 import { c, b as b2, b as b1, b } from "mod";
 
@@ -24,14 +24,14 @@ export { c, b as b2, b as b1, b };
 warning[useSortedSpecifiers]: The specifiers of the import declaration should be sorted alphabetically.
   ┌─ useSortedSpecifiers.js:2:1
   │
-2 │ import { b/**some comment */, a, c, D } from "mod";
-  │ ---------------------------------------------------
+2 │ import { b/**some comment */, a, c, D   } from "mod";
+  │ -----------------------------------------------------
 
 Suggested fix: Use a while loop
     | @@ -1,5 +1,5 @@
 0 0 |   // invalid
-1   | - import { b/**some comment */, a, c, D } from "mod";
-  1 | + import { D , a, b/**some comment */, c } from "mod";
+1   | - import { b/**some comment */, a, c, D   } from "mod";
+  1 | + import { D   , a, b/**some comment */, c   } from "mod";
 2 2 |   import { b as A, a as C, B } from "mod";
 3 3 |   import { c, b as b2, b as b1, b } from "mod";
 4 4 |   
@@ -49,12 +49,33 @@ warning[useSortedSpecifiers]: The specifiers of the import declaration should be
 Suggested fix: Use a while loop
     | @@ -1,6 +1,6 @@
 0 0 |   // invalid
-1 1 |   import { b/**some comment */, a, c, D } from "mod";
+1 1 |   import { b/**some comment */, a, c, D   } from "mod";
 2   | - import { b as A, a as C, B } from "mod";
   2 | + import { b as A, B , a as C } from "mod";
 3 3 |   import { c, b as b2, b as b1, b } from "mod";
 4 4 |   
 5 5 |   export { b, a, c, D } from "mod";
+
+
+```
+
+```
+warning[useSortedSpecifiers]: The specifiers of the import declaration should be sorted alphabetically.
+  ┌─ useSortedSpecifiers.js:4:1
+  │
+4 │ import { c, b as b2, b as b1, b } from "mod";
+  │ ---------------------------------------------
+
+Suggested fix: Use a while loop
+    | @@ -1,7 +1,7 @@
+0 0 |   // invalid
+1 1 |   import { b/**some comment */, a, c, D   } from "mod";
+2 2 |   import { b as A, a as C, B } from "mod";
+3   | - import { c, b as b2, b as b1, b } from "mod";
+  3 | + import { b , b as b1, b as b2, c } from "mod";
+4 4 |   
+5 5 |   export { b, a, c, D } from "mod";
+6 6 |   export { b as A, a as C, B } from "mod";
 
 
 ```
