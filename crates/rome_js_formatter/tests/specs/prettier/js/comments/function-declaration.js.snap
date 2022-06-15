@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: function-declaration.js
 ---
 # Input
@@ -70,7 +71,7 @@ function foo4() {
 
 # Output
 ```js
-function a(/* comment */) {} // comment
+function a(/* comment */ ) {} // comment
 function b() {} // comment
 function c(/* comment */ argA, argB, argC) {} // comment
 call((/*object*/ row) => {});
@@ -82,9 +83,9 @@ KEYPAD_NUMBERS.map(
 );
 
 function f1 /* f */ () {}
-function f2(/* args */) {}
+function f2(/* args */ ) {}
 function f3() /* returns */ {}
-function f4 /* f */ (/* args */) /* returns */ {}
+function f4 /* f */ (/* args */ ) /* returns */ {}
 
 function f5 /* f */ (/* a */ a) {}
 function f6 /* f */ (a /* a */) {}
@@ -92,27 +93,27 @@ function f7 /* f */ (/* a */ a) /* returns */ {}
 
 const obj = {
   f1 /* f */ () {},
-  f2(/* args */) {},
+  f2(/* args */ ) {},
   f3() /* returns */ {},
-  f4 /* f */ (/* args */) /* returns */ {},
+  f4 /* f */ (/* args */ ) /* returns */ {},
 };
 
 (function f /* f */ () {})();
-(function f(/* args */) {})();
+(function f(/* args */ ) {})();
 (function f() /* returns */ {})();
-(function f /* f */ (/* args */) /* returns */ {})();
+(function f /* f */ (/* args */ ) /* returns */ {})();
 
 class C1 {
   f /* f */ () {}
 }
 class C2 {
-  f(/* args */) {}
+  f(/* args */ ) {}
 }
 class C3 {
   f() /* returns */ {}
 }
 class C4 {
-  f /* f */ (/* args */) /* returns */ {}
+  f /* f */ (/* args */ ) /* returns */ {}
 }
 
 function foo1()

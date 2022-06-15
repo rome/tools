@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsArrayExpression,
     JsArrowFunctionExpression, JsCallArgumentList, JsCallArguments, JsCallArgumentsFields,
     JsConditionalExpression, JsFunctionBody, JsFunctionExpression, JsObjectExpression,
-    JsSyntaxNode, TsAsExpression, TsReferenceType, TsTypeAssertionExpression,
+    JsSyntaxKind, JsSyntaxNode, TsAsExpression, TsReferenceType, TsTypeAssertionExpression,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
@@ -56,7 +56,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                         // we don't want to print the trailing separator, so if it's present, we replace it
                         // with an empty element
                         if let Some(separator) = second_argument.trailing_separator()? {
-                            return write!(f, [format_replaced(separator, &empty_element())]);
+                            return write!(f, [format_removed(separator)]);
                         }
 
                         Ok(())
@@ -90,7 +90,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
             // we can't attempt to print the same node twice without incur in "printed token twice" errors.
             // We also disallow the trailing separator, we are interested in doing it manually.
             let separated: Vec<_> = args
-                .format_separated(token(","))
+                .format_separated(JsSyntaxKind::COMMA)
                 .with_options(
                     FormatSeparatedOptions::default()
                         .with_trailing_separator(TrailingSeparator::Elide),
@@ -218,10 +218,11 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                         l_paren,
                         l_trailing_trivia,
                         &soft_block_indent(&format_with(|f| {
-                            let separated = args.format_separated(token(",")).with_options(
-                                FormatSeparatedOptions::default()
-                                    .with_trailing_separator(TrailingSeparator::Elide),
-                            );
+                            let separated =
+                                args.format_separated(JsSyntaxKind::COMMA).with_options(
+                                    FormatSeparatedOptions::default()
+                                        .with_trailing_separator(TrailingSeparator::Elide),
+                                );
                             fmt_arguments_multi_line(separated, f)
                         }),),
                         r_leading_trivia,
@@ -392,7 +393,7 @@ fn is_react_hook_with_deps_array(node: &JsCallArgumentList) -> SyntaxResult<bool
             JsAnyExpression::JsArrowFunctionExpression(arrow_function),
         ) = first
         {
-            let no_parameters = arrow_function.parameters()?.len() == 0;
+            let no_parameters = arrow_function.parameters()?.is_empty();
             let body = arrow_function.body()?;
             let is_block = matches!(body, JsAnyFunctionBody::JsFunctionBody(_));
 

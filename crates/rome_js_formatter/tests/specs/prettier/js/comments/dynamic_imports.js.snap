@@ -40,7 +40,8 @@ import("something" /* Hello */ + "else");
 import(
   /* Hello */
   "something",
-/* Hello */ );
+/* Hello */
+);
 
 wrap(import(/* Hello */ "something"));
 

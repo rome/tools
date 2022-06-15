@@ -48,7 +48,7 @@ where
                         return Err(FormatError::SyntaxError);
                     }
                     TrailingSeparator::Elide => {
-                        write!(f, [format_replaced(separator, &empty_element())])?;
+                        write!(f, [format_removed(separator)])?;
                     }
                 }
             } else {

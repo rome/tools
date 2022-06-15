@@ -268,7 +268,7 @@ setTimeout(
   500,
 );
 
-setTimeout( /* blip */
+setTimeout(/* blip */
 function () {
   thing();
 }, 500);

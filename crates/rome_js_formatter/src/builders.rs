@@ -3,7 +3,7 @@ use crate::{AsFormat, JsCommentStyle};
 use rome_formatter::token::{
     format_token_trailing_trivia, FormatInserted, FormatInsertedCloseParen,
     FormatInsertedOpenParen, FormatLeadingTrivia, FormatOnlyIfBreaks, FormatRemoved,
-    FormatReplaced, TriviaPrintMode,
+    FormatReplaced,
 };
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
@@ -520,7 +520,7 @@ impl<'t> OpenDelimiter<'t> {
 
     /// It extracts the formatted leading trivia of the token, without writing it in the buffer
     pub(crate) fn as_leading_trivia_fmt(&self) -> impl Format<JsFormatContext> + 't {
-        format_leading_trivia(self.open_token, TriviaPrintMode::Full)
+        format_leading_trivia(self.open_token)
     }
 
     /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
@@ -570,13 +570,7 @@ impl<'t> CloseDelimiter<'t> {
         format_with(|f| {
             let mut buffer = PreambleBuffer::new(f, soft_line_break_or_space());
 
-            write!(
-                buffer,
-                [format_leading_trivia(
-                    self.close_token,
-                    TriviaPrintMode::Trim
-                )]
-            )
+            write!(buffer, [format_leading_trivia(self.close_token,)])
         })
     }
 

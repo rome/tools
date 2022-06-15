@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: arrow.js
 ---
 # Input
@@ -12,9 +13,9 @@ const fn2 = (/*event, data*/) => doSomething(anything);
 
 # Output
 ```js
-const fn = (/*event, data*/) => doSomething();
+const fn = (/*event, data*/ ) => doSomething();
 
-const fn2 = (/*event, data*/) => doSomething(anything);
+const fn2 = (/*event, data*/ ) => doSomething(anything);
 
 ```
 

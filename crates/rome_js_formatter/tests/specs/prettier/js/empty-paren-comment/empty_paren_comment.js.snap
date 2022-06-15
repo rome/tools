@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: empty_paren_comment.js
 ---
 # Input
@@ -27,15 +28,15 @@ let f4 = () => doThing(a, /* ... */ b);
 
 # Output
 ```js
-let f1 = (/* ... */) => {};
-(function (/* ... */) {})(/* ... */);
-function f2(/* ... */) {}
+let f1 = (/* ... */ ) => {};
+(function (/* ... */ ) {})(/* ... */);
+function f2(/* ... */ ) {}
 
 const obj = {
-  f(/* ... */) {},
-  f: (/* ... */) => {},
-  f: function (/* ... */) {},
-  f: function f(/* ... */) {},
+  f(/* ... */ ) {},
+  f: (/* ... */ ) => {},
+  f: function (/* ... */ ) {},
+  f: function f(/* ... */ ) {},
 };
 
 f(/* ... */);

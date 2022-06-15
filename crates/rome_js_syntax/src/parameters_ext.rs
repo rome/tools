@@ -8,4 +8,8 @@ impl JsAnyArrowFunctionParameters {
             JsAnyArrowFunctionParameters::JsParameters(parameters) => parameters.items().len(),
         }
     }
+
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
 }

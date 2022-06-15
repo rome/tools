@@ -246,6 +246,7 @@ comments(
 
   short3,
 // More comments
+
 );
 
 differentArgTypes(
@@ -268,6 +269,7 @@ moreArgTypes(
     { name: "Hello World", age: 34 },
     oneThing + anotherThing,
   // Comment
+
   ),
 );
 
