@@ -21,6 +21,20 @@ useMemo(() => {
     ,
     [a, b]
 )
+
+test.expect(t => {
+    t.true(a)
+})
+
+test.expect(t => {
+    t.true(a)
+}, false)
+
+test.something(t => {
+    t.true()
+}, context => {
+    context.flush()
+})
 =============================
 # Outputs
 ## Output 1
@@ -39,4 +53,21 @@ useMemo(() => {
 }, [a, b]);
 
 useMemo(() => {}, [a, b]); // some comment
+
+test.expect((t) => {
+	t.true(a);
+});
+
+test.expect((t) => {
+	t.true(a);
+}, false);
+
+test.something(
+	(t) => {
+		t.true();
+	},
+	(context) => {
+		context.flush();
+	},
+);
 

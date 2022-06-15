@@ -526,7 +526,9 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-
+       app.get("/", (req, res): void => {
+         res.send("Hello World!");
+       });
        
  export class Thing implements OtherThing {
         do: (type: Type) => Provider<Prop> = memoize(

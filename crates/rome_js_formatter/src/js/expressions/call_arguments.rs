@@ -110,7 +110,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
             let r_paren = r_paren.memoized();
             let r_trailing_trivia = r_trailing_trivia.memoized();
 
-            let edge_arguments_not_grouped = format_with(|f| {
+            let edge_arguments_do_not_break = format_with(|f| {
                 // `should_group_first_argument` and `should_group_last_argument` are mutually exclusive
                 // which means that if one is `false`, then the other is `true`.
                 // This means that in this branch we format the case where `should_group_first_argument`,
@@ -177,11 +177,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                                     &soft_block_indent(&format_args![
                                         &l_trailing_trivia,
                                         format_with(|f| {
-                                            fmt_arguments_multi_line(
-                                                separated.iter(),
-                                                separated.len(),
-                                                f,
-                                            )
+                                            fmt_arguments_multi_line(separated.iter(), f)
                                         }),
                                         &r_leading_trivia,
                                         soft_line_break()
@@ -203,13 +199,13 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                         l_paren,
                         l_trailing_trivia,
                         group_elements(&format_args![format_with(|f| {
-                            fmt_arguments_multi_line(separated.iter(), separated.len(), f)
+                            fmt_arguments_multi_line(separated.iter(), f)
                         })]),
                         r_leading_trivia,
                         r_paren,
                         r_trailing_trivia
                     ],
-                    edge_arguments_not_grouped,
+                    edge_arguments_do_not_break,
                     all_arguments_expanded
                 ]]
             )
@@ -226,7 +222,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                                 FormatSeparatedOptions::default()
                                     .with_trailing_separator(TrailingSeparator::Elide),
                             );
-                            fmt_arguments_multi_line(separated, args.len(), f)
+                            fmt_arguments_multi_line(separated, f)
                         }),),
                         r_leading_trivia,
                         r_paren,
@@ -262,18 +258,14 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
         false
     };
 
-    let second_arg_is_function_like =
-        if let JsAnyCallArgument::JsAnyExpression(ref expression) = second {
-            matches!(
-                expression,
-                JsAnyExpression::JsFunctionExpression(_)
-                    | JsAnyExpression::JsArrowFunctionExpression(_)
-                    | JsAnyExpression::JsConditionalExpression(_)
-            )
-        } else {
-            false
-        };
-
+    let second_arg_is_function_like = matches!(
+        second,
+        JsAnyCallArgument::JsAnyExpression(
+            JsAnyExpression::JsFunctionExpression(_)
+                | JsAnyExpression::JsArrowFunctionExpression(_)
+                | JsAnyExpression::JsConditionalExpression(_)
+        )
+    );
     Ok(!has_comments
         && is_function_like
         && !second_arg_is_function_like

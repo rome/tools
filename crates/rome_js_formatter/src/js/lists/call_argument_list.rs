@@ -9,15 +9,18 @@ impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
 
     fn fmt(node: &JsCallArgumentList, f: &mut JsFormatter) -> FormatResult<()> {
         if node.len() == 0 {
-            return write!(f, [empty_element()]);
+            return Ok(());
         }
-        let args = format_with(|f| {
-            let separated = node.format_separated(JsSyntaxKind::COMMA).with_options(
-                FormatSeparatedOptions::default().with_trailing_separator(TrailingSeparator::Elide),
-            );
-            fmt_arguments_multi_line(separated, node.len(), f)
-        });
 
-        write!(f, [&group_elements(&soft_block_indent(&args))])
+        write!(
+            f,
+            [&group_elements(&soft_block_indent(&format_with(|f| {
+                let separated = node.format_separated(JsSyntaxKind::COMMA).with_options(
+                    FormatSeparatedOptions::default()
+                        .with_trailing_separator(TrailingSeparator::Elide),
+                );
+                fmt_arguments_multi_line(separated, f)
+            })))]
+        )
     }
 }
