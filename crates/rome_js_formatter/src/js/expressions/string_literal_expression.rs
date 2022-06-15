@@ -3,9 +3,9 @@ use rome_formatter::{write, Buffer, VecBuffer};
 
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
-use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsStringLiteralExpression;
 use rome_js_syntax::JsStringLiteralExpressionFields;
+use rome_js_syntax::{JsExpressionStatement, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLiteralExpression> {
@@ -32,16 +32,11 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
 
             let (leading_trivia, content, trailing_trivia) = formatted_element.split_trivia();
 
-            write!(
-                f,
-                [format_once(|f| {
-                    f.write_element(leading_trivia)?;
-                    write!(f, [token("(")])?;
-                    f.write_element(content)?;
-                    write!(f, [token(")")])?;
-                    f.write_element(trailing_trivia)
-                })]
-            )
+            f.write_element(leading_trivia)?;
+            format_inserted(JsSyntaxKind::L_PAREN).fmt(f)?;
+            f.write_element(content)?;
+            format_inserted(JsSyntaxKind::R_PAREN).fmt(f)?;
+            f.write_element(trailing_trivia)
         } else {
             write!(
                 f,

@@ -103,9 +103,9 @@ export class Point {
    */
   mismatchedIndentation() {}
 
-  inline /* foo*/ ( /* bar */ ) /* baz */ {}
+  inline /* foo*/ (/* bar */) /* baz */ {}
 
-  noBody( /* comment */ arg);
+  noBody(/* comment */ arg);
 }
 
 ```

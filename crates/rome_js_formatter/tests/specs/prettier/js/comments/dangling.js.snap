@@ -20,16 +20,16 @@ export /* dangling */{};
 
 # Output
 ```js
-var a = { /* dangling */ };
+var a = {/* dangling */};
 var b = {
   // dangling
 };
-var b = [ /* dangling */ ];
+var b = [/* dangling */];
 function d() {
   /* dangling */
 }
-new Thing( /* dangling */ );
-Thing( /* dangling */ );
+new Thing(/* dangling */);
+Thing(/* dangling */);
 export /* dangling */ {};
 
 ```

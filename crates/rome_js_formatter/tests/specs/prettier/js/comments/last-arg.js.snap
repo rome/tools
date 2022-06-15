@@ -51,17 +51,17 @@ class Foo {
 # Output
 ```js
 class Foo {
-  a(lol /*string*/ ) {}
+  a(lol /*string*/) {}
 
-  b(lol /*string*/ ) {}
+  b(lol /*string*/) {}
 
-  d(lol /*string*/ , lol2 /*string*/ , lol3 /*string*/ , lol4 /*string*/ ) {}
+  d(lol /*string*/, lol2 /*string*/, lol3 /*string*/, lol4 /*string*/) {}
 
   d(
-    lol /*string*/ ,
-    lol2 /*string*/ ,
-    lol3 /*string*/ ,
-    lol4 /*string*/ ,
+    lol /*string*/,
+    lol2 /*string*/,
+    lol3 /*string*/,
+    lol4 /*string*/,
   ) /*string*/ {}
 
   // prettier-ignore

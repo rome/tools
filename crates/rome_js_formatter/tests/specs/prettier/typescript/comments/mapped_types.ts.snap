@@ -59,7 +59,7 @@ type B = {
 };
 
 type C = {
-  [ /* commentC */ c in C]: string;
+  [/* commentC */ c in C]: string;
 };
 
 type D = {
@@ -71,7 +71,7 @@ type E = {
 };
 
 type F = {
-  [f in F /* commentF */ ]: string;
+  [f in F /* commentF */]: string;
 };
 
 type G = {
@@ -84,7 +84,7 @@ type H = {
 };
 
 type I = {
-  [ /* commentI */ i in I]: string;
+  [/* commentI */ i in I]: string;
 };
 
 type J = {
@@ -96,7 +96,7 @@ type K = {
 };
 
 type L = {
-  [l in L /* commentL */ ]: string;
+  [l in L /* commentL */]: string;
 };
 
 type M = {

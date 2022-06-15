@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::AsFormat;
 use rome_formatter::{write, GroupId};
-use rome_js_syntax::JsLanguage;
+use rome_js_syntax::{JsLanguage, JsSyntaxKind};
 use rome_rowan::{
     AstNode, AstSeparatedElement, AstSeparatedList, AstSeparatedListElementsIterator, Language,
 };
@@ -9,27 +9,23 @@ use std::iter::FusedIterator;
 
 /// Formats a single element inside of a separated list.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct FormatSeparatedElement<L: Language, N, Separator> {
+pub struct FormatSeparatedElement<L: Language, N> {
     element: AstSeparatedElement<L, N>,
     is_last: bool,
     /// The separator to write if the element has no separator yet.
-    separator: Separator,
+    separator: JsSyntaxKind,
     options: FormatSeparatedOptions,
 }
 
-impl<N, Separator> Format<JsFormatContext> for FormatSeparatedElement<JsLanguage, N, Separator>
+impl<N> Format<JsFormatContext> for FormatSeparatedElement<JsLanguage, N>
 where
     for<'a> N: AstNode<Language = JsLanguage> + AsFormat<'a>,
-    Separator: Format<JsFormatContext>,
 {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let node = self.element.node()?;
         let separator = self.element.trailing_separator()?;
 
         write!(f, [group_elements(&node.format())])?;
-
-        let format_trailing_separator =
-            if_group_breaks(&self.separator).with_group_id(self.options.group_id);
 
         // Reuse the existing trailing separator or create it if it wasn't in the
         // input source. Only print the last trailing token if the outer group breaks
@@ -39,8 +35,10 @@ where
                     TrailingSeparator::Allowed => {
                         // Use format_replaced instead of wrapping the result of format_token
                         // in order to remove only the token itself when the group doesn't break
-                        // but still print its associated trivias unconditionally
-                        write!(f, [format_replaced(separator, &format_trailing_separator)])?;
+                        // but still print its associated trivia unconditionally
+                        format_only_if_breaks(separator, &separator.format())
+                            .with_group_id(self.options.group_id)
+                            .fmt(f)?;
                     }
                     TrailingSeparator::Mandatory => {
                         write!(f, [separator.format()])?;
@@ -56,15 +54,21 @@ where
         } else if self.is_last {
             match self.options.trailing_separator {
                 TrailingSeparator::Allowed => {
-                    write!(f, [format_trailing_separator])?;
+                    write!(
+                        f,
+                        [if_group_breaks(&format_inserted(self.separator))
+                            .with_group_id(self.options.group_id)]
+                    )?;
                 }
                 TrailingSeparator::Mandatory => {
-                    write!(f, [&self.separator])?;
+                    format_inserted(self.separator).fmt(f)?;
                 }
                 TrailingSeparator::Disallowed => { /* no op */ }
             }
         } else {
-            write!(f, [&self.separator])?;
+            unreachable!(
+                "This is a syntax error, separator must be present between every two elements"
+            );
         };
 
         Ok(())
@@ -73,21 +77,21 @@ where
 
 /// Iterator for formatting separated elements. Prints the separator between each element and
 /// inserts a trailing separator if necessary
-pub struct FormatSeparatedIter<I, Language, Node, Separator>
+pub struct FormatSeparatedIter<I, Language, Node>
 where
     Language: rome_rowan::Language,
 {
     next: Option<AstSeparatedElement<Language, Node>>,
     inner: I,
-    separator: Separator,
+    separator: JsSyntaxKind,
     options: FormatSeparatedOptions,
 }
 
-impl<I, L, Node, Separator> FormatSeparatedIter<I, L, Node, Separator>
+impl<I, L, Node> FormatSeparatedIter<I, L, Node>
 where
     L: Language,
 {
-    fn new(inner: I, separator: Separator) -> Self {
+    fn new(inner: I, separator: JsSyntaxKind) -> Self {
         Self {
             inner,
             separator,
@@ -102,12 +106,11 @@ where
     }
 }
 
-impl<I, N, Separator> Iterator for FormatSeparatedIter<I, JsLanguage, N, Separator>
+impl<I, N> Iterator for FormatSeparatedIter<I, JsLanguage, N>
 where
     I: Iterator<Item = AstSeparatedElement<JsLanguage, N>>,
-    Separator: Copy,
 {
-    type Item = FormatSeparatedElement<JsLanguage, N, Separator>;
+    type Item = FormatSeparatedElement<JsLanguage, N>;
 
     fn next(&mut self) -> Option<Self::Item> {
         let element = self.next.take().or_else(|| self.inner.next())?;
@@ -124,17 +127,13 @@ where
     }
 }
 
-impl<I, N, Separator> FusedIterator for FormatSeparatedIter<I, JsLanguage, N, Separator>
-where
-    I: Iterator<Item = AstSeparatedElement<JsLanguage, N>> + FusedIterator,
-    Separator: Copy,
+impl<I, N> FusedIterator for FormatSeparatedIter<I, JsLanguage, N> where
+    I: Iterator<Item = AstSeparatedElement<JsLanguage, N>> + FusedIterator
 {
 }
 
-impl<I, N, Separator> ExactSizeIterator for FormatSeparatedIter<I, JsLanguage, N, Separator>
-where
-    I: Iterator<Item = AstSeparatedElement<JsLanguage, N>> + ExactSizeIterator,
-    Separator: Copy,
+impl<I, N> ExactSizeIterator for FormatSeparatedIter<I, JsLanguage, N> where
+    I: Iterator<Item = AstSeparatedElement<JsLanguage, N>> + ExactSizeIterator
 {
 }
 
@@ -146,18 +145,14 @@ pub trait FormatAstSeparatedListExtension: AstSeparatedList<Language = JsLanguag
     /// created by calling the `separator_factory` function.
     /// The last trailing separator in the list will only be printed
     /// if the outer group breaks.
-    fn format_separated<Separator>(
+    fn format_separated(
         &self,
-        separator: Separator,
+        separator: JsSyntaxKind,
     ) -> FormatSeparatedIter<
         AstSeparatedListElementsIterator<JsLanguage, Self::Node>,
         JsLanguage,
         Self::Node,
-        Separator,
-    >
-    where
-        Separator: Format<JsFormatContext> + Copy,
-    {
+    > {
         FormatSeparatedIter::new(self.elements(), separator)
     }
 }

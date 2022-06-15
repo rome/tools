@@ -1,13 +1,13 @@
 use crate::generated::FormatJsNamedImportSpecifierList;
 use crate::prelude::*;
-use rome_js_syntax::JsNamedImportSpecifierList;
+use rome_js_syntax::{JsNamedImportSpecifierList, JsSyntaxKind};
 
 impl FormatRule<JsNamedImportSpecifierList> for FormatJsNamedImportSpecifierList {
     type Context = JsFormatContext;
 
     fn fmt(node: &JsNamedImportSpecifierList, f: &mut JsFormatter) -> FormatResult<()> {
         f.join_with(&soft_line_break_or_space())
-            .entries(node.format_separated(token(",")))
+            .entries(node.format_separated(JsSyntaxKind::COMMA))
             .finish()
     }
 }

@@ -3,7 +3,7 @@ use crate::FormatNodeFields;
 use rome_formatter::{format_args, write, VecBuffer};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyName, JsStaticMemberExpression,
-    JsStaticMemberExpressionFields, JsSyntaxNode, JsSyntaxToken,
+    JsStaticMemberExpressionFields, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::AstNode;
 use std::ops::Deref;
@@ -151,16 +151,11 @@ impl Format<JsFormatContext> for FormatMemberStaticExpression<'_> {
 
             let (object_leading, object_content, object_trailing) = formatted_member.split_trivia();
 
-            write!(
-                f,
-                [format_once(|f| {
-                    f.write_element(object_leading)?;
-                    write!(f, [token("(")])?;
-                    f.write_element(object_content)?;
-                    write!(f, [token(")")])?;
-                    f.write_element(object_trailing)
-                })]
-            )
+            f.write_element(object_leading)?;
+            format_inserted(JsSyntaxKind::L_PAREN).fmt(f)?;
+            f.write_element(object_content)?;
+            format_inserted(JsSyntaxKind::R_PAREN).fmt(f)?;
+            f.write_element(object_trailing)
         } else {
             write!(f, [format_node])
         }

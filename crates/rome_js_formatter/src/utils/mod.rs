@@ -50,7 +50,7 @@ impl<'a> FormatTypeMemberSeparator<'a> {
 impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(separator) = self.token {
-            write!(f, [format_replaced(separator, &empty_element())])
+            format_removed(separator).fmt(f)
         } else {
             Ok(())
         }
@@ -167,7 +167,7 @@ impl Format<JsFormatContext> for FormatBodyStatement<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self.body {
             JsAnyStatement::JsEmptyStatement(body) => {
-                write!(f, [body.format(), token(";")])
+                write!(f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)])
             }
             body => {
                 write!(f, [space_token(), body.format()])
@@ -439,7 +439,7 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
         if let Some(semicolon) = self.semicolon {
             write!(f, [semicolon.format()])?;
         } else if !is_unknown {
-            write!(f, [token(";")])?;
+            format_inserted(JsSyntaxKind::SEMICOLON).fmt(f)?;
         }
         Ok(())
     }
