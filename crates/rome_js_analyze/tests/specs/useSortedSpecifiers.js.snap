@@ -31,7 +31,7 @@ Suggested fix: Use a while loop
     | @@ -1,5 +1,5 @@
 0 0 |   // invalid
 1   | - import { b/**some comment */, a, c, D   } from "mod";
-  1 | + import { D   , a, b/**some comment */, c   } from "mod";
+  1 | + import { D, a, b/**some comment */, c} from "mod";
 2 2 |   import { b as A, a as C, B } from "mod";
 3 3 |   import { c, b as b2, b as b1, b } from "mod";
 4 4 |   
@@ -51,7 +51,7 @@ Suggested fix: Use a while loop
 0 0 |   // invalid
 1 1 |   import { b/**some comment */, a, c, D   } from "mod";
 2   | - import { b as A, a as C, B } from "mod";
-  2 | + import { b as A, B , a as C } from "mod";
+  2 | + import { b as A, B, a as C} from "mod";
 3 3 |   import { c, b as b2, b as b1, b } from "mod";
 4 4 |   
 5 5 |   export { b, a, c, D } from "mod";
@@ -72,7 +72,7 @@ Suggested fix: Use a while loop
 1 1 |   import { b/**some comment */, a, c, D   } from "mod";
 2 2 |   import { b as A, a as C, B } from "mod";
 3   | - import { c, b as b2, b as b1, b } from "mod";
-  3 | + import { b , b as b1, b as b2, c } from "mod";
+  3 | + import { b, b as b1, b as b2, c} from "mod";
 4 4 |   
 5 5 |   export { b, a, c, D } from "mod";
 6 6 |   export { b as A, a as C, B } from "mod";
