@@ -1,15 +1,14 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
 use crate::prelude::*;
-use crate::utils::{
-    fmt_arguments_multi_line, fmt_arguments_one_line, is_simple_expression, token_has_comments,
-};
+use crate::utils::{fmt_arguments_multi_line, fmt_arguments_one_line, is_call_like_expression};
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
+use rome_js_syntax::JsSyntaxKind::JS_EMPTY_STATEMENT;
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsArrayExpression,
     JsArrowFunctionExpression, JsCallArgumentList, JsCallArguments, JsCallArgumentsFields,
-    JsFunctionExpression, JsObjectExpression, JsSyntaxNode, TsAsExpression,
-    TsTypeAssertionExpression,
+    JsConditionalExpression, JsFunctionBody, JsFunctionExpression, JsObjectExpression,
+    JsSyntaxNode, TsAsExpression, TsReferenceType, TsTypeAssertionExpression,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
@@ -28,33 +27,15 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
         let open_delimiter = format_open_delimiter(&l_paren_token);
         let close_delimiter = format_close_delimiter(&r_paren_token);
 
-        // we now extracts the formatted version of trivias and tokens of the delimiters and
-        // we cache them. This is needed because `[rome_formatter::best_fitting]` will try to
-        // print each version first
-
-        // tokens on the left
-        let l_leading_trivia = open_delimiter.as_leading_trivia_fmt().memoized();
-        let l_paren = open_delimiter.as_token_fmt().memoized();
-        let l_trailing_trivia = open_delimiter.as_trailing_trivia_fmt().memoized();
-
-        // tokens on the right
-        let r_leading_trivia = close_delimiter.as_leading_trivia_fmt().memoized();
-        let r_paren = close_delimiter.as_token_fmt().memoized();
-        let r_trailing_trivia = close_delimiter.as_trailing_trivia_fmt().memoized();
+        // we now extracts the formatted version of trivias and tokens of the delimiters
 
         if args.len() == 0 {
             return write!(
                 f,
                 [
-                    l_leading_trivia,
-                    l_paren,
-                    group_elements(&format_args![
-                        l_trailing_trivia,
-                        args.format(),
-                        r_leading_trivia,
-                    ]),
-                    r_paren,
-                    r_trailing_trivia
+                    l_paren_token.format(),
+                    args.format(),
+                    r_paren_token.format()
                 ]
             );
         }
@@ -67,13 +48,10 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
             let first_argument = list.next().unwrap();
             let second_argument = list.next().unwrap();
 
-            // SAFETY: function is_react_hook_with_deps_array checks if there aren't any
-            // comments. If there are comments, we don't fall in this branch of the condition,
-            // so it's safe to not print them
             return write!(
                 f,
                 [
-                    &l_paren,
+                    l_paren_token.format(),
                     first_argument.node().format(),
                     first_argument.trailing_separator().format(),
                     space_token(),
@@ -87,90 +65,99 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
 
                         Ok(())
                     }),
-                    &r_paren
+                    r_paren_token.format()
                 ]
             );
         }
 
+        // tokens on the left
+        let l_leading_trivia = open_delimiter.as_leading_trivia_fmt();
+        let l_paren = open_delimiter.as_token_fmt();
+        let l_trailing_trivia = open_delimiter.as_trailing_trivia_fmt();
+
+        // tokens on the right
+        let r_leading_trivia = close_delimiter.as_leading_trivia_fmt();
+        let r_paren = close_delimiter.as_token_fmt();
+        let r_trailing_trivia = close_delimiter.as_trailing_trivia_fmt();
+
         let should_group_first_argument = should_group_first_argument(&args)?;
         let should_group_last_argument = should_group_last_argument(&args)?;
 
+        // We finished the "simple cases", we now need to use `best_fitting`.
+        // We now need to allocate a new vector with cached nodes, this is needed because
+        // we can't attempt to print the same node twice without incur in "printed token twice" errors.
+        // We also disallow the trailing separator, we are interested in doing it manually.
+        let separated: Vec<_> = args
+            .format_separated(token(","))
+            .with_options(
+                FormatSeparatedOptions::default().with_trailing_separator(TrailingSeparator::Elide),
+            )
+            .map(|e| e.memoized())
+            .collect();
+
         // if the first or last groups needs grouping, then we prepare some special formatting
         if should_group_first_argument || should_group_last_argument {
-            // We finished the "simple cases", we now need to use `best_fitting`.
-            // We now need to allocate a new vector with cached nodes, this is needed because
-            // we can't attempt to print the same node twice without incur in "printed token twice" errors.
-            // We also disallow the trailing separator, we are interested in doing it manually.
-            let separated: Vec<_> = args
-                .format_separated(token(","))
-                .with_options(
-                    FormatSeparatedOptions::default()
-                        .with_trailing_separator(TrailingSeparator::Elide),
-                )
-                .map(|e| e.memoized())
-                .collect();
+            // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
+            // print each version first
+            // tokens on the left
+            let l_leading_trivia = l_leading_trivia.memoized();
+            let l_paren = l_paren.memoized();
+            let l_trailing_trivia = l_trailing_trivia.memoized();
 
-            let formatted = format_with(|f| {
+            // tokens on the right
+            let r_leading_trivia = r_leading_trivia.memoized();
+            let r_paren = r_paren.memoized();
+            let r_trailing_trivia = r_trailing_trivia.memoized();
+
+            let edge_arguments_not_grouped = format_with(|f| {
                 // `should_group_first_argument` and `should_group_last_argument` are mutually exclusive
                 // which means that if one is `false`, then the other is `true`.
                 // This means that in this branch we format the case where `should_group_first_argument`,
                 // in the else branch we format the case where `should_group_last_argument` is `true`.
+
+                write!(f, [l_leading_trivia, l_paren, l_trailing_trivia,])?;
                 if should_group_first_argument {
                     write!(
                         f,
-                        [
-                            l_leading_trivia,
-                            l_paren,
-                            l_trailing_trivia,
-                            format_with(|f| {
-                                // special formatting of the first element
-                                let mut iter = separated.iter();
-                                // SAFETY: check on the existence of at least one argument are done before
-                                let first = iter.next().unwrap();
-                                f.join_with(&space_token())
-                                    .entry(&format_with(|f| {
-                                        write!(
-                                            f,
-                                            [group_elements(&format_args![first, expand_parent()])]
-                                        )
-                                    }))
-                                    .entries(iter)
-                                    .finish()
-                            }),
-                            r_leading_trivia,
-                            r_paren,
-                            r_trailing_trivia
-                        ]
-                    )
+                        [format_with(|f| {
+                            // special formatting of the first element
+                            let mut iter = separated.iter();
+                            // SAFETY: check on the existence of at least one argument are done before
+                            let first = iter.next().unwrap();
+                            f.join_with(&space_token())
+                                .entry(&format_with(|f| {
+                                    write!(
+                                        f,
+                                        [group_elements(&format_args![first, expand_parent()])]
+                                    )
+                                }))
+                                .entries(iter)
+                                .finish()
+                        }),]
+                    )?;
                 } else {
                     write!(
                         f,
-                        [
-                            l_leading_trivia,
-                            l_paren,
-                            l_trailing_trivia,
-                            format_with(|f| {
-                                // special formatting of the last element
-                                let mut iter = separated.iter();
-                                // SAFETY: check on the existence of at least one argument are done before
-                                let last = iter.next_back().unwrap();
+                        [format_with(|f| {
+                            // special formatting of the last element
+                            let mut iter = separated.iter();
+                            // SAFETY: check on the existence of at least one argument are done before
+                            let last = iter.next_back().unwrap();
 
-                                f.join_with(&space_token())
-                                    .entries(iter)
-                                    .entry(&format_with(|f| {
-                                        write!(
-                                            f,
-                                            [group_elements(&format_args![last, expand_parent()])]
-                                        )
-                                    }))
-                                    .finish()
-                            }),
-                            r_leading_trivia,
-                            r_paren,
-                            r_trailing_trivia
-                        ]
-                    )
+                            f.join_with(&space_token())
+                                .entries(iter)
+                                .entry(&format_with(|f| {
+                                    write!(
+                                        f,
+                                        [group_elements(&format_args![last, expand_parent()])]
+                                    )
+                                }))
+                                .finish()
+                        }),]
+                    )?;
                 }
+
+                write!(f, [r_leading_trivia, r_paren, r_trailing_trivia])
             });
 
             // This is the version of where all the arguments are broken out
@@ -182,7 +169,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                     [
                         &l_leading_trivia,
                         &l_paren,
-                        &group_elements(&format_args![format_with(|f| {
+                        &group_elements(&format_with(|f| {
                             write!(
                                 f,
                                 [
@@ -195,18 +182,17 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                                                 f,
                                             )
                                         }),
-                                        r_leading_trivia,
+                                        &r_leading_trivia,
                                         soft_line_break()
                                     ]),
                                     &r_paren
                                 ]
                             )
-                        })]),
+                        })),
                         &r_trailing_trivia
                     ]
                 )
-            })
-            .memoized();
+            });
 
             write!(
                 f,
@@ -222,19 +208,11 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                         r_paren,
                         r_trailing_trivia
                     ],
-                    format_args![formatted],
-                    format_args![all_arguments_expanded]
+                    edge_arguments_not_grouped,
+                    all_arguments_expanded
                 ]]
             )
         } else {
-            let separated: Vec<_> = args
-                .format_separated(token(","))
-                .with_options(
-                    FormatSeparatedOptions::default()
-                        .with_trailing_separator(TrailingSeparator::Elide),
-                )
-                .map(|e| e.memoized())
-                .collect();
             write!(
                 f,
                 [
@@ -242,6 +220,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                     &group_elements(&format_args![
                         l_paren,
                         l_trailing_trivia,
+                        // TODO: check if soft_line_block works here
                         &if_group_breaks(&format_args![
                             indent(&format_args![
                                 soft_line_break(),
@@ -264,43 +243,6 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
     }
 }
 
-/// Returns true if the passed [JsCallArguments] has a single argument
-/// that is a simple function expression, array expression or object expression
-fn is_simple_function_arguments(node: &JsCallArguments) -> SyntaxResult<bool> {
-    let JsCallArgumentsFields {
-        l_paren_token,
-        args,
-        r_paren_token,
-    } = node.as_fields();
-
-    if token_has_comments(&l_paren_token?) || token_has_comments(&r_paren_token?) {
-        return Ok(false);
-    }
-
-    if args.len() > 1 {
-        return Ok(false);
-    }
-
-    for item in args.elements() {
-        if let Some(separator) = item.trailing_separator()? {
-            if token_has_comments(separator) {
-                return Ok(false);
-            }
-        }
-
-        match item.node() {
-            Ok(JsAnyCallArgument::JsAnyExpression(expr)) => {
-                if !is_simple_expression(expr)? {
-                    return Ok(false);
-                }
-            }
-            _ => return Ok(false),
-        }
-    }
-
-    Ok(true)
-}
-
 /// Checks if the the first argument requires grouping
 fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
     if list.len() != 2 {
@@ -317,8 +259,7 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
         match expression {
             JsAnyExpression::JsFunctionExpression(_) => true,
             JsAnyExpression::JsArrowFunctionExpression(arrow) => {
-                let body = arrow.body()?;
-                matches!(body, JsAnyFunctionBody::JsFunctionBody(_))
+                matches!(arrow.body()?, JsAnyFunctionBody::JsFunctionBody(_))
             }
             _ => false,
         }
@@ -341,7 +282,7 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
     Ok(!has_comments
         && is_function_like
         && !second_arg_is_function_like
-        && !can_group_argument(second.syntax())?)
+        && !could_group_argument(second.syntax(), false)?)
 }
 
 /// Checks if the last group requires grouping
@@ -365,15 +306,15 @@ fn should_group_last_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
         };
 
         Ok(!last.syntax().has_comments_direct()
-            && can_group_argument(last.syntax())?
+            && could_group_argument(last.syntax(), false)?
             && check_with_penultimate)
     } else {
         Ok(false)
     }
 }
 
-/// Checks if the current argument requires grouping.
-fn can_group_argument(argument: &JsSyntaxNode) -> SyntaxResult<bool> {
+/// Checks if the current argument could be grouped
+fn could_group_argument(argument: &JsSyntaxNode, is_arrow_recursion: bool) -> SyntaxResult<bool> {
     let result = if let Some(object_expression) = JsObjectExpression::cast(argument.clone()) {
         object_expression.members().len() > 0
             || object_expression.syntax().has_comments_at_the_edges()
@@ -381,9 +322,67 @@ fn can_group_argument(argument: &JsSyntaxNode) -> SyntaxResult<bool> {
         array_expression.elements().len() > 0
             || array_expression.syntax().has_comments_at_the_edges()
     } else if let Some(assertion_expression) = TsTypeAssertionExpression::cast(argument.clone()) {
-        can_group_argument(assertion_expression.expression()?.syntax())?
+        could_group_argument(assertion_expression.expression()?.syntax(), false)?
     } else if let Some(as_expression) = TsAsExpression::cast(argument.clone()) {
-        can_group_argument(as_expression.expression()?.syntax())?
+        could_group_argument(as_expression.expression()?.syntax(), false)?
+    } else if let Some(arrow_function) = JsArrowFunctionExpression::cast(argument.clone()) {
+        let body = arrow_function.body()?;
+        let return_type_annotation = arrow_function.return_type_annotation();
+
+        // Handles cases like:
+        //
+        // app.get("/", (req, res): void => {
+        //     res.send("Hello World!");
+        // });
+        //
+        // export class Thing implements OtherThing {
+        //   do: (type: Type) => Provider<Prop> = memoize(
+        //     (type: ObjectType): Provider<Opts> => {}
+        //   );
+        // }
+        let can_group_type =
+            !return_type_annotation
+                .and_then(|rty| rty.ty().ok())
+                .map_or(false, |any_type| {
+                    TsReferenceType::can_cast(any_type.syntax().kind())
+                        || JsFunctionBody::cast(body.syntax().clone()).map_or(
+                            true,
+                            |function_body| {
+                                function_body
+                                    .statements()
+                                    .iter()
+                                    .any(|st| st.syntax().kind() == JS_EMPTY_STATEMENT)
+                            },
+                        )
+                });
+
+        let body_is_delimited = matches!(
+            body,
+            JsAnyFunctionBody::JsFunctionBody(_)
+                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(_))
+                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrayExpression(_))
+        );
+
+        if let JsAnyFunctionBody::JsAnyExpression(any_expression) = body.clone() {
+            let is_nested_arrow_function =
+                JsArrowFunctionExpression::cast(any_expression.syntax().clone())
+                    .and_then(|arrow_function_expression| {
+                        arrow_function_expression
+                            .body()
+                            .ok()
+                            .and_then(|body| could_group_argument(body.syntax(), true).ok())
+                    })
+                    .unwrap_or(false);
+
+            body_is_delimited
+                && is_nested_arrow_function
+                && can_group_type
+                && (!is_arrow_recursion
+                    && (is_call_like_expression(&any_expression)
+                        || JsConditionalExpression::can_cast(body.syntax().kind())))
+        } else {
+            body_is_delimited && can_group_type
+        }
     } else {
         JsFunctionExpression::can_cast(argument.kind())
     };
@@ -397,10 +396,9 @@ fn can_group_argument(argument: &JsSyntaxNode) -> SyntaxResult<bool> {
 /// useMemo(() => {}, [])
 /// ```
 fn is_react_hook_with_deps_array(node: &JsCallArgumentList) -> SyntaxResult<bool> {
-    let enough_arguments = node.len() == 2;
-    let result = if enough_arguments {
+    let result = if node.len() == 2 {
         let mut iter = node.elements();
-        // SAFETY: covered by enough_arguments
+        // SAFETY: covered by the previous if check
         let first = iter.next().unwrap().into_node()?;
         let second = iter.next().unwrap().into_node()?;
         let first_node_matches = if let JsAnyCallArgument::JsAnyExpression(
@@ -417,9 +415,7 @@ fn is_react_hook_with_deps_array(node: &JsCallArgumentList) -> SyntaxResult<bool
         };
 
         let second_node_matches = JsArrayExpression::can_cast(second.syntax().kind());
-
         let no_comments = !node.syntax().has_comments_at_the_edges();
-
         first_node_matches && second_node_matches && no_comments
     } else {
         false

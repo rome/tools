@@ -526,14 +526,14 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-export class Thing implements OtherThing {
-  do: (type: Type) => Provider<Prop> = memoize(
-    (type: ObjectType): Provider<Opts> => {},
-  );
-}
 
-        
-    
+       
+ export class Thing implements OtherThing {
+        do: (type: Type) => Provider<Prop> = memoize(
+          (type: ObjectType): Provider<Opts> => {}
+        );
+      }
+ 
 "#;
         // let src = r#"useEffect(() => { hey; }, [1, 4])"#;
 
