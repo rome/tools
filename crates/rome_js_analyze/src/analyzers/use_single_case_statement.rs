@@ -4,9 +4,7 @@ use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
-};
+use rome_js_syntax::{JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,};
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
 use crate::JsRuleAction;
@@ -107,7 +105,9 @@ impl Rule for UseSingleCaseStatement {
             node
         };
 
-        let root = ctx.root().clone()
+        let root = ctx
+            .root()
+            .clone()
             .replace_node(n.clone(), node)
             .expect("failed to replace node");
 

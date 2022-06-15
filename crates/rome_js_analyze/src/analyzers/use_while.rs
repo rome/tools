@@ -3,7 +3,7 @@ use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
+use rome_js_syntax::{JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::AstNodeExt;
 pub(crate) enum UseWhile {}
 
@@ -44,7 +44,7 @@ impl Rule for UseWhile {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query_result();
-        
+
         // SAFETY: These tokens have been checked for errors in `run` already
         let for_range = node.for_token().unwrap().text_trimmed_range();
         let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();

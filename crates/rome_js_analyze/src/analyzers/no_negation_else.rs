@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyRoot, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
+    JsAnyExpression, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
     JsUnaryExpression, JsUnaryOperator,
 };
 use rome_rowan::{AstNode, AstNodeExt};
@@ -43,7 +43,7 @@ impl Rule for NoNegationElse {
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query_result();
-        
+
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -86,7 +86,9 @@ impl Rule for NoNegationElse {
                     next_stmt.consequent().ok()?,
                     stmt.else_clause()?.alternate().ok()?,
                 )?;
-                ctx.root().clone().replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
+                ctx.root()
+                    .clone()
+                    .replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
             }
         }?;
         Some(JsRuleAction {

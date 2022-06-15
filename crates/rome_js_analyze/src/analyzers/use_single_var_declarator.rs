@@ -46,7 +46,7 @@ impl Rule for UseSingleVarDeclarator {
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query_result();
-        
+
         Some(RuleDiagnostic::warning(
             node.range(),
             "Declare variables separately",
@@ -102,7 +102,9 @@ impl Rule for UseSingleVarDeclarator {
             applicability: Applicability::Always,
             message: markup! { "Break out into multiple declarations" }.to_owned(),
             root: JsAnyRoot::unwrap_cast(
-                ctx.root().clone().into_syntax()
+                ctx.root()
+                    .clone()
+                    .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             ),
         })

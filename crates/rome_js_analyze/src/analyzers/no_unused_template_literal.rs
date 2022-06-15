@@ -4,7 +4,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsAnyTemplateElement, JsTemplate,
+    JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
 
@@ -31,7 +31,7 @@ impl Rule for NoUnusedTemplateLiteral {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query_result();
-        
+
         Some(RuleDiagnostic::warning(node.range(),markup! {
             "Do not use template literals if interpolation and special-character handling are not needed."
         }

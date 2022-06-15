@@ -52,7 +52,7 @@ impl Rule for NoCompareNegZero {
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query_result();
-        
+
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -60,9 +60,7 @@ impl Rule for NoCompareNegZero {
             },
         ))
     }
-   fn action(ctx: &RuleContext<Self>,
-        state: &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query_result();
         let root = ctx.root();
         let root = if state.left_need_replaced && state.right_need_replaced {

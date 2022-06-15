@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyArrayElement, JsAnyExpression, JsAnyRoot, JsArrayExpression, TriviaPieceKind,
+    JsAnyArrayElement, JsAnyExpression, JsArrayExpression, TriviaPieceKind,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
@@ -33,7 +33,7 @@ impl Rule for NoSparseArray {
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query_result();
-        
+
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
 markup! {

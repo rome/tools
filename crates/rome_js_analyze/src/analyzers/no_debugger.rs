@@ -24,7 +24,7 @@ impl Rule for NoDebugger {
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query_result();
-        
+
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
             markup! {
@@ -34,9 +34,7 @@ impl Rule for NoDebugger {
         ))
     }
 
-   fn action(ctx: &RuleContext<Self>,
-        _: &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query_result();
 
         let prev_parent = node.syntax().parent()?;
@@ -54,7 +52,9 @@ impl Rule for NoDebugger {
 
             // SAFETY: We know the kind of root is `JsAnyRoot` so cast `root.into_syntax()` will not panic
             JsAnyRoot::unwrap_cast(
-                ctx.root().clone().into_syntax()
+                ctx.root()
+                    .clone()
+                    .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             )
         } else {

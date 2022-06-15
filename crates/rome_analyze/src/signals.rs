@@ -9,7 +9,8 @@ use rome_rowan::{AstNode, Direction, Language, SyntaxNode, TextRange};
 
 use crate::{
     categories::ActionCategory,
-    registry::{LanguageRoot, Rule, RuleLanguage, RuleRoot}, context::RuleContext,
+    context::RuleContext,
+    registry::{LanguageRoot, Rule, RuleLanguage, RuleRoot},
 };
 
 /// Event raised by the analyzer when a [Rule](crate::registry::Rule)
@@ -101,8 +102,7 @@ impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
 impl<'a, R: Rule> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R> {
     fn diagnostic(&self) -> Option<Diagnostic> {
         let ctx = RuleContext::new(self.node.clone(), self.root.clone());
-        R::diagnostic(&ctx, &self.state)
-            .map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
+        R::diagnostic(&ctx, &self.state).map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {

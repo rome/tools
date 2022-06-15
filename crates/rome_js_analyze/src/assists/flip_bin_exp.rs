@@ -2,8 +2,7 @@ use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyRoot, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
+use rome_js_syntax::{JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
 };
 use rome_rowan::AstNodeExt;
 

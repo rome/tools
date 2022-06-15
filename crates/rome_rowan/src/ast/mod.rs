@@ -22,7 +22,7 @@ pub use mutation::{AstNodeExt, AstNodeListExt, AstSeparatedListExt};
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
 /// the same representation: a pointer to the tree root and a pointer to the
 /// node itself.
-pub trait AstNode : Clone {
+pub trait AstNode: Clone {
     type Language: Language;
 
     /// Returns `true` if a node with the given kind can be cased to this AST node.
@@ -855,6 +855,7 @@ mod tests {
         let typed = tree.first_child().unwrap().cast::<RawRoot>().unwrap();
         let _ = typed.parent::<RawRoot>().unwrap();
 
+        #[derive(Clone)]
         struct RawRoot(SyntaxNode<RawLanguage>);
         impl AstNode for RawRoot {
             type Language = RawLanguage;
