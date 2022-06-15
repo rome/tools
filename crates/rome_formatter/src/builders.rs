@@ -470,7 +470,7 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 ///     SimpleFormatContext::default(),
 ///     [
 ///         group_elements(&format_args![
-///             comment(&empty_line()),
+///             comments(&format_args![token("// test"), hard_line_break()]).leading(true),
 ///             token("a"),
 ///             soft_line_break_or_space(),
 ///             token("b")
@@ -479,39 +479,51 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 /// ).unwrap();
 ///
 /// assert_eq!(
-///     "\na b",
+///     "// test\na b",
 ///     elements.print().as_code()
 /// );
 /// ```
 #[inline]
-pub fn comment<Content, Context>(content: &Content) -> FormatComment<Context>
+pub fn comments<Content, Context>(content: &Content) -> FormatComments<Context>
 where
     Content: Format<Context>,
 {
-    FormatComment {
+    FormatComments {
         content: Argument::new(content),
+        leading: false,
     }
 }
 
 #[derive(Copy, Clone)]
-pub struct FormatComment<'a, Context> {
+pub struct FormatComments<'a, Context> {
     content: Argument<'a, Context>,
+    leading: bool,
 }
 
-impl<Context> Format<Context> for FormatComment<'_, Context> {
+impl<Context> FormatComments<'_, Context> {
+    pub fn leading(mut self, leading: bool) -> Self {
+        self.leading = leading;
+        self
+    }
+}
+
+impl<Context> Format<Context> for FormatComments<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         buffer.write_fmt(Arguments::from(&self.content))?;
-        let content = buffer.into_element();
+        let content = buffer.into_vec();
 
-        f.write_element(FormatElement::Comment(Box::new(content)))
+        f.write_element(FormatElement::Comments {
+            content: content.into_boxed_slice(),
+            leading: self.leading,
+        })
     }
 }
 
-impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
+impl<Context> std::fmt::Debug for FormatComments<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_tuple("Comment").field(&"{{content}}").finish()
+        f.debug_tuple("Comments").field(&"{{content}}").finish()
     }
 }
 
@@ -931,25 +943,11 @@ impl<Context> Format<Context> for GroupElements<'_, Context> {
 
         buffer.write_fmt(Arguments::from(&self.content))?;
 
-        let mut content = buffer.into_vec();
+        let content = buffer.into_vec();
 
-        // Move the leading comments out of the group to prevent that a leading line comment expands the
-        // token's enclosing group.
-        //
-        // ```javascript
-        // /* a comment */
-        // [1]
-        // ```
-        //
-        // The `/* a comment */` belongs to the `[` group token that is part of a group wrapping the whole
-        // `[1]` expression. It's important that the comment `/* a comment */` gets moved out of the group element
-        // to avoid that the `[1]` group expands because of the line break inserted by the comment.
-        let leading_end = content
-            .iter()
-            .position(|element| !matches!(element, FormatElement::Comment(_)))
-            .unwrap_or(content.len());
-
-        f.write_elements(content.drain(..leading_end))?;
+        if content.is_empty() && self.group_id.is_none() {
+            return Ok(());
+        }
 
         let group = Group::new(content).with_id(self.group_id);
 

@@ -57,7 +57,10 @@ pub enum FormatElement {
     /// a trivia content, and it should only have a limited influence on the
     /// formatting (for instance line breaks contained within will not cause
     /// the parent group to break if this element is at the start of it)
-    Comment(Content),
+    Comments {
+        content: Box<[FormatElement]>,
+        leading: bool,
+    },
 
     /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
     Verbatim(Verbatim),
@@ -134,7 +137,11 @@ impl Debug for FormatElement {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
             FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
-            FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
+            FormatElement::Comments { content, leading } => fmt
+                .debug_struct("Comments")
+                .field("content", content)
+                .field("leading", leading)
+                .finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
                 .field(&verbatim.element)
@@ -486,66 +493,17 @@ impl FormatElement {
             FormatElement::Fill(fill) => fill.list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
-            FormatElement::Comment(content) => content.will_break(),
+            FormatElement::Comments { content, leading } => {
+                if *leading {
+                    false
+                } else {
+                    content.iter().any(FormatElement::will_break)
+                }
+            }
             FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
             FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
             FormatElement::ExpandParent => true,
-        }
-    }
-
-    /// Splits off the leading and trailing trivias (comments) from this [FormatElement]
-    ///
-    /// For [FormatElement::HardGroup], the trailing trivia
-    /// is automatically moved  outside of the group. The group itself is then recreated around the
-    /// content itself.
-    pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
-        match self {
-            FormatElement::List(mut list) => {
-                // Find the index of the first non-comment element in the list
-                let content_start = list
-                    .content
-                    .iter()
-                    .position(|elem| !matches!(elem, FormatElement::Comment(_)));
-
-                // List contains at least one non trivia element.
-                if let Some(content_start) = content_start {
-                    let (leading, mut content) = if content_start > 0 {
-                        let content = list.content.split_off(content_start);
-                        (FormatElement::List(list), content)
-                    } else {
-                        // No leading trivia
-                        (FormatElement::List(List::default()), list.content)
-                    };
-
-                    let content_end = content
-                        .iter()
-                        .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
-                        .expect("List guaranteed to contain at least one non trivia element.");
-                    let trailing_start = content_end + 1;
-
-                    let trailing = if trailing_start < content.len() {
-                        FormatElement::List(List::new(content.split_off(trailing_start)))
-                    } else {
-                        FormatElement::List(List::default())
-                    };
-
-                    (leading, FormatElement::List(List::new(content)), trailing)
-                } else {
-                    // All leading trivia
-                    (
-                        FormatElement::List(list),
-                        FormatElement::List(List::default()),
-                        FormatElement::List(List::default()),
-                    )
-                }
-            }
-            // Non-list elements are returned directly
-            _ => (
-                FormatElement::List(List::default()),
-                self,
-                FormatElement::List(List::default()),
-            ),
         }
     }
 
@@ -562,7 +520,7 @@ impl FormatElement {
             FormatElement::List(list) => {
                 list.iter().rev().find_map(|element| element.last_element())
             }
-            FormatElement::Line(_) | FormatElement::Comment(_) => None,
+            FormatElement::Line(_) | FormatElement::Comments { .. } => None,
 
             FormatElement::Indent(indent) => indent.last_element(),
             FormatElement::Group(group) => group
