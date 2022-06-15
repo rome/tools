@@ -10,6 +10,7 @@ use rome_js_syntax::{
 mod analyzers;
 mod assists;
 mod registry;
+pub mod utils;
 
 use crate::registry::build_registry;
 
