@@ -90,7 +90,7 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg /" <Emphasis>{eg_length}</Emphasis>"/" }.to_owned(),
+            message: markup! { "It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {"{eg_length}"}/" }.to_owned(),
             root,
         })
     }

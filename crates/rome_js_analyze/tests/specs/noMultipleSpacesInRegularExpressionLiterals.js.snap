@@ -28,7 +28,7 @@ warning[noMultipleSpacesInRegularExpressionLiterals]: This regular expression co
 7 │ /   /;
   │  ---
 
-Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg /3/
+Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
     | @@ -4,7 +4,7 @@
 3 3 |   /foo bar\tbaz/;
 4 4 |   /foo /;
@@ -49,7 +49,7 @@ warning[noMultipleSpacesInRegularExpressionLiterals]: This regular expression co
 8 │ /  foo/;
   │  --
 
-Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg /2/
+Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
     | @@ -5,7 +5,7 @@
 4 4 |   /foo /;
 5 5 |   // invalid
@@ -70,7 +70,7 @@ warning[noMultipleSpacesInRegularExpressionLiterals]: This regular expression co
 9 │ /foo   /;
   │     ---
 
-Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg /3/
+Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
     | @@ -6,7 +6,7 @@
 5 5 |   // invalid
 6 6 |   /   /;
@@ -91,7 +91,7 @@ warning[noMultipleSpacesInRegularExpressionLiterals]: This regular expression co
 10 │ /foo  bar/;
    │     --
 
-Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg /2/
+Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
       | @@ -7,6 +7,6 @@
  6  6 |   /   /;
  7  7 |   /  foo/;
@@ -111,7 +111,7 @@ warning[noMultipleSpacesInRegularExpressionLiterals]: This regular expression co
 11 │ /foo   bar    baz/;
    │     ----------
 
-Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg /7/
+Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {7}/
       | @@ -8,5 +8,5 @@
  7  7 |   /  foo/;
  8  8 |   /foo   /;
@@ -130,7 +130,7 @@ warning[noMultipleSpacesInRegularExpressionLiterals]: This regular expression co
 12 │ /foo [ba]r  b(a|z)/;
    │           --
 
-Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg /2/
+Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
       | @@ -9,4 +9,4 @@
  8  8 |   /foo   /;
  9  9 |   /foo  bar/;
