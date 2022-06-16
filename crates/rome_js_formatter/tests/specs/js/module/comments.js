@@ -72,4 +72,7 @@ statement /* comment */;
 
 /* leading */ "test" /*trailing*/ ;
 
+/* leading */
+"test" /*trailing*/ ;
+
 /* EOF comment */

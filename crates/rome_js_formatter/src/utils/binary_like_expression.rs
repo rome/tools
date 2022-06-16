@@ -226,7 +226,7 @@ fn format_sub_expression<'a>(
                 &sub_expression,
                 sub_expression.syntax().last_token(),
             )
-            .grouped()
+            .grouped_with_soft_block_indent()
             .fmt(f)
         } else {
             write!(f, [sub_expression])
@@ -569,7 +569,7 @@ impl FlattenedBinaryExpressionPart {
                     let last_token = current.syntax().last_token();
 
                     format_parenthesize(first_token, &content, last_token)
-                        .grouped()
+                        .grouped_with_soft_block_indent()
                         .fmt(f)
                 } else {
                     write!(f, [content])

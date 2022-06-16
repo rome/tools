@@ -71,7 +71,7 @@ pub fn format_inserted_close_paren(
     kind: JsSyntaxKind,
     f: &mut JsFormatter,
 ) -> FormatInsertedCloseParen<JsCommentStyle> {
-    FormatInsertedCloseParen::new(
+    FormatInsertedCloseParen::after_token(
         after_token,
         kind,
         kind.to_string()
@@ -124,7 +124,9 @@ pub struct FormatParenthesize<'content> {
 }
 
 impl FormatParenthesize<'_> {
-    pub fn grouped(mut self) -> Self {
+    /// Groups the open parenthesis, the content, and the closing parenthesis inside of a group
+    /// and indents the content with a soft block indent.
+    pub fn grouped_with_soft_block_indent(mut self) -> Self {
         self.grouped = true;
         self
     }

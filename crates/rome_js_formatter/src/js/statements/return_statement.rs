@@ -27,7 +27,7 @@ impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
                                 &argument.format(),
                                 argument.syntax().last_token(),
                             )
-                            .grouped()
+                            .grouped_with_soft_block_indent()
                             .fmt(f)?;
                         } else {
                             write![f, [argument.format()]]?;

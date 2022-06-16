@@ -40,7 +40,7 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
                     &format_args![binding.format(), if_group_breaks(&token(",")),],
                     binding.syntax().last_token(),
                 )
-                .grouped()]
+                .grouped_with_soft_block_indent()]
             )?,
             JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,
         }

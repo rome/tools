@@ -6,7 +6,6 @@ use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
 use std::cell::Cell;
-use std::fmt::Debug;
 use std::marker::PhantomData;
 
 /// A line break that only gets printed if the enclosing `Group` doesn't fit on a single line.

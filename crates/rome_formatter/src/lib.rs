@@ -56,7 +56,7 @@ pub use builders::{
 pub use comments::{CommentKind, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
-use indexmap::IndexMap;
+use indexmap::IndexSet;
 use rome_rowan::{
     Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxKind, SyntaxNode, SyntaxResult,
     SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
@@ -1083,7 +1083,7 @@ pub struct FormatState<Context> {
     /// Storing the position is sufficient because comments are guaranteed to not be empty
     /// (all start with a specific comment sequence) and thus, no two comments can have the same
     /// absolute position.
-    manually_formatted_comments: IndexMap<TextSize, ()>,
+    manually_formatted_comments: IndexSet<TextSize>,
 
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
@@ -1115,7 +1115,7 @@ impl<Context> FormatState<Context> {
             group_id_builder: Default::default(),
             last_content_inline_comment: false,
             last_token_kind: None,
-            manually_formatted_comments: IndexMap::default(),
+            manually_formatted_comments: IndexSet::default(),
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
@@ -1175,7 +1175,7 @@ impl<Context> FormatState<Context> {
         comment: &SyntaxTriviaPieceComments<L>,
     ) {
         self.manually_formatted_comments
-            .insert(comment.text_range().start(), ());
+            .insert(comment.text_range().start());
     }
 
     /// Returns `true` if this comment has already been formatted manually
@@ -1185,7 +1185,7 @@ impl<Context> FormatState<Context> {
         comment: &SyntaxTriviaPieceComments<L>,
     ) -> bool {
         self.manually_formatted_comments
-            .contains_key(&comment.text_range().start())
+            .contains(&comment.text_range().start())
     }
 
     /// Returns the context specifying how to format the current CST

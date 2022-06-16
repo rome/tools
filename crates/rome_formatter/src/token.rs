@@ -240,7 +240,7 @@ impl<S> FormatInsertedCloseParen<S>
 where
     S: CommentStyle,
 {
-    pub fn new<Context>(
+    pub fn after_token<Context>(
         after_token: &Option<SyntaxToken<S::Language>>,
         kind: <S::Language as Language>::Kind,
         text: &'static str,

@@ -65,7 +65,7 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
             if is_simple_expression(&argument)? {
                 parenthesize.fmt(f)
             } else {
-                parenthesize.grouped().fmt(f)
+                parenthesize.grouped_with_soft_block_indent().fmt(f)
             }
         } else {
             write![f, [operator_token.format(), argument.format(),]]
