@@ -56,13 +56,11 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
         if is_ambiguous_expression {
             operator_token.format().fmt(f)?;
 
-            // SAFETY: `is_ambiguous_expression` matches ont he argument, guaranteeing that it is an expression
-            // containing at least one token
-            let first_token = argument.syntax().first_token().unwrap();
-            let last_token = argument.syntax().last_token().unwrap();
+            let first_token = argument.syntax().first_token();
+            let last_token = argument.syntax().last_token();
             let format_argument = argument.format();
 
-            let parenthesize = format_parenthesize(&first_token, &format_argument, &last_token);
+            let parenthesize = format_parenthesize(first_token, &format_argument, last_token);
 
             if is_simple_expression(&argument)? {
                 parenthesize.fmt(f)

@@ -23,7 +23,12 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
             .is_some();
 
         if needs_parenthesis {
-            format_parenthesize(&value_token, &formatted, &value_token).fmt(f)
+            format_parenthesize(
+                Some(value_token.clone()),
+                &formatted,
+                Some(value_token.clone()),
+            )
+            .fmt(f)
         } else {
             formatted.fmt(f)
         }

@@ -22,12 +22,10 @@ impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
                         write!(f, [space_token()])?;
 
                         if let JsAnyExpression::JsSequenceExpression(_expression) = argument {
-                            // SAFETY: a sequence expression contains at least the `,` comma token. Therefore, it's safe
-                            // to call `unwrap` here
                             format_parenthesize(
-                                &argument.syntax().first_token().unwrap(),
+                                argument.syntax().first_token(),
                                 &argument.format(),
-                                &argument.syntax().last_token().unwrap(),
+                                argument.syntax().last_token(),
                             )
                             .grouped()
                             .fmt(f)?;

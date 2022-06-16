@@ -54,7 +54,7 @@ pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsCommentStyle> {
 }
 
 pub fn format_inserted_open_paren(
-    before_token: &JsSyntaxToken,
+    before_token: Option<JsSyntaxToken>,
     kind: JsSyntaxKind,
 ) -> FormatInsertedOpenParen<JsCommentStyle> {
     FormatInsertedOpenParen::new(
@@ -67,7 +67,7 @@ pub fn format_inserted_open_paren(
 }
 
 pub fn format_inserted_close_paren(
-    after_token: &JsSyntaxToken,
+    after_token: &Option<JsSyntaxToken>,
     kind: JsSyntaxKind,
     f: &mut JsFormatter,
 ) -> FormatInsertedCloseParen<JsCommentStyle> {
@@ -98,11 +98,11 @@ pub fn format_inserted_close_paren(
 /// ```javascript
 /// /* leading */ ("test") /* trailing */;
 /// ```
-pub fn format_parenthesize<'token, 'content, Content>(
-    first_content_token: &'token JsSyntaxToken,
-    content: &'content Content,
-    last_content_token: &'token JsSyntaxToken,
-) -> FormatParenthesize<'token, 'content>
+pub fn format_parenthesize<Content>(
+    first_content_token: Option<JsSyntaxToken>,
+    content: &Content,
+    last_content_token: Option<JsSyntaxToken>,
+) -> FormatParenthesize
 where
     Content: Format<JsFormatContext>,
 {
@@ -116,26 +116,26 @@ where
 
 /// Adds parentheses around an expression
 #[derive(Clone)]
-pub struct FormatParenthesize<'token, 'content> {
+pub struct FormatParenthesize<'content> {
     grouped: bool,
-    first_content_token: &'token JsSyntaxToken,
-    last_content_token: &'token JsSyntaxToken,
+    first_content_token: Option<JsSyntaxToken>,
     content: Argument<'content, JsFormatContext>,
+    last_content_token: Option<JsSyntaxToken>,
 }
 
-impl FormatParenthesize<'_, '_> {
+impl FormatParenthesize<'_> {
     pub fn grouped(mut self) -> Self {
         self.grouped = true;
         self
     }
 }
 
-impl Format<JsFormatContext> for FormatParenthesize<'_, '_> {
+impl Format<JsFormatContext> for FormatParenthesize<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let format_open_paren =
-            format_inserted_open_paren(self.first_content_token, JsSyntaxKind::L_PAREN);
+            format_inserted_open_paren(self.first_content_token.clone(), JsSyntaxKind::L_PAREN);
         let format_close_paren =
-            format_inserted_close_paren(self.last_content_token, JsSyntaxKind::R_PAREN, f);
+            format_inserted_close_paren(&self.last_content_token, JsSyntaxKind::R_PAREN, f);
 
         if self.grouped {
             write!(

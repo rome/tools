@@ -36,10 +36,9 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
                 [format_parenthesize(
-                    // SAFETY: A binding without any content wouldn't parse as an any binding, thus, it's safe to call unwrap
-                    &binding.syntax().first_token().unwrap(),
+                    binding.syntax().first_token(),
                     &format_args![binding.format(), if_group_breaks(&token(",")),],
-                    &binding.syntax().last_token().unwrap(),
+                    binding.syntax().last_token(),
                 )
                 .grouped()]
             )?,

@@ -96,13 +96,13 @@ where
 /// ```
 ///
 /// when inserting the "(" before the "string" token.
-#[derive(Copy, Clone, Debug)]
-pub struct FormatInsertedOpenParen<'a, S>
+#[derive(Clone, Debug)]
+pub struct FormatInsertedOpenParen<S>
 where
     S: CommentStyle,
 {
     /// The token before which the open paren must be inserted
-    before_token: &'a SyntaxToken<S::Language>,
+    before_token: Option<SyntaxToken<S::Language>>,
 
     /// The token text of the open paren
     text: &'static str,
@@ -113,12 +113,12 @@ where
     style: S,
 }
 
-impl<'a, S> FormatInsertedOpenParen<'a, S>
+impl<S> FormatInsertedOpenParen<S>
 where
     S: CommentStyle,
 {
     pub fn new(
-        before_token: &'a SyntaxToken<S::Language>,
+        before_token: Option<SyntaxToken<S::Language>>,
         kind: <S::Language as Language>::Kind,
         text: &'static str,
         style: S,
@@ -132,41 +132,44 @@ where
     }
 }
 
-impl<Context, S> Format<Context> for FormatInsertedOpenParen<'_, S>
+impl<Context, S> Format<Context> for FormatInsertedOpenParen<S>
 where
     S: CommentStyle + 'static,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        // Format the leading trivia of the next token as the leading trivia of the open paren.
-        let leading_pieces = self.before_token.leading_trivia().pieces();
-
-        let mut lines_before = 0;
         let mut comments = Vec::new();
 
-        for piece in leading_pieces {
-            if let Some(comment) = piece.as_comments() {
-                comments.push(SourceComment::leading(comment, lines_before));
-                lines_before = 0;
-            } else if piece.is_newline() {
-                lines_before += 1;
-            } else if piece.is_skipped() {
-                // Keep the skipped trivia inside of the parens. Handled by the
-                // formatting of the `before_token`.
-                break;
-            }
-        }
+        if let Some(before_token) = &self.before_token {
+            // Format the leading trivia of the next token as the leading trivia of the open paren.
+            let leading_pieces = before_token.leading_trivia().pieces();
 
-        write!(
-            f,
-            [FormatLeadingComments {
-                comments: &comments,
-                options: LeadingTriviaOptions {
-                    style: self.style,
-                    trim_mode: TriviaPrintMode::Full,
-                },
-                lines_before_token: lines_before,
-            }]
-        )?;
+            let mut lines_before = 0;
+
+            for piece in leading_pieces {
+                if let Some(comment) = piece.as_comments() {
+                    comments.push(SourceComment::leading(comment, lines_before));
+                    lines_before = 0;
+                } else if piece.is_newline() {
+                    lines_before += 1;
+                } else if piece.is_skipped() {
+                    // Keep the skipped trivia inside of the parens. Handled by the
+                    // formatting of the `before_token`.
+                    break;
+                }
+            }
+
+            write!(
+                f,
+                [FormatLeadingComments {
+                    comments: &comments,
+                    options: LeadingTriviaOptions {
+                        style: self.style,
+                        trim_mode: TriviaPrintMode::Full,
+                    },
+                    lines_before_token: lines_before,
+                }]
+            )?;
+        }
 
         let is_last_content_inline_comment = f.state().is_last_content_inline_comment();
 
@@ -238,20 +241,23 @@ where
     S: CommentStyle,
 {
     pub fn new<Context>(
-        after_token: &SyntaxToken<S::Language>,
+        after_token: &Option<SyntaxToken<S::Language>>,
         kind: <S::Language as Language>::Kind,
         text: &'static str,
         style: S,
         f: &mut Formatter<Context>,
     ) -> Self {
         let mut comments = Vec::new();
-        // "Steal" the trailing comments and mark them as handled.
-        // Must be done eagerly before formatting because the `after_token`
-        // gets formatted **before** formatting the inserted paren.
-        for piece in after_token.trailing_trivia().pieces() {
-            if let Some(comment) = piece.as_comments() {
-                f.state_mut().mark_comment_as_formatted(&comment);
-                comments.push(SourceComment::trailing(comment));
+
+        if let Some(after_token) = after_token {
+            // "Steal" the trailing comments and mark them as handled.
+            // Must be done eagerly before formatting because the `after_token`
+            // gets formatted **before** formatting the inserted paren.
+            for piece in after_token.trailing_trivia().pieces() {
+                if let Some(comment) = piece.as_comments() {
+                    f.state_mut().mark_comment_as_formatted(&comment);
+                    comments.push(SourceComment::trailing(comment));
+                }
             }
         }
 

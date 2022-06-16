@@ -221,11 +221,10 @@ fn format_sub_expression<'a>(
 ) -> impl Format<JsFormatContext> + 'a {
     format_with(move |f| {
         if needs_parens(parent_operator, sub_expression)? {
-            // SAFETY: `needs_parens` guarantees that the sub expression isn't empty (has at least one token)
             format_parenthesize(
-                &sub_expression.syntax().first_token().unwrap(),
+                sub_expression.syntax().first_token(),
                 &sub_expression,
-                &sub_expression.syntax().last_token().unwrap(),
+                sub_expression.syntax().last_token(),
             )
             .grouped()
             .fmt(f)
@@ -566,11 +565,10 @@ impl FlattenedBinaryExpressionPart {
                 });
 
                 if *parenthesized {
-                    // SAFETY: Guaranteed that left hand side is not an empty expression (or the left hand side node would be missing completely)
-                    let first_token = current.syntax().first_token().unwrap();
-                    let last_token = current.syntax().last_token().unwrap();
+                    let first_token = current.syntax().first_token();
+                    let last_token = current.syntax().last_token();
 
-                    format_parenthesize(&first_token, &content, &last_token)
+                    format_parenthesize(first_token, &content, last_token)
                         .grouped()
                         .fmt(f)
                 } else {

@@ -145,14 +145,7 @@ impl Format<JsFormatContext> for FormatMemberStaticExpression<'_> {
         });
 
         if is_member_number_literal && (object_has_trailing_trivia || operator_has_leading_trivia) {
-            // SAFETY: `is_member_number_literal` expression guarantees that the node contains a `NumberLiteral`
-            // which always has at least one token.
-            format_parenthesize(
-                &self.first_token().unwrap(),
-                &format_node,
-                &self.last_token().unwrap(),
-            )
-            .fmt(f)
+            format_parenthesize(self.first_token(), &format_node, self.last_token()).fmt(f)
         } else {
             write!(f, [format_node])
         }
