@@ -5,6 +5,7 @@ use rome_js_syntax::{
     JsAnyRoot, JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize,
 };
 use rome_rowan::AstNodeExt;
+use std::fmt::Write;
 
 use crate::JsRuleAction;
 
@@ -69,12 +70,13 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         let mut normalized_string_token = String::new();
         let mut previous_start = 0;
 
-        let eg_length = state.iter().fold(0usize, |acc, (s, e)| acc + *e - *s);
+        let mut eg_length = 0;
 
         for (start, end) in state.iter() {
             normalized_string_token += &trimmed_token_string[previous_start..*start];
-            normalized_string_token += &format!(" {{{}}}", *end - *start);
+            write!(normalized_string_token, " {{{}}}", *end - *start).unwrap();
             previous_start = *end;
+            eg_length += *end - *start;
         }
         normalized_string_token += &trimmed_token_string[previous_start..];
         let next_trimmed_token = JsSyntaxToken::new_detached(
