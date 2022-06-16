@@ -115,11 +115,6 @@ pub fn assert(code: &str, test_name: &str) {
 
     let assertions = SemanticAssertions::from_root(r.tree(), code, test_name);
 
-    // Print info to help debug when a test fail
-
-    dbg!(&events_by_pos);
-    dbg!(&assertions);
-
     // check
 
     assertions.check(code, test_name, events_by_pos);
