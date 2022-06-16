@@ -3,7 +3,7 @@ use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyName, JsStaticMemberExpression,
-    JsStaticMemberExpressionFields, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsStaticMemberExpressionFields, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::AstNode;
 use std::ops::Deref;
@@ -145,7 +145,14 @@ impl Format<JsFormatContext> for FormatMemberStaticExpression<'_> {
         });
 
         if is_member_number_literal && (object_has_trailing_trivia || operator_has_leading_trivia) {
-            format_parenthesize(JsSyntaxKind::L_PAREN, &format_node, JsSyntaxKind::R_PAREN).fmt(f)
+            // SAFETY: `is_member_number_literal` expression guarantees that the node contains a `NumberLiteral`
+            // which always has at least one token.
+            format_parenthesize(
+                &self.first_token().unwrap(),
+                &format_node,
+                &self.last_token().unwrap(),
+            )
+            .fmt(f)
         } else {
             write!(f, [format_node])
         }

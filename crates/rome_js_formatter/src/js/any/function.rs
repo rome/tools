@@ -35,14 +35,13 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         match node.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
-                [group_elements(&format_args![
-                    token("("),
-                    soft_block_indent(&format_args![
-                        binding.format(),
-                        if_group_breaks(&token(",")),
-                    ]),
-                    token(")"),
-                ])]
+                [format_parenthesize(
+                    // SAFETY: A binding without any content wouldn't parse as an any binding, thus, it's safe to call unwrap
+                    &binding.syntax().first_token().unwrap(),
+                    &format_args![binding.format(), if_group_breaks(&token(",")),],
+                    &binding.syntax().last_token().unwrap(),
+                )
+                .grouped()]
             )?,
             JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,
         }

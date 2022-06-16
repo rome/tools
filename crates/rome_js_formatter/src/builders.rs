@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use crate::{AsFormat, JsCommentStyle};
 use rome_formatter::token::{
-    format_token_trailing_trivia, FormatInserted, FormatLeadingTrivia, FormatOnlyIfBreaks,
-    FormatRemoved, FormatReplaced, InsertedToken, TriviaPrintMode,
+    format_token_trailing_trivia, FormatInserted, FormatInsertedCloseParen,
+    FormatInsertedOpenParen, FormatLeadingTrivia, FormatOnlyIfBreaks, FormatRemoved,
+    FormatReplaced, TriviaPrintMode,
 };
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
@@ -46,37 +47,116 @@ where
 
 pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsCommentStyle> {
     FormatInserted::new(
-        InsertedToken::new(
-            kind,
-            kind.to_string().expect("Expected a punctuation token"),
-        ),
+        kind,
+        kind.to_string().expect("Expected a punctuation token"),
         JsCommentStyle,
     )
 }
 
+pub fn format_inserted_open_paren(
+    before_token: &JsSyntaxToken,
+    kind: JsSyntaxKind,
+) -> FormatInsertedOpenParen<JsCommentStyle> {
+    FormatInsertedOpenParen::new(
+        before_token,
+        kind,
+        kind.to_string()
+            .expect("Expected a punctuation token as the open paren token."),
+        JsCommentStyle,
+    )
+}
+
+pub fn format_inserted_close_paren(
+    after_token: &JsSyntaxToken,
+    kind: JsSyntaxKind,
+    f: &mut JsFormatter,
+) -> FormatInsertedCloseParen<JsCommentStyle> {
+    FormatInsertedCloseParen::new(
+        after_token,
+        kind,
+        kind.to_string()
+            .expect("Expected a punctuation token as the close paren token."),
+        JsCommentStyle,
+        f,
+    )
+}
+
 /// Adds parentheses around some content
-pub fn format_parenthesize<Content>(
-    open_paren: JsSyntaxKind,
-    content: &Content,
-    close_paren: JsSyntaxKind,
-) -> FormatParenthesize<JsFormatContext, JsCommentStyle>
+/// Ensures that the leading trivia of the `first_content_token` is moved
+/// before the opening parentheses and the trailing trivia of the `last_content_token`
+/// is moved after the closing parentheses.
+///
+/// # Examples
+/// Adding parentheses around the string literal
+///
+/// ```javascript
+/// /* leading */ "test" /* trailing */;
+/// ```
+///
+/// becomes
+///
+/// ```javascript
+/// /* leading */ ("test") /* trailing */;
+/// ```
+pub fn format_parenthesize<'token, 'content, Content>(
+    first_content_token: &'token JsSyntaxToken,
+    content: &'content Content,
+    last_content_token: &'token JsSyntaxToken,
+) -> FormatParenthesize<'token, 'content>
 where
     Content: Format<JsFormatContext>,
 {
-    let open_paren = InsertedToken::new(
-        open_paren,
-        open_paren
-            .to_string()
-            .expect("Expected a punctuation token as the open paren token."),
-    );
-    let close_paren = InsertedToken::new(
-        close_paren,
-        close_paren
-            .to_string()
-            .expect("Expected a punctuation token as the close paren token."),
-    );
+    FormatParenthesize {
+        first_content_token,
+        content: Argument::new(content),
+        last_content_token,
+        grouped: false,
+    }
+}
 
-    FormatParenthesize::new(open_paren, content, close_paren, JsCommentStyle)
+/// Adds parentheses around an expression
+#[derive(Clone)]
+pub struct FormatParenthesize<'token, 'content> {
+    grouped: bool,
+    first_content_token: &'token JsSyntaxToken,
+    last_content_token: &'token JsSyntaxToken,
+    content: Argument<'content, JsFormatContext>,
+}
+
+impl FormatParenthesize<'_, '_> {
+    pub fn grouped(mut self) -> Self {
+        self.grouped = true;
+        self
+    }
+}
+
+impl Format<JsFormatContext> for FormatParenthesize<'_, '_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let format_open_paren =
+            format_inserted_open_paren(self.first_content_token, JsSyntaxKind::L_PAREN);
+        let format_close_paren =
+            format_inserted_close_paren(self.last_content_token, JsSyntaxKind::R_PAREN, f);
+
+        if self.grouped {
+            write!(
+                f,
+                [group_elements(&format_args![
+                    format_open_paren,
+                    soft_block_indent(&Arguments::from(&self.content)),
+                    format_close_paren
+                ])]
+            )
+        } else {
+            write!(
+                f,
+                [
+                    format_open_paren,
+                    Arguments::from(&self.content),
+                    format_close_paren
+                ]
+            )
+        }
+    }
 }
 
 /// Formats the leading and trailing trivia of a removed token.

@@ -7,7 +7,6 @@ use rome_js_syntax::{
     JsSyntaxNode, JsSyntaxToken,
 };
 
-use crate::builders::format_parenthesize;
 use crate::utils::is_break_after_colon;
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::cmp::Ordering;
@@ -222,17 +221,14 @@ fn format_sub_expression<'a>(
 ) -> impl Format<JsFormatContext> + 'a {
     format_with(move |f| {
         if needs_parens(parent_operator, sub_expression)? {
-            write!(
-                f,
-                [
-                    format_parenthesize(
-                        JsSyntaxKind::L_PAREN,
-                        sub_expression,
-                        JsSyntaxKind::R_PAREN
-                    )
-                    .grouped()
-                ]
+            // SAFETY: `needs_parens` guarantees that the sub expression isn't empty (has at least one token)
+            format_parenthesize(
+                &sub_expression.syntax().first_token().unwrap(),
+                &sub_expression,
+                &sub_expression.syntax().last_token().unwrap(),
             )
+            .grouped()
+            .fmt(f)
         } else {
             write!(f, [sub_expression])
         }
@@ -570,15 +566,13 @@ impl FlattenedBinaryExpressionPart {
                 });
 
                 if *parenthesized {
-                    write!(
-                        f,
-                        [format_parenthesize(
-                            JsSyntaxKind::L_PAREN,
-                            &content,
-                            JsSyntaxKind::R_PAREN
-                        )
-                        .grouped()]
-                    )
+                    // SAFETY: Guaranteed that left hand side is not an empty expression (or the left hand side node would be missing completely)
+                    let first_token = current.syntax().first_token().unwrap();
+                    let last_token = current.syntax().last_token().unwrap();
+
+                    format_parenthesize(&first_token, &content, &last_token)
+                        .grouped()
+                        .fmt(f)
                 } else {
                     write!(f, [content])
                 }

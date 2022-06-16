@@ -1,8 +1,6 @@
 use crate::prelude::*;
-use crate::token::{FormatInserted, InsertedToken};
 use crate::{
-    format_element, write, Argument, Arguments, CommentStyle, GroupId, PreambleBuffer, TextRange,
-    TextSize,
+    format_element, write, Argument, Arguments, GroupId, PreambleBuffer, TextRange, TextSize,
 };
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
@@ -1254,105 +1252,6 @@ impl<Context> std::fmt::Debug for IfGroupBreaks<'_, Context> {
         f.debug_struct(name)
             .field("group_id", &self.group_id)
             .field("content", &"{{content}}")
-            .finish()
-    }
-}
-
-/// Inserts parenthesizes around some content.
-#[derive(Copy, Clone)]
-pub struct FormatParenthesize<'inner, Context, S>
-where
-    S: CommentStyle,
-{
-    open_paren: InsertedToken<<S::Language as Language>::Kind>,
-    content: Argument<'inner, Context>,
-    close_paren: InsertedToken<<S::Language as Language>::Kind>,
-    style: S,
-    group: bool,
-}
-
-impl<'inner, Context, S> FormatParenthesize<'inner, Context, S>
-where
-    S: CommentStyle,
-{
-    pub fn new<Content>(
-        open_paren: InsertedToken<<S::Language as Language>::Kind>,
-        content: &'inner Content,
-        close_paren: InsertedToken<<S::Language as Language>::Kind>,
-        style: S,
-    ) -> Self
-    where
-        Content: Format<Context>,
-    {
-        Self {
-            open_paren,
-            content: Argument::new(content),
-            close_paren,
-            style,
-            group: false,
-        }
-    }
-
-    pub fn grouped(mut self) -> Self {
-        self.group = true;
-        self
-    }
-}
-
-impl<Context, S> Format<Context> for FormatParenthesize<'_, Context, S>
-where
-    S: CommentStyle + 'static,
-{
-    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        // This may look odd but it's important to first write the opening parenthesis
-        // before writing the content to ensure that the tokens are formatted in the right order.
-        let mut buffer = VecBuffer::new(f.state_mut());
-        write!(buffer, [FormatInserted::new(self.open_paren, self.style)])?;
-        let l_paren_element = buffer.take_element();
-
-        buffer.write_fmt(Arguments::from(&self.content))?;
-        let formatted_node = buffer.into_element();
-
-        let (leading, content, trailing) = formatted_node.split_trivia();
-
-        f.write_element(leading)?;
-
-        let inner = format_once(|f| {
-            f.write_element(l_paren_element)?;
-
-            if self.group {
-                write!(
-                    f,
-                    [soft_block_indent(
-                        &format_once(|f| f.write_element(content))
-                    )]
-                )?;
-            } else {
-                f.write_element(content)?;
-            }
-
-            FormatInserted::new(self.close_paren, self.style).fmt(f)
-        });
-
-        if self.group {
-            write!(f, [group_elements(&inner)])?;
-        } else {
-            write!(f, [inner])?;
-        }
-
-        f.write_element(trailing)
-    }
-}
-
-impl<Context, S> Debug for FormatParenthesize<'_, Context, S>
-where
-    S: CommentStyle,
-{
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("FormatParenthesize")
-            .field("open_paren", &self.open_paren)
-            .field("content", &"{{content}}")
-            .field("close_paren", &self.close_paren)
             .finish()
     }
 }

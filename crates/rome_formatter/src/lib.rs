@@ -56,6 +56,7 @@ pub use builders::{
 pub use comments::{CommentKind, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
+use indexmap::IndexMap;
 use rome_rowan::{
     Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxKind, SyntaxNode, SyntaxResult,
     SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
@@ -1075,6 +1076,15 @@ pub struct FormatState<Context> {
     /// The kind of the last formatted token
     last_token_kind: Option<LastTokenKind>,
 
+    /// Tracks comments that have been formatted manually and shouldn't be emitted again
+    /// when formatting the token the comments belong to.
+    ///
+    /// The map stores the absolute position of the manually formatted comments.
+    /// Storing the position is sufficient because comments are guaranteed to not be empty
+    /// (all start with a specific comment sequence) and thus, no two comments can have the same
+    /// absolute position.
+    manually_formatted_comments: IndexMap<TextSize, ()>,
+
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
@@ -1105,6 +1115,7 @@ impl<Context> FormatState<Context> {
             group_id_builder: Default::default(),
             last_content_inline_comment: false,
             last_token_kind: None,
+            manually_formatted_comments: IndexMap::default(),
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
@@ -1139,6 +1150,44 @@ impl<Context> FormatState<Context> {
         });
     }
 
+    /// Mark the passed comment as formatted. This is necessary if a comment from a token is formatted
+    /// to avoid that the comment gets emitted again when formatting that token.
+    ///
+    /// # Examples
+    /// This can be useful when you want to move comments from one token to another.
+    /// For example, when parenthesising an expression:
+    ///
+    /// ```javascript
+    /// console.log("test");
+    /// /* leading */ "string" /* trailing */;
+    /// ```
+    ///
+    /// It is then desired that the leading and trailing comments are outside of the parentheses.
+    ///
+    /// ```javascript
+    /// /* leading */ ("string") /* trailing */;
+    /// ```
+    ///
+    /// This can be accomplished by manually formatting the leading/trailing trivia of the string literal expression
+    /// before/after the close parentheses and then mark the comments as handled.
+    pub fn mark_comment_as_formatted<L: Language>(
+        &mut self,
+        comment: &SyntaxTriviaPieceComments<L>,
+    ) {
+        self.manually_formatted_comments
+            .insert(comment.text_range().start(), ());
+    }
+
+    /// Returns `true` if this comment has already been formatted manually
+    /// and shouldn't be formatted again when formatting the token to which the comment belongs.
+    pub fn is_comment_formatted<L: Language>(
+        &self,
+        comment: &SyntaxTriviaPieceComments<L>,
+    ) -> bool {
+        self.manually_formatted_comments
+            .contains_key(&comment.text_range().start())
+    }
+
     /// Returns the context specifying how to format the current CST
     pub fn context(&self) -> &Context {
         &self.context
@@ -1153,6 +1202,7 @@ impl<Context> FormatState<Context> {
         FormatStateSnapshot {
             last_content_inline_comment: self.last_content_inline_comment,
             last_token_kind: self.last_token_kind,
+            manual_handled_comments_len: self.manually_formatted_comments.len(),
             #[cfg(debug_assertions)]
             printed_tokens: self.printed_tokens.clone(),
         }
@@ -1161,6 +1211,8 @@ impl<Context> FormatState<Context> {
     pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
         self.last_content_inline_comment = snapshot.last_content_inline_comment;
         self.last_token_kind = snapshot.last_token_kind;
+        self.manually_formatted_comments
+            .truncate(snapshot.manual_handled_comments_len);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 self.printed_tokens = snapshot.printed_tokens;
@@ -1218,6 +1270,7 @@ impl LastTokenKind {
 pub struct FormatStateSnapshot {
     last_content_inline_comment: bool,
     last_token_kind: Option<LastTokenKind>,
+    manual_handled_comments_len: usize,
     #[cfg(debug_assertions)]
     printed_tokens: PrintedTokens,
 }

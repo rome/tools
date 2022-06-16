@@ -3,8 +3,8 @@ use crate::utils::is_simple_expression;
 use rome_formatter::write;
 
 use crate::FormatNodeFields;
+use rome_js_syntax::JsPreUpdateOperator;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
-use rome_js_syntax::{JsPreUpdateOperator, JsSyntaxKind};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
 impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
@@ -56,21 +56,18 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
         if is_ambiguous_expression {
             operator_token.format().fmt(f)?;
 
+            // SAFETY: `is_ambiguous_expression` matches ont he argument, guaranteeing that it is an expression
+            // containing at least one token
+            let first_token = argument.syntax().first_token().unwrap();
+            let last_token = argument.syntax().last_token().unwrap();
+            let format_argument = argument.format();
+
+            let parenthesize = format_parenthesize(&first_token, &format_argument, &last_token);
+
             if is_simple_expression(&argument)? {
-                format_parenthesize(
-                    JsSyntaxKind::L_PAREN,
-                    &argument.format(),
-                    JsSyntaxKind::R_PAREN,
-                )
-                .fmt(f)
+                parenthesize.fmt(f)
             } else {
-                format_parenthesize(
-                    JsSyntaxKind::L_PAREN,
-                    &argument.format(),
-                    JsSyntaxKind::R_PAREN,
-                )
-                .grouped()
-                .fmt(f)
+                parenthesize.grouped().fmt(f)
             }
         } else {
             write![f, [operator_token.format(), argument.format(),]]

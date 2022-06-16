@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
 use crate::FormatNodeFields;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
+use rome_js_syntax::{JsAnyExpression, JsReturnStatement, JsReturnStatementFields};
 
 impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
     fn fmt_fields(node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {
@@ -22,14 +22,15 @@ impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
                         write!(f, [space_token()])?;
 
                         if let JsAnyExpression::JsSequenceExpression(_expression) = argument {
-                            write![
-                                f,
-                                [group_elements(&format_parenthesize(
-                                    JsSyntaxKind::L_PAREN,
-                                    &soft_block_indent(&argument.format()),
-                                    JsSyntaxKind::R_PAREN
-                                ))]
-                            ]?;
+                            // SAFETY: a sequence expression contains at least the `,` comma token. Therefore, it's safe
+                            // to call `unwrap` here
+                            format_parenthesize(
+                                &argument.syntax().first_token().unwrap(),
+                                &argument.format(),
+                                &argument.syntax().last_token().unwrap(),
+                            )
+                            .grouped()
+                            .fmt(f)?;
                         } else {
                             write![f, [argument.format()]]?;
                         }

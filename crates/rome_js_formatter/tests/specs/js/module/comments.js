@@ -70,4 +70,6 @@ function test /* spacing before parentheses*/ () {}
 a /* before member */.test;
 statement /* comment */;
 
+/* leading */ "test" /*trailing*/ ;
+
 /* EOF comment */
