@@ -1,7 +1,7 @@
 pub(crate) mod array;
+mod assignment_like;
 mod binary_like_expression;
 mod format_conditional;
-mod object;
 mod simple;
 pub mod string_utils;
 
@@ -10,13 +10,12 @@ mod member_chain;
 mod quickcheck_utils;
 
 use crate::prelude::*;
+pub(crate) use assignment_like::{
+    compute_expression_layout, is_break_after_colon, write_member_name, AssignmentLikeLayout,
+};
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
-pub(crate) use object::{
-    is_break_after_colon, property_object_member_layout, write_member_name,
-    PropertyObjectMemberLayout,
-};
 use rome_formatter::{normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;

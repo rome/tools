@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::utils::{property_object_member_layout, write_member_name, PropertyObjectMemberLayout};
+use crate::utils::{compute_expression_layout, write_member_name, AssignmentLikeLayout};
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsPropertyObjectMember;
@@ -20,9 +20,9 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
             let name_width = write_member_name(&name, f)?;
             colon_token.format().fmt(f)?;
 
-            let layout = property_object_member_layout(f, name_width, &value)?;
+            let layout = compute_expression_layout(f, Some(name_width), &value)?;
             match layout {
-                PropertyObjectMemberLayout::Fluid => {
+                AssignmentLikeLayout::Fluid => {
                     let group_id = f.group_id("property_object_member");
 
                     let value = value.format().memoized();
@@ -38,7 +38,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                         ]
                     ]
                 }
-                PropertyObjectMemberLayout::BreakAfterColon => {
+                AssignmentLikeLayout::BreakAfterColon => {
                     write![
                         f,
                         [
@@ -50,7 +50,7 @@ impl FormatNodeFields<JsPropertyObjectMember> for FormatNodeRule<JsPropertyObjec
                         ]
                     ]
                 }
-                PropertyObjectMemberLayout::NeverBreakAfterColon => {
+                AssignmentLikeLayout::NeverBreakAfterColon => {
                     write![f, [space_token(), value.format(),]]
                 }
             }

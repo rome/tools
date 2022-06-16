@@ -38,7 +38,12 @@ pub(crate) fn write_member_name(
 }
 
 /// Determines how a property object member should be formatted
-pub(crate) enum PropertyObjectMemberLayout {
+///
+/// Assignment like are:
+/// - Assignment
+/// - Object property member
+#[derive(Debug)]
+pub(crate) enum AssignmentLikeLayout {
     /// First break right-hand side, then after operator.
     /// ```js
     /// {
@@ -80,29 +85,32 @@ const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 /// Returns the layout variant for an object member depending on value expression and name length
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
-pub(crate) fn property_object_member_layout(
+pub(crate) fn compute_expression_layout(
     formatter: &JsFormatter,
-    name_width: usize,
+    name_width: Option<usize>,
     value: &JsAnyExpression,
-) -> FormatResult<PropertyObjectMemberLayout> {
+) -> FormatResult<AssignmentLikeLayout> {
     let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
-    let is_name_short = name_width < text_width_for_break;
+    // Compare name only if we are in a position of computing it.
+    // If not (for example, left is not na identifier), then let's fallback to false,
+    // so we can continue the chain of checks
+    let is_name_short = name_width.map_or(false, |name_with| name_with < text_width_for_break);
 
     if is_break_after_colon(value)? {
-        Ok(PropertyObjectMemberLayout::BreakAfterColon)
+        Ok(AssignmentLikeLayout::BreakAfterColon)
     } else if is_name_short {
-        Ok(PropertyObjectMemberLayout::NeverBreakAfterColon)
+        Ok(AssignmentLikeLayout::NeverBreakAfterColon)
     } else if matches!(
         value,
         JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(
             _
         ))
     ) {
-        Ok(PropertyObjectMemberLayout::BreakAfterColon)
+        Ok(AssignmentLikeLayout::BreakAfterColon)
     } else if is_never_break_after_colon(value)? {
-        Ok(PropertyObjectMemberLayout::NeverBreakAfterColon)
+        Ok(AssignmentLikeLayout::NeverBreakAfterColon)
     } else {
-        Ok(PropertyObjectMemberLayout::Fluid)
+        Ok(AssignmentLikeLayout::Fluid)
     }
 }
 
