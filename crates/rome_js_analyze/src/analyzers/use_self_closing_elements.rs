@@ -38,7 +38,7 @@ impl Rule for UseSelfClosingElements {
         let JsxOpeningElementFields {
             l_angle_token,
             name,
-            type_arguments: _,
+            type_arguments,
             attributes,
             r_angle_token,
         } = open_element.as_fields();
@@ -84,6 +84,7 @@ impl Rule for UseSelfClosingElements {
             attributes,
             JsSyntaxToken::new_detached(T![/], &slash_token, leading_trivia, []),
             r_angle_token,
+            type_arguments,
         );
         let self_closing_element = self_closing_element_builder.build();
         let root = root.replace_node(

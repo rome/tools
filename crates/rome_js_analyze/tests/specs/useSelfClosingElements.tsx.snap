@@ -165,7 +165,7 @@ Suggested fix: Use a SelfClosingElement instead
 16 16 |   <div ></div> /* comment */;
 17 17 |   /* comment */ <div ></div>;
 18    | - <Generic<true>></Generic>;
-   18 | + <Generic />;
+   18 | + <Generic<true> />;
 
 
 ```
