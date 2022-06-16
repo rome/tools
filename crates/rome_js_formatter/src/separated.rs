@@ -47,7 +47,7 @@ where
                         // A trailing separator was present where it wasn't allowed, opt out of formatting
                         return Err(FormatError::SyntaxError);
                     }
-                    TrailingSeparator::Elide => {
+                    TrailingSeparator::Omit => {
                         write!(f, [format_removed(separator)])?;
                     }
                 }
@@ -66,7 +66,7 @@ where
                 TrailingSeparator::Mandatory => {
                     format_inserted(self.separator).fmt(f)?;
                 }
-                TrailingSeparator::Elide | TrailingSeparator::Disallowed => { /* no op */ }
+                TrailingSeparator::Omit | TrailingSeparator::Disallowed => { /* no op */ }
             }
         } else {
             unreachable!(
@@ -174,8 +174,8 @@ pub enum TrailingSeparator {
     Mandatory,
 
     /// A trailing separator might be present, but the consumer
-    /// decided to remove it with an [rome_formatter::empty_element]
-    Elide,
+    /// decides to remove it
+    Omit,
 }
 
 impl Default for TrailingSeparator {

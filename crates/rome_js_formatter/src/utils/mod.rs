@@ -526,7 +526,7 @@ impl Format<JsFormatContext> for FormatMemberName {
 }
 
 /// This function is in charge to format the call arguments.
-pub(crate) fn format_arguments_multi_line<S: Format<JsFormatContext>, I>(
+pub(crate) fn write_arguments_multi_line<S: Format<JsFormatContext>, I>(
     separated: I,
     f: &mut JsFormatter,
 ) -> FormatResult<()>

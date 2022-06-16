@@ -29,3 +29,12 @@ test.something(t => {
 }, context => {
     context.flush()
 })
+
+// trailing separator omitted
+test.expect(t => {
+    t.true(a)
+}, false,)
+
+test.expect(t => {
+    t.true(a)
+}, false, /* something */)

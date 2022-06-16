@@ -1,6 +1,6 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
 use crate::prelude::*;
-use crate::utils::{format_arguments_multi_line, is_call_like_expression};
+use crate::utils::{is_call_like_expression, write_arguments_multi_line};
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
@@ -81,7 +81,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                 .format_separated(JsSyntaxKind::COMMA)
                 .with_options(
                     FormatSeparatedOptions::default()
-                        .with_trailing_separator(TrailingSeparator::Elide),
+                        .with_trailing_separator(TrailingSeparator::Omit),
                 )
                 .map(|e| e.memoized())
                 .collect();
@@ -112,7 +112,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                     let first = iter.next().unwrap();
                     f.join_with(&space_token())
                         .entry(&format_with(|f| {
-                            write!(f, [group_elements(&format_args![first, expand_parent()])])
+                            write!(f, [&format_args![first, expand_parent()]])
                         }))
                         .entries(iter)
                         .finish()?;
@@ -125,7 +125,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                     f.join_with(&space_token())
                         .entries(iter)
                         .entry(&format_with(|f| {
-                            write!(f, [group_elements(&format_args![last, expand_parent()])])
+                            write!(f, [&format_args![last, expand_parent()]])
                         }))
                         .finish()?;
                 }
@@ -149,7 +149,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                                     &soft_block_indent(&format_args![
                                         &l_trailing_trivia,
                                         format_with(|f| {
-                                            format_arguments_multi_line(separated.iter(), f)
+                                            write_arguments_multi_line(separated.iter(), f)
                                         }),
                                         &r_leading_trivia,
                                         soft_line_break()
@@ -171,7 +171,7 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                         l_paren,
                         l_trailing_trivia,
                         group_elements(&format_args![format_with(|f| {
-                            format_arguments_multi_line(separated.iter(), f)
+                            write_arguments_multi_line(separated.iter(), f)
                         })]),
                         r_leading_trivia,
                         r_paren,
@@ -193,9 +193,9 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
                             let separated =
                                 args.format_separated(JsSyntaxKind::COMMA).with_options(
                                     FormatSeparatedOptions::default()
-                                        .with_trailing_separator(TrailingSeparator::Elide),
+                                        .with_trailing_separator(TrailingSeparator::Omit),
                                 );
-                            format_arguments_multi_line(separated, f)
+                            write_arguments_multi_line(separated, f)
                         }),),
                         r_leading_trivia,
                         r_paren,
@@ -276,45 +276,49 @@ fn could_group_argument(
     is_arrow_recursion: bool,
 ) -> SyntaxResult<bool> {
     let result = if let JsAnyCallArgument::JsAnyExpression(argument) = argument {
-        if let JsAnyExpression::JsObjectExpression(object_expression) = argument {
-            object_expression.members().len() > 0
-                || object_expression
-                    .syntax()
-                    .first_or_last_token_have_comments()
-        } else if let JsAnyExpression::JsArrayExpression(array_expression) = argument {
-            array_expression.elements().len() > 0
-                || array_expression
-                    .syntax()
-                    .first_or_last_token_have_comments()
-        } else if let JsAnyExpression::TsTypeAssertionExpression(assertion_expression) = argument {
-            could_group_argument(
-                &JsAnyCallArgument::JsAnyExpression(assertion_expression.expression()?),
-                false,
-            )?
-        } else if let JsAnyExpression::TsAsExpression(as_expression) = argument {
-            could_group_argument(
+        match argument {
+            JsAnyExpression::JsObjectExpression(object_expression) => {
+                object_expression.members().len() > 0
+                    || object_expression
+                        .syntax()
+                        .first_or_last_token_have_comments()
+            }
+
+            JsAnyExpression::JsArrayExpression(array_expression) => {
+                array_expression.elements().len() > 0
+                    || array_expression
+                        .syntax()
+                        .first_or_last_token_have_comments()
+            }
+            JsAnyExpression::TsTypeAssertionExpression(assertion_expression) => {
+                could_group_argument(
+                    &JsAnyCallArgument::JsAnyExpression(assertion_expression.expression()?),
+                    false,
+                )?
+            }
+
+            JsAnyExpression::TsAsExpression(as_expression) => could_group_argument(
                 &JsAnyCallArgument::JsAnyExpression(as_expression.expression()?),
                 false,
-            )?
-        } else if let JsAnyExpression::JsArrowFunctionExpression(arrow_function) = argument {
-            let body = arrow_function.body()?;
-            let return_type_annotation = arrow_function.return_type_annotation();
+            )?,
+            JsAnyExpression::JsArrowFunctionExpression(arrow_function) => {
+                let body = arrow_function.body()?;
+                let return_type_annotation = arrow_function.return_type_annotation();
 
-            // Handles cases like:
-            //
-            // app.get("/", (req, res): void => {
-            //     res.send("Hello World!");
-            // });
-            //
-            // export class Thing implements OtherThing {
-            //   do: (type: Type) => Provider<Prop> = memoize(
-            //     (type: ObjectType): Provider<Opts> => {}
-            //   );
-            // }
-            let can_group_type =
-                !return_type_annotation
-                    .and_then(|rty| rty.ty().ok())
-                    .map_or(false, |any_type| {
+                // Handles cases like:
+                //
+                // app.get("/", (req, res): void => {
+                //     res.send("Hello World!");
+                // });
+                //
+                // export class Thing implements OtherThing {
+                //   do: (type: Type) => Provider<Prop> = memoize(
+                //     (type: ObjectType): Provider<Opts> => {}
+                //   );
+                // }
+                let can_group_type = !return_type_annotation.and_then(|rty| rty.ty().ok()).map_or(
+                    false,
+                    |any_type| {
                         TsReferenceType::can_cast(any_type.syntax().kind())
                             || if let JsAnyFunctionBody::JsFunctionBody(function_body) = &body {
                                 function_body
@@ -324,52 +328,58 @@ fn could_group_argument(
                             } else {
                                 true
                             }
-                    });
+                    },
+                );
 
-            let body_is_delimited = matches!(
-                body,
-                JsAnyFunctionBody::JsFunctionBody(_)
-                    | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(_))
-                    | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrayExpression(_))
-            );
+                let body_is_delimited = matches!(
+                    body,
+                    JsAnyFunctionBody::JsFunctionBody(_)
+                        | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(
+                            _
+                        ))
+                        | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrayExpression(_))
+                );
 
-            if let JsAnyFunctionBody::JsAnyExpression(any_expression) = body.clone() {
-                let is_nested_arrow_function =
-                    if let JsAnyExpression::JsArrowFunctionExpression(arrow_function_expression) =
-                        &any_expression
-                    {
-                        arrow_function_expression
-                            .body()
-                            .ok()
-                            .and_then(|body| body.as_js_any_expression().cloned())
-                            .and_then(|body| {
-                                could_group_argument(
-                                    &JsAnyCallArgument::JsAnyExpression(body),
-                                    true,
-                                )
+                if let JsAnyFunctionBody::JsAnyExpression(any_expression) = body.clone() {
+                    let is_nested_arrow_function =
+                        if let JsAnyExpression::JsArrowFunctionExpression(
+                            arrow_function_expression,
+                        ) = &any_expression
+                        {
+                            arrow_function_expression
+                                .body()
                                 .ok()
-                            })
-                            .unwrap_or(false)
-                    } else {
-                        false
-                    };
+                                .and_then(|body| body.as_js_any_expression().cloned())
+                                .and_then(|body| {
+                                    could_group_argument(
+                                        &JsAnyCallArgument::JsAnyExpression(body),
+                                        true,
+                                    )
+                                    .ok()
+                                })
+                                .unwrap_or(false)
+                        } else {
+                            false
+                        };
 
-                body_is_delimited
-                    && is_nested_arrow_function
-                    && can_group_type
-                    && (!is_arrow_recursion
-                        && (is_call_like_expression(&any_expression)
-                            || matches!(
-                                body,
-                                JsAnyFunctionBody::JsAnyExpression(
-                                    JsAnyExpression::JsConditionalExpression(_)
-                                )
-                            )))
-            } else {
-                body_is_delimited && can_group_type
+                    body_is_delimited
+                        && is_nested_arrow_function
+                        && can_group_type
+                        && (!is_arrow_recursion
+                            && (is_call_like_expression(&any_expression)
+                                || matches!(
+                                    body,
+                                    JsAnyFunctionBody::JsAnyExpression(
+                                        JsAnyExpression::JsConditionalExpression(_)
+                                    )
+                                )))
+                } else {
+                    body_is_delimited && can_group_type
+                }
             }
-        } else {
-            matches!(argument, JsAnyExpression::JsFunctionExpression(_))
+
+            JsAnyExpression::JsFunctionExpression(_) => true,
+            _ => false,
         }
     } else {
         false

@@ -568,7 +568,7 @@ impl<'t> CloseDelimiter<'t> {
     /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
     pub(crate) fn format_leading_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
-            let mut buffer = PreambleBuffer::new(f, soft_line_break_or_space());
+            let mut buffer = PreambleBuffer::new(f, soft_line_break());
 
             write!(buffer, [format_leading_trivia(self.close_token,)])
         })
