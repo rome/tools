@@ -69,8 +69,7 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         let mut normalized_string_token = String::new();
         let mut previous_start = 0;
 
-        let eg_length = state.iter().fold(0usize, |acc, (s, e)|  acc + *e - *s);
-
+        let eg_length = state.iter().fold(0usize, |acc, (s, e)| acc + *e - *s);
 
         for (start, end) in state.iter() {
             normalized_string_token += &trimmed_token_string[previous_start..*start];
