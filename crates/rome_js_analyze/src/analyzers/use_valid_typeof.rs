@@ -1,10 +1,10 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression,
-    JsBinaryExpressionFields, JsBinaryOperator, JsUnaryOperator, TextRange,
+    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryExpressionFields,
+    JsBinaryOperator, JsUnaryOperator, TextRange,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
@@ -22,7 +22,9 @@ impl Rule for UseValidTypeof {
     type Query = JsBinaryExpression;
     type State = (TypeofError, Option<(JsAnyExpression, JsTypeName)>);
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query();
+
         let JsBinaryExpressionFields {
             left,
             operator_token: _,
@@ -140,7 +142,7 @@ impl Rule for UseValidTypeof {
         Some((TypeofError::InvalidExpression(range), None))
     }
 
-    fn diagnostic(_: &Self::Query, (err, _): &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, (err, _): &Self::State) -> Option<RuleDiagnostic> {
         const TITLE: &str = "Invalid `typeof` comparison value";
 
         Some(match err {
@@ -153,11 +155,9 @@ impl Rule for UseValidTypeof {
         })
     }
 
-    fn action(
-        root: JsAnyRoot,
-        _node: &Self::Query,
-        (_, suggestion): &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, (_, suggestion): &Self::State) -> Option<JsRuleAction> {
+        let root = ctx.root();
+
         let (expr, type_name) = suggestion.as_ref()?;
 
         let root = root.replace_node(

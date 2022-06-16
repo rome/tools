@@ -1,6 +1,6 @@
 use std::iter;
 
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -25,7 +25,9 @@ impl Rule for UseSingleVarDeclarator {
         Option<JsSyntaxToken>,
     );
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query();
+
         let JsVariableStatementFields {
             declaration,
             semicolon_token,
@@ -42,14 +44,18 @@ impl Rule for UseSingleVarDeclarator {
         Some((kind, declarators, semicolon_token))
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+
         Some(RuleDiagnostic::warning(
             node.range(),
             "Declare variables separately",
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+
         let (kind, declarators, semicolon_token) = state;
 
         let prev_parent = node.syntax().parent()?;
@@ -96,7 +102,8 @@ impl Rule for UseSingleVarDeclarator {
             applicability: Applicability::Always,
             message: markup! { "Break out into multiple declarations" }.to_owned(),
             root: JsAnyRoot::unwrap_cast(
-                root.into_syntax()
+                ctx.root()
+                    .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             ),
         })

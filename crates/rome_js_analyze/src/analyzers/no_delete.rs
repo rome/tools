@@ -1,11 +1,11 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyRoot,
-    JsComputedMemberExpression, JsComputedMemberExpressionFields, JsStaticMemberExpression,
-    JsStaticMemberExpressionFields, JsUnaryExpression, JsUnaryOperator, T,
+    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsComputedMemberExpression,
+    JsComputedMemberExpressionFields, JsStaticMemberExpression, JsStaticMemberExpressionFields,
+    JsUnaryExpression, JsUnaryOperator, T,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
@@ -20,7 +20,9 @@ impl Rule for NoDelete {
     type Query = JsUnaryExpression;
     type State = MemberExpression;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query();
+
         let op = node.operator().ok()?;
         if op != JsUnaryOperator::Delete {
             return None;
@@ -30,7 +32,9 @@ impl Rule for NoDelete {
         MemberExpression::try_from(argument).ok()
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+
         Some(
             RuleDiagnostic::warning(node.range(), markup! {
                 "This is an unexpected use of the "<Emphasis>"delete"</Emphasis>" operator."
@@ -39,8 +43,10 @@ impl Rule for NoDelete {
         )
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
-        let root = root.replace_node(
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+
+        let root = ctx.root().replace_node(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
                 state.clone().try_into().ok()?,

@@ -1,8 +1,9 @@
+use rome_analyze::context::RuleContext;
 use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression, T};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, T};
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
@@ -17,7 +18,9 @@ impl Rule for NoDoubleEquals {
     type Query = JsBinaryExpression;
     type State = JsSyntaxToken;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query();
+
         let op = n.operator_token().ok()?;
 
         if !matches!(op.kind(), EQ2 | NEQ) {
@@ -32,7 +35,7 @@ impl Rule for NoDoubleEquals {
         Some(op)
     }
 
-    fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, op: &Self::State) -> Option<RuleDiagnostic> {
         let text_trimmed = op.text_trimmed();
         let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
 
@@ -50,9 +53,11 @@ impl Rule for NoDoubleEquals {
         )
     }
 
-    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
         let suggestion = if op.kind() == EQ2 { T![===] } else { T![!==] };
-        let root = root.replace_token(op.clone(), make::token(suggestion))?;
+        let root = ctx
+            .root()
+            .replace_token(op.clone(), make::token(suggestion))?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

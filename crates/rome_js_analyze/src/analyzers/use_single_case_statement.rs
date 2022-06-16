@@ -1,11 +1,11 @@
 use std::iter;
 
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
+    JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
@@ -22,7 +22,8 @@ impl Rule for UseSingleCaseStatement {
     type Query = JsCaseClause;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query();
         if n.consequent().len() > 1 {
             Some(())
         } else {
@@ -30,7 +31,9 @@ impl Rule for UseSingleCaseStatement {
         }
     }
 
-    fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let n = ctx.query();
+
         Some(RuleDiagnostic::warning(
             n.consequent().range(),
             markup! {
@@ -39,7 +42,9 @@ impl Rule for UseSingleCaseStatement {
         ))
     }
 
-    fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let n = ctx.query();
+
         let JsCaseClauseFields {
             case_token,
             colon_token,
@@ -102,7 +107,8 @@ impl Rule for UseSingleCaseStatement {
             node
         };
 
-        let root = root
+        let root = ctx
+            .root()
             .replace_node(n.clone(), node)
             .expect("failed to replace node");
 
