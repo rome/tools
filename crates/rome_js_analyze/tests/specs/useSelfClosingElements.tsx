@@ -16,3 +16,4 @@
 
 <div ></div> /* comment */;
 /* comment */ <div ></div>;
+<Generic<true>></Generic>;
