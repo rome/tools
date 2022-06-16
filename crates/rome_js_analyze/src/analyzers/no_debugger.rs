@@ -53,7 +53,6 @@ impl Rule for NoDebugger {
             // SAFETY: We know the kind of root is `JsAnyRoot` so cast `root.into_syntax()` will not panic
             JsAnyRoot::unwrap_cast(
                 ctx.root()
-                    .clone()
                     .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             )

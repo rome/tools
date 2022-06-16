@@ -103,7 +103,6 @@ impl Rule for UseSingleVarDeclarator {
             message: markup! { "Break out into multiple declarations" }.to_owned(),
             root: JsAnyRoot::unwrap_cast(
                 ctx.root()
-                    .clone()
                     .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             ),

@@ -92,9 +92,9 @@ impl Rule for NoCompareNegZero {
                     ),
                 ),
             )?;
-            root.clone().replace_node(node.clone(), binary)?
+            root.replace_node(node.clone(), binary)?
         } else if state.left_need_replaced {
-            root.clone().replace_node(
+            root.replace_node(
                 node.left().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -108,7 +108,7 @@ impl Rule for NoCompareNegZero {
                 ),
             )?
         } else if state.right_need_replaced {
-            root.clone().replace_node(
+            root.replace_node(
                 node.right().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -122,7 +122,7 @@ impl Rule for NoCompareNegZero {
                 ),
             )?
         } else {
-            root.clone()
+            root
         };
 
         Some(JsRuleAction {

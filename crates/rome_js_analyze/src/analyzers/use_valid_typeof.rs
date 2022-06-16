@@ -160,7 +160,7 @@ impl Rule for UseValidTypeof {
 
         let (expr, type_name) = suggestion.as_ref()?;
 
-        let root = root.clone().replace_node(
+        let root = root.replace_node(
             expr.clone(),
             JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(
                 make::js_string_literal_expression(make::js_string_literal(type_name.as_str())),

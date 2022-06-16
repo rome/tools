@@ -57,7 +57,6 @@ impl Rule for NoDoubleEquals {
         let suggestion = if op.kind() == EQ2 { T![===] } else { T![!==] };
         let root = ctx
             .root()
-            .clone()
             .replace_token(op.clone(), make::token(suggestion))?;
 
         Some(JsRuleAction {

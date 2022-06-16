@@ -87,7 +87,6 @@ impl Rule for NoNegationElse {
                     stmt.else_clause()?.alternate().ok()?,
                 )?;
                 ctx.root()
-                    .clone()
                     .replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
             }
         }?;

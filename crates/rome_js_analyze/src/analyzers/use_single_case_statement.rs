@@ -109,7 +109,6 @@ impl Rule for UseSingleCaseStatement {
 
         let root = ctx
             .root()
-            .clone()
             .replace_node(n.clone(), node)
             .expect("failed to replace node");
 
