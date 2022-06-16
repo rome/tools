@@ -19,7 +19,7 @@ impl Rule for NoDoubleEquals {
     type State = JsSyntaxToken;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query_result();
+        let n = ctx.query();
 
         let op = n.operator_token().ok()?;
 

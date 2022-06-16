@@ -20,7 +20,7 @@ impl Rule for NoNegationElse {
     type State = JsUnaryExpression;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query_result();
+        let n = ctx.query();
 
         match n {
             JsAnyCondition::JsConditionalExpression(expr) => {
@@ -42,7 +42,7 @@ impl Rule for NoNegationElse {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -53,7 +53,7 @@ impl Rule for NoNegationElse {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let root = match node {
             JsAnyCondition::JsConditionalExpression(expr) => {
@@ -66,7 +66,7 @@ impl Rule for NoNegationElse {
                 next_expr = next_expr
                     .clone()
                     .replace_node(next_expr.consequent().ok()?, expr.alternate().ok()?)?;
-                ctx.root().clone().replace_node(
+                ctx.root().replace_node(
                     node.clone(),
                     JsAnyCondition::JsConditionalExpression(next_expr),
                 )

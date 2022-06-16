@@ -24,7 +24,7 @@ impl Rule for NoCompareNegZero {
     type State = NoCompareNegZeroState;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         if !node.is_comparison_operator() {
             return None;
@@ -51,7 +51,7 @@ impl Rule for NoCompareNegZero {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -61,7 +61,7 @@ impl Rule for NoCompareNegZero {
         ))
     }
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
         let root = ctx.root();
         let root = if state.left_need_replaced && state.right_need_replaced {
             let binary = node.clone().replace_node(

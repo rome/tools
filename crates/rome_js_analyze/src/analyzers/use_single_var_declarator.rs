@@ -26,7 +26,7 @@ impl Rule for UseSingleVarDeclarator {
     );
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let JsVariableStatementFields {
             declaration,
@@ -45,7 +45,7 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -54,7 +54,7 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let (kind, declarators, semicolon_token) = state;
 

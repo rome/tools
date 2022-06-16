@@ -19,7 +19,7 @@ impl Rule for NoUnusedTemplateLiteral {
     type State = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         if node.tag().is_none() && can_convert_to_string_literal(node) {
             Some(())
@@ -29,7 +29,7 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(node.range(),markup! {
             "Do not use template literals if interpolation and special-character handling are not needed."
@@ -38,7 +38,7 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         // join all template content
         let inner_content = node
@@ -58,7 +58,7 @@ impl Rule for NoUnusedTemplateLiteral {
                     }
                 }
             });
-        let root = ctx.root().clone().replace_node(
+        let root = ctx.root().replace_node(
             JsAnyExpression::JsTemplate(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(

@@ -19,7 +19,7 @@ impl Rule for NoImplicitBoolean {
     type State = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query_result();
+        let n = ctx.query();
 
         match n.initializer() {
             Some(_) => None,
@@ -28,7 +28,7 @@ impl Rule for NoImplicitBoolean {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let n = ctx.query_result();
+        let n = ctx.query();
 
         Some(RuleDiagnostic::warning(
             n.range(),
@@ -40,7 +40,7 @@ impl Rule for NoImplicitBoolean {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let n = ctx.query_result();
+        let n = ctx.query();
 
         let JsxAttributeFields {
             name,
@@ -82,7 +82,7 @@ impl Rule for NoImplicitBoolean {
         );
         let next_attr = next_attr.build();
 
-        let root = ctx.root().clone().replace_node(n.clone(), next_attr)?;
+        let root = ctx.root().replace_node(n.clone(), next_attr)?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,

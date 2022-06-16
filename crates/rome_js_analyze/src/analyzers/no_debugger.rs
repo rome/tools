@@ -23,7 +23,7 @@ impl Rule for NoDebugger {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
@@ -35,7 +35,7 @@ impl Rule for NoDebugger {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let prev_parent = node.syntax().parent()?;
 
@@ -58,7 +58,7 @@ impl Rule for NoDebugger {
                     .replace_child(prev_parent.into(), next_parent.into())?,
             )
         } else {
-            ctx.root().clone().replace_node(
+            ctx.root().replace_node(
                 JsAnyStatement::JsDebuggerStatement(node.clone()),
                 JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
             )?

@@ -23,7 +23,7 @@ impl Rule for UseValidTypeof {
     type State = (TypeofError, Option<(JsAnyExpression, JsTypeName)>);
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query_result();
+        let n = ctx.query();
 
         let JsBinaryExpressionFields {
             left,

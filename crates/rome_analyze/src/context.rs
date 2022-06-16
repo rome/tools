@@ -16,11 +16,11 @@ where
         Self { query_result, root }
     }
 
-    pub fn query_result(&self) -> &<R as Rule>::Query {
+    pub fn query(&self) -> &<R as Rule>::Query {
         &self.query_result
     }
 
-    pub fn root(&self) -> &RuleRoot<R> {
-        &self.root
+    pub fn root(&self) -> RuleRoot<R> {
+        self.root.clone()
     }
 }

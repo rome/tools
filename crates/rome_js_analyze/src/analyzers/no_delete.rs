@@ -21,7 +21,7 @@ impl Rule for NoDelete {
     type State = MemberExpression;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let op = node.operator().ok()?;
         if op != JsUnaryOperator::Delete {
@@ -33,7 +33,7 @@ impl Rule for NoDelete {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         Some(
             RuleDiagnostic::warning(node.range(), markup! {
@@ -44,9 +44,9 @@ impl Rule for NoDelete {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
-        let root = ctx.root().clone().replace_node(
+        let root = ctx.root().replace_node(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
                 state.clone().try_into().ok()?,

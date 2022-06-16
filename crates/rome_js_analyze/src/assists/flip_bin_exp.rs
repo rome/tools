@@ -19,7 +19,7 @@ impl Rule for FlipBinExp {
     type State = JsSyntaxKind;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let JsBinaryExpressionFields {
             left,
@@ -35,7 +35,7 @@ impl Rule for FlipBinExp {
     }
 
     fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;
@@ -53,7 +53,7 @@ impl Rule for FlipBinExp {
             category: ActionCategory::Refactor,
             applicability: Applicability::Always,
             message: markup! { "Flip Binary Expression" }.to_owned(),
-            root: ctx.root().clone().replace_node(node.clone(), new_node)?,
+            root: ctx.root().replace_node(node.clone(), new_node)?,
         })
     }
 }

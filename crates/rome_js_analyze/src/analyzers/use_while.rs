@@ -15,7 +15,7 @@ impl Rule for UseWhile {
     type State = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query_result();
+        let n = ctx.query();
 
         let JsForStatementFields {
             for_token: _,
@@ -43,7 +43,7 @@ impl Rule for UseWhile {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         // SAFETY: These tokens have been checked for errors in `run` already
         let for_range = node.for_token().unwrap().text_trimmed_range();
@@ -58,7 +58,7 @@ impl Rule for UseWhile {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query_result();
+        let node = ctx.query();
 
         let JsForStatementFields {
             for_token: _,
@@ -72,7 +72,7 @@ impl Rule for UseWhile {
             body,
         } = node.as_fields();
 
-        let root = ctx.root().clone().replace_node(
+        let root = ctx.root().replace_node(
             JsAnyStatement::from(node.clone()),
             JsAnyStatement::from(make::js_while_statement(
                 make::token_decorated_with_space(T![while]),
