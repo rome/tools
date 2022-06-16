@@ -54,12 +54,12 @@ pub enum FormatElement {
     LineSuffixBoundary,
 
     /// Special semantic element letting the printer and formatter know this is
-    /// a trivia content, and it should only have a limited influence on the
+    /// a comment content block, and it should only have a limited influence on the
     /// formatting (for instance line breaks contained within will not cause
-    /// the parent group to break if this element is at the start of it)
+    /// the parent group to break if this element is at the start of a line).
     Comments {
         content: Box<[FormatElement]>,
-        leading: bool,
+        position: CommentPosition,
     },
 
     /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
@@ -68,6 +68,12 @@ pub enum FormatElement {
     /// A list of different variants representing the same content. The printer picks the best fitting content.
     /// Line breaks inside of a best fitting don't propagate to parent groups.
     BestFitting(BestFitting),
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum CommentPosition {
+    Leading,
+    Trailing,
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
@@ -137,10 +143,10 @@ impl Debug for FormatElement {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
             FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
-            FormatElement::Comments { content, leading } => fmt
+            FormatElement::Comments { content, position } => fmt
                 .debug_struct("Comments")
                 .field("content", content)
-                .field("leading", leading)
+                .field("position", position)
                 .finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
@@ -493,8 +499,8 @@ impl FormatElement {
             FormatElement::Fill(fill) => fill.list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
-            FormatElement::Comments { content, leading } => {
-                if *leading {
+            FormatElement::Comments { content, position } => {
+                if *position == CommentPosition::Leading {
                     false
                 } else {
                     content.iter().any(FormatElement::will_break)

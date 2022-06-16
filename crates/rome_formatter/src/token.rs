@@ -807,7 +807,7 @@ where
             Ok(())
         });
 
-        write!(f, [comments(&format_comments).leading(true)])
+        write!(f, [comments(&format_comments, CommentPosition::Leading)])
     }
 }
 
@@ -883,6 +883,10 @@ where
         let mut comments = comments.enumerate().peekable();
         let is_empty = comments.peek().is_none();
 
+        if is_empty {
+            return Ok(());
+        }
+
         let format_comments = format_once(|f| {
             for (index, comment) in comments {
                 if !self.skip_formatted_check && f.state().is_comment_formatted(comment.piece()) {
@@ -915,12 +919,9 @@ where
             Ok(())
         });
 
-        if !is_empty {
-            crate::comments(&format_comments).fmt(f)?;
-            f.state_mut()
-                .set_last_content_is_inline_comment(last_inline_comment);
-        }
-
+        crate::comments(&format_comments, CommentPosition::Trailing).fmt(f)?;
+        f.state_mut()
+            .set_last_content_is_inline_comment(last_inline_comment);
         Ok(())
     }
 }
