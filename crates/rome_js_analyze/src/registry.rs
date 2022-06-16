@@ -20,6 +20,9 @@ pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage
     if filter.match_rule::<NoImplicitBoolean>() {
         rules.push::<NoImplicitBoolean>();
     }
+    if filter.match_rule::<NoMultipleSpacesInRegularExpressionLiterals>() {
+        rules.push::<NoMultipleSpacesInRegularExpressionLiterals>();
+    }
     if filter.match_rule::<NoNegationElse>() {
         rules.push::<NoNegationElse>();
     }
