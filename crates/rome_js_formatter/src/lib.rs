@@ -526,7 +526,9 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        class S { constructor() { this.x = y } }
+        fn = 
+
+        a;
         "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);

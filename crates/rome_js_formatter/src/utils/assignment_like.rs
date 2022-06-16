@@ -1,12 +1,12 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::utils::StringLiteralParentKind;
+use crate::utils::{has_leading_newline, StringLiteralParentKind};
 use crate::utils::{FormatLiteralStringToken, JsAnyBinaryLikeExpression};
-use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
-use rome_js_syntax::{JsAnyExpression, JsAnyObjectMemberName};
-use rome_rowan::{AstNode, SyntaxResult};
+use rome_js_syntax::{JsAnyExpression, JsAnyObjectMemberName, JsLanguage};
+use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
+use rome_rowan::{AstNode, SyntaxResult, SyntaxTriviaPiece};
 use unicode_width::UnicodeWidthStr;
 
 pub(crate) fn write_member_name(
@@ -92,7 +92,7 @@ pub(crate) fn compute_expression_layout(
 ) -> FormatResult<AssignmentLikeLayout> {
     let text_width_for_break = (formatter.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
     // Compare name only if we are in a position of computing it.
-    // If not (for example, left is not na identifier), then let's fallback to false,
+    // If not (for example, left is not an identifier), then let's fallback to false,
     // so we can continue the chain of checks
     let is_name_short = name_width.map_or(false, |name_with| name_with < text_width_for_break);
 
@@ -133,7 +133,27 @@ pub(crate) fn is_break_after_colon(value: &JsAnyExpression) -> SyntaxResult<bool
         }
     }
 
+    if has_new_line_before_comment(value.syntax()) {
+        return Ok(true);
+    }
+
     Ok(false)
+}
+
+/// If checks if among leading trivias, we there's a sequence of [Newline, Comment]
+pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {
+    if let Some(leading_trivia) = node.first_leading_trivia() {
+        let mut seen_newline = false;
+        for piece in leading_trivia.pieces() {
+            if piece.is_comments() && seen_newline {
+                return true;
+            }
+            if piece.is_newline() {
+                seen_newline = true
+            }
+        }
+    }
+    false
 }
 
 fn is_never_break_after_colon(value: &JsAnyExpression) -> SyntaxResult<bool> {

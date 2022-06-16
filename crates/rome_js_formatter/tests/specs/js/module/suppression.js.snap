@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: suppression.js
 ---
 # Input
@@ -62,7 +63,7 @@ const expr =
 
 const expr2 = {
 	key:
-	// rome-ignore format: only skip formatting the value
+		// rome-ignore format: only skip formatting the value
         'single quoted string',
 };
 

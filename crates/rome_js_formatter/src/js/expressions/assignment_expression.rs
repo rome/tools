@@ -17,6 +17,7 @@ impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExp
         let left = left?;
         let layout = compute_expression_layout(f, None, &right)?;
 
+        dbg!(&layout);
         match layout {
             AssignmentLikeLayout::Fluid => {
                 let group_id = f.group_id("assignment");
