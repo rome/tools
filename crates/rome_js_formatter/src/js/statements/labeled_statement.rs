@@ -2,8 +2,8 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::FormatNodeFields;
-use rome_js_syntax::JsLabeledStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsLabeledStatement};
+use rome_js_syntax::{JsLabeledStatementFields, JsSyntaxKind};
 
 impl FormatNodeFields<JsLabeledStatement> for FormatNodeRule<JsLabeledStatement> {
     fn fmt_fields(node: &JsLabeledStatement, f: &mut JsFormatter) -> FormatResult<()> {
@@ -18,7 +18,10 @@ impl FormatNodeFields<JsLabeledStatement> for FormatNodeRule<JsLabeledStatement>
         match body? {
             JsAnyStatement::JsEmptyStatement(empty) => {
                 // If the body is an empty statement, force semicolon insertion
-                write!(f, [empty.format(), token(";")])
+                write!(
+                    f,
+                    [empty.format(), format_inserted(JsSyntaxKind::SEMICOLON)]
+                )
             }
             body => {
                 write!(f, [space_token(), body.format()])

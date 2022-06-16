@@ -22,12 +22,12 @@ class Test {
 // #9324
 
 class foo1 {
-  bar() /* bat */ ;
+  bar() /* bat */;
 }
 
 // #9367
 class Test {
-  foo( /* 2 */ ) /* 3 */ ;
+  foo(/* 2 */) /* 3 */;
 }
 
 ```

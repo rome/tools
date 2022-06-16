@@ -12,7 +12,7 @@ declare class Foo extends Qux<string> {/* dangling */}
 
 # Output
 ```js
-Thing?.( /* dangling */ );
+Thing?.(/* dangling */);
 declare class Foo extends Qux<string> {
   /* dangling */
 }

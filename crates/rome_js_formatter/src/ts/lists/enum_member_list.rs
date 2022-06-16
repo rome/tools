@@ -1,7 +1,7 @@
 use crate::generated::FormatTsEnumMemberList;
 use crate::prelude::*;
 use crate::utils::has_leading_newline;
-use rome_js_syntax::TsEnumMemberList;
+use rome_js_syntax::{JsSyntaxKind, TsEnumMemberList};
 
 impl FormatRule<TsEnumMemberList> for FormatTsEnumMemberList {
     type Context = JsFormatContext;
@@ -14,7 +14,7 @@ impl FormatRule<TsEnumMemberList> for FormatTsEnumMemberList {
         } else {
             soft_line_break_or_space()
         })
-        .entries(node.format_separated(token(",")))
+        .entries(node.format_separated(JsSyntaxKind::COMMA))
         .finish()
     }
 }
