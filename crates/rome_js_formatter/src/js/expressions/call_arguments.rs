@@ -344,7 +344,7 @@ fn could_group_argument(
                             .and_then(|body| body.as_js_any_expression().cloned())
                             .and_then(|body| {
                                 could_group_argument(
-                                    &JsAnyCallArgument::JsAnyExpression(body.clone()),
+                                    &JsAnyCallArgument::JsAnyExpression(body),
                                     true,
                                 )
                                 .ok()
@@ -378,19 +378,16 @@ fn could_group_argument(
     Ok(result)
 }
 
+type HookArgs = (
+    AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
+    AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
+);
 /// This function is used to check if the code is a hook-like code:
 ///
 /// ```js
 /// useMemo(() => {}, [])
 /// ```
-fn is_react_hook_with_deps_array(
-    node: &JsCallArgumentList,
-) -> SyntaxResult<
-    Option<(
-        AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
-        AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
-    )>,
-> {
+fn is_react_hook_with_deps_array(node: &JsCallArgumentList) -> SyntaxResult<Option<HookArgs>> {
     let result = if node.len() == 2 {
         let mut iter = node.elements();
         let first_element = iter.next().unwrap();
