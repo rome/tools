@@ -469,7 +469,7 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 ///     SimpleFormatContext::default(),
 ///     [
 ///         group_elements(&format_args![
-///             comments(&format_args![token("// test"), hard_line_break()]).leading(true),
+///             comments(&format_args![token("// test"), hard_line_break()], CommentPosition::Leading),
 ///             token("a"),
 ///             soft_line_break_or_space(),
 ///             token("b")
@@ -483,27 +483,23 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 /// );
 /// ```
 #[inline]
-pub fn comments<Content, Context>(content: &Content) -> FormatComments<Context>
+pub fn comments<Content, Context>(
+    content: &Content,
+    position: CommentPosition,
+) -> FormatComments<Context>
 where
     Content: Format<Context>,
 {
     FormatComments {
         content: Argument::new(content),
-        leading: false,
+        position,
     }
 }
 
 #[derive(Copy, Clone)]
 pub struct FormatComments<'a, Context> {
     content: Argument<'a, Context>,
-    leading: bool,
-}
-
-impl<Context> FormatComments<'_, Context> {
-    pub fn leading(mut self, leading: bool) -> Self {
-        self.leading = leading;
-        self
-    }
+    position: CommentPosition,
 }
 
 impl<Context> Format<Context> for FormatComments<'_, Context> {
@@ -515,7 +511,7 @@ impl<Context> Format<Context> for FormatComments<'_, Context> {
 
         f.write_element(FormatElement::Comments {
             content: content.into_boxed_slice(),
-            leading: self.leading,
+            position: self.position,
         })
     }
 }
