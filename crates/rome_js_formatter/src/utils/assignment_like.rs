@@ -1,12 +1,11 @@
 use crate::prelude::*;
-use rome_formatter::write;
-
-use crate::utils::{has_leading_newline, StringLiteralParentKind};
+use crate::utils::StringLiteralParentKind;
 use crate::utils::{FormatLiteralStringToken, JsAnyBinaryLikeExpression};
+use rome_formatter::write;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
-use rome_js_syntax::{JsAnyExpression, JsAnyObjectMemberName, JsLanguage};
+use rome_js_syntax::{JsAnyExpression, JsAnyObjectMemberName};
 use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
-use rome_rowan::{AstNode, SyntaxResult, SyntaxTriviaPiece};
+use rome_rowan::{AstNode, SyntaxResult};
 use unicode_width::UnicodeWidthStr;
 
 pub(crate) fn write_member_name(

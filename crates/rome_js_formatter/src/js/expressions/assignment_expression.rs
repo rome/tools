@@ -2,8 +2,8 @@ use crate::prelude::*;
 use crate::utils::{compute_expression_layout, AssignmentLikeLayout};
 use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
+use rome_js_syntax::JsAssignmentExpression;
 use rome_js_syntax::JsAssignmentExpressionFields;
-use rome_js_syntax::{JsAnyAssignmentPattern, JsAssignmentExpression};
 
 impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExpression> {
     fn fmt_fields(node: &JsAssignmentExpression, f: &mut JsFormatter) -> FormatResult<()> {
@@ -17,7 +17,6 @@ impl FormatNodeFields<JsAssignmentExpression> for FormatNodeRule<JsAssignmentExp
         let left = left?;
         let layout = compute_expression_layout(f, None, &right)?;
 
-        dbg!(&layout);
         match layout {
             AssignmentLikeLayout::Fluid => {
                 let group_id = f.group_id("assignment");
