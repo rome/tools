@@ -8,6 +8,7 @@ use crate::format_element::{
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
+use crate::prelude::CommentPosition;
 use rome_rowan::TextSize;
 use std::iter::{once, Rev};
 
@@ -853,10 +854,12 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Comments { content, leading } => queue.extend(content.iter().map(|e| {
+        FormatElement::Comments { content, position } => queue.extend(content.iter().map(|e| {
             PrintElementCall::new(
                 e,
-                args.with_in_leading_comment(*leading && state.line_width == 0),
+                args.with_in_leading_comment(
+                    *position == CommentPosition::Leading && state.line_width == 0,
+                ),
             )
         })),
 
@@ -1236,11 +1239,14 @@ two lines`,
                 token("]")
             ]),
             token(";"),
-            comments(&line_suffix(&format_args![
-                space_token(),
-                token("// trailing"),
-                space_token()
-            ]))
+            comments(
+                &line_suffix(&format_args![
+                    space_token(),
+                    token("// trailing"),
+                    space_token()
+                ]),
+                CommentPosition::Trailing
+            )
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")
