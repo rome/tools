@@ -2,11 +2,10 @@ use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsAnyTemplateElement, JsTemplate,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
+use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
 
 use crate::JsRuleAction;
 
@@ -39,7 +38,7 @@ impl Rule for NoUnusedTemplateLiteral {
         let inner_content = node
             .elements()
             .iter()
-            .fold(String::from("\""), |mut acc, cur| {
+            .fold(String::from(""), |mut acc, cur| {
                 match cur {
                     JsAnyTemplateElement::JsTemplateChunkElement(ele) => {
                         // Safety: if `ele.template_chunk_token()` is `Err` variant, [can_convert_to_string_lit] should return false,
@@ -57,12 +56,7 @@ impl Rule for NoUnusedTemplateLiteral {
             JsAnyExpression::JsTemplate(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(
-                    make::js_string_literal_expression(SyntaxToken::new_detached(
-                        JS_STRING_LITERAL,
-                        &(inner_content + "\""),
-                        [],
-                        [],
-                    )),
+                    make::js_string_literal_expression(make::js_string_literal(&inner_content)),
                 ),
             ),
         )?;
