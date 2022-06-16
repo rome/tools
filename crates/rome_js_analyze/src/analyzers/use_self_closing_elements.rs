@@ -78,14 +78,17 @@ impl Rule for UseSelfClosingElements {
 
         slash_token += "/";
 
-        let self_closing_element_builder = make::jsx_self_closing_element(
+        let mut self_closing_element_builder = make::jsx_self_closing_element(
             l_angle_token.ok()?,
             name.ok()?,
             attributes,
             JsSyntaxToken::new_detached(T![/], &slash_token, leading_trivia, []),
             r_angle_token,
-            type_arguments,
         );
+        if let Some(type_arguments) = type_arguments {
+            self_closing_element_builder =
+                self_closing_element_builder.with_type_arguments(type_arguments);
+        }
         let self_closing_element = self_closing_element_builder.build();
         let root = root.replace_node(
             JsxAnyTag::JsxElement(node.clone()),

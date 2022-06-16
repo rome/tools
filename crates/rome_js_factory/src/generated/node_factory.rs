@@ -3741,7 +3741,6 @@ pub fn jsx_self_closing_element(
     attributes: JsxAttributeList,
     slash_token: SyntaxToken,
     r_angle_token: SyntaxToken,
-    type_arguments: Option<TsTypeArguments>
 ) -> JsxSelfClosingElementBuilder {
     JsxSelfClosingElementBuilder {
         l_angle_token,
@@ -3749,7 +3748,7 @@ pub fn jsx_self_closing_element(
         attributes,
         slash_token,
         r_angle_token,
-        type_arguments
+        type_arguments: None,
     }
 }
 pub struct JsxSelfClosingElementBuilder {
