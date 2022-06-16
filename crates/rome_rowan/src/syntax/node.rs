@@ -474,7 +474,7 @@ impl<L: Language> SyntaxNode<L> {
 
     /// It checks if the current node has comments at the edges:
     /// if first or last tokens contain comments (leading or trailing)
-    pub fn has_comments_at_the_edges(&self) -> bool {
+    pub fn first_or_last_token_have_comments(&self) -> bool {
         self.first_token_has_comments() || self.last_token_has_comments()
     }
 

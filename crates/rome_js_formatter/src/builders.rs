@@ -535,7 +535,7 @@ impl<'t> OpenDelimiter<'t> {
 
             if !trivia.is_empty() {
                 f.write_elements(trivia)?;
-                soft_line_break_or_space().fmt(f)?;
+                soft_line_break().fmt(f)?;
             }
 
             Ok(())

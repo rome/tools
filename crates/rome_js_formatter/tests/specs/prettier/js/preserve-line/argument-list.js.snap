@@ -249,12 +249,9 @@ comments(
 
 );
 
-differentArgTypes(
-  () => {
-    return true;
-  },
-  isTrue ? doSomething() : 12,
-);
+differentArgTypes(() => {
+  return true;
+}, isTrue ? doSomething() : 12);
 
 moreArgTypes(
   [1, 2, 3],

@@ -1,6 +1,6 @@
 use crate::generated::FormatJsCallArgumentList;
 use crate::prelude::*;
-use crate::utils::fmt_arguments_multi_line;
+use crate::utils::format_arguments_multi_line;
 use rome_formatter::write;
 use rome_js_syntax::{JsCallArgumentList, JsSyntaxKind};
 
@@ -19,7 +19,7 @@ impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
                     FormatSeparatedOptions::default()
                         .with_trailing_separator(TrailingSeparator::Elide),
                 );
-                fmt_arguments_multi_line(separated, f)
+                format_arguments_multi_line(separated, f)
             })))]
         )
     }

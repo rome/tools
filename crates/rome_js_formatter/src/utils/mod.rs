@@ -526,13 +526,12 @@ impl Format<JsFormatContext> for FormatMemberName {
 }
 
 /// This function is in charge to format the call arguments.
-pub(crate) fn fmt_arguments_multi_line<S: Format<JsFormatContext>, I>(
+pub(crate) fn format_arguments_multi_line<S: Format<JsFormatContext>, I>(
     separated: I,
     f: &mut JsFormatter,
 ) -> FormatResult<()>
 where
     I: Iterator<Item = S>,
-    S: std::fmt::Debug,
 {
     let mut iterator = separated.peekable();
     let mut join_with = f.join_with(soft_line_break_or_space());
