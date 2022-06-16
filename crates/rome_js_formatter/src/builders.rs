@@ -413,14 +413,14 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
         let open_delimiter = format_open_delimiter(open_token);
         let close_delimiter = format_close_delimiter(close_token);
 
-        open_delimiter.as_leading_trivia_fmt().fmt(f)?;
+        open_delimiter.format_leading_trivia().fmt(f)?;
 
-        let open_token_trailing_trivia = open_delimiter.as_trailing_trivia_fmt();
+        let open_token_trailing_trivia = open_delimiter.format_trailing_trivia();
 
-        let close_token_leading_trivia = close_delimiter.as_leading_trivia_fmt();
+        let close_token_leading_trivia = close_delimiter.format_leading_trivia();
 
         let delimited = format_with(|f| {
-            open_delimiter.as_token_fmt().fmt(f)?;
+            open_delimiter.format_token().fmt(f)?;
 
             let format_content = format_with(|f| f.write_fmt(Arguments::from(content)));
 
@@ -463,7 +463,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                 }
             };
 
-            close_delimiter.as_token_fmt().fmt(f)
+            close_delimiter.format_token().fmt(f)
         });
 
         let _grouped = match mode {
@@ -519,12 +519,12 @@ impl<'t> OpenDelimiter<'t> {
     }
 
     /// It extracts the formatted leading trivia of the token, without writing it in the buffer
-    pub(crate) fn as_leading_trivia_fmt(&self) -> impl Format<JsFormatContext> + 't {
+    pub(crate) fn format_leading_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_leading_trivia(self.open_token)
     }
 
     /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
-    pub(crate) fn as_trailing_trivia_fmt(&self) -> impl Format<JsFormatContext> + 't {
+    pub(crate) fn format_trailing_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             // Not really interested in the pre-amble, but want to know if it was written
             let mut buffer = VecBuffer::new(f.state_mut());
@@ -543,7 +543,7 @@ impl<'t> OpenDelimiter<'t> {
     }
 
     /// It extracts the formatted token, without writing it in the buffer
-    pub(crate) fn as_token_fmt(&self) -> impl Format<JsFormatContext> + 't {
+    pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             f.state_mut().track_token(self.open_token);
             write!(f, [format_trimmed_token(self.open_token)])
@@ -561,12 +561,12 @@ impl<'t> CloseDelimiter<'t> {
     }
 
     /// It extracts the formatted leading trivia of the token, without writing it in the buffer
-    pub(crate) fn as_trailing_trivia_fmt(&self) -> impl Format<JsFormatContext> + 't {
+    pub(crate) fn format_trailing_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_trailing_trivia(self.close_token)
     }
 
     /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
-    pub(crate) fn as_leading_trivia_fmt(&self) -> impl Format<JsFormatContext> + 't {
+    pub(crate) fn format_leading_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             let mut buffer = PreambleBuffer::new(f, soft_line_break_or_space());
 
@@ -575,7 +575,7 @@ impl<'t> CloseDelimiter<'t> {
     }
 
     /// It extracts the formatted token, without writing it in the buffer
-    pub(crate) fn as_token_fmt(&self) -> impl Format<JsFormatContext> + 't {
+    pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             f.state_mut().track_token(self.close_token);
             write!(f, [format_trimmed_token(self.close_token)])

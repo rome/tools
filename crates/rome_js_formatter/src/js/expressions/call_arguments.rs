@@ -59,14 +59,14 @@ impl FormatNodeFields<JsCallArguments> for FormatNodeRule<JsCallArguments> {
 
         // we now extracts the formatted version of trivias and tokens of the delimiters
         // tokens on the left
-        let l_leading_trivia = open_delimiter.as_leading_trivia_fmt();
-        let l_paren = open_delimiter.as_token_fmt();
-        let l_trailing_trivia = open_delimiter.as_trailing_trivia_fmt();
+        let l_leading_trivia = open_delimiter.format_leading_trivia();
+        let l_paren = open_delimiter.format_token();
+        let l_trailing_trivia = open_delimiter.format_trailing_trivia();
 
         // tokens on the right
-        let r_leading_trivia = close_delimiter.as_leading_trivia_fmt();
-        let r_paren = close_delimiter.as_token_fmt();
-        let r_trailing_trivia = close_delimiter.as_trailing_trivia_fmt();
+        let r_leading_trivia = close_delimiter.format_leading_trivia();
+        let r_paren = close_delimiter.format_token();
+        let r_trailing_trivia = close_delimiter.format_trailing_trivia();
 
         let should_group_first_argument = should_group_first_argument(&args)?;
         let should_group_last_argument = should_group_last_argument(&args)?;
