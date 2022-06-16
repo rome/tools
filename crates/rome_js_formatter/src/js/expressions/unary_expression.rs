@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::utils::is_simple_expression;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
 use crate::FormatNodeFields;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
@@ -54,28 +54,23 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
         };
 
         if is_ambiguous_expression {
+            operator_token.format().fmt(f)?;
+
             if is_simple_expression(&argument)? {
-                write![
-                    f,
-                    [
-                        operator_token.format(),
-                        format_inserted(JsSyntaxKind::L_PAREN),
-                        argument.format(),
-                        format_inserted(JsSyntaxKind::R_PAREN),
-                    ]
-                ]
+                format_parenthesize(
+                    JsSyntaxKind::L_PAREN,
+                    &argument.format(),
+                    JsSyntaxKind::R_PAREN,
+                )
+                .fmt(f)
             } else {
-                write![
-                    f,
-                    [
-                        operator_token.format(),
-                        group_elements(&format_args![
-                            format_inserted(JsSyntaxKind::L_PAREN),
-                            soft_block_indent(&argument.format()),
-                            format_inserted(JsSyntaxKind::R_PAREN),
-                        ]),
-                    ]
-                ]
+                format_parenthesize(
+                    JsSyntaxKind::L_PAREN,
+                    &argument.format(),
+                    JsSyntaxKind::R_PAREN,
+                )
+                .grouped()
+                .fmt(f)
             }
         } else {
             write![f, [operator_token.format(), argument.format(),]]

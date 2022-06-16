@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::{AsFormat, JsCommentStyle};
 use rome_formatter::token::{
     format_token_trailing_trivia, FormatInserted, FormatLeadingTrivia, FormatOnlyIfBreaks,
-    FormatRemoved, FormatReplaced, TriviaPrintMode,
+    FormatRemoved, FormatReplaced, InsertedToken, TriviaPrintMode,
 };
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
@@ -46,10 +46,37 @@ where
 
 pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsCommentStyle> {
     FormatInserted::new(
-        kind,
-        kind.to_string().expect("Expected a punctuation token"),
+        InsertedToken::new(
+            kind,
+            kind.to_string().expect("Expected a punctuation token"),
+        ),
         JsCommentStyle,
     )
+}
+
+/// Adds parentheses around some content
+pub fn format_parenthesize<Content>(
+    open_paren: JsSyntaxKind,
+    content: &Content,
+    close_paren: JsSyntaxKind,
+) -> FormatParenthesize<JsFormatContext, JsCommentStyle>
+where
+    Content: Format<JsFormatContext>,
+{
+    let open_paren = InsertedToken::new(
+        open_paren,
+        open_paren
+            .to_string()
+            .expect("Expected a punctuation token as the open paren token."),
+    );
+    let close_paren = InsertedToken::new(
+        close_paren,
+        close_paren
+            .to_string()
+            .expect("Expected a punctuation token as the close paren token."),
+    );
+
+    FormatParenthesize::new(open_paren, content, close_paren, JsCommentStyle)
 }
 
 /// Formats the leading and trailing trivia of a removed token.

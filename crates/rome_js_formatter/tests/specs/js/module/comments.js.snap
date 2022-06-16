@@ -151,7 +151,7 @@ function name(
 ) /* comment */ {}
 
 4 + /* plus trailing */
-(3 * 2 /* 2 trailing */);
+(3 * 2) /* 2 trailing */;
 
 /* leading of opening */ (
 	/* trailing of opening */

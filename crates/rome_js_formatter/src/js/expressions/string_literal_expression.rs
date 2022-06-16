@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer, VecBuffer};
+use rome_formatter::{write, Buffer};
 
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
@@ -19,24 +19,12 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
         let needs_parenthesis = parent.and_then(JsExpressionStatement::cast).is_some();
 
         if needs_parenthesis {
-            let mut buffer = VecBuffer::new(f.state_mut());
-            write!(
-                buffer,
-                [FormatLiteralStringToken::new(
-                    &value_token,
-                    StringLiteralParentKind::Expression
-                )]
-            )?;
-
-            let formatted_element = buffer.into_element();
-
-            let (leading_trivia, content, trailing_trivia) = formatted_element.split_trivia();
-
-            f.write_element(leading_trivia)?;
-            format_inserted(JsSyntaxKind::L_PAREN).fmt(f)?;
-            f.write_element(content)?;
-            format_inserted(JsSyntaxKind::R_PAREN).fmt(f)?;
-            f.write_element(trailing_trivia)
+            format_parenthesize(
+                JsSyntaxKind::L_PAREN,
+                &FormatLiteralStringToken::new(&value_token, StringLiteralParentKind::Expression),
+                JsSyntaxKind::R_PAREN,
+            )
+            .fmt(f)
         } else {
             write!(
                 f,

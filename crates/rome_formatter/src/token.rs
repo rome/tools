@@ -33,9 +33,16 @@ where
     }
 }
 
-struct InsertedToken<Kind> {
+#[derive(Copy, Clone, Eq, PartialEq, Debug)]
+pub struct InsertedToken<Kind> {
     kind: Kind,
     text: &'static str,
+}
+
+impl<Kind> InsertedToken<Kind> {
+    pub fn new(kind: Kind, text: &'static str) -> Self {
+        Self { kind, text }
+    }
 }
 
 /// Formats a token that has been inserted by the formatter and isn't present in the source text.
@@ -52,11 +59,8 @@ impl<S> FormatInserted<S>
 where
     S: CommentStyle,
 {
-    pub fn new(kind: <S::Language as Language>::Kind, text: &'static str, style: S) -> Self {
-        Self {
-            token: InsertedToken { kind, text },
-            style,
-        }
+    pub fn new(token: InsertedToken<<S::Language as Language>::Kind>, style: S) -> Self {
+        Self { token, style }
     }
 }
 
@@ -360,14 +364,17 @@ where
         )?;
 
         let is_last_content_inline_comment = f.state_mut().is_last_content_inline_comment();
+
         if needs_space_between_comments_and_token(
             &leading_comments,
             self.token.kind(),
             is_last_content_inline_comment,
             self.style,
         ) {
-            comment(&space_token()).fmt(f)?;
+            space_token().fmt(f)?;
         }
+
+        f.state_mut().set_last_content_is_inline_comment(false);
 
         Ok(())
     }

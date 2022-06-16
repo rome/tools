@@ -3,7 +3,7 @@ use crate::prelude::*;
 use crate::utils::is_simple_expression;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody, JsSyntaxKind,
+    JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
 
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
@@ -36,12 +36,12 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
                 [group_elements(&format_args![
-                    format_inserted(JsSyntaxKind::L_PAREN),
+                    token("("),
                     soft_block_indent(&format_args![
                         binding.format(),
-                        if_group_breaks(&format_inserted(JsSyntaxKind::COMMA)),
+                        if_group_breaks(&token(",")),
                     ]),
-                    format_inserted(JsSyntaxKind::R_PAREN),
+                    token(")"),
                 ])]
             )?,
             JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,

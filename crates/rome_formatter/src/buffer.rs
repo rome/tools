@@ -182,7 +182,7 @@ impl<'a, Context> VecBuffer<'a, Context> {
 
     /// Consumes the buffer and returns its content as a [`FormatElement`]
     pub fn into_element(mut self) -> FormatElement {
-        self.take()
+        self.take_element()
     }
 
     /// Consumes the buffer and returns the written [`FormatElement]`s as a vector.
@@ -191,7 +191,7 @@ impl<'a, Context> VecBuffer<'a, Context> {
     }
 
     /// Takes the elements without consuming self
-    pub fn take(&mut self) -> FormatElement {
+    pub fn take_element(&mut self) -> FormatElement {
         if self.len() == 1 {
             // Safety: Guaranteed by len check above
             self.elements.pop().unwrap()
