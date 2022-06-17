@@ -526,11 +526,11 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        a = {
-  ee: {qqq, ffff},
-  loreum,
-  ipsurmm,
-} = {};
+class C {
+
+  set something({ something: { els: {lorem} } }) {}
+}
+
 
            "#;
         let syntax = SourceType::ts();

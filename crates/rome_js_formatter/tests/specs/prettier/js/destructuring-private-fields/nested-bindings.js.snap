@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 184
 expression: nested-bindings.js
 ---
 # Input
@@ -18,7 +19,10 @@ class C {
 class C {
   #x = 1;
   m() {
-    const { x: { #x: [x] }, y: [...{ #x: y }] } = this;
+    const {
+      x: { #x: [x] },
+      y: [...{ #x: y }],
+    } = this;
   }
 }
 
