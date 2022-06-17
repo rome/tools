@@ -67,9 +67,9 @@ pub enum FormatElement {
     /// Line breaks inside of a best fitting don't propagate to parent groups.
     BestFitting(BestFitting),
 
-    /// Reference counted format element content. Useful when the same content must be emitted twice
-    /// because it avoids deep cloning of the inner content and instead only requires bumping a ref counter.
-    Rc(Rc<FormatElement>),
+    /// An interned format element. Useful when the same content must be emitted multiple times to avoid
+    /// deep cloning the IR when using the `best_fitting!` macro or `if_group_fits_on_line` and `if_group_breaks`.
+    Interned(Interned),
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
@@ -149,7 +149,7 @@ impl Debug for FormatElement {
                 best_fitting.fmt(fmt)
             }
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
-            FormatElement::Rc(inner) => inner.fmt(fmt),
+            FormatElement::Interned(inner) => inner.fmt(fmt),
         }
     }
 }
@@ -329,6 +329,29 @@ impl Debug for BestFitting {
     }
 }
 
+#[derive(Clone, Eq, PartialEq)]
+pub struct Interned(Rc<FormatElement>);
+
+impl Interned {
+    pub(crate) fn try_unwrap(this: Interned) -> Result<FormatElement, Interned> {
+        Rc::try_unwrap(this.0).map_err(|rc| Interned(rc))
+    }
+}
+
+impl Debug for Interned {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        self.0.fmt(f)
+    }
+}
+
+impl Deref for Interned {
+    type Target = FormatElement;
+
+    fn deref(&self) -> &Self::Target {
+        self.0.deref()
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ConditionalGroupContent {
     pub(crate) content: Content,
@@ -499,7 +522,7 @@ impl FormatElement {
             FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
             FormatElement::ExpandParent => true,
-            FormatElement::Rc(inner) => inner.will_break(),
+            FormatElement::Interned(inner) => inner.0.will_break(),
         }
     }
 
@@ -526,6 +549,17 @@ impl FormatElement {
                 .find_map(FormatElement::last_element),
 
             _ => Some(self),
+        }
+    }
+
+    /// Interns a format element.
+    ///
+    /// Returns `self` for an empty list AND an already interned elements.
+    pub fn intern(self) -> FormatElement {
+        match self {
+            FormatElement::List(list) if list.is_empty() => list.into(),
+            element @ FormatElement::Interned(_) => element,
+            element => FormatElement::Interned(Interned(Rc::new(element))),
         }
     }
 }
