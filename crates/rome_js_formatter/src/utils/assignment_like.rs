@@ -159,7 +159,16 @@ impl JsAnyAssignmentLike {
             matches!(
                 parent_kind,
                 Some(JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION | JsSyntaxKind::JS_VARIABLE_DECLARATOR)
-            )
+            ) && {
+                !right_is_tail
+                    || (matches!(
+                        parent_kind,
+                        Some(
+                            JsSyntaxKind::JS_EXPRESSION_STATEMENT
+                                | JsSyntaxKind::JS_VARIABLE_DECLARATOR
+                        )
+                    ))
+            }
         };
         let result = if should_use_chain_formatting {
             if right_is_tail {
@@ -262,6 +271,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 
             let layout = self.layout(is_left_short)?;
 
+            dbg!(&layout);
             match layout {
                 AssignmentLikeLayout::Fluid => {
                     let group_id = f.group_id("assignment_like");
