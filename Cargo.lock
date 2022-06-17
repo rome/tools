@@ -744,9 +744,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "1.8.0"
+version = "1.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "282a6247722caba404c065016bbfa522806e51714c34f5dfc3e4a3a46fcb4223"
+checksum = "e6012d540c5baa3589337a98ce73408de9b5a25ec9fc2c6fd6be8f0d39e0ca5a"
 dependencies = [
  "autocfg",
  "hashbrown",
@@ -1375,6 +1375,7 @@ name = "rome_formatter"
 version = "0.1.0"
 dependencies = [
  "cfg-if",
+ "indexmap",
  "rome_rowan",
  "tracing",
 ]

@@ -1,11 +1,10 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer, VecBuffer};
 
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 use crate::FormatNodeFields;
+use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsStringLiteralExpression;
 use rome_js_syntax::JsStringLiteralExpressionFields;
-use rome_js_syntax::{JsExpressionStatement, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLiteralExpression> {
@@ -13,38 +12,25 @@ impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLite
         let JsStringLiteralExpressionFields { value_token } = node.as_fields();
 
         let value_token = value_token?;
-        let syntax_node = node.syntax();
-        let parent = syntax_node.parent();
 
-        let needs_parenthesis = parent.and_then(JsExpressionStatement::cast).is_some();
+        let formatted =
+            FormatLiteralStringToken::new(&value_token, StringLiteralParentKind::Expression);
+
+        let needs_parenthesis = node
+            .syntax()
+            .parent()
+            .and_then(JsExpressionStatement::cast)
+            .is_some();
 
         if needs_parenthesis {
-            let mut buffer = VecBuffer::new(f.state_mut());
-            write!(
-                buffer,
-                [FormatLiteralStringToken::new(
-                    &value_token,
-                    StringLiteralParentKind::Expression
-                )]
-            )?;
-
-            let formatted_element = buffer.into_element();
-
-            let (leading_trivia, content, trailing_trivia) = formatted_element.split_trivia();
-
-            f.write_element(leading_trivia)?;
-            format_inserted(JsSyntaxKind::L_PAREN).fmt(f)?;
-            f.write_element(content)?;
-            format_inserted(JsSyntaxKind::R_PAREN).fmt(f)?;
-            f.write_element(trailing_trivia)
-        } else {
-            write!(
-                f,
-                [FormatLiteralStringToken::new(
-                    &value_token,
-                    StringLiteralParentKind::Expression
-                )]
+            format_parenthesize(
+                Some(value_token.clone()),
+                &formatted,
+                Some(value_token.clone()),
             )
+            .fmt(f)
+        } else {
+            formatted.fmt(f)
         }
     }
 }

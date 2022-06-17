@@ -75,6 +75,11 @@ function test /* spacing before parentheses*/ () {}
 a /* before member */.test;
 statement /* comment */;
 
+/* leading */ "test" /*trailing*/ ;
+
+/* leading */
+"test" /*trailing*/ ;
+
 /* EOF comment */
 
 =============================
@@ -151,7 +156,7 @@ function name(
 ) /* comment */ {}
 
 4 + /* plus trailing */
-(3 * 2 /* 2 trailing */);
+(3 * 2) /* 2 trailing */;
 
 /* leading of opening */ (
 	/* trailing of opening */
@@ -165,5 +170,10 @@ function test /* spacing before parentheses*/ () {}
 
 a /* before member */.test;
 statement /* comment */;
+
+/* leading */ ("test") /*trailing*/;
+
+/* leading */
+("test") /*trailing*/;
 /* EOF comment */
 

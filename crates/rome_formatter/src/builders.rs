@@ -1695,7 +1695,7 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
         for variant in variants {
             buffer.write_fmt(Arguments::from(&*variant))?;
 
-            formatted_variants.push(buffer.take());
+            formatted_variants.push(buffer.take_element());
         }
 
         // SAFETY: The constructor guarantees that there are always at least two variants. It's, therefore,

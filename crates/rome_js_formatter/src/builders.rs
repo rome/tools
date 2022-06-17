@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use crate::{AsFormat, JsCommentStyle};
 use rome_formatter::token::{
-    format_token_trailing_trivia, FormatInserted, FormatLeadingTrivia, FormatOnlyIfBreaks,
-    FormatRemoved, FormatReplaced, TriviaPrintMode,
+    format_token_trailing_trivia, FormatInserted, FormatInsertedCloseParen,
+    FormatInsertedOpenParen, FormatLeadingTrivia, FormatOnlyIfBreaks, FormatRemoved,
+    FormatReplaced, TriviaPrintMode,
 };
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
@@ -50,6 +51,114 @@ pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsCommentStyle> {
         kind.to_string().expect("Expected a punctuation token"),
         JsCommentStyle,
     )
+}
+
+pub fn format_inserted_open_paren(
+    before_token: Option<JsSyntaxToken>,
+    kind: JsSyntaxKind,
+) -> FormatInsertedOpenParen<JsCommentStyle> {
+    FormatInsertedOpenParen::new(
+        before_token,
+        kind,
+        kind.to_string()
+            .expect("Expected a punctuation token as the open paren token."),
+        JsCommentStyle,
+    )
+}
+
+pub fn format_inserted_close_paren(
+    after_token: &Option<JsSyntaxToken>,
+    kind: JsSyntaxKind,
+    f: &mut JsFormatter,
+) -> FormatInsertedCloseParen<JsCommentStyle> {
+    FormatInsertedCloseParen::after_token(
+        after_token,
+        kind,
+        kind.to_string()
+            .expect("Expected a punctuation token as the close paren token."),
+        JsCommentStyle,
+        f,
+    )
+}
+
+/// Adds parentheses around some content
+/// Ensures that the leading trivia of the `first_content_token` is moved
+/// before the opening parentheses and the trailing trivia of the `last_content_token`
+/// is moved after the closing parentheses.
+///
+/// # Examples
+/// Adding parentheses around the string literal
+///
+/// ```javascript
+/// /* leading */ "test" /* trailing */;
+/// ```
+///
+/// becomes
+///
+/// ```javascript
+/// /* leading */ ("test") /* trailing */;
+/// ```
+pub fn format_parenthesize<Content>(
+    first_content_token: Option<JsSyntaxToken>,
+    content: &Content,
+    last_content_token: Option<JsSyntaxToken>,
+) -> FormatParenthesize
+where
+    Content: Format<JsFormatContext>,
+{
+    FormatParenthesize {
+        first_content_token,
+        content: Argument::new(content),
+        last_content_token,
+        grouped: false,
+    }
+}
+
+/// Adds parentheses around an expression
+#[derive(Clone)]
+pub struct FormatParenthesize<'content> {
+    grouped: bool,
+    first_content_token: Option<JsSyntaxToken>,
+    content: Argument<'content, JsFormatContext>,
+    last_content_token: Option<JsSyntaxToken>,
+}
+
+impl FormatParenthesize<'_> {
+    /// Groups the open parenthesis, the content, and the closing parenthesis inside of a group
+    /// and indents the content with a soft block indent.
+    pub fn grouped_with_soft_block_indent(mut self) -> Self {
+        self.grouped = true;
+        self
+    }
+}
+
+impl Format<JsFormatContext> for FormatParenthesize<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let format_open_paren =
+            format_inserted_open_paren(self.first_content_token.clone(), JsSyntaxKind::L_PAREN);
+        let format_close_paren =
+            format_inserted_close_paren(&self.last_content_token, JsSyntaxKind::R_PAREN, f);
+
+        if self.grouped {
+            write!(
+                f,
+                [group_elements(&format_args![
+                    format_open_paren,
+                    soft_block_indent(&Arguments::from(&self.content)),
+                    format_close_paren
+                ])]
+            )
+        } else {
+            write!(
+                f,
+                [
+                    format_open_paren,
+                    Arguments::from(&self.content),
+                    format_close_paren
+                ]
+            )
+        }
+    }
 }
 
 /// Formats the leading and trailing trivia of a removed token.
