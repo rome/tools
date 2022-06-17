@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
+assertion_line: 257
 expression: if_else.js
-
 ---
 # Input
 if(a);
@@ -125,6 +124,7 @@ if (true) {
 
 if (true) {
 	// trailing
+
 } else {
 	// trailing
 }

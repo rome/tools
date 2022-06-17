@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: pipe-function-calls-with-comments.ts
 ---
 # Input
@@ -81,18 +82,16 @@ expression: pipe-function-calls-with-comments.ts
     ),
   )()
     .then(messageResponse(logger, msg))
-    .catch(
-      (err: Error) => {
-        logger.error(
-          pipe(
-            // add a descriptive comment here
-            O.fromNullable(err.stack),
-            O.getOrElse(constant(err.message)),
-          ),
-        );
-        process.exit(1);
-      },
-    );
+    .catch((err: Error) => {
+      logger.error(
+        pipe(
+          // add a descriptive comment here
+          O.fromNullable(err.stack),
+          O.getOrElse(constant(err.message)),
+        ),
+      );
+      process.exit(1);
+    });
 
   pipe(
     // add a descriptive comment here

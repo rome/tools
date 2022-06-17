@@ -1,13 +1,14 @@
 use std::io::Write;
 use std::panic::RefUnwindSafe;
 
-use fmt::Termcolor;
 use termcolor::{ColorChoice, StandardStream};
+use write::Termcolor;
 
 pub mod codespan;
 pub mod diff;
 pub mod fmt;
 mod markup;
+mod write;
 
 pub use self::markup::{Markup, MarkupBuf, MarkupElement, MarkupNode};
 pub use rome_markup::markup;

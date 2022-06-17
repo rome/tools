@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: angular_async.js
 ---
 # Input
@@ -46,7 +47,7 @@ function x() { async(() => {}) }
 beforeEach(
   async(() => {
     // code
-  },),
+  }),
 );
 
 beforeEach((done) => foo().bar().bar());
@@ -54,7 +55,7 @@ beforeEach((done) => foo().bar().bar());
 afterAll(
   async(() => {
     console.log("Hello");
-  },),
+  }),
 );
 
 afterAll((done) => foo().bar().bar());
@@ -63,14 +64,14 @@ it(
   "should create the app",
   async(() => {
     //code
-  },),
+  }),
 );
 
 it(
   "does something really long and complicated so I have to write a very long name for the test",
   async(() => {
     // code
-  },),
+  }),
 );
 
 /*

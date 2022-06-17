@@ -282,7 +282,6 @@ impl<'a> Printer<'a> {
                                 if fits_on_line(&[variant], args.with_print_mode(mode), queue, self)
                                 {
                                     self.state.measured_group_fits = true;
-
                                     queue.enqueue(PrintElementCall::new(
                                         variant,
                                         args.with_print_mode(mode),
@@ -294,6 +293,7 @@ impl<'a> Printer<'a> {
                     }
                 }
             }
+            FormatElement::Rc(content) => queue.enqueue(PrintElementCall::new(content, args)),
         }
     }
 
@@ -800,6 +800,7 @@ fn fits_element_on_line<'a, 'rest>(
                 return Fits::No;
             }
         }
+        FormatElement::Rc(content) => queue.enqueue(PrintElementCall::new(content, args)),
     }
 
     Fits::Maybe

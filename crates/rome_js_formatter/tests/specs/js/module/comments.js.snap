@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: comments.js
 ---
 # Input
@@ -97,15 +98,13 @@ import {
 expression(/* block comment */);
 
 expression(
-	/* block comment */
+/* block comment */
 );
 
-expression(
-	// line comment
-);
+expression(); // line comment
 
 expression(
-	// line comment
+// line comment
 );
 
 expression(

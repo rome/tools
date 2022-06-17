@@ -1,4 +1,6 @@
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -10,10 +12,34 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoNegationElse {}
+declare_rule! {
+    /// Disallow negation in the condition of an `if` statement if it has an `else` clause
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// if (!true) {consequent;} else {alternate;}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// !true ? consequent : alternate
+    ///```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// if (!true) {consequent;}
+    ///```
+    ///
+    /// ```js
+    /// true ? consequent : alternate
+    ///```
+    pub(crate) NoNegationElse = "noNegationElse"
+}
 
 impl Rule for NoNegationElse {
-    const NAME: &'static str = "noNegationElse";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsAnyCondition;

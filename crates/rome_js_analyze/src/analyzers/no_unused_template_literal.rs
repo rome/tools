@@ -1,16 +1,45 @@
 use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate};
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
 
-pub(crate) enum NoUnusedTemplateLiteral {}
+declare_rule! {
+    /// Disallow template literals if interpolation and special-character handling are not needed
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// const foo = `bar`
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const foo = `bar `
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const foo = `bar
+    /// has newline`;
+    /// ```
+    ///
+    /// ```js
+    /// const foo = `"bar"`
+    /// ```
+    ///
+    /// ```js
+    /// const foo = `'bar'`
+    /// ```
+    pub(crate) NoUnusedTemplateLiteral = "noUnusedTemplateLiteral"
+}
 
 impl Rule for NoUnusedTemplateLiteral {
-    const NAME: &'static str = "noUnusedTemplateLiteral";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsTemplate;

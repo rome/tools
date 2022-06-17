@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: assignment.ts
 ---
 # Input
@@ -61,25 +62,19 @@ const TYPE_MAP = {
 
 this.previewPlayerHandle =
   (
-    setInterval(
-      async () => {
-        if (this.previewIsPlaying) {
-          await this.fetchNextPreviews();
-          this.currentPreviewIndex++;
-        }
-      },
-      this.refreshDelay,
-    ) as unknown
+    setInterval(async () => {
+      if (this.previewIsPlaying) {
+        await this.fetchNextPreviews();
+        this.currentPreviewIndex++;
+      }
+    }, this.refreshDelay) as unknown
   ) as number;
 
 this.intervalID =
   (
-    setInterval(
-      () => {
-        self.step();
-      },
-      30,
-    ) as unknown
+    setInterval(() => {
+      self.step();
+    }, 30) as unknown
   ) as number;
 
 ```

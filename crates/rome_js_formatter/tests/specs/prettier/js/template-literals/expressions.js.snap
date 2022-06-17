@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: expressions.js
 ---
 # Input
@@ -109,15 +110,12 @@ console.log(
   `\nApparently jetbrains changed the release artifact for ${app.name}@${app.jetbrains.version}.\n`,
 );
 
-descirbe(
-  "something",
-  () => {
-    test(
-      `{pass: false} expect(${small}).toBeGreaterThanOrEqual(${big})`,
-      () => {},
-    );
-  },
-);
+descirbe("something", () => {
+  test(
+    `{pass: false} expect(${small}).toBeGreaterThanOrEqual(${big})`,
+    () => {},
+  );
+});
 
 throw new Error(
   `pretty-format: Option "theme" has a key "${key}" whose value "${value}" is undefined in ansi-styles.`,
@@ -137,6 +135,6 @@ throw new Error(
    34:       return `${process.env.OPENID_URL}/something/something/something?${Object.keys(
    44:   `Trying update appcast for ${app.name} (${app.cask.appcast}) -> (${app.cask.appcastGenerated})`,
    52:   `\nApparently jetbrains changed the release artifact for ${app.name}@${app.jetbrains.version}.\n`,
-   66:   `pretty-format: Option "theme" has a key "${key}" whose value "${value}" is undefined in ansi-styles.`,
+   63:   `pretty-format: Option "theme" has a key "${key}" whose value "${value}" is undefined in ansi-styles.`,
 ```
 
