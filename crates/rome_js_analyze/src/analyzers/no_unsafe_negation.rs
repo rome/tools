@@ -65,13 +65,14 @@ impl Rule for NoUnsafeNegation {
         // 3. Replace the `JsParenthesizedExpression` to `JsUnaryExpression` by adding a `JsUnaryOperator::LogicalNot`
         match node {
             JsInOrInstanceOfExpression::JsInstanceofExpression(expr) => {
-                // let next_expr = expr.replace_node(JsAnyExpression::Unary, );
                 let left = expr.left().ok()?;
                 // SAFETY: We check it in run stage, if `expr.left()` is not a `JsUnaryExpression`,
                 // the `run` function will return `None`, which will not reach here.
                 let unary_expression = left.as_js_unary_expression().unwrap();
                 let argument = unary_expression.argument().ok()?;
-                let next_expr = expr.clone().replace_node_discard_trivia(left.clone(), argument)?;
+                let next_expr = expr
+                    .clone()
+                    .replace_node_discard_trivia(left.clone(), argument)?;
                 let next_parenthesis_expression = make::js_parenthesized_expression(
                     make::token(T!['(']),
                     rome_js_syntax::JsAnyExpression::JsInstanceofExpression(next_expr.clone()),
@@ -81,16 +82,35 @@ impl Rule for NoUnsafeNegation {
                     unary_expression.operator_token().ok()?,
                     JsAnyExpression::JsParenthesizedExpression(next_parenthesis_expression),
                 );
-                // root = root.replace_node(expr.clone(), next_expr.clone())?;
-                // println!("{}", next_parenthesis_expression);
-                root = root
-                    .replace_node(
-                        JsAnyExpression::JsInstanceofExpression(expr.clone()),
-                        JsAnyExpression::JsUnaryExpression(next_unary_expression),
-                    )
-                    .unwrap();
+                root = root.replace_node(
+                    JsAnyExpression::JsInstanceofExpression(expr.clone()),
+                    JsAnyExpression::JsUnaryExpression(next_unary_expression),
+                )?;
             }
-            JsInOrInstanceOfExpression::JsInExpression(expr) => return None,
+            JsInOrInstanceOfExpression::JsInExpression(expr) => {
+                let left = expr.property().ok()?;
+                // SAFETY: We check it in run stage, if `expr.left()` is not a `JsUnaryExpression`,
+                // the `run` function will return `None`, which will not reach here.
+                let unary_expression = left.as_js_any_expression()?.as_js_unary_expression()?;
+                let argument = unary_expression.argument().ok()?;
+                let next_expr = expr.clone().replace_node_discard_trivia(
+                    left.clone(),
+                    rome_js_syntax::JsAnyInProperty::JsAnyExpression(argument),
+                )?;
+                let next_parenthesis_expression = make::js_parenthesized_expression(
+                    make::token(T!['(']),
+                    rome_js_syntax::JsAnyExpression::JsInExpression(next_expr.clone()),
+                    make::token(T![')']),
+                );
+                let next_unary_expression = make::js_unary_expression(
+                    unary_expression.operator_token().ok()?,
+                    JsAnyExpression::JsParenthesizedExpression(next_parenthesis_expression),
+                );
+                root = root.replace_node(
+                    JsAnyExpression::JsInExpression(expr.clone()),
+                    JsAnyExpression::JsUnaryExpression(next_unary_expression),
+                )?;
+            }
         }
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
