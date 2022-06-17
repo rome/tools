@@ -7,4 +7,4 @@ delete 1 in [1,2];
 +1 instanceof [1,2];
 // invalid
 !1 in [1,2];
-!1 instanceof [1,2];
+/**test*/!/** test*/1 instanceof [1,2];
