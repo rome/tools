@@ -1,9 +1,7 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{
-    JsAnyRoot, JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize,
-};
+use rome_js_syntax::{JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize};
 use rome_rowan::AstNodeExt;
 use std::fmt::Write;
 
@@ -18,7 +16,9 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
     type Query = JsRegexLiteralExpression;
     type State = Vec<(usize, usize)>;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query();
+
         let value_token = n.value_token().ok()?;
         let trimmed_text = value_token.text_trimmed();
         let mut range_list = vec![];
@@ -45,7 +45,8 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
         let value_token = node.value_token().ok()?;
         let value_token_range = value_token.text_trimmed_range();
         // SAFETY: We know diagnostic will be sended only if the `range_list` is not empty
@@ -64,7 +65,10 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let root = ctx.root();
+        let node = ctx.query();
+
         let trimmed_token = node.value_token().ok()?;
         let trimmed_token_string = trimmed_token.text_trimmed();
         let mut normalized_string_token = String::new();
