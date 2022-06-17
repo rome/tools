@@ -10,7 +10,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
 pub(crate) fn format_assignment_like(
-    assignment_like: JsAnyAssignmentLike,
+    assignment_like: &JsAnyAssignmentLike,
     f: &mut JsFormatter,
 ) -> FormatResult<()> {
     let right = assignment_like.right()?;
@@ -234,4 +234,10 @@ fn is_never_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> 
     }
 
     Ok(false)
+}
+
+impl Format<JsFormatContext> for JsAnyAssignmentLike {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        format_assignment_like(self, f)
+    }
 }
