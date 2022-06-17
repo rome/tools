@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: lone-arg.js
 ---
 # Input
@@ -43,8 +42,9 @@ const bifornCringerMoshedPerplexSawderGlyphsHa = someBigFunctionName("foo")(
 );
 
 if (true) {
-  node.id =
-    this.flowParseTypeAnnotatableIdentifier(/*allowPrimitiveOverride*/ true);
+  node.id = this.flowParseTypeAnnotatableIdentifier(/*allowPrimitiveOverride*/
+    true,
+  );
 }
 
 const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(

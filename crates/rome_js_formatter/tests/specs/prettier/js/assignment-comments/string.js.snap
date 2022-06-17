@@ -116,12 +116,12 @@ fnString =
     "long" +
     "string";
 
-fnString = // Comment0
+fnString =
+  // Comment0
   // Comment1
   "some" + "long" + "string";
 
-fnString = // Comment
-"some" + "long" + "string";
+fnString = "some" + "long" + "string"; // Comment
 
 fnString =
   // Comment
