@@ -246,7 +246,7 @@ impl SemanticEventExtractor {
         // and save shadowed names to be used later
         let shadowed = self
             .declared_names
-            .insert(name_hash, declaration_range.clone())
+            .insert(name_hash, declaration_range)
             .map(|shadowed_range| (name_hash, shadowed_range));
 
         let current_scope = self.current_scope_mut();

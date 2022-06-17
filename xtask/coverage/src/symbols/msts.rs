@@ -79,14 +79,11 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 // We do the same below because TS classifies some string literals as symbols and we also
                 // filter them below.
                 let name = x.str(&code);
-                if name.contains('\"') || name.contains('\'') {
-                    false
-                } else {
-                    match x {
-                        SemanticEvent::DeclarationFound { .. } | SemanticEvent::Read { .. } => true,
-                        _ => false,
-                    }
-                }
+                (name.contains('\"') || name.contains('\''))
+                    && matches!(
+                        x,
+                        SemanticEvent::DeclarationFound { .. } | SemanticEvent::Read { .. }
+                    )
             })
             .collect();
         actual.sort_by_key(|x| x.range().start());
