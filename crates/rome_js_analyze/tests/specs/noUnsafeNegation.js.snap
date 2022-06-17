@@ -1,0 +1,42 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: noUnsafeNegation.js
+---
+# Input
+```js
+// valid
+-1 in [1,2];
+~1 in [1,2];
+typeof 1 in [1,2];
+void 1 in [1,2];
+delete 1 in [1,2];
++1 instanceof [1,2];
+// invalid
+!1 in [1,2];
+!1 instanceof [1,2];
+
+```
+
+# Diagnostics
+```
+warning[noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
+  ┌─ noUnsafeNegation.js:9:1
+  │
+9 │ !1 in [1,2];
+  │ -----------
+
+
+```
+
+```
+warning[noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
+   ┌─ noUnsafeNegation.js:10:1
+   │
+10 │ !1 instanceof [1,2];
+   │ -------------------
+
+
+```
+
+
