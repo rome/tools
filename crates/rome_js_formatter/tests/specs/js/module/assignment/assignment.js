@@ -116,7 +116,11 @@ bifornCringerMoshedPerplex = bifornCringerMoshedPerplexSawder = arrayOfNumb = a 
 // chain and chain tail where it doesn't break
 loreum = ipsum = arrayOfNumb = a = "test"
 
-// complex destructuring
+// chain tail arrow function
+
+lorem = fff = ee = () => (fff) => () => (fefef) => () => fff;
+
+// complex destructuring, break left hand
 a = {
     a: { t: c = b }, loreum, ipsurm
 } = {}

@@ -3,7 +3,7 @@ use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyExpression, JsAnyObjectAssignmentPatternMember,
+    JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
     JsAnyObjectBindingPatternMember, JsAnyObjectMemberName, JsAssignmentExpression,
     JsObjectAssignmentPattern, JsObjectAssignmentPatternProperty, JsObjectBindingPattern,
     JsPropertyObjectMember, JsSyntaxKind,
@@ -33,7 +33,7 @@ declare_node_union! {
 
 impl AnyObjectPattern {
     fn is_complex(&self) -> SyntaxResult<bool> {
-        return match self {
+        match self {
             AnyObjectPattern::JsObjectAssignmentPattern(assignment_pattern) => {
                 let properties_len = assignment_pattern.properties().len();
                 // A binding is complex when we have at least one [JsObjectBindingPatternProperty]
@@ -76,19 +76,16 @@ impl AnyObjectPattern {
                     });
                 Ok(properties_len > 2 && has_at_least_a_complex_binding)
             }
-        };
+        }
     }
 }
 
 impl LeftAssignmentLike {
     fn as_object_assignment_pattern(&self) -> Option<AnyObjectPattern> {
         match self {
-            LeftAssignmentLike::JsAnyAssignmentPattern(pattern) => match pattern {
-                JsAnyAssignmentPattern::JsObjectAssignmentPattern(node) => {
-                    Some(AnyObjectPattern::from(node.clone()))
-                }
-                _ => None,
-            },
+            LeftAssignmentLike::JsAnyAssignmentPattern(
+                JsAnyAssignmentPattern::JsObjectAssignmentPattern(node),
+            ) => Some(AnyObjectPattern::from(node.clone())),
             _ => None,
         }
     }
@@ -174,6 +171,9 @@ pub(crate) enum AssignmentLikeLayout {
 
     ///
     BreakLeftHandSide,
+
+    ///
+    ChainTailArrowFunction,
 }
 
 impl JsAnyAssignmentLike {
@@ -244,7 +244,7 @@ impl JsAnyAssignmentLike {
         }
     }
 
-    fn format_right<'t>(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn write_right(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
                 let value = property.value()?;
@@ -347,7 +347,25 @@ impl JsAnyAssignmentLike {
             if right_is_tail {
                 Some(AssignmentLikeLayout::ChainTail)
             } else {
-                Some(AssignmentLikeLayout::Chain)
+                match right {
+                    RightAssignmentLike::JsAnyExpression(
+                        JsAnyExpression::JsArrowFunctionExpression(arrow),
+                    ) => {
+                        let body = arrow.body()?;
+                        if matches!(
+                            body,
+                            JsAnyFunctionBody::JsAnyExpression(
+                                JsAnyExpression::JsArrowFunctionExpression(_)
+                            )
+                        ) {
+                            Some(AssignmentLikeLayout::ChainTailArrowFunction)
+                        } else {
+                            Some(AssignmentLikeLayout::Chain)
+                        }
+                    }
+
+                    _ => Some(AssignmentLikeLayout::Chain),
+                }
             }
         } else {
             None
@@ -415,14 +433,6 @@ pub(crate) fn is_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<b
         }
     }
 
-    // head is a long chain, meaning that right -> right are both assignment expressions
-    if let JsAnyExpression::JsAssignmentExpression(assignment) = right {
-        let right = assignment.right()?;
-        if matches!(right, JsAnyExpression::JsAssignmentExpression(_)) {
-            return Ok(true);
-        }
-    }
-
     if JsAnyBinaryLikeExpression::cast(right.syntax().clone())
         .map_or(false, |expression| !expression.should_inline())
     {
@@ -474,7 +484,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                 AssignmentLikeLayout::Fluid => {
                     let group_id = f.group_id("assignment_like");
 
-                    let right = format_with(|f| self.format_right(f)).memoized();
+                    let right = format_with(|f| self.write_right(f)).memoized();
 
                     write![
                         f,
@@ -492,14 +502,14 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         f,
                         [group_elements(&indent(&format_args![
                             soft_line_break_or_space(),
-                            format_with(|f| { self.format_right(f) }),
+                            format_with(|f| { self.write_right(f) }),
                         ])),]
                     ]
                 }
                 AssignmentLikeLayout::NeverBreakAfterOperator => {
                     write![
                         f,
-                        [space_token(), format_with(|f| { self.format_right(f) }),]
+                        [space_token(), format_with(|f| { self.write_right(f) }),]
                     ]
                 }
 
@@ -508,7 +518,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         f,
                         [
                             space_token(),
-                            group_elements(&format_with(|f| { self.format_right(f) }),),
+                            group_elements(&format_with(|f| { self.write_right(f) }),),
                         ]
                     ]
                 }
@@ -518,7 +528,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         f,
                         [
                             soft_line_break_or_space(),
-                            format_with(|f| { self.format_right(f) }),
+                            format_with(|f| { self.write_right(f) }),
                         ]
                     )
                 }
@@ -528,9 +538,13 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         f,
                         [&indent(&format_args![
                             soft_line_break_or_space(),
-                            format_with(|f| { self.format_right(f) }),
+                            format_with(|f| { self.write_right(f) }),
                         ])]
                     )
+                }
+
+                AssignmentLikeLayout::ChainTailArrowFunction => {
+                    write!(f, [space_token(), format_with(|f| { self.write_right(f) })])
                 }
             });
 
