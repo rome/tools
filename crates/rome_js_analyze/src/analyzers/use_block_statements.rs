@@ -1,16 +1,14 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Rule, RuleAction, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::{Applicability, Severity};
+use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsAnyStatement, JsBinaryExpression,
-    JsElseClauseFields, JsIfStatementFields, TextRange, T,
-};
-use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeExt, SyntaxResult, SyntaxToken};
+use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatementFields, T};
+
+use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
+use crate::{use_block_statements_diagnostic, use_block_statements_replace_body};
 
 declare_rule! {
     /// Block statements are preferred in this position.
@@ -53,7 +51,7 @@ impl Rule for UseBlockStatements {
                 // if `IfStatement` has not consequent then it must has no else clause,
                 // so this `?` operation here is safe
                 if !matches!(&consequent, JsAnyStatement::JsBlockStatement(_)) {
-                    return Some(UseBlockStatementsOperationType::Wrap(consequent.clone()));
+                    return Some(UseBlockStatementsOperationType::Wrap(consequent));
                 }
                 if let Some(else_clause) = else_clause {
                     // SAFETY: because we know the variant of `else_clause` is `Some(_)`
@@ -61,29 +59,34 @@ impl Rule for UseBlockStatements {
                         else_token: _,
                         alternate,
                     } = else_clause.as_fields();
-                    // make::js_block_statement(l_curly_token, statements, r_curly_token);
                     let alternate = alternate.ok()?;
                     if !matches!(
                         alternate,
                         JsAnyStatement::JsBlockStatement(_) | JsAnyStatement::JsIfStatement(_)
                     ) {
-                        return Some(UseBlockStatementsOperationType::Wrap(alternate.clone()));
+                        return Some(UseBlockStatementsOperationType::Wrap(alternate));
                     }
                 }
                 None
             }
             JsAnyStatement::JsDoWhileStatement(stmt) => {
-                let body = stmt.body().ok()?;
-                if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
-                    return None;
-                }
-                None
+                use_block_statements_diagnostic!(stmt)
             }
-            JsAnyStatement::JsForInStatement(_)
-            | JsAnyStatement::JsForOfStatement(_)
-            | JsAnyStatement::JsForStatement(_)
-            | JsAnyStatement::JsWhileStatement(_)
-            | JsAnyStatement::JsWithStatement(_) => None,
+            JsAnyStatement::JsForInStatement(stmt) => {
+                use_block_statements_diagnostic!(stmt)
+            }
+            JsAnyStatement::JsForOfStatement(stmt) => {
+                use_block_statements_diagnostic!(stmt)
+            }
+            JsAnyStatement::JsForStatement(stmt) => {
+                use_block_statements_diagnostic!(stmt)
+            }
+            JsAnyStatement::JsWhileStatement(stmt) => {
+                use_block_statements_diagnostic!(stmt)
+            }
+            JsAnyStatement::JsWithStatement(stmt) => {
+                use_block_statements_diagnostic!(stmt)
+            }
             _ => None,
         }
     }
@@ -102,20 +105,38 @@ impl Rule for UseBlockStatements {
         ctx: &RuleContext<Self>,
         nodes_need_to_replaced: &Self::State,
     ) -> Option<JsRuleAction> {
+        let node = ctx.query();
         let root = ctx.root();
         let root = match nodes_need_to_replaced {
-            UseBlockStatementsOperationType::Wrap(stmt) => {
-                let root = root.replace_node(
-                    stmt.clone(),
-                    JsAnyStatement::JsBlockStatement(make::js_block_statement(
-                        make::token(T!['{']),
-                        make::js_statement_list(std::iter::once(stmt.clone())),
-                        make::token(T!['}']),
-                    )),
-                )?;
-                root
-            }
-            UseBlockStatementsOperationType::ReplaceBody => todo!(),
+            UseBlockStatementsOperationType::Wrap(stmt) => root.replace_node(
+                stmt.clone(),
+                JsAnyStatement::JsBlockStatement(make::js_block_statement(
+                    make::token(T!['{']),
+                    make::js_statement_list(std::iter::once(stmt.clone())),
+                    make::token(T!['}']),
+                )),
+            )?,
+            UseBlockStatementsOperationType::ReplaceBody => match node {
+                JsAnyStatement::JsDoWhileStatement(stmt) => {
+                    use_block_statements_replace_body!(JsDoWhileStatement, root, node, stmt)
+                }
+                JsAnyStatement::JsForInStatement(stmt) => {
+                    use_block_statements_replace_body!(JsForInStatement, root, node, stmt)
+                }
+                JsAnyStatement::JsForOfStatement(stmt) => {
+                    use_block_statements_replace_body!(JsForOfStatement, root, node, stmt)
+                }
+                JsAnyStatement::JsForStatement(stmt) => {
+                    use_block_statements_replace_body!(JsForStatement, root, node, stmt)
+                }
+                JsAnyStatement::JsWhileStatement(stmt) => {
+                    use_block_statements_replace_body!(JsWhileStatement, root, node, stmt)
+                }
+                JsAnyStatement::JsWithStatement(stmt) => {
+                    use_block_statements_replace_body!(JsWithStatement, root, node, stmt)
+                }
+                _ => return None,
+            },
         };
         Some(RuleAction {
             category: ActionCategory::QuickFix,
@@ -129,4 +150,34 @@ impl Rule for UseBlockStatements {
 pub enum UseBlockStatementsOperationType {
     Wrap(JsAnyStatement),
     ReplaceBody,
+}
+
+#[macro_export]
+macro_rules! use_block_statements_diagnostic {
+    ($id:ident) => {{
+        let body = $id.body().ok()?;
+        if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+            return Some(UseBlockStatementsOperationType::ReplaceBody);
+        }
+        if !matches!(body, JsAnyStatement::JsBlockStatement(_)) {
+            return Some(UseBlockStatementsOperationType::Wrap(body.clone()));
+        }
+        None
+    }};
+}
+
+#[macro_export]
+macro_rules! use_block_statements_replace_body {
+    ($stmt_type:ident, $root:ident, $node:ident, $stmt:ident) => {{
+        $root.replace_node(
+            $node.clone(),
+            JsAnyStatement::$stmt_type($stmt.clone().with_body(JsAnyStatement::JsBlockStatement(
+                make::js_block_statement(
+                    make::token(T!['{']),
+                    make::js_statement_list([]),
+                    make::token(T!['}']),
+                ),
+            ))),
+        )?
+    }};
 }
