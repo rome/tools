@@ -59,6 +59,10 @@ declare_node_union! {
 }
 
 /// Determines how a assignment like be formatted
+///
+/// Assignment like are:
+/// - Assignment
+/// - Object property member
 pub(crate) enum AssignmentLikeLayout {
     /// First break right-hand side, then after operator.
     /// ```js
