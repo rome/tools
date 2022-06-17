@@ -144,10 +144,10 @@ mod tests {
                 FormatElement::Space,
                 FormatElement::Token(Token::Static { text: "a" }),
                 FormatElement::Space,
-                FormatElement::Group(Group::new(FormatElement::List(List::new(vec![
+                FormatElement::Group(Group::new(vec![
                     FormatElement::Token(Token::Static { text: "(" }),
                     FormatElement::Token(Token::Static { text: ")" }),
-                ]))))
+                ]))
             ]))
         );
     }
