@@ -122,7 +122,10 @@ bifornCringerMoshedPerplex = bifornCringerMoshedPerplexSawder = arrayOfNumb = a 
 // chain and chain tail where it doesn't break
 loreum = ipsum = arrayOfNumb = a = "test"
 
-
+// complex destructuring
+a = {
+    a: { t: c = b }, loreum, ipsurm
+} = {}
 =============================
 # Outputs
 ## Output 1
@@ -298,6 +301,9 @@ bifornCringerMoshedPerplex =
 
 // chain and chain tail where it doesn't break
 loreum = ipsum = arrayOfNumb = a = "test";
+
+// complex destructuring
+a = { a: { t: c = b }, loreum, ipsurm } = {};
 
 
 ## Lines exceeding width of 80 characters
