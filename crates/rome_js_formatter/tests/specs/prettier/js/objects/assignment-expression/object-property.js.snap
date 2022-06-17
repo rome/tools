@@ -12,10 +12,9 @@ a = {
 
 # Output
 ```js
-a =
-  {
-    [this.resource = resource]: 1,
-  };
+a = {
+  [this.resource = resource]: 1,
+};
 
 ```
 

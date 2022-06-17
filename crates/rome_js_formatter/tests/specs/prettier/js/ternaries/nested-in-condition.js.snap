@@ -45,12 +45,11 @@ const value = (bifornCringerMoshedPerplexSawder
 
 # Output
 ```js
-$var =
-  (
-    ($number % 10) >= 2 && (
-      ($number % 100) < 10 || ($number % 100) >= 20
-    ) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
-  ) ? anodyneCondosMalateOverateRetinol : averredBathersBoxroomBuggyNurl;
+$var = (
+  ($number % 10) >= 2 && (
+    ($number % 100) < 10 || ($number % 100) >= 20
+  ) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
+) ? anodyneCondosMalateOverateRetinol : averredBathersBoxroomBuggyNurl;
 
 const value = (
   bifornCringerMoshedPerplexSawder ? askTrovenaBeenaDependsRowans : glimseGlyphsHazardNoopsTieTie
@@ -87,6 +86,6 @@ const value = (
 
 # Lines exceeding max width of 80 characters
 ```
-    9:   bifornCringerMoshedPerplexSawder ? askTrovenaBeenaDependsRowans : glimseGlyphsHazardNoopsTieTie
+    8:   bifornCringerMoshedPerplexSawder ? askTrovenaBeenaDependsRowans : glimseGlyphsHazardNoopsTieTie
 ```
 
