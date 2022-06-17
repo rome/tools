@@ -1,6 +1,8 @@
 use std::iter;
 
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -11,12 +13,38 @@ use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
 use crate::JsRuleAction;
 
-/// Enforces case clauses have a single statement, emits a quick fix wrapping
-/// the statements in a block
-pub(crate) enum UseSingleCaseStatement {}
+declare_rule! {
+    /// Enforces case clauses have a single statement, emits a quick fix wrapping
+    /// the statements in a block
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// switch (foo) {
+    ///     case true:
+    ///     case false:
+    ///         let foo = '';
+    ///         foo;
+    /// }
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// switch (foo) {
+    ///     case true:
+    ///     case false: {
+    ///         let foo = '';
+    ///         foo;
+    ///     }
+    /// }
+    /// ```
+    pub(crate) UseSingleCaseStatement = "useSingleCaseStatement"
+}
 
 impl Rule for UseSingleCaseStatement {
-    const NAME: &'static str = "useSingleCaseStatement";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsCaseClause;

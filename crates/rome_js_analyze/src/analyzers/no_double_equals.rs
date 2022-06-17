@@ -1,5 +1,6 @@
-use rome_analyze::context::RuleContext;
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -9,10 +10,46 @@ use rome_rowan::{AstNodeExt, SyntaxResult};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoDoubleEquals {}
+declare_rule! {
+    /// Require the use of `===` and `!==`
+    ///
+    /// It is generally bad practice to use `==` for comparison instead of
+    /// `===`. Double operators will triger implicit [type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)
+    /// and are thus not prefered. Using strict equality operators is almost
+    /// always best practice.
+    ///
+    /// For ergonomic reasons, this rule makes an exception for `== null` for
+    /// comparing to both `null` and `undefined`.
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// foo == bar
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// foo == null
+    ///```
+    ///
+    /// ```js
+    /// foo != null
+    ///```
+    ///
+    /// ```js
+    /// null == foo
+    ///```
+    ///
+    /// ```js
+    /// null != foo
+    ///```
+    pub(crate) NoDoubleEquals = "noDoubleEquals"
+}
 
 impl Rule for NoDoubleEquals {
-    const NAME: &'static str = "noDoubleEquals";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsBinaryExpression;

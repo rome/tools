@@ -1,4 +1,6 @@
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -7,10 +9,20 @@ use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoSparseArray {}
+declare_rule! {
+    /// Disallow sparse arrays
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// [1,,2]
+    /// ```
+    pub(crate) NoSparseArray = "noSparseArray"
+}
 
 impl Rule for NoSparseArray {
-    const NAME: &'static str = "noSparseArray";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsArrayExpression;

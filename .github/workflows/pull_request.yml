@@ -80,3 +80,35 @@ jobs:
         with:
           command: test
           args: --workspace --verbose
+
+  codegen:
+    name: Codegen
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install toolchain
+        run: rustup show
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+      - name: Run the grammar codegen
+        uses: actions-rs/cargo@v1
+        with:
+          command: codegen
+          args: grammar
+      - name: Run the analyzer codegen
+        uses: actions-rs/cargo@v1
+        with:
+          command: codegen
+          args: analyzer
+      - name: Run the website codegen
+        uses: actions-rs/cargo@v1
+        with:
+          command: lintdoc
+      - name: Check for git diff
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git status
+            exit 1
+          fi

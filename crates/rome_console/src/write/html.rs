@@ -1,0 +1,152 @@
+use std::{
+    fmt,
+    io::{self, Write as _},
+};
+
+use crate::{fmt::MarkupElements, MarkupElement};
+
+use super::Write;
+
+/// Adapter struct implementing [Write] over types implementing [io::Write],
+/// renders markup as UTF-8 strings of HTML code
+pub struct HTML<W>(pub W);
+
+impl<W> Write for HTML<W>
+where
+    W: io::Write,
+{
+    fn write_str(&mut self, elements: &MarkupElements, content: &str) -> io::Result<()> {
+        push_styles(&mut self.0, elements)?;
+        EscapeAdapter(&mut self.0).write_all(content.as_bytes())?;
+        pop_styles(&mut self.0, elements)
+    }
+
+    fn write_fmt(&mut self, elements: &MarkupElements, content: fmt::Arguments) -> io::Result<()> {
+        push_styles(&mut self.0, elements)?;
+        EscapeAdapter(&mut self.0).write_fmt(content)?;
+        pop_styles(&mut self.0, elements)
+    }
+}
+
+fn push_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Result<()> {
+    let mut result = Ok(());
+    elements.for_each(&mut |styles| {
+        if result.is_err() {
+            return;
+        }
+
+        for style in styles {
+            let res = match style {
+                MarkupElement::Emphasis => {
+                    write!(fmt, "<em>")
+                }
+                MarkupElement::Dim => {
+                    write!(fmt, "<span style=\"opacity: 0.8;\">")
+                }
+                MarkupElement::Italic => {
+                    write!(fmt, "<i>")
+                }
+                MarkupElement::Underline => {
+                    write!(fmt, "<u>")
+                }
+                MarkupElement::Error => {
+                    write!(fmt, "<span style=\"color: Tomato;\">")
+                }
+                MarkupElement::Success => {
+                    write!(fmt, "<span style=\"color: MediumSeaGreen;\">")
+                }
+                MarkupElement::Warn => {
+                    write!(fmt, "<span style=\"color: Orange;\">")
+                }
+                MarkupElement::Info => {
+                    write!(fmt, "<span style=\"color: rgb(38, 148, 255);\">")
+                }
+            };
+
+            if res.is_err() {
+                result = res;
+                return;
+            }
+        }
+    });
+
+    result
+}
+
+fn pop_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Result<()> {
+    let mut result = Ok(());
+    elements.for_each(&mut |styles| {
+        if result.is_err() {
+            return;
+        }
+
+        for style in styles {
+            let res = match style {
+                MarkupElement::Emphasis => {
+                    write!(fmt, "</em>")
+                }
+                MarkupElement::Italic => {
+                    write!(fmt, "</i>")
+                }
+                MarkupElement::Underline => {
+                    write!(fmt, "</u>")
+                }
+                MarkupElement::Dim
+                | MarkupElement::Error
+                | MarkupElement::Success
+                | MarkupElement::Warn
+                | MarkupElement::Info => {
+                    write!(fmt, "</span>")
+                }
+            };
+
+            if res.is_err() {
+                result = res;
+                return;
+            }
+        }
+    });
+
+    result
+}
+
+/// Adapter wrapping a type implementing [io::Write] and adding HTML special
+/// characters escaping to the written byte sequence
+struct EscapeAdapter<W>(W);
+
+impl<W: io::Write> io::Write for EscapeAdapter<W> {
+    fn write(&mut self, mut buf: &[u8]) -> io::Result<usize> {
+        let mut bytes = 0;
+
+        const HTML_ESCAPES: [u8; 4] = [b'"', b'&', b'<', b'>'];
+        while let Some(idx) = buf.iter().position(|b| HTML_ESCAPES.contains(b)) {
+            let (before, after) = buf.split_at(idx);
+
+            self.0.write_all(before)?;
+            bytes += before.len();
+
+            // SAFETY: Because of the above `position` match we know the buffer
+            // contains at least the matching byte
+            let (byte, after) = after.split_first().unwrap();
+            match *byte {
+                b'"' => self.0.write_all(b"&quot;")?,
+                b'&' => self.0.write_all(b"&amp;")?,
+                b'<' => self.0.write_all(b"&lt;")?,
+                b'>' => self.0.write_all(b"&gt;")?,
+                _ => unreachable!(),
+            }
+
+            // Only 1 byte of the input was written
+            bytes += 1;
+            buf = after;
+        }
+
+        self.0.write_all(buf)?;
+        bytes += buf.len();
+        Ok(bytes)
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        self.0.flush()
+    }
+}
