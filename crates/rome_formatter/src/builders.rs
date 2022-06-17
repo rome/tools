@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::{
-    format_element, write, Argument, Arguments, GroupId, PreambleBuffer, TextRange, TextSize,
+    format_element, write, Argument, Arguments, BufferSnapshot, FormatState, GroupId,
+    PreambleBuffer, TextRange, TextSize,
 };
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
@@ -469,7 +470,7 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 ///     SimpleFormatContext::default(),
 ///     [
 ///         group_elements(&format_args![
-///             comments(&format_args![token("// test"), hard_line_break()], CommentPosition::Leading),
+///             comment(&format_args![token("// test"), hard_line_break()]),
 ///             token("a"),
 ///             soft_line_break_or_space(),
 ///             token("b")
@@ -483,42 +484,34 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 /// );
 /// ```
 #[inline]
-pub fn comments<Content, Context>(
-    content: &Content,
-    position: CommentPosition,
-) -> FormatComments<Context>
+pub fn comment<Content, Context>(content: &Content) -> FormatComment<Context>
 where
     Content: Format<Context>,
 {
-    FormatComments {
+    FormatComment {
         content: Argument::new(content),
-        position,
     }
 }
 
 #[derive(Copy, Clone)]
-pub struct FormatComments<'a, Context> {
+pub struct FormatComment<'a, Context> {
     content: Argument<'a, Context>,
-    position: CommentPosition,
 }
 
-impl<Context> Format<Context> for FormatComments<'_, Context> {
+impl<Context> Format<Context> for FormatComment<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         buffer.write_fmt(Arguments::from(&self.content))?;
         let content = buffer.into_vec();
 
-        f.write_element(FormatElement::Comments {
-            content: content.into_boxed_slice(),
-            position: self.position,
-        })
+        f.write_element(FormatElement::Comment(content.into_boxed_slice()))
     }
 }
 
-impl<Context> std::fmt::Debug for FormatComments<'_, Context> {
+impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_tuple("Comments").field(&"{{content}}").finish()
+        f.debug_tuple("Comment").field(&"{{content}}").finish()
     }
 }
 
@@ -934,10 +927,8 @@ impl<Context> GroupElements<'_, Context> {
 
 impl<Context> Format<Context> for GroupElements<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        let mut buffer = VecBuffer::new(f.state_mut());
-
+        let mut buffer = GroupElementsBuffer::new(f);
         buffer.write_fmt(Arguments::from(&self.content))?;
-
         let content = buffer.into_vec();
 
         if content.is_empty() && self.group_id.is_none() {
@@ -959,6 +950,92 @@ impl<Context> std::fmt::Debug for GroupElements<'_, Context> {
             .field("content", &"{{content}}")
             .finish()
     }
+}
+
+/// Custom buffer implementation for `GroupElements` that moves the leading comments out of the group
+/// to prevent that a leading line comment expands the token's enclosing group.
+///
+/// # Examples
+///
+/// ```javascript
+/// /* a comment */
+/// [1]
+/// ```
+///
+/// The `/* a comment */` belongs to the `[` group token that is part of a group wrapping the whole
+/// `[1]` expression. It's important that the comment `/* a comment */` gets moved out of the group element
+/// to avoid that the `[1]` group expands because of the line break inserted by the comment.
+struct GroupElementsBuffer<'inner, Context> {
+    inner: &'inner mut dyn Buffer<Context = Context>,
+
+    /// The group inner content
+    content: Vec<FormatElement>,
+}
+
+impl<'inner, Context> GroupElementsBuffer<'inner, Context> {
+    fn new(inner: &'inner mut dyn Buffer<Context = Context>) -> Self {
+        Self {
+            inner,
+            content: Vec::new(),
+        }
+    }
+
+    fn into_vec(self) -> Vec<FormatElement> {
+        self.content
+    }
+}
+
+impl<Context> Buffer for GroupElementsBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        if self.content.is_empty() {
+            match element {
+                FormatElement::List(list) => {
+                    self.write_elements(list.into_vec())?;
+                }
+                comment @ FormatElement::Comment { .. } => {
+                    self.inner.write_element(comment)?;
+                }
+                element => self.content.push(element),
+            }
+        } else {
+            match element {
+                FormatElement::List(list) => {
+                    self.content.extend(list.into_vec());
+                }
+                element => self.content.push(element),
+            }
+        }
+
+        Ok(())
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Any(Box::new(GroupElementsBufferSnapshot {
+            inner: self.inner.snapshot(),
+            content_len: self.content.len(),
+        }))
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        let snapshot = snapshot.unwrap_any::<GroupElementsBufferSnapshot>();
+        self.inner.restore_snapshot(snapshot.inner);
+        self.content.truncate(snapshot.content_len);
+    }
+}
+
+struct GroupElementsBufferSnapshot {
+    inner: BufferSnapshot,
+    content_len: usize,
 }
 
 /// IR element that forces the parent group to print in expanded mode.
