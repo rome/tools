@@ -1,5 +1,5 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{ActionCategory, Rule, RuleAction, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Rule, RuleAction, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
@@ -12,14 +12,30 @@ use rome_rowan::{AstNode, AstNodeExt, SyntaxResult, SyntaxToken};
 
 use crate::JsRuleAction;
 
-pub(crate) enum UseBlockStatements {}
+declare_rule! {
+    /// Block statements are preferred in this position.
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// (1 >= -0)
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// (1 >= 0)
+    ///```
+    pub(crate) UseBlockStatements = "useBlockStatements"
+}
 
 impl Rule for UseBlockStatements {
-    const NAME: &'static str = "useBlockStatements";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsAnyStatement;
-    type State = Vec<JsAnyStatement>;
+    type State = UseBlockStatementsOperationType;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
@@ -33,64 +49,46 @@ impl Rule for UseBlockStatements {
                     consequent,
                     else_clause,
                 } = stmt.as_fields();
-                let mut nodes_need_to_replaced = vec![];
                 let consequent = consequent.ok()?;
                 // if `IfStatement` has not consequent then it must has no else clause,
                 // so this `?` operation here is safe
                 if !matches!(&consequent, JsAnyStatement::JsBlockStatement(_)) {
-                    nodes_need_to_replaced.push(consequent.clone());
+                    return Some(UseBlockStatementsOperationType::Wrap(consequent.clone()));
                 }
-                if else_clause.is_some() {
+                if let Some(else_clause) = else_clause {
                     // SAFETY: because we know the variant of `else_clause` is `Some(_)`
                     let JsElseClauseFields {
                         else_token: _,
                         alternate,
-                    } = else_clause.unwrap().as_fields();
+                    } = else_clause.as_fields();
+                    // make::js_block_statement(l_curly_token, statements, r_curly_token);
                     let alternate = alternate.ok()?;
                     if !matches!(
                         alternate,
                         JsAnyStatement::JsBlockStatement(_) | JsAnyStatement::JsIfStatement(_)
                     ) {
-                        nodes_need_to_replaced.push(alternate);
+                        return Some(UseBlockStatementsOperationType::Wrap(alternate.clone()));
                     }
                 }
-                Some(nodes_need_to_replaced)
+                None
             }
-            JsAnyStatement::JsBlockStatement(_)
-            | JsAnyStatement::JsBreakStatement(_)
-            | JsAnyStatement::JsClassDeclaration(_)
-            | JsAnyStatement::JsContinueStatement(_)
-            | JsAnyStatement::JsDebuggerStatement(_)
-            | JsAnyStatement::JsDoWhileStatement(_)
-            | JsAnyStatement::JsEmptyStatement(_)
-            | JsAnyStatement::JsExpressionStatement(_)
-            | JsAnyStatement::JsForInStatement(_)
+            JsAnyStatement::JsDoWhileStatement(stmt) => {
+                let body = stmt.body().ok()?;
+                if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+                    return None;
+                }
+                None
+            }
+            JsAnyStatement::JsForInStatement(_)
             | JsAnyStatement::JsForOfStatement(_)
             | JsAnyStatement::JsForStatement(_)
-            | JsAnyStatement::JsFunctionDeclaration(_)
-            | JsAnyStatement::JsLabeledStatement(_)
-            | JsAnyStatement::JsReturnStatement(_)
-            | JsAnyStatement::JsSwitchStatement(_)
-            | JsAnyStatement::JsThrowStatement(_)
-            | JsAnyStatement::JsTryFinallyStatement(_)
-            | JsAnyStatement::JsTryStatement(_)
-            | JsAnyStatement::JsUnknownStatement(_)
-            | JsAnyStatement::JsVariableStatement(_)
             | JsAnyStatement::JsWhileStatement(_)
-            | JsAnyStatement::JsWithStatement(_)
-            | JsAnyStatement::TsDeclareFunctionDeclaration(_)
-            | JsAnyStatement::TsDeclareStatement(_)
-            | JsAnyStatement::TsEnumDeclaration(_)
-            | JsAnyStatement::TsExternalModuleDeclaration(_)
-            | JsAnyStatement::TsGlobalDeclaration(_)
-            | JsAnyStatement::TsImportEqualsDeclaration(_)
-            | JsAnyStatement::TsInterfaceDeclaration(_)
-            | JsAnyStatement::TsModuleDeclaration(_)
-            | JsAnyStatement::TsTypeAliasDeclaration(_) => None,
+            | JsAnyStatement::JsWithStatement(_) => None,
+            _ => None,
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -104,38 +102,31 @@ impl Rule for UseBlockStatements {
         ctx: &RuleContext<Self>,
         nodes_need_to_replaced: &Self::State,
     ) -> Option<JsRuleAction> {
-        let node = ctx.query();
         let root = ctx.root();
-        let mut next_node = node.clone();
-        // let mut root = root;
-        for node in nodes_need_to_replaced.iter() {
-            next_node = next_node
-                .replace_node(
-                    node.clone(),
+        let root = match nodes_need_to_replaced {
+            UseBlockStatementsOperationType::Wrap(stmt) => {
+                let root = root.replace_node(
+                    stmt.clone(),
                     JsAnyStatement::JsBlockStatement(make::js_block_statement(
-                        SyntaxToken::new_detached(T!['{'], "{", [], []),
-                        make::js_statement_list(std::iter::once(node.clone())),
-                        SyntaxToken::new_detached(T!['}'], "}", [], []),
+                        make::token(T!['{']),
+                        make::js_statement_list(std::iter::once(stmt.clone())),
+                        make::token(T!['}']),
                     )),
-                )
-                .unwrap();
-        }
-        let root = root.replace_node(node.clone(), next_node)?;
-        println!("{}\n------------------------------", root);
+                )?;
+                root
+            }
+            UseBlockStatementsOperationType::ReplaceBody => todo!(),
+        };
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with strict equality" }.to_owned(),
+            message: markup! { "Wrap the statement with a `JsBlockStatement`" }.to_owned(),
             root,
         })
     }
 }
 
-fn is_null_literal(res: SyntaxResult<JsAnyExpression>) -> bool {
-    matches!(
-        res,
-        Ok(JsAnyExpression::JsAnyLiteralExpression(
-            JsAnyLiteralExpression::JsNullLiteralExpression(_)
-        ))
-    )
+pub enum UseBlockStatementsOperationType {
+    Wrap(JsAnyStatement),
+    ReplaceBody,
 }

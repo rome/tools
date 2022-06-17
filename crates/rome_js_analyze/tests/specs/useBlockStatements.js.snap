@@ -30,7 +30,7 @@ warning[useBlockStatements]: Block statements are preferred in this position.
 2 │ if (x) x;
   │ ---------
 
-Suggested fix: Replace with strict equality
+Suggested fix: Wrap the statement with a `JsBlockStatement`
     | @@ -1,5 +1,5 @@
 0 0 |   // invalid
 1   | - if (x) x;
@@ -51,7 +51,7 @@ warning[useBlockStatements]: Block statements are preferred in this position.
 5 │ │ } else y;
   │ └─────────'
 
-Suggested fix: Replace with strict equality
+Suggested fix: Wrap the statement with a `JsBlockStatement`
     | @@ -2,7 +2,7 @@
 1 1 |   if (x) x;
 2 2 |   if (x) {
@@ -67,26 +67,12 @@ Suggested fix: Replace with strict equality
 
 ```
 warning[useBlockStatements]: Block statements are preferred in this position.
-  ┌─ useBlockStatements.js:6:1
-  │  
-6 │ ┌ if (x) {
-7 │ │   x;
-8 │ │ } else if (y) y;
-  │ └────────────────'
-
-Suggested fix: Replace with strict equality
-
-
-```
-
-```
-warning[useBlockStatements]: Block statements are preferred in this position.
   ┌─ useBlockStatements.js:8:8
   │
 8 │ } else if (y) y;
   │        ---------
 
-Suggested fix: Replace with strict equality
+Suggested fix: Wrap the statement with a `JsBlockStatement`
     | @@ -5,7 +5,7 @@
 4 4 |   } else y;
 5 5 |   if (x) {
