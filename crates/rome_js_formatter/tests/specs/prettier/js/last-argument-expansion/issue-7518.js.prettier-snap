@@ -8,6 +8,6 @@ const Broken = React.forwardRef(
       hidden,
       // 3
     },
-    ref
-  ) => <div ref={ref}>{children}</div>
+    ref,
+  ) => <div ref={ref}>{children}</div>,
 );

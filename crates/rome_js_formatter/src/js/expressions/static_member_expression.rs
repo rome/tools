@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use rome_formatter::{format_args, write, VecBuffer};
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyName, JsStaticMemberExpression,
     JsStaticMemberExpressionFields, JsSyntaxNode, JsSyntaxToken,
@@ -145,22 +145,7 @@ impl Format<JsFormatContext> for FormatMemberStaticExpression<'_> {
         });
 
         if is_member_number_literal && (object_has_trailing_trivia || operator_has_leading_trivia) {
-            let mut buffer = VecBuffer::new(f.state_mut());
-            write!(buffer, [format_node])?;
-            let formatted_member = buffer.into_element();
-
-            let (object_leading, object_content, object_trailing) = formatted_member.split_trivia();
-
-            write!(
-                f,
-                [format_once(|f| {
-                    f.write_element(object_leading)?;
-                    write!(f, [token("(")])?;
-                    f.write_element(object_content)?;
-                    write!(f, [token(")")])?;
-                    f.write_element(object_trailing)
-                })]
-            )
+            format_parenthesize(self.first_token(), &format_node, self.last_token()).fmt(f)
         } else {
             write!(f, [format_node])
         }

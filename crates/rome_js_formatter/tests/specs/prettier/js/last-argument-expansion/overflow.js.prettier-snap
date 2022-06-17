@@ -1,7 +1,7 @@
 SuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLongCall(
   (err, result) => {
     // comment
-  }
+  },
 );
 
 func(one, two, three, four, five, six, seven, eig, is, this, too, long, no, []);
@@ -19,7 +19,7 @@ func(
   too,
   long,
   yes,
-  []
+  [],
 );
 func(one, two, three, four, five, six, seven, eig, is, this, too, long, yes, [
   // Comments
@@ -43,7 +43,7 @@ func(
   too,
   long,
   yes,
-  {}
+  {},
 );
 func(one, two, three, four, five, six, seven, eig, is, this, too, long, yes, {
   // Comments
@@ -64,8 +64,8 @@ foo(
     eleven,
     twelve,
     thirteen,
-    fourteen
-  ) => {}
+    fourteen,
+  ) => {},
 );
 
 const contentTypes = function (tile, singleSelection) {
@@ -75,7 +75,7 @@ const contentTypes = function (tile, singleSelection) {
     filteredContentTypes = [],
     contentTypesArray = [],
     selectedGroup,
-    singleSelection
+    singleSelection,
   ) {
     selectedGroup = (tile.state && tile.state.group) || selectedGroup;
   });

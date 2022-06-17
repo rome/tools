@@ -2,9 +2,9 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::FormatNodeFields;
-use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken};
 
 impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
     fn fmt_fields(node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
@@ -82,9 +82,9 @@ fn write_consequent_block(f: &mut JsFormatter, stmt: JsAnyStatement) -> FormatRe
         f,
         [
             space_token(),
-            token("{"),
+            format_inserted(JsSyntaxKind::L_CURLY),
             block_indent(&stmt.format()),
-            token("}"),
+            format_inserted(JsSyntaxKind::R_CURLY)
         ]
     ]
 }

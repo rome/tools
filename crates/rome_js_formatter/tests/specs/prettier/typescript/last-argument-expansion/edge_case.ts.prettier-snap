@@ -6,5 +6,5 @@ var listener = DOM.listen(
     BanzaiLogger.log(config, {
       ...logData,
       ...DataStore.get(event.getNode(sigil)),
-    })
+    }),
 );

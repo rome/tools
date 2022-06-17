@@ -3,6 +3,7 @@
 mod ast;
 mod css_kinds_src;
 mod formatter;
+mod generate_analyzer;
 mod generate_macros;
 mod generate_node_factory;
 mod generate_nodes;
@@ -23,6 +24,7 @@ use xtask::{glue::fs2, Mode, Result};
 
 pub use self::ast::generate_ast;
 pub use self::formatter::generate_formatter;
+pub use self::generate_analyzer::generate_analyzer;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
 

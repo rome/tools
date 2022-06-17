@@ -61,5 +61,5 @@ type Comments =
 	// leading type
 	A
 	| B /*
-trailing type */ ;
+trailing type */;
 

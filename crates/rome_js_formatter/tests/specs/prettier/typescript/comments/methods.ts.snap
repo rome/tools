@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: methods.ts
-
 ---
 # Input
 ```js
@@ -105,9 +103,9 @@ export class Point {
    */
   mismatchedIndentation() {}
 
-  inline /* foo*/ ( /* bar */ ) /* baz */ {}
+  inline /* foo*/ (/* bar */) /* baz */ {}
 
-  noBody( /* comment */ arg);
+  noBody(/* comment */ arg);
 }
 
 ```

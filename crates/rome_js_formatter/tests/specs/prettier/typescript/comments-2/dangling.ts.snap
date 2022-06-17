@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: dangling.ts
-
 ---
 # Input
 ```js
@@ -14,7 +12,7 @@ declare class Foo extends Qux<string> {/* dangling */}
 
 # Output
 ```js
-Thing?.( /* dangling */ );
+Thing?.(/* dangling */);
 declare class Foo extends Qux<string> {
   /* dangling */
 }

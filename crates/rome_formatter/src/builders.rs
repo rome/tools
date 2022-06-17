@@ -8,23 +8,6 @@ use std::borrow::Cow;
 use std::cell::Cell;
 use std::marker::PhantomData;
 
-/// A no-op element.
-///
-/// Doesn't write any content. Useful in combination with `format_replaced` to remove a token but
-/// still format its comments.
-pub const fn empty_element() -> Empty {
-    Empty
-}
-
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
-pub struct Empty;
-
-impl<Context> Format<Context> for Empty {
-    fn fmt(&self, _: &mut Formatter<Context>) -> FormatResult<()> {
-        Ok(())
-    }
-}
-
 /// A line break that only gets printed if the enclosing `Group` doesn't fit on a single line.
 /// It's omitted if the enclosing `Group` fits on a single line.
 /// A soft line break is identical to a hard line break when not enclosed inside of a `Group`.
@@ -500,21 +483,21 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 /// );
 /// ```
 #[inline]
-pub fn comment<Content, Context>(content: &Content) -> Comment<Context>
+pub fn comment<Content, Context>(content: &Content) -> FormatComment<Context>
 where
     Content: Format<Context>,
 {
-    Comment {
+    FormatComment {
         content: Argument::new(content),
     }
 }
 
 #[derive(Copy, Clone)]
-pub struct Comment<'a, Context> {
+pub struct FormatComment<'a, Context> {
     content: Argument<'a, Context>,
 }
 
-impl<Context> Format<Context> for Comment<'_, Context> {
+impl<Context> Format<Context> for FormatComment<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
@@ -525,7 +508,7 @@ impl<Context> Format<Context> for Comment<'_, Context> {
     }
 }
 
-impl<Context> std::fmt::Debug for Comment<'_, Context> {
+impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("Comment").field(&"{{content}}").finish()
     }
@@ -1712,7 +1695,7 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
         for variant in variants {
             buffer.write_fmt(Arguments::from(&*variant))?;
 
-            formatted_variants.push(buffer.take());
+            formatted_variants.push(buffer.take_element());
         }
 
         // SAFETY: The constructor guarantees that there are always at least two variants. It's, therefore,

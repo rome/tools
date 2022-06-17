@@ -1,0 +1,18 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: binary-expr.ts
+---
+# Input
+```js
+new A < B >
+C
+
+```
+
+# Output
+```js
+new A() < B > C;
+
+```
+
+

@@ -1,5 +1,9 @@
 # Rome changelog
 
+## 0.6.1
+
+Fixes a regression introduced in the `rome format` command ([#2670](https://github.com/rome/tools/issues/2670))
+
 ## 0.6.0
 
 ### Formatter
@@ -24,7 +28,7 @@ Correctly choose the correct quote based on quantity of quotes inside a literal:
   let a = {
     something: 3
   }
-  let b = "cool ins't it";   
+  let b = "cool isn't it";   
   let c = '"content" \' ';
   ```
 - Better formatting of various statements

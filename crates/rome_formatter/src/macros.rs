@@ -84,7 +84,7 @@ macro_rules! write {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// dbg_write!(&mut buffer, [token("Hello")]).unwrap();
+/// dbg_write!(buffer, [token("Hello")]).unwrap();
 /// // ^-- prints: [src/main.rs:7][0] = StaticToken("Hello")
 ///
 /// assert_eq!(buffer.into_element(), FormatElement::Token(Token::Static { text: "Hello" }));
@@ -96,8 +96,9 @@ macro_rules! write {
 #[macro_export]
 macro_rules! dbg_write {
     ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
+        use $crate::BufferExtensions;
         let mut count = 0;
-        let mut inspect = $crate::Inspect::new($dst, |element: &FormatElement| {
+        let mut inspect = $dst.inspect(|element: &FormatElement| {
             std::eprintln!(
                 "[{}:{}][{}] = {element:#?}",
                 std::file!(), std::line!(), count
@@ -146,9 +147,7 @@ macro_rules! format {
 ///
 /// ## Examples
 ///
-///  Temporarily ignored because [BestFitting] needs to be adjusted due to the
-/// `fits_element_on_line` changes in https://github.com/rome/tools/pull/2645
-/// ```ignore
+/// ```
 /// use rome_formatter::{Formatted, LineWidth, format, format_args};
 /// use rome_formatter::prelude::*;
 ///
@@ -238,10 +237,20 @@ macro_rules! format {
 /// * The worst case complexity is that the printer tires each variant. This can result in quadratic
 ///   complexity if used in nested structures.
 ///
-/// ## Prettier
-/// This IR is similar to Prettier's `ConditionalGroupContent` IR. It provides the same functionality but
+/// ## Behavior
+/// This IR is similar to Prettier's `conditionalGroup`. It provides similar functionality but
 /// differs in that Prettier automatically wraps each variant in a `Group`. Rome doesn't do so.
 /// You can wrap the variant content in a group if you want to use soft line breaks.
+/// Unlike in Prettier, the printer will try to fit **only the first variant** in [`Flat`] mode,
+/// then it will try to fit the rest of the variants in [`Expanded`] mode.
+///
+/// A variant that is measured in [`Expanded`] mode will be considered to fit if it can be printed without
+/// overflowing the current line with all of its inner groups expanded. Those inner groups could still end
+/// up being printed in flat mode if they fit on the line while printing. But there is currently no way
+/// to enforce that a specific group inside a variant must be flat when measuring if that variant fits.
+///
+/// [`Flat`]: crate::format_element::PrintMode::Flat
+/// [`Expanded`]: crate::format_element::PrintMode::Expanded
 #[macro_export]
 macro_rules! best_fitting {
     ($least_expanded:expr, $($tail:expr),+ $(,)?) => {{
@@ -304,5 +313,112 @@ mod tests {
                 FormatElement::Token(Token::Static { text: "test" })
             ]))
         );
+    }
+
+    #[test]
+    fn best_fitting_variants_print_as_lists() {
+        use crate::prelude::*;
+        use crate::{format, format_args, Formatted};
+
+        // The second variant below should be selected when printing at a width of 30
+        let formatted_best_fitting = format!(
+            SimpleFormatContext::default(),
+            [
+                token("aVeryLongIdentifier"),
+                soft_line_break_or_space(),
+                best_fitting!(
+                    format_args!(token(
+                        "Something that will not fit on a 30 character print width."
+                    ),),
+                    format_args![
+                        token("Start"),
+                        soft_line_break(),
+                        &group_elements(&soft_block_indent(&format_args![
+                            token("1,"),
+                            soft_line_break_or_space(),
+                            token("2,"),
+                            soft_line_break_or_space(),
+                            token("3"),
+                        ])),
+                        soft_line_break_or_space(),
+                        &soft_block_indent(&format_args![
+                            token("1,"),
+                            soft_line_break_or_space(),
+                            token("2,"),
+                            soft_line_break_or_space(),
+                            group_elements(&format_args!(
+                                token("A,"),
+                                soft_line_break_or_space(),
+                                token("B")
+                            )),
+                            soft_line_break_or_space(),
+                            token("3")
+                        ]),
+                        soft_line_break_or_space(),
+                        token("End")
+                    ],
+                    format_args!(token("Most"), hard_line_break(), token("Expanded"))
+                )
+            ]
+        )
+        .unwrap();
+
+        // This matches the IR above except that the `best_fitting` was replaced with
+        // the contents of its second variant.
+        let formatted_normal_list = format!(
+            SimpleFormatContext::default(),
+            [
+                token("aVeryLongIdentifier"),
+                soft_line_break_or_space(),
+                format_args![
+                    token("Start"),
+                    soft_line_break(),
+                    &group_elements(&soft_block_indent(&format_args![
+                        token("1,"),
+                        soft_line_break_or_space(),
+                        token("2,"),
+                        soft_line_break_or_space(),
+                        token("3"),
+                    ])),
+                    soft_line_break_or_space(),
+                    &soft_block_indent(&format_args![
+                        token("1,"),
+                        soft_line_break_or_space(),
+                        token("2,"),
+                        soft_line_break_or_space(),
+                        group_elements(&format_args!(
+                            token("A,"),
+                            soft_line_break_or_space(),
+                            token("B")
+                        )),
+                        soft_line_break_or_space(),
+                        token("3")
+                    ]),
+                    soft_line_break_or_space(),
+                    token("End")
+                ],
+            ]
+        )
+        .unwrap();
+
+        let best_fitting_code = Formatted::new(
+            formatted_best_fitting.into_format_element(),
+            PrinterOptions::default().with_print_width(30.try_into().unwrap()),
+        )
+        .print()
+        .as_code()
+        .to_string();
+
+        let normal_list_code = Formatted::new(
+            formatted_normal_list.into_format_element(),
+            PrinterOptions::default().with_print_width(30.try_into().unwrap()),
+        )
+        .print()
+        .as_code()
+        .to_string();
+
+        // The variant that "fits" will print its contents as if it were a normal list
+        // outside of a BestFitting element.
+        assert_eq!(best_fitting_code, normal_list_code);
     }
 }

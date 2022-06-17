@@ -1,3 +1,6 @@
 * text=auto eol=lf
 crates/rome_js_parser/src/lexer/tables.rs linguist-generated=true text=auto eol=lf
 **/generated/* linguist-generated=true text=auto eol=lf
+crates/rome_js_analyze/src/analyzers.rs linguist-generated=true text=auto eol=lf
+crates/rome_js_analyze/src/assists.rs linguist-generated=true text=auto eol=lf
+crates/rome_js_analyze/src/registry.rs linguist-generated=true text=auto eol=lf

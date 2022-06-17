@@ -1,7 +1,7 @@
 var abstract;
 class X {}
 
-const abstract;
+const abstract = 1;
 class Y {}
 
 export let abstract;

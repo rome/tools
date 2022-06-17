@@ -3,6 +3,6 @@ instantiate(game, [
   render_colored_diffuse(
     game.MaterialDiffuse,
     game.Meshes["monkey_flat"],
-    [1, 1, 0.3, 1]
+    [1, 1, 0.3, 1],
   ),
 ]);

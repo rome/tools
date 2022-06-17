@@ -27,7 +27,7 @@ impl FormatNodeFields<JsModule> for FormatNodeRule<JsModule> {
             f,
             [
                 items.format(),
-                format_replaced(&eof_token?, &empty_element()),
+                format_removed(&eof_token?),
                 hard_line_break()
             ]
         )

@@ -16,7 +16,7 @@ const foo = {
 # Output
 ```js
 const foo = {
-  a: "a" /* comment for this line */ ,
+  a: "a" /* comment for this line */,
 
   /* Section B */
   b: "b",
