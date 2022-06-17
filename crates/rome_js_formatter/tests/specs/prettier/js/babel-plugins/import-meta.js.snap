@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: import-meta.js
 ---
 # Input
@@ -41,7 +42,8 @@ expression: import-meta.js
 
   const image = new Image();
   image.src = URL.createObjectURL(blob);
-  image.width = image.height = size;
+  image.width = image.height =
+    size;
 
   document.body.appendChild(image);
 })();

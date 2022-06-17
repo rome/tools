@@ -109,3 +109,10 @@ render =  withGraphQLQuery(
 loadNext = (stateIsOK && hasNext) || {
     skipNext: true,
 };
+
+// chain and chain tail where it breaks
+bifornCringerMoshedPerplex = bifornCringerMoshedPerplexSawder = arrayOfNumb = a = "test"
+
+// chain and chain tail where it doesn't break
+loreum = ipsum = arrayOfNumb = a = "test"
+

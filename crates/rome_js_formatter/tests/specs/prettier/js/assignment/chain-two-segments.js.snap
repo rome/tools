@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: chain-two-segments.js
 ---
 # Input
@@ -14,11 +15,12 @@ tt.parenR.updateContext = tt.braceR.updateContext = function () {
 
 # Output
 ```js
-tt.parenR.updateContext = tt.braceR.updateContext = function () {
-  if (this.state.context.length === 1) {
-    return;
-  }
-};
+tt.parenR.updateContext = tt.braceR.updateContext =
+  function () {
+    if (this.state.context.length === 1) {
+      return;
+    }
+  };
 
 ```
 

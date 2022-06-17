@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: assignment.js
 ---
 # Input
@@ -114,6 +115,14 @@ render =  withGraphQLQuery(
 loadNext = (stateIsOK && hasNext) || {
     skipNext: true,
 };
+
+// chain and chain tail where it breaks
+bifornCringerMoshedPerplex = bifornCringerMoshedPerplexSawder = arrayOfNumb = a = "test"
+
+// chain and chain tail where it doesn't break
+loreum = ipsum = arrayOfNumb = a = "test"
+
+
 =============================
 # Outputs
 ## Output 1
@@ -243,9 +252,8 @@ bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumbers = {
 	a: 10,
 };
 bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder =
-	bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawderArrayNumbes = {
-		a: 10,
-	};
+	bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawderArrayNumbes =
+		{ a: 10 };
 fn = fn();
 this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line =
 	orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig();
@@ -279,6 +287,16 @@ render = withGraphQLQuery("node(1234567890){image{uri}}", function (
 loadNext = (stateIsOK && hasNext) || {
 	skipNext: true,
 };
+
+// chain and chain tail where it breaks
+bifornCringerMoshedPerplex =
+	bifornCringerMoshedPerplexSawder =
+	arrayOfNumb =
+	a =
+		"test";
+
+// chain and chain tail where it doesn't break
+loreum = ipsum = arrayOfNumb = a = "test";
 
 
 ## Lines exceeding width of 80 characters
