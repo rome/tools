@@ -15,6 +15,9 @@ pub(crate) fn format_assignment_like(
 ) -> FormatResult<()> {
     let right = assignment_like.right()?;
     let format_content = format_with(|f| {
+        // Compare name only if we are in a position of computing it.
+        // If not (for example, left is not an identifier), then let's fallback to false,
+        // so we can continue the chain of checks
         let is_left_short = assignment_like.write_left(f)?;
         assignment_like.write_operator(f)?;
 
