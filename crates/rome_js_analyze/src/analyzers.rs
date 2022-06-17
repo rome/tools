@@ -18,6 +18,8 @@ mod no_sparse_array;
 pub(crate) use no_sparse_array::NoSparseArray;
 mod no_unused_template_literal;
 pub(crate) use no_unused_template_literal::NoUnusedTemplateLiteral;
+mod use_block_statements;
+pub(crate) use use_block_statements::UseBlockStatements;
 mod use_self_closing_elements;
 pub(crate) use use_self_closing_elements::UseSelfClosingElements;
 mod use_single_case_statement;

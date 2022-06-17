@@ -1,3 +1,5 @@
+use rome_analyze::context::RuleContext;
+use rome_analyze::{ActionCategory, Rule, RuleAction, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::{Applicability, Severity};
 use rome_js_factory::make;
@@ -8,8 +10,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeExt, SyntaxResult, SyntaxToken};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use crate::JsRuleAction;
 
 pub(crate) enum UseBlockStatements {}
 
@@ -20,7 +21,8 @@ impl Rule for UseBlockStatements {
     type Query = JsAnyStatement;
     type State = Vec<JsAnyStatement>;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query();
         match node {
             JsAnyStatement::JsIfStatement(stmt) => {
                 let JsIfStatementFields {
@@ -88,37 +90,42 @@ impl Rule for UseBlockStatements {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic {
-            severity: Severity::Error,
-            message: markup! {
-                "Block statements are preferred in this position."
-            }
-            .to_owned(),
-            range: if state.len() == 1 {
-                state[0].range()
-            } else {
-                node.range()
-            },
-        })
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+        None
+        // Some(RuleDiagnostic:: {
+        //     severity: Severity::Error,
+        //     message: markup! {
+        //         "Block statements are preferred in this position."
+        //     }
+        //     .to_owned(),
+        //     range: if state.len() == 1 {
+        //         state[0].range()
+        //     } else {
+        //         node.range()
+        //     },
+        // })
     }
 
     fn action(
-        root: JsAnyRoot,
-        node: &Self::Query,
+        ctx: &RuleContext<Self>,
         nodes_need_to_replaced: &Self::State,
-    ) -> Option<RuleAction> {
+    ) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let root = ctx.root();
         let mut next_node = node.clone();
         // let mut root = root;
         for node in nodes_need_to_replaced.iter() {
-            next_node = next_node.replace_node(
-                node.clone(),
-                JsAnyStatement::JsBlockStatement(make::js_block_statement(
-                    SyntaxToken::new_detached(T!['{'], "{", [], []),
-                    make::js_statement_list(std::iter::once(node.clone())),
-                    SyntaxToken::new_detached(T!['}'], "}", [], []),
-                )),
-            ).unwrap();
+            next_node = next_node
+                .replace_node(
+                    node.clone(),
+                    JsAnyStatement::JsBlockStatement(make::js_block_statement(
+                        SyntaxToken::new_detached(T!['{'], "{", [], []),
+                        make::js_statement_list(std::iter::once(node.clone())),
+                        SyntaxToken::new_detached(T!['}'], "}", [], []),
+                    )),
+                )
+                .unwrap();
         }
         let root = root.replace_node(node.clone(), next_node)?;
         println!("{}\n------------------------------", root);

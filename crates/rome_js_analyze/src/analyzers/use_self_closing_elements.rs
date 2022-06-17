@@ -1,4 +1,4 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -16,7 +16,8 @@ impl Rule for UseSelfClosingElements {
     type Query = JsxElement;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query();
         if n.children().is_empty() {
             Some(())
         } else {
@@ -24,7 +25,8 @@ impl Rule for UseSelfClosingElements {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -33,7 +35,9 @@ impl Rule for UseSelfClosingElements {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let root = ctx.root();
         let open_element = node.opening_element().ok()?;
         let JsxOpeningElementFields {
             l_angle_token,
