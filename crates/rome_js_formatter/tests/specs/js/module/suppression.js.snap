@@ -62,7 +62,7 @@ const expr =
 
 const expr2 = {
 	key:
-	// rome-ignore format: only skip formatting the value
+		// rome-ignore format: only skip formatting the value
         'single quoted string',
 };
 

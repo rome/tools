@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use std::cell::RefCell;
 use std::marker::PhantomData;
-use std::rc::Rc;
 
 use crate::{write, Buffer, VecBuffer};
 
@@ -145,7 +144,7 @@ impl<T, Context> MemoizeFormat<Context> for T where T: Format<Context> {}
 #[derive(Debug)]
 pub struct Memoized<F, Context> {
     inner: F,
-    memory: RefCell<Option<FormatResult<Rc<FormatElement>>>>,
+    memory: RefCell<Option<FormatResult<FormatElement>>>,
     options: PhantomData<Context>,
 }
 
@@ -171,7 +170,7 @@ where
         if let Some(memory) = self.memory.borrow().as_ref() {
             return match memory {
                 Ok(elements) => {
-                    f.write_element(FormatElement::Rc(elements.clone()))?;
+                    f.write_element(elements.clone())?;
 
                     Ok(())
                 }
@@ -185,9 +184,11 @@ where
         match result {
             Ok(_) => {
                 let elements = buffer.into_element();
-                let reference = Rc::new(elements);
-                f.write_element(FormatElement::Rc(reference.clone()))?;
-                *self.memory.borrow_mut() = Some(Ok(reference));
+                let interned = elements.intern();
+
+                f.write_element(interned.clone())?;
+
+                *self.memory.borrow_mut() = Some(Ok(interned));
 
                 Ok(())
             }

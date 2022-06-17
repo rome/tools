@@ -13,11 +13,10 @@ state = {
 
 # Output
 ```js
-state =
-  {
-    // students
-    hoverColumn: -1,
-  };
+state = {
+  // students
+  hoverColumn: -1,
+};
 
 ```
 

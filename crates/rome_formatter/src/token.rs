@@ -901,7 +901,7 @@ where
                         //  Write a space for all other cases
                         _ => space_token().fmt(f)?,
                     }
-                    comment.piece().fmt(f)?;
+                    comment.piece().fmt(f)
                 } else {
                     write![
                         f,
@@ -909,10 +909,8 @@ where
                             line_suffix(&format_args![space_token(), comment.piece()]),
                             expand_parent()
                         ]
-                    ]?;
+                    ]
                 }
-
-                Ok(())
             });
 
             crate::comment(&content).fmt(f)?;

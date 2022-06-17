@@ -451,8 +451,7 @@ async function bar2() {
   /* foo */
 );
 !(
-  x =
-    y // foo
+  x = y // foo
 );
 
 !x.y;
