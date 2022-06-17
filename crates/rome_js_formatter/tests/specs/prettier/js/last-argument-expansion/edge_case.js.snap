@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: edge_case.js
 ---
 # Input
@@ -78,12 +77,12 @@ a(
 
 exports.examples = [
   {
-    render: withGraphQLQuery(
-      "node(1234567890){image{uri}}",function (
+    render: withGraphQLQuery("node(1234567890){image{uri}}", function (
       container,
-        data,) {
-        return (
-          <div>
+      data,
+    ) {
+      return (
+        <div>
             <InlineBlock>
               <img
                 src={data[1234567890].image.uri}
@@ -91,10 +90,9 @@ exports.examples = [
               />
             </InlineBlock>
           </div>
-        );
-      }),
-    },
-
+      );
+    }),
+  },
 ];
 
 someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a(

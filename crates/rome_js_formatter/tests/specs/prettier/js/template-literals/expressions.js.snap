@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: expressions.js
 ---
 # Input
@@ -131,9 +130,9 @@ throw new Error(
    10: const foo = `such a long template string ${foo.bar.baz} that prettier will want to wrap it`;
    12: const shouldWrapForNow = `such a long template string ${foo().bar.baz} that prettier will want to wrap it`;
    20:     `Covered Lines below threshold: ${coverageSettings.lines}%. Actual: ${coverageSummary.total.lines.pct}%`,
-   34:       return `${process.env.OPENID_URL}/something/something/something?${Object.keys(
-   44:   `Trying update appcast for ${app.name} (${app.cask.appcast}) -> (${app.cask.appcastGenerated})`,
-   52:   `\nApparently jetbrains changed the release artifact for ${app.name}@${app.jetbrains.version}.\n`,
-   63:   `pretty-format: Option "theme" has a key "${key}" whose value "${value}" is undefined in ansi-styles.`,
+   33:       return `${process.env.OPENID_URL}/something/something/something?${Object.keys(
+   43:   `Trying update appcast for ${app.name} (${app.cask.appcast}) -> (${app.cask.appcastGenerated})`,
+   51:   `\nApparently jetbrains changed the release artifact for ${app.name}@${app.jetbrains.version}.\n`,
+   62:   `pretty-format: Option "theme" has a key "${key}" whose value "${value}" is undefined in ansi-styles.`,
 ```
 
