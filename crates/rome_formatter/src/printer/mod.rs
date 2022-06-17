@@ -8,7 +8,6 @@ use crate::format_element::{
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
-use crate::prelude::CommentPosition;
 use rome_rowan::TextSize;
 use std::iter::{once, Rev};
 
@@ -224,7 +223,7 @@ impl<'a> Printer<'a> {
 
                     // Fit's only tests if groups up to the first line break fit.
                     // The next group must re-measure if it still fits.
-                    self.state.measured_group_fits = !args.in_leading_comment;
+                    self.state.measured_group_fits = false;
                 }
             }
 
@@ -238,7 +237,7 @@ impl<'a> Printer<'a> {
                 self.queue_line_suffixes(HARD_BREAK, args, queue);
             }
 
-            FormatElement::Comments { content, .. } => {
+            FormatElement::Comment(content) => {
                 queue.extend(content.iter().map(|e| PrintElementCall::new(e, args)))
             }
 
@@ -540,32 +539,6 @@ impl PrinterState<'_> {
 struct PrintElementArgs {
     indent: u16,
     mode: PrintMode,
-
-    /// `true` if the printer is inside of a leading comments block at the start of a line.
-    /// The information is necessary to avoid that a leading comment with a line break, breaks the group
-    /// of the token:
-    ///
-    /// ```javascript
-    /// /* This comment should not expand `[]` */
-    /// []
-    /// ```
-    ///
-    /// The IR for the code roughly is (assuming that `[]` doesn't use `FormatDelimited`):
-    ///
-    /// ```plain
-    /// group_elements(
-    ///   comments(token("/* This comment... "), hard_line_break()),
-    ///   token("["),
-    ///   token("]"),
-    /// )
-    /// ```
-    ///
-    /// The important part is that the `comments` are part of the `group_elements` because the comments
-    /// are formatted as part of the `[` token that is part of the group.
-    ///
-    /// The printer should ignore line breaks in leading comments at the start of the line when
-    /// deciding if a group fits on the line or not.
-    in_leading_comment: bool,
 }
 
 impl PrintElementArgs {
@@ -585,11 +558,6 @@ impl PrintElementArgs {
         self.mode = mode;
         self
     }
-
-    pub fn with_in_leading_comment(mut self, in_leading_comment: bool) -> Self {
-        self.in_leading_comment = in_leading_comment;
-        self
-    }
 }
 
 impl Default for PrintElementArgs {
@@ -597,7 +565,6 @@ impl Default for PrintElementArgs {
         Self {
             indent: 0,
             mode: PrintMode::Expanded,
-            in_leading_comment: false,
         }
     }
 }
@@ -751,15 +718,7 @@ fn fits_element_on_line<'a, 'rest>(
                     }
                     LineMode::Soft => {}
                     LineMode::Hard | LineMode::Empty => {
-                        // Line breaks inside a multiline block comment are OK if this is a leading comment at
-                        // the beginning of the line.
-                        if args.in_leading_comment {
-                            state.pending_space = false;
-                            state.pending_indent = args.indent;
-                            state.line_width = 0;
-                        } else {
-                            return Fits::No;
-                        }
+                        return Fits::No;
                     }
                 }
             } else {
@@ -806,32 +765,12 @@ fn fits_element_on_line<'a, 'rest>(
             for c in token.chars() {
                 let char_width = match c {
                     '\t' => options.tab_width,
-                    '\n' => match args.mode {
-                        PrintMode::Flat => {
-                            // Special handling for leading comments at the start of a new line.
-                            // Prevents that a leading line comment expands the token's enclosing group.
-                            //
-                            // ```javascript
-                            // /* a comment */
-                            // [1]
-                            // ```
-                            //
-                            // The `/* a comment */` belongs to the `[` group token that is part of a group wrapping the whole
-                            // `[1]` expression. This branch treats the `/* a comment */` as if it is outside of the group element
-                            // to avoid that the `[1]` group expands because of the line break at the end of the comment.
-                            if args.in_leading_comment {
-                                state.line_width = 0;
-                                state.pending_space = false;
-                                state.pending_indent = args.indent;
-                                continue;
-                            } else {
-                                return Fits::No;
-                            }
+                    '\n' => {
+                        return match args.mode {
+                            PrintMode::Flat => Fits::No,
+                            PrintMode::Expanded => Fits::Yes,
                         }
-                        PrintMode::Expanded => {
-                            return Fits::Yes;
-                        }
-                    },
+                    }
                     _ => 1,
                 };
                 state.line_width += char_width as usize;
@@ -854,14 +793,9 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Comments { content, position } => queue.extend(content.iter().map(|e| {
-            PrintElementCall::new(
-                e,
-                args.with_in_leading_comment(
-                    *position == CommentPosition::Leading && state.line_width == 0,
-                ),
-            )
-        })),
+        FormatElement::Comment(content) => {
+            queue.extend(content.iter().map(|e| PrintElementCall::new(e, args)))
+        }
 
         FormatElement::Verbatim(verbatim) => {
             queue.enqueue(PrintElementCall::new(&verbatim.element, args))
@@ -1239,14 +1173,11 @@ two lines`,
                 token("]")
             ]),
             token(";"),
-            comments(
-                &line_suffix(&format_args![
-                    space_token(),
-                    token("// trailing"),
-                    space_token()
-                ]),
-                CommentPosition::Trailing
-            )
+            comment(&line_suffix(&format_args![
+                space_token(),
+                token("// trailing"),
+                space_token()
+            ]),)
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")

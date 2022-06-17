@@ -761,31 +761,26 @@ where
     S: CommentStyle,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
-        if self.comments.is_empty() {
-            return Ok(());
-        }
+        for (index, comment) in self.comments.iter().enumerate() {
+            if f.state().is_comment_formatted(comment.piece()) {
+                continue;
+            }
 
-        let format_comments = format_with(|f| {
-            for (index, comment) in self.comments.iter().enumerate() {
-                if f.state().is_comment_formatted(comment.piece()) {
-                    continue;
-                }
+            let is_line_comment = self
+                .options
+                .style
+                .get_comment_kind(comment.piece())
+                .is_line();
+            let lines_after = self
+                .comments
+                .get(index + 1)
+                .map(|comment| comment.lines_before())
+                .unwrap_or_else(|| match self.options.trim_mode {
+                    TriviaPrintMode::Full => self.lines_before_token,
+                    TriviaPrintMode::Trim => 0,
+                });
 
-                let is_line_comment = self
-                    .options
-                    .style
-                    .get_comment_kind(comment.piece())
-                    .is_line();
-
-                let lines_after = self
-                    .comments
-                    .get(index + 1)
-                    .map(|comment| comment.lines_before())
-                    .unwrap_or_else(|| match self.options.trim_mode {
-                        TriviaPrintMode::Full => self.lines_before_token,
-                        TriviaPrintMode::Trim => 0,
-                    });
-
+            let format_content = format_with(|f| {
                 if comment.lines_before() > 0 && index == 0 {
                     write!(f, [hard_line_break()])?;
                 } else {
@@ -809,11 +804,14 @@ where
                         _ => write!(f, [empty_line()])?,
                     }
                 };
-            }
-            Ok(())
-        });
 
-        write!(f, [comments(&format_comments, CommentPosition::Leading)])
+                Ok(())
+            });
+
+            write!(f, [crate::comment(&format_content)])?;
+        }
+
+        Ok(())
     }
 }
 
@@ -886,23 +884,16 @@ where
         let comments = self.comments.clone();
         let mut last_inline_comment = false;
 
-        let mut comments = comments.enumerate().peekable();
-        let is_empty = comments.peek().is_none();
+        for (index, comment) in comments.enumerate() {
+            if !self.skip_formatted_check && f.state().is_comment_formatted(comment.piece()) {
+                continue;
+            }
 
-        if is_empty {
-            return Ok(());
-        }
+            let kind = self.style.get_comment_kind(comment.piece());
+            last_inline_comment = kind.is_inline();
+            let is_single_line = kind.is_line();
 
-        let format_comments = format_once(|f| {
-            for (index, comment) in comments {
-                if !self.skip_formatted_check && f.state().is_comment_formatted(comment.piece()) {
-                    continue;
-                }
-
-                let kind = self.style.get_comment_kind(comment.piece());
-                last_inline_comment = kind.is_inline();
-                let is_single_line = kind.is_line();
-
+            let content = format_with(|f| {
                 if !is_single_line {
                     match self.token_kind {
                         // Don't write a space if this is a group start token and it isn't the first trailing comment
@@ -910,7 +901,7 @@ where
                         //  Write a space for all other cases
                         _ => space_token().fmt(f)?,
                     }
-                    comment.piece().fmt(f)?;
+                    comment.piece().fmt(f)
                 } else {
                     write![
                         f,
@@ -918,16 +909,16 @@ where
                             line_suffix(&format_args![space_token(), comment.piece()]),
                             expand_parent()
                         ]
-                    ]?;
+                    ]
                 }
-            }
+            });
 
-            Ok(())
-        });
+            crate::comment(&content).fmt(f)?;
+        }
 
-        crate::comments(&format_comments, CommentPosition::Trailing).fmt(f)?;
         f.state_mut()
             .set_last_content_is_inline_comment(last_inline_comment);
+
         Ok(())
     }
 }

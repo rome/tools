@@ -55,13 +55,10 @@ pub enum FormatElement {
     LineSuffixBoundary,
 
     /// Special semantic element letting the printer and formatter know this is
-    /// a comment content block, and it should only have a limited influence on the
+    /// a comment content, and it should only have a limited influence on the
     /// formatting (for instance line breaks contained within will not cause
-    /// the parent group to break if this element is at the start of a line).
-    Comments {
-        content: Box<[FormatElement]>,
-        position: CommentPosition,
-    },
+    /// the parent group to break if this element is at the start of it).
+    Comment(Box<[FormatElement]>),
 
     /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
     Verbatim(Verbatim),
@@ -73,12 +70,6 @@ pub enum FormatElement {
     /// Reference counted format element content. Useful when the same content must be emitted twice
     /// because it avoids deep cloning of the inner content and instead only requires bumping a ref counter.
     Rc(Rc<FormatElement>),
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub enum CommentPosition {
-    Leading,
-    Trailing,
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
@@ -148,11 +139,7 @@ impl Debug for FormatElement {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
             FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
-            FormatElement::Comments { content, position } => fmt
-                .debug_struct("Comments")
-                .field("content", content)
-                .field("position", position)
-                .finish(),
+            FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
                 .field(&verbatim.element)
@@ -500,19 +487,14 @@ impl FormatElement {
             FormatElement::Space => false,
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Indent(content) => content.will_break(),
-            FormatElement::Group(group) => group.content.iter().any(FormatElement::will_break),
+            FormatElement::Group(Group { content, .. }) | FormatElement::Comment(content) => {
+                content.iter().any(FormatElement::will_break)
+            }
             FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
             FormatElement::Fill(fill) => fill.list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
-            FormatElement::Comments { content, position } => {
-                if *position == CommentPosition::Leading {
-                    false
-                } else {
-                    content.iter().any(FormatElement::will_break)
-                }
-            }
             FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
             FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
@@ -534,7 +516,7 @@ impl FormatElement {
             FormatElement::List(list) => {
                 list.iter().rev().find_map(|element| element.last_element())
             }
-            FormatElement::Line(_) | FormatElement::Comments { .. } => None,
+            FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
             FormatElement::Indent(indent) => indent.last_element(),
             FormatElement::Group(group) => group
