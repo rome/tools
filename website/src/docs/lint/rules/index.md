@@ -77,6 +77,13 @@ Disallow sparse arrays
 Disallow template literals if interpolation and special-character handling are not needed
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useBlockStatements">
+	<a href="/docs/lint/rules/useBlockStatements">useBlockStatements</a>
+	<a class="header-anchor" href="#useBlockStatements"></a>
+</h3>
+Block statements are preferred in this position.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSelfClosingElements">
 	<a href="/docs/lint/rules/useSelfClosingElements">useSelfClosingElements</a>
 	<a class="header-anchor" href="#useSelfClosingElements"></a>

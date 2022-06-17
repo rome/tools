@@ -18,14 +18,45 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// (1 >= -0)
+    ///  if (x) x;
     /// ```
     ///
-    /// ### Valid
+    /// ```js,expect_diagnostic
+    ///  if (x) {
+    ///    x;
+    ///  } else y;
+    /// ```
     ///
-    /// ```js
-    /// (1 >= 0)
-    ///```
+    /// ```js,expect_diagnostic
+    /// if (x) {
+    ///   x;
+    /// } else if (y) y;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///    for (;;);
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///    for (p in obj);
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///   for (x of xs);
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///   do;
+    ///   while (x);
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///    while (x);
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///   with (x);
+    /// ```
     pub(crate) UseBlockStatements = "useBlockStatements"
 }
 
