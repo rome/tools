@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: bracket_0.js
 ---
 # Input
@@ -23,7 +24,7 @@ function a() {
     queryThenMutateDOM(() => {
       title =
         SomeThing.call(root, "someLongStringThatPushesThisTextReallyFar")[0];
-    },);
+    });
   }
 }
 

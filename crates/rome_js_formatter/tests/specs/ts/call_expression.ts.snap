@@ -1,0 +1,34 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: call_expression.ts
+---
+# Input
+app.get("/", (req, res): void => {
+    res.send("Hello World!");
+})
+
+
+export class Thing implements OtherThing {
+    do: (type: Type) => Provider<Prop> = memoize(
+        (type: ObjectType): Provider<Opts> => {}
+    );
+}
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+app.get("/", (req, res): void => {
+	res.send("Hello World!");
+});
+
+export class Thing implements OtherThing {
+	do: (type: Type) => Provider<Prop> = memoize(
+		(type: ObjectType): Provider<Opts> => {},
+	);
+}
+

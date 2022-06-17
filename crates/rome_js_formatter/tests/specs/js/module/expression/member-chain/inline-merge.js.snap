@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: inline-merge.js
 ---
 # Input
@@ -31,8 +32,8 @@ _.flatMap(this.visibilityHandlers, (fn) => fn())
 Object.keys(
 	availableLocales({
 		test: true,
-	},),
+	}),
 ).forEach((locale) => {
 	// ...
-},);
+});
 

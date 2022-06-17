@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issues.js
 ---
 # Input
@@ -88,7 +89,7 @@ this.call(a, /* comment */ b);
 throw new ProcessSystemError({
   code: acc.error.code, // Alias of errno
   originalError: acc.error, // Just in case.
-},);
+});
 
 // Missing one level of indentation because of the comment
 const rootEpic = (actions, store) => (
@@ -97,7 +98,7 @@ const rootEpic = (actions, store) => (
     .catch((err, stream) => {
       getLogger().error(err);
       return stream;
-    },)
+    })
 );
 
 // optional trailing comma gets moved all the way to the beginning
@@ -149,7 +150,7 @@ const result = asyncExecute("non_existing_command", /* args */ []);
 // The closing paren is printed on the same line as the comment
 foo(
   {},
-  // Hi
+// Hi
 );
 
 ```

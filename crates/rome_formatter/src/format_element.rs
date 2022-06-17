@@ -5,6 +5,7 @@ use rome_rowan::SyntaxTokenText;
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
+use std::rc::Rc;
 
 type Content = Box<FormatElement>;
 
@@ -65,6 +66,10 @@ pub enum FormatElement {
     /// A list of different variants representing the same content. The printer picks the best fitting content.
     /// Line breaks inside of a best fitting don't propagate to parent groups.
     BestFitting(BestFitting),
+
+    /// Reference counted format element content. Useful when the same content must be emitted twice
+    /// because it avoids deep cloning of the inner content and instead only requires bumping a ref counter.
+    Rc(Rc<FormatElement>),
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
@@ -144,6 +149,7 @@ impl Debug for FormatElement {
                 best_fitting.fmt(fmt)
             }
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
+            FormatElement::Rc(inner) => inner.fmt(fmt),
         }
     }
 }
@@ -464,6 +470,7 @@ impl FormatElement {
     pub fn is_empty(&self) -> bool {
         match self {
             FormatElement::List(list) => list.is_empty(),
+            FormatElement::Rc(inner) => inner.is_empty(),
             _ => false,
         }
     }
@@ -491,6 +498,7 @@ impl FormatElement {
             FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
             FormatElement::ExpandParent => true,
+            FormatElement::Rc(inner) => inner.will_break(),
         }
     }
 

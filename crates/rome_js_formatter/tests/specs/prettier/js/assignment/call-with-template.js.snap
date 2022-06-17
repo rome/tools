@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: call-with-template.js
 ---
 # Input
@@ -25,11 +26,11 @@ const result = template(
 `,
 )({
   SOME_VAR: value,
-},);
+});
 
 const output = template(`function f() %%A%%`)({
   A: t.blockStatement([]),
-},);
+});
 
 ```
 

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: inline_merge.js
 ---
 # Input
@@ -30,10 +31,10 @@ var jqxhr = $.ajax("example.php")
 Object.keys(
   availableLocales({
     test: true,
-  },),
+  }),
 ).forEach((locale) => {
   // ...
-},);
+});
 
 this.layoutPartsToHide =
   this.utils.hashset(

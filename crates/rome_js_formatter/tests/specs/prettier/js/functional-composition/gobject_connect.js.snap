@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: gobject_connect.js
 ---
 # Input
@@ -21,13 +22,10 @@ app.connect(
 # Output
 ```js
 button.connect("clicked", () => doSomething());
-app.connect(
-  "activate",
-  async () => {
-    await data.load();
-    win.show_all();
-  },
-);
+app.connect("activate", async () => {
+  await data.load();
+  win.show_all();
+});
 
 ```
 
