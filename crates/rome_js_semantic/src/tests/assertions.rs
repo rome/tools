@@ -24,6 +24,17 @@ use std::collections::{BTreeMap, HashMap};
 /// let a/*#A*/ = 1;
 /// ```
 ///
+/// #### Read Assertion
+///
+/// Test if the attached token is reference "reading" the value of a symbol.
+/// Pattern: ```/*READ <LABEL> */
+///
+/// /// Example:
+/// ```js
+/// let a/*#A*/ = 1;
+/// let b = a/*READ A*/ + 1;
+/// ```
+///
 /// #### At Scope Assertion
 ///
 /// Test if the attached token is a declaration that lives inside the specified scope.

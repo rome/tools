@@ -2,15 +2,20 @@
 
 use std::collections::{HashMap, VecDeque};
 
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange, TextSize};
-use rome_rowan::syntax::Preorder;
+use rome_js_syntax::{
+    JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, JsSyntaxToken, TextRange,
+    TextSize,
+};
+use rome_rowan::{syntax::Preorder, SyntaxNodeCast};
+
+type StrHash = u64;
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
 #[derive(Debug)]
 pub enum SemanticEvent {
     /// Signifies that a new symbol declaration was found.
-    /// Currently is generated for:
+    /// Generated for:
     /// - Variable Declarations
     /// - Import bindings
     /// - Functions parameters
@@ -20,19 +25,21 @@ pub enum SemanticEvent {
     },
 
     /// Signifies that a symbol value is being read.
+    /// Generated for:
+    /// - All reference identifiers
     Read {
         range: TextRange,
         declaration_at: Option<TextRange>,
     },
 
     /// Signifies that a new scope was started
-    /// Currently generated for:
+    /// Generated for:
     /// - Blocks
     /// - Function body
     ScopeStarted { range: TextRange },
 
     /// Signifies that a new scope was ended
-    /// Currently generated for:
+    /// Generated for:
     /// - Blocks
     /// - Function body
     ScopeEnded {
@@ -94,17 +101,17 @@ impl SemanticEvent {
 pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
-    declared_names: HashMap<String, TextRange>,
+    declared_names: HashMap<StrHash, TextRange>,
 }
 
 struct ScopeDeclaration {
-    name: String,
+    name_hash: StrHash,
 }
 
 struct Scope {
     started_at: TextSize,
     declared: Vec<ScopeDeclaration>,
-    shadowed: Vec<(String, TextRange)>,
+    shadowed: Vec<(StrHash, TextRange)>,
 }
 
 impl SemanticEventExtractor {
@@ -122,11 +129,27 @@ impl SemanticEventExtractor {
         use rome_js_syntax::JsSyntaxKind::*;
 
         match node.kind() {
-            JS_IDENTIFIER_BINDING => self.declare_name(node),
-            JS_REFERENCE_IDENTIFIER => self.stash.push_back(SemanticEvent::Read {
-                range: node.text_range(),
-                declaration_at: self.get_name(node).cloned(),
-            }),
+            JS_IDENTIFIER_BINDING => {
+                if let Some(name_token) = node
+                    .clone()
+                    .cast::<JsIdentifierBinding>()
+                    .and_then(|id| id.name_token().ok())
+                {
+                    self.declare_name(&name_token);
+                }
+            }
+            JS_REFERENCE_IDENTIFIER => {
+                if let Some(name_token) = node
+                    .clone()
+                    .cast::<JsReferenceIdentifier>()
+                    .and_then(|reference| reference.value_token().ok())
+                {
+                    self.stash.push_back(SemanticEvent::Read {
+                        range: node.text_range(),
+                        declaration_at: self.get_declaration_range_of(&name_token).cloned(),
+                    })
+                }
+            }
 
             JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
@@ -193,7 +216,7 @@ impl SemanticEventExtractor {
 
             // remove all declarations
             for decl in scope.declared {
-                self.declared_names.remove(&decl.name);
+                self.declared_names.remove(&decl.name_hash);
             }
 
             // return all shadowed names
@@ -203,30 +226,50 @@ impl SemanticEventExtractor {
         }
     }
 
-    fn declare_name(&mut self, node: &JsSyntaxNode) {
-        let name = node.text_trimmed().to_string();
-        let declaration_range = node.text_range();
+    fn current_scope_mut(&mut self) -> &mut Scope {
+        // We should at least have the global scope
+        debug_assert!(!self.scopes.is_empty());
+
+        match self.scopes.last_mut() {
+            None => unreachable!(),
+            Some(scope) => scope,
+        }
+    }
+
+    fn declare_name(&mut self, name_token: &JsSyntaxToken) {
+        let name = name_token.text_trimmed();
+        let name_hash = Self::hash(name);
+
+        let declaration_range = name_token.text_range();
 
         // insert this name into the list of available names
-        // and get if any previous name is being shadowed
+        // and save shadowed names to be used later
         let shadowed = self
             .declared_names
-            .insert(name.clone(), declaration_range.clone())
-            .map(|shadowed_range| (name.clone(), shadowed_range));
+            .insert(name_hash, declaration_range.clone())
+            .map(|shadowed_range| (name_hash, shadowed_range));
 
-        let current_scope = self.scopes.last_mut().unwrap();
-        current_scope.declared.push(ScopeDeclaration { name });
+        let current_scope = self.current_scope_mut();
+        current_scope.declared.push(ScopeDeclaration { name_hash });
         current_scope.shadowed.extend(shadowed);
+        let scope_started_at = current_scope.started_at;
 
         self.stash.push_back(SemanticEvent::DeclarationFound {
-            range: node.text_range(),
-            scope_started_at: current_scope.started_at,
+            range: declaration_range,
+            scope_started_at,
         });
     }
 
-    fn get_name(&self, node: &JsSyntaxNode) -> Option<&TextRange> {
-        let name = dbg!(node.text_trimmed().to_string());
-        dbg!(&self.declared_names).get(&name)
+    fn get_declaration_range_of(&self, name_token: &JsSyntaxToken) -> Option<&TextRange> {
+        let name_hash = Self::hash(name_token.text_trimmed());
+        self.declared_names.get(&name_hash)
+    }
+
+    fn hash(name: &str) -> StrHash {
+        use std::hash::{Hash, Hasher};
+        let mut hasher = std::collections::hash_map::DefaultHasher::new();
+        name.hash(&mut hasher);
+        hasher.finish()
     }
 }
 
