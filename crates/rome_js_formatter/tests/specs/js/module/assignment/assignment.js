@@ -25,7 +25,7 @@ a[ b ]  =  c[ d ]
 (s||(s=Object.create(null)))[i]=!0;
 (s||(s=Object.create(null))).test=!0;
 
-//never break after colon object layout
+//never break after operator object layout
 this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_1 = require();
 class_member_with_looooooooooooooooongggggggg_nameeeeeeeeee = class MyLooooonnnngggClassNamee { constructor() { console.log('class object constructor')}};
 this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_boolean_true = true;
@@ -37,7 +37,7 @@ template_string = `
     32131ewqewq
     `;
 
-//break after colon layout
+//break after operator layout
 x = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 url = "http://example.com/12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 a = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
@@ -66,9 +66,18 @@ blablah =
     "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
     "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
     "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
+fn =
+// something
+    fn()
 
 
 // fluid layout
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumbers = [1, 2, 3, 4, 5];
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumbers = { a: 10 };
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder = bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawderArrayNumbes = { a: 10 };
+fn =
+
+    fn()
 this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line = orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig();
 dsakdljaskldjaslk = [
     {

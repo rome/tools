@@ -1,10 +1,11 @@
 use crate::prelude::*;
 
 use crate::utils::object::write_member_name;
-use crate::utils::{has_leading_newline, JsAnyBinaryLikeExpression};
+use crate::utils::JsAnyBinaryLikeExpression;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAssignmentExpression, JsPropertyObjectMember,
+    JsSyntaxNode,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -163,7 +164,7 @@ impl JsAnyAssignmentLike {
 }
 
 pub(crate) fn is_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> {
-    if has_leading_newline(right.syntax()) && right.syntax().has_leading_comments() {
+    if has_new_line_before_comment(right.syntax()) {
         return Ok(true);
     }
 
@@ -186,6 +187,22 @@ pub(crate) fn is_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<b
     }
 
     Ok(false)
+}
+
+/// If checks if among leading trivias, we there's a sequence of [Newline, Comment]
+pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {
+    if let Some(leading_trivia) = node.first_leading_trivia() {
+        let mut seen_newline = false;
+        for piece in leading_trivia.pieces() {
+            if piece.is_comments() && seen_newline {
+                return true;
+            }
+            if piece.is_newline() {
+                seen_newline = true
+            }
+        }
+    }
+    false
 }
 
 fn is_never_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> {
