@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: as.ts
 ---
 # Input
@@ -79,12 +80,10 @@ async function g1() {
 }
 ({}) as X;
 () => ({}) as X;
-const state = JSON.stringify(
-  {
-    next: window.location.href,
-    nonce,
-  } as State,
-);
+const state = JSON.stringify({
+  next: window.location.href,
+  nonce,
+} as State);
 
 (foo.bar as Baz) = [bar];
 (foo.bar as any)++;
@@ -122,8 +121,8 @@ const iter2 = createIterator(
 
 # Lines exceeding max width of 80 characters
 ```
-   44: const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
-   45: const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
-   54: const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
+   42: const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
+   43: const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
+   52: const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
 ```
 

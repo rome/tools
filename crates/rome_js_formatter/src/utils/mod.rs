@@ -15,7 +15,7 @@ pub(crate) use assignment_like::{is_break_after_operator, JsAnyAssignmentLike};
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
-use rome_formatter::{normalize_newlines, write, Buffer, VecBuffer};
+use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{
@@ -25,6 +25,7 @@ use rome_js_syntax::{
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
+use std::fmt::Debug;
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
@@ -135,7 +136,7 @@ pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
 }
 
 /// Returns true if this node contains newlines in trivias.
-pub(crate) fn has_leading_newline(node: &JsSyntaxNode) -> bool {
+pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
     if let Some(leading_trivia) = node.first_leading_trivia() {
         for piece in leading_trivia.pieces() {
             if piece.is_newline() {
@@ -520,4 +521,28 @@ impl Format<JsFormatContext> for FormatMemberName {
             }
         }
     }
+}
+
+/// This function is in charge to format the call arguments.
+pub(crate) fn write_arguments_multi_line<S: Format<JsFormatContext>, I>(
+    separated: I,
+    f: &mut JsFormatter,
+) -> FormatResult<()>
+where
+    I: Iterator<Item = S>,
+{
+    let mut iterator = separated.peekable();
+    let mut join_with = f.join_with(soft_line_break_or_space());
+
+    while let Some(element) = iterator.by_ref().next() {
+        let last = iterator.peek().is_none();
+
+        if last {
+            join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
+        } else {
+            join_with.entry(&element);
+        }
+    }
+
+    join_with.finish()
 }

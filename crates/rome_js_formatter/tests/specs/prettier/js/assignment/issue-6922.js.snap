@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-6922.js
 ---
 # Input
@@ -44,10 +45,9 @@ async function f() {
   return { data, status };
 }
 
-const data1 = request.delete(
-  "----------------------------------------------",
-  { validateStatus: () => true },
-);
+const data1 = request.delete("----------------------------------------------", {
+  validateStatus: () => true,
+});
 
 const data2 = request.delete(
   "----------------------------------------------x",

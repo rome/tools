@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: angular_waitForAsync.js
 ---
 # Input
@@ -36,27 +37,27 @@ function x() { waitForAsync(() => {}) }
 beforeEach(
   waitForAsync(() => {
     // code
-  },),
+  }),
 );
 
 afterAll(
   waitForAsync(() => {
     console.log("Hello");
-  },),
+  }),
 );
 
 it(
   "should create the app",
   waitForAsync(() => {
     //code
-  },),
+  }),
 );
 
 it(
   "does something really long and complicated so I have to write a very long name for the test",
   waitForAsync(() => {
     // code
-  },),
+  }),
 );
 
 it(

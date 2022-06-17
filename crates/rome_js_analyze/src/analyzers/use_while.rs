@@ -1,14 +1,31 @@
-use crate::JsRuleAction;
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::AstNodeExt;
-pub(crate) enum UseWhile {}
+
+use crate::JsRuleAction;
+
+declare_rule! {
+    /// Enforce the use of `while` loops instead of `for` loops when the
+    /// initializer and update expressions are not needed
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// for (; x.running;) {
+    ///     x.step();
+    /// }
+    /// ```
+    pub(crate) UseWhile = "useWhile"
+}
 
 impl Rule for UseWhile {
-    const NAME: &'static str = "useWhile";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsForStatement;

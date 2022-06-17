@@ -47,6 +47,9 @@ where
                         // A trailing separator was present where it wasn't allowed, opt out of formatting
                         return Err(FormatError::SyntaxError);
                     }
+                    TrailingSeparator::Omit => {
+                        write!(f, [format_removed(separator)])?;
+                    }
                 }
             } else {
                 write!(f, [separator.format()])?;
@@ -63,7 +66,7 @@ where
                 TrailingSeparator::Mandatory => {
                     format_inserted(self.separator).fmt(f)?;
                 }
-                TrailingSeparator::Disallowed => { /* no op */ }
+                TrailingSeparator::Omit | TrailingSeparator::Disallowed => { /* no op */ }
             }
         } else {
             unreachable!(
@@ -169,6 +172,10 @@ pub enum TrailingSeparator {
 
     /// A trailing separator is mandatory for the syntax to be correct
     Mandatory,
+
+    /// A trailing separator might be present, but the consumer
+    /// decides to remove it
+    Omit,
 }
 
 impl Default for TrailingSeparator {

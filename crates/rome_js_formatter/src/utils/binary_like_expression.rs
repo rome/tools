@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, Buffer, VecBuffer};
+use rome_formatter::{write, Buffer};
 
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
@@ -221,35 +221,16 @@ fn format_sub_expression<'a>(
 ) -> impl Format<JsFormatContext> + 'a {
     format_with(move |f| {
         if needs_parens(parent_operator, sub_expression)? {
-            write!(f, [format_parenthesized(sub_expression)])
+            format_parenthesize(
+                sub_expression.syntax().first_token(),
+                &sub_expression,
+                sub_expression.syntax().last_token(),
+            )
+            .grouped_with_soft_block_indent()
+            .fmt(f)
         } else {
             write!(f, [sub_expression])
         }
-    })
-}
-
-fn format_parenthesized<'a, Inner>(inner: Inner) -> impl Format<JsFormatContext>
-where
-    Inner: Format<JsFormatContext> + 'a,
-{
-    format_with(move |f| {
-        let mut buffer = VecBuffer::new(f.state_mut());
-        write!(buffer, [inner])?;
-        let formatted_node = buffer.into_element();
-        let (leading, content, trailing) = formatted_node.split_trivia();
-
-        f.write_element(leading)?;
-        write![
-            f,
-            [group_elements(&format_args![
-                format_inserted(JsSyntaxKind::L_PAREN),
-                soft_block_indent(&format_once(|f| {
-                    f.write_element(content)?;
-                    f.write_element(trailing)
-                })),
-                format_inserted(JsSyntaxKind::R_PAREN)
-            ])]
-        ]
     })
 }
 
@@ -584,7 +565,12 @@ impl FlattenedBinaryExpressionPart {
                 });
 
                 if *parenthesized {
-                    write!(f, [format_parenthesized(content)])
+                    let first_token = current.syntax().first_token();
+                    let last_token = current.syntax().last_token();
+
+                    format_parenthesize(first_token, &content, last_token)
+                        .grouped_with_soft_block_indent()
+                        .fmt(f)
                 } else {
                     write!(f, [content])
                 }

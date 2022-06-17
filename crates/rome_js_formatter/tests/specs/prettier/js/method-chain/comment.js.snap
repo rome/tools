@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: comment.js
 ---
 # Input
@@ -88,12 +89,12 @@ Something
 // Warm-up first
 measure().then(() => {
   SomethingLong();
-},);
+});
 
 measure() // Warm-up first
 .then(() => {
   SomethingLong();
-},);
+});
 
 const configModel = this.baseConfigurationService.getCache().consolidated.merge(
   // global/default values (do NOT modify)

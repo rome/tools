@@ -4,7 +4,7 @@ use crate::{
     TsAnyVariableAnnotation, TsImplementsClause, TsReturnTypeAnnotation, TsTypeAnnotation,
     TsTypeParameters,
 };
-use rome_rowan::SyntaxResult;
+use rome_rowan::{AstSeparatedList, SyntaxResult};
 
 impl JsAnyClass {
     pub fn abstract_token(&self) -> Option<JsSyntaxToken> {
@@ -218,5 +218,18 @@ impl TsAnyPropertyAnnotation {
                 Ok(Some(type_annotation.clone()))
             }
         }
+    }
+}
+
+impl JsAnyArrowFunctionParameters {
+    pub fn len(&self) -> usize {
+        match self {
+            JsAnyArrowFunctionParameters::JsAnyBinding(_) => 1,
+            JsAnyArrowFunctionParameters::JsParameters(parameters) => parameters.items().len(),
+        }
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
     }
 }

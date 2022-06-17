@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -9,10 +9,18 @@ use rome_rowan::AstNodeExt;
 
 use crate::JsRuleAction;
 
-pub(crate) enum FlipBinExp {}
+declare_rule! {
+    /// Provides a refactor to invert the left and right hand side of a binary expression
+    ///
+    /// ## Examples
+    ///
+    /// ```js
+    /// (a < b)
+    /// ```
+    pub(crate) FlipBinExp = "flipBinExp"
+}
 
 impl Rule for FlipBinExp {
-    const NAME: &'static str = "flipBinExp";
     const CATEGORY: RuleCategory = RuleCategory::Action;
 
     type Query = JsBinaryExpression;
