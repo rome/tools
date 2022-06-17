@@ -293,7 +293,8 @@ loadNext = (stateIsOK && hasNext) || {
 bifornCringerMoshedPerplex =
 	bifornCringerMoshedPerplexSawder =
 	arrayOfNumb =
-	a = "test";
+	a =
+		"test";
 
 // chain and chain tail where it doesn't break
 loreum = ipsum = arrayOfNumb = a = "test";

@@ -526,11 +526,8 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-tt.parenR.updateContext = tt.braceR.updateContext = function () {
-  if (this.state.context.length === 1) {
-    return;
-  }
-}        "#;
+bifornCringerMoshedPerplex =
+	bifornCringerMoshedPerplexSawder = arrayOfNumb = a = "test";       "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())

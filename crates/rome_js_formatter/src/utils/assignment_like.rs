@@ -152,25 +152,45 @@ impl JsAnyAssignmentLike {
     /// Checks if the right node is entitled of the chain formatting,
     /// and if so, it return the layout type
     fn is_chain_formatting(&self) -> SyntaxResult<Option<AssignmentLikeLayout>> {
-        let parent_kind = self.syntax().parent().map(|p| p.kind());
         let right = self.right()?;
         let right_is_tail = !matches!(right, JsAnyExpression::JsAssignmentExpression(_));
-        let should_use_chain_formatting = {
-            matches!(
-                parent_kind,
-                Some(JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION | JsSyntaxKind::JS_VARIABLE_DECLARATOR)
-            ) && {
-                !right_is_tail
-                    || (matches!(
-                        parent_kind,
-                        Some(
-                            JsSyntaxKind::JS_EXPRESSION_STATEMENT
-                                | JsSyntaxKind::JS_VARIABLE_DECLARATOR
-                        )
-                    ))
-            }
-        };
-        let result = if should_use_chain_formatting {
+        // Here we surf the upper levels and make sure that the current node
+        // is eligible of chain formatting
+        //
+        // The chain goes up two levels, by checking up to the great parent if all the conditions
+        // are correctly met.
+        let upper_chain_is_eligible =
+            // First, we check if the current node is an assignment expression
+            if let JsAnyAssignmentLike::JsAssignmentExpression(assignment) = self {
+                assignment.syntax().parent().map_or(false, |parent| {
+                    // Then we check if the parent is assignment expression or variable declarator
+                    if matches!(
+                        parent.kind(),
+                        JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION
+                            | JsSyntaxKind::JS_VARIABLE_DECLARATOR
+                    ) {
+                        let great_parent_kind = parent.parent().map(|n| n.kind());
+                        // Finally, we check the great parent.
+                        // The great parent triggers the eligibility when
+                        // - the current node that we were inspecting is not a "tail"
+                        // - or the great parent is not an expression statement or a variable declarator
+                        !right_is_tail
+                            || !matches!(
+                                great_parent_kind,
+                                Some(
+                                    JsSyntaxKind::JS_EXPRESSION_STATEMENT
+                                        | JsSyntaxKind::JS_VARIABLE_DECLARATOR
+                                )
+                            )
+                    } else {
+                        false
+                    }
+                })
+            } else {
+                false
+            };
+
+        let result = if upper_chain_is_eligible {
             if right_is_tail {
                 Some(AssignmentLikeLayout::ChainTail)
             } else {
