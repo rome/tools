@@ -291,8 +291,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 
             let layout = self.layout(is_left_short)?;
 
-            dbg!(&layout);
-            match layout {
+            let inner_content = format_with(|f| match &layout {
                 AssignmentLikeLayout::Fluid => {
                     let group_id = f.group_id("assignment_like");
 
@@ -335,16 +334,19 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         ])]
                     )
                 }
+            });
+
+            match layout {
+                // Layouts that don't need enclosing group
+                AssignmentLikeLayout::Chain | AssignmentLikeLayout::ChainTail => {
+                    write!(f, [&inner_content])
+                }
+                _ => {
+                    write!(f, [group_elements(&inner_content)])
+                }
             }
         });
 
-        match self {
-            JsAnyAssignmentLike::JsPropertyObjectMember(_) => {
-                write!(f, [group_elements(&format_content)])
-            }
-            JsAnyAssignmentLike::JsAssignmentExpression(_) => {
-                write!(f, [&format_content])
-            }
-        }
+        write!(f, [format_content])
     }
 }
