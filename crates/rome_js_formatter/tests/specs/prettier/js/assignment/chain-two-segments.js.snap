@@ -15,11 +15,12 @@ tt.parenR.updateContext = tt.braceR.updateContext = function () {
 
 # Output
 ```js
-tt.parenR.updateContext = tt.braceR.updateContext = function () {
-  if (this.state.context.length === 1) {
-    return;
-  }
-};
+tt.parenR.updateContext = tt.braceR.updateContext =
+  function () {
+    if (this.state.context.length === 1) {
+      return;
+    }
+  };
 
 ```
 

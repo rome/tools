@@ -240,6 +240,14 @@ pub(crate) fn is_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<b
         }
     }
 
+    // head is a long chain, meaning that right -> right are both assignment expressions
+    if let JsAnyExpression::JsAssignmentExpression(assignment) = right {
+        let right = assignment.right()?;
+        if matches!(right, JsAnyExpression::JsAssignmentExpression(_)) {
+            return Ok(true);
+        }
+    }
+
     if JsAnyBinaryLikeExpression::cast(right.syntax().clone())
         .map_or(false, |expression| !expression.should_inline())
     {
