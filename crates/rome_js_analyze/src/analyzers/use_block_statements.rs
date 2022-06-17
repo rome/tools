@@ -92,19 +92,12 @@ impl Rule for UseBlockStatements {
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
-        None
-        // Some(RuleDiagnostic:: {
-        //     severity: Severity::Error,
-        //     message: markup! {
-        //         "Block statements are preferred in this position."
-        //     }
-        //     .to_owned(),
-        //     range: if state.len() == 1 {
-        //         state[0].range()
-        //     } else {
-        //         node.range()
-        //     },
-        // })
+        Some(RuleDiagnostic::warning(
+            node.range(),
+            markup! {
+                "Block statements are preferred in this position."
+            },
+        ))
     }
 
     fn action(
