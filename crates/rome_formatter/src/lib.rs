@@ -19,8 +19,6 @@
 //! * [`format_args!`]: Concatenates a sequence of Format objects.
 //! * [`write!`]: Writes a sequence of formatable objects into an output buffer.
 
-extern crate core;
-
 mod arguments;
 mod buffer;
 mod builders;

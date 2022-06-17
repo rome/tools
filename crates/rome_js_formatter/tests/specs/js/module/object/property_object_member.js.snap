@@ -149,7 +149,8 @@ const breakAfterColonObject = {
 		33333333333333331, "dsadsadasdsadas", 3, "dsadsadasdsadasdsadsadasdsadas", 5
 	),
 	"conditional-expression-1":
-		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
+		this.state
+			.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
 	"conditional-expression-2":
 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
 	"conditional-expression-3":
@@ -162,7 +163,8 @@ const breakAfterColonObject = {
 		} in "long-key",
 
 	1:
-		this.state.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
+		this.state
+			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
 	2:
 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
 	11:
@@ -179,7 +181,8 @@ const breakAfterColonObject = {
 	),
 
 	a:
-		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
+		this.state
+			.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
 	b:
 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
 	c:
@@ -249,12 +252,12 @@ const fluidObject = {
    28: 		"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
    36: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
    38: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   51: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   53: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
-   62: 		this.state.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
-   64: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
-   66: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
-   68: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   81: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   83: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   52: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+   54: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   64: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
+   66: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
+   68: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
+   70: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
+   84: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+   86: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
 
