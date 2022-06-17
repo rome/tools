@@ -6,9 +6,7 @@ use rome_js_syntax::{
     JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, JsSyntaxToken, TextRange,
     TextSize,
 };
-use rome_rowan::{syntax::Preorder, SyntaxNodeCast};
-
-type StrHash = u64;
+use rome_rowan::{syntax::Preorder, SyntaxNodeCast, SyntaxTokenText};
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
@@ -101,17 +99,17 @@ impl SemanticEvent {
 pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
-    declared_names: HashMap<StrHash, TextRange>,
+    declared_names: HashMap<SyntaxTokenText, TextRange>,
 }
 
 struct ScopeDeclaration {
-    name_hash: StrHash,
+    name: SyntaxTokenText,
 }
 
 struct Scope {
     started_at: TextSize,
     declared: Vec<ScopeDeclaration>,
-    shadowed: Vec<(StrHash, TextRange)>,
+    shadowed: Vec<(SyntaxTokenText, TextRange)>,
 }
 
 impl SemanticEventExtractor {
@@ -146,7 +144,9 @@ impl SemanticEventExtractor {
                 {
                     self.stash.push_back(SemanticEvent::Read {
                         range: node.text_range(),
-                        declaration_at: self.get_declaration_range_of(&name_token).cloned(),
+                        declaration_at: self
+                            .get_declaration_range_by_trimmed_text(&name_token)
+                            .cloned(),
                     })
                 }
             }
@@ -216,7 +216,7 @@ impl SemanticEventExtractor {
 
             // remove all declarations
             for decl in scope.declared {
-                self.declared_names.remove(&decl.name_hash);
+                self.declared_names.remove(&decl.name);
             }
 
             // return all shadowed names
@@ -237,8 +237,7 @@ impl SemanticEventExtractor {
     }
 
     fn declare_name(&mut self, name_token: &JsSyntaxToken) {
-        let name = name_token.text_trimmed();
-        let name_hash = Self::hash(name);
+        let name = name_token.token_text_trimmed();
 
         let declaration_range = name_token.text_range();
 
@@ -246,11 +245,11 @@ impl SemanticEventExtractor {
         // and save shadowed names to be used later
         let shadowed = self
             .declared_names
-            .insert(name_hash, declaration_range)
-            .map(|shadowed_range| (name_hash, shadowed_range));
+            .insert(name.clone(), declaration_range)
+            .map(|shadowed_range| (name.clone(), shadowed_range));
 
         let current_scope = self.current_scope_mut();
-        current_scope.declared.push(ScopeDeclaration { name_hash });
+        current_scope.declared.push(ScopeDeclaration { name });
         current_scope.shadowed.extend(shadowed);
         let scope_started_at = current_scope.started_at;
 
@@ -260,16 +259,12 @@ impl SemanticEventExtractor {
         });
     }
 
-    fn get_declaration_range_of(&self, name_token: &JsSyntaxToken) -> Option<&TextRange> {
-        let name_hash = Self::hash(name_token.text_trimmed());
-        self.declared_names.get(&name_hash)
-    }
-
-    fn hash(name: &str) -> StrHash {
-        use std::hash::{Hash, Hasher};
-        let mut hasher = rustc_hash::FxHasher::default();
-        name.hash(&mut hasher);
-        hasher.finish()
+    fn get_declaration_range_by_trimmed_text(
+        &self,
+        name_token: &JsSyntaxToken,
+    ) -> Option<&TextRange> {
+        let name = name_token.token_text_trimmed();
+        self.declared_names.get(&name)
     }
 }
 
