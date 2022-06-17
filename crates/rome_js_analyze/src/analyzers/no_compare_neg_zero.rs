@@ -1,4 +1,4 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -23,7 +23,9 @@ impl Rule for NoCompareNegZero {
     type Query = JsBinaryExpression;
     type State = NoCompareNegZeroState;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query();
+
         if !node.is_comparison_operator() {
             return None;
         }
@@ -48,7 +50,9 @@ impl Rule for NoCompareNegZero {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -56,11 +60,9 @@ impl Rule for NoCompareNegZero {
             },
         ))
     }
-    fn action(
-        root: rome_js_syntax::JsAnyRoot,
-        node: &Self::Query,
-        state: &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let root = ctx.root();
         let root = if state.left_need_replaced && state.right_need_replaced {
             let binary = node.clone().replace_node(
                 node.left().ok()?,

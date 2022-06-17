@@ -1,12 +1,10 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use crate::JsRuleAction;
+use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
+use rome_js_syntax::{JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::AstNodeExt;
-
-use crate::JsRuleAction;
-
 pub(crate) enum UseWhile {}
 
 impl Rule for UseWhile {
@@ -16,7 +14,9 @@ impl Rule for UseWhile {
     type Query = JsForStatement;
     type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let n = ctx.query();
+
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -42,7 +42,9 @@ impl Rule for UseWhile {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+
         // SAFETY: These tokens have been checked for errors in `run` already
         let for_range = node.for_token().unwrap().text_trimmed_range();
         let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();
@@ -55,7 +57,9 @@ impl Rule for UseWhile {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -68,7 +72,7 @@ impl Rule for UseWhile {
             body,
         } = node.as_fields();
 
-        let root = root.replace_node(
+        let root = ctx.root().replace_node(
             JsAnyStatement::from(node.clone()),
             JsAnyStatement::from(make::js_while_statement(
                 make::token_decorated_with_space(T![while]),

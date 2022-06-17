@@ -9,6 +9,7 @@ use rome_rowan::{AstNode, Direction, Language, SyntaxNode, TextRange};
 
 use crate::{
     categories::ActionCategory,
+    context::RuleContext,
     registry::{LanguageRoot, Rule, RuleLanguage, RuleRoot},
 };
 
@@ -100,12 +101,13 @@ impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
 
 impl<'a, R: Rule> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R> {
     fn diagnostic(&self) -> Option<Diagnostic> {
-        R::diagnostic(&self.node, &self.state)
-            .map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
+        let ctx = RuleContext::new(self.node.clone(), self.root.clone());
+        R::diagnostic(&ctx, &self.state).map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
-        R::action(self.root.clone(), &self.node, &self.state).and_then(|action| {
+        let ctx = RuleContext::new(self.node.clone(), self.root.clone());
+        R::action(&ctx, &self.state).and_then(|action| {
             let (original_range, new_range) =
                 find_diff_range(self.root.syntax(), action.root.syntax())?;
             Some(AnalyzerAction {

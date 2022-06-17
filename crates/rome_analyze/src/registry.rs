@@ -5,6 +5,7 @@ use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{Diagnostic, DiagnosticTag, Footer, Span, SubDiagnostic};
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange};
 
+use crate::context::RuleContext;
 use crate::{
     categories::{ActionCategory, RuleCategory},
     signals::{AnalyzerSignal, RuleSignal},
@@ -77,9 +78,16 @@ fn run<'a, R: Rule + 'static>(
         return None;
     }
 
-    let node = <R::Query>::cast(node.clone())?;
-    let result = R::run(&node)?;
-    Some(RuleSignal::<R>::new_boxed(file_id, root, node, result))
+    let query_result = <R::Query>::cast(node.clone())?;
+    let ctx = RuleContext::new(query_result.clone(), root.clone());
+
+    let result = R::run(&ctx)?;
+    Some(RuleSignal::<R>::new_boxed(
+        file_id,
+        root,
+        query_result,
+        result,
+    ))
 }
 
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
@@ -104,13 +112,14 @@ pub trait Rule {
     /// being analyzed. If it returns `Some` the state object will be wrapped
     /// in a generic `AnalyzerSignal`, and the consumer of the analyzer may call
     /// `diagnostic` or `action` on it
-    fn run(node: &Self::Query) -> Option<Self::State>;
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State>;
 
     /// Called by the consumer of the analyzer to try to generate a diagnostic
     /// from a signal raised by `run`
     ///
     /// The default implementation returns None
-    fn diagnostic(_node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    #[allow(unused)]
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         None
     }
 
@@ -118,10 +127,10 @@ pub trait Rule {
     /// from a signal raised by `run`
     ///
     /// The default implementation returns None
+    #[allow(unused)]
     fn action(
-        _root: RuleRoot<Self>,
-        _node: &Self::Query,
-        _state: &Self::State,
+        ctx: &RuleContext<Self>,
+        state: &Self::State,
     ) -> Option<RuleAction<RuleLanguage<Self>>> {
         None
     }

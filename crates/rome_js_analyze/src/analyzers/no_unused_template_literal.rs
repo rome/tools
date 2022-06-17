@@ -1,14 +1,11 @@
+use crate::JsRuleAction;
+use rome_analyze::context::RuleContext;
 use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsAnyTemplateElement, JsTemplate,
-};
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
-
-use crate::JsRuleAction;
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate};
+use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
 
 pub(crate) enum NoUnusedTemplateLiteral {}
 
@@ -19,7 +16,9 @@ impl Rule for NoUnusedTemplateLiteral {
     type Query = JsTemplate;
     type State = ();
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let node = ctx.query();
+
         if node.tag().is_none() && can_convert_to_string_literal(node) {
             Some(())
         } else {
@@ -27,19 +26,23 @@ impl Rule for NoUnusedTemplateLiteral {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+
         Some(RuleDiagnostic::warning(node.range(),markup! {
             "Do not use template literals if interpolation and special-character handling are not needed."
         }
         .to_owned() ) )
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+
         // join all template content
         let inner_content = node
             .elements()
             .iter()
-            .fold(String::from("\""), |mut acc, cur| {
+            .fold(String::from(""), |mut acc, cur| {
                 match cur {
                     JsAnyTemplateElement::JsTemplateChunkElement(ele) => {
                         // Safety: if `ele.template_chunk_token()` is `Err` variant, [can_convert_to_string_lit] should return false,
@@ -53,16 +56,11 @@ impl Rule for NoUnusedTemplateLiteral {
                     }
                 }
             });
-        let root = root.replace_node(
+        let root = ctx.root().replace_node(
             JsAnyExpression::JsTemplate(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(
-                    make::js_string_literal_expression(SyntaxToken::new_detached(
-                        JS_STRING_LITERAL,
-                        &(inner_content + "\""),
-                        [],
-                        [],
-                    )),
+                    make::js_string_literal_expression(make::js_string_literal(&inner_content)),
                 ),
             ),
         )?;

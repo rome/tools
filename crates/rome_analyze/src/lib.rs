@@ -1,15 +1,14 @@
-use std::ops;
-
-use rome_diagnostics::file::FileId;
-use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
-
 mod categories;
+pub mod context;
 mod registry;
 mod signals;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 pub use crate::registry::{LanguageRoot, Rule, RuleAction, RuleDiagnostic, RuleRegistry};
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
+use rome_diagnostics::file::FileId;
+use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
+use std::ops;
 
 /// Allows filtering the list of rules that will be executed in a run of the analyzer,
 /// and at what source code range signals (diagnostics or actions) may be raised
