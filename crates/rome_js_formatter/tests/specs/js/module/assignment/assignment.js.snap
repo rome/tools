@@ -252,8 +252,9 @@ bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumbers = {
 	a: 10,
 };
 bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder =
-	bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawderArrayNumbes =
-		{ a: 10 };
+	bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawderArrayNumbes = {
+		a: 10,
+	};
 fn = fn();
 this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line =
 	orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig();
@@ -292,8 +293,7 @@ loadNext = (stateIsOK && hasNext) || {
 bifornCringerMoshedPerplex =
 	bifornCringerMoshedPerplexSawder =
 	arrayOfNumb =
-	a =
-		"test";
+	a = "test";
 
 // chain and chain tail where it doesn't break
 loreum = ipsum = arrayOfNumb = a = "test";
