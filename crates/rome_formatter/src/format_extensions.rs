@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use std::cell::RefCell;
 use std::marker::PhantomData;
-use std::rc::Rc;
 
 use crate::{write, Buffer, VecBuffer};
 

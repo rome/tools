@@ -334,7 +334,7 @@ pub struct Interned(Rc<FormatElement>);
 
 impl Interned {
     pub(crate) fn try_unwrap(this: Interned) -> Result<FormatElement, Interned> {
-        Rc::try_unwrap(this.0).map_err(|rc| Interned(rc))
+        Rc::try_unwrap(this.0).map_err(Interned)
     }
 }
 
@@ -493,7 +493,6 @@ impl FormatElement {
     pub fn is_empty(&self) -> bool {
         match self {
             FormatElement::List(list) => list.is_empty(),
-            FormatElement::Rc(inner) => inner.is_empty(),
             _ => false,
         }
     }
