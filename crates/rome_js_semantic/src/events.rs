@@ -267,7 +267,7 @@ impl SemanticEventExtractor {
 
     fn hash(name: &str) -> StrHash {
         use std::hash::{Hash, Hasher};
-        let mut hasher = ahash::AHasher::new_with_keys(56053, 64951); // two random prime numbers
+        let mut hasher = rustc_hash::FxHasher::default();
         name.hash(&mut hasher);
         hasher.finish()
     }
