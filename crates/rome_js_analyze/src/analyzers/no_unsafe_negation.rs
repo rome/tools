@@ -3,10 +3,7 @@ use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsBinaryExpression, JsForStatement, JsForStatementFields,
-    JsInExpression, JsInstanceofExpression, T,
-};
+use rome_js_syntax::{JsAnyExpression, JsInExpression, JsInstanceofExpression, T};
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
 pub(crate) enum NoUnsafeNegation {}
 
@@ -66,16 +63,14 @@ impl Rule for NoUnsafeNegation {
         match node {
             JsInOrInstanceOfExpression::JsInstanceofExpression(expr) => {
                 let left = expr.left().ok()?;
-                // SAFETY: We check it in run stage, if `expr.left()` is not a `JsUnaryExpression`,
-                // the `run` function will return `None`, which will not reach here.
-                let unary_expression = left.as_js_unary_expression().unwrap();
+                let unary_expression = left.as_js_unary_expression()?;
                 let argument = unary_expression.argument().ok()?;
                 let next_expr = expr
                     .clone()
                     .replace_node_discard_trivia(left.clone(), argument)?;
                 let next_parenthesis_expression = make::js_parenthesized_expression(
                     make::token(T!['(']),
-                    rome_js_syntax::JsAnyExpression::JsInstanceofExpression(next_expr.clone()),
+                    rome_js_syntax::JsAnyExpression::JsInstanceofExpression(next_expr),
                     make::token(T![')']),
                 );
                 let next_unary_expression = make::js_unary_expression(
@@ -89,8 +84,6 @@ impl Rule for NoUnsafeNegation {
             }
             JsInOrInstanceOfExpression::JsInExpression(expr) => {
                 let left = expr.property().ok()?;
-                // SAFETY: We check it in run stage, if `expr.left()` is not a `JsUnaryExpression`,
-                // the `run` function will return `None`, which will not reach here.
                 let unary_expression = left.as_js_any_expression()?.as_js_unary_expression()?;
                 let argument = unary_expression.argument().ok()?;
                 let next_expr = expr.clone().replace_node_discard_trivia(
@@ -99,7 +92,7 @@ impl Rule for NoUnsafeNegation {
                 )?;
                 let next_parenthesis_expression = make::js_parenthesized_expression(
                     make::token(T!['(']),
-                    rome_js_syntax::JsAnyExpression::JsInExpression(next_expr.clone()),
+                    rome_js_syntax::JsAnyExpression::JsInExpression(next_expr),
                     make::token(T![')']),
                 );
                 let next_unary_expression = make::js_unary_expression(
