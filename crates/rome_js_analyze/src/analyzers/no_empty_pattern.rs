@@ -28,7 +28,7 @@ declare_rule! {
     /// ```js
     /// var [a] = foo;
     /// ```
-    /// 
+    ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
@@ -115,5 +115,3 @@ declare_node_union! {
     /// enum of `JsObjectBindingPattern` and `JsArrayBindingPattern`
     pub(crate) JsAnyBindPatternLike = JsArrayBindingPattern | JsObjectBindingPattern
 }
-
-fn test() {}
