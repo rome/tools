@@ -5,34 +5,68 @@ use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
 declare_rule! {
     /// Disallows empty destructuring patterns.
-    ///
     /// ## Examples
     ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// var {a = {}} = foo;
+    /// ```
+    /// ```js
+    /// var {a, b = {}} = foo;
+    /// ```
+    /// ```js
+    /// var {a = []} = foo;
+    /// ```
+    /// ```js
+    /// function foo({a = {}}) {}
+    /// ```
+    ///
+    /// ```js
+    /// function foo({a = []}) {}
+    /// ```
+    /// ```js
+    /// var [a] = foo;
+    /// ```
     /// 
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    ///    var {a = {}} = foo;
+    /// var {} = foo;
     /// ```
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
+    ///
+    /// ```js,expect_diagnostic
+    /// var [] = foo;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// var {a: {}} = foo;
+    /// ```
+    ///
+    ///  ```js,expect_diagnostic
+    /// var {a, b: {}} = foo;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// var {a: []} = foo;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// function foo({}) {}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// function foo([]) {}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// function foo({a: {}}) {}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// function foo({a: []}) {}
+    /// ```
+    ///
     pub(crate) NoEmptyPattern = "noEmptyPattern"
 }
 
@@ -81,3 +115,5 @@ declare_node_union! {
     /// enum of `JsObjectBindingPattern` and `JsArrayBindingPattern`
     pub(crate) JsAnyBindPatternLike = JsArrayBindingPattern | JsObjectBindingPattern
 }
+
+fn test() {}
