@@ -14,6 +14,13 @@ eleventyNavigation:
 <section>
 <h2>JavaScript</h2>
 <div class="rule">
+<h3 data-toc-exclude id="noAsyncPromiseExecutor">
+	<a href="/docs/lint/rules/noAsyncPromiseExecutor">noAsyncPromiseExecutor</a>
+	<a class="header-anchor" href="#noAsyncPromiseExecutor"></a>
+</h3>
+Disallows using an async function as a Promise executor.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noCompareNegZero">
 	<a href="/docs/lint/rules/noCompareNegZero">noCompareNegZero</a>
 	<a class="header-anchor" href="#noCompareNegZero"></a>

@@ -1,28 +1,42 @@
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Applicability;
-use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsArrowFunctionExpression, JsForStatement,
-    JsForStatementFields, JsFunctionExpression, JsNewExpression, JsNewExpressionFields, T,
+    JsAnyExpression, JsArrowFunctionExpression, JsFunctionExpression, JsNewExpression,
+    JsNewExpressionFields,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeExt, AstSeparatedList};
-
-use crate::JsRuleAction;
+use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
 declare_rule! {
     /// Disallows using an async function as a Promise executor.
     ///
     /// ## Examples
+    /// ### Valid
+    ///
+    /// ```js
+    ///   new Promise((resolve, reject) => {})
+    /// ```
+    /// ```js
+    ///   new Promise((resolve, reject) => {}, async function unrelated() {})
+    /// ```
+    /// ```js
+    ///   new Foo(async (resolve, reject) => {})
+    /// ```
+    /// ```js
+    /// new Foo((( (resolve, reject) => {} )))
+    /// ```
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// for (; x.running;) {
-    ///     x.step();
-    /// }
+    /// new Promise(async function foo(resolve, reject) {})
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///   new Promise(async (resolve, reject) => {})
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    ///   new Promise(((((async () => {})))))
     /// ```
     pub(crate) NoAsyncPromiseExecutor = "noAsyncPromiseExecutor"
 }
@@ -70,11 +84,13 @@ impl Rule for NoAsyncPromiseExecutor {
     }
 }
 
-/// Check if the expression is async function expression like, include the edge case 
+/// Check if the expression is async function expression like, include the edge case
 ///  ```js
 /// ((((((async function () {}))))))
 /// ```
-fn get_async_function_expression_like(expr: &JsAnyExpression) -> Option<JsAnyFunctionExpressionLike> {
+fn get_async_function_expression_like(
+    expr: &JsAnyExpression,
+) -> Option<JsAnyFunctionExpressionLike> {
     match expr {
         JsAnyExpression::JsFunctionExpression(func) => func
             .async_token()
