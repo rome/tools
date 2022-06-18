@@ -1,0 +1,14 @@
+[package]
+name = "xtask_docgen"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+xtask = { path = '../', version = "0.0" }
+rome_js_analyze = { path = "../../crates/rome_js_analyze" }
+rome_js_parser = { path = "../../crates/rome_js_parser" }
+rome_js_syntax = { path = "../../crates/rome_js_syntax" }
+rome_rowan = { path = "../../crates/rome_rowan" }
+anyhow = "1.0.57"
+textwrap = "0.15.0"
