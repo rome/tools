@@ -9,6 +9,7 @@ expression: noAsyncPromiseExecutor.js
 new Promise((resolve, reject) => {})
 new Promise((resolve, reject) => {}, async function unrelated() {})
 new Foo(async (resolve, reject) => {})
+new Foo((( (resolve, reject) => {} )))
 // invalid
 new Promise(async function foo(resolve, reject) {})
 new Promise(async (resolve, reject) => {})
@@ -18,9 +19,9 @@ new Promise(((((async () => {})))))
 # Diagnostics
 ```
 warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
-  ┌─ noAsyncPromiseExecutor.js:6:13
+  ┌─ noAsyncPromiseExecutor.js:7:13
   │
-6 │ new Promise(async function foo(resolve, reject) {})
+7 │ new Promise(async function foo(resolve, reject) {})
   │             --------------------------------------
 
 
@@ -28,10 +29,20 @@ warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
 
 ```
 warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
-  ┌─ noAsyncPromiseExecutor.js:7:13
+  ┌─ noAsyncPromiseExecutor.js:8:13
   │
-7 │ new Promise(async (resolve, reject) => {})
+8 │ new Promise(async (resolve, reject) => {})
   │             -----------------------------
+
+
+```
+
+```
+warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
+  ┌─ noAsyncPromiseExecutor.js:9:17
+  │
+9 │ new Promise(((((async () => {})))))
+  │                 --------------
 
 
 ```

@@ -54,15 +54,7 @@ impl Rule for NoAsyncPromiseExecutor {
         let first_arg = arguments?.args().iter().next()?.ok()?;
 
         if let Some(expr) = first_arg.as_js_any_expression() {
-            match expr {
-                JsAnyExpression::JsFunctionExpression(func) => func
-                    .async_token()
-                    .map(|_| JsAnyFunctionExpressionLike::JsFunctionExpression(func.clone())),
-                JsAnyExpression::JsArrowFunctionExpression(func) => func
-                    .async_token()
-                    .map(|_| JsAnyFunctionExpressionLike::JsArrowFunctionExpression(func.clone())),
-                _ => None,
-            }
+            get_async_function_expression_like(expr)
         } else {
             None
         }
@@ -75,6 +67,26 @@ impl Rule for NoAsyncPromiseExecutor {
                 "Promise executor functions should not be async."
             },
         ))
+    }
+}
+
+/// Check if the expression is async function expression like, include the edge case 
+///  ```js
+/// ((((((async function () {}))))))
+/// ```
+fn get_async_function_expression_like(expr: &JsAnyExpression) -> Option<JsAnyFunctionExpressionLike> {
+    match expr {
+        JsAnyExpression::JsFunctionExpression(func) => func
+            .async_token()
+            .map(|_| JsAnyFunctionExpressionLike::JsFunctionExpression(func.clone())),
+        JsAnyExpression::JsArrowFunctionExpression(func) => func
+            .async_token()
+            .map(|_| JsAnyFunctionExpressionLike::JsArrowFunctionExpression(func.clone())),
+        JsAnyExpression::JsParenthesizedExpression(expr) => {
+            let inner_expression = expr.expression().ok()?;
+            get_async_function_expression_like(&inner_expression)
+        }
+        _ => None,
     }
 }
 
