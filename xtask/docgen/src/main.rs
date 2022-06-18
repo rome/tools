@@ -19,44 +19,6 @@ fn main() -> anyhow::Result<()> {
             }
         }
     }
-    // println!("{}", source);
-    // let args = env::args().collect::<Vec<_>>();
-    // println!("{:?}", args);
-    // let source = r#"
-    // // valid
-    // if (a < b) {
-    // }
-    // if (a > b) {
-    // }
-    // if (a <= b) {
-    // }
-    // if (a >= b) {
-    // }
-    // if (a == b) {
-    // }
-    // if (a === b) {
-    // }
-    // if (a != b) {
-    // }
-    // if (a !== b) {
-    // }
-    // // invalid
-    // const a = b + c;
-    // const a = b - c;
-    // const a = b * c;
-    // const a = b / c;
-    // const a = b % c;
-    // const a = b ** c;
-
-    // const a = b << c;
-    // const a = b >> c;
-    // const a = b >>> c;
-    // const a = b & c;
-    // const a = b | c;
-    // const a = b ^ c;
-
-    // "#;
-    println!("{}", source);
 
     let root = parse(&source, 0, SourceType::js_module());
     let root = root.tree();
