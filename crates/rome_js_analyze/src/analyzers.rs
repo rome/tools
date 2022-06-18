@@ -8,6 +8,8 @@ mod no_delete;
 pub(crate) use no_delete::NoDelete;
 mod no_double_equals;
 pub(crate) use no_double_equals::NoDoubleEquals;
+mod no_empty_pattern;
+pub(crate) use no_empty_pattern::NoEmptyPattern;
 mod no_implicit_boolean;
 pub(crate) use no_implicit_boolean::NoImplicitBoolean;
 mod no_multiple_spaces_in_regular_expression_literals;
