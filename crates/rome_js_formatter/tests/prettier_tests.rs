@@ -279,7 +279,7 @@ enum ReportType {
 }
 
 #[derive(Debug, PartialEq, Serialize, Default)]
-struct PeerFileJsonReport {
+struct SingleFileJsonReport {
     filename: String,
     single_file_compatibility: f64,
 }
@@ -302,7 +302,7 @@ struct PrettierCompatibilityMetricData {
 struct ReportJson {
     file_based_average_prettier_similarity: f64,
     line_based_average_prettier_similarity: f64,
-    files: Vec<PeerFileJsonReport>,
+    files: Vec<SingleFileJsonReport>,
 }
 impl FromStr for ReportType {
     type Err = String;
@@ -533,7 +533,7 @@ impl DiffReport {
                          single_file_compatibility,
                          diff: _,
                      }| {
-                        PeerFileJsonReport {
+                        SingleFileJsonReport {
                             filename,
                             single_file_compatibility,
                         }
