@@ -281,8 +281,23 @@ enum ReportType {
 #[derive(Debug, PartialEq, Serialize, Default)]
 struct PeerFileJsonReport {
     filename: String,
-    prettier_similarity: f64,
+    single_file_compatibility: f64,
 }
+
+#[derive(Debug, Clone, Default)]
+struct SingleFileMetricData {
+    filename: String,
+    single_file_compatibility: f64,
+    diff: String,
+}
+
+#[derive(Clone, Debug, Default)]
+struct PrettierCompatibilityMetricData {
+    file_based_average_prettier_similarity: f64,
+    line_based_average_prettier_similarity: f64,
+    files: Vec<SingleFileMetricData>,
+}
+
 #[derive(Debug, PartialEq, Serialize, Default)]
 struct ReportJson {
     file_based_average_prettier_similarity: f64,
@@ -394,16 +409,9 @@ impl DiffReport {
     }
 
     fn report_prettier(&self, report_type: ReportType, report_filename: String) {
-        match report_type {
-            ReportType::Json => self.report_json(report_filename),
-            ReportType::Markdown => self.report_markdown(report_filename),
-        }
-    }
-
-    fn report_markdown(&self, report_filename: String) {
-        let mut report = String::new();
         let mut state = self.state.lock();
         state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
+        let mut report_metric_data = PrettierCompatibilityMetricData::default();
         let mut sum_of_per_compatibility_file = 0_f64;
         let mut total_line = 0;
         let mut total_matched_line = 0;
@@ -415,14 +423,15 @@ impl DiffReport {
             match_category,
         } in state.iter()
         {
+            let mut single_file_metric_data = SingleFileMetricData::default();
             file_count += 1;
             let rome_lines = rome_formatted_result.lines().count();
             let prettier_lines = prettier_formatted_result.lines().count();
             let mut matched_lines = 0;
-            let compatibility_per_file;
+            let mut per_file_compatibility = 1f64;
+            let mut diff = String::new();
             if *match_category == MatchCategory::Diff {
-                writeln!(report, "# {}", file_name).unwrap();
-                writeln!(report, "```diff").unwrap();
+                writeln!(diff, "```diff").unwrap();
 
                 for (tag, line) in diff_lines(
                     Algorithm::default(),
@@ -433,94 +442,105 @@ impl DiffReport {
                         matched_lines += line.lines().count();
                     }
                     let line = line.strip_suffix('\n').unwrap_or(line);
-                    writeln!(report, "{}{}", tag, line).unwrap();
+                    writeln!(diff, "{}{}", tag, line).unwrap();
                 }
 
-                compatibility_per_file =
+                per_file_compatibility =
                     matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
-                sum_of_per_compatibility_file += compatibility_per_file;
-                writeln!(report, "```").unwrap();
-                writeln!(report, "----").unwrap();
-                writeln!(
-                    report,
-                    "**Prettier Similarity**: {:.2}%",
-                    compatibility_per_file * 100_f64
-                )
-                .unwrap();
-                writeln!(report).unwrap();
-                writeln!(report, "----").unwrap();
+                sum_of_per_compatibility_file += per_file_compatibility;
+                writeln!(diff, "```").unwrap();
             } else {
                 // in this branch `rome_lines` == `prettier_lines` == `matched_lines`
                 assert!(rome_lines == prettier_lines);
                 matched_lines = rome_lines;
-                sum_of_per_compatibility_file += 1_f64;
+                sum_of_per_compatibility_file += per_file_compatibility;
             }
             total_line += rome_lines.max(prettier_lines);
             total_matched_line += matched_lines;
+            single_file_metric_data.diff = diff;
+            single_file_metric_data.filename = file_name.to_string();
+            single_file_metric_data.single_file_compatibility = per_file_compatibility;
+            report_metric_data.files.push(single_file_metric_data);
+        }
+        report_metric_data.file_based_average_prettier_similarity =
+            sum_of_per_compatibility_file / file_count as f64;
+        report_metric_data.line_based_average_prettier_similarity =
+            total_matched_line as f64 / total_line as f64;
+        match report_type {
+            ReportType::Json => self.report_json(report_filename, report_metric_data),
+            ReportType::Markdown => self.report_markdown(report_filename, report_metric_data),
+        }
+    }
+
+    fn report_markdown(
+        &self,
+        report_filename: String,
+        report_metric_data: PrettierCompatibilityMetricData,
+    ) {
+        let mut report = String::new();
+        for SingleFileMetricData {
+            filename,
+            single_file_compatibility,
+            diff,
+        } in report_metric_data.files.iter()
+        {
+            writeln!(report, "# {}", filename).unwrap();
+            write!(report, "{}", diff).unwrap();
+            writeln!(
+                report,
+                "**Prettier Similarity**: {:.2}%",
+                single_file_compatibility * 100_f64
+            )
+            .unwrap();
         }
         // extra two space force markdown render insert a new line
-        report = format!(
-            "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \n the definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893 \n",
-            (sum_of_per_compatibility_file / file_count as f64) * 100_f64,
-            (total_matched_line as f64 / total_line as f64) * 100_f64
-        ) + &report;
+        writeln!(
+            report,
+            "**File Based Average Prettier Similarity**: {:.2}%  ",
+            report_metric_data.file_based_average_prettier_similarity * 100_f64,
+        )
+        .unwrap();
+        writeln!(
+            report,
+            "**Line Based Average Prettier Similarity**: {:.2}%  ",
+            report_metric_data.line_based_average_prettier_similarity * 100_f64
+        )
+        .unwrap();
+        writeln!(
+            report,
+            " the definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893",
+        ).unwrap();
+        // write report content to target file_name
         write(report_filename, report).unwrap();
     }
 
-    fn report_json(&self, report_filename: String) {
-        let mut state = self.state.lock();
-        state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
-
-        let mut report_json = ReportJson::default();
-
-        let mut sum_of_per_compatibility_file = 0_f64;
-        let mut total_line = 0;
-        let mut total_matched_line = 0;
-        let mut file_count = 0;
-        for DiffReportItem {
-            file_name,
-            rome_formatted_result,
-            prettier_formatted_result,
-            match_category,
-        } in state.iter()
-        {
-            file_count += 1;
-            let rome_lines = rome_formatted_result.lines().count();
-            let prettier_lines = prettier_formatted_result.lines().count();
-            let mut matched_lines = 0;
-            let compatibility_per_file;
-            if *match_category == MatchCategory::Diff {
-                for (tag, line) in diff_lines(
-                    Algorithm::default(),
-                    prettier_formatted_result,
-                    rome_formatted_result,
-                ) {
-                    if matches!(tag, ChangeTag::Equal) {
-                        matched_lines += line.lines().count();
-                    }
-                }
-
-                compatibility_per_file =
-                    matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
-                sum_of_per_compatibility_file += compatibility_per_file;
-            } else {
-                assert!(rome_lines == prettier_lines);
-                matched_lines = rome_lines;
-                compatibility_per_file = 1_f64;
-                sum_of_per_compatibility_file += compatibility_per_file;
-            }
-
-            total_line += rome_lines.max(prettier_lines);
-            total_matched_line += matched_lines;
-            report_json.files.push(PeerFileJsonReport {
-                filename: file_name.to_string(),
-                prettier_similarity: compatibility_per_file,
-            });
-        }
-        let line_based = sum_of_per_compatibility_file / file_count as f64;
-        let file_based = total_matched_line as f64 / total_line as f64;
-        report_json.line_based_average_prettier_similarity = line_based;
-        report_json.file_based_average_prettier_similarity = file_based;
+    fn report_json(
+        &self,
+        report_filename: String,
+        report_metric_data: PrettierCompatibilityMetricData,
+    ) {
+        let report_json = ReportJson {
+            file_based_average_prettier_similarity: report_metric_data
+                .file_based_average_prettier_similarity,
+            line_based_average_prettier_similarity: report_metric_data
+                .line_based_average_prettier_similarity,
+            files: report_metric_data
+                .files
+                .into_iter()
+                .map(
+                    |SingleFileMetricData {
+                         filename,
+                         single_file_compatibility,
+                         diff: _,
+                     }| {
+                        PeerFileJsonReport {
+                            filename,
+                            single_file_compatibility,
+                        }
+                    },
+                )
+                .collect::<Vec<_>>(),
+        };
 
         let json_content = serde_json::to_string(&report_json).unwrap();
         write(report_filename, json_content).unwrap();
