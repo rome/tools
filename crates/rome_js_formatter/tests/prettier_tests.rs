@@ -412,7 +412,7 @@ impl DiffReport {
         let mut state = self.state.lock();
         state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
         let mut report_metric_data = PrettierCompatibilityMetricData::default();
-        let mut sum_of_per_compatibility_file = 0_f64;
+        let mut sum_of_single_compatibility_file = 0_f64;
         let mut total_line = 0;
         let mut total_matched_line = 0;
         let mut file_count = 0;
@@ -428,7 +428,7 @@ impl DiffReport {
             let rome_lines = rome_formatted_result.lines().count();
             let prettier_lines = prettier_formatted_result.lines().count();
             let mut matched_lines = 0;
-            let mut per_file_compatibility = 1f64;
+            let mut single_file_compatibility = 1f64;
             let mut diff = String::new();
             if *match_category == MatchCategory::Diff {
                 writeln!(diff, "```diff").unwrap();
@@ -445,25 +445,25 @@ impl DiffReport {
                     writeln!(diff, "{}{}", tag, line).unwrap();
                 }
 
-                per_file_compatibility =
+                single_file_compatibility =
                     matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
-                sum_of_per_compatibility_file += per_file_compatibility;
+                sum_of_single_compatibility_file += single_file_compatibility;
                 writeln!(diff, "```").unwrap();
             } else {
                 // in this branch `rome_lines` == `prettier_lines` == `matched_lines`
                 assert!(rome_lines == prettier_lines);
                 matched_lines = rome_lines;
-                sum_of_per_compatibility_file += per_file_compatibility;
+                sum_of_single_compatibility_file += single_file_compatibility;
             }
             total_line += rome_lines.max(prettier_lines);
             total_matched_line += matched_lines;
             single_file_metric_data.diff = diff;
             single_file_metric_data.filename = file_name.to_string();
-            single_file_metric_data.single_file_compatibility = per_file_compatibility;
+            single_file_metric_data.single_file_compatibility = single_file_compatibility;
             report_metric_data.files.push(single_file_metric_data);
         }
         report_metric_data.file_based_average_prettier_similarity =
-            sum_of_per_compatibility_file / file_count as f64;
+            sum_of_single_compatibility_file / file_count as f64;
         report_metric_data.line_based_average_prettier_similarity =
             total_matched_line as f64 / total_line as f64;
         match report_type {
