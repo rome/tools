@@ -1,14 +1,49 @@
 use crate::JsRuleAction;
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsInExpression, JsInstanceofExpression, T};
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
-pub(crate) enum NoUnsafeNegation {}
+
+declare_rule! {
+    /// Disallow using unsafe negation.
+    ///
+    /// ## Examples
+    ///
+    /// ### Valid
+    /// ```js
+    /// -1 in [1,2];
+    /// ```
+    /// ```js
+    /// ~1 in [1,2];
+    /// ```
+    /// ```js
+    /// typeof 1 in [1,2];
+    /// ```
+    /// ```js
+    /// void 1 in [1,2];
+    /// ```
+    /// ```js
+    /// delete 1 in [1,2];
+    /// ```
+    /// ```js
+    /// +1 instanceof [1,2];
+    /// ```
+    /// ### Invalid
+
+    /// ```js,expect_diagnostic
+    /// !1 in [1,2];
+    /// ```
+    /// ```js,expect_diagnostic
+    /// /**test*/!/** test*/1 instanceof [1,2];
+    /// ```
+    pub(crate) NoUnsafeNegation = "NoUnsafeNegation"
+}
 
 impl Rule for NoUnsafeNegation {
-    const NAME: &'static str = "noUnsafeNegation";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsInOrInstanceOfExpression;
