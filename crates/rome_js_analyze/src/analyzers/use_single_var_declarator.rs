@@ -1,6 +1,8 @@
 use std::iter;
 
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -12,10 +14,26 @@ use rome_rowan::{AstNode, AstSeparatedList};
 
 use crate::JsRuleAction;
 
-pub(crate) enum UseSingleVarDeclarator {}
+declare_rule! {
+    /// Disallow multiple variable declarations in the same variable statement
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// let foo, bar;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// for (let i = 0, x = 1; i < arr.length; i++) {}
+    /// ```
+    pub(crate) UseSingleVarDeclarator = "useSingleVarDeclarator"
+}
 
 impl Rule for UseSingleVarDeclarator {
-    const NAME: &'static str = "useSingleVarDeclarator";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsVariableStatement;

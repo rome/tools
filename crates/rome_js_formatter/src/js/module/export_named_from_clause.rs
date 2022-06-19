@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{has_leading_newline, FormatWithSemicolon};
+use crate::utils::{node_has_leading_newline, FormatWithSemicolon};
 use rome_formatter::write;
 
 use crate::FormatNodeFields;
@@ -25,7 +25,7 @@ impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedF
                 write!(f, [type_token.format(), space_token()])?;
             }
 
-            if has_leading_newline(specifiers.syntax()) {
+            if node_has_leading_newline(specifiers.syntax()) {
                 write!(
                     f,
                     [format_delimited(

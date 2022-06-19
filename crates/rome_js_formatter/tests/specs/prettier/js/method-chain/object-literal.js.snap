@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: object-literal.js
 ---
 # Input
@@ -30,7 +31,7 @@ of("test")
     error(err) {
       thrown = err;
     },
-  },);
+  });
 
 of("test")
   .pipe(throwIfEmpty())
@@ -38,7 +39,7 @@ of("test")
     get foo() {
       bar();
     },
-  },);
+  });
 
 ```
 

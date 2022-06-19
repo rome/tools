@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: test_declarations.js
 ---
 # Input
@@ -215,15 +216,12 @@ it(
   },
 );
 
-it(
-  `handles
+it(`handles
   some
     newlines
-  does something really long and complicated so I have to write a very long name for the test`,
-  () => {
-    console.log("hello!");
-  },
-);
+  does something really long and complicated so I have to write a very long name for the test`, () => {
+  console.log("hello!");
+});
 
 test(
   "does something really long and complicated so I have to write a very long name for the test",
@@ -242,24 +240,18 @@ test(
 describe(
   "does something really long and complicated so I have to write a very long name for the describe block",
   () => {
-    it(
-      "an example test",
-      (done) => {
-        console.log("hello!");
-      },
-    );
+    it("an example test", (done) => {
+      console.log("hello!");
+    });
   },
 );
 
 describe(
   `does something really long and complicated so I have to write a very long name for the describe block`,
   () => {
-    it(
-      `an example test`,
-      (done) => {
-        console.log("hello!");
-      },
-    );
+    it(`an example test`, (done) => {
+      console.log("hello!");
+    });
   },
 );
 
@@ -503,48 +495,48 @@ it(
    25:   "does something really long and complicated so I have to write a very long name for the test",
    32:   `does something really long and complicated so I have to write a very long name for the test`,
    39:   `{foo + bar} does something really long and complicated so I have to write a very long name for the test`,
-   49:   does something really long and complicated so I have to write a very long name for the test`,
-   56:   "does something really long and complicated so I have to write a very long name for the test",
-   63:   `does something really long and complicated so I have to write a very long name for the test`,
-   70:   "does something really long and complicated so I have to write a very long name for the describe block",
-   82:   `does something really long and complicated so I have to write a very long name for the describe block`,
-   94:   "does something really long and complicated so I have to write a very long name for the describe block",
-   99:   "does something really long and complicated so I have to write a very long name for the describe block",
-  104:   `does something really long and complicated so I have to write a very long name for the test`,
-  109:   `does something really long and complicated so I have to write a very long name for the test`,
-  114:   "does something really long and complicated so I have to write a very long name for the describe block",
-  119:   "does something really long and complicated so I have to write a very long name for the describe block",
-  124:   "does something really long and complicated so I have to write a very long name for the test",
-  131:   `does something really long and complicated so I have to write a very long name for the test`,
-  138:   `does something really long and complicated so I have to write a very long name for the test`,
-  143:   `does something really long and complicated so I have to write a very long name for the test`,
-  148:   `does something really long and complicated so I have to write a very long name for the test`,
-  153:   "does something really long and complicated so I have to write a very long name for the describe block",
-  158:   "does something really long and complicated so I have to write a very long name for the describe block",
-  163:   `does something really long and complicated so I have to write a very long name for the test`,
-  168:   "does something really long and complicated so I have to write a very long name for the test",
-  173:   "does something really long and complicated so I have to write a very long name for the test",
-  178:   `does something really long and complicated so I have to write a very long name for the test`,
-  183:   "does something really long and complicated so I have to write a very long name for the test",
-  188:   `does something really long and complicated so I have to write a very long name for the test`,
-  193:   "does something really long and complicated so I have to write a very long name for the test",
-  198:   `does something really long and complicated so I have to write a very long name for the test`,
-  203:   "does something really long and complicated so I have to write a very long name for the test",
-  208:   `does something really long and complicated so I have to write a very long name for the test`,
-  213:   "does something really long and complicated so I have to write a very long name for the testThis is a very",
-  218:   `does something really long and complicated so I have to write a very long name for the testThis is a very`,
-  223:   "does something really long and complicated so I have to write a very long name for the test",
-  228:   `does something really long and complicated so I have to write a very long name for the test`,
-  233:   "does something really long and complicated so I have to write a very long name for the test",
-  238:   `does something really long and complicated so I have to write a very long name for the test`,
-  245:   "does something really long and complicated so I have to write a very long name for the test",
-  253:   "does something really long and complicated so I have to write a very long name for the test",
-  260:   "does something really long and complicated so I have to write a very long name for the test",
-  267:   "does something really long and complicated so I have to write a very long name for the test",
-  272:   "does something really long and complicated so I have to write a very long name for the test",
-  277:   "does something really long and complicated so I have to write a very long name for the testThis is a very",
-  282:   "does something really long and complicated so I have to write a very long name for the test",
-  287:   "does something really long and complicated so I have to write a very long name for the test",
-  297:   does something really long and complicated so I have to write a very long name for the test`,
+   48:   does something really long and complicated so I have to write a very long name for the test`, () => {
+   53:   "does something really long and complicated so I have to write a very long name for the test",
+   60:   `does something really long and complicated so I have to write a very long name for the test`,
+   67:   "does something really long and complicated so I have to write a very long name for the describe block",
+   76:   `does something really long and complicated so I have to write a very long name for the describe block`,
+   85:   "does something really long and complicated so I have to write a very long name for the describe block",
+   90:   "does something really long and complicated so I have to write a very long name for the describe block",
+   95:   `does something really long and complicated so I have to write a very long name for the test`,
+  100:   `does something really long and complicated so I have to write a very long name for the test`,
+  105:   "does something really long and complicated so I have to write a very long name for the describe block",
+  110:   "does something really long and complicated so I have to write a very long name for the describe block",
+  115:   "does something really long and complicated so I have to write a very long name for the test",
+  122:   `does something really long and complicated so I have to write a very long name for the test`,
+  129:   `does something really long and complicated so I have to write a very long name for the test`,
+  134:   `does something really long and complicated so I have to write a very long name for the test`,
+  139:   `does something really long and complicated so I have to write a very long name for the test`,
+  144:   "does something really long and complicated so I have to write a very long name for the describe block",
+  149:   "does something really long and complicated so I have to write a very long name for the describe block",
+  154:   `does something really long and complicated so I have to write a very long name for the test`,
+  159:   "does something really long and complicated so I have to write a very long name for the test",
+  164:   "does something really long and complicated so I have to write a very long name for the test",
+  169:   `does something really long and complicated so I have to write a very long name for the test`,
+  174:   "does something really long and complicated so I have to write a very long name for the test",
+  179:   `does something really long and complicated so I have to write a very long name for the test`,
+  184:   "does something really long and complicated so I have to write a very long name for the test",
+  189:   `does something really long and complicated so I have to write a very long name for the test`,
+  194:   "does something really long and complicated so I have to write a very long name for the test",
+  199:   `does something really long and complicated so I have to write a very long name for the test`,
+  204:   "does something really long and complicated so I have to write a very long name for the testThis is a very",
+  209:   `does something really long and complicated so I have to write a very long name for the testThis is a very`,
+  214:   "does something really long and complicated so I have to write a very long name for the test",
+  219:   `does something really long and complicated so I have to write a very long name for the test`,
+  224:   "does something really long and complicated so I have to write a very long name for the test",
+  229:   `does something really long and complicated so I have to write a very long name for the test`,
+  236:   "does something really long and complicated so I have to write a very long name for the test",
+  244:   "does something really long and complicated so I have to write a very long name for the test",
+  251:   "does something really long and complicated so I have to write a very long name for the test",
+  258:   "does something really long and complicated so I have to write a very long name for the test",
+  263:   "does something really long and complicated so I have to write a very long name for the test",
+  268:   "does something really long and complicated so I have to write a very long name for the testThis is a very",
+  273:   "does something really long and complicated so I have to write a very long name for the test",
+  278:   "does something really long and complicated so I have to write a very long name for the test",
+  288:   does something really long and complicated so I have to write a very long name for the test`,
 ```
 

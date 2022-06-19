@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: indent.js
 ---
 # Input
@@ -243,7 +244,7 @@ a ? {
           a ? {
             a: a({
               a: 0,
-            },),
+            }),
           } : [
             0,
             a(),
@@ -254,7 +255,7 @@ a ? {
               },
               a ? a() : a({
                 a: 0,
-              },),
+              }),
             ),
             a() ? {
               a: a(),
@@ -277,7 +278,7 @@ a ? {
               {
                 a: 0,
               },
-            ],);
+            ]);
           })(
             a ? function (a) {
               return function () {

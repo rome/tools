@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-4125.js
 ---
 # Input
@@ -211,13 +212,10 @@ d3
 
 Object.keys(props)
   .filter((key) => (key in own) === false)
-  .reduce(
-    (a, key) => {
-      a[key] = props[key];
-      return a;
-    },
-    {},
-  );
+  .reduce((a, key) => {
+    a[key] = props[key];
+    return a;
+  }, {});
 
 point().x(4).y(3).z(6).plot();
 
@@ -254,12 +252,12 @@ function HelloWorld() {
   window.FooClient.setVars({
     locale: getFooLocale({ page }),
     authorizationToken: data.token,
-  },).initVerify("foo_container");
+  }).initVerify("foo_container");
 
   fejax.ajax({
     url: "/verification/",
     dataType: "json",
-  },).then(
+  }).then(
     (data) => {
       this.setState({ isLoading: false });
       this.initWidget(data);
@@ -295,15 +293,12 @@ action$
 window.FooClient.setVars({
   locale: getFooLocale({ page }),
   authorizationToken: data.token,
-},).initVerify("foo_container");
+}).initVerify("foo_container");
 
-it(
-  "gets triggered by mouseenter",
-  () => {
-    const wrapper = shallow(<CalendarDay />);
-    wrapper.dive().find(Button).prop();
-  },
-);
+it("gets triggered by mouseenter", () => {
+  const wrapper = shallow(<CalendarDay />);
+  wrapper.dive().find(Button).prop();
+});
 
 const a1 = x.a(true).b(null).c(123);
 const a2 = x.d("").e(``).f(g);

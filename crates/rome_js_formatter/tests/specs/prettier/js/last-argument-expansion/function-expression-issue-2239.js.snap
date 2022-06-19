@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: function-expression-issue-2239.js
 ---
 # Input
@@ -12,12 +13,11 @@ someFunctionCallWithBigArgumentsAndACallback(thisArgumentIsQuiteLong, function(c
 
 # Output
 ```js
-someFunctionCallWithBigArgumentsAndACallback(
-  thisArgumentIsQuiteLong,
-  function (cool) {
-    return cool;
-  },
-);
+someFunctionCallWithBigArgumentsAndACallback(thisArgumentIsQuiteLong, function (
+  cool,
+) {
+  return cool;
+});
 
 ```
 

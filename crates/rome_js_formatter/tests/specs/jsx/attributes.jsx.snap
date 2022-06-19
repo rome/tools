@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: attributes.jsx
 ---
 # Input
@@ -71,16 +72,13 @@ Quote style: Double Quotes
 />;
 
 <CodeEditor
-	value={formatWithPrettier(
-		code,
-		{
-			lineWidth,
-			indentStyle,
-			indentWidth,
-			language: isTypeScript ? "ts" : "js",
-			quoteStyle,
-		},
-	)}
+	value={formatWithPrettier(code, {
+		lineWidth,
+		indentStyle,
+		indentWidth,
+		language: isTypeScript ? "ts" : "js",
+		quoteStyle,
+	})}
 	key={code + lineWidth + indentStyle + indentWidth + language + quoteStyle}
 	language={language}
 	placeholder="Prettier Output"
@@ -116,5 +114,5 @@ let a = <test
 ## Lines exceeding width of 80 characters
 
    10: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   33: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   30: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 

@@ -84,7 +84,7 @@ fn write_consequent_block(f: &mut JsFormatter, stmt: JsAnyStatement) -> FormatRe
             space_token(),
             format_inserted(JsSyntaxKind::L_CURLY),
             block_indent(&stmt.format()),
-            format_inserted(JsSyntaxKind::R_CURLY),
+            format_inserted(JsSyntaxKind::R_CURLY)
         ]
     ]
 }

@@ -1,4 +1,6 @@
-use rome_analyze::{context::RuleContext, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -11,10 +13,33 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoDelete {}
+declare_rule! {
+    /// Disallow the use of the `delete` operator
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// const arr = [['a','b','c'], [1, 2, 3]];
+    /// delete arr[0][2];
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const obj = {a: {b: {c: 123}}};
+    /// delete obj.a.b.c;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const foo = new Set([1,2,3]);
+    /// foo.delete(1);
+    ///```
+    pub(crate) NoDelete = "noDelete"
+}
 
 impl Rule for NoDelete {
-    const NAME: &'static str = "noDelete";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsUnaryExpression;

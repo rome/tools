@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: break.ts
 ---
 # Input
@@ -81,7 +82,7 @@ class InMemoryAppender extends log4javascript.Appender
 
 class Foo extends Immutable.Record({
   ipaddress: "",
-},) {
+}) {
   ipaddress: string;
 }
 

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: graphql-tag.js
 ---
 # Input
@@ -307,7 +308,7 @@ ${USER_DETAILS_FRAGMENT}
     ${FRIENDS_FRAGMENT}
   ${generateFragment({
   totally: "a good idea",
-},)}
+})}
 
 ${fragment}#comment
 
