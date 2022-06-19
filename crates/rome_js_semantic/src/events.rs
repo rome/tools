@@ -54,7 +54,7 @@ impl SemanticEvent {
 
 /// Extracts [SemanticEvent] from [SyntaxNode].
 ///
-/// The extraction is not enterily pull based, nor entirely push based.
+/// The extraction is not entirely pull based, nor entirely push based.
 /// This happens because some nodes can generate multiple events.
 /// A hoisted variable declaration like ```var a```, being the more obvious
 /// example. As soon ```a``` is hoisted, all references of ```a``` are solved
@@ -63,7 +63,7 @@ impl SemanticEvent {
 /// For a simpler way to extract [SemanticEvent] see [semantic_events] or [SemanticEventIterator].
 ///
 /// To use the [SemanticEventExtractor] one must push the current node, following
-/// the [PreOrder] of the tree, and must pull events unti [Pop] returuns [None].
+/// the [PreOrder] of the tree, and must pull events until [Pop] returns [None].
 ///
 /// ```rust
 /// use rome_js_parser::*;
