@@ -1,23 +1,27 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
 
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
+use rome_js_syntax::JsSyntaxKind::JS_SEQUENCE_EXPRESSION;
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpression> {
     fn fmt_fields(node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        let content = format_with(|f| {
-            let mut current = node.clone();
-            let parent = current.syntax().parent();
+        let first_non_sequence_parent = node
+            .syntax()
+            .ancestors()
+            .find(|p| p.kind() != JS_SEQUENCE_EXPRESSION);
 
-            let has_already_indentation = parent.map_or(false, |parent| {
+        let is_nested = first_non_sequence_parent != node.syntax().parent();
+
+        let has_already_indentation = first_non_sequence_parent.map_or(false, |parent| {
+            match parent.kind() {
                 // Return statement already does the indentation for us
                 // Arrow function body can't have a sequence expression unless it's parenthesized, otherwise
                 // would be a syntax error
-                if matches!(parent.kind(), JsSyntaxKind::JS_RETURN_STATEMENT) {
-                    true
-                } else if matches!(parent.kind(), JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION) {
+                JsSyntaxKind::JS_RETURN_STATEMENT => true,
+                JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => {
                     // In case we are inside a sequence expression, we have to go up a level and see the great parent.
                     // Arrow function body and return statements applying indentation for us, so we signal the
                     // sequence expression to not add other indentation levels
@@ -31,79 +35,34 @@ impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpress
                                 | JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER
                         )
                     )
-                } else {
-                    false
                 }
-            });
-
-            // Find the left most sequence expression
-            while let Some(sequence_expression) =
-                JsSequenceExpression::cast(current.left()?.syntax().clone())
-            {
-                current = sequence_expression;
+                _ => false,
             }
-
-            // Format the left most sequence expression
-            let JsSequenceExpressionFields {
-                left,
-                comma_token,
-                right,
-            } = current.as_fields();
-
-            write![f, [left.format()?, comma_token.format()?]]?;
-
-            let mut previous_right = right;
-
-            // Traverse upwards again and concatenate the sequence expression until we find the first non-sequence expression
-            while let Some(parent_sequence) = current
-                .syntax()
-                .parent()
-                .and_then(JsSequenceExpression::cast)
-            {
-                let JsSequenceExpressionFields {
-                    left: _left,
-                    comma_token,
-                    right,
-                } = parent_sequence.as_fields();
-
-                if has_already_indentation {
-                    write![
-                        f,
-                        [
-                            soft_line_break_or_space(),
-                            previous_right.format()?,
-                            comma_token.format()?,
-                        ]
-                    ]?;
-                } else {
-                    write![
-                        f,
-                        [indent(&format_args![
-                            soft_line_break_or_space(),
-                            previous_right.format()?,
-                            comma_token.format()?,
-                        ])]
-                    ]?;
-                }
-                previous_right = right;
-                current = parent_sequence;
-            }
-
-            if has_already_indentation {
-                write![f, [soft_line_break_or_space(), previous_right.format()?,]]?;
-            } else {
-                write![
-                    f,
-                    [indent(&format_args![
-                        soft_line_break_or_space(),
-                        previous_right.format(),
-                    ])]
-                ]?;
-            }
-
-            Ok(())
         });
 
-        write!(f, [group_elements(&content)])
+        let JsSequenceExpressionFields {
+            left,
+            comma_token,
+            right,
+        } = node.as_fields();
+
+        let format_content = format_with(|f| {
+            write!(f, [left.format(), comma_token.format()])?;
+
+            let format_right =
+                format_with(|f| write!(f, [soft_line_break_or_space(), right.format()]));
+
+            if has_already_indentation {
+                write!(f, [format_right])
+            } else {
+                write!(f, [indent(&format_right)])
+            }
+        });
+
+        if is_nested {
+            write!(f, [format_content])
+        } else {
+            write!(f, [group_elements(&format_content)])
+        }
     }
 }

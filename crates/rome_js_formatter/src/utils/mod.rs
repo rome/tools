@@ -534,7 +534,7 @@ where
     let mut iterator = separated.peekable();
     let mut join_with = f.join_with(soft_line_break_or_space());
 
-    while let Some(element) = iterator.by_ref().next() {
+    while let Some(element) = iterator.next() {
         let last = iterator.peek().is_none();
 
         if last {

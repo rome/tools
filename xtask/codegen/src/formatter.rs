@@ -202,7 +202,7 @@ impl ModuleIndex {
                     content.push_str("#[allow(clippy::module_inception)]\n");
                 }
 
-                content.push_str("mod ");
+                content.push_str("pub(crate) mod ");
                 content.push_str(&import);
                 content.push_str(";\n");
             }
