@@ -526,7 +526,7 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-const { id1, method: isMethod1, methodId1 } = privateNamesMap.get(name);
+lorem = fff = ee = () => (fff) => () => (fefef) => () => fff;
 
            "#;
         let syntax = SourceType::ts();
