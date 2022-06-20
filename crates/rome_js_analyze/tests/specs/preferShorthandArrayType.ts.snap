@@ -43,7 +43,7 @@ Suggested fix: Use a [] to replace
 0 0 |   let valid: Array<foo>;
 1 1 |   let invalid1: bar[];
 2   | - let invalid2: Array<foo, Array<string>>;
-  2 | + let invalid2: foo[],string[][],;
+  2 | + let invalid2: foo[] | string[][];
 3 3 |   let invalid3: Promise<Array<string>>;
 4 4 |   let invalid4: Array<Foo<Bar>>;
 

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
 assertion_line: 98
-expression: preferShorthandArrayType.ts
+expression: useShorthandArrayType.ts
 ---
 # Input
 ```js
@@ -14,8 +14,8 @@ let invalid4: Array<Foo<Bar>>;
 
 # Diagnostics
 ```
-warning[preferShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
-  ┌─ preferShorthandArrayType.ts:1:12
+warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
+  ┌─ useShorthandArrayType.ts:1:12
   │
 1 │ let valid: Array<foo>;
   │            ----------
@@ -32,8 +32,8 @@ Suggested fix: Use a [] to replace
 ```
 
 ```
-warning[preferShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
-  ┌─ preferShorthandArrayType.ts:3:15
+warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
+  ┌─ useShorthandArrayType.ts:3:15
   │
 3 │ let invalid2: Array<foo, Array<string>>;
   │               -------------------------
@@ -51,8 +51,8 @@ Suggested fix: Use a [] to replace
 ```
 
 ```
-warning[preferShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
-  ┌─ preferShorthandArrayType.ts:3:26
+warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
+  ┌─ useShorthandArrayType.ts:3:26
   │
 3 │ let invalid2: Array<foo, Array<string>>;
   │                          -------------
@@ -70,8 +70,8 @@ Suggested fix: Use a [] to replace
 ```
 
 ```
-warning[preferShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
-  ┌─ preferShorthandArrayType.ts:4:23
+warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
+  ┌─ useShorthandArrayType.ts:4:23
   │
 4 │ let invalid3: Promise<Array<string>>;
   │                       -------------
@@ -89,8 +89,8 @@ Suggested fix: Use a [] to replace
 ```
 
 ```
-warning[preferShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
-  ┌─ preferShorthandArrayType.ts:5:15
+warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
+  ┌─ useShorthandArrayType.ts:5:15
   │
 5 │ let invalid4: Array<Foo<Bar>>;
   │               ---------------

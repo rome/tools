@@ -25,10 +25,10 @@ declare_rule! {
     ///     x.step();
     /// }
     /// ```
-    pub(crate) PreferShorthandArrayType = "preferShorthandArrayType"
+    pub(crate) UseShorthandArrayType = "useShorthandArrayType"
 }
 
-impl Rule for PreferShorthandArrayType {
+impl Rule for UseShorthandArrayType {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = TsReferenceType;
