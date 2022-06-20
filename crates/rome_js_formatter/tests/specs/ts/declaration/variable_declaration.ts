@@ -9,5 +9,14 @@ const map: Map<Function, Foo<S>> = new Map();
 
 //fluid layout
 
+const map: Map<Map<string | void, { value: UnloadedDescriptor }>> =
+    new Map();
+
 const map: Map<Function, FunctionFunctionFunctionFunctionffFunction> =
+    new Map();
+
+const map: Map<Foo<S>> =
+    new Map();
+
+const map: Map<Condition extends Foo ? FooFooFoo : BarBarBar> =
     new Map();
