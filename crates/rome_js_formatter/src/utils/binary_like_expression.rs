@@ -6,7 +6,7 @@ use rome_js_syntax::{
     JsSyntaxNode, JsSyntaxToken,
 };
 
-use crate::utils::is_break_after_operator;
+use crate::utils::should_break_after_operator;
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::cmp::Ordering;
 use std::fmt::Debug;
@@ -265,7 +265,7 @@ fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpress
     match parent_kind {
         Some(JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER) => current_node
             .as_expression()
-            .and_then(|expression| is_break_after_operator(expression).ok())
+            .and_then(|expression| should_break_after_operator(expression).ok())
             .unwrap_or(false),
         Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION) => {
             true
