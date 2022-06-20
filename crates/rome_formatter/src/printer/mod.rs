@@ -6,7 +6,7 @@ use crate::format_element::{
     ConditionalGroupContent, Group, LineMode, List, PrintMode, VerbatimKind,
 };
 use crate::intersperse::Intersperse;
-use crate::{group_elements, FormatElement, GroupId, Printed, SourceMarker, TextRange};
+use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
 use rome_rowan::TextSize;
 use std::iter::{once, Rev};
@@ -1200,6 +1200,33 @@ two lines`,
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")
+    }
+
+    #[test]
+    fn conditional_with_group_id_in_fits() {
+        let content = format_with(|f| {
+            let group_id = f.group_id("test");
+            write!(
+                f,
+                [
+                    group_elements(&format_args![
+                        token("The referenced group breaks."),
+                        hard_line_break()
+                    ])
+                    .with_group_id(Some(group_id)),
+                    group_elements(&format_args![
+                        token("This group breaks because:"),
+                        soft_line_break_or_space(),
+                        if_group_fits_on_line(&token("This content fits but should not be printed.")).with_group_id(Some(group_id)),
+                        if_group_breaks(&token("It measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.")).with_group_id(Some(group_id)),
+                    ])
+                ]
+            )
+        });
+
+        let printed = format(&content);
+
+        assert_eq!(printed.as_code(), "The referenced group breaks.\nThis group breaks because:\nIt measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.");
     }
 
     struct FormatArrayElements<'a> {
