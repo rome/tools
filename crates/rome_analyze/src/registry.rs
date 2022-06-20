@@ -1,7 +1,7 @@
-use std::{iter::Map, vec::IntoIter};
+use std::collections::HashSet;
 
 use rome_diagnostics::file::FileId;
-use rome_rowan::{AstNode, Language, SyntaxNode};
+use rome_rowan::{AstNode, Language, SyntaxKind, SyntaxNode};
 
 use crate::{
     context::RuleContext,
@@ -11,12 +11,12 @@ use crate::{
 
 /// The rule registry holds type-erased instances of all active analysis rules
 pub struct RuleRegistry<L: Language> {
-    rules: Vec<RegistryRule<L>>,
+    nodes: Vec<KindRules<L>>,
 }
 
 impl<L: Language> RuleRegistry<L> {
     pub fn empty() -> Self {
-        Self { rules: Vec::new() }
+        Self { nodes: Vec::new() }
     }
 
     pub fn push<R>(&mut self)
@@ -24,18 +24,39 @@ impl<L: Language> RuleRegistry<L> {
         R: Rule + 'static,
         R::Query: AstNode<Language = L>,
     {
-        self.rules.push(RegistryRule::of::<R>());
+        for kind in <R::Query as AstNode>::KIND_SET.iter() {
+            let index = usize::from(kind.to_raw().0);
+
+            if self.nodes.len() <= index {
+                self.nodes.resize_with(index + 1, KindRules::empty);
+            }
+
+            let node = &mut self.nodes[index];
+            node.rules.push(RegistryRule::of::<R>());
+        }
     }
 
     /// Returns an iterator over the name and documentation of all active rules
     /// in this instance of the registry
-    pub fn metadata(self) -> MetadataIter<L> {
-        self.rules.into_iter().map(|rule| (rule.name, rule.docs))
+    pub fn metadata(self) -> impl Iterator<Item = (&'static str, &'static str)> {
+        let mut unique = HashSet::new();
+        self.nodes
+            .into_iter()
+            .flat_map(|node| node.rules)
+            .map(|rule| (rule.name, rule.docs))
+            .filter(move |(name, _)| unique.insert(name.as_ptr() as u64))
     }
 }
 
-pub type MetadataIter<L> =
-    Map<IntoIter<RegistryRule<L>>, fn(RegistryRule<L>) -> (&'static str, &'static str)>;
+struct KindRules<L: Language> {
+    rules: Vec<RegistryRule<L>>,
+}
+
+impl<L: Language> KindRules<L> {
+    fn empty() -> Self {
+        Self { rules: Vec::new() }
+    }
+}
 
 pub(crate) type RuleLanguage<R> = NodeLanguage<<R as Rule>::Query>;
 pub(crate) type NodeLanguage<N> = <N as AstNode>::Language;
@@ -55,7 +76,12 @@ where
         node: SyntaxNode<L>,
         callback: &mut impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B>,
     ) -> ControlFlow<B> {
-        for rule in &self.rules {
+        let kind = usize::from(node.kind().to_raw().0);
+        let rules = match self.nodes.get(kind) {
+            Some(entry) => &entry.rules,
+            None => return ControlFlow::Continue(()),
+        };
+        for rule in rules {
             if let Some(event) = (rule.run)(file_id, root, &node) {
                 if let ControlFlow::Break(b) = callback(&*event) {
                     return ControlFlow::Break(b);

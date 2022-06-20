@@ -1,5 +1,5 @@
 use rome_analyze::{
-    AnalysisFilter, Analyzer, AnalyzerSignal, ControlFlow, LanguageRoot, MetadataIter, RuleAction,
+    AnalysisFilter, Analyzer, AnalyzerSignal, ControlFlow, LanguageRoot, RuleAction,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
@@ -17,7 +17,7 @@ pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
 /// Return an iterator over the name and documentation of all the rules
 /// implemented by the JS analyzer
-pub fn metadata(filter: AnalysisFilter) -> MetadataIter<JsLanguage> {
+pub fn metadata(filter: AnalysisFilter) -> impl Iterator<Item = (&'static str, &'static str)> {
     build_registry(&filter).metadata()
 }
 

@@ -9,7 +9,7 @@ use crate::{
     JsonSyntaxKind::{self as SyntaxKind, *},
     JsonSyntaxList as SyntaxList, JsonSyntaxNode as SyntaxNode, JsonSyntaxToken as SyntaxToken,
 };
-use rome_rowan::{support, AstNode, SyntaxResult};
+use rome_rowan::{support, AstNode, RawSyntaxKind, SyntaxKindSet, SyntaxResult};
 #[allow(unused)]
 use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
@@ -376,6 +376,8 @@ impl JsonValue {
 }
 impl AstNode for JsonArray {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_ARRAY as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ARRAY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -410,6 +412,8 @@ impl From<JsonArray> for SyntaxElement {
 }
 impl AstNode for JsonBoolean {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_BOOLEAN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_BOOLEAN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -440,6 +444,8 @@ impl From<JsonBoolean> for SyntaxElement {
 }
 impl AstNode for JsonMember {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_MEMBER as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -471,6 +477,8 @@ impl From<JsonMember> for SyntaxElement {
 }
 impl AstNode for JsonNull {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_NULL as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_NULL }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -497,6 +505,8 @@ impl From<JsonNull> for SyntaxElement {
 }
 impl AstNode for JsonNumber {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_NUMBER as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_NUMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -526,6 +536,8 @@ impl From<JsonNumber> for SyntaxElement {
 }
 impl AstNode for JsonObject {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_OBJECT as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_OBJECT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -560,6 +572,8 @@ impl From<JsonObject> for SyntaxElement {
 }
 impl AstNode for JsonRoot {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_ROOT as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ROOT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -586,6 +600,8 @@ impl From<JsonRoot> for SyntaxElement {
 }
 impl AstNode for JsonString {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_STRING as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_STRING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -636,6 +652,13 @@ impl From<JsonUnknown> for JsonValue {
 }
 impl AstNode for JsonValue {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = JsonArray::KIND_SET
+        .union(JsonBoolean::KIND_SET)
+        .union(JsonNull::KIND_SET)
+        .union(JsonNumber::KIND_SET)
+        .union(JsonObject::KIND_SET)
+        .union(JsonString::KIND_SET)
+        .union(JsonUnknown::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -779,6 +802,8 @@ impl JsonUnknown {
 }
 impl AstNode for JsonUnknown {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_UNKNOWN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_UNKNOWN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -822,6 +847,8 @@ impl JsonArrayElementList {
 }
 impl AstNode for JsonArrayElementList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_ARRAY_ELEMENT_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ARRAY_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsonArrayElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -889,6 +916,8 @@ impl JsonMemberList {
 }
 impl AstNode for JsonMemberList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JSON_MEMBER_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_MEMBER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsonMemberList> {
         if Self::can_cast(syntax.kind()) {

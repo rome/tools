@@ -15,8 +15,70 @@ use text_size::TextRange;
 mod mutation;
 
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
-use crate::{Language, SyntaxList, SyntaxNode, SyntaxToken};
+use crate::{Language, RawSyntaxKind, SyntaxKind, SyntaxList, SyntaxNode, SyntaxToken};
 pub use mutation::{AstNodeExt, AstNodeListExt, AstSeparatedListExt};
+
+/// Represents a set of [SyntaxKind] as a bitfield, with each bit representing
+/// whether the corresponding [RawSyntaxKind] value is contained in the set
+///
+/// This is similar to the `TokenSet` struct in `rome_js_parser`, with the
+/// bitfield here being twice as large as it needs to cover all nodes as well
+/// as all token kinds
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct SyntaxKindSet<L: ?Sized + Language>([u128; 4], PhantomData<L>);
+
+impl<L> SyntaxKindSet<L>
+where
+    L: Language,
+{
+    /// Create a new [SyntaxKindSet] containing only the provided [SyntaxKind]
+    pub fn of(kind: L::Kind) -> Self {
+        Self::from_raw(kind.to_raw())
+    }
+
+    /// Create a new [SyntaxKindSet] containing only the provided [RawSyntaxKind]
+    pub const fn from_raw(kind: RawSyntaxKind) -> Self {
+        Self(kind.as_bits(), PhantomData)
+    }
+
+    /// Returns the union of the two sets `self` and `other`
+    pub const fn union(self, other: Self) -> Self {
+        Self(
+            [
+                self.0[0] | other.0[0],
+                self.0[1] | other.0[1],
+                self.0[2] | other.0[2],
+                self.0[3] | other.0[3],
+            ],
+            PhantomData,
+        )
+    }
+
+    /// Returns true if `kind` is contained in this set
+    pub fn matches(self, kind: L::Kind) -> bool {
+        let bits = kind.to_raw().as_bits();
+        (self.0[0] & bits[0]) != 0
+            || (self.0[1] & bits[1]) != 0
+            || (self.0[2] & bits[2]) != 0
+            || (self.0[3] & bits[3]) != 0
+    }
+
+    /// Returns an iterator over all the [SyntaxKind] contained in this set
+    pub fn iter(self) -> impl Iterator<Item = L::Kind> {
+        self.0.into_iter().enumerate().flat_map(|(index, item)| {
+            let index = index as u16 * 128;
+            (0..u128::BITS).filter_map(move |bit| {
+                if (item & (1 << bit)) != 0 {
+                    let raw = index + bit as u16;
+                    let raw = RawSyntaxKind(raw);
+                    Some(<L::Kind as SyntaxKind>::from_raw(raw))
+                } else {
+                    None
+                }
+            })
+        })
+    }
+}
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
@@ -24,6 +86,8 @@ pub use mutation::{AstNodeExt, AstNodeListExt, AstSeparatedListExt};
 /// node itself.
 pub trait AstNode: Clone {
     type Language: Language;
+
+    const KIND_SET: SyntaxKindSet<Self::Language>;
 
     /// Returns `true` if a node with the given kind can be cased to this AST node.
     fn can_cast(kind: <Self::Language as Language>::Kind) -> bool;
@@ -859,6 +923,10 @@ mod tests {
         struct RawRoot(SyntaxNode<RawLanguage>);
         impl AstNode for RawRoot {
             type Language = RawLanguage;
+
+            const KIND_SET: SyntaxKindSet<Self::Language> =
+                SyntaxKindSet::from_raw(RawSyntaxKind(RawLanguageKind::ROOT as u16));
+
             fn can_cast(_: <Self::Language as Language>::Kind) -> bool {
                 todo!()
             }
