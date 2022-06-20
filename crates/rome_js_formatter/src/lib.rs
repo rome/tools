@@ -526,20 +526,9 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-       app.get("/", (req, res): void => {
-         res.send("Hello World!");
-       });
-       
- export class Thing implements OtherThing {
-        do: (type: Type) => Provider<Prop> = memoize(
-          (type: ObjectType): Provider<Opts> => {}
-        );
-      }
- 
-"#;
-        // let src = r#"useEffect(() => { hey; }, [1, 4])"#;
-
-        let syntax = SourceType::tsx();
+bifornCringerMoshedPerplex =
+	bifornCringerMoshedPerplexSawder = arrayOfNumb = a = "test";       "#;
+        let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()

@@ -1,64 +1,21 @@
 use crate::prelude::*;
-
 use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAssignmentExpression, JsPropertyObjectMember,
-    JsSyntaxNode,
+    JsAnyAssignmentPattern, JsAnyExpression, JsAnyObjectMemberName, JsAssignmentExpression,
+    JsPropertyObjectMember, JsSyntaxKind,
 };
+use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
-
-pub(crate) fn write_assignment_like(
-    assignment_like: &JsAnyAssignmentLike,
-    f: &mut JsFormatter,
-) -> FormatResult<()> {
-    let right = assignment_like.right()?;
-    let format_content = format_with(|f| {
-        // Compare name only if we are in a position of computing it.
-        // If not (for example, left is not an identifier), then let's fallback to false,
-        // so we can continue the chain of checks
-        let is_left_short = assignment_like.write_left(f)?;
-        assignment_like.write_operator(f)?;
-
-        let layout = assignment_like.layout(is_left_short)?;
-        match layout {
-            AssignmentLikeLayout::Fluid => {
-                let group_id = f.group_id("assignment_like");
-
-                let right = right.format().memoized();
-
-                write![
-                    f,
-                    [
-                        group_elements(&indent(&soft_line_break_or_space()),)
-                            .with_group_id(Some(group_id)),
-                        line_suffix_boundary(),
-                        if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
-                        if_group_fits_on_line(&right).with_group_id(Some(group_id)),
-                    ]
-                ]
-            }
-            AssignmentLikeLayout::BreakAfterOperator => {
-                write![
-                    f,
-                    [group_elements(&indent(&format_args![
-                        soft_line_break_or_space(),
-                        right.format()
-                    ])),]
-                ]
-            }
-            AssignmentLikeLayout::NeverBreakAfterOperator => {
-                write![f, [space_token(), right.format(),]]
-            }
-        }
-    });
-
-    write!(f, [group_elements(&format_content)])
-}
 
 declare_node_union! {
     pub(crate) JsAnyAssignmentLike = JsPropertyObjectMember | JsAssignmentExpression
+
+}
+
+declare_node_union! {
+    pub(crate) LeftAssignmentLike = JsAnyAssignmentPattern | JsAnyObjectMemberName
 }
 
 /// Determines how a assignment like be formatted
@@ -66,6 +23,7 @@ declare_node_union! {
 /// Assignment like are:
 /// - Assignment
 /// - Object property member
+#[derive(Debug)]
 pub(crate) enum AssignmentLikeLayout {
     /// First break right-hand side, then after operator.
     /// ```js
@@ -102,6 +60,28 @@ pub(crate) enum AssignmentLikeLayout {
     /// }
     /// ```
     NeverBreakAfterOperator,
+
+    /// This is a special layout usually used for long variable declarations or assignment expressions
+    /// This layout is hit, usually, when we are in the "middle" of the chain:
+    ///
+    /// ```js
+    /// var a =
+    ///     loreum =
+    ///     ipsum =
+    ///         "foo";
+    /// ```
+    ///
+    /// Given the previous snippet, then `loreum` and `ipsum` will be formatted using the [Chain] layout.
+    Chain,
+
+    /// This is a special layout usually used for long variable declarations or assignment expressions
+    /// This layout is hit, usually, when we are in the end of a chain:
+    /// ```js
+    /// var a = loreum = ipsum = "foo";
+    /// ```
+    ///
+    /// Given the previous snippet, then `"foo"` formatted  using the [ChainTail] layout.
+    ChainTail,
 }
 
 impl JsAnyAssignmentLike {
@@ -144,14 +124,14 @@ impl JsAnyAssignmentLike {
             }
         }
     }
-}
 
-impl JsAnyAssignmentLike {
     /// Returns the layout variant for an assignment like depending on right expression and left part length
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
     fn layout(&self, is_left_short: bool) -> FormatResult<AssignmentLikeLayout> {
         let right = self.right()?;
-        if is_break_after_operator(&right)? {
+        if let Some(layout) = self.chain_formatting_layout()? {
+            Ok(layout)
+        } else if is_break_after_operator(&right)? {
             Ok(AssignmentLikeLayout::BreakAfterOperator)
         } else if is_left_short {
             Ok(AssignmentLikeLayout::NeverBreakAfterOperator)
@@ -162,17 +142,102 @@ impl JsAnyAssignmentLike {
             )
         ) {
             Ok(AssignmentLikeLayout::BreakAfterOperator)
-        } else if is_never_break_after_operator(&right)? {
+        } else if self.is_never_break_after_operator()? {
             Ok(AssignmentLikeLayout::NeverBreakAfterOperator)
         } else {
             Ok(AssignmentLikeLayout::Fluid)
         }
     }
+
+    /// Checks if the right node is entitled of the chain formatting,
+    /// and if so, it return the layout type
+    fn chain_formatting_layout(&self) -> SyntaxResult<Option<AssignmentLikeLayout>> {
+        let right = self.right()?;
+        let right_is_tail = !matches!(right, JsAnyExpression::JsAssignmentExpression(_));
+        // The chain goes up two levels, by checking up to the great parent if all the conditions
+        // are correctly met.
+        let upper_chain_is_eligible =
+            // First, we check if the current node is an assignment expression
+            if let JsAnyAssignmentLike::JsAssignmentExpression(assignment) = self {
+                assignment.syntax().parent().map_or(false, |parent| {
+                    // Then we check if the parent is assignment expression or variable declarator
+                    if matches!(
+                        parent.kind(),
+                        JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION
+                            | JsSyntaxKind::JS_VARIABLE_DECLARATOR
+                    ) {
+                        let great_parent_kind = parent.parent().map(|n| n.kind());
+                        // Finally, we check the great parent.
+                        // The great parent triggers the eligibility when
+                        // - the current node that we were inspecting is not a "tail"
+                        // - or the great parent is not an expression statement or a variable declarator
+                        !right_is_tail
+                            || !matches!(
+                                great_parent_kind,
+                                Some(
+                                    JsSyntaxKind::JS_EXPRESSION_STATEMENT
+                                        | JsSyntaxKind::JS_VARIABLE_DECLARATOR
+                                )
+                            )
+                    } else {
+                        false
+                    }
+                })
+            } else {
+                false
+            };
+
+        let result = if upper_chain_is_eligible {
+            if right_is_tail {
+                Some(AssignmentLikeLayout::ChainTail)
+            } else {
+                Some(AssignmentLikeLayout::Chain)
+            }
+        } else {
+            None
+        };
+
+        Ok(result)
+    }
+
+    fn is_never_break_after_operator(&self) -> SyntaxResult<bool> {
+        let right = self.right()?;
+        if let JsAnyExpression::JsCallExpression(call_expression) = &right {
+            if call_expression.callee()?.syntax().text() == "require" {
+                return Ok(true);
+            }
+        }
+
+        if matches!(
+            right,
+            JsAnyExpression::JsClassExpression(_)
+                | JsAnyExpression::JsTemplate(_)
+                | JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(_),
+                )
+                | JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+                )
+        ) {
+            return Ok(true);
+        }
+
+        Ok(false)
+    }
 }
 
+/// Checks if the function is entitled to be printed with layout [AssignmentLikeLayout::BreakAfterOperator]
 pub(crate) fn is_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> {
     if has_new_line_before_comment(right.syntax()) {
         return Ok(true);
+    }
+
+    // head is a long chain, meaning that right -> right are both assignment expressions
+    if let JsAnyExpression::JsAssignmentExpression(assignment) = right {
+        let right = assignment.right()?;
+        if matches!(right, JsAnyExpression::JsAssignmentExpression(_)) {
+            return Ok(true);
+        }
     }
 
     if JsAnyBinaryLikeExpression::cast(right.syntax().clone())
@@ -195,7 +260,6 @@ pub(crate) fn is_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<b
 
     Ok(false)
 }
-
 /// If checks if among leading trivias, we there's a sequence of [Newline, Comment]
 pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {
     if let Some(leading_trivia) = node.first_leading_trivia() {
@@ -212,32 +276,74 @@ pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {
     false
 }
 
-fn is_never_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> {
-    if let JsAnyExpression::JsCallExpression(call_expression) = &right {
-        if call_expression.callee()?.syntax().text() == "require" {
-            return Ok(true);
-        }
-    }
-
-    if matches!(
-        right,
-        JsAnyExpression::JsClassExpression(_)
-            | JsAnyExpression::JsTemplate(_)
-            | JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsBooleanLiteralExpression(_),
-            )
-            | JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsNumberLiteralExpression(_)
-            )
-    ) {
-        return Ok(true);
-    }
-
-    Ok(false)
-}
-
 impl Format<JsFormatContext> for JsAnyAssignmentLike {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        write_assignment_like(self, f)
+        let right = self.right()?;
+        let format_content = format_with(|f| {
+            // Compare name only if we are in a position of computing it.
+            // If not (for example, left is not an identifier), then let's fallback to false,
+            // so we can continue the chain of checks
+            let is_left_short = self.write_left(f)?;
+            self.write_operator(f)?;
+
+            let layout = self.layout(is_left_short)?;
+
+            let inner_content = format_with(|f| match &layout {
+                AssignmentLikeLayout::Fluid => {
+                    let group_id = f.group_id("assignment_like");
+
+                    let right = right.format().memoized();
+
+                    write![
+                        f,
+                        [
+                            group_elements(&indent(&soft_line_break_or_space()),)
+                                .with_group_id(Some(group_id)),
+                            line_suffix_boundary(),
+                            if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
+                            if_group_fits_on_line(&right).with_group_id(Some(group_id)),
+                        ]
+                    ]
+                }
+                AssignmentLikeLayout::BreakAfterOperator => {
+                    write![
+                        f,
+                        [group_elements(&indent(&format_args![
+                            soft_line_break_or_space(),
+                            right.format()
+                        ])),]
+                    ]
+                }
+                AssignmentLikeLayout::NeverBreakAfterOperator => {
+                    write![f, [space_token(), right.format(),]]
+                }
+
+                AssignmentLikeLayout::Chain => {
+                    write!(f, [soft_line_break_or_space(), right.format()])
+                }
+
+                AssignmentLikeLayout::ChainTail => {
+                    write!(
+                        f,
+                        [&indent(&format_args![
+                            soft_line_break_or_space(),
+                            right.format()
+                        ])]
+                    )
+                }
+            });
+
+            match layout {
+                // Layouts that don't need enclosing group
+                AssignmentLikeLayout::Chain | AssignmentLikeLayout::ChainTail => {
+                    write!(f, [&inner_content])
+                }
+                _ => {
+                    write!(f, [group_elements(&inner_content)])
+                }
+            }
+        });
+
+        write!(f, [format_content])
     }
 }
