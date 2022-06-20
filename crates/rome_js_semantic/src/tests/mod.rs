@@ -1,5 +1,6 @@
 mod assertions;
 pub mod declarations;
+mod references;
 pub mod scopes;
 
 #[macro_export]

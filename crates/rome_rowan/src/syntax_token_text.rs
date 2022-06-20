@@ -12,9 +12,20 @@ pub struct SyntaxTokenText {
     range: TextRange,
 }
 
+impl std::hash::Hash for SyntaxTokenText {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.text().hash(state);
+    }
+}
+
 impl SyntaxTokenText {
     pub(crate) fn new(token: GreenToken) -> SyntaxTokenText {
         let range = TextRange::at(TextSize::default(), token.text_len());
+        Self { token, range }
+    }
+
+    pub(crate) fn with_range(token: GreenToken, range: TextRange) -> SyntaxTokenText {
+        debug_assert!(range.end() <= token.text_len());
         Self { token, range }
     }
 

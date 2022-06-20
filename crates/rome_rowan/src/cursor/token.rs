@@ -105,6 +105,14 @@ impl SyntaxToken {
     }
 
     #[inline]
+    pub fn token_text_trimmed(&self) -> SyntaxTokenText {
+        let green = self.green().to_owned();
+        let mut range = self.text_trimmed_range();
+        range -= self.data().offset;
+        SyntaxTokenText::with_range(green, range)
+    }
+
+    #[inline]
     pub fn text_trimmed(&self) -> &str {
         self.green().text_trimmed()
     }
