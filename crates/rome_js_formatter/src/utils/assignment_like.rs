@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsAnyObjectAssignmentPatternMember, JsAnyObjectBindingPatternMember, JsAnyObjectMemberName,
     JsAssignmentExpression, JsInitializerClause, JsObjectAssignmentPattern,
     JsObjectAssignmentPatternProperty, JsObjectBindingPattern, JsPropertyObjectMember,
-    JsSyntaxKind, JsVariableDeclarator,
+    JsSyntaxKind, JsVariableDeclarator, TsAnyVariableAnnotation, TsType,
 };
 use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
@@ -23,6 +23,10 @@ declare_node_union! {
 
 declare_node_union! {
     pub(crate) LeftAssignmentLike = JsAnyAssignmentPattern | JsAnyObjectMemberName | JsAnyBindingPattern
+}
+
+declare_node_union! {
+    pub(crate) AnnotationLike = TsAnyVariableAnnotation
 }
 
 declare_node_union! {
@@ -92,14 +96,49 @@ impl LeftAssignmentLike {
                 }
                 _ => None,
             },
-            LeftAssignmentLike::JsAnyBindingPattern(pattern) => match pattern {
-                JsAnyBindingPattern::JsObjectBindingPattern(node) => {
-                    Some(AnyObjectPattern::from(node.clone()))
-                }
-                _ => None,
-            },
+            LeftAssignmentLike::JsAnyBindingPattern(
+                JsAnyBindingPattern::JsObjectBindingPattern(node),
+            ) => Some(AnyObjectPattern::from(node.clone())),
             _ => None,
         }
+    }
+}
+
+impl AnnotationLike {
+    fn has_complex_type_annotation(&self) -> SyntaxResult<bool> {
+        let AnnotationLike::TsAnyVariableAnnotation(annotation) = self;
+
+        let is_complex = annotation
+            .type_annotation()?
+            .and_then(|type_annotation| type_annotation.ty().ok())
+            .and_then(|ty| match ty {
+                TsType::TsReferenceType(reference_type) => {
+                    let type_arguments = reference_type.type_arguments()?;
+                    let argument_list = type_arguments.ts_type_argument_list();
+                    let argument_list_len = argument_list.len();
+
+                    let has_at_least_a_complex_type =
+                        argument_list.iter().flat_map(|p| p.ok()).any(|argument| {
+                            if matches!(argument, TsType::TsConditionalType(_)) {
+                                return true;
+                            }
+
+                            let is_complex_type = argument
+                                .as_ts_reference_type()
+                                .and_then(|reference_type| reference_type.type_arguments())
+                                .map_or(false, |type_arguments| {
+                                    type_arguments.ts_type_argument_list().len() > 0
+                                });
+
+                            is_complex_type
+                        });
+                    Some(argument_list_len > 1 && has_at_least_a_complex_type)
+                }
+                _ => Some(false),
+            })
+            .unwrap_or(false);
+
+        Ok(is_complex)
     }
 }
 
@@ -236,6 +275,15 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 Ok(variable_declarator.id()?.into())
             }
+        }
+    }
+
+    fn annotation(&self) -> Option<AnnotationLike> {
+        match self {
+            JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => variable_declarator
+                .variable_annotation()
+                .map(AnnotationLike::from),
+            _ => None,
         }
     }
 }
@@ -494,7 +542,12 @@ impl JsAnyAssignmentLike {
             .and_then(|pattern| pattern.is_complex().ok())
             .unwrap_or(false);
 
-        Ok(is_complex_destructuring)
+        let has_complex_type_annotation = self
+            .annotation()
+            .and_then(|annotation| annotation.has_complex_type_annotation().ok())
+            .unwrap_or(false);
+
+        Ok(is_complex_destructuring || has_complex_type_annotation)
     }
 }
 
