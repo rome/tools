@@ -5,6 +5,7 @@ mod format_conditional;
 mod simple;
 pub mod string_utils;
 
+pub(crate) mod format_class;
 mod member_chain;
 mod object;
 #[cfg(test)]

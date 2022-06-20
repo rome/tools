@@ -26,29 +26,30 @@ class loooooooooooooooooooong extends looooooooooooooooooong implements looooooo
 
 # Output
 ```js
-class loooooooooooooooooooong extends looooooooooooooooooong
-  implements
-    loooooooooooooooooooong
+class loooooooooooooooooooong
+  extends looooooooooooooooooong
+  implements loooooooooooooooooooong
 {
   // leading comment
   property: string;
 }
 
-class loooooooooooooooooooong extends looooooooooooooooooong
-  implements
-    loooooooooooooooooooong
+class loooooooooooooooooooong
+  extends looooooooooooooooooong
+  implements loooooooooooooooooooong
 {
   property: string;
 }
 
-class loooooooooooooooooooong extends looooooooooooooooooong
-  implements
-    loooooooooooooooooooong
+class loooooooooooooooooooong
+  extends looooooooooooooooooong
+  implements loooooooooooooooooooong
 {
   property: string;
 }
 
-class loooooooooooooooooooong extends looooooooooooooooooong
+class loooooooooooooooooooong
+  extends looooooooooooooooooong
   implements
     loooooooooooooooooooong,
     loooooooooooooooooooong,

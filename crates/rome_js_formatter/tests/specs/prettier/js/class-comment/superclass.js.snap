@@ -50,10 +50,11 @@ extends Base
 # Output
 ```js
 class A // comment 1
-// comment 2
-extends B {}
+  // comment 2
+  extends B {}
 
-class A1 extends B // comment1
+class A1
+  extends B // comment1
 // comment2
 // comment3
 {}
@@ -64,12 +65,13 @@ class A4 extends /* a */ B {}
 
 (
   class A5 // comment 1
-  // comment 2
-  extends B {}
+    // comment 2
+    extends B {}
 );
 
 (
-  class A6 extends B // comment1
+  class A6
+    extends B // comment1
   // comment2
   // comment3
   {}
@@ -79,8 +81,9 @@ class A4 extends /* a */ B {}
 (class A8 extends B /* a */ {});
 (class A9 extends /* a */ B {});
 
-class a extends b {
-  // comment
+class a
+  extends b // comment
+{
   constructor() {}
 }
 
@@ -90,8 +93,9 @@ class c extends d
   constructor() {}
 }
 
-class C2 extends Base {
-  // comment
+class C2 // comment
+  extends Base
+{
   foo() {}
 }
 

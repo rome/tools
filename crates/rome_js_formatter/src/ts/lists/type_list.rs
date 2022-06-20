@@ -9,10 +9,9 @@ impl FormatRule<TsTypeList> for FormatTsTypeList {
         // the grouping will be applied by the parent
         f.join_with(&soft_line_break_or_space())
             .entries(
-                node.format_separated(JsSyntaxKind::COMMA).with_options(
-                    FormatSeparatedOptions::default()
-                        .with_trailing_separator(TrailingSeparator::Disallowed),
-                ),
+                node.format_separated(JsSyntaxKind::COMMA)
+                    .with_trailing_separator(TrailingSeparator::Disallowed)
+                    .group_nodes(false),
             )
             .finish()
     }
