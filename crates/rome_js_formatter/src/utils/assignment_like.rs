@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsAnyObjectAssignmentPatternMember, JsAnyObjectBindingPatternMember, JsAnyObjectMemberName,
     JsAssignmentExpression, JsInitializerClause, JsObjectAssignmentPattern,
     JsObjectAssignmentPatternProperty, JsObjectBindingPattern, JsPropertyObjectMember,
-    JsSyntaxKind, JsVariableDeclarator, TsAnyVariableAnnotation,
+    JsSyntaxKind, JsVariableDeclarator,
 };
 use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
@@ -84,10 +84,16 @@ impl AnyObjectPattern {
 }
 
 impl LeftAssignmentLike {
-    fn as_object_assignment_pattern(&self) -> Option<AnyObjectPattern> {
+    fn as_object_pattern(&self) -> Option<AnyObjectPattern> {
         match self {
             LeftAssignmentLike::JsAnyAssignmentPattern(pattern) => match pattern {
                 JsAnyAssignmentPattern::JsObjectAssignmentPattern(node) => {
+                    Some(AnyObjectPattern::from(node.clone()))
+                }
+                _ => None,
+            },
+            LeftAssignmentLike::JsAnyBindingPattern(pattern) => match pattern {
+                JsAnyBindingPattern::JsObjectBindingPattern(node) => {
                     Some(AnyObjectPattern::from(node.clone()))
                 }
                 _ => None,
@@ -482,16 +488,11 @@ impl JsAnyAssignmentLike {
     /// Particular function that checks if the left hand side of a [JsAnyAssignmentLike] should
     /// be broken on multiple lines
     fn should_break_left_hand_side(&self) -> SyntaxResult<bool> {
-        // TODO: here we have to add the check for variable declarator too
-        let is_complex_destructuring = if let JsAnyAssignmentLike::JsAssignmentExpression(_) = self
-        {
-            self.left()?
-                .as_object_assignment_pattern()
-                .and_then(|pattern| pattern.is_complex().ok())
-                .unwrap_or(false)
-        } else {
-            false
-        };
+        let is_complex_destructuring = self
+            .left()?
+            .as_object_pattern()
+            .and_then(|pattern| pattern.is_complex().ok())
+            .unwrap_or(false);
 
         Ok(is_complex_destructuring)
     }
