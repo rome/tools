@@ -129,7 +129,7 @@ impl JsAnyAssignmentLike {
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
     fn layout(&self, is_left_short: bool) -> FormatResult<AssignmentLikeLayout> {
         let right = self.right()?;
-        if let Some(layout) = self.is_chain_formatting()? {
+        if let Some(layout) = self.chain_formatting_layout()? {
             Ok(layout)
         } else if is_break_after_operator(&right)? {
             Ok(AssignmentLikeLayout::BreakAfterOperator)
@@ -151,12 +151,9 @@ impl JsAnyAssignmentLike {
 
     /// Checks if the right node is entitled of the chain formatting,
     /// and if so, it return the layout type
-    fn is_chain_formatting(&self) -> SyntaxResult<Option<AssignmentLikeLayout>> {
+    fn chain_formatting_layout(&self) -> SyntaxResult<Option<AssignmentLikeLayout>> {
         let right = self.right()?;
         let right_is_tail = !matches!(right, JsAnyExpression::JsAssignmentExpression(_));
-        // Here we surf the upper levels and make sure that the current node
-        // is eligible of chain formatting
-        //
         // The chain goes up two levels, by checking up to the great parent if all the conditions
         // are correctly met.
         let upper_chain_is_eligible =
