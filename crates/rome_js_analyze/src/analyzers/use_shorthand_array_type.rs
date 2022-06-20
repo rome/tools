@@ -88,12 +88,15 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
             let element_type = match param {
                 TsType::TsUnionType(_) => continue,
                 TsType::TsTypeOperatorType(_) => continue,
-                TsType::TsReferenceType(ty) if ty.type_arguments().is_some() => {
+                TsType::TsReferenceType(ty)
+                    if is_array_reference(&ty).unwrap_or(false) && ty.type_arguments().is_some() =>
+                {
                     // SAFETY: We have checked the `ty.type_arguments` is `Some` in match guard
                     convert_to_array_type(ty.type_arguments().unwrap())
                 }
                 _ => Some(param),
             };
+            println!("{:?}", element_type);
             if let Some(element_type) = element_type {
                 array_types.push(TsType::TsArrayType(make::ts_array_type(
                     element_type,
@@ -104,8 +107,12 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
             // let param_type = param.ts_type().ok()?;
             // array_types.push(make::ts_type_array(param_type.clone()));
         }
+        println!(
+            "{:?}------------------------------------------",
+            array_types
+        );
         match array_types.len() {
-            0 => return None,
+            0 => {}
             1 => {
                 // SAFETY: We know that `length` of `array_types` is 1, so unwrap the first element should be safe.
                 let first_type = array_types.into_iter().next().unwrap();
@@ -136,5 +143,6 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
             }
         }
     }
+    println!("fuck: {}", type_arguments.ts_type_argument_list().len());
     None
 }

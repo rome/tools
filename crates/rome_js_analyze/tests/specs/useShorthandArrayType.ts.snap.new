@@ -26,7 +26,7 @@ Suggested fix: Use a [] to replace
 2 2 |   // let invalid2: Array<foo, Array<string>>;
 3 3 |   // let invalid3: Promise<Array<string>>;
 4   | - let invalid4: Array<Foo<Bar>>;
-  4 | + let invalid4: Bar[][];
+  4 | + let invalid4: Foo<Bar>[];
 
 
 ```
