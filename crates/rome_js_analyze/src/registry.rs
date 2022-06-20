@@ -32,6 +32,9 @@ pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage
     if filter.match_rule::<NoUnusedTemplateLiteral>() {
         rules.push::<NoUnusedTemplateLiteral>();
     }
+    if filter.match_rule::<PreferShorthandArrayType>() {
+        rules.push::<PreferShorthandArrayType>();
+    }
     if filter.match_rule::<UseSelfClosingElements>() {
         rules.push::<UseSelfClosingElements>();
     }
