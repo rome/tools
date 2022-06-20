@@ -278,32 +278,21 @@ enum ReportType {
     Markdown,
 }
 
-#[derive(Debug, PartialEq, Serialize, Default)]
-struct SingleFileJsonReport {
-    filename: String,
-    single_file_compatibility: f64,
-}
-
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, Serialize)]
 struct SingleFileMetricData {
     filename: String,
     single_file_compatibility: f64,
+    #[serde(skip)]
     diff: String,
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, Serialize)]
 struct PrettierCompatibilityMetricData {
     file_based_average_prettier_similarity: f64,
     line_based_average_prettier_similarity: f64,
     files: Vec<SingleFileMetricData>,
 }
 
-#[derive(Debug, PartialEq, Serialize, Default)]
-struct ReportJson {
-    file_based_average_prettier_similarity: f64,
-    line_based_average_prettier_similarity: f64,
-    files: Vec<SingleFileJsonReport>,
-}
 impl FromStr for ReportType {
     type Err = String;
 
@@ -519,30 +508,7 @@ impl DiffReport {
         report_filename: String,
         report_metric_data: PrettierCompatibilityMetricData,
     ) {
-        let report_json = ReportJson {
-            file_based_average_prettier_similarity: report_metric_data
-                .file_based_average_prettier_similarity,
-            line_based_average_prettier_similarity: report_metric_data
-                .line_based_average_prettier_similarity,
-            files: report_metric_data
-                .files
-                .into_iter()
-                .map(
-                    |SingleFileMetricData {
-                         filename,
-                         single_file_compatibility,
-                         diff: _,
-                     }| {
-                        SingleFileJsonReport {
-                            filename,
-                            single_file_compatibility,
-                        }
-                    },
-                )
-                .collect::<Vec<_>>(),
-        };
-
-        let json_content = serde_json::to_string(&report_json).unwrap();
+        let json_content = serde_json::to_string(&report_metric_data).unwrap();
         write(report_filename, json_content).unwrap();
     }
 }
