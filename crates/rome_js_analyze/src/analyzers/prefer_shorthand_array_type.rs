@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyStatement, JsForStatement, JsForStatementFields, TsReferenceType, TsType,
+    JsAnyStatement, JsForStatement, JsForStatementFields, TriviaPieceKind, TsReferenceType, TsType,
     TsTypeAnnotation, TsTypeArguments, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
@@ -111,14 +111,28 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                 let first_type = array_types.into_iter().next().unwrap();
                 return Some(first_type);
             }
-            _ => {
-                let a = make::ts_union_type(make::ts_union_type_variant_list(
-                    array_types
-                        .into_iter()
-                        .map(|item| (item, Some(make::token(T![,])))),
+            length => {
+                let ts_union_type_builder = make::ts_union_type(make::ts_union_type_variant_list(
+                    array_types.into_iter().enumerate().map(|(i, item)| {
+                        (
+                            item,
+                            (i != length - 1).then(|| {
+                                let separator = make::token(T![|])
+                                    .with_leading_trivia(std::iter::once((
+                                        TriviaPieceKind::Whitespace,
+                                        " ",
+                                    )))
+                                    .with_trailing_trivia(std::iter::once((
+                                        TriviaPieceKind::Whitespace,
+                                        " ",
+                                    )));
+                                separator
+                            }),
+                        )
+                    }),
                 ));
                 // return Some()e
-                return Some(TsType::TsUnionType(a.build()));
+                return Some(TsType::TsUnionType(ts_union_type_builder.build()));
             }
         }
     }
