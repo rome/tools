@@ -36,6 +36,9 @@ impl AnyObjectPattern {
         match self {
             AnyObjectPattern::JsObjectAssignmentPattern(assignment_pattern) => {
                 let properties_len = assignment_pattern.properties().len();
+                if properties_len <= 2 {
+                    return Ok(false);
+                }
                 // A binding is complex when we have at least one [JsObjectBindingPatternProperty]
                 // e.g. a = { a: c = f } = a
                 // The `c = f` will trigger the complex binding
@@ -53,10 +56,13 @@ impl AnyObjectPattern {
                             )
                         )
                     });
-                Ok(properties_len > 2 && has_at_least_a_complex_binding)
+                Ok(has_at_least_a_complex_binding)
             }
             AnyObjectPattern::JsObjectBindingPattern(binding_pattern) => {
                 let properties_len = binding_pattern.properties().len();
+                if properties_len <= 2 {
+                    return Ok(false);
+                }
                 // A binding is complex when we have at least one [JsObjectBindingPatternProperty]
                 // e.g. const a = { a: c = f } = a
                 // The `c = f` will trigger the complex binding
@@ -74,7 +80,7 @@ impl AnyObjectPattern {
                             )
                         )
                     });
-                Ok(properties_len > 2 && has_at_least_a_complex_binding)
+                Ok(has_at_least_a_complex_binding)
             }
         }
     }
