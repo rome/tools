@@ -4,8 +4,11 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyStatement, JsForStatement, JsForStatementFields, T, TsReferenceType};
-use rome_rowan::{AstNodeExt, AstNode};
+use rome_js_syntax::{
+    JsAnyStatement, JsForStatement, JsForStatementFields, TsReferenceType, TsType,
+    TsTypeAnnotation, TsTypeArguments, T,
+};
+use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
 use crate::JsRuleAction;
 
@@ -29,7 +32,7 @@ impl Rule for PreferShorthandArrayType {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = TsReferenceType;
-    type State = ();
+    type State = TsType;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
@@ -39,7 +42,7 @@ impl Rule for PreferShorthandArrayType {
         // SAFETY: We have checked the `node.type_arguments` is `Some` above, if it `None`, it would be early returned.
         let type_arguments = node.type_arguments().unwrap();
 
-        todo!()
+        convert_to_array_type(type_arguments)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -50,17 +53,19 @@ impl Rule for PreferShorthandArrayType {
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
-                "Use "<Emphasis>"while"</Emphasis>" loops instead of "<Emphasis>"for"</Emphasis>" loops."
+                "Use shorthand T[] syntax instead of Array<T> syntax."
             },
         ))
     }
 
-    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let root = ctx.root();
+        let node = ctx.query();
+        let root = root.replace_node(TsType::TsReferenceType(node.clone()), state.clone())?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use a while loop" }.to_owned(),
+            message: markup! { "Use a [] to replace" }.to_owned(),
             root,
         })
     }
@@ -72,9 +77,50 @@ fn is_array_reference(ty: &TsReferenceType) -> Option<bool> {
         let name = identifier.value_token().ok()?;
         Some(name.text_trimmed() == "Array")
     })
-
 }
 
-fn convert_to_array_type(type_arguments: TsTypeArguments) Option<> {
+fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
+    if type_arguments.ts_type_argument_list().len() > 0 {
+        let mut array_types = Vec::new();
 
+        for param in type_arguments.ts_type_argument_list().iter() {
+            let param = param.ok()?;
+            let element_type = match param {
+                TsType::TsUnionType(_) => continue,
+                TsType::TsTypeOperatorType(_) => continue,
+                TsType::TsReferenceType(ty) if ty.type_arguments().is_some() => {
+                    // SAFETY: We have checked the `ty.type_arguments` is `Some` in match guard
+                    convert_to_array_type(ty.type_arguments().unwrap())
+                }
+                _ => Some(param),
+            };
+            if let Some(element_type) = element_type {
+                array_types.push(TsType::TsArrayType(make::ts_array_type(
+                    element_type,
+                    make::token(T!['[']),
+                    make::token(T![']']),
+                )));
+            }
+            // let param_type = param.ts_type().ok()?;
+            // array_types.push(make::ts_type_array(param_type.clone()));
+        }
+        match array_types.len() {
+            0 => return None,
+            1 => {
+                // SAFETY: We know that `length` of `array_types` is 1, so unwrap the first element should be safe.
+                let first_type = array_types.into_iter().next().unwrap();
+                return Some(first_type);
+            }
+            _ => {
+                let a = make::ts_union_type(make::ts_union_type_variant_list(
+                    array_types
+                        .into_iter()
+                        .map(|item| (item, Some(make::token(T![,])))),
+                ));
+                // return Some()e
+                return Some(TsType::TsUnionType(a.build()));
+            }
+        }
+    }
+    None
 }
