@@ -159,7 +159,7 @@ impl<'a> Printer<'a> {
                 };
 
                 if let Some(id) = id {
-                    self.state.insert_group_mode(*id, group_mode);
+                    self.state.group_modes.insert_print_mode(*id, group_mode);
                 }
             }
 
@@ -185,11 +185,7 @@ impl<'a> Printer<'a> {
             }) => {
                 let group_mode = match group_id {
                     None => args.mode,
-                    Some(id) => {
-                        self.state.get_print_mode(*id).unwrap_or_else(||
-                            panic!("Expected group with id {id:?} to exist but it wasn't present in the document. Ensure that a group with such a document appears in the document before the element {element:?}.")
-                        )
-                    }
+                    Some(id) => self.state.group_modes.unwrap_print_mode(*id, element),
                 };
 
                 if &group_mode == mode {
@@ -505,27 +501,36 @@ struct PrinterState<'a> {
     has_empty_line: bool,
     line_suffixes: Vec<PrintElementCall<'a>>,
     verbatim_markers: Vec<TextRange>,
-    /// Tracks the mode in which groups with ids are printed. Stores the groups at `group.id()` index.
-    /// This is based on the assumption that the group ids for a single document are dense.
-    group_modes: Vec<Option<PrintMode>>,
+    group_modes: GroupModes,
     // Re-used queue to measure if a group fits. Optimisation to avoid re-allocating a new
     // vec everytime a group gets measured
     measure_queue: Vec<PrintElementCall<'a>>,
 }
 
-impl PrinterState<'_> {
-    fn insert_group_mode(&mut self, group_id: GroupId, mode: PrintMode) {
+/// Tracks the mode in which groups with ids are printed. Stores the groups at `group.id()` index.
+/// This is based on the assumption that the group ids for a single document are dense.
+#[derive(Debug, Default)]
+struct GroupModes(Vec<Option<PrintMode>>);
+
+impl GroupModes {
+    fn insert_print_mode(&mut self, group_id: GroupId, mode: PrintMode) {
         let index = u32::from(group_id) as usize;
 
-        self.group_modes.resize(index + 1, None);
-        self.group_modes[index] = Some(mode);
+        self.0.resize(index + 1, None);
+        self.0[index] = Some(mode);
     }
 
     fn get_print_mode(&self, group_id: GroupId) -> Option<PrintMode> {
         let index = u32::from(group_id) as usize;
-        self.group_modes
+        self.0
             .get(index)
             .and_then(|option| option.as_ref().copied())
+    }
+
+    fn unwrap_print_mode(&self, group_id: GroupId, next_element: &FormatElement) -> PrintMode {
+        self.get_print_mode(group_id).unwrap_or_else(||
+            panic!("Expected group with id {group_id:?} to exist but it wasn't present in the document. Ensure that a group with such a document appears in the document before the element {next_element:?}.")
+        )
     }
 }
 
@@ -659,6 +664,7 @@ where
         pending_space: printer.state.pending_space,
         line_width: printer.state.line_width,
         has_line_suffix: !printer.state.line_suffixes.is_empty(),
+        group_modes: &mut printer.state.group_modes,
     };
 
     let result = loop {
@@ -736,11 +742,23 @@ fn fits_element_on_line<'a, 'rest>(
         )),
 
         FormatElement::Group(group) => {
-            queue.extend(group.content.iter().map(|e| PrintElementCall::new(e, args)))
+            queue.extend(group.content.iter().map(|e| PrintElementCall::new(e, args)));
+
+            if let Some(id) = group.id {
+                state.group_modes.insert_print_mode(id, args.mode);
+            }
         }
 
         FormatElement::ConditionalGroupContent(conditional) => {
-            if args.mode == conditional.mode {
+            let group_mode = match conditional.group_id {
+                None => args.mode,
+                Some(group_id) => state
+                    .group_modes
+                    .get_print_mode(group_id)
+                    .unwrap_or(args.mode),
+            };
+
+            if group_mode == conditional.mode {
                 queue.enqueue(PrintElementCall::new(&conditional.content, args))
             }
         }
@@ -840,11 +858,12 @@ impl From<bool> for Fits {
 
 /// State used when measuring if a group fits on a single line
 #[derive(Debug)]
-struct MeasureState {
+struct MeasureState<'group> {
     pending_indent: u16,
     pending_space: bool,
     has_line_suffix: bool,
     line_width: usize,
+    group_modes: &'group mut GroupModes,
 }
 
 #[derive(Debug)]
@@ -1181,6 +1200,33 @@ two lines`,
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")
+    }
+
+    #[test]
+    fn conditional_with_group_id_in_fits() {
+        let content = format_with(|f| {
+            let group_id = f.group_id("test");
+            write!(
+                f,
+                [
+                    group_elements(&format_args![
+                        token("The referenced group breaks."),
+                        hard_line_break()
+                    ])
+                    .with_group_id(Some(group_id)),
+                    group_elements(&format_args![
+                        token("This group breaks because:"),
+                        soft_line_break_or_space(),
+                        if_group_fits_on_line(&token("This content fits but should not be printed.")).with_group_id(Some(group_id)),
+                        if_group_breaks(&token("It measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.")).with_group_id(Some(group_id)),
+                    ])
+                ]
+            )
+        });
+
+        let printed = format(&content);
+
+        assert_eq!(printed.as_code(), "The referenced group breaks.\nThis group breaks because:\nIt measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.");
     }
 
     struct FormatArrayElements<'a> {
