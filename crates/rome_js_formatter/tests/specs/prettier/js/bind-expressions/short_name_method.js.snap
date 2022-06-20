@@ -19,7 +19,7 @@ class X {
 ```js
 class X {
   constructor() {
-    this.shortMethod =
+    this.shortMethod =;
     ::this.shortMethod
   }
 
