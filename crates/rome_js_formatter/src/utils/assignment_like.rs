@@ -176,7 +176,7 @@ impl Format<JsFormatContext> for RightAssignmentLike {
 /// - Variable declaration
 #[derive(Debug)]
 pub(crate) enum AssignmentLikeLayout {
-    /// This is a special layout usually used for long variable declarations
+    /// This is a special layout usually used for variable declarations
     /// This layout is hit, usually, when variable declarator doesn't have initializer:
     OnlyLeft,
 
