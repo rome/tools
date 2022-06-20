@@ -526,7 +526,15 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-lorem = fff = ee = () => (fff) => () => (fefef) => () => fff;
+const a =
+		aa &&
+		bb &&
+		something &&
+		elsewhere &&
+		happy &&
+		thoughts &&
+		somethingsomethingsomethingsomething;
+
 
            "#;
         let syntax = SourceType::ts();

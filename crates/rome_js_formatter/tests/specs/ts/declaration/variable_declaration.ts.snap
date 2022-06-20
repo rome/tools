@@ -1,0 +1,59 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: variable_declaration.ts
+---
+# Input
+//break left-hand side layout
+const map: Map<Function, Map<string | void, { value: UnloadedDescriptor }>> =
+    new Map();
+
+const map: Map<Function, Condition extends Foo ? FooFooFoo : BarBarBar> =
+    new Map();
+
+const map: Map<Function, Foo<S>> = new Map();
+
+//fluid layout
+
+const map: Map<Map<string | void, { value: UnloadedDescriptor }>> =
+    new Map();
+
+const map: Map<Function, FunctionFunctionFunctionFunctionffFunction> =
+    new Map();
+
+const map: Map<Foo<S>> =
+    new Map();
+
+const map: Map<Condition extends Foo ? FooFooFoo : BarBarBar> =
+    new Map();
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+//break left-hand side layout
+const map: Map<
+	Function,
+	Map<string | void, { value: UnloadedDescriptor }>
+> = new Map();
+
+const map: Map<
+	Function,
+	Condition extends Foo ? FooFooFoo : BarBarBar
+> = new Map();
+
+const map: Map<Function, Foo<S>> = new Map();
+
+//fluid layout
+
+const map: Map<Map<string | void, { value: UnloadedDescriptor }>> = new Map();
+
+const map: Map<Function, FunctionFunctionFunctionFunctionffFunction> =
+	new Map();
+
+const map: Map<Foo<S>> = new Map();
+
+const map: Map<Condition extends Foo ? FooFooFoo : BarBarBar> = new Map();
+

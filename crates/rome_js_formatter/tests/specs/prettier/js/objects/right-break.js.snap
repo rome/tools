@@ -28,9 +28,9 @@ const o = {
 # Output
 ```js
 const blablah =
-    "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
-    "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
-    "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
+  "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
+  "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
+  "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
 
 const k = {
   blablah:

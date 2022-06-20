@@ -260,16 +260,24 @@ fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
 /// There are some cases where the indentation is done by the parent, so if the parent is already doing
 /// the indentation, then there's no need to do a second indentation.
 fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
-    let parent_kind = current_node.syntax().parent().map(|parent| parent.kind());
+    let parent = current_node.syntax().parent();
+    let parent_kind = current_node.syntax().parent().map(|node| node.kind());
 
-    match parent_kind {
-        Some(JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER) => current_node
-            .as_expression()
-            .and_then(|expression| should_break_after_operator(expression).ok())
-            .unwrap_or(false),
-        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION) => {
-            true
+    let great_parent = parent.and_then(|parent| parent.parent());
+    let great_parent_kind = great_parent.map(|node| node.kind());
+
+    match (parent_kind, great_parent_kind) {
+        (Some(JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER), _)
+        | (Some(JsSyntaxKind::JS_INITIALIZER_CLAUSE), Some(JsSyntaxKind::JS_VARIABLE_DECLARATOR)) => {
+            current_node
+                .as_expression()
+                .and_then(|expression| should_break_after_operator(expression).ok())
+                .unwrap_or(false)
         }
+        (
+            Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION),
+            _,
+        ) => true,
         _ => false,
     }
 }
