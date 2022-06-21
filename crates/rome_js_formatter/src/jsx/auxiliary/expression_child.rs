@@ -31,10 +31,9 @@ impl FormatNodeFields<JsxExpressionChild> for FormatNodeRule<JsxExpressionChild>
                 if str_token.text() == space_str {
                     let l_curly_token = l_curly_token?;
                     let r_curly_token = r_curly_token?;
-                    let empty = empty_element();
-                    let l_curly = format_replaced(&l_curly_token, &empty);
-                    let space = format_replaced(&str_token, &empty);
-                    let r_curly = format_replaced(&r_curly_token, &empty);
+                    let l_curly = format_removed(&l_curly_token);
+                    let space = format_removed(&str_token);
+                    let r_curly = format_removed(&r_curly_token);
 
                     return write![f, [l_curly, space, JsxSpace::default(), r_curly]];
                 }

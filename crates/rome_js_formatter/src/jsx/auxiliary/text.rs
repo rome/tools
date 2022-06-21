@@ -23,7 +23,7 @@ impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
                 Some(WhitespaceType::HasNewline) | None
             )
         {
-            return write![f, [format_replaced(&token, &empty_element())]];
+            return write![f, [format_removed(&token)]];
         }
 
         let new_token = syntax_token_cow_slice(new_text, &token, start);

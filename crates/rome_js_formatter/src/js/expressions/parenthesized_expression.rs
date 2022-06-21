@@ -83,9 +83,9 @@ impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesi
                     write![
                         f,
                         [
-                            format_replaced(&l_paren_token?, &empty_element()),
+                            format_removed(&l_paren_token?),
                             expression.format(),
-                            format_replaced(&r_paren_token?, &empty_element())
+                            format_removed(&r_paren_token?),
                         ]
                     ]
                 }
