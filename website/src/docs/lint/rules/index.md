@@ -42,6 +42,13 @@ Disallow the use of the <code>delete</code> operator
 Require the use of <code>===</code> and <code>!==</code>
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noEmptyPattern">
+	<a href="/docs/lint/rules/noEmptyPattern">noEmptyPattern</a>
+	<a class="header-anchor" href="#noEmptyPattern"></a>
+</h3>
+Disallows empty destructuring patterns.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noImplicitBoolean">
 	<a href="/docs/lint/rules/noImplicitBoolean">noImplicitBoolean</a>
 	<a class="header-anchor" href="#noImplicitBoolean"></a>
