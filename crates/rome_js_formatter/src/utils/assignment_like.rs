@@ -195,6 +195,7 @@ pub(crate) enum AssignmentLikeLayout {
     /// }
     /// ```
     Fluid,
+
     /// First break after operator, then the sides are broken independently on their own lines.
     /// There is a soft line break after operator token.
     /// ```js
@@ -206,6 +207,7 @@ pub(crate) enum AssignmentLikeLayout {
     /// }
     /// ```
     BreakAfterOperator,
+
     /// First break right-hand side, then left-hand side. There are not any soft line breaks
     /// between left and right parts
     /// ```js
