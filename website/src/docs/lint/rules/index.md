@@ -19,6 +19,9 @@ eleventyNavigation:
 	<a class="header-anchor" href="#noAsyncPromiseExecutor"></a>
 </h3>
 Disallows using an async function as a Promise executor.
+The executor function can also be an async function. However, this is usually a mistake, for a few reasons:
+If an async executor function throws an error, the error will be lost and won't cause the newly-constructed <code>Promise</code> to reject. This could make it difficult to debug and handle some errors.
+If a Promise executor function is using <code>await</code>, this is usually a sign that it is not actually necessary to use the <code>new Promise</code> constructor, or the scope of the <code>new Promise</code> constructor can be reduced.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noCompareNegZero">
