@@ -3,10 +3,11 @@
 use std::collections::{HashMap, VecDeque};
 
 use rome_js_syntax::{
-    JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, JsSyntaxToken, TextRange,
-    TextSize,
+    JsForVariableDeclaration, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList, TextRange, TextSize,
 };
-use rome_rowan::{syntax::Preorder, SyntaxNodeCast, SyntaxTokenText};
+use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxTokenText};
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
@@ -29,6 +30,17 @@ pub enum SemanticEvent {
         range: TextRange,
         declaration_at: Option<TextRange>,
     },
+
+    HoistedRead {
+        range: TextRange,
+        declaration_at: TextRange,
+    },
+
+    /// Tracks when a reference do no have any matching
+    /// binding
+    /// Generated for:
+    /// - Unmatched reference identifiers
+    UnresolvedReference { range: TextRange },
 
     /// Tracks when a new scope starts
     /// Generated for:
@@ -53,6 +65,8 @@ impl SemanticEvent {
             SemanticEvent::ScopeStarted { range } => range,
             SemanticEvent::ScopeEnded { range, .. } => range,
             SemanticEvent::Read { range, .. } => range,
+            SemanticEvent::UnresolvedReference { range } => range,
+            SemanticEvent::HoistedRead { range, .. } => range,
         }
     }
 
@@ -106,13 +120,22 @@ struct Binding {
     name: SyntaxTokenText,
 }
 
+struct PendingReference {
+    range: TextRange,
+}
+
 struct Scope {
     started_at: TextSize,
     /// All bindings declared inside this scope
     bindings: Vec<Binding>,
+    /// Reference that do not have a matching declaration
+    pending: HashMap<SyntaxTokenText, Vec<PendingReference>>,
     /// All bindings that where shadowed and will be
     /// restored after this scope ends.
     shadowed: Vec<(SyntaxTokenText, TextRange)>,
+    /// If this scope allows declarations to hoist to parent scope
+    /// or not
+    allows_decl_hoisting: bool,
 }
 
 impl SemanticEventExtractor {
@@ -131,43 +154,137 @@ impl SemanticEventExtractor {
 
         match node.kind() {
             JS_IDENTIFIER_BINDING => {
-                if let Some(name_token) = node
-                    .clone()
-                    .cast::<JsIdentifierBinding>()
-                    .and_then(|id| id.name_token().ok())
-                {
-                    self.push_binding_into_current_scope(&name_token);
-                }
+                self.enter_identifier_binding(node);
             }
             JS_REFERENCE_IDENTIFIER => {
-                if let Some(name_token) = node
-                    .clone()
-                    .cast::<JsReferenceIdentifier>()
-                    .and_then(|reference| reference.value_token().ok())
-                {
-                    self.stash.push_back(SemanticEvent::Read {
-                        range: node.text_range(),
-                        declaration_at: self.get_binding_range(&name_token).cloned(),
-                    })
-                }
+                let e = self.enter_reference_identifier(node);
+                self.stash.extend(e);
             }
 
-            JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range()),
+            JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range(), false),
             JS_FUNCTION_DECLARATION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_SETTER_CLASS_MEMBER
-            | JS_BLOCK_STATEMENT
-            | JS_FOR_STATEMENT
-            | JS_FOR_OF_STATEMENT
-            | JS_FOR_IN_STATEMENT
-            | JS_CATCH_CLAUSE
             | JS_FUNCTION_BODY => {
-                self.push_scope(node.text_range());
+                self.push_scope(node.text_range(), false);
+            }
+
+            JS_BLOCK_STATEMENT | JS_FOR_STATEMENT | JS_FOR_OF_STATEMENT | JS_FOR_IN_STATEMENT
+            | JS_CATCH_CLAUSE => {
+                self.push_scope(node.text_range(), true);
             }
             _ => {}
         }
+    }
+
+    fn is_var(binding: &JsIdentifierBinding) -> Option<bool> {
+        let declarator = binding.parent::<JsVariableDeclarator>()?;
+
+        use JsSyntaxKind::*;
+        let is_var = match declarator.syntax().parent().map(|parent| parent.kind()) {
+            Some(JS_VARIABLE_DECLARATOR_LIST) => declarator
+                .parent::<JsVariableDeclaratorList>()?
+                .parent::<JsVariableDeclaration>()?
+                .is_var(),
+            Some(JS_FOR_VARIABLE_DECLARATION) => {
+                declarator
+                    .parent::<JsForVariableDeclaration>()?
+                    .kind_token()
+                    .ok()?
+                    .kind()
+                    == VAR_KW
+            }
+            x @ _ => todo!("{:?}", x),
+        };
+        Some(is_var)
+    }
+
+    fn enter_identifier_binding(&mut self, node: &JsSyntaxNode) -> Option<()> {
+        let binding = node.clone().cast::<JsIdentifierBinding>()?;
+        let name_token = binding.name_token().ok()?;
+
+        use JsSyntaxKind::*;
+        match node.parent().map(|parent| parent.kind()) {
+            Some(JS_VARIABLE_DECLARATOR) => {
+                if let Some(true) = Self::is_var(&binding) {
+                    let scope_idx = self.current_not_hoisting_scope_index();
+                    self.push_binding_into_scope(scope_idx, &name_token);
+                    self.solve_pending_references(node, &binding, &name_token);
+                } else {
+                    let scope_idx = self.scopes.len() - 1;
+                    self.push_binding_into_scope(scope_idx, &name_token);
+                };
+            }
+            Some(_) => {
+                let scope_idx = self.scopes.len() - 1;
+                self.push_binding_into_scope(scope_idx, &name_token);
+            }
+            k @ _ => todo!("{:?}", k),
+        }
+
+        Some(())
+    }
+
+    fn solve_pending_references(
+        &mut self,
+        node: &JsSyntaxNode,
+        binding: &JsIdentifierBinding,
+        name_token: &JsSyntaxToken,
+    ) -> Option<()> {
+        let is_var = binding
+            .parent::<JsVariableDeclarator>()?
+            .parent::<JsVariableDeclaratorList>()?
+            .parent::<JsVariableDeclaration>()?
+            .is_var();
+
+        if is_var {
+            let name = name_token.token_text_trimmed();
+
+            // Solve pending references in parent scopes if the
+            // current scope is flagged as hoists = false.
+            let scopes = self.scopes.iter_mut().rev();
+            for scope in scopes {
+                if let Some(references) = scope.pending.remove(&name) {
+                    for reference in references {
+                        self.stash.push_back(SemanticEvent::HoistedRead {
+                            range: reference.range,
+                            declaration_at: node.text_range(),
+                        })
+                    }
+                }
+
+                if !scope.allows_decl_hoisting {
+                    break;
+                }
+            }
+        }
+
+        Some(())
+    }
+
+    fn enter_reference_identifier(&mut self, node: &JsSyntaxNode) -> Option<SemanticEvent> {
+        let reference = node.clone().cast::<JsReferenceIdentifier>()?;
+        let name_token = reference.value_token().ok()?;
+
+        let declaration_at = self.get_binding_range(&name_token).cloned();
+
+        // No declaration found. Flag as pending.
+        if declaration_at.is_none() {
+            let name = name_token.token_text_trimmed();
+
+            let current_scope = self.current_scope_mut();
+            let pending = current_scope.pending.entry(name.clone()).or_default();
+            pending.push(PendingReference {
+                range: node.text_range(),
+            });
+        }
+
+        Some(SemanticEvent::Read {
+            range: node.text_range(),
+            declaration_at,
+        })
     }
 
     /// See [SemanticEvent] for a more detailed description
@@ -199,12 +316,14 @@ impl SemanticEventExtractor {
         self.stash.pop_front()
     }
 
-    fn push_scope(&mut self, range: TextRange) {
+    fn push_scope(&mut self, range: TextRange, allows_decl_hoisting: bool) {
         self.stash.push_back(SemanticEvent::ScopeStarted { range });
         self.scopes.push(Scope {
             started_at: range.start(),
             bindings: vec![],
+            pending: HashMap::new(),
             shadowed: vec![],
+            allows_decl_hoisting,
         });
     }
 
@@ -215,12 +334,28 @@ impl SemanticEventExtractor {
                 started_at: scope.started_at,
             });
 
+            // Remove all bindings declared in this scope
             for binding in scope.bindings {
                 self.bindings.remove(&binding.name);
             }
 
-            for (k, v) in scope.shadowed {
-                self.bindings.insert(k, v);
+            // Return shadowed bindings
+            self.bindings.extend(scope.shadowed);
+
+            // Promote pending references to the parent scope
+            match self.scopes.last_mut() {
+                Some(parent) => parent.pending.extend(scope.pending.into_iter()),
+                // global scope pending references become
+                // UnresolvedReference events
+                None => {
+                    for (_, pendings) in scope.pending {
+                        for pending in pendings {
+                            self.stash.push_back(SemanticEvent::UnresolvedReference {
+                                range: pending.range,
+                            });
+                        }
+                    }
+                }
             }
         }
     }
@@ -235,7 +370,25 @@ impl SemanticEventExtractor {
         }
     }
 
-    fn push_binding_into_current_scope(&mut self, name_token: &JsSyntaxToken) {
+    fn current_not_hoisting_scope_index(&mut self) -> usize {
+        // We should at least have the global scope
+        // that do not hoist
+        debug_assert!(!self.scopes[0].allows_decl_hoisting);
+        debug_assert!(!self.scopes.is_empty());
+
+        let idx = self
+            .scopes
+            .iter_mut()
+            .rev()
+            .position(|scope| !scope.allows_decl_hoisting);
+
+        match idx {
+            None => unreachable!(),
+            Some(idx) => idx,
+        }
+    }
+
+    fn push_binding_into_scope(&mut self, scope_idx: usize, name_token: &JsSyntaxToken) {
         let name = name_token.token_text_trimmed();
 
         let declaration_range = name_token.text_range();
@@ -247,10 +400,11 @@ impl SemanticEventExtractor {
             .insert(name.clone(), declaration_range)
             .map(|shadowed_range| (name.clone(), shadowed_range));
 
-        let current_scope = self.current_scope_mut();
-        current_scope.bindings.push(Binding { name });
-        current_scope.shadowed.extend(shadowed);
-        let scope_started_at = current_scope.started_at;
+        debug_assert!(scope_idx < self.scopes.len());
+        let scope = &mut self.scopes[scope_idx];
+        scope.bindings.push(Binding { name });
+        scope.shadowed.extend(shadowed);
+        let scope_started_at = scope.started_at;
 
         self.stash.push_back(SemanticEvent::DeclarationFound {
             range: declaration_range,
