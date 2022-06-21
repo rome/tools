@@ -185,6 +185,9 @@ pub(crate) enum AssignmentLikeLayout {
     /// ```js
     ///     let variable;
     /// ```
+    /// ```ts
+    ///     let variable: Map<string, number>;
+    /// ```
     OnlyLeft,
 
     /// First break right-hand side, then after operator.
@@ -279,19 +282,18 @@ pub(crate) enum AssignmentLikeLayout {
 }
 
 impl JsAnyAssignmentLike {
-    fn right(&self) -> Option<RightAssignmentLike> {
+    fn right(&self) -> SyntaxResult<RightAssignmentLike> {
         match self {
-            JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
-                Some(property.value().ok()?.into())
-            }
+            JsAnyAssignmentLike::JsPropertyObjectMember(property) => Ok(property.value()?.into()),
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
-                Some(assignment.right().ok()?.into())
+                Ok(assignment.right()?.into())
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(assignment_pattern) => {
-                Some(assignment_pattern.pattern().ok()?.into())
+                Ok(assignment_pattern.pattern()?.into())
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
-                Some(variable_declarator.initializer()?.into())
+                // SAFETY: Calling `unwrap` here is safe because we check `should_only_left` variant at the beginning of the `layout` function
+                Ok(variable_declarator.initializer().unwrap().into())
             }
         }
     }
@@ -414,12 +416,11 @@ impl JsAnyAssignmentLike {
     /// Returns the layout variant for an assignment like depending on right expression and left part length
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
     fn layout(&self, is_left_short: bool) -> FormatResult<AssignmentLikeLayout> {
-        let right = match self.right() {
-            Some(right) => right,
-            None => return Ok(AssignmentLikeLayout::OnlyLeft),
-        };
+        if self.should_only_left() {
+            return Ok(AssignmentLikeLayout::OnlyLeft);
+        }
 
-        let right = right.as_expression();
+        let right = self.right()?.as_expression();
 
         if let Some(layout) = self.chain_formatting_layout()? {
             return Ok(layout);
@@ -454,13 +455,20 @@ impl JsAnyAssignmentLike {
         Ok(AssignmentLikeLayout::Fluid)
     }
 
+    /// Checks that a [JsAnyAssignmentLike] consists only of the left part
+    /// usually, when a [variable declarator](JsVariableDeclarator) doesn't have initializer
+    fn should_only_left(&self) -> bool {
+        if let JsAnyAssignmentLike::JsVariableDeclarator(declarator) = self {
+            declarator.initializer().is_none()
+        } else {
+            false
+        }
+    }
+
     /// Checks if the right node is entitled of the chain formatting,
     /// and if so, it return the layout type
     fn chain_formatting_layout(&self) -> SyntaxResult<Option<AssignmentLikeLayout>> {
-        let right = match self.right() {
-            Some(right) => right,
-            None => return Ok(None),
-        };
+        let right = self.right()?;
 
         let right_is_tail = !matches!(
             right,
@@ -532,12 +540,7 @@ impl JsAnyAssignmentLike {
     }
 
     fn should_never_break_after_operator(&self) -> SyntaxResult<bool> {
-        let right = match self.right() {
-            Some(right) => right,
-            None => return Ok(false),
-        };
-
-        let right = right.as_expression();
+        let right = self.right()?.as_expression();
 
         if let Some(JsAnyExpression::JsCallExpression(call_expression)) = &right {
             if call_expression.callee()?.syntax().text() == "require" {

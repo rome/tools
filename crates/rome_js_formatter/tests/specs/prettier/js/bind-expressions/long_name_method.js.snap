@@ -19,7 +19,7 @@ class X {
 ```js
 class X {
   constructor() {
-    this.testLongNameMethodAndSomethingElseLallala =;
+    this.testLongNameMethodAndSomethingElseLallala =
     ::this.testLongNameMethodAndSomethingElseLallala
   }
 
