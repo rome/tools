@@ -20,6 +20,8 @@ mod no_unused_template_literal;
 pub(crate) use no_unused_template_literal::NoUnusedTemplateLiteral;
 mod use_self_closing_elements;
 pub(crate) use use_self_closing_elements::UseSelfClosingElements;
+mod use_simplified_logic_expression;
+pub(crate) use use_simplified_logic_expression::UseSimplifiedLogicExpression;
 mod use_single_case_statement;
 pub(crate) use use_single_case_statement::UseSingleCaseStatement;
 mod use_single_var_declarator;

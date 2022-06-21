@@ -35,6 +35,9 @@ pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage
     if filter.match_rule::<UseSelfClosingElements>() {
         rules.push::<UseSelfClosingElements>();
     }
+    if filter.match_rule::<UseSimplifiedLogicExpression>() {
+        rules.push::<UseSimplifiedLogicExpression>();
+    }
     if filter.match_rule::<UseSingleCaseStatement>() {
         rules.push::<UseSingleCaseStatement>();
     }
