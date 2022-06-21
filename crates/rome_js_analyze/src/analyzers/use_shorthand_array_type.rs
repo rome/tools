@@ -9,19 +9,39 @@ use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
 use crate::JsRuleAction;
 
+// // valid
+// // invalid
+
 declare_rule! {
+
     /// Enforce the use of `while` loops instead of `for` loops when the
     /// initializer and update expressions are not needed
     ///
     /// ## Examples
     ///
+    /// ### Valid
+	/// ```js
+	/// let valid: Array<Foo | Bar>;
+	/// let valid: Array<keyof Bar>;
+	/// let valid: Array<foo | bar>;
+	/// ```
+	///
     /// ### Invalid
+	/// ```js,expect_diagnostic
+	/// let valid: Array<foo>;
+	/// ```
     ///
-    /// ```js,expect_diagnostic
-    /// for (; x.running;) {
-    ///     x.step();
-    /// }
-    /// ```
+	/// ```js,expect_diagnostic
+	/// let invalid1: Array<foo, Array<string>>;
+	/// ```
+	///
+	/// ```js,expect_diagnostic
+	/// let invalid2: Promise<Array<string>>;
+	/// ```
+	///
+	/// ```js,expect_diagnostic
+	/// let invalid3: Array<Foo<Bar>>;
+	/// ```
     pub(crate) UseShorthandArrayType = "useShorthandArrayType"
 }
 
