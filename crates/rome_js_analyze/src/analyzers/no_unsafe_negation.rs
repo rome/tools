@@ -23,7 +23,6 @@ declare_rule! {
     /// +1 instanceof [1,2];
     /// ```
     /// ### Invalid
-
     /// ```js,expect_diagnostic
     /// !1 in [1,2];
     /// ```
