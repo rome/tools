@@ -19,17 +19,18 @@ declare_rule! {
     ///
     /// ```ts
     /// let valid: Array<Foo | Bar>;
-    /// let valid: Array<keyof Bar>;
-    /// let valid: Array<foo | bar>;
     /// ```
+	///
+	/// ```ts
+	/// let valid: Array<keyof Bar>;
+	/// ```
+	/// ```ts
+	/// let valid: Array<foo | bar>;
+	/// ```
     ///
     /// ### Invalid
     /// ```ts,expect_diagnostic
     /// let valid: Array<foo>;
-    /// ```
-    ///
-    /// ```ts,expect_diagnostic
-    /// let invalid1: Array<foo, Array<string>>;
     /// ```
     ///
     /// ```ts,expect_diagnostic
