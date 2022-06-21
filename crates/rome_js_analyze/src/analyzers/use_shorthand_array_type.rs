@@ -4,10 +4,7 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyStatement, JsForStatement, JsForStatementFields, TriviaPieceKind, TsReferenceType, TsType,
-    TsTypeAnnotation, TsTypeArguments, T,
-};
+use rome_js_syntax::{TriviaPieceKind, TsReferenceType, TsType, TsTypeArguments, T};
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
 use crate::JsRuleAction;
@@ -36,7 +33,7 @@ impl Rule for UseShorthandArrayType {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
-        if !is_array_reference(&node).unwrap_or(false) || node.type_arguments().is_none() {
+        if !is_array_reference(node).unwrap_or(false) || node.type_arguments().is_none() {
             return None;
         }
         // SAFETY: We have checked the `node.type_arguments` is `Some` above, if it `None`, it would be early returned.
@@ -47,8 +44,6 @@ impl Rule for UseShorthandArrayType {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
-
-        // SAFETY: These tokede.r_paren_token().unwrap().text_trimmed_range();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -89,14 +84,14 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                 TsType::TsUnionType(_) => continue,
                 TsType::TsTypeOperatorType(_) => continue,
                 TsType::TsReferenceType(ty)
-                    if is_array_reference(&ty).unwrap_or(false) && ty.type_arguments().is_some() =>
+                    if is_array_reference(&ty).unwrap_or(false)
+                        && ty.type_arguments().is_some() =>
                 {
                     // SAFETY: We have checked the `ty.type_arguments` is `Some` in match guard
                     convert_to_array_type(ty.type_arguments().unwrap())
                 }
                 _ => Some(param),
             };
-            println!("{:?}", element_type);
             if let Some(element_type) = element_type {
                 array_types.push(TsType::TsArrayType(make::ts_array_type(
                     element_type,
@@ -104,13 +99,7 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                     make::token(T![']']),
                 )));
             }
-            // let param_type = param.ts_type().ok()?;
-            // array_types.push(make::ts_type_array(param_type.clone()));
         }
-        println!(
-            "{:?}------------------------------------------",
-            array_types
-        );
         match array_types.len() {
             0 => {}
             1 => {
@@ -124,7 +113,7 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                         (
                             item,
                             (i != length - 1).then(|| {
-                                let separator = make::token(T![|])
+                                make::token(T![|])
                                     .with_leading_trivia(std::iter::once((
                                         TriviaPieceKind::Whitespace,
                                         " ",
@@ -132,17 +121,14 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                                     .with_trailing_trivia(std::iter::once((
                                         TriviaPieceKind::Whitespace,
                                         " ",
-                                    )));
-                                separator
+                                    )))
                             }),
                         )
                     }),
                 ));
-                // return Some()e
                 return Some(TsType::TsUnionType(ts_union_type_builder.build()));
             }
         }
     }
-    println!("fuck: {}", type_arguments.ts_type_argument_list().len());
     None
 }
