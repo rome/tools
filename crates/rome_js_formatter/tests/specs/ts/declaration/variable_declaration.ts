@@ -20,3 +20,28 @@ const map: Map<Foo<S>> =
 
 const map: Map<Condition extends Foo ? FooFooFoo : BarBarBar> =
     new Map();
+
+const {
+	id, static: isStatic, method: isMethod,
+	methodId, getId, setId,
+}:
+	Map<Function, Map<string | void, {
+		value: UnloadedDescriptor
+	}>> =
+	anodyneCondosMalateOverateRetinol.get(
+		bifornCringerMoshedPerplexSawder
+	);
+
+// rome-ignore format: test
+const {
+	id, static: isStatic, method: isMethod,
+	methodId, getId, setId,
+}:
+	// rome-ignore format: test
+	Map<Function, Map<string | void, {
+		value: UnloadedDescriptor
+	}>> =
+	// rome-ignore format: test
+	anodyneCondosMalateOverateRetinol.get(
+		bifornCringerMoshedPerplexSawder
+	);
