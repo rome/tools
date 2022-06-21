@@ -19,12 +19,7 @@ declare_rule! {
     ///
     /// ```ts
     /// let valid: Array<Foo | Bar>;
-    /// ```
-    ///
-    /// ```ts
     /// let valid: Array<keyof Bar>;
-    /// ```
-    /// ```ts
     /// let valid: Array<foo | bar>;
     /// ```
     ///
@@ -51,13 +46,14 @@ impl Rule for UseShorthandArrayType {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
-        if !is_array_reference(node).unwrap_or(false) || node.type_arguments().is_none() {
-            return None;
-        }
-        // SAFETY: We have checked the `node.type_arguments` is `Some` above, if it `None`, it would be early returned.
-        let type_arguments = node.type_arguments().unwrap();
-
-        convert_to_array_type(type_arguments)
+        let type_arguments = node.type_arguments()?;
+        is_array_reference(node).and_then(|ret| {
+            if ret {
+                convert_to_array_type(type_arguments)
+            } else {
+                None
+            }
+        })
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -67,7 +63,7 @@ impl Rule for UseShorthandArrayType {
             node.range(),
             markup! {
 
-                "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" instead of "<Emphasis>"Array<T> syntax."</Emphasis>""
+                "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" instead of "<Emphasis>"Array<T> syntax."</Emphasis>
             },
         ))
     }
