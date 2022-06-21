@@ -196,7 +196,7 @@ impl SemanticEventExtractor {
                     .kind()
                     == VAR_KW
             }
-            x @ _ => todo!("{:?}", x),
+            _ => false,
         };
         Some(is_var)
     }
@@ -221,7 +221,7 @@ impl SemanticEventExtractor {
                 let scope_idx = self.scopes.len() - 1;
                 self.push_binding_into_scope(scope_idx, &name_token);
             }
-            k @ _ => todo!("{:?}", k),
+            _ => {}
         }
 
         Some(())
@@ -270,7 +270,7 @@ impl SemanticEventExtractor {
         let name = name_token.token_text_trimmed();
 
         let current_scope = self.current_scope_mut();
-        let references = current_scope.references.entry(name.clone()).or_default();
+        let references = current_scope.references.entry(name).or_default();
         references.push(Reference {
             range: node.text_range(),
         });
@@ -319,7 +319,7 @@ impl SemanticEventExtractor {
     }
 
     fn pop_scope(&mut self, range: TextRange) {
-        debug_assert!(self.scopes.len() > 0);
+        debug_assert!(!self.scopes.is_empty());
 
         if let Some(scope) = self.scopes.pop() {
             // Solve all references ..
@@ -331,18 +331,16 @@ impl SemanticEventExtractor {
                             declaration_at: Some(*declaration_at),
                         });
                     }
+                } else if let Some(parent) = self.scopes.last_mut() {
+                    // .. and promote pending references to the parent scope
+                    parent.references.insert(name, references);
                 } else {
-                    if let Some(parent) = self.scopes.last_mut() {
-                        // .. and promote pending references to the parent scope
-                        parent.references.insert(name, references);
-                    } else {
-                        // ... or raise UnresolvedReference events
-                        // when popping the global scope
-                        for reference in references {
-                            self.stash.push_back(SemanticEvent::UnresolvedReference {
-                                range: reference.range,
-                            });
-                        }
+                    // ... or raise UnresolvedReference events
+                    // when popping the global scope
+                    for reference in references {
+                        self.stash.push_back(SemanticEvent::UnresolvedReference {
+                            range: reference.range,
+                        });
                     }
                 }
             }

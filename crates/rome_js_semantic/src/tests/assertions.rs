@@ -396,7 +396,7 @@ impl SemanticAssertions {
 
             let at_least_one_match = events.iter().any(|e| {
                 let declaration_at_range = match &e {
-                    SemanticEvent::Read { declaration_at, .. } => declaration_at.clone(),
+                    SemanticEvent::Read { declaration_at, .. } => *declaration_at,
                     SemanticEvent::HoistedRead { declaration_at, .. } => Some(*declaration_at),
                     _ => None,
                 };
