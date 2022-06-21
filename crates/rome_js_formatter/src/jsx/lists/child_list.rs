@@ -6,10 +6,8 @@ use rome_js_syntax::JsxChildList;
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxChildList;
 
-impl FormatRule<JsxChildList> for FormatJsxChildList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<JsxChildList> for FormatJsxChildList {
+    fn fmt_fields(&self, node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
         if contains_meaningful_jsx_text(node) {
             formatter
                 .fill(soft_line_break())

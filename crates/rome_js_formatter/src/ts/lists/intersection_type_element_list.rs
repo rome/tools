@@ -6,10 +6,12 @@ use rome_rowan::AstSeparatedList;
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsIntersectionTypeElementList;
 
-impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeElementList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &TsIntersectionTypeElementList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeElementList {
+    fn fmt_fields(
+        &self,
+        node: &TsIntersectionTypeElementList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         f.join()

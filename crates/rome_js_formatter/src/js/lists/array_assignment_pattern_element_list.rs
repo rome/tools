@@ -5,10 +5,10 @@ use rome_js_syntax::JsArrayAssignmentPatternElementList;
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsArrayAssignmentPatternElementList;
 
-impl FormatRule<JsArrayAssignmentPatternElementList> for FormatJsArrayAssignmentPatternElementList {
-    type Context = JsFormatContext;
-
-    fn fmt(
+impl FormatNodeRule<JsArrayAssignmentPatternElementList>
+    for FormatJsArrayAssignmentPatternElementList
+{
+    fn fmt_fields(
         &self,
         node: &JsArrayAssignmentPatternElementList,
         formatter: &mut JsFormatter,

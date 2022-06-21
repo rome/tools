@@ -315,9 +315,7 @@ pub fn generate_formatter() {
                 #[derive(Debug, Clone, Default)]
                 pub struct #format_id;
 
-                impl FormatRule<#node_id> for #format_id {
-                    type Context = JsFormatContext;
-
+                impl FormatNodeRule<#node_id> for #format_id {
                     fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                         f.join().entries(node.iter().formatted()).finish()
                     }
@@ -330,9 +328,7 @@ pub fn generate_formatter() {
                 #[derive(Debug, Clone, Default)]
                 pub struct #format_id;
 
-                impl FormatRule<#node_id> for #format_id {
-                    type Context = JsFormatContext;
-
+                impl FormatNodeRule<#node_id> for #format_id {
                     fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                         format_verbatim_node(node.syntax()).fmt(f)
                     }
@@ -436,7 +432,7 @@ impl BoilerplateImpls {
 
     fn push(&mut self, kind: &NodeKind, node_id: &Ident, format_id: &TokenStream) {
         let format_rule_impl = match kind {
-            NodeKind::List { .. } | NodeKind::Union { .. } => quote!(),
+            NodeKind::Union { .. } => quote!(),
             _ => quote! {
                 impl FormatRule<rome_js_syntax::#node_id> for #format_id {
                    type Context = JsFormatContext;

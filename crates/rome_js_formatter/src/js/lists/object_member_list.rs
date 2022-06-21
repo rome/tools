@@ -5,10 +5,8 @@ use rome_rowan::{AstNode, AstSeparatedList};
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsObjectMemberList;
 
-impl FormatRule<JsObjectMemberList> for FormatJsObjectMemberList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &JsObjectMemberList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<JsObjectMemberList> for FormatJsObjectMemberList {
+    fn fmt_fields(&self, node: &JsObjectMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let mut join = f.join_nodes_with_soft_line();
 
         for (element, formatted) in node

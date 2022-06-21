@@ -9140,6 +9140,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsxSpreadChild {
         )
     }
 }
+impl FormatRule < rome_js_syntax :: JsArrayAssignmentPatternElementList > for crate :: js :: lists :: array_assignment_pattern_element_list :: FormatJsArrayAssignmentPatternElementList { type Context = JsFormatContext ; fn fmt (& self , node : & rome_js_syntax :: JsArrayAssignmentPatternElementList , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsArrayAssignmentPatternElementList > :: fmt (self , node , f) } }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsArrayAssignmentPatternElementList {
     type Format = FormatRefWithRule < 'a , rome_js_syntax :: JsArrayAssignmentPatternElementList , crate :: js :: lists :: array_assignment_pattern_element_list :: FormatJsArrayAssignmentPatternElementList > ;
     fn format(&'a self) -> Self::Format {
@@ -9152,6 +9153,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsArrayAssignmentPat
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: array_assignment_pattern_element_list :: FormatJsArrayAssignmentPatternElementList :: default ())
     }
 }
+impl FormatRule<rome_js_syntax::JsArrayBindingPatternElementList>
+    for crate::js::lists::array_binding_pattern_element_list::FormatJsArrayBindingPatternElementList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsArrayBindingPatternElementList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsArrayBindingPatternElementList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsArrayBindingPatternElementList {
     type Format = FormatRefWithRule < 'a , rome_js_syntax :: JsArrayBindingPatternElementList , crate :: js :: lists :: array_binding_pattern_element_list :: FormatJsArrayBindingPatternElementList > ;
     fn format(&'a self) -> Self::Format {
@@ -9162,6 +9175,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsArrayBindingPatter
     type Format = FormatOwnedWithRule < rome_js_syntax :: JsArrayBindingPatternElementList , crate :: js :: lists :: array_binding_pattern_element_list :: FormatJsArrayBindingPatternElementList > ;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: array_binding_pattern_element_list :: FormatJsArrayBindingPatternElementList :: default ())
+    }
+}
+impl FormatRule<rome_js_syntax::JsArrayElementList>
+    for crate::js::lists::array_element_list::FormatJsArrayElementList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsArrayElementList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsArrayElementList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsArrayElementList {
@@ -9189,6 +9214,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsArrayElementList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsCallArgumentList>
+    for crate::js::lists::call_argument_list::FormatJsCallArgumentList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsCallArgumentList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsCallArgumentList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsCallArgumentList {
     type Format = FormatRefWithRule<
         'a,
@@ -9212,6 +9249,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsCallArgumentList {
             self,
             crate::js::lists::call_argument_list::FormatJsCallArgumentList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::JsClassMemberList>
+    for crate::js::lists::class_member_list::FormatJsClassMemberList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsClassMemberList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsClassMemberList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsClassMemberList {
@@ -9239,6 +9288,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsClassMemberList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsConstructorModifierList>
+    for crate::js::lists::constructor_modifier_list::FormatJsConstructorModifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsConstructorModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsConstructorModifierList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsConstructorModifierList {
     type Format = FormatRefWithRule<
         'a,
@@ -9262,6 +9323,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsConstructorModifie
             self,
             crate::js::lists::constructor_modifier_list::FormatJsConstructorModifierList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::JsConstructorParameterList>
+    for crate::js::lists::constructor_parameter_list::FormatJsConstructorParameterList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsConstructorParameterList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsConstructorParameterList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsConstructorParameterList {
@@ -9291,6 +9364,14 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsConstructorParamet
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsDirectiveList>
+    for crate::js::lists::directive_list::FormatJsDirectiveList
+{
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &rome_js_syntax::JsDirectiveList, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsDirectiveList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsDirectiveList {
     type Format = FormatRefWithRule<
         'a,
@@ -9316,6 +9397,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsDirectiveList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsExportNamedFromSpecifierList>
+    for crate::js::lists::export_named_from_specifier_list::FormatJsExportNamedFromSpecifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsExportNamedFromSpecifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsExportNamedFromSpecifierList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsExportNamedFromSpecifierList {
     type Format = FormatRefWithRule<
         'a,
@@ -9333,6 +9426,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsExportNamedFromSpe
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: export_named_from_specifier_list :: FormatJsExportNamedFromSpecifierList :: default ())
+    }
+}
+impl FormatRule<rome_js_syntax::JsExportNamedSpecifierList>
+    for crate::js::lists::export_named_specifier_list::FormatJsExportNamedSpecifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsExportNamedSpecifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsExportNamedSpecifierList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsExportNamedSpecifierList {
@@ -9354,6 +9459,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsExportNamedSpecifi
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: export_named_specifier_list :: FormatJsExportNamedSpecifierList :: default ())
     }
 }
+impl FormatRule<rome_js_syntax::JsImportAssertionEntryList>
+    for crate::js::lists::import_assertion_entry_list::FormatJsImportAssertionEntryList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsImportAssertionEntryList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsImportAssertionEntryList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsImportAssertionEntryList {
     type Format = FormatRefWithRule<
         'a,
@@ -9371,6 +9488,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsImportAssertionEnt
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: import_assertion_entry_list :: FormatJsImportAssertionEntryList :: default ())
+    }
+}
+impl FormatRule<rome_js_syntax::JsMethodModifierList>
+    for crate::js::lists::method_modifier_list::FormatJsMethodModifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsMethodModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsMethodModifierList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsMethodModifierList {
@@ -9398,6 +9527,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsMethodModifierList
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsModuleItemList>
+    for crate::js::lists::module_item_list::FormatJsModuleItemList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsModuleItemList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsModuleItemList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsModuleItemList {
     type Format = FormatRefWithRule<
         'a,
@@ -9423,6 +9564,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsModuleItemList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsNamedImportSpecifierList>
+    for crate::js::lists::named_import_specifier_list::FormatJsNamedImportSpecifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsNamedImportSpecifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsNamedImportSpecifierList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsNamedImportSpecifierList {
     type Format = FormatRefWithRule<
         'a,
@@ -9442,6 +9595,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsNamedImportSpecifi
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: named_import_specifier_list :: FormatJsNamedImportSpecifierList :: default ())
     }
 }
+impl FormatRule < rome_js_syntax :: JsObjectAssignmentPatternPropertyList > for crate :: js :: lists :: object_assignment_pattern_property_list :: FormatJsObjectAssignmentPatternPropertyList { type Context = JsFormatContext ; fn fmt (& self , node : & rome_js_syntax :: JsObjectAssignmentPatternPropertyList , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsObjectAssignmentPatternPropertyList > :: fmt (self , node , f) } }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsObjectAssignmentPatternPropertyList {
     type Format = FormatRefWithRule < 'a , rome_js_syntax :: JsObjectAssignmentPatternPropertyList , crate :: js :: lists :: object_assignment_pattern_property_list :: FormatJsObjectAssignmentPatternPropertyList > ;
     fn format(&'a self) -> Self::Format {
@@ -9454,6 +9608,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsObjectAssignmentPa
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: object_assignment_pattern_property_list :: FormatJsObjectAssignmentPatternPropertyList :: default ())
     }
 }
+impl FormatRule < rome_js_syntax :: JsObjectBindingPatternPropertyList > for crate :: js :: lists :: object_binding_pattern_property_list :: FormatJsObjectBindingPatternPropertyList { type Context = JsFormatContext ; fn fmt (& self , node : & rome_js_syntax :: JsObjectBindingPatternPropertyList , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsObjectBindingPatternPropertyList > :: fmt (self , node , f) } }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsObjectBindingPatternPropertyList {
     type Format = FormatRefWithRule < 'a , rome_js_syntax :: JsObjectBindingPatternPropertyList , crate :: js :: lists :: object_binding_pattern_property_list :: FormatJsObjectBindingPatternPropertyList > ;
     fn format(&'a self) -> Self::Format {
@@ -9464,6 +9619,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsObjectBindingPatte
     type Format = FormatOwnedWithRule < rome_js_syntax :: JsObjectBindingPatternPropertyList , crate :: js :: lists :: object_binding_pattern_property_list :: FormatJsObjectBindingPatternPropertyList > ;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: object_binding_pattern_property_list :: FormatJsObjectBindingPatternPropertyList :: default ())
+    }
+}
+impl FormatRule<rome_js_syntax::JsObjectMemberList>
+    for crate::js::lists::object_member_list::FormatJsObjectMemberList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsObjectMemberList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsObjectMemberList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsObjectMemberList {
@@ -9491,6 +9658,14 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsObjectMemberList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsParameterList>
+    for crate::js::lists::parameter_list::FormatJsParameterList
+{
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &rome_js_syntax::JsParameterList, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsParameterList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsParameterList {
     type Format = FormatRefWithRule<
         'a,
@@ -9514,6 +9689,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsParameterList {
             self,
             crate::js::lists::parameter_list::FormatJsParameterList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::JsPropertyModifierList>
+    for crate::js::lists::property_modifier_list::FormatJsPropertyModifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsPropertyModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsPropertyModifierList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsPropertyModifierList {
@@ -9541,6 +9728,14 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsPropertyModifierLi
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsStatementList>
+    for crate::js::lists::statement_list::FormatJsStatementList
+{
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &rome_js_syntax::JsStatementList, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsStatementList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsStatementList {
     type Format = FormatRefWithRule<
         'a,
@@ -9564,6 +9759,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsStatementList {
             self,
             crate::js::lists::statement_list::FormatJsStatementList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::JsSwitchCaseList>
+    for crate::js::lists::switch_case_list::FormatJsSwitchCaseList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsSwitchCaseList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsSwitchCaseList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsSwitchCaseList {
@@ -9591,6 +9798,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsSwitchCaseList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsTemplateElementList>
+    for crate::js::lists::template_element_list::FormatJsTemplateElementList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsTemplateElementList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsTemplateElementList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsTemplateElementList {
     type Format = FormatRefWithRule<
         'a,
@@ -9614,6 +9833,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsTemplateElementLis
             self,
             crate::js::lists::template_element_list::FormatJsTemplateElementList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::JsVariableDeclaratorList>
+    for crate::js::lists::variable_declarator_list::FormatJsVariableDeclaratorList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsVariableDeclaratorList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsVariableDeclaratorList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsVariableDeclaratorList {
@@ -9641,6 +9872,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsVariableDeclarator
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsxAttributeList>
+    for crate::jsx::lists::attribute_list::FormatJsxAttributeList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsxAttributeList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsxAttributeList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsxAttributeList {
     type Format = FormatRefWithRule<
         'a,
@@ -9664,6 +9907,14 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsxAttributeList {
             self,
             crate::jsx::lists::attribute_list::FormatJsxAttributeList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::JsxChildList>
+    for crate::jsx::lists::child_list::FormatJsxChildList
+{
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &rome_js_syntax::JsxChildList, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsxChildList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsxChildList {
@@ -9691,6 +9942,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsxChildList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsEnumMemberList>
+    for crate::ts::lists::enum_member_list::FormatTsEnumMemberList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsEnumMemberList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsEnumMemberList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::TsEnumMemberList {
     type Format = FormatRefWithRule<
         'a,
@@ -9716,6 +9979,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsEnumMemberList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsIndexSignatureModifierList>
+    for crate::ts::lists::index_signature_modifier_list::FormatTsIndexSignatureModifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsIndexSignatureModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsIndexSignatureModifierList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::TsIndexSignatureModifierList {
     type Format = FormatRefWithRule<
         'a,
@@ -9733,6 +10008,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsIndexSignatureModi
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: ts :: lists :: index_signature_modifier_list :: FormatTsIndexSignatureModifierList :: default ())
+    }
+}
+impl FormatRule<rome_js_syntax::TsIntersectionTypeElementList>
+    for crate::ts::lists::intersection_type_element_list::FormatTsIntersectionTypeElementList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsIntersectionTypeElementList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsIntersectionTypeElementList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::TsIntersectionTypeElementList {
@@ -9754,6 +10041,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsIntersectionTypeEl
         FormatOwnedWithRule :: new (self , crate :: ts :: lists :: intersection_type_element_list :: FormatTsIntersectionTypeElementList :: default ())
     }
 }
+impl FormatRule<rome_js_syntax::TsMethodSignatureModifierList>
+    for crate::ts::lists::method_signature_modifier_list::FormatTsMethodSignatureModifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsMethodSignatureModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsMethodSignatureModifierList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::TsMethodSignatureModifierList {
     type Format = FormatRefWithRule<
         'a,
@@ -9771,6 +10070,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsMethodSignatureMod
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: ts :: lists :: method_signature_modifier_list :: FormatTsMethodSignatureModifierList :: default ())
+    }
+}
+impl FormatRule<rome_js_syntax::TsPropertyParameterModifierList>
+    for crate::ts::lists::property_parameter_modifier_list::FormatTsPropertyParameterModifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsPropertyParameterModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsPropertyParameterModifierList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::TsPropertyParameterModifierList {
@@ -9792,6 +10103,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsPropertyParameterM
         FormatOwnedWithRule :: new (self , crate :: ts :: lists :: property_parameter_modifier_list :: FormatTsPropertyParameterModifierList :: default ())
     }
 }
+impl FormatRule<rome_js_syntax::TsPropertySignatureModifierList>
+    for crate::ts::lists::property_signature_modifier_list::FormatTsPropertySignatureModifierList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsPropertySignatureModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsPropertySignatureModifierList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::TsPropertySignatureModifierList {
     type Format = FormatRefWithRule<
         'a,
@@ -9809,6 +10132,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsPropertySignatureM
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: ts :: lists :: property_signature_modifier_list :: FormatTsPropertySignatureModifierList :: default ())
+    }
+}
+impl FormatRule<rome_js_syntax::TsTemplateElementList>
+    for crate::ts::lists::template_element_list::FormatTsTemplateElementList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTemplateElementList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTemplateElementList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::TsTemplateElementList {
@@ -9836,6 +10171,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsTemplateElementLis
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsTupleTypeElementList>
+    for crate::ts::lists::tuple_type_element_list::FormatTsTupleTypeElementList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTupleTypeElementList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTupleTypeElementList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::TsTupleTypeElementList {
     type Format = FormatRefWithRule<
         'a,
@@ -9859,6 +10206,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsTupleTypeElementLi
             self,
             crate::ts::lists::tuple_type_element_list::FormatTsTupleTypeElementList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::TsTypeArgumentList>
+    for crate::ts::lists::type_argument_list::FormatTsTypeArgumentList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTypeArgumentList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeArgumentList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::TsTypeArgumentList {
@@ -9886,6 +10245,12 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsTypeArgumentList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsTypeList> for crate::ts::lists::type_list::FormatTsTypeList {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &rome_js_syntax::TsTypeList, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::TsTypeList {
     type Format = FormatRefWithRule<
         'a,
@@ -9909,6 +10274,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsTypeList {
             self,
             crate::ts::lists::type_list::FormatTsTypeList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::TsTypeMemberList>
+    for crate::ts::lists::type_member_list::FormatTsTypeMemberList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTypeMemberList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeMemberList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::TsTypeMemberList {
@@ -9936,6 +10313,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsTypeMemberList {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsTypeParameterList>
+    for crate::ts::lists::type_parameter_list::FormatTsTypeParameterList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTypeParameterList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeParameterList>::fmt(self, node, f)
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::TsTypeParameterList {
     type Format = FormatRefWithRule<
         'a,
@@ -9959,6 +10348,18 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsTypeParameterList 
             self,
             crate::ts::lists::type_parameter_list::FormatTsTypeParameterList::default(),
         )
+    }
+}
+impl FormatRule<rome_js_syntax::TsUnionTypeVariantList>
+    for crate::ts::lists::union_type_variant_list::FormatTsUnionTypeVariantList
+{
+    type Context = JsFormatContext;
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsUnionTypeVariantList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsUnionTypeVariantList>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::TsUnionTypeVariantList {

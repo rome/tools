@@ -5,10 +5,8 @@ use rome_rowan::AstSeparatedList;
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsTypeParameterList;
 
-impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<TsTypeParameterList> for FormatTsTypeParameterList {
+    fn fmt_fields(&self, node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
         // nodes and formatter are not aware of the source type (TSX vs TS), which means we can't
         // exactly pin point the exact case.
         //

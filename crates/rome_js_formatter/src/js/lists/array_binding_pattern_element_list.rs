@@ -5,10 +5,8 @@ use rome_js_syntax::JsArrayBindingPatternElementList;
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsArrayBindingPatternElementList;
 
-impl FormatRule<JsArrayBindingPatternElementList> for FormatJsArrayBindingPatternElementList {
-    type Context = JsFormatContext;
-
-    fn fmt(
+impl FormatNodeRule<JsArrayBindingPatternElementList> for FormatJsArrayBindingPatternElementList {
+    fn fmt_fields(
         &self,
         node: &JsArrayBindingPatternElementList,
         formatter: &mut JsFormatter,

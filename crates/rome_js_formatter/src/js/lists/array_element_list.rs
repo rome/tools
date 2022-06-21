@@ -22,10 +22,8 @@ impl FormatRuleWithOptions<JsArrayElementList> for FormatJsArrayElementList {
     }
 }
 
-impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &JsArrayElementList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<JsArrayElementList> for FormatJsArrayElementList {
+    fn fmt_fields(&self, node: &JsArrayElementList, f: &mut JsFormatter) -> FormatResult<()> {
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             // Using format_separated is valid in this case as can_print_fill does not allow holes
             return f

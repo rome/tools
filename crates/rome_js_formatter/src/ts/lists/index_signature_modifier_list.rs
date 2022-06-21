@@ -6,10 +6,12 @@ use rome_js_syntax::TsIndexSignatureModifierList;
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsIndexSignatureModifierList;
 
-impl FormatRule<TsIndexSignatureModifierList> for FormatTsIndexSignatureModifierList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &TsIndexSignatureModifierList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<TsIndexSignatureModifierList> for FormatTsIndexSignatureModifierList {
+    fn fmt_fields(
+        &self,
+        node: &TsIndexSignatureModifierList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         f.join_with(&space_token())
             .entries(sort_modifiers_by_precedence(node).into_iter().formatted())
             .finish()

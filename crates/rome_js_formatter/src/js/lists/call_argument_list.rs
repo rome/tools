@@ -6,10 +6,8 @@ use rome_js_syntax::{JsCallArgumentList, JsSyntaxKind};
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsCallArgumentList;
 
-impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &JsCallArgumentList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<JsCallArgumentList> for FormatJsCallArgumentList {
+    fn fmt_fields(&self, node: &JsCallArgumentList, f: &mut JsFormatter) -> FormatResult<()> {
         if node.len() == 0 {
             return Ok(());
         }

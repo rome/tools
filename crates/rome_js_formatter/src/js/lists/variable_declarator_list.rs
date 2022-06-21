@@ -8,10 +8,8 @@ use rome_rowan::AstSeparatedList;
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsVariableDeclaratorList;
 
-impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
+    fn fmt_fields(&self, node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         let mut declarators = node.elements().enumerate().map(|(index, element)| {

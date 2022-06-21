@@ -4,10 +4,12 @@ use rome_js_syntax::{JsAnyConstructorParameter, JsConstructorParameterList, JsSy
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsConstructorParameterList;
 
-impl FormatRule<JsConstructorParameterList> for FormatJsConstructorParameterList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &JsConstructorParameterList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<JsConstructorParameterList> for FormatJsConstructorParameterList {
+    fn fmt_fields(
+        &self,
+        node: &JsConstructorParameterList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         // The trailing separator is disallowed if the last element in the list is a rest parameter
         let has_trailing_rest = match node.into_iter().last() {
             Some(elem) => matches!(elem?, JsAnyConstructorParameter::JsRestParameter(_)),

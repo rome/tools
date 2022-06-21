@@ -6,10 +6,10 @@ use rome_js_syntax::{
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsObjectBindingPatternPropertyList;
 
-impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPatternPropertyList {
-    type Context = JsFormatContext;
-
-    fn fmt(
+impl FormatNodeRule<JsObjectBindingPatternPropertyList>
+    for FormatJsObjectBindingPatternPropertyList
+{
+    fn fmt_fields(
         &self,
         node: &JsObjectBindingPatternPropertyList,
         f: &mut JsFormatter,

@@ -5,10 +5,8 @@ use rome_js_syntax::{JsSyntaxKind, TsEnumMemberList};
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsEnumMemberList;
 
-impl FormatRule<TsEnumMemberList> for FormatTsEnumMemberList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &TsEnumMemberList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<TsEnumMemberList> for FormatTsEnumMemberList {
+    fn fmt_fields(&self, node: &TsEnumMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let has_newline = node_has_leading_newline(node.syntax());
 
         f.join_with(&if has_newline {

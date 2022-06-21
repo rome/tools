@@ -6,10 +6,8 @@ use rome_rowan::{AstSeparatedElement, AstSeparatedList};
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsUnionTypeVariantList;
 
-impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
+    fn fmt_fields(&self, node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         f.join()

@@ -6,10 +6,8 @@ use rome_rowan::{AstNode, AstNodeList};
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsDirectiveList;
 
-impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
-    type Context = JsFormatContext;
-
-    fn fmt(&self, node: &JsDirectiveList, f: &mut JsFormatter) -> FormatResult<()> {
+impl FormatNodeRule<JsDirectiveList> for FormatJsDirectiveList {
+    fn fmt_fields(&self, node: &JsDirectiveList, f: &mut JsFormatter) -> FormatResult<()> {
         if node.is_empty() {
             return Ok(());
         }
