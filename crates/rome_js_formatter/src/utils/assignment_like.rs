@@ -199,9 +199,9 @@ pub(crate) enum AssignmentLikeLayout {
     ///
     /// ```js
     /// lorem =
-    /// 	fff =
-    /// 	ee =
-    /// 		() => (fff) => () => (fefef) => () => fff;
+    ///     fff =
+    ///     ee =
+    ///         () => (fff) => () => (fefef) => () => fff;
     /// ```
     ChainTailArrowFunction,
 }
@@ -511,11 +511,11 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 
             let layout = self.layout(is_left_short)?;
 
+            let right = &format_with(|f| self.write_right(f)).memoized();
+
             let inner_content = format_with(|f| match &layout {
                 AssignmentLikeLayout::Fluid => {
                     let group_id = f.group_id("assignment_like");
-
-                    let right = format_with(|f| self.write_right(f)).memoized();
 
                     write![
                         f,
@@ -533,44 +533,26 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         f,
                         [group_elements(&indent(&format_args![
                             soft_line_break_or_space(),
-                            format_with(|f| { self.write_right(f) }),
+                            right,
                         ])),]
                     ]
                 }
                 AssignmentLikeLayout::NeverBreakAfterOperator => {
-                    write![
-                        f,
-                        [space_token(), format_with(|f| { self.write_right(f) }),]
-                    ]
+                    write![f, [space_token(), right,]]
                 }
 
                 AssignmentLikeLayout::BreakLeftHandSide => {
-                    write![
-                        f,
-                        [
-                            space_token(),
-                            group_elements(&format_with(|f| { self.write_right(f) }),),
-                        ]
-                    ]
+                    write![f, [space_token(), group_elements(right),]]
                 }
 
                 AssignmentLikeLayout::Chain => {
-                    write!(
-                        f,
-                        [
-                            soft_line_break_or_space(),
-                            format_with(|f| { self.write_right(f) }),
-                        ]
-                    )
+                    write!(f, [soft_line_break_or_space(), right,])
                 }
 
                 AssignmentLikeLayout::ChainTail => {
                     write!(
                         f,
-                        [&indent(&format_args![
-                            soft_line_break_or_space(),
-                            format_with(|f| { self.write_right(f) }),
-                        ])]
+                        [&indent(&format_args![soft_line_break_or_space(), right,])]
                     )
                 }
 
@@ -581,11 +563,8 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         f,
                         [
                             space_token(),
-                            group_elements(&indent(&format_args![
-                                hard_line_break(),
-                                &format_with(|f| { self.write_right(f) })
-                            ]))
-                            .with_group_id(Some(group_id)),
+                            group_elements(&indent(&format_args![hard_line_break(), right]))
+                                .with_group_id(Some(group_id)),
                         ]
                     )
                 }
