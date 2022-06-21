@@ -319,41 +319,29 @@ impl SemanticEventExtractor {
     }
 
     fn pop_scope(&mut self, range: TextRange) {
+        debug_assert!(self.scopes.len() > 0);
+
         if let Some(scope) = self.scopes.pop() {
-            // Solve references and
-            // promote pending references to the parent scope
-            match self.scopes.last_mut() {
-                Some(parent) => {
-                    for (name, references) in scope.references {
-                        if let Some(declaration_at) = self.bindings.get(&name) {
-                            for reference in references {
-                                self.stash.push_back(SemanticEvent::Read {
-                                    range: reference.range,
-                                    declaration_at: Some(*declaration_at),
-                                });
-                            }
-                        } else {
-                            parent.references.insert(name, references);
-                        }
+            // Solve all references ..
+            for (name, references) in scope.references {
+                if let Some(declaration_at) = self.bindings.get(&name) {
+                    for reference in references {
+                        self.stash.push_back(SemanticEvent::Read {
+                            range: reference.range,
+                            declaration_at: Some(*declaration_at),
+                        });
                     }
-                }
-                // global scope pending references become
-                // UnresolvedReference events
-                None => {
-                    for (name, references) in scope.references {
-                        if let Some(declaration_at) = self.bindings.get(&name) {
-                            for reference in references {
-                                self.stash.push_back(SemanticEvent::Read {
-                                    range: reference.range,
-                                    declaration_at: Some(*declaration_at),
-                                });
-                            }
-                        } else {
-                            for reference in references {
-                                self.stash.push_back(SemanticEvent::UnresolvedReference {
-                                    range: reference.range,
-                                });
-                            }
+                } else {
+                    if let Some(parent) = self.scopes.last_mut() {
+                        // .. and promote pending references to the parent scope
+                        parent.references.insert(name, references);
+                    } else {
+                        // ... or raise UnresolvedReference events
+                        // when popping the global scope
+                        for reference in references {
+                            self.stash.push_back(SemanticEvent::UnresolvedReference {
+                                range: reference.range,
+                            });
                         }
                     }
                 }
@@ -424,11 +412,6 @@ impl SemanticEventExtractor {
             range: declaration_range,
             scope_started_at,
         });
-    }
-
-    fn get_binding_range(&self, name_token: &JsSyntaxToken) -> Option<&TextRange> {
-        let name = name_token.token_text_trimmed();
-        self.bindings.get(&name)
     }
 }
 
