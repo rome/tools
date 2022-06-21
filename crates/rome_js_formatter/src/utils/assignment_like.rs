@@ -26,10 +26,6 @@ declare_node_union! {
 }
 
 declare_node_union! {
-    pub(crate) AnnotationLike = TsAnyVariableAnnotation
-}
-
-declare_node_union! {
     pub(crate) RightAssignmentLike = JsAnyExpression | JsAnyAssignmentPattern | JsInitializerClause
 }
 
@@ -107,48 +103,46 @@ impl LeftAssignmentLike {
     }
 }
 
-impl AnnotationLike {
-    fn has_complex_type_annotation(&self) -> SyntaxResult<bool> {
-        let AnnotationLike::TsAnyVariableAnnotation(annotation) = self;
+pub(crate) fn has_complex_type_annotation(
+    annotation: TsAnyVariableAnnotation,
+) -> SyntaxResult<bool> {
+    let is_complex = annotation
+        .type_annotation()?
+        .and_then(|type_annotation| type_annotation.ty().ok())
+        .and_then(|ty| match ty {
+            TsType::TsReferenceType(reference_type) => {
+                let type_arguments = reference_type.type_arguments()?;
+                let argument_list_len = type_arguments.ts_type_argument_list().len();
 
-        let is_complex = annotation
-            .type_annotation()?
-            .and_then(|type_annotation| type_annotation.ty().ok())
-            .and_then(|ty| match ty {
-                TsType::TsReferenceType(reference_type) => {
-                    let type_arguments = reference_type.type_arguments()?;
-                    let argument_list_len = type_arguments.ts_type_argument_list().len();
-
-                    if argument_list_len <= 1 {
-                        return Some(false);
-                    }
-
-                    let has_at_least_a_complex_type = type_arguments
-                        .ts_type_argument_list()
-                        .iter()
-                        .flat_map(|p| p.ok())
-                        .any(|argument| {
-                            if matches!(argument, TsType::TsConditionalType(_)) {
-                                return true;
-                            }
-
-                            let is_complex_type = argument
-                                .as_ts_reference_type()
-                                .and_then(|reference_type| reference_type.type_arguments())
-                                .map_or(false, |type_arguments| {
-                                    type_arguments.ts_type_argument_list().len() > 0
-                                });
-
-                            is_complex_type
-                        });
-                    Some(has_at_least_a_complex_type)
+                if argument_list_len <= 1 {
+                    return Some(false);
                 }
-                _ => Some(false),
-            })
-            .unwrap_or(false);
 
-        Ok(is_complex)
-    }
+                let has_at_least_a_complex_type = type_arguments
+                    .ts_type_argument_list()
+                    .iter()
+                    .flat_map(|p| p.ok())
+                    .any(|argument| {
+                        if matches!(argument, TsType::TsConditionalType(_)) {
+                            return true;
+                        }
+
+                        let is_complex_type = argument
+                            .as_ts_reference_type()
+                            .and_then(|reference_type| reference_type.type_arguments())
+                            .map_or(false, |type_arguments| {
+                                type_arguments.ts_type_argument_list().len() > 0
+                            });
+
+                        is_complex_type
+                    });
+                Some(has_at_least_a_complex_type)
+            }
+            _ => Some(false),
+        })
+        .unwrap_or(false);
+
+    Ok(is_complex)
 }
 
 impl RightAssignmentLike {
@@ -287,11 +281,11 @@ impl JsAnyAssignmentLike {
         }
     }
 
-    fn annotation(&self) -> Option<AnnotationLike> {
+    fn annotation(&self) -> Option<TsAnyVariableAnnotation> {
         match self {
-            JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => variable_declarator
-                .variable_annotation()
-                .map(AnnotationLike::from),
+            JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
+                variable_declarator.variable_annotation()
+            }
             _ => None,
         }
     }
@@ -550,7 +544,7 @@ impl JsAnyAssignmentLike {
 
         let has_complex_type_annotation = self
             .annotation()
-            .and_then(|annotation| annotation.has_complex_type_annotation().ok())
+            .and_then(|annotation| has_complex_type_annotation(annotation).ok())
             .unwrap_or(false);
 
         Ok(is_complex_destructuring || has_complex_type_annotation)
