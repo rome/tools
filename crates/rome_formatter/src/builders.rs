@@ -1789,15 +1789,8 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
             write!(buffer, [entry])?;
 
-            let item = buffer.into_element();
-
-            if !item.is_empty() {
-                if let FormatElement::List(items) = item {
-                    self.items.extend(items.to_vec())
-                } else {
-                    self.items.push(item);
-                }
-            }
+            let items = buffer.into_vec();
+            self.items.extend(items);
 
             Ok(())
         });

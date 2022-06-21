@@ -12,34 +12,23 @@ impl FormatNodeFields<JsxOpeningElement> for FormatNodeRule<JsxOpeningElement> {
             attributes,
             r_angle_token,
         } = node.as_fields();
+        write!(
+            f,
+            [
+                l_angle_token.format(),
+                name.format(),
+                type_arguments.format(),
+                line_suffix_boundary(),
+            ]
+        )?;
 
-        if attributes.is_empty() && type_arguments.is_none() {
-            write![
+        if !attributes.is_empty() {
+            write!(
                 f,
-                [
-                    l_angle_token.format(),
-                    name.format(),
-                    type_arguments.format(),
-                    line_suffix_boundary(),
-                    attributes.format(),
-                    line_suffix_boundary(),
-                    r_angle_token.format()
-                ]
-            ]
-        } else {
-            write![
-                f,
-                [
-                    l_angle_token.format(),
-                    name.format(),
-                    type_arguments.format(),
-                    line_suffix_boundary(),
-                    space_token(),
-                    attributes.format(),
-                    line_suffix_boundary(),
-                    r_angle_token.format()
-                ]
-            ]
+                [space_token(), attributes.format(), line_suffix_boundary()]
+            )?;
         }
+
+        write!(f, [r_angle_token.format()])
     }
 }

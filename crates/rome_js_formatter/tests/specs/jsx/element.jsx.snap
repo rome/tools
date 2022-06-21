@@ -147,6 +147,10 @@ let component = (
 	className={bar} index={0} name="Component" // here is another comment
 ></Component>;
 
+// spacing
+let a = <a>{' '}</a>
+let b = <a>{" "}</a>
+
 =============================
 # Outputs
 ## Output 1
@@ -325,6 +329,10 @@ let bar = (
 	index={0}
 	name="Component" // here is another comment
 ></Component>;
+
+// spacing
+let a = <a> </a>;
+let b = <a> </a>;
 
 
 ## Lines exceeding width of 80 characters

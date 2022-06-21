@@ -354,29 +354,13 @@ impl<'a> Printer<'a> {
 
         let mut items = content.iter();
 
-        let mut current_content = match items.next() {
+        let current_content = match items.next() {
             None => {
                 // Empty list
                 return;
             }
             Some(item) => item,
         };
-
-        while current_content.is_empty() {
-            self.print_all(
-                queue,
-                &[current_content],
-                args.with_print_mode(PrintMode::Flat),
-            );
-
-            current_content = match items.next() {
-                None => {
-                    // Empty list
-                    return;
-                }
-                Some(item) => item,
-            };
-        }
 
         let mut current_fits = fits_on_line(
             [current_content],

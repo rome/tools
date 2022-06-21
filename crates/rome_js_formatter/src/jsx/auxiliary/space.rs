@@ -31,7 +31,7 @@ impl Format<JsFormatContext> for JsxSpace {
         write![
             formatter,
             [
-                if_group_breaks(&format_args![token(jsx_space), soft_line_break()]),
+                if_group_breaks(&format_args![token(jsx_space), hard_line_break()]),
                 if_group_fits_on_line(&space_token())
             ]
         ]

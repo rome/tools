@@ -6,7 +6,7 @@ mod simple;
 pub mod string_utils;
 
 pub(crate) mod format_class;
-pub(crate) mod jsx_utils;
+pub mod jsx_utils;
 mod member_chain;
 mod object;
 #[cfg(test)]

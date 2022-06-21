@@ -140,3 +140,7 @@ let component = (
 <Component // here is a comment
 	className={bar} index={0} name="Component" // here is another comment
 ></Component>;
+
+// spacing
+let a = <a>{' '}</a>
+let b = <a>{" "}</a>

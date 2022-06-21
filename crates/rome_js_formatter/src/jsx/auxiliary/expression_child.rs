@@ -1,4 +1,3 @@
-use crate::context::QuoteStyle;
 use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
 use crate::prelude::{format_args, write};
@@ -22,20 +21,19 @@ impl FormatNodeFields<JsxExpressionChild> for FormatNodeRule<JsxExpressionChild>
         )) = &expression
         {
             if let Ok(str_token) = string_literal.value_token() {
-                let quote_style = f.context().quote_style();
-                let space_str = match quote_style {
-                    QuoteStyle::Double => "\" \"",
-                    QuoteStyle::Single => "' '",
-                };
-
-                if str_token.text() == space_str {
+                if str_token.text().contains("' '") || str_token.text().contains("\" \"") {
                     let l_curly_token = l_curly_token?;
                     let r_curly_token = r_curly_token?;
-                    let l_curly = format_removed(&l_curly_token);
-                    let space = format_removed(&str_token);
-                    let r_curly = format_removed(&r_curly_token);
 
-                    return write![f, [l_curly, space, JsxSpace::default(), r_curly]];
+                    return write![
+                        f,
+                        [
+                            format_removed(&l_curly_token),
+                            format_removed(&str_token),
+                            JsxSpace::default(),
+                            format_removed(&r_curly_token)
+                        ]
+                    ];
                 }
             }
         }
