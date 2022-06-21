@@ -326,10 +326,18 @@ impl SemanticEventExtractor {
             for (name, references) in scope.references {
                 if let Some(declaration_at) = self.bindings.get(&name) {
                     for reference in references {
-                        self.stash.push_back(SemanticEvent::Read {
-                            range: reference.range,
-                            declaration_at: Some(*declaration_at),
-                        });
+                        let e = if declaration_at.start() < reference.range.start() {
+                            SemanticEvent::Read {
+                                range: reference.range,
+                                declaration_at: Some(*declaration_at),
+                            }
+                        } else {
+                            SemanticEvent::HoistedRead {
+                                range: reference.range,
+                                declaration_at: *declaration_at,
+                            }
+                        };
+                        self.stash.push_back(e);
                     }
                 } else if let Some(parent) = self.scopes.last_mut() {
                     // .. and promote pending references to the parent scope
