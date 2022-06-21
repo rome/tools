@@ -10,8 +10,8 @@ use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce the use of `while` loops instead of `for` loops when the
-    /// initializer and update expressions are not needed
+
+    /// When expressing array types, this rule promotes the usage of `T[]` shorthand instead of `Array<T>`.
     ///
     /// ## Examples
     ///
