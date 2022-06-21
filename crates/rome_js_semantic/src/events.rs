@@ -12,7 +12,7 @@ use rome_rowan::{syntax::Preorder, SyntaxNodeCast, SyntaxTokenText};
 /// made into the Semantic Model.
 #[derive(Debug)]
 pub enum SemanticEvent {
-    /// Signifies that a new symbol declaration was found.
+    /// Tracks when a new symbol declaration is found.
     /// Generated for:
     /// - Variable Declarations
     /// - Import bindings
@@ -22,7 +22,7 @@ pub enum SemanticEvent {
         scope_started_at: TextSize,
     },
 
-    /// Signifies that a symbol value is being read.
+    /// Tracks when a symbol is read.
     /// Generated for:
     /// - All reference identifiers
     Read {
@@ -30,13 +30,13 @@ pub enum SemanticEvent {
         declaration_at: Option<TextRange>,
     },
 
-    /// Signifies that a new scope was started
+    /// Tracks when a new scope starts
     /// Generated for:
     /// - Blocks
     /// - Function body
     ScopeStarted { range: TextRange },
 
-    /// Signifies that a new scope was ended
+    /// Tracks when a scope ends
     /// Generated for:
     /// - Blocks
     /// - Function body
@@ -99,16 +99,19 @@ impl SemanticEvent {
 pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
-    declared_names: HashMap<SyntaxTokenText, TextRange>,
+    bindings: HashMap<SyntaxTokenText, TextRange>,
 }
 
-struct ScopeDeclaration {
+struct Binding {
     name: SyntaxTokenText,
 }
 
 struct Scope {
     started_at: TextSize,
-    declared: Vec<ScopeDeclaration>,
+    /// All bindings declared inside this scope
+    bindings: Vec<Binding>,
+    /// All bindings that where shadowed and will be
+    /// restored after this scope ends.
     shadowed: Vec<(SyntaxTokenText, TextRange)>,
 }
 
@@ -117,7 +120,7 @@ impl SemanticEventExtractor {
         Self {
             stash: VecDeque::new(),
             scopes: vec![],
-            declared_names: HashMap::new(),
+            bindings: HashMap::new(),
         }
     }
 
@@ -133,7 +136,7 @@ impl SemanticEventExtractor {
                     .cast::<JsIdentifierBinding>()
                     .and_then(|id| id.name_token().ok())
                 {
-                    self.declare_name(&name_token);
+                    self.push_binding_into_current_scope(&name_token);
                 }
             }
             JS_REFERENCE_IDENTIFIER => {
@@ -144,9 +147,7 @@ impl SemanticEventExtractor {
                 {
                     self.stash.push_back(SemanticEvent::Read {
                         range: node.text_range(),
-                        declaration_at: self
-                            .get_declaration_range_by_trimmed_text(&name_token)
-                            .cloned(),
+                        declaration_at: self.get_binding_range(&name_token).cloned(),
                     })
                 }
             }
@@ -202,7 +203,7 @@ impl SemanticEventExtractor {
         self.stash.push_back(SemanticEvent::ScopeStarted { range });
         self.scopes.push(Scope {
             started_at: range.start(),
-            declared: vec![],
+            bindings: vec![],
             shadowed: vec![],
         });
     }
@@ -214,14 +215,12 @@ impl SemanticEventExtractor {
                 started_at: scope.started_at,
             });
 
-            // remove all declarations
-            for decl in scope.declared {
-                self.declared_names.remove(&decl.name);
+            for binding in scope.bindings {
+                self.bindings.remove(&binding.name);
             }
 
-            // return all shadowed names
-            for (name, range) in scope.shadowed {
-                self.declared_names.insert(name, range);
+            for (k, v) in scope.shadowed {
+                self.bindings.insert(k, v);
             }
         }
     }
@@ -236,7 +235,7 @@ impl SemanticEventExtractor {
         }
     }
 
-    fn declare_name(&mut self, name_token: &JsSyntaxToken) {
+    fn push_binding_into_current_scope(&mut self, name_token: &JsSyntaxToken) {
         let name = name_token.token_text_trimmed();
 
         let declaration_range = name_token.text_range();
@@ -244,12 +243,12 @@ impl SemanticEventExtractor {
         // insert this name into the list of available names
         // and save shadowed names to be used later
         let shadowed = self
-            .declared_names
+            .bindings
             .insert(name.clone(), declaration_range)
             .map(|shadowed_range| (name.clone(), shadowed_range));
 
         let current_scope = self.current_scope_mut();
-        current_scope.declared.push(ScopeDeclaration { name });
+        current_scope.bindings.push(Binding { name });
         current_scope.shadowed.extend(shadowed);
         let scope_started_at = current_scope.started_at;
 
@@ -259,12 +258,9 @@ impl SemanticEventExtractor {
         });
     }
 
-    fn get_declaration_range_by_trimmed_text(
-        &self,
-        name_token: &JsSyntaxToken,
-    ) -> Option<&TextRange> {
+    fn get_binding_range(&self, name_token: &JsSyntaxToken) -> Option<&TextRange> {
         let name = name_token.token_text_trimmed();
-        self.declared_names.get(&name)
+        self.bindings.get(&name)
     }
 }
 
