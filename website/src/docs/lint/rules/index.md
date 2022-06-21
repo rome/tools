@@ -82,7 +82,7 @@ Disallow template literals if interpolation and special-character handling are n
 	<a class="header-anchor" href="#useBlockStatements"></a>
 </h3>
 Requires following curly brace conventions.
-JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity. 
+JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useSelfClosingElements">
