@@ -96,12 +96,9 @@ impl AnyObjectPattern {
 impl LeftAssignmentLike {
     fn as_object_pattern(&self) -> Option<AnyObjectPattern> {
         match self {
-            LeftAssignmentLike::JsAnyAssignmentPattern(pattern) => match pattern {
-                JsAnyAssignmentPattern::JsObjectAssignmentPattern(node) => {
-                    Some(AnyObjectPattern::from(node.clone()))
-                }
-                _ => None,
-            },
+            LeftAssignmentLike::JsAnyAssignmentPattern(
+                JsAnyAssignmentPattern::JsObjectAssignmentPattern(node),
+            ) => Some(AnyObjectPattern::from(node.clone())),
             LeftAssignmentLike::JsAnyBindingPattern(
                 JsAnyBindingPattern::JsObjectBindingPattern(node),
             ) => Some(AnyObjectPattern::from(node.clone())),
@@ -120,11 +117,17 @@ impl AnnotationLike {
             .and_then(|ty| match ty {
                 TsType::TsReferenceType(reference_type) => {
                     let type_arguments = reference_type.type_arguments()?;
-                    let argument_list = type_arguments.ts_type_argument_list();
-                    let argument_list_len = argument_list.len();
+                    let argument_list_len = type_arguments.ts_type_argument_list().len();
 
-                    let has_at_least_a_complex_type =
-                        argument_list.iter().flat_map(|p| p.ok()).any(|argument| {
+                    if argument_list_len <= 1 {
+                        return Some(false);
+                    }
+
+                    let has_at_least_a_complex_type = type_arguments
+                        .ts_type_argument_list()
+                        .iter()
+                        .flat_map(|p| p.ok())
+                        .any(|argument| {
                             if matches!(argument, TsType::TsConditionalType(_)) {
                                 return true;
                             }
@@ -138,7 +141,7 @@ impl AnnotationLike {
 
                             is_complex_type
                         });
-                    Some(argument_list_len > 1 && has_at_least_a_complex_type)
+                    Some(has_at_least_a_complex_type)
                 }
                 _ => Some(false),
             })
