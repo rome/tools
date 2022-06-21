@@ -84,6 +84,13 @@ Disallow template literals if interpolation and special-character handling are n
 Prevent extra closing tags for components without children
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useShorthandArrayType">
+	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType</a>
+	<a class="header-anchor" href="#useShorthandArrayType"></a>
+</h3>
+Enforce the use of <code>while</code> loops instead of <code>for</code> loops when the
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">
 	<a href="/docs/lint/rules/useSingleCaseStatement">useSingleCaseStatement</a>
 	<a class="header-anchor" href="#useSingleCaseStatement"></a>
