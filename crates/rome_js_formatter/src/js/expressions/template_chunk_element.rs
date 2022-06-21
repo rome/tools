@@ -1,10 +1,12 @@
 use crate::prelude::*;
 use crate::utils::format_template_chunk;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::{JsTemplateChunkElement, JsTemplateChunkElementFields};
 
-impl FormatNodeFields<JsTemplateChunkElement> for FormatNodeRule<JsTemplateChunkElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsTemplateChunkElement;
+
+impl FormatNodeRule<JsTemplateChunkElement> for FormatJsTemplateChunkElement {
     fn fmt_fields(node: &JsTemplateChunkElement, formatter: &mut JsFormatter) -> FormatResult<()> {
         let JsTemplateChunkElementFields {
             template_chunk_token,

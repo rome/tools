@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsxSpreadAttribute, JsxSpreadAttributeFields};
 
-impl FormatNodeFields<JsxSpreadAttribute> for FormatNodeRule<JsxSpreadAttribute> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxSpreadAttribute;
+
+impl FormatNodeRule<JsxSpreadAttribute> for FormatJsxSpreadAttribute {
     fn fmt_fields(node: &JsxSpreadAttribute, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxSpreadAttributeFields {
             l_curly_token,

@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsStaticMemberExpression, JsStaticMemberExpressionFields};
 
-impl FormatNodeFields<JsStaticMemberExpression> for FormatNodeRule<JsStaticMemberExpression> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsStaticMemberExpression;
+
+impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression {
     fn fmt_fields(node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStaticMemberExpressionFields {
             object,

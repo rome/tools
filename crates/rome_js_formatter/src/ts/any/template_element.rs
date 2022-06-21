@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatTsAnyTemplateElement;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyTemplateElement;
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsAnyTemplateElement;
 impl FormatRule<TsAnyTemplateElement> for FormatTsAnyTemplateElement {
     type Context = JsFormatContext;
     fn fmt(node: &TsAnyTemplateElement, f: &mut JsFormatter) -> FormatResult<()> {

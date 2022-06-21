@@ -1,8 +1,10 @@
-use crate::generated::FormatTsIndexSignatureModifierList;
 use crate::prelude::*;
 use crate::utils::sort_modifiers_by_precedence;
 
 use rome_js_syntax::TsIndexSignatureModifierList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIndexSignatureModifierList;
 
 impl FormatRule<TsIndexSignatureModifierList> for FormatTsIndexSignatureModifierList {
     type Context = JsFormatContext;

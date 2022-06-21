@@ -1,7 +1,9 @@
-use crate::generated::FormatJsxAttributeList;
 use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::JsxAttributeList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxAttributeList;
 
 impl FormatRule<JsxAttributeList> for FormatJsxAttributeList {
     type Context = JsFormatContext;

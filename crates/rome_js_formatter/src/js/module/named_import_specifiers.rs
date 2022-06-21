@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsNamedImportSpecifiers;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
-impl FormatNodeFields<JsNamedImportSpecifiers> for FormatNodeRule<JsNamedImportSpecifiers> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsNamedImportSpecifiers;
+
+impl FormatNodeRule<JsNamedImportSpecifiers> for FormatJsNamedImportSpecifiers {
     fn fmt_fields(node: &JsNamedImportSpecifiers, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNamedImportSpecifiersFields {
             l_curly_token,

@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsQualifiedModuleName;
 use rome_js_syntax::TsQualifiedModuleNameFields;
 
-impl FormatNodeFields<TsQualifiedModuleName> for FormatNodeRule<TsQualifiedModuleName> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsQualifiedModuleName;
+
+impl FormatNodeRule<TsQualifiedModuleName> for FormatTsQualifiedModuleName {
     fn fmt_fields(node: &TsQualifiedModuleName, f: &mut JsFormatter) -> FormatResult<()> {
         let TsQualifiedModuleNameFields {
             left,

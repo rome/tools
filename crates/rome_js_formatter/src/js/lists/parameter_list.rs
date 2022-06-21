@@ -1,6 +1,8 @@
-use crate::generated::FormatJsParameterList;
 use crate::prelude::*;
 use rome_js_syntax::{JsAnyParameter, JsParameterList, JsSyntaxKind};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsParameterList;
 
 impl FormatRule<JsParameterList> for FormatJsParameterList {
     type Context = JsFormatContext;

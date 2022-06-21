@@ -1,12 +1,12 @@
 use crate::prelude::*;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsUnknownNamedImportSpecifier;
 use rome_rowan::AstNode;
 
-impl FormatNodeFields<JsUnknownNamedImportSpecifier>
-    for FormatNodeRule<JsUnknownNamedImportSpecifier>
-{
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsUnknownNamedImportSpecifier;
+
+impl FormatNodeRule<JsUnknownNamedImportSpecifier> for FormatJsUnknownNamedImportSpecifier {
     fn fmt_fields(
         node: &JsUnknownNamedImportSpecifier,
         formatter: &mut JsFormatter,

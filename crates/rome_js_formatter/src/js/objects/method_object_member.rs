@@ -1,11 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsMethodObjectMember;
 use rome_js_syntax::JsMethodObjectMemberFields;
 
-impl FormatNodeFields<JsMethodObjectMember> for FormatNodeRule<JsMethodObjectMember> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsMethodObjectMember;
+
+impl FormatNodeRule<JsMethodObjectMember> for FormatJsMethodObjectMember {
     fn fmt_fields(node: &JsMethodObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsMethodObjectMemberFields {
             async_token,

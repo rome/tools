@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsTypeArguments, TsTypeArgumentsFields};
 
-impl FormatNodeFields<TsTypeArguments> for FormatNodeRule<TsTypeArguments> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeArguments;
+
+impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
     fn fmt_fields(node: &TsTypeArguments, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeArgumentsFields {
             l_angle_token,

@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsExtendsClause, TsExtendsClauseFields};
 
-impl FormatNodeFields<TsExtendsClause> for FormatNodeRule<TsExtendsClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsExtendsClause;
+
+impl FormatNodeRule<TsExtendsClause> for FormatTsExtendsClause {
     fn fmt_fields(node: &TsExtendsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExtendsClauseFields {
             extends_token,

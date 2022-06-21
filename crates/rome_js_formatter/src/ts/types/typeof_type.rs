@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsTypeofType, TsTypeofTypeFields};
 
-impl FormatNodeFields<TsTypeofType> for FormatNodeRule<TsTypeofType> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeofType;
+
+impl FormatNodeRule<TsTypeofType> for FormatTsTypeofType {
     fn fmt_fields(node: &TsTypeofType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeofTypeFields {
             typeof_token,

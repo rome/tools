@@ -2,11 +2,14 @@ use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsExpressionStatementFields;
 
-impl FormatNodeFields<JsExpressionStatement> for FormatNodeRule<JsExpressionStatement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExpressionStatement;
+
+impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
     fn fmt_fields(node: &JsExpressionStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExpressionStatementFields {
             expression,

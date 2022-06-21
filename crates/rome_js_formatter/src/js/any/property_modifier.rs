@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyPropertyModifier;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyPropertyModifier;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyPropertyModifier;
 impl FormatRule<JsAnyPropertyModifier> for FormatJsAnyPropertyModifier {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyPropertyModifier, f: &mut JsFormatter) -> FormatResult<()> {

@@ -1,8 +1,10 @@
-use crate::generated::FormatJsCallArgumentList;
 use crate::prelude::*;
 use crate::utils::write_arguments_multi_line;
 use rome_formatter::write;
 use rome_js_syntax::{JsCallArgumentList, JsSyntaxKind};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsCallArgumentList;
 
 impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
     type Context = JsFormatContext;

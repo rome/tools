@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyArrayElement;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayElement;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyArrayElement;
 impl FormatRule<JsAnyArrayElement> for FormatJsAnyArrayElement {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyArrayElement, f: &mut JsFormatter) -> FormatResult<()> {

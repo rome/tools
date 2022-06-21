@@ -1,6 +1,8 @@
-use crate::generated::FormatJsStatementList;
 use crate::prelude::*;
 use rome_js_syntax::JsStatementList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsStatementList;
 
 impl FormatRule<JsStatementList> for FormatJsStatementList {
     type Context = JsFormatContext;

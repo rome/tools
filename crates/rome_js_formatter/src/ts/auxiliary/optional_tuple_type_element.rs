@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementFields};
 
-impl FormatNodeFields<TsOptionalTupleTypeElement> for FormatNodeRule<TsOptionalTupleTypeElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsOptionalTupleTypeElement;
+
+impl FormatNodeRule<TsOptionalTupleTypeElement> for FormatTsOptionalTupleTypeElement {
     fn fmt_fields(node: &TsOptionalTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         let TsOptionalTupleTypeElementFields {
             ty,

@@ -1,10 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::JsCatchClause;
 use rome_js_syntax::JsCatchClauseFields;
 
-impl FormatNodeFields<JsCatchClause> for FormatNodeRule<JsCatchClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsCatchClause;
+
+impl FormatNodeRule<JsCatchClause> for FormatJsCatchClause {
     fn fmt_fields(node: &JsCatchClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCatchClauseFields {
             catch_token,

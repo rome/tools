@@ -1,12 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsDefinitePropertyAnnotation;
 use rome_js_syntax::TsDefinitePropertyAnnotationFields;
 
-impl FormatNodeFields<TsDefinitePropertyAnnotation>
-    for FormatNodeRule<TsDefinitePropertyAnnotation>
-{
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsDefinitePropertyAnnotation;
+
+impl FormatNodeRule<TsDefinitePropertyAnnotation> for FormatTsDefinitePropertyAnnotation {
     fn fmt_fields(node: &TsDefinitePropertyAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         let TsDefinitePropertyAnnotationFields {
             excl_token,

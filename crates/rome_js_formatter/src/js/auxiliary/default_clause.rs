@@ -1,11 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
 
-impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsDefaultClause;
+
+impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
     fn fmt_fields(node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDefaultClauseFields {
             default_token,

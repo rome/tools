@@ -1,11 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsVariableDeclaration;
 use rome_js_syntax::JsVariableDeclarationFields;
 
-impl FormatNodeFields<JsVariableDeclaration> for FormatNodeRule<JsVariableDeclaration> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableDeclaration;
+
+impl FormatNodeRule<JsVariableDeclaration> for FormatJsVariableDeclaration {
     fn fmt_fields(node: &JsVariableDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableDeclarationFields { kind, declarators } = node.as_fields();
 

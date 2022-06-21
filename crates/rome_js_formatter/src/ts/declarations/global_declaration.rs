@@ -1,11 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::TsGlobalDeclaration;
 use rome_js_syntax::TsGlobalDeclarationFields;
 
-impl FormatNodeFields<TsGlobalDeclaration> for FormatNodeRule<TsGlobalDeclaration> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsGlobalDeclaration;
+
+impl FormatNodeRule<TsGlobalDeclaration> for FormatTsGlobalDeclaration {
     fn fmt_fields(node: &TsGlobalDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsGlobalDeclarationFields { global_token, body } = node.as_fields();
 

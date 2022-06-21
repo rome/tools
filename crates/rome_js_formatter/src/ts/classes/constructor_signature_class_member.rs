@@ -1,13 +1,14 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::TsConstructorSignatureClassMember;
 use rome_js_syntax::TsConstructorSignatureClassMemberFields;
 
-impl FormatNodeFields<TsConstructorSignatureClassMember>
-    for FormatNodeRule<TsConstructorSignatureClassMember>
-{
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsConstructorSignatureClassMember;
+
+impl FormatNodeRule<TsConstructorSignatureClassMember> for FormatTsConstructorSignatureClassMember {
     fn fmt_fields(
         node: &TsConstructorSignatureClassMember,
         f: &mut JsFormatter,

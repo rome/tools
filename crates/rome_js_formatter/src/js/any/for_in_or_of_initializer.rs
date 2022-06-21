@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyForInOrOfInitializer;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyForInOrOfInitializer;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyForInOrOfInitializer;
 impl FormatRule<JsAnyForInOrOfInitializer> for FormatJsAnyForInOrOfInitializer {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyForInOrOfInitializer, f: &mut JsFormatter) -> FormatResult<()> {

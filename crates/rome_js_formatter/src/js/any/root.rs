@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyRoot;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyRoot;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyRoot;
 impl FormatRule<JsAnyRoot> for FormatJsAnyRoot {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyRoot, f: &mut JsFormatter) -> FormatResult<()> {

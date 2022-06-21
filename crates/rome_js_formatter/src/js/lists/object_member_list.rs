@@ -1,7 +1,9 @@
-use crate::generated::FormatJsObjectMemberList;
 use crate::prelude::*;
 use rome_js_syntax::{JsObjectMemberList, JsSyntaxKind};
 use rome_rowan::{AstNode, AstSeparatedList};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectMemberList;
 
 impl FormatRule<JsObjectMemberList> for FormatJsObjectMemberList {
     type Context = JsFormatContext;

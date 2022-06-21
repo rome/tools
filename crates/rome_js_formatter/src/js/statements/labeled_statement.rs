@@ -1,11 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::{JsAnyStatement, JsLabeledStatement};
 use rome_js_syntax::{JsLabeledStatementFields, JsSyntaxKind};
 
-impl FormatNodeFields<JsLabeledStatement> for FormatNodeRule<JsLabeledStatement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsLabeledStatement;
+
+impl FormatNodeRule<JsLabeledStatement> for FormatJsLabeledStatement {
     fn fmt_fields(node: &JsLabeledStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsLabeledStatementFields {
             label_token,

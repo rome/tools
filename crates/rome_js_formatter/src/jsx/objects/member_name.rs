@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsxMemberName, JsxMemberNameFields};
 
-impl FormatNodeFields<JsxMemberName> for FormatNodeRule<JsxMemberName> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxMemberName;
+
+impl FormatNodeRule<JsxMemberName> for FormatJsxMemberName {
     fn fmt_fields(node: &JsxMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxMemberNameFields {
             object,

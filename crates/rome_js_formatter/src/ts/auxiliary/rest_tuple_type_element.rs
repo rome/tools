@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsRestTupleTypeElement, TsRestTupleTypeElementFields};
 
-impl FormatNodeFields<TsRestTupleTypeElement> for FormatNodeRule<TsRestTupleTypeElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsRestTupleTypeElement;
+
+impl FormatNodeRule<TsRestTupleTypeElement> for FormatTsRestTupleTypeElement {
     fn fmt_fields(node: &TsRestTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         let TsRestTupleTypeElementFields {
             dotdotdot_token,

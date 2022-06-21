@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::NewTarget;
 use rome_js_syntax::NewTargetFields;
 
-impl FormatNodeFields<NewTarget> for FormatNodeRule<NewTarget> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatNewTarget;
+
+impl FormatNodeRule<NewTarget> for FormatNewTarget {
     fn fmt_fields(node: &NewTarget, f: &mut JsFormatter) -> FormatResult<()> {
         let NewTargetFields {
             new_token,

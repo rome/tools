@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsIndexSignatureParameter, TsIndexSignatureParameterFields};
 
-impl FormatNodeFields<TsIndexSignatureParameter> for FormatNodeRule<TsIndexSignatureParameter> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIndexSignatureParameter;
+
+impl FormatNodeRule<TsIndexSignatureParameter> for FormatTsIndexSignatureParameter {
     fn fmt_fields(node: &TsIndexSignatureParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let TsIndexSignatureParameterFields {
             binding,

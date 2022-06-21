@@ -4,10 +4,12 @@ use std::convert::Infallible;
 
 use crate::utils::array::write_array_node;
 
-use crate::generated::FormatJsArrayElementList;
 use crate::utils::has_formatter_trivia;
 use rome_js_syntax::{JsAnyExpression, JsArrayElementList, JsSyntaxKind};
 use rome_rowan::{AstNode, AstSeparatedList};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrayElementList;
 
 impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
     type Context = JsFormatContext;

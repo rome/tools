@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsxAnyChild;
 use crate::prelude::*;
 use rome_js_syntax::JsxAnyChild;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxAnyChild;
 impl FormatRule<JsxAnyChild> for FormatJsxAnyChild {
     type Context = JsFormatContext;
     fn fmt(node: &JsxAnyChild, f: &mut JsFormatter) -> FormatResult<()> {

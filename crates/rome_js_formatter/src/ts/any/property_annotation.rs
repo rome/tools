@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatTsAnyPropertyAnnotation;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertyAnnotation;
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsAnyPropertyAnnotation;
 impl FormatRule<TsAnyPropertyAnnotation> for FormatTsAnyPropertyAnnotation {
     type Context = JsFormatContext;
     fn fmt(node: &TsAnyPropertyAnnotation, f: &mut JsFormatter) -> FormatResult<()> {

@@ -2,11 +2,14 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
 
-impl FormatNodeFields<JsExportNamedClause> for FormatNodeRule<JsExportNamedClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportNamedClause;
+
+impl FormatNodeRule<JsExportNamedClause> for FormatJsExportNamedClause {
     fn fmt_fields(node: &JsExportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedClauseFields {
             type_token,

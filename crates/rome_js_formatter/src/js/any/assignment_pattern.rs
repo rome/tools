@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyAssignmentPattern;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyAssignmentPattern;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyAssignmentPattern;
 impl FormatRule<JsAnyAssignmentPattern> for FormatJsAnyAssignmentPattern {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {

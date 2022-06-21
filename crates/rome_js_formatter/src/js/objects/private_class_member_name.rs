@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsPrivateClassMemberName;
 use rome_js_syntax::JsPrivateClassMemberNameFields;
 
-impl FormatNodeFields<JsPrivateClassMemberName> for FormatNodeRule<JsPrivateClassMemberName> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsPrivateClassMemberName;
+
+impl FormatNodeRule<JsPrivateClassMemberName> for FormatJsPrivateClassMemberName {
     fn fmt_fields(node: &JsPrivateClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPrivateClassMemberNameFields {
             hash_token,

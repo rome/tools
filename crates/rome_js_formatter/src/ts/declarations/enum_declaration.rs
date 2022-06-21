@@ -1,10 +1,12 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 
-impl FormatNodeFields<TsEnumDeclaration> for FormatNodeRule<TsEnumDeclaration> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsEnumDeclaration;
+
+impl FormatNodeRule<TsEnumDeclaration> for FormatTsEnumDeclaration {
     fn fmt_fields(node: &TsEnumDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsEnumDeclarationFields {
             const_token,

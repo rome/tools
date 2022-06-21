@@ -1,8 +1,10 @@
-use crate::generated::FormatJsObjectAssignmentPatternPropertyList;
 use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList, JsSyntaxKind,
 };
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectAssignmentPatternPropertyList;
 
 impl FormatRule<JsObjectAssignmentPatternPropertyList>
     for FormatJsObjectAssignmentPatternPropertyList

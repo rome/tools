@@ -1,10 +1,12 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
-use crate::generated::FormatJsVariableDeclaratorList;
 use crate::AsFormat;
 use rome_js_syntax::{JsSyntaxKind, JsVariableDeclaratorList};
 use rome_rowan::AstSeparatedList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableDeclaratorList;
 
 impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
     type Context = JsFormatContext;

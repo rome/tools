@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatTsAnyMethodSignatureModifier;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyMethodSignatureModifier;
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsAnyMethodSignatureModifier;
 impl FormatRule<TsAnyMethodSignatureModifier> for FormatTsAnyMethodSignatureModifier {
     type Context = JsFormatContext;
     fn fmt(node: &TsAnyMethodSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {

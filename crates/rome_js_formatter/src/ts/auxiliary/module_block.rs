@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsModuleBlock;
 use rome_js_syntax::TsModuleBlockFields;
 
-impl FormatNodeFields<TsModuleBlock> for FormatNodeRule<TsModuleBlock> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsModuleBlock;
+
+impl FormatNodeRule<TsModuleBlock> for FormatTsModuleBlock {
     fn fmt_fields(node: &TsModuleBlock, f: &mut JsFormatter) -> FormatResult<()> {
         let TsModuleBlockFields {
             l_curly_token,

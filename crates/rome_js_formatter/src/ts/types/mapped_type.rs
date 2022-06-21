@@ -1,10 +1,13 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 
-impl FormatNodeFields<TsMappedType> for FormatNodeRule<TsMappedType> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsMappedType;
+
+impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
     fn fmt_fields(node: &TsMappedType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMappedTypeFields {
             l_curly_token,

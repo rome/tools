@@ -1,6 +1,8 @@
-use crate::generated::FormatTsTypeList;
 use crate::prelude::*;
 use rome_js_syntax::{JsSyntaxKind, TsTypeList};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeList;
 
 impl FormatRule<TsTypeList> for FormatTsTypeList {
     type Context = JsFormatContext;

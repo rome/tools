@@ -1,10 +1,12 @@
-use crate::generated::FormatJsAnyFunction;
 use crate::prelude::*;
 use crate::utils::is_simple_expression;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyFunction;
 
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
     type Context = JsFormatContext;

@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
 use rome_js_syntax::{JsDoWhileStatementFields, JsSyntaxKind};
 
-impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsDoWhileStatement;
+
+impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
     fn fmt_fields(node: &JsDoWhileStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDoWhileStatementFields {
             do_token,

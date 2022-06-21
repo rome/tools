@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsConstructorType;
 use rome_js_syntax::TsConstructorTypeFields;
 
-impl FormatNodeFields<TsConstructorType> for FormatNodeRule<TsConstructorType> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsConstructorType;
+
+impl FormatNodeRule<TsConstructorType> for FormatTsConstructorType {
     fn fmt_fields(node: &TsConstructorType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsConstructorTypeFields {
             abstract_token,

@@ -1,6 +1,8 @@
-use crate::generated::FormatJsTemplateElementList;
 use crate::prelude::*;
 use rome_js_syntax::JsTemplateElementList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsTemplateElementList;
 
 impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
     type Context = JsFormatContext;

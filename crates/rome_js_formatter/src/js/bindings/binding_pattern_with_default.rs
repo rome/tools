@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsBindingPatternWithDefault;
 use rome_js_syntax::JsBindingPatternWithDefaultFields;
 
-impl FormatNodeFields<JsBindingPatternWithDefault> for FormatNodeRule<JsBindingPatternWithDefault> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsBindingPatternWithDefault;
+
+impl FormatNodeRule<JsBindingPatternWithDefault> for FormatJsBindingPatternWithDefault {
     fn fmt_fields(node: &JsBindingPatternWithDefault, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBindingPatternWithDefaultFields {
             pattern,

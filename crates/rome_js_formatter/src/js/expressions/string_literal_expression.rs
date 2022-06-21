@@ -1,13 +1,16 @@
 use crate::prelude::*;
 
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsStringLiteralExpression;
 use rome_js_syntax::JsStringLiteralExpressionFields;
 use rome_rowan::AstNode;
 
-impl FormatNodeFields<JsStringLiteralExpression> for FormatNodeRule<JsStringLiteralExpression> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsStringLiteralExpression;
+
+impl FormatNodeRule<JsStringLiteralExpression> for FormatJsStringLiteralExpression {
     fn fmt_fields(node: &JsStringLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStringLiteralExpressionFields { value_token } = node.as_fields();
 

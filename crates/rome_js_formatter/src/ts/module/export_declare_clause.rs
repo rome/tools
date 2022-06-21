@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsExportDeclareClause;
 use rome_js_syntax::TsExportDeclareClauseFields;
 
-impl FormatNodeFields<TsExportDeclareClause> for FormatNodeRule<TsExportDeclareClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsExportDeclareClause;
+
+impl FormatNodeRule<TsExportDeclareClause> for FormatTsExportDeclareClause {
     fn fmt_fields(node: &TsExportDeclareClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExportDeclareClauseFields {
             declare_token,

@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsExtendsClauseFields;
 use rome_js_syntax::JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION;
 use rome_js_syntax::{JsExtendsClause, JsSyntaxKind};
 
-impl FormatNodeFields<JsExtendsClause> for FormatNodeRule<JsExtendsClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExtendsClause;
+
+impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
     fn fmt_fields(node: &JsExtendsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExtendsClauseFields {
             extends_token,

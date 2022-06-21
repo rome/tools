@@ -1,7 +1,9 @@
-use crate::generated::FormatJsMethodModifierList;
 use crate::prelude::*;
 use crate::utils::sort_modifiers_by_precedence;
 use rome_js_syntax::JsMethodModifierList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsMethodModifierList;
 
 impl FormatRule<JsMethodModifierList> for FormatJsMethodModifierList {
     type Context = JsFormatContext;

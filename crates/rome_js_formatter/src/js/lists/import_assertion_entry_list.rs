@@ -1,6 +1,8 @@
-use crate::generated::FormatJsImportAssertionEntryList;
 use crate::prelude::*;
 use rome_js_syntax::{JsImportAssertionEntryList, JsSyntaxKind};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsImportAssertionEntryList;
 
 impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList {
     type Context = JsFormatContext;

@@ -1,10 +1,13 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsVariableDeclarationClause;
 use rome_js_syntax::JsVariableDeclarationClauseFields;
 
-impl FormatNodeFields<JsVariableDeclarationClause> for FormatNodeRule<JsVariableDeclarationClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableDeclarationClause;
+
+impl FormatNodeRule<JsVariableDeclarationClause> for FormatJsVariableDeclarationClause {
     fn fmt_fields(node: &JsVariableDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableDeclarationClauseFields {
             declaration,

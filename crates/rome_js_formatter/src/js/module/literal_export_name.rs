@@ -1,11 +1,14 @@
 use crate::prelude::*;
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsLiteralExportName;
 use rome_js_syntax::JsLiteralExportNameFields;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 
-impl FormatNodeFields<JsLiteralExportName> for FormatNodeRule<JsLiteralExportName> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsLiteralExportName;
+
+impl FormatNodeRule<JsLiteralExportName> for FormatJsLiteralExportName {
     fn fmt_fields(node: &JsLiteralExportName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsLiteralExportNameFields { value } = node.as_fields();
 

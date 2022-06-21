@@ -1,6 +1,8 @@
-use crate::generated::FormatJsModuleItemList;
 use crate::prelude::*;
 use rome_js_syntax::JsModuleItemList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsModuleItemList;
 
 impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
     type Context = JsFormatContext;

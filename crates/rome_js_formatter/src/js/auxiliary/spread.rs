@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsSpread;
 use rome_js_syntax::JsSpreadFields;
 
-impl FormatNodeFields<JsSpread> for FormatNodeRule<JsSpread> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsSpread;
+
+impl FormatNodeRule<JsSpread> for FormatJsSpread {
     fn fmt_fields(node: &JsSpread, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSpreadFields {
             dotdotdot_token,

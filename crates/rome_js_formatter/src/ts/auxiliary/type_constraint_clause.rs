@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsTypeConstraintClause, TsTypeConstraintClauseFields};
 
-impl FormatNodeFields<TsTypeConstraintClause> for FormatNodeRule<TsTypeConstraintClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeConstraintClause;
+
+impl FormatNodeRule<TsTypeConstraintClause> for FormatTsTypeConstraintClause {
     fn fmt_fields(node: &TsTypeConstraintClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeConstraintClauseFields { extends_token, ty } = node.as_fields();
 

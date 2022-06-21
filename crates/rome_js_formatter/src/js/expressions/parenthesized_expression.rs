@@ -3,14 +3,17 @@ use crate::utils::{is_simple_expression, FormatPrecedence};
 use rome_formatter::write;
 
 use crate::utils::JsAnyBinaryLikeExpression;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
     JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
-impl FormatNodeFields<JsParenthesizedExpression> for FormatNodeRule<JsParenthesizedExpression> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsParenthesizedExpression;
+
+impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpression {
     fn fmt_fields(node: &JsParenthesizedExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsParenthesizedExpressionFields {
             l_paren_token,

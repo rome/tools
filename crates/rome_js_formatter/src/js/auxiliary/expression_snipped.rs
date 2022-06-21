@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsExpressionSnipped;
 use rome_js_syntax::JsExpressionSnippedFields;
 
-impl FormatNodeFields<JsExpressionSnipped> for FormatNodeRule<JsExpressionSnipped> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExpressionSnipped;
+
+impl FormatNodeRule<JsExpressionSnipped> for FormatJsExpressionSnipped {
     fn fmt_fields(node: &JsExpressionSnipped, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExpressionSnippedFields {
             expression,

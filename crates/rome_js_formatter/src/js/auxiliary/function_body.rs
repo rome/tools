@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsFunctionBody;
 use rome_js_syntax::JsFunctionBodyFields;
 
-impl FormatNodeFields<JsFunctionBody> for FormatNodeRule<JsFunctionBody> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsFunctionBody;
+
+impl FormatNodeRule<JsFunctionBody> for FormatJsFunctionBody {
     fn fmt_fields(node: &JsFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {
         let JsFunctionBodyFields {
             l_curly_token,

@@ -2,11 +2,14 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsVariableStatement;
 use rome_js_syntax::JsVariableStatementFields;
 
-impl FormatNodeFields<JsVariableStatement> for FormatNodeRule<JsVariableStatement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableStatement;
+
+impl FormatNodeRule<JsVariableStatement> for FormatJsVariableStatement {
     fn fmt_fields(node: &JsVariableStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableStatementFields {
             declaration,

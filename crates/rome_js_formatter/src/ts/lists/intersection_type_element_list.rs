@@ -1,8 +1,10 @@
-use crate::generated::FormatTsIntersectionTypeElementList;
 use crate::prelude::*;
 use crate::ts::lists::union_type_variant_list::FormatTypeVariant;
 use rome_js_syntax::TsIntersectionTypeElementList;
 use rome_rowan::AstSeparatedList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIntersectionTypeElementList;
 
 impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeElementList {
     type Context = JsFormatContext;

@@ -1,9 +1,11 @@
-use crate::generated::FormatTsTypeMemberList;
 use crate::prelude::*;
 use rome_formatter::{write, Buffer, VecBuffer};
 use rome_js_syntax::{JsSyntaxKind, TsAnyTypeMember, TsTypeMemberList};
 
 use rome_rowan::AstNodeList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeMemberList;
 
 impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
     type Context = JsFormatContext;

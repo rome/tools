@@ -1,11 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsTryFinallyStatement;
 use rome_js_syntax::JsTryFinallyStatementFields;
 
-impl FormatNodeFields<JsTryFinallyStatement> for FormatNodeRule<JsTryFinallyStatement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsTryFinallyStatement;
+
+impl FormatNodeRule<JsTryFinallyStatement> for FormatJsTryFinallyStatement {
     fn fmt_fields(node: &JsTryFinallyStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsTryFinallyStatementFields {
             try_token,

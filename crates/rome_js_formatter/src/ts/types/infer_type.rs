@@ -1,9 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsInferType, TsInferTypeFields};
 
-impl FormatNodeFields<TsInferType> for FormatNodeRule<TsInferType> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsInferType;
+
+impl FormatNodeRule<TsInferType> for FormatTsInferType {
     fn fmt_fields(node: &TsInferType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInferTypeFields {
             infer_token,

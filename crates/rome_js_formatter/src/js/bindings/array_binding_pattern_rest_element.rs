@@ -1,12 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsArrayBindingPatternRestElement;
 use rome_js_syntax::JsArrayBindingPatternRestElementFields;
 
-impl FormatNodeFields<JsArrayBindingPatternRestElement>
-    for FormatNodeRule<JsArrayBindingPatternRestElement>
-{
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrayBindingPatternRestElement;
+
+impl FormatNodeRule<JsArrayBindingPatternRestElement> for FormatJsArrayBindingPatternRestElement {
     fn fmt_fields(
         node: &JsArrayBindingPatternRestElement,
         f: &mut JsFormatter,

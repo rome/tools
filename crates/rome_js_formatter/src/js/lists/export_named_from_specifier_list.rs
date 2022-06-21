@@ -1,6 +1,8 @@
-use crate::generated::FormatJsExportNamedFromSpecifierList;
 use crate::prelude::*;
 use rome_js_syntax::{JsExportNamedFromSpecifierList, JsSyntaxKind};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportNamedFromSpecifierList;
 
 impl FormatRule<JsExportNamedFromSpecifierList> for FormatJsExportNamedFromSpecifierList {
     type Context = JsFormatContext;

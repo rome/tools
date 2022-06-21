@@ -1,12 +1,12 @@
 use crate::prelude::*;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsUnknownImportAssertionEntry;
 use rome_rowan::AstNode;
 
-impl FormatNodeFields<JsUnknownImportAssertionEntry>
-    for FormatNodeRule<JsUnknownImportAssertionEntry>
-{
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsUnknownImportAssertionEntry;
+
+impl FormatNodeRule<JsUnknownImportAssertionEntry> for FormatJsUnknownImportAssertionEntry {
     fn fmt_fields(
         node: &JsUnknownImportAssertionEntry,
         formatter: &mut JsFormatter,

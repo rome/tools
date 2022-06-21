@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatTsAnyReturnType;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyReturnType;
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsAnyReturnType;
 impl FormatRule<TsAnyReturnType> for FormatTsAnyReturnType {
     type Context = JsFormatContext;
     fn fmt(node: &TsAnyReturnType, f: &mut JsFormatter) -> FormatResult<()> {

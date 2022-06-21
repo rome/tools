@@ -1,8 +1,10 @@
-use crate::generated::FormatJsObjectBindingPatternPropertyList;
 use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList, JsSyntaxKind,
 };
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectBindingPatternPropertyList;
 
 impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPatternPropertyList {
     type Context = JsFormatContext;

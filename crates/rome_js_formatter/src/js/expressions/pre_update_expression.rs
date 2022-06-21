@@ -1,11 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsPreUpdateExpression;
 use rome_js_syntax::JsPreUpdateExpressionFields;
 
-impl FormatNodeFields<JsPreUpdateExpression> for FormatNodeRule<JsPreUpdateExpression> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsPreUpdateExpression;
+
+impl FormatNodeRule<JsPreUpdateExpression> for FormatJsPreUpdateExpression {
     fn fmt_fields(node: &JsPreUpdateExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPreUpdateExpressionFields {
             operator_token,

@@ -1,11 +1,14 @@
 use crate::prelude::*;
 use crate::utils::node_has_leading_newline;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsObjectExpression;
 use rome_js_syntax::JsObjectExpressionFields;
 
-impl FormatNodeFields<JsObjectExpression> for FormatNodeRule<JsObjectExpression> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectExpression;
+
+impl FormatNodeRule<JsObjectExpression> for FormatJsObjectExpression {
     fn fmt_fields(node: &JsObjectExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsObjectExpressionFields {
             l_curly_token,

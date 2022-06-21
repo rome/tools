@@ -1,6 +1,8 @@
-use crate::generated::FormatJsNamedImportSpecifierList;
 use crate::prelude::*;
 use rome_js_syntax::{JsNamedImportSpecifierList, JsSyntaxKind};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsNamedImportSpecifierList;
 
 impl FormatRule<JsNamedImportSpecifierList> for FormatJsNamedImportSpecifierList {
     type Context = JsFormatContext;

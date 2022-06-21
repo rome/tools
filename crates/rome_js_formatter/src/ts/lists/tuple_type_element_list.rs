@@ -1,6 +1,8 @@
-use crate::generated::FormatTsTupleTypeElementList;
 use crate::prelude::*;
 use rome_js_syntax::{JsSyntaxKind, TsTupleTypeElementList};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTupleTypeElementList;
 
 impl FormatRule<TsTupleTypeElementList> for FormatTsTupleTypeElementList {
     type Context = JsFormatContext;

@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyImportAssertionEntry;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyImportAssertionEntry;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyImportAssertionEntry;
 impl FormatRule<JsAnyImportAssertionEntry> for FormatJsAnyImportAssertionEntry {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyImportAssertionEntry, f: &mut JsFormatter) -> FormatResult<()> {

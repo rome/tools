@@ -1,10 +1,12 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::JsParenthesizedAssignment;
 use rome_js_syntax::JsParenthesizedAssignmentFields;
 
-impl FormatNodeFields<JsParenthesizedAssignment> for FormatNodeRule<JsParenthesizedAssignment> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsParenthesizedAssignment;
+
+impl FormatNodeRule<JsParenthesizedAssignment> for FormatJsParenthesizedAssignment {
     fn fmt_fields(node: &JsParenthesizedAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsParenthesizedAssignmentFields {
             l_paren_token,

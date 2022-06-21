@@ -1,7 +1,9 @@
-use crate::generated::FormatTsPropertySignatureModifierList;
 use crate::prelude::*;
 use crate::utils::sort_modifiers_by_precedence;
 use rome_js_syntax::TsPropertySignatureModifierList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsPropertySignatureModifierList;
 
 impl FormatRule<TsPropertySignatureModifierList> for FormatTsPropertySignatureModifierList {
     type Context = JsFormatContext;

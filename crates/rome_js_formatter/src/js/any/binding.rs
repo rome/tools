@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyBinding;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyBinding;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyBinding;
 impl FormatRule<JsAnyBinding> for FormatJsAnyBinding {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyBinding, f: &mut JsFormatter) -> FormatResult<()> {

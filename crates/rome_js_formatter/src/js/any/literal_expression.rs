@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyLiteralExpression;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyLiteralExpression;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyLiteralExpression;
 impl FormatRule<JsAnyLiteralExpression> for FormatJsAnyLiteralExpression {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {

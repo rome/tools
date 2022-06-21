@@ -164,20 +164,10 @@ where
 {
 }
 
-pub struct FormatNodeRule<T>
-where
-    T: AstNode<Language = JsLanguage>,
-{
-    node: PhantomData<T>,
-}
-
-impl<N> FormatRule<N> for FormatNodeRule<N>
+pub trait FormatNodeRule<N>
 where
     N: AstNode<Language = JsLanguage>,
-    FormatNodeRule<N>: FormatNodeFields<N>,
 {
-    type Context = JsFormatContext;
-
     fn fmt(node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
         if has_formatter_suppressions(syntax) {
@@ -188,14 +178,9 @@ where
 
         Ok(())
     }
-}
 
-pub trait FormatNodeFields<T>
-where
-    T: AstNode<Language = JsLanguage>,
-{
     /// Formats the node's fields.
-    fn fmt_fields(item: &T, f: &mut JsFormatter) -> FormatResult<()>;
+    fn fmt_fields(item: &N, f: &mut JsFormatter) -> FormatResult<()>;
 }
 
 /// Format implementation specific to JavaScript tokens.

@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsRestParameter;
 use rome_js_syntax::JsRestParameterFields;
 
-impl FormatNodeFields<JsRestParameter> for FormatNodeRule<JsRestParameter> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsRestParameter;
+
+impl FormatNodeRule<JsRestParameter> for FormatJsRestParameter {
     fn fmt_fields(node: &JsRestParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let JsRestParameterFields {
             dotdotdot_token,

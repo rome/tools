@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsImportDefaultClause;
 use rome_js_syntax::JsImportDefaultClauseFields;
 
-impl FormatNodeFields<JsImportDefaultClause> for FormatNodeRule<JsImportDefaultClause> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsImportDefaultClause;
+
+impl FormatNodeRule<JsImportDefaultClause> for FormatJsImportDefaultClause {
     fn fmt_fields(node: &JsImportDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportDefaultClauseFields {
             type_token,

@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyNamedImportSpecifier;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyNamedImportSpecifier;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyNamedImportSpecifier;
 impl FormatRule<JsAnyNamedImportSpecifier> for FormatJsAnyNamedImportSpecifier {
     type Context = JsFormatContext;
     fn fmt(node: &JsAnyNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {

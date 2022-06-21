@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsNewExpressionFields;
 use rome_js_syntax::{JsNewExpression, JsSyntaxKind};
 
-impl FormatNodeFields<JsNewExpression> for FormatNodeRule<JsNewExpression> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsNewExpression;
+
+impl FormatNodeRule<JsNewExpression> for FormatJsNewExpression {
     fn fmt_fields(node: &JsNewExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNewExpressionFields {
             new_token,

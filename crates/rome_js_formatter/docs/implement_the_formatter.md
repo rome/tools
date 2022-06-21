@@ -31,7 +31,10 @@ This will automatically build and open a browser tab to the documentation.
 
 1. Use the `*Fields` struct to extract all the tokens/nodes
    ```rust
-    impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
+    #[derive(Debug, Clone, Default)]
+pub struct FormatJsExportDefaultExpressionClause;
+
+impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses{
    		fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
@@ -44,7 +47,10 @@ This will automatically build and open a browser tab to the documentation.
 2. When using `.as_fields()` with the destructuring, don't use the `..` feature. Prefer extracting all fields and ignore them
    using the `_`
    ```rust
-   impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
+   #[derive(Debug, Clone, Default)]
+pub struct FormatJsExportDefaultExpressionClause;
+
+impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses{
    		fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
@@ -63,7 +69,10 @@ This will automatically build and open a browser tab to the documentation.
    3. `format_extensions.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
    that are exposed based on its type. If you have a good IDE support, this feature will help you. For example:
    ```rust
-      impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
+      #[derive(Debug, Clone, Default)]
+pub struct FormatJsExportDefaultExpressionClause;
+
+impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses{
    			fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
