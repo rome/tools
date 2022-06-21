@@ -11,19 +11,15 @@ impl FormatNodeFields<TsImplementsClause> for FormatNodeRule<TsImplementsClause>
             types,
         } = node.as_fields();
 
-        let implements_token = implements_token.format().memoized();
-        let types = types.format().memoized();
-
         write!(
             f,
-            [group_elements(&format_args![
-                if_group_breaks(&block_indent(&format_args![
-                    &implements_token,
-                    space_token(),
-                    soft_block_indent(&types)
-                ])),
-                if_group_fits_on_line(&format_args![&implements_token, space_token(), &types]),
-            ])]
+            [
+                implements_token.format(),
+                group_elements(&indent(&format_args![
+                    soft_line_break_or_space(),
+                    types.format()
+                ]))
+            ]
         )
     }
 }

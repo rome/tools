@@ -202,7 +202,7 @@ impl ModuleIndex {
                     content.push_str("#[allow(clippy::module_inception)]\n");
                 }
 
-                content.push_str("mod ");
+                content.push_str("pub(crate) mod ");
                 content.push_str(&import);
                 content.push_str(";\n");
             }
@@ -286,9 +286,7 @@ pub fn generate_formatter() {
 
         // Union nodes except for AnyFunction and AnyClass have a generated
         // implementation, the codegen will always overwrite any existing file
-        let allow_overwrite = matches!(kind, NodeKind::Union { .. })
-            && name != "JsAnyFunction"
-            && name != "JsAnyClass";
+        let allow_overwrite = matches!(kind, NodeKind::Union { .. }) && name != "JsAnyFunction";
 
         if !allow_overwrite && path.exists() {
             continue;

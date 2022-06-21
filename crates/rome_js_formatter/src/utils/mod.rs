@@ -5,8 +5,10 @@ mod format_conditional;
 mod simple;
 pub mod string_utils;
 
+pub(crate) mod format_class;
 mod member_chain;
 mod object;
+mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
 
@@ -15,6 +17,7 @@ pub(crate) use assignment_like::{should_break_after_operator, JsAnyAssignmentLik
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
+pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
@@ -534,7 +537,7 @@ where
     let mut iterator = separated.peekable();
     let mut join_with = f.join_with(soft_line_break_or_space());
 
-    while let Some(element) = iterator.by_ref().next() {
+    while let Some(element) = iterator.next() {
         let last = iterator.peek().is_none();
 
         if last {

@@ -120,7 +120,7 @@ loreum = ipsum = arrayOfNumb = a = "test"
 
 lorem = fff = ee = () => (fff) => () => (fefef) => () => fff;
 
-// complex destructuring
+// complex destructuring, break left hand
 a = {
     a: { t: c = b }, loreum, ipsurm
 } = {}

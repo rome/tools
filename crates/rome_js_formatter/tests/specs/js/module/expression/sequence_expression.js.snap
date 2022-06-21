@@ -26,10 +26,17 @@ const object ={
 
 }
 
+a,
+	// rome-ignore format: Test suppression comments
+	[
+		0,    1, 2
+	], d;
+
 aLongIdentifierName,
     aLongIdentifierName,
     aLongIdentifierName,
     aLongIdentifierName;
+
 =============================
 # Outputs
 ## Output 1
@@ -83,6 +90,13 @@ const object = {
 		____________third
 	),
 };
+
+a,
+	// rome-ignore format: Test suppression comments
+	[
+		0,    1, 2
+	],
+	d;
 
 aLongIdentifierName,
 	aLongIdentifierName,

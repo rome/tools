@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: break.ts
 ---
 # Input
@@ -45,40 +44,35 @@ export class VisTimelineComponent2
 
 # Output
 ```js
-class MyContractSelectionWidget extends React.Component<
-  void,
-  MyContractSelectionWidgetPropsType,
-  void
-> implements SomethingLarge {
+class MyContractSelectionWidget
+  extends React.Component<void, MyContractSelectionWidgetPropsType, void>
+  implements SomethingLarge
+{
   method() {}
 }
 
-class DisplayObject1 extends utils.EventEmitter
-  implements
-    interaction_InteractiveTarget
-{}
+class DisplayObject1
+  extends utils.EventEmitter
+  implements interaction_InteractiveTarget {}
 
-class DisplayObject2 extends utils.EventEmitter
-  implements
-    interaction_InteractiveTarget
-{}
+class DisplayObject2
+  extends utils.EventEmitter
+  implements interaction_InteractiveTarget {}
 
-class DisplayObject3 extends utils.EventEmitter
+class DisplayObject3
+  extends utils.EventEmitter
   implements
     interaction_InteractiveTarget,
     somethingElse_SomeOtherThing,
-    somethingElseAgain_RunningOutOfNames
-{}
+    somethingElseAgain_RunningOutOfNames {}
 
-class DisplayObject4 extends utils.EventEmitter
-  implements
-    interaction_InteractiveTarget
-{}
+class DisplayObject4
+  extends utils.EventEmitter
+  implements interaction_InteractiveTarget {}
 class Readable extends events.EventEmitter implements NodeJS_ReadableStream {}
-class InMemoryAppender extends log4javascript.Appender
-  implements
-    ICachedLogMessageProvider
-{}
+class InMemoryAppender
+  extends log4javascript.Appender
+  implements ICachedLogMessageProvider {}
 
 class Foo extends Immutable.Record({
   ipaddress: "",
@@ -87,18 +81,13 @@ class Foo extends Immutable.Record({
 }
 
 export class VisTimelineComponent
-  implements
-    AfterViewInit,
-    OnChanges,
-    OnDestroy
-{}
+  implements AfterViewInit, OnChanges, OnDestroy {}
 export class VisTimelineComponent2
   implements
     AfterViewInit,
     OnChanges,
     OnDestroy,
-    AndSomethingReallyReallyLong
-{}
+    AndSomethingReallyReallyLong {}
 
 ```
 

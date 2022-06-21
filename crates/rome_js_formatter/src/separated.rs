@@ -25,7 +25,11 @@ where
         let node = self.element.node()?;
         let separator = self.element.trailing_separator()?;
 
-        write!(f, [group_elements(&node.format())])?;
+        if self.options.disable_group_nodes {
+            node.format().fmt(f)?;
+        } else {
+            group_elements(&node.format()).fmt(f)?;
+        }
 
         // Reuse the existing trailing separator or create it if it wasn't in the
         // input source. Only print the last trailing token if the outer group breaks
@@ -105,6 +109,24 @@ where
 
     pub fn with_options(mut self, options: FormatSeparatedOptions) -> Self {
         self.options = options;
+        self
+    }
+
+    /// Sets whatever the nodes should be wrapped by a `group_elements` (default: `true` for compatibility
+    /// reasons).
+    pub fn group_nodes(mut self, group_nodes: bool) -> Self {
+        self.options.disable_group_nodes = !group_nodes;
+        self
+    }
+
+    pub fn with_trailing_separator(mut self, separator: TrailingSeparator) -> Self {
+        self.options.trailing_separator = separator;
+        self
+    }
+
+    #[allow(unused)]
+    pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
+        self.options.group_id = group_id;
         self
     }
 }
@@ -188,6 +210,7 @@ impl Default for TrailingSeparator {
 pub struct FormatSeparatedOptions {
     trailing_separator: TrailingSeparator,
     group_id: Option<GroupId>,
+    disable_group_nodes: bool,
 }
 
 impl FormatSeparatedOptions {

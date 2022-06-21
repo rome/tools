@@ -20,8 +20,7 @@ extends B<T> // 3
 
 # Output
 ```js
-declare class a
-  // 1
+declare class a // 1
   // extends b   // 2
   implements
     z,
@@ -31,8 +30,8 @@ declare class a
 }
 
 declare class A1<T> // 1
-// 2
-extends B<T> {} // 3
+  // 2
+  extends B<T> {} // 3
 
 ```
 
