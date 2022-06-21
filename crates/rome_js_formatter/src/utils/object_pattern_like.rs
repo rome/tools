@@ -29,6 +29,13 @@ impl JsObjectPatternLike {
         }
     }
 
+    fn properties_len(&self) -> usize {
+        match self {
+            JsObjectPatternLike::JsObjectAssignmentPattern(node) => node.properties().len(),
+            JsObjectPatternLike::JsObjectBindingPattern(node) => node.properties().len(),
+        }
+    }
+
     fn write_properties(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             JsObjectPatternLike::JsObjectAssignmentPattern(node) => {
@@ -97,32 +104,54 @@ impl JsObjectPatternLike {
 
         Ok(parent_where_not_to_break && has_at_least_a_complex_property)
     }
+
+    fn is_in_assignment_like(&self) -> bool {
+        if let JsObjectPatternLike::JsObjectAssignmentPattern(pattern) = self {
+            let parent_kind = pattern.syntax().parent().map(|p| p.kind());
+            matches!(
+                parent_kind,
+                Some(JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION | JsSyntaxKind::JS_VARIABLE_DECLARATOR)
+            )
+        } else {
+            false
+        }
+    }
 }
 
 impl Format<JsFormatContext> for JsObjectPatternLike {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let should_break_properties = self.should_break_properties()?;
+        let right = &format_with(|f| self.write_properties(f));
+        let is_in_assignment_like = self.is_in_assignment_like();
+        let properties_len = self.properties_len();
 
         if should_break_properties {
             write!(
                 f,
                 [
                     &self.l_curly_token()?.format(),
-                    group_elements(&block_indent(&format_with(|f| {
-                        self.write_properties(f)
-                    }),),),
+                    &block_indent(right),
                     &self.r_curly_token()?.format(),
                 ]
             )
+        } else if !should_break_properties && is_in_assignment_like {
+            // no need to add a group if we know the parent already does that
+            write!(f, [&self.l_curly_token()?.format()])?;
+            if properties_len > 0 {
+                write!(f, [soft_line_break_or_space()])?;
+                write!(f, [soft_block_indent(right)])?;
+                write!(f, [soft_line_break_or_space()])?;
+            } else {
+                write!(f, [right])?;
+            }
+            write!(f, [&self.r_curly_token()?.format()])
         } else {
             write!(
                 f,
-                [format_delimited(
-                    &self.l_curly_token()?,
-                    &format_with(|f| { self.write_properties(f) }),
-                    &self.r_curly_token()?,
-                )
-                .soft_block_spaces()]
+                [
+                    format_delimited(&self.l_curly_token()?, right, &self.r_curly_token()?,)
+                        .soft_block_spaces()
+                ]
             )
         }
     }

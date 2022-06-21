@@ -247,10 +247,34 @@ pub(crate) enum AssignmentLikeLayout {
     /// Given the previous snippet, then `"foo"` formatted  using the [ChainTail] layout.
     ChainTail,
 
+    /// This layout is used in cases where we want to "break" the left hand side
+    /// of assignment like expression, but only when the group decides to do it.
     ///
+    /// ```js
+    /// const a {
+    ///     loreum: { ipsum },
+    ///     something_else,
+    ///     happy_days: { fonzy }
+    /// } = obj;
+    /// ```
+    ///
+    /// The snippet triggers the layout because the left hand side contains a "complex destructuring"
+    /// which requires having the properties broke on different lines.
     BreakLeftHandSide,
 
+    /// This is a special case of the "chain" layout collection. This is triggered when there's
+    /// a series of simple assignments (at least three) and in the middle we have an arrow function
+    /// and this function followed by two more arrow functions.
     ///
+    /// This layout will break the right hand side of the tail on a new line and add a new level
+    /// of indentation
+    ///
+    /// ```js
+    /// lorem =
+    ///     fff =
+    ///     ee =
+    ///         () => (fff) => () => (fefef) => () => fff;
+    /// ```
     ChainTailArrowFunction,
 }
 
@@ -476,27 +500,28 @@ impl JsAnyAssignmentLike {
             };
 
         let result = if upper_chain_is_eligible {
-            if right_is_tail {
-                Some(AssignmentLikeLayout::ChainTail)
+            if !right_is_tail {
+                Some(AssignmentLikeLayout::Chain)
             } else {
                 match right {
                     RightAssignmentLike::JsAnyExpression(
                         JsAnyExpression::JsArrowFunctionExpression(arrow),
                     ) => {
-                        let body = arrow.body()?;
+                        dbg!("here");
+                        let this_body = arrow.body()?;
                         if matches!(
-                            body,
+                            this_body,
                             JsAnyFunctionBody::JsAnyExpression(
                                 JsAnyExpression::JsArrowFunctionExpression(_)
                             )
                         ) {
                             Some(AssignmentLikeLayout::ChainTailArrowFunction)
                         } else {
-                            Some(AssignmentLikeLayout::Chain)
+                            Some(AssignmentLikeLayout::ChainTail)
                         }
                     }
 
-                    _ => Some(AssignmentLikeLayout::Chain),
+                    _ => Some(AssignmentLikeLayout::ChainTail),
                 }
             }
         } else {
@@ -617,12 +642,13 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             self.write_operator(f)?;
 
             let layout = self.layout(is_left_short)?;
+
+            let right = &format_with(|f| self.write_right(f)).memoized();
+
             let inner_content = format_with(|f| match &layout {
                 AssignmentLikeLayout::OnlyLeft => Ok(()),
                 AssignmentLikeLayout::Fluid => {
                     let group_id = f.group_id("assignment_like");
-
-                    let right = format_with(|f| self.write_right(f)).memoized();
 
                     write![
                         f,
@@ -640,49 +666,40 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         f,
                         [group_elements(&indent(&format_args![
                             soft_line_break_or_space(),
-                            format_with(|f| { self.write_right(f) }),
+                            right,
                         ])),]
                     ]
                 }
                 AssignmentLikeLayout::NeverBreakAfterOperator => {
-                    write![
-                        f,
-                        [space_token(), format_with(|f| { self.write_right(f) }),]
-                    ]
+                    write![f, [space_token(), right,]]
                 }
 
                 AssignmentLikeLayout::BreakLeftHandSide => {
-                    write![
-                        f,
-                        [
-                            space_token(),
-                            group_elements(&format_with(|f| { self.write_right(f) }),),
-                        ]
-                    ]
+                    write![f, [space_token(), group_elements(right),]]
                 }
 
                 AssignmentLikeLayout::Chain => {
-                    write!(
-                        f,
-                        [
-                            soft_line_break_or_space(),
-                            format_with(|f| { self.write_right(f) }),
-                        ]
-                    )
+                    write!(f, [soft_line_break_or_space(), right,])
                 }
 
                 AssignmentLikeLayout::ChainTail => {
                     write!(
                         f,
-                        [&indent(&format_args![
-                            soft_line_break_or_space(),
-                            format_with(|f| { self.write_right(f) }),
-                        ])]
+                        [&indent(&format_args![soft_line_break_or_space(), right,])]
                     )
                 }
 
                 AssignmentLikeLayout::ChainTailArrowFunction => {
-                    write!(f, [space_token(), format_with(|f| { self.write_right(f) })])
+                    let group_id = f.group_id("arrow_chain");
+
+                    write!(
+                        f,
+                        [
+                            space_token(),
+                            group_elements(&indent(&format_args![hard_line_break(), right]))
+                                .with_group_id(Some(group_id)),
+                        ]
+                    )
                 }
             });
 
