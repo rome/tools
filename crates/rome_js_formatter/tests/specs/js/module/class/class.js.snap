@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: class.js
 ---
 # Input
@@ -61,6 +62,19 @@ x = class foo extends Boar {
 x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb {
 }
 
+
+export class Task {
+
+
+	constructor(
+		script,
+		duration,
+		threadCount,
+		...args
+	) {
+		this.args = args;
+	}
+}
 =============================
 # Outputs
 ## Output 1
@@ -122,6 +136,12 @@ x = class {};
 x = class foo extends Boar {};
 
 x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb {};
+
+export class Task {
+	constructor(script, duration, threadCount, ...args) {
+		this.args = args;
+	}
+}
 
 
 ## Lines exceeding width of 80 characters
