@@ -4,7 +4,7 @@ a(
     {
       SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong: 1,
     },
-  ]
+  ],
 );
 
 exports.examples = [
@@ -27,7 +27,7 @@ exports.examples = [
             </InlineBlock>
           </div>
         );
-      }
+      },
     ),
   },
 ];
@@ -37,7 +37,7 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
     [],
     // comment
     [],
-  ]
+  ],
 );
 
 (function webpackUniversalModuleDefinition() {})(
@@ -62,7 +62,7 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
           /***/
         },
         /******/
-      ]
+      ],
     );
-  }
+  },
 );

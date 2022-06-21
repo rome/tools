@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
 expression: property_object_member.js
 ---
 # Input
@@ -53,6 +54,10 @@ const breakAfterColonObject = {
     c: 13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
     d: '321321312312ddddddddddddddddddddddd312312312312' instanceof Object ? {} : {},
     g: {'long-key': '123123213123213123edwqdqwdasdasdsaewqewqewqdas'} in 'long-key',
+    blablah:
+        "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
+        "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
+        "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf",
 };
 
 const fluidObject = {
@@ -83,6 +88,9 @@ const fluidObject = {
 				return 'image';
 			}
 		),
+    loadNext: (stateIsOK && hasNext) || {
+        skipNext: true,
+    },
 };
 
 =============================
@@ -182,6 +190,10 @@ const breakAfterColonObject = {
 		{
 			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
 		} in "long-key",
+	blablah:
+		"aldkfkladfskladklsfkladklfkaldfadfkdaf" +
+		"adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
+		"dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf",
 };
 
 const fluidObject = {
@@ -207,12 +219,15 @@ const fluidObject = {
 			created: "09/01/2017 17:25",
 		},
 	],
-	render: withGraphQLQuery(
-		"node(1234567890){image{uri}}",
-		function (container, data) {
-			return "image";
-		},
-	),
+	render: withGraphQLQuery("node(1234567890){image{uri}}", function (
+		container,
+		data,
+	) {
+		return "image";
+	}),
+	loadNext: (stateIsOK && hasNext) || {
+		skipNext: true,
+	},
 };
 
 

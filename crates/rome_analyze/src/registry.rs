@@ -1,136 +1,119 @@
-use rome_console::MarkupBuf;
-use rome_diagnostics::{file::FileId, Applicability, Severity};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, TextRange};
-use rome_rowan::{AstNode, SyntaxNode};
+use std::{iter::Map, vec::IntoIter};
+
+use rome_diagnostics::file::FileId;
+use rome_rowan::{AstNode, Language, SyntaxNode};
 
 use crate::{
-    analyzers::*,
-    assists::*,
-    categories::{ActionCategory, RuleCategory},
+    context::RuleContext,
     signals::{AnalyzerSignal, RuleSignal},
-    AnalysisFilter,
+    ControlFlow, Rule,
 };
 
 /// The rule registry holds type-erased instances of all active analysis rules
-pub(crate) struct RuleRegistry {
-    rules: Vec<RegistryRule>,
+pub struct RuleRegistry<L: Language> {
+    rules: Vec<RegistryRule<L>>,
 }
 
-/// Utility macro for implementing the `with_filter` method of [RuleRegistry]
-macro_rules! impl_registry_builders {
-    ( $( $rule:ident ),* ) => {
-        impl RuleRegistry {
-            pub(crate) fn with_filter(filter: &AnalysisFilter) -> Self {
-                let mut rules: Vec<RegistryRule> = Vec::new();
+impl<L: Language> RuleRegistry<L> {
+    pub fn empty() -> Self {
+        Self { rules: Vec::new() }
+    }
 
-                $( if filter.categories.contains($rule::CATEGORY.into()) && filter.rules.map_or(true, |rules| rules.contains(&$rule::NAME)) {
-                    rules.push(run::<$rule>);
-                } )*
+    pub fn push<R>(&mut self)
+    where
+        R: Rule + 'static,
+        R::Query: AstNode<Language = L>,
+    {
+        self.rules.push(RegistryRule::of::<R>());
+    }
 
-                Self { rules }
-            }
-        }
-    };
+    /// Returns an iterator over the name and documentation of all active rules
+    /// in this instance of the registry
+    pub fn metadata(self) -> MetadataIter<L> {
+        self.rules.into_iter().map(|rule| (rule.name, rule.docs))
+    }
 }
 
-impl_registry_builders!(
-    // Analyzers
-    NoDelete,
-    NoDoubleEquals,
-    UseSingleVarDeclarator,
-    UseWhile,
-    // Assists
-    FlipBinExp
-);
+pub type MetadataIter<L> =
+    Map<IntoIter<RegistryRule<L>>, fn(RegistryRule<L>) -> (&'static str, &'static str)>;
 
-impl RuleRegistry {
+pub(crate) type RuleLanguage<R> = NodeLanguage<<R as Rule>::Query>;
+pub(crate) type NodeLanguage<N> = <N as AstNode>::Language;
+
+pub(crate) type RuleRoot<R> = LanguageRoot<RuleLanguage<R>>;
+pub type LanguageRoot<L> = <L as Language>::Root;
+
+impl<L> RuleRegistry<L>
+where
+    L: Language,
+{
     // Run all rules known to the registry associated with nodes of type N
-    pub(crate) fn analyze(
+    pub(crate) fn analyze<B>(
         &self,
         file_id: FileId,
-        root: &JsAnyRoot,
-        node: JsSyntaxNode,
-        callback: &mut impl FnMut(&dyn AnalyzerSignal),
-    ) {
+        root: &LanguageRoot<L>,
+        node: SyntaxNode<L>,
+        callback: &mut impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B>,
+    ) -> ControlFlow<B> {
         for rule in &self.rules {
-            if let Some(event) = (rule)(file_id, root, &node) {
-                callback(&*event);
+            if let Some(event) = (rule.run)(file_id, root, &node) {
+                if let ControlFlow::Break(b) = callback(&*event) {
+                    return ControlFlow::Break(b);
+                }
             }
         }
+
+        ControlFlow::Continue(())
     }
 }
 
-/// Representation of a single rule in the registry as a generic function pointer
-type RegistryRule =
-    for<'a> fn(FileId, &'a JsAnyRoot, &'a JsSyntaxNode) -> Option<Box<dyn AnalyzerSignal + 'a>>;
+/// Executor for rule as a generic function pointer
+type RuleExecutor<L> = for<'a> fn(
+    FileId,
+    &'a LanguageRoot<L>,
+    &'a SyntaxNode<L>,
+) -> Option<Box<dyn AnalyzerSignal<L> + 'a>>;
 
-/// Generic implementation of RegistryRule for any rule type R
-fn run<'a, R: Rule + 'static>(
-    file_id: FileId,
-    root: &'a JsAnyRoot,
-    node: &'a SyntaxNode<<R::Query as AstNode>::Language>,
-) -> Option<Box<dyn AnalyzerSignal + 'a>> {
-    if !<R::Query>::can_cast(node.kind()) {
-        return None;
-    }
-
-    let node = <R::Query>::cast(node.clone())?;
-    let result = R::run(&node)?;
-    Some(RuleSignal::<R>::new_boxed(file_id, root, node, result))
+#[doc(hidden)]
+/// Internal representation of a single rule in the registry
+pub struct RegistryRule<L: Language> {
+    name: &'static str,
+    docs: &'static str,
+    run: RuleExecutor<L>,
 }
 
-/// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
-/// and a callback function to be executed on all nodes matching the query to possibly
-/// raise an analysis event
-pub(crate) trait Rule {
-    /// The name of this rule, displayed in the diagnostics it emits
-    const NAME: &'static str;
-    /// The category this rule belong to, this is used for broadly filtering
-    /// rules when running the analyzer
-    const CATEGORY: RuleCategory;
+impl<L: Language> RegistryRule<L> {
+    const fn of<R>() -> Self
+    where
+        R: Rule + 'static,
+        R::Query: AstNode<Language = L>,
+    {
+        /// Generic implementation of RuleExecutor for any rule type R
+        fn run<'a, R: Rule + 'static>(
+            file_id: FileId,
+            root: &'a RuleRoot<R>,
+            node: &'a SyntaxNode<<R::Query as AstNode>::Language>,
+        ) -> Option<Box<dyn AnalyzerSignal<RuleLanguage<R>> + 'a>> {
+            if !<R::Query>::can_cast(node.kind()) {
+                return None;
+            }
 
-    /// The type of AstNode this rule is interested in
-    type Query: AstNode;
-    /// A generic type that will be kept in memory between a call to `run` and
-    /// subsequent executions of `diagnostic` or `action`, allows the rule to
-    /// hold some temporary state between the moment a signal is raised and
-    /// when a diagnostic or action needs to be built
-    type State;
+            let query_result = <R::Query>::cast(node.clone())?;
+            let ctx = RuleContext::new(query_result.clone(), root.clone());
 
-    /// This function is called once for each node matching `Query` in the tree
-    /// being analyzed. If it returns `Some` the state object will be wrapped
-    /// in a generic `AnalyzerSignal`, and the consumer of the analyzer may call
-    /// `diagnostic` or `action` on it
-    fn run(node: &Self::Query) -> Option<Self::State>;
+            let result = R::run(&ctx)?;
+            Some(RuleSignal::<R>::new_boxed(
+                file_id,
+                root,
+                query_result,
+                result,
+            ))
+        }
 
-    /// Called by the consumer of the analyzer to try to generate a diagnostic
-    /// from a signal raised by `run`
-    ///
-    /// The default implementation returns None
-    fn diagnostic(_node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
-        None
+        Self {
+            name: R::NAME,
+            docs: R::DOCS,
+            run: run::<R>,
+        }
     }
-
-    /// Called by the consumer of the analyzer to try to generate a code action
-    /// from a signal raised by `run`
-    ///
-    /// The default implementation returns None
-    fn action(_root: JsAnyRoot, _node: &Self::Query, _state: &Self::State) -> Option<RuleAction> {
-        None
-    }
-}
-
-/// Diagnostic object returned by a single analysis rule
-pub struct RuleDiagnostic {
-    pub severity: Severity,
-    pub range: TextRange,
-    pub message: MarkupBuf,
-}
-
-/// Code Action object returned by a single analysis rule
-pub struct RuleAction {
-    pub category: ActionCategory,
-    pub applicability: Applicability,
-    pub message: MarkupBuf,
-    pub root: JsAnyRoot,
 }

@@ -16,10 +16,9 @@ map(([resource]) => ({
 
 # Output
 ```js
-a =
-  {
-    resource: (this.resource = resource),
-  };
+a = {
+  resource: (this.resource = resource),
+};
 
 map(
   ([resource]) => ({

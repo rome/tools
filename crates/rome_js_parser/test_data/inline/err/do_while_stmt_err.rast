@@ -105,14 +105,14 @@ error[SyntaxError]: expected an expression but instead found ')'
   │           ^ Expected an expression here
 
 --
-error[SyntaxError]: expected `'('` but instead found `true`
+error[SyntaxError]: expected `(` but instead found `true`
   ┌─ do_while_stmt_err.js:3:10
   │
 3 │ do while true
   │          ^^^^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead the file ends
+error[SyntaxError]: expected `)` but instead the file ends
   ┌─ do_while_stmt_err.js:4:1
   │
 4 │ 

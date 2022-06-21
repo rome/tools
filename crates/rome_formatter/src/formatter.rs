@@ -1,9 +1,7 @@
 use crate::buffer::BufferSnapshot;
-use crate::builders::{FillBuilder, JoinBuilder};
+use crate::builders::{FillBuilder, JoinBuilder, JoinNodesBuilder, Line};
 use crate::prelude::*;
-#[cfg(debug_assertions)]
-use crate::printed_tokens::PrintedTokens;
-use crate::{Arguments, Buffer, FormatState, GroupId};
+use crate::{Arguments, Buffer, FormatState, FormatStateSnapshot, GroupId};
 
 /// Handles the formatting of a CST and stores the context how the CST should be formatted (user preferences).
 /// The formatter is passed to the [Format] implementation of every node in the CST so that they
@@ -172,20 +170,15 @@ impl<Context> Formatter<'_, Context> {
     pub fn snapshot(&self) -> FormatterSnapshot {
         FormatterSnapshot {
             buffer: self.buffer.snapshot(),
-            #[cfg(debug_assertions)]
-            printed_tokens: self.state().printed_tokens.clone(),
+            state: self.state().snapshot(),
         }
     }
 
     #[inline]
     /// Restore the state of the formatter to a previous snapshot
     pub fn restore_snapshot(&mut self, snapshot: FormatterSnapshot) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.state_mut().printed_tokens = snapshot.printed_tokens;
-            }
-        }
-        self.buffer.restore_snapshot(snapshot.buffer)
+        self.state_mut().restore_snapshot(snapshot.state);
+        self.buffer.restore_snapshot(snapshot.buffer);
     }
 }
 
@@ -228,6 +221,5 @@ impl<Context> Buffer for Formatter<'_, Context> {
 /// mode and compiled to nothing in release mode
 pub struct FormatterSnapshot {
     buffer: BufferSnapshot,
-    #[cfg(debug_assertions)]
-    printed_tokens: PrintedTokens,
+    state: FormatStateSnapshot,
 }

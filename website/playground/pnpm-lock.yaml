@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@honkhonk/vite-plugin-svgr': ^1.1.0
   '@tailwindcss/forms': ^0.4.0
-  '@types/prettier': ^2.4.3
+  '@types/prettier': ^2.6.3
   '@types/react': ^17.0.33
   '@types/react-dom': ^17.0.10
   '@types/react-tabs': ^2.3.4
@@ -11,19 +11,19 @@ specifiers:
   '@vitejs/plugin-react': ^1.0.7
   autoprefixer: ^10.4.2
   postcss: ^8.4.6
-  prettier: ^2.5.1
+  prettier: ^2.7.0
   react: ^17.0.2
   react-dom: ^17.0.2
   react-json-view: ^1.21.3
   react-tabs: ^3.2.3
-  rome: 0.5.0-next
+  rome: 0.6.0-next
   tailwindcss: ^3.0.19
   typescript: ^4.4.4
   vite: ^2.7.2
 
 dependencies:
   '@uiw/react-textarea-code-editor': 1.4.16_sfoxds7t5ydpegc3knd667wn6m
-  prettier: 2.5.1
+  prettier: 2.7.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-json-view: 1.21.3_xd63vgjm47lzoal5ybyqmsdesy
@@ -32,14 +32,14 @@ dependencies:
 devDependencies:
   '@honkhonk/vite-plugin-svgr': 1.1.0_vite@2.7.13
   '@tailwindcss/forms': 0.4.1_tailwindcss@3.0.19
-  '@types/prettier': 2.4.4
+  '@types/prettier': 2.6.3
   '@types/react': 17.0.39
   '@types/react-dom': 17.0.11
   '@types/react-tabs': 2.3.4
   '@vitejs/plugin-react': 1.1.4
   autoprefixer: 10.4.2_postcss@8.4.6
   postcss: 8.4.6
-  rome: 0.5.0-next
+  rome: 0.6.0-next
   tailwindcss: 3.0.19_qm7bagfnbv4vjkuayu3hle4sne
   typescript: 4.5.5
   vite: 2.7.13
@@ -389,48 +389,48 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rometools/cli-darwin-arm64/0.5.0-next:
-    resolution: {integrity: sha512-dzwIOxvSNPD70DJYzyrxs0DLqUd4p+wDJM/AmHKGTxYJSdQahEG5/scnqfwIGiaSpKP/qNIv4+7Hd0aSaQF0NQ==}
+  /@rometools/cli-darwin-arm64/0.6.0-next:
+    resolution: {integrity: sha512-DQzlRUlTRnxhFXG/50aBNQjb60mTpEn2Ko5yWLwW9m4sQiUhG1xK1NXxbCI8MfGnymcUiV1vQDv7ScC51MXLzg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-darwin-x64/0.5.0-next:
-    resolution: {integrity: sha512-DXb/5PxNvD4ENb0oKiWnV2Zfww+yyZ5Q/ADUQqF1TsQjy8l7+4uiY618Wxo7KfH4y2uJA8b7wnly16bSw44F5g==}
+  /@rometools/cli-darwin-x64/0.6.0-next:
+    resolution: {integrity: sha512-/0ubFXniAgdp6GJuZjfH7i+YkGY0Dvr8271OvybeWhcLh72f9JosYp2VIcjgox/eIl9b+iKoAn8IpiBSirTodA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-arm64/0.5.0-next:
-    resolution: {integrity: sha512-1vWKrnQgBgTBeQZquphsmqdCudX4GuwugaQbQVmpCQa+WfKpAe8SAQIJz5G5G3m9uYQRUfwS2AXXEWuMCVHSZQ==}
+  /@rometools/cli-linux-arm64/0.6.0-next:
+    resolution: {integrity: sha512-TC8g4dABlYghMMMXHcvtvm08ATkCbSbYcyk4fv4/utOxUTmzDlguGXj8uulMvKCGhTSuKSwdzQztg+QMVhF4Xg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-x64/0.5.0-next:
-    resolution: {integrity: sha512-rKLhodWhYdMmVtIN1mZFxEFTbTiceat6NJUBGbsLHrjQVZ9h9tw8LlK/Lx8dBpzH5j093xKModnxZDFeIYyHLQ==}
+  /@rometools/cli-linux-x64/0.6.0-next:
+    resolution: {integrity: sha512-YUym0jh5aZx/DmnwiEawEdw+kcOJti6ym+0FkGsOGiW/Zsaw5K0rzC5T+ucK+TV1TS8Aq7UT244oN3KdbYJkCA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-arm64/0.5.0-next:
-    resolution: {integrity: sha512-XDVcPeTAvR9KgCqJQYLkhG2cb5XhsY1ZQUKSGsruxB257spkizb2M299VvLaSKVD7pDakG8Vk0JN3lPXdn0zdQ==}
+  /@rometools/cli-win32-arm64/0.6.0-next:
+    resolution: {integrity: sha512-H6swDALdEm2VGAz3xmYylI52/ZjbOjJtTobY/qXHvVOY2BgFNT8SfDCaAfF3rrBm6PPPRqLW5bcP6C0rZh9LOQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-x64/0.5.0-next:
-    resolution: {integrity: sha512-kZeH17xLyQeAD+Y3vAPFuFnF7RxaCmtN/WSfB4mobje5HsAIqP6YPA7Gxpex/fJhv3rRWyNMTvrZEtDn5ogjHw==}
+  /@rometools/cli-win32-x64/0.6.0-next:
+    resolution: {integrity: sha512-KxV4LHYXnO/8bRYsuon5codT4C9VwXokdw/fxAQ128rGrt8G3o0hei0XqdZiS3T0ktiwl0hDxufujNgVPpDUkQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -566,8 +566,8 @@ packages:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
     dev: false
 
-  /@types/prettier/2.4.4:
-    resolution: {integrity: sha512-ReVR2rLTV1kvtlWFyuot+d1pkpG2Fw/XKE3PDAdj57rbM97ttSp9JZ2UsP+2EHTylra9cUf6JA7tGwW1INzUrA==}
+  /@types/prettier/2.6.3:
+    resolution: {integrity: sha512-ymZk3LEC/fsut+/Q5qejp6R9O1rMxz3XaRHDV6kX8MrGAhOSPqVARbDi+EZvInBpw+BnCX3TD240byVkOfQsHg==}
     dev: true
 
   /@types/prop-types/15.7.4:
@@ -2646,8 +2646,8 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /prettier/2.5.1:
-    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
+  /prettier/2.7.0:
+    resolution: {integrity: sha512-nwoX4GMFgxoPC6diHvSwmK/4yU8FFH3V8XWtLQrbj4IBsK2pkYhG4kf/ljF/haaZ/aii+wNJqISrCDPgxGWDVQ==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: false
@@ -2958,18 +2958,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rome/0.5.0-next:
-    resolution: {integrity: sha512-Y5LmDdSeu35DrqJRQnNHSmZcL6yOyHUhJLKevZN5xXW4GnPwHMLF8rUahnhgAugD5wmyGYAgakwKWA64n6yxkg==}
+  /rome/0.6.0-next:
+    resolution: {integrity: sha512-6XFNdUYs/tJ5pMi/aI+iF15nD1lEnYbGMLL7S9BzIRKZo6+2hLd3/cqEtcjT+V58eJoXuQvyIgZg2RFkAYBpAw==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@rometools/cli-darwin-arm64': 0.5.0-next
-      '@rometools/cli-darwin-x64': 0.5.0-next
-      '@rometools/cli-linux-arm64': 0.5.0-next
-      '@rometools/cli-linux-x64': 0.5.0-next
-      '@rometools/cli-win32-arm64': 0.5.0-next
-      '@rometools/cli-win32-x64': 0.5.0-next
+      '@rometools/cli-darwin-arm64': 0.6.0-next
+      '@rometools/cli-darwin-x64': 0.6.0-next
+      '@rometools/cli-linux-arm64': 0.6.0-next
+      '@rometools/cli-linux-x64': 0.6.0-next
+      '@rometools/cli-win32-arm64': 0.6.0-next
+      '@rometools/cli-win32-x64': 0.6.0-next
     dev: true
 
   /run-async/2.4.1:

@@ -18,7 +18,7 @@ impl FormatNodeFields<JsEmptyStatement> for FormatNodeRule<JsEmptyStatement> {
         ) {
             write!(f, [semicolon_token.format()])
         } else {
-            write!(f, [format_replaced(&semicolon_token?, &empty_element())])
+            write!(f, [format_removed(&semicolon_token?)])
         }
     }
 }

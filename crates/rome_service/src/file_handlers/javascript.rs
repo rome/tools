@@ -1,13 +1,15 @@
-use rome_analyze::{analyze, AnalysisFilter, AnalyzerAction, RuleCategories};
-use rome_diagnostics::Diagnostic;
+use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleCategories};
+use rome_diagnostics::{Applicability, Diagnostic};
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
+use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatOptions, QuoteStyle};
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
 use rome_rowan::AstNode;
 
+use crate::workspace::FixFileResult;
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::server::AnyParse,
@@ -66,6 +68,7 @@ impl ExtensionHandler for JsFileHandler {
             lint: Some(lint),
             format: Some(format),
             code_actions: Some(code_actions),
+            fix_all: Some(fix_all),
             format_range: Some(format_range),
             format_on_type: Some(format_on_type),
         }
@@ -116,12 +119,12 @@ fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
     format!("{tree:#?}")
 }
 
-fn lint(rome_path: &RomePath, parse: AnyParse) -> Vec<Diagnostic> {
+fn lint(rome_path: &RomePath, parse: AnyParse, categories: RuleCategories) -> Vec<Diagnostic> {
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
 
     let filter = AnalysisFilter {
-        categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+        categories,
         ..AnalysisFilter::default()
     };
 
@@ -134,12 +137,18 @@ fn lint(rome_path: &RomePath, parse: AnyParse) -> Vec<Diagnostic> {
 
             diagnostics.push(diag);
         }
+
+        ControlFlow::<Never>::Continue(())
     });
 
     diagnostics
 }
 
-fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> Vec<AnalyzerAction> {
+fn code_actions(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    range: TextRange,
+) -> Vec<AnalyzerAction<JsLanguage>> {
     let tree = parse.tree();
 
     let mut actions = Vec::new();
@@ -154,9 +163,48 @@ fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> Vec<
         if let Some(action) = signal.action() {
             actions.push(action);
         }
+
+        ControlFlow::<Never>::Continue(())
     });
 
     actions
+}
+
+fn fix_all(rome_path: &RomePath, parse: AnyParse) -> FixFileResult {
+    let mut tree: JsAnyRoot = parse.tree();
+    let mut rules = Vec::new();
+
+    let filter = AnalysisFilter {
+        categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+        ..AnalysisFilter::default()
+    };
+
+    let file_id = rome_path.file_id();
+
+    loop {
+        let action = analyze(file_id, &tree, filter, |signal| {
+            if let Some(action) = signal.action() {
+                if action.applicability == Applicability::Always {
+                    return ControlFlow::Break(action);
+                }
+            }
+
+            ControlFlow::Continue(())
+        });
+
+        match action {
+            Some(action) => {
+                tree = action.root;
+                rules.push((action.rule_name, action.original_range));
+            }
+            None => {
+                return FixFileResult {
+                    code: tree.syntax().to_string(),
+                    rules,
+                }
+            }
+        }
+    }
 }
 
 fn format(

@@ -1,0 +1,24 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: inferface-asi.ts
+---
+# Input
+```js
+interface Example {
+  (a: number): typeof a
+      
+  <T>(): void
+};
+
+```
+
+# Output
+```js
+interface Example {
+  (a: number): typeof a;
+  <T>(): void;
+}
+
+```
+
+

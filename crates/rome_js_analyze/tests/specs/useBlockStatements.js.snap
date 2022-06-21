@@ -1,0 +1,193 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: useBlockStatements.js
+---
+# Input
+```js
+// invalid
+if (x) x;
+if (x) {
+  x;
+} else y;
+if (x) {
+  x;
+} else if (y) y;
+for (;;);
+for (p in obj);
+for (x of xs);
+do;
+while (x);
+while (x);
+with (x);
+```
+
+# Diagnostics
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:2:1
+  │
+2 │ if (x) x;
+  │ ---------
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,5 +1,5 @@
+0 0 |   // invalid
+1   | - if (x) x;
+  1 | + if (x) {x;}
+2 2 |   if (x) {
+3 3 |     x;
+4 4 |   } else y;
+
+
+```
+
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:3:1
+  │  
+3 │ ┌ if (x) {
+4 │ │   x;
+5 │ │ } else y;
+  │ └─────────'
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -2,7 +2,7 @@
+1 1 |   if (x) x;
+2 2 |   if (x) {
+3 3 |     x;
+4   | - } else y;
+  4 | + } else {y;}
+5 5 |   if (x) {
+6 6 |     x;
+7 7 |   } else if (y) y;
+
+
+```
+
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:8:8
+  │
+8 │ } else if (y) y;
+  │        ---------
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -5,7 +5,7 @@
+4 4 |   } else y;
+5 5 |   if (x) {
+6 6 |     x;
+7   | - } else if (y) y;
+  7 | + } else if (y) {y;}
+8 8 |   for (;;);
+9 9 |   for (p in obj);
+10 10 |   for (x of xs);
+
+
+```
+
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+  ┌─ useBlockStatements.js:9:1
+  │
+9 │ for (;;);
+  │ ---------
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -6,7 +6,7 @@
+5 5 |   if (x) {
+6 6 |     x;
+7 7 |   } else if (y) y;
+8   | - for (;;);
+  8 | + for (;;){}
+9 9 |   for (p in obj);
+10 10 |   for (x of xs);
+11 11 |   do;
+
+
+```
+
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+   ┌─ useBlockStatements.js:10:1
+   │
+10 │ for (p in obj);
+   │ ---------------
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+      | @@ -7,7 +7,7 @@
+ 6  6 |     x;
+ 7  7 |   } else if (y) y;
+ 8  8 |   for (;;);
+ 9    | - for (p in obj);
+    9 | + for (p in obj){}
+10 10 |   for (x of xs);
+11 11 |   do;
+12 12 |   while (x);
+
+
+```
+
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+   ┌─ useBlockStatements.js:11:1
+   │
+11 │ for (x of xs);
+   │ --------------
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+      | @@ -8,7 +8,7 @@
+ 7  7 |   } else if (y) y;
+ 8  8 |   for (;;);
+ 9  9 |   for (p in obj);
+10    | - for (x of xs);
+   10 | + for (x of xs){}
+11 11 |   do;
+12 12 |   while (x);
+13 13 |   while (x);
+
+
+```
+
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+   ┌─ useBlockStatements.js:12:1
+   │  
+12 │ ┌ do;
+13 │ │ while (x);
+   │ └──────────'
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+      | @@ -9,7 +9,7 @@
+ 8  8 |   for (;;);
+ 9  9 |   for (p in obj);
+10 10 |   for (x of xs);
+11    | - do;
+   11 | + do{}
+12 12 |   while (x);
+13 13 |   while (x);
+14 14 |   with (x);
+
+
+```
+
+```
+warning[useBlockStatements]: Block statements are preferred in this position.
+   ┌─ useBlockStatements.js:14:1
+   │
+14 │ while (x);
+   │ ----------
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+      | @@ -11,5 +11,5 @@
+10 10 |   for (x of xs);
+11 11 |   do;
+12 12 |   while (x);
+13    | - while (x);
+   13 | + while (x){}
+14 14 |   with (x);
+
+
+```
+
+

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: if_else.js
-
 ---
 # Input
 if(a);
@@ -68,6 +66,10 @@ if (true) {
 
 if (true) that(); else;
 
+if (true) {}
+// rome-ignore format: Test suppression comments
+else     if (true &&  false) {}
+
 =============================
 # Outputs
 ## Output 1
@@ -125,6 +127,7 @@ if (true) {
 
 if (true) {
 	// trailing
+
 } else {
 	// trailing
 }
@@ -132,4 +135,9 @@ if (true) {
 if (true) {
 	that();
 } else;
+
+if (true) {
+}
+// rome-ignore format: Test suppression comments
+else     if (true &&  false) {}
 

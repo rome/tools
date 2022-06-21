@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: catch.js
 ---
 # Input
@@ -52,7 +51,7 @@ try {
 ) {}
 
 try {
-} catch (foo /* comment */ ) {}
+} catch (foo /* comment */) {}
 
 try {
 } catch (

@@ -202,19 +202,19 @@ error[SyntaxError]: expected `while` but instead found `;`
 18 │ };
    │  ^ unexpected
 
-error[SyntaxError]: expected `'}'` but instead found `do`
+error[SyntaxError]: expected `}` but instead found `do`
    ┌─ do.js:25:9
    │
 25 │         do {
    │         ^^ unexpected
 
-error[SyntaxError]: expected `'}'` but instead found `if`
+error[SyntaxError]: expected `}` but instead found `if`
    ┌─ do.js:26:11
    │
 26 │           if (loggedIn) {
    │           ^^ unexpected
 
-error[SyntaxError]: expected `')'` but instead found `do`
+error[SyntaxError]: expected `)` but instead found `do`
    ┌─ do.js:37:2
    │
 37 │ (do {});
@@ -226,7 +226,7 @@ error[SyntaxError]: expected `while` but instead found `)`
 37 │ (do {});
    │       ^ unexpected
 
-error[SyntaxError]: expected `')'` but instead found `do`
+error[SyntaxError]: expected `)` but instead found `do`
    ┌─ do.js:38:2
    │
 38 │ (do {} + 1);
@@ -262,7 +262,7 @@ error[SyntaxError]: expected `while` but instead found `;`
 40 │ () => do {};
    │            ^ unexpected
 
-error[SyntaxError]: expected `')'` but instead found `do`
+error[SyntaxError]: expected `)` but instead found `do`
    ┌─ do.js:42:2
    │
 42 │ (do {

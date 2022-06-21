@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: call2.js
+---
+# Input
+```js
+const kochabCooieGameOnOboleUnweave = // ???
+      rhubarbRhubarb(annularCooeedSplicesWalksWayWay);
+
+```
+
+# Output
+```js
+const kochabCooieGameOnOboleUnweave = rhubarbRhubarb(
+  // ???
+  annularCooeedSplicesWalksWayWay,
+);
+
+```
+
+

@@ -11,7 +11,7 @@ const getIconEngagementTypeFrom2 =
   (
     engagementTypes: Array<EngagementType>,
     secondArg: Something,
-    thirArg: SomethingElse
+    thirArg: SomethingElse,
   ) =>
   (iconEngagementType) =>
     engagementTypes.includes(iconEngagementType);

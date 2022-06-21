@@ -182,7 +182,7 @@ impl<'a, Context> VecBuffer<'a, Context> {
 
     /// Consumes the buffer and returns its content as a [`FormatElement`]
     pub fn into_element(mut self) -> FormatElement {
-        self.take()
+        self.take_element()
     }
 
     /// Consumes the buffer and returns the written [`FormatElement]`s as a vector.
@@ -191,7 +191,7 @@ impl<'a, Context> VecBuffer<'a, Context> {
     }
 
     /// Takes the elements without consuming self
-    pub fn take(&mut self) -> FormatElement {
+    pub fn take_element(&mut self) -> FormatElement {
         if self.len() == 1 {
             // Safety: Guaranteed by len check above
             self.elements.pop().unwrap()
@@ -391,7 +391,7 @@ pub struct Inspect<'inner, Context, Inspector> {
 }
 
 impl<'inner, Context, Inspector> Inspect<'inner, Context, Inspector> {
-    pub fn new(inner: &'inner mut dyn Buffer<Context = Context>, inspector: Inspector) -> Self {
+    fn new(inner: &'inner mut dyn Buffer<Context = Context>, inspector: Inspector) -> Self {
         Self { inner, inspector }
     }
 }
@@ -432,6 +432,18 @@ pub trait BufferExtensions: Buffer + Sized {
         F: FnMut(&FormatElement),
     {
         Inspect::new(self, inspector)
+    }
+
+    /// Writes a sequence of elements into this buffer.
+    fn write_elements<I>(&mut self, elements: I) -> FormatResult<()>
+    where
+        I: IntoIterator<Item = FormatElement>,
+    {
+        for element in elements {
+            self.write_element(element)?;
+        }
+
+        Ok(())
     }
 }
 

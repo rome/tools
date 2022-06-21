@@ -37,27 +37,27 @@ function x() { fakeAsync(() => {}) }
 beforeEach(
   fakeAsync(() => {
     // code
-  },),
+  }),
 );
 
 afterAll(
   fakeAsync(() => {
     console.log("Hello");
-  },),
+  }),
 );
 
 it(
   "should create the app",
   fakeAsync(() => {
     //code
-  },),
+  }),
 );
 
 it(
   "does something really long and complicated so I have to write a very long name for the test",
   fakeAsync(() => {
     // code
-  },),
+  }),
 );
 
 it(

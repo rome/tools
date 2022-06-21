@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: trailing_whitespace.js
 ---
 # Input
@@ -59,20 +60,18 @@ let example = [
 
 foo(
   {},
-  // Comment
+// Comment
 );
 
-o =
-  {
-    state,
-    // Comment
-  };
+o = {
+  state,
+  // Comment
+};
 
-o =
-  {
-    state,
-    // Comment
-  };
+o = {
+  state,
+  // Comment
+};
 
 function supersupersupersuperLongF(
   supersupersupersuperLongA,
@@ -89,17 +88,13 @@ function supersupersupersuperLongF(
   a;
 }
 
-this.getAttribute(
-  function (s)
-  /*string*/ {
-    console.log();
-  },
-);
-this.getAttribute(
-  function (s) /*string*/ {
-    console.log();
-  },
-);
+this.getAttribute(function (s)
+/*string*/ {
+  console.log();
+});
+this.getAttribute(function (s) /*string*/ {
+  console.log();
+});
 
 ```
 

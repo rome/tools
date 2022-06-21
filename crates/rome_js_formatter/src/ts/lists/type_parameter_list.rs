@@ -1,6 +1,6 @@
 use crate::generated::FormatTsTypeParameterList;
 use crate::prelude::*;
-use rome_js_syntax::TsTypeParameterList;
+use rome_js_syntax::{JsSyntaxKind, TsTypeParameterList};
 use rome_rowan::AstSeparatedList;
 
 impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
@@ -20,7 +20,7 @@ impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
         };
 
         f.join_with(&soft_line_break_or_space())
-            .entries(node.format_separated(token(",")).with_options(
+            .entries(node.format_separated(JsSyntaxKind::COMMA).with_options(
                 FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),
             ))
             .finish()

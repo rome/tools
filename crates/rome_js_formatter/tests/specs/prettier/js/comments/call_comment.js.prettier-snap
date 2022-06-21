@@ -1,17 +1,17 @@
 render(
   // Warm any cache
   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
-  container
+  container,
 );
 
 React.render(
   // Warm any cache
   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
-  container
+  container,
 );
 
 render?.(
   // Warm any cache
   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
-  container
+  container,
 );

@@ -15,7 +15,7 @@ window.addEventListener(
 			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
 				toggleMobileSidebar();
 			}
-		});
+		},);
 	},
 );
 
@@ -43,7 +43,7 @@ const headingElements = tocLinks.map((link) => {
 		),
 		link,
 	};
-});
+},);
 
 /**
  * @typedef {Object} CalculatedHeading
@@ -271,7 +271,9 @@ class Manager {
 				hasActive = true;
 
 				// Make sure TOC link is visible
-				let linkTop = this.headingsCalculated[i].link.offsetTop - sidebarScroller.offsetTop;
+				let linkTop = this.headingsCalculated[
+					i
+				].link.offsetTop - sidebarScroller.offsetTop;
 				if (i === 0) {
 					linkTop = 0;
 				}
@@ -378,8 +380,8 @@ class Manager {
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				copied.style.opacity = "0";
-			});
-		});
+			},);
+		},);
 		copied.addEventListener(
 			"transitionend",
 			() => {
@@ -472,7 +474,11 @@ class Manager {
 			{ passive: true },
 		);
 
-		document.addEventListener("click", this.handleGlobalClick.bind(this), false);
+		document.addEventListener(
+			"click",
+			this.handleGlobalClick.bind(this),
+			false,
+		);
 	}
 }
 
@@ -601,7 +607,7 @@ if (docsearchInput != null) {
 						indexName: "romefrontend",
 						inputSelector: "#docsearch",
 						debug: false, // Set debug to true if you want to inspect the dropdown
-					});
+					},);
 				},
 			);
 			document.body.appendChild(script);
@@ -757,7 +763,7 @@ for (const scroller of heroScrollers) {
 
 	heroCallbacks.push(() => {
 		setActiveIndex(activeIndex + 1, true);
-	});
+	},);
 }
 if (heroCallbacks.length > 0) {
 	setInterval(

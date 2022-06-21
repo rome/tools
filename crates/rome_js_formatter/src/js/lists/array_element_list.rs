@@ -6,7 +6,7 @@ use crate::utils::array::write_array_node;
 
 use crate::generated::FormatJsArrayElementList;
 use crate::utils::has_formatter_trivia;
-use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
+use rome_js_syntax::{JsAnyExpression, JsArrayElementList, JsSyntaxKind};
 use rome_rowan::{AstNode, AstSeparatedList};
 
 impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
@@ -29,7 +29,7 @@ impl FormatJsArrayElementList {
             return f
                 .fill(soft_line_break_or_space())
                 .entries(
-                    node.format_separated(token(","))
+                    node.format_separated(JsSyntaxKind::COMMA)
                         .with_options(FormatSeparatedOptions::default().with_group_id(group_id)),
                 )
                 .finish();

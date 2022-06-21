@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: inline-object-array.js
 ---
 # Input
@@ -99,25 +98,23 @@ const obj = {
 
 # Output
 ```js
-prevState =
-  prevState || {
+prevState = prevState || {
+  catalogs: [],
+  loadState: LOADED,
+  opened: false,
+  searchQuery: "",
+  selectedCatalog: null,
+};
+
+prevState = prevState ||
+  defaultState ||
+  {
     catalogs: [],
     loadState: LOADED,
     opened: false,
     searchQuery: "",
     selectedCatalog: null,
   };
-
-prevState =
-  prevState ||
-    defaultState ||
-    {
-      catalogs: [],
-      loadState: LOADED,
-      opened: false,
-      searchQuery: "",
-      selectedCatalog: null,
-    };
 
 prevState =
   prevState || (
@@ -130,24 +127,22 @@ prevState =
     }
   );
 
-prevState =
-  prevState ||
-    (useDefault && defaultState) ||
-    {
-      catalogs: [],
-      loadState: LOADED,
-      opened: false,
-      searchQuery: "",
-      selectedCatalog: null,
-    };
+prevState = prevState ||
+  (useDefault && defaultState) ||
+  {
+    catalogs: [],
+    loadState: LOADED,
+    opened: false,
+    searchQuery: "",
+    selectedCatalog: null,
+  };
 
-this.steps =
-  steps || [
-    {
-      name: "mock-module",
-      path: "/nux/mock-module",
-    },
-  ];
+this.steps = steps || [
+  {
+    name: "mock-module",
+    path: "/nux/mock-module",
+  },
+];
 
 this.steps =
   steps || (
@@ -159,13 +154,12 @@ this.steps =
     ]
   );
 
-this.steps =
-  (steps && checkStep) || [
-    {
-      name: "mock-module",
-      path: "/nux/mock-module",
-    },
-  ];
+this.steps = (steps && checkStep) || [
+  {
+    name: "mock-module",
+    path: "/nux/mock-module",
+  },
+];
 
 const create = () => {
   const result = doSomething();
@@ -192,17 +186,15 @@ const create2 = () => {
 };
 
 const obj = {
-  state:
-    shouldHaveState &&
-      stateIsOK &&
-      {
-        loadState: LOADED,
-        opened: false,
-      },
-  loadNext:
-    (stateIsOK && hasNext) || {
-      skipNext: true,
+  state: shouldHaveState &&
+    stateIsOK &&
+    {
+      loadState: LOADED,
+      opened: false,
     },
+  loadNext: (stateIsOK && hasNext) || {
+    skipNext: true,
+  },
   loaded: true,
 };
 

@@ -9,7 +9,7 @@ use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Applicability, Diagnostic, SuggestionChange};
 use rome_diagnostics::{CodeSuggestion, Severity};
-use rome_rowan::{TextRange, TextSize};
+use rome_rowan::{Language, TextRange, TextSize};
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types::{self as lsp};
 use tracing::error;
@@ -39,12 +39,15 @@ pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> TextRange
     TextRange::new(start, end)
 }
 
-pub(crate) fn code_fix_to_lsp(
+pub(crate) fn code_fix_to_lsp<L>(
     url: &lsp::Url,
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
-    action: AnalyzerAction,
-) -> lsp::CodeAction {
+    action: AnalyzerAction<L>,
+) -> lsp::CodeAction
+where
+    L: Language,
+{
     // Mark diagnostics emitted by the same rule as resolved by this action
     let diagnostics: Vec<_> = if matches!(action.category, ActionCategory::QuickFix) {
         diagnostics
@@ -150,7 +153,9 @@ pub(crate) fn diagnostic_to_lsp(
         }),
         diagnostic.code.map(lsp::NumberOrString::String),
         Some("rome".into()),
-        print_markup(&diagnostic.title),
+        diagnostic
+            .summary
+            .unwrap_or_else(|| print_markup(&diagnostic.title)),
         related_information,
         diagnostic.tag.map(|tag| {
             let mut result = Vec::new();

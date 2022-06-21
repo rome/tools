@@ -1,0 +1,1 @@
+call(await something());

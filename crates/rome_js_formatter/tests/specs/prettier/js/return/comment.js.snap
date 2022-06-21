@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: comment.js
 ---
 # Input
@@ -51,7 +52,7 @@ fn(function f() {
 # Output
 ```js
 function f() {
-  return /* a */ ;
+  return /* a */;
 }
 
 function f() {
@@ -60,7 +61,7 @@ function f() {
 
 function f() {
   return // a
-  /* b */ ;
+  /* b */;
 }
 
 function f() {
@@ -89,7 +90,7 @@ fn(function f() {
     // comment
     .bar()
   );
-},);
+});
 
 ```
 

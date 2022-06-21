@@ -32,28 +32,22 @@ postMessages(
 
 # Output
 ```js
-postMessage(
-  <IActionMessage>{
-    context: item.context,
-    topic: item.topic,
-  },
-);
+postMessage(<IActionMessage>{
+  context: item.context,
+  topic: item.topic,
+});
 
-window.postMessage(
+window.postMessage({
+  context: item.context,
+  topic: item.topic,
+} as IActionMessage);
+
+postMessages(<IActionMessage[]>[
   {
     context: item.context,
     topic: item.topic,
-  } as IActionMessage,
-);
-
-postMessages(
-  <IActionMessage[]>[
-    {
-      context: item.context,
-      topic: item.topic,
-    },
-  ],
-);
+  },
+]);
 
 ```
 

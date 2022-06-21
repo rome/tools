@@ -5,5 +5,5 @@ Math.min(
   document.body.scrollHeight -
     (window.scrollY + window.innerHeight) -
     devsite_footer_height,
-  0
+  0,
 );

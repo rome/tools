@@ -5,6 +5,7 @@ use rome_analyze::AnalyzerAction;
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
+use rome_js_syntax::JsLanguage;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
 
 use crate::{
@@ -14,8 +15,8 @@ use crate::{
 };
 
 use super::{
-    ChangeFileParams, CloseFileParams, FeatureName, FormatFileParams, FormatOnTypeParams,
-    FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
+    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
+    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
     PullDiagnosticsParams, SupportsFeatureParams, UpdateSettingsParams,
 };
 
@@ -215,12 +216,15 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
 
-        Ok(linter(&params.path, parse))
+        Ok(linter(&params.path, parse, params.categories))
     }
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(&self, params: PullActionsParams) -> Result<Vec<AnalyzerAction>, RomeError> {
+    fn pull_actions(
+        &self,
+        params: PullActionsParams,
+    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError> {
         let capabilities = self.features.get_capabilities(&params.path);
         let code_actions = capabilities
             .code_actions
@@ -279,5 +283,16 @@ impl Workspace for WorkspaceServer {
         }
 
         formatter(&params.path, parse, settings, params.offset)
+    }
+
+    fn fix_file(&self, params: super::FixFileParams) -> Result<FixFileResult, RomeError> {
+        let capabilities = self.features.get_capabilities(&params.path);
+        let fix_all = capabilities
+            .fix_all
+            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+
+        let parse = self.get_parse(params.path.clone())?;
+
+        Ok(fix_all(&params.path, parse))
     }
 }

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: generic.ts
-
 ---
 # Input
 ```js
@@ -33,19 +31,25 @@ class G1<T> implements IPoly<T> {
   x: T;
 }
 
-class G2<T> implements IPoly<T> {
-  // g2
+class G2<T> // g2
+  implements IPoly<T>
+{
   x: T;
 }
 
-class G3<T> extends U implements IPoly<T> {
-  // g3
+class G3<T> // g3
+  extends U
+  implements IPoly<T>
+{
   x: T;
 }
 
 class G4<
-  T, // g4
-> extends U implements IPoly<T> {
+    T, // g4
+  >
+  extends U
+  implements IPoly<T>
+{
   x: T;
 }
 

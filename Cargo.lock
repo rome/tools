@@ -98,15 +98,15 @@ checksum = "cdb031dd78e28731d87d56cc8ffef4a8f36ca26c38fe2de700543e627f8a464a"
 
 [[package]]
 name = "backtrace"
-version = "0.3.63"
+version = "0.3.65"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "321629d8ba6513061f26707241fa9bc89524ff1cd7a915a97ef0c62c666ce1b6"
+checksum = "11a17d453482a265fd5f8479f2a3f405566e6ca627837aaddb85af8b1ab8ef61"
 dependencies = [
  "addr2line",
  "cc",
  "cfg-if",
  "libc",
- "miniz_oxide",
+ "miniz_oxide 0.5.3",
  "object",
  "rustc-demangle",
 ]
@@ -487,7 +487,7 @@ dependencies = [
  "cfg-if",
  "crc32fast",
  "libc",
- "miniz_oxide",
+ "miniz_oxide 0.4.4",
 ]
 
 [[package]]
@@ -744,9 +744,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "1.8.0"
+version = "1.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "282a6247722caba404c065016bbfa522806e51714c34f5dfc3e4a3a46fcb4223"
+checksum = "e6012d540c5baa3589337a98ce73408de9b5a25ec9fc2c6fd6be8f0d39e0ca5a"
 dependencies = [
  "autocfg",
  "hashbrown",
@@ -935,6 +935,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "miniz_oxide"
+version = "0.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f5c75688da582b8ffc1f1799e9db273f32133c49e048f614d22ec3256773ccc"
+dependencies = [
+ "adler",
+]
+
+[[package]]
 name = "mio"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -993,9 +1002,9 @@ checksum = "830b246a0e5f20af87141b25c173cd1b609bd7779a4617d6ec582abaf90870f3"
 
 [[package]]
 name = "object"
-version = "0.27.1"
+version = "0.28.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67ac1d3f9a1d3616fd9a60c8d74296f22406a238b6a72f5cc1e6f314df4ffbf9"
+checksum = "e42c982f2d955fac81dd7e1d0e1426a7d702acd9c98d19ab01083a6a0328c424"
 dependencies = [
  "memchr",
 ]
@@ -1147,6 +1156,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "pulldown-cmark"
+version = "0.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "34f197a544b0c9ab3ae46c359a7ec9cbbb5c7bf97054266fecb7ead794a181d6"
+dependencies = [
+ "bitflags",
+ "memchr",
+ "unicase",
+]
+
+[[package]]
 name = "quickcheck"
 version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1284,15 +1304,11 @@ name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
  "bitflags",
- "countme",
- "insta",
  "rome_console",
  "rome_diagnostics",
  "rome_js_factory",
- "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
- "tests_macros",
 ]
 
 [[package]]
@@ -1370,6 +1386,7 @@ name = "rome_formatter"
 version = "0.1.0"
 dependencies = [
  "cfg-if",
+ "indexmap",
  "rome_rowan",
  "tracing",
 ]
@@ -1383,6 +1400,22 @@ dependencies = [
  "parking_lot",
  "rayon",
  "tracing",
+]
+
+[[package]]
+name = "rome_js_analyze"
+version = "0.1.0"
+dependencies = [
+ "countme",
+ "insta",
+ "rome_analyze",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_js_factory",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_rowan",
+ "tests_macros",
 ]
 
 [[package]]
@@ -1521,6 +1554,7 @@ dependencies = [
  "rome_console",
  "rome_diagnostics",
  "rome_formatter",
+ "rome_js_analyze",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
@@ -1553,6 +1587,7 @@ dependencies = [
  "rome_diagnostics",
  "rome_formatter",
  "rome_fs",
+ "rome_js_analyze",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
@@ -2114,6 +2149,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "66be59c2fd880e3d76d1a6cf6d34114008f1d8af2748d4ad9d39ea712f14fda9"
 
 [[package]]
+name = "unicase"
+version = "2.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "50f37be617794602aabbeee0be4f259dc1778fabe05e2d67ee8f79326d5cb4f6"
+dependencies = [
+ "version_check",
+]
+
+[[package]]
 name = "unicode-bidi"
 version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2401,6 +2445,7 @@ dependencies = [
  "rome_analyze",
  "rome_diagnostics",
  "rome_formatter",
+ "rome_js_analyze",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
@@ -2432,6 +2477,7 @@ version = "0.0.0"
 dependencies = [
  "ascii_table",
  "atty",
+ "backtrace",
  "colored",
  "indicatif",
  "num_cpus",
@@ -2451,6 +2497,20 @@ dependencies = [
  "walkdir",
  "xtask",
  "yastl",
+]
+
+[[package]]
+name = "xtask_lintdoc"
+version = "0.0.0"
+dependencies = [
+ "pulldown-cmark",
+ "rome_analyze",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_js_analyze",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "xtask",
 ]
 
 [[package]]

@@ -57,9 +57,11 @@ use rome_analyze::AnalyzerAction;
 use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
-use rome_js_syntax::{TextRange, TextSize};
+use rome_js_syntax::{JsLanguage, TextRange, TextSize};
 
 use crate::{settings::WorkspaceSettings, RomeError};
+
+pub use rome_analyze::RuleCategories;
 
 pub(crate) mod server;
 
@@ -99,6 +101,7 @@ pub struct CloseFileParams {
 
 pub struct PullDiagnosticsParams {
     pub path: RomePath,
+    pub categories: RuleCategories,
 }
 
 pub struct PullActionsParams {
@@ -121,6 +124,17 @@ pub struct FormatOnTypeParams {
     pub path: RomePath,
     pub offset: TextSize,
     pub indent_style: IndentStyle,
+}
+
+pub struct FixFileParams {
+    pub path: RomePath,
+}
+
+pub struct FixFileResult {
+    /// New source code for the file with all fixes applied
+    pub code: String,
+    /// List of all the rules applied to the file with their associated text range
+    pub rules: Vec<(&'static str, TextRange)>,
 }
 
 pub trait Workspace: Send + Sync + RefUnwindSafe {
@@ -148,7 +162,10 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(&self, params: PullActionsParams) -> Result<Vec<AnalyzerAction>, RomeError>;
+    fn pull_actions(
+        &self,
+        params: PullActionsParams,
+    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError>;
 
     /// Runs the given file through the formatter using the provided options
     /// and returns the resulting source code
@@ -160,6 +177,9 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Runs a "block" ending at the specified character of an open document
     /// through the formatter
     fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, RomeError>;
+
+    /// Return the content of the file with all safe code actions applied
+    fn fix_file(&self, params: FixFileParams) -> Result<FixFileResult, RomeError>;
 }
 
 /// Convenience function for constructing a server instance of [Workspace]
@@ -196,13 +216,20 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn pull_diagnostics(&self) -> Result<Vec<Diagnostic>, RomeError> {
+    pub fn pull_diagnostics(
+        &self,
+        categories: RuleCategories,
+    ) -> Result<Vec<Diagnostic>, RomeError> {
         self.workspace.pull_diagnostics(PullDiagnosticsParams {
             path: self.path.clone(),
+            categories,
         })
     }
 
-    pub fn pull_actions(&self, range: TextRange) -> Result<Vec<AnalyzerAction>, RomeError> {
+    pub fn pull_actions(
+        &self,
+        range: TextRange,
+    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError> {
         self.workspace.pull_actions(PullActionsParams {
             path: self.path.clone(),
             range,
@@ -237,6 +264,12 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
             path: self.path.clone(),
             indent_style,
             offset,
+        })
+    }
+
+    pub fn fix_file(&self) -> Result<FixFileResult, RomeError> {
+        self.workspace.fix_file(FixFileParams {
+            path: self.path.clone(),
         })
     }
 }

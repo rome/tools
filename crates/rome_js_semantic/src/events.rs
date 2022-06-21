@@ -1,29 +1,43 @@
 //! Events emitted by the [SemanticEventExtractor] which are then constructed into the Semantic Model
 
-use std::collections::VecDeque;
+use std::collections::{HashMap, VecDeque};
 
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange, TextSize};
-use rome_rowan::syntax::Preorder;
+use rome_js_syntax::{
+    JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, JsSyntaxToken, TextRange,
+    TextSize,
+};
+use rome_rowan::{syntax::Preorder, SyntaxNodeCast, SyntaxTokenText};
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
 #[derive(Debug)]
 pub enum SemanticEvent {
     /// Signifies that a new symbol declaration was found.
-    /// Currently is generated for:
+    /// Generated for:
     /// - Variable Declarations
     /// - Import bindings
     /// - Functions parameters
-    DeclarationFound { range: TextRange },
+    DeclarationFound {
+        range: TextRange,
+        scope_started_at: TextSize,
+    },
+
+    /// Signifies that a symbol value is being read.
+    /// Generated for:
+    /// - All reference identifiers
+    Read {
+        range: TextRange,
+        declaration_at: Option<TextRange>,
+    },
 
     /// Signifies that a new scope was started
-    /// Currently generated for:
+    /// Generated for:
     /// - Blocks
     /// - Function body
     ScopeStarted { range: TextRange },
 
     /// Signifies that a new scope was ended
-    /// Currently generated for:
+    /// Generated for:
     /// - Blocks
     /// - Function body
     ScopeEnded {
@@ -35,9 +49,10 @@ pub enum SemanticEvent {
 impl SemanticEvent {
     pub fn range(&self) -> &TextRange {
         match self {
-            SemanticEvent::DeclarationFound { range } => range,
+            SemanticEvent::DeclarationFound { range, .. } => range,
             SemanticEvent::ScopeStarted { range } => range,
             SemanticEvent::ScopeEnded { range, .. } => range,
+            SemanticEvent::Read { range, .. } => range,
         }
     }
 
@@ -51,7 +66,7 @@ impl SemanticEvent {
 
 /// Extracts [SemanticEvent] from [SyntaxNode].
 ///
-/// The extraction is not enterily pull based, nor entirely push based.
+/// The extraction is not entirely pull based, nor entirely push based.
 /// This happens because some nodes can generate multiple events.
 /// A hoisted variable declaration like ```var a```, being the more obvious
 /// example. As soon ```a``` is hoisted, all references of ```a``` are solved
@@ -60,7 +75,7 @@ impl SemanticEvent {
 /// For a simpler way to extract [SemanticEvent] see [semantic_events] or [SemanticEventIterator].
 ///
 /// To use the [SemanticEventExtractor] one must push the current node, following
-/// the [PreOrder] of the tree, and must pull events unti [Pop] returuns [None].
+/// the [PreOrder] of the tree, and must pull events until [Pop] returns [None].
 ///
 /// ```rust
 /// use rome_js_parser::*;
@@ -84,10 +99,17 @@ impl SemanticEvent {
 pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
+    declared_names: HashMap<SyntaxTokenText, TextRange>,
+}
+
+struct ScopeDeclaration {
+    name: SyntaxTokenText,
 }
 
 struct Scope {
     started_at: TextSize,
+    declared: Vec<ScopeDeclaration>,
+    shadowed: Vec<(SyntaxTokenText, TextRange)>,
 }
 
 impl SemanticEventExtractor {
@@ -95,6 +117,7 @@ impl SemanticEventExtractor {
         Self {
             stash: VecDeque::new(),
             scopes: vec![],
+            declared_names: HashMap::new(),
         }
     }
 
@@ -102,13 +125,46 @@ impl SemanticEventExtractor {
     /// of which ```SyntaxNode``` generates which events.
     pub fn enter(&mut self, node: &JsSyntaxNode) {
         use rome_js_syntax::JsSyntaxKind::*;
-        use SemanticEvent::*;
 
         match node.kind() {
-            JS_IDENTIFIER_BINDING => self.stash.push_back(DeclarationFound {
-                range: node.text_range(),
-            }),
-            JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.push_scope(node.text_range()),
+            JS_IDENTIFIER_BINDING => {
+                if let Some(name_token) = node
+                    .clone()
+                    .cast::<JsIdentifierBinding>()
+                    .and_then(|id| id.name_token().ok())
+                {
+                    self.declare_name(&name_token);
+                }
+            }
+            JS_REFERENCE_IDENTIFIER => {
+                if let Some(name_token) = node
+                    .clone()
+                    .cast::<JsReferenceIdentifier>()
+                    .and_then(|reference| reference.value_token().ok())
+                {
+                    self.stash.push_back(SemanticEvent::Read {
+                        range: node.text_range(),
+                        declaration_at: self
+                            .get_declaration_range_by_trimmed_text(&name_token)
+                            .cloned(),
+                    })
+                }
+            }
+
+            JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range()),
+            JS_FUNCTION_DECLARATION
+            | JS_ARROW_FUNCTION_EXPRESSION
+            | JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_GETTER_CLASS_MEMBER
+            | JS_SETTER_CLASS_MEMBER
+            | JS_BLOCK_STATEMENT
+            | JS_FOR_STATEMENT
+            | JS_FOR_OF_STATEMENT
+            | JS_FOR_IN_STATEMENT
+            | JS_CATCH_CLAUSE
+            | JS_FUNCTION_BODY => {
+                self.push_scope(node.text_range());
+            }
             _ => {}
         }
     }
@@ -119,7 +175,20 @@ impl SemanticEventExtractor {
         use rome_js_syntax::JsSyntaxKind::*;
 
         match node.kind() {
-            JS_BLOCK_STATEMENT | JS_FUNCTION_BODY => self.pop_scope(node.text_range()),
+            JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
+            JS_FUNCTION_DECLARATION
+            | JS_ARROW_FUNCTION_EXPRESSION
+            | JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_GETTER_CLASS_MEMBER
+            | JS_SETTER_CLASS_MEMBER
+            | JS_BLOCK_STATEMENT
+            | JS_FOR_STATEMENT
+            | JS_FOR_OF_STATEMENT
+            | JS_FOR_IN_STATEMENT
+            | JS_CATCH_CLAUSE
+            | JS_FUNCTION_BODY => {
+                self.pop_scope(node.text_range());
+            }
             _ => {}
         }
     }
@@ -133,6 +202,8 @@ impl SemanticEventExtractor {
         self.stash.push_back(SemanticEvent::ScopeStarted { range });
         self.scopes.push(Scope {
             started_at: range.start(),
+            declared: vec![],
+            shadowed: vec![],
         });
     }
 
@@ -142,7 +213,58 @@ impl SemanticEventExtractor {
                 range,
                 started_at: scope.started_at,
             });
+
+            // remove all declarations
+            for decl in scope.declared {
+                self.declared_names.remove(&decl.name);
+            }
+
+            // return all shadowed names
+            for (name, range) in scope.shadowed {
+                self.declared_names.insert(name, range);
+            }
         }
+    }
+
+    fn current_scope_mut(&mut self) -> &mut Scope {
+        // We should at least have the global scope
+        debug_assert!(!self.scopes.is_empty());
+
+        match self.scopes.last_mut() {
+            None => unreachable!(),
+            Some(scope) => scope,
+        }
+    }
+
+    fn declare_name(&mut self, name_token: &JsSyntaxToken) {
+        let name = name_token.token_text_trimmed();
+
+        let declaration_range = name_token.text_range();
+
+        // insert this name into the list of available names
+        // and save shadowed names to be used later
+        let shadowed = self
+            .declared_names
+            .insert(name.clone(), declaration_range)
+            .map(|shadowed_range| (name.clone(), shadowed_range));
+
+        let current_scope = self.current_scope_mut();
+        current_scope.declared.push(ScopeDeclaration { name });
+        current_scope.shadowed.extend(shadowed);
+        let scope_started_at = current_scope.started_at;
+
+        self.stash.push_back(SemanticEvent::DeclarationFound {
+            range: declaration_range,
+            scope_started_at,
+        });
+    }
+
+    fn get_declaration_range_by_trimmed_text(
+        &self,
+        name_token: &JsSyntaxToken,
+    ) -> Option<&TextRange> {
+        let name = name_token.token_text_trimmed();
+        self.declared_names.get(&name)
     }
 }
 

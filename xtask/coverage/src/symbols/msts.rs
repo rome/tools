@@ -54,7 +54,19 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 s
             })
         } else {
-            std::fs::read_to_string(&full_path).unwrap()
+            match std::fs::read_to_string(&full_path) {
+                Ok(code) => code,
+                Err(_) => {
+                    return TestRunOutcome::IncorrectlyErrored {
+                        files: TestCaseFiles::single(
+                            self.name.clone(),
+                            "".to_string(),
+                            SourceType::tsx(),
+                        ),
+                        errors: vec![],
+                    }
+                }
+            }
         };
 
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
@@ -66,10 +78,13 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 // We filter any event pointing to string literals.
                 // We do the same below because TS classifies some string literals as symbols and we also
                 // filter them below.
-                let name = x.str(&code);
-                matches!(x, SemanticEvent::DeclarationFound { .. })
-                    && !name.contains('\"')
-                    && !name.contains('\'')
+                match x {
+                    SemanticEvent::DeclarationFound { .. } | SemanticEvent::Read { .. } => {
+                        let name = x.str(&code);
+                        !name.contains('\"') && !name.contains('\'')
+                    }
+                    _ => false,
+                }
             })
             .collect();
         actual.sort_by_key(|x| x.range().start());

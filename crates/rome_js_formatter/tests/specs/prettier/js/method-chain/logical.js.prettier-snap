@@ -3,7 +3,7 @@ const someLongVariableName = (
 ).map((edge) => edge.node);
 
 (veryLongVeryLongVeryLong || e).map((tickets) =>
-  TicketRecord.createFromSomeLongString()
+  TicketRecord.createFromSomeLongString(),
 );
 
 (veryLongVeryLongVeryLong || e)

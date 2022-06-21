@@ -1,7 +1,7 @@
 use crate::generated::FormatTsUnionTypeVariantList;
 use crate::prelude::*;
 use rome_formatter::write;
-use rome_js_syntax::{JsLanguage, TsType, TsUnionTypeVariantList};
+use rome_js_syntax::{JsLanguage, JsSyntaxKind, TsType, TsUnionTypeVariantList};
 use rome_rowan::{AstSeparatedElement, AstSeparatedList};
 
 impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
@@ -37,7 +37,7 @@ impl Format<JsFormatContext> for FormatTypeVariant {
         match separator {
             Some(token) => {
                 if self.last {
-                    write!(f, [format_replaced(token, &empty_element())])?;
+                    write!(f, [format_removed(token)])?;
                 } else {
                     write![
                         f,
@@ -47,7 +47,14 @@ impl Format<JsFormatContext> for FormatTypeVariant {
             }
             None => {
                 if !self.last {
-                    write![f, [soft_line_break_or_space(), token("|"), space_token()]]?;
+                    write![
+                        f,
+                        [
+                            soft_line_break_or_space(),
+                            format_inserted(JsSyntaxKind::PIPE),
+                            space_token()
+                        ]
+                    ]?;
                 }
             }
         }

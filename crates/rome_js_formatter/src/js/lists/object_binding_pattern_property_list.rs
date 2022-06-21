@@ -1,6 +1,8 @@
 use crate::generated::FormatJsObjectBindingPatternPropertyList;
 use crate::prelude::*;
-use rome_js_syntax::{JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList};
+use rome_js_syntax::{
+    JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList, JsSyntaxKind,
+};
 
 impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPatternPropertyList {
     type Context = JsFormatContext;
@@ -22,7 +24,7 @@ impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPat
         };
 
         f.join_with(&soft_line_break_or_space())
-            .entries(node.format_separated(token(",")).with_options(
+            .entries(node.format_separated(JsSyntaxKind::COMMA).with_options(
                 FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),
             ))
             .finish()

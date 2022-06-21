@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: text.js
-
 ---
 # Input
 ```js
@@ -22,9 +20,8 @@ a = {
 
 # Output
 ```js
-a =
-  {
-    viewer: graphql`
+a = {
+  viewer: graphql`
     fragment x on Viewer {
       y(named: [
         "projects_feedback_ids" # PROJECTS_FEEDBACK_IDS
@@ -33,7 +30,7 @@ a =
       }
     }
   `,
-  };
+};
 
 ```
 
