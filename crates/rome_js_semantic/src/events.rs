@@ -120,7 +120,8 @@ struct Binding {
     name: SyntaxTokenText,
 }
 
-struct PendingReference {
+#[derive(Debug)]
+struct Reference {
     range: TextRange,
 }
 
@@ -129,7 +130,7 @@ struct Scope {
     /// All bindings declared inside this scope
     bindings: Vec<Binding>,
     /// Reference that do not have a matching declaration
-    pending: HashMap<SyntaxTokenText, Vec<PendingReference>>,
+    references: HashMap<SyntaxTokenText, Vec<Reference>>,
     /// All bindings that where shadowed and will be
     /// restored after this scope ends.
     shadowed: Vec<(SyntaxTokenText, TextRange)>,
@@ -157,8 +158,7 @@ impl SemanticEventExtractor {
                 self.enter_identifier_binding(node);
             }
             JS_REFERENCE_IDENTIFIER => {
-                let e = self.enter_reference_identifier(node);
-                self.stash.extend(e);
+                self.enter_reference_identifier(node);
             }
 
             JS_MODULE | JS_SCRIPT => self.push_scope(node.text_range(), false),
@@ -246,7 +246,7 @@ impl SemanticEventExtractor {
             // current scope is flagged as hoists = false.
             let scopes = self.scopes.iter_mut().rev();
             for scope in scopes {
-                if let Some(references) = scope.pending.remove(&name) {
+                if let Some(references) = scope.references.remove(&name) {
                     for reference in references {
                         self.stash.push_back(SemanticEvent::HoistedRead {
                             range: reference.range,
@@ -264,27 +264,18 @@ impl SemanticEventExtractor {
         Some(())
     }
 
-    fn enter_reference_identifier(&mut self, node: &JsSyntaxNode) -> Option<SemanticEvent> {
+    fn enter_reference_identifier(&mut self, node: &JsSyntaxNode) -> Option<()> {
         let reference = node.clone().cast::<JsReferenceIdentifier>()?;
         let name_token = reference.value_token().ok()?;
+        let name = name_token.token_text_trimmed();
 
-        let declaration_at = self.get_binding_range(&name_token).cloned();
-
-        // No declaration found. Flag as pending.
-        if declaration_at.is_none() {
-            let name = name_token.token_text_trimmed();
-
-            let current_scope = self.current_scope_mut();
-            let pending = current_scope.pending.entry(name.clone()).or_default();
-            pending.push(PendingReference {
-                range: node.text_range(),
-            });
-        }
-
-        Some(SemanticEvent::Read {
+        let current_scope = self.current_scope_mut();
+        let references = current_scope.references.entry(name.clone()).or_default();
+        references.push(Reference {
             range: node.text_range(),
-            declaration_at,
-        })
+        });
+
+        Some(())
     }
 
     /// See [SemanticEvent] for a more detailed description
@@ -321,7 +312,7 @@ impl SemanticEventExtractor {
         self.scopes.push(Scope {
             started_at: range.start(),
             bindings: vec![],
-            pending: HashMap::new(),
+            references: HashMap::new(),
             shadowed: vec![],
             allows_decl_hoisting,
         });
@@ -329,10 +320,44 @@ impl SemanticEventExtractor {
 
     fn pop_scope(&mut self, range: TextRange) {
         if let Some(scope) = self.scopes.pop() {
-            self.stash.push_back(SemanticEvent::ScopeEnded {
-                range,
-                started_at: scope.started_at,
-            });
+            // Solve references and
+            // promote pending references to the parent scope
+            match self.scopes.last_mut() {
+                Some(parent) => {
+                    for (name, references) in scope.references {
+                        if let Some(declaration_at) = self.bindings.get(&name) {
+                            for reference in references {
+                                self.stash.push_back(SemanticEvent::Read {
+                                    range: reference.range,
+                                    declaration_at: Some(*declaration_at),
+                                });
+                            }
+                        } else {
+                            parent.references.insert(name, references);
+                        }
+                    }
+                }
+                // global scope pending references become
+                // UnresolvedReference events
+                None => {
+                    for (name, references) in scope.references {
+                        if let Some(declaration_at) = self.bindings.get(&name) {
+                            for reference in references {
+                                self.stash.push_back(SemanticEvent::Read {
+                                    range: reference.range,
+                                    declaration_at: Some(*declaration_at),
+                                });
+                            }
+                        } else {
+                            for reference in references {
+                                self.stash.push_back(SemanticEvent::UnresolvedReference {
+                                    range: reference.range,
+                                });
+                            }
+                        }
+                    }
+                }
+            }
 
             // Remove all bindings declared in this scope
             for binding in scope.bindings {
@@ -342,21 +367,10 @@ impl SemanticEventExtractor {
             // Return shadowed bindings
             self.bindings.extend(scope.shadowed);
 
-            // Promote pending references to the parent scope
-            match self.scopes.last_mut() {
-                Some(parent) => parent.pending.extend(scope.pending.into_iter()),
-                // global scope pending references become
-                // UnresolvedReference events
-                None => {
-                    for (_, pendings) in scope.pending {
-                        for pending in pendings {
-                            self.stash.push_back(SemanticEvent::UnresolvedReference {
-                                range: pending.range,
-                            });
-                        }
-                    }
-                }
-            }
+            self.stash.push_back(SemanticEvent::ScopeEnded {
+                range,
+                started_at: scope.started_at,
+            });
         }
     }
 
