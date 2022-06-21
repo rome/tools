@@ -6,7 +6,7 @@ use rome_js_syntax::TsAnyTupleTypeElement;
 pub struct FormatTsAnyTupleTypeElement;
 impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
     type Context = JsFormatContext;
-    fn fmt(node: &TsAnyTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsAnyTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => node.format().fmt(f),
             TsAnyTupleTypeElement::TsType(node) => node.format().fmt(f),

@@ -7,7 +7,7 @@ use rome_js_syntax::JsxReferenceIdentifier;
 pub struct FormatJsxReferenceIdentifier;
 
 impl FormatNodeRule<JsxReferenceIdentifier> for FormatJsxReferenceIdentifier {
-    fn fmt_fields(node: &JsxReferenceIdentifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxReferenceIdentifier, f: &mut JsFormatter) -> FormatResult<()> {
         write![f, [node.value_token().format()]]
     }
 }

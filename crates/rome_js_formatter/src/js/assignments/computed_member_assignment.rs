@@ -8,7 +8,11 @@ use rome_js_syntax::JsComputedMemberAssignmentFields;
 pub struct FormatJsComputedMemberAssignment;
 
 impl FormatNodeRule<JsComputedMemberAssignment> for FormatJsComputedMemberAssignment {
-    fn fmt_fields(node: &JsComputedMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsComputedMemberAssignment,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsComputedMemberAssignmentFields {
             object,
             l_brack_token,

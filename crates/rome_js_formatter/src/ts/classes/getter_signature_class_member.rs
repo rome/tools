@@ -9,7 +9,11 @@ use rome_js_syntax::{TsGetterSignatureClassMember, TsGetterSignatureClassMemberF
 pub struct FormatTsGetterSignatureClassMember;
 
 impl FormatNodeRule<TsGetterSignatureClassMember> for FormatTsGetterSignatureClassMember {
-    fn fmt_fields(node: &TsGetterSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsGetterSignatureClassMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsGetterSignatureClassMemberFields {
             modifiers,
             get_token,

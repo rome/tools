@@ -8,7 +8,11 @@ use rome_js_syntax::JsComputedMemberExpressionFields;
 pub struct FormatJsComputedMemberExpression;
 
 impl FormatNodeRule<JsComputedMemberExpression> for FormatJsComputedMemberExpression {
-    fn fmt_fields(node: &JsComputedMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsComputedMemberExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsComputedMemberExpressionFields {
             object,
             optional_chain_token,

@@ -9,7 +9,11 @@ use rome_js_syntax::TsImportEqualsDeclarationFields;
 pub struct FormatTsImportEqualsDeclaration;
 
 impl FormatNodeRule<TsImportEqualsDeclaration> for FormatTsImportEqualsDeclaration {
-    fn fmt_fields(node: &TsImportEqualsDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsImportEqualsDeclaration,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsImportEqualsDeclarationFields {
             import_token,
             type_token,

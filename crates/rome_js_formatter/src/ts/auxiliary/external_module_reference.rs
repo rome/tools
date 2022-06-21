@@ -8,7 +8,11 @@ use rome_js_syntax::TsExternalModuleReferenceFields;
 pub struct FormatTsExternalModuleReference;
 
 impl FormatNodeRule<TsExternalModuleReference> for FormatTsExternalModuleReference {
-    fn fmt_fields(node: &TsExternalModuleReference, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsExternalModuleReference,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsExternalModuleReferenceFields {
             require_token,
             l_paren_token,

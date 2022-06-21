@@ -11,7 +11,7 @@ pub struct FormatJsVariableDeclaratorList;
 impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         let mut declarators = node.elements().enumerate().map(|(index, element)| {

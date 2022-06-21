@@ -8,7 +8,7 @@ use rome_js_syntax::{TsTypeAliasDeclaration, TsTypeAliasDeclarationFields};
 pub struct FormatTsTypeAliasDeclaration;
 
 impl FormatNodeRule<TsTypeAliasDeclaration> for FormatTsTypeAliasDeclaration {
-    fn fmt_fields(node: &TsTypeAliasDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsTypeAliasDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeAliasDeclarationFields {
             type_token,
             binding_identifier,

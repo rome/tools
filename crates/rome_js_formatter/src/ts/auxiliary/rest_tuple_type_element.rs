@@ -7,7 +7,7 @@ use rome_js_syntax::{TsRestTupleTypeElement, TsRestTupleTypeElementFields};
 pub struct FormatTsRestTupleTypeElement;
 
 impl FormatNodeRule<TsRestTupleTypeElement> for FormatTsRestTupleTypeElement {
-    fn fmt_fields(node: &TsRestTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsRestTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         let TsRestTupleTypeElementFields {
             dotdotdot_token,
             ty,

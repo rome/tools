@@ -7,7 +7,7 @@ use rome_js_syntax::{TsInferType, TsInferTypeFields};
 pub struct FormatTsInferType;
 
 impl FormatNodeRule<TsInferType> for FormatTsInferType {
-    fn fmt_fields(node: &TsInferType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsInferType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInferTypeFields {
             infer_token,
             type_parameter,

@@ -9,7 +9,7 @@ use rome_js_syntax::TsExportAssignmentClauseFields;
 pub struct FormatTsExportAssignmentClause;
 
 impl FormatNodeRule<TsExportAssignmentClause> for FormatTsExportAssignmentClause {
-    fn fmt_fields(node: &TsExportAssignmentClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsExportAssignmentClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExportAssignmentClauseFields {
             eq_token,
             expression,

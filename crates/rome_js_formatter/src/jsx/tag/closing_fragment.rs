@@ -7,7 +7,7 @@ use rome_js_syntax::{JsxClosingFragment, JsxClosingFragmentFields};
 pub struct FormatJsxClosingFragment;
 
 impl FormatNodeRule<JsxClosingFragment> for FormatJsxClosingFragment {
-    fn fmt_fields(node: &JsxClosingFragment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxClosingFragment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxClosingFragmentFields {
             r_angle_token,
             slash_token,

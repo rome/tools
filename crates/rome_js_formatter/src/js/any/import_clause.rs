@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyImportClause;
 pub struct FormatJsAnyImportClause;
 impl FormatRule<JsAnyImportClause> for FormatJsAnyImportClause {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyImportClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyImportClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyImportClause::JsImportBareClause(node) => node.format().fmt(f),
             JsAnyImportClause::JsImportNamedClause(node) => node.format().fmt(f),

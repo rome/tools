@@ -7,7 +7,11 @@ use rome_js_syntax::JsParenthesizedAssignmentFields;
 pub struct FormatJsParenthesizedAssignment;
 
 impl FormatNodeRule<JsParenthesizedAssignment> for FormatJsParenthesizedAssignment {
-    fn fmt_fields(node: &JsParenthesizedAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsParenthesizedAssignment,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsParenthesizedAssignmentFields {
             l_paren_token,
             assignment,

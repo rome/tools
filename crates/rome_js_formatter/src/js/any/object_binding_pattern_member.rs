@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyObjectBindingPatternMember;
 pub struct FormatJsAnyObjectBindingPatternMember;
 impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPatternMember {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
                 node.format().fmt(f)

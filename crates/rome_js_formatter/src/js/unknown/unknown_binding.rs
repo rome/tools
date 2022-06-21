@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 pub struct FormatJsUnknownBinding;
 
 impl FormatNodeRule<JsUnknownBinding> for FormatJsUnknownBinding {
-    fn fmt_fields(node: &JsUnknownBinding, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsUnknownBinding, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_unknown_node(node.syntax()).fmt(formatter)
     }
 }

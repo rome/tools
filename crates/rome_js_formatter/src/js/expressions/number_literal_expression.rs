@@ -8,7 +8,11 @@ use rome_js_syntax::{JsNumberLiteralExpression, JsStaticMemberExpression};
 pub struct FormatJsNumberLiteralExpression;
 
 impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpression {
-    fn fmt_fields(node: &JsNumberLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsNumberLiteralExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsNumberLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
 

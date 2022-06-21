@@ -9,7 +9,7 @@ use rome_js_syntax::JsConstructorClassMemberFields;
 pub struct FormatJsConstructorClassMember;
 
 impl FormatNodeRule<JsConstructorClassMember> for FormatJsConstructorClassMember {
-    fn fmt_fields(node: &JsConstructorClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsConstructorClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsConstructorClassMemberFields {
             modifiers,
             name,

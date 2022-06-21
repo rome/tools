@@ -8,7 +8,7 @@ pub struct FormatTsTypeParameterList;
 impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
         // nodes and formatter are not aware of the source type (TSX vs TS), which means we can't
         // exactly pin point the exact case.
         //

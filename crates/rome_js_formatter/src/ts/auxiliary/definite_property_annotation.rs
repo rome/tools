@@ -8,7 +8,11 @@ use rome_js_syntax::TsDefinitePropertyAnnotationFields;
 pub struct FormatTsDefinitePropertyAnnotation;
 
 impl FormatNodeRule<TsDefinitePropertyAnnotation> for FormatTsDefinitePropertyAnnotation {
-    fn fmt_fields(node: &TsDefinitePropertyAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsDefinitePropertyAnnotation,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsDefinitePropertyAnnotationFields {
             excl_token,
             type_annotation,

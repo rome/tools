@@ -8,7 +8,7 @@ use rome_js_syntax::JsYieldArgumentFields;
 pub struct FormatJsYieldArgument;
 
 impl FormatNodeRule<JsYieldArgument> for FormatJsYieldArgument {
-    fn fmt_fields(node: &JsYieldArgument, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsYieldArgument, f: &mut JsFormatter) -> FormatResult<()> {
         let JsYieldArgumentFields {
             star_token,
             expression,

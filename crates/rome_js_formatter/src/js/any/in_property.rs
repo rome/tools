@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyInProperty;
 pub struct FormatJsAnyInProperty;
 impl FormatRule<JsAnyInProperty> for FormatJsAnyInProperty {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyInProperty, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyInProperty, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyInProperty::JsPrivateName(node) => node.format().fmt(f),
             JsAnyInProperty::JsAnyExpression(node) => node.format().fmt(f),

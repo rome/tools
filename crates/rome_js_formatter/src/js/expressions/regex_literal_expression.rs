@@ -8,7 +8,7 @@ use rome_js_syntax::JsRegexLiteralExpressionFields;
 pub struct FormatJsRegexLiteralExpression;
 
 impl FormatNodeRule<JsRegexLiteralExpression> for FormatJsRegexLiteralExpression {
-    fn fmt_fields(node: &JsRegexLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsRegexLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsRegexLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
         let trimmed_raw_string = value_token.text_trimmed();

@@ -8,7 +8,7 @@ use rome_js_syntax::TsQualifiedNameFields;
 pub struct FormatTsQualifiedName;
 
 impl FormatNodeRule<TsQualifiedName> for FormatTsQualifiedName {
-    fn fmt_fields(node: &TsQualifiedName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsQualifiedName, f: &mut JsFormatter) -> FormatResult<()> {
         let TsQualifiedNameFields {
             left,
             dot_token,

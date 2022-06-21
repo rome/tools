@@ -7,7 +7,7 @@ use rome_js_syntax::{TsTypeArguments, TsTypeArgumentsFields};
 pub struct FormatTsTypeArguments;
 
 impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
-    fn fmt_fields(node: &TsTypeArguments, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsTypeArguments, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeArgumentsFields {
             l_angle_token,
             ts_type_argument_list,

@@ -10,6 +10,7 @@ pub struct FormatJsObjectAssignmentPatternProperty;
 
 impl FormatNodeRule<JsObjectAssignmentPatternProperty> for FormatJsObjectAssignmentPatternProperty {
     fn fmt_fields(
+        &self,
         node: &JsObjectAssignmentPatternProperty,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

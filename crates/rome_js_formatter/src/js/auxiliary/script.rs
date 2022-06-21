@@ -9,7 +9,7 @@ use rome_js_syntax::JsScriptFields;
 pub struct FormatJsScript;
 
 impl FormatNodeRule<JsScript> for FormatJsScript {
-    fn fmt_fields(node: &JsScript, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsScript, f: &mut JsFormatter) -> FormatResult<()> {
         let JsScriptFields {
             interpreter_token,
             directives,

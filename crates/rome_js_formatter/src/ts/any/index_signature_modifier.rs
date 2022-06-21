@@ -6,7 +6,7 @@ use rome_js_syntax::TsAnyIndexSignatureModifier;
 pub struct FormatTsAnyIndexSignatureModifier;
 impl FormatRule<TsAnyIndexSignatureModifier> for FormatTsAnyIndexSignatureModifier {
     type Context = JsFormatContext;
-    fn fmt(node: &TsAnyIndexSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsAnyIndexSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyIndexSignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
             TsAnyIndexSignatureModifier::TsReadonlyModifier(node) => node.format().fmt(f),

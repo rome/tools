@@ -11,6 +11,7 @@ impl FormatNodeRule<TsMappedTypeOptionalModifierClause>
     for FormatTsMappedTypeOptionalModifierClause
 {
     fn fmt_fields(
+        &self,
         node: &TsMappedTypeOptionalModifierClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

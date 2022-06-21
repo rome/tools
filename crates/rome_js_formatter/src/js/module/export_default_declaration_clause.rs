@@ -8,6 +8,7 @@ pub struct FormatJsExportDefaultDeclarationClause;
 
 impl FormatNodeRule<JsExportDefaultDeclarationClause> for FormatJsExportDefaultDeclarationClause {
     fn fmt_fields(
+        &self,
         node: &JsExportDefaultDeclarationClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

@@ -7,7 +7,7 @@ use rome_js_syntax::{TsTypeofType, TsTypeofTypeFields};
 pub struct FormatTsTypeofType;
 
 impl FormatNodeRule<TsTypeofType> for FormatTsTypeofType {
-    fn fmt_fields(node: &TsTypeofType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsTypeofType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeofTypeFields {
             typeof_token,
             expression_name,

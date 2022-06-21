@@ -7,7 +7,7 @@ pub struct FormatJsModuleItemList;
 impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsModuleItemList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsModuleItemList, f: &mut JsFormatter) -> FormatResult<()> {
         let mut join = f.join_nodes_with_hardline();
 
         for module_item in node {

@@ -8,7 +8,11 @@ use rome_js_syntax::TsNonNullAssertionAssignmentFields;
 pub struct FormatTsNonNullAssertionAssignment;
 
 impl FormatNodeRule<TsNonNullAssertionAssignment> for FormatTsNonNullAssertionAssignment {
-    fn fmt_fields(node: &TsNonNullAssertionAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsNonNullAssertionAssignment,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsNonNullAssertionAssignmentFields {
             assignment,
             excl_token,

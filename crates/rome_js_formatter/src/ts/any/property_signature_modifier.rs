@@ -6,7 +6,7 @@ use rome_js_syntax::TsAnyPropertySignatureModifier;
 pub struct FormatTsAnyPropertySignatureModifier;
 impl FormatRule<TsAnyPropertySignatureModifier> for FormatTsAnyPropertySignatureModifier {
     type Context = JsFormatContext;
-    fn fmt(node: &TsAnyPropertySignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsAnyPropertySignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyPropertySignatureModifier::TsDeclareModifier(node) => node.format().fmt(f),
             TsAnyPropertySignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),

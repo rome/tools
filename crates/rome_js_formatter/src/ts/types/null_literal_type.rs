@@ -7,7 +7,7 @@ use rome_js_syntax::{TsNullLiteralType, TsNullLiteralTypeFields};
 pub struct FormatTsNullLiteralType;
 
 impl FormatNodeRule<TsNullLiteralType> for FormatTsNullLiteralType {
-    fn fmt_fields(node: &TsNullLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsNullLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsNullLiteralTypeFields { literal_token } = node.as_fields();
         write![f, [literal_token.format()]]
     }

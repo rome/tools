@@ -6,7 +6,7 @@ use rome_js_syntax::JsxAnyElementName;
 pub struct FormatJsxAnyElementName;
 impl FormatRule<JsxAnyElementName> for FormatJsxAnyElementName {
     type Context = JsFormatContext;
-    fn fmt(node: &JsxAnyElementName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsxAnyElementName, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsxAnyElementName::JsxName(node) => node.format().fmt(f),
             JsxAnyElementName::JsxReferenceIdentifier(node) => node.format().fmt(f),

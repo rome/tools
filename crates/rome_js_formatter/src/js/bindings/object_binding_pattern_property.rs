@@ -9,7 +9,11 @@ use rome_js_syntax::JsObjectBindingPatternPropertyFields;
 pub struct FormatJsObjectBindingPatternProperty;
 
 impl FormatNodeRule<JsObjectBindingPatternProperty> for FormatJsObjectBindingPatternProperty {
-    fn fmt_fields(node: &JsObjectBindingPatternProperty, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsObjectBindingPatternProperty,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectBindingPatternPropertyFields {
             member,
             colon_token,

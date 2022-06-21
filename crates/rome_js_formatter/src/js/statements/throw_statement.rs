@@ -10,7 +10,7 @@ use rome_js_syntax::JsThrowStatementFields;
 pub struct FormatJsThrowStatement;
 
 impl FormatNodeRule<JsThrowStatement> for FormatJsThrowStatement {
-    fn fmt_fields(node: &JsThrowStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsThrowStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsThrowStatementFields {
             throw_token,
             argument,

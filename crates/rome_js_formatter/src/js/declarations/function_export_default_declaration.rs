@@ -11,6 +11,7 @@ impl FormatNodeRule<JsFunctionExportDefaultDeclaration>
     for FormatJsFunctionExportDefaultDeclaration
 {
     fn fmt_fields(
+        &self,
         node: &JsFunctionExportDefaultDeclaration,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

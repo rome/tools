@@ -9,7 +9,11 @@ use rome_js_syntax::TsExportAsNamespaceClauseFields;
 pub struct FormatTsExportAsNamespaceClause;
 
 impl FormatNodeRule<TsExportAsNamespaceClause> for FormatTsExportAsNamespaceClause {
-    fn fmt_fields(node: &TsExportAsNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsExportAsNamespaceClause,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsExportAsNamespaceClauseFields {
             as_token,
             namespace_token,

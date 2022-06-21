@@ -10,7 +10,7 @@ use rome_js_syntax::{JsImportAssertionEntry, JsSyntaxKind};
 pub struct FormatJsImportAssertionEntry;
 
 impl FormatNodeRule<JsImportAssertionEntry> for FormatJsImportAssertionEntry {
-    fn fmt_fields(node: &JsImportAssertionEntry, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsImportAssertionEntry, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportAssertionEntryFields {
             key,
             colon_token,

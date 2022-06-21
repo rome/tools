@@ -10,7 +10,7 @@ use rome_js_syntax::JsDebuggerStatementFields;
 pub struct FormatJsDebuggerStatement;
 
 impl FormatNodeRule<JsDebuggerStatement> for FormatJsDebuggerStatement {
-    fn fmt_fields(node: &JsDebuggerStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsDebuggerStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDebuggerStatementFields {
             debugger_token,
             semicolon_token,

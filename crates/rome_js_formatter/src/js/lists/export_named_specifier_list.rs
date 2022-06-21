@@ -7,7 +7,7 @@ pub struct FormatJsExportNamedSpecifierList;
 impl FormatRule<JsExportNamedSpecifierList> for FormatJsExportNamedSpecifierList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsExportNamedSpecifierList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsExportNamedSpecifierList, f: &mut JsFormatter) -> FormatResult<()> {
         f.join_with(&soft_line_break_or_space())
             .entries(node.format_separated(JsSyntaxKind::COMMA))
             .finish()

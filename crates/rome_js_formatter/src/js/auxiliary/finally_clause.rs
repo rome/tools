@@ -8,7 +8,7 @@ use rome_js_syntax::JsFinallyClauseFields;
 pub struct FormatJsFinallyClause;
 
 impl FormatNodeRule<JsFinallyClause> for FormatJsFinallyClause {
-    fn fmt_fields(node: &JsFinallyClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsFinallyClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsFinallyClauseFields {
             finally_token,
             body,

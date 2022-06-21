@@ -8,7 +8,7 @@ use rome_js_syntax::{TsObjectType, TsObjectTypeFields};
 pub struct FormatTsObjectType;
 
 impl FormatNodeRule<TsObjectType> for FormatTsObjectType {
-    fn fmt_fields(node: &TsObjectType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsObjectType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsObjectTypeFields {
             l_curly_token,
             members,

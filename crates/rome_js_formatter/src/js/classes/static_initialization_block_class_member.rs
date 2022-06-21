@@ -11,6 +11,7 @@ impl FormatNodeRule<JsStaticInitializationBlockClassMember>
     for FormatJsStaticInitializationBlockClassMember
 {
     fn fmt_fields(
+        &self,
         node: &JsStaticInitializationBlockClassMember,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

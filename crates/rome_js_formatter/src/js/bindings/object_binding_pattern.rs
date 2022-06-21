@@ -8,7 +8,7 @@ use rome_js_syntax::JsObjectBindingPatternFields;
 pub struct FormatJsObjectBindingPattern;
 
 impl FormatNodeRule<JsObjectBindingPattern> for FormatJsObjectBindingPattern {
-    fn fmt_fields(node: &JsObjectBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsObjectBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {
         let JsObjectBindingPatternFields {
             l_curly_token,
             properties,

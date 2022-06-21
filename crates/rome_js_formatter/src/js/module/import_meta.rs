@@ -11,7 +11,7 @@ pub struct FormatImportMeta;
 pub struct FormatJsImportMeta;
 
 impl FormatNodeRule<ImportMeta> for FormatImportMeta {
-    fn fmt_fields(node: &ImportMeta, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &ImportMeta, f: &mut JsFormatter) -> FormatResult<()> {
         let ImportMetaFields {
             import_token,
             dot_token,

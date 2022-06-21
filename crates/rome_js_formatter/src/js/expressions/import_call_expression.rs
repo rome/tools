@@ -8,7 +8,7 @@ use rome_js_syntax::JsImportCallExpressionFields;
 pub struct FormatJsImportCallExpression;
 
 impl FormatNodeRule<JsImportCallExpression> for FormatJsImportCallExpression {
-    fn fmt_fields(node: &JsImportCallExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsImportCallExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportCallExpressionFields {
             import_token,
             arguments,

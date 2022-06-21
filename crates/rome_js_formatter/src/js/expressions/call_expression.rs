@@ -8,7 +8,7 @@ use rome_rowan::AstNode;
 pub struct FormatJsCallExpression;
 
 impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
-    fn fmt_fields(node: &JsCallExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsCallExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_call_expression(node.syntax(), formatter)
     }
 }

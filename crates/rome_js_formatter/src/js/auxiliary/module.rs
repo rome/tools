@@ -10,7 +10,7 @@ use rome_js_syntax::JsModuleFields;
 pub struct FormatJsModule;
 
 impl FormatNodeRule<JsModule> for FormatJsModule {
-    fn fmt_fields(node: &JsModule, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsModule, f: &mut JsFormatter) -> FormatResult<()> {
         let JsModuleFields {
             interpreter_token,
             directives,

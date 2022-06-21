@@ -9,6 +9,7 @@ pub struct FormatJsArrayBindingPatternRestElement;
 
 impl FormatNodeRule<JsArrayBindingPatternRestElement> for FormatJsArrayBindingPatternRestElement {
     fn fmt_fields(
+        &self,
         node: &JsArrayBindingPatternRestElement,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

@@ -8,7 +8,7 @@ use rome_rowan::AstNodeList;
 pub struct FormatJsSwitchStatement;
 
 impl FormatNodeRule<JsSwitchStatement> for FormatJsSwitchStatement {
-    fn fmt_fields(node: &JsSwitchStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsSwitchStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSwitchStatementFields {
             switch_token,
             l_paren_token,

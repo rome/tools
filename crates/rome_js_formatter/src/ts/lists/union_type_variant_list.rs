@@ -9,7 +9,7 @@ pub struct FormatTsUnionTypeVariantList;
 impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         f.join()

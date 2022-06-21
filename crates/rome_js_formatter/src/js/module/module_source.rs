@@ -9,7 +9,7 @@ use rome_js_syntax::JsModuleSourceFields;
 pub struct FormatJsModuleSource;
 
 impl FormatNodeRule<JsModuleSource> for FormatJsModuleSource {
-    fn fmt_fields(node: &JsModuleSource, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsModuleSource, f: &mut JsFormatter) -> FormatResult<()> {
         let JsModuleSourceFields { value_token } = node.as_fields();
 
         write!(

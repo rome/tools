@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyExportDefaultDeclaration;
 pub struct FormatJsAnyExportDefaultDeclaration;
 impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDeclaration {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyExportDefaultDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyExportDefaultDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {
                 node.format().fmt(f)

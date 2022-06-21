@@ -9,7 +9,7 @@ use rome_js_syntax::JsObjectExpressionFields;
 pub struct FormatJsObjectExpression;
 
 impl FormatNodeRule<JsObjectExpression> for FormatJsObjectExpression {
-    fn fmt_fields(node: &JsObjectExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsObjectExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsObjectExpressionFields {
             l_curly_token,
             members,

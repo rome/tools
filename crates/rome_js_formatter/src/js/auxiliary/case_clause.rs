@@ -9,7 +9,7 @@ use rome_rowan::AstNodeList;
 pub struct FormatJsCaseClause;
 
 impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
-    fn fmt_fields(node: &JsCaseClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsCaseClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCaseClauseFields {
             case_token,
             test,

@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyStatement;
 pub struct FormatJsAnyStatement;
 impl FormatRule<JsAnyStatement> for FormatJsAnyStatement {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyStatement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyStatement::JsBlockStatement(node) => node.format().fmt(f),
             JsAnyStatement::JsBreakStatement(node) => node.format().fmt(f),

@@ -7,7 +7,7 @@ use rome_js_syntax::{TsTypeParameters, TsTypeParametersFields};
 pub struct FormatTsTypeParameters;
 
 impl FormatNodeRule<TsTypeParameters> for FormatTsTypeParameters {
-    fn fmt_fields(node: &TsTypeParameters, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsTypeParameters, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeParametersFields {
             items,
             r_angle_token,

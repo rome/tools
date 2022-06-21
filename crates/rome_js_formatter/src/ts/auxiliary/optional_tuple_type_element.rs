@@ -7,7 +7,11 @@ use rome_js_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementField
 pub struct FormatTsOptionalTupleTypeElement;
 
 impl FormatNodeRule<TsOptionalTupleTypeElement> for FormatTsOptionalTupleTypeElement {
-    fn fmt_fields(node: &TsOptionalTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsOptionalTupleTypeElement,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsOptionalTupleTypeElementFields {
             ty,
             question_mark_token,

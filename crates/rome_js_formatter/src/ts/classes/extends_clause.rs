@@ -7,7 +7,7 @@ use rome_js_syntax::{TsExtendsClause, TsExtendsClauseFields};
 pub struct FormatTsExtendsClause;
 
 impl FormatNodeRule<TsExtendsClause> for FormatTsExtendsClause {
-    fn fmt_fields(node: &TsExtendsClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsExtendsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExtendsClauseFields {
             extends_token,
             types,

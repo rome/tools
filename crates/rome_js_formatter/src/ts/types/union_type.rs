@@ -9,7 +9,7 @@ use rome_js_syntax::{JsSyntaxKind, TsUnionType};
 pub struct FormatTsUnionType;
 
 impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
-    fn fmt_fields(node: &TsUnionType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsUnionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsUnionTypeFields {
             leading_separator_token,
             types,

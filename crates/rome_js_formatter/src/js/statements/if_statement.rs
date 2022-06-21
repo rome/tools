@@ -9,7 +9,7 @@ use rome_js_syntax::{JsAnyStatement, JsIfStatement};
 pub struct FormatJsIfStatement;
 
 impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
-    fn fmt_fields(node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsIfStatementFields {
             if_token,
             l_paren_token,

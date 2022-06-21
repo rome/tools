@@ -7,7 +7,7 @@ use rome_js_syntax::{JsxSelfClosingElement, JsxSelfClosingElementFields};
 pub struct FormatJsxSelfClosingElement;
 
 impl FormatNodeRule<JsxSelfClosingElement> for FormatJsxSelfClosingElement {
-    fn fmt_fields(node: &JsxSelfClosingElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxSelfClosingElement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxSelfClosingElementFields {
             l_angle_token,
             name,

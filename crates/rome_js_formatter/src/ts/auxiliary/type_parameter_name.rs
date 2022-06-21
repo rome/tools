@@ -7,7 +7,7 @@ use rome_js_syntax::{TsTypeParameterName, TsTypeParameterNameFields};
 pub struct FormatTsTypeParameterName;
 
 impl FormatNodeRule<TsTypeParameterName> for FormatTsTypeParameterName {
-    fn fmt_fields(node: &TsTypeParameterName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsTypeParameterName, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeParameterNameFields { ident_token } = node.as_fields();
 
         write![f, [ident_token.format()]]

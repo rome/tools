@@ -14,7 +14,7 @@ use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult};
 pub struct FormatJsCallArguments;
 
 impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
-    fn fmt_fields(node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCallArgumentsFields {
             l_paren_token,
             args,

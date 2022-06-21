@@ -9,7 +9,7 @@ pub struct FormatJsDirectiveList;
 impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsDirectiveList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsDirectiveList, f: &mut JsFormatter) -> FormatResult<()> {
         if node.is_empty() {
             return Ok(());
         }

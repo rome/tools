@@ -6,7 +6,7 @@ use rome_js_syntax::JsxAnyTag;
 pub struct FormatJsxAnyTag;
 impl FormatRule<JsxAnyTag> for FormatJsxAnyTag {
     type Context = JsFormatContext;
-    fn fmt(node: &JsxAnyTag, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsxAnyTag, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsxAnyTag::JsxElement(node) => node.format().fmt(f),
             JsxAnyTag::JsxSelfClosingElement(node) => node.format().fmt(f),

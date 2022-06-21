@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyLiteralExpression;
 pub struct FormatJsAnyLiteralExpression;
 impl FormatRule<JsAnyLiteralExpression> for FormatJsAnyLiteralExpression {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyLiteralExpression::JsStringLiteralExpression(node) => node.format().fmt(f),
             JsAnyLiteralExpression::JsNumberLiteralExpression(node) => node.format().fmt(f),

@@ -8,7 +8,7 @@ use rome_js_syntax::JsNamedImportSpecifierFields;
 pub struct FormatJsNamedImportSpecifier;
 
 impl FormatNodeRule<JsNamedImportSpecifier> for FormatJsNamedImportSpecifier {
-    fn fmt_fields(node: &JsNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNamedImportSpecifierFields {
             type_token,
             name,

@@ -10,7 +10,7 @@ use rome_js_syntax::JsWhileStatementFields;
 pub struct FormatJsWhileStatement;
 
 impl FormatNodeRule<JsWhileStatement> for FormatJsWhileStatement {
-    fn fmt_fields(node: &JsWhileStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsWhileStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsWhileStatementFields {
             while_token,
             l_paren_token,

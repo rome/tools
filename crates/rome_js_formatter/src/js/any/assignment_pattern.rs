@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyAssignmentPattern;
 pub struct FormatJsAnyAssignmentPattern;
 impl FormatRule<JsAnyAssignmentPattern> for FormatJsAnyAssignmentPattern {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyAssignmentPattern::JsAnyAssignment(node) => node.format().fmt(f),
             JsAnyAssignmentPattern::JsArrayAssignmentPattern(node) => node.format().fmt(f),

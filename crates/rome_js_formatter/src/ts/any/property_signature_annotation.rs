@@ -6,7 +6,11 @@ use rome_js_syntax::TsAnyPropertySignatureAnnotation;
 pub struct FormatTsAnyPropertySignatureAnnotation;
 impl FormatRule<TsAnyPropertySignatureAnnotation> for FormatTsAnyPropertySignatureAnnotation {
     type Context = JsFormatContext;
-    fn fmt(node: &TsAnyPropertySignatureAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(
+        &self,
+        node: &TsAnyPropertySignatureAnnotation,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         match node {
             TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => node.format().fmt(f),
             TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node) => {

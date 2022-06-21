@@ -8,7 +8,7 @@ pub struct FormatJsxChildList;
 impl FormatRule<JsxChildList> for FormatJsxChildList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_verbatim_node(node.syntax()).fmt(formatter)
+    fn fmt(&self, node: &JsxChildList, f: &mut JsFormatter) -> FormatResult<()> {
+        format_verbatim_node(node.syntax()).fmt(f)
     }
 }

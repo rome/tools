@@ -7,7 +7,7 @@ use rome_js_syntax::{JsxNamespaceName, JsxNamespaceNameFields};
 pub struct FormatJsxNamespaceName;
 
 impl FormatNodeRule<JsxNamespaceName> for FormatJsxNamespaceName {
-    fn fmt_fields(node: &JsxNamespaceName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxNamespaceName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxNamespaceNameFields {
             namespace,
             colon_token,

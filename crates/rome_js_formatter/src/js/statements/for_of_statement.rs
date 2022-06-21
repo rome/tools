@@ -9,7 +9,7 @@ use rome_js_syntax::JsForOfStatementFields;
 pub struct FormatJsForOfStatement;
 
 impl FormatNodeRule<JsForOfStatement> for FormatJsForOfStatement {
-    fn fmt_fields(node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForOfStatementFields {
             for_token,
             await_token,

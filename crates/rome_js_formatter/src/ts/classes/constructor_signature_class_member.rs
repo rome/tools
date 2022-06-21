@@ -10,6 +10,7 @@ pub struct FormatTsConstructorSignatureClassMember;
 
 impl FormatNodeRule<TsConstructorSignatureClassMember> for FormatTsConstructorSignatureClassMember {
     fn fmt_fields(
+        &self,
         node: &TsConstructorSignatureClassMember,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

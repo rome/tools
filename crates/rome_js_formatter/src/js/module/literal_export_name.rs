@@ -9,7 +9,7 @@ use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 pub struct FormatJsLiteralExportName;
 
 impl FormatNodeRule<JsLiteralExportName> for FormatJsLiteralExportName {
-    fn fmt_fields(node: &JsLiteralExportName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsLiteralExportName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsLiteralExportNameFields { value } = node.as_fields();
 
         let value = value?;

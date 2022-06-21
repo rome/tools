@@ -8,7 +8,7 @@ use rome_js_syntax::JsPrivateClassMemberNameFields;
 pub struct FormatJsPrivateClassMemberName;
 
 impl FormatNodeRule<JsPrivateClassMemberName> for FormatJsPrivateClassMemberName {
-    fn fmt_fields(node: &JsPrivateClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsPrivateClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPrivateClassMemberNameFields {
             hash_token,
             id_token,

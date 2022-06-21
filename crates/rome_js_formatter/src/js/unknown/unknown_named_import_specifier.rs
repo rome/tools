@@ -8,6 +8,7 @@ pub struct FormatJsUnknownNamedImportSpecifier;
 
 impl FormatNodeRule<JsUnknownNamedImportSpecifier> for FormatJsUnknownNamedImportSpecifier {
     fn fmt_fields(
+        &self,
         node: &JsUnknownNamedImportSpecifier,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {

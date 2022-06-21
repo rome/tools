@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyPropertyModifier;
 pub struct FormatJsAnyPropertyModifier;
 impl FormatRule<JsAnyPropertyModifier> for FormatJsAnyPropertyModifier {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyPropertyModifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyPropertyModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyPropertyModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
             JsAnyPropertyModifier::JsStaticModifier(node) => node.format().fmt(f),

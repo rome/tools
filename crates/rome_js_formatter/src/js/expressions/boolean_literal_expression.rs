@@ -8,7 +8,11 @@ use rome_js_syntax::JsBooleanLiteralExpressionFields;
 pub struct FormatJsBooleanLiteralExpression;
 
 impl FormatNodeRule<JsBooleanLiteralExpression> for FormatJsBooleanLiteralExpression {
-    fn fmt_fields(node: &JsBooleanLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsBooleanLiteralExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsBooleanLiteralExpressionFields { value_token } = node.as_fields();
 
         write![f, [value_token.format()]]

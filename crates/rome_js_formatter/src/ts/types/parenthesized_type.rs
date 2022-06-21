@@ -8,7 +8,7 @@ use rome_js_syntax::TsParenthesizedTypeFields;
 pub struct FormatTsParenthesizedType;
 
 impl FormatNodeRule<TsParenthesizedType> for FormatTsParenthesizedType {
-    fn fmt_fields(node: &TsParenthesizedType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsParenthesizedType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsParenthesizedTypeFields {
             l_paren_token,
             ty,

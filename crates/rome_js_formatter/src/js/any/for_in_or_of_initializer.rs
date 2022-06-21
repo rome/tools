@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyForInOrOfInitializer;
 pub struct FormatJsAnyForInOrOfInitializer;
 impl FormatRule<JsAnyForInOrOfInitializer> for FormatJsAnyForInOrOfInitializer {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyForInOrOfInitializer, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyForInOrOfInitializer, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(node) => node.format().fmt(f),
             JsAnyForInOrOfInitializer::JsForVariableDeclaration(node) => node.format().fmt(f),

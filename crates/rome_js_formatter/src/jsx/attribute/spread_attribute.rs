@@ -7,7 +7,7 @@ use rome_js_syntax::{JsxSpreadAttribute, JsxSpreadAttributeFields};
 pub struct FormatJsxSpreadAttribute;
 
 impl FormatNodeRule<JsxSpreadAttribute> for FormatJsxSpreadAttribute {
-    fn fmt_fields(node: &JsxSpreadAttribute, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxSpreadAttribute, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxSpreadAttributeFields {
             l_curly_token,
             dotdotdot_token,

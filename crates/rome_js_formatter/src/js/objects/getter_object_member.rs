@@ -8,7 +8,7 @@ use rome_js_syntax::JsGetterObjectMemberFields;
 pub struct FormatJsGetterObjectMember;
 
 impl FormatNodeRule<JsGetterObjectMember> for FormatJsGetterObjectMember {
-    fn fmt_fields(node: &JsGetterObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsGetterObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsGetterObjectMemberFields {
             get_token,
             name,

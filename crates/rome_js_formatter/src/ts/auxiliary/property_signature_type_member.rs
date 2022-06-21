@@ -8,7 +8,11 @@ use rome_js_syntax::{TsPropertySignatureTypeMember, TsPropertySignatureTypeMembe
 pub struct FormatTsPropertySignatureTypeMember;
 
 impl FormatNodeRule<TsPropertySignatureTypeMember> for FormatTsPropertySignatureTypeMember {
-    fn fmt_fields(node: &TsPropertySignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsPropertySignatureTypeMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsPropertySignatureTypeMemberFields {
             readonly_token,
             name,

@@ -8,7 +8,7 @@ use rome_js_syntax::{JsAnyExpression, JsReturnStatement, JsReturnStatementFields
 pub struct FormatJsReturnStatement;
 
 impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
-    fn fmt_fields(node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsReturnStatementFields {
             return_token,
             argument,

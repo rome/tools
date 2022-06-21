@@ -8,7 +8,7 @@ use rome_rowan::AstNodeList;
 pub struct FormatJsDefaultClause;
 
 impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
-    fn fmt_fields(node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDefaultClauseFields {
             default_token,
             colon_token,

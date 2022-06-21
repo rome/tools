@@ -7,7 +7,7 @@ use rome_js_syntax::{TsBooleanType, TsBooleanTypeFields};
 pub struct FormatTsBooleanType;
 
 impl FormatNodeRule<TsBooleanType> for FormatTsBooleanType {
-    fn fmt_fields(node: &TsBooleanType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsBooleanType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsBooleanTypeFields { boolean_token } = node.as_fields();
 
         write![f, [boolean_token.format()]]

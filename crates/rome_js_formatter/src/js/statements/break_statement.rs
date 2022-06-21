@@ -10,7 +10,7 @@ use rome_js_syntax::JsBreakStatementFields;
 pub struct FormatJsBreakStatement;
 
 impl FormatNodeRule<JsBreakStatement> for FormatJsBreakStatement {
-    fn fmt_fields(node: &JsBreakStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsBreakStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBreakStatementFields {
             break_token,
             label_token,

@@ -7,7 +7,11 @@ use rome_rowan::AstNode;
 pub struct FormatJsxOpeningElement;
 
 impl FormatNodeRule<JsxOpeningElement> for FormatJsxOpeningElement {
-    fn fmt_fields(node: &JsxOpeningElement, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsxOpeningElement,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         format_verbatim_node(node.syntax()).fmt(formatter)
     }
 }

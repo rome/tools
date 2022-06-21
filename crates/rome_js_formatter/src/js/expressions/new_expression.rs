@@ -8,7 +8,7 @@ use rome_js_syntax::{JsNewExpression, JsSyntaxKind};
 pub struct FormatJsNewExpression;
 
 impl FormatNodeRule<JsNewExpression> for FormatJsNewExpression {
-    fn fmt_fields(node: &JsNewExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsNewExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNewExpressionFields {
             new_token,
             callee,

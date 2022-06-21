@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyConstructorParameter;
 pub struct FormatJsAnyConstructorParameter;
 impl FormatRule<JsAnyConstructorParameter> for FormatJsAnyConstructorParameter {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyConstructorParameter, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyConstructorParameter, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyConstructorParameter::JsAnyFormalParameter(node) => node.format().fmt(f),
             JsAnyConstructorParameter::JsRestParameter(node) => node.format().fmt(f),

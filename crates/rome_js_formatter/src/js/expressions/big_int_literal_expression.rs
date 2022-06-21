@@ -11,7 +11,11 @@ use rome_js_syntax::JsBigIntLiteralExpressionFields;
 pub struct FormatJsBigIntLiteralExpression;
 
 impl FormatNodeRule<JsBigIntLiteralExpression> for FormatJsBigIntLiteralExpression {
-    fn fmt_fields(node: &JsBigIntLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsBigIntLiteralExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsBigIntLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
 

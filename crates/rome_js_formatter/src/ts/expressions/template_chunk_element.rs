@@ -7,7 +7,11 @@ use rome_js_syntax::{TsTemplateChunkElement, TsTemplateChunkElementFields};
 pub struct FormatTsTemplateChunkElement;
 
 impl FormatNodeRule<TsTemplateChunkElement> for FormatTsTemplateChunkElement {
-    fn fmt_fields(node: &TsTemplateChunkElement, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsTemplateChunkElement,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsTemplateChunkElementFields {
             template_chunk_token,
         } = node.as_fields();

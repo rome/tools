@@ -10,7 +10,7 @@ pub struct FormatTsTypeMemberList;
 impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &TsTypeMemberList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsTypeMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 

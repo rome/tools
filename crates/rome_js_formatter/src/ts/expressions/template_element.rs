@@ -7,7 +7,11 @@ use rome_js_syntax::TsTemplateElement;
 pub struct FormatTsTemplateElement;
 
 impl FormatNodeRule<TsTemplateElement> for FormatTsTemplateElement {
-    fn fmt_fields(node: &TsTemplateElement, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsTemplateElement,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         format_template_literal(TemplateElement::Ts(node.clone()), formatter)
     }
 }

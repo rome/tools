@@ -8,7 +8,7 @@ use rome_js_syntax::JsTemplateFields;
 pub struct FormatJsTemplate;
 
 impl FormatNodeRule<JsTemplate> for FormatJsTemplate {
-    fn fmt_fields(node: &JsTemplate, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsTemplate, f: &mut JsFormatter) -> FormatResult<()> {
         let JsTemplateFields {
             tag,
             type_arguments,

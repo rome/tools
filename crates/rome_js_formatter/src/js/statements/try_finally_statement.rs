@@ -8,7 +8,7 @@ use rome_js_syntax::JsTryFinallyStatementFields;
 pub struct FormatJsTryFinallyStatement;
 
 impl FormatNodeRule<JsTryFinallyStatement> for FormatJsTryFinallyStatement {
-    fn fmt_fields(node: &JsTryFinallyStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsTryFinallyStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsTryFinallyStatementFields {
             try_token,
             body,

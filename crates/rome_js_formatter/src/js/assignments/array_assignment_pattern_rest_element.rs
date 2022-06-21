@@ -11,6 +11,7 @@ impl FormatNodeRule<JsArrayAssignmentPatternRestElement>
     for FormatJsArrayAssignmentPatternRestElement
 {
     fn fmt_fields(
+        &self,
         node: &JsArrayAssignmentPatternRestElement,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

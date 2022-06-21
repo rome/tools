@@ -8,7 +8,7 @@ use rome_js_syntax::JsAssignmentExpression;
 pub struct FormatJsAssignmentExpression;
 
 impl FormatNodeRule<JsAssignmentExpression> for FormatJsAssignmentExpression {
-    fn fmt_fields(node: &JsAssignmentExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsAssignmentExpression, f: &mut JsFormatter) -> FormatResult<()> {
         write![f, [JsAnyAssignmentLike::from(node.clone())]]
     }
 }

@@ -10,7 +10,7 @@ use rome_js_syntax::JsWithStatementFields;
 pub struct FormatJsWithStatement;
 
 impl FormatNodeRule<JsWithStatement> for FormatJsWithStatement {
-    fn fmt_fields(node: &JsWithStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsWithStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsWithStatementFields {
             with_token,
             l_paren_token,

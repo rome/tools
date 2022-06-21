@@ -11,7 +11,7 @@ use rome_js_syntax::JsNamedImportSpecifiersFields;
 pub struct FormatJsImportNamedClause;
 
 impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
-    fn fmt_fields(node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportNamedClauseFields {
             type_token,
             default_specifier,

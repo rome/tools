@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyDeclaration;
 pub struct FormatJsAnyDeclaration;
 impl FormatRule<JsAnyDeclaration> for FormatJsAnyDeclaration {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyDeclaration::JsClassDeclaration(node) => node.format().fmt(f),
             JsAnyDeclaration::JsFunctionDeclaration(node) => node.format().fmt(f),

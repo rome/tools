@@ -8,7 +8,7 @@ use rome_js_syntax::TsConstructorTypeFields;
 pub struct FormatTsConstructorType;
 
 impl FormatNodeRule<TsConstructorType> for FormatTsConstructorType {
-    fn fmt_fields(node: &TsConstructorType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsConstructorType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsConstructorTypeFields {
             abstract_token,
             new_token,

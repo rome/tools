@@ -9,7 +9,7 @@ pub struct FormatJsCallArgumentList;
 impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsCallArgumentList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsCallArgumentList, f: &mut JsFormatter) -> FormatResult<()> {
         if node.len() == 0 {
             return Ok(());
         }

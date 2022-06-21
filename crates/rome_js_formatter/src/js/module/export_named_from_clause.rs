@@ -10,7 +10,7 @@ use rome_rowan::AstNode;
 pub struct FormatJsExportNamedFromClause;
 
 impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
-    fn fmt_fields(node: &JsExportNamedFromClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsExportNamedFromClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedFromClauseFields {
             type_token,
             l_curly_token,

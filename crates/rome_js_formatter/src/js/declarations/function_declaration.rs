@@ -7,7 +7,7 @@ use rome_js_syntax::{JsAnyFunction, JsFunctionDeclaration};
 pub struct FormatJsFunctionDeclaration;
 
 impl FormatNodeRule<JsFunctionDeclaration> for FormatJsFunctionDeclaration {
-    fn fmt_fields(node: &JsFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         write![f, [JsAnyFunction::from(node.clone()).format()]]
     }
 }

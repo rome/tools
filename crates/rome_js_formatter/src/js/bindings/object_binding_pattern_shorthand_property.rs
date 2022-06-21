@@ -11,6 +11,7 @@ impl FormatNodeRule<JsObjectBindingPatternShorthandProperty>
     for FormatJsObjectBindingPatternShorthandProperty
 {
     fn fmt_fields(
+        &self,
         node: &JsObjectBindingPatternShorthandProperty,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

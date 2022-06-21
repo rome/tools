@@ -8,7 +8,7 @@ use rome_js_syntax::{TsEnumMember, TsEnumMemberFields};
 pub struct FormatTsEnumMember;
 
 impl FormatNodeRule<TsEnumMember> for FormatTsEnumMember {
-    fn fmt_fields(node: &TsEnumMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsEnumMember, f: &mut JsFormatter) -> FormatResult<()> {
         let TsEnumMemberFields { name, initializer } = node.as_fields();
 
         write!(

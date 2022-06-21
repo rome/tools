@@ -8,7 +8,7 @@ use rome_js_syntax::JsInitializerClauseFields;
 pub struct FormatJsInitializerClause;
 
 impl FormatNodeRule<JsInitializerClause> for FormatJsInitializerClause {
-    fn fmt_fields(node: &JsInitializerClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsInitializerClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsInitializerClauseFields {
             eq_token,
             expression,

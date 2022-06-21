@@ -10,7 +10,7 @@ use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 pub struct FormatJsUnaryExpression;
 
 impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
-    fn fmt_fields(node: &JsUnaryExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsUnaryExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsUnaryExpressionFields {
             operator_token,
             argument,

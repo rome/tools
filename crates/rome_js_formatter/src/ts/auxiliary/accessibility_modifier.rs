@@ -8,7 +8,7 @@ use rome_js_syntax::TsAccessibilityModifierFields;
 pub struct FormatTsAccessibilityModifier;
 
 impl FormatNodeRule<TsAccessibilityModifier> for FormatTsAccessibilityModifier {
-    fn fmt_fields(node: &TsAccessibilityModifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsAccessibilityModifier, f: &mut JsFormatter) -> FormatResult<()> {
         let TsAccessibilityModifierFields { modifier_token } = node.as_fields();
 
         write![f, [modifier_token.format()]]

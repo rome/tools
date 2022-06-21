@@ -6,7 +6,11 @@ use rome_js_syntax::TsAnyExternalModuleDeclarationBody;
 pub struct FormatTsAnyExternalModuleDeclarationBody;
 impl FormatRule<TsAnyExternalModuleDeclarationBody> for FormatTsAnyExternalModuleDeclarationBody {
     type Context = JsFormatContext;
-    fn fmt(node: &TsAnyExternalModuleDeclarationBody, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(
+        &self,
+        node: &TsAnyExternalModuleDeclarationBody,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         match node {
             TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node) => {
                 node.format().fmt(f)

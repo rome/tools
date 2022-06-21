@@ -8,7 +8,7 @@ use rome_js_syntax::NewTargetFields;
 pub struct FormatNewTarget;
 
 impl FormatNodeRule<NewTarget> for FormatNewTarget {
-    fn fmt_fields(node: &NewTarget, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &NewTarget, f: &mut JsFormatter) -> FormatResult<()> {
         let NewTargetFields {
             new_token,
             dot_token,

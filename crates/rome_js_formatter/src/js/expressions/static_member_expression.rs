@@ -7,7 +7,7 @@ use rome_js_syntax::{JsStaticMemberExpression, JsStaticMemberExpressionFields};
 pub struct FormatJsStaticMemberExpression;
 
 impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression {
-    fn fmt_fields(node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStaticMemberExpressionFields {
             object,
             operator_token,

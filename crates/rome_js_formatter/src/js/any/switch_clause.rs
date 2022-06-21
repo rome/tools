@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnySwitchClause;
 pub struct FormatJsAnySwitchClause;
 impl FormatRule<JsAnySwitchClause> for FormatJsAnySwitchClause {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnySwitchClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnySwitchClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnySwitchClause::JsCaseClause(node) => node.format().fmt(f),
             JsAnySwitchClause::JsDefaultClause(node) => node.format().fmt(f),

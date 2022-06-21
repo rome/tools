@@ -6,7 +6,11 @@ use rome_js_syntax::JsAnyObjectAssignmentPatternMember;
 pub struct FormatJsAnyObjectAssignmentPatternMember;
 impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignmentPatternMember {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyObjectAssignmentPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(
+        &self,
+        node: &JsAnyObjectAssignmentPatternMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         match node {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
                 node,

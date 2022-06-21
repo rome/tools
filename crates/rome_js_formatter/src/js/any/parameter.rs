@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyParameter;
 pub struct FormatJsAnyParameter;
 impl FormatRule<JsAnyParameter> for FormatJsAnyParameter {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyParameter, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyParameter, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyParameter::JsAnyFormalParameter(node) => node.format().fmt(f),
             JsAnyParameter::JsRestParameter(node) => node.format().fmt(f),

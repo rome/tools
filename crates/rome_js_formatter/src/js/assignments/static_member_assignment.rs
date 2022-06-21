@@ -7,7 +7,7 @@ use rome_js_syntax::JsStaticMemberAssignmentFields;
 pub struct FormatJsStaticMemberAssignment;
 
 impl FormatNodeRule<JsStaticMemberAssignment> for FormatJsStaticMemberAssignment {
-    fn fmt_fields(node: &JsStaticMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsStaticMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStaticMemberAssignmentFields {
             object,
             dot_token,

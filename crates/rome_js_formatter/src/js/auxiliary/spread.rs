@@ -8,7 +8,7 @@ use rome_js_syntax::JsSpreadFields;
 pub struct FormatJsSpread;
 
 impl FormatNodeRule<JsSpread> for FormatJsSpread {
-    fn fmt_fields(node: &JsSpread, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsSpread, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSpreadFields {
             dotdotdot_token,
             argument,

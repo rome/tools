@@ -8,7 +8,11 @@ use rome_js_syntax::TsExternalModuleDeclarationFields;
 pub struct FormatTsExternalModuleDeclaration;
 
 impl FormatNodeRule<TsExternalModuleDeclaration> for FormatTsExternalModuleDeclaration {
-    fn fmt_fields(node: &TsExternalModuleDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsExternalModuleDeclaration,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsExternalModuleDeclarationFields {
             body,
             module_token,

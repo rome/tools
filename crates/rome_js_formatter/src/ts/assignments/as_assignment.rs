@@ -8,7 +8,7 @@ use rome_js_syntax::TsAsAssignmentFields;
 pub struct FormatTsAsAssignment;
 
 impl FormatNodeRule<TsAsAssignment> for FormatTsAsAssignment {
-    fn fmt_fields(node: &TsAsAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsAsAssignment, f: &mut JsFormatter) -> FormatResult<()> {
         let TsAsAssignmentFields {
             assignment,
             as_token,

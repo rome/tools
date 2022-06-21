@@ -7,7 +7,7 @@ use rome_js_syntax::{TsBigIntLiteralType, TsBigIntLiteralTypeFields};
 pub struct FormatTsBigIntLiteralType;
 
 impl FormatNodeRule<TsBigIntLiteralType> for FormatTsBigIntLiteralType {
-    fn fmt_fields(node: &TsBigIntLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsBigIntLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsBigIntLiteralTypeFields {
             minus_token,
             literal_token,

@@ -10,7 +10,7 @@ use rome_js_syntax::JsContinueStatementFields;
 pub struct FormatJsContinueStatement;
 
 impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
-    fn fmt_fields(node: &JsContinueStatement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsContinueStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsContinueStatementFields {
             continue_token,
             label_token,

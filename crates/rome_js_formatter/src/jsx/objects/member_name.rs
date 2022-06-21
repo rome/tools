@@ -7,7 +7,7 @@ use rome_js_syntax::{JsxMemberName, JsxMemberNameFields};
 pub struct FormatJsxMemberName;
 
 impl FormatNodeRule<JsxMemberName> for FormatJsxMemberName {
-    fn fmt_fields(node: &JsxMemberName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxMemberNameFields {
             object,
             dot_token,

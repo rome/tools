@@ -7,7 +7,11 @@ use rome_js_syntax::JsConditionalExpression;
 pub struct FormatJsConditionalExpression;
 
 impl FormatNodeRule<JsConditionalExpression> for FormatJsConditionalExpression {
-    fn fmt_fields(node: &JsConditionalExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsConditionalExpression,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         format_conditional(&Conditional::Expression(node.clone()), formatter, false)
     }
 }

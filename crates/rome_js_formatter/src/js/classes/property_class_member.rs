@@ -10,7 +10,7 @@ use rome_js_syntax::JsPropertyClassMemberFields;
 pub struct FormatJsPropertyClassMember;
 
 impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
-    fn fmt_fields(node: &JsPropertyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsPropertyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPropertyClassMemberFields {
             modifiers,
             name,

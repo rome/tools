@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyCallArgument;
 pub struct FormatJsAnyCallArgument;
 impl FormatRule<JsAnyCallArgument> for FormatJsAnyCallArgument {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyCallArgument, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyCallArgument, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyCallArgument::JsAnyExpression(node) => node.format().fmt(f),
             JsAnyCallArgument::JsSpread(node) => node.format().fmt(f),

@@ -7,7 +7,7 @@ use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 pub struct FormatTsInterfaceDeclaration;
 
 impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
-    fn fmt_fields(node: &TsInterfaceDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsInterfaceDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInterfaceDeclarationFields {
             interface_token,
             id,

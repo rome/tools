@@ -7,7 +7,7 @@ use rome_js_syntax::JsxTagExpression;
 pub struct FormatJsxTagExpression;
 
 impl FormatNodeRule<JsxTagExpression> for FormatJsxTagExpression {
-    fn fmt_fields(node: &JsxTagExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxTagExpression, f: &mut JsFormatter) -> FormatResult<()> {
         write![f, [node.tag().format()]]
     }
 }

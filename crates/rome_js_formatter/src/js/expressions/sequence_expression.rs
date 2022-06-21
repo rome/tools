@@ -9,7 +9,7 @@ use rome_rowan::AstNode;
 pub struct FormatJsSequenceExpression;
 
 impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
-    fn fmt_fields(node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let first_non_sequence_parent = node
             .syntax()
             .ancestors()

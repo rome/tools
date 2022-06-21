@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyTemplateElement;
 pub struct FormatJsAnyTemplateElement;
 impl FormatRule<JsAnyTemplateElement> for FormatJsAnyTemplateElement {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyTemplateElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyTemplateElement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyTemplateElement::JsTemplateChunkElement(node) => node.format().fmt(f),
             JsAnyTemplateElement::JsTemplateElement(node) => node.format().fmt(f),

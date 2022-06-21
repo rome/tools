@@ -8,7 +8,7 @@ use rome_js_syntax::JsPropertyObjectMember;
 pub struct FormatJsPropertyObjectMember;
 
 impl FormatNodeRule<JsPropertyObjectMember> for FormatJsPropertyObjectMember {
-    fn fmt_fields(node: &JsPropertyObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsPropertyObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         write![f, [JsAnyAssignmentLike::from(node.clone())]]
     }
 }

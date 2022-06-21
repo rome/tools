@@ -8,7 +8,7 @@ use rome_js_syntax::TsGlobalDeclarationFields;
 pub struct FormatTsGlobalDeclaration;
 
 impl FormatNodeRule<TsGlobalDeclaration> for FormatTsGlobalDeclaration {
-    fn fmt_fields(node: &TsGlobalDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsGlobalDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsGlobalDeclarationFields { global_token, body } = node.as_fields();
 
         write![f, [global_token.format(), space_token(), body.format()]]

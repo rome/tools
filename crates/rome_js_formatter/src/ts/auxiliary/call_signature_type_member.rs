@@ -8,7 +8,11 @@ use rome_js_syntax::{TsCallSignatureTypeMember, TsCallSignatureTypeMemberFields}
 pub struct FormatTsCallSignatureTypeMember;
 
 impl FormatNodeRule<TsCallSignatureTypeMember> for FormatTsCallSignatureTypeMember {
-    fn fmt_fields(node: &TsCallSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsCallSignatureTypeMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsCallSignatureTypeMemberFields {
             type_parameters,
             parameters,

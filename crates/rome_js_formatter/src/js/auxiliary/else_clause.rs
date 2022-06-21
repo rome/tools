@@ -10,7 +10,7 @@ use rome_js_syntax::JsElseClauseFields;
 pub struct FormatJsElseClause;
 
 impl FormatNodeRule<JsElseClause> for FormatJsElseClause {
-    fn fmt_fields(node: &JsElseClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsElseClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsElseClauseFields {
             else_token,
             alternate,

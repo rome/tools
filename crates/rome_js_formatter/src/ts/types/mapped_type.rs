@@ -8,7 +8,7 @@ use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 pub struct FormatTsMappedType;
 
 impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
-    fn fmt_fields(node: &TsMappedType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsMappedType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsMappedTypeFields {
             l_curly_token,
             readonly_modifier,

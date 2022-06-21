@@ -11,7 +11,11 @@ use rome_rowan::AstNode;
 pub struct FormatJsStringLiteralExpression;
 
 impl FormatNodeRule<JsStringLiteralExpression> for FormatJsStringLiteralExpression {
-    fn fmt_fields(node: &JsStringLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsStringLiteralExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsStringLiteralExpressionFields { value_token } = node.as_fields();
 
         let value_token = value_token?;

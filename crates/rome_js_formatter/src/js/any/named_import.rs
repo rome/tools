@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyNamedImport;
 pub struct FormatJsAnyNamedImport;
 impl FormatRule<JsAnyNamedImport> for FormatJsAnyNamedImport {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyNamedImport, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyNamedImport, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyNamedImport::JsNamedImportSpecifiers(node) => node.format().fmt(f),
             JsAnyNamedImport::JsNamespaceImportSpecifier(node) => node.format().fmt(f),

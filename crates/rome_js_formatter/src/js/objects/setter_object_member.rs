@@ -8,7 +8,7 @@ use rome_js_syntax::JsSetterObjectMemberFields;
 pub struct FormatJsSetterObjectMember;
 
 impl FormatNodeRule<JsSetterObjectMember> for FormatJsSetterObjectMember {
-    fn fmt_fields(node: &JsSetterObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsSetterObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSetterObjectMemberFields {
             set_token,
             name,

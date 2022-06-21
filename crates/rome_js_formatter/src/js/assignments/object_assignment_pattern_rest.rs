@@ -8,7 +8,11 @@ use rome_js_syntax::JsObjectAssignmentPatternRestFields;
 pub struct FormatJsObjectAssignmentPatternRest;
 
 impl FormatNodeRule<JsObjectAssignmentPatternRest> for FormatJsObjectAssignmentPatternRest {
-    fn fmt_fields(node: &JsObjectAssignmentPatternRest, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsObjectAssignmentPatternRest,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectAssignmentPatternRestFields {
             dotdotdot_token,
             target,

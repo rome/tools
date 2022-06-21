@@ -10,7 +10,7 @@ use rome_js_syntax::JsImportFields;
 pub struct FormatJsImport;
 
 impl FormatNodeRule<JsImport> for FormatJsImport {
-    fn fmt_fields(node: &JsImport, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsImport, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportFields {
             import_token,
             import_clause,

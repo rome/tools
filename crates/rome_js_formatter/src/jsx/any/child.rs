@@ -6,7 +6,7 @@ use rome_js_syntax::JsxAnyChild;
 pub struct FormatJsxAnyChild;
 impl FormatRule<JsxAnyChild> for FormatJsxAnyChild {
     type Context = JsFormatContext;
-    fn fmt(node: &JsxAnyChild, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsxAnyChild, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsxAnyChild::JsxElement(node) => node.format().fmt(f),
             JsxAnyChild::JsxSelfClosingElement(node) => node.format().fmt(f),

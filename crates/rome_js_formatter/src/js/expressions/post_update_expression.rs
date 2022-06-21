@@ -8,7 +8,7 @@ use rome_js_syntax::JsPostUpdateExpressionFields;
 pub struct FormatJsPostUpdateExpression;
 
 impl FormatNodeRule<JsPostUpdateExpression> for FormatJsPostUpdateExpression {
-    fn fmt_fields(node: &JsPostUpdateExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsPostUpdateExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPostUpdateExpressionFields {
             operand,
             operator_token,

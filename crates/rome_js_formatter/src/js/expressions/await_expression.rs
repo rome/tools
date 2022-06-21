@@ -8,7 +8,7 @@ use rome_js_syntax::JsAwaitExpressionFields;
 pub struct FormatJsAwaitExpression;
 
 impl FormatNodeRule<JsAwaitExpression> for FormatJsAwaitExpression {
-    fn fmt_fields(node: &JsAwaitExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsAwaitExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsAwaitExpressionFields {
             await_token,
             argument,

@@ -7,7 +7,11 @@ use rome_js_syntax::TsConditionalType;
 pub struct FormatTsConditionalType;
 
 impl FormatNodeRule<TsConditionalType> for FormatTsConditionalType {
-    fn fmt_fields(node: &TsConditionalType, formatter: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &TsConditionalType,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
         format_conditional(&Conditional::Type(node.clone()), formatter, false)
     }
 }

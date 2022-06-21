@@ -8,7 +8,7 @@ use rome_js_syntax::TsAsExpressionFields;
 pub struct FormatTsAsExpression;
 
 impl FormatNodeRule<TsAsExpression> for FormatTsAsExpression {
-    fn fmt_fields(node: &TsAsExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsAsExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let TsAsExpressionFields {
             ty,
             as_token,

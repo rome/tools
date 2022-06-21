@@ -11,7 +11,7 @@ use std::str::CharIndices;
 pub struct FormatJsxText;
 
 impl FormatNodeRule<JsxText> for FormatJsxText {
-    fn fmt_fields(node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxTextFields { value_token } = node.as_fields();
         let token = value_token?;
         let new_text = clean_jsx_text(token.text());

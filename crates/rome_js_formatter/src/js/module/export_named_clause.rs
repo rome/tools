@@ -10,7 +10,7 @@ use rome_js_syntax::JsExportNamedClauseFields;
 pub struct FormatJsExportNamedClause;
 
 impl FormatNodeRule<JsExportNamedClause> for FormatJsExportNamedClause {
-    fn fmt_fields(node: &JsExportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsExportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedClauseFields {
             type_token,
             l_curly_token,

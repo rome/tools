@@ -9,7 +9,6 @@ use std::{
 use git2::{Repository, Status, StatusOptions};
 use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
-use ungrammar::Token;
 use xtask::project_root;
 
 use crate::ast::load_js_ast;
@@ -319,7 +318,7 @@ pub fn generate_formatter() {
                 impl FormatRule<#node_id> for #format_id {
                     type Context = JsFormatContext;
 
-                    fn fmt(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                    fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                         f.join().entries(node.iter().formatted()).finish()
                     }
                 }
@@ -334,7 +333,7 @@ pub fn generate_formatter() {
                 impl FormatRule<#node_id> for #format_id {
                     type Context = JsFormatContext;
 
-                    fn fmt(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                    fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                         format_verbatim_node(node.syntax()).fmt(f)
                     }
                 }
@@ -350,7 +349,7 @@ pub fn generate_formatter() {
                     pub struct #format_id;
 
                     impl FormatNodeRule<#node_id> for #format_id {
-                        fn fmt_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        fn fmt_fields(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             format_verbatim_node(node.syntax()).fmt(f)
                         }
                     }
@@ -367,7 +366,7 @@ pub fn generate_formatter() {
                     pub struct #format_id;
 
                     impl FormatNodeRule<#node_id> for #format_id {
-                        fn fmt_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        fn fmt_fields(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             format_unknown_node(node.syntax()).fmt(f)
                         }
                     }
@@ -393,7 +392,7 @@ pub fn generate_formatter() {
                     impl FormatRule<#node_id> for #format_id {
                         type Context = JsFormatContext;
 
-                        fn fmt(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             match node {
                                 #( #match_arms )*
                             }
@@ -441,8 +440,8 @@ impl BoilerplateImpls {
             _ => quote! {
                 impl FormatRule<rome_js_syntax::#node_id> for #format_id {
                    type Context = JsFormatContext;
-                    fn fmt(node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
-                        <#format_id as FormatNodeRule<rome_js_syntax::#node_id>>::fmt(node, f)
+                    fn fmt(&self, node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        FormatNodeRule::<rome_js_syntax::#node_id>::fmt(self, node, f)
                     }
                 }
             },
@@ -455,7 +454,7 @@ impl BoilerplateImpls {
                 type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
 
                 fn format(&'a self) -> Self::Format {
-                    FormatRefWithRule::new(self)
+                    FormatRefWithRule::new(self, #format_id::default())
                 }
             }
 
@@ -463,7 +462,7 @@ impl BoilerplateImpls {
                 type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, #format_id>;
 
                 fn into_format(self) -> Self::Format {
-                    FormatOwnedWithRule::new(self)
+                    FormatOwnedWithRule::new(self, #format_id::default())
                 }
             }
         });
@@ -560,15 +559,6 @@ impl NodeModuleInformation {
             .join(self.language.as_str())
             .join(self.concept.as_str())
             .join(&format!("{}.rs", self.name))
-    }
-
-    fn as_specifier(&self) -> String {
-        format!(
-            "crate::{}::{}::{}",
-            self.language.as_str(),
-            self.concept.as_str(),
-            self.name
-        )
     }
 }
 

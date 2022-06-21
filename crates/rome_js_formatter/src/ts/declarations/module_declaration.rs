@@ -8,7 +8,7 @@ use rome_js_syntax::TsModuleDeclarationFields;
 pub struct FormatTsModuleDeclaration;
 
 impl FormatNodeRule<TsModuleDeclaration> for FormatTsModuleDeclaration {
-    fn fmt_fields(node: &TsModuleDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsModuleDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsModuleDeclarationFields {
             module_or_namespace,
             name,

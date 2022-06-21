@@ -6,7 +6,7 @@ use rome_js_syntax::TsAnyVariableAnnotation;
 pub struct FormatTsAnyVariableAnnotation;
 impl FormatRule<TsAnyVariableAnnotation> for FormatTsAnyVariableAnnotation {
     type Context = JsFormatContext;
-    fn fmt(node: &TsAnyVariableAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsAnyVariableAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             TsAnyVariableAnnotation::TsTypeAnnotation(node) => node.format().fmt(f),
             TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node) => node.format().fmt(f),

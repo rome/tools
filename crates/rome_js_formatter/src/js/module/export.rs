@@ -8,7 +8,7 @@ use rome_js_syntax::JsExportFields;
 pub struct FormatJsExport;
 
 impl FormatNodeRule<JsExport> for FormatJsExport {
-    fn fmt_fields(node: &JsExport, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsExport, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportFields {
             export_token,
             export_clause,

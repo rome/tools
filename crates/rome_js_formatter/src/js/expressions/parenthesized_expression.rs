@@ -14,7 +14,11 @@ use rome_rowan::{AstNode, SyntaxResult};
 pub struct FormatJsParenthesizedExpression;
 
 impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpression {
-    fn fmt_fields(node: &JsParenthesizedExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsParenthesizedExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsParenthesizedExpressionFields {
             l_paren_token,
             expression,

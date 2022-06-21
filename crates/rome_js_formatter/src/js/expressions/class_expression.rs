@@ -7,7 +7,7 @@ use rome_js_syntax::JsClassExpression;
 pub struct FormatJsClassExpression;
 
 impl FormatNodeRule<JsClassExpression> for FormatJsClassExpression {
-    fn fmt_fields(node: &JsClassExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsClassExpression, f: &mut JsFormatter) -> FormatResult<()> {
         FormatClass::from(&node.clone().into()).fmt(f)
     }
 }

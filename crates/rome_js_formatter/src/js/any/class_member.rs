@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyClassMember;
 pub struct FormatJsAnyClassMember;
 impl FormatRule<JsAnyClassMember> for FormatJsAnyClassMember {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyClassMember::JsConstructorClassMember(node) => node.format().fmt(f),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(node) => node.format().fmt(f),

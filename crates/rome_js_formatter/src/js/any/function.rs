@@ -11,7 +11,7 @@ pub struct FormatJsAnyFunction;
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(async_token) = node.async_token() {
             write!(f, [async_token.format(), space_token()])?;
         }

@@ -9,6 +9,7 @@ impl FormatRule<JsArrayBindingPatternElementList> for FormatJsArrayBindingPatter
     type Context = JsFormatContext;
 
     fn fmt(
+        &self,
         node: &JsArrayBindingPatternElementList,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {

@@ -7,7 +7,11 @@ use rome_js_syntax::JsClassExportDefaultDeclaration;
 pub struct FormatJsClassExportDefaultDeclaration;
 
 impl FormatNodeRule<JsClassExportDefaultDeclaration> for FormatJsClassExportDefaultDeclaration {
-    fn fmt_fields(node: &JsClassExportDefaultDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsClassExportDefaultDeclaration,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         FormatClass::from(&node.clone().into()).fmt(f)
     }
 }

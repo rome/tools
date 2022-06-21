@@ -8,7 +8,7 @@ pub struct FormatTsPropertySignatureModifierList;
 impl FormatRule<TsPropertySignatureModifierList> for FormatTsPropertySignatureModifierList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &TsPropertySignatureModifierList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsPropertySignatureModifierList, f: &mut JsFormatter) -> FormatResult<()> {
         f.join_with(&space_token())
             .entries(sort_modifiers_by_precedence(node).into_iter().formatted())
             .finish()

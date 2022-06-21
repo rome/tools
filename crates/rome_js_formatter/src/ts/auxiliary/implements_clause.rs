@@ -8,7 +8,7 @@ use rome_js_syntax::TsImplementsClauseFields;
 pub struct FormatTsImplementsClause;
 
 impl FormatNodeRule<TsImplementsClause> for FormatTsImplementsClause {
-    fn fmt_fields(node: &TsImplementsClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsImplementsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImplementsClauseFields {
             implements_token,
             types,

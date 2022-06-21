@@ -8,7 +8,11 @@ use rome_js_syntax::JsNamespaceImportSpecifierFields;
 pub struct FormatJsNamespaceImportSpecifier;
 
 impl FormatNodeRule<JsNamespaceImportSpecifier> for FormatJsNamespaceImportSpecifier {
-    fn fmt_fields(node: &JsNamespaceImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsNamespaceImportSpecifier,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsNamespaceImportSpecifierFields {
             star_token,
             as_token,

@@ -6,7 +6,7 @@ use rome_js_syntax::JsAnyRoot;
 pub struct FormatJsAnyRoot;
 impl FormatRule<JsAnyRoot> for FormatJsAnyRoot {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyRoot, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyRoot, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyRoot::JsScript(node) => node.format().fmt(f),
             JsAnyRoot::JsModule(node) => node.format().fmt(f),

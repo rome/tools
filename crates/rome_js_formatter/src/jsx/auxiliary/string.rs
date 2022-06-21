@@ -7,7 +7,7 @@ use rome_js_syntax::JsxString;
 pub struct FormatJsxString;
 
 impl FormatNodeRule<JsxString> for FormatJsxString {
-    fn fmt_fields(node: &JsxString, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxString, f: &mut JsFormatter) -> FormatResult<()> {
         write![f, [node.value_token().format()]]
     }
 }

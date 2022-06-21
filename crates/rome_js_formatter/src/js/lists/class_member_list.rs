@@ -7,7 +7,7 @@ pub struct FormatJsClassMemberList;
 impl FormatRule<JsClassMemberList> for FormatJsClassMemberList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsClassMemberList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsClassMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let mut join = f.join_nodes_with_hardline();
 
         for member in node {

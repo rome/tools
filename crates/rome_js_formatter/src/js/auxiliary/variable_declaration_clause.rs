@@ -8,7 +8,11 @@ use rome_js_syntax::JsVariableDeclarationClauseFields;
 pub struct FormatJsVariableDeclarationClause;
 
 impl FormatNodeRule<JsVariableDeclarationClause> for FormatJsVariableDeclarationClause {
-    fn fmt_fields(node: &JsVariableDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(
+        &self,
+        node: &JsVariableDeclarationClause,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsVariableDeclarationClauseFields {
             declaration,
             semicolon_token,

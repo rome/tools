@@ -11,6 +11,7 @@ impl FormatNodeRule<TsMappedTypeReadonlyModifierClause>
     for FormatTsMappedTypeReadonlyModifierClause
 {
     fn fmt_fields(
+        &self,
         node: &TsMappedTypeReadonlyModifierClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

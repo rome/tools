@@ -7,7 +7,7 @@ use rome_js_syntax::{TsNonPrimitiveType, TsNonPrimitiveTypeFields};
 pub struct FormatTsNonPrimitiveType;
 
 impl FormatNodeRule<TsNonPrimitiveType> for FormatTsNonPrimitiveType {
-    fn fmt_fields(node: &TsNonPrimitiveType, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &TsNonPrimitiveType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsNonPrimitiveTypeFields { object_token } = node.as_fields();
 
         write![f, [object_token.format()]]

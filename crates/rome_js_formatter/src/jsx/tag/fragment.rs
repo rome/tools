@@ -7,7 +7,7 @@ use rome_js_syntax::{JsxFragment, JsxFragmentFields};
 pub struct FormatJsxFragment;
 
 impl FormatNodeRule<JsxFragment> for FormatJsxFragment {
-    fn fmt_fields(node: &JsxFragment, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt_fields(&self, node: &JsxFragment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxFragmentFields {
             opening_fragment,
             children,
