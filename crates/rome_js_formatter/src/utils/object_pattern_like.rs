@@ -29,6 +29,13 @@ impl JsObjectPatternLike {
         }
     }
 
+    fn properties_len(&self) -> usize {
+        match self {
+            JsObjectPatternLike::JsObjectAssignmentPattern(node) => node.properties().len(),
+            JsObjectPatternLike::JsObjectBindingPattern(node) => node.properties().len(),
+        }
+    }
+
     fn write_properties(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             JsObjectPatternLike::JsObjectAssignmentPattern(node) => {
@@ -97,11 +104,24 @@ impl JsObjectPatternLike {
 
         Ok(parent_where_not_to_break && has_at_least_a_complex_property)
     }
+
+    fn is_in_assignment_like(&self) -> bool {
+        if let JsObjectPatternLike::JsObjectAssignmentPattern(pattern) = self {
+            let parent_kind = pattern.syntax().parent().map(|p| p.kind());
+            matches!(
+                parent_kind,
+                Some(JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION | JsSyntaxKind::JS_VARIABLE_DECLARATOR)
+            )
+        } else {
+            false
+        }
+    }
 }
 
 impl Format<JsFormatContext> for JsObjectPatternLike {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let should_break_properties = self.should_break_properties()?;
+        let properties_len = self.properties_len();
 
         if should_break_properties {
             write!(
