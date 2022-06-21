@@ -1,5 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+mod no_async_promise_executor;
+pub(crate) use no_async_promise_executor::NoAsyncPromiseExecutor;
 mod no_compare_neg_zero;
 pub(crate) use no_compare_neg_zero::NoCompareNegZero;
 mod no_debugger;
