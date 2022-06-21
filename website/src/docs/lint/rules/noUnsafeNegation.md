@@ -13,25 +13,10 @@ Disallow using unsafe negation.
 
 ```jsx
 -1 in [1,2];
-```
-
-```jsx
 ~1 in [1,2];
-```
-
-```jsx
 typeof 1 in [1,2];
-```
-
-```jsx
 void 1 in [1,2];
-```
-
-```jsx
 delete 1 in [1,2];
-```
-
-```jsx
 +1 instanceof [1,2];
 ```
 
