@@ -70,9 +70,9 @@ Disallow negation in the condition of an <code>if</code> statement if it has an 
 Disallow sparse arrays
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="NoUnsafeNegation">
-	<a href="/docs/lint/rules/NoUnsafeNegation">NoUnsafeNegation</a>
-	<a class="header-anchor" href="#NoUnsafeNegation"></a>
+<h3 data-toc-exclude id="noUnsafeNegation">
+	<a href="/docs/lint/rules/noUnsafeNegation">noUnsafeNegation</a>
+	<a class="header-anchor" href="#noUnsafeNegation"></a>
 </h3>
 Disallow using unsafe negation.
 </div>

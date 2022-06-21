@@ -40,7 +40,7 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// /**test*/!/** test*/1 instanceof [1,2];
     /// ```
-    pub(crate) NoUnsafeNegation = "NoUnsafeNegation"
+    pub(crate) NoUnsafeNegation = "noUnsafeNegation"
 }
 
 impl Rule for NoUnsafeNegation {
@@ -143,7 +143,7 @@ impl Rule for NoUnsafeNegation {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Replace with string literal" }.to_owned(),
+            message: markup! { "Wrap the expression with a parenthesis" }.to_owned(),
             root,
         })
     }
