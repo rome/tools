@@ -8,24 +8,14 @@ declare_rule! {
     /// ## Examples
     ///
     /// ### Valid
+    /// The following cases are valid because they create new bindings.
     ///
     /// ```js
     /// var {a = {}} = foo;
-    /// ```
-    /// ```js
     /// var {a, b = {}} = foo;
-    /// ```
-    /// ```js
     /// var {a = []} = foo;
-    /// ```
-    /// ```js
     /// function foo({a = {}}) {}
-    /// ```
-    ///
-    /// ```js
     /// function foo({a = []}) {}
-    /// ```
-    /// ```js
     /// var [a] = foo;
     /// ```
     ///
@@ -36,35 +26,11 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// var [] = foo;
-    /// ```
-    ///
-    /// ```js,expect_diagnostic
     /// var {a: {}} = foo;
-    /// ```
-    ///
-    ///  ```js,expect_diagnostic
-    /// var {a, b: {}} = foo;
-    /// ```
-    ///
-    /// ```js,expect_diagnostic
-    /// var {a: []} = foo;
     /// ```
     ///
     /// ```js,expect_diagnostic
     /// function foo({}) {}
-    /// ```
-    ///
-    /// ```js,expect_diagnostic
-    /// function foo([]) {}
-    /// ```
-    ///
-    /// ```js,expect_diagnostic
-    /// function foo({a: {}}) {}
-    /// ```
-    ///
-    /// ```js,expect_diagnostic
-    /// function foo({a: []}) {}
     /// ```
     ///
     pub(crate) NoEmptyPattern = "noEmptyPattern"
