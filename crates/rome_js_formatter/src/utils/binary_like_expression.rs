@@ -261,7 +261,7 @@ fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
 /// the indentation, then there's no need to do a second indentation.
 fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
     let parent = current_node.syntax().parent();
-    let parent_kind = parent.map(|node| node.kind());
+    let parent_kind = parent.as_ref().map(|node| node.kind());
 
     let great_parent = parent.and_then(|parent| parent.parent());
     let great_parent_kind = great_parent.map(|node| node.kind());
