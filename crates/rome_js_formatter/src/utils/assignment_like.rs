@@ -103,7 +103,7 @@ impl LeftAssignmentLike {
     }
 }
 
-pub(crate) fn has_complex_type_annotation(
+pub(crate) fn is_complex_type_annotation(
     annotation: TsAnyVariableAnnotation,
 ) -> SyntaxResult<bool> {
     let is_complex = annotation
@@ -544,7 +544,7 @@ impl JsAnyAssignmentLike {
 
         let has_complex_type_annotation = self
             .annotation()
-            .and_then(|annotation| has_complex_type_annotation(annotation).ok())
+            .and_then(|annotation| is_complex_type_annotation(annotation).ok())
             .unwrap_or(false);
 
         Ok(is_complex_destructuring || has_complex_type_annotation)
