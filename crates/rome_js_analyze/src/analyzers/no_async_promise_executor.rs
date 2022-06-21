@@ -1,25 +1,22 @@
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsAnyExpression, JsArrowFunctionExpression, JsFunctionExpression, JsNewExpression,
-    JsNewExpressionFields,
-};
-use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
+use rome_js_syntax::{JsAnyExpression, JsAnyFunction, JsNewExpression, JsNewExpressionFields};
+use rome_rowan::{AstNode, AstSeparatedList};
 
 declare_rule! {
     /// Disallows using an async function as a Promise executor.
-	/// The executor function can also be an async function. However, this is usually a mistake, for a few reasons:
-	/// If an async executor function throws an error, the error will be lost and won't cause the newly-constructed `Promise` to reject. This could make it difficult to debug and handle some errors.
-	/// If a Promise executor function is using `await`, this is usually a sign that it is not actually necessary to use the `new Promise` constructor, or the scope of the `new Promise` constructor can be reduced.
+    /// The executor function can also be an async function. However, this is usually a mistake, for a few reasons:
+    /// If an async executor function throws an error, the error will be lost and won't cause the newly-constructed `Promise` to reject. This could make it difficult to debug and handle some errors.
+    /// If a Promise executor function is using `await`, this is usually a sign that it is not actually necessary to use the `new Promise` constructor, or the scope of the `new Promise` constructor can be reduced.
     ///
     /// ## Examples
     /// ### Valid
     ///
     /// ```js
     ///   new Promise((resolve, reject) => {})
-	///   new Promise((resolve, reject) => {}, async function unrelated() {})
-	///   new Foo(async (resolve, reject) => {})
-	///   new Foo((( (resolve, reject) => {} )))
+    ///   new Promise((resolve, reject) => {}, async function unrelated() {})
+    ///   new Foo(async (resolve, reject) => {})
+    ///   new Foo((( (resolve, reject) => {} )))
     /// ```
     ///
     /// ### Invalid
@@ -42,7 +39,7 @@ impl Rule for NoAsyncPromiseExecutor {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsNewExpression;
-    type State = JsAnyFunctionExpressionLike;
+    type State = JsAnyFunction;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
@@ -56,7 +53,7 @@ impl Rule for NoAsyncPromiseExecutor {
         let is_promise_constructor = callee
             .as_js_identifier_expression()
             .and_then(|ident| ident.name().ok())
-            .map_or(false, |name| name.syntax().text() == "Promise");
+            .map_or(false, |name| name.syntax().text_trimmed() == "Promise");
         if !is_promise_constructor {
             return None;
         }
@@ -85,24 +82,18 @@ impl Rule for NoAsyncPromiseExecutor {
 ///  ```js
 /// ((((((async function () {}))))))
 /// ```
-fn get_async_function_expression_like(
-    expr: &JsAnyExpression,
-) -> Option<JsAnyFunctionExpressionLike> {
+fn get_async_function_expression_like(expr: &JsAnyExpression) -> Option<JsAnyFunction> {
     match expr {
         JsAnyExpression::JsFunctionExpression(func) => func
             .async_token()
-            .map(|_| JsAnyFunctionExpressionLike::JsFunctionExpression(func.clone())),
+            .map(|_| JsAnyFunction::JsFunctionExpression(func.clone())),
         JsAnyExpression::JsArrowFunctionExpression(func) => func
             .async_token()
-            .map(|_| JsAnyFunctionExpressionLike::JsArrowFunctionExpression(func.clone())),
+            .map(|_| JsAnyFunction::JsArrowFunctionExpression(func.clone())),
         JsAnyExpression::JsParenthesizedExpression(expr) => {
             let inner_expression = expr.expression().ok()?;
             get_async_function_expression_like(&inner_expression)
         }
         _ => None,
     }
-}
-
-declare_node_union! {
-    pub(crate) JsAnyFunctionExpressionLike = JsFunctionExpression | JsArrowFunctionExpression
 }

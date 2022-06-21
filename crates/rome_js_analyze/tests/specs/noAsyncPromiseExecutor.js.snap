@@ -18,7 +18,7 @@ new Promise(((((async () => {})))))
 
 # Diagnostics
 ```
-warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
+warning[noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
   ┌─ noAsyncPromiseExecutor.js:7:13
   │
 7 │ new Promise(async function foo(resolve, reject) {})
@@ -28,7 +28,7 @@ warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
 ```
 
 ```
-warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
+warning[noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
   ┌─ noAsyncPromiseExecutor.js:8:13
   │
 8 │ new Promise(async (resolve, reject) => {})
@@ -38,7 +38,7 @@ warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
 ```
 
 ```
-warning[noAsyncPromiseExecutor]: Promise executor functions should not be async.
+warning[noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
   ┌─ noAsyncPromiseExecutor.js:9:17
   │
 9 │ new Promise(((((async () => {})))))

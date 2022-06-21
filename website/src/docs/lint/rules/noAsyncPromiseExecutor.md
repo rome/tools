@@ -27,7 +27,7 @@ If a Promise executor function is using `await`, this is usually a sign that it 
 new Promise(async function foo(resolve, reject) {})
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noAsyncPromiseExecutor</span><span style="color: Orange;">]</span><em>: </em><em>Promise executor functions should not be async.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noAsyncPromiseExecutor</span><span style="color: Orange;">]</span><em>: </em><em>Promise executor functions should not be `async`.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> noAsyncPromiseExecutor.js:1:13
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> new Promise(async function foo(resolve, reject) {})
@@ -39,7 +39,7 @@ new Promise(async function foo(resolve, reject) {})
   new Promise(async (resolve, reject) => {})
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noAsyncPromiseExecutor</span><span style="color: Orange;">]</span><em>: </em><em>Promise executor functions should not be async.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noAsyncPromiseExecutor</span><span style="color: Orange;">]</span><em>: </em><em>Promise executor functions should not be `async`.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> noAsyncPromiseExecutor.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>   new Promise(async (resolve, reject) =&gt; {})
@@ -51,7 +51,7 @@ new Promise(async function foo(resolve, reject) {})
   new Promise(((((async () => {})))))
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noAsyncPromiseExecutor</span><span style="color: Orange;">]</span><em>: </em><em>Promise executor functions should not be async.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noAsyncPromiseExecutor</span><span style="color: Orange;">]</span><em>: </em><em>Promise executor functions should not be `async`.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> noAsyncPromiseExecutor.js:1:19
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>   new Promise(((((async () =&gt; {})))))
