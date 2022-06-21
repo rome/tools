@@ -78,7 +78,7 @@ impl Rule for NoAsyncPromiseExecutor {
         Some(RuleDiagnostic::warning(
             state.range(),
             markup! {
-                "Promise executor functions should not be async."
+                "Promise executor functions should not be `async`."
             },
         ))
     }
