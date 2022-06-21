@@ -61,7 +61,8 @@ impl Rule for UseShorthandArrayType {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" to replace" }.to_owned(),
+            message: markup! { "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" to replace" }
+                .to_owned(),
             root,
         })
     }
