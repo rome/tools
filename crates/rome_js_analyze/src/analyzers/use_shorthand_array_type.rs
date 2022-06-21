@@ -48,7 +48,8 @@ impl Rule for UseShorthandArrayType {
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
-                "Use shorthand T[] syntax instead of Array<T> syntax."
+
+                "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" instead of "<Emphasis>"Array<T> syntax."</Emphasis>""
             },
         ))
     }
@@ -60,7 +61,7 @@ impl Rule for UseShorthandArrayType {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use a [] to replace" }.to_owned(),
+            message: markup! { "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" to replace" }.to_owned(),
             root,
         })
     }
