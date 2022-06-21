@@ -20,13 +20,13 @@ declare_rule! {
     /// ```ts
     /// let valid: Array<Foo | Bar>;
     /// ```
-	///
-	/// ```ts
-	/// let valid: Array<keyof Bar>;
-	/// ```
-	/// ```ts
-	/// let valid: Array<foo | bar>;
-	/// ```
+    ///
+    /// ```ts
+    /// let valid: Array<keyof Bar>;
+    /// ```
+    /// ```ts
+    /// let valid: Array<foo | bar>;
+    /// ```
     ///
     /// ### Invalid
     /// ```ts,expect_diagnostic
