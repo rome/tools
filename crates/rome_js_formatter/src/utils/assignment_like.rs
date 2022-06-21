@@ -103,6 +103,7 @@ impl LeftAssignmentLike {
     }
 }
 
+/// [Prettier applies]: https://github.com/prettier/prettier/blob/fde0b49d7866e203ca748c306808a87b7c15548f/src/language-js/print/assignment.js#L278
 pub(crate) fn is_complex_type_annotation(
     annotation: TsAnyVariableAnnotation,
 ) -> SyntaxResult<bool> {
