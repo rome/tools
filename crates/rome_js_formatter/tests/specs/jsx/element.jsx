@@ -144,3 +144,9 @@ let component = (
 // spacing
 let a = <a>{' '}</a>
 let b = <a>{" "}</a>
+
+// comments
+let a = <a>{ /* comment */ " " /* comment */ }</a>;
+let a = <a>{  " "
+	/* comment */ }</a>;
+let a = <a>{ /* comment */ " " }</a>;
