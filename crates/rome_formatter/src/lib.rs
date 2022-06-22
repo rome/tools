@@ -1156,7 +1156,7 @@ impl<Context> FormatState<Context> {
     }
 
     /// Sets whether the last written content is an inline comment that has no trailing whitespace.
-    pub fn set_last_content_is_inline_comment(&mut self, has_comment: bool) {
+    pub fn set_last_content_inline_comment(&mut self, has_comment: bool) {
         self.last_content_inline_comment = has_comment;
     }
 
@@ -1167,13 +1167,14 @@ impl<Context> FormatState<Context> {
 
     /// Sets the kind of the last formatted token and sets `last_content_inline_comment` to `false`.
     pub fn set_last_token_kind<Kind: SyntaxKind + 'static>(&mut self, kind: Kind) {
-        // Reset the last comment kind before token because we've now seen a token.
-        self.last_content_inline_comment = false;
-
-        self.last_token_kind = Some(LastTokenKind {
+        self.set_last_token_kind_raw(Some(LastTokenKind {
             kind_type: TypeId::of::<Kind>(),
             kind: kind.to_raw(),
-        });
+        }));
+    }
+
+    pub fn set_last_token_kind_raw(&mut self, kind: Option<LastTokenKind>) {
+        self.last_token_kind = kind;
     }
 
     /// Mark the passed comment as formatted. This is necessary if a comment from a token is formatted

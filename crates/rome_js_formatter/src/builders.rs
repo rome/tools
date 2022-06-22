@@ -466,7 +466,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
             close_delimiter.format_token().fmt(f)
         });
 
-        let _grouped = match mode {
+        match mode {
             // Group is useless, the block indent would expand it right anyway
             DelimitedMode::BlockIndent => write!(f, [delimited])?,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
@@ -546,7 +546,7 @@ impl<'t> OpenDelimiter<'t> {
     pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             f.state_mut().track_token(self.open_token);
-            write!(f, [format_trimmed_token(self.open_token)])
+            write!(f, [format_trimmed_token(self.open_token, JsCommentStyle)])
         })
     }
 }
@@ -578,7 +578,7 @@ impl<'t> CloseDelimiter<'t> {
     pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             f.state_mut().track_token(self.close_token);
-            write!(f, [format_trimmed_token(self.close_token)])
+            write!(f, [format_trimmed_token(self.close_token, JsCommentStyle)])
         })
     }
 }

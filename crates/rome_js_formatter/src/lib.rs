@@ -196,7 +196,7 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
             f,
             [
                 format_leading_trivia(token),
-                format_trimmed_token(token),
+                format_trimmed_token(token, JsCommentStyle),
                 format_trailing_trivia(token),
             ]
         )
