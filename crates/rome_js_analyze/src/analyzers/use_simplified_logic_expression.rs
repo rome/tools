@@ -13,8 +13,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce the use of `while` loops instead of `for` loops when the
-    /// initializer and update expressions are not needed
+    /// This rule simplified your logic expressions.
     ///
     /// ## Examples
     ///
@@ -138,7 +137,7 @@ impl Rule for UseSimplifiedLogicExpression {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use a while loop" }.to_owned(),
+            message: markup! { "Simplified your logic expression" }.to_owned(),
             root,
         })
     }

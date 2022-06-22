@@ -88,8 +88,7 @@ Prevent extra closing tags for components without children
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
 </h3>
-Enforce the use of <code>while</code> loops instead of <code>for</code> loops when the
-initializer and update expressions are not needed
+This rule simplified your logic expressions.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">
