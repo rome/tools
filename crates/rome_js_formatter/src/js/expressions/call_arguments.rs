@@ -82,10 +82,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             // We also disallow the trailing separator, we are interested in doing it manually.
             let separated: Vec<_> = args
                 .format_separated(JsSyntaxKind::COMMA)
-                .with_options(
-                    FormatSeparatedOptions::default()
-                        .with_trailing_separator(TrailingSeparator::Omit),
-                )
+                .with_trailing_separator(TrailingSeparator::Omit)
+                .group_nodes(false)
                 .map(|e| e.memoized())
                 .collect();
 
@@ -153,7 +151,6 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                                             write_arguments_multi_line(separated.iter(), f)
                                         }),
                                         &r_leading_trivia,
-                                        soft_line_break()
                                     ]),
                                     &r_paren
                                 ]
@@ -191,11 +188,9 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                         l_paren,
                         l_trailing_trivia,
                         &soft_block_indent(&format_with(|f| {
-                            let separated =
-                                args.format_separated(JsSyntaxKind::COMMA).with_options(
-                                    FormatSeparatedOptions::default()
-                                        .with_trailing_separator(TrailingSeparator::Omit),
-                                );
+                            let separated = args
+                                .format_separated(JsSyntaxKind::COMMA)
+                                .with_trailing_separator(TrailingSeparator::Omit);
                             write_arguments_multi_line(separated, f)
                         }),),
                         r_leading_trivia,

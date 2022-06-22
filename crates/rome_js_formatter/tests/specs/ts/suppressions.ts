@@ -1,7 +1,7 @@
 
 interface Suppressions {
     // rome-ignore format: test
-    a: void
+    a:     void
 
     b: void
 }

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: assignment.js
 ---
 # Input
@@ -340,7 +339,7 @@ a =
 
 a = {
 	// rome-ignore format: test
-        a: { t: c = b },
+	a: { t: c = b },
 	loreum,
 	ipsurm,
 } = {};

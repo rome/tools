@@ -142,7 +142,7 @@ impl Debug for FormatElement {
                 best_fitting.fmt(fmt)
             }
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
-            FormatElement::Interned(inner) => inner.fmt(fmt),
+            FormatElement::Interned(inner) => fmt.debug_tuple("Interned").field(&inner).finish(),
         }
     }
 }

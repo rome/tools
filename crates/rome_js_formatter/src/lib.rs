@@ -9,18 +9,19 @@ pub mod utils;
 
 use crate::utils::has_formatter_suppressions;
 use rome_formatter::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{write, Argument, Arguments, CommentContext};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::AstNode;
-use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
+use rome_rowan::{AstNode, Language, SyntaxNode};
+use rome_rowan::{SyntaxResult, SyntaxToken};
 
 use crate::builders::format_suppressed_node;
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
+use rome_formatter::token::format_leading_node_trivia;
 use rome_formatter::TriviaKind::{Leading, Trailing};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
@@ -190,7 +191,7 @@ where
 }
 
 #[derive(Copy, Clone)]
-pub struct FormatComments<'node, 'content> {
+pub struct FormatNodeComments<'node, 'content> {
     node: &'node JsSyntaxNode,
     content: Argument<'content, JsFormatContext>,
 }
@@ -198,17 +199,17 @@ pub struct FormatComments<'node, 'content> {
 pub fn format_node_comments<'node, 'content, Content>(
     node: &'node JsSyntaxNode,
     content: &'content Content,
-) -> FormatComments<'node, 'content>
+) -> FormatNodeComments<'node, 'content>
 where
     Content: Format<JsFormatContext>,
 {
-    FormatComments {
+    FormatNodeComments {
         node,
         content: Argument::new(content),
     }
 }
 
-impl Format<JsFormatContext> for FormatComments<'_, '_> {
+impl Format<JsFormatContext> for FormatNodeComments<'_, '_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         // TODO: Mark comments of leading/trailing as suppressed?
         // TODO: How to avoid calling into first_token & last_token for every node (rather expensive)?
@@ -216,29 +217,75 @@ impl Format<JsFormatContext> for FormatComments<'_, '_> {
         // Option 1: Add new state that tracks if the leading / trailing has been formatted of token X
         // Option 2:
 
-        if self.node.prev_sibling_or_token().is_some() {
-            if let Some(first_token) = self.node.first_token() {
-                write!(f, [format_leading_trivia(&first_token)])?;
-                f.state_mut()
-                    .mark_token_trivia_as_formatted(&first_token, Leading);
-            }
-        }
-
-        let last_token = if self.node.next_sibling_or_token().is_some() {
-            if let Some(last_token) = self.node.last_token() {
-                f.state_mut()
-                    .mark_token_trivia_as_formatted(&last_token, Trailing);
-                Some(last_token)
-            } else {
-                None
-            }
-        } else {
-            None
-        };
+        format_node_leading_comments(self.node).fmt(f)?;
+        let format_last_token = format_node_trailing_comments(self.node, f);
 
         f.write_fmt(Arguments::from(&self.content))?;
 
-        if let Some(last_token) = last_token {
+        format_last_token.fmt(f)
+    }
+}
+
+pub const fn format_node_leading_comments<L: Language>(
+    node: &SyntaxNode<L>,
+) -> FormatNodeLeadingComments<L> {
+    FormatNodeLeadingComments { node }
+}
+
+#[derive(Debug, Copy, Clone)]
+pub struct FormatNodeLeadingComments<'a, L: Language> {
+    node: &'a SyntaxNode<L>,
+}
+
+impl<L, Context> Format<Context> for FormatNodeLeadingComments<'_, L>
+where
+    L: Language + 'static,
+    Context: CommentContext<L>,
+{
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        if self.node.prev_sibling_or_token().is_some() {
+            if let Some(first_token) = self.node.first_token() {
+                f.state_mut()
+                    .mark_token_trivia_as_formatted(&first_token, Leading);
+                write!(f, [format_leading_node_trivia(&first_token)])?;
+            }
+        }
+
+        Ok(())
+    }
+}
+
+pub fn format_node_trailing_comments<L: Language + 'static, Context>(
+    node: &SyntaxNode<L>,
+    f: &mut Formatter<Context>,
+) -> FormatNodeTrailingComments<L> {
+    let last_token = if node.next_sibling_or_token().is_some() {
+        if let Some(last_token) = node.last_token() {
+            f.state_mut()
+                .mark_token_trivia_as_formatted(&last_token, Trailing);
+            Some(last_token)
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
+    FormatNodeTrailingComments { last_token }
+}
+
+#[derive(Debug, Clone)]
+pub struct FormatNodeTrailingComments<L: Language> {
+    last_token: Option<SyntaxToken<L>>,
+}
+
+impl<L, Context> Format<Context> for FormatNodeTrailingComments<L>
+where
+    L: Language + 'static,
+    Context: CommentContext<L>,
+{
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        if let Some(last_token) = &self.last_token {
             write!(
                 f,
                 [format_trailing_trivia(&last_token).skip_formatted_check()]
@@ -537,9 +584,7 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-var fnString = // Comment0
-  // Comment1
-  'some' + 'long' + 'string';
+let a = [[]];
   "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);

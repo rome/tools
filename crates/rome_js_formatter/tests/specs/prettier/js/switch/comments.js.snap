@@ -92,7 +92,8 @@ switch (x) {
 }
 
 switch (x) {
-  default: // comment
+  default:
+    // comment
     break;
 }
 

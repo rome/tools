@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
+use crate::{format_node_comments, format_node_leading_comments, format_node_trailing_comments};
 use rome_formatter::{format_args, write, VecBuffer};
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyExpression, JsAnyFunctionBody,
@@ -325,29 +326,29 @@ impl JsAnyAssignmentLike {
 const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 impl JsAnyAssignmentLike {
-    fn write_left(&self, buffer: &mut VecBuffer<JsFormatContext>) -> FormatResult<bool> {
+    fn write_left(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<bool> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
-                let width = write_member_name(&property.name()?, buffer)?;
+                let width = write_member_name(&property.name()?, f)?;
                 let text_width_for_break =
-                    (buffer.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
                 let left = assignment.left()?;
-                write!(buffer, [&left.format()])?;
+                write!(f, [&left.format()])?;
                 Ok(false)
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
-                let width = write_member_name(&property.member()?, buffer)?;
+                let width = write_member_name(&property.member()?, f)?;
                 let text_width_for_break =
-                    (buffer.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 let id = variable_declarator.id()?;
                 let variable_annotation = variable_declarator.variable_annotation();
-                write!(buffer, [id.format(), variable_annotation.format()])?;
+                write!(f, [id.format(), variable_annotation.format()])?;
                 Ok(false)
             }
         }
@@ -370,7 +371,14 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 if let Some(initializer) = variable_declarator.initializer() {
                     let eq_token = initializer.eq_token()?;
-                    write!(f, [space_token(), eq_token.format()])?
+                    write!(
+                        f,
+                        [
+                            space_token(),
+                            format_node_leading_comments(initializer.syntax()),
+                            eq_token.format()
+                        ]
+                    )?
                 }
                 Ok(())
             }
@@ -398,8 +406,17 @@ impl JsAnyAssignmentLike {
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 if let Some(initializer) = variable_declarator.initializer() {
+                    let format_trailing_comments =
+                        format_node_trailing_comments(initializer.syntax(), f);
                     let expression = initializer.expression()?;
-                    write!(f, [space_token(), expression.format()])?;
+                    write!(
+                        f,
+                        [&format_args![
+                            space_token(),
+                            expression.format(),
+                            format_trailing_comments
+                        ]]
+                    )?;
                 }
                 Ok(())
             }
@@ -642,7 +659,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             // 3. we compute the layout
             // 4. we write the left node inside the main buffer based on the layout
             let mut buffer = VecBuffer::new(f.state_mut());
-            let is_left_short = self.write_left(&mut buffer)?;
+            let is_left_short = self.write_left(&mut Formatter::new(&mut buffer))?;
 
             // Compare name only if we are in a position of computing it.
             // If not (for example, left is not an identifier), then let's fallback to false,

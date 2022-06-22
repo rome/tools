@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
     format_args, write, Argument, Arguments, CommentContext, CommentKind, CommentStyle, GroupId,
-    LastTokenKind, SourceComment,
+    LastTokenKind, SourceComment, TriviaKind,
 };
 use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPiece};
 
@@ -312,10 +312,7 @@ impl Default for TriviaPrintMode {
 
 /// Formats the leading trivia (comments, skipped token trivia) of a token
 pub fn format_leading_trivia<L: Language>(token: &SyntaxToken<L>) -> FormatLeadingTrivia<L> {
-    FormatLeadingTrivia {
-        trim_mode: TriviaPrintMode::Full,
-        token,
-    }
+    FormatLeadingTrivia { token }
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -323,23 +320,12 @@ pub struct FormatLeadingTrivia<'a, L>
 where
     L: Language,
 {
-    trim_mode: TriviaPrintMode,
     token: &'a SyntaxToken<L>,
-}
-
-impl<'a, L> FormatLeadingTrivia<'a, L>
-where
-    L: Language,
-{
-    pub fn with_trim_mode(mut self, mode: TriviaPrintMode) -> Self {
-        self.trim_mode = mode;
-        self
-    }
 }
 
 impl<L, C> Format<C> for FormatLeadingTrivia<'_, L>
 where
-    L: Language,
+    L: Language + 'static,
     C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
@@ -352,14 +338,44 @@ where
         // TODO is it possible to introduce a new format dangling because
         // this here is indeed a dangling comment between two tokens except if formatted as part of the node
 
+        // debug_assert!(
+        //     self.token.prev_sibling_or_token().is_some(),
+        //     "Leading comments of {:?} should have been formatted as leading node comments of {:?}.",
+        //     self.token,
+        //     self.token.parent()
+        // );
+
         write_leading_trivia(
             self.token.leading_trivia().pieces(),
             self.token,
-            self.trim_mode,
+            TriviaPrintMode::Full,
             f,
-        )?;
+        )
+    }
+}
 
-        Ok(())
+pub const fn format_leading_node_trivia<L: Language>(
+    first_token: &SyntaxToken<L>,
+) -> FormatLeadingNodeTrivia<L> {
+    FormatLeadingNodeTrivia { token: first_token }
+}
+
+#[derive(Debug, Copy, Clone)]
+pub struct FormatLeadingNodeTrivia<'a, L: Language> {
+    token: &'a SyntaxToken<L>,
+}
+
+impl<L: Language, Context> Format<Context> for FormatLeadingNodeTrivia<'_, L>
+where
+    Context: CommentContext<L>,
+{
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        write_leading_trivia(
+            self.token.leading_trivia().pieces(),
+            self.token,
+            TriviaPrintMode::Full,
+            f,
+        )
     }
 }
 
@@ -596,7 +612,7 @@ where
             .pieces()
             .filter_map(|piece| piece.as_comments().map(SourceComment::trailing));
 
-        FormatTrailingComments::new(comments, self.token.kind(), self.style).fmt(f)
+        FormatTrailingComments::new(comments, self.token.kind()).fmt(f)
     }
 }
 

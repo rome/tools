@@ -6,10 +6,11 @@ expression: suppressions.ts
 
 interface Suppressions {
     // rome-ignore format: test
-    a: void
+    a:     void
 
     b: void
 }
+
 =============================
 # Outputs
 ## Output 1
@@ -20,7 +21,7 @@ Quote style: Double Quotes
 -----
 interface Suppressions {
 	// rome-ignore format: test
-    a: void
+	a:     void
 	b: void;
 }
 
