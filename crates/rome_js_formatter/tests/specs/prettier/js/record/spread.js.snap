@@ -15,16 +15,16 @@ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
 
 # Output
 ```js
-const formData = #
+const formData = #;
 {
   title: ("Implement all the things");
 }
-const taskNow = #
+const taskNow = #;
 {
   id: 42, status;
   : "WIP", ...formData
 }
-const taskLater = #
+const taskLater = #;
 {
   ...taskNow, status: "DONE"
 }

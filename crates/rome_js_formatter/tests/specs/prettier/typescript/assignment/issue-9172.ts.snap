@@ -10,9 +10,8 @@ const firestorePersonallyIdentifiablePaths: Array<Collections.Users.Entity> = so
 
 # Output
 ```js
-const firestorePersonallyIdentifiablePaths: Array<
-  Collections.Users.Entity
-> = somefunc();
+const firestorePersonallyIdentifiablePaths: Array<Collections.Users.Entity> =
+  somefunc();
 
 ```
 

@@ -17,26 +17,23 @@ const loooooooooooooooooooooooooong8 = !!"looooooooooooooooooooooooooooooooooooo
 
 # Output
 ```js
-const loooooooooooooooooooooooooong1 = void looooooooooooooong.looooooooooooooong.loooooong;
-const loooooooooooooooooooooooooong2 = void "looooooooooooooooooooooooooooooooooooooooooog";
-const loooooooooooooooooooooooooong3 = !looooooooooooooong.looooooooooooooong.loooooong;
-const loooooooooooooooooooooooooong4 = !"looooooooooooooooooooooooooooooooooooooooooog";
-const loooooooooooooooooooooooooong5 = void void looooooooooooooong.looooooooooooooong.loooooong;
-const loooooooooooooooooooooooooong6 = void void "looooooooooooooooooooooooooooooooooooooooooog";
-const loooooooooooooooooooooooooong7 = !!looooooooooooooong.looooooooooooooong.loooooong;
-const loooooooooooooooooooooooooong8 = !!"looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong1 =
+  void looooooooooooooong.looooooooooooooong.loooooong;
+const loooooooooooooooooooooooooong2 =
+  void "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong3 =
+  !looooooooooooooong.looooooooooooooong.loooooong;
+const loooooooooooooooooooooooooong4 =
+  !"looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong5 =
+  void void looooooooooooooong.looooooooooooooong.loooooong;
+const loooooooooooooooooooooooooong6 =
+  void void "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong7 =
+  !!looooooooooooooong.looooooooooooooong.loooooong;
+const loooooooooooooooooooooooooong8 =
+  !!"looooooooooooooooooooooooooooooooooooooooooog";
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const loooooooooooooooooooooooooong1 = void looooooooooooooong.looooooooooooooong.loooooong;
-    2: const loooooooooooooooooooooooooong2 = void "looooooooooooooooooooooooooooooooooooooooooog";
-    3: const loooooooooooooooooooooooooong3 = !looooooooooooooong.looooooooooooooong.loooooong;
-    4: const loooooooooooooooooooooooooong4 = !"looooooooooooooooooooooooooooooooooooooooooog";
-    5: const loooooooooooooooooooooooooong5 = void void looooooooooooooong.looooooooooooooong.loooooong;
-    6: const loooooooooooooooooooooooooong6 = void void "looooooooooooooooooooooooooooooooooooooooooog";
-    7: const loooooooooooooooooooooooooong7 = !!looooooooooooooong.looooooooooooooong.loooooong;
-    8: const loooooooooooooooooooooooooong8 = !!"looooooooooooooooooooooooooooooooooooooooooog";
-```
 
