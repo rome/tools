@@ -14,6 +14,8 @@ let valid: Array<foo>;
 let invalid1: Array<foo, Array<string>>;
 let invalid2: Promise<Array<string>>;
 let invalid3: Array<Foo<Bar>>;
+let invalid4: Array<[number, number]>;
+
 
 ```
 
@@ -47,7 +49,7 @@ warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syn
   │               -------------------------
 
 Suggested fix: Use shorthand T[] syntax to replace
-    | @@ -4,6 +4,6 @@
+    | @@ -4,7 +4,7 @@
 3 3 |   let valid: Array<foo | bar>;
 4 4 |   // invalid
 5 5 |   let valid: Array<foo>;
@@ -55,6 +57,7 @@ Suggested fix: Use shorthand T[] syntax to replace
   6 | + let invalid1: foo[] | string[][];
 7 7 |   let invalid2: Promise<Array<string>>;
 8 8 |   let invalid3: Array<Foo<Bar>>;
+9 9 |   let invalid4: Array<[number, number]>;
 
 
 ```
@@ -67,7 +70,7 @@ warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syn
   │                          -------------
 
 Suggested fix: Use shorthand T[] syntax to replace
-    | @@ -4,6 +4,6 @@
+    | @@ -4,7 +4,7 @@
 3 3 |   let valid: Array<foo | bar>;
 4 4 |   // invalid
 5 5 |   let valid: Array<foo>;
@@ -75,6 +78,7 @@ Suggested fix: Use shorthand T[] syntax to replace
   6 | + let invalid1: Array<foo, string[]>;
 7 7 |   let invalid2: Promise<Array<string>>;
 8 8 |   let invalid3: Array<Foo<Bar>>;
+9 9 |   let invalid4: Array<[number, number]>;
 
 
 ```
@@ -87,13 +91,15 @@ warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syn
   │                       -------------
 
 Suggested fix: Use shorthand T[] syntax to replace
-    | @@ -5,5 +5,5 @@
+    | @@ -5,7 +5,7 @@
 4 4 |   // invalid
 5 5 |   let valid: Array<foo>;
 6 6 |   let invalid1: Array<foo, Array<string>>;
 7   | - let invalid2: Promise<Array<string>>;
   7 | + let invalid2: Promise<string[]>;
 8 8 |   let invalid3: Array<Foo<Bar>>;
+9 9 |   let invalid4: Array<[number, number]>;
+10 10 |   
 
 
 ```
@@ -106,12 +112,33 @@ warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syn
   │               ---------------
 
 Suggested fix: Use shorthand T[] syntax to replace
-    | @@ -6,4 +6,4 @@
+    | @@ -6,6 +6,6 @@
 5 5 |   let valid: Array<foo>;
 6 6 |   let invalid1: Array<foo, Array<string>>;
 7 7 |   let invalid2: Promise<Array<string>>;
 8   | - let invalid3: Array<Foo<Bar>>;
   8 | + let invalid3: Foo<Bar>[];
+9 9 |   let invalid4: Array<[number, number]>;
+10 10 |   
+
+
+```
+
+```
+warning[useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> syntax.
+   ┌─ useShorthandArrayType.ts:10:15
+   │
+10 │ let invalid4: Array<[number, number]>;
+   │               -----------------------
+
+Suggested fix: Use shorthand T[] syntax to replace
+      | @@ -7,5 +7,5 @@
+ 6  6 |   let invalid1: Array<foo, Array<string>>;
+ 7  7 |   let invalid2: Promise<Array<string>>;
+ 8  8 |   let invalid3: Array<Foo<Bar>>;
+ 9    | - let invalid4: Array<[number, number]>;
+    9 | + let invalid4: [number, number][];
+10 10 |   
 
 
 ```
