@@ -5,9 +5,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyStatement, JsBooleanLiteralExpression,
-    JsForStatement, JsForStatementFields, JsLogicalExpression, JsUnaryExpression, JsUnaryOperator,
-    T,
+    JsAnyExpression, JsAnyLiteralExpression, JsBooleanLiteralExpression, JsLogicalExpression,
+    JsUnaryExpression, JsUnaryOperator, T,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
@@ -19,7 +18,39 @@ declare_rule! {
     ///
     /// ## Examples
     ///
+    /// ### Valid
+    /// ```js
+    /// const boolExpr3 = true;
+    /// const boolExpr4 = false;
+    /// const r5 = !(boolExpr1 && boolExpr2);
+    /// const boolExpr5 = true;
+    /// const boolExpr6 = false;
+    /// const r6 = !!boolExpr1 || !!boolExpr2;
+    /// ```
+    ///
     /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// const boolExp = true;
+    /// const r = true && boolExp;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const boolExp2 = true;
+    /// const r2 = boolExp || true;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const nonNullExp = 123;
+    /// const r3 = null ?? nonNullExp;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const boolExpr1 = true;
+    /// const boolExpr2 = false;
+    /// const r4 = !boolExpr1 || !boolExpr2;
+    /// ```
+    ///
     pub(crate) UseSimplifiedLogicExpression = "useSimplifiedLogicExpression"
 }
 
@@ -34,7 +65,16 @@ impl Rule for UseSimplifiedLogicExpression {
         let left = node.left().ok()?;
         let right = node.right().ok()?;
         match node.operator().ok()? {
-            rome_js_syntax::JsLogicalOperator::NullishCoalescing => {}
+            rome_js_syntax::JsLogicalOperator::NullishCoalescing
+                if matches!(
+                    left,
+                    JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsNullLiteralExpression(_)
+                    )
+                ) =>
+            {
+                return Some(right);
+            }
             rome_js_syntax::JsLogicalOperator::LogicalOr => {
                 if let JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
@@ -51,8 +91,7 @@ impl Rule for UseSimplifiedLogicExpression {
                 }
 
                 if could_apply_de_morgan(node).unwrap_or(false) {
-                    return simplify_de_morgan(node)
-                        .map(|node| JsAnyExpression::JsUnaryExpression(node));
+                    return simplify_de_morgan(node).map(JsAnyExpression::JsUnaryExpression);
                 }
             }
             rome_js_syntax::JsLogicalOperator::LogicalAnd => {
@@ -71,10 +110,10 @@ impl Rule for UseSimplifiedLogicExpression {
                 }
 
                 if could_apply_de_morgan(node).unwrap_or(false) {
-                    return simplify_de_morgan(node)
-                        .map(|node| JsAnyExpression::JsUnaryExpression(node));
+                    return simplify_de_morgan(node).map(JsAnyExpression::JsUnaryExpression);
                 }
             }
+            _ => return None,
         }
         None
     }
