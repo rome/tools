@@ -39,6 +39,10 @@ declare_rule! {
     /// ```ts,expect_diagnostic
     /// let invalid: Array<[number, number]>;
     /// ```
+    ///
+    /// ```ts,expect_diagnostic
+    /// let invalid: Array<[number, number]>;
+    /// ```
     pub(crate) UseShorthandArrayType = "useShorthandArrayType"
 }
 
@@ -96,40 +100,42 @@ fn is_array_reference(ty: &TsReferenceType) -> Option<bool> {
 
 fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
     if type_arguments.ts_type_argument_list().len() > 0 {
-        let mut array_types = Vec::new();
-
-        for param in type_arguments.ts_type_argument_list().iter() {
-            let param = param.ok()?;
-            let element_type = match &param {
-                TsType::TsUnionType(_) => continue,
-                TsType::TsTypeOperatorType(_) => continue,
-                TsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
-                    if let Some(type_arguments) = ty.type_arguments() {
-                        convert_to_array_type(type_arguments)
-                    } else {
-                        Some(param)
+        let types_array = type_arguments
+            .ts_type_argument_list()
+            .into_iter()
+            .filter_map(|param| {
+                let param = param.ok()?;
+                let element_type = match &param {
+                    TsType::TsUnionType(_) => None,
+                    TsType::TsTypeOperatorType(_) => None,
+                    TsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
+                        if let Some(type_arguments) = ty.type_arguments() {
+                            convert_to_array_type(type_arguments)
+                        } else {
+                            Some(param)
+                        }
                     }
-                }
-                _ => Some(param),
-            };
-            if let Some(element_type) = element_type {
-                array_types.push(TsType::TsArrayType(make::ts_array_type(
-                    element_type,
-                    make::token(T!['[']),
-                    make::token(T![']']),
-                )));
-            }
-        }
-        match array_types.len() {
+                    _ => Some(param),
+                };
+                element_type.map(|element_type| {
+                    TsType::TsArrayType(make::ts_array_type(
+                        element_type,
+                        make::token(T!['[']),
+                        make::token(T![']']),
+                    ))
+                })
+            })
+            .collect::<Vec<_>>();
+        match types_array.len() {
             0 => {}
             1 => {
                 // SAFETY: We know that `length` of `array_types` is 1, so unwrap the first element should be safe.
-                let first_type = array_types.into_iter().next().unwrap();
+                let first_type = types_array.into_iter().next().unwrap();
                 return Some(first_type);
             }
             length => {
                 let ts_union_type_builder = make::ts_union_type(make::ts_union_type_variant_list(
-                    array_types.into_iter().enumerate().map(|(i, item)| {
+                    types_array.into_iter().enumerate().map(|(i, item)| {
                         (
                             item,
                             (i != length - 1).then(|| {
