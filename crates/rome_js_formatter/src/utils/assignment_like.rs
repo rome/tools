@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, VecBuffer};
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
     JsAnyObjectBindingPatternMember, JsAnyObjectMemberName, JsAssignmentExpression,
@@ -115,7 +115,7 @@ impl Format<JsFormatContext> for RightAssignmentLike {
 /// Assignment like are:
 /// - Assignment
 /// - Object property member
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq)]
 pub(crate) enum AssignmentLikeLayout {
     /// First break right-hand side, then after operator.
     /// ```js
@@ -235,23 +235,23 @@ impl JsAnyAssignmentLike {
 const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 impl JsAnyAssignmentLike {
-    fn write_left(&self, f: &mut JsFormatter) -> FormatResult<bool> {
+    fn write_left(&self, buffer: &mut VecBuffer<JsFormatContext>) -> FormatResult<bool> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
-                let width = write_member_name(&property.name()?, f)?;
+                let width = write_member_name(&property.name()?, buffer)?;
                 let text_width_for_break =
-                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (buffer.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
                 let left = assignment.left()?;
-                write!(f, [group_elements(&left.format())])?;
+                write!(buffer, [&left.format()])?;
                 Ok(false)
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
-                let width = write_member_name(&property.member()?, f)?;
+                let width = write_member_name(&property.member()?, buffer)?;
                 let text_width_for_break =
-                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (buffer.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
         }
@@ -502,13 +502,42 @@ pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {
 impl Format<JsFormatContext> for JsAnyAssignmentLike {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let format_content = format_with(|f| {
+            // We create a temporary buffer because the left hand side has to conditionally add
+            // a group based on the layout, but the layout can only be computed by knowing the
+            // width of the left hand side. The left hand side can be a member, and that has a width
+            // can can be known only when it's formatted (it can incur in some transformation,
+            // like removing some escapes, etc.).
+            //
+            // 1. we crate a temporary buffer
+            // 2. we write the left hand side into the buffer and retrieve the `is_left_short` info
+            // which is computed only when we format it
+            // 3. we compute the layout
+            // 4. we write the left node inside the main buffer based on the layout
+            let mut buffer = VecBuffer::new(f.state_mut());
+            let is_left_short = self.write_left(&mut buffer)?;
+
             // Compare name only if we are in a position of computing it.
             // If not (for example, left is not an identifier), then let's fallback to false,
             // so we can continue the chain of checks
-            let is_left_short = self.write_left(f)?;
-            self.write_operator(f)?;
-
             let layout = self.layout(is_left_short)?;
+
+            let formatted_element = buffer.into_element();
+
+            if layout == AssignmentLikeLayout::BreakLeftHandSide {
+                write!(
+                    f,
+                    [&format_once(|f| { f.write_element(formatted_element) })]
+                )?;
+            } else {
+                write!(
+                    f,
+                    [group_elements(&format_once(|f| {
+                        f.write_element(formatted_element)
+                    }))]
+                )?;
+            }
+
+            self.write_operator(f)?;
 
             let right = &format_with(|f| self.write_right(f)).memoized();
 
