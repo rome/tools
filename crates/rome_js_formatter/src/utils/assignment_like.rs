@@ -347,7 +347,7 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 let id = variable_declarator.id()?;
                 let variable_annotation = variable_declarator.variable_annotation();
-                write!(buffer, [&id.format(), variable_annotation.format()])?;
+                write!(buffer, [id.format(), variable_annotation.format()])?;
                 Ok(false)
             }
         }
@@ -409,7 +409,7 @@ impl JsAnyAssignmentLike {
     /// Returns the layout variant for an assignment like depending on right expression and left part length
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
     fn layout(&self, is_left_short: bool) -> FormatResult<AssignmentLikeLayout> {
-        if self.should_only_left() {
+        if self.has_only_left_hand_side() {
             return Ok(AssignmentLikeLayout::OnlyLeft);
         }
 
@@ -450,7 +450,7 @@ impl JsAnyAssignmentLike {
 
     /// Checks that a [JsAnyAssignmentLike] consists only of the left part
     /// usually, when a [variable declarator](JsVariableDeclarator) doesn't have initializer
-    fn should_only_left(&self) -> bool {
+    fn has_only_left_hand_side(&self) -> bool {
         if let JsAnyAssignmentLike::JsVariableDeclarator(declarator) = self {
             declarator.initializer().is_none()
         } else {
