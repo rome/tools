@@ -511,8 +511,9 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-bifornCringerMoshedPerplex =
-	bifornCringerMoshedPerplexSawder = arrayOfNumb = a = "test";       "#;
+({aaaaaaaaaa,bbbbbbbbbb=cccccccccc,dddddddddd:eeeeeeeeee,ffffffffff:gggggggggg=hhhhhhhhhh,...jjjjjjjjjj} = x)
+
+           "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
