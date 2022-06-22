@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: method_types.ts
 ---
 # Input
@@ -52,7 +51,7 @@ abstract class Test {
 interface foo1 {
   bar3 /* foo */ (/* baz */); // bat
   bar /* foo */ ? /* bar */ (/* baz */) /* bat */;
-  bar2 /* foo */ (/* baz */) /* bat */;
+  bar2 /* foo */ (/* baz */); /* bat */
 }
 
 interface foo2 {
@@ -86,7 +85,7 @@ let foo10: new /* foo */ (a: /* bar */ string) /* baz */ => string;
 abstract class Test {
   abstract foo12 /* foo */ (a: /* bar */ string): /* baz */ void;
 
-  abstract foo13 /* foo */ (/* bar */) /* baz */;
+  abstract foo13 /* foo */ (/* bar */); /* baz */
 }
 
 ```

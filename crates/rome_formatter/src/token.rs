@@ -87,186 +87,6 @@ where
     Ok(())
 }
 
-/// Inserts a open parentheses before the specified token and ensures
-/// that any leading trivia of the token is formatted **before** the inserted parentheses.
-///
-/// # Example
-///
-/// ```javascript
-/// /* leading */ "string";
-/// ```
-///
-/// Becomes
-///
-/// ```javascript
-/// /* leading */ ("string";
-/// ```
-///
-/// when inserting the "(" before the "string" token.
-#[derive(Clone, Debug)]
-pub struct FormatInsertedOpenParen<L>
-where
-    L: Language,
-{
-    /// The token before which the open paren must be inserted
-    before_token: Option<SyntaxToken<L>>,
-
-    /// The token text of the open paren
-    text: &'static str,
-
-    /// The kind of the open paren
-    kind: L::Kind,
-}
-
-impl<L> FormatInsertedOpenParen<L>
-where
-    L: Language,
-{
-    pub fn new(before_token: Option<SyntaxToken<L>>, kind: L::Kind, text: &'static str) -> Self {
-        Self {
-            before_token,
-            kind,
-            text,
-        }
-    }
-}
-
-impl<Context, L> Format<Context> for FormatInsertedOpenParen<L>
-where
-    L: Language + 'static,
-    Context: CommentContext<L>,
-{
-    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        let mut comments = Vec::new();
-
-        if let Some(before_token) = &self.before_token {
-            // Format the leading trivia of the next token as the leading trivia of the open paren.
-            let leading_pieces = before_token.leading_trivia().pieces();
-
-            let mut lines_before = 0;
-
-            for piece in leading_pieces {
-                if let Some(comment) = piece.as_comments() {
-                    comments.push(SourceComment::leading(comment, lines_before));
-                    lines_before = 0;
-                } else if piece.is_newline() {
-                    lines_before += 1;
-                } else if piece.is_skipped() {
-                    // Keep the skipped trivia inside of the parens. Handled by the
-                    // formatting of the `before_token`.
-                    break;
-                }
-            }
-
-            write!(
-                f,
-                [FormatLeadingComments {
-                    comments: &comments,
-                    trim_mode: TriviaPrintMode::Full,
-                    lines_before_token: lines_before,
-                }]
-            )?;
-        }
-
-        write!(
-            f,
-            [FormatInserted {
-                kind: self.kind,
-                text: self.text,
-            }]
-        )?;
-
-        // Prevent that the comments get formatted again when formatting the
-        // `before_token`
-        for comment in comments {
-            f.state_mut().mark_comment_as_formatted(comment.piece());
-        }
-
-        Ok(())
-    }
-}
-
-/// Inserts a closing parentheses before another token and moves that tokens
-/// trailing trivia after the closing parentheses.
-///
-/// # Example
-///
-/// ```javascript
-/// "string" /* trailing */;
-/// ```
-///
-/// Becomes
-///
-/// ```javascript
-/// "string") /* trailing */
-/// ```
-#[derive(Clone, Debug)]
-pub struct FormatInsertedCloseParen<L>
-where
-    L: Language,
-{
-    /// The token after which the close paren must be inserted
-    comments: Vec<SourceComment<L>>,
-
-    /// The token text of the close paren
-    text: &'static str,
-
-    /// The kind of the close paren
-    kind: L::Kind,
-}
-
-impl<L> FormatInsertedCloseParen<L>
-where
-    L: Language,
-{
-    pub fn after_token<Context>(
-        after_token: &Option<SyntaxToken<L>>,
-        kind: L::Kind,
-        text: &'static str,
-        f: &mut Formatter<Context>,
-    ) -> Self {
-        let mut comments = Vec::new();
-
-        if let Some(after_token) = after_token {
-            // "Steal" the trailing comments and mark them as handled.
-            // Must be done eagerly before formatting because the `after_token`
-            // gets formatted **before** formatting the inserted paren.
-            for piece in after_token.trailing_trivia().pieces() {
-                if let Some(comment) = piece.as_comments() {
-                    f.state_mut().mark_comment_as_formatted(&comment);
-                    comments.push(SourceComment::trailing(comment));
-                }
-            }
-        }
-
-        Self {
-            comments,
-            kind,
-            text,
-        }
-    }
-}
-
-impl<Context, L> Format<Context> for FormatInsertedCloseParen<L>
-where
-    L: Language + 'static,
-    Context: CommentContext<L>,
-{
-    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        write!(
-            f,
-            [
-                FormatInserted {
-                    kind: self.kind,
-                    text: self.text,
-                },
-                FormatTrailingTrivia::new(self.comments.iter().cloned(), self.kind,)
-                    .skip_formatted_check()
-            ]
-        )
-    }
-}
-
 /// Formats the leading and trailing trivia of a removed token.
 ///
 /// Formats all leading and trailing comments up to the first line break or skipped token trivia as a trailing
@@ -311,10 +131,28 @@ where
     L: Language + 'static,
     C: CommentContext<L>,
 {
-    let mut pieces = token
-        .leading_trivia()
-        .pieces()
-        .chain(token.trailing_trivia().pieces())
+    let leading = if f
+        .state()
+        .is_token_trivia_formatted(token, TriviaKind::Leading)
+    {
+        None
+    } else {
+        Some(token.leading_trivia().pieces())
+    };
+
+    let trailing = if f
+        .state()
+        .is_token_trivia_formatted(token, TriviaKind::Trailing)
+    {
+        None
+    } else {
+        Some(token.trailing_trivia().pieces())
+    };
+
+    let mut pieces = leading
+        .into_iter()
+        .flatten()
+        .chain(trailing.into_iter().flatten())
         .peekable();
 
     let last_token = last_token.and_then(|token| token.as_language::<L>());
@@ -327,9 +165,7 @@ where
 
         while let Some(piece) = pieces.peek() {
             if let Some(comment) = piece.as_comments() {
-                if !f.state().is_comment_formatted(&comment) {
-                    trailing_comments.push(SourceComment::trailing(comment));
-                }
+                trailing_comments.push(SourceComment::trailing(comment));
             } else if piece.is_newline() || piece.is_skipped() {
                 break;
             }
@@ -337,7 +173,7 @@ where
             pieces.next();
         }
 
-        FormatTrailingTrivia::new(trailing_comments.into_iter(), last_token).fmt(f)?;
+        FormatTrailingComments::new(trailing_comments.into_iter(), last_token).fmt(f)?;
     }
 
     write_leading_trivia(pieces, token, TriviaPrintMode::Full, f)?;
@@ -507,6 +343,15 @@ where
     C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
+        if f.state()
+            .is_token_trivia_formatted(self.token, TriviaKind::Leading)
+        {
+            return Ok(());
+        }
+
+        // TODO is it possible to introduce a new format dangling because
+        // this here is indeed a dangling comment between two tokens except if formatted as part of the node
+
         write_leading_trivia(
             self.token.leading_trivia().pieces(),
             self.token,
@@ -535,9 +380,7 @@ where
 
     while let Some(piece) = pieces.next() {
         if let Some(comment) = piece.as_comments() {
-            if !f.state().is_comment_formatted(&comment) {
-                comments.push(SourceComment::leading(comment, lines_before));
-            }
+            comments.push(SourceComment::leading(comment, lines_before));
 
             lines_before = 0;
         } else if piece.is_newline() {
@@ -614,7 +457,7 @@ where
             let skipped_trailing_comments = comments;
 
             // Format the trailing comments of the last skipped token trivia
-            FormatTrailingTrivia::skipped(skipped_trailing_comments.into_iter()).fmt(f)?;
+            FormatTrailingComments::skipped(skipped_trailing_comments.into_iter()).fmt(f)?;
 
             // Ensure that there's some whitespace between the last skipped token trivia and the
             // next token except if there was no whitespace present in the source.
@@ -659,14 +502,9 @@ where
     C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
-        let mut first = true;
         let mut last_inline_comment = f.state().is_last_content_inline_comment();
 
         for (index, comment) in self.comments.iter().enumerate() {
-            if f.state().is_comment_formatted(comment.piece()) {
-                continue;
-            }
-
             let lines_after = self
                 .comments
                 .get(index + 1)
@@ -682,37 +520,30 @@ where
                 .get_comment_kind(comment.piece());
             last_inline_comment = comment_kind.is_inline() && lines_after == 0;
 
-            let format_content = format_with(|f| {
-                if comment.lines_before() > 0 && first {
-                    write!(f, [hard_line_break()])?;
-                } else if !first {
-                    write!(f, [space_token()])?;
-                };
+            if comment.lines_before() > 0 && index == 0 {
+                write!(f, [hard_line_break()])?;
+            } else if index > 0 {
+                write!(f, [space_token()])?;
+            };
 
-                write!(f, [comment.piece()])?;
+            write!(f, [comment.piece()])?;
 
-                match comment_kind {
-                    CommentKind::Line => match lines_after {
-                        0 | 1 => write!(f, [hard_line_break()])?,
-                        _ => write!(f, [empty_line()])?,
-                    },
-                    CommentKind::InlineBlock | CommentKind::Block => {
-                        match lines_after {
-                            0 => {
-                                // space between last comment and token handled at the end.
-                                // space between comments is inserted before each comment
-                            }
-                            1 => write!(f, [hard_line_break()])?,
-                            _ => write!(f, [empty_line()])?,
+            match comment_kind {
+                CommentKind::Line => match lines_after {
+                    0 | 1 => write!(f, [hard_line_break()])?,
+                    _ => write!(f, [empty_line()])?,
+                },
+                CommentKind::InlineBlock | CommentKind::Block => {
+                    match lines_after {
+                        0 => {
+                            // space between last comment and token handled at the end.
+                            // space between comments is inserted before each comment
                         }
+                        1 => write!(f, [hard_line_break()])?,
+                        _ => write!(f, [empty_line()])?,
                     }
                 }
-
-                Ok(())
-            });
-
-            write!(f, [crate::comment(&format_content)])?;
-            first = false;
+            }
         }
 
         f.state_mut()
@@ -723,19 +554,54 @@ where
 }
 
 /// Formats the trailing trivia (comments) of a token
-pub fn format_trailing_trivia<L: Language>(
-    token: &SyntaxToken<L>,
-) -> FormatTrailingTrivia<impl Iterator<Item = SourceComment<L>> + Clone, L> {
-    let comments = token
-        .trailing_trivia()
-        .pieces()
-        .filter_map(|piece| piece.as_comments().map(SourceComment::trailing));
-
-    FormatTrailingTrivia::new(comments, token.kind())
+pub fn format_trailing_trivia<L: Language>(token: &SyntaxToken<L>) -> FormatTrailingTrivia<L> {
+    FormatTrailingTrivia {
+        token,
+        skip_formatted_check: false,
+    }
 }
 
 #[derive(Debug, Copy, Clone)]
-pub struct FormatTrailingTrivia<I, L: Language>
+pub struct FormatTrailingTrivia<'a, L: Language> {
+    token: &'a SyntaxToken<L>,
+    skip_formatted_check: bool,
+}
+
+impl<L> FormatTrailingTrivia<'_, L>
+where
+    L: Language,
+{
+    pub fn skip_formatted_check(mut self) -> Self {
+        self.skip_formatted_check = true;
+        self
+    }
+}
+
+impl<L, Context> Format<Context> for FormatTrailingTrivia<'_, L>
+where
+    L: Language + 'static,
+    Context: CommentContext<L>,
+{
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        if !self.skip_formatted_check
+            && f.state()
+                .is_token_trivia_formatted(self.token, TriviaKind::Trailing)
+        {
+            return Ok(());
+        }
+
+        let comments = self
+            .token
+            .trailing_trivia()
+            .pieces()
+            .filter_map(|piece| piece.as_comments().map(SourceComment::trailing));
+
+        FormatTrailingComments::new(comments, self.token.kind(), self.style).fmt(f)
+    }
+}
+
+#[derive(Debug, Copy, Clone)]
+pub struct FormatTrailingComments<I, L: Language>
 where
     I: Iterator<Item = SourceComment<L>> + Clone,
 {
@@ -749,7 +615,7 @@ where
     skip_formatted_check: bool,
 }
 
-impl<I, L: Language> FormatTrailingTrivia<I, L>
+impl<I, L: Language> FormatTrailingComments<I, L>
 where
     I: Iterator<Item = SourceComment<L>> + Clone,
 {
@@ -775,7 +641,7 @@ where
     }
 }
 
-impl<I, L: Language, C> Format<C> for FormatTrailingTrivia<I, L>
+impl<I, L: Language, C> Format<C> for FormatTrailingComments<I, L>
 where
     I: Iterator<Item = SourceComment<L>> + Clone,
     C: CommentContext<L>,
@@ -785,10 +651,6 @@ where
         let mut last_inline_comment = f.state().is_last_content_inline_comment();
 
         for (index, comment) in comments.enumerate() {
-            if !self.skip_formatted_check && f.state().is_comment_formatted(comment.piece()) {
-                continue;
-            }
-
             let kind = f
                 .context()
                 .comment_style()
@@ -796,29 +658,25 @@ where
             last_inline_comment = kind.is_inline();
             let is_single_line = kind.is_line();
 
-            let content = format_with(|f: &mut Formatter<C>| {
-                if !is_single_line {
-                    match self.token_kind {
-                        // Don't write a space if this is a group start token and it isn't the first trailing comment
-                        Some(token)
-                            if f.context().comment_style().is_group_start_token(token)
-                                && index == 0 => {}
-                        //  Write a space for all other cases
-                        _ => space_token().fmt(f)?,
-                    }
-                    comment.piece().fmt(f)
-                } else {
-                    write![
-                        f,
-                        [
-                            line_suffix(&format_args![space_token(), comment.piece()]),
-                            expand_parent()
-                        ]
-                    ]
+            if !is_single_line {
+                match self.token_kind {
+                    // Don't write a space if this is a group start token and it isn't the first trailing comment
+                    Some(token)
+                        if f.context().comment_style().is_group_start_token(token)
+                            && index == 0 => {}
+                    //  Write a space for all other cases
+                    _ => space_token().fmt(f)?,
                 }
-            });
-
-            crate::comment(&content).fmt(f)?;
+                comment.piece().fmt(f)?;
+            } else {
+                write![
+                    f,
+                    [
+                        line_suffix(&format_args![space_token(), comment.piece()]),
+                        expand_parent()
+                    ]
+                ]?;
+            }
         }
 
         f.state_mut()

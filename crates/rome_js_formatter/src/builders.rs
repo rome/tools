@@ -48,32 +48,6 @@ pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsLanguage> {
     )
 }
 
-pub fn format_inserted_open_paren(
-    before_token: Option<JsSyntaxToken>,
-    kind: JsSyntaxKind,
-) -> FormatInsertedOpenParen<JsLanguage> {
-    FormatInsertedOpenParen::new(
-        before_token,
-        kind,
-        kind.to_string()
-            .expect("Expected a punctuation token as the open paren token."),
-    )
-}
-
-pub fn format_inserted_close_paren(
-    after_token: &Option<JsSyntaxToken>,
-    kind: JsSyntaxKind,
-    f: &mut JsFormatter,
-) -> FormatInsertedCloseParen<JsLanguage> {
-    FormatInsertedCloseParen::after_token(
-        after_token,
-        kind,
-        kind.to_string()
-            .expect("Expected a punctuation token as the close paren token."),
-        f,
-    )
-}
-
 /// Adds parentheses around some content
 /// Ensures that the leading trivia of the `first_content_token` is moved
 /// before the opening parentheses and the trailing trivia of the `last_content_token`
@@ -91,18 +65,12 @@ pub fn format_inserted_close_paren(
 /// ```javascript
 /// /* leading */ ("test") /* trailing */;
 /// ```
-pub fn format_parenthesize<Content>(
-    first_content_token: Option<JsSyntaxToken>,
-    content: &Content,
-    last_content_token: Option<JsSyntaxToken>,
-) -> FormatParenthesize
+pub fn format_parenthesize<Content>(content: &Content) -> FormatParenthesize
 where
     Content: Format<JsFormatContext>,
 {
     FormatParenthesize {
-        first_content_token,
         content: Argument::new(content),
-        last_content_token,
         grouped: false,
     }
 }
@@ -111,9 +79,7 @@ where
 #[derive(Clone)]
 pub struct FormatParenthesize<'content> {
     grouped: bool,
-    first_content_token: Option<JsSyntaxToken>,
     content: Argument<'content, JsFormatContext>,
-    last_content_token: Option<JsSyntaxToken>,
 }
 
 impl FormatParenthesize<'_> {
@@ -127,27 +93,22 @@ impl FormatParenthesize<'_> {
 
 impl Format<JsFormatContext> for FormatParenthesize<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let format_open_paren =
-            format_inserted_open_paren(self.first_content_token.clone(), JsSyntaxKind::L_PAREN);
-        let format_close_paren =
-            format_inserted_close_paren(&self.last_content_token, JsSyntaxKind::R_PAREN, f);
-
         if self.grouped {
             write!(
                 f,
                 [group_elements(&format_args![
-                    format_open_paren,
+                    format_inserted(JsSyntaxKind::L_PAREN),
                     soft_block_indent(&Arguments::from(&self.content)),
-                    format_close_paren
+                    format_inserted(JsSyntaxKind::R_PAREN)
                 ])]
             )
         } else {
             write!(
                 f,
                 [
-                    format_open_paren,
+                    format_inserted(JsSyntaxKind::L_PAREN),
                     Arguments::from(&self.content),
-                    format_close_paren
+                    format_inserted(JsSyntaxKind::R_PAREN)
                 ]
             )
         }
@@ -205,14 +166,19 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
         write!(
             buffer,
             [format_with(|f| {
-                for leading_trivia in self
-                    .node
-                    .first_leading_trivia()
-                    .into_iter()
-                    .flat_map(|trivia| trivia.pieces())
-                    .skip_while(skip_whitespace)
-                {
-                    write_trivia_token(f, leading_trivia)?;
+                if let Some(first_token) = self.node.first_token() {
+                    if !f
+                        .state()
+                        .is_token_trivia_formatted(&first_token, TriviaKind::Leading)
+                    {
+                        for leading_trivia in first_token
+                            .leading_trivia()
+                            .pieces()
+                            .skip_while(skip_whitespace)
+                        {
+                            write_trivia_token(f, leading_trivia)?;
+                        }
+                    }
                 }
 
                 dynamic_token(
@@ -221,18 +187,24 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 )
                 .fmt(f)?;
 
-                // Clippy false positive: SkipWhile does not implement DoubleEndedIterator
-                #[allow(clippy::needless_collect)]
-                let trailing_trivia: Vec<_> = self
-                    .node
-                    .last_trailing_trivia()
-                    .into_iter()
-                    .flat_map(|trivia| trivia.pieces().rev())
-                    .skip_while(skip_whitespace)
-                    .collect();
+                if let Some(last_token) = self.node.last_token() {
+                    if !f
+                        .state()
+                        .is_token_trivia_formatted(&last_token, TriviaKind::Trailing)
+                    {
+                        // Clippy false positive: SkipWhile does not implement DoubleEndedIterator
+                        #[allow(clippy::needless_collect)]
+                        let trailing_trivia: Vec<_> = last_token
+                            .trailing_trivia()
+                            .pieces()
+                            .rev()
+                            .skip_while(skip_whitespace)
+                            .collect();
 
-                for trailing_trivia in trailing_trivia.into_iter().rev() {
-                    write_trivia_token(f, trailing_trivia)?;
+                        for trailing_trivia in trailing_trivia.into_iter().rev() {
+                            write_trivia_token(f, trailing_trivia)?;
+                        }
+                    }
                 }
 
                 Ok(())

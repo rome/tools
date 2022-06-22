@@ -35,7 +35,7 @@ export type a =
 # Output
 ```js
 export type a =
-  // foo
+// foo
   | foo1 & foo2
   // bar
   | bar1 & bar2
@@ -43,7 +43,7 @@ export type a =
   | qux1 & qux2;
 
 export type a =
-  // foo
+// foo
   | foo1 & foo2
   // bar
   | bar1 & bar2

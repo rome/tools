@@ -57,7 +57,7 @@ export interface ApplicationEventData {
   registerBroadcastReceiver(
     onReceiveCallback: (
       context: any /* android.content.Context */,
-      intent: any /* android.content.Intent */,
+      intent: any, /* android.content.Intent */
     ) => void,
   ): void;
 }

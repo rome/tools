@@ -96,7 +96,7 @@ foo = {
 foo = {
   baz: {
     // prettier-ignore
-  foo: [1, 2,    3],
+    foo: [1, 2,    3],
   },
   // prettier-ignore
   bar:            1,

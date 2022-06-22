@@ -21,6 +21,7 @@ use rome_rowan::TextRange;
 use crate::builders::format_suppressed_node;
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
+use rome_formatter::TriviaKind::{Leading, Trailing};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -170,17 +171,82 @@ where
 {
     fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
-        if has_formatter_suppressions(syntax) {
-            write!(f, [format_suppressed_node(syntax)])?;
-        } else {
-            self.fmt_fields(node, f)?;
-        };
 
-        Ok(())
+        if has_formatter_suppressions(syntax) {
+            return write!(f, [format_suppressed_node(syntax)]);
+        }
+
+        write!(
+            f,
+            [format_node_comments(
+                node.syntax(),
+                &format_with(|f| { self.fmt_fields(node, f) })
+            )]
+        )
     }
 
     /// Formats the node's fields.
     fn fmt_fields(&self, item: &N, f: &mut JsFormatter) -> FormatResult<()>;
+}
+
+#[derive(Copy, Clone)]
+pub struct FormatComments<'node, 'content> {
+    node: &'node JsSyntaxNode,
+    content: Argument<'content, JsFormatContext>,
+}
+
+pub fn format_node_comments<'node, 'content, Content>(
+    node: &'node JsSyntaxNode,
+    content: &'content Content,
+) -> FormatComments<'node, 'content>
+where
+    Content: Format<JsFormatContext>,
+{
+    FormatComments {
+        node,
+        content: Argument::new(content),
+    }
+}
+
+impl Format<JsFormatContext> for FormatComments<'_, '_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        // TODO: Mark comments of leading/trailing as suppressed?
+        // TODO: How to avoid calling into first_token & last_token for every node (rather expensive)?
+
+        // Option 1: Add new state that tracks if the leading / trailing has been formatted of token X
+        // Option 2:
+
+        if self.node.prev_sibling_or_token().is_some() {
+            if let Some(first_token) = self.node.first_token() {
+                write!(f, [format_leading_trivia(&first_token)])?;
+                f.state_mut()
+                    .mark_token_trivia_as_formatted(&first_token, Leading);
+            }
+        }
+
+        let last_token = if self.node.next_sibling_or_token().is_some() {
+            if let Some(last_token) = self.node.last_token() {
+                f.state_mut()
+                    .mark_token_trivia_as_formatted(&last_token, Trailing);
+                Some(last_token)
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+
+        f.write_fmt(Arguments::from(&self.content))?;
+
+        if let Some(last_token) = last_token {
+            write!(
+                f,
+                [format_trailing_trivia(&last_token).skip_formatted_check()]
+            )?;
+        }
+
+        Ok(())
+    }
 }
 
 /// Format implementation specific to JavaScript tokens.
@@ -463,39 +529,36 @@ pub(crate) mod separated;
 #[cfg(test)]
 mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::{format_node, JsFormatContext};
+    use crate::{format_node, AsFormat, JsFormatContext};
     use rome_js_parser::parse;
     use rome_js_syntax::SourceType;
 
-    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-export class Task {
-    args: any[];
-
-    constructor(
-        public script: string,
-        public duration: number,
-        public threadCount: number,
-        ...args: any[]
-    ) {
-        this.args = args;
-    }
-}       "#;
+var fnString = // Comment0
+  // Comment1
+  'some' + 'long' + 'string';
+  "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);
+
+        dbg!(rome_formatter::format!(
+            JsFormatContext::default(),
+            [tree.tree().format()]
+        ));
+
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
-        check_reformat(CheckReformatParams {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            format_context: JsFormatContext::default(),
-        });
+        // check_reformat(CheckReformatParams {
+        //     root: &tree.syntax(),
+        //     text: result.as_code(),
+        //     source_type: syntax,
+        //     file_name: "quick_test",
+        //     format_context: JsFormatContext::default(),
+        // });
         assert_eq!(
             result.as_code(),
             "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"

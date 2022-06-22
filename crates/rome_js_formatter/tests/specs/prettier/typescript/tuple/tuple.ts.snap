@@ -24,7 +24,7 @@ export type SCMRawResource = [
   modes.Command /*command*/,
   string[] /*icons: light, dark*/,
   boolean /*strike through*/,
-  boolean /*faded*/,
+  boolean, /*faded*/
 ];
 
 ```

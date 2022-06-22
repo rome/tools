@@ -12,8 +12,7 @@ declare interface a // 1
 
 # Output
 ```js
-declare interface a
-  // 1
+declare interface a // 1
   extends
     b // 2
 {

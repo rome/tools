@@ -15,7 +15,6 @@ export v from 'mod';
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from
 
-
 export
 v;
 from;

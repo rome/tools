@@ -18,14 +18,7 @@ impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpressi
 
         if let Some(static_member_expression) = node.parent::<JsStaticMemberExpression>() {
             if static_member_expression.object()?.syntax() == node.syntax() {
-                return write!(
-                    f,
-                    [format_parenthesize(
-                        Some(value_token.clone()),
-                        &value_token.format(),
-                        Some(value_token.clone())
-                    )]
-                );
+                return write!(f, [format_parenthesize(&value_token.format(),)]);
             }
         }
 

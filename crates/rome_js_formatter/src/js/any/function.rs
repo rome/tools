@@ -37,11 +37,10 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         match node.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
-                [format_parenthesize(
-                    binding.syntax().first_token(),
-                    &format_args![binding.format(), if_group_breaks(&token(",")),],
-                    binding.syntax().last_token(),
-                )
+                [format_parenthesize(&format_args![
+                    binding.format(),
+                    if_group_breaks(&token(",")),
+                ],)
                 .grouped_with_soft_block_indent()]
             )?,
             JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,

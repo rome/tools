@@ -233,10 +233,6 @@ impl<'a> Printer<'a> {
                 self.queue_line_suffixes(HARD_BREAK, args, queue);
             }
 
-            FormatElement::Comment(content) => {
-                queue.extend(content.iter().map(|e| PrintElementCall::new(e, args)))
-            }
-
             FormatElement::Verbatim(verbatim) => {
                 if let VerbatimKind::Verbatim { length } = &verbatim.kind {
                     self.state.verbatim_markers.push(TextRange::at(
@@ -311,7 +307,7 @@ impl<'a> Printer<'a> {
         // If the indentation level has changed since these line suffixes were queued,
         // insert a line break before to push the comments into the new indent block
         // SAFETY: Indexing into line_suffixes is guarded by the above call to is_empty
-        let has_line_break = self.state.line_suffixes[0].args.indent < args.indent;
+        let has_line_break = false; // self.state.line_suffixes[0].args.indent < args.indent;
 
         // Print this line break element again once all the line suffixes have been flushed
         let call_self = PrintElementCall::new(line_break, args);
@@ -811,13 +807,10 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Comment(content) => {
-            queue.extend(content.iter().map(|e| PrintElementCall::new(e, args)))
-        }
-
         FormatElement::Verbatim(verbatim) => {
             queue.enqueue(PrintElementCall::new(&verbatim.element, args))
         }
+
         FormatElement::BestFitting(best_fitting) => {
             let content = match args.mode {
                 PrintMode::Flat => best_fitting.most_flat(),
@@ -1192,11 +1185,11 @@ two lines`,
                 token("]")
             ]),
             token(";"),
-            comment(&line_suffix(&format_args![
+            &line_suffix(&format_args![
                 space_token(),
                 token("// trailing"),
                 space_token()
-            ]),)
+            ])
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")

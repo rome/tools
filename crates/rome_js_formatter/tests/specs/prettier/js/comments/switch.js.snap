@@ -66,8 +66,7 @@ switch (foo) {
 }
 
 switch (foo) {
-  case "bar":
-    //comment
+  case "bar": //comment
     doThing(); //comment
 
   case "baz":

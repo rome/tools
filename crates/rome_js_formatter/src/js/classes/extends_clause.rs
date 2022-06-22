@@ -34,14 +34,7 @@ impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
                 .map_or(false, |p| p.kind() == JS_ASSIGNMENT_EXPRESSION)
             {
                 if super_class.syntax().has_leading_comments() || has_trailing_comments {
-                    write!(
-                        f,
-                        [format_parenthesize(
-                            super_class.syntax().first_token(),
-                            &content,
-                            super_class.syntax().last_token()
-                        )]
-                    )
+                    write!(f, [format_parenthesize(&content)])
                 } else {
                     let content = content.memoized();
                     write!(

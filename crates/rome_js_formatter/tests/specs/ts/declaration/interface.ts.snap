@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: interface.ts
 ---
 # Input
@@ -48,7 +47,8 @@ interface C<
 	But,
 	Maybe,
 	Not,
-> extends B {
+>
+	extends B {
 	something: string;
 }
 
@@ -58,8 +58,7 @@ interface D
 		B<string, symbol>,
 		F<string, symbol>,
 		G<string, number, symbol>,
-		H<string, number, symbol>
-{
+		H<string, number, symbol> {
 	something1: string;
 	something2: string;
 	something3: string;

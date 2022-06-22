@@ -48,10 +48,9 @@ use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
 pub use builders::{
-    block_indent, comment, empty_line, get_lines_before, group_elements, hard_line_break,
-    if_group_breaks, if_group_fits_on_line, indent, line_suffix, soft_block_indent,
-    soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
-    BestFitting,
+    block_indent, empty_line, get_lines_before, group_elements, hard_line_break, if_group_breaks,
+    if_group_fits_on_line, indent, line_suffix, soft_block_indent, soft_line_break,
+    soft_line_break_or_space, soft_line_indent_or_space, space_token, token, BestFitting,
 };
 pub use comments::{CommentContext, CommentKind, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
@@ -1102,19 +1101,18 @@ pub struct FormatState<Context> {
     /// The kind of the last formatted token
     last_token_kind: Option<LastTokenKind>,
 
-    /// Tracks comments that have been formatted manually and shouldn't be emitted again
-    /// when formatting the token the comments belong to.
-    ///
-    /// The map stores the absolute position of the manually formatted comments.
-    /// Storing the position is sufficient because comments are guaranteed to not be empty
-    /// (all start with a specific comment sequence) and thus, no two comments can have the same
-    /// absolute position.
-    manually_formatted_comments: IndexSet<TextSize>,
+    manually_formatted_trivia: IndexSet<(LastTokenKind, TextSize, TriviaKind)>,
 
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
     pub printed_tokens: PrintedTokens,
+}
+
+#[derive(Debug, Eq, PartialEq, Copy, Clone, Hash)]
+pub enum TriviaKind {
+    Leading,
+    Trailing,
 }
 
 impl<Context> fmt::Debug for FormatState<Context>
@@ -1141,7 +1139,7 @@ impl<Context> FormatState<Context> {
             group_id_builder: Default::default(),
             last_content_inline_comment: false,
             last_token_kind: None,
-            manually_formatted_comments: IndexSet::default(),
+            manually_formatted_trivia: IndexSet::default(),
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
@@ -1177,42 +1175,32 @@ impl<Context> FormatState<Context> {
         self.last_token_kind = kind;
     }
 
-    /// Mark the passed comment as formatted. This is necessary if a comment from a token is formatted
-    /// to avoid that the comment gets emitted again when formatting that token.
-    ///
-    /// # Examples
-    /// This can be useful when you want to move comments from one token to another.
-    /// For example, when parenthesising an expression:
-    ///
-    /// ```javascript
-    /// console.log("test");
-    /// /* leading */ "string" /* trailing */;
-    /// ```
-    ///
-    /// It is then desired that the leading and trailing comments are outside of the parentheses.
-    ///
-    /// ```javascript
-    /// /* leading */ ("string") /* trailing */;
-    /// ```
-    ///
-    /// This can be accomplished by manually formatting the leading/trailing trivia of the string literal expression
-    /// before/after the close parentheses and then mark the comments as handled.
-    pub fn mark_comment_as_formatted<L: Language>(
-        &mut self,
-        comment: &SyntaxTriviaPieceComments<L>,
-    ) {
-        self.manually_formatted_comments
-            .insert(comment.text_range().start());
+    pub fn mark_token_trivia_as_formatted<L>(&mut self, token: &SyntaxToken<L>, kind: TriviaKind)
+    where
+        L: Language + 'static,
+    {
+        self.manually_formatted_trivia.insert((
+            LastTokenKind {
+                kind_type: TypeId::of::<L>(),
+                kind: token.kind().to_raw(),
+            },
+            token.text_range().start(),
+            kind,
+        ));
     }
 
-    /// Returns `true` if this comment has already been formatted manually
-    /// and shouldn't be formatted again when formatting the token to which the comment belongs.
-    pub fn is_comment_formatted<L: Language>(
-        &self,
-        comment: &SyntaxTriviaPieceComments<L>,
-    ) -> bool {
-        self.manually_formatted_comments
-            .contains(&comment.text_range().start())
+    pub fn is_token_trivia_formatted<L>(&self, token: &SyntaxToken<L>, kind: TriviaKind) -> bool
+    where
+        L: Language + 'static,
+    {
+        self.manually_formatted_trivia.contains(&(
+            LastTokenKind {
+                kind_type: TypeId::of::<L>(),
+                kind: token.kind().to_raw(),
+            },
+            token.text_range().start(),
+            kind,
+        ))
     }
 
     /// Returns the context specifying how to format the current CST
@@ -1229,7 +1217,7 @@ impl<Context> FormatState<Context> {
         FormatStateSnapshot {
             last_content_inline_comment: self.last_content_inline_comment,
             last_token_kind: self.last_token_kind,
-            manual_handled_comments_len: self.manually_formatted_comments.len(),
+            manually_formatted_token_trivia_len: self.manually_formatted_trivia.len(),
             #[cfg(debug_assertions)]
             printed_tokens: self.printed_tokens.clone(),
         }
@@ -1238,8 +1226,8 @@ impl<Context> FormatState<Context> {
     pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
         self.last_content_inline_comment = snapshot.last_content_inline_comment;
         self.last_token_kind = snapshot.last_token_kind;
-        self.manually_formatted_comments
-            .truncate(snapshot.manual_handled_comments_len);
+        self.manually_formatted_trivia
+            .truncate(snapshot.manually_formatted_token_trivia_len);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 self.printed_tokens = snapshot.printed_tokens;
@@ -1278,7 +1266,7 @@ impl<Context> FormatState<Context> {
     }
 }
 
-#[derive(Eq, PartialEq, Debug, Copy, Clone)]
+#[derive(Eq, PartialEq, Debug, Copy, Clone, Hash)]
 pub struct LastTokenKind {
     kind_type: TypeId,
     kind: RawSyntaxKind,
@@ -1297,7 +1285,7 @@ impl LastTokenKind {
 pub struct FormatStateSnapshot {
     last_content_inline_comment: bool,
     last_token_kind: Option<LastTokenKind>,
-    manual_handled_comments_len: usize,
+    manually_formatted_token_trivia_len: usize,
     #[cfg(debug_assertions)]
     printed_tokens: PrintedTokens,
 }

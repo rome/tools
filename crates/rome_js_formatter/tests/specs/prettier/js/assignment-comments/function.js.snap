@@ -84,8 +84,7 @@ f3 = (
   a = b, //comment
 ) => {};
 
-f4 =
-  // Comment
+f4 = // Comment
   () => {};
 
 f5 =

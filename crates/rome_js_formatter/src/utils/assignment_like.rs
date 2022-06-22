@@ -177,7 +177,7 @@ impl Format<JsFormatContext> for RightAssignmentLike {
 /// - Assignment
 /// - Object property member
 /// - Variable declaration
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub(crate) enum AssignmentLikeLayout {
     /// This is a special layout usually used for variable declarations.
     /// This layout is hit, usually, when a [variable declarator](JsVariableDeclarator) doesn't have initializer:
@@ -241,7 +241,7 @@ pub(crate) enum AssignmentLikeLayout {
     Chain,
 
     /// This is a special layout usually used for long variable declarations or assignment expressions
-    /// This layout is hit, usually, when we are in the end of a chain:
+    /// This layout is hit, usually, when we are at the end of a chain:
     /// ```js
     /// var a = loreum = ipsum = "foo";
     /// ```
@@ -611,7 +611,7 @@ pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResu
 
     Ok(false)
 }
-/// If checks if among leading trivias, we there's a sequence of [Newline, Comment]
+/// If checks if among leading trivia, we there's a sequence of [Newline, Comment]
 pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {
     if let Some(leading_trivia) = node.first_leading_trivia() {
         let mut seen_newline = false;

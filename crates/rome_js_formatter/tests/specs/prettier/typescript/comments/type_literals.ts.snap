@@ -22,10 +22,10 @@ type Props3 = {
 
 # Output
 ```js
-type Props1 = {
-  // (DispatchProps & StateProps); WHY DON'T YOU WORK FLOW!!!!!!!!!
-  isPlaying: boolean;
-};
+type Props1 = // (DispatchProps & StateProps); WHY DON'T YOU WORK FLOW!!!!!!!!!
+  {
+    isPlaying: boolean;
+  };
 
 type Props2 = {
   // (DispatchProps & StateProps); WHY DON'T YOU WORK FLOW!!!!!!!!!

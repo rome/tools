@@ -56,10 +56,10 @@ type LongUnion =
 	| Z;
 
 type Comments =
-	// leading separator
+// leading separator
 	|
 	// leading type
 	A
-	| B /*
-trailing type */;
+	| B; /*
+trailing type */
 

@@ -92,14 +92,13 @@ switch (x) {
 }
 
 switch (x) {
-  default:
-    // comment
+  default: // comment
     break;
 }
 
 switch (x) {
-  default: {
-    // comment
+  default: // comment
+  {
     break;
   }
 }

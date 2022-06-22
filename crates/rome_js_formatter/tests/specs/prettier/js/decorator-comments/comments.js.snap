@@ -16,8 +16,8 @@ class Something {
 ```js
 class Something {
   @Annotateme()
-    // comment
-    static property: Array<string>;
+  // comment
+  static property: Array<string>;
 }
 
 ```

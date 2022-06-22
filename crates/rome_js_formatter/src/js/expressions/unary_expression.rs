@@ -58,11 +58,9 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
         if is_ambiguous_expression {
             operator_token.format().fmt(f)?;
 
-            let first_token = argument.syntax().first_token();
-            let last_token = argument.syntax().last_token();
             let format_argument = argument.format();
 
-            let parenthesize = format_parenthesize(first_token, &format_argument, last_token);
+            let parenthesize = format_parenthesize(&format_argument);
 
             if is_simple_expression(&argument)? {
                 parenthesize.fmt(f)

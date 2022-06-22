@@ -18,15 +18,14 @@ interface Foo<
 # Output
 ```js
 interface Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOO>
-  extends
-    Foo
-{}
+  extends Foo {}
 
 interface Foo<
   FOOOOOOOOOOOOOOOOOOOOOOOOOO,
   FOOOOOOOOOOOOOOOOOOOOOOOOOO,
   FOOOOOOOOOOOOOOOOOOOOOOOOOO,
-> extends Foo {}
+>
+  extends Foo {}
 
 ```
 

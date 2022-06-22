@@ -13,19 +13,16 @@ impl FormatNodeRule<TsExtendsClause> for FormatTsExtendsClause {
             types,
         } = node.as_fields();
 
-        let extends_token = extends_token.format().memoized();
-        let types = types.format().memoized();
-
         write!(
             f,
-            [group_elements(&format_args!(
-                if_group_breaks(&block_indent(&format_args![
-                    &extends_token,
-                    space_token(),
-                    soft_block_indent(&types)
-                ])),
-                if_group_fits_on_line(&format_args![&extends_token, space_token(), &types]),
-            ))]
+            [
+                extends_token.format(),
+                space_token(),
+                group_elements(&indent(&format_args![
+                    soft_line_break_or_space(),
+                    &types.format()
+                ]))
+            ]
         )
     }
 }

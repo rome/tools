@@ -33,40 +33,40 @@ if (a === 0) {
 } else if (a === 1) {
   doSomethingElse(); // comment B1
 } else if (a === 2) {
-  doSomethingElse(); // comment C1
-}
+  doSomethingElse();
+} // comment C1
 
 if (a === 0) {
   doSomething(); /* comment A2 */
 } else if (a === 1) {
   doSomethingElse(); /* comment B2 */
 } else if (a === 2) {
-  doSomethingElse(); /* comment C2 */
-}
+  doSomethingElse();
+} /* comment C2 */
 
 if (a === 0) {
   expr; // comment A3
 } else if (a === 1) {
   expr; // comment B3
 } else if (a === 2) {
-  expr; // comment C3
-}
+  expr;
+} // comment C3
 
 if (a === 0) {
   expr; /* comment A4 */
 } else if (a === 1) {
   expr; /* comment B4 */
 } else if (a === 2) {
-  expr; /* comment C4 */
-}
+  expr;
+} /* comment C4 */
 
 if (a === 0) {
   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment A5
 } else if (a === 1) {
   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment B5
 } else if (a === 2) {
-  looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment C5
-}
+  looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong;
+} // comment C5
 
 ```
 
@@ -74,6 +74,5 @@ if (a === 0) {
 ```
    34:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment A5
    36:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment B5
-   38:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment C5
 ```
 

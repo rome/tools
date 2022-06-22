@@ -30,12 +30,7 @@ impl FormatNodeRule<JsStringLiteralExpression> for FormatJsStringLiteralExpressi
             .is_some();
 
         if needs_parenthesis {
-            format_parenthesize(
-                Some(value_token.clone()),
-                &formatted,
-                Some(value_token.clone()),
-            )
-            .fmt(f)
+            format_parenthesize(&formatted).fmt(f)
         } else {
             formatted.fmt(f)
         }

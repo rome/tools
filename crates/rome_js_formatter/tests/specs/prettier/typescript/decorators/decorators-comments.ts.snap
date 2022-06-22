@@ -83,14 +83,14 @@ class Something {
 
 class Something2 {
   @foo()
-    // comment
-    abstract property: Array<string>
+  // comment
+  abstract property: Array<string>
 }
 
 class Something3 {
   @foo()
-    // comment
-    abstract method(): Array<string>
+  // comment
+  abstract method(): Array<string>
 }
 
 ```

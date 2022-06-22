@@ -220,13 +220,9 @@ fn format_sub_expression<'a>(
 ) -> impl Format<JsFormatContext> + 'a {
     format_with(move |f| {
         if needs_parens(parent_operator, sub_expression)? {
-            format_parenthesize(
-                sub_expression.syntax().first_token(),
-                &sub_expression,
-                sub_expression.syntax().last_token(),
-            )
-            .grouped_with_soft_block_indent()
-            .fmt(f)
+            format_parenthesize(&sub_expression)
+                .grouped_with_soft_block_indent()
+                .fmt(f)
         } else {
             write!(f, [sub_expression])
         }
@@ -573,10 +569,7 @@ impl FlattenedBinaryExpressionPart {
                 });
 
                 if *parenthesized {
-                    let first_token = current.syntax().first_token();
-                    let last_token = current.syntax().last_token();
-
-                    format_parenthesize(first_token, &content, last_token)
+                    format_parenthesize(&content)
                         .grouped_with_soft_block_indent()
                         .fmt(f)
                 } else {
