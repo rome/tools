@@ -100,15 +100,15 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
 
         for param in type_arguments.ts_type_argument_list().iter() {
             let param = param.ok()?;
-            let element_type = match param {
+            let element_type = match &param {
                 TsType::TsUnionType(_) => continue,
                 TsType::TsTypeOperatorType(_) => continue,
-                TsType::TsReferenceType(ty)
-                    if is_array_reference(&ty).unwrap_or(false)
-                        && ty.type_arguments().is_some() =>
-                {
-                    // SAFETY: We have checked the `ty.type_arguments` is `Some` in match guard
-                    convert_to_array_type(ty.type_arguments().unwrap())
+                TsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
+                    if let Some(type_arguments) = ty.type_arguments() {
+                        convert_to_array_type(type_arguments)
+                    } else {
+                        Some(param)
+                    }
                 }
                 _ => Some(param),
             };
