@@ -199,6 +199,11 @@ impl<'a, Context> VecBuffer<'a, Context> {
             FormatElement::List(List::new(std::mem::take(&mut self.elements)))
         }
     }
+
+    /// Returns a reference to the current context
+    pub fn context(&self) -> &Context {
+        &self.state.context
+    }
 }
 
 impl<Context> Deref for VecBuffer<'_, Context> {
