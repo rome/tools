@@ -6,6 +6,7 @@ mod simple;
 pub mod string_utils;
 
 pub(crate) mod format_class;
+pub mod jsx_utils;
 mod member_chain;
 mod object;
 mod object_pattern_like;

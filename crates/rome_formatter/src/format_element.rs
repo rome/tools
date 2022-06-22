@@ -183,7 +183,7 @@ impl List {
         Self { content }
     }
 
-    pub(crate) fn into_vec(self) -> Vec<FormatElement> {
+    pub fn into_vec(self) -> Vec<FormatElement> {
         self.content
     }
 }

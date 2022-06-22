@@ -91,11 +91,13 @@ Quote style: Double Quotes
 	}}
 />;
 
-let a = <test
-	aVeryLongAttributeName={
-		"WithAVeryLongValuethat exceeds the line width, what happens with ithis"
-	}
-/>;
+let a = (
+	<test
+		aVeryLongAttributeName={
+			"WithAVeryLongValuethat exceeds the line width, what happens with ithis"
+		}
+	/>
+);
 
 <test
 	{...WithAVeryLongFunctionthat_exceeds_the_line_width_what_happens_with_ithis()}

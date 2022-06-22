@@ -1,6 +1,7 @@
 use crate::prelude::*;
+use crate::utils::jsx_utils::contains_meaningful_jsx_text;
+use crate::JsFormatter;
 use rome_js_syntax::JsxChildList;
-use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxChildList;
@@ -8,7 +9,17 @@ pub struct FormatJsxChildList;
 impl FormatRule<JsxChildList> for FormatJsxChildList {
     type Context = JsFormatContext;
 
-    fn fmt(&self, node: &JsxChildList, f: &mut JsFormatter) -> FormatResult<()> {
-        format_verbatim_node(node.syntax()).fmt(f)
+    fn fmt(&self, node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
+        if contains_meaningful_jsx_text(node) {
+            formatter
+                .fill(soft_line_break())
+                .flatten_entries(node.iter().formatted())
+                .finish()
+        } else {
+            formatter
+                .join_with(soft_line_break())
+                .entries(node.iter().formatted())
+                .finish()
+        }
     }
 }
