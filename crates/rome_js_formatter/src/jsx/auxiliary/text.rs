@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsxText, JsxTextFields};
 use std::borrow::Cow;
@@ -7,8 +7,11 @@ use std::borrow::Cow;
 use std::ops::Range;
 use std::str::CharIndices;
 
-impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
-    fn fmt_fields(node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxText;
+
+impl FormatNodeRule<JsxText> for FormatJsxText {
+    fn fmt_fields(&self, node: &JsxText, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxTextFields { value_token } = node.as_fields();
         let token = value_token?;
         let new_text = clean_jsx_text(token.text());

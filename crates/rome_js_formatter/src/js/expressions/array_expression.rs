@@ -1,12 +1,14 @@
-use crate::generated::FormatJsArrayElementList;
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsArrayExpression;
 use rome_js_syntax::JsArrayExpressionFields;
 
-impl FormatNodeFields<JsArrayExpression> for FormatNodeRule<JsArrayExpression> {
-    fn fmt_fields(node: &JsArrayExpression, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrayExpression;
+
+impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
+    fn fmt_fields(&self, node: &JsArrayExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsArrayExpressionFields {
             l_brack_token,
             elements,
@@ -15,9 +17,7 @@ impl FormatNodeFields<JsArrayExpression> for FormatNodeRule<JsArrayExpression> {
 
         let group_id = f.group_id("array");
 
-        let elements = format_with(|f| {
-            FormatJsArrayElementList::format_with_group_id(&elements, f, Some(group_id))
-        });
+        let elements = elements.format().with_options(Some(group_id));
 
         write!(
             f,

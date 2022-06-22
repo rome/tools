@@ -2,12 +2,15 @@ use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsImport;
 use rome_js_syntax::JsImportFields;
 
-impl FormatNodeFields<JsImport> for FormatNodeRule<JsImport> {
-    fn fmt_fields(node: &JsImport, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsImport;
+
+impl FormatNodeRule<JsImport> for FormatJsImport {
+    fn fmt_fields(&self, node: &JsImport, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportFields {
             import_token,
             import_clause,

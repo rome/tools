@@ -2,12 +2,15 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::utils::FormatInitializerClause;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsFormalParameter;
 use rome_js_syntax::JsFormalParameterFields;
 
-impl FormatNodeFields<JsFormalParameter> for FormatNodeRule<JsFormalParameter> {
-    fn fmt_fields(node: &JsFormalParameter, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsFormalParameter;
+
+impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
+    fn fmt_fields(&self, node: &JsFormalParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let JsFormalParameterFields {
             binding,
             question_mark_token,

@@ -276,13 +276,20 @@ pub fn generate_formatter() {
     // Create a default implementation for theses nodes only if
     // the file doesn't already exist
     for (kind, name) in names {
-        let path = name_to_path(&kind, &name);
+        let module = name_to_module(&kind, &name);
+        let path = module.as_path();
         modules.insert(&repo, &path);
 
         let node_id = Ident::new(&name, Span::call_site());
         let format_id = Ident::new(&format!("Format{name}"), Span::call_site());
+        let qualified_format_id = {
+            let language = Ident::new(module.language.as_str(), Span::call_site());
+            let concept = Ident::new(module.concept.as_str(), Span::call_site());
+            let module = Ident::new(&module.name, Span::call_site());
+            quote! { crate::#language::#concept::#module::#format_id }
+        };
 
-        format_impls.push(&kind, &node_id, &format_id);
+        format_impls.push(&kind, &node_id, &qualified_format_id);
 
         // Union nodes except for AnyFunction and AnyClass have a generated
         // implementation, the codegen will always overwrite any existing file
@@ -303,26 +310,30 @@ pub fn generate_formatter() {
         let tokens = match kind {
             NodeKind::List { separated: false } => quote! {
                 use crate::prelude::*;
-                use crate::generated::#format_id;
                 use rome_js_syntax::#node_id;
+
+                #[derive(Debug, Clone, Default)]
+                pub struct #format_id;
 
                 impl FormatRule<#node_id> for #format_id {
                     type Context = JsFormatContext;
 
-                    fn fmt(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                    fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                         f.join().entries(node.iter().formatted()).finish()
                     }
                 }
             },
             NodeKind::List { .. } => quote! {
                 use crate::prelude::*;
-                use crate::generated::#format_id;
                 use rome_js_syntax::#node_id;
+
+                #[derive(Debug, Clone, Default)]
+                pub struct #format_id;
 
                 impl FormatRule<#node_id> for #format_id {
                     type Context = JsFormatContext;
 
-                    fn fmt(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                    fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                         format_verbatim_node(node.syntax()).fmt(f)
                     }
                 }
@@ -330,12 +341,15 @@ pub fn generate_formatter() {
             NodeKind::Node => {
                 quote! {
                     use crate::prelude::*;
-                    use crate::FormatNodeFields;
+
                     use rome_rowan::AstNode;
                     use rome_js_syntax::#node_id;
 
-                    impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn fmt_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                    #[derive(Debug, Clone, Default)]
+                    pub struct #format_id;
+
+                    impl FormatNodeRule<#node_id> for #format_id {
+                        fn fmt_fields(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             format_verbatim_node(node.syntax()).fmt(f)
                         }
                     }
@@ -348,8 +362,11 @@ pub fn generate_formatter() {
                     use rome_rowan::AstNode;
                     use rome_js_syntax::#node_id;
 
-                    impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
-                        fn fmt_fields(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                    #[derive(Debug, Clone, Default)]
+                    pub struct #format_id;
+
+                    impl FormatNodeRule<#node_id> for #format_id {
+                        fn fmt_fields(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             format_unknown_node(node.syntax()).fmt(f)
                         }
                     }
@@ -367,13 +384,15 @@ pub fn generate_formatter() {
 
                 quote! {
                     use crate::prelude::*;
-                    use crate::generated::#format_id;
                     use rome_js_syntax::#node_id;
+
+                    #[derive(Debug, Clone, Default)]
+                    pub struct #format_id;
 
                     impl FormatRule<#node_id> for #format_id {
                         type Context = JsFormatContext;
 
-                        fn fmt(node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        fn fmt(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                             match node {
                                 #( #match_arms )*
                             }
@@ -415,57 +434,46 @@ impl BoilerplateImpls {
         }
     }
 
-    fn push(&mut self, kind: &NodeKind, node_id: &Ident, format_id: &Ident) {
-        match kind {
-            NodeKind::Node | NodeKind::Unknown => {
-                self.impls.push(quote! {
-                    impl<'a> AsFormat<'a> for rome_js_syntax::#node_id {
-                        type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, FormatNodeRule<rome_js_syntax::#node_id>>;
-
-                        fn format(&'a self) -> Self::Format {
-                            FormatRefWithRule::new(self)
-                        }
+    fn push(&mut self, kind: &NodeKind, node_id: &Ident, format_id: &TokenStream) {
+        let format_rule_impl = match kind {
+            NodeKind::List { .. } | NodeKind::Union { .. } => quote!(),
+            _ => quote! {
+                impl FormatRule<rome_js_syntax::#node_id> for #format_id {
+                   type Context = JsFormatContext;
+                    fn fmt(&self, node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                        FormatNodeRule::<rome_js_syntax::#node_id>::fmt(self, node, f)
                     }
+                }
+            },
+        };
 
-                    impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::#node_id {
-                        type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, FormatNodeRule<rome_js_syntax::#node_id>>;
+        self.impls.push(quote! {
+            #format_rule_impl
 
-                        fn into_format(self) -> Self::Format {
-                            FormatOwnedWithRule::new(self)
-                        }
-                    }
-                });
+            impl<'a> AsFormat<'a> for rome_js_syntax::#node_id {
+                type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
+
+                fn format(&'a self) -> Self::Format {
+                    FormatRefWithRule::new(self, #format_id::default())
+                }
             }
-            _ => {
-                self.impls.push(quote! {
-                    pub struct #format_id;
 
-                    impl<'a> AsFormat<'a> for rome_js_syntax::#node_id {
-                        type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
+            impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::#node_id {
+                type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, #format_id>;
 
-                        fn format(&'a self) -> Self::Format {
-                            FormatRefWithRule::new(self)
-                        }
-                    }
-
-                    impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::#node_id {
-                        type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, #format_id>;
-
-                        fn into_format(self) -> Self::Format {
-                            FormatOwnedWithRule::new(self)
-                        }
-                    }
-                });
+                fn into_format(self) -> Self::Format {
+                    FormatOwnedWithRule::new(self, #format_id::default())
+                }
             }
-        }
+        });
     }
 
     fn print(self, stage: &mut Vec<PathBuf>) {
         let impls = self.impls;
 
         let tokens = quote! {
-            use rome_formatter::{FormatRefWithRule, FormatOwnedWithRule};
-            use crate::{AsFormat, IntoFormat, FormatNodeRule};
+            use rome_formatter::{FormatRefWithRule, FormatOwnedWithRule, FormatRule, FormatResult};
+            use crate::{AsFormat, IntoFormat, FormatNodeRule, JsFormatter, JsFormatContext};
 
             #( #impls )*
         };
@@ -538,6 +546,22 @@ impl NodeConcept {
     }
 }
 
+struct NodeModuleInformation {
+    language: NodeLanguage,
+    concept: NodeConcept,
+    name: String,
+}
+
+impl NodeModuleInformation {
+    fn as_path(&self) -> PathBuf {
+        project_root()
+            .join("crates/rome_js_formatter/src")
+            .join(self.language.as_str())
+            .join(self.concept.as_str())
+            .join(&format!("{}.rs", self.name))
+    }
+}
+
 /// Convert an AstNode name to a path / Rust module name
 ///
 /// Nodes are classified within the following concepts:
@@ -554,7 +578,7 @@ impl NodeConcept {
 /// - lists
 /// - unions
 /// - auxiliary (everything else)
-fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
+fn name_to_module(kind: &NodeKind, in_name: &str) -> NodeModuleInformation {
     // Detect language prefix
     let mid_before_second_capital_letter = in_name
         .chars()
@@ -673,17 +697,15 @@ fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
 
     // "type" and "enum" are Rust keywords, add the "ts_"
     // prefix to these modules to avoid parsing errors
-    let mut stem = match stem.as_str() {
+    let stem = match stem.as_str() {
         "type" => String::from("ts_type"),
         "enum" => String::from("ts_enum"),
         _ => stem,
     };
 
-    stem.push_str(".rs");
-
-    project_root()
-        .join("crates/rome_js_formatter/src")
-        .join(language.as_str())
-        .join(concept.as_str())
-        .join(stem)
+    NodeModuleInformation {
+        name: stem,
+        language,
+        concept,
+    }
 }

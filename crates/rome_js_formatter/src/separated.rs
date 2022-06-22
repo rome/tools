@@ -219,6 +219,7 @@ impl FormatSeparatedOptions {
         self
     }
 
+    #[allow(unused)]
     pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
         self.group_id = group_id;
         self

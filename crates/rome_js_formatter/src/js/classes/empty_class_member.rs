@@ -1,11 +1,13 @@
 use crate::prelude::*;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsEmptyClassMember;
 use rome_js_syntax::JsEmptyClassMemberFields;
 
-impl FormatNodeFields<JsEmptyClassMember> for FormatNodeRule<JsEmptyClassMember> {
-    fn fmt_fields(node: &JsEmptyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsEmptyClassMember;
+
+impl FormatNodeRule<JsEmptyClassMember> for FormatJsEmptyClassMember {
+    fn fmt_fields(&self, node: &JsEmptyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsEmptyClassMemberFields { semicolon_token } = node.as_fields();
 
         format_removed(&semicolon_token?).fmt(f)

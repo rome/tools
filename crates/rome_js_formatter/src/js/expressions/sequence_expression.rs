@@ -1,13 +1,15 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
 
 use rome_formatter::write;
 use rome_js_syntax::JsSyntaxKind::JS_SEQUENCE_EXPRESSION;
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-impl FormatNodeFields<JsSequenceExpression> for FormatNodeRule<JsSequenceExpression> {
-    fn fmt_fields(node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsSequenceExpression;
+
+impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
+    fn fmt_fields(&self, node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let first_non_sequence_parent = node
             .syntax()
             .ancestors()

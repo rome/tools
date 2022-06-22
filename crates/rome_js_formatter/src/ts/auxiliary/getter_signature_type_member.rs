@@ -1,11 +1,18 @@
 use crate::prelude::*;
 use crate::utils::FormatTypeMemberSeparator;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsGetterSignatureTypeMember, TsGetterSignatureTypeMemberFields};
 
-impl FormatNodeFields<TsGetterSignatureTypeMember> for FormatNodeRule<TsGetterSignatureTypeMember> {
-    fn fmt_fields(node: &TsGetterSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsGetterSignatureTypeMember;
+
+impl FormatNodeRule<TsGetterSignatureTypeMember> for FormatTsGetterSignatureTypeMember {
+    fn fmt_fields(
+        &self,
+        node: &TsGetterSignatureTypeMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsGetterSignatureTypeMemberFields {
             get_token,
             name,

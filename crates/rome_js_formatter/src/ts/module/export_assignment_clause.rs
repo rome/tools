@@ -1,12 +1,15 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::TsExportAssignmentClause;
 use rome_js_syntax::TsExportAssignmentClauseFields;
 
-impl FormatNodeFields<TsExportAssignmentClause> for FormatNodeRule<TsExportAssignmentClause> {
-    fn fmt_fields(node: &TsExportAssignmentClause, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsExportAssignmentClause;
+
+impl FormatNodeRule<TsExportAssignmentClause> for FormatTsExportAssignmentClause {
+    fn fmt_fields(&self, node: &TsExportAssignmentClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsExportAssignmentClauseFields {
             eq_token,
             expression,

@@ -1,12 +1,15 @@
 use crate::prelude::*;
 use crate::ts::types::intersection_type::FormatTypeSetLeadingSeparator;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::TsUnionTypeFields;
 use rome_js_syntax::{JsSyntaxKind, TsUnionType};
 
-impl FormatNodeFields<TsUnionType> for FormatNodeRule<TsUnionType> {
-    fn fmt_fields(node: &TsUnionType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsUnionType;
+
+impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
+    fn fmt_fields(&self, node: &TsUnionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsUnionTypeFields {
             leading_separator_token,
             types,

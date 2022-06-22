@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsxSelfClosingElement, JsxSelfClosingElementFields};
 
-impl FormatNodeFields<JsxSelfClosingElement> for FormatNodeRule<JsxSelfClosingElement> {
-    fn fmt_fields(node: &JsxSelfClosingElement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxSelfClosingElement;
+
+impl FormatNodeRule<JsxSelfClosingElement> for FormatJsxSelfClosingElement {
+    fn fmt_fields(&self, node: &JsxSelfClosingElement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxSelfClosingElementFields {
             l_angle_token,
             name,

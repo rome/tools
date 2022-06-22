@@ -1,12 +1,14 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedSpecifier;
 use rome_js_syntax::JsExportNamedSpecifierFields;
 
-impl FormatNodeFields<JsExportNamedSpecifier> for FormatNodeRule<JsExportNamedSpecifier> {
-    fn fmt_fields(node: &JsExportNamedSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportNamedSpecifier;
+
+impl FormatNodeRule<JsExportNamedSpecifier> for FormatJsExportNamedSpecifier {
+    fn fmt_fields(&self, node: &JsExportNamedSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedSpecifierFields {
             type_token,
             local_name,

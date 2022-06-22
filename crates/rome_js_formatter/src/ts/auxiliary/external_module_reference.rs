@@ -1,11 +1,18 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsExternalModuleReference;
 use rome_js_syntax::TsExternalModuleReferenceFields;
 
-impl FormatNodeFields<TsExternalModuleReference> for FormatNodeRule<TsExternalModuleReference> {
-    fn fmt_fields(node: &TsExternalModuleReference, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsExternalModuleReference;
+
+impl FormatNodeRule<TsExternalModuleReference> for FormatTsExternalModuleReference {
+    fn fmt_fields(
+        &self,
+        node: &TsExternalModuleReference,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsExternalModuleReferenceFields {
             require_token,
             l_paren_token,

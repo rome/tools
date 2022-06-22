@@ -1,12 +1,15 @@
 use crate::prelude::*;
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsImportType;
 use rome_js_syntax::TsImportTypeFields;
 
-impl FormatNodeFields<TsImportType> for FormatNodeRule<TsImportType> {
-    fn fmt_fields(node: &TsImportType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsImportType;
+
+impl FormatNodeRule<TsImportType> for FormatTsImportType {
+    fn fmt_fields(&self, node: &TsImportType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImportTypeFields {
             typeof_token,
             import_token,

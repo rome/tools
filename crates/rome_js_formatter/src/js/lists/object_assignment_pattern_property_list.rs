@@ -1,15 +1,21 @@
-use crate::generated::FormatJsObjectAssignmentPatternPropertyList;
 use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList, JsSyntaxKind,
 };
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectAssignmentPatternPropertyList;
 
 impl FormatRule<JsObjectAssignmentPatternPropertyList>
     for FormatJsObjectAssignmentPatternPropertyList
 {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsObjectAssignmentPatternPropertyList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(
+        &self,
+        node: &JsObjectAssignmentPatternPropertyList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         // The trailing separator is disallowed after a rest element
         let has_trailing_rest = match node.into_iter().last() {
             Some(elem) => matches!(

@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsTupleType, TsTupleTypeFields};
 
-impl FormatNodeFields<TsTupleType> for FormatNodeRule<TsTupleType> {
-    fn fmt_fields(node: &TsTupleType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTupleType;
+
+impl FormatNodeRule<TsTupleType> for FormatTsTupleType {
+    fn fmt_fields(&self, node: &TsTupleType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTupleTypeFields {
             l_brack_token,
             elements,

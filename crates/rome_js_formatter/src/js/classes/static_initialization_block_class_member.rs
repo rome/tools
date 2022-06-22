@@ -1,13 +1,17 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsStaticInitializationBlockClassMember;
 use rome_js_syntax::JsStaticInitializationBlockClassMemberFields;
 
-impl FormatNodeFields<JsStaticInitializationBlockClassMember>
-    for FormatNodeRule<JsStaticInitializationBlockClassMember>
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsStaticInitializationBlockClassMember;
+
+impl FormatNodeRule<JsStaticInitializationBlockClassMember>
+    for FormatJsStaticInitializationBlockClassMember
 {
     fn fmt_fields(
+        &self,
         node: &JsStaticInitializationBlockClassMember,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

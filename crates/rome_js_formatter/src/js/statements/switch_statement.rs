@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
 use rome_rowan::AstNodeList;
 
-impl FormatNodeFields<JsSwitchStatement> for FormatNodeRule<JsSwitchStatement> {
-    fn fmt_fields(node: &JsSwitchStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsSwitchStatement;
+
+impl FormatNodeRule<JsSwitchStatement> for FormatJsSwitchStatement {
+    fn fmt_fields(&self, node: &JsSwitchStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSwitchStatementFields {
             switch_token,
             l_paren_token,

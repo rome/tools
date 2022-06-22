@@ -1,11 +1,13 @@
 use crate::prelude::*;
 
-use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
-impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDeclaration> {
-    fn fmt_fields(node: &TsInterfaceDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsInterfaceDeclaration;
+
+impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
+    fn fmt_fields(&self, node: &TsInterfaceDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInterfaceDeclarationFields {
             interface_token,
             id,

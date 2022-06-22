@@ -1,11 +1,14 @@
 use crate::prelude::*;
 use crate::utils::node_has_leading_newline;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsObjectType, TsObjectTypeFields};
 
-impl FormatNodeFields<TsObjectType> for FormatNodeRule<TsObjectType> {
-    fn fmt_fields(node: &TsObjectType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsObjectType;
+
+impl FormatNodeRule<TsObjectType> for FormatTsObjectType {
+    fn fmt_fields(&self, node: &TsObjectType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsObjectTypeFields {
             l_curly_token,
             members,

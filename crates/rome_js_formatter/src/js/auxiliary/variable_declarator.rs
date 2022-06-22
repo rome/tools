@@ -1,12 +1,15 @@
 use crate::prelude::*;
 use crate::utils::FormatInitializerClause;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsVariableDeclarator;
 use rome_js_syntax::JsVariableDeclaratorFields;
 
-impl FormatNodeFields<JsVariableDeclarator> for FormatNodeRule<JsVariableDeclarator> {
-    fn fmt_fields(node: &JsVariableDeclarator, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableDeclarator;
+
+impl FormatNodeRule<JsVariableDeclarator> for FormatJsVariableDeclarator {
+    fn fmt_fields(&self, node: &JsVariableDeclarator, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableDeclaratorFields {
             id,
             variable_annotation,

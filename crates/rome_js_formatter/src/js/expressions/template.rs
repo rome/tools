@@ -1,12 +1,14 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsTemplate;
 use rome_js_syntax::JsTemplateFields;
 
-impl FormatNodeFields<JsTemplate> for FormatNodeRule<JsTemplate> {
-    fn fmt_fields(node: &JsTemplate, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsTemplate;
+
+impl FormatNodeRule<JsTemplate> for FormatJsTemplate {
+    fn fmt_fields(&self, node: &JsTemplate, f: &mut JsFormatter) -> FormatResult<()> {
         let JsTemplateFields {
             tag,
             type_arguments,

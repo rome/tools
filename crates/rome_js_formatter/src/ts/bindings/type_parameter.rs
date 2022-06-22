@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsTypeParameter, TsTypeParameterFields};
 
-impl FormatNodeFields<TsTypeParameter> for FormatNodeRule<TsTypeParameter> {
-    fn fmt_fields(node: &TsTypeParameter, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeParameter;
+
+impl FormatNodeRule<TsTypeParameter> for FormatTsTypeParameter {
+    fn fmt_fields(&self, node: &TsTypeParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeParameterFields {
             name,
             constraint,

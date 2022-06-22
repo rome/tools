@@ -3,11 +3,13 @@ use crate::utils::FormatBodyStatement;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsForOfStatement;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsForOfStatementFields;
 
-impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
-    fn fmt_fields(node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsForOfStatement;
+
+impl FormatNodeRule<JsForOfStatement> for FormatJsForOfStatement {
+    fn fmt_fields(&self, node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForOfStatementFields {
             for_token,
             await_token,

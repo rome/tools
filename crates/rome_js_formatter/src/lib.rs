@@ -164,38 +164,23 @@ where
 {
 }
 
-pub struct FormatNodeRule<T>
-where
-    T: AstNode<Language = JsLanguage>,
-{
-    node: PhantomData<T>,
-}
-
-impl<N> FormatRule<N> for FormatNodeRule<N>
+pub trait FormatNodeRule<N>
 where
     N: AstNode<Language = JsLanguage>,
-    FormatNodeRule<N>: FormatNodeFields<N>,
 {
-    type Context = JsFormatContext;
-
-    fn fmt(node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
         if has_formatter_suppressions(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
         } else {
-            Self::fmt_fields(node, f)?;
+            self.fmt_fields(node, f)?;
         };
 
         Ok(())
     }
-}
 
-pub trait FormatNodeFields<T>
-where
-    T: AstNode<Language = JsLanguage>,
-{
     /// Formats the node's fields.
-    fn fmt_fields(item: &T, f: &mut JsFormatter) -> FormatResult<()>;
+    fn fmt_fields(&self, item: &N, f: &mut JsFormatter) -> FormatResult<()>;
 }
 
 /// Format implementation specific to JavaScript tokens.
@@ -204,7 +189,7 @@ pub struct FormatJsSyntaxToken;
 impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
     type Context = JsFormatContext;
 
-    fn fmt(token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
         f.state_mut().track_token(token);
 
         write!(
@@ -222,7 +207,7 @@ impl<'a> AsFormat<'a> for JsSyntaxToken {
     type Format = FormatRefWithRule<'a, JsSyntaxToken, FormatJsSyntaxToken>;
 
     fn format(&'a self) -> Self::Format {
-        FormatRefWithRule::new(self)
+        FormatRefWithRule::new(self, FormatJsSyntaxToken)
     }
 }
 
@@ -230,7 +215,7 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
     type Format = FormatOwnedWithRule<JsSyntaxToken, FormatJsSyntaxToken>;
 
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule::new(self)
+        FormatOwnedWithRule::new(self, FormatJsSyntaxToken)
     }
 }
 

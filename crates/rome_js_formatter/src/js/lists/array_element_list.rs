@@ -1,36 +1,38 @@
 use crate::prelude::*;
-use rome_formatter::GroupId;
+use rome_formatter::{FormatRuleWithOptions, GroupId};
 use std::convert::Infallible;
 
 use crate::utils::array::write_array_node;
 
-use crate::generated::FormatJsArrayElementList;
 use crate::utils::has_formatter_trivia;
 use rome_js_syntax::{JsAnyExpression, JsArrayElementList, JsSyntaxKind};
 use rome_rowan::{AstNode, AstSeparatedList};
 
-impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
-    type Context = JsFormatContext;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrayElementList {
+    group_id: Option<GroupId>,
+}
 
-    fn fmt(node: &JsArrayElementList, formatter: &mut JsFormatter) -> FormatResult<()> {
-        Self::format_with_group_id(node, formatter, None)
+impl FormatRuleWithOptions<JsArrayElementList> for FormatJsArrayElementList {
+    type Options = Option<GroupId>;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.group_id = options;
+        self
     }
 }
 
-impl FormatJsArrayElementList {
-    /// Formats the array list with
-    pub fn format_with_group_id(
-        node: &JsArrayElementList,
-        f: &mut JsFormatter,
-        group_id: Option<GroupId>,
-    ) -> FormatResult<()> {
+impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
+    type Context = JsFormatContext;
+
+    fn fmt(&self, node: &JsArrayElementList, f: &mut JsFormatter) -> FormatResult<()> {
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             // Using format_separated is valid in this case as can_print_fill does not allow holes
             return f
                 .fill(soft_line_break_or_space())
                 .entries(
                     node.format_separated(JsSyntaxKind::COMMA)
-                        .with_options(FormatSeparatedOptions::default().with_group_id(group_id)),
+                        .with_group_id(self.group_id),
                 )
                 .finish();
         }

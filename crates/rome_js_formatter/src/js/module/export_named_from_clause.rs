@@ -2,13 +2,15 @@ use crate::prelude::*;
 use crate::utils::{node_has_leading_newline, FormatWithSemicolon};
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedFromClause;
 use rome_js_syntax::JsExportNamedFromClauseFields;
 use rome_rowan::AstNode;
 
-impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedFromClause> {
-    fn fmt_fields(node: &JsExportNamedFromClause, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportNamedFromClause;
+
+impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
+    fn fmt_fields(&self, node: &JsExportNamedFromClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportNamedFromClauseFields {
             type_token,
             l_curly_token,
