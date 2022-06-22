@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use crate::soft_block_indent;
 use crate::utils::jsx_utils::is_jsx_inside_arrow_function_inside_call_inside_expression_child;
-use crate::FormatNodeFields;
 use rome_formatter::{format_args, write, FormatResult};
 use rome_js_syntax::{JsxElement, JsxElementFields};
 

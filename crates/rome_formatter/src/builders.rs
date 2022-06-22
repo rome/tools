@@ -1770,6 +1770,11 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
 
     /// Adds an iterator of entries to the fill output, flattening any [FormatElement::List]
     /// entries by adding the list's elements to the fill output.
+    ///
+    /// ## Warning
+    ///
+    /// The usage of this method is highly discouraged and it's better to use
+    /// other APIs on ways: for example progressively format the items based on their type.
     pub fn flatten_entries<F, I>(&mut self, entries: I) -> &mut Self
     where
         F: Format<Context>,
@@ -1789,8 +1794,7 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
             write!(buffer, [entry])?;
 
-            let items = buffer.into_vec();
-            self.items.extend(items);
+            self.items.extend(buffer.into_vec());
 
             Ok(())
         });

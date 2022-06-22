@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::utils::jsx_utils::{get_wrap_state, WrapState};
-use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsxTagExpression;
 
