@@ -13,15 +13,12 @@ const pendingIndicatorz =
 
 # Output
 ```js
-const pendingIndicators = shield.alarmGeneratorConfiguration.getPendingVersionColumnValues;
+const pendingIndicators =
+  shield.alarmGeneratorConfiguration.getPendingVersionColumnValues;
 
-const pendingIndicatorz = shield.alarmGeneratorConfiguration.getPendingVersionColumnValues();
+const pendingIndicatorz =
+  shield.alarmGeneratorConfiguration.getPendingVersionColumnValues();
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const pendingIndicators = shield.alarmGeneratorConfiguration.getPendingVersionColumnValues;
-    3: const pendingIndicatorz = shield.alarmGeneratorConfiguration.getPendingVersionColumnValues();
-```
 

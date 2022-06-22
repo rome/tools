@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: as.ts
 ---
 # Input
@@ -91,8 +90,10 @@ const state = JSON.stringify({
 (bValue as boolean) ? 0 : -1;
 <boolean>bValue ? 0 : -1;
 
-const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
-const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
+const value1 =
+  thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
+const value2 =
+  thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
 const value3 = thisIsAReallyLongIdentifier as (
   SomeInterface | SomeOtherInterface
 );
@@ -101,10 +102,11 @@ const value4 = thisIsAReallyLongIdentifier as {
   prop2: number;
   prop3: number;
 }[];
-const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
-  string,
-  number,
-];
+const value5 =
+  thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
+    string,
+    number,
+  ];
 
 const iter1 = createIterator(
   this.controller,
@@ -121,8 +123,7 @@ const iter2 = createIterator(
 
 # Lines exceeding max width of 80 characters
 ```
-   42: const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
-   43: const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
-   52: const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
+   45:   thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
+   55:   thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
 ```
 

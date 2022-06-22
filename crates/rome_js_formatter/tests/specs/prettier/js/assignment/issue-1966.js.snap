@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: issue-1966.js
 ---
 # Input
@@ -15,7 +14,8 @@ this.isaverylongmethodexpression.withmultiplelevels = this.isanotherverylongexpr
 
 # Output
 ```js
-const aVeryLongNameThatGoesOnAndOn = this.someOtherObject.someOtherNestedObject.someLongFunctionName();
+const aVeryLongNameThatGoesOnAndOn =
+  this.someOtherObject.someOtherNestedObject.someLongFunctionName();
 
 this.someObject.someOtherNestedObject =
   this.someOtherObject.whyNotNestAnotherOne.someLongFunctionName();
@@ -25,8 +25,4 @@ this.isaverylongmethodexpression.withmultiplelevels =
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const aVeryLongNameThatGoesOnAndOn = this.someOtherObject.someOtherNestedObject.someLongFunctionName();
-```
 

@@ -13,11 +13,12 @@ const radioSelectedAttr =
 
 # Output
 ```js
-const radioSelectedAttr = (
-  isAnyValueSelected && node.getAttribute(
-    radioAttr.toLowerCase(),
-  ) === radioValue
-) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
+const radioSelectedAttr =
+  (
+    isAnyValueSelected && node.getAttribute(
+      radioAttr.toLowerCase(),
+    ) === radioValue
+  ) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
 
 ```
 

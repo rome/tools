@@ -112,17 +112,19 @@ let f3 = (
   a = b, //comment
 ) => {};
 
-let f4 = () => {}; // Comment
+let f4 =
+  // Comment
+  () => {};
 
 let f5 =
-// Comment
+  // Comment
 
-() => {};
+  () => {};
 
 let f6 = /* comment */
-// Comment
+  // Comment
 
-() => {};
+  () => {};
 
 ```
 
