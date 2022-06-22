@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::utils::JsAnyAssignmentLike;
-use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::JsObjectAssignmentPatternProperty;
 
