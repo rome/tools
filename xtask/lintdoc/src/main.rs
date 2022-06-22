@@ -143,7 +143,7 @@ fn parse_documentation(
     // Tracks the content of the current code block if it's using a
     // language supported for analysis
     let mut language = None;
-    let mut list_order = Some(0u64);
+    let mut list_order = None;
     for event in parser {
         if is_summary {
             if matches!(event, Event::End(Tag::Paragraph)) {
@@ -266,7 +266,7 @@ fn parse_documentation(
                 list_order = list_order.map(|item| item + 1);
                 writeln!(content)?;
             }
-            
+
             _ => {
                 // TODO: Implement remaining events as required
                 bail!("unimplemented event {event:?}")
