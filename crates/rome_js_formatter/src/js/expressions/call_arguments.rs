@@ -106,7 +106,6 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 // which means that if one is `false`, then the other is `true`.
                 // This means that in this branch we format the case where `should_group_first_argument`,
                 // in the else branch we format the case where `should_group_last_argument` is `true`.
-
                 write!(f, [l_leading_trivia, l_paren, l_trailing_trivia,])?;
                 if should_group_first_argument {
                     // special formatting of the first element
@@ -132,7 +131,6 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                         }))
                         .finish()?;
                 }
-
                 write!(f, [r_leading_trivia, r_paren, r_trailing_trivia])
             });
 
