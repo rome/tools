@@ -1,12 +1,19 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::TsIndexSignatureClassMember;
 use rome_js_syntax::TsIndexSignatureClassMemberFields;
 
-impl FormatNodeFields<TsIndexSignatureClassMember> for FormatNodeRule<TsIndexSignatureClassMember> {
-    fn fmt_fields(node: &TsIndexSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIndexSignatureClassMember;
+
+impl FormatNodeRule<TsIndexSignatureClassMember> for FormatTsIndexSignatureClassMember {
+    fn fmt_fields(
+        &self,
+        node: &TsIndexSignatureClassMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsIndexSignatureClassMemberFields {
             modifiers,
             l_brack_token,

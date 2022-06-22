@@ -1,12 +1,19 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
 };
 
-impl FormatNodeFields<JsxExpressionAttributeValue> for FormatNodeRule<JsxExpressionAttributeValue> {
-    fn fmt_fields(node: &JsxExpressionAttributeValue, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxExpressionAttributeValue;
+
+impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttributeValue {
+    fn fmt_fields(
+        &self,
+        node: &JsxExpressionAttributeValue,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsxExpressionAttributeValueFields {
             l_curly_token,
             expression,

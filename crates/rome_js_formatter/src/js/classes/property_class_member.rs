@@ -2,12 +2,15 @@ use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
 use crate::utils::{FormatMemberName, FormatWithSemicolon};
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsPropertyClassMember;
 use rome_js_syntax::JsPropertyClassMemberFields;
 
-impl FormatNodeFields<JsPropertyClassMember> for FormatNodeRule<JsPropertyClassMember> {
-    fn fmt_fields(node: &JsPropertyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsPropertyClassMember;
+
+impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
+    fn fmt_fields(&self, node: &JsPropertyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPropertyClassMemberFields {
             modifiers,
             name,

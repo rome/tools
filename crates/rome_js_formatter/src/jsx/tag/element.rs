@@ -5,8 +5,11 @@ use crate::FormatNodeFields;
 use rome_formatter::{format_args, write, FormatResult};
 use rome_js_syntax::{JsxElement, JsxElementFields};
 
-impl FormatNodeFields<JsxElement> for FormatNodeRule<JsxElement> {
-    fn fmt_fields(node: &JsxElement, formatter: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxElement;
+
+impl FormatNodeRule<JsxElement> for FormatJsxElement {
+    fn fmt_fields(&self, node: &JsxElement, formatter: &mut JsFormatter) -> FormatResult<()> {
         let JsxElementFields {
             opening_element,
             children,

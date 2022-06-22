@@ -2,13 +2,15 @@ use crate::prelude::*;
 use crate::utils::is_simple_expression;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsPreUpdateOperator;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
-impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
-    fn fmt_fields(node: &JsUnaryExpression, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsUnaryExpression;
+
+impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
+    fn fmt_fields(&self, node: &JsUnaryExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsUnaryExpressionFields {
             operator_token,
             argument,

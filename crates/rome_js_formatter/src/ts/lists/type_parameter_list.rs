@@ -1,12 +1,14 @@
-use crate::generated::FormatTsTypeParameterList;
 use crate::prelude::*;
 use rome_js_syntax::{JsSyntaxKind, TsTypeParameterList};
 use rome_rowan::AstSeparatedList;
 
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeParameterList;
+
 impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsTypeParameterList, f: &mut JsFormatter) -> FormatResult<()> {
         // nodes and formatter are not aware of the source type (TSX vs TS), which means we can't
         // exactly pin point the exact case.
         //

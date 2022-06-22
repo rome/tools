@@ -3,13 +3,15 @@ use rome_formatter::{write, Buffer};
 use rome_js_syntax::JsBlockStatement;
 use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
-impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
-    fn fmt_fields(node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsBlockStatement;
+
+impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
+    fn fmt_fields(&self, node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsBlockStatementFields {
             l_curly_token,
             statements,

@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSyntaxKind, TsIntersectionTypeFields};
 use rome_js_syntax::{JsSyntaxToken, TsIntersectionType};
 
-impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType> {
-    fn fmt_fields(node: &TsIntersectionType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIntersectionType;
+
+impl FormatNodeRule<TsIntersectionType> for FormatTsIntersectionType {
+    fn fmt_fields(&self, node: &TsIntersectionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsIntersectionTypeFields {
             leading_separator_token,
             types,
@@ -25,7 +28,7 @@ impl FormatNodeFields<TsIntersectionType> for FormatNodeRule<TsIntersectionType>
     }
 }
 
-pub(crate) struct FormatTypeSetLeadingSeparator<'a> {
+pub struct FormatTypeSetLeadingSeparator<'a> {
     pub(crate) separator: JsSyntaxKind,
     pub(crate) leading_separator: Option<&'a JsSyntaxToken>,
 }

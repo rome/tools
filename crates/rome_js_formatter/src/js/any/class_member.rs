@@ -1,11 +1,12 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyClassMember;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyClassMember;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyClassMember;
 impl FormatRule<JsAnyClassMember> for FormatJsAnyClassMember {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyClassMember::JsConstructorClassMember(node) => node.format().fmt(f),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(node) => node.format().fmt(f),

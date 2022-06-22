@@ -7,8 +7,11 @@ use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsxExpressionChild, JsxExpressionChildFields,
 };
 
-impl FormatNodeFields<JsxExpressionChild> for FormatNodeRule<JsxExpressionChild> {
-    fn fmt_fields(node: &JsxExpressionChild, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxExpressionChild;
+
+impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
+    fn fmt_fields(&self, node: &JsxExpressionChild, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxExpressionChildFields {
             l_curly_token,
             expression,

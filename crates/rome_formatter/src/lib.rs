@@ -63,7 +63,6 @@ use rome_rowan::{
 };
 use std::error::Error;
 use std::fmt;
-use std::marker::PhantomData;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -451,7 +450,15 @@ impl<Context> Format<Context> for () {
 pub trait FormatRule<T> {
     type Context;
 
-    fn fmt(item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+    fn fmt(&self, item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+}
+
+/// Rule that supports customizing how it formats an object of type [T].
+pub trait FormatRuleWithOptions<T>: FormatRule<T> {
+    type Options;
+
+    /// Returns a new rule that uses the given options to format an object.
+    fn with_options(self, options: Self::Options) -> Self;
 }
 
 /// Trait for an object that formats an object with a specified rule.
@@ -487,23 +494,31 @@ pub trait FormatWithRule<Context>: Format<Context> {
 }
 
 /// Formats the referenced `item` with the specified rule.
+#[derive(Debug, Copy, Clone)]
 pub struct FormatRefWithRule<'a, T, R>
 where
     R: FormatRule<T>,
 {
     item: &'a T,
-    rule: PhantomData<R>,
+    rule: R,
 }
 
 impl<'a, T, R> FormatRefWithRule<'a, T, R>
 where
     R: FormatRule<T>,
 {
-    pub fn new(item: &'a T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
+    pub fn new(item: &'a T, rule: R) -> Self {
+        Self { item, rule }
+    }
+}
+
+impl<T, R, O> FormatRefWithRule<'_, T, R>
+where
+    R: FormatRuleWithOptions<T, Options = O>,
+{
+    pub fn with_options(mut self, options: O) -> Self {
+        self.rule = self.rule.with_options(options);
+        self
     }
 }
 
@@ -524,28 +539,26 @@ where
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::fmt(self.item, f)
+        self.rule.fmt(self.item, f)
     }
 }
 
 /// Formats the `item` with the specified rule.
+#[derive(Debug, Clone)]
 pub struct FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
     item: T,
-    rule: PhantomData<R>,
+    rule: R,
 }
 
 impl<T, R> FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    pub fn new(item: T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
+    pub fn new(item: T, rule: R) -> Self {
+        Self { item, rule }
     }
 
     pub fn with_item(mut self, item: T) -> Self {
@@ -564,7 +577,17 @@ where
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::fmt(&self.item, f)
+        self.rule.fmt(&self.item, f)
+    }
+}
+
+impl<T, R, O> FormatOwnedWithRule<T, R>
+where
+    R: FormatRuleWithOptions<T, Options = O>,
+{
+    pub fn with_options(mut self, options: O) -> Self {
+        self.rule = self.rule.with_options(options);
+        self
     }
 }
 
@@ -755,7 +778,7 @@ pub fn format_range<Context, L, R, P>(
 where
     Context: FormatContext,
     L: Language,
-    R: FormatRule<SyntaxNode<L>, Context = Context>,
+    R: FormatRule<SyntaxNode<L>, Context = Context> + Default,
     P: FnMut(&SyntaxNode<L>) -> bool,
 {
     if range.is_empty() {
@@ -897,7 +920,10 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_sub_tree(context, &FormatRefWithRule::<_, R>::new(common_root))?;
+    let formatted = format_sub_tree(
+        context,
+        &FormatRefWithRule::<_, R>::new(common_root, R::default()),
+    )?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest

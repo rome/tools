@@ -1,13 +1,18 @@
 use crate::prelude::*;
 use crate::utils::{FormatMemberName, FormatWithSemicolon};
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsMethodSignatureClassMember, TsMethodSignatureClassMemberFields};
 
-impl FormatNodeFields<TsMethodSignatureClassMember>
-    for FormatNodeRule<TsMethodSignatureClassMember>
-{
-    fn fmt_fields(node: &TsMethodSignatureClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsMethodSignatureClassMember;
+
+impl FormatNodeRule<TsMethodSignatureClassMember> for FormatTsMethodSignatureClassMember {
+    fn fmt_fields(
+        &self,
+        node: &TsMethodSignatureClassMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsMethodSignatureClassMemberFields {
             modifiers,
             async_token,

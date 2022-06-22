@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsImportAssertion;
 use rome_js_syntax::JsImportAssertionFields;
 
-impl FormatNodeFields<JsImportAssertion> for FormatNodeRule<JsImportAssertion> {
-    fn fmt_fields(node: &JsImportAssertion, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsImportAssertion;
+
+impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
+    fn fmt_fields(&self, node: &JsImportAssertion, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportAssertionFields {
             assert_token,
             l_curly_token,

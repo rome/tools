@@ -1,12 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsExportDefaultDeclarationClause, JsExportDefaultDeclarationClauseFields};
 
-impl FormatNodeFields<JsExportDefaultDeclarationClause>
-    for FormatNodeRule<JsExportDefaultDeclarationClause>
-{
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportDefaultDeclarationClause;
+
+impl FormatNodeRule<JsExportDefaultDeclarationClause> for FormatJsExportDefaultDeclarationClause {
     fn fmt_fields(
+        &self,
         node: &JsExportDefaultDeclarationClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

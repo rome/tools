@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsBigIntLiteralType, TsBigIntLiteralTypeFields};
 
-impl FormatNodeFields<TsBigIntLiteralType> for FormatNodeRule<TsBigIntLiteralType> {
-    fn fmt_fields(node: &TsBigIntLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsBigIntLiteralType;
+
+impl FormatNodeRule<TsBigIntLiteralType> for FormatTsBigIntLiteralType {
+    fn fmt_fields(&self, node: &TsBigIntLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsBigIntLiteralTypeFields {
             minus_token,
             literal_token,

@@ -1,13 +1,15 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsIfStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::{JsAnyStatement, JsIfStatement};
 
-impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
-    fn fmt_fields(node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsIfStatement;
+
+impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
+    fn fmt_fields(&self, node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsIfStatementFields {
             if_token,
             l_paren_token,
@@ -31,7 +33,7 @@ impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
     }
 }
 
-pub(crate) struct FormatIfElseConsequentBlock(JsAnyStatement);
+pub struct FormatIfElseConsequentBlock(JsAnyStatement);
 
 impl From<JsAnyStatement> for FormatIfElseConsequentBlock {
     fn from(stmt: JsAnyStatement) -> Self {

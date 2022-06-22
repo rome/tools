@@ -1,13 +1,18 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsShorthandNamedImportSpecifier;
 use rome_js_syntax::JsShorthandNamedImportSpecifierFields;
 
-impl FormatNodeFields<JsShorthandNamedImportSpecifier>
-    for FormatNodeRule<JsShorthandNamedImportSpecifier>
-{
-    fn fmt_fields(node: &JsShorthandNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsShorthandNamedImportSpecifier;
+
+impl FormatNodeRule<JsShorthandNamedImportSpecifier> for FormatJsShorthandNamedImportSpecifier {
+    fn fmt_fields(
+        &self,
+        node: &JsShorthandNamedImportSpecifier,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsShorthandNamedImportSpecifierFields {
             type_token,
             local_name,

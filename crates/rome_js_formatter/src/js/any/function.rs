@@ -1,4 +1,3 @@
-use crate::generated::FormatJsAnyFunction;
 use crate::prelude::*;
 use crate::utils::is_simple_expression;
 use rome_formatter::{format_args, write};
@@ -6,10 +5,13 @@ use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
 
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyFunction;
+
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(async_token) = node.async_token() {
             write!(f, [async_token.format(), space_token()])?;
         }
