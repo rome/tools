@@ -386,7 +386,7 @@ impl SemanticEventExtractor {
 
         let idx = self
             .scopes
-            .iter_mut()
+            .iter()
             .rev()
             .position(|scope| !scope.allows_decl_hoisting);
 
