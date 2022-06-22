@@ -20,12 +20,6 @@ declare_rule! {
     /// ## Examples
     ///
     /// ### Invalid
-    ///
-    /// ```js,expect_diagnostic
-    /// for (; x.running;) {
-    ///     x.step();
-    /// }
-    /// ```
     pub(crate) UseSimplifiedLogicExpression = "useSimplifiedLogicExpression"
 }
 
@@ -33,16 +27,56 @@ impl Rule for UseSimplifiedLogicExpression {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsLogicalExpression;
-    type State = ();
+    type State = JsAnyExpression;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
+        let left = node.left().ok()?;
+        let right = node.right().ok()?;
         match node.operator().ok()? {
             rome_js_syntax::JsLogicalOperator::NullishCoalescing => {}
-            rome_js_syntax::JsLogicalOperator::LogicalOr => {}
-            rome_js_syntax::JsLogicalOperator::LogicalAnd => {}
+            rome_js_syntax::JsLogicalOperator::LogicalOr => {
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = left
+                {
+                    return simplify_or_expression(literal, right);
+                }
+
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = right
+                {
+                    return simplify_or_expression(literal, left);
+                }
+
+                if could_apply_de_morgan(node).unwrap_or(false) {
+                    return simplify_de_morgan(node)
+                        .map(|node| JsAnyExpression::JsUnaryExpression(node));
+                }
+            }
+            rome_js_syntax::JsLogicalOperator::LogicalAnd => {
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = left
+                {
+                    return simplify_and_expression(literal, right);
+                }
+
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = right
+                {
+                    return simplify_and_expression(literal, left);
+                }
+
+                if could_apply_de_morgan(node).unwrap_or(false) {
+                    return simplify_de_morgan(node)
+                        .map(|node| JsAnyExpression::JsUnaryExpression(node));
+                }
+            }
         }
-        todo!()
+        None
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -51,15 +85,17 @@ impl Rule for UseSimplifiedLogicExpression {
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
-                "Use "<Emphasis>"while"</Emphasis>" loops instead of "<Emphasis>"for"</Emphasis>" loops."
+                "Logical expression contains unnecessary complexity."
             },
         ))
     }
 
-    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root = ctx.root();
-
+        let root = ctx.root().replace_node(
+            JsAnyExpression::JsLogicalExpression(node.clone()),
+            state.clone(),
+        )?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
@@ -122,8 +158,32 @@ fn keep_expression_if_literal(
     }
 }
 
-fn simplify_de_morgan(node: JsLogicalExpression) -> Option<JsUnaryExpression> {
+fn simplify_de_morgan(node: &JsLogicalExpression) -> Option<JsUnaryExpression> {
     let left = node.left().ok()?;
     let right = node.right().ok()?;
-    Some(make::js_unary_expression(make::token(T![!]), todo!()))
+    let operator_token = node.operator_token().ok()?;
+    match (left, right) {
+        (JsAnyExpression::JsUnaryExpression(left), JsAnyExpression::JsUnaryExpression(right)) => {
+            let mut next_logic_expression = match operator_token.kind() {
+                T![||] => node
+                    .clone()
+                    .replace_token(operator_token, make::token(T![&&])),
+                T![&&] => node
+                    .clone()
+                    .replace_token(operator_token, make::token(T![||])),
+                _ => return None,
+            }?;
+            next_logic_expression = next_logic_expression.with_left(left.argument().ok()?);
+            next_logic_expression = next_logic_expression.with_right(right.argument().ok()?);
+            Some(make::js_unary_expression(
+                make::token(T![!]),
+                JsAnyExpression::JsParenthesizedExpression(make::js_parenthesized_expression(
+                    make::token(T!['(']),
+                    JsAnyExpression::JsLogicalExpression(next_logic_expression),
+                    make::token(T![')']),
+                )),
+            ))
+        }
+        _ => None,
+    }
 }
