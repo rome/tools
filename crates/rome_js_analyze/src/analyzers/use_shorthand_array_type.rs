@@ -35,10 +35,10 @@ declare_rule! {
     /// ```ts,expect_diagnostic
     /// let invalid3: Array<Foo<Bar>>;
     /// ```
-	///
-	/// ```ts,expect_diagnostic
-	/// let invalid: Array<[number, number]>;
-	/// ```
+    ///
+    /// ```ts,expect_diagnostic
+    /// let invalid: Array<[number, number]>;
+    /// ```
     pub(crate) UseShorthandArrayType = "useShorthandArrayType"
 }
 
