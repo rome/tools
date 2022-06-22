@@ -381,7 +381,6 @@ impl JsAnyAssignmentLike {
                     RightAssignmentLike::JsAnyExpression(
                         JsAnyExpression::JsArrowFunctionExpression(arrow),
                     ) => {
-                        dbg!("here");
                         let this_body = arrow.body()?;
                         if matches!(
                             this_body,

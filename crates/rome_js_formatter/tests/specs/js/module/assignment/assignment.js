@@ -130,3 +130,9 @@ a =
     a: { t: c = b }, loreum, ipsurm
 } = {}
 
+a =
+    {
+// rome-ignore format: test
+        a: { t: c = b }, loreum, ipsurm
+    } = {}
+
