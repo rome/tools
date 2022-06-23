@@ -9,7 +9,7 @@ impl FormatRule<TsTupleTypeElementList> for FormatTsTupleTypeElementList {
 
     fn fmt(&self, node: &TsTupleTypeElementList, f: &mut JsFormatter) -> FormatResult<()> {
         f.join_with(&soft_line_break_or_space())
-            .entries(node.format_separated(JsSyntaxKind::COMMA))
+            .entries(node.format_separated(JsSyntaxKind::COMMA).nodes_grouped())
             .finish()
     }
 }

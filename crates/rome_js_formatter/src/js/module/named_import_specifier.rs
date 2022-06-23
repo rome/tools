@@ -24,9 +24,9 @@ impl FormatNodeRule<JsNamedImportSpecifier> for FormatJsNamedImportSpecifier {
             f,
             [
                 name.format(),
-                soft_line_break_or_space(),
+                space_token(),
                 as_token.format(),
-                soft_line_break_or_space(),
+                space_token(),
                 local_name.format()
             ]
         ]

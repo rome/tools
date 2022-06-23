@@ -25,7 +25,7 @@ where
         let node = self.element.node()?;
         let separator = self.element.trailing_separator()?;
 
-        if self.options.disable_group_nodes {
+        if !self.options.nodes_grouped {
             node.format().fmt(f)?;
         } else {
             group_elements(&node.format()).fmt(f)?;
@@ -107,15 +107,9 @@ where
         }
     }
 
-    pub fn with_options(mut self, options: FormatSeparatedOptions) -> Self {
-        self.options = options;
-        self
-    }
-
-    /// Sets whatever the nodes should be wrapped by a `group_elements` (default: `true` for compatibility
-    /// reasons).
-    pub fn group_nodes(mut self, group_nodes: bool) -> Self {
-        self.options.disable_group_nodes = !group_nodes;
+    /// Wraps every node inside of a group
+    pub fn nodes_grouped(mut self) -> Self {
+        self.options.nodes_grouped = true;
         self
     }
 
@@ -210,18 +204,5 @@ impl Default for TrailingSeparator {
 pub struct FormatSeparatedOptions {
     trailing_separator: TrailingSeparator,
     group_id: Option<GroupId>,
-    disable_group_nodes: bool,
-}
-
-impl FormatSeparatedOptions {
-    pub fn with_trailing_separator(mut self, separator: TrailingSeparator) -> Self {
-        self.trailing_separator = separator;
-        self
-    }
-
-    #[allow(unused)]
-    pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
-        self.group_id = group_id;
-        self
-    }
+    nodes_grouped: bool,
 }
