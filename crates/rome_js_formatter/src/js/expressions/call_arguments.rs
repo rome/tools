@@ -5,10 +5,9 @@ use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyName,
     JsAnyStatement, JsArrayExpression, JsArrowFunctionExpression, JsCallArgumentList,
-    JsCallArguments, JsCallArgumentsFields, JsCallExpression, JsLanguage, JsSyntaxKind,
-    TsReferenceType,
+    JsCallArguments, JsCallArgumentsFields, JsCallExpression, JsSyntaxKind, TsReferenceType,
 };
-use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult};
+use rome_rowan::{AstSeparatedList, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsCallArguments;
@@ -23,8 +22,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
 
         let l_paren_token = l_paren_token?;
         let r_paren_token = r_paren_token?;
-
-        if args.len() == 0 {
+        let arguments_len = args.len();
+        if arguments_len == 0 {
             return write!(
                 f,
                 [
@@ -34,51 +33,69 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 ]
             );
         }
-        let parent = node.syntax().parent();
-        if let Some(call_expression) = parent
-            .as_ref()
-            .and_then(|node| JsCallExpression::cast(node.clone()))
-        {
-            let callee = call_expression.callee()?;
 
-            if is_framework_test_call(&args, &callee)? {
+        let mut iter = args.iter();
+        let first_argument = iter.next();
+        let second_argument = iter.next();
+        let third_argument = iter.next();
+
+        if let (Some(first_argument), Some(second_argument)) = (first_argument, second_argument) {
+            let first_argument = first_argument?;
+            let second_argument = second_argument?;
+
+            if let Some(call_expression) = node
+                .syntax()
+                .parent()
+                .as_ref()
+                .and_then(|node| JsCallExpression::cast(node.clone()))
+            {
+                let callee = call_expression.callee()?;
+
+                if is_framework_test_call(IsTestFrameworkCallPayload {
+                    first_argument: &first_argument,
+                    second_argument: &second_argument,
+                    third_argument: &third_argument,
+                    arguments_len,
+                    callee: &callee,
+                })? {
+                    return write!(
+                        f,
+                        [
+                            l_paren_token.format(),
+                            format_with(|f| {
+                                let separated =
+                                    args.format_separated(JsSyntaxKind::COMMA).with_options(
+                                        FormatSeparatedOptions::default()
+                                            .with_trailing_separator(TrailingSeparator::Omit),
+                                    );
+                                f.join_with(space_token()).entries(separated).finish()
+                            }),
+                            r_paren_token.format()
+                        ]
+                    );
+                }
+            }
+
+            // particular formatting for hooks
+            if is_react_hook_with_deps_array(&first_argument, &second_argument)? {
                 return write!(
                     f,
                     [
                         l_paren_token.format(),
                         format_with(|f| {
-                            let separated =
-                                args.format_separated(JsSyntaxKind::COMMA).with_options(
-                                    FormatSeparatedOptions::default()
-                                        .with_trailing_separator(TrailingSeparator::Omit),
-                                );
-                            f.join_with(space_token()).entries(separated).finish()
+                            f.join_with(space_token())
+                                .entries(
+                                    args.format_separated(JsSyntaxKind::COMMA).with_options(
+                                        FormatSeparatedOptions::default()
+                                            .with_trailing_separator(TrailingSeparator::Omit),
+                                    ),
+                                )
+                                .finish()
                         }),
                         r_paren_token.format()
                     ]
                 );
             }
-        }
-
-        // particular formatting for hooks
-        if let Some((first_argument, second_argument)) = is_react_hook_with_deps_array(&args)? {
-            write!(
-                f,
-                [
-                    l_paren_token.format(),
-                    first_argument.node().format(),
-                    first_argument.trailing_separator().format(),
-                    space_token(),
-                    second_argument.node().format(),
-                ]
-            )?;
-
-            // we don't want to print the trailing separator, so if it's present, we remove it
-            if let Some(separator) = second_argument.trailing_separator()? {
-                write!(f, [format_removed(separator)])?;
-            }
-
-            return write!(f, [r_paren_token.format()]);
         }
 
         // we create open a close delimiters
@@ -410,50 +427,44 @@ fn could_group_argument(
     Ok(result)
 }
 
-type HookArgs = (
-    AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
-    AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
-);
 /// This function is used to check if the code is a hook-like code:
 ///
 /// ```js
 /// useMemo(() => {}, [])
 /// ```
-fn is_react_hook_with_deps_array(node: &JsCallArgumentList) -> SyntaxResult<Option<HookArgs>> {
-    let result = if node.len() == 2 {
-        let mut iter = node.elements();
-        let first_element = iter.next().unwrap();
-        let second_element = iter.next().unwrap();
-        // SAFETY: covered by the previous if check
-        let first_node = first_element.node()?;
-        let second_node = second_element.node()?;
-        let first_node_matches = if let JsAnyCallArgument::JsAnyExpression(
-            JsAnyExpression::JsArrowFunctionExpression(arrow_function),
-        ) = first_node
-        {
-            let no_parameters = arrow_function.parameters()?.is_empty();
-            let body = arrow_function.body()?;
-            let is_block = matches!(body, JsAnyFunctionBody::JsFunctionBody(_));
+fn is_react_hook_with_deps_array(
+    first_argument: &JsAnyCallArgument,
+    second_argument: &JsAnyCallArgument,
+) -> SyntaxResult<bool> {
+    let first_node_matches = if let JsAnyCallArgument::JsAnyExpression(
+        JsAnyExpression::JsArrowFunctionExpression(arrow_function),
+    ) = first_argument
+    {
+        let no_parameters = arrow_function.parameters()?.is_empty();
+        let body = arrow_function.body()?;
+        let is_block = matches!(body, JsAnyFunctionBody::JsFunctionBody(_));
 
-            no_parameters && is_block
-        } else {
-            false
-        };
-
-        let second_node_matches = matches!(second_node, JsAnyCallArgument::JsAnyExpression(_));
-        let no_comments = !node.syntax().first_or_last_token_have_comments();
-        if first_node_matches && second_node_matches && no_comments {
-            Some((first_element, second_element))
-        } else {
-            None
-        }
+        no_parameters && is_block
     } else {
-        None
+        false
     };
 
-    Ok(result)
+    let second_node_matches = matches!(second_argument, JsAnyCallArgument::JsAnyExpression(_));
+    // let no_comments = !node.syntax().first_or_last_token_have_comments();
+    if first_node_matches && second_node_matches {
+        Ok(true)
+    } else {
+        Ok(false)
+    }
 }
 
+struct IsTestFrameworkCallPayload<'a> {
+    first_argument: &'a JsAnyCallArgument,
+    second_argument: &'a JsAnyCallArgument,
+    third_argument: &'a Option<SyntaxResult<JsAnyCallArgument>>,
+    arguments_len: usize,
+    callee: &'a JsAnyExpression,
+}
 /// This is a specialised function that checks if the current [call expression]
 /// is reminds a call expression usually used by the majority of testing frameworks.
 ///
@@ -475,71 +486,64 @@ fn is_react_hook_with_deps_array(node: &JsCallArgumentList) -> SyntaxResult<Opti
 /// [arguments]: crate::rome_js_syntax::JsCallArgumentList
 /// [arrow function expression]: crate::rome_js_syntax::JsArrowFunctionExpression
 /// [function expression]: crate::rome_js_syntax::JsCallArgumentList
-fn is_framework_test_call(
-    list: &JsCallArgumentList,
-    callee: &JsAnyExpression,
-) -> SyntaxResult<bool> {
-    let arguments_len = list.len();
-    if arguments_len == 2 || arguments_len == 3 {
-        let mut iter = list.iter();
-        // SAFETY: we know tht the function has at least two arguments
-        let first_argument = iter.next().unwrap()?;
-        let first_argument_is_literal_like = matches!(
-            first_argument,
-            JsAnyCallArgument::JsAnyExpression(
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsStringLiteralExpression(_)
-                ) | JsAnyExpression::JsTemplate(_)
-            )
-        );
+fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<bool> {
+    let IsTestFrameworkCallPayload {
+        first_argument,
+        second_argument,
+        third_argument,
+        arguments_len,
+        callee,
+    } = payload;
+    let first_argument_is_literal_like = matches!(
+        first_argument,
+        JsAnyCallArgument::JsAnyExpression(
+            JsAnyExpression::JsAnyLiteralExpression(
+                JsAnyLiteralExpression::JsStringLiteralExpression(_)
+            ) | JsAnyExpression::JsTemplate(_)
+        )
+    );
 
-        if first_argument_is_literal_like && contains_a_test_pattern(callee)? {
-            // SAFETY: we know tht the function has at least two arguments
-            let second_argument = iter.next().unwrap()?;
-            let third_argument = iter.next();
-            // if the third argument is not a numeric literal, we bail
-            // example: `it("name", () => { ... }, 2500)`
-            if let Some(third_argument) = third_argument {
-                let third_argument = third_argument?;
-                if !matches!(
-                    third_argument,
-                    JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsAnyLiteralExpression(
-                        JsAnyLiteralExpression::JsNumberLiteralExpression(_)
-                    ))
-                ) {
-                    return Ok(false);
-                }
-            }
-
-            return if arguments_len == 2 {
-                Ok(matches!(
-                    second_argument,
-                    JsAnyCallArgument::JsAnyExpression(
-                        JsAnyExpression::JsArrowFunctionExpression(_)
-                            | JsAnyExpression::JsFunctionExpression(_)
-                    )
+    if first_argument_is_literal_like && contains_a_test_pattern(callee)? {
+        // if the third argument is not a numeric literal, we bail
+        // example: `it("name", () => { ... }, 2500)`
+        if let Some(Ok(third_argument)) = third_argument {
+            if !matches!(
+                third_argument,
+                JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsNumberLiteralExpression(_)
                 ))
-            } else {
-                let result = match second_argument {
-                    JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(
-                        node,
-                    )) => node.parameters()?.items().len() <= 1,
-                    JsAnyCallArgument::JsAnyExpression(
-                        JsAnyExpression::JsArrowFunctionExpression(node),
-                    ) => {
-                        let body = node.body()?;
-                        let has_enough_parameters = node.parameters()?.len() <= 1;
-                        matches!(body, JsAnyFunctionBody::JsFunctionBody(_))
-                            && has_enough_parameters
-                    }
-                    _ => false,
-                };
-                Ok(result)
-            };
+            ) {
+                return Ok(false);
+            }
         }
-    }
 
-    Ok(false)
+        if arguments_len == 2 {
+            Ok(matches!(
+                second_argument,
+                JsAnyCallArgument::JsAnyExpression(
+                    JsAnyExpression::JsArrowFunctionExpression(_)
+                        | JsAnyExpression::JsFunctionExpression(_)
+                )
+            ))
+        } else {
+            let result = match second_argument {
+                JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(node)) => {
+                    node.parameters()?.items().len() <= 1
+                }
+                JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(
+                    node,
+                )) => {
+                    let body = node.body()?;
+                    let has_enough_parameters = node.parameters()?.len() <= 1;
+                    matches!(body, JsAnyFunctionBody::JsFunctionBody(_)) && has_enough_parameters
+                }
+                _ => false,
+            };
+            Ok(result)
+        }
+    } else {
+        Ok(false)
+    }
 }
 
 fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
