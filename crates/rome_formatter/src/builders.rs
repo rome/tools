@@ -1931,7 +1931,7 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
 /// })]).unwrap();
 ///
 /// assert_eq!(
-///     "break\nhello\nworld",
+///     "break\nhello\nworld!",
 ///     formatted.print().as_code()
 /// );
 /// ```
@@ -1940,10 +1940,11 @@ pub fn will_break<Context>(
     f: &mut Formatter<Context>,
 ) -> FormatResult<bool> {
     let mut will_break = WillBreak::new(f);
-
+    let snapshot = will_break.snapshot();
     write!(will_break, [element])?;
-
-    Ok(will_break.finish())
+    let result = will_break.finish();
+    will_break.restore_snapshot(snapshot);
+    Ok(result)
 }
 
 #[must_use = "must eventually call `finish()` to retrieve the information"]
