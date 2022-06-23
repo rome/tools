@@ -1,3 +1,4 @@
+use rome_control_flow::ControlFlowGraph;
 use rome_rowan::{AstNode, Language, SyntaxKindSet, SyntaxNode};
 
 use crate::registry::NodeLanguage;
@@ -22,12 +23,14 @@ pub trait Queryable: Sized {
 /// Enumerate all the types of [Queryable] analyzer visitors may emit
 pub enum QueryMatch<L: Language> {
     Syntax(SyntaxNode<L>),
+    ControlFlowGraph(ControlFlowGraph<L>),
 }
 
 /// Mirrors the variants of [QueryMatch] to statically compute which queries a
 /// given [Queryable] type can match
 pub enum QueryKey<L: Language> {
     Syntax(SyntaxKindSet<L>),
+    ControlFlowGraph,
 }
 
 /// Query type usable by lint rules to match on specific [AstNode] types
@@ -47,6 +50,20 @@ where
     fn unwrap_match(query: &QueryMatch<Self::Language>) -> Self {
         match query {
             QueryMatch::Syntax(node) => Self(N::unwrap_cast(node.clone())),
+            _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
+        }
+    }
+}
+
+impl<L: Language> Queryable for ControlFlowGraph<L> {
+    type Language = L;
+
+    const KEY: QueryKey<Self::Language> = QueryKey::ControlFlowGraph;
+
+    fn unwrap_match(query: &QueryMatch<Self::Language>) -> Self {
+        match query {
+            QueryMatch::ControlFlowGraph(cfg) => cfg.clone(),
+            _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
         }
     }
 }
