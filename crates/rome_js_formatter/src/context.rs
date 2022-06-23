@@ -1,6 +1,9 @@
 use rome_formatter::printer::PrinterOptions;
-use rome_formatter::{FormatContext, IndentStyle, LineWidth};
-use rome_js_syntax::SourceType;
+use rome_formatter::{
+    CommentContext, CommentKind, CommentStyle, FormatContext, IndentStyle, LineWidth,
+};
+use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
+use rome_rowan::SyntaxTriviaPieceComments;
 use std::fmt;
 use std::fmt::Debug;
 use std::str::FromStr;
@@ -81,6 +84,51 @@ impl fmt::Display for JsFormatContext {
         writeln!(f, "Line width: {}", self.line_width.value())?;
         write!(f, "{}", self.options)?;
         Ok(())
+    }
+}
+
+impl CommentContext<JsLanguage> for JsFormatContext {
+    type Style = JsCommentStyle;
+
+    fn comment_style(&self) -> Self::Style {
+        JsCommentStyle
+    }
+}
+
+#[derive(Eq, PartialEq, Copy, Clone, Debug, Default)]
+pub struct JsCommentStyle;
+
+impl CommentStyle<JsLanguage> for JsCommentStyle {
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
+        if comment.text().starts_with("/*") {
+            if comment.has_newline() {
+                CommentKind::Block
+            } else {
+                CommentKind::InlineBlock
+            }
+        } else {
+            CommentKind::Line
+        }
+    }
+
+    fn is_group_start_token(&self, kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::L_PAREN | JsSyntaxKind::L_BRACK | JsSyntaxKind::L_CURLY
+        )
+    }
+
+    fn is_group_end_token(&self, kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::R_BRACK
+                | JsSyntaxKind::R_CURLY
+                | JsSyntaxKind::R_PAREN
+                | JsSyntaxKind::COMMA
+                | JsSyntaxKind::SEMICOLON
+                | JsSyntaxKind::DOT
+                | JsSyntaxKind::EOF
+        )
     }
 }
 
