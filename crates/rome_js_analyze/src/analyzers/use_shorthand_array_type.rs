@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -49,11 +49,12 @@ declare_rule! {
 impl Rule for UseShorthandArrayType {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = TsReferenceType;
+    type Query = Ast<TsReferenceType>;
     type State = TsType;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let type_arguments = node.type_arguments()?;
         is_array_reference(node).and_then(|ret| {
             if ret {
@@ -65,7 +66,7 @@ impl Rule for UseShorthandArrayType {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -78,7 +79,7 @@ impl Rule for UseShorthandArrayType {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let root = ctx.root();
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let root = root.replace_node(TsType::TsReferenceType(node.clone()), state.clone())?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

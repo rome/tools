@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -63,11 +63,12 @@ declare_rule! {
 impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsRegexLiteralExpression;
+    type Query = Ast<JsRegexLiteralExpression>;
     type State = Vec<(usize, usize)>;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let value_token = ctx.query().value_token().ok()?;
+        let value_token = ctx.query().0.value_token().ok()?;
         let trimmed_text = value_token.text_trimmed();
         let mut range_list = vec![];
         let mut continue_white_space = false;
@@ -94,7 +95,7 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let value_token = ctx.query().value_token().ok()?;
+        let value_token = ctx.query().0.value_token().ok()?;
         let value_token_range = value_token.text_trimmed_range();
         // SAFETY: We know diagnostic will be sended only if the `range_list` is not empty
         // first and last continuous whitespace range of `range_list`
@@ -113,7 +114,7 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let trimmed_token = ctx.query().value_token().ok()?;
+        let trimmed_token = ctx.query().0.value_token().ok()?;
         let trimmed_token_string = trimmed_token.text_trimmed();
         let mut normalized_string_token = String::new();
         let mut previous_start = 0;
