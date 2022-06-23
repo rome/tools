@@ -1,3 +1,4 @@
+use crate::CommentStyle;
 use rome_rowan::{Language, SyntaxTriviaPieceComments};
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
@@ -105,4 +106,11 @@ impl CommentKind {
     pub const fn is_inline(&self) -> bool {
         matches!(self, CommentKind::InlineBlock | CommentKind::Block)
     }
+}
+
+/// Stores comments specific context information.
+pub trait CommentContext<L: Language> {
+    type Style: CommentStyle<L>;
+
+    fn comment_style(&self) -> Self::Style;
 }

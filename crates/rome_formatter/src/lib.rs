@@ -53,7 +53,7 @@ pub use builders::{
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
-pub use comments::{CommentKind, SourceComment};
+pub use comments::{CommentContext, CommentKind, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
@@ -1303,7 +1303,7 @@ pub struct FormatStateSnapshot {
 }
 
 /// Defines how to format comments for a specific [Language].
-pub trait CommentStyle<L: Language> {
+pub trait CommentStyle<L: Language>: Copy {
     /// Returns the kind of the comment
     fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<L>) -> CommentKind;
 

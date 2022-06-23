@@ -1,5 +1,7 @@
 use rome_formatter::printer::PrinterOptions;
-use rome_formatter::{CommentKind, CommentStyle, FormatContext, IndentStyle, LineWidth};
+use rome_formatter::{
+    CommentContext, CommentKind, CommentStyle, FormatContext, IndentStyle, LineWidth,
+};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
 use rome_rowan::SyntaxTriviaPieceComments;
 use std::fmt;
@@ -85,7 +87,18 @@ impl fmt::Display for JsFormatContext {
     }
 }
 
-impl CommentStyle<JsLanguage> for JsFormatContext {
+impl CommentContext<JsLanguage> for JsFormatContext {
+    type Style = JsCommentStyle;
+
+    fn comment_style(&self) -> Self::Style {
+        JsCommentStyle
+    }
+}
+
+#[derive(Eq, PartialEq, Copy, Clone, Debug, Default)]
+pub struct JsCommentStyle;
+
+impl CommentStyle<JsLanguage> for JsCommentStyle {
     fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
         if comment.text().starts_with("/*") {
             if comment.has_newline() {

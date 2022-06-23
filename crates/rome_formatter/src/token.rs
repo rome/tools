@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
-    format_args, write, Argument, Arguments, CommentKind, CommentStyle, GroupId, LastTokenKind,
-    SourceComment,
+    format_args, write, Argument, Arguments, CommentContext, CommentKind, CommentStyle, GroupId,
+    LastTokenKind, SourceComment,
 };
 use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPiece};
 
@@ -22,7 +22,7 @@ pub struct FormatTrimmedToken<'a, L: Language> {
 
 impl<L: Language + 'static, C> Format<C> for FormatTrimmedToken<'_, L>
 where
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         write_space_between_comment_and_token(self.token.kind(), f)?;
@@ -56,7 +56,7 @@ where
 impl<L, C> Format<C> for FormatInserted<L>
 where
     L: Language + 'static,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         write_space_between_comment_and_token(self.kind, f)?;
@@ -71,13 +71,14 @@ fn write_space_between_comment_and_token<L: Language, Context>(
     f: &mut Formatter<Context>,
 ) -> FormatResult<()>
 where
-    Context: CommentStyle<L>,
+    Context: CommentContext<L>,
 {
     let is_last_content_inline_content = f.state().is_last_content_inline_comment();
 
     // Insert a space if the previous token has any trailing comments and this is not a group
     // end token
-    if is_last_content_inline_content && !f.context().is_group_end_token(token_kind) {
+    if is_last_content_inline_content && !f.context().comment_style().is_group_end_token(token_kind)
+    {
         space_token().fmt(f)?;
     }
 
@@ -133,7 +134,7 @@ where
 impl<Context, L> Format<Context> for FormatInsertedOpenParen<L>
 where
     L: Language + 'static,
-    Context: CommentStyle<L>,
+    Context: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut comments = Vec::new();
@@ -249,7 +250,7 @@ where
 impl<Context, L> Format<Context> for FormatInsertedCloseParen<L>
 where
     L: Language + 'static,
-    Context: CommentStyle<L>,
+    Context: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         write!(
@@ -289,7 +290,7 @@ where
 impl<C, L> Format<C> for FormatRemoved<'_, L>
 where
     L: Language + 'static,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
@@ -308,7 +309,7 @@ fn write_removed_token_trivia<C, L>(
 ) -> FormatResult<()>
 where
     L: Language + 'static,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     let mut pieces = token
         .leading_trivia()
@@ -375,7 +376,7 @@ where
 impl<L, C> Format<C> for FormatReplaced<'_, '_, L, C>
 where
     L: Language + 'static,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
@@ -431,7 +432,7 @@ where
 impl<L, C> Format<C> for FormatOnlyIfBreaks<'_, '_, L, C>
 where
     L: Language + 'static,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         // Store the last token and last trailing comment before formatting the content which will override the state.
@@ -503,7 +504,7 @@ where
 impl<L, C> Format<C> for FormatLeadingTrivia<'_, L>
 where
     L: Language,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         write_leading_trivia(
@@ -526,7 +527,7 @@ fn write_leading_trivia<I, L, C>(
 where
     I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
     L: Language,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     let mut lines_before = 0;
     let mut comments = Vec::new();
@@ -655,7 +656,7 @@ where
 impl<L, C> Format<C> for FormatLeadingComments<'_, L>
 where
     L: Language,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         let mut first = true;
@@ -675,7 +676,10 @@ where
                     TriviaPrintMode::Trim => 0,
                 });
 
-            let comment_kind = f.context().get_comment_kind(comment.piece());
+            let comment_kind = f
+                .context()
+                .comment_style()
+                .get_comment_kind(comment.piece());
             last_inline_comment = comment_kind.is_inline() && lines_after == 0;
 
             let format_content = format_with(|f| {
@@ -774,7 +778,7 @@ where
 impl<I, L: Language, C> Format<C> for FormatTrailingTrivia<I, L>
 where
     I: Iterator<Item = SourceComment<L>> + Clone,
-    C: CommentStyle<L>,
+    C: CommentContext<L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         let comments = self.comments.clone();
@@ -785,7 +789,10 @@ where
                 continue;
             }
 
-            let kind = f.context().get_comment_kind(comment.piece());
+            let kind = f
+                .context()
+                .comment_style()
+                .get_comment_kind(comment.piece());
             last_inline_comment = kind.is_inline();
             let is_single_line = kind.is_line();
 
@@ -793,7 +800,9 @@ where
                 if !is_single_line {
                     match self.token_kind {
                         // Don't write a space if this is a group start token and it isn't the first trailing comment
-                        Some(token) if f.context().is_group_start_token(token) && index == 0 => {}
+                        Some(token)
+                            if f.context().comment_style().is_group_start_token(token)
+                                && index == 0 => {}
                         //  Write a space for all other cases
                         _ => space_token().fmt(f)?,
                     }
