@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 184
 expression: expressions.js
 ---
 # Input
@@ -117,10 +118,7 @@ console.log(
 );
 
 descirbe("something", () => {
-  test(
-    `{pass: false} expect(${small}).toBeGreaterThanOrEqual(${big})`,
-    () => {},
-  );
+  test(`{pass: false} expect(${small}).toBeGreaterThanOrEqual(${big})`, () => {});
 });
 
 throw new Error(
@@ -133,6 +131,7 @@ throw new Error(
 ```
     6:   .e} long longlong ${loooooooooooooooooong} long longlong ${loooooooooooooooooong} long longlong ${loooooooooooooooooong} long long`;
    26:     `Covered Lines below threshold: ${coverageSettings.lines}%. Actual: ${coverageSummary
-   70:   `pretty-format: Option "theme" has a key "${key}" whose value "${value}" is undefined in ansi-styles.`,
+   63:   test(`{pass: false} expect(${small}).toBeGreaterThanOrEqual(${big})`, () => {});
+   67:   `pretty-format: Option "theme" has a key "${key}" whose value "${value}" is undefined in ansi-styles.`,
 ```
 

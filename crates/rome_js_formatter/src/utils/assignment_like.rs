@@ -347,7 +347,7 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 let id = variable_declarator.id()?;
                 let variable_annotation = variable_declarator.variable_annotation();
-                write!(buffer, [id.format(), variable_annotation.format()])?;
+                write!(f, [id.format(), variable_annotation.format()])?;
                 Ok(false)
             }
         }
