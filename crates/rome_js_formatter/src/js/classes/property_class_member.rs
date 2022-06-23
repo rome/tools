@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
-use crate::utils::{FormatMemberName, FormatWithSemicolon};
+use crate::utils::FormatWithSemicolon;
 
 use rome_js_syntax::JsPropertyClassMember;
 use rome_js_syntax::JsPropertyClassMemberFields;
@@ -25,7 +25,7 @@ impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
                 &format_args!(
                     modifiers.format(),
                     space_token(),
-                    FormatMemberName::from(name?),
+                    name.format(),
                     property_annotation.format(),
                     value
                         .format()
