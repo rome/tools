@@ -1,27 +1,17 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
 use crate::prelude::*;
 use crate::utils::{is_call_like_expression, write_arguments_multi_line};
-use rome_formatter::{format_args, write, FormatRuleWithOptions};
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyName,
     JsAnyStatement, JsArrayExpression, JsArrowFunctionExpression, JsCallArgumentList,
-    JsCallArguments, JsCallArgumentsFields, JsLanguage, JsSyntaxKind, TsReferenceType,
+    JsCallArguments, JsCallArgumentsFields, JsCallExpression, JsLanguage, JsSyntaxKind,
+    TsReferenceType,
 };
 use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCallArguments {
-    parent_callee: Option<JsAnyExpression>,
-}
-
-impl FormatRuleWithOptions<JsCallArguments> for FormatJsCallArguments {
-    type Options = Option<JsAnyExpression>;
-
-    fn with_options(mut self, options: Self::Options) -> Self {
-        self.parent_callee = options;
-        self
-    }
-}
+pub struct FormatJsCallArguments;
 
 impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
     fn fmt_fields(&self, node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
@@ -44,9 +34,14 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 ]
             );
         }
+        let parent = node.syntax().parent();
+        if let Some(call_expression) = parent
+            .as_ref()
+            .and_then(|node| JsCallExpression::cast(node.clone()))
+        {
+            let callee = call_expression.callee()?;
 
-        if let Some(callee) = &self.parent_callee {
-            if is_framework_test_call(&args, callee)? {
+            if is_framework_test_call(&args, &callee)? {
                 return write!(
                     f,
                     [
