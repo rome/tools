@@ -1,0 +1,401 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noDeadCode.js
+---
+# Input
+```js
+// JsLabeledStatement
+function JsLabeledStatement1() {
+    label: while (true) {
+        while (true) {
+            if (true) {
+                continue label;
+            } else {
+                break label;
+            }
+        }
+
+        afterLabelJump();
+    }
+}
+
+// JsTryStatement
+function JsTryStatement1() {
+    try {
+        test();
+        return;
+    } catch(err) {
+        test();
+        return;
+    }
+
+    afterTryCatchReturn();
+}
+
+// JsTryFinallyStatement
+function JsTryFinallyStatement1() {
+    try {
+        test();
+    } catch(err) {
+        test();
+    } finally {
+        test();
+        return;
+    }
+
+    afterFinallyReturn();
+}
+
+// JsIfStatement
+function JsIfStatement1() {
+    if(true) {
+        return;
+    } else {
+        return;
+    }
+
+    afterIfElseReturn();
+}
+
+// JsSwitchStatement
+function JsSwitchStatement1() {
+    switch(value) {
+        case 0:
+            case0();
+            break;
+        default:
+            caseDefault();
+            break;
+        case 1: // afterDefault
+            afterDefault();
+    }
+}
+
+function JsSwitchStatement2() {
+    switch(value) {
+        case 0:
+            break;
+            afterBreak();
+    }
+}
+
+// JsForStatement
+function JsForStatement1() {
+    for(let i = 0; i < 10; ++i) {
+        break;
+    }
+}
+
+// JsForInStatement
+function JsForInStatement1() {
+    for(const key in value) {
+        break;
+        afterBreak();
+    }
+}
+
+function JsForInStatement2() {
+    for(const key in value) {
+        continue;
+        afterContinue();
+    }
+}
+
+// JsForOfStatement
+function JsForOfStatement1() {
+    for(const key of value) {
+        break;
+        afterBreak();
+    }
+}
+
+function JsForOfStatement2() {
+    for(const key of value) {
+        continue;
+        afterContinue();
+    }
+}
+
+// JsWhileStatement
+function JsWhileStatement1() {
+    while(true) {
+        break;
+        afterBreak();
+    }
+}
+
+// JsDoWhileStatement
+function JsDoWhileStatement1() {
+    do {
+        break;
+    } while(true); // afterBreak
+}
+
+function JsDoWhileStatement2() {
+    do {
+        continue;
+        afterContinue();
+    } while(true);
+}
+
+// JsBreakStatement
+function JsBreakStatement1() {
+    while(true) {
+        break;
+        break; // afterBreak
+    }
+}
+
+function JsBreakStatement2() {
+    while(true) {
+        break;
+        continue; // afterBreak
+    }
+}
+
+// JsContinueStatement
+function JsContinueStatement1() {
+    while(true) {
+        continue;
+        continue; // afterContinue
+    }
+}
+
+function JsContinueStatement2() {
+    while(true) {
+        continue;
+        break; // afterContinue
+    }
+}
+
+// JsReturnStatement
+function JsReturnStatement1() {
+    return;
+    afterReturn();
+}
+
+function JsReturnStatement2() {
+    return;
+    return; // afterReturn
+}
+
+// JsThrowStatement
+function JsThrowStatement1() {
+    throw new Error();
+    afterThrow();
+}
+
+```
+
+# Diagnostics
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:26:5
+   │
+26 │     afterTryCatchReturn();
+   │     ----------------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:40:5
+   │
+40 │     afterFinallyReturn();
+   │     ---------------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:51:5
+   │
+51 │     afterIfElseReturn();
+   │     --------------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:63:14
+   │
+63 │         case 1: // afterDefault
+   │              -
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:64:13
+   │
+64 │             afterDefault();
+   │             ---------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:72:13
+   │
+72 │             afterBreak();
+   │             -------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:78:28
+   │
+78 │     for(let i = 0; i < 10; ++i) {
+   │                            ---
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:87:9
+   │
+87 │         afterBreak();
+   │         -------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ noDeadCode.js:94:9
+   │
+94 │         afterContinue();
+   │         ----------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:102:9
+    │
+102 │         afterBreak();
+    │         -------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:109:9
+    │
+109 │         afterContinue();
+    │         ----------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:117:9
+    │
+117 │         afterBreak();
+    │         -------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:125:13
+    │
+125 │     } while(true); // afterBreak
+    │             ----
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:131:9
+    │
+131 │         afterContinue();
+    │         ----------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:139:9
+    │
+139 │         break; // afterBreak
+    │         ------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:146:9
+    │
+146 │         continue; // afterBreak
+    │         ---------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:154:9
+    │
+154 │         continue; // afterContinue
+    │         ---------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:161:9
+    │
+161 │         break; // afterContinue
+    │         ------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:168:5
+    │
+168 │     afterReturn();
+    │     --------------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:173:5
+    │
+173 │     return; // afterReturn
+    │     -------
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:179:5
+    │
+179 │     afterThrow();
+    │     -------------
+
+
+```
+
+

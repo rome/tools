@@ -17,6 +17,9 @@ where
     if filter.match_rule::<NoCompareNegZero>() {
         rules.push::<NoCompareNegZero>();
     }
+    if filter.match_rule::<NoDeadCode>() {
+        rules.push::<NoDeadCode>();
+    }
     if filter.match_rule::<NoDebugger>() {
         rules.push::<NoDebugger>();
     }
