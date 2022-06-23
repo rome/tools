@@ -1892,3 +1892,71 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
         Ok(())
     }
 }
+
+/// This function takes an element that implements [Format] and a formatter, and it checks if the element
+/// inside it will break.
+///
+/// It does so by calling [FormatElement::will_break] onto the element.
+pub fn will_break<Context>(
+    element: impl Format<Context>,
+    f: &mut Formatter<Context>,
+) -> FormatResult<bool> {
+    let mut will_break = WillBreak::new(f);
+
+    write!(will_break, [element])?;
+
+    Ok(will_break.finish())
+}
+
+struct WillBreak<'buffer, Context> {
+    breaks: bool,
+    inner: &'buffer mut dyn Buffer<Context = Context>,
+}
+
+impl<'buffer, Context> WillBreak<'buffer, Context> {
+    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
+        Self {
+            breaks: false,
+            inner: buffer,
+        }
+    }
+
+    pub fn finish(&self) -> bool {
+        self.breaks
+    }
+}
+
+impl<Context> Buffer for WillBreak<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        self.breaks = self.breaks || element.will_break();
+        self.inner.write_element(element)
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Any(Box::new(WillBreakSnapshot {
+            inner: self.inner.snapshot(),
+            breaks: self.breaks,
+        }))
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        let snapshot = snapshot.unwrap_any::<WillBreakSnapshot>();
+        self.inner.restore_snapshot(snapshot.inner);
+        self.breaks = snapshot.breaks;
+    }
+}
+
+struct WillBreakSnapshot {
+    inner: BufferSnapshot,
+    breaks: bool,
+}

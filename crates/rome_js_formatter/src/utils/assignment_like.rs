@@ -325,23 +325,23 @@ impl JsAnyAssignmentLike {
 const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 impl JsAnyAssignmentLike {
-    fn write_left(&self, buffer: &mut VecBuffer<JsFormatContext>) -> FormatResult<bool> {
+    fn write_left(&self, f: &mut JsFormatter) -> FormatResult<bool> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
-                let width = write_member_name(&property.name()?, buffer)?;
+                let width = write_member_name(&property.name()?, f)?;
                 let text_width_for_break =
-                    (buffer.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
                 let left = assignment.left()?;
-                write!(buffer, [&left.format()])?;
+                write!(f, [&left.format()])?;
                 Ok(false)
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
-                let width = write_member_name(&property.member()?, buffer)?;
+                let width = write_member_name(&property.member()?, f)?;
                 let text_width_for_break =
-                    (buffer.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
@@ -642,7 +642,14 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             // 3. we compute the layout
             // 4. we write the left node inside the main buffer based on the layout
             let mut buffer = VecBuffer::new(f.state_mut());
-            let is_left_short = self.write_left(&mut buffer)?;
+            let mut is_left_short = false;
+            write!(
+                buffer,
+                [&format_once(|f| {
+                    is_left_short = self.write_left(f)?;
+                    Ok(())
+                })]
+            )?;
 
             // Compare name only if we are in a position of computing it.
             // If not (for example, left is not an identifier), then let's fallback to false,
