@@ -392,7 +392,7 @@ where
     }
 }
 
-/// Formats the given token only if the group does break and otherwise retains the tokens trivia.
+/// Formats the given token only if the group does break and otherwise retains the token's trivia.
 pub fn format_only_if_breaks<'a, 'content, L, Content, Context>(
     token: &'a SyntaxToken<L>,
     content: &'content Content,
