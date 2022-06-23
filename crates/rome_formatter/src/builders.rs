@@ -1939,7 +1939,7 @@ pub fn will_break<Context>(
     element: impl Format<Context>,
     f: &mut Formatter<Context>,
 ) -> FormatResult<bool> {
-    let mut will_break = WillBreak::new(f);
+    let mut will_break = WillBreakBuffer::new(f);
     let snapshot = will_break.snapshot();
     write!(will_break, [element])?;
     let result = will_break.finish();
@@ -1948,12 +1948,12 @@ pub fn will_break<Context>(
 }
 
 #[must_use = "must eventually call `finish()` to retrieve the information"]
-struct WillBreak<'buffer, Context> {
+pub struct WillBreakBuffer<'buffer, Context> {
     breaks: bool,
     inner: &'buffer mut dyn Buffer<Context = Context>,
 }
 
-impl<'buffer, Context> WillBreak<'buffer, Context> {
+impl<'buffer, Context> WillBreakBuffer<'buffer, Context> {
     pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
         Self {
             breaks: false,
@@ -1966,7 +1966,7 @@ impl<'buffer, Context> WillBreak<'buffer, Context> {
     }
 }
 
-impl<Context> Buffer for WillBreak<'_, Context> {
+impl<Context> Buffer for WillBreakBuffer<'_, Context> {
     type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
