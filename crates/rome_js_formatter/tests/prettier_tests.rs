@@ -483,23 +483,11 @@ impl DiffReport {
             .unwrap();
         }
         // extra two space force markdown render insert a new line
-        writeln!(
-            report,
-            "**File Based Average Prettier Similarity**: {:.2}%  ",
+        report = format!(
+            "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \nthe definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893\n",
             report_metric_data.file_based_average_prettier_similarity * 100_f64,
-        )
-        .unwrap();
-        writeln!(
-            report,
-            "**Line Based Average Prettier Similarity**: {:.2}%  ",
             report_metric_data.line_based_average_prettier_similarity * 100_f64
-        )
-        .unwrap();
-        writeln!(
-            report,
-            " the definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893",
-        ).unwrap();
-        // write report content to target file_name
+        ) + &report;
         write(report_filename, report).unwrap();
     }
 
