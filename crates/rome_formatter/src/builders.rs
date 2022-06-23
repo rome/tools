@@ -1897,6 +1897,44 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
 /// inside it will break.
 ///
 /// It does so by calling [FormatElement::will_break] onto the element.
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{format, format_args, write, LineWidth};
+/// use rome_formatter::prelude::*;
+///
+/// let context = SimpleFormatContext {
+///     line_width: LineWidth::try_from(20).unwrap(),
+///     ..SimpleFormatContext::default()
+/// };
+///
+///
+/// let formatted = format!(context, [format_with(|f| {
+///     
+///     let element_will_break = format_with(|f| {
+///         write!(f, [
+///             token("hello"),
+///             hard_line_break(),
+///             token("world!")
+///         ])
+///     });
+///
+///     let will_break = will_break(&element_will_break, f)?;
+///
+///     if will_break {
+///         write!(f, [token("break"), hard_line_break(), element_will_break])
+///     } else {
+///         write!(f, [token("did not break")])
+///     }   
+///    
+/// })]).unwrap();
+///
+/// assert_eq!(
+///     "break\nhello\nworld",
+///     formatted.print().as_code()
+/// );
+/// ```
 pub fn will_break<Context>(
     element: impl Format<Context>,
     f: &mut Formatter<Context>,
@@ -1908,6 +1946,7 @@ pub fn will_break<Context>(
     Ok(will_break.finish())
 }
 
+#[must_use = "must eventually call `finish()` to retrieve the information"]
 struct WillBreak<'buffer, Context> {
     breaks: bool,
     inner: &'buffer mut dyn Buffer<Context = Context>,
