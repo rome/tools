@@ -528,10 +528,7 @@ fn is_framework_test_call(
                 let result = match second_argument {
                     JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(
                         node,
-                    )) => {
-                        let has_enough_parameters = node.parameters()?.items().len() <= 1;
-                        has_enough_parameters
-                    }
+                    )) => node.parameters()?.items().len() <= 1,
                     JsAnyCallArgument::JsAnyExpression(
                         JsAnyExpression::JsArrowFunctionExpression(node),
                     ) => {
@@ -582,7 +579,7 @@ fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
             return Ok(true);
         }
     }
-    return Ok(false);
+    Ok(false)
 }
 
 /// This is particular used to identify if a [JsCallExpression] has the shape
