@@ -1303,20 +1303,18 @@ pub struct FormatStateSnapshot {
 }
 
 /// Defines how to format comments for a specific [Language].
-pub trait CommentStyle: Copy {
-    type Language: Language;
-
+pub trait CommentStyle<L: Language> {
     /// Returns the kind of the comment
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<L>) -> CommentKind;
 
     /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are:
     /// * left parentheses: `(`, `[`, `{`
-    fn is_group_start_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
+    fn is_group_start_token(&self, kind: L::Kind) -> bool;
 
     /// Returns `true` if a token with the passed `kind` marks the end of a group. Common group end tokens are:
     /// * right parentheses: `)`, `]`, `}`
     /// * end of statement token: `;`
     /// * element separator: `,` or `.`.
     /// * end of file token: `EOF`
-    fn is_group_end_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
+    fn is_group_end_token(&self, kind: L::Kind) -> bool;
 }

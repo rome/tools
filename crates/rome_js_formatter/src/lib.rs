@@ -9,16 +9,16 @@ pub mod utils;
 
 use crate::utils::has_formatter_suppressions;
 use rome_formatter::prelude::*;
-use rome_formatter::{write, CommentKind, CommentStyle};
+use rome_formatter::write;
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
+use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
-use rome_rowan::{AstNode, SyntaxTriviaPieceComments};
 
-use crate::builders::{format_leading_trivia, format_suppressed_node, format_trailing_trivia};
+use crate::builders::format_suppressed_node;
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
 use std::iter::FusedIterator;
@@ -196,7 +196,7 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
             f,
             [
                 format_leading_trivia(token),
-                format_trimmed_token(token, JsCommentStyle),
+                format_trimmed_token(token),
                 format_trailing_trivia(token),
             ]
         )
@@ -278,45 +278,6 @@ pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResul
 /// It returns a [Formatted] result
 pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
     rome_formatter::format_sub_tree(context, &root.format())
-}
-
-#[derive(Copy, Clone, Debug)]
-pub struct JsCommentStyle;
-
-impl CommentStyle for JsCommentStyle {
-    type Language = JsLanguage;
-
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind {
-        if comment.text().starts_with("/*") {
-            if comment.has_newline() {
-                CommentKind::Block
-            } else {
-                CommentKind::InlineBlock
-            }
-        } else {
-            CommentKind::Line
-        }
-    }
-
-    fn is_group_start_token(&self, kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            JsSyntaxKind::L_PAREN | JsSyntaxKind::L_BRACK | JsSyntaxKind::L_CURLY
-        )
-    }
-
-    fn is_group_end_token(&self, kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            JsSyntaxKind::R_BRACK
-                | JsSyntaxKind::R_CURLY
-                | JsSyntaxKind::R_PAREN
-                | JsSyntaxKind::COMMA
-                | JsSyntaxKind::SEMICOLON
-                | JsSyntaxKind::DOT
-                | JsSyntaxKind::EOF
-        )
-    }
 }
 
 #[cfg(test)]

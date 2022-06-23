@@ -1,10 +1,6 @@
 use crate::prelude::*;
-use crate::{AsFormat, JsCommentStyle};
-use rome_formatter::token::{
-    format_token_trailing_trivia, FormatInserted, FormatInsertedCloseParen,
-    FormatInsertedOpenParen, FormatLeadingTrivia, FormatOnlyIfBreaks, FormatRemoved,
-    FormatReplaced,
-};
+use crate::AsFormat;
+use rome_formatter::token::{FormatInserted, FormatInsertedCloseParen, FormatInsertedOpenParen};
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, Direction, Language, SyntaxTriviaPiece};
@@ -45,24 +41,22 @@ where
     }
 }
 
-pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsCommentStyle> {
+pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsLanguage> {
     FormatInserted::new(
         kind,
         kind.to_string().expect("Expected a punctuation token"),
-        JsCommentStyle,
     )
 }
 
 pub fn format_inserted_open_paren(
     before_token: Option<JsSyntaxToken>,
     kind: JsSyntaxKind,
-) -> FormatInsertedOpenParen<JsCommentStyle> {
+) -> FormatInsertedOpenParen<JsLanguage> {
     FormatInsertedOpenParen::new(
         before_token,
         kind,
         kind.to_string()
             .expect("Expected a punctuation token as the open paren token."),
-        JsCommentStyle,
     )
 }
 
@@ -70,13 +64,12 @@ pub fn format_inserted_close_paren(
     after_token: &Option<JsSyntaxToken>,
     kind: JsSyntaxKind,
     f: &mut JsFormatter,
-) -> FormatInsertedCloseParen<JsCommentStyle> {
+) -> FormatInsertedCloseParen<JsLanguage> {
     FormatInsertedCloseParen::after_token(
         after_token,
         kind,
         kind.to_string()
             .expect("Expected a punctuation token as the close paren token."),
-        JsCommentStyle,
         f,
     )
 }
@@ -159,46 +152,6 @@ impl Format<JsFormatContext> for FormatParenthesize<'_> {
             )
         }
     }
-}
-
-/// Formats the leading and trailing trivia of a removed token.
-///
-/// Formats all leading and trailing comments up to the first line break or skipped token trivia as a trailing
-/// comment of the previous token. The remaining trivia is then printed as leading trivia of the next token.
-pub const fn format_removed(token: &JsSyntaxToken) -> FormatRemoved<JsCommentStyle> {
-    FormatRemoved::new(token, JsCommentStyle)
-}
-
-/// Print out a `token` from the original source with a different `content`.
-///
-/// This will print the trivia that belong to `token` to `content`;
-/// `token` is then marked as consumed by the formatter.
-pub fn format_replaced<'a, 'content>(
-    token: &'a JsSyntaxToken,
-    content: &'content impl Format<JsFormatContext>,
-) -> FormatReplaced<'a, 'content, JsCommentStyle, JsFormatContext> {
-    FormatReplaced::new(token, content, JsCommentStyle)
-}
-
-/// Formats the given token only if the group does break and otherwise retains the tokens trivia.
-pub fn format_only_if_breaks<'a, 'content, Content>(
-    token: &'a JsSyntaxToken,
-    content: &'content Content,
-) -> FormatOnlyIfBreaks<'a, 'content, JsCommentStyle, JsFormatContext>
-where
-    Content: Format<JsFormatContext>,
-{
-    FormatOnlyIfBreaks::new(token, content, JsCommentStyle)
-}
-
-/// Formats the leading trivia (comments, skipped token trivia) of a token
-pub fn format_leading_trivia(token: &JsSyntaxToken) -> FormatLeadingTrivia<JsCommentStyle> {
-    FormatLeadingTrivia::new(token, JsCommentStyle)
-}
-
-/// Formats the trailing trivia (comments) of a token
-pub fn format_trailing_trivia(token: &JsSyntaxToken) -> impl Format<JsFormatContext> {
-    format_token_trailing_trivia(token, JsCommentStyle)
 }
 
 /// "Formats" a node according to its original formatting in the source text. Being able to format
@@ -546,7 +499,7 @@ impl<'t> OpenDelimiter<'t> {
     pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             f.state_mut().track_token(self.open_token);
-            write!(f, [format_trimmed_token(self.open_token, JsCommentStyle)])
+            write!(f, [format_trimmed_token(self.open_token)])
         })
     }
 }
@@ -578,7 +531,7 @@ impl<'t> CloseDelimiter<'t> {
     pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
             f.state_mut().track_token(self.close_token);
-            write!(f, [format_trimmed_token(self.close_token, JsCommentStyle)])
+            write!(f, [format_trimmed_token(self.close_token)])
         })
     }
 }
