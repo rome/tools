@@ -1,10 +1,7 @@
 use super::{write, Arguments, FormatElement};
 use crate::format_element::List;
-use std::any::{Any, TypeId};
-
 use crate::{Format, FormatResult, FormatState};
-
-use crate::builders::WillBreakBuffer;
+use std::any::{Any, TypeId};
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};
 
@@ -450,10 +447,6 @@ pub trait BufferExtensions: Buffer + Sized {
         }
 
         Ok(())
-    }
-
-    fn will_break(&mut self) -> WillBreakBuffer<Self::Context> {
-        WillBreakBuffer::new(self)
     }
 }
 
