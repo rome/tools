@@ -491,8 +491,8 @@ fn is_framework_test_call(
     let arguments_len = list.len();
     if arguments_len == 2 || arguments_len == 3 {
         let mut iter = list.iter();
-        // safe
-        let first_argument = iter.next().expect("Expected at least one argument")?;
+        // SAFETY: we know tht the function has at least two arguments
+        let first_argument = iter.next().unwrap()?;
         let first_argument_is_literal_like = matches!(
             first_argument,
             JsAnyCallArgument::JsAnyExpression(
@@ -503,7 +503,8 @@ fn is_framework_test_call(
         );
 
         if first_argument_is_literal_like && contains_a_test_pattern(callee)? {
-            let second_argument = iter.next().expect("Expected at least two arguments")?;
+            // SAFETY: we know tht the function has at least two arguments
+            let second_argument = iter.next().unwrap()?;
             let third_argument = iter.next();
             // if the third argument is not a numeric literal, we bail
             // example: `it("name", () => { ... }, 2500)`
