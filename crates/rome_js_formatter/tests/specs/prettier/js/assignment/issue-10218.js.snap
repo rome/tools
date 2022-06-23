@@ -14,21 +14,15 @@ const {_id:id3} = data.createTestMessageWithAReallyLongName.someVeryLongProperty
 
 # Output
 ```js
-const _id1 =
-  data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty._id;
+const _id1 = data.createTestMessageWithAReallyLongName.someVeryLongProperty
+  .thisIsAlsoALongProperty._id;
 
-const { _id2 } =
-  data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty;
+const { _id2 } = data.createTestMessageWithAReallyLongName.someVeryLongProperty
+  .thisIsAlsoALongProperty;
 
-const { _id: id3 } =
-  data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty;
+const { _id: id3 } = data.createTestMessageWithAReallyLongName
+  .someVeryLongProperty.thisIsAlsoALongProperty;
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    2:   data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty._id;
-    5:   data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty;
-    8:   data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty;
-```
 

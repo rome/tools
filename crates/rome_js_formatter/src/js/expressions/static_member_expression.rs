@@ -2,11 +2,10 @@ use crate::prelude::*;
 
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyLiteralExpression,
-    JsAssignmentExpression, JsStaticMemberExpression, JsStaticMemberExpressionFields,
-    JsVariableDeclarator,
+    JsAnyExpression, JsAssignmentExpression, JsStaticMemberExpression,
+    JsStaticMemberExpressionFields, JsVariableDeclarator,
 };
-use rome_rowan::{AstNode, SyntaxNodeCast};
+use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsStaticMemberExpression;
@@ -24,10 +23,10 @@ impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression
         let layout = compute_member_layout(node)?;
 
         match layout {
-            StaticMemberExpressionLayout::Inline => {
+            StaticMemberExpressionLayout::NoBreak => {
                 write!(f, [operator_token.format(), member.format()])
             }
-            StaticMemberExpressionLayout::Grouped => {
+            StaticMemberExpressionLayout::BreakAfterObject => {
                 write!(
                     f,
                     [group_elements(&indent(&format_args![
@@ -42,22 +41,17 @@ impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression
 }
 
 enum StaticMemberExpressionLayout {
-    Inline,
-    Grouped,
+    /// Forces that there's no line break between the object, operator, and member
+    NoBreak,
+
+    /// Breaks the static member expression after the object if the whole expression doesn't fit on a single line
+    BreakAfterObject,
 }
 
 fn compute_member_layout(
     member: &JsStaticMemberExpression,
 ) -> FormatResult<StaticMemberExpressionLayout> {
     let parent = member.syntax().parent();
-
-    // ((parent.type === "AssignmentExpression" ||
-    //     parent.type === "VariableDeclarator") &&
-    //     ((isCallExpression(node.object) && node.object.arguments.length > 0) ||
-    //         (node.object.type === "TSNonNullExpression" &&
-    //     isCallExpression(node.object.expression) &&
-    //     node.object.expression.arguments.length > 0) ||
-    //     objectDoc.label === "member-chain"));
 
     let nested = parent
         .as_ref()
@@ -67,7 +61,7 @@ fn compute_member_layout(
         if JsAssignmentExpression::can_cast(parent.kind())
             || JsVariableDeclarator::can_cast(parent.kind())
         {
-            let inline = match member.object()? {
+            let no_break = match member.object()? {
                 JsAnyExpression::JsCallExpression(call_expression) => {
                     !call_expression.arguments()?.args().is_empty()
                 }
@@ -82,14 +76,14 @@ fn compute_member_layout(
                 _ => false,
             };
 
-            if inline {
-                return Ok(StaticMemberExpressionLayout::Inline);
+            if no_break {
+                return Ok(StaticMemberExpressionLayout::NoBreak);
             }
         }
     };
 
     if !nested && matches!(member.object()?, JsAnyExpression::JsIdentifierExpression(_)) {
-        return Ok(StaticMemberExpressionLayout::Inline);
+        return Ok(StaticMemberExpressionLayout::NoBreak);
     }
 
     let first_non_static_member_ancestor = member
@@ -101,8 +95,8 @@ fn compute_member_layout(
         first_non_static_member_ancestor.and_then(JsAnyExpression::cast),
         Some(JsAnyExpression::JsNewExpression(_))
     ) {
-        return Ok(StaticMemberExpressionLayout::Inline);
+        return Ok(StaticMemberExpressionLayout::NoBreak);
     }
 
-    Ok(StaticMemberExpressionLayout::Grouped)
+    Ok(StaticMemberExpressionLayout::BreakAfterObject)
 }
