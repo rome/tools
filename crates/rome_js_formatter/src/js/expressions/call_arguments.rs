@@ -1,17 +1,27 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
 use crate::prelude::*;
 use crate::utils::{is_call_like_expression, write_arguments_multi_line};
-
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, FormatRuleWithOptions};
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyStatement, JsArrayExpression,
-    JsArrowFunctionExpression, JsCallArgumentList, JsCallArguments, JsCallArgumentsFields,
-    JsLanguage, JsSyntaxKind, TsReferenceType,
+    JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyName,
+    JsAnyStatement, JsArrayExpression, JsArrowFunctionExpression, JsCallArgumentList,
+    JsCallArguments, JsCallArgumentsFields, JsLanguage, JsSyntaxKind, TsReferenceType,
 };
 use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCallArguments;
+pub struct FormatJsCallArguments {
+    parent_callee: Option<JsAnyExpression>,
+}
+
+impl FormatRuleWithOptions<JsCallArguments> for FormatJsCallArguments {
+    type Options = Option<JsAnyExpression>;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.parent_callee = options;
+        self
+    }
+}
 
 impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
     fn fmt_fields(&self, node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
@@ -33,6 +43,26 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     r_paren_token.format()
                 ]
             );
+        }
+
+        if let Some(callee) = &self.parent_callee {
+            if is_framework_test_call(&args, callee)? {
+                return write!(
+                    f,
+                    [
+                        l_paren_token.format(),
+                        format_with(|f| {
+                            let separated =
+                                args.format_separated(JsSyntaxKind::COMMA).with_options(
+                                    FormatSeparatedOptions::default()
+                                        .with_trailing_separator(TrailingSeparator::Omit),
+                                );
+                            f.join_with(space_token()).entries(separated).finish()
+                        }),
+                        r_paren_token.format()
+                    ]
+                );
+            }
         }
 
         // particular formatting for hooks
@@ -427,4 +457,252 @@ fn is_react_hook_with_deps_array(node: &JsCallArgumentList) -> SyntaxResult<Opti
     };
 
     Ok(result)
+}
+
+/// This is a specialised function that checks if the current [call expression]
+/// is reminds a call expression usually used by the majority of testing frameworks.
+///
+/// If the [call expression] matches the criteria, a different formatting is applied.
+///
+/// To evaluable the eligibility of a  [call expression] to be a test framework like,
+/// we need to check its [callee] and its [arguments].
+///
+/// 1. The [callee] must contain a name or a chain of names that belongs to the
+/// test frameworks, for example: `test()`, `test.only()`, etc.
+/// 2. The [arguments] should be at the least 2
+/// 3. The first argument has to be a string literal
+/// 4. The third argument, if present, has to be a number literal
+/// 5. The second argument has to be an [arrow function expression] or [function expression]
+/// 6. Both function must have zero or one parameters
+///
+/// [call expression]: crate::rome_js_syntax::JsCallExpression
+/// [callee]: crate::rome_js_syntax::JsAnyExpression
+/// [arguments]: crate::rome_js_syntax::JsCallArgumentList
+/// [arrow function expression]: crate::rome_js_syntax::JsArrowFunctionExpression
+/// [function expression]: crate::rome_js_syntax::JsCallArgumentList
+fn is_framework_test_call(
+    list: &JsCallArgumentList,
+    callee: &JsAnyExpression,
+) -> SyntaxResult<bool> {
+    let arguments_len = list.len();
+    if arguments_len == 2 || arguments_len == 3 {
+        let mut iter = list.iter();
+        // safe
+        let first_argument = iter.next().expect("Expected at least one argument")?;
+        let first_argument_is_literal_like = matches!(
+            first_argument,
+            JsAnyCallArgument::JsAnyExpression(
+                JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsStringLiteralExpression(_)
+                ) | JsAnyExpression::JsTemplate(_)
+            )
+        );
+
+        if first_argument_is_literal_like && contains_a_test_pattern(callee)? {
+            let second_argument = iter.next().expect("Expected at least two arguments")?;
+            let third_argument = iter.next();
+            // if the third argument is not a numeric literal, we bail
+            // example: `it("name", () => { ... }, 2500)`
+            if let Some(third_argument) = third_argument {
+                let third_argument = third_argument?;
+                if !matches!(
+                    third_argument,
+                    JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+                    ))
+                ) {
+                    return Ok(false);
+                }
+            }
+
+            return if arguments_len == 2 {
+                Ok(matches!(
+                    second_argument,
+                    JsAnyCallArgument::JsAnyExpression(
+                        JsAnyExpression::JsArrowFunctionExpression(_)
+                            | JsAnyExpression::JsFunctionExpression(_)
+                    )
+                ))
+            } else {
+                let result = match second_argument {
+                    JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(
+                        node,
+                    )) => {
+                        let has_enough_parameters = node.parameters()?.items().len() <= 1;
+                        has_enough_parameters
+                    }
+                    JsAnyCallArgument::JsAnyExpression(
+                        JsAnyExpression::JsArrowFunctionExpression(node),
+                    ) => {
+                        let body = node.body()?;
+                        let has_enough_parameters = node.parameters()?.len() <= 1;
+                        matches!(body, JsAnyFunctionBody::JsFunctionBody(_))
+                            && has_enough_parameters
+                    }
+                    _ => false,
+                };
+                Ok(result)
+            };
+        }
+    }
+
+    Ok(false)
+}
+
+fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
+    const TEST_CALLEE_PATTERNS: [&str; 23] = [
+        "it",
+        "it.only",
+        "it.skip",
+        "describe",
+        "describe.only",
+        "describe.skip",
+        "test",
+        "test.only",
+        "test.skip",
+        "test.step",
+        "test.describe",
+        "test.describe.only",
+        "test.describe.parallel",
+        "test.describe.parallel.only",
+        "test.describe.serial",
+        "test.describe.serial.only",
+        "skip",
+        "xit",
+        "xdescribe",
+        "xtest",
+        "fit",
+        "fdescribe",
+        "ftest",
+    ];
+
+    for pattern in TEST_CALLEE_PATTERNS {
+        if matches_test_call(pattern, callee)? {
+            return Ok(true);
+        }
+    }
+    return Ok(false);
+}
+
+/// This is particular used to identify if a [JsCallExpression] has the shape
+/// of a call argument coming from a test framework.
+///
+/// An example are call arguments coming from Mocha, Jest, etc.
+///
+/// ```js
+/// describe("My component", () => {
+///     it("should render", () => {
+///         
+///     });
+/// })
+///
+/// test.only("", testSomething);
+/// ```
+///
+/// This function should accept the `callee` of [JsCallExpression] and the
+/// string pattern to test against. For example "test", "test.only"
+fn matches_test_call(pattern: &str, callee: &JsAnyExpression) -> SyntaxResult<bool> {
+    let paths = pattern.split('.');
+    let mut current_node = callee.clone();
+    let mut iter = paths.rev().peekable();
+    while let Some(path) = iter.next() {
+        let is_last = iter.peek().is_none();
+        if let JsAnyExpression::JsIdentifierExpression(identifier) = &current_node {
+            let same_name_slice = identifier.name()?.value_token()?.text_trimmed() == path;
+            if !same_name_slice {
+                return Ok(false);
+            } else if is_last {
+                return Ok(true);
+            }
+        } else if let JsAnyExpression::JsStaticMemberExpression(member_expression) = &current_node {
+            match member_expression.member()? {
+                JsAnyName::JsName(name) => {
+                    let same_name_slice = name.value_token()?.text_trimmed() == path;
+                    if same_name_slice {
+                        current_node = member_expression.object()?;
+                    } else {
+                        return Ok(false);
+                    }
+                }
+                _ => return Ok(false),
+            };
+        } else {
+            return Ok(false);
+        }
+    }
+
+    Ok(false)
+}
+
+#[cfg(test)]
+mod test {
+    use super::matches_test_call;
+    use rome_js_parser::parse;
+    use rome_js_syntax::{JsCallExpression, SourceType};
+    use rome_rowan::AstNodeList;
+
+    fn extract_call_expression(src: &str) -> JsCallExpression {
+        let source_type = SourceType::js_module();
+        let result = parse(src, 0, source_type);
+        let module = result
+            .tree()
+            .as_js_module()
+            .unwrap()
+            .items()
+            .first()
+            .unwrap();
+
+        module
+            .as_js_any_statement()
+            .unwrap()
+            .as_js_expression_statement()
+            .unwrap()
+            .expression()
+            .unwrap()
+            .as_js_call_expression()
+            .unwrap()
+            .clone()
+    }
+
+    #[test]
+    fn matches_simple_call() {
+        let call_expression = extract_call_expression("test();");
+        assert_eq!(
+            matches_test_call("test", &call_expression.callee().unwrap()),
+            Ok(true)
+        );
+
+        assert_eq!(
+            matches_test_call("testttt", &call_expression.callee().unwrap()),
+            Ok(false)
+        );
+    }
+
+    #[test]
+    fn matches_static_member_expression() {
+        let call_expression = extract_call_expression("test.only();");
+        assert_eq!(
+            matches_test_call("test.only", &call_expression.callee().unwrap()),
+            Ok(true)
+        );
+
+        assert_eq!(
+            matches_test_call("test.describe", &call_expression.callee().unwrap()),
+            Ok(false)
+        );
+    }
+
+    #[test]
+    fn matches_static_member_expression_deep() {
+        let call_expression = extract_call_expression("test.describe.only();");
+        assert_eq!(
+            matches_test_call("test.describe.only", &call_expression.callee().unwrap()),
+            Ok(true)
+        );
+
+        assert_eq!(
+            matches_test_call("test.describe", &call_expression.callee().unwrap()),
+            Ok(false)
+        );
+    }
 }

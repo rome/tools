@@ -49,7 +49,7 @@ pub use builders::{
     block_indent, comment, empty_line, get_lines_before, group_elements, hard_line_break,
     if_group_breaks, if_group_fits_on_line, indent, line_suffix, soft_block_indent,
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
-    BestFitting,
+    will_break, BestFitting,
 };
 pub use comments::{CommentContext, CommentKind, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};

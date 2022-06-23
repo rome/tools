@@ -472,19 +472,12 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-export class Task {
-    args: any[];
-
-    constructor(
-        public script: string,
-        public duration: number,
-        public threadCount: number,
-        ...args: any[]
-    ) {
-        this.args = args;
-    }
-}       "#;
-        let syntax = SourceType::ts();
+        
+describe.each([1, 2, 3])("test", (a) => {
+  expect(a).toBe(a);
+});
+        "#;
+        let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
