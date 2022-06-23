@@ -162,7 +162,7 @@ impl Format<JsFormatContext> for FlattenItem {
                 } = call_expression.as_fields();
 
                 let arguments = arguments?;
-                let arguments = arguments.format().with_options(Some(callee?.clone()));
+                let arguments = arguments.format().with_options(Some(callee?));
 
                 write!(
                     f,
