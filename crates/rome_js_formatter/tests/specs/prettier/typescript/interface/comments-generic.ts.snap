@@ -60,7 +60,9 @@ interface ReallyReallyLongName3<
     TypeArgumentNumberThree,
   > // 1
   // 2
-  extends BaseInterface {} // 3
+  extends BaseInterface {
+  // 3
+}
 
 interface Foo<
     FOOOOOOOOOOOOOOOOOOOOOOOOOO,

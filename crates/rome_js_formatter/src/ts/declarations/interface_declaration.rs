@@ -67,6 +67,28 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
 
         write![f, [interface_token.format(), space_token()]]?;
 
+        // Manually handle the trailing comments and push them into the members block
+        // to prevent that a comment gets formatted on the same line as the opening `{`
+        let last_node = match (&type_parameters, &extends_clause) {
+            (_, Some(extends_clause)) => extends_clause.syntax(),
+            (Some(type_parameters), None) => type_parameters.syntax(),
+            (None, None) => id.syntax(),
+        };
+
+        let last_token = last_node.last_token();
+        let mut has_trailing_comments = false;
+
+        if let Some(last_token) = &last_token {
+            for comment in last_token
+                .trailing_trivia()
+                .pieces()
+                .filter_map(|piece| piece.as_comments())
+            {
+                has_trailing_comments = true;
+                f.state_mut().mark_comment_as_formatted(&comment);
+            }
+        }
+
         let id_has_trailing_comments = id.syntax().has_trailing_comments();
         if id_has_trailing_comments || extends_clause.is_some() {
             if should_indent_extends_only {
@@ -94,7 +116,31 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
             f,
             [
                 space_token(),
-                format_delimited(&l_curly_token, &members.format(), &r_curly_token).block_indent()
+                format_delimited(
+                    &l_curly_token,
+                    &format_args![
+                        format_with(|f| {
+                            // Write the manual handled comments
+                            if let Some(last_token) = &last_token {
+                                if has_trailing_comments {
+                                    write!(
+                                        f,
+                                        [
+                                            format_trailing_trivia(last_token)
+                                                .skip_formatted_check(),
+                                            hard_line_break()
+                                        ]
+                                    )?;
+                                }
+                            }
+
+                            Ok(())
+                        }),
+                        members.format()
+                    ],
+                    &r_curly_token
+                )
+                .block_indent()
             ]
         )
     }

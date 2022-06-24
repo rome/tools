@@ -37,8 +37,8 @@ foo(): bar;}
 
 # Output
 ```js
-interface A1 // comment
-{
+interface A1 {
+  // comment
   foo(): bar;
 }
 
@@ -48,30 +48,33 @@ interface A2 // comment
 }
 
 interface A3 // comment1
-  extends Base // comment2
-{
+  extends Base {
+  // comment2
   foo(): bar;
 }
 
 interface A4 // comment1
-  extends Base // comment2
+  extends Base
 // comment3
 {
+  // comment2
   foo(): bar;
 }
 
 interface A5 // comment1
-  extends Base // comment2
+  extends Base
 // comment3
 {
   // comment4
+  // comment2
   foo(): bar;
 }
 
 interface A6 // comment1
-  extends Base // comment2
+  extends Base
 // comment3
 {
+  // comment2
   // comment4
   foo(): bar;
 }

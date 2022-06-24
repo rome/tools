@@ -34,7 +34,8 @@ Line width: 80
 Quote style: Double Quotes
 -----
 interface A {}
-interface B extends A /** comment **/ {
+interface B extends A {
+	/** comment **/
 	something: string;
 }
 
