@@ -180,7 +180,8 @@ where
     ///   value: Cell<u64>
     /// }
     ///
-    /// impl Format<SimpleFormatContext> for Counter {fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+    /// impl Format<SimpleFormatContext> for Counter {
+    ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
     ///         let current = self.value.get();
     ///
     ///         write!(f, [
@@ -189,6 +190,7 @@ where
     ///             dynamic_token(&std::format!("{current}"), TextSize::default()),
     ///             hard_line_break()
     ///         ])?;
+    ///
     ///         self.value.set(current + 1);
     ///         Ok(())
     ///     }
