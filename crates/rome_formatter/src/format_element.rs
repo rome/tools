@@ -550,6 +550,7 @@ impl FormatElement {
             | FormatElement::Comment(content)
             | FormatElement::Fill(Fill { content, .. })
             | FormatElement::Verbatim(Verbatim { content, .. })
+            | FormatElement::Label(Label { content, .. })
             | FormatElement::Indent(content) => content.iter().any(FormatElement::will_break),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),
