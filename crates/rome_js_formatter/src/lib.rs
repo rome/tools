@@ -322,10 +322,7 @@ while(
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -357,10 +354,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -391,10 +385,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -413,10 +404,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -438,10 +426,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -472,7 +457,7 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        
+
 it(`does something really long and complicated so I have to write a very long name for the test`, function () {
   console.log("hello!");
  });
