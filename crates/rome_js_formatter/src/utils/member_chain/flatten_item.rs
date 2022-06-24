@@ -1,3 +1,4 @@
+use crate::context::TabWidth;
 use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::{
@@ -123,14 +124,14 @@ impl FlattenItem {
         }
     }
 
-    pub(crate) fn has_short_name(&self, tab_width: u8) -> SyntaxResult<bool> {
+    pub(crate) fn has_short_name(&self, tab_width: TabWidth) -> SyntaxResult<bool> {
         if let FlattenItem::StaticMember(static_member, ..) = self {
             if let JsAnyExpression::JsIdentifierExpression(identifier_expression) =
                 static_member.object()?
             {
                 let value_token = identifier_expression.name()?.value_token()?;
                 let text = value_token.text_trimmed();
-                Ok(text.len() <= tab_width as usize)
+                Ok(text.len() <= u8::from(tab_width) as usize)
             } else {
                 Ok(false)
             }

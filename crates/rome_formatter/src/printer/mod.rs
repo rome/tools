@@ -2,9 +2,7 @@ mod printer_options;
 
 pub use printer_options::*;
 
-use crate::format_element::{
-    ConditionalGroupContent, Group, LineMode, List, PrintMode, VerbatimKind,
-};
+use crate::format_element::{ConditionalGroupContent, Group, LineMode, PrintMode, VerbatimKind};
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
@@ -129,11 +127,7 @@ impl<'a> Printer<'a> {
                     PrintMode::Flat if self.state.measured_group_fits => {
                         // A parent group has already verified that this group fits on a single line
                         // Thus, just continue in flat mode
-                        queue.extend(
-                            content
-                                .iter()
-                                .map(|element| PrintElementCall::new(element, args)),
-                        );
+                        queue.extend_with_args(content.iter(), args);
                         PrintMode::Flat
                     }
                     // The printer is either in expanded mode or it's necessary to re-measure if the group fits
@@ -144,15 +138,14 @@ impl<'a> Printer<'a> {
 
                         let flat_args = args.with_print_mode(PrintMode::Flat);
                         if fits_on_line(content.iter(), flat_args, queue, self) {
-                            queue.extend(
-                                content.iter().map(|e| PrintElementCall::new(e, flat_args)),
-                            );
+                            queue.extend_with_args(content.iter(), flat_args);
                             self.state.measured_group_fits = true;
                             PrintMode::Flat
                         } else {
-                            queue.extend(content.iter().map(|e| {
-                                PrintElementCall::new(e, args.with_print_mode(PrintMode::Expanded))
-                            }));
+                            queue.extend_with_args(
+                                content.iter(),
+                                args.with_print_mode(PrintMode::Expanded),
+                            );
                             PrintMode::Expanded
                         }
                     }
@@ -164,18 +157,15 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Fill(fill) => {
-                self.print_fill(queue, fill.list(), fill.separator(), args);
+                self.print_fill(queue, fill.content(), fill.separator(), args);
             }
 
             FormatElement::List(list) => {
-                queue.extend(list.iter().map(|t| PrintElementCall::new(t, args)));
+                queue.extend_with_args(list.iter(), args);
             }
 
             FormatElement::Indent(content) => {
-                queue.enqueue(PrintElementCall::new(
-                    content,
-                    args.with_incremented_indent(),
-                ));
+                queue.extend_with_args(content.iter(), args.with_incremented_indent());
             }
 
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
@@ -189,7 +179,7 @@ impl<'a> Printer<'a> {
                 };
 
                 if &group_mode == mode {
-                    queue.enqueue(PrintElementCall::new(content, args));
+                    queue.extend_with_args(content.iter(), args);
                 }
             }
 
@@ -226,7 +216,7 @@ impl<'a> Printer<'a> {
             FormatElement::LineSuffix(suffix) => {
                 self.state
                     .line_suffixes
-                    .push(PrintElementCall::new(&**suffix, args));
+                    .extend(suffix.iter().map(|e| PrintElementCall::new(e, args)));
             }
             FormatElement::LineSuffixBoundary => {
                 const HARD_BREAK: &FormatElement = &FormatElement::Line(LineMode::Hard);
@@ -234,7 +224,7 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Comment(content) => {
-                queue.extend(content.iter().map(|e| PrintElementCall::new(e, args)))
+                queue.extend_with_args(content.iter(), args);
             }
 
             FormatElement::Verbatim(verbatim) => {
@@ -245,7 +235,7 @@ impl<'a> Printer<'a> {
                     ));
                 }
 
-                queue.enqueue(PrintElementCall::new(&verbatim.element, args));
+                queue.extend_with_args(verbatim.content.iter(), args);
             }
             FormatElement::ExpandParent => {
                 // No-op, only has an effect on `fits`
@@ -352,7 +342,7 @@ impl<'a> Printer<'a> {
     fn print_fill(
         &mut self,
         queue: &mut ElementCallQueue<'a>,
-        content: &'a List,
+        content: &'a [FormatElement],
         separator: &'a FormatElement,
         args: PrintElementArgs,
     ) {
@@ -446,11 +436,7 @@ impl<'a> Printer<'a> {
     ) {
         let min_queue_length = queue.0.len();
 
-        queue.extend(
-            elements
-                .iter()
-                .map(|element| PrintElementCall::new(element, args)),
-        );
+        queue.extend(elements.iter().map(|e| PrintElementCall::new(e, args)));
 
         while let Some(call) = queue.dequeue() {
             self.print_element(queue, call.element, call.args);
@@ -622,6 +608,18 @@ impl<'a> ElementCallQueue<'a> {
         self.0.extend(calls.into_iter().rev());
     }
 
+    fn extend_with_args<I>(&mut self, elements: I, args: PrintElementArgs)
+    where
+        I: IntoIterator<Item = &'a FormatElement>,
+        I::IntoIter: DoubleEndedIterator,
+    {
+        self.extend(
+            elements
+                .into_iter()
+                .map(|element| PrintElementCall::new(element, args)),
+        )
+    }
+
     pub fn enqueue(&mut self, call: PrintElementCall<'a>) {
         self.0.push(call);
     }
@@ -659,11 +657,7 @@ where
         .with_rest(queue)
         .with_queue(ElementCallQueue::new(shared_buffer));
 
-    measure_queue.extend(
-        elements
-            .into_iter()
-            .map(|element| PrintElementCall::new(element, args)),
-    );
+    measure_queue.extend(elements.into_iter(), args);
 
     let mut measure_state = MeasureState {
         pending_indent: printer.state.pending_indent,
@@ -742,13 +736,12 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Indent(content) => queue.enqueue(PrintElementCall::new(
-            content,
-            args.with_incremented_indent(),
-        )),
+        FormatElement::Indent(content) => {
+            queue.extend(content.iter(), args.with_incremented_indent())
+        }
 
         FormatElement::Group(group) => {
-            queue.extend(group.content.iter().map(|e| PrintElementCall::new(e, args)));
+            queue.extend(group.content.iter(), args);
 
             if let Some(id) = group.id {
                 state.group_modes.insert_print_mode(id, args.mode);
@@ -765,16 +758,14 @@ fn fits_element_on_line<'a, 'rest>(
             };
 
             if group_mode == conditional.mode {
-                queue.enqueue(PrintElementCall::new(&conditional.content, args))
+                queue.extend(conditional.content.iter(), args);
             }
         }
 
-        FormatElement::List(list) => {
-            queue.extend(list.iter().map(|t| PrintElementCall::new(t, args)))
-        }
+        FormatElement::List(list) => queue.extend(list.iter(), args),
 
         FormatElement::Fill(fill) => queue.queue.0.extend(
-            Intersperse::new(fill.list().iter().rev(), fill.separator())
+            Intersperse::new(fill.content().iter().rev(), fill.separator())
                 .map(|t| PrintElementCall::new(t, args)),
         ),
 
@@ -817,13 +808,9 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Comment(content) => {
-            queue.extend(content.iter().map(|e| PrintElementCall::new(e, args)))
-        }
+        FormatElement::Comment(content) => queue.extend(content.iter(), args),
 
-        FormatElement::Verbatim(verbatim) => {
-            queue.enqueue(PrintElementCall::new(&verbatim.element, args))
-        }
+        FormatElement::Verbatim(verbatim) => queue.extend(verbatim.content.iter(), args),
         FormatElement::BestFitting(best_fitting) => {
             let content = match args.mode {
                 PrintMode::Flat => best_fitting.most_flat(),
@@ -911,14 +898,19 @@ impl<'a, 'rest> MeasureQueue<'a, 'rest> {
         self.queue.enqueue(call);
     }
 
-    fn extend<T>(&mut self, calls: T)
+    fn extend<T>(&mut self, elements: T, args: PrintElementArgs)
     where
-        T: IntoIterator<Item = PrintElementCall<'a>>,
+        T: IntoIterator<Item = &'a FormatElement>,
         T::IntoIter: DoubleEndedIterator,
     {
         // Reverse the calls because elements are removed from the back of the vec
         // in reversed insertion order
-        self.queue.0.extend(calls.into_iter().rev());
+        self.queue.0.extend(
+            elements
+                .into_iter()
+                .rev()
+                .map(|element| PrintElementCall::new(element, args)),
+        );
     }
 
     fn dequeue(&mut self) -> Option<(&'a FormatElement, PrintElementArgs)> {

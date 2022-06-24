@@ -330,7 +330,7 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
                 let width = write_member_name(&property.name()?, f)?;
                 let text_width_for_break =
-                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
@@ -341,7 +341,7 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
                 let width = write_member_name(&property.member()?, f)?;
                 let text_width_for_break =
-                    (f.context().tab_width() + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
