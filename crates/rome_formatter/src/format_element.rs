@@ -553,12 +553,11 @@ impl FormatElement {
 
     /// Interns a format element.
     ///
-    /// Returns `self` for an empty list AND an already interned elements.
-    pub fn intern(self) -> FormatElement {
+    /// Returns `self` for an already interned element.
+    pub fn intern(self) -> Interned {
         match self {
-            FormatElement::List(list) if list.is_empty() => list.into(),
-            element @ FormatElement::Interned(_) => element,
-            element => FormatElement::Interned(Interned(Rc::new(element))),
+            FormatElement::Interned(interned) => interned,
+            element => Interned(Rc::new(element)),
         }
     }
 }
