@@ -213,44 +213,27 @@ where
     ///
     /// ```
     pub fn inspect(&mut self, f: &mut Formatter<Context>) -> FormatResult<&FormatElement> {
-        let cache = self.memory.get_mut();
-        if cache.is_none() {
-            Self::format_and_store(cache, &self.inner, f)?;
-        }
+        let result = self
+            .memory
+            .get_mut()
+            .get_or_insert_with(|| Self::intern(&self.inner, f))
+            .as_ref();
 
-        // SAFETY: Safe because `format_and_store` populates the cache
-        match cache.as_ref().unwrap() {
+        match result {
             Ok(content) => Ok(content.deref()),
             Err(error) => Err(*error),
         }
     }
 
-    /// Formats the inner content and stores it in the provided store.
-    ///
-    /// Guarantees that the cache is populated after this call.
-    fn format_and_store(
-        cache: &mut Option<FormatResult<Interned>>,
-        inner: &F,
-        f: &mut Formatter<Context>,
-    ) -> FormatResult<()> {
+    fn intern(inner: &F, f: &mut Formatter<Context>) -> FormatResult<Interned> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
         let result = write!(buffer, [inner]);
 
-        match result {
-            Ok(_) => {
-                let elements = buffer.into_element();
-                let interned = elements.intern();
-
-                *cache = Some(Ok(interned));
-
-                Ok(())
-            }
-            Err(err) => {
-                *cache = Some(Err(err));
-                Err(err)
-            }
-        }
+        result.map(|_| {
+            let elements = buffer.into_element();
+            elements.intern()
+        })
     }
 }
 
@@ -259,18 +242,16 @@ where
     F: Format<Context>,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        if self.memory.borrow().is_none() {
-            Self::format_and_store(&mut self.memory.borrow_mut(), &self.inner, f)?;
-        }
+        let mut memory = self.memory.borrow_mut();
+        let result = memory.get_or_insert_with(|| Self::intern(&self.inner, f));
 
-        // SAFETY: format_and_store guarantees that content is stored in memory
-        return match self.memory.borrow().as_ref().unwrap() {
+        match result {
             Ok(elements) => {
                 f.write_element(FormatElement::Interned(elements.clone()))?;
 
                 Ok(())
             }
             Err(err) => Err(*err),
-        };
+        }
     }
 }
