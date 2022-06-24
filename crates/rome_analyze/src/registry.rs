@@ -11,6 +11,8 @@ use crate::{
 
 /// The rule registry holds type-erased instances of all active analysis rules
 pub struct RuleRegistry<L: Language> {
+    /// Holds a collection of rules for each [SyntaxKind] node type that has
+    /// lint rules associated with it
     nodes: Vec<KindRules<L>>,
 }
 
@@ -48,6 +50,7 @@ impl<L: Language> RuleRegistry<L> {
     }
 }
 
+/// [KindRules] holds a collection of [Rule]s that match a specific [SyntaxKind] value
 struct KindRules<L: Language> {
     rules: Vec<RegistryRule<L>>,
 }
@@ -120,11 +123,9 @@ impl<L: Language> RegistryRule<L> {
             root: &'a RuleRoot<R>,
             node: &'a SyntaxNode<<R::Query as AstNode>::Language>,
         ) -> Option<Box<dyn AnalyzerSignal<RuleLanguage<R>> + 'a>> {
-            if !<R::Query>::can_cast(node.kind()) {
-                return None;
-            }
-
-            let query_result = <R::Query>::cast(node.clone())?;
+            // SAFETY: The rule should never get executed in the first place
+            // if the query doesn't match
+            let query_result = <R::Query>::unwrap_cast(node.clone());
             let ctx = RuleContext::new(query_result.clone(), root.clone());
 
             let result = R::run(&ctx)?;
