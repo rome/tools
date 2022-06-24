@@ -6,6 +6,7 @@ mod query;
 mod registry;
 mod rule;
 mod signals;
+mod syntax;
 mod visitor;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
@@ -13,8 +14,9 @@ pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{LanguageRoot, RuleRegistry};
 pub use crate::rule::{Rule, RuleAction, RuleDiagnostic, RuleMeta};
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
+pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext};
-use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
+use rome_rowan::{AstNode, Language, TextRange};
 
 /// The analyzer is the main entry point into the `rome_analyze` infrastructure.
 /// Its role is to run a collection of [Visitor]s over a syntax tree, with each
@@ -100,68 +102,3 @@ pub enum Never {}
 /// (`Option<Never>` has a size of 0 and can be elided, while `Option<()>` has
 /// a size of 1 as it still need to store a discriminant)
 pub type ControlFlow<B = Never> = ops::ControlFlow<B>;
-
-/// The [SyntaxVisitor] is the simplest form of visitor implemented for the
-/// analyzer, it simply broadcast each [WalkEvent::Enter] as a query match
-/// event for the [SyntaxNode] being entered
-pub struct SyntaxVisitor<L: Language, F> {
-    has_suppressions: F,
-    skip_subtree: Option<SyntaxNode<L>>,
-}
-
-impl<L: Language, F> SyntaxVisitor<L, F>
-where
-    F: Fn(&SyntaxNode<L>) -> bool,
-{
-    pub fn new(has_suppressions: F) -> Self {
-        Self {
-            has_suppressions,
-            skip_subtree: None,
-        }
-    }
-}
-
-impl<L: Language, F, B> Visitor<B> for SyntaxVisitor<L, F>
-where
-    F: Fn(&SyntaxNode<L>) -> bool,
-{
-    type Language = L;
-
-    fn visit(
-        &mut self,
-        event: &WalkEvent<SyntaxNode<Self::Language>>,
-        ctx: &mut VisitorContext<L, B>,
-    ) -> ControlFlow<B> {
-        let node = match event {
-            WalkEvent::Enter(node) => node,
-            WalkEvent::Leave(node) => {
-                if let Some(skip_subtree) = &self.skip_subtree {
-                    if skip_subtree == node {
-                        self.skip_subtree.take();
-                    }
-                }
-
-                return ControlFlow::Continue(());
-            }
-        };
-
-        if self.skip_subtree.is_some() {
-            return ControlFlow::Continue(());
-        }
-
-        if let Some(range) = ctx.range {
-            if node.text_range().ordering(range).is_ne() {
-                self.skip_subtree = Some(node.clone());
-                return ControlFlow::Continue(());
-            }
-        }
-
-        if (self.has_suppressions)(node) {
-            self.skip_subtree = Some(node.clone());
-            return ControlFlow::Continue(());
-        }
-
-        let query = QueryMatch::Syntax(node.clone());
-        ctx.match_query(&query)
-    }
-}

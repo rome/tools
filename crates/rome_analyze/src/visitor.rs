@@ -3,20 +3,22 @@ use std::ops::ControlFlow;
 use rome_diagnostics::file::FileId;
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
-use crate::{registry::NodeLanguage, LanguageRoot, QueryMatch, RuleRegistry};
+use crate::{registry::NodeLanguage, LanguageRoot, QueryMatch};
 
 /// Mutable context objects shared by all visitors
 pub struct VisitorContext<'a, L: Language, B> {
     pub file_id: FileId,
     pub root: LanguageRoot<L>,
     pub range: Option<TextRange>,
-    pub registry: RuleRegistry<'a, L, B>,
+    pub match_query: MatchQuery<'a, L, B>,
 }
+
+type MatchQuery<'a, L, B> =
+    Box<dyn FnMut(FileId, &LanguageRoot<L>, &QueryMatch<L>) -> ControlFlow<B> + 'a>;
 
 impl<'a, L: Language, B> VisitorContext<'a, L, B> {
     pub fn match_query(&mut self, query_match: &QueryMatch<L>) -> ControlFlow<B> {
-        self.registry
-            .match_query(self.file_id, &self.root, query_match)
+        (self.match_query)(self.file_id, &self.root, query_match)
     }
 }
 

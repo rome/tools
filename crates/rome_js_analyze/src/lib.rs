@@ -45,11 +45,14 @@ where
         has_suppressions_category(SuppressionCategory::Lint, node)
     }));
 
+    let mut registry = build_registry(&filter, callback);
     let mut ctx = VisitorContext {
         file_id,
         root: root.clone(),
         range: filter.range,
-        registry: build_registry(&filter, callback),
+        match_query: Box::new(move |file_id, root, query_match| {
+            registry.match_query(file_id, root, query_match)
+        }),
     };
 
     analyzer.run(&mut ctx)
