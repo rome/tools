@@ -545,18 +545,18 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 /// }
 ///
 /// let content = format_with(|f| {
-///     let mut counter = Labelled::default().memoized();
-///     let counter_content = counter.inspect(f)?;
+///     let mut labelled = Labelled::default().memoized();
+///     let labelled_content = labelled.inspect(f)?;
 ///
-///     let is_labelled = match counter_content {
+///     let is_labelled = match labelled_content {
 ///         FormatElement::Label(label) => label.label() == "some-label",
 ///         _ => false,
 ///     };
 ///
 ///     if is_labelled {
-///         write!(f, [token("This is "), &counter])
+///         write!(f, [token("This is "), &labelled])
 ///     } else {
-///         write!(f, [token("This is not "), &counter])
+///         write!(f, [token("This is not "), &labelled])
 ///     }
 /// });
 ///
@@ -599,7 +599,7 @@ impl<Context> Format<Context> for FormatLabelled<'_, Context> {
 impl<Context> std::fmt::Debug for FormatLabelled<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("Label")
-            .field(&"{{name}}")
+            .field(&self.label)
             .field(&"{{content}}")
             .finish()
     }
