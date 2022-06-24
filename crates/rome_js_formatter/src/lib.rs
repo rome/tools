@@ -473,9 +473,10 @@ mod test {
     fn quick_test() {
         let src = r#"
         
-describe.each([1, 2, 3])("test", (a) => {
-  expect(a).toBe(a);
-});
+it(`does something really long and complicated so I have to write a very long name for the test`, function () {
+  console.log("hello!");
+ });
+
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
