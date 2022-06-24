@@ -43,58 +43,29 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             let first_argument = first_argument?;
             let second_argument = second_argument?;
 
-            if let Some(call_expression) = node
-                .syntax()
-                .parent()
-                .as_ref()
-                .and_then(|node| JsCallExpression::cast(node.clone()))
-            {
+            if let Some(call_expression) = node.syntax().parent().and_then(JsCallExpression::cast) {
                 let callee = call_expression.callee()?;
 
-                if is_framework_test_call(IsTestFrameworkCallPayload {
+                let is_framework_test_call = is_framework_test_call(IsTestFrameworkCallPayload {
                     first_argument: &first_argument,
                     second_argument: &second_argument,
                     third_argument: &third_argument,
                     arguments_len,
                     callee: &callee,
-                })? {
-                    return write!(
-                        f,
-                        [
-                            l_paren_token.format(),
-                            format_with(|f| {
-                                let separated =
-                                    args.format_separated(JsSyntaxKind::COMMA).with_options(
-                                        FormatSeparatedOptions::default()
-                                            .with_trailing_separator(TrailingSeparator::Omit),
-                                    );
-                                f.join_with(space_token()).entries(separated).finish()
-                            }),
-                            r_paren_token.format()
-                        ]
-                    );
-                }
-            }
+                })?;
+                let is_react_hook_with_deps_array =
+                    is_react_hook_with_deps_array(&first_argument, &second_argument)?
+                        && !node.syntax().first_or_last_token_have_comments();
 
-            // particular formatting for hooks
-            if is_react_hook_with_deps_array(&first_argument, &second_argument)? {
-                return write!(
-                    f,
-                    [
-                        l_paren_token.format(),
-                        format_with(|f| {
-                            f.join_with(space_token())
-                                .entries(
-                                    args.format_separated(JsSyntaxKind::COMMA).with_options(
-                                        FormatSeparatedOptions::default()
-                                            .with_trailing_separator(TrailingSeparator::Omit),
-                                    ),
-                                )
-                                .finish()
-                        }),
-                        r_paren_token.format()
-                    ]
-                );
+                if is_framework_test_call || is_react_hook_with_deps_array {
+                    write!(f, [l_paren_token.format(),])?;
+                    let separated = args
+                        .format_separated(JsSyntaxKind::COMMA)
+                        .with_trailing_separator(TrailingSeparator::Omit);
+
+                    f.join_with(space_token()).entries(separated).finish()?;
+                    return write!(f, [r_paren_token.format()]);
+                }
             }
         }
 
