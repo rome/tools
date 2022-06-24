@@ -163,6 +163,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
         FillBuilder::new(self, separator)
     }
 
+    /// Formats `content` into an interned element without writing it to the formatter's buffer.
     pub fn intern(&mut self, content: &dyn Format<Context>) -> FormatResult<Interned> {
         let mut buffer = VecBuffer::new(self.state_mut());
 
