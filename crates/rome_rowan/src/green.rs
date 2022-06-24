@@ -18,20 +18,6 @@ pub(crate) use self::node_cache::NodeCacheNodeEntryMut;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RawSyntaxKind(pub u16);
 
-impl RawSyntaxKind {
-    pub(crate) const fn as_bits(self) -> [u128; 4] {
-        if self.0 < 128 {
-            [1u128 << self.0, 0, 0, 0]
-        } else if self.0 < 256 {
-            [0, 1u128 << (self.0 - 128), 0, 0]
-        } else if self.0 < 384 {
-            [0, 0, 1u128 << (self.0 - 256), 0]
-        } else {
-            [0, 0, 0, 1u128 << (self.0 - 384)]
-        }
-    }
-}
-
 pub(crate) fn has_live() -> bool {
     node::has_live() || token::has_live() || trivia::has_live()
 }

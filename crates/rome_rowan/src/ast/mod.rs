@@ -37,8 +37,27 @@ where
     }
 
     /// Create a new [SyntaxKindSet] containing only the provided [RawSyntaxKind]
+    ///
+    /// Unlike `SyntaxKindSet::of` this function can be evaluated in constants,
+    /// and will result in a compile-time error if the value overflows:
+    ///
+    /// ```compile_fail
+    /// # use rome_rowan::{SyntaxKindSet, RawLanguage, RawSyntaxKind};
+    /// const EXAMPLE: SyntaxKindSet<RawLanguage> =
+    ///     SyntaxKindSet::<RawLanguage>::from_raw(RawSyntaxKind(512));
+    /// # println!("{EXAMPLE:?}"); // The constant must be used to be evaluated
+    /// ```
     pub const fn from_raw(kind: RawSyntaxKind) -> Self {
-        Self(kind.as_bits(), PhantomData)
+        let RawSyntaxKind(kind) = kind;
+
+        let index = kind as usize / u128::BITS as usize;
+        let shift = kind % u128::BITS as u16;
+        let mask = 1 << shift;
+
+        let mut bits = [0; 4];
+        bits[index] = mask;
+
+        Self(bits, PhantomData)
     }
 
     /// Returns the union of the two sets `self` and `other`
@@ -56,17 +75,19 @@ where
 
     /// Returns true if `kind` is contained in this set
     pub fn matches(self, kind: L::Kind) -> bool {
-        let bits = kind.to_raw().as_bits();
-        (self.0[0] & bits[0]) != 0
-            || (self.0[1] & bits[1]) != 0
-            || (self.0[2] & bits[2]) != 0
-            || (self.0[3] & bits[3]) != 0
+        let RawSyntaxKind(kind) = kind.to_raw();
+
+        let index = kind as usize / u128::BITS as usize;
+        let shift = kind % u128::BITS as u16;
+        let mask = 1 << shift;
+
+        self.0[index] & mask != 0
     }
 
     /// Returns an iterator over all the [SyntaxKind] contained in this set
     pub fn iter(self) -> impl Iterator<Item = L::Kind> {
         self.0.into_iter().enumerate().flat_map(|(index, item)| {
-            let index = index as u16 * 128;
+            let index = index as u16 * u128::BITS as u16;
             (0..u128::BITS).filter_map(move |bit| {
                 if (item & (1 << bit)) != 0 {
                     let raw = index + bit as u16;
