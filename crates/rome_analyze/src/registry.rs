@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use rome_diagnostics::file::FileId;
-use rome_rowan::{AstNode, Language, SyntaxKind, SyntaxNode};
+use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 
 use crate::{
     context::RuleContext,
@@ -21,18 +21,27 @@ impl<L: Language> RuleRegistry<L> {
         Self { nodes: Vec::new() }
     }
 
+    /// Add the rule `R` to the list of rules stores in this registry instance
     pub fn push<R>(&mut self)
     where
         R: Rule + 'static,
         R::Query: AstNode<Language = L>,
     {
+        // Iterate on all the SyntaxKind variants this node can match
         for kind in <R::Query as AstNode>::KIND_SET.iter() {
-            let index = usize::from(kind.to_raw().0);
+            // Convert the numerical value of `kind` to an index in the
+            // `nodes` vector
+            let RawSyntaxKind(index) = kind.to_raw();
+            let index = usize::from(index);
 
+            // Ensure the vector has enough capacity by inserting empty
+            // `KindRules` as required
             if self.nodes.len() <= index {
                 self.nodes.resize_with(index + 1, KindRules::empty);
             }
 
+            // Insert a handle to the rule `R` into the `KindRules` entry
+            // corresponding to the SyntaxKind index
             let node = &mut self.nodes[index];
             node.rules.push(RegistryRule::of::<R>());
         }
@@ -79,11 +88,18 @@ where
         node: SyntaxNode<L>,
         callback: &mut impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B>,
     ) -> ControlFlow<B> {
-        let kind = usize::from(node.kind().to_raw().0);
+        // Convert the numerical value of the SyntaxKind to an index in the
+        // `nodes` vector
+        let RawSyntaxKind(kind) = node.kind().to_raw();
+        let kind = usize::from(kind);
+
+        // Lookup the nodes entry corresponding to the SyntaxKind index
         let rules = match self.nodes.get(kind) {
             Some(entry) => &entry.rules,
             None => return ControlFlow::Continue(()),
         };
+
+        // Run all the rules registered to this SyntaxKind
         for rule in rules {
             if let Some(event) = (rule.run)(file_id, root, &node) {
                 if let ControlFlow::Break(b) = callback(&*event) {
