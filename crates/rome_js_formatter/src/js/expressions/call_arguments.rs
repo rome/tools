@@ -43,31 +43,36 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             let first_argument = first_argument?;
             let second_argument = second_argument?;
 
-            if let Some(call_expression) = node.syntax().parent().and_then(JsCallExpression::cast) {
+            let is_framework_test_call = if let Some(call_expression) =
+                node.syntax().parent().and_then(JsCallExpression::cast)
+            {
                 let callee = call_expression.callee()?;
 
-                let is_framework_test_call = is_framework_test_call(IsTestFrameworkCallPayload {
+                is_framework_test_call(IsTestFrameworkCallPayload {
                     first_argument: &first_argument,
                     second_argument: &second_argument,
                     third_argument: &third_argument,
                     arguments_len,
                     callee: &callee,
-                })?;
-                let is_react_hook_with_deps_array =
-                    is_react_hook_with_deps_array(&first_argument, &second_argument)?
-                        && !node.syntax().first_or_last_token_have_comments();
+                })?
+            } else {
+                false
+            };
 
-                if is_framework_test_call || is_react_hook_with_deps_array {
-                    write!(f, [l_paren_token.format(),])?;
-                    let separated = args
-                        .format_separated(JsSyntaxKind::COMMA)
-                        .with_trailing_separator(TrailingSeparator::Omit);
+            let is_react_hook_with_deps_array =
+                is_react_hook_with_deps_array(&first_argument, &second_argument)?
+                    && !node.syntax().first_or_last_token_have_comments();
 
-                    f.join_with(space_token()).entries(separated).finish()?;
-                    return write!(f, [r_paren_token.format()]);
-                }
+            if is_framework_test_call || is_react_hook_with_deps_array {
+                write!(f, [l_paren_token.format(),])?;
+                let separated = args
+                    .format_separated(JsSyntaxKind::COMMA)
+                    .with_trailing_separator(TrailingSeparator::Omit);
+
+                f.join_with(space_token()).entries(separated).finish()?;
+                return write!(f, [r_paren_token.format()]);
             }
-        }
+        };
 
         // we create open a close delimiters
         let open_delimiter = format_open_delimiter(&l_paren_token);
@@ -605,14 +610,14 @@ fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenTe
     for _ in 0..MAX_DEPTH {
         if let JsAnyExpression::JsIdentifierExpression(identifier) = &current_node {
             let value_token = identifier.name()?.value_token()?;
-            let value = value_token.token_text();
+            let value = value_token.token_text_trimmed();
             test_call.push(value);
             break;
         } else if let JsAnyExpression::JsStaticMemberExpression(member_expression) = &current_node {
             match member_expression.member()? {
                 JsAnyName::JsName(name) => {
                     let value = name.value_token()?;
-                    test_call.push(value.token_text());
+                    test_call.push(value.token_text_trimmed());
                     current_node = member_expression.object()?;
                 }
                 _ => break,
@@ -621,8 +626,8 @@ fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenTe
             break;
         }
     }
-
-    Ok(test_call.into_iter().rev().collect())
+    test_call.reverse();
+    Ok(test_call)
 }
 
 #[cfg(test)]
@@ -658,6 +663,12 @@ mod test {
     #[test]
     fn matches_simple_call() {
         let call_expression = extract_call_expression("test();");
+        assert_eq!(
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            Ok(true)
+        );
+
+        let call_expression = extract_call_expression("it();");
         assert_eq!(
             contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(true)
