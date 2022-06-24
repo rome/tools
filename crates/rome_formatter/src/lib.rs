@@ -194,6 +194,9 @@ impl From<LineWidth> for u16 {
 /// Defines the common formatting options. Implementations can define additional options that
 /// are specific to formatting a specific object.
 pub trait FormatContext {
+    /// The type storing a snapshot of the context's (mutable) state.
+    type Snapshot;
+
     /// The indent style.
     fn indent_style(&self) -> IndentStyle;
 
@@ -202,15 +205,23 @@ pub trait FormatContext {
 
     /// Derives the print options from the these format options
     fn as_print_options(&self) -> PrinterOptions;
+
+    /// Snapshots the state of the context that can be restored with `restore_snapshot`.
+    fn snapshot(&self) -> Self::Snapshot;
+
+    /// Restores the contexts state to the state when the snapshot was taken.
+    fn restore_snapshot(&mut self, snapshot: Self::Snapshot);
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Eq, PartialEq)]
 pub struct SimpleFormatContext {
     pub indent_style: IndentStyle,
     pub line_width: LineWidth,
 }
 
 impl FormatContext for SimpleFormatContext {
+    type Snapshot = ();
+
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -224,6 +235,10 @@ impl FormatContext for SimpleFormatContext {
             .with_indent(self.indent_style)
             .with_print_width(self.line_width)
     }
+
+    fn snapshot(&self) -> Self::Snapshot {}
+
+    fn restore_snapshot(&mut self, _: Self::Snapshot) {}
 }
 
 /// Lightweight sourcemap marker between source and output tokens
@@ -236,26 +251,35 @@ pub struct SourceMarker {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct Formatted {
+pub struct Formatted<Context> {
     root: FormatElement,
-    options: PrinterOptions,
+    context: Context,
 }
 
-impl Formatted {
-    pub fn new(root: FormatElement, options: PrinterOptions) -> Self {
-        Self { root, options }
+impl<Context> Formatted<Context> {
+    pub fn new(root: FormatElement, context: Context) -> Self {
+        Self { root, context }
     }
 
-    pub fn print(&self) -> Printed {
-        Printer::new(self.options.clone()).print(&self.root)
-    }
-
-    pub fn print_with_indent(&self, indent: u16) -> Printed {
-        Printer::new(self.options.clone()).print_with_indent(&self.root, indent)
+    pub fn context(&self) -> &Context {
+        &self.context
     }
 
     pub fn into_format_element(self) -> FormatElement {
         self.root
+    }
+}
+
+impl<Context> Formatted<Context>
+where
+    Context: FormatContext,
+{
+    pub fn print(&self) -> Printed {
+        Printer::new(self.context.as_print_options()).print(&self.root)
+    }
+
+    pub fn print_with_indent(&self, indent: u16) -> Printed {
+        Printer::new(self.context.as_print_options()).print_with_indent(&self.root, indent)
     }
 }
 
@@ -492,7 +516,7 @@ pub trait FormatRuleWithOptions<T>: FormatRule<T> {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, Formatted, FormatWithRule};
 /// use rome_rowan::{Language, SyntaxNode};
-/// fn format_node<L: Language, F: FormatWithRule<SimpleFormatContext, Item=SyntaxNode<L>>>(node: F) -> FormatResult<Formatted> {
+/// fn format_node<L: Language, F: FormatWithRule<SimpleFormatContext, Item=SyntaxNode<L>>>(node: F) -> FormatResult<Formatted<SimpleFormatContext>> {
 ///     let formatted = format!(SimpleFormatContext::default(), [node]);
 ///     let syntax = node.item();
 ///     // Do something with syntax
@@ -630,7 +654,7 @@ where
 ///
 /// write!(&mut buffer, [format_args!(token("Hello World"))]).unwrap();
 ///
-/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
 ///
 /// assert_eq!("Hello World", formatted.print().as_code())
 /// ```
@@ -646,7 +670,7 @@ where
 ///
 /// write!(&mut buffer, [token("Hello World")]).unwrap();
 ///
-/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
 ///
 /// assert_eq!("Hello World", formatted.print().as_code())
 /// ```
@@ -685,11 +709,13 @@ pub fn write<Context>(
 /// let formatted = format!(SimpleFormatContext::default(), [token("test")]).unwrap();
 /// assert_eq!("test", formatted.print().as_code());
 /// ```
-pub fn format<Context>(context: Context, arguments: Arguments<Context>) -> FormatResult<Formatted>
+pub fn format<Context>(
+    context: Context,
+    arguments: Arguments<Context>,
+) -> FormatResult<Formatted<Context>>
 where
     Context: FormatContext,
 {
-    let print_options = context.as_print_options();
     let mut state = FormatState::new(context);
     let mut buffer = VecBuffer::with_capacity(arguments.items().len(), &mut state);
 
@@ -697,7 +723,7 @@ where
 
     Ok(Formatted {
         root: buffer.into_element(),
-        options: print_options,
+        context: state.into_context(),
     })
 }
 
@@ -711,9 +737,8 @@ pub fn format_node<
 >(
     context: Context,
     root: &N,
-) -> FormatResult<Formatted> {
+) -> FormatResult<Formatted<Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let print_options = context.as_print_options();
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 
@@ -723,7 +748,7 @@ pub fn format_node<
 
         state.assert_formatted_all_tokens(root.item());
 
-        Ok(Formatted::new(document, print_options))
+        Ok(Formatted::new(document, state.into_context()))
     })
 }
 
@@ -1160,6 +1185,10 @@ impl<Context> FormatState<Context> {
         }
     }
 
+    pub fn into_context(self) -> Context {
+        self.context
+    }
+
     /// Returns `true` if the last written content is an inline comment with no trailing whitespace.
     ///
     /// The formatting of the next content may need to insert a whitespace to separate the
@@ -1238,28 +1267,6 @@ impl<Context> FormatState<Context> {
         &mut self.context
     }
 
-    pub fn snapshot(&self) -> FormatStateSnapshot {
-        FormatStateSnapshot {
-            last_content_inline_comment: self.last_content_inline_comment,
-            last_token_kind: self.last_token_kind,
-            manual_handled_comments_len: self.manually_formatted_comments.len(),
-            #[cfg(debug_assertions)]
-            printed_tokens: self.printed_tokens.clone(),
-        }
-    }
-
-    pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
-        self.last_content_inline_comment = snapshot.last_content_inline_comment;
-        self.last_token_kind = snapshot.last_token_kind;
-        self.manually_formatted_comments
-            .truncate(snapshot.manual_handled_comments_len);
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.printed_tokens = snapshot.printed_tokens;
-            }
-        }
-    }
-
     /// Creates a new group id that is unique to this document. The passed debug name is used in the
     /// [std::fmt::Debug] of the document if this is a debug build.
     /// The name is unused for production builds and has no meaning on the equality of two group ids.
@@ -1291,6 +1298,35 @@ impl<Context> FormatState<Context> {
     }
 }
 
+impl<Context> FormatState<Context>
+where
+    Context: FormatContext,
+{
+    pub fn snapshot(&self) -> FormatStateSnapshot<Context::Snapshot> {
+        FormatStateSnapshot {
+            context: self.context.snapshot(),
+            last_content_inline_comment: self.last_content_inline_comment,
+            last_token_kind: self.last_token_kind,
+            manual_handled_comments_len: self.manually_formatted_comments.len(),
+            #[cfg(debug_assertions)]
+            printed_tokens: self.printed_tokens.clone(),
+        }
+    }
+
+    pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot<Context::Snapshot>) {
+        self.context.restore_snapshot(snapshot.context);
+        self.last_content_inline_comment = snapshot.last_content_inline_comment;
+        self.last_token_kind = snapshot.last_token_kind;
+        self.manually_formatted_comments
+            .truncate(snapshot.manual_handled_comments_len);
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                self.printed_tokens = snapshot.printed_tokens;
+            }
+        }
+    }
+}
+
 #[derive(Eq, PartialEq, Debug, Copy, Clone)]
 pub struct LastTokenKind {
     kind_type: TypeId,
@@ -1307,7 +1343,8 @@ impl LastTokenKind {
     }
 }
 
-pub struct FormatStateSnapshot {
+pub struct FormatStateSnapshot<Context> {
+    context: Context,
     last_content_inline_comment: bool,
     last_token_kind: Option<LastTokenKind>,
     manual_handled_comments_len: usize,
