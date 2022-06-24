@@ -7,7 +7,7 @@ use rome_js_syntax::{
     JsAnyStatement, JsArrayExpression, JsArrowFunctionExpression, JsCallArgumentList,
     JsCallArguments, JsCallArgumentsFields, JsCallExpression, JsSyntaxKind, TsReferenceType,
 };
-use rome_rowan::{AstSeparatedList, SyntaxResult};
+use rome_rowan::{AstSeparatedList, SyntaxResult, SyntaxTokenText};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsCallArguments;
@@ -517,39 +517,67 @@ fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<b
     }
 }
 
+/// This function checks if a call expressions has one of the following members:
+/// - `it`
+/// - `it.only`
+/// - `it.skip`
+/// - `describe`
+/// - `describe.only`
+/// - `describe.skip`
+/// - `test`
+/// - `test.only`
+/// - `test.skip`
+/// - `test.step`
+/// - `test.describe`
+/// - `test.describe.only`
+/// - `test.describe.parallel`
+/// - `test.describe.parallel.only`
+/// - `test.describe.serial`
+/// - `test.describe.serial.only`
+/// - `skip`
+/// - `xit`
+/// - `xdescribe`
+/// - `xtest`
+/// - `fit`
+/// - `fdescribe`
+/// - `ftest`
+///
+/// Based on this [article]
+///
+/// [article]: https://craftinginterpreters.com/scanning-on-demand.html#tries-and-state-machines
 fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
-    const TEST_CALLEE_PATTERNS: [&str; 23] = [
-        "it",
-        "it.only",
-        "it.skip",
-        "describe",
-        "describe.only",
-        "describe.skip",
-        "test",
-        "test.only",
-        "test.skip",
-        "test.step",
-        "test.describe",
-        "test.describe.only",
-        "test.describe.parallel",
-        "test.describe.parallel.only",
-        "test.describe.serial",
-        "test.describe.serial.only",
-        "skip",
-        "xit",
-        "xdescribe",
-        "xtest",
-        "fit",
-        "fdescribe",
-        "ftest",
-    ];
-    let test_call = matches_test_call(callee)?;
-    for pattern in TEST_CALLEE_PATTERNS {
-        if test_call == pattern {
-            return Ok(true);
-        }
-    }
-    Ok(false)
+    let members: Vec<_> = matches_test_call(callee)?;
+
+    let first = members.get(0).map(|t| t.text());
+    let second = members.get(1).map(|t| t.text());
+    let third = members.get(2).map(|t| t.text());
+    let fourth = members.get(3).map(|t| t.text());
+    let fifth = members.get(4).map(|t| t.text());
+
+    Ok(match first {
+        Some("it" | "describe") => match second {
+            None => true,
+            Some("only" | "skip") => third.is_none(),
+            _ => false,
+        },
+        Some("test") => match second {
+            None => true,
+            Some("only" | "skip" | "step") => third.is_none(),
+            Some("describe") => match third {
+                None => true,
+                Some("only") => true,
+                Some("parallel" | "serial") => match fourth {
+                    None => true,
+                    Some("only") => fifth.is_none(),
+                    _ => false,
+                },
+                _ => false,
+            },
+            _ => false,
+        },
+        Some("skip" | "xit" | "xdescribe" | "xtest" | "fit" | "fdescribe" | "ftest") => true,
+        _ => false,
+    })
 }
 
 /// This is particular used to identify if a [JsCallExpression] has the shape
@@ -569,22 +597,22 @@ fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
 ///
 /// This function should accept the `callee` of [JsCallExpression] and the
 /// string pattern to test against. For example "test", "test.only"
-fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<String> {
-    const MAX_DEPTH: u8 = 4;
-    let mut test_call = Vec::new();
+fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenText>> {
+    // this the max depth plus one, because we want to catch cases where we have test.only.WRONG
+    const MAX_DEPTH: u8 = 5;
+    let mut test_call = Vec::with_capacity(MAX_DEPTH as usize);
     let mut current_node = callee.clone();
     for _ in 0..MAX_DEPTH {
         if let JsAnyExpression::JsIdentifierExpression(identifier) = &current_node {
             let value_token = identifier.name()?.value_token()?;
-            let value = value_token.text_trimmed();
-            test_call.push(value.to_string());
+            let value = value_token.token_text();
+            test_call.push(value);
             break;
         } else if let JsAnyExpression::JsStaticMemberExpression(member_expression) = &current_node {
             match member_expression.member()? {
                 JsAnyName::JsName(name) => {
                     let value = name.value_token()?;
-                    test_call.push(value.text_trimmed().to_string());
-                    test_call.push(".".to_string());
+                    test_call.push(value.token_text());
                     current_node = member_expression.object()?;
                 }
                 _ => break,
@@ -599,7 +627,7 @@ fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<String> {
 
 #[cfg(test)]
 mod test {
-    use super::matches_test_call;
+    use super::contains_a_test_pattern;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsCallExpression, SourceType};
     use rome_rowan::AstNodeList;
@@ -631,17 +659,8 @@ mod test {
     fn matches_simple_call() {
         let call_expression = extract_call_expression("test();");
         assert_eq!(
-            matches_test_call(&call_expression.callee().unwrap())
-                .unwrap()
-                .as_str(),
-            "test"
-        );
-
-        assert_ne!(
-            matches_test_call(&call_expression.callee().unwrap())
-                .unwrap()
-                .as_str(),
-            "testtt"
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            Ok(true)
         );
     }
 
@@ -649,35 +668,26 @@ mod test {
     fn matches_static_member_expression() {
         let call_expression = extract_call_expression("test.only();");
         assert_eq!(
-            matches_test_call(&call_expression.callee().unwrap())
-                .unwrap()
-                .as_str(),
-            "test.only"
-        );
-
-        assert_ne!(
-            matches_test_call(&call_expression.callee().unwrap())
-                .unwrap()
-                .as_str(),
-            "test.describe"
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            Ok(true)
         );
     }
 
     #[test]
     fn matches_static_member_expression_deep() {
-        let call_expression = extract_call_expression("test.describe.only();");
+        let call_expression = extract_call_expression("test.describe.parallel.only();");
         assert_eq!(
-            matches_test_call(&call_expression.callee().unwrap())
-                .unwrap()
-                .as_str(),
-            "test.describe.only"
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            Ok(true)
         );
+    }
 
-        assert_ne!(
-            matches_test_call(&call_expression.callee().unwrap())
-                .unwrap()
-                .as_str(),
-            "test.describe"
+    #[test]
+    fn doesnt_static_member_expression_deep() {
+        let call_expression = extract_call_expression("test.describe.parallel.only.AHAHA();");
+        assert_eq!(
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            Ok(false)
         );
     }
 }
