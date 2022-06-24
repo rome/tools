@@ -9,7 +9,7 @@ pub mod builder;
 
 use crate::builder::BlockId;
 
-/// The ControlFlowGraph is an auxiliary data structure to the syntax tree,
+/// The [ControlFlowGraph] is an auxiliary data structure to the syntax tree,
 /// representing the execution order of statements and expressions in a given
 /// function as a graph of [BasicBlock]
 #[derive(Debug, Clone)]
@@ -35,12 +35,12 @@ impl<L: Language> ControlFlowGraph<L> {
 }
 
 /// A basic block represents an atomic unit of control flow, a flat list of
-/// instruction that will be executed linearly when the function is run
+/// instructions that will be executed linearly when a function is run.
 ///
-/// Note however that while the instructions that comprise a basic block are
+/// Note, however, that while the instructions that comprise a basic block are
 /// guaranteed to be executed in order from the start towards the end, the
 /// block may not be executed entirely if a jump or return instruction is
-/// encountered
+/// encountered.
 #[derive(Debug, Clone)]
 pub struct BasicBlock<L: Language> {
     pub instructions: Vec<Instruction<L>>,
@@ -54,14 +54,14 @@ impl<L: Language> BasicBlock<L> {
     }
 }
 
-/// Instructions are used to represent statements or expression being executed
-/// for side effects, as well as potential divergence points for the control flow
+/// Instructions are used to represent statements or expressions being executed
+/// as side effects, as well as potential divergence points for the control flow.
 ///
 /// Each node has an associated kind, as well as an optional syntax node: the
 /// node is useful to emit diagnostics but does not have a semantic value, and
-/// is optional as the code generating the control flow graph may emit
-/// instructions that do not correspond to any node in the syntax tree to model
-/// the control flow of the program accurately
+/// is optional. The code generating the control flow graph may emit
+/// instructions that do not correspond to any node in the syntax tree, to model
+/// the control flow of the program accurately.
 #[derive(Debug, Clone)]
 pub struct Instruction<L: Language> {
     pub kind: InstructionKind,
@@ -75,15 +75,15 @@ pub enum InstructionKind {
     /// evaluated at this point in the program
     Statement,
     /// This instruction may cause the control flow to diverge towards `block`,
-    /// either unconditionally if `conditional` is set to false, or after
+    /// either unconditionally if `conditional` is set to `false`, or after
     /// evaluating the associated syntax node otherwise
     Jump { conditional: bool, block: BlockId },
     /// This instruction causes the control flow to unconditionally abort the
-    /// execution of the function, either due to a `return` or `throw` statement
+    /// execution of the function, for example is JavaScript this can be triggered by a `return` or `throw` statement
     Return,
 }
 
-/// The Display implementation for ControlFlowGraph prints a flowchart in
+/// The Display implementation for [ControlFlowGraph] prints a flowchart in
 /// mermaid.js syntax
 ///
 /// By default the graph is printed in "simple" mode where each basic block is
