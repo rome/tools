@@ -5,7 +5,7 @@ use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
 use rome_formatter::IndentStyle;
-use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
+use rome_js_formatter::context::JsFormatContext;
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
 use rome_js_syntax::{LanguageVariant, SourceType};
@@ -173,14 +173,10 @@ pub fn run(
         IndentStyle::Tab
     };
 
-    let context = JsFormatContext {
-        indent_style,
-        line_width: options.line_width.try_into().unwrap_or_default(),
-        options: JsFormatOptions {
-            quote_style: options.quote_style.parse().unwrap_or_default(),
-        },
-        source_type,
-    };
+    let context = JsFormatContext::new(source_type)
+        .with_indent_style(indent_style)
+        .with_line_width(options.line_width.try_into().unwrap_or_default())
+        .with_quote_style(options.quote_style.parse().unwrap_or_default());
 
     let (cst, ast) = if output_json {
         let cst_json = clean_up_json(
