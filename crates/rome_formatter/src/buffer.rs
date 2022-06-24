@@ -1,9 +1,7 @@
 use super::{write, Arguments, FormatElement};
 use crate::format_element::List;
-use std::any::{Any, TypeId};
-
 use crate::{Format, FormatResult, FormatState};
-
+use std::any::{Any, TypeId};
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};
 
@@ -198,11 +196,6 @@ impl<'a, Context> VecBuffer<'a, Context> {
         } else {
             FormatElement::List(List::new(std::mem::take(&mut self.elements)))
         }
-    }
-
-    /// Returns a reference to the current context
-    pub fn context(&self) -> &Context {
-        &self.state.context
     }
 }
 
