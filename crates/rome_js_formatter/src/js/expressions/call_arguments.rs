@@ -543,9 +543,9 @@ fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
         "fdescribe",
         "ftest",
     ];
-
+    let test_call = matches_test_call(callee)?;
     for pattern in TEST_CALLEE_PATTERNS {
-        if matches_test_call(pattern, callee)? {
+        if test_call == pattern {
             return Ok(true);
         }
     }
@@ -569,37 +569,32 @@ fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
 ///
 /// This function should accept the `callee` of [JsCallExpression] and the
 /// string pattern to test against. For example "test", "test.only"
-fn matches_test_call(pattern: &str, callee: &JsAnyExpression) -> SyntaxResult<bool> {
-    let paths = pattern.split('.');
+fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<String> {
+    const MAX_DEPTH: u8 = 4;
+    let mut test_call = Vec::new();
     let mut current_node = callee.clone();
-    let mut iter = paths.rev().peekable();
-    while let Some(path) = iter.next() {
-        let is_last = iter.peek().is_none();
+    for _ in 0..MAX_DEPTH {
         if let JsAnyExpression::JsIdentifierExpression(identifier) = &current_node {
-            let same_name_slice = identifier.name()?.value_token()?.text_trimmed() == path;
-            if !same_name_slice {
-                return Ok(false);
-            } else if is_last {
-                return Ok(true);
-            }
+            let value_token = identifier.name()?.value_token()?;
+            let value = value_token.text_trimmed();
+            test_call.push(value.to_string());
+            break;
         } else if let JsAnyExpression::JsStaticMemberExpression(member_expression) = &current_node {
             match member_expression.member()? {
                 JsAnyName::JsName(name) => {
-                    let same_name_slice = name.value_token()?.text_trimmed() == path;
-                    if same_name_slice {
-                        current_node = member_expression.object()?;
-                    } else {
-                        return Ok(false);
-                    }
+                    let value = name.value_token()?;
+                    test_call.push(value.text_trimmed().to_string());
+                    test_call.push(".".to_string());
+                    current_node = member_expression.object()?;
                 }
-                _ => return Ok(false),
+                _ => break,
             };
         } else {
-            return Ok(false);
+            break;
         }
     }
 
-    Ok(false)
+    Ok(test_call.into_iter().rev().collect())
 }
 
 #[cfg(test)]
@@ -636,13 +631,17 @@ mod test {
     fn matches_simple_call() {
         let call_expression = extract_call_expression("test();");
         assert_eq!(
-            matches_test_call("test", &call_expression.callee().unwrap()),
-            Ok(true)
+            matches_test_call(&call_expression.callee().unwrap())
+                .unwrap()
+                .as_str(),
+            "test"
         );
 
-        assert_eq!(
-            matches_test_call("testttt", &call_expression.callee().unwrap()),
-            Ok(false)
+        assert_ne!(
+            matches_test_call(&call_expression.callee().unwrap())
+                .unwrap()
+                .as_str(),
+            "testtt"
         );
     }
 
@@ -650,13 +649,17 @@ mod test {
     fn matches_static_member_expression() {
         let call_expression = extract_call_expression("test.only();");
         assert_eq!(
-            matches_test_call("test.only", &call_expression.callee().unwrap()),
-            Ok(true)
+            matches_test_call(&call_expression.callee().unwrap())
+                .unwrap()
+                .as_str(),
+            "test.only"
         );
 
-        assert_eq!(
-            matches_test_call("test.describe", &call_expression.callee().unwrap()),
-            Ok(false)
+        assert_ne!(
+            matches_test_call(&call_expression.callee().unwrap())
+                .unwrap()
+                .as_str(),
+            "test.describe"
         );
     }
 
@@ -664,13 +667,17 @@ mod test {
     fn matches_static_member_expression_deep() {
         let call_expression = extract_call_expression("test.describe.only();");
         assert_eq!(
-            matches_test_call("test.describe.only", &call_expression.callee().unwrap()),
-            Ok(true)
+            matches_test_call(&call_expression.callee().unwrap())
+                .unwrap()
+                .as_str(),
+            "test.describe.only"
         );
 
-        assert_eq!(
-            matches_test_call("test.describe", &call_expression.callee().unwrap()),
-            Ok(false)
+        assert_ne!(
+            matches_test_call(&call_expression.callee().unwrap())
+                .unwrap()
+                .as_str(),
+            "test.describe"
         );
     }
 }
