@@ -3,7 +3,7 @@ use std::cell::RefCell;
 use std::marker::PhantomData;
 use std::ops::Deref;
 
-use crate::{write, Buffer, VecBuffer};
+use crate::Buffer;
 
 /// Utility trait used to simplify the formatting of optional objects that are formattable.
 ///
@@ -216,24 +216,12 @@ where
         let result = self
             .memory
             .get_mut()
-            .get_or_insert_with(|| Self::intern(&self.inner, f))
-            .as_ref();
+            .get_or_insert_with(|| f.intern(&self.inner));
 
-        match result {
+        match result.as_ref() {
             Ok(content) => Ok(content.deref()),
             Err(error) => Err(*error),
         }
-    }
-
-    fn intern(inner: &F, f: &mut Formatter<Context>) -> FormatResult<Interned> {
-        let mut buffer = VecBuffer::new(f.state_mut());
-
-        let result = write!(buffer, [inner]);
-
-        result.map(|_| {
-            let elements = buffer.into_element();
-            elements.intern()
-        })
     }
 }
 
@@ -243,7 +231,7 @@ where
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut memory = self.memory.borrow_mut();
-        let result = memory.get_or_insert_with(|| Self::intern(&self.inner, f));
+        let result = memory.get_or_insert_with(|| f.intern(&self.inner));
 
         match result {
             Ok(elements) => {

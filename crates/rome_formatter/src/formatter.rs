@@ -1,7 +1,7 @@
 use crate::buffer::BufferSnapshot;
 use crate::builders::{FillBuilder, JoinBuilder, JoinNodesBuilder, Line};
 use crate::prelude::*;
-use crate::{Arguments, Buffer, FormatState, FormatStateSnapshot, GroupId};
+use crate::{Arguments, Buffer, FormatState, FormatStateSnapshot, GroupId, VecBuffer};
 
 /// Handles the formatting of a CST and stores the context how the CST should be formatted (user preferences).
 /// The formatter is passed to the [Format] implementation of every node in the CST so that they
@@ -161,6 +161,14 @@ impl<'buf, Context> Formatter<'buf, Context> {
         Separator: Format<Context>,
     {
         FillBuilder::new(self, separator)
+    }
+
+    pub fn intern(&mut self, content: &dyn Format<Context>) -> FormatResult<Interned> {
+        let mut buffer = VecBuffer::new(self.state_mut());
+
+        crate::write!(&mut buffer, [content])?;
+
+        Ok(buffer.into_element().intern())
     }
 }
 
