@@ -523,6 +523,88 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
     }
 }
 
+/// Marks some content with a label.
+///
+/// This does not directly influence how this content will be printed, but some
+/// parts of the formatter may inspect the `FormatElement::Label` and chose to handle this element in a specific way
+///
+/// # Example
+///
+/// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format, write};
+///
+/// #[derive(Default)]
+/// struct Labelled;
+///
+/// impl Format<SimpleFormatContext> for Labelled {
+///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+///         write!(f, [labelled("some-label", &token("labelled"))])?;
+///         Ok(())
+///     }
+/// }
+///
+/// let content = format_with(|f| {
+///     let mut counter = Labelled::default().memoized();
+///     let counter_content = counter.inspect(f)?;
+///
+///     let is_labelled = match counter_content {
+///         FormatElement::Label(label) => label.label() == "some-label",
+///         _ => false,
+///     };
+///
+///     if is_labelled {
+///         write!(f, [token("This is "), &counter])
+///     } else {
+///         write!(f, [token("This is not "), &counter])
+///     }
+/// });
+///
+/// let formatted = format!(SimpleFormatContext::default(), [content]).unwrap();
+/// assert_eq!("This is labelled", formatted.print().as_code())
+/// ```
+#[inline]
+pub fn labelled<'a, Content, Context>(
+    label: &'static str,
+    content: &'a Content,
+) -> FormatLabelled<'a, Context>
+where
+    Content: Format<Context>,
+{
+    FormatLabelled {
+        label,
+        content: Argument::new(content),
+    }
+}
+
+#[derive(Copy, Clone)]
+pub struct FormatLabelled<'a, Context> {
+    label: &'static str,
+    content: Argument<'a, Context>,
+}
+
+impl<Context> Format<Context> for FormatLabelled<'_, Context> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
+
+        buffer.write_fmt(Arguments::from(&self.content))?;
+        let content = buffer.into_vec();
+
+        let label = Label::new(self.label, content);
+
+        f.write_element(FormatElement::Label(label))
+    }
+}
+
+impl<Context> std::fmt::Debug for FormatLabelled<'_, Context> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_tuple("Label")
+            .field(&"{{name}}")
+            .field(&"{{content}}")
+            .finish()
+    }
+}
+
 /// Inserts a single space. Allows to separate different tokens.
 ///
 /// # Examples

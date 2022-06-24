@@ -70,6 +70,11 @@ pub enum FormatElement {
     /// An interned format element. Useful when the same content must be emitted multiple times to avoid
     /// deep cloning the IR when using the `best_fitting!` macro or `if_group_fits_on_line` and `if_group_breaks`.
     Interned(Interned),
+
+    /// Special semantic element marking the content with a label.
+    /// This does not directly influence how the content will be printed.
+    /// See [crate::labelled] for documentation.
+    Label(Label),
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
@@ -150,6 +155,10 @@ impl Debug for FormatElement {
             }
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
             FormatElement::Interned(inner) => inner.fmt(fmt),
+            FormatElement::Label(label) => {
+                write!(fmt, "Label")?;
+                label.fmt(fmt)
+            }
         }
     }
 }
@@ -352,6 +361,34 @@ impl Deref for Interned {
     }
 }
 
+#[derive(Clone, PartialEq, Eq)]
+pub struct Label {
+    pub(crate) content: Box<[FormatElement]>,
+    label: &'static str,
+}
+
+impl Label {
+    pub fn new(label: &'static str, content: Vec<FormatElement>) -> Self {
+        Self {
+            content: content.into_boxed_slice(),
+            label,
+        }
+    }
+
+    pub fn label(&self) -> &'static str {
+        self.label
+    }
+}
+
+impl Debug for Label {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        fmt.debug_struct("")
+            .field("label", &self.label)
+            .field("content", &self.content)
+            .finish()
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ConditionalGroupContent {
     pub(crate) content: Content,
@@ -509,7 +546,9 @@ impl FormatElement {
             FormatElement::Space => false,
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Indent(content) => content.will_break(),
-            FormatElement::Group(Group { content, .. }) | FormatElement::Comment(content) => {
+            FormatElement::Group(Group { content, .. })
+            | FormatElement::Comment(content)
+            | FormatElement::Label(Label { content, .. }) => {
                 content.iter().any(FormatElement::will_break)
             }
             FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
