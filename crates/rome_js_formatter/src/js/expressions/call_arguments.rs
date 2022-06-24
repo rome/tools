@@ -626,8 +626,8 @@ fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenTe
             break;
         }
     }
-
-    Ok(test_call.reverse())
+    test_call.reverse();
+    Ok(test_call)
 }
 
 #[cfg(test)]
