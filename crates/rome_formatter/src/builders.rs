@@ -409,8 +409,8 @@ impl<Context> Format<Context> for LineSuffix<'_, Context> {
         let mut buffer = VecBuffer::new(f.state_mut());
         buffer.write_fmt(Arguments::from(&self.content))?;
 
-        let content = buffer.into_element();
-        f.write_element(FormatElement::LineSuffix(Box::new(content)))
+        let content = buffer.into_vec();
+        f.write_element(FormatElement::LineSuffix(content.into_boxed_slice()))
     }
 }
 
@@ -607,8 +607,8 @@ impl<Context> Format<Context> for Indent<'_, Context> {
             return Ok(());
         }
 
-        let content = buffer.into_element();
-        f.write_element(FormatElement::Indent(Box::new(content)))
+        let content = buffer.into_vec();
+        f.write_element(FormatElement::Indent(content.into_boxed_slice()))
     }
 }
 
@@ -820,9 +820,9 @@ impl<Context> Format<Context> for BlockIndent<'_, Context> {
             return Ok(());
         }
 
-        let content = buffer.into_element();
+        let content = buffer.into_vec();
 
-        f.write_element(FormatElement::Indent(Box::new(content)))?;
+        f.write_element(FormatElement::Indent(content.into_boxed_slice()))?;
 
         match self.mode {
             IndentMode::Soft => write!(f, [soft_line_break()])?,
@@ -1381,9 +1381,10 @@ impl<Context> Format<Context> for IfGroupBreaks<'_, Context> {
             return Ok(());
         }
 
-        let content = buffer.into_element();
+        let content = buffer.into_vec();
         f.write_element(FormatElement::ConditionalGroupContent(
-            ConditionalGroupContent::new(content, self.mode).with_group_id(self.group_id),
+            ConditionalGroupContent::new(content.into_boxed_slice(), self.mode)
+                .with_group_id(self.group_id),
         ))
     }
 }
@@ -1828,13 +1829,10 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
             match items.len() {
                 0 => Ok(()),
                 1 => self.fmt.write_element(items.pop().unwrap()),
-                _ => self.fmt.write_element(FormatElement::Fill(Box::new(Fill {
-                    list: List::new(items),
-                    separator: std::mem::replace(
-                        &mut self.separator,
-                        FormatElement::List(List::default()),
-                    ),
-                }))),
+                _ => self.fmt.write_element(FormatElement::Fill(Fill {
+                    content: items.into_boxed_slice(),
+                    separator: Box::new(self.separator.clone()),
+                })),
             }
         })
     }
