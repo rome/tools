@@ -554,7 +554,7 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 ///     let label_id = LabelId::of::<SomeLabelId>();
 ///
 ///     let is_labelled = match labelled_content {
-///         FormatElement::Label(labelled) => labelled.label() == label_id,
+///         FormatElement::Label(labelled) => labelled.label_id() == label_id,
 ///         _ => false,
 ///     };
 ///
