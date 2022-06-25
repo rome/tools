@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: issue-4124.js
-
 ---
 # Input
 ```js
@@ -28,7 +26,7 @@ const test = /** @type (function (*): ?|undefined) */ (foo);
 # Output
 ```js
 /** @type {Object} */ (myObject.property).someProp = true;
-( /** @type {Object} */ (myObject.property)).someProp = true;
+(/** @type {Object} */ (myObject.property)).someProp = true;
 
 const prop = /** @type {Object} */ (myObject.property).someProp;
 

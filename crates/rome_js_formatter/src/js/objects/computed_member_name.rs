@@ -1,21 +1,27 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsComputedMemberName;
 use rome_js_syntax::JsComputedMemberNameFields;
 
-impl FormatNode for JsComputedMemberName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsComputedMemberName;
+
+impl FormatNodeRule<JsComputedMemberName> for FormatJsComputedMemberName {
+    fn fmt_fields(&self, node: &JsComputedMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsComputedMemberNameFields {
             l_brack_token,
             expression,
             r_brack_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            l_brack_token.format(formatter)?,
-            expression.format(formatter)?,
-            r_brack_token.format(formatter)?,
-        ])
+        write![
+            f,
+            [
+                l_brack_token.format(),
+                expression.format(),
+                r_brack_token.format(),
+            ]
+        ]
     }
 }

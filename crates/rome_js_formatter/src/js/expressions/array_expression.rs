@@ -1,21 +1,30 @@
-use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsArrayExpression;
 use rome_js_syntax::JsArrayExpressionFields;
 
-impl FormatNode for JsArrayExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrayExpression;
+
+impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
+    fn fmt_fields(&self, node: &JsArrayExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsArrayExpressionFields {
             l_brack_token,
             elements,
             r_brack_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        formatter.format_delimited_soft_block_indent(
-            &l_brack_token?,
-            elements.format(formatter)?,
-            &r_brack_token?,
+        let group_id = f.group_id("array");
+
+        let elements = elements.format().with_options(Some(group_id));
+
+        write!(
+            f,
+            [
+                format_delimited(&l_brack_token?, &elements, &r_brack_token?)
+                    .soft_block_indent_with_group_id(Some(group_id))
+            ]
         )
     }
 }

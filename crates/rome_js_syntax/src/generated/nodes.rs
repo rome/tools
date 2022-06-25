@@ -14,6 +14,10 @@ use rome_rowan::{support, AstNode, SyntaxResult};
 use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
+#[cfg(feature = "serde")]
+use serde_crate::ser::SerializeSeq;
+#[cfg(feature = "serde")]
+use serde_crate::{Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct ImportMeta {
@@ -44,6 +48,16 @@ impl ImportMeta {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for ImportMeta {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct ImportMetaFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -78,6 +92,16 @@ impl JsArrayAssignmentPattern {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayAssignmentPattern {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsArrayAssignmentPatternFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsArrayAssignmentPatternElementList,
@@ -108,6 +132,16 @@ impl JsArrayAssignmentPatternRestElement {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayAssignmentPatternRestElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsArrayAssignmentPatternRestElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
@@ -141,6 +175,16 @@ impl JsArrayBindingPattern {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayBindingPattern {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsArrayBindingPatternFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsArrayBindingPatternElementList,
@@ -171,6 +215,16 @@ impl JsArrayBindingPatternRestElement {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayBindingPatternRestElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsArrayBindingPatternRestElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub pattern: SyntaxResult<JsAnyBindingPattern>,
@@ -202,6 +256,16 @@ impl JsArrayExpression {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsArrayExpressionFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsArrayElementList,
@@ -221,6 +285,16 @@ impl JsArrayHole {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsArrayHoleFields { JsArrayHoleFields {} }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayHole {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsArrayHoleFields {}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrowFunctionExpression {
@@ -261,6 +335,16 @@ impl JsArrowFunctionExpression {
         support::required_node(&self.syntax, 5usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsArrowFunctionExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsArrowFunctionExpressionFields {
     pub async_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
@@ -298,6 +382,16 @@ impl JsAssignmentExpression {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsAssignmentExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsAssignmentExpressionFields {
     pub left: SyntaxResult<JsAnyAssignmentPattern>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -332,6 +426,16 @@ impl JsAssignmentWithDefault {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsAssignmentWithDefault {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsAssignmentWithDefaultFields {
     pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
     pub eq_token: SyntaxResult<SyntaxToken>,
@@ -362,6 +466,16 @@ impl JsAwaitExpression {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsAwaitExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsAwaitExpressionFields {
     pub await_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -387,6 +501,16 @@ impl JsBigIntLiteralExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsBigIntLiteralExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsBigIntLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -419,6 +543,16 @@ impl JsBinaryExpression {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsBinaryExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsBinaryExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -453,6 +587,16 @@ impl JsBindingPatternWithDefault {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsBindingPatternWithDefault {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsBindingPatternWithDefaultFields {
     pub pattern: SyntaxResult<JsAnyBindingPattern>,
     pub eq_token: SyntaxResult<SyntaxToken>,
@@ -485,6 +629,16 @@ impl JsBlockStatement {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsBlockStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsBlockStatementFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub statements: JsStatementList,
@@ -511,6 +665,16 @@ impl JsBooleanLiteralExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsBooleanLiteralExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsBooleanLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -539,6 +703,16 @@ impl JsBreakStatement {
     pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsBreakStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsBreakStatementFields {
     pub break_token: SyntaxResult<SyntaxToken>,
     pub label_token: Option<SyntaxToken>,
@@ -571,6 +745,16 @@ impl JsCallArguments {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsCallArguments {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsCallArgumentsFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub args: JsCallArgumentList,
@@ -607,6 +791,16 @@ impl JsCallExpression {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsCallExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsCallExpressionFields {
     pub callee: SyntaxResult<JsAnyExpression>,
     pub optional_chain_token: Option<SyntaxToken>,
@@ -644,6 +838,16 @@ impl JsCaseClause {
     }
     pub fn consequent(&self) -> JsStatementList { support::list(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsCaseClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsCaseClauseFields {
     pub case_token: SyntaxResult<SyntaxToken>,
     pub test: SyntaxResult<JsAnyExpression>,
@@ -677,6 +881,16 @@ impl JsCatchClause {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsCatchClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsCatchClauseFields {
     pub catch_token: SyntaxResult<SyntaxToken>,
     pub declaration: Option<JsCatchDeclaration>,
@@ -715,6 +929,16 @@ impl JsCatchDeclaration {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsCatchDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsCatchDeclarationFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<JsAnyBindingPattern>,
@@ -766,6 +990,16 @@ impl JsClassDeclaration {
         support::required_token(&self.syntax, 8usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsClassDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsClassDeclarationFields {
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
@@ -822,6 +1056,16 @@ impl JsClassExportDefaultDeclaration {
         support::required_token(&self.syntax, 8usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsClassExportDefaultDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsClassExportDefaultDeclarationFields {
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
@@ -876,6 +1120,16 @@ impl JsClassExpression {
         support::required_token(&self.syntax, 7usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsClassExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsClassExpressionFields {
     pub class_token: SyntaxResult<SyntaxToken>,
     pub id: Option<JsAnyBinding>,
@@ -919,6 +1173,16 @@ impl JsComputedMemberAssignment {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsComputedMemberAssignment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsComputedMemberAssignmentFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -962,6 +1226,16 @@ impl JsComputedMemberExpression {
         support::required_token(&self.syntax, 4usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsComputedMemberExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsComputedMemberExpressionFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub optional_chain_token: Option<SyntaxToken>,
@@ -998,6 +1272,16 @@ impl JsComputedMemberName {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsComputedMemberName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsComputedMemberNameFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -1040,6 +1324,16 @@ impl JsConditionalExpression {
         support::required_node(&self.syntax, 4usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsConditionalExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsConditionalExpressionFields {
     pub test: SyntaxResult<JsAnyExpression>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
@@ -1078,6 +1372,16 @@ impl JsConstructorClassMember {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsConstructorClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsConstructorClassMemberFields {
     pub modifiers: JsConstructorModifierList,
     pub name: SyntaxResult<JsLiteralMemberName>,
@@ -1111,6 +1415,16 @@ impl JsConstructorParameters {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsConstructorParameters {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsConstructorParametersFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub parameters: JsConstructorParameterList,
@@ -1141,6 +1455,16 @@ impl JsContinueStatement {
     pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsContinueStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsContinueStatementFields {
     pub continue_token: SyntaxResult<SyntaxToken>,
     pub label_token: Option<SyntaxToken>,
@@ -1169,6 +1493,16 @@ impl JsDebuggerStatement {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsDebuggerStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsDebuggerStatementFields {
     pub debugger_token: SyntaxResult<SyntaxToken>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -1200,6 +1534,16 @@ impl JsDefaultClause {
     }
     pub fn consequent(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsDefaultClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsDefaultClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -1230,6 +1574,16 @@ impl JsDefaultImportSpecifier {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsDefaultImportSpecifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsDefaultImportSpecifierFields {
     pub local_name: SyntaxResult<JsAnyBinding>,
     pub trailing_comma_token: SyntaxResult<SyntaxToken>,
@@ -1257,6 +1611,16 @@ impl JsDirective {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsDirective {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsDirectiveFields {
     pub value_token: SyntaxResult<SyntaxToken>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -1304,6 +1668,16 @@ impl JsDoWhileStatement {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsDoWhileStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsDoWhileStatementFields {
     pub do_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsAnyStatement>,
@@ -1338,6 +1712,16 @@ impl JsElseClause {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsElseClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsElseClauseFields {
     pub else_token: SyntaxResult<SyntaxToken>,
     pub alternate: SyntaxResult<JsAnyStatement>,
@@ -1363,6 +1747,16 @@ impl JsEmptyClassMember {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsEmptyClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsEmptyClassMemberFields {
     pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
@@ -1387,6 +1781,16 @@ impl JsEmptyStatement {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsEmptyStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsEmptyStatementFields {
     pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
@@ -1415,6 +1819,16 @@ impl JsExport {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExport {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportFields {
     pub export_token: SyntaxResult<SyntaxToken>,
     pub export_clause: SyntaxResult<JsAnyExportClause>,
@@ -1444,6 +1858,16 @@ impl JsExportAsClause {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportAsClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportAsClauseFields {
     pub as_token: SyntaxResult<SyntaxToken>,
     pub exported_name: SyntaxResult<JsLiteralExportName>,
@@ -1475,6 +1899,16 @@ impl JsExportDefaultDeclarationClause {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportDefaultDeclarationClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportDefaultDeclarationClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
     pub declaration: SyntaxResult<JsAnyExportDefaultDeclaration>,
@@ -1507,6 +1941,16 @@ impl JsExportDefaultExpressionClause {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportDefaultExpressionClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportDefaultExpressionClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -1547,6 +1991,16 @@ impl JsExportFromClause {
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportFromClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportFromClauseFields {
     pub star_token: SyntaxResult<SyntaxToken>,
     pub export_as: Option<JsExportAsClause>,
@@ -1586,6 +2040,16 @@ impl JsExportNamedClause {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportNamedClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportNamedClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -1636,6 +2100,16 @@ impl JsExportNamedFromClause {
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 6usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportNamedFromClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportNamedFromClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -1671,6 +2145,16 @@ impl JsExportNamedFromSpecifier {
     }
     pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportNamedFromSpecifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportNamedFromSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub source_name: SyntaxResult<JsLiteralExportName>,
@@ -1699,6 +2183,16 @@ impl JsExportNamedShorthandSpecifier {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportNamedShorthandSpecifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportNamedShorthandSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsReferenceIdentifier>,
@@ -1734,6 +2228,16 @@ impl JsExportNamedSpecifier {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExportNamedSpecifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExportNamedSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub local_name: SyntaxResult<JsReferenceIdentifier>,
@@ -1765,6 +2269,16 @@ impl JsExpressionSnipped {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExpressionSnipped {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExpressionSnippedFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub eof_token: SyntaxResult<SyntaxToken>,
@@ -1792,6 +2306,16 @@ impl JsExpressionStatement {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExpressionStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExpressionStatementFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -1823,6 +2347,16 @@ impl JsExtendsClause {
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsExtendsClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsExtendsClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
     pub super_class: SyntaxResult<JsAnyExpression>,
@@ -1853,6 +2387,16 @@ impl JsFinallyClause {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsFinallyClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsFinallyClauseFields {
     pub finally_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsBlockStatement>,
@@ -1902,6 +2446,16 @@ impl JsForInStatement {
         support::required_node(&self.syntax, 6usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsForInStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsForInStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -1958,6 +2512,16 @@ impl JsForOfStatement {
         support::required_node(&self.syntax, 7usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsForOfStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsForOfStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub await_token: Option<SyntaxToken>,
@@ -2015,6 +2579,16 @@ impl JsForStatement {
         support::required_node(&self.syntax, 8usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsForStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsForStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -2051,6 +2625,16 @@ impl JsForVariableDeclaration {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsForVariableDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsForVariableDeclarationFields {
     pub kind_token: SyntaxResult<SyntaxToken>,
     pub declarator: SyntaxResult<JsVariableDeclarator>,
@@ -2086,6 +2670,16 @@ impl JsFormalParameter {
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsFormalParameter {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsFormalParameterFields {
     pub binding: SyntaxResult<JsAnyBindingPattern>,
     pub question_mark_token: Option<SyntaxToken>,
@@ -2121,6 +2715,16 @@ impl JsFunctionBody {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsFunctionBody {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsFunctionBodyFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub directives: JsDirectiveList,
@@ -2170,6 +2774,16 @@ impl JsFunctionDeclaration {
         support::required_node(&self.syntax, 7usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsFunctionDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsFunctionDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -2223,6 +2837,16 @@ impl JsFunctionExportDefaultDeclaration {
         support::required_node(&self.syntax, 7usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsFunctionExportDefaultDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsFunctionExportDefaultDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -2276,6 +2900,16 @@ impl JsFunctionExpression {
         support::required_node(&self.syntax, 7usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsFunctionExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsFunctionExpressionFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -2327,6 +2961,16 @@ impl JsGetterClassMember {
         support::required_node(&self.syntax, 6usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsGetterClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsGetterClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
@@ -2375,6 +3019,16 @@ impl JsGetterObjectMember {
         support::required_node(&self.syntax, 5usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsGetterObjectMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsGetterObjectMemberFields {
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -2404,6 +3058,16 @@ impl JsIdentifierAssignment {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsIdentifierAssignment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsIdentifierAssignmentFields {
     pub name_token: SyntaxResult<SyntaxToken>,
 }
@@ -2428,6 +3092,16 @@ impl JsIdentifierBinding {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsIdentifierBinding {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsIdentifierBindingFields {
     pub name_token: SyntaxResult<SyntaxToken>,
 }
@@ -2450,6 +3124,16 @@ impl JsIdentifierExpression {
         support::required_node(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsIdentifierExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsIdentifierExpressionFields {
     pub name: SyntaxResult<JsReferenceIdentifier>,
 }
@@ -2492,6 +3176,16 @@ impl JsIfStatement {
     }
     pub fn else_clause(&self) -> Option<JsElseClause> { support::node(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsIfStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsIfStatementFields {
     pub if_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -2527,6 +3221,16 @@ impl JsImport {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImport {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub import_clause: SyntaxResult<JsAnyImportClause>,
@@ -2563,6 +3267,16 @@ impl JsImportAssertion {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImportAssertion {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportAssertionFields {
     pub assert_token: SyntaxResult<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -2596,6 +3310,16 @@ impl JsImportAssertionEntry {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImportAssertionEntry {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportAssertionEntryFields {
     pub key: SyntaxResult<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -2624,6 +3348,16 @@ impl JsImportBareClause {
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImportBareClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportBareClauseFields {
     pub source: SyntaxResult<JsModuleSource>,
     pub assertion: Option<JsImportAssertion>,
@@ -2653,6 +3387,16 @@ impl JsImportCallExpression {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImportCallExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportCallExpressionFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub arguments: SyntaxResult<JsCallArguments>,
@@ -2690,6 +3434,16 @@ impl JsImportDefaultClause {
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImportDefaultClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportDefaultClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub local_name: SyntaxResult<JsAnyBinding>,
@@ -2734,6 +3488,16 @@ impl JsImportNamedClause {
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImportNamedClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportNamedClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub default_specifier: Option<JsDefaultImportSpecifier>,
@@ -2783,6 +3547,16 @@ impl JsImportNamespaceClause {
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 6usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsImportNamespaceClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsImportNamespaceClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub star_token: SyntaxResult<SyntaxToken>,
@@ -2821,6 +3595,16 @@ impl JsInExpression {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsInExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsInExpressionFields {
     pub property: SyntaxResult<JsAnyInProperty>,
     pub in_token: SyntaxResult<SyntaxToken>,
@@ -2851,6 +3635,16 @@ impl JsInitializerClause {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsInitializerClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsInitializerClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -2884,6 +3678,16 @@ impl JsInstanceofExpression {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsInstanceofExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsInstanceofExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub instanceof_token: SyntaxResult<SyntaxToken>,
@@ -2918,6 +3722,16 @@ impl JsLabeledStatement {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsLabeledStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsLabeledStatementFields {
     pub label_token: SyntaxResult<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -2944,6 +3758,16 @@ impl JsLiteralExportName {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsLiteralExportName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsLiteralExportNameFields {
     pub value: SyntaxResult<SyntaxToken>,
 }
@@ -2968,6 +3792,16 @@ impl JsLiteralMemberName {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsLiteralMemberName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsLiteralMemberNameFields {
     pub value: SyntaxResult<SyntaxToken>,
 }
@@ -3000,6 +3834,16 @@ impl JsLogicalExpression {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsLogicalExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsLogicalExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -3052,6 +3896,16 @@ impl JsMethodClassMember {
         support::required_node(&self.syntax, 8usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsMethodClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsMethodClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub async_token: Option<SyntaxToken>,
@@ -3104,6 +3958,16 @@ impl JsMethodObjectMember {
         support::required_node(&self.syntax, 6usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsMethodObjectMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsMethodObjectMemberFields {
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
@@ -3140,6 +4004,16 @@ impl JsModule {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsModule {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsModuleFields {
     pub interpreter_token: Option<SyntaxToken>,
     pub directives: JsDirectiveList,
@@ -3167,6 +4041,16 @@ impl JsModuleSource {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsModuleSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsModuleSourceFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -3191,6 +4075,16 @@ impl JsName {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsNameFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -3225,6 +4119,16 @@ impl JsNamedImportSpecifier {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsNamedImportSpecifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsNamedImportSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsLiteralExportName>,
@@ -3258,6 +4162,16 @@ impl JsNamedImportSpecifiers {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsNamedImportSpecifiers {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsNamedImportSpecifiersFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub specifiers: JsNamedImportSpecifierList,
@@ -3292,6 +4206,16 @@ impl JsNamespaceImportSpecifier {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsNamespaceImportSpecifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsNamespaceImportSpecifierFields {
     pub star_token: SyntaxResult<SyntaxToken>,
     pub as_token: SyntaxResult<SyntaxToken>,
@@ -3326,6 +4250,16 @@ impl JsNewExpression {
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
     pub fn arguments(&self) -> Option<JsCallArguments> { support::node(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsNewExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsNewExpressionFields {
     pub new_token: SyntaxResult<SyntaxToken>,
     pub callee: SyntaxResult<JsAnyExpression>,
@@ -3353,6 +4287,16 @@ impl JsNullLiteralExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsNullLiteralExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsNullLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -3377,6 +4321,16 @@ impl JsNumberLiteralExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsNumberLiteralExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsNumberLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -3409,6 +4363,16 @@ impl JsObjectAssignmentPattern {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectAssignmentPattern {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectAssignmentPatternFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub properties: JsObjectAssignmentPatternPropertyList,
@@ -3445,6 +4409,16 @@ impl JsObjectAssignmentPatternProperty {
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectAssignmentPatternProperty {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectAssignmentPatternPropertyFields {
     pub member: SyntaxResult<JsAnyObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -3476,6 +4450,16 @@ impl JsObjectAssignmentPatternRest {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectAssignmentPatternRest {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectAssignmentPatternRestFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub target: SyntaxResult<JsAnyAssignment>,
@@ -3503,6 +4487,16 @@ impl JsObjectAssignmentPatternShorthandProperty {
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectAssignmentPatternShorthandProperty {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectAssignmentPatternShorthandPropertyFields {
     pub identifier: SyntaxResult<JsIdentifierAssignment>,
     pub init: Option<JsInitializerClause>,
@@ -3536,6 +4530,16 @@ impl JsObjectBindingPattern {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectBindingPattern {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectBindingPatternFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub properties: JsObjectBindingPatternPropertyList,
@@ -3572,6 +4576,16 @@ impl JsObjectBindingPatternProperty {
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectBindingPatternProperty {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectBindingPatternPropertyFields {
     pub member: SyntaxResult<JsAnyObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -3603,6 +4617,16 @@ impl JsObjectBindingPatternRest {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectBindingPatternRest {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectBindingPatternRestFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<JsAnyBinding>,
@@ -3630,6 +4654,16 @@ impl JsObjectBindingPatternShorthandProperty {
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectBindingPatternShorthandProperty {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectBindingPatternShorthandPropertyFields {
     pub identifier: SyntaxResult<JsAnyBinding>,
     pub init: Option<JsInitializerClause>,
@@ -3661,6 +4695,16 @@ impl JsObjectExpression {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsObjectExpressionFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub members: JsObjectMemberList,
@@ -3693,6 +4737,16 @@ impl JsParameters {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsParameters {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsParametersFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub items: JsParameterList,
@@ -3727,6 +4781,16 @@ impl JsParenthesizedAssignment {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsParenthesizedAssignment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsParenthesizedAssignmentFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub assignment: SyntaxResult<JsAnyAssignment>,
@@ -3761,6 +4825,16 @@ impl JsParenthesizedExpression {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsParenthesizedExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsParenthesizedExpressionFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -3791,6 +4865,16 @@ impl JsPostUpdateExpression {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsPostUpdateExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsPostUpdateExpressionFields {
     pub operand: SyntaxResult<JsAnyAssignment>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -3820,6 +4904,16 @@ impl JsPreUpdateExpression {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsPreUpdateExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsPreUpdateExpressionFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub operand: SyntaxResult<JsAnyAssignment>,
@@ -3849,6 +4943,16 @@ impl JsPrivateClassMemberName {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsPrivateClassMemberName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsPrivateClassMemberNameFields {
     pub hash_token: SyntaxResult<SyntaxToken>,
     pub id_token: SyntaxResult<SyntaxToken>,
@@ -3878,6 +4982,16 @@ impl JsPrivateName {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsPrivateName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsPrivateNameFields {
     pub hash_token: SyntaxResult<SyntaxToken>,
     pub value_token: SyntaxResult<SyntaxToken>,
@@ -3913,6 +5027,16 @@ impl JsPropertyClassMember {
     pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsPropertyClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsPropertyClassMemberFields {
     pub modifiers: JsPropertyModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -3949,6 +5073,16 @@ impl JsPropertyObjectMember {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsPropertyObjectMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsPropertyObjectMemberFields {
     pub name: SyntaxResult<JsAnyObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -3975,6 +5109,16 @@ impl JsReferenceIdentifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsReferenceIdentifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsReferenceIdentifierFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -3999,6 +5143,16 @@ impl JsRegexLiteralExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsRegexLiteralExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsRegexLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -4031,6 +5185,16 @@ impl JsRestParameter {
         support::node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsRestParameter {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsRestParameterFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<JsAnyBindingPattern>,
@@ -4061,6 +5225,16 @@ impl JsReturnStatement {
     pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 1usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsReturnStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsReturnStatementFields {
     pub return_token: SyntaxResult<SyntaxToken>,
     pub argument: Option<JsAnyExpression>,
@@ -4093,6 +5267,16 @@ impl JsScript {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsScript {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsScriptFields {
     pub interpreter_token: Option<SyntaxToken>,
     pub directives: JsDirectiveList,
@@ -4128,6 +5312,16 @@ impl JsSequenceExpression {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsSequenceExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsSequenceExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub comma_token: SyntaxResult<SyntaxToken>,
@@ -4176,6 +5370,16 @@ impl JsSetterClassMember {
         support::required_node(&self.syntax, 6usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsSetterClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsSetterClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
@@ -4226,6 +5430,16 @@ impl JsSetterObjectMember {
         support::required_node(&self.syntax, 5usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsSetterObjectMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsSetterObjectMemberFields {
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -4257,6 +5471,16 @@ impl JsShorthandNamedImportSpecifier {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsShorthandNamedImportSpecifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsShorthandNamedImportSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub local_name: SyntaxResult<JsAnyBinding>,
@@ -4280,6 +5504,16 @@ impl JsShorthandPropertyObjectMember {
         support::required_node(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsShorthandPropertyObjectMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsShorthandPropertyObjectMemberFields {
     pub name: SyntaxResult<JsReferenceIdentifier>,
 }
@@ -4308,6 +5542,16 @@ impl JsSpread {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsSpread {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsSpreadFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -4343,6 +5587,16 @@ impl JsStaticInitializationBlockClassMember {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsStaticInitializationBlockClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsStaticInitializationBlockClassMemberFields {
     pub static_token: SyntaxResult<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -4376,6 +5630,16 @@ impl JsStaticMemberAssignment {
     }
     pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsStaticMemberAssignment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsStaticMemberAssignmentFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -4408,6 +5672,16 @@ impl JsStaticMemberExpression {
     }
     pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsStaticMemberExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsStaticMemberExpressionFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -4434,6 +5708,16 @@ impl JsStaticModifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsStaticModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsStaticModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -4458,6 +5742,16 @@ impl JsStringLiteralExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsStringLiteralExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsStringLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -4482,6 +5776,16 @@ impl JsSuperExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsSuperExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsSuperExpressionFields {
     pub super_token: SyntaxResult<SyntaxToken>,
 }
@@ -4528,6 +5832,16 @@ impl JsSwitchStatement {
         support::required_token(&self.syntax, 6usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsSwitchStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsSwitchStatementFields {
     pub switch_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -4568,6 +5882,16 @@ impl JsTemplate {
         support::required_token(&self.syntax, 4usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsTemplate {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsTemplateFields {
     pub tag: Option<JsAnyExpression>,
     pub type_arguments: Option<TsTypeArguments>,
@@ -4596,6 +5920,16 @@ impl JsTemplateChunkElement {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsTemplateChunkElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsTemplateChunkElementFields {
     pub template_chunk_token: SyntaxResult<SyntaxToken>,
 }
@@ -4628,6 +5962,16 @@ impl JsTemplateElement {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsTemplateElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsTemplateElementFields {
     pub dollar_curly_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -4654,6 +5998,16 @@ impl JsThisExpression {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsThisExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsThisExpressionFields {
     pub this_token: SyntaxResult<SyntaxToken>,
 }
@@ -4684,6 +6038,16 @@ impl JsThrowStatement {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsThrowStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsThrowStatementFields {
     pub throw_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -4720,6 +6084,16 @@ impl JsTryFinallyStatement {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsTryFinallyStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsTryFinallyStatementFields {
     pub try_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsBlockStatement>,
@@ -4755,6 +6129,16 @@ impl JsTryStatement {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsTryStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsTryStatementFields {
     pub try_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsBlockStatement>,
@@ -4785,6 +6169,16 @@ impl JsUnaryExpression {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsUnaryExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsUnaryExpressionFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -4812,6 +6206,16 @@ impl JsVariableDeclaration {
     }
     pub fn declarators(&self) -> JsVariableDeclaratorList { support::list(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsVariableDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsVariableDeclarationFields {
     pub kind: SyntaxResult<SyntaxToken>,
     pub declarators: JsVariableDeclaratorList,
@@ -4839,6 +6243,16 @@ impl JsVariableDeclarationClause {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsVariableDeclarationClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsVariableDeclarationClauseFields {
     pub declaration: SyntaxResult<JsVariableDeclaration>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -4870,6 +6284,16 @@ impl JsVariableDeclarator {
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsVariableDeclarator {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsVariableDeclaratorFields {
     pub id: SyntaxResult<JsAnyBindingPattern>,
     pub variable_annotation: Option<TsAnyVariableAnnotation>,
@@ -4898,6 +6322,16 @@ impl JsVariableStatement {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsVariableStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsVariableStatementFields {
     pub declaration: SyntaxResult<JsVariableDeclaration>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -4939,6 +6373,16 @@ impl JsWhileStatement {
         support::required_node(&self.syntax, 4usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsWhileStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsWhileStatementFields {
     pub while_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -4983,6 +6427,16 @@ impl JsWithStatement {
         support::required_node(&self.syntax, 4usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsWithStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsWithStatementFields {
     pub with_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -5013,6 +6467,16 @@ impl JsYieldArgument {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsYieldArgument {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsYieldArgumentFields {
     pub star_token: Option<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -5040,6 +6504,16 @@ impl JsYieldExpression {
     }
     pub fn argument(&self) -> Option<JsYieldArgument> { support::node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsYieldExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsYieldExpressionFields {
     pub yield_token: SyntaxResult<SyntaxToken>,
     pub argument: Option<JsYieldArgument>,
@@ -5069,6 +6543,16 @@ impl JsxAttribute {
         support::node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxAttribute {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxAttributeFields {
     pub name: SyntaxResult<JsxAnyAttributeName>,
     pub initializer: Option<JsxAttributeInitializerClause>,
@@ -5098,6 +6582,16 @@ impl JsxAttributeInitializerClause {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxAttributeInitializerClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxAttributeInitializerClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub value: SyntaxResult<JsxAnyAttributeValue>,
@@ -5135,6 +6629,16 @@ impl JsxClosingElement {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxClosingElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub slash_token: SyntaxResult<SyntaxToken>,
@@ -5170,6 +6674,16 @@ impl JsxClosingFragment {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxClosingFragment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxClosingFragmentFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub slash_token: SyntaxResult<SyntaxToken>,
@@ -5202,6 +6716,16 @@ impl JsxElement {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxElementFields {
     pub opening_element: SyntaxResult<JsxOpeningElement>,
     pub children: JsxChildList,
@@ -5236,6 +6760,16 @@ impl JsxExpressionAttributeValue {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxExpressionAttributeValue {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxExpressionAttributeValueFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -5268,6 +6802,16 @@ impl JsxExpressionChild {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxExpressionChild {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxExpressionChildFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub expression: Option<JsAnyExpression>,
@@ -5300,6 +6844,16 @@ impl JsxFragment {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxFragment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxFragmentFields {
     pub opening_fragment: SyntaxResult<JsxOpeningFragment>,
     pub children: JsxChildList,
@@ -5332,6 +6886,16 @@ impl JsxMemberName {
     }
     pub fn member(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxMemberName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxMemberNameFields {
     pub object: SyntaxResult<JsxAnyObjectName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -5358,6 +6922,16 @@ impl JsxName {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxNameFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -5388,6 +6962,16 @@ impl JsxNamespaceName {
     }
     pub fn name(&self) -> SyntaxResult<JsxName> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxNamespaceName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxNamespaceNameFields {
     pub namespace: SyntaxResult<JsxName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -5426,6 +7010,16 @@ impl JsxOpeningElement {
         support::required_token(&self.syntax, 4usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxOpeningElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxOpeningElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
@@ -5458,6 +7052,16 @@ impl JsxOpeningFragment {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxOpeningFragment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxOpeningFragmentFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
@@ -5483,6 +7087,16 @@ impl JsxReferenceIdentifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxReferenceIdentifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxReferenceIdentifierFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -5523,6 +7137,16 @@ impl JsxSelfClosingElement {
         support::required_token(&self.syntax, 5usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxSelfClosingElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxSelfClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
@@ -5564,6 +7188,16 @@ impl JsxSpreadAttribute {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxSpreadAttribute {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxSpreadAttributeFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
@@ -5603,6 +7237,16 @@ impl JsxSpreadChild {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxSpreadChild {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxSpreadChildFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
@@ -5630,6 +7274,16 @@ impl JsxString {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxString {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxStringFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -5648,6 +7302,16 @@ impl JsxTagExpression {
     pub fn as_fields(&self) -> JsxTagExpressionFields { JsxTagExpressionFields { tag: self.tag() } }
     pub fn tag(&self) -> SyntaxResult<JsxAnyTag> { support::required_node(&self.syntax, 0usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxTagExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxTagExpressionFields {
     pub tag: SyntaxResult<JsxAnyTag>,
 }
@@ -5672,6 +7336,16 @@ impl JsxText {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsxText {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsxTextFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -5704,6 +7378,16 @@ impl NewTarget {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for NewTarget {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct NewTargetFields {
     pub new_token: SyntaxResult<SyntaxToken>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -5730,6 +7414,16 @@ impl TsAbstractModifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsAbstractModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsAbstractModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -5754,6 +7448,16 @@ impl TsAccessibilityModifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsAccessibilityModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsAccessibilityModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -5778,6 +7482,16 @@ impl TsAnyType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsAnyType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsAnyTypeFields {
     pub any_token: SyntaxResult<SyntaxToken>,
 }
@@ -5810,6 +7524,16 @@ impl TsArrayType {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsArrayType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsArrayTypeFields {
     pub element_type: SyntaxResult<TsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -5842,6 +7566,16 @@ impl TsAsAssignment {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsAsAssignment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsAsAssignmentFields {
     pub assignment: SyntaxResult<JsAnyAssignment>,
     pub as_token: SyntaxResult<SyntaxToken>,
@@ -5874,6 +7608,16 @@ impl TsAsExpression {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsAsExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsAsExpressionFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub as_token: SyntaxResult<SyntaxToken>,
@@ -5902,6 +7646,16 @@ impl TsAssertsCondition {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsAssertsCondition {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsAssertsConditionFields {
     pub is_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -5933,6 +7687,16 @@ impl TsAssertsReturnType {
     }
     pub fn predicate(&self) -> Option<TsAssertsCondition> { support::node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsAssertsReturnType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsAssertsReturnTypeFields {
     pub asserts_token: SyntaxResult<SyntaxToken>,
     pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
@@ -5961,6 +7725,16 @@ impl TsBigIntLiteralType {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsBigIntLiteralType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsBigIntLiteralTypeFields {
     pub minus_token: Option<SyntaxToken>,
     pub literal_token: SyntaxResult<SyntaxToken>,
@@ -5986,6 +7760,16 @@ impl TsBigintType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsBigintType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsBigintTypeFields {
     pub bigint_token: SyntaxResult<SyntaxToken>,
 }
@@ -6010,6 +7794,16 @@ impl TsBooleanLiteralType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsBooleanLiteralType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsBooleanLiteralTypeFields {
     pub literal: SyntaxResult<SyntaxToken>,
 }
@@ -6034,6 +7828,16 @@ impl TsBooleanType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsBooleanType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsBooleanTypeFields {
     pub boolean_token: SyntaxResult<SyntaxToken>,
 }
@@ -6068,6 +7872,16 @@ impl TsCallSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsCallSignatureTypeMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsCallSignatureTypeMemberFields {
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -6117,6 +7931,16 @@ impl TsConditionalType {
         support::required_node(&self.syntax, 6usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsConditionalType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsConditionalTypeFields {
     pub check_type: SyntaxResult<TsType>,
     pub extends_token: SyntaxResult<SyntaxToken>,
@@ -6161,6 +7985,16 @@ impl TsConstructSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsConstructSignatureTypeMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsConstructSignatureTypeMemberFields {
     pub new_token: SyntaxResult<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
@@ -6197,6 +8031,16 @@ impl TsConstructorSignatureClassMember {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsConstructorSignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsConstructorSignatureClassMemberFields {
     pub modifiers: JsConstructorModifierList,
     pub name: SyntaxResult<JsLiteralMemberName>,
@@ -6242,6 +8086,16 @@ impl TsConstructorType {
         support::required_node(&self.syntax, 5usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsConstructorType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsConstructorTypeFields {
     pub abstract_token: Option<SyntaxToken>,
     pub new_token: SyntaxResult<SyntaxToken>,
@@ -6289,6 +8143,16 @@ impl TsDeclareFunctionDeclaration {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsDeclareFunctionDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsDeclareFunctionDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -6319,6 +8183,16 @@ impl TsDeclareModifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsDeclareModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsDeclareModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -6347,6 +8221,16 @@ impl TsDeclareStatement {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsDeclareStatement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsDeclareStatementFields {
     pub declare_token: SyntaxResult<SyntaxToken>,
     pub declaration: SyntaxResult<JsAnyDeclarationClause>,
@@ -6374,6 +8258,16 @@ impl TsDefaultTypeClause {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsDefaultTypeClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsDefaultTypeClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -6403,6 +8297,16 @@ impl TsDefinitePropertyAnnotation {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsDefinitePropertyAnnotation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsDefinitePropertyAnnotationFields {
     pub excl_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
@@ -6432,6 +8336,16 @@ impl TsDefiniteVariableAnnotation {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsDefiniteVariableAnnotation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsDefiniteVariableAnnotationFields {
     pub excl_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
@@ -6457,6 +8371,16 @@ impl TsEmptyExternalModuleDeclarationBody {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsEmptyExternalModuleDeclarationBody {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsEmptyExternalModuleDeclarationBodyFields {
     pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
@@ -6495,6 +8419,16 @@ impl TsEnumDeclaration {
         support::required_token(&self.syntax, 5usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsEnumDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsEnumDeclarationFields {
     pub const_token: Option<SyntaxToken>,
     pub enum_token: SyntaxResult<SyntaxToken>,
@@ -6526,6 +8460,16 @@ impl TsEnumMember {
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsEnumMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsEnumMemberFields {
     pub name: SyntaxResult<JsAnyObjectMemberName>,
     pub initializer: Option<JsInitializerClause>,
@@ -6559,6 +8503,16 @@ impl TsExportAsNamespaceClause {
     pub fn name(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsExportAsNamespaceClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsExportAsNamespaceClauseFields {
     pub as_token: SyntaxResult<SyntaxToken>,
     pub namespace_token: SyntaxResult<SyntaxToken>,
@@ -6592,6 +8546,16 @@ impl TsExportAssignmentClause {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsExportAssignmentClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsExportAssignmentClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -6622,6 +8586,16 @@ impl TsExportDeclareClause {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsExportDeclareClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsExportDeclareClauseFields {
     pub declare_token: SyntaxResult<SyntaxToken>,
     pub declaration: SyntaxResult<JsAnyDeclarationClause>,
@@ -6649,6 +8623,16 @@ impl TsExtendsClause {
     }
     pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsExtendsClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsExtendsClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
     pub types: TsTypeList,
@@ -6682,6 +8666,16 @@ impl TsExternalModuleDeclaration {
         support::node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsExternalModuleDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsExternalModuleDeclarationFields {
     pub module_token: SyntaxResult<SyntaxToken>,
     pub source: SyntaxResult<JsModuleSource>,
@@ -6720,6 +8714,16 @@ impl TsExternalModuleReference {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsExternalModuleReference {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsExternalModuleReferenceFields {
     pub require_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -6759,6 +8763,16 @@ impl TsFunctionType {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsFunctionType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsFunctionTypeFields {
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -6804,6 +8818,16 @@ impl TsGetterSignatureClassMember {
     pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 5usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsGetterSignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsGetterSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
@@ -6852,6 +8876,16 @@ impl TsGetterSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsGetterSignatureTypeMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsGetterSignatureTypeMemberFields {
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -6885,6 +8919,16 @@ impl TsGlobalDeclaration {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsGlobalDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsGlobalDeclarationFields {
     pub global_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<TsModuleBlock>,
@@ -6910,6 +8954,16 @@ impl TsIdentifierBinding {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsIdentifierBinding {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsIdentifierBindingFields {
     pub name_token: SyntaxResult<SyntaxToken>,
 }
@@ -6936,6 +8990,16 @@ impl TsImplementsClause {
     }
     pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsImplementsClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsImplementsClauseFields {
     pub implements_token: SyntaxResult<SyntaxToken>,
     pub types: TsTypeList,
@@ -6975,6 +9039,16 @@ impl TsImportEqualsDeclaration {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsImportEqualsDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsImportEqualsDeclarationFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub type_token: Option<SyntaxToken>,
@@ -7024,6 +9098,16 @@ impl TsImportType {
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 6usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsImportType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsImportTypeFields {
     pub typeof_token: Option<SyntaxToken>,
     pub import_token: SyntaxResult<SyntaxToken>,
@@ -7056,6 +9140,16 @@ impl TsImportTypeQualifier {
     }
     pub fn right(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsImportTypeQualifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsImportTypeQualifierFields {
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub right: SyntaxResult<TsAnyName>,
@@ -7097,6 +9191,16 @@ impl TsIndexSignatureClassMember {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsIndexSignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsIndexSignatureClassMemberFields {
     pub modifiers: TsIndexSignatureModifierList,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -7130,6 +9234,16 @@ impl TsIndexSignatureParameter {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsIndexSignatureParameter {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsIndexSignatureParameterFields {
     pub binding: SyntaxResult<JsIdentifierBinding>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
@@ -7171,6 +9285,16 @@ impl TsIndexSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsIndexSignatureTypeMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsIndexSignatureTypeMemberFields {
     pub readonly_token: Option<SyntaxToken>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -7212,6 +9336,16 @@ impl TsIndexedAccessType {
         support::required_token(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsIndexedAccessType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsIndexedAccessTypeFields {
     pub object_type: SyntaxResult<TsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -7243,6 +9377,16 @@ impl TsInferType {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsInferType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsInferTypeFields {
     pub infer_token: SyntaxResult<SyntaxToken>,
     pub type_parameter: SyntaxResult<TsTypeParameterName>,
@@ -7288,6 +9432,16 @@ impl TsInterfaceDeclaration {
         support::required_token(&self.syntax, 6usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsInterfaceDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsInterfaceDeclarationFields {
     pub interface_token: SyntaxResult<SyntaxToken>,
     pub id: SyntaxResult<TsIdentifierBinding>,
@@ -7320,6 +9474,16 @@ impl TsIntersectionType {
     }
     pub fn types(&self) -> TsIntersectionTypeElementList { support::list(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsIntersectionType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsIntersectionTypeFields {
     pub leading_separator_token: Option<SyntaxToken>,
     pub types: TsIntersectionTypeElementList,
@@ -7381,6 +9545,16 @@ impl TsMappedType {
         support::required_token(&self.syntax, 11usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsMappedType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMappedTypeFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub readonly_modifier: Option<TsMappedTypeReadonlyModifierClause>,
@@ -7418,6 +9592,16 @@ impl TsMappedTypeAsClause {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsMappedTypeAsClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMappedTypeAsClauseFields {
     pub as_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -7447,6 +9631,16 @@ impl TsMappedTypeOptionalModifierClause {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsMappedTypeOptionalModifierClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMappedTypeOptionalModifierClauseFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
@@ -7476,6 +9670,16 @@ impl TsMappedTypeReadonlyModifierClause {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsMappedTypeReadonlyModifierClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMappedTypeReadonlyModifierClauseFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub readonly_token: SyntaxResult<SyntaxToken>,
@@ -7523,6 +9727,16 @@ impl TsMethodSignatureClassMember {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsMethodSignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMethodSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub async_token: Option<SyntaxToken>,
@@ -7570,6 +9784,16 @@ impl TsMethodSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsMethodSignatureTypeMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMethodSignatureTypeMemberFields {
     pub name: SyntaxResult<JsAnyObjectMemberName>,
     pub optional_token: Option<SyntaxToken>,
@@ -7605,6 +9829,16 @@ impl TsModuleBlock {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsModuleBlock {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsModuleBlockFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub items: JsModuleItemList,
@@ -7639,6 +9873,16 @@ impl TsModuleDeclaration {
         support::required_node(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsModuleDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsModuleDeclarationFields {
     pub module_or_namespace: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<TsAnyModuleName>,
@@ -7665,6 +9909,16 @@ impl TsNameWithTypeArguments {
     pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNameWithTypeArguments {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNameWithTypeArgumentsFields {
     pub name: SyntaxResult<TsAnyName>,
     pub type_arguments: Option<TsTypeArguments>,
@@ -7700,6 +9954,16 @@ impl TsNamedTupleTypeElement {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNamedTupleTypeElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNamedTupleTypeElementFields {
     pub dotdotdot_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsName>,
@@ -7728,6 +9992,16 @@ impl TsNeverType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNeverType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNeverTypeFields {
     pub never_token: SyntaxResult<SyntaxToken>,
 }
@@ -7756,6 +10030,16 @@ impl TsNonNullAssertionAssignment {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNonNullAssertionAssignment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNonNullAssertionAssignmentFields {
     pub assignment: SyntaxResult<JsAnyAssignment>,
     pub excl_token: SyntaxResult<SyntaxToken>,
@@ -7785,6 +10069,16 @@ impl TsNonNullAssertionExpression {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNonNullAssertionExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNonNullAssertionExpressionFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub excl_token: SyntaxResult<SyntaxToken>,
@@ -7810,6 +10104,16 @@ impl TsNonPrimitiveType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNonPrimitiveType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNonPrimitiveTypeFields {
     pub object_token: SyntaxResult<SyntaxToken>,
 }
@@ -7834,6 +10138,16 @@ impl TsNullLiteralType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNullLiteralType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNullLiteralTypeFields {
     pub literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -7860,6 +10174,16 @@ impl TsNumberLiteralType {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNumberLiteralType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNumberLiteralTypeFields {
     pub minus_token: Option<SyntaxToken>,
     pub literal_token: SyntaxResult<SyntaxToken>,
@@ -7885,6 +10209,16 @@ impl TsNumberType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsNumberType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsNumberTypeFields {
     pub number_token: SyntaxResult<SyntaxToken>,
 }
@@ -7915,6 +10249,16 @@ impl TsObjectType {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsObjectType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsObjectTypeFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub members: TsTypeMemberList,
@@ -7945,6 +10289,16 @@ impl TsOptionalPropertyAnnotation {
         support::node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsOptionalPropertyAnnotation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsOptionalPropertyAnnotationFields {
     pub question_mark_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
@@ -7972,6 +10326,16 @@ impl TsOptionalTupleTypeElement {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsOptionalTupleTypeElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsOptionalTupleTypeElementFields {
     pub ty: SyntaxResult<TsType>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
@@ -7997,6 +10361,16 @@ impl TsOverrideModifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsOverrideModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsOverrideModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -8027,6 +10401,16 @@ impl TsParenthesizedType {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsParenthesizedType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsParenthesizedTypeFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8059,6 +10443,16 @@ impl TsPredicateReturnType {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsPredicateReturnType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsPredicateReturnTypeFields {
     pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
     pub is_token: SyntaxResult<SyntaxToken>,
@@ -8089,6 +10483,16 @@ impl TsPropertyParameter {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsPropertyParameter {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsPropertyParameterFields {
     pub modifiers: TsPropertyParameterModifierList,
     pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
@@ -8124,6 +10528,16 @@ impl TsPropertySignatureClassMember {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsPropertySignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsPropertySignatureClassMemberFields {
     pub modifiers: TsPropertySignatureModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -8161,6 +10575,16 @@ impl TsPropertySignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsPropertySignatureTypeMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsPropertySignatureTypeMemberFields {
     pub readonly_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -8195,6 +10619,16 @@ impl TsQualifiedModuleName {
     }
     pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsQualifiedModuleName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsQualifiedModuleNameFields {
     pub left: SyntaxResult<TsAnyModuleName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -8225,6 +10659,16 @@ impl TsQualifiedName {
     }
     pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsQualifiedName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsQualifiedNameFields {
     pub left: SyntaxResult<TsAnyName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -8251,6 +10695,16 @@ impl TsReadonlyModifier {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsReadonlyModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsReadonlyModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -8275,6 +10729,16 @@ impl TsReferenceType {
     pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsReferenceType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsReferenceTypeFields {
     pub name: SyntaxResult<TsAnyName>,
     pub type_arguments: Option<TsTypeArguments>,
@@ -8302,6 +10766,16 @@ impl TsRestTupleTypeElement {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsRestTupleTypeElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsRestTupleTypeElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8331,6 +10805,16 @@ impl TsReturnTypeAnnotation {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsReturnTypeAnnotation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsReturnTypeAnnotationFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsAnyReturnType>,
@@ -8376,6 +10860,16 @@ impl TsSetterSignatureClassMember {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsSetterSignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsSetterSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
@@ -8424,6 +10918,16 @@ impl TsSetterSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsSetterSignatureTypeMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsSetterSignatureTypeMemberFields {
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -8453,6 +10957,16 @@ impl TsStringLiteralType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsStringLiteralType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsStringLiteralTypeFields {
     pub literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -8477,6 +10991,16 @@ impl TsStringType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsStringType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsStringTypeFields {
     pub string_token: SyntaxResult<SyntaxToken>,
 }
@@ -8501,6 +11025,16 @@ impl TsSymbolType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsSymbolType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsSymbolTypeFields {
     pub symbol_token: SyntaxResult<SyntaxToken>,
 }
@@ -8525,6 +11059,16 @@ impl TsTemplateChunkElement {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTemplateChunkElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTemplateChunkElementFields {
     pub template_chunk_token: SyntaxResult<SyntaxToken>,
 }
@@ -8555,6 +11099,16 @@ impl TsTemplateElement {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTemplateElement {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTemplateElementFields {
     pub dollar_curly_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8587,6 +11141,16 @@ impl TsTemplateLiteralType {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTemplateLiteralType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTemplateLiteralTypeFields {
     pub l_tick_token: SyntaxResult<SyntaxToken>,
     pub elements: TsTemplateElementList,
@@ -8617,6 +11181,16 @@ impl TsThisParameter {
         support::node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsThisParameter {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsThisParameterFields {
     pub this_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
@@ -8642,6 +11216,16 @@ impl TsThisType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsThisType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsThisTypeFields {
     pub this_token: SyntaxResult<SyntaxToken>,
 }
@@ -8672,6 +11256,16 @@ impl TsTupleType {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTupleType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTupleTypeFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: TsTupleTypeElementList,
@@ -8714,6 +11308,16 @@ impl TsTypeAliasDeclaration {
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeAliasDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeAliasDeclarationFields {
     pub type_token: SyntaxResult<SyntaxToken>,
     pub binding_identifier: SyntaxResult<TsIdentifierBinding>,
@@ -8745,6 +11349,16 @@ impl TsTypeAnnotation {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeAnnotation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeAnnotationFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8778,6 +11392,16 @@ impl TsTypeArguments {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeArguments {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeArgumentsFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub ts_type_argument_list: TsTypeArgumentList,
@@ -8814,6 +11438,16 @@ impl TsTypeAssertionAssignment {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeAssertionAssignment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeAssertionAssignmentFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8851,6 +11485,16 @@ impl TsTypeAssertionExpression {
         support::required_node(&self.syntax, 3usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeAssertionExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeAssertionExpressionFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8880,6 +11524,16 @@ impl TsTypeConstraintClause {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeConstraintClause {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeConstraintClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8907,6 +11561,16 @@ impl TsTypeOperatorType {
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeOperatorType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeOperatorTypeFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8938,6 +11602,16 @@ impl TsTypeParameter {
     }
     pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeParameter {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeParameterFields {
     pub name: SyntaxResult<TsTypeParameterName>,
     pub constraint: Option<TsTypeConstraintClause>,
@@ -8964,6 +11638,16 @@ impl TsTypeParameterName {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeParameterName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeParameterNameFields {
     pub ident_token: SyntaxResult<SyntaxToken>,
 }
@@ -8994,6 +11678,16 @@ impl TsTypeParameters {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeParameters {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeParametersFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub items: TsTypeParameterList,
@@ -9024,6 +11718,16 @@ impl TsTypeofType {
         support::required_node(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeofType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsTypeofTypeFields {
     pub typeof_token: SyntaxResult<SyntaxToken>,
     pub expression_name: SyntaxResult<TsAnyName>,
@@ -9049,6 +11753,16 @@ impl TsUndefinedType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsUndefinedType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsUndefinedTypeFields {
     pub undefined_token: SyntaxResult<SyntaxToken>,
 }
@@ -9075,6 +11789,16 @@ impl TsUnionType {
     }
     pub fn types(&self) -> TsUnionTypeVariantList { support::list(&self.syntax, 1usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsUnionType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsUnionTypeFields {
     pub leading_separator_token: Option<SyntaxToken>,
     pub types: TsUnionTypeVariantList,
@@ -9100,6 +11824,16 @@ impl TsUnknownType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsUnknownType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsUnknownTypeFields {
     pub unknown_token: SyntaxResult<SyntaxToken>,
 }
@@ -9124,10 +11858,22 @@ impl TsVoidType {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for TsVoidType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsVoidTypeFields {
     pub void_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrayAssignmentPatternElement {
     JsAnyAssignmentPattern(JsAnyAssignmentPattern),
     JsArrayAssignmentPatternRestElement(JsArrayAssignmentPatternRestElement),
@@ -9165,6 +11911,8 @@ impl JsAnyArrayAssignmentPatternElement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrayBindingPatternElement {
     JsAnyBindingPattern(JsAnyBindingPattern),
     JsArrayBindingPatternRestElement(JsArrayBindingPatternRestElement),
@@ -9200,6 +11948,8 @@ impl JsAnyArrayBindingPatternElement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrayElement {
     JsAnyExpression(JsAnyExpression),
     JsArrayHole(JsArrayHole),
@@ -9226,6 +11976,8 @@ impl JsAnyArrayElement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrowFunctionParameters {
     JsAnyBinding(JsAnyBinding),
     JsParameters(JsParameters),
@@ -9245,6 +11997,8 @@ impl JsAnyArrowFunctionParameters {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyAssignment {
     JsComputedMemberAssignment(JsComputedMemberAssignment),
     JsIdentifierAssignment(JsIdentifierAssignment),
@@ -9306,6 +12060,8 @@ impl JsAnyAssignment {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyAssignmentPattern {
     JsAnyAssignment(JsAnyAssignment),
     JsArrayAssignmentPattern(JsArrayAssignmentPattern),
@@ -9332,6 +12088,8 @@ impl JsAnyAssignmentPattern {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyBinding {
     JsIdentifierBinding(JsIdentifierBinding),
     JsUnknownBinding(JsUnknownBinding),
@@ -9351,6 +12109,8 @@ impl JsAnyBinding {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyBindingPattern {
     JsAnyBinding(JsAnyBinding),
     JsArrayBindingPattern(JsArrayBindingPattern),
@@ -9377,6 +12137,8 @@ impl JsAnyBindingPattern {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyCallArgument {
     JsAnyExpression(JsAnyExpression),
     JsSpread(JsSpread),
@@ -9396,6 +12158,8 @@ impl JsAnyCallArgument {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyClass {
     JsClassDeclaration(JsClassDeclaration),
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
@@ -9424,6 +12188,8 @@ impl JsAnyClass {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyClassMember {
     JsConstructorClassMember(JsConstructorClassMember),
     JsEmptyClassMember(JsEmptyClassMember),
@@ -9531,6 +12297,8 @@ impl JsAnyClassMember {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyClassMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
@@ -9557,6 +12325,8 @@ impl JsAnyClassMemberName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyConstructorParameter {
     JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
@@ -9583,6 +12353,8 @@ impl JsAnyConstructorParameter {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyDeclaration {
     JsClassDeclaration(JsClassDeclaration),
     JsFunctionDeclaration(JsFunctionDeclaration),
@@ -9665,6 +12437,8 @@ impl JsAnyDeclaration {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyDeclarationClause {
     JsClassDeclaration(JsClassDeclaration),
     JsFunctionDeclaration(JsFunctionDeclaration),
@@ -9747,6 +12521,8 @@ impl JsAnyDeclarationClause {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExportClause {
     JsAnyDeclarationClause(JsAnyDeclarationClause),
     JsExportDefaultDeclarationClause(JsExportDefaultDeclarationClause),
@@ -9819,6 +12595,8 @@ impl JsAnyExportClause {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExportDefaultDeclaration {
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
     JsFunctionExportDefaultDeclaration(JsFunctionExportDefaultDeclaration),
@@ -9856,6 +12634,8 @@ impl JsAnyExportDefaultDeclaration {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExportNamedSpecifier {
     JsExportNamedShorthandSpecifier(JsExportNamedShorthandSpecifier),
     JsExportNamedSpecifier(JsExportNamedSpecifier),
@@ -9877,6 +12657,8 @@ impl JsAnyExportNamedSpecifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExpression {
     ImportMeta(ImportMeta),
     JsAnyLiteralExpression(JsAnyLiteralExpression),
@@ -10127,6 +12909,8 @@ impl JsAnyExpression {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyForInOrOfInitializer {
     JsAnyAssignmentPattern(JsAnyAssignmentPattern),
     JsForVariableDeclaration(JsForVariableDeclaration),
@@ -10146,6 +12930,8 @@ impl JsAnyForInOrOfInitializer {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyForInitializer {
     JsAnyExpression(JsAnyExpression),
     JsVariableDeclaration(JsVariableDeclaration),
@@ -10165,6 +12951,8 @@ impl JsAnyForInitializer {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyFormalParameter {
     JsFormalParameter(JsFormalParameter),
     JsUnknownParameter(JsUnknownParameter),
@@ -10184,6 +12972,8 @@ impl JsAnyFormalParameter {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyFunction {
     JsArrowFunctionExpression(JsArrowFunctionExpression),
     JsFunctionDeclaration(JsFunctionDeclaration),
@@ -10219,6 +13009,8 @@ impl JsAnyFunction {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyFunctionBody {
     JsAnyExpression(JsAnyExpression),
     JsFunctionBody(JsFunctionBody),
@@ -10238,6 +13030,8 @@ impl JsAnyFunctionBody {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyImportAssertionEntry {
     JsImportAssertionEntry(JsImportAssertionEntry),
     JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry),
@@ -10257,6 +13051,8 @@ impl JsAnyImportAssertionEntry {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyImportClause {
     JsImportBareClause(JsImportBareClause),
     JsImportDefaultClause(JsImportDefaultClause),
@@ -10290,6 +13086,8 @@ impl JsAnyImportClause {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyInProperty {
     JsAnyExpression(JsAnyExpression),
     JsPrivateName(JsPrivateName),
@@ -10309,6 +13107,8 @@ impl JsAnyInProperty {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyLiteralExpression {
     JsBigIntLiteralExpression(JsBigIntLiteralExpression),
     JsBooleanLiteralExpression(JsBooleanLiteralExpression),
@@ -10356,6 +13156,8 @@ impl JsAnyLiteralExpression {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyMethodModifier {
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
@@ -10382,6 +13184,8 @@ impl JsAnyMethodModifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyModuleItem {
     JsAnyStatement(JsAnyStatement),
     JsExport(JsExport),
@@ -10408,6 +13212,8 @@ impl JsAnyModuleItem {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyName {
     JsName(JsName),
     JsPrivateName(JsPrivateName),
@@ -10427,6 +13233,8 @@ impl JsAnyName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyNamedImport {
     JsNamedImportSpecifiers(JsNamedImportSpecifiers),
     JsNamespaceImportSpecifier(JsNamespaceImportSpecifier),
@@ -10446,6 +13254,8 @@ impl JsAnyNamedImport {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyNamedImportSpecifier {
     JsNamedImportSpecifier(JsNamedImportSpecifier),
     JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier),
@@ -10474,6 +13284,8 @@ impl JsAnyNamedImportSpecifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectAssignmentPatternMember {
     JsObjectAssignmentPatternProperty(JsObjectAssignmentPatternProperty),
     JsObjectAssignmentPatternRest(JsObjectAssignmentPatternRest),
@@ -10515,6 +13327,8 @@ impl JsAnyObjectAssignmentPatternMember {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectBindingPatternMember {
     JsIdentifierBinding(JsIdentifierBinding),
     JsObjectBindingPatternProperty(JsObjectBindingPatternProperty),
@@ -10559,6 +13373,8 @@ impl JsAnyObjectBindingPatternMember {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectMember {
     JsGetterObjectMember(JsGetterObjectMember),
     JsMethodObjectMember(JsMethodObjectMember),
@@ -10615,6 +13431,8 @@ impl JsAnyObjectMember {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
@@ -10634,6 +13452,8 @@ impl JsAnyObjectMemberName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyParameter {
     JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
@@ -10660,6 +13480,8 @@ impl JsAnyParameter {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyPropertyModifier {
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
@@ -10693,6 +13515,8 @@ impl JsAnyPropertyModifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyRoot {
     JsExpressionSnipped(JsExpressionSnipped),
     JsModule(JsModule),
@@ -10719,6 +13543,8 @@ impl JsAnyRoot {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyStatement {
     JsBlockStatement(JsBlockStatement),
     JsBreakStatement(JsBreakStatement),
@@ -10948,6 +13774,8 @@ impl JsAnyStatement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnySwitchClause {
     JsCaseClause(JsCaseClause),
     JsDefaultClause(JsDefaultClause),
@@ -10967,6 +13795,8 @@ impl JsAnySwitchClause {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyTemplateElement {
     JsTemplateChunkElement(JsTemplateChunkElement),
     JsTemplateElement(JsTemplateElement),
@@ -10986,6 +13816,8 @@ impl JsAnyTemplateElement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyAttribute {
     JsxAttribute(JsxAttribute),
     JsxSpreadAttribute(JsxSpreadAttribute),
@@ -11005,6 +13837,8 @@ impl JsxAnyAttribute {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyAttributeName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
@@ -11024,6 +13858,8 @@ impl JsxAnyAttributeName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyAttributeValue {
     JsxAnyTag(JsxAnyTag),
     JsxExpressionAttributeValue(JsxExpressionAttributeValue),
@@ -11050,6 +13886,8 @@ impl JsxAnyAttributeValue {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyChild {
     JsxElement(JsxElement),
     JsxExpressionChild(JsxExpressionChild),
@@ -11097,6 +13935,8 @@ impl JsxAnyChild {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyElementName {
     JsxMemberName(JsxMemberName),
     JsxName(JsxName),
@@ -11130,6 +13970,8 @@ impl JsxAnyElementName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
@@ -11149,6 +13991,8 @@ impl JsxAnyName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyObjectName {
     JsxMemberName(JsxMemberName),
     JsxNamespaceName(JsxNamespaceName),
@@ -11175,6 +14019,8 @@ impl JsxAnyObjectName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyTag {
     JsxElement(JsxElement),
     JsxFragment(JsxFragment),
@@ -11201,6 +14047,8 @@ impl JsxAnyTag {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyExternalModuleDeclarationBody {
     TsEmptyExternalModuleDeclarationBody(TsEmptyExternalModuleDeclarationBody),
     TsModuleBlock(TsModuleBlock),
@@ -11224,6 +14072,8 @@ impl TsAnyExternalModuleDeclarationBody {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyIndexSignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsReadonlyModifier(TsReadonlyModifier),
@@ -11243,6 +14093,8 @@ impl TsAnyIndexSignatureModifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyMethodSignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
@@ -11276,6 +14128,8 @@ impl TsAnyMethodSignatureModifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyModuleName {
     TsIdentifierBinding(TsIdentifierBinding),
     TsQualifiedModuleName(TsQualifiedModuleName),
@@ -11295,6 +14149,8 @@ impl TsAnyModuleName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyModuleReference {
     TsAnyName(TsAnyName),
     TsExternalModuleReference(TsExternalModuleReference),
@@ -11314,6 +14170,8 @@ impl TsAnyModuleReference {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsQualifiedName(TsQualifiedName),
@@ -11333,6 +14191,8 @@ impl TsAnyName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertyAnnotation {
     TsDefinitePropertyAnnotation(TsDefinitePropertyAnnotation),
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
@@ -11359,6 +14219,8 @@ impl TsAnyPropertyAnnotation {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertyParameterModifier {
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
@@ -11385,6 +14247,8 @@ impl TsAnyPropertyParameterModifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertySignatureAnnotation {
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
@@ -11404,6 +14268,8 @@ impl TsAnyPropertySignatureAnnotation {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertySignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
@@ -11451,6 +14317,8 @@ impl TsAnyPropertySignatureModifier {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyReturnType {
     TsAssertsReturnType(TsAssertsReturnType),
     TsPredicateReturnType(TsPredicateReturnType),
@@ -11477,6 +14345,8 @@ impl TsAnyReturnType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTemplateElement {
     TsTemplateChunkElement(TsTemplateChunkElement),
     TsTemplateElement(TsTemplateElement),
@@ -11496,6 +14366,8 @@ impl TsAnyTemplateElement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTupleTypeElement {
     TsNamedTupleTypeElement(TsNamedTupleTypeElement),
     TsOptionalTupleTypeElement(TsOptionalTupleTypeElement),
@@ -11529,6 +14401,8 @@ impl TsAnyTupleTypeElement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTypeMember {
     JsUnknownMember(JsUnknownMember),
     TsCallSignatureTypeMember(TsCallSignatureTypeMember),
@@ -11590,6 +14464,8 @@ impl TsAnyTypeMember {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTypePredicateParameterName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsThisType(TsThisType),
@@ -11609,6 +14485,8 @@ impl TsAnyTypePredicateParameterName {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyVariableAnnotation {
     TsDefiniteVariableAnnotation(TsDefiniteVariableAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
@@ -11628,6 +14506,8 @@ impl TsAnyVariableAnnotation {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsType {
     TsAnyType(TsAnyType),
     TsArrayType(TsArrayType),
@@ -11881,6 +14761,7 @@ impl AstNode for ImportMeta {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for ImportMeta {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -11911,6 +14792,7 @@ impl AstNode for JsArrayAssignmentPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsArrayAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -11944,6 +14826,7 @@ impl AstNode for JsArrayAssignmentPatternRestElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsArrayAssignmentPatternRestElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -11973,6 +14856,7 @@ impl AstNode for JsArrayBindingPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsArrayBindingPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12006,6 +14890,7 @@ impl AstNode for JsArrayBindingPatternRestElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsArrayBindingPatternRestElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12035,6 +14920,7 @@ impl AstNode for JsArrayExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsArrayExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12068,6 +14954,7 @@ impl AstNode for JsArrayHole {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsArrayHole {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12091,6 +14978,7 @@ impl AstNode for JsArrowFunctionExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsArrowFunctionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12133,6 +15021,7 @@ impl AstNode for JsAssignmentExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsAssignmentExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12163,6 +15052,7 @@ impl AstNode for JsAssignmentWithDefault {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsAssignmentWithDefault {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12190,6 +15080,7 @@ impl AstNode for JsAwaitExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsAwaitExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12219,6 +15110,7 @@ impl AstNode for JsBigIntLiteralExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsBigIntLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12247,6 +15139,7 @@ impl AstNode for JsBinaryExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsBinaryExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12277,6 +15170,7 @@ impl AstNode for JsBindingPatternWithDefault {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsBindingPatternWithDefault {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12304,6 +15198,7 @@ impl AstNode for JsBlockStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsBlockStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12337,6 +15232,7 @@ impl AstNode for JsBooleanLiteralExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsBooleanLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12365,6 +15261,7 @@ impl AstNode for JsBreakStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsBreakStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12401,6 +15298,7 @@ impl AstNode for JsCallArguments {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsCallArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12434,6 +15332,7 @@ impl AstNode for JsCallExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsCallExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12468,6 +15367,7 @@ impl AstNode for JsCaseClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsCaseClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12499,6 +15399,7 @@ impl AstNode for JsCatchClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsCatchClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12532,6 +15433,7 @@ impl AstNode for JsCatchDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsCatchDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12569,6 +15471,7 @@ impl AstNode for JsClassDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsClassDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12623,6 +15526,7 @@ impl AstNode for JsClassExportDefaultDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsClassExportDefaultDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12677,6 +15581,7 @@ impl AstNode for JsClassExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsClassExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12727,6 +15632,7 @@ impl AstNode for JsComputedMemberAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsComputedMemberAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12761,6 +15667,7 @@ impl AstNode for JsComputedMemberExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsComputedMemberExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12799,6 +15706,7 @@ impl AstNode for JsComputedMemberName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsComputedMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12832,6 +15740,7 @@ impl AstNode for JsConditionalExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsConditionalExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12867,6 +15776,7 @@ impl AstNode for JsConstructorClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsConstructorClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12895,6 +15805,7 @@ impl AstNode for JsConstructorParameters {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsConstructorParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12928,6 +15839,7 @@ impl AstNode for JsContinueStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsContinueStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12964,6 +15876,7 @@ impl AstNode for JsDebuggerStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsDebuggerStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -12996,6 +15909,7 @@ impl AstNode for JsDefaultClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsDefaultClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13029,6 +15943,7 @@ impl AstNode for JsDefaultImportSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsDefaultImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13058,6 +15973,7 @@ impl AstNode for JsDirective {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsDirective {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13090,6 +16006,7 @@ impl AstNode for JsDoWhileStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsDoWhileStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13133,6 +16050,7 @@ impl AstNode for JsElseClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsElseClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13159,6 +16077,7 @@ impl AstNode for JsEmptyClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsEmptyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13187,6 +16106,7 @@ impl AstNode for JsEmptyStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsEmptyStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13215,6 +16135,7 @@ impl AstNode for JsExport {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13247,6 +16168,7 @@ impl AstNode for JsExportAsClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportAsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13276,6 +16198,7 @@ impl AstNode for JsExportDefaultDeclarationClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportDefaultDeclarationClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13312,6 +16235,7 @@ impl AstNode for JsExportDefaultExpressionClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportDefaultExpressionClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13345,6 +16269,7 @@ impl AstNode for JsExportFromClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportFromClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13384,6 +16309,7 @@ impl AstNode for JsExportNamedClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportNamedClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13425,6 +16351,7 @@ impl AstNode for JsExportNamedFromClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportNamedFromClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13472,6 +16399,7 @@ impl AstNode for JsExportNamedFromSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportNamedFromSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13508,6 +16436,7 @@ impl AstNode for JsExportNamedShorthandSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportNamedShorthandSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13537,6 +16466,7 @@ impl AstNode for JsExportNamedSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExportNamedSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13571,6 +16501,7 @@ impl AstNode for JsExpressionSnipped {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExpressionSnipped {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13597,6 +16528,7 @@ impl AstNode for JsExpressionStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExpressionStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13626,6 +16558,7 @@ impl AstNode for JsExtendsClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13662,6 +16595,7 @@ impl AstNode for JsFinallyClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsFinallyClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13691,6 +16625,7 @@ impl AstNode for JsForInStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsForInStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13731,6 +16666,7 @@ impl AstNode for JsForOfStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsForOfStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13775,6 +16711,7 @@ impl AstNode for JsForStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsForStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13823,6 +16760,7 @@ impl AstNode for JsForVariableDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsForVariableDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13849,6 +16787,7 @@ impl AstNode for JsFormalParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsFormalParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13886,6 +16825,7 @@ impl AstNode for JsFunctionBody {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsFunctionBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13920,6 +16860,7 @@ impl AstNode for JsFunctionDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsFunctionDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -13967,6 +16908,7 @@ impl AstNode for JsFunctionExportDefaultDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsFunctionExportDefaultDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14014,6 +16956,7 @@ impl AstNode for JsFunctionExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsFunctionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14061,6 +17004,7 @@ impl AstNode for JsGetterClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsGetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14101,6 +17045,7 @@ impl AstNode for JsGetterObjectMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsGetterObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14140,6 +17085,7 @@ impl AstNode for JsIdentifierAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsIdentifierAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14165,6 +17111,7 @@ impl AstNode for JsIdentifierBinding {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsIdentifierBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14190,6 +17137,7 @@ impl AstNode for JsIdentifierExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsIdentifierExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14215,6 +17163,7 @@ impl AstNode for JsIfStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsIfStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14254,6 +17203,7 @@ impl AstNode for JsImport {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14290,6 +17240,7 @@ impl AstNode for JsImportAssertion {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImportAssertion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14327,6 +17278,7 @@ impl AstNode for JsImportAssertionEntry {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14360,6 +17312,7 @@ impl AstNode for JsImportBareClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImportBareClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14389,6 +17342,7 @@ impl AstNode for JsImportCallExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImportCallExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14418,6 +17372,7 @@ impl AstNode for JsImportDefaultClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImportDefaultClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14453,6 +17408,7 @@ impl AstNode for JsImportNamedClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImportNamedClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14495,6 +17451,7 @@ impl AstNode for JsImportNamespaceClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsImportNamespaceClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14532,6 +17489,7 @@ impl AstNode for JsInExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsInExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14559,6 +17517,7 @@ impl AstNode for JsInitializerClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsInitializerClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14585,6 +17544,7 @@ impl AstNode for JsInstanceofExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsInstanceofExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14615,6 +17575,7 @@ impl AstNode for JsLabeledStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsLabeledStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14648,6 +17609,7 @@ impl AstNode for JsLiteralExportName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsLiteralExportName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14673,6 +17635,7 @@ impl AstNode for JsLiteralMemberName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsLiteralMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14698,6 +17661,7 @@ impl AstNode for JsLogicalExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsLogicalExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14728,6 +17692,7 @@ impl AstNode for JsMethodClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsMethodClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14776,6 +17741,7 @@ impl AstNode for JsMethodObjectMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsMethodObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14819,6 +17785,7 @@ impl AstNode for JsModule {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsModule {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14850,6 +17817,7 @@ impl AstNode for JsModuleSource {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsModuleSource {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14878,6 +17846,7 @@ impl AstNode for JsName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14906,6 +17875,7 @@ impl AstNode for JsNamedImportSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14937,6 +17907,7 @@ impl AstNode for JsNamedImportSpecifiers {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsNamedImportSpecifiers {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14970,6 +17941,7 @@ impl AstNode for JsNamespaceImportSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsNamespaceImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14997,6 +17969,7 @@ impl AstNode for JsNewExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsNewExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15031,6 +18004,7 @@ impl AstNode for JsNullLiteralExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsNullLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15059,6 +18033,7 @@ impl AstNode for JsNumberLiteralExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsNumberLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15087,6 +18062,7 @@ impl AstNode for JsObjectAssignmentPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15120,6 +18096,7 @@ impl AstNode for JsObjectAssignmentPatternProperty {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectAssignmentPatternProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15151,6 +18128,7 @@ impl AstNode for JsObjectAssignmentPatternRest {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectAssignmentPatternRest {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15182,6 +18160,7 @@ impl AstNode for JsObjectAssignmentPatternShorthandProperty {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectAssignmentPatternShorthandProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15208,6 +18187,7 @@ impl AstNode for JsObjectBindingPattern {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectBindingPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15241,6 +18221,7 @@ impl AstNode for JsObjectBindingPatternProperty {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectBindingPatternProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15272,6 +18253,7 @@ impl AstNode for JsObjectBindingPatternRest {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectBindingPatternRest {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15301,6 +18283,7 @@ impl AstNode for JsObjectBindingPatternShorthandProperty {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectBindingPatternShorthandProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15327,6 +18310,7 @@ impl AstNode for JsObjectExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsObjectExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15360,6 +18344,7 @@ impl AstNode for JsParameters {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15393,6 +18378,7 @@ impl AstNode for JsParenthesizedAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsParenthesizedAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15426,6 +18412,7 @@ impl AstNode for JsParenthesizedExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsParenthesizedExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15459,6 +18446,7 @@ impl AstNode for JsPostUpdateExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsPostUpdateExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15488,6 +18476,7 @@ impl AstNode for JsPreUpdateExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsPreUpdateExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15517,6 +18506,7 @@ impl AstNode for JsPrivateClassMemberName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsPrivateClassMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15543,6 +18533,7 @@ impl AstNode for JsPrivateName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsPrivateName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15572,6 +18563,7 @@ impl AstNode for JsPropertyClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsPropertyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15607,6 +18599,7 @@ impl AstNode for JsPropertyObjectMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsPropertyObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15637,6 +18630,7 @@ impl AstNode for JsReferenceIdentifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsReferenceIdentifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15665,6 +18659,7 @@ impl AstNode for JsRegexLiteralExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsRegexLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15693,6 +18688,7 @@ impl AstNode for JsRestParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsRestParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15726,6 +18722,7 @@ impl AstNode for JsReturnStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsReturnStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15759,6 +18756,7 @@ impl AstNode for JsScript {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsScript {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15790,6 +18788,7 @@ impl AstNode for JsSequenceExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsSequenceExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15820,6 +18819,7 @@ impl AstNode for JsSetterClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsSetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15857,6 +18857,7 @@ impl AstNode for JsSetterObjectMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsSetterObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15893,6 +18894,7 @@ impl AstNode for JsShorthandNamedImportSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsShorthandNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15922,6 +18924,7 @@ impl AstNode for JsShorthandPropertyObjectMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsShorthandPropertyObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15947,6 +18950,7 @@ impl AstNode for JsSpread {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsSpread {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -15976,6 +18980,7 @@ impl AstNode for JsStaticInitializationBlockClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsStaticInitializationBlockClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16013,6 +19018,7 @@ impl AstNode for JsStaticMemberAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsStaticMemberAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16040,6 +19046,7 @@ impl AstNode for JsStaticMemberExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsStaticMemberExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16070,6 +19077,7 @@ impl AstNode for JsStaticModifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsStaticModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16098,6 +19106,7 @@ impl AstNode for JsStringLiteralExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsStringLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16126,6 +19135,7 @@ impl AstNode for JsSuperExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsSuperExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16154,6 +19164,7 @@ impl AstNode for JsSwitchStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsSwitchStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16203,6 +19214,7 @@ impl AstNode for JsTemplate {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsTemplate {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16241,6 +19253,7 @@ impl AstNode for JsTemplateChunkElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsTemplateChunkElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16269,6 +19282,7 @@ impl AstNode for JsTemplateElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16302,6 +19316,7 @@ impl AstNode for JsThisExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsThisExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16327,6 +19342,7 @@ impl AstNode for JsThrowStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsThrowStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16360,6 +19376,7 @@ impl AstNode for JsTryFinallyStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsTryFinallyStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16394,6 +19411,7 @@ impl AstNode for JsTryStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsTryStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16424,6 +19442,7 @@ impl AstNode for JsUnaryExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnaryExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16453,6 +19472,7 @@ impl AstNode for JsVariableDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsVariableDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16479,6 +19499,7 @@ impl AstNode for JsVariableDeclarationClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsVariableDeclarationClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16511,6 +19532,7 @@ impl AstNode for JsVariableDeclarator {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsVariableDeclarator {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16544,6 +19566,7 @@ impl AstNode for JsVariableStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsVariableStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16576,6 +19599,7 @@ impl AstNode for JsWhileStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsWhileStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16614,6 +19638,7 @@ impl AstNode for JsWithStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsWithStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16649,6 +19674,7 @@ impl AstNode for JsYieldArgument {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsYieldArgument {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16678,6 +19704,7 @@ impl AstNode for JsYieldExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsYieldExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16707,6 +19734,7 @@ impl AstNode for JsxAttribute {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16736,6 +19764,7 @@ impl AstNode for JsxAttributeInitializerClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxAttributeInitializerClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16762,6 +19791,7 @@ impl AstNode for JsxClosingElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxClosingElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16799,6 +19829,7 @@ impl AstNode for JsxClosingFragment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxClosingFragment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16835,6 +19866,7 @@ impl AstNode for JsxElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16868,6 +19900,7 @@ impl AstNode for JsxExpressionAttributeValue {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxExpressionAttributeValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16901,6 +19934,7 @@ impl AstNode for JsxExpressionChild {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxExpressionChild {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16937,6 +19971,7 @@ impl AstNode for JsxFragment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxFragment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16970,6 +20005,7 @@ impl AstNode for JsxMemberName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16997,6 +20033,7 @@ impl AstNode for JsxName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17025,6 +20062,7 @@ impl AstNode for JsxNamespaceName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxNamespaceName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17055,6 +20093,7 @@ impl AstNode for JsxOpeningElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxOpeningElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17093,6 +20132,7 @@ impl AstNode for JsxOpeningFragment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxOpeningFragment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17125,6 +20165,7 @@ impl AstNode for JsxReferenceIdentifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxReferenceIdentifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17153,6 +20194,7 @@ impl AstNode for JsxSelfClosingElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxSelfClosingElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17195,6 +20237,7 @@ impl AstNode for JsxSpreadAttribute {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxSpreadAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17232,6 +20275,7 @@ impl AstNode for JsxSpreadChild {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxSpreadChild {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17269,6 +20313,7 @@ impl AstNode for JsxString {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17297,6 +20342,7 @@ impl AstNode for JsxTagExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxTagExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17322,6 +20368,7 @@ impl AstNode for JsxText {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsxText {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17350,6 +20397,7 @@ impl AstNode for NewTarget {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for NewTarget {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17380,6 +20428,7 @@ impl AstNode for TsAbstractModifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsAbstractModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17408,6 +20457,7 @@ impl AstNode for TsAccessibilityModifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsAccessibilityModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17436,6 +20486,7 @@ impl AstNode for TsAnyType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsAnyType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17461,6 +20512,7 @@ impl AstNode for TsArrayType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsArrayType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17497,6 +20549,7 @@ impl AstNode for TsAsAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsAsAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17524,6 +20577,7 @@ impl AstNode for TsAsExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsAsExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17551,6 +20605,7 @@ impl AstNode for TsAssertsCondition {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsAssertsCondition {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17577,6 +20632,7 @@ impl AstNode for TsAssertsReturnType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsAssertsReturnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17613,6 +20669,7 @@ impl AstNode for TsBigIntLiteralType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsBigIntLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17645,6 +20702,7 @@ impl AstNode for TsBigintType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsBigintType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17673,6 +20731,7 @@ impl AstNode for TsBooleanLiteralType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsBooleanLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17698,6 +20757,7 @@ impl AstNode for TsBooleanType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsBooleanType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17726,6 +20786,7 @@ impl AstNode for TsCallSignatureTypeMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsCallSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17763,6 +20824,7 @@ impl AstNode for TsConditionalType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsConditionalType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17806,6 +20868,7 @@ impl AstNode for TsConstructSignatureTypeMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsConstructSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17844,6 +20907,7 @@ impl AstNode for TsConstructorSignatureClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsConstructorSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17875,6 +20939,7 @@ impl AstNode for TsConstructorType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsConstructorType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17917,6 +20982,7 @@ impl AstNode for TsDeclareFunctionDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsDeclareFunctionDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17963,6 +21029,7 @@ impl AstNode for TsDeclareModifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsDeclareModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17991,6 +21058,7 @@ impl AstNode for TsDeclareStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsDeclareStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18023,6 +21091,7 @@ impl AstNode for TsDefaultTypeClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsDefaultTypeClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18049,6 +21118,7 @@ impl AstNode for TsDefinitePropertyAnnotation {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsDefinitePropertyAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18078,6 +21148,7 @@ impl AstNode for TsDefiniteVariableAnnotation {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsDefiniteVariableAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18107,6 +21178,7 @@ impl AstNode for TsEmptyExternalModuleDeclarationBody {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsEmptyExternalModuleDeclarationBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18135,6 +21207,7 @@ impl AstNode for TsEnumDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsEnumDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18174,6 +21247,7 @@ impl AstNode for TsEnumMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsEnumMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18203,6 +21277,7 @@ impl AstNode for TsExportAsNamespaceClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsExportAsNamespaceClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18237,6 +21312,7 @@ impl AstNode for TsExportAssignmentClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsExportAssignmentClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18267,6 +21343,7 @@ impl AstNode for TsExportDeclareClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsExportDeclareClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18299,6 +21376,7 @@ impl AstNode for TsExtendsClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18328,6 +21406,7 @@ impl AstNode for TsExternalModuleDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsExternalModuleDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18358,6 +21437,7 @@ impl AstNode for TsExternalModuleReference {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsExternalModuleReference {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18395,6 +21475,7 @@ impl AstNode for TsFunctionType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsFunctionType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18432,6 +21513,7 @@ impl AstNode for TsGetterSignatureClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsGetterSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18475,6 +21557,7 @@ impl AstNode for TsGetterSignatureTypeMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsGetterSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18517,6 +21600,7 @@ impl AstNode for TsGlobalDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsGlobalDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18546,6 +21630,7 @@ impl AstNode for TsIdentifierBinding {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsIdentifierBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18571,6 +21656,7 @@ impl AstNode for TsImplementsClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsImplementsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18600,6 +21686,7 @@ impl AstNode for TsImportEqualsDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsImportEqualsDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18642,6 +21729,7 @@ impl AstNode for TsImportType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsImportType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18694,6 +21782,7 @@ impl AstNode for TsImportTypeQualifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsImportTypeQualifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18720,6 +21809,7 @@ impl AstNode for TsIndexSignatureClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsIndexSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18762,6 +21852,7 @@ impl AstNode for TsIndexSignatureParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsIndexSignatureParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18791,6 +21882,7 @@ impl AstNode for TsIndexSignatureTypeMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsIndexSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18836,6 +21928,7 @@ impl AstNode for TsIndexedAccessType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsIndexedAccessType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18873,6 +21966,7 @@ impl AstNode for TsInferType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsInferType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18905,6 +21999,7 @@ impl AstNode for TsInterfaceDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsInterfaceDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18951,6 +22046,7 @@ impl AstNode for TsIntersectionType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsIntersectionType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -18980,6 +22076,7 @@ impl AstNode for TsMappedType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsMappedType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19046,6 +22143,7 @@ impl AstNode for TsMappedTypeAsClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsMappedTypeAsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19072,6 +22170,7 @@ impl AstNode for TsMappedTypeOptionalModifierClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsMappedTypeOptionalModifierClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19104,6 +22203,7 @@ impl AstNode for TsMappedTypeReadonlyModifierClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsMappedTypeReadonlyModifierClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19136,6 +22236,7 @@ impl AstNode for TsMethodSignatureClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsMethodSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19183,6 +22284,7 @@ impl AstNode for TsMethodSignatureTypeMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsMethodSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19225,6 +22327,7 @@ impl AstNode for TsModuleBlock {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsModuleBlock {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19258,6 +22361,7 @@ impl AstNode for TsModuleDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsModuleDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19288,6 +22392,7 @@ impl AstNode for TsNameWithTypeArguments {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNameWithTypeArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19317,6 +22422,7 @@ impl AstNode for TsNamedTupleTypeElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNamedTupleTypeElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19355,6 +22461,7 @@ impl AstNode for TsNeverType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNeverType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19383,6 +22490,7 @@ impl AstNode for TsNonNullAssertionAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNonNullAssertionAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19409,6 +22517,7 @@ impl AstNode for TsNonNullAssertionExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNonNullAssertionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19435,6 +22544,7 @@ impl AstNode for TsNonPrimitiveType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNonPrimitiveType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19463,6 +22573,7 @@ impl AstNode for TsNullLiteralType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNullLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19491,6 +22602,7 @@ impl AstNode for TsNumberLiteralType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNumberLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19523,6 +22635,7 @@ impl AstNode for TsNumberType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsNumberType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19551,6 +22664,7 @@ impl AstNode for TsObjectType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsObjectType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19584,6 +22698,7 @@ impl AstNode for TsOptionalPropertyAnnotation {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsOptionalPropertyAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19616,6 +22731,7 @@ impl AstNode for TsOptionalTupleTypeElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsOptionalTupleTypeElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19645,6 +22761,7 @@ impl AstNode for TsOverrideModifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsOverrideModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19673,6 +22790,7 @@ impl AstNode for TsParenthesizedType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsParenthesizedType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19706,6 +22824,7 @@ impl AstNode for TsPredicateReturnType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsPredicateReturnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19736,6 +22855,7 @@ impl AstNode for TsPropertyParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsPropertyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19765,6 +22885,7 @@ impl AstNode for TsPropertySignatureClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsPropertySignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19799,6 +22920,7 @@ impl AstNode for TsPropertySignatureTypeMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsPropertySignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19840,6 +22962,7 @@ impl AstNode for TsQualifiedModuleName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsQualifiedModuleName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19867,6 +22990,7 @@ impl AstNode for TsQualifiedName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsQualifiedName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19894,6 +23018,7 @@ impl AstNode for TsReadonlyModifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsReadonlyModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19922,6 +23047,7 @@ impl AstNode for TsReferenceType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsReferenceType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19951,6 +23077,7 @@ impl AstNode for TsRestTupleTypeElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsRestTupleTypeElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19980,6 +23107,7 @@ impl AstNode for TsReturnTypeAnnotation {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsReturnTypeAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20009,6 +23137,7 @@ impl AstNode for TsSetterSignatureClassMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsSetterSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20049,6 +23178,7 @@ impl AstNode for TsSetterSignatureTypeMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsSetterSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20088,6 +23218,7 @@ impl AstNode for TsStringLiteralType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsStringLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20116,6 +23247,7 @@ impl AstNode for TsStringType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsStringType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20144,6 +23276,7 @@ impl AstNode for TsSymbolType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsSymbolType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20172,6 +23305,7 @@ impl AstNode for TsTemplateChunkElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTemplateChunkElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20200,6 +23334,7 @@ impl AstNode for TsTemplateElement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20233,6 +23368,7 @@ impl AstNode for TsTemplateLiteralType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTemplateLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20266,6 +23402,7 @@ impl AstNode for TsThisParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsThisParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20295,6 +23432,7 @@ impl AstNode for TsThisType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsThisType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20320,6 +23458,7 @@ impl AstNode for TsTupleType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTupleType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20353,6 +23492,7 @@ impl AstNode for TsTypeAliasDeclaration {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeAliasDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20392,6 +23532,7 @@ impl AstNode for TsTypeAnnotation {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20421,6 +23562,7 @@ impl AstNode for TsTypeArguments {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20454,6 +23596,7 @@ impl AstNode for TsTypeAssertionAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeAssertionAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20488,6 +23631,7 @@ impl AstNode for TsTypeAssertionExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeAssertionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20522,6 +23666,7 @@ impl AstNode for TsTypeConstraintClause {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeConstraintClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20551,6 +23696,7 @@ impl AstNode for TsTypeOperatorType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeOperatorType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20580,6 +23726,7 @@ impl AstNode for TsTypeParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20610,6 +23757,7 @@ impl AstNode for TsTypeParameterName {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeParameterName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20638,6 +23786,7 @@ impl AstNode for TsTypeParameters {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20671,6 +23820,7 @@ impl AstNode for TsTypeofType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsTypeofType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20703,6 +23853,7 @@ impl AstNode for TsUndefinedType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsUndefinedType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20731,6 +23882,7 @@ impl AstNode for TsUnionType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsUnionType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20760,6 +23912,7 @@ impl AstNode for TsUnknownType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsUnknownType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20788,6 +23941,7 @@ impl AstNode for TsVoidType {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for TsVoidType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -20862,6 +24016,16 @@ impl AstNode for JsAnyArrayAssignmentPatternElement {
             JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => &it.syntax,
             JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => &it.syntax,
             JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
+                it.syntax
+            }
+            JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => it.syntax,
+            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => it.syntax,
+            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(it) => it.into_syntax(),
         }
     }
 }
@@ -20957,6 +24121,14 @@ impl AstNode for JsAnyArrayBindingPatternElement {
             JsAnyArrayBindingPatternElement::JsAnyBindingPattern(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => it.syntax,
+            JsAnyArrayBindingPatternElement::JsArrayHole(it) => it.syntax,
+            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(it) => it.syntax,
+            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyArrayBindingPatternElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -21023,6 +24195,13 @@ impl AstNode for JsAnyArrayElement {
             JsAnyArrayElement::JsAnyExpression(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyArrayElement::JsArrayHole(it) => it.syntax,
+            JsAnyArrayElement::JsSpread(it) => it.syntax,
+            JsAnyArrayElement::JsAnyExpression(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyArrayElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -21078,6 +24257,12 @@ impl AstNode for JsAnyArrowFunctionParameters {
         match self {
             JsAnyArrowFunctionParameters::JsParameters(it) => &it.syntax,
             JsAnyArrowFunctionParameters::JsAnyBinding(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyArrowFunctionParameters::JsParameters(it) => it.syntax,
+            JsAnyArrowFunctionParameters::JsAnyBinding(it) => it.into_syntax(),
         }
     }
 }
@@ -21198,6 +24383,18 @@ impl AstNode for JsAnyAssignment {
             JsAnyAssignment::TsTypeAssertionAssignment(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyAssignment::JsComputedMemberAssignment(it) => it.syntax,
+            JsAnyAssignment::JsIdentifierAssignment(it) => it.syntax,
+            JsAnyAssignment::JsParenthesizedAssignment(it) => it.syntax,
+            JsAnyAssignment::JsStaticMemberAssignment(it) => it.syntax,
+            JsAnyAssignment::JsUnknownAssignment(it) => it.syntax,
+            JsAnyAssignment::TsAsAssignment(it) => it.syntax,
+            JsAnyAssignment::TsNonNullAssertionAssignment(it) => it.syntax,
+            JsAnyAssignment::TsTypeAssertionAssignment(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -21280,6 +24477,13 @@ impl AstNode for JsAnyAssignmentPattern {
             JsAnyAssignmentPattern::JsAnyAssignment(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => it.syntax,
+            JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => it.syntax,
+            JsAnyAssignmentPattern::JsAnyAssignment(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -21330,6 +24534,12 @@ impl AstNode for JsAnyBinding {
         match self {
             JsAnyBinding::JsIdentifierBinding(it) => &it.syntax,
             JsAnyBinding::JsUnknownBinding(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyBinding::JsIdentifierBinding(it) => it.syntax,
+            JsAnyBinding::JsUnknownBinding(it) => it.syntax,
         }
     }
 }
@@ -21398,6 +24608,13 @@ impl AstNode for JsAnyBindingPattern {
             JsAnyBindingPattern::JsAnyBinding(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyBindingPattern::JsArrayBindingPattern(it) => it.syntax,
+            JsAnyBindingPattern::JsObjectBindingPattern(it) => it.syntax,
+            JsAnyBindingPattern::JsAnyBinding(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyBindingPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -21451,6 +24668,12 @@ impl AstNode for JsAnyCallArgument {
         match self {
             JsAnyCallArgument::JsSpread(it) => &it.syntax,
             JsAnyCallArgument::JsAnyExpression(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyCallArgument::JsSpread(it) => it.syntax,
+            JsAnyCallArgument::JsAnyExpression(it) => it.into_syntax(),
         }
     }
 }
@@ -21513,6 +24736,13 @@ impl AstNode for JsAnyClass {
             JsAnyClass::JsClassDeclaration(it) => &it.syntax,
             JsAnyClass::JsClassExportDefaultDeclaration(it) => &it.syntax,
             JsAnyClass::JsClassExpression(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyClass::JsClassDeclaration(it) => it.syntax,
+            JsAnyClass::JsClassExportDefaultDeclaration(it) => it.syntax,
+            JsAnyClass::JsClassExpression(it) => it.syntax,
         }
     }
 }
@@ -21707,6 +24937,24 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::TsSetterSignatureClassMember(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyClassMember::JsConstructorClassMember(it) => it.syntax,
+            JsAnyClassMember::JsEmptyClassMember(it) => it.syntax,
+            JsAnyClassMember::JsGetterClassMember(it) => it.syntax,
+            JsAnyClassMember::JsMethodClassMember(it) => it.syntax,
+            JsAnyClassMember::JsPropertyClassMember(it) => it.syntax,
+            JsAnyClassMember::JsSetterClassMember(it) => it.syntax,
+            JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.syntax,
+            JsAnyClassMember::JsUnknownMember(it) => it.syntax,
+            JsAnyClassMember::TsConstructorSignatureClassMember(it) => it.syntax,
+            JsAnyClassMember::TsGetterSignatureClassMember(it) => it.syntax,
+            JsAnyClassMember::TsIndexSignatureClassMember(it) => it.syntax,
+            JsAnyClassMember::TsMethodSignatureClassMember(it) => it.syntax,
+            JsAnyClassMember::TsPropertySignatureClassMember(it) => it.syntax,
+            JsAnyClassMember::TsSetterSignatureClassMember(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -21801,6 +25049,13 @@ impl AstNode for JsAnyClassMemberName {
             JsAnyClassMemberName::JsPrivateClassMemberName(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyClassMemberName::JsComputedMemberName(it) => it.syntax,
+            JsAnyClassMemberName::JsLiteralMemberName(it) => it.syntax,
+            JsAnyClassMemberName::JsPrivateClassMemberName(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyClassMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -21869,6 +25124,13 @@ impl AstNode for JsAnyConstructorParameter {
             JsAnyConstructorParameter::JsRestParameter(it) => &it.syntax,
             JsAnyConstructorParameter::TsPropertyParameter(it) => &it.syntax,
             JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyConstructorParameter::JsRestParameter(it) => it.syntax,
+            JsAnyConstructorParameter::TsPropertyParameter(it) => it.syntax,
+            JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.into_syntax(),
         }
     }
 }
@@ -22025,6 +25287,21 @@ impl AstNode for JsAnyDeclaration {
             JsAnyDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
             JsAnyDeclaration::TsModuleDeclaration(it) => &it.syntax,
             JsAnyDeclaration::TsTypeAliasDeclaration(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyDeclaration::JsClassDeclaration(it) => it.syntax,
+            JsAnyDeclaration::JsFunctionDeclaration(it) => it.syntax,
+            JsAnyDeclaration::JsVariableDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsEnumDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsExternalModuleDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsGlobalDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsImportEqualsDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsInterfaceDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsModuleDeclaration(it) => it.syntax,
+            JsAnyDeclaration::TsTypeAliasDeclaration(it) => it.syntax,
         }
     }
 }
@@ -22203,6 +25480,21 @@ impl AstNode for JsAnyDeclarationClause {
             JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyDeclarationClause::JsClassDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::JsFunctionDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::JsVariableDeclarationClause(it) => it.syntax,
+            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::TsEnumDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::TsGlobalDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::TsImportEqualsDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::TsInterfaceDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::TsModuleDeclaration(it) => it.syntax,
+            JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyDeclarationClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -22354,6 +25646,19 @@ impl AstNode for JsAnyExportClause {
             JsAnyExportClause::JsAnyDeclarationClause(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyExportClause::JsExportDefaultDeclarationClause(it) => it.syntax,
+            JsAnyExportClause::JsExportDefaultExpressionClause(it) => it.syntax,
+            JsAnyExportClause::JsExportFromClause(it) => it.syntax,
+            JsAnyExportClause::JsExportNamedClause(it) => it.syntax,
+            JsAnyExportClause::JsExportNamedFromClause(it) => it.syntax,
+            JsAnyExportClause::TsExportAsNamespaceClause(it) => it.syntax,
+            JsAnyExportClause::TsExportAssignmentClause(it) => it.syntax,
+            JsAnyExportClause::TsExportDeclareClause(it) => it.syntax,
+            JsAnyExportClause::JsAnyDeclarationClause(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyExportClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -22456,6 +25761,14 @@ impl AstNode for JsAnyExportDefaultDeclaration {
             JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => it.syntax,
+            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => it.syntax,
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(it) => it.syntax,
+            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyExportDefaultDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -22527,6 +25840,12 @@ impl AstNode for JsAnyExportNamedSpecifier {
         match self {
             JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => &it.syntax,
             JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => it.syntax,
+            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => it.syntax,
         }
     }
 }
@@ -22862,6 +26181,45 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsAnyLiteralExpression(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyExpression::ImportMeta(it) => it.syntax,
+            JsAnyExpression::JsArrayExpression(it) => it.syntax,
+            JsAnyExpression::JsArrowFunctionExpression(it) => it.syntax,
+            JsAnyExpression::JsAssignmentExpression(it) => it.syntax,
+            JsAnyExpression::JsAwaitExpression(it) => it.syntax,
+            JsAnyExpression::JsBinaryExpression(it) => it.syntax,
+            JsAnyExpression::JsCallExpression(it) => it.syntax,
+            JsAnyExpression::JsClassExpression(it) => it.syntax,
+            JsAnyExpression::JsComputedMemberExpression(it) => it.syntax,
+            JsAnyExpression::JsConditionalExpression(it) => it.syntax,
+            JsAnyExpression::JsFunctionExpression(it) => it.syntax,
+            JsAnyExpression::JsIdentifierExpression(it) => it.syntax,
+            JsAnyExpression::JsImportCallExpression(it) => it.syntax,
+            JsAnyExpression::JsInExpression(it) => it.syntax,
+            JsAnyExpression::JsInstanceofExpression(it) => it.syntax,
+            JsAnyExpression::JsLogicalExpression(it) => it.syntax,
+            JsAnyExpression::JsNewExpression(it) => it.syntax,
+            JsAnyExpression::JsObjectExpression(it) => it.syntax,
+            JsAnyExpression::JsParenthesizedExpression(it) => it.syntax,
+            JsAnyExpression::JsPostUpdateExpression(it) => it.syntax,
+            JsAnyExpression::JsPreUpdateExpression(it) => it.syntax,
+            JsAnyExpression::JsSequenceExpression(it) => it.syntax,
+            JsAnyExpression::JsStaticMemberExpression(it) => it.syntax,
+            JsAnyExpression::JsSuperExpression(it) => it.syntax,
+            JsAnyExpression::JsTemplate(it) => it.syntax,
+            JsAnyExpression::JsThisExpression(it) => it.syntax,
+            JsAnyExpression::JsUnaryExpression(it) => it.syntax,
+            JsAnyExpression::JsUnknownExpression(it) => it.syntax,
+            JsAnyExpression::JsYieldExpression(it) => it.syntax,
+            JsAnyExpression::JsxTagExpression(it) => it.syntax,
+            JsAnyExpression::NewTarget(it) => it.syntax,
+            JsAnyExpression::TsAsExpression(it) => it.syntax,
+            JsAnyExpression::TsNonNullAssertionExpression(it) => it.syntax,
+            JsAnyExpression::TsTypeAssertionExpression(it) => it.syntax,
+            JsAnyExpression::JsAnyLiteralExpression(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -22989,6 +26347,12 @@ impl AstNode for JsAnyForInOrOfInitializer {
             JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyForInOrOfInitializer::JsForVariableDeclaration(it) => it.syntax,
+            JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyForInOrOfInitializer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -23046,6 +26410,12 @@ impl AstNode for JsAnyForInitializer {
             JsAnyForInitializer::JsAnyExpression(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyForInitializer::JsVariableDeclaration(it) => it.syntax,
+            JsAnyForInitializer::JsAnyExpression(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyForInitializer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -23100,6 +26470,12 @@ impl AstNode for JsAnyFormalParameter {
         match self {
             JsAnyFormalParameter::JsFormalParameter(it) => &it.syntax,
             JsAnyFormalParameter::JsUnknownParameter(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyFormalParameter::JsFormalParameter(it) => it.syntax,
+            JsAnyFormalParameter::JsUnknownParameter(it) => it.syntax,
         }
     }
 }
@@ -23184,6 +26560,14 @@ impl AstNode for JsAnyFunction {
             JsAnyFunction::JsFunctionExpression(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyFunction::JsArrowFunctionExpression(it) => it.syntax,
+            JsAnyFunction::JsFunctionDeclaration(it) => it.syntax,
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(it) => it.syntax,
+            JsAnyFunction::JsFunctionExpression(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyFunction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -23239,6 +26623,12 @@ impl AstNode for JsAnyFunctionBody {
         match self {
             JsAnyFunctionBody::JsFunctionBody(it) => &it.syntax,
             JsAnyFunctionBody::JsAnyExpression(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyFunctionBody::JsFunctionBody(it) => it.syntax,
+            JsAnyFunctionBody::JsAnyExpression(it) => it.into_syntax(),
         }
     }
 }
@@ -23300,6 +26690,12 @@ impl AstNode for JsAnyImportAssertionEntry {
         match self {
             JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => &it.syntax,
             JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => it.syntax,
+            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(it) => it.syntax,
         }
     }
 }
@@ -23384,6 +26780,14 @@ impl AstNode for JsAnyImportClause {
             JsAnyImportClause::JsImportNamespaceClause(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyImportClause::JsImportBareClause(it) => it.syntax,
+            JsAnyImportClause::JsImportDefaultClause(it) => it.syntax,
+            JsAnyImportClause::JsImportNamedClause(it) => it.syntax,
+            JsAnyImportClause::JsImportNamespaceClause(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyImportClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -23439,6 +26843,12 @@ impl AstNode for JsAnyInProperty {
         match self {
             JsAnyInProperty::JsPrivateName(it) => &it.syntax,
             JsAnyInProperty::JsAnyExpression(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyInProperty::JsPrivateName(it) => it.syntax,
+            JsAnyInProperty::JsAnyExpression(it) => it.into_syntax(),
         }
     }
 }
@@ -23551,6 +26961,16 @@ impl AstNode for JsAnyLiteralExpression {
             JsAnyLiteralExpression::JsStringLiteralExpression(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyLiteralExpression::JsBigIntLiteralExpression(it) => it.syntax,
+            JsAnyLiteralExpression::JsBooleanLiteralExpression(it) => it.syntax,
+            JsAnyLiteralExpression::JsNullLiteralExpression(it) => it.syntax,
+            JsAnyLiteralExpression::JsNumberLiteralExpression(it) => it.syntax,
+            JsAnyLiteralExpression::JsRegexLiteralExpression(it) => it.syntax,
+            JsAnyLiteralExpression::JsStringLiteralExpression(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -23627,6 +27047,13 @@ impl AstNode for JsAnyMethodModifier {
             JsAnyMethodModifier::TsOverrideModifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyMethodModifier::JsStaticModifier(it) => it.syntax,
+            JsAnyMethodModifier::TsAccessibilityModifier(it) => it.syntax,
+            JsAnyMethodModifier::TsOverrideModifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyMethodModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -23687,6 +27114,13 @@ impl AstNode for JsAnyModuleItem {
             JsAnyModuleItem::JsAnyStatement(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyModuleItem::JsExport(it) => it.syntax,
+            JsAnyModuleItem::JsImport(it) => it.syntax,
+            JsAnyModuleItem::JsAnyStatement(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyModuleItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -23733,6 +27167,12 @@ impl AstNode for JsAnyName {
         match self {
             JsAnyName::JsName(it) => &it.syntax,
             JsAnyName::JsPrivateName(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyName::JsName(it) => it.syntax,
+            JsAnyName::JsPrivateName(it) => it.syntax,
         }
     }
 }
@@ -23792,6 +27232,12 @@ impl AstNode for JsAnyNamedImport {
         match self {
             JsAnyNamedImport::JsNamedImportSpecifiers(it) => &it.syntax,
             JsAnyNamedImport::JsNamespaceImportSpecifier(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyNamedImport::JsNamedImportSpecifiers(it) => it.syntax,
+            JsAnyNamedImport::JsNamespaceImportSpecifier(it) => it.syntax,
         }
     }
 }
@@ -23866,6 +27312,13 @@ impl AstNode for JsAnyNamedImportSpecifier {
             JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => &it.syntax,
             JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => &it.syntax,
             JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => it.syntax,
+            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => it.syntax,
+            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(it) => it.syntax,
         }
     }
 }
@@ -23964,6 +27417,16 @@ impl AstNode for JsAnyObjectAssignmentPatternMember {
                 &it.syntax
             }
             JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => it.syntax,
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => it.syntax,
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
+                it.syntax
+            }
+            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(it) => it.syntax,
         }
     }
 }
@@ -24076,6 +27539,17 @@ impl AstNode for JsAnyObjectBindingPatternMember {
                 &it.syntax
             }
             JsAnyObjectBindingPatternMember::JsUnknownBinding(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyObjectBindingPatternMember::JsIdentifierBinding(it) => it.syntax,
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.syntax,
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.syntax,
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
+                it.syntax
+            }
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(it) => it.syntax,
         }
     }
 }
@@ -24196,6 +27670,17 @@ impl AstNode for JsAnyObjectMember {
             JsAnyObjectMember::JsUnknownMember(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyObjectMember::JsGetterObjectMember(it) => it.syntax,
+            JsAnyObjectMember::JsMethodObjectMember(it) => it.syntax,
+            JsAnyObjectMember::JsPropertyObjectMember(it) => it.syntax,
+            JsAnyObjectMember::JsSetterObjectMember(it) => it.syntax,
+            JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => it.syntax,
+            JsAnyObjectMember::JsSpread(it) => it.syntax,
+            JsAnyObjectMember::JsUnknownMember(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -24262,6 +27747,12 @@ impl AstNode for JsAnyObjectMemberName {
             JsAnyObjectMemberName::JsLiteralMemberName(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyObjectMemberName::JsComputedMemberName(it) => it.syntax,
+            JsAnyObjectMemberName::JsLiteralMemberName(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyObjectMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -24320,6 +27811,13 @@ impl AstNode for JsAnyParameter {
             JsAnyParameter::JsRestParameter(it) => &it.syntax,
             JsAnyParameter::TsThisParameter(it) => &it.syntax,
             JsAnyParameter::JsAnyFormalParameter(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyParameter::JsRestParameter(it) => it.syntax,
+            JsAnyParameter::TsThisParameter(it) => it.syntax,
+            JsAnyParameter::JsAnyFormalParameter(it) => it.into_syntax(),
         }
     }
 }
@@ -24404,6 +27902,14 @@ impl AstNode for JsAnyPropertyModifier {
             JsAnyPropertyModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyPropertyModifier::JsStaticModifier(it) => it.syntax,
+            JsAnyPropertyModifier::TsAccessibilityModifier(it) => it.syntax,
+            JsAnyPropertyModifier::TsOverrideModifier(it) => it.syntax,
+            JsAnyPropertyModifier::TsReadonlyModifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyPropertyModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -24459,6 +27965,13 @@ impl AstNode for JsAnyRoot {
             JsAnyRoot::JsExpressionSnipped(it) => &it.syntax,
             JsAnyRoot::JsModule(it) => &it.syntax,
             JsAnyRoot::JsScript(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyRoot::JsExpressionSnipped(it) => it.syntax,
+            JsAnyRoot::JsModule(it) => it.syntax,
+            JsAnyRoot::JsScript(it) => it.syntax,
         }
     }
 }
@@ -24759,6 +28272,42 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyStatement::JsBlockStatement(it) => it.syntax,
+            JsAnyStatement::JsBreakStatement(it) => it.syntax,
+            JsAnyStatement::JsClassDeclaration(it) => it.syntax,
+            JsAnyStatement::JsContinueStatement(it) => it.syntax,
+            JsAnyStatement::JsDebuggerStatement(it) => it.syntax,
+            JsAnyStatement::JsDoWhileStatement(it) => it.syntax,
+            JsAnyStatement::JsEmptyStatement(it) => it.syntax,
+            JsAnyStatement::JsExpressionStatement(it) => it.syntax,
+            JsAnyStatement::JsForInStatement(it) => it.syntax,
+            JsAnyStatement::JsForOfStatement(it) => it.syntax,
+            JsAnyStatement::JsForStatement(it) => it.syntax,
+            JsAnyStatement::JsFunctionDeclaration(it) => it.syntax,
+            JsAnyStatement::JsIfStatement(it) => it.syntax,
+            JsAnyStatement::JsLabeledStatement(it) => it.syntax,
+            JsAnyStatement::JsReturnStatement(it) => it.syntax,
+            JsAnyStatement::JsSwitchStatement(it) => it.syntax,
+            JsAnyStatement::JsThrowStatement(it) => it.syntax,
+            JsAnyStatement::JsTryFinallyStatement(it) => it.syntax,
+            JsAnyStatement::JsTryStatement(it) => it.syntax,
+            JsAnyStatement::JsUnknownStatement(it) => it.syntax,
+            JsAnyStatement::JsVariableStatement(it) => it.syntax,
+            JsAnyStatement::JsWhileStatement(it) => it.syntax,
+            JsAnyStatement::JsWithStatement(it) => it.syntax,
+            JsAnyStatement::TsDeclareFunctionDeclaration(it) => it.syntax,
+            JsAnyStatement::TsDeclareStatement(it) => it.syntax,
+            JsAnyStatement::TsEnumDeclaration(it) => it.syntax,
+            JsAnyStatement::TsExternalModuleDeclaration(it) => it.syntax,
+            JsAnyStatement::TsGlobalDeclaration(it) => it.syntax,
+            JsAnyStatement::TsImportEqualsDeclaration(it) => it.syntax,
+            JsAnyStatement::TsInterfaceDeclaration(it) => it.syntax,
+            JsAnyStatement::TsModuleDeclaration(it) => it.syntax,
+            JsAnyStatement::TsTypeAliasDeclaration(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -24865,6 +28414,12 @@ impl AstNode for JsAnySwitchClause {
             JsAnySwitchClause::JsDefaultClause(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnySwitchClause::JsCaseClause(it) => it.syntax,
+            JsAnySwitchClause::JsDefaultClause(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnySwitchClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -24921,6 +28476,12 @@ impl AstNode for JsAnyTemplateElement {
             JsAnyTemplateElement::JsTemplateElement(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsAnyTemplateElement::JsTemplateChunkElement(it) => it.syntax,
+            JsAnyTemplateElement::JsTemplateElement(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsAnyTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -24971,6 +28532,12 @@ impl AstNode for JsxAnyAttribute {
             JsxAnyAttribute::JsxSpreadAttribute(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyAttribute::JsxAttribute(it) => it.syntax,
+            JsxAnyAttribute::JsxSpreadAttribute(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsxAnyAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25019,6 +28586,12 @@ impl AstNode for JsxAnyAttributeName {
         match self {
             JsxAnyAttributeName::JsxName(it) => &it.syntax,
             JsxAnyAttributeName::JsxNamespaceName(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyAttributeName::JsxName(it) => it.syntax,
+            JsxAnyAttributeName::JsxNamespaceName(it) => it.syntax,
         }
     }
 }
@@ -25083,6 +28656,13 @@ impl AstNode for JsxAnyAttributeValue {
             JsxAnyAttributeValue::JsxExpressionAttributeValue(it) => &it.syntax,
             JsxAnyAttributeValue::JsxString(it) => &it.syntax,
             JsxAnyAttributeValue::JsxAnyTag(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyAttributeValue::JsxExpressionAttributeValue(it) => it.syntax,
+            JsxAnyAttributeValue::JsxString(it) => it.syntax,
+            JsxAnyAttributeValue::JsxAnyTag(it) => it.into_syntax(),
         }
     }
 }
@@ -25165,6 +28745,16 @@ impl AstNode for JsxAnyChild {
             JsxAnyChild::JsxText(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyChild::JsxElement(it) => it.syntax,
+            JsxAnyChild::JsxExpressionChild(it) => it.syntax,
+            JsxAnyChild::JsxFragment(it) => it.syntax,
+            JsxAnyChild::JsxSelfClosingElement(it) => it.syntax,
+            JsxAnyChild::JsxSpreadChild(it) => it.syntax,
+            JsxAnyChild::JsxText(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsxAnyChild {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25240,6 +28830,14 @@ impl AstNode for JsxAnyElementName {
             JsxAnyElementName::JsxReferenceIdentifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyElementName::JsxMemberName(it) => it.syntax,
+            JsxAnyElementName::JsxName(it) => it.syntax,
+            JsxAnyElementName::JsxNamespaceName(it) => it.syntax,
+            JsxAnyElementName::JsxReferenceIdentifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsxAnyElementName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25288,6 +28886,12 @@ impl AstNode for JsxAnyName {
         match self {
             JsxAnyName::JsxName(it) => &it.syntax,
             JsxAnyName::JsxNamespaceName(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyName::JsxName(it) => it.syntax,
+            JsxAnyName::JsxNamespaceName(it) => it.syntax,
         }
     }
 }
@@ -25350,6 +28954,13 @@ impl AstNode for JsxAnyObjectName {
             JsxAnyObjectName::JsxReferenceIdentifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyObjectName::JsxMemberName(it) => it.syntax,
+            JsxAnyObjectName::JsxNamespaceName(it) => it.syntax,
+            JsxAnyObjectName::JsxReferenceIdentifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for JsxAnyObjectName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25405,6 +29016,13 @@ impl AstNode for JsxAnyTag {
             JsxAnyTag::JsxElement(it) => &it.syntax,
             JsxAnyTag::JsxFragment(it) => &it.syntax,
             JsxAnyTag::JsxSelfClosingElement(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsxAnyTag::JsxElement(it) => it.syntax,
+            JsxAnyTag::JsxFragment(it) => it.syntax,
+            JsxAnyTag::JsxSelfClosingElement(it) => it.syntax,
         }
     }
 }
@@ -25472,6 +29090,14 @@ impl AstNode for TsAnyExternalModuleDeclarationBody {
             TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+                it.syntax
+            }
+            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyExternalModuleDeclarationBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25530,6 +29156,12 @@ impl AstNode for TsAnyIndexSignatureModifier {
         match self {
             TsAnyIndexSignatureModifier::JsStaticModifier(it) => &it.syntax,
             TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyIndexSignatureModifier::JsStaticModifier(it) => it.syntax,
+            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => it.syntax,
         }
     }
 }
@@ -25614,6 +29246,14 @@ impl AstNode for TsAnyMethodSignatureModifier {
             TsAnyMethodSignatureModifier::TsOverrideModifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyMethodSignatureModifier::JsStaticModifier(it) => it.syntax,
+            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => it.syntax,
+            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => it.syntax,
+            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyMethodSignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25676,6 +29316,12 @@ impl AstNode for TsAnyModuleName {
             TsAnyModuleName::TsQualifiedModuleName(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyModuleName::TsIdentifierBinding(it) => it.syntax,
+            TsAnyModuleName::TsQualifiedModuleName(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyModuleName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25735,6 +29381,12 @@ impl AstNode for TsAnyModuleReference {
             TsAnyModuleReference::TsAnyName(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyModuleReference::TsExternalModuleReference(it) => it.syntax,
+            TsAnyModuleReference::TsAnyName(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyModuleReference {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25783,6 +29435,12 @@ impl AstNode for TsAnyName {
         match self {
             TsAnyName::JsReferenceIdentifier(it) => &it.syntax,
             TsAnyName::TsQualifiedName(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyName::JsReferenceIdentifier(it) => it.syntax,
+            TsAnyName::TsQualifiedName(it) => it.syntax,
         }
     }
 }
@@ -25855,6 +29513,13 @@ impl AstNode for TsAnyPropertyAnnotation {
             TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => &it.syntax,
             TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
             TsAnyPropertyAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => it.syntax,
+            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => it.syntax,
+            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => it.syntax,
         }
     }
 }
@@ -25933,6 +29598,13 @@ impl AstNode for TsAnyPropertyParameterModifier {
             TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => it.syntax,
+            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => it.syntax,
+            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyPropertyParameterModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -25993,6 +29665,12 @@ impl AstNode for TsAnyPropertySignatureAnnotation {
         match self {
             TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
             TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => it.syntax,
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => it.syntax,
         }
     }
 }
@@ -26099,6 +29777,16 @@ impl AstNode for TsAnyPropertySignatureModifier {
             TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyPropertySignatureModifier::JsStaticModifier(it) => it.syntax,
+            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => it.syntax,
+            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => it.syntax,
+            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => it.syntax,
+            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => it.syntax,
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyPropertySignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -26175,6 +29863,13 @@ impl AstNode for TsAnyReturnType {
             TsAnyReturnType::TsType(it) => it.syntax(),
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyReturnType::TsAssertsReturnType(it) => it.syntax,
+            TsAnyReturnType::TsPredicateReturnType(it) => it.syntax,
+            TsAnyReturnType::TsType(it) => it.into_syntax(),
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyReturnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -26231,6 +29926,12 @@ impl AstNode for TsAnyTemplateElement {
         match self {
             TsAnyTemplateElement::TsTemplateChunkElement(it) => &it.syntax,
             TsAnyTemplateElement::TsTemplateElement(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyTemplateElement::TsTemplateChunkElement(it) => it.syntax,
+            TsAnyTemplateElement::TsTemplateElement(it) => it.syntax,
         }
     }
 }
@@ -26310,6 +30011,14 @@ impl AstNode for TsAnyTupleTypeElement {
             TsAnyTupleTypeElement::TsOptionalTupleTypeElement(it) => &it.syntax,
             TsAnyTupleTypeElement::TsRestTupleTypeElement(it) => &it.syntax,
             TsAnyTupleTypeElement::TsType(it) => it.syntax(),
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyTupleTypeElement::TsNamedTupleTypeElement(it) => it.syntax,
+            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(it) => it.syntax,
+            TsAnyTupleTypeElement::TsRestTupleTypeElement(it) => it.syntax,
+            TsAnyTupleTypeElement::TsType(it) => it.into_syntax(),
         }
     }
 }
@@ -26436,6 +30145,18 @@ impl AstNode for TsAnyTypeMember {
             TsAnyTypeMember::TsSetterSignatureTypeMember(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyTypeMember::JsUnknownMember(it) => it.syntax,
+            TsAnyTypeMember::TsCallSignatureTypeMember(it) => it.syntax,
+            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => it.syntax,
+            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => it.syntax,
+            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => it.syntax,
+            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => it.syntax,
+            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => it.syntax,
+            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -26502,6 +30223,12 @@ impl AstNode for TsAnyTypePredicateParameterName {
             TsAnyTypePredicateParameterName::TsThisType(it) => &it.syntax,
         }
     }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyTypePredicateParameterName::JsReferenceIdentifier(it) => it.syntax,
+            TsAnyTypePredicateParameterName::TsThisType(it) => it.syntax,
+        }
+    }
 }
 impl std::fmt::Debug for TsAnyTypePredicateParameterName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -26560,6 +30287,12 @@ impl AstNode for TsAnyVariableAnnotation {
         match self {
             TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => &it.syntax,
             TsAnyVariableAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => it.syntax,
+            TsAnyVariableAnnotation::TsTypeAnnotation(it) => it.syntax,
         }
     }
 }
@@ -26810,6 +30543,44 @@ impl AstNode for TsType {
             TsType::TsUnionType(it) => &it.syntax,
             TsType::TsUnknownType(it) => &it.syntax,
             TsType::TsVoidType(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            TsType::TsAnyType(it) => it.syntax,
+            TsType::TsArrayType(it) => it.syntax,
+            TsType::TsBigIntLiteralType(it) => it.syntax,
+            TsType::TsBigintType(it) => it.syntax,
+            TsType::TsBooleanLiteralType(it) => it.syntax,
+            TsType::TsBooleanType(it) => it.syntax,
+            TsType::TsConditionalType(it) => it.syntax,
+            TsType::TsConstructorType(it) => it.syntax,
+            TsType::TsFunctionType(it) => it.syntax,
+            TsType::TsImportType(it) => it.syntax,
+            TsType::TsIndexedAccessType(it) => it.syntax,
+            TsType::TsInferType(it) => it.syntax,
+            TsType::TsIntersectionType(it) => it.syntax,
+            TsType::TsMappedType(it) => it.syntax,
+            TsType::TsNeverType(it) => it.syntax,
+            TsType::TsNonPrimitiveType(it) => it.syntax,
+            TsType::TsNullLiteralType(it) => it.syntax,
+            TsType::TsNumberLiteralType(it) => it.syntax,
+            TsType::TsNumberType(it) => it.syntax,
+            TsType::TsObjectType(it) => it.syntax,
+            TsType::TsParenthesizedType(it) => it.syntax,
+            TsType::TsReferenceType(it) => it.syntax,
+            TsType::TsStringLiteralType(it) => it.syntax,
+            TsType::TsStringType(it) => it.syntax,
+            TsType::TsSymbolType(it) => it.syntax,
+            TsType::TsTemplateLiteralType(it) => it.syntax,
+            TsType::TsThisType(it) => it.syntax,
+            TsType::TsTupleType(it) => it.syntax,
+            TsType::TsTypeOperatorType(it) => it.syntax,
+            TsType::TsTypeofType(it) => it.syntax,
+            TsType::TsUndefinedType(it) => it.syntax,
+            TsType::TsUnionType(it) => it.syntax,
+            TsType::TsUnknownType(it) => it.syntax,
+            TsType::TsVoidType(it) => it.syntax,
         }
     }
 }
@@ -28610,6 +32381,8 @@ impl std::fmt::Display for TsVoidType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknown {
     syntax: SyntaxNode,
 }
@@ -28634,6 +32407,7 @@ impl AstNode for JsUnknown {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknown {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28649,6 +32423,8 @@ impl From<JsUnknown> for SyntaxElement {
     fn from(n: JsUnknown) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownAssignment {
     syntax: SyntaxNode,
 }
@@ -28673,6 +32449,7 @@ impl AstNode for JsUnknownAssignment {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28688,6 +32465,8 @@ impl From<JsUnknownAssignment> for SyntaxElement {
     fn from(n: JsUnknownAssignment) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownBinding {
     syntax: SyntaxNode,
 }
@@ -28712,6 +32491,7 @@ impl AstNode for JsUnknownBinding {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28727,6 +32507,8 @@ impl From<JsUnknownBinding> for SyntaxElement {
     fn from(n: JsUnknownBinding) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownExpression {
     syntax: SyntaxNode,
 }
@@ -28751,6 +32533,7 @@ impl AstNode for JsUnknownExpression {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28766,6 +32549,8 @@ impl From<JsUnknownExpression> for SyntaxElement {
     fn from(n: JsUnknownExpression) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownImportAssertionEntry {
     syntax: SyntaxNode,
 }
@@ -28790,6 +32575,7 @@ impl AstNode for JsUnknownImportAssertionEntry {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28805,6 +32591,8 @@ impl From<JsUnknownImportAssertionEntry> for SyntaxElement {
     fn from(n: JsUnknownImportAssertionEntry) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownMember {
     syntax: SyntaxNode,
 }
@@ -28829,6 +32617,7 @@ impl AstNode for JsUnknownMember {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28844,6 +32633,8 @@ impl From<JsUnknownMember> for SyntaxElement {
     fn from(n: JsUnknownMember) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownNamedImportSpecifier {
     syntax: SyntaxNode,
 }
@@ -28868,6 +32659,7 @@ impl AstNode for JsUnknownNamedImportSpecifier {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28883,6 +32675,8 @@ impl From<JsUnknownNamedImportSpecifier> for SyntaxElement {
     fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownParameter {
     syntax: SyntaxNode,
 }
@@ -28907,6 +32701,7 @@ impl AstNode for JsUnknownParameter {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28922,6 +32717,8 @@ impl From<JsUnknownParameter> for SyntaxElement {
     fn from(n: JsUnknownParameter) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownStatement {
     syntax: SyntaxNode,
 }
@@ -28946,6 +32743,7 @@ impl AstNode for JsUnknownStatement {
         }
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
 impl std::fmt::Debug for JsUnknownStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28990,11 +32788,26 @@ impl AstNode for JsArrayAssignmentPatternElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayAssignmentPatternElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsArrayAssignmentPatternElementList {
     type Language = Language;
     type Node = JsAnyArrayAssignmentPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsArrayAssignmentPatternElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29042,11 +32855,26 @@ impl AstNode for JsArrayBindingPatternElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayBindingPatternElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsArrayBindingPatternElementList {
     type Language = Language;
     type Node = JsAnyArrayBindingPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsArrayBindingPatternElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29094,11 +32922,26 @@ impl AstNode for JsArrayElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsArrayElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsArrayElementList {
     type Language = Language;
     type Node = JsAnyArrayElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsArrayElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29146,11 +32989,26 @@ impl AstNode for JsCallArgumentList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsCallArgumentList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsCallArgumentList {
     type Language = Language;
     type Node = JsAnyCallArgument;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsCallArgumentList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29198,11 +33056,26 @@ impl AstNode for JsClassMemberList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsClassMemberList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsClassMemberList {
     type Language = Language;
     type Node = JsAnyClassMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsClassMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29250,11 +33123,26 @@ impl AstNode for JsConstructorModifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsConstructorModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsConstructorModifierList {
     type Language = Language;
     type Node = TsAccessibilityModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsConstructorModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29302,11 +33190,26 @@ impl AstNode for JsConstructorParameterList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsConstructorParameterList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsConstructorParameterList {
     type Language = Language;
     type Node = JsAnyConstructorParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsConstructorParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29354,11 +33257,26 @@ impl AstNode for JsDirectiveList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsDirectiveList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsDirectiveList {
     type Language = Language;
     type Node = JsDirective;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsDirectiveList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29406,11 +33324,26 @@ impl AstNode for JsExportNamedFromSpecifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsExportNamedFromSpecifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsExportNamedFromSpecifierList {
     type Language = Language;
     type Node = JsExportNamedFromSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsExportNamedFromSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29458,11 +33391,26 @@ impl AstNode for JsExportNamedSpecifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsExportNamedSpecifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsExportNamedSpecifierList {
     type Language = Language;
     type Node = JsAnyExportNamedSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsExportNamedSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29510,11 +33458,26 @@ impl AstNode for JsImportAssertionEntryList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsImportAssertionEntryList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsImportAssertionEntryList {
     type Language = Language;
     type Node = JsAnyImportAssertionEntry;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsImportAssertionEntryList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29562,11 +33525,26 @@ impl AstNode for JsMethodModifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsMethodModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsMethodModifierList {
     type Language = Language;
     type Node = JsAnyMethodModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsMethodModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29614,11 +33592,26 @@ impl AstNode for JsModuleItemList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsModuleItemList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsModuleItemList {
     type Language = Language;
     type Node = JsAnyModuleItem;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsModuleItemList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29666,11 +33659,26 @@ impl AstNode for JsNamedImportSpecifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsNamedImportSpecifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsNamedImportSpecifierList {
     type Language = Language;
     type Node = JsAnyNamedImportSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsNamedImportSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29718,11 +33726,26 @@ impl AstNode for JsObjectAssignmentPatternPropertyList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectAssignmentPatternPropertyList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsObjectAssignmentPatternPropertyList {
     type Language = Language;
     type Node = JsAnyObjectAssignmentPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsObjectAssignmentPatternPropertyList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29770,11 +33793,26 @@ impl AstNode for JsObjectBindingPatternPropertyList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectBindingPatternPropertyList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsObjectBindingPatternPropertyList {
     type Language = Language;
     type Node = JsAnyObjectBindingPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsObjectBindingPatternPropertyList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29822,11 +33860,26 @@ impl AstNode for JsObjectMemberList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsObjectMemberList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsObjectMemberList {
     type Language = Language;
     type Node = JsAnyObjectMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsObjectMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29874,11 +33927,26 @@ impl AstNode for JsParameterList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsParameterList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsParameterList {
     type Language = Language;
     type Node = JsAnyParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29926,11 +33994,26 @@ impl AstNode for JsPropertyModifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsPropertyModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsPropertyModifierList {
     type Language = Language;
     type Node = JsAnyPropertyModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsPropertyModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -29978,11 +34061,26 @@ impl AstNode for JsStatementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsStatementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsStatementList {
     type Language = Language;
     type Node = JsAnyStatement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsStatementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30030,11 +34128,26 @@ impl AstNode for JsSwitchCaseList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsSwitchCaseList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsSwitchCaseList {
     type Language = Language;
     type Node = JsAnySwitchClause;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsSwitchCaseList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30082,11 +34195,26 @@ impl AstNode for JsTemplateElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsTemplateElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsTemplateElementList {
     type Language = Language;
     type Node = JsAnyTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsTemplateElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30134,11 +34262,26 @@ impl AstNode for JsVariableDeclaratorList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsVariableDeclaratorList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsVariableDeclaratorList {
     type Language = Language;
     type Node = JsVariableDeclarator;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsVariableDeclaratorList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30186,11 +34329,26 @@ impl AstNode for JsxAttributeList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsxAttributeList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsxAttributeList {
     type Language = Language;
     type Node = JsxAnyAttribute;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsxAttributeList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30238,11 +34396,26 @@ impl AstNode for JsxChildList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsxChildList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for JsxChildList {
     type Language = Language;
     type Node = JsxAnyChild;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsxChildList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30290,11 +34463,26 @@ impl AstNode for TsEnumMemberList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsEnumMemberList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for TsEnumMemberList {
     type Language = Language;
     type Node = TsEnumMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsEnumMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30342,11 +34530,26 @@ impl AstNode for TsIndexSignatureModifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsIndexSignatureModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for TsIndexSignatureModifierList {
     type Language = Language;
     type Node = TsAnyIndexSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsIndexSignatureModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30394,11 +34597,26 @@ impl AstNode for TsIntersectionTypeElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsIntersectionTypeElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for TsIntersectionTypeElementList {
     type Language = Language;
     type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsIntersectionTypeElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30446,11 +34664,26 @@ impl AstNode for TsMethodSignatureModifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsMethodSignatureModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for TsMethodSignatureModifierList {
     type Language = Language;
     type Node = TsAnyMethodSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsMethodSignatureModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30498,11 +34731,26 @@ impl AstNode for TsPropertyParameterModifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsPropertyParameterModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for TsPropertyParameterModifierList {
     type Language = Language;
     type Node = TsAnyPropertyParameterModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsPropertyParameterModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30550,11 +34798,26 @@ impl AstNode for TsPropertySignatureModifierList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsPropertySignatureModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for TsPropertySignatureModifierList {
     type Language = Language;
     type Node = TsAnyPropertySignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsPropertySignatureModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30602,11 +34865,26 @@ impl AstNode for TsTemplateElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsTemplateElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for TsTemplateElementList {
     type Language = Language;
     type Node = TsAnyTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTemplateElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30654,11 +34932,26 @@ impl AstNode for TsTupleTypeElementList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsTupleTypeElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for TsTupleTypeElementList {
     type Language = Language;
     type Node = TsAnyTupleTypeElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTupleTypeElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30706,11 +34999,26 @@ impl AstNode for TsTypeArgumentList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeArgumentList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for TsTypeArgumentList {
     type Language = Language;
     type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeArgumentList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30758,11 +35066,26 @@ impl AstNode for TsTypeList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for TsTypeList {
     type Language = Language;
     type Node = TsNameWithTypeArguments;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30810,11 +35133,26 @@ impl AstNode for TsTypeMemberList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeMemberList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstNodeList for TsTypeMemberList {
     type Language = Language;
     type Node = TsAnyTypeMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30862,11 +35200,26 @@ impl AstNode for TsTypeParameterList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeParameterList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for TsTypeParameterList {
     type Language = Language;
     type Node = TsTypeParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -30914,11 +35267,26 @@ impl AstNode for TsUnionTypeVariantList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsUnionTypeVariantList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for TsUnionTypeVariantList {
     type Language = Language;
     type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsUnionTypeVariantList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

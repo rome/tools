@@ -15,15 +15,15 @@ export const enviromentProdValues: EnvironmentValues = assign<EnvironmentValues>
 
 # Output
 ```js
-export const enviromentProdValues: EnvironmentValues = assign<EnvironmentValues>(
-  { apiURL: "/api" },
+export const enviromentProdValues: EnvironmentValues = assign<
+  EnvironmentValues
+>(
+  {
+    apiURL: "/api",
+  },
   enviromentBaseValues,
 );
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: export const enviromentProdValues: EnvironmentValues = assign<EnvironmentValues>(
-```
 

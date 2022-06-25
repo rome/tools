@@ -1,13 +1,15 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::JsAnyFunctionBody;
-impl Format for JsAnyFunctionBody {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsAnyExpression(node) => node.format(formatter),
-            Self::JsFunctionBody(node) => node.format(formatter),
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyFunctionBody;
+impl FormatRule<JsAnyFunctionBody> for FormatJsAnyFunctionBody {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &JsAnyFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsAnyFunctionBody::JsAnyExpression(node) => node.format().fmt(f),
+            JsAnyFunctionBody::JsFunctionBody(node) => node.format().fmt(f),
         }
     }
 }

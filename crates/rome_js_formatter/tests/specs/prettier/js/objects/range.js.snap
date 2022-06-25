@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: range.js
 ---
 # Input
@@ -22,21 +23,14 @@ group(
 
 # Output
 ```js
-group(
-  concat([
-    "(",
-    indent(options.tabWidth, concat([line, join(concat([",", line]), printed)])),
-    options.trailingComma ? "," : "",
-    line,
-    ")",
-  ]),
-  { shouldBreak: true },
-);
+group(concat([
+  "(",
+  indent(options.tabWidth, concat([line, join(concat([",", line]), printed)])),
+  options.trailingComma ? "," : "",
+  line,
+  ")",
+]), { shouldBreak: true });
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    4:     indent(options.tabWidth, concat([line, join(concat([",", line]), printed)])),
-```
 

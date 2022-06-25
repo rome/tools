@@ -1,27 +1,31 @@
-use crate::format_traits::FormatOptional;
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::TsFunctionType;
 use rome_js_syntax::TsFunctionTypeFields;
 
-impl FormatNode for TsFunctionType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsFunctionType;
+
+impl FormatNodeRule<TsFunctionType> for FormatTsFunctionType {
+    fn fmt_fields(&self, node: &TsFunctionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsFunctionTypeFields {
             parameters,
             fat_arrow_token,
             type_parameters,
             return_type,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(hard_group_elements(format_elements![
-            type_parameters.format_or_empty(formatter)?,
-            parameters.format(formatter)?,
-            space_token(),
-            fat_arrow_token.format(formatter)?,
-            space_token(),
-            return_type.format(formatter)?
-        ]))
+        write![
+            f,
+            [
+                type_parameters.format(),
+                parameters.format(),
+                space_token(),
+                fat_arrow_token.format(),
+                space_token(),
+                return_type.format()
+            ]
+        ]
     }
 }

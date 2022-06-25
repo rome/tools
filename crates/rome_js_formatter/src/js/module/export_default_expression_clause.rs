@@ -1,25 +1,32 @@
-use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
+
+use crate::utils::FormatWithSemicolon;
 
 use rome_js_syntax::JsExportDefaultExpressionClause;
 use rome_js_syntax::JsExportDefaultExpressionClauseFields;
 
-impl FormatNode for JsExportDefaultExpressionClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportDefaultExpressionClause;
+
+impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClause {
+    fn fmt_fields(
+        &self,
+        node: &JsExportDefaultExpressionClause,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsExportDefaultExpressionClauseFields {
             default_token,
             expression,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let default_token = default_token.format(formatter)?;
-        let class = expression.format(formatter)?;
-
-        format_with_semicolon(
-            formatter,
-            format_elements![default_token, space_token(), class],
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(default_token.format(), space_token(), expression.format()),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

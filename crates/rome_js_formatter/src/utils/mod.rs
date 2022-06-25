@@ -1,32 +1,36 @@
 pub(crate) mod array;
+mod assignment_like;
 mod binary_like_expression;
 mod format_conditional;
 mod simple;
 pub mod string_utils;
 
+pub(crate) mod format_class;
+pub mod jsx_utils;
 mod member_chain;
+mod object;
+mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
 
-use crate::format_traits::FormatOptional;
-use crate::{
-    empty_element, empty_line, format_elements, hard_group_elements, space_token, token, Format,
-    FormatElement, Formatter, JsFormatter, QuoteStyle, Token,
-};
+use crate::prelude::*;
+pub(crate) use assignment_like::{should_break_after_operator, JsAnyAssignmentLike};
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
-use rome_formatter::{normalize_newlines, FormatResult};
+pub(crate) use object_pattern_like::JsObjectPatternLike;
+use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
+use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause, JsLanguage,
-    JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
-    TsTemplateElementFields, TsType,
+    JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
+    JsTemplateElement, Modifiers, TsTemplateElement, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList};
-use std::borrow::Cow;
+use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
+use std::fmt::Debug;
 
 pub(crate) use simple::*;
+pub(crate) use string_utils::*;
 
 /// Utility function to format the separators of the nodes that belong to the unions
 /// of [rome_js_syntax::TsAnyTypeMember].
@@ -34,36 +38,67 @@ pub(crate) use simple::*;
 /// We can have two kind of separators: `,`, `;` or ASI.
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
 /// So here, we create - on purpose - an empty node.
-pub(crate) fn format_type_member_separator(
-    separator_token: Option<JsSyntaxToken>,
-    formatter: &Formatter,
-) -> FormatElement {
-    if let Some(separator) = separator_token {
-        formatter.format_replaced(&separator, empty_element())
-    } else {
-        empty_element()
+pub struct FormatTypeMemberSeparator<'a> {
+    token: Option<&'a JsSyntaxToken>,
+}
+
+impl<'a> FormatTypeMemberSeparator<'a> {
+    pub fn new(token: Option<&'a JsSyntaxToken>) -> Self {
+        Self { token }
+    }
+}
+
+impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        if let Some(separator) = self.token {
+            format_removed(separator).fmt(f)
+        } else {
+            Ok(())
+        }
     }
 }
 
 /// Utility function to format the node [rome_js_syntax::JsInitializerClause]
-pub(crate) fn format_initializer_clause(
-    formatter: &Formatter,
-    initializer: Option<JsInitializerClause>,
-) -> FormatResult<FormatElement> {
-    initializer.format_with_or_empty(formatter, |initializer| {
-        format_elements![space_token(), initializer]
-    })
+pub struct FormatInitializerClause<'a> {
+    initializer: Option<&'a JsInitializerClause>,
 }
 
-pub(crate) fn format_interpreter(
-    interpreter: Option<JsSyntaxToken>,
-    formatter: &Formatter,
-) -> FormatResult<FormatElement> {
-    interpreter.format_with_or(
-        formatter,
-        |interpreter| format_elements![interpreter, empty_line()],
-        empty_element,
-    )
+impl<'a> FormatInitializerClause<'a> {
+    pub fn new(initializer: Option<&'a JsInitializerClause>) -> Self {
+        Self { initializer }
+    }
+}
+
+impl Format<JsFormatContext> for FormatInitializerClause<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        if let Some(initializer) = self.initializer {
+            write!(f, [space_token(), initializer.format()])
+        } else {
+            Ok(())
+        }
+    }
+}
+
+pub struct FormatInterpreterToken<'a> {
+    token: Option<&'a JsSyntaxToken>,
+}
+
+impl<'a> FormatInterpreterToken<'a> {
+    pub fn new(interpreter_token: Option<&'a JsSyntaxToken>) -> Self {
+        Self {
+            token: interpreter_token,
+        }
+    }
+}
+
+impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        if let Some(interpreter) = self.token {
+            write!(f, [interpreter.format(), empty_line()])
+        } else {
+            Ok(())
+        }
+    }
 }
 
 /// Returns true if this node contains "printable" trivias: comments
@@ -71,7 +106,7 @@ pub(crate) fn format_interpreter(
 pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
     let mut line_count = 0;
 
-    for token in node.descendants_tokens() {
+    for token in node.descendants_tokens(Direction::Next) {
         for trivia in token.leading_trivia().pieces() {
             if trivia.is_comments() {
                 return true;
@@ -102,277 +137,54 @@ pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
     false
 }
 
+/// Returns true if this node contains newlines in trivias.
+pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
+    if let Some(leading_trivia) = node.first_leading_trivia() {
+        for piece in leading_trivia.pieces() {
+            if piece.is_newline() {
+                return true;
+            }
+        }
+    }
+    false
+}
+
 /// Format an element with a single line head and a body that might
 /// be either a block or a single statement
 ///
 /// This will place the head element inside a [hard_group_elements], but
 /// the body will broken out of flat printing if its a single statement
-pub(crate) fn format_head_body_statement(
-    formatter: &Formatter,
-    head: FormatElement,
-    body: JsAnyStatement,
-) -> FormatResult<FormatElement> {
-    if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-        Ok(hard_group_elements(format_elements![
-            head,
-            space_token(),
-            body.format(formatter)?,
-        ]))
-    } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
-        // Force semicolon insertion if the body is empty
-        Ok(format_elements![
-            hard_group_elements(head),
-            body.format(formatter)?,
-            token(";"),
-        ])
-    } else {
-        Ok(format_elements![
-            hard_group_elements(head),
-            space_token(),
-            body.format(formatter)?,
-        ])
+pub struct FormatBodyStatement<'a> {
+    body: &'a JsAnyStatement,
+}
+
+impl<'a> FormatBodyStatement<'a> {
+    pub fn new(statement: &'a JsAnyStatement) -> Self {
+        Self { body: statement }
     }
 }
 
-/// Single instance of a suppression comment, with the following syntax:
-///
-/// `// rome-ignore { <category> { (<value>) }? }+: <reason>`
-///
-/// The category broadly describes what feature is being suppressed (formatting,
-/// linting, ...) with the value being and optional, category-specific name of
-/// a specific element to disable (for instance a specific lint name). A single
-/// suppression may specify one or more categories + values, for instance to
-/// disable multiple lints at once
-///
-/// A suppression must specify a reason: this part has no semantic meaning but
-/// is required to document why a particular feature is being disable for this
-/// line (lint false-positive, specific formatting requirements, ...)
-#[derive(Debug, PartialEq, Eq)]
-struct Suppression<'a> {
-    /// List of categories for this suppression
-    ///
-    /// Categories are pair of the category name +
-    /// an optional category value
-    categories: Vec<(&'a str, Option<&'a str>)>,
-    /// Reason for this suppression comment to exist
-    reason: &'a str,
-}
-
-const CATEGORY_FORMAT: &str = "format";
-
-fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppression> {
-    let (head, mut comment) = comment.split_at(2);
-    let is_block_comment = match head {
-        "//" => false,
-        "/*" => {
-            comment = comment
-                .strip_suffix("*/")
-                .expect("block comment with no closing token");
-            true
-        }
-        token => panic!("comment with unknown opening token {token:?}"),
-    };
-
-    comment.lines().filter_map(move |line| {
-        // Eat start of line whitespace
-        let mut line = line.trim_start();
-
-        // If we're in a block comment eat stars, then whitespace again
-        if is_block_comment {
-            line = line.trim_start_matches('*').trim_start()
-        }
-
-        // Check for the rome-ignore token or skip the line entirely
-        line = line.strip_prefix("rome-ignore")?.trim_start();
-
-        let mut categories = Vec::new();
-
-        loop {
-            // Find either a colon opening parenthesis or space
-            let separator = line.find(|c: char| c == ':' || c == '(' || c.is_whitespace())?;
-
-            let (category, rest) = line.split_at(separator);
-            let category = category.trim_end();
-
-            // Skip over and match the separator
-            let (separator, rest) = rest.split_at(1);
-
-            match separator {
-                // Colon token: stop parsing categories
-                ":" => {
-                    if !category.is_empty() {
-                        categories.push((category, None));
-                    }
-
-                    line = rest.trim_start();
-                    break;
-                }
-                // Paren token: parse a category + value
-                "(" => {
-                    let paren = rest.find(')')?;
-
-                    let (value, rest) = rest.split_at(paren);
-                    let value = value.trim();
-
-                    categories.push((category, Some(value)));
-
-                    line = rest.strip_prefix(')').unwrap().trim_start();
-                }
-                // Whitespace: push a category without value
-                _ => {
-                    if !category.is_empty() {
-                        categories.push((category, None));
-                    }
-
-                    line = rest.trim_start();
-                }
+impl Format<JsFormatContext> for FormatBodyStatement<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match self.body {
+            JsAnyStatement::JsEmptyStatement(body) => {
+                write!(f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)])
+            }
+            body => {
+                write!(f, [space_token(), body.format()])
             }
         }
-
-        let reason = line.trim_end();
-        Some(Suppression { categories, reason })
-    })
+    }
 }
 
 pub(crate) fn has_formatter_suppressions(node: &JsSyntaxNode) -> bool {
-    // Lists cannot have a suppression comment attached, it must
-    // belong to either the entire parent node or one of the children
-    let kind = node.kind();
-    if JsAnyRoot::can_cast(kind) || kind.is_list() {
-        return false;
-    }
-
-    let first_token = match node.first_token() {
-        Some(token) => token,
-        None => return false,
-    };
-
-    first_token
-        .leading_trivia()
-        .pieces()
-        .filter_map(|trivia| trivia.as_comments())
-        .any(|comment| {
-            parse_suppression_comment(comment.text())
-                .flat_map(|suppression| suppression.categories)
-                .any(|category| category.0 == CATEGORY_FORMAT)
-        })
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{parse_suppression_comment, Suppression};
-
-    #[test]
-    fn parse_simple_suppression() {
-        assert_eq!(
-            parse_suppression_comment("// rome-ignore parse: explanation1").collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", None)],
-                reason: "explanation1"
-            }],
-        );
-
-        assert_eq!(
-            parse_suppression_comment("/** rome-ignore parse: explanation2 */").collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", None)],
-                reason: "explanation2"
-            }],
-        );
-
-        assert_eq!(
-            parse_suppression_comment(
-                "/**
-                  * rome-ignore parse: explanation3
-                  */"
-            )
-            .collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", None)],
-                reason: "explanation3"
-            }],
-        );
-
-        assert_eq!(
-            parse_suppression_comment(
-                "/**
-                  * hello
-                  * rome-ignore parse: explanation4
-                  */"
-            )
-            .collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", None)],
-                reason: "explanation4"
-            }],
-        );
-    }
-
-    #[test]
-    fn parse_multiple_suppression() {
-        assert_eq!(
-            parse_suppression_comment("// rome-ignore parse(foo) parse(dog): explanation")
-                .collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", Some("foo")), ("parse", Some("dog"))],
-                reason: "explanation"
-            }],
-        );
-
-        assert_eq!(
-            parse_suppression_comment("/** rome-ignore parse(bar) parse(cat): explanation */")
-                .collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", Some("bar")), ("parse", Some("cat"))],
-                reason: "explanation"
-            }],
-        );
-
-        assert_eq!(
-            parse_suppression_comment(
-                "/**
-                  * rome-ignore parse(yes) parse(frog): explanation
-                  */"
-            )
-            .collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", Some("yes")), ("parse", Some("frog"))],
-                reason: "explanation"
-            }],
-        );
-
-        assert_eq!(
-            parse_suppression_comment(
-                "/**
-                  * hello
-                  * rome-ignore parse(wow) parse(fish): explanation
-                  */"
-            )
-            .collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("parse", Some("wow")), ("parse", Some("fish"))],
-                reason: "explanation"
-            }],
-        );
-    }
-
-    #[test]
-    fn parse_multiple_suppression_categories() {
-        assert_eq!(
-            parse_suppression_comment("// rome-ignore format lint: explanation")
-                .collect::<Vec<_>>(),
-            vec![Suppression {
-                categories: vec![("format", None), ("lint", None)],
-                reason: "explanation"
-            }],
-        );
-    }
+    has_suppressions_category(SuppressionCategory::Format, node)
 }
 
 /// This function consumes a list of modifiers and applies a predictable sorting.
 pub(crate) fn sort_modifiers_by_precedence<List, Node>(list: &List) -> Vec<Node>
 where
-    Node: AstNode<Language = JsLanguage> + Clone,
+    Node: AstNode<Language = JsLanguage>,
     List: AstNodeList<Language = JsLanguage, Node = Node>,
     Modifiers: for<'a> From<&'a Node>,
 {
@@ -384,28 +196,29 @@ where
 }
 
 /// Utility to format
-pub(crate) fn format_template_chunk(
-    chunk: JsSyntaxToken,
-    formatter: &Formatter,
-) -> FormatResult<FormatElement> {
+pub(crate) fn format_template_chunk(chunk: JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
     // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
     // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
-    Ok(formatter.format_replaced(
-        &chunk,
-        FormatElement::from(Token::from_syntax_token_cow_slice(
-            normalize_newlines(chunk.text_trimmed(), ['\r']),
+
+    write!(
+        f,
+        [format_replaced(
             &chunk,
-            chunk.text_trimmed_range().start(),
-        )),
-    ))
+            &syntax_token_cow_slice(
+                normalize_newlines(chunk.text_trimmed(), ['\r']),
+                &chunk,
+                chunk.text_trimmed_range().start(),
+            )
+        )]
+    )
 }
 
 /// Function to format template literals and template literal types
 pub(crate) fn format_template_literal(
     literal: TemplateElement,
-    formatter: &Formatter,
-) -> FormatResult<FormatElement> {
-    literal.into_format_element(formatter)
+    formatter: &mut JsFormatter,
+) -> FormatResult<()> {
+    write!(formatter, [literal])
 }
 
 pub(crate) enum TemplateElement {
@@ -413,53 +226,60 @@ pub(crate) enum TemplateElement {
     Ts(TsTemplateElement),
 }
 
-impl TemplateElement {
-    pub fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format<JsFormatContext> for TemplateElement {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let expression_is_plain = self.is_plain_expression()?;
         let has_comments = self.has_comments();
         let should_hard_group = expression_is_plain && !has_comments;
 
-        let (dollar_curly_token, middle, r_curly_token) = match self {
-            TemplateElement::Js(template_element) => {
-                let JsTemplateElementFields {
-                    dollar_curly_token,
-                    expression,
-                    r_curly_token,
-                } = template_element.as_fields();
-
-                let dollar_curly_token = dollar_curly_token?;
-                let expression = expression.format(formatter)?;
-                let r_curly_token = r_curly_token?;
-
-                (dollar_curly_token, expression, r_curly_token)
+        let content = format_with(|f| {
+            match self {
+                TemplateElement::Js(template) => {
+                    write!(f, [template.expression().format()])?;
+                }
+                TemplateElement::Ts(template) => {
+                    write!(f, [template.ty().format()])?;
+                }
             }
-            TemplateElement::Ts(template_element) => {
-                let TsTemplateElementFields {
-                    ty,
-                    r_curly_token,
-                    dollar_curly_token,
-                } = template_element.as_fields();
 
-                let dollar_curly_token = dollar_curly_token?;
-                let ty = ty.format(formatter)?;
-                let r_curly_token = r_curly_token?;
-
-                (dollar_curly_token, ty, r_curly_token)
-            }
-        };
+            write!(f, [line_suffix_boundary()])
+        });
 
         if should_hard_group {
-            Ok(hard_group_elements(format_elements![
-                dollar_curly_token.format(formatter)?,
-                middle,
-                r_curly_token.format(formatter)?
-            ]))
-        } else {
-            formatter.format_delimited_soft_block_indent(
-                &dollar_curly_token,
-                middle,
-                &r_curly_token,
+            write!(
+                f,
+                [
+                    self.dollar_curly_token().format(),
+                    content,
+                    self.r_curly_token().format()
+                ]
             )
+        } else {
+            write!(
+                f,
+                [format_delimited(
+                    &self.dollar_curly_token()?,
+                    &content,
+                    &self.r_curly_token()?
+                )
+                .soft_block_indent()]
+            )
+        }
+    }
+}
+
+impl TemplateElement {
+    fn dollar_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            TemplateElement::Js(template) => template.dollar_curly_token(),
+            TemplateElement::Ts(template) => template.dollar_curly_token(),
+        }
+    }
+
+    fn r_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            TemplateElement::Js(template) => template.r_curly_token(),
+            TemplateElement::Ts(template) => template.r_curly_token(),
         }
     }
 
@@ -588,52 +408,42 @@ impl FormatPrecedence {
 /// Format a some code followed by an optional semicolon, and performs
 /// semicolon insertion if it was missing in the input source and the
 /// preceeding element wasn't an unknown node
-pub(crate) fn format_with_semicolon(
-    formatter: &Formatter,
-    content: FormatElement,
-    semicolon: Option<JsSyntaxToken>,
-) -> FormatResult<FormatElement> {
-    let is_unknown = match content.last_element() {
-        Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
-        _ => false,
-    };
-
-    Ok(format_elements![
-        content,
-        semicolon.format_or(
-            formatter,
-            if is_unknown {
-                empty_element
-            } else {
-                || token(";")
-            }
-        )?
-    ])
+pub struct FormatWithSemicolon<'a> {
+    content: &'a dyn Format<JsFormatContext>,
+    semicolon: Option<&'a JsSyntaxToken>,
 }
 
-pub(crate) fn format_string_literal_token(
-    token: JsSyntaxToken,
-    formatter: &Formatter,
-) -> FormatElement {
-    let quoted = token.text_trimmed();
-    let (primary_quote_char, secondary_quote_char) = match formatter.options().quote_style {
-        QuoteStyle::Double => ('"', '\''),
-        QuoteStyle::Single => ('\'', '"'),
-    };
-    let content =
-        if quoted.starts_with(secondary_quote_char) && !quoted.contains(primary_quote_char) {
-            let s = &quoted[1..quoted.len() - 1];
-            let s = format!("{}{}{}", primary_quote_char, s, primary_quote_char);
-            Cow::Owned(normalize_newlines(&s, ['\r']).into_owned())
-        } else {
-            normalize_newlines(quoted, ['\r'])
+impl<'a> FormatWithSemicolon<'a> {
+    pub fn new(
+        content: &'a dyn Format<JsFormatContext>,
+        semicolon: Option<&'a JsSyntaxToken>,
+    ) -> Self {
+        Self { content, semicolon }
+    }
+}
+
+impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
+
+        write!(buffer, [self.content])?;
+
+        let content = buffer.into_element();
+
+        let is_unknown = match content.last_element() {
+            Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
+            _ => false,
         };
 
-    formatter.format_replaced(
-        &token,
-        Token::from_syntax_token_cow_slice(content, &token, token.text_trimmed_range().start())
-            .into(),
-    )
+        f.write_element(content)?;
+
+        if let Some(semicolon) = self.semicolon {
+            write!(f, [semicolon.format()])?;
+        } else if !is_unknown {
+            format_inserted(JsSyntaxKind::SEMICOLON).fmt(f)?;
+        }
+        Ok(())
+    }
 }
 
 /// A call like expression is one of:
@@ -648,4 +458,28 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
             | JsAnyExpression::JsImportCallExpression(_)
             | JsAnyExpression::JsCallExpression(_)
     )
+}
+
+/// This function is in charge to format the call arguments.
+pub(crate) fn write_arguments_multi_line<S: Format<JsFormatContext>, I>(
+    separated: I,
+    f: &mut JsFormatter,
+) -> FormatResult<()>
+where
+    I: Iterator<Item = S>,
+{
+    let mut iterator = separated.peekable();
+    let mut join_with = f.join_with(soft_line_break_or_space());
+
+    while let Some(element) = iterator.next() {
+        let last = iterator.peek().is_none();
+
+        if last {
+            join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
+        } else {
+            join_with.entry(&element);
+        }
+    }
+
+    join_with.finish()
 }

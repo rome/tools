@@ -1,14 +1,15 @@
-use crate::formatter::TrailingSeparator;
-use crate::{
-    join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
-use rome_js_syntax::{JsAnyParameter, JsParameterList};
+use crate::prelude::*;
+use rome_js_syntax::{JsAnyParameter, JsParameterList, JsSyntaxKind};
 
-impl Format for JsParameterList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsParameterList;
+
+impl FormatRule<JsParameterList> for FormatJsParameterList {
+    type Context = JsFormatContext;
+
+    fn fmt(&self, node: &JsParameterList, f: &mut JsFormatter) -> FormatResult<()> {
         // The trailing separator is disallowed if the last element in the list is a rest parameter
-        let has_trailing_rest = match self.into_iter().last() {
+        let has_trailing_rest = match node.into_iter().last() {
             Some(elem) => matches!(elem?, JsAnyParameter::JsRestParameter(_)),
             None => false,
         };
@@ -19,9 +20,11 @@ impl Format for JsParameterList {
             TrailingSeparator::Allowed
         };
 
-        Ok(join_elements(
-            soft_line_break_or_space(),
-            formatter.format_separated(self, || token(","), trailing_separator)?,
-        ))
+        f.join_with(&soft_line_break_or_space())
+            .entries(
+                node.format_separated(JsSyntaxKind::COMMA)
+                    .with_trailing_separator(trailing_separator),
+            )
+            .finish()
     }
 }

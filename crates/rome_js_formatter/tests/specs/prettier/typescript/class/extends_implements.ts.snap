@@ -71,31 +71,20 @@ class ImplementsInterfaceClassWithComments1<
 
 # Output
 ```js
-class Class extends AbstractClass
-  implements
-    Interface1,
-    Interface2,
-    Interface3,
-    Interface4
-{}
+class Class
+  extends AbstractClass
+  implements Interface1, Interface2, Interface3, Interface4 {}
 
-class ExtendsAbstractClassAndImplementsInterfaces1 extends AbstractClass
-  implements
-    Interface1,
-    Interface2,
-    Interface3,
-    Interface4
-{}
+class ExtendsAbstractClassAndImplementsInterfaces1
+  extends AbstractClass
+  implements Interface1, Interface2, Interface3, Interface4 {}
 
-class ExtendsAbstractClassAndImplementsInterfaces2 extends AAAAAAAAAAAAAAbstractClass
-  implements
-    Interface1,
-    Interface2,
-    Interface3,
-    Interface4
-{}
+class ExtendsAbstractClassAndImplementsInterfaces2
+  extends AAAAAAAAAAAAAAbstractClass
+  implements Interface1, Interface2, Interface3, Interface4 {}
 
-class ExtendsAbstractClassAndImplementsInterfaces3 extends AAAAAAAAAAAAAAbstractClass
+class ExtendsAbstractClassAndImplementsInterfaces3
+  extends AAAAAAAAAAAAAAbstractClass
   implements
     Interface1,
     Interface2,
@@ -104,8 +93,7 @@ class ExtendsAbstractClassAndImplementsInterfaces3 extends AAAAAAAAAAAAAAbstract
     Interface5,
     Interface6,
     Interface7,
-    Interface8
-{}
+    Interface8 {}
 
 class ExtendsAbstractClassAndImplementsInterfaces4 extends AAAAAAAAAAAAAAbstractClass<
   Type1,
@@ -117,15 +105,16 @@ class ExtendsAbstractClassAndImplementsInterfaces4 extends AAAAAAAAAAAAAAbstract
   Type7
 > {}
 
-class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstractClass<
-  Type1,
-  Type2,
-  Type3,
-  Type4,
-  Type5,
-  Type6,
-  Type7
->
+class ExtendsAbstractClassAndImplementsInterfaces5
+  extends AAAAAAAAAAAAAAbstractClass<
+    Type1,
+    Type2,
+    Type3,
+    Type4,
+    Type5,
+    Type6,
+    Type7
+  >
   implements
     Interface1,
     Interface2,
@@ -134,46 +123,41 @@ class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstract
     Interface5,
     Interface6,
     Interface7,
-    Interface8
-{}
+    Interface8 {}
 
-class ImplementsInterfaceAndExtendsAbstractClass1<Foo> extends FOOOOOOOOOOOOOOOOO
-  implements
-    FOOOOOOOOOOOOOOOOO,
-    BARRRRRRRRRR
-{}
+class ImplementsInterfaceAndExtendsAbstractClass1<Foo>
+  extends FOOOOOOOOOOOOOOOOO
+  implements FOOOOOOOOOOOOOOOOO, BARRRRRRRRRR {}
 
 class Foo<FOOOOOOOOOOOOOOOOOOOOOOOOOOO, FOOOOOOOOOOOOOOOOOOOOOOOOOOO>
-  implements
-    Foo
-{}
+  implements Foo {}
 
 class ImplementsInterfaceAndExtendsAbstractClass2<
-  TypeArgumentNumberOne,
-  TypeArgumentNumberTwo,
-  TypeArgumentNumberThree,
-> extends FOOOOOOOOOOOOOOOOOO implements BaseInterface {}
+    TypeArgumentNumberOne,
+    TypeArgumentNumberTwo,
+    TypeArgumentNumberThree,
+  >
+  extends FOOOOOOOOOOOOOOOOOO
+  implements BaseInterface {}
 
 class ImplementsInterfaceClass1<
-  TypeArgumentNumberOne,
-  TypeArgumentNumberTwo,
-  TypeArgumentNumberThree,
-> implements BaseInterface {}
+    TypeArgumentNumberOne,
+    TypeArgumentNumberTwo,
+    TypeArgumentNumberThree,
+  >
+  implements BaseInterface {}
 
 class ImplementsInterfaceClassWithComments1<
-  TypeArgumentNumberOne,
-  TypeArgumentNumberTwo,
-  TypeArgumentNumberThree,
-> implements BaseInterface {} // comments
+    TypeArgumentNumberOne,
+    TypeArgumentNumberTwo,
+    TypeArgumentNumberThree,
+  > // comments
+  implements BaseInterface {}
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-   17: class ExtendsAbstractClassAndImplementsInterfaces2 extends AAAAAAAAAAAAAAbstractClass
-   25: class ExtendsAbstractClassAndImplementsInterfaces3 extends AAAAAAAAAAAAAAbstractClass
-   37: class ExtendsAbstractClassAndImplementsInterfaces4 extends AAAAAAAAAAAAAAbstractClass<
-   47: class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstractClass<
-   67: class ImplementsInterfaceAndExtendsAbstractClass1<Foo> extends FOOOOOOOOOOOOOOOOO
+   25: class ExtendsAbstractClassAndImplementsInterfaces4 extends AAAAAAAAAAAAAAbstractClass<
 ```
 

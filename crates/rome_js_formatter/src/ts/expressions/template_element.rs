@@ -1,10 +1,17 @@
+use crate::prelude::*;
 use crate::utils::{format_template_literal, TemplateElement};
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+
 use rome_js_syntax::TsTemplateElement;
 
-impl FormatNode for TsTemplateElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        format_template_literal(TemplateElement::Ts(self.clone()), formatter)
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTemplateElement;
+
+impl FormatNodeRule<TsTemplateElement> for FormatTsTemplateElement {
+    fn fmt_fields(
+        &self,
+        node: &TsTemplateElement,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        format_template_literal(TemplateElement::Ts(node.clone()), formatter)
     }
 }

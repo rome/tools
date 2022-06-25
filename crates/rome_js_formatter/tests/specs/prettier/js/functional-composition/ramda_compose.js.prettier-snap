@@ -13,7 +13,7 @@ var getStateCode = R.composeK(
   R.compose(Maybe.of, R.toUpper),
   get("state"),
   get("address"),
-  get("user")
+  get("user"),
 );
 getStateCode({ user: { address: { state: "ny" } } }); //=> Maybe.Just("NY")
 getStateCode({}); //=> Maybe.Nothing()
@@ -35,13 +35,13 @@ lookupUser("JOE").then(lookupFollowers);
 //  followersForUser :: String -> Promise [UserId]
 var followersForUser = R.composeP(lookupFollowers, lookupUser);
 followersForUser("JOE").then((followers) =>
-  console.log("Followers:", followers)
+  console.log("Followers:", followers),
 );
 // Followers: ["STEVE","SUZY"]
 
 const mapStateToProps = (state) => ({
   users: R.compose(
     R.filter(R.propEq("status", "active")),
-    R.values
+    R.values,
   )(state.users),
 });

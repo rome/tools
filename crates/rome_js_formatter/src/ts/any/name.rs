@@ -1,13 +1,15 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::TsAnyName;
-impl Format for TsAnyName {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsReferenceIdentifier(node) => node.format(formatter),
-            Self::TsQualifiedName(node) => node.format(formatter),
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsAnyName;
+impl FormatRule<TsAnyName> for FormatTsAnyName {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &TsAnyName, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            TsAnyName::JsReferenceIdentifier(node) => node.format().fmt(f),
+            TsAnyName::TsQualifiedName(node) => node.format().fmt(f),
         }
     }
 }

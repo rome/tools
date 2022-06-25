@@ -94,6 +94,10 @@ the source code. Please read [the proper chapter for more information](#write-te
 
 It's strongly advised to **run this command before committing new changes**.
 
+#### `cargo codegen analyzer`
+
+This command will detect linter rules declared in the `analyzers` and `assists` directories in `rome_analyze`, regenerate the index modules `analyzers.rs` and `assists.rs` to import these files, and update the registry builder function in `registry.rs` to include all these rules.
+
 #### `cargo coverage`
 
 This command will check and report parser conformance against different test suites.

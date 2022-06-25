@@ -19,3 +19,14 @@ let a = {
 
 	...spread,
 }
+
+const x = {apple: "banana"};
+
+const y = {
+	apple: "banana",
+};
+
+({a, b, c} = {a: 'apple', b: 'banana', c: 'coconut'});
+
+({
+	a, b, c} = {a: 'apple', b: 'banana', c: 'coconut'});

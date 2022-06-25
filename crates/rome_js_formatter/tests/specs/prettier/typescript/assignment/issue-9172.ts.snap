@@ -10,12 +10,9 @@ const firestorePersonallyIdentifiablePaths: Array<Collections.Users.Entity> = so
 
 # Output
 ```js
-const firestorePersonallyIdentifiablePaths: Array<Collections.Users.Entity> = somefunc();
+const firestorePersonallyIdentifiablePaths: Array<Collections.Users.Entity> =
+  somefunc();
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const firestorePersonallyIdentifiablePaths: Array<Collections.Users.Entity> = somefunc();
-```
 

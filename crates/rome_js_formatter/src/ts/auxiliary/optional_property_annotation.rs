@@ -1,19 +1,23 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::TsOptionalPropertyAnnotation;
 use rome_js_syntax::TsOptionalPropertyAnnotationFields;
 
-impl FormatNode for TsOptionalPropertyAnnotation {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsOptionalPropertyAnnotation;
+
+impl FormatNodeRule<TsOptionalPropertyAnnotation> for FormatTsOptionalPropertyAnnotation {
+    fn fmt_fields(
+        &self,
+        node: &TsOptionalPropertyAnnotation,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsOptionalPropertyAnnotationFields {
             question_mark_token,
             type_annotation,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            question_mark_token.format(formatter)?,
-            type_annotation.format_or_empty(formatter)?
-        ])
+        write![f, [question_mark_token.format(), type_annotation.format()]]
     }
 }

@@ -1,50 +1,102 @@
-use rome_js_syntax::JsSyntaxKind;
+use crate::prelude::*;
+
+use rome_formatter::{format_args, write};
+use rome_js_syntax::{
+    JsAnyExpression, JsAssignmentExpression, JsStaticMemberExpression,
+    JsStaticMemberExpressionFields, JsVariableDeclarator,
+};
 use rome_rowan::AstNode;
 
-use crate::{format_elements, group_elements, token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsStaticMemberExpression;
 
-use rome_js_syntax::JsStaticMemberExpression;
-use rome_js_syntax::JsStaticMemberExpressionFields;
-
-impl FormatNode for JsStaticMemberExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression {
+    fn fmt_fields(&self, node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStaticMemberExpressionFields {
             object,
             operator_token,
             member,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let object_syntax = object.clone()?.syntax().clone();
+        write!(f, [object.format()])?;
 
-        let is_object_number_literal =
-            object_syntax.kind() == JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION;
+        let layout = compute_member_layout(node)?;
 
-        let has_object_trailing_trivia =
-            object_syntax.last_trailing_trivia().unwrap().pieces().len() > 0;
-        let has_operator_leading_trivia =
-            operator_token.clone()?.leading_trivia().pieces().len() > 0;
-
-        let formatted_object = object?.format(formatter)?;
-
-        if is_object_number_literal && (has_object_trailing_trivia || has_operator_leading_trivia) {
-            let (object_leading, object_content, object_trailing) = formatted_object.split_trivia();
-
-            Ok(group_elements(format_elements![
-                object_leading,
-                token("("),
-                object_content,
-                token(")"),
-                object_trailing,
-                operator_token.format(formatter)?,
-                member.format(formatter)?,
-            ]))
-        } else {
-            Ok(group_elements(format_elements![
-                formatted_object,
-                operator_token.format(formatter)?,
-                member.format(formatter)?,
-            ]))
+        match layout {
+            StaticMemberExpressionLayout::NoBreak => {
+                write!(f, [operator_token.format(), member.format()])
+            }
+            StaticMemberExpressionLayout::BreakAfterObject => {
+                write!(
+                    f,
+                    [group_elements(&indent(&format_args![
+                        soft_line_break(),
+                        operator_token.format(),
+                        member.format(),
+                    ]))]
+                )
+            }
         }
     }
+}
+
+enum StaticMemberExpressionLayout {
+    /// Forces that there's no line break between the object, operator, and member
+    NoBreak,
+
+    /// Breaks the static member expression after the object if the whole expression doesn't fit on a single line
+    BreakAfterObject,
+}
+
+fn compute_member_layout(
+    member: &JsStaticMemberExpression,
+) -> FormatResult<StaticMemberExpressionLayout> {
+    let parent = member.syntax().parent();
+
+    let nested = parent
+        .as_ref()
+        .map_or(false, |p| JsStaticMemberExpression::can_cast(p.kind()));
+
+    if let Some(parent) = &parent {
+        if JsAssignmentExpression::can_cast(parent.kind())
+            || JsVariableDeclarator::can_cast(parent.kind())
+        {
+            let no_break = match member.object()? {
+                JsAnyExpression::JsCallExpression(call_expression) => {
+                    !call_expression.arguments()?.args().is_empty()
+                }
+                JsAnyExpression::TsNonNullAssertionExpression(non_null_assertion) => {
+                    match non_null_assertion.expression()? {
+                        JsAnyExpression::JsCallExpression(call_expression) => {
+                            !call_expression.arguments()?.args().is_empty()
+                        }
+                        _ => false,
+                    }
+                }
+                _ => false,
+            };
+
+            if no_break {
+                return Ok(StaticMemberExpressionLayout::NoBreak);
+            }
+        }
+    };
+
+    if !nested && matches!(member.object()?, JsAnyExpression::JsIdentifierExpression(_)) {
+        return Ok(StaticMemberExpressionLayout::NoBreak);
+    }
+
+    let first_non_static_member_ancestor = member
+        .syntax()
+        .ancestors()
+        .find(|parent| !JsStaticMemberExpression::can_cast(parent.kind()));
+
+    if matches!(
+        first_non_static_member_ancestor.and_then(JsAnyExpression::cast),
+        Some(JsAnyExpression::JsNewExpression(_))
+    ) {
+        return Ok(StaticMemberExpressionLayout::NoBreak);
+    }
+
+    Ok(StaticMemberExpressionLayout::BreakAfterObject)
 }

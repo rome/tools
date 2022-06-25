@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: strings.js
-
 ---
 # Input
 ```js
@@ -40,18 +38,18 @@ expression: strings.js
   "abc",
   "abc",
 
-  "\'",
+  "'",
 
   '"',
-  '\"',
+  '"',
   '\\"',
 
   "'",
-  "\'",
+  "'",
   "\\'",
 
   "'\"",
-  '\'"',
+  "'\"",
 
   "\\",
   "\\",

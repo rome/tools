@@ -12,14 +12,10 @@ const sel = this.connections
 
 # Output
 ```js
-const sel = this.connections.concat(this.activities.concat(this.operators)).filter(
-  (x) => x.selected,
-);
+const sel = this.connections.concat(
+  this.activities.concat(this.operators),
+).filter((x) => x.selected);
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const sel = this.connections.concat(this.activities.concat(this.operators)).filter(
-```
 

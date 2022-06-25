@@ -1,16 +1,36 @@
-use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::{write, FormatRuleWithOptions, GroupId};
 use rome_js_syntax::{TsTypeParameters, TsTypeParametersFields};
 
-impl FormatNode for TsTypeParameters {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeParameters {
+    group_id: Option<GroupId>,
+}
+
+impl FormatRuleWithOptions<TsTypeParameters> for FormatTsTypeParameters {
+    type Options = Option<GroupId>;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.group_id = options;
+        self
+    }
+}
+
+impl FormatNodeRule<TsTypeParameters> for FormatTsTypeParameters {
+    fn fmt_fields(&self, node: &TsTypeParameters, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeParametersFields {
             items,
             r_angle_token,
             l_angle_token,
-        } = self.as_fields();
-        let items = items.format(formatter)?;
+        } = node.as_fields();
 
-        formatter.format_delimited_soft_block_indent(&l_angle_token?, items, &r_angle_token?)
+        write!(
+            f,
+            [
+                format_delimited(&l_angle_token?, &items.format(), &r_angle_token?)
+                    .soft_block_indent_with_group_id(self.group_id)
+            ]
+        )
     }
 }

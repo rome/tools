@@ -1,11 +1,12 @@
-use crate::{parse, parse_module, Parse, SourceType};
+use crate::{parse, parse_module, Parse};
 use expect_test::expect_file;
 use rome_diagnostics::file::SimpleFile;
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{file::SimpleFiles, Emitter};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxKind};
+use rome_js_syntax::{JsAnyRoot, JsLanguage, JsSyntaxKind, SourceType};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, SyntaxKind, TextSize};
+use rome_rowan::{AstNode, Direction, SyntaxKind, TextSize};
+use std::fmt::Debug;
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -162,9 +163,15 @@ fn has_unknown_nodes(node: &JsSyntaxNode) -> bool {
         .any(|descendant| descendant.kind().is_unknown())
 }
 
-fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
+fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path)
+where
+    T: AstNode<Language = JsLanguage> + Debug,
+{
     let syntax = program.syntax();
-    if !program.has_errors() && !has_unknown_nodes(&syntax) {
+    let debug_tree = format!("{:?}", program.tree());
+    let has_missing_children = debug_tree.contains("missing (required)");
+
+    if !program.has_errors() && !has_unknown_nodes(&syntax) && !has_missing_children {
         return;
     }
 
@@ -187,7 +194,7 @@ fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
 pub fn test_trivia_attached_to_tokens() {
     let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
     let m = parse_module(text, 0);
-    let mut tokens = m.syntax().descendants_tokens();
+    let mut tokens = m.syntax().descendants_tokens(Direction::Next);
 
     let is_let = |x: &JsSyntaxToken| x.text_trimmed() == "let";
     let first_let = tokens.find(is_let).unwrap();
@@ -249,7 +256,7 @@ pub fn jsroot_ranges() {
     assert_eq!(4usize, range.end().into());
 
     let eq = syntax
-        .descendants_tokens()
+        .descendants_tokens(Direction::Next)
         .find(|x| x.text_trimmed() == "=")
         .unwrap();
     let range = eq.text_range();

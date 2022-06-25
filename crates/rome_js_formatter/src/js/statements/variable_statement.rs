@@ -1,17 +1,27 @@
-use crate::utils::format_with_semicolon;
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
+
+use crate::utils::FormatWithSemicolon;
 
 use rome_js_syntax::JsVariableStatement;
 use rome_js_syntax::JsVariableStatementFields;
 
-impl FormatNode for JsVariableStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableStatement;
+
+impl FormatNodeRule<JsVariableStatement> for FormatJsVariableStatement {
+    fn fmt_fields(&self, node: &JsVariableStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableStatementFields {
             declaration,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        format_with_semicolon(formatter, declaration.format(formatter)?, semicolon_token)
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &declaration.format(),
+                semicolon_token.as_ref()
+            )]
+        )
     }
 }

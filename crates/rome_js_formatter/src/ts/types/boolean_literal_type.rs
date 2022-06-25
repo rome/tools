@@ -1,9 +1,14 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsBooleanLiteralType;
+use crate::prelude::*;
 
-impl FormatNode for TsBooleanLiteralType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.literal().format(formatter)
+use rome_formatter::write;
+use rome_js_syntax::{TsBooleanLiteralType, TsBooleanLiteralTypeFields};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsBooleanLiteralType;
+
+impl FormatNodeRule<TsBooleanLiteralType> for FormatTsBooleanLiteralType {
+    fn fmt_fields(&self, node: &TsBooleanLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsBooleanLiteralTypeFields { literal } = node.as_fields();
+        write![f, [literal.format()]]
     }
 }

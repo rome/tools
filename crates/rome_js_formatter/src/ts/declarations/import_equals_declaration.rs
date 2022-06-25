@@ -1,13 +1,19 @@
-use crate::format_traits::FormatOptional;
-use crate::space_token;
-use crate::utils::format_with_semicolon;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::FormatWithSemicolon;
+
+use rome_formatter::{format_args, write};
 use rome_js_syntax::TsImportEqualsDeclaration;
 use rome_js_syntax::TsImportEqualsDeclarationFields;
 
-impl FormatNode for TsImportEqualsDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsImportEqualsDeclaration;
+
+impl FormatNodeRule<TsImportEqualsDeclaration> for FormatTsImportEqualsDeclaration {
+    fn fmt_fields(
+        &self,
+        node: &TsImportEqualsDeclaration,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsImportEqualsDeclarationFields {
             import_token,
             type_token,
@@ -15,24 +21,25 @@ impl FormatNode for TsImportEqualsDeclaration {
             eq_token,
             module_reference,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            format_elements![
-                import_token.format(formatter)?,
-                space_token(),
-                type_token.format_with_or_empty(formatter, |token| format_elements![
-                    token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
+                    import_token.format(),
                     space_token(),
-                ])?,
-                id.format(formatter)?,
-                space_token(),
-                eq_token.format(formatter)?,
-                space_token(),
-                module_reference.format(formatter)?,
-            ],
-            semicolon_token,
+                    type_token
+                        .format()
+                        .with_or_empty(|token, f| write![f, [token, space_token()]]),
+                    id.format(),
+                    space_token(),
+                    eq_token.format(),
+                    space_token(),
+                    module_reference.format(),
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

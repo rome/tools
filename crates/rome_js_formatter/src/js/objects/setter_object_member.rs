@@ -1,13 +1,14 @@
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsSetterObjectMember;
 use rome_js_syntax::JsSetterObjectMemberFields;
 
-impl FormatNode for JsSetterObjectMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsSetterObjectMember;
+
+impl FormatNodeRule<JsSetterObjectMember> for FormatJsSetterObjectMember {
+    fn fmt_fields(&self, node: &JsSetterObjectMember, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSetterObjectMemberFields {
             set_token,
             name,
@@ -15,17 +16,20 @@ impl FormatNode for JsSetterObjectMember {
             parameter,
             r_paren_token,
             body,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(hard_group_elements(format_elements![
-            set_token.format(formatter)?,
-            space_token(),
-            name.format(formatter)?,
-            l_paren_token.format(formatter)?,
-            parameter.format(formatter)?,
-            r_paren_token.format(formatter)?,
-            space_token(),
-            body.format(formatter)?,
-        ]))
+        write![
+            f,
+            [
+                set_token.format(),
+                space_token(),
+                name.format(),
+                l_paren_token.format(),
+                parameter.format(),
+                r_paren_token.format(),
+                space_token(),
+                body.format(),
+            ]
+        ]
     }
 }

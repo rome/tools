@@ -16,9 +16,11 @@ foo!.bar().baz().what();
 
 # Output
 ```js
-const { somePropThatHasAReallyLongName, anotherPropThatHasALongName } = this.props.imReallySureAboutThis!;
+const { somePropThatHasAReallyLongName, anotherPropThatHasALongName } = this
+  .props.imReallySureAboutThis!;
 
-const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } = this.props.imReallySureAboutThis!.anotherObject;
+const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } = this
+  .props.imReallySureAboutThis!.anotherObject;
 
 this.foo.get("bar")!.doThings().more();
 
@@ -26,9 +28,4 @@ foo!.bar().baz().what();
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const { somePropThatHasAReallyLongName, anotherPropThatHasALongName } = this.props.imReallySureAboutThis!;
-    3: const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } = this.props.imReallySureAboutThis!.anotherObject;
-```
 

@@ -1,15 +1,17 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::TsAnyMethodSignatureModifier;
-impl Format for TsAnyMethodSignatureModifier {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsAccessibilityModifier(node) => node.format(formatter),
-            Self::JsStaticModifier(node) => node.format(formatter),
-            Self::TsOverrideModifier(node) => node.format(formatter),
-            Self::TsAbstractModifier(node) => node.format(formatter),
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsAnyMethodSignatureModifier;
+impl FormatRule<TsAnyMethodSignatureModifier> for FormatTsAnyMethodSignatureModifier {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &TsAnyMethodSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            TsAnyMethodSignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
+            TsAnyMethodSignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
+            TsAnyMethodSignatureModifier::TsOverrideModifier(node) => node.format().fmt(f),
+            TsAnyMethodSignatureModifier::TsAbstractModifier(node) => node.format().fmt(f),
         }
     }
 }

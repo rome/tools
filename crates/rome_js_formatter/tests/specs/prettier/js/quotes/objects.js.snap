@@ -14,7 +14,11 @@ const obj = {
 
 # Output
 ```js
-const obj = { "a": true, b: true, "𐊧": true };
+const obj = {
+  a: true,
+  b: true,
+  𐊧: true,
+};
 
 ```
 

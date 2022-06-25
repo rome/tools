@@ -11,12 +11,9 @@ path.scope.getProgramParent().path.get("body")[0].node;
 
 # Output
 ```js
-const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[0].node;
+const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[0]
+  .node;
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[0].node;
-```
 

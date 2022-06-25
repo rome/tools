@@ -1,13 +1,16 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsName;
 use rome_js_syntax::JsNameFields;
 
-impl FormatNode for JsName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsNameFields { value_token } = self.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsName;
 
-        value_token.format(formatter)
+impl FormatNodeRule<JsName> for FormatJsName {
+    fn fmt_fields(&self, node: &JsName, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsNameFields { value_token } = node.as_fields();
+
+        write![f, [value_token.format()]]
     }
 }

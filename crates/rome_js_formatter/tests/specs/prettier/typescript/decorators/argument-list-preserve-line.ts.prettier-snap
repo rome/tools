@@ -7,6 +7,6 @@ class Foo {
     private readonly myProcessor: IMyProcessor,
 
     @inject(InjectionTypes.AnotherThing)
-    private readonly anotherThing: IAnotherThing | undefined
+    private readonly anotherThing: IAnotherThing | undefined,
   ) {}
 }

@@ -1,14 +1,14 @@
-use crate::hard_group_elements;
-use crate::{
-    format_elements, join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
-    Formatter, JsFormatter,
-};
-use rome_formatter::{hard_line_break, FormatResult};
-use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
-use rome_rowan::{AstNode, AstNodeList};
+use crate::prelude::*;
 
-impl FormatNode for JsSwitchStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+use rome_formatter::write;
+use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
+use rome_rowan::AstNodeList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsSwitchStatement;
+
+impl FormatNodeRule<JsSwitchStatement> for FormatJsSwitchStatement {
+    fn fmt_fields(&self, node: &JsSwitchStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSwitchStatementFields {
             switch_token,
             l_paren_token,
@@ -17,31 +17,28 @@ impl FormatNode for JsSwitchStatement {
             l_curly_token,
             cases,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(hard_group_elements(format_elements![
-            switch_token.format(formatter)?,
-            space_token(),
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                discriminant.format(formatter)?,
-                &r_paren_token?,
-            )?,
-            space_token(),
-            formatter.format_delimited_block_indent(
-                &l_curly_token?,
-                if cases.is_empty() {
-                    hard_line_break()
-                } else {
-                    join_elements_hard_line(
-                        cases
-                            .iter()
-                            .map(|node| node.syntax().clone())
-                            .zip(formatter.format_all(cases)?),
-                    )
-                },
-                &r_curly_token?
-            )?
-        ]))
+        let format_cases = format_with(|f| {
+            if cases.is_empty() {
+                hard_line_break().fmt(f)?;
+            } else {
+                cases.format().fmt(f)?;
+            }
+
+            Ok(())
+        });
+
+        write![
+            f,
+            [
+                switch_token.format(),
+                space_token(),
+                format_delimited(&l_paren_token?, &discriminant.format(), &r_paren_token?,)
+                    .soft_block_indent(),
+                space_token(),
+                format_delimited(&l_curly_token?, &format_cases, &r_curly_token?).block_indent()
+            ]
+        ]
     }
 }

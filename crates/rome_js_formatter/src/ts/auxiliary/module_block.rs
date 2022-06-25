@@ -1,20 +1,23 @@
-use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::TsModuleBlock;
 use rome_js_syntax::TsModuleBlockFields;
 
-impl FormatNode for TsModuleBlock {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsModuleBlock;
+
+impl FormatNodeRule<TsModuleBlock> for FormatTsModuleBlock {
+    fn fmt_fields(&self, node: &TsModuleBlock, f: &mut JsFormatter) -> FormatResult<()> {
         let TsModuleBlockFields {
             l_curly_token,
             items,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        formatter.format_delimited_block_indent(
-            &l_curly_token?,
-            items.format(formatter)?,
-            &r_curly_token?,
+        write!(
+            f,
+            [format_delimited(&l_curly_token?, &items.format(), &r_curly_token?,).block_indent()]
         )
     }
 }

@@ -14,18 +14,15 @@ this.isaverylongmethodexpression.withmultiplelevels = this.isanotherverylongexpr
 
 # Output
 ```js
-const aVeryLongNameThatGoesOnAndOn = this.someOtherObject.someOtherNestedObject.someLongFunctionName();
+const aVeryLongNameThatGoesOnAndOn =
+  this.someOtherObject.someOtherNestedObject.someLongFunctionName();
 
 this.someObject.someOtherNestedObject =
   this.someOtherObject.whyNotNestAnotherOne.someLongFunctionName();
 
-this.isaverylongmethodexpression.withmultiplelevels =
-  this.isanotherverylongexpression.thatisalsoassigned = 0;
+this.isaverylongmethodexpression.withmultiplelevels = this
+  .isanotherverylongexpression.thatisalsoassigned = 0;
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const aVeryLongNameThatGoesOnAndOn = this.someOtherObject.someOtherNestedObject.someLongFunctionName();
-```
 

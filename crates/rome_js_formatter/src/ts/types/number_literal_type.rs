@@ -1,12 +1,17 @@
-use crate::format_traits::FormatOptional;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsNumberLiteralType;
+use crate::prelude::*;
 
-impl FormatNode for TsNumberLiteralType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let minus = self.minus_token().format_or_empty(formatter)?;
-        let literal = self.literal_token().format(formatter)?;
-        Ok(format_elements![minus, literal])
+use rome_formatter::write;
+use rome_js_syntax::{TsNumberLiteralType, TsNumberLiteralTypeFields};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsNumberLiteralType;
+
+impl FormatNodeRule<TsNumberLiteralType> for FormatTsNumberLiteralType {
+    fn fmt_fields(&self, node: &TsNumberLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsNumberLiteralTypeFields {
+            minus_token,
+            literal_token,
+        } = node.as_fields();
+        write![f, [minus_token.format(), literal_token.format()]]
     }
 }

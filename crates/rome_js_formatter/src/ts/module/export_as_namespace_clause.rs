@@ -1,28 +1,38 @@
-use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::FormatWithSemicolon;
+
+use rome_formatter::{format_args, write};
 use rome_js_syntax::TsExportAsNamespaceClause;
 use rome_js_syntax::TsExportAsNamespaceClauseFields;
 
-impl FormatNode for TsExportAsNamespaceClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsExportAsNamespaceClause;
+
+impl FormatNodeRule<TsExportAsNamespaceClause> for FormatTsExportAsNamespaceClause {
+    fn fmt_fields(
+        &self,
+        node: &TsExportAsNamespaceClause,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsExportAsNamespaceClauseFields {
             as_token,
             namespace_token,
             name,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            format_elements![
-                as_token.format(formatter)?,
-                space_token(),
-                namespace_token.format(formatter)?,
-                space_token(),
-                name.format(formatter)?,
-            ],
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
+                    as_token.format(),
+                    space_token(),
+                    namespace_token.format(),
+                    space_token(),
+                    name.format()
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

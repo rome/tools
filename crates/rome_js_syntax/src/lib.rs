@@ -7,7 +7,9 @@ mod generated;
 pub mod expr_ext;
 pub mod modifier_ext;
 pub mod numbers;
+pub mod source_type;
 pub mod stmt_ext;
+pub mod suppression;
 mod syntax_node;
 mod union_ext;
 
@@ -17,6 +19,7 @@ pub use modifier_ext::*;
 pub use rome_rowan::{
     SyntaxNodeText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,
 };
+pub use source_type::*;
 pub use stmt_ext::*;
 pub use syntax_node::*;
 

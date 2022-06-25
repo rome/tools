@@ -1,5 +1,6 @@
 const { promises: fs } = require("fs");
 const path = require("path");
+const prettier = require("prettier");
 
 if (process.argv.length < 3) {
     console.error("Usage: node prepare_tests.js <prettier root>");
@@ -9,10 +10,10 @@ if (process.argv.length < 3) {
 const PRETTIER_ROOT = path.resolve(process.argv[2], "tests/format");
 
 // Recursively traverse the test directory to search for snapshots files
-async function traverseDir(dir) {
+async function traverseDir(dir, config) {
     for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
         if (entry.isDirectory()) {
-            await traverseDir(path.resolve(dir, entry.name));
+            await traverseDir(path.resolve(dir, entry.name), config);
             continue;
         }
 
@@ -56,7 +57,13 @@ async function traverseDir(dir) {
                     const startOffset = start.index + start[0].length;
                     const endOffset = end.index;
                     snapContent = snapContent.substring(startOffset, endOffset);
-
+                    try {
+                        // We need to reformat prettier snapshot
+                        // because Rome and Prettier have different default options
+                        snapContent = prettier.format(snapContent, config);
+                    } catch (error) {
+                        console.error(`Prettier format error in ${filePath}: ${error}`);
+                    }
                     // Write the expected output to an additional prettier-snap
                     // file in the specs directory
                     const snapFile = path.basename(file) + ".prettier-snap";
@@ -73,11 +80,25 @@ async function traverseDir(dir) {
 const PRETTIER_ROOT_JS = path.resolve(PRETTIER_ROOT, "js");
 const PRETTIER_ROOT_TS = path.resolve(PRETTIER_ROOT, "typescript");
 
+const defaultConfig = {
+    trailingComma: "all",
+    tabWidth: 2,
+    printWidth: 80,
+    singleQuote: false,
+    useTabs: false,
+};
+
 async function main() {
     console.log("Extracting tests from %s ...", PRETTIER_ROOT_JS);
-    await traverseDir(PRETTIER_ROOT_JS);
+    await traverseDir(PRETTIER_ROOT_JS, {
+        ...defaultConfig,
+        parser: "babel",
+    });
     console.log("Extracting tests from %s ...", PRETTIER_ROOT_TS);
-    await traverseDir(PRETTIER_ROOT_TS);
+    await traverseDir(PRETTIER_ROOT_TS, {
+        ...defaultConfig,
+        parser: "typescript"
+    });
 }
 
 main().catch(

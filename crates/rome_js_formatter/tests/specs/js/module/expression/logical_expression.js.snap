@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: logical_expression.js
 ---
 # Input
@@ -232,7 +231,9 @@ const a = x + y;
 }
 
 if (
-	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) || (
+	(
+		somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
+	) || (
 		somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
 	)
 ) {
@@ -246,23 +247,24 @@ const b = `${
 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
 }`;
 
-const a = (
-	aa &&
-		bb &&
-		something &&
-		elsewhere &&
-		happy &&
-		thoughts &&
-		somethingsomethingsomethingsomething
-) || (
-	aa &&
-		bb &&
-		something &&
-		elsewhere &&
-		happy &&
-		thoughts &&
-		somethingsomethingsomethingsomething
-);
+const a =
+	(
+		aa &&
+			bb &&
+			something &&
+			elsewhere &&
+			happy &&
+			thoughts &&
+			somethingsomethingsomethingsomething
+	) || (
+		aa &&
+			bb &&
+			something &&
+			elsewhere &&
+			happy &&
+			thoughts &&
+			somethingsomethingsomethingsomething
+	);
 
 (
 	lorem && // foo
@@ -309,7 +311,9 @@ a in
 	LongClassName;
 
 (
-	(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String) && (
+	(
+		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String
+	) && (
 		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number
 	)
 ) || (
@@ -319,7 +323,5 @@ a in
 
 ## Lines exceeding width of 80 characters
 
-  108: 	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) || (
-  119: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
-  185: 	(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String) && (
+  121: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
 

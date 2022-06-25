@@ -32,8 +32,15 @@ foo(obj.property * new Class() && obj instanceof Class && longVariable ? number 
 // break them all at the same time.
 
 const x = longVariable + longVariable + longVariable;
-const x1 = longVariable + longVariable + longVariable + longVariable - longVariable + longVariable;
-const x2 = longVariable + (longVariable * longVariable) + longVariable - longVariable + longVariable;
+const x1 =
+  longVariable +
+    longVariable +
+    longVariable +
+    longVariable - longVariable + longVariable;
+const x2 =
+  longVariable +
+    (longVariable * longVariable) +
+    longVariable - longVariable + longVariable;
 const x3 =
   longVariable +
   (longVariable * longVariable * longVariable / longVariable) +
@@ -58,28 +65,26 @@ const x7 =
   firstItemWithAVeryLongNameThatKeepsGoing ||
   firstItemWithAVeryLongNameThatKeepsGoing ||
   [];
-const x8 = call(
-  firstItemWithAVeryLongNameThatKeepsGoing,
-  firstItemWithAVeryLongNameThatKeepsGoing,
-) || [];
+const x8 =
+  call(
+    firstItemWithAVeryLongNameThatKeepsGoing,
+    firstItemWithAVeryLongNameThatKeepsGoing,
+  ) || [];
 
 const x9 =
   longVariable * longint && longVariable >> 0 && longVariable + longVariable;
 
-const x10 = longVariable > longint && longVariable === (
-  0 + (longVariable * longVariable)
-);
+const x10 =
+  longVariable > longint && longVariable === (
+    0 + (longVariable * longVariable)
+  );
 
 foo(
-  obj.property * new Class() && (obj instanceof Class) && longVariable ? number + 5 : false,
+  obj.property * new Class() &&
+    (obj instanceof Class) &&
+    longVariable ? number + 5 : false,
 );
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    5: const x1 = longVariable + longVariable + longVariable + longVariable - longVariable + longVariable;
-    6: const x2 = longVariable + (longVariable * longVariable) + longVariable - longVariable + longVariable;
-   44:   obj.property * new Class() && (obj instanceof Class) && longVariable ? number + 5 : false,
-```
 

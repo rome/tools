@@ -22,6 +22,10 @@ struct GreenTokenHead {
     _c: Count<GreenToken>,
 }
 
+pub(crate) fn has_live() -> bool {
+    countme::get::<GreenToken>().live > 0
+}
+
 type Repr = HeaderSlice<GreenTokenHead, [u8]>;
 type ReprThin = HeaderSlice<GreenTokenHead, [u8; 0]>;
 #[repr(transparent)]
@@ -166,13 +170,6 @@ impl GreenToken {
         };
         let ptr = ThinArc::from_header_and_iter(head, text.bytes());
         GreenToken { ptr }
-    }
-
-    #[inline]
-    pub(crate) fn into_raw(this: GreenToken) -> ptr::NonNull<GreenTokenData> {
-        let green = ManuallyDrop::new(this);
-        let green: &GreenTokenData = &*green;
-        ptr::NonNull::from(&*green)
     }
 
     #[inline]

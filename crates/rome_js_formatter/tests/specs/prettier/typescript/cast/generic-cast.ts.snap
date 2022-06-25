@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: generic-cast.ts
 ---
 # Input
@@ -70,9 +69,9 @@ function y() {
   const fitsObjLiteral = <Immutable.Map<string, any>>{ a: "test" };
   const fitsArrayLiteral = <Immutable.Map<string, any>>["test", "test2"];
 
-  const breakAfterCast = <Immutable.Map<string, any>>someExistingConfigMap.mergeDeep(
-    fallbackOpts,
-  );
+  const breakAfterCast = <
+    Immutable.Map<string, any>
+  >someExistingConfigMap.mergeDeep(fallbackOpts);
 
   const stillTooLong = <
     Immutable.Map<
@@ -173,9 +172,9 @@ function x() {
   const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
   const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
 
-  const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[
-    receiverType
-  ];
+  const breakAfterCast = <PermissionsChecker<any> | undefined>(
+    <any>permissions
+  )[receiverType];
 
   const stillTooLong = <
     PermissionsChecker<object> | undefined | number | string | boolean
@@ -246,9 +245,4 @@ function x() {
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    7:   const breakAfterCast = <Immutable.Map<string, any>>someExistingConfigMap.mergeDeep(
-  110:   const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[
-```
 

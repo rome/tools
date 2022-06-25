@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: argument-list.js
 ---
 # Input
@@ -244,26 +245,28 @@ comments(
   // Long Long Long Long Long Comment
 
   short3,
-  // More comments
+// More comments
+
 );
 
-differentArgTypes(
-  () => {
-    return true;
-  },
-  isTrue ? doSomething() : 12,
-);
+differentArgTypes(() => {
+  return true;
+}, isTrue ? doSomething() : 12);
 
 moreArgTypes(
   [1, 2, 3],
-  { name: "Hello World", age: 29 },
+  {
+    name: "Hello World",
+    age: 29,
+  },
   doSomething(
     // Hello world
 
     // Hello world again
     { name: "Hello World", age: 34 },
     oneThing + anotherThing,
-    // Comment
+  // Comment
+
   ),
 );
 
@@ -280,12 +283,9 @@ foo.apply(
   [1, 2],
 );
 
-bar.on(
-  "readable",
-  () => {
-    doStuff();
-  },
-);
+bar.on("readable", () => {
+  doStuff();
+});
 
 foo(
   ["A, B"],
@@ -302,23 +302,24 @@ doSomething.apply(
   ["Hello world 1", "Hello world 2", "Hello world 3"],
 );
 
-doAnotherThing("node", { solution_type, time_frame });
+doAnotherThing("node", {
+  solution_type,
+  time_frame,
+});
 
-stuff.doThing(someStuff, -1, { accept: (node) => doSomething(node) });
+stuff.doThing(someStuff, -1, {
+  accept: (node) => doSomething(node),
+});
 
-doThing(
-  someOtherStuff,
-  // This is important
-  true,
-  { decline: (creditCard) => takeMoney(creditCard) },
-);
+doThing(someOtherStuff,
+// This is important
+true, {
+  decline: (creditCard) => takeMoney(creditCard),
+});
 
-func(
-  () => {
-    thing();
-  },
-  { yes: true, no: 5 },
-);
+func(() => {
+  thing();
+}, { yes: true, no: 5 });
 
 doSomething(
   { tomorrow: maybe, today: never[always] },
@@ -329,12 +330,20 @@ doSomething(
   { helloWorld, someImportantStuff },
 );
 
-function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
+function foo(
+  one,
+  two,
+  three,
+  four,
+  five,
+  six,
+  seven,
+  eight,
+  nine,
+  ten,
+  eleven,
+) {}
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-  115: function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
-```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 83
 expression: export-default-from.js
-
 ---
 # Input
 ```js
@@ -21,7 +19,7 @@ export v from 'mod';
 export
 v;
 from;
-"mod";
+("mod");
 
 ```
 

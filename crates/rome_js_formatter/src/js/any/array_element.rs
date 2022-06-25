@@ -1,14 +1,16 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::JsAnyArrayElement;
-impl Format for JsAnyArrayElement {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsAnyExpression(node) => node.format(formatter),
-            Self::JsSpread(node) => node.format(formatter),
-            Self::JsArrayHole(node) => node.format(formatter),
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyArrayElement;
+impl FormatRule<JsAnyArrayElement> for FormatJsAnyArrayElement {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &JsAnyArrayElement, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsAnyArrayElement::JsAnyExpression(node) => node.format().fmt(f),
+            JsAnyArrayElement::JsSpread(node) => node.format().fmt(f),
+            JsAnyArrayElement::JsArrayHole(node) => node.format().fmt(f),
         }
     }
 }

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: classExpression.ts
-
 ---
 # Input
 ```js
@@ -23,7 +21,9 @@ var z = class C4 {
 ```js
 var x = class C {};
 
-var y = { foo: class C2 {} };
+var y = {
+  foo: class C2 {},
+};
 
 var z = class C4 {};
 

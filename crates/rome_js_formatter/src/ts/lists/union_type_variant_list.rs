@@ -1,44 +1,66 @@
-use crate::{
-    concat_elements, empty_element, format_elements, soft_line_break_or_space, space_token, token,
-    Format, FormatElement, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsUnionTypeVariantList;
-use rome_rowan::AstSeparatedList;
+use crate::prelude::*;
+use rome_formatter::write;
+use rome_js_syntax::{JsLanguage, JsSyntaxKind, TsType, TsUnionTypeVariantList};
+use rome_rowan::{AstSeparatedElement, AstSeparatedList};
 
-impl Format for TsUnionTypeVariantList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let mut elements = Vec::with_capacity(self.len());
-        let last_index = self.len().saturating_sub(1);
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsUnionTypeVariantList;
 
-        for (index, item) in self.elements().enumerate() {
-            let ty = item.node()?;
-            let separator = item.trailing_separator()?;
+impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
+    type Context = JsFormatContext;
 
-            let separator = match separator {
-                Some(token) => {
-                    if index == last_index {
-                        formatter.format_replaced(token, empty_element())
-                    } else {
-                        format_elements![
+    fn fmt(&self, node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
+        let last_index = node.len().saturating_sub(1);
+
+        f.join()
+            .entries(
+                node.elements()
+                    .enumerate()
+                    .map(|(index, item)| FormatTypeVariant {
+                        last: index == last_index,
+                        element: item,
+                    }),
+            )
+            .finish()
+    }
+}
+
+pub struct FormatTypeVariant {
+    pub last: bool,
+    pub element: AstSeparatedElement<JsLanguage, TsType>,
+}
+
+impl Format<JsFormatContext> for FormatTypeVariant {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        write!(f, [group_elements(&self.element.node().format())])?;
+
+        let separator = self.element.trailing_separator()?;
+
+        match separator {
+            Some(token) => {
+                if self.last {
+                    write!(f, [format_removed(token)])?;
+                } else {
+                    write![
+                        f,
+                        [soft_line_break_or_space(), token.format(), space_token()]
+                    ]?;
+                }
+            }
+            None => {
+                if !self.last {
+                    write![
+                        f,
+                        [
                             soft_line_break_or_space(),
-                            token.format(formatter)?,
+                            format_inserted(JsSyntaxKind::PIPE),
                             space_token()
                         ]
-                    }
+                    ]?;
                 }
-                None => {
-                    if index == last_index {
-                        empty_element()
-                    } else {
-                        format_elements![soft_line_break_or_space(), token("|"), space_token()]
-                    }
-                }
-            };
-
-            elements.push(format_elements![ty.format(formatter)?, separator])
+            }
         }
 
-        Ok(concat_elements(elements))
+        Ok(())
     }
 }

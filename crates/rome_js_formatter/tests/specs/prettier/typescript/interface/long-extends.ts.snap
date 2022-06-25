@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: long-extends.ts
 ---
 # Input
@@ -34,34 +33,26 @@ export interface I extends A, B, C {
 }
 
 export interface ThirdVeryLongAndBoringInterfaceName
-  extends
-    ALongAndBoringInterfaceName
-{
+  extends ALongAndBoringInterfaceName {
   c: string;
 }
 
 export interface ThirdVeryLongAndBoringInterfaceName
-  extends
-    ALongAndBoringInterfaceName,
-    AnotherLongAndBoringInterfaceName
-{
+  extends ALongAndBoringInterfaceName,
+    AnotherLongAndBoringInterfaceName {
   c: string;
 }
 
 export interface ThirdVeryLongAndBoringInterfaceName
-  extends
-    AVeryLongAndBoringInterfaceName,
-    AnotherVeryLongAndBoringInterfaceName
-{
+  extends AVeryLongAndBoringInterfaceName,
+    AnotherVeryLongAndBoringInterfaceName {
   c: string;
 }
 
 export interface ThirdVeryLongAndBoringInterfaceName
-  extends
-    A_AVeryLongAndBoringInterfaceName,
+  extends A_AVeryLongAndBoringInterfaceName,
     B_AVeryLongAndBoringInterfaceName,
-    C_AVeryLongAndBoringInterfaceName
-{
+    C_AVeryLongAndBoringInterfaceName {
   c: string;
 }
 

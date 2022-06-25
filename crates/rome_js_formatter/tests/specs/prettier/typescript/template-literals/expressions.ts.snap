@@ -9,12 +9,11 @@ const bar = tag<number>`but where will prettier wrap such a long tagged template
 
 # Output
 ```js
-const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo.bar.baz} long long long long long long long long long long long long long long`;
+const bar = tag<
+  number
+>`but where will prettier wrap such a long tagged template literal? ${foo.bar
+  .baz} long long long long long long long long long long long long long long`;
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo.bar.baz} long long long long long long long long long long long long long long`;
-```
 

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 182
 expression: hug-args.ts
-
 ---
 # Input
 ```js
@@ -33,13 +32,22 @@ postMessages(
 
 # Output
 ```js
-postMessage(<IActionMessage>{ context: item.context, topic: item.topic });
+postMessage(<IActionMessage>{
+  context: item.context,
+  topic: item.topic,
+});
 
-window.postMessage(
-  { context: item.context, topic: item.topic } as IActionMessage,
-);
+window.postMessage({
+  context: item.context,
+  topic: item.topic,
+} as IActionMessage);
 
-postMessages(<IActionMessage[]>[{ context: item.context, topic: item.topic }]);
+postMessages(<IActionMessage[]>[
+  {
+    context: item.context,
+    topic: item.topic,
+  },
+]);
 
 ```
 

@@ -1,10 +1,17 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::JsAnyClass;
+use crate::prelude::*;
+use crate::utils::format_class::FormatClass;
+
 use rome_js_syntax::JsClassExportDefaultDeclaration;
 
-impl FormatNode for JsClassExportDefaultDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        JsAnyClass::from(self.clone()).format(formatter)
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsClassExportDefaultDeclaration;
+
+impl FormatNodeRule<JsClassExportDefaultDeclaration> for FormatJsClassExportDefaultDeclaration {
+    fn fmt_fields(
+        &self,
+        node: &JsClassExportDefaultDeclaration,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatClass::from(&node.clone().into()).fmt(f)
     }
 }

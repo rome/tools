@@ -20,8 +20,8 @@ top: ${p => p.overlap === 'next' && 0};
 # Output
 ```js
 const OverlapWrapper =
-/** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
-(styled.div)`
+  /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
+  (styled.div)`
 position:relative;
     > {
   position: absolute;
@@ -34,6 +34,6 @@ top: ${(p) => p.overlap === "next" && 0};
 
 # Lines exceeding max width of 80 characters
 ```
-    2: /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
+    2:   /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
 ```
 

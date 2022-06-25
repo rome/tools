@@ -1,26 +1,43 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::{FormatRuleWithOptions, GroupId};
 use std::convert::Infallible;
 
-use crate::formatter::TrailingSeparator;
-use crate::utils::array::format_array_node;
-use crate::{
-    fill_elements, token, utils::has_formatter_trivia, Format, FormatElement, Formatter,
-    JsFormatter,
-};
+use crate::utils::array::write_array_node;
 
-use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
+use crate::utils::has_formatter_trivia;
+use rome_js_syntax::{JsAnyExpression, JsArrayElementList, JsSyntaxKind};
 use rome_rowan::{AstNode, AstSeparatedList};
 
-impl Format for JsArrayElementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
-            return Ok(fill_elements(
-                // Using format_separated is valid in this case as can_print_fill does not allow holes
-                formatter.format_separated(self, || token(","), TrailingSeparator::default())?,
-            ));
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrayElementList {
+    group_id: Option<GroupId>,
+}
+
+impl FormatRuleWithOptions<JsArrayElementList> for FormatJsArrayElementList {
+    type Options = Option<GroupId>;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.group_id = options;
+        self
+    }
+}
+
+impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
+    type Context = JsFormatContext;
+
+    fn fmt(&self, node: &JsArrayElementList, f: &mut JsFormatter) -> FormatResult<()> {
+        if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
+            // Using format_separated is valid in this case as can_print_fill does not allow holes
+            return f
+                .fill(soft_line_break_or_space())
+                .entries(
+                    node.format_separated(JsSyntaxKind::COMMA)
+                        .with_group_id(self.group_id),
+                )
+                .finish();
         }
 
-        format_array_node(self, formatter)
+        write_array_node(node, f)
     }
 }
 

@@ -1,12 +1,15 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { formatWithPrettier, getLanguage } from "./utils";
+import { createSetter, getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
+import TreeView from "./TreeView";
+import ReactJson from "react-json-view";
 
 export function MobilePlayground(
 	{
-		playgroundState: { code, setCode, ...settings },
+		setPlaygroundState,
+		playgroundState: { code, treeStyle, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
@@ -23,7 +26,8 @@ export function MobilePlayground(
 					<Tab selectedClassName="bg-slate-300">Formatter Output</Tab>
 					<Tab selectedClassName="bg-slate-300">CST</Tab>
 					<Tab selectedClassName="bg-slate-300">AST</Tab>
-					<Tab selectedClassName="bg-slate-300">Formatter IR</Tab>
+					<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
+					<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
 					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
 						Errors
 					</Tab>
@@ -34,7 +38,10 @@ export function MobilePlayground(
 						language={language}
 						placeholder="Enter some code here"
 						onChange={(evn) => {
-							setCode(evn.target.value);
+							setPlaygroundState((state) => ({
+								...state,
+								code: evn.target.value,
+							}));
 						}}
 						style={{
 							fontSize: 12,
@@ -45,7 +52,10 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<SettingsMenu settings={settings} />
+					<SettingsMenu
+						setPlaygroundState={setPlaygroundState}
+						settings={settings}
+					/>
 				</TabPanel>
 				<TabPanel>
 					<h1>Rome</h1>
@@ -63,7 +73,7 @@ export function MobilePlayground(
 					/>
 					<h1>Prettier</h1>
 					<CodeEditor
-						value={prettierOutput}
+						value={prettierOutput.code}
 						language={language}
 						placeholder="Prettier Output"
 						style={{
@@ -76,13 +86,24 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll">{cst}</pre>
+					<TreeView
+						tree={cst}
+						treeStyle={treeStyle}
+						setPlaygroundState={setPlaygroundState}
+					/>
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll">{ast}</pre>
+					<TreeView
+						tree={ast}
+						treeStyle={treeStyle}
+						setPlaygroundState={setPlaygroundState}
+					/>
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
+				</TabPanel>
+				<TabPanel>
+					<pre className="h-screen overflow-y-scroll">{prettierOutput.ir}</pre>
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">

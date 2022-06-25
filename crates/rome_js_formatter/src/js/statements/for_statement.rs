@@ -1,17 +1,15 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
 
-use crate::{
-    format_elements, group_elements, soft_line_break_or_space, space_token, token, Format,
-    FormatElement, FormatNode, Formatter, JsFormatter,
-};
-
-use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsForStatement;
 use rome_js_syntax::JsForStatementFields;
+use rome_js_syntax::{JsAnyStatement, JsSyntaxKind};
 
-impl FormatNode for JsForStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsForStatement;
+
+impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
+    fn fmt_fields(&self, node: &JsForStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForStatementFields {
             for_token,
             l_paren_token,
@@ -22,42 +20,49 @@ impl FormatNode for JsForStatement {
             update,
             r_paren_token,
             body,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let inner = if initializer.is_some() || test.is_some() || update.is_some() {
-            format_elements![
-                initializer.format_or_empty(formatter)?,
-                first_semi_token.format(formatter)?,
-                soft_line_break_or_space(),
-                test.format_or_empty(formatter)?,
-                second_semi_token.format(formatter)?,
-                soft_line_break_or_space(),
-                update.format_or_empty(formatter)?,
-            ]
-        } else {
-            format_elements![
-                first_semi_token.format(formatter)?,
-                second_semi_token.format(formatter)?,
-            ]
-        };
+        let condition = format_with(|f| {
+            if initializer.is_some() || test.is_some() || update.is_some() {
+                write![
+                    f,
+                    [
+                        initializer.format(),
+                        first_semi_token.format(),
+                        soft_line_break_or_space(),
+                        test.format(),
+                        second_semi_token.format(),
+                        soft_line_break_or_space(),
+                        update.format(),
+                    ]
+                ]
+            } else {
+                write![f, [first_semi_token.format(), second_semi_token.format()]]
+            }
+        });
 
-        // Force semicolon insertion for empty bodies
-        let body = body?;
-        let body = if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
-            format_elements![body.format(formatter)?, token(";")]
-        } else {
-            format_elements![space_token(), body.format(formatter)?]
-        };
+        let content = format_with(|f| {
+            write!(
+                f,
+                [
+                    for_token.format(),
+                    space_token(),
+                    format_delimited(l_paren_token.as_ref()?, &condition, r_paren_token.as_ref()?,)
+                        .soft_block_indent(),
+                ]
+            )?;
 
-        Ok(group_elements(format_elements![
-            for_token.format(formatter)?,
-            space_token(),
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                inner,
-                &r_paren_token?,
-            )?,
-            body
-        ]))
+            // Force semicolon insertion for empty bodies
+            match body.as_ref()? {
+                JsAnyStatement::JsEmptyStatement(body) => {
+                    write![f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)]]
+                }
+                body => {
+                    write!(f, [space_token(), body.format()])
+                }
+            }
+        });
+
+        write!(f, [group_elements(&content)])
     }
 }

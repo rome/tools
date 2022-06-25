@@ -24,15 +24,16 @@ averredBathersBoxroomBuggyNurl(
 
 # Output
 ```js
-const bifornCringerMoshedPerplexSawder = askTrovenaBeenaDependsRowans as glimseGlyphsHazardNoopsTieTie;
+const bifornCringerMoshedPerplexSawder =
+  askTrovenaBeenaDependsRowans as glimseGlyphsHazardNoopsTieTie;
 
 averredBathersBoxroomBuggyNurl.anodyneCondosMalateOverateRetinol =
   annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave;
 
-averredBathersBoxroomBuggyNurl =
-  {
-    anodyneCondosMalateOverateRetinol: annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
-  };
+averredBathersBoxroomBuggyNurl = {
+  anodyneCondosMalateOverateRetinol:
+    annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
+};
 
 averredBathersBoxroomBuggyNurl(
   anodyneCondosMalateOverateRetinol.annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
@@ -42,8 +43,6 @@ averredBathersBoxroomBuggyNurl(
 
 # Lines exceeding max width of 80 characters
 ```
-    1: const bifornCringerMoshedPerplexSawder = askTrovenaBeenaDependsRowans as glimseGlyphsHazardNoopsTieTie;
-    8:     anodyneCondosMalateOverateRetinol: annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
-   12:   anodyneCondosMalateOverateRetinol.annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
+   13:   anodyneCondosMalateOverateRetinol.annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
 ```
 

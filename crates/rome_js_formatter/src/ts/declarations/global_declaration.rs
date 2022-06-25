@@ -1,16 +1,16 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
+
 use rome_js_syntax::TsGlobalDeclaration;
 use rome_js_syntax::TsGlobalDeclarationFields;
 
-impl FormatNode for TsGlobalDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let TsGlobalDeclarationFields { global_token, body } = self.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsGlobalDeclaration;
 
-        Ok(format_elements![
-            global_token.format(formatter)?,
-            space_token(),
-            body.format(formatter)?
-        ])
+impl FormatNodeRule<TsGlobalDeclaration> for FormatTsGlobalDeclaration {
+    fn fmt_fields(&self, node: &TsGlobalDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsGlobalDeclarationFields { global_token, body } = node.as_fields();
+
+        write![f, [global_token.format(), space_token(), body.format()]]
     }
 }

@@ -1,19 +1,19 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsSpread;
 use rome_js_syntax::JsSpreadFields;
 
-impl FormatNode for JsSpread {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsSpread;
+
+impl FormatNodeRule<JsSpread> for FormatJsSpread {
+    fn fmt_fields(&self, node: &JsSpread, f: &mut JsFormatter) -> FormatResult<()> {
         let JsSpreadFields {
             dotdotdot_token,
             argument,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            dotdotdot_token.format(formatter)?,
-            argument.format(formatter)?
-        ])
+        write![f, [dotdotdot_token.format(), argument.format()]]
     }
 }

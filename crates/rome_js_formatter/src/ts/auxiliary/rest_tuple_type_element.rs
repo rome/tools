@@ -1,15 +1,19 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::{TsRestTupleTypeElement, TsRestTupleTypeElementFields};
 
-impl FormatNode for TsRestTupleTypeElement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsRestTupleTypeElement;
+
+impl FormatNodeRule<TsRestTupleTypeElement> for FormatTsRestTupleTypeElement {
+    fn fmt_fields(&self, node: &TsRestTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         let TsRestTupleTypeElementFields {
             dotdotdot_token,
             ty,
-        } = self.as_fields();
-        let dotdotdot = dotdotdot_token.format(formatter)?;
-        let ty = ty.format(formatter)?;
-        Ok(format_elements![dotdotdot, ty])
+        } = node.as_fields();
+        let dotdotdot = dotdotdot_token.format();
+        let ty = ty.format();
+        write![f, [dotdotdot, ty]]
     }
 }

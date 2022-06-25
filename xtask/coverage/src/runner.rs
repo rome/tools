@@ -3,8 +3,8 @@ use crate::reporters::TestReporter;
 use rome_diagnostics::file::{FileId, SimpleFiles};
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{Diagnostic, Emitter, Severity};
-use rome_js_parser::{parse, Parse, SourceType};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode};
+use rome_js_parser::{parse, Parse};
+use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, SourceType};
 use rome_rowan::SyntaxKind;
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
@@ -82,7 +82,7 @@ pub(crate) struct TestCaseFile {
 
 impl TestCaseFile {
     pub(crate) fn parse(&self) -> Parse<JsAnyRoot> {
-        parse(&self.code, self.id, self.source_type.clone())
+        parse(&self.code, self.id, self.source_type)
     }
 
     pub(crate) fn name(&self) -> &str {
@@ -233,7 +233,58 @@ pub(crate) fn run_test_suite(
     let instance = load_tests(test_suite, context);
     context.reporter.test_suite_run_started(&instance);
 
-    std::panic::set_hook(Box::new(|_| {}));
+    std::panic::set_hook(Box::new(|info| {
+        use std::io::Write;
+
+        let backtrace = backtrace::Backtrace::default();
+        let mut stacktrace = vec![];
+
+        // Skip frames inside the backtrace lib
+        for frame in backtrace.frames().iter().skip(6) {
+            if let Some(s) = frame.symbols().get(0) {
+                if let Some(file) = s.filename() {
+                    // We don't care about std or cargo registry libs
+                    let file_path = file.as_os_str().to_str().unwrap();
+                    if file_path.starts_with("/rustc") || file_path.contains(".cargo") {
+                        continue;
+                    }
+
+                    let _ = write!(stacktrace, "{}", file.display());
+                } else if let Some(name) = s.name().and_then(|x| x.as_str()) {
+                    let _ = write!(stacktrace, "{}", name);
+                } else {
+                    let _ = write!(stacktrace, "<unknown>");
+                }
+
+                match (s.lineno(), s.colno()) {
+                    (Some(line), Some(col)) => {
+                        let _ = write!(stacktrace, " @ line {} col {}", line, col);
+                    }
+                    (Some(line), None) => {
+                        let _ = write!(stacktrace, " @ line {}", line);
+                    }
+                    (None, Some(col)) => {
+                        let _ = write!(stacktrace, " @ col {}", col);
+                    }
+                    _ => {}
+                }
+
+                let _ = writeln!(stacktrace);
+            }
+        }
+
+        let stacktrace = String::from_utf8(stacktrace).unwrap();
+
+        let mut msg = vec![];
+        let _ = write!(msg, "{}", info);
+        let msg = String::from_utf8(msg).unwrap();
+
+        tracing::error!(
+            panic = msg.as_str(),
+            stacktrace = stacktrace.as_str(),
+            "Test panicked"
+        );
+    }));
 
     let mut test_results = TestResults::new();
     let (tx, rx) = std::sync::mpsc::channel();
@@ -256,9 +307,23 @@ pub(crate) fn run_test_suite(
 
             scope.execute(move || {
                 let test_ref = test.as_ref();
-                let run_result = std::panic::catch_unwind(|| test_ref.run());
 
-                let outcome = run_result.unwrap_or_else(|panic| TestRunOutcome::Panicked(panic));
+                let outcome = match std::panic::catch_unwind(|| test_ref.run()) {
+                    Ok(result) => result,
+                    Err(panic) => {
+                        let error = panic
+                            .downcast_ref::<String>()
+                            .map(|x| x.to_string())
+                            .or_else(|| panic.downcast_ref::<&str>().map(|x| x.to_string()))
+                            .unwrap_or_else(|| "".to_string());
+                        tracing::error!(
+                            panic = error.as_str(),
+                            name = test.name(),
+                            "Test panicked"
+                        );
+                        TestRunOutcome::Panicked(panic)
+                    }
+                };
 
                 tx.send(TestRunResult {
                     test_case: test.name().to_owned(),

@@ -211,9 +211,8 @@ impl SimpleArgument {
                         member,
                         JsAnyObjectMember::JsShorthandPropertyObjectMember(_)
                     );
-                    let is_simple = SimpleArgument::from(member.clone()).is_simple(depth + 1);
                     let is_computed_property =
-                        if let JsAnyObjectMember::JsPropertyObjectMember(property) = member {
+                        if let JsAnyObjectMember::JsPropertyObjectMember(property) = &member {
                             matches!(
                                 property.name(),
                                 Ok(JsAnyObjectMemberName::JsComputedMemberName(_))
@@ -221,6 +220,7 @@ impl SimpleArgument {
                         } else {
                             false
                         };
+                    let is_simple = SimpleArgument::from(member).is_simple(depth + 1);
 
                     !is_computed_property && (is_shorthand_property || is_simple)
                 })

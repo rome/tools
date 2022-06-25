@@ -12,12 +12,9 @@ const name: SomeGeneric<
 
 # Output
 ```js
-const name: SomeGeneric<Pick<Config, "ONE_LONG_PROP" | "ANOTHER_LONG_PROP">> = null;
+const name: SomeGeneric<Pick<Config, "ONE_LONG_PROP" | "ANOTHER_LONG_PROP">> =
+  null;
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: const name: SomeGeneric<Pick<Config, "ONE_LONG_PROP" | "ANOTHER_LONG_PROP">> = null;
-```
 

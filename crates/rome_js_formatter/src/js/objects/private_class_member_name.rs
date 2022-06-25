@@ -1,19 +1,19 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsPrivateClassMemberName;
 use rome_js_syntax::JsPrivateClassMemberNameFields;
 
-impl FormatNode for JsPrivateClassMemberName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsPrivateClassMemberName;
+
+impl FormatNodeRule<JsPrivateClassMemberName> for FormatJsPrivateClassMemberName {
+    fn fmt_fields(&self, node: &JsPrivateClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPrivateClassMemberNameFields {
             hash_token,
             id_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            hash_token.format(formatter)?,
-            id_token.format(formatter)?,
-        ])
+        write![f, [hash_token.format(), id_token.format()]]
     }
 }

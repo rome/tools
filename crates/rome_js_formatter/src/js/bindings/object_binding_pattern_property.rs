@@ -1,28 +1,39 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use rome_formatter::write;
 use rome_js_syntax::JsObjectBindingPatternProperty;
 use rome_js_syntax::JsObjectBindingPatternPropertyFields;
 
-impl FormatNode for JsObjectBindingPatternProperty {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectBindingPatternProperty;
+
+impl FormatNodeRule<JsObjectBindingPatternProperty> for FormatJsObjectBindingPatternProperty {
+    fn fmt_fields(
+        &self,
+        node: &JsObjectBindingPatternProperty,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectBindingPatternPropertyFields {
             member,
             colon_token,
             pattern,
             init,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let init_node =
-            init.format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
-        Ok(format_elements![
-            member.format(formatter)?,
-            colon_token.format(formatter)?,
-            space_token(),
-            pattern.format(formatter)?,
-            init_node,
-        ])
+        write![
+            f,
+            [
+                member.format(),
+                colon_token.format(),
+                space_token(),
+                pattern.format(),
+            ]
+        ]?;
+
+        if let Some(init) = init {
+            write!(f, [space_token(), init.format()])?;
+        }
+
+        Ok(())
     }
 }

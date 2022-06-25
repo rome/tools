@@ -1,26 +1,36 @@
-use crate::format_traits::FormatOptional;
-use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
+
+use crate::utils::FormatWithSemicolon;
 
 use rome_js_syntax::JsContinueStatement;
 use rome_js_syntax::JsContinueStatementFields;
 
-impl FormatNode for JsContinueStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsContinueStatement;
+
+impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
+    fn fmt_fields(&self, node: &JsContinueStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsContinueStatementFields {
             continue_token,
             label_token,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let label = label_token
-            .format_with_or_empty(formatter, |token| format_elements![space_token(), token])?;
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_with(|f| {
+                    write!(f, [continue_token.format()])?;
 
-        format_with_semicolon(
-            formatter,
-            format_elements![continue_token.format(formatter)?, label],
-            semicolon_token,
+                    if let Some(label_token) = &label_token {
+                        write!(f, [space_token(), label_token.format()])?;
+                    }
+
+                    Ok(())
+                }),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

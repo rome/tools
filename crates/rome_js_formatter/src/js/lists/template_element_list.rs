@@ -1,8 +1,19 @@
-use crate::{Format, FormatElement, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::JsTemplateElementList;
-impl Format for JsTemplateElementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(self.clone()))
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsTemplateElementList;
+
+impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
+    type Context = JsFormatContext;
+
+    fn fmt(&self, node: &JsTemplateElementList, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut join = f.join();
+
+        for element in node {
+            join.entry(&element.format());
+        }
+
+        join.finish()
     }
 }

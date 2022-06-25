@@ -1,14 +1,16 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::JsAnyMethodModifier;
-impl Format for JsAnyMethodModifier {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsAccessibilityModifier(node) => node.format(formatter),
-            Self::JsStaticModifier(node) => node.format(formatter),
-            Self::TsOverrideModifier(node) => node.format(formatter),
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyMethodModifier;
+impl FormatRule<JsAnyMethodModifier> for FormatJsAnyMethodModifier {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &JsAnyMethodModifier, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsAnyMethodModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
+            JsAnyMethodModifier::JsStaticModifier(node) => node.format().fmt(f),
+            JsAnyMethodModifier::TsOverrideModifier(node) => node.format().fmt(f),
         }
     }
 }

@@ -1,24 +1,37 @@
-use crate::format_traits::FormatOptional;
-use crate::utils::format_type_member_separator;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsMethodSignatureTypeMember;
+use crate::prelude::*;
+use crate::utils::FormatTypeMemberSeparator;
 
-impl FormatNode for TsMethodSignatureTypeMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.name().format(formatter)?;
-        let optional_token = self.optional_token().format_or_empty(formatter)?;
-        let type_arguments = self.type_parameters().format_or_empty(formatter)?;
-        let parameters = self.parameters().format(formatter)?;
-        let return_type_annotation = self.return_type_annotation().format_or_empty(formatter)?;
-        let separator = format_type_member_separator(self.separator_token(), formatter);
-        Ok(format_elements![
+use rome_formatter::write;
+use rome_js_syntax::{TsMethodSignatureTypeMember, TsMethodSignatureTypeMemberFields};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsMethodSignatureTypeMember;
+
+impl FormatNodeRule<TsMethodSignatureTypeMember> for FormatTsMethodSignatureTypeMember {
+    fn fmt_fields(
+        &self,
+        node: &TsMethodSignatureTypeMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        let TsMethodSignatureTypeMemberFields {
             name,
             optional_token,
-            type_arguments,
+            type_parameters,
             parameters,
             return_type_annotation,
-            separator
-        ])
+            separator_token,
+        } = node.as_fields();
+
+        write![
+            f,
+            [
+                name.format(),
+                optional_token.format(),
+                type_parameters.format(),
+                parameters.format(),
+                return_type_annotation.format(),
+                FormatTypeMemberSeparator::new(separator_token.as_ref())
+            ]
+        ]
     }
 }

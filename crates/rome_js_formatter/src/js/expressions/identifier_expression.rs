@@ -1,13 +1,16 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsIdentifierExpression;
 use rome_js_syntax::JsIdentifierExpressionFields;
 
-impl FormatNode for JsIdentifierExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsIdentifierExpressionFields { name } = self.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsIdentifierExpression;
 
-        name.format(formatter)
+impl FormatNodeRule<JsIdentifierExpression> for FormatJsIdentifierExpression {
+    fn fmt_fields(&self, node: &JsIdentifierExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsIdentifierExpressionFields { name } = node.as_fields();
+
+        write![f, [name.format()]]
     }
 }

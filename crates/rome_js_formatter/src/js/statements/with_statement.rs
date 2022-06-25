@@ -1,34 +1,33 @@
-use crate::utils::format_head_body_statement;
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
+
+use crate::utils::FormatBodyStatement;
 
 use rome_js_syntax::JsWithStatement;
 use rome_js_syntax::JsWithStatementFields;
 
-impl FormatNode for JsWithStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsWithStatement;
+
+impl FormatNodeRule<JsWithStatement> for FormatJsWithStatement {
+    fn fmt_fields(&self, node: &JsWithStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsWithStatementFields {
             with_token,
             l_paren_token,
             object,
             r_paren_token,
             body,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        format_head_body_statement(
-            formatter,
-            format_elements![
-                with_token.format(formatter)?,
+        write!(
+            f,
+            [
+                with_token.format(),
                 space_token(),
-                formatter.format_delimited_soft_block_indent(
-                    &l_paren_token?,
-                    object.format(formatter)?,
-                    &r_paren_token?,
-                )?,
-            ],
-            body?,
+                format_delimited(&l_paren_token?, &object.format(), &r_paren_token?,)
+                    .soft_block_indent(),
+                FormatBodyStatement::new(&body?)
+            ]
         )
     }
 }

@@ -4,7 +4,7 @@
 //! Copied from rust-analyzer
 use std::{collections::HashMap, iter};
 
-use rome_js_syntax::{TextRange, TextSize};
+use rome_rowan::{TextRange, TextSize};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct LineIndex {

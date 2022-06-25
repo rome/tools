@@ -1,7 +1,9 @@
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
-use xtask_codegen::{generate_ast, generate_formatter, generate_parser_tests, generate_tables};
+use xtask_codegen::{
+    generate_analyzer, generate_ast, generate_formatter, generate_parser_tests, generate_tables,
+};
 
 fn main() -> Result<()> {
     let _d = pushd(project_root());
@@ -30,6 +32,10 @@ fn main() -> Result<()> {
             generate_tables()?;
             Ok(())
         }
+        "analyzer" => {
+            generate_analyzer()?;
+            Ok(())
+        }
         _ => {
             eprintln!(
                 "\
@@ -38,6 +44,7 @@ Run codegen command.
 USAGE:
 	cargo codegen <SUBCOMMAND> [option]
 SUBCOMMANDS:
+	analyzer     Generate factory functions for the analyzer
 	grammar      Transforms js.ungram into AST
 	test         Extracts parser inline comments into test files
 	unicode      Generates unicode table inside lexer

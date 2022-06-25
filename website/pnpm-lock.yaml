@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@11ty/eleventy': ^0.12.1
@@ -111,6 +111,8 @@ packages:
     resolution: {integrity: sha512-bm3AQf45vR4gKggRfvJdYJ0gFLoCbsPxiFLSH6hTVYABptNHY6l9NrhnucVjQ/X+SPtLANT9lc0fFhikj+VBRA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.17.0
     dev: true
 
   /@babel/types/7.17.0:
@@ -265,6 +267,8 @@ packages:
       reduce: 1.0.2
       semver: 5.7.1
       tunnel-agent: 0.6.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /ansi-regex/2.1.1:
@@ -709,6 +713,8 @@ packages:
       finalhandler: 1.1.0
       parseurl: 1.3.3
       utils-merge: 1.0.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /constantinople/4.0.1:
@@ -789,6 +795,11 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.0.0
     dev: true
@@ -867,6 +878,8 @@ packages:
       stack-utils: 1.0.2
       to-factory: 1.0.0
       zepto: 1.2.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /doctypes/1.1.0:
@@ -1131,6 +1144,8 @@ packages:
       parseurl: 1.3.3
       statuses: 1.3.1
       unpipe: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /follow-redirects/1.14.9_debug@4.3.2:
@@ -2329,6 +2344,8 @@ packages:
     dependencies:
       debug: 2.6.9
       minimatch: 3.0.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /reusify/1.0.4:
@@ -2420,6 +2437,8 @@ packages:
       on-finished: 2.3.0
       range-parser: 1.2.1
       statuses: 1.4.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /serve-index/1.9.1:
@@ -2433,6 +2452,8 @@ packages:
       http-errors: 1.6.3
       mime-types: 2.1.35
       parseurl: 1.3.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /serve-static/1.13.2:
@@ -2443,6 +2464,8 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.16.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /server-destroy/1.0.1:
@@ -2667,6 +2690,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
+      acorn: 8.7.0
       commander: 2.20.3
       source-map: 0.6.1
       source-map-support: 0.5.21

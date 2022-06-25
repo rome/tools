@@ -4,7 +4,8 @@ use crate::token_source::Trivia;
 use crate::*;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{
-    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode,
+    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
+    SourceType,
 };
 use rome_rowan::AstNode;
 use std::marker::PhantomData;
@@ -46,15 +47,17 @@ impl<T> Parse<T> {
     ///
     /// ```
     /// use rome_js_parser::parse_script;
-    /// use rome_rowan::{AstNode, AstNodeList};
     /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
+    /// use rome_rowan::{AstNode, AstNodeList};
     ///
     /// let parse = parse_script(
-    /// "
+    ///     "
     ///     if (a > 5) {
     ///         /* something */
     ///     }
-    /// ", 0);
+    /// ",
+    ///     0,
+    /// );
     ///
     /// // The first stmt in the root syntax node (Script) is the if statement.
     /// let if_stmt = parse.tree().statements().first().unwrap();
@@ -129,8 +132,8 @@ pub fn parse_common(
 ///
 /// ```
 /// use rome_js_parser::parse_script;
-/// use rome_js_syntax::{JsSyntaxToken, JsSyntaxList, JsComputedMemberExpression};
-/// use rome_rowan::AstNode;
+/// use rome_js_syntax::{JsSyntaxToken, SourceType, JsSyntaxList, JsComputedMemberExpression};
+/// use rome_rowan::{AstNode, Direction};
 ///
 /// let parse = parse_script("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
@@ -151,7 +154,7 @@ pub fn parse_common(
 /// assert_eq!(prop.syntax().text(), "2");
 ///
 /// // Util has a function for yielding all tokens of a node.
-/// let tokens = untyped_expr_node.descendants_tokens().map(|token| token.text_trimmed().to_string()).collect::<Vec<_>>();
+/// let tokens = untyped_expr_node.descendants_tokens(Direction::Next).map(|token| token.text_trimmed().to_string()).collect::<Vec<_>>();
 ///
 /// assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
 /// ```

@@ -1,31 +1,37 @@
 use parking_lot::{const_mutex, Mutex};
 use rome_rowan::{TextRange, TextSize};
-use similar::{utils::diff_lines, Algorithm};
+use similar::{utils::diff_lines, Algorithm, ChangeTag};
 use std::{
     env,
     ffi::OsStr,
     fmt::Write,
     fs::{read_to_string, write},
     ops::Range,
+    os::raw::c_int,
     path::Path,
+    str::FromStr,
+    sync::Once,
 };
 
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_js_formatter::{FormatOptions, IndentStyle};
-use rome_js_parser::{parse, SourceType};
+use rome_formatter::IndentStyle;
+use rome_js_formatter::context::JsFormatContext;
+use rome_js_parser::parse;
+use rome_js_syntax::SourceType;
+use serde::Serialize;
 
 use crate::check_reformat::CheckReformatParams;
 
 mod check_reformat;
 
-static REPORTER: DiffReport = DiffReport::new();
-
-tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts,jsx,tsx}", crate::test_snapshot, "script"}
+tests_macros::gen_tests! {"tests/specs/prettier/{js,typescript}/**/*.{js,ts,jsx,tsx}", crate::test_snapshot, "script"}
 
 const PRETTIER_IGNORE: &str = "prettier-ignore";
 const ROME_IGNORE: &str = "rome-ignore format: prettier ignore";
 
 fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
+    countme::enable(true);
+
     if input.contains("flow") || input.contains("prepare_tests") {
         return;
     }
@@ -49,12 +55,12 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         input_file.try_into().unwrap()
     };
 
-    let parsed = parse(&parse_input, 0, source_type.clone());
+    let parsed = parse(&parse_input, 0, source_type);
 
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
-    let options = FormatOptions::new(IndentStyle::Space(2));
+    let context = JsFormatContext::default().with_indent_style(IndentStyle::Space(2));
 
     let result = match (range_start_index, range_end_index) {
         (Some(start), Some(end)) => {
@@ -65,7 +71,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             }
 
             rome_js_formatter::format_range(
-                options,
+                context.clone(),
                 &syntax,
                 TextRange::new(
                     TextSize::try_from(start).unwrap(),
@@ -73,7 +79,8 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                 ),
             )
         }
-        _ => rome_js_formatter::format_node(options, &syntax).map(|formatted| formatted.print()),
+        _ => rome_js_formatter::format_node(context.clone(), &syntax)
+            .map(|formatted| formatted.print()),
     };
 
     let formatted = result.expect("formatting failed");
@@ -97,7 +104,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                     text: &result,
                     source_type,
                     file_name,
-                    format_options: options,
+                    format_context: context.clone(),
                 });
             }
 
@@ -146,7 +153,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         writeln!(snapshot).unwrap();
     }
 
-    let max_width = options.line_width.value() as usize;
+    let max_width = context.line_width().value() as usize;
     let mut lines_exceeding_max_width = formatted
         .lines()
         .enumerate()
@@ -186,21 +193,23 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
 
         strip_placeholders(&mut content);
 
+        let root_path = Path::new(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/specs/prettier/"
+        ));
+
+        let input_file = input_file.strip_prefix(root_path).unwrap_or_else(|_| {
+            panic!(
+                "failed to strip prefix {:?} from {:?}",
+                root_path, input_file
+            )
+        });
         if formatted != content {
-            let root_path = Path::new(concat!(
-                env!("CARGO_MANIFEST_DIR"),
-                "/tests/specs/prettier/"
-            ));
-
-            let input_file = input_file.strip_prefix(root_path).unwrap_or_else(|_| {
-                panic!(
-                    "failed to strip prefix {:?} from {:?}",
-                    root_path, input_file
-                )
-            });
-
             let input_file = input_file.to_str().unwrap();
-            REPORTER.report(input_file, formatted, content);
+            DiffReport::get().report_diff(input_file, formatted, content);
+        } else {
+            let input_file = input_file.to_str().unwrap();
+            DiffReport::get().report_match(input_file, formatted, content);
         }
     }
 }
@@ -252,52 +261,240 @@ fn strip_placeholders(input_code: &mut String) -> (Option<usize>, Option<usize>,
     (cursor_index, range_start_index, range_end_index)
 }
 
+/// This enum type is used to represent if our formatting result is expected
+/// [MatchCategory::Diff] means that our formatting result have some thing different from the expected
+/// [MatchCategory::Match] means that our formatting result is the same as the expected
+#[derive(Debug, PartialEq, Eq)]
+enum MatchCategory {
+    Diff,
+    Match,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+enum ReportType {
+    Json,
+    Markdown,
+}
+
+#[derive(Debug, Clone, Default, Serialize)]
+struct SingleFileMetricData {
+    filename: String,
+    single_file_compatibility: f64,
+    #[serde(skip)]
+    diff: String,
+}
+
+#[derive(Clone, Debug, Default, Serialize)]
+struct PrettierCompatibilityMetricData {
+    file_based_average_prettier_similarity: f64,
+    line_based_average_prettier_similarity: f64,
+    files: Vec<SingleFileMetricData>,
+}
+
+impl FromStr for ReportType {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "json" => Ok(Self::Json),
+            "markdown" => Ok(Self::Markdown),
+            _ => Err("Only `json` and `markdown` are supported".to_string()),
+        }
+    }
+}
+
+struct DiffReportItem {
+    file_name: &'static str,
+    rome_formatted_result: String,
+    prettier_formatted_result: String,
+    match_category: MatchCategory,
+}
 struct DiffReport {
-    state: Mutex<Vec<(&'static str, String, String)>>,
+    state: Mutex<Vec<DiffReportItem>>,
 }
 
 impl DiffReport {
-    const fn new() -> Self {
-        Self {
+    fn get() -> &'static Self {
+        static REPORTER: DiffReport = DiffReport {
             state: const_mutex(Vec::new()),
-        }
+        };
+
+        // Use an atomic Once to register an exit callback the first time any
+        // testing thread requests an instance of the Reporter
+        static ONCE: Once = Once::new();
+        ONCE.call_once(|| {
+            // Import the atexit function from libc
+            extern "C" {
+                fn atexit(f: extern "C" fn()) -> c_int;
+            }
+
+            // Trampoline function into the reporter printing logic with the
+            // correct extern C ABI
+            extern "C" fn print_report() {
+                REPORTER.print();
+            }
+
+            // Register the print_report function to be called when the process exits
+            unsafe {
+                atexit(print_report);
+            }
+        });
+
+        &REPORTER
     }
 
-    fn report(&self, file_name: &'static str, rome: String, prettier: String) {
-        self.state.lock().push((file_name, rome, prettier));
+    fn report_diff(
+        &self,
+        file_name: &'static str,
+        rome_formatted_result: String,
+        prettier_formatted_result: String,
+    ) {
+        self.state.lock().push(DiffReportItem {
+            file_name,
+            rome_formatted_result,
+            prettier_formatted_result,
+            match_category: MatchCategory::Diff,
+        });
     }
 
+    fn report_match(
+        &self,
+        file_name: &'static str,
+        rome_formatted_result: String,
+        prettier_formatted_result: String,
+    ) {
+        self.state.lock().push(DiffReportItem {
+            file_name,
+            rome_formatted_result,
+            prettier_formatted_result,
+            match_category: MatchCategory::Match,
+        });
+    }
     fn print(&self) {
+        if let Some(report) = rome_rowan::check_live() {
+            panic!("\n{report}")
+        }
         // Only create the report file if the REPORT_PRETTIER
         // environment variable is set to 1
         match env::var("REPORT_PRETTIER") {
-            Ok(value) if value == "1" => {}
-            _ => return,
-        }
-
-        let mut report = String::new();
-
-        let mut state = self.state.lock();
-
-        state.sort_by_key(|(name, ..)| *name);
-
-        for (file_name, rome, prettier) in state.iter() {
-            writeln!(report, "# {}", file_name).unwrap();
-            writeln!(report, "```diff").unwrap();
-
-            for (tag, line) in diff_lines(Algorithm::default(), prettier, rome) {
-                let line = line.strip_suffix('\n').unwrap_or(line);
-                writeln!(report, "{}{}", tag, line).unwrap();
+            Ok(value) if value == "1" => {
+                let report_type = match env::var("REPORT_TYPE") {
+                    Ok(value) => ReportType::from_str(&value).unwrap(),
+                    _ => ReportType::Markdown,
+                };
+                let report_filename = match env::var("REPORT_FILENAME") {
+                    Ok(value) => value,
+                    _ => match report_type {
+                        ReportType::Json => "report.json".to_string(),
+                        ReportType::Markdown => "report.md".to_string(),
+                    },
+                };
+                self.report_prettier(report_type, report_filename);
             }
-
-            writeln!(report, "```").unwrap();
+            _ => {}
         }
-
-        write("report.md", report).unwrap();
     }
-}
 
-#[ctor::dtor]
-fn print_report() {
-    REPORTER.print();
+    fn report_prettier(&self, report_type: ReportType, report_filename: String) {
+        let mut state = self.state.lock();
+        state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
+        let mut report_metric_data = PrettierCompatibilityMetricData::default();
+        let mut sum_of_single_compatibility_file = 0_f64;
+        let mut total_line = 0;
+        let mut total_matched_line = 0;
+        let mut file_count = 0;
+        for DiffReportItem {
+            file_name,
+            rome_formatted_result,
+            prettier_formatted_result,
+            match_category,
+        } in state.iter()
+        {
+            let mut single_file_metric_data = SingleFileMetricData::default();
+            file_count += 1;
+            let rome_lines = rome_formatted_result.lines().count();
+            let prettier_lines = prettier_formatted_result.lines().count();
+            let mut matched_lines = 0;
+            let mut single_file_compatibility = 1f64;
+            let mut diff = String::new();
+            if *match_category == MatchCategory::Diff {
+                writeln!(diff, "```diff").unwrap();
+
+                for (tag, line) in diff_lines(
+                    Algorithm::default(),
+                    prettier_formatted_result,
+                    rome_formatted_result,
+                ) {
+                    if matches!(tag, ChangeTag::Equal) {
+                        matched_lines += line.lines().count();
+                    }
+                    let line = line.strip_suffix('\n').unwrap_or(line);
+                    writeln!(diff, "{}{}", tag, line).unwrap();
+                }
+
+                single_file_compatibility =
+                    matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
+                sum_of_single_compatibility_file += single_file_compatibility;
+                writeln!(diff, "```").unwrap();
+            } else {
+                // in this branch `rome_lines` == `prettier_lines` == `matched_lines`
+                assert!(rome_lines == prettier_lines);
+                matched_lines = rome_lines;
+                sum_of_single_compatibility_file += single_file_compatibility;
+            }
+            total_line += rome_lines.max(prettier_lines);
+            total_matched_line += matched_lines;
+            single_file_metric_data.diff = diff;
+            single_file_metric_data.filename = file_name.to_string();
+            single_file_metric_data.single_file_compatibility = single_file_compatibility;
+            report_metric_data.files.push(single_file_metric_data);
+        }
+        report_metric_data.file_based_average_prettier_similarity =
+            sum_of_single_compatibility_file / file_count as f64;
+        report_metric_data.line_based_average_prettier_similarity =
+            total_matched_line as f64 / total_line as f64;
+        match report_type {
+            ReportType::Json => self.report_json(report_filename, report_metric_data),
+            ReportType::Markdown => self.report_markdown(report_filename, report_metric_data),
+        }
+    }
+
+    fn report_markdown(
+        &self,
+        report_filename: String,
+        report_metric_data: PrettierCompatibilityMetricData,
+    ) {
+        let mut report = String::new();
+        for SingleFileMetricData {
+            filename,
+            single_file_compatibility,
+            diff,
+        } in report_metric_data.files.iter()
+        {
+            writeln!(report, "# {}", filename).unwrap();
+            write!(report, "{}", diff).unwrap();
+            writeln!(
+                report,
+                "**Prettier Similarity**: {:.2}%",
+                single_file_compatibility * 100_f64
+            )
+            .unwrap();
+        }
+        // extra two space force markdown render insert a new line
+        report = format!(
+            "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \nthe definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893\n",
+            report_metric_data.file_based_average_prettier_similarity * 100_f64,
+            report_metric_data.line_based_average_prettier_similarity * 100_f64
+        ) + &report;
+        write(report_filename, report).unwrap();
+    }
+
+    fn report_json(
+        &self,
+        report_filename: String,
+        report_metric_data: PrettierCompatibilityMetricData,
+    ) {
+        let json_content = serde_json::to_string(&report_metric_data).unwrap();
+        write(report_filename, json_content).unwrap();
+    }
 }

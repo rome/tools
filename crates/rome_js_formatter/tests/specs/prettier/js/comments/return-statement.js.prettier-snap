@@ -33,35 +33,28 @@ function binary() {
 function binaryInBinaryLeft() {
   return (
     // Reason for 42
-    42 *
-      84 +
-    2
+    42 * 84 + 2
   );
 }
 
 function binaryInBinaryRight() {
   return (
     // Reason for 42
-    42 +
-    84 * 2
+    42 + 84 * 2
   );
 }
 
 function conditional() {
   return (
     // Reason for 42
-    42
-      ? 1
-      : 2
+    42 ? 1 : 2
   );
 }
 
 function binaryInConditional() {
   return (
     // Reason for 42
-    42 * 3
-      ? 1
-      : 2
+    42 * 3 ? 1 : 2
   );
 }
 
@@ -87,12 +80,10 @@ function memberOutside() {
 }
 
 function memberInAndOutWithCalls() {
-  return (
-    aFunction
-      .b// Reason for a
-      ()
-      .c.d()
-  );
+  return aFunction
+    .b // Reason for a
+    ()
+    .c.d();
 }
 
 function excessiveEverything() {

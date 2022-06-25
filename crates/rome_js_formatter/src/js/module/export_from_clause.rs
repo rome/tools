@@ -1,14 +1,16 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
 
-use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::utils::FormatWithSemicolon;
 
 use rome_js_syntax::JsExportFromClause;
 use rome_js_syntax::JsExportFromClauseFields;
 
-impl FormatNode for JsExportFromClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportFromClause;
+
+impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
+    fn fmt_fields(&self, node: &JsExportFromClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportFromClauseFields {
             star_token,
             export_as,
@@ -16,31 +18,26 @@ impl FormatNode for JsExportFromClause {
             source,
             assertion,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let star = star_token.format(formatter)?;
-
-        let export_as = export_as.format_with_or_empty(formatter, |as_token| {
-            format_elements![as_token, space_token()]
-        })?;
-        let from = from_token.format(formatter)?;
-        let source = source.format(formatter)?;
-        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            format_elements![space_token(), assertion]
-        })?;
-
-        format_with_semicolon(
-            formatter,
-            format_elements![
-                star,
-                space_token(),
-                export_as,
-                from,
-                space_token(),
-                source,
-                assertion,
-            ],
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(
+                    star_token.format(),
+                    space_token(),
+                    export_as
+                        .format()
+                        .with_or_empty(|as_token, f| write![f, [as_token, space_token()]]),
+                    from_token.format(),
+                    space_token(),
+                    source.format(),
+                    assertion
+                        .format()
+                        .with_or_empty(|assertion, f| write![f, [space_token(), assertion]]),
+                ),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

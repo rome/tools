@@ -1,12 +1,17 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::formatter::unknown_node;
 use rome_js_syntax::JsUnknownExpression;
 use rome_rowan::AstNode;
 
-impl FormatNode for JsUnknownExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        unknown_node(self.syntax()).format(formatter)
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsUnknownExpression;
+
+impl FormatNodeRule<JsUnknownExpression> for FormatJsUnknownExpression {
+    fn fmt_fields(
+        &self,
+        node: &JsUnknownExpression,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        format_unknown_node(node.syntax()).fmt(formatter)
     }
 }

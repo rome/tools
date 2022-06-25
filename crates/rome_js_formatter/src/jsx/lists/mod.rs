@@ -1,4 +1,4 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-mod attribute_list;
-mod child_list;
+pub(crate) mod attribute_list;
+pub(crate) mod child_list;

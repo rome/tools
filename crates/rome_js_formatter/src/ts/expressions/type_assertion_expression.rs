@@ -1,24 +1,32 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::TsTypeAssertionExpression;
 use rome_js_syntax::TsTypeAssertionExpressionFields;
 
-impl FormatNode for TsTypeAssertionExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeAssertionExpression;
+
+impl FormatNodeRule<TsTypeAssertionExpression> for FormatTsTypeAssertionExpression {
+    fn fmt_fields(
+        &self,
+        node: &TsTypeAssertionExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsTypeAssertionExpressionFields {
             l_angle_token,
             ty,
             r_angle_token,
             expression,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            formatter.format_delimited_soft_block_indent(
-                &l_angle_token?,
-                ty.format(formatter)?,
-                &r_angle_token?,
-            )?,
-            expression.format(formatter)?
-        ])
+        write![
+            f,
+            [
+                format_delimited(&l_angle_token?, &ty.format(), &r_angle_token?,)
+                    .soft_block_indent(),
+                expression.format()
+            ]
+        ]
     }
 }

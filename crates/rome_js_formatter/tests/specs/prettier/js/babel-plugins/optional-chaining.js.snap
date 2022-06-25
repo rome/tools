@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: optional-chaining.js
-
 ---
 # Input
 ```js
@@ -25,6 +23,7 @@ obj?.foo.bar?.baz; // Only access `foo` if `obj` exists, and `baz` if
                    // `bar` exists
 
 // Example usage with bracket notation:
+// rome-ignore format: https://github.com/rome/tools/issues/2768
 obj?.['foo']?.bar?.baz // 42
 
 const obj2 = {
@@ -75,7 +74,13 @@ const ret = delete obj?.foo?.bar?.baz; // true
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining
 
-const obj = { foo: { bar: { baz: 42 } } };
+const obj = {
+  foo: {
+    bar: {
+      baz: 42,
+    },
+  },
+};
 
 const baz = obj?.foo?.bar?.baz; // 42
 
@@ -86,7 +91,8 @@ obj?.foo.bar?.baz; // Only access `foo` if `obj` exists, and `baz` if
 // `bar` exists
 
 // Example usage with bracket notation:
-obj?.["foo"]?.bar?.baz; // 42
+// rome-ignore format: https://github.com/rome/tools/issues/2768
+obj?.['foo']?.bar?.baz // 42
 
 const obj2 = {
   foo: {
@@ -113,9 +119,19 @@ test?.(); // 42
 
 exists?.(); // undefined
 
-const obj3 = { foo: { bar: { baz: class {} } } };
+const obj3 = {
+  foo: {
+    bar: {
+      baz: class {},
+    },
+  },
+};
 
-const obj4 = { foo: { bar: {} } };
+const obj4 = {
+  foo: {
+    bar: {},
+  },
+};
 
 const ret = delete obj?.foo?.bar?.baz; // true
 

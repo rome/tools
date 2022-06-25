@@ -60,14 +60,11 @@ const testResults = results.testResults.map(
 	(testResult) => formatResult(testResult, formatter, reporter),
 );
 
-it(
-	"mocks regexp instances",
-	() => {
-		expect(
-			// () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
-		).not.toThrow();
-	},
-);
+it("mocks regexp instances", () => {
+	expect(
+	// () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
+	).not.toThrow();
+});
 
 expect(() => asyncRequest({ url: "/test-endpoint" }));
 // .toThrowError(/Required parameter/);
@@ -80,7 +77,9 @@ expect(
 );
 // .toThrowError(/Required parameter/);
 
-expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
+expect(
+	() => asyncRequest({ type: "foo", url: "/test-endpoint" }),
+).not.toThrowError();
 
 expect(
 	() => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
@@ -107,12 +106,7 @@ const composition = (ViewComponent, ContainerComponent) =>
 
 romise.then(
 	(result) =>
-		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+		result.veryLongVariable
+			.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 );
-
-
-## Lines exceeding width of 80 characters
-
-   25: expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
-   52: 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 

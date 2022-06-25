@@ -1,12 +1,16 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::TsAbstractModifier;
 use rome_js_syntax::TsAbstractModifierFields;
 
-impl FormatNode for TsAbstractModifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let TsAbstractModifierFields { modifier_token } = self.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsAbstractModifier;
 
-        modifier_token.format(formatter)
+impl FormatNodeRule<TsAbstractModifier> for FormatTsAbstractModifier {
+    fn fmt_fields(&self, node: &TsAbstractModifier, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsAbstractModifierFields { modifier_token } = node.as_fields();
+
+        write![f, [modifier_token.format()]]
     }
 }

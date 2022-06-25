@@ -128,7 +128,7 @@ error[SyntaxError]: expected `,` but instead found `(`
   │             ^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead found `{`
+error[SyntaxError]: expected `)` but instead found `{`
   ┌─ js_rewind_at_eof_token.js:1:15
   │
 1 │ (([zAgRvz=[=(e{V{
@@ -142,7 +142,7 @@ error[SyntaxError]: expected `,` but instead found `{`
   │                 ^ unexpected
 
 --
-error[SyntaxError]: expected `'}'` but instead the file ends
+error[SyntaxError]: expected `}` but instead the file ends
   ┌─ js_rewind_at_eof_token.js:2:1
   │
 2 │ 

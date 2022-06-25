@@ -1,11 +1,21 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::TsEmptyExternalModuleDeclarationBody;
 use rome_js_syntax::TsEmptyExternalModuleDeclarationBodyFields;
 
-impl FormatNode for TsEmptyExternalModuleDeclarationBody {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let TsEmptyExternalModuleDeclarationBodyFields { semicolon_token } = self.as_fields();
-        semicolon_token.format(formatter)
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsEmptyExternalModuleDeclarationBody;
+
+impl FormatNodeRule<TsEmptyExternalModuleDeclarationBody>
+    for FormatTsEmptyExternalModuleDeclarationBody
+{
+    fn fmt_fields(
+        &self,
+        node: &TsEmptyExternalModuleDeclarationBody,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        let TsEmptyExternalModuleDeclarationBodyFields { semicolon_token } = node.as_fields();
+        write![f, [semicolon_token.format()]]
     }
 }

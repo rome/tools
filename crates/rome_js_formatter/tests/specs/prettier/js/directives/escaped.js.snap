@@ -47,7 +47,7 @@ expression: escaped.js
 // Unnecessary escapes. (adapted from tests/quotes/strings.js)
 // Note that in directives, unnecessary escapes should be preserved.
 // See https://github.com/prettier/prettier/issues/1555
-"\'";
+'\'';
 '\"';
 "\'";
 "\"";

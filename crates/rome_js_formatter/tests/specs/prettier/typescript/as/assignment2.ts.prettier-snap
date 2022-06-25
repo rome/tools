@@ -1,5 +1,5 @@
 const defaultMaskGetter = $parse(attrs[directiveName]) as (
-  scope: ng.IScope
+  scope: ng.IScope,
 ) => Mask;
 
 (this.configuration as any) =
@@ -26,7 +26,7 @@ const extraRendererAttrs = ((attrs.rendererAttrs &&
   Object.create(null)) as FieldService.RendererAttributes;
 
 const annotate = (angular.injector as any).$$annotate as (
-  fn: Function
+  fn: Function,
 ) => string[];
 
 const originalPrototype = originalConstructor.prototype as TComponent &

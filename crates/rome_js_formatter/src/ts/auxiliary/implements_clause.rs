@@ -1,28 +1,28 @@
-use crate::{
-    block_indent, format_elements, group_elements, if_group_breaks, if_group_fits_on_single_line,
-    soft_block_indent, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
+use rome_formatter::{format_args, write};
 use rome_js_syntax::TsImplementsClause;
 use rome_js_syntax::TsImplementsClauseFields;
 
-impl FormatNode for TsImplementsClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsImplementsClause;
+
+impl FormatNodeRule<TsImplementsClause> for FormatTsImplementsClause {
+    fn fmt_fields(&self, node: &TsImplementsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImplementsClauseFields {
             implements_token,
             types,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let implements_token = implements_token.format(formatter)?;
-        let types = types.format(formatter)?;
-
-        Ok(group_elements(format_elements![
-            if_group_breaks(block_indent(format_elements![
-                implements_token.clone(),
-                space_token(),
-                soft_block_indent(types.clone())
-            ])),
-            if_group_fits_on_single_line(format_elements![implements_token, space_token(), types]),
-        ]))
+        write!(
+            f,
+            [
+                implements_token.format(),
+                group_elements(&indent(&format_args![
+                    soft_line_break_or_space(),
+                    types.format()
+                ]))
+            ]
+        )
     }
 }

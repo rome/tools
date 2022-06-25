@@ -1,36 +1,51 @@
-use crate::{
-    format_elements, group_elements, if_group_breaks, indent, soft_line_break, space_token, token,
-    Format, FormatElement, FormatNode, Formatter, JsFormatter, Token,
-};
-use rome_formatter::FormatResult;
-use rome_js_syntax::TsIntersectionType;
-use rome_js_syntax::TsIntersectionTypeFields;
+use crate::prelude::*;
 
-impl FormatNode for TsIntersectionType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+use rome_formatter::{format_args, write};
+use rome_js_syntax::{JsSyntaxKind, TsIntersectionTypeFields};
+use rome_js_syntax::{JsSyntaxToken, TsIntersectionType};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIntersectionType;
+
+impl FormatNodeRule<TsIntersectionType> for FormatTsIntersectionType {
+    fn fmt_fields(&self, node: &TsIntersectionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsIntersectionTypeFields {
             leading_separator_token,
             types,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let leading_separator_token = match leading_separator_token {
+        write!(
+            f,
+            [group_elements(&indent(&format_args!(
+                soft_line_break(),
+                FormatTypeSetLeadingSeparator {
+                    separator: JsSyntaxKind::AMP,
+                    leading_separator: leading_separator_token.as_ref()
+                },
+                types.format()
+            )))]
+        )
+    }
+}
+
+pub struct FormatTypeSetLeadingSeparator<'a> {
+    pub(crate) separator: JsSyntaxKind,
+    pub(crate) leading_separator: Option<&'a JsSyntaxToken>,
+}
+
+impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match &self.leading_separator {
             Some(token) => {
-                // The SyntaxToken is converted into a FormatElement using
-                // Token::from to strip the token's trivia pieces which are
-                // then reinserted in format_replaced outside of the
-                // if_group_breaks block to avoid removing comments when the
-                // group does not break
-                let replaced =
-                    if_group_breaks(format_elements![Token::from(&token), space_token()]);
-                formatter.format_replaced(&token, replaced)
+                format_only_if_breaks(token, &format_args!(token.format(), space_token())).fmt(f)
             }
-            None => if_group_breaks(format_elements![token("&"), space_token()]),
-        };
-
-        Ok(group_elements(indent(format_elements![
-            soft_line_break(),
-            leading_separator_token,
-            types.format(formatter)?,
-        ])))
+            None => write!(
+                f,
+                [if_group_breaks(&format_args![
+                    format_inserted(self.separator),
+                    space_token()
+                ])]
+            ),
+        }
     }
 }

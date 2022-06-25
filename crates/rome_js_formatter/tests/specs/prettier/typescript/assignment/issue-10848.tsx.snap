@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-10848.tsx
 ---
 # Input
@@ -62,7 +63,9 @@ const MyComponent: React.VoidFunctionComponent<MyComponentProps> = ({ x }) => {
   return <div>x = {x}; a = {a}</div>;
 };
 
-const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({ x, y }) => {
+const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = (
+  { x, y },
+) => {
   const a = useA();
   return <div>x = {x}; y = {y}; a = {a}</div>;
 };
@@ -119,16 +122,12 @@ const Query: FunctionComponent<QueryProps> = (
   },
 ) =>
   children(
-    useQuery(
-      { type, resource, payload },
-      { ...options, withDeclarativeSideEffectsSupport: true },
-    ),
+    useQuery({ type, resource, payload }, {
+      ...options,
+      withDeclarativeSideEffectsSupport: true,
+    }),
   );
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    6: const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({ x, y }) => {
-```
 

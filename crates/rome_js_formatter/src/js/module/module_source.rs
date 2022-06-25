@@ -1,14 +1,23 @@
-use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 
-use crate::utils::format_string_literal_token;
+use rome_formatter::write;
 use rome_js_syntax::JsModuleSource;
 use rome_js_syntax::JsModuleSourceFields;
 
-impl FormatNode for JsModuleSource {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsModuleSourceFields { value_token } = self.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsModuleSource;
 
-        Ok(format_string_literal_token(value_token?, formatter))
+impl FormatNodeRule<JsModuleSource> for FormatJsModuleSource {
+    fn fmt_fields(&self, node: &JsModuleSource, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsModuleSourceFields { value_token } = node.as_fields();
+
+        write!(
+            f,
+            [FormatLiteralStringToken::new(
+                &value_token?,
+                StringLiteralParentKind::Expression
+            )]
+        )
     }
 }

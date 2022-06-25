@@ -1,8 +1,19 @@
-use crate::{Format, FormatElement, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::JsStatementList;
-impl Format for JsStatementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(self.clone()))
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsStatementList;
+
+impl FormatRule<JsStatementList> for FormatJsStatementList {
+    type Context = JsFormatContext;
+
+    fn fmt(&self, node: &JsStatementList, f: &mut JsFormatter) -> FormatResult<()> {
+        let mut join = f.join_nodes_with_hardline();
+
+        for statement in node.iter() {
+            join.entry(statement.syntax(), &format_or_verbatim(&statement));
+        }
+
+        join.finish()
     }
 }

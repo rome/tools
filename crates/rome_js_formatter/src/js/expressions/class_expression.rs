@@ -1,9 +1,13 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
-use rome_js_syntax::{JsAnyClass, JsClassExpression};
+use crate::prelude::*;
+use crate::utils::format_class::FormatClass;
 
-impl FormatNode for JsClassExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        JsAnyClass::from(self.clone()).format(formatter)
+use rome_js_syntax::JsClassExpression;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsClassExpression;
+
+impl FormatNodeRule<JsClassExpression> for FormatJsClassExpression {
+    fn fmt_fields(&self, node: &JsClassExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatClass::from(&node.clone().into()).fmt(f)
     }
 }

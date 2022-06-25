@@ -5,5 +5,5 @@ runtimeAgent.getProperties(
   false, // generatePreview
   (error, properties, internalProperties) => {
     return 1;
-  }
+  },
 );

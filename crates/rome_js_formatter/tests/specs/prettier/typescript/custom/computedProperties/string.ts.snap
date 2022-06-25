@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
 expression: string.ts
 ---
 # Input
@@ -26,16 +25,20 @@ type B = {
 # Output
 ```js
 interface I {
-  "string": "I";
+  string: "I";
 }
 
-type T = { "string": "T" };
+type T = {
+  string: "T";
+};
 
 interface A {
-  "string": "A";
+  string: "A";
 }
 
-type B = { "string": "B" };
+type B = {
+  string: "B";
+};
 
 ```
 

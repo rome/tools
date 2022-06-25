@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 175
+assertion_line: 184
 expression: issues.js
 ---
 # Input
@@ -95,21 +95,19 @@ throw new ProcessSystemError({
 const rootEpic = (actions, store) => (
   combineEpics(...epics)(actions, store)
     // Log errors and continue.
-    .catch(
-      (err, stream) => {
-        getLogger().error(err);
-        return stream;
-      },
-    )
+    .catch((err, stream) => {
+      getLogger().error(err);
+      return stream;
+    })
 );
 
 // optional trailing comma gets moved all the way to the beginning
 const regex = new RegExp(
   "^\\s*" + // beginning of the line
     "name\\s*=\\s*" + // name =
-    '[\'"]' + // opening quotation mark
+    "['\"]" + // opening quotation mark
     escapeStringRegExp(target.name) + // target name
-    '[\'"]' + // closing quotation mark
+    "['\"]" + // closing quotation mark
     ",?$", // optional trailing comma
 );
 
@@ -125,9 +123,7 @@ Observable.of(process)
   .takeUntil(exit);
 
 // Comments disappear inside of JSX
-<div>
-  {/* Some comment */}
-</div>;
+<div>{/* Some comment */}</div>;
 
 // Comments in JSX tag are placed in a non optimal way
 <div
@@ -152,13 +148,13 @@ const result = asyncExecute("non_existing_command", /* args */ []);
 // The closing paren is printed on the same line as the comment
 foo(
   {},
-  // Hi
+// Hi
 );
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-   34: import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
+   32: import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
 ```
 

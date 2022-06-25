@@ -1,33 +1,35 @@
-use rome_formatter::{concat_elements, FormatElement};
+use crate::context::TabWidth;
+use crate::prelude::*;
+use rome_formatter::write;
 use rome_js_syntax::{
-    JsAnyExpression, JsCallExpression, JsComputedMemberExpression, JsIdentifierExpression,
-    JsImportCallExpression, JsNewExpression, JsStaticMemberExpression, JsSyntaxNode,
+    JsAnyExpression, JsCallExpression, JsCallExpressionFields, JsComputedMemberExpression,
+    JsComputedMemberExpressionFields, JsIdentifierExpression, JsImportCallExpression,
+    JsNewExpression, JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxNode,
     JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 use std::fmt::Debug;
-use std::slice;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 /// Data structure that holds the node with its formatted version
 pub(crate) enum FlattenItem {
     /// Holds onto a [rome_js_syntax::JsStaticMemberExpression]
-    StaticMember(JsStaticMemberExpression, Vec<FormatElement>),
+    StaticMember(JsStaticMemberExpression),
     /// Holds onto a [rome_js_syntax::JsCallExpression]
-    CallExpression(JsCallExpression, Vec<FormatElement>),
+    CallExpression(JsCallExpression),
     /// Holds onto a [rome_js_syntax::JsComputedMemberExpression]
-    ComputedExpression(JsComputedMemberExpression, Vec<FormatElement>),
+    ComputedMember(JsComputedMemberExpression),
     /// Any other node that are not  [rome_js_syntax::JsCallExpression] or [rome_js_syntax::JsStaticMemberExpression]
     /// Are tracked using this variant
-    Node(JsSyntaxNode, FormatElement),
+    Node(JsSyntaxNode),
 }
 
 impl FlattenItem {
     /// checks if the current node is a [rome_js_syntax::JsCallExpression],  [rome_js_syntax::JsImportExpression] or a [rome_js_syntax::JsNewExpression]
     pub fn is_loose_call_expression(&self) -> bool {
         match self {
-            FlattenItem::CallExpression(_, _) => true,
-            FlattenItem::Node(node, _) => {
+            FlattenItem::CallExpression(_) => true,
+            FlattenItem::Node(node) => {
                 JsImportCallExpression::can_cast(node.kind())
                     | JsNewExpression::can_cast(node.kind())
             }
@@ -35,56 +37,38 @@ impl FlattenItem {
         }
     }
 
-    pub(crate) fn as_format_elements(&self) -> &[FormatElement] {
-        match self {
-            FlattenItem::StaticMember(_, elements) => elements,
-            FlattenItem::CallExpression(_, elements) => elements,
-            FlattenItem::ComputedExpression(_, elements) => elements,
-            FlattenItem::Node(_, element) => slice::from_ref(element),
-        }
-    }
-
     pub(crate) fn as_syntax(&self) -> &JsSyntaxNode {
         match self {
-            FlattenItem::StaticMember(node, _) => node.syntax(),
-            FlattenItem::CallExpression(node, _) => node.syntax(),
-            FlattenItem::ComputedExpression(node, _) => node.syntax(),
-            FlattenItem::Node(node, _) => node,
-        }
-    }
-
-    pub(crate) fn has_leading_comments(&self) -> bool {
-        match self {
-            FlattenItem::StaticMember(node, _) => node.syntax().has_leading_comments(),
-            FlattenItem::CallExpression(node, _) => node.syntax().has_leading_comments(),
-            FlattenItem::ComputedExpression(node, _) => node.syntax().has_leading_comments(),
-            FlattenItem::Node(node, _) => node.has_leading_comments(),
+            FlattenItem::StaticMember(node) => node.syntax(),
+            FlattenItem::CallExpression(node) => node.syntax(),
+            FlattenItem::ComputedMember(node) => node.syntax(),
+            FlattenItem::Node(node) => node,
         }
     }
 
     pub(crate) fn has_trailing_comments(&self) -> bool {
         match self {
-            FlattenItem::StaticMember(node, _) => node.syntax().has_trailing_comments(),
-            FlattenItem::CallExpression(node, _) => node.syntax().has_trailing_comments(),
-            FlattenItem::ComputedExpression(node, _) => node.syntax().has_trailing_comments(),
-            FlattenItem::Node(node, _) => node.has_trailing_comments(),
+            FlattenItem::StaticMember(node) => node.syntax().has_trailing_comments(),
+            FlattenItem::CallExpression(node) => node.syntax().has_trailing_comments(),
+            FlattenItem::ComputedMember(node) => node.syntax().has_trailing_comments(),
+            FlattenItem::Node(node) => node.has_trailing_comments(),
         }
     }
 
     pub fn is_computed_expression(&self) -> bool {
-        matches!(self, FlattenItem::ComputedExpression(..))
+        matches!(self, FlattenItem::ComputedMember(..))
     }
 
     pub(crate) fn is_this_expression(&self) -> bool {
         match self {
-            FlattenItem::Node(node, _) => JsThisExpression::can_cast(node.kind()),
+            FlattenItem::Node(node) => JsThisExpression::can_cast(node.kind()),
             _ => false,
         }
     }
 
     pub(crate) fn is_identifier_expression(&self) -> bool {
         match self {
-            FlattenItem::Node(node, _) => JsIdentifierExpression::can_cast(node.kind()),
+            FlattenItem::Node(node) => JsIdentifierExpression::can_cast(node.kind()),
             _ => false,
         }
     }
@@ -140,14 +124,14 @@ impl FlattenItem {
         }
     }
 
-    pub(crate) fn has_short_name(&self, tab_width: u8) -> SyntaxResult<bool> {
+    pub(crate) fn has_short_name(&self, tab_width: TabWidth) -> SyntaxResult<bool> {
         if let FlattenItem::StaticMember(static_member, ..) = self {
             if let JsAnyExpression::JsIdentifierExpression(identifier_expression) =
                 static_member.object()?
             {
                 let value_token = identifier_expression.name()?.value_token()?;
                 let text = value_token.text_trimmed();
-                Ok(text.len() <= tab_width as usize)
+                Ok(text.len() <= u8::from(tab_width) as usize)
             } else {
                 Ok(false)
             }
@@ -157,28 +141,58 @@ impl FlattenItem {
     }
 }
 
-impl Debug for FlattenItem {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Format<JsFormatContext> for FlattenItem {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
-            FlattenItem::StaticMember(_, formatted) => write!(f, "StaticMember: {:?}", formatted),
-            FlattenItem::CallExpression(_, formatted) => {
-                write!(f, "CallExpression: {:?}", formatted)
+            FlattenItem::StaticMember(static_member) => {
+                let JsStaticMemberExpressionFields {
+                    // Formatted as part of the previous item
+                    object: _,
+                    operator_token,
+                    member,
+                } = static_member.as_fields();
+                write![f, [operator_token.format(), member.format(),]]
             }
-            FlattenItem::ComputedExpression(_, formatted) => {
-                write!(f, "ComputedExpression: {:?}", formatted)
-            }
-            FlattenItem::Node(node, formatted) => write!(f, "{:?} {:?}", node.kind(), formatted),
-        }
-    }
-}
+            FlattenItem::CallExpression(call_expression) => {
+                let JsCallExpressionFields {
+                    // Formatted as part of the previous item
+                    callee: _,
+                    optional_chain_token,
+                    type_arguments,
+                    arguments,
+                } = call_expression.as_fields();
 
-impl From<FlattenItem> for FormatElement {
-    fn from(flatten_item: FlattenItem) -> Self {
-        match flatten_item {
-            FlattenItem::StaticMember(_, formatted) => concat_elements(formatted),
-            FlattenItem::CallExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::ComputedExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::Node(_, formatted) => formatted,
+                write!(
+                    f,
+                    [
+                        optional_chain_token.format(),
+                        type_arguments.format(),
+                        arguments.format()
+                    ]
+                )
+            }
+            FlattenItem::ComputedMember(computed_member) => {
+                let JsComputedMemberExpressionFields {
+                    // Formatted as part of the previous item
+                    object: _,
+                    optional_chain_token,
+                    l_brack_token,
+                    member,
+                    r_brack_token,
+                } = computed_member.as_fields();
+                write!(
+                    f,
+                    [
+                        optional_chain_token.format(),
+                        l_brack_token.format(),
+                        member.format(),
+                        r_brack_token.format(),
+                    ]
+                )
+            }
+            FlattenItem::Node(node) => {
+                write!(f, [node.format()])
+            }
         }
     }
 }

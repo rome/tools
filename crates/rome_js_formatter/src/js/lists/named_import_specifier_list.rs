@@ -1,15 +1,15 @@
-use crate::formatter::TrailingSeparator;
-use crate::{
-    join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
-use rome_js_syntax::JsNamedImportSpecifierList;
+use crate::prelude::*;
+use rome_js_syntax::{JsNamedImportSpecifierList, JsSyntaxKind};
 
-impl Format for JsNamedImportSpecifierList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(join_elements(
-            soft_line_break_or_space(),
-            formatter.format_separated(self, || token(","), TrailingSeparator::default())?,
-        ))
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsNamedImportSpecifierList;
+
+impl FormatRule<JsNamedImportSpecifierList> for FormatJsNamedImportSpecifierList {
+    type Context = JsFormatContext;
+
+    fn fmt(&self, node: &JsNamedImportSpecifierList, f: &mut JsFormatter) -> FormatResult<()> {
+        f.join_with(&soft_line_break_or_space())
+            .entries(node.format_separated(JsSyntaxKind::COMMA))
+            .finish()
     }
 }

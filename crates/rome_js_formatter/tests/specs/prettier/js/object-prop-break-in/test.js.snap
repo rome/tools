@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: test.js
 ---
 # Input
@@ -44,23 +45,29 @@ const a = classnames({
 });
 
 const b = classnames({
-  "some-prop": this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
+  "some-prop":
+    this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
 });
 
 const c = classnames({
   "some-prop": ["foo", "bar", "foo", "bar", "foo", "bar", "foo", "bar", "foo"],
 });
 
-const d = classnames({ "some-prop": () => {} });
+const d = classnames({
+  "some-prop": () => {},
+});
 
-const e = classnames({ "some-prop": function bar() {} });
+const e = classnames({
+  "some-prop": function bar() {},
+});
 
 const f = classnames({
   "some-prop": { foo: "bar", bar: "foo", foo: "bar", bar: "foo", foo: "bar" },
 });
 
 const g = classnames({
-  "some-prop": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
+  "some-prop":
+    longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
 });
 
 const h = {
@@ -71,9 +78,4 @@ ipsum`,
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    6:   "some-prop": this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
-   22:   "some-prop": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
-```
 

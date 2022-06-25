@@ -1,7 +1,7 @@
 foo(
   `a long string ${
     1 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3
-  } with expr`
+  } with expr`,
 );
 
 const x = `a long string ${
@@ -51,13 +51,13 @@ foo(
     3 +
     2 +
     3
-  } with expr`
+  } with expr`,
 );
 
 pipe.write(
   `\n  ${chalk.dim(
-    `\u203A and ${more} more ${more} more ${more} more ${more}`
-  )}`
+    `\u203A and ${more} more ${more} more ${more} more ${more}`,
+  )}`,
 );
 
 // https://github.com/prettier/prettier/issues/1662#issue-230406820
@@ -72,7 +72,7 @@ const env = ${JSON.stringify(
     fefef: "sf sdfs fdsfdsf s dfsfds",
   },
   null,
-  "\t"
+  "\t",
 )});
 `;
 
@@ -81,7 +81,7 @@ f(
   `${{
     a: 4,
     b: 9,
-  }}`
+  }}`,
 );
 
 // https://github.com/prettier/prettier/issues/1183#issue-220863505
@@ -96,13 +96,13 @@ const makeBody = (store, assets, html) =>
         `window.__INITIAL_STATE__ = ${JSON.stringify(
           store.getState(),
           null,
-          2
+          2,
         )};`,
       ]}
       content={[
         { id: "app-container", dangerouslySetInnerHTML: { __html: html } },
       ]}
-    />
+    />,
   )}`;
 
 // https://github.com/prettier/prettier/issues/1626#issue-229655106

@@ -1,13 +1,20 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsBooleanLiteralExpression;
 use rome_js_syntax::JsBooleanLiteralExpressionFields;
 
-impl FormatNode for JsBooleanLiteralExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsBooleanLiteralExpressionFields { value_token } = self.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsBooleanLiteralExpression;
 
-        value_token.format(formatter)
+impl FormatNodeRule<JsBooleanLiteralExpression> for FormatJsBooleanLiteralExpression {
+    fn fmt_fields(
+        &self,
+        node: &JsBooleanLiteralExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        let JsBooleanLiteralExpressionFields { value_token } = node.as_fields();
+
+        write![f, [value_token.format()]]
     }
 }

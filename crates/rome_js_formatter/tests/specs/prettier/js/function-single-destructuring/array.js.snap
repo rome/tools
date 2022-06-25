@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: array.js
 ---
 # Input
@@ -34,7 +35,9 @@ promise.then(([firstResult, secondResult, thirdResult, fourthResult, fifthResult
 
 # Output
 ```js
-function excludeFirstFiveResults([first, second, third, fourth, fifth, ...rest]) {
+function excludeFirstFiveResults(
+  [first, second, third, fourth, fifth, ...rest],
+) {
   return rest;
 }
 
@@ -45,9 +48,14 @@ function excludeFirstFiveResults2(
 }
 
 function excludeFirstFiveResults3(
-  [firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest] = [
-    1, 2, 3, 4, 5,
-  ],
+  [
+    firstResult,
+    secondResult,
+    thirdResult,
+    fourthResult,
+    fifthResult,
+    ...rest
+  ] = [1, 2, 3, 4, 5],
 ) {
   return rest;
 }
@@ -66,18 +74,12 @@ class A {
   }
 }
 
-promise.then(
-  ([firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest]) => {
-    return rest;
-  },
-);
+promise.then((
+  [firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest],
+) => {
+  return rest;
+});
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    1: function excludeFirstFiveResults([first, second, third, fourth, fifth, ...rest]) {
-   12:   [firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest] = [
-   34:   ([firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest]) => {
-```
 

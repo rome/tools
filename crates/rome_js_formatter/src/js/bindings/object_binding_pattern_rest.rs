@@ -1,19 +1,23 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
+use rome_formatter::write;
 use rome_js_syntax::JsObjectBindingPatternRest;
 use rome_js_syntax::JsObjectBindingPatternRestFields;
 
-impl FormatNode for JsObjectBindingPatternRest {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectBindingPatternRest;
+
+impl FormatNodeRule<JsObjectBindingPatternRest> for FormatJsObjectBindingPatternRest {
+    fn fmt_fields(
+        &self,
+        node: &JsObjectBindingPatternRest,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsObjectBindingPatternRestFields {
             dotdotdot_token,
             binding,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            dotdotdot_token.format(formatter)?,
-            binding.format(formatter)?,
-        ])
+        write![f, [dotdotdot_token.format(), binding.format(),]]
     }
 }

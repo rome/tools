@@ -1,19 +1,19 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::{format_elements, FormatResult};
+use crate::prelude::*;
+
+use rome_formatter::write;
 use rome_js_syntax::{JsxMemberName, JsxMemberNameFields};
 
-impl FormatNode for JsxMemberName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxMemberName;
+
+impl FormatNodeRule<JsxMemberName> for FormatJsxMemberName {
+    fn fmt_fields(&self, node: &JsxMemberName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxMemberNameFields {
             object,
             dot_token,
             member,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            object.format(formatter)?,
-            dot_token.format(formatter)?,
-            member.format(formatter)?,
-        ])
+        write![f, [object.format(), dot_token.format(), member.format(),]]
     }
 }

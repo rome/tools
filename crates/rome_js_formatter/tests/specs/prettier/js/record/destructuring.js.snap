@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: destructuring.js
-
 ---
 # Input
 ```js
@@ -20,7 +18,7 @@ assert(rest.c === 3);
 
 # Output
 ```js
-const { a, b } = #
+const { a, b } = #;
 {
   a: 1, b;
   : 2
@@ -28,7 +26,7 @@ const { a, b } = #
 assert(a === 1);
 assert(b === 2);
 
-const { a, ...rest } = #
+const { a, ...rest } = #;
 {
   a: 1, b;
   : 2, c: 3

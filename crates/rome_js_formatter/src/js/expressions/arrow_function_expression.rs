@@ -1,9 +1,17 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
+
 use rome_js_syntax::{JsAnyFunction, JsArrowFunctionExpression};
 
-impl FormatNode for JsArrowFunctionExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        JsAnyFunction::from(self.clone()).format(formatter)
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrowFunctionExpression;
+
+impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpression {
+    fn fmt_fields(
+        &self,
+        node: &JsArrowFunctionExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        write![f, [JsAnyFunction::from(node.clone()).format()]]
     }
 }

@@ -1,12 +1,17 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::formatter::unknown_node;
 use rome_js_syntax::JsUnknownNamedImportSpecifier;
 use rome_rowan::AstNode;
 
-impl FormatNode for JsUnknownNamedImportSpecifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        unknown_node(self.syntax()).format(formatter)
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsUnknownNamedImportSpecifier;
+
+impl FormatNodeRule<JsUnknownNamedImportSpecifier> for FormatJsUnknownNamedImportSpecifier {
+    fn fmt_fields(
+        &self,
+        node: &JsUnknownNamedImportSpecifier,
+        formatter: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        format_unknown_node(node.syntax()).fmt(formatter)
     }
 }

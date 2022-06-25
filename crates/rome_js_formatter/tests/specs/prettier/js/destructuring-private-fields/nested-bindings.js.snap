@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 184
+expression: nested-bindings.js
+---
+# Input
+```js
+class C {
+  #x = 1;
+  m() {
+    const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
+  }
+}
+
+```
+
+# Output
+```js
+class C {
+  #x = 1;
+  m() {
+    const {
+      x: { #x: [x] },
+      y: [...{ #x: y }],
+    } = this;
+  }
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found '#x: [x]'
+  ┌─ nested-bindings.js:4:17
+  │
+4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
+  │                 ^^^^^^^ Expected an identifier, a member name, or a rest pattern here
+
+error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found '#x: y'
+  ┌─ nested-bindings.js:4:37
+  │
+4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
+  │                                     ^^^^^ Expected an identifier, a member name, or a rest pattern here
+
+
+```
+
+

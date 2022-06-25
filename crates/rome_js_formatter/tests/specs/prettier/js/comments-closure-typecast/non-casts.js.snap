@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 182
 expression: non-casts.js
-
 ---
 # Input
 ```js
@@ -30,27 +29,21 @@ const w1 = /** @typefoo Foo */ (value);
 # Output
 ```js
 /* @type { } */
-z(
-  (x) => {
-    (foo)((bar)(2 + (3)));
-    return (1);
-  },
-);
+z((x) => {
+  (foo)((bar)(2 + (3)));
+  return (1);
+});
 
 /** @type { } */
-z(
-  (x) => {
-    (foo)((bar)(2 + (3)));
-    return (1);
-  },
-);
+z((x) => {
+  (foo)((bar)(2 + (3)));
+  return (1);
+});
 
 /** @type {number} */
-let q = z(
-  (x) => {
-    return (1);
-  },
-);
+let q = z((x) => {
+  return (1);
+});
 
 const w1 = /** @typefoo Foo */ (value);
 

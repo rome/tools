@@ -1,13 +1,15 @@
-use crate::{empty_element, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsEmptyClassMember;
 use rome_js_syntax::JsEmptyClassMemberFields;
 
-impl FormatNode for JsEmptyClassMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsEmptyClassMemberFields { semicolon_token } = self.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsEmptyClassMember;
 
-        Ok(formatter.format_replaced(&semicolon_token?, empty_element()))
+impl FormatNodeRule<JsEmptyClassMember> for FormatJsEmptyClassMember {
+    fn fmt_fields(&self, node: &JsEmptyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsEmptyClassMemberFields { semicolon_token } = node.as_fields();
+
+        format_removed(&semicolon_token?).fmt(f)
     }
 }

@@ -11,7 +11,7 @@ static ALLOCATOR: DhatAlloc = DhatAlloc;
 
 fn main() -> Result<(), pico_args::Error> {
     #[cfg(feature = "dhat-on")]
-    let dhat = dhat::Dhat::start_heap_profiling();
+    let _dhat = dhat::Dhat::start_heap_profiling();
 
     let _d = pushd(project_root());
     let mut args = Arguments::from_env();
@@ -27,7 +27,7 @@ OPTIONS
     --save-baseline     Allows different runs to be compared.
     --feature           Possible values: parser, formatter
     --criterion=[true/false]  Run a series of statistical test to assess with the this run is faster or slower than previous runs.
-    --suites=<IDS>      Runs the specified benchmarks. Use comma as separator. 
+    --suites=<IDS>      Runs the specified benchmarks. Use comma as separator.
                         Valid values are:
                             *: will run all benchmarks;
                             js: will benchmark all javascript libraries;

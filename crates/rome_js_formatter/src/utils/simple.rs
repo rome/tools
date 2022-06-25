@@ -40,23 +40,26 @@
 //! ```
 
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunction, JsAnyFunctionBody, JsArrayExpression, JsArrayExpressionFields,
-    JsFormalParameter, JsFormalParameterFields, JsFunctionBodyFields, JsIdentifierBinding,
+    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyBindingPattern, JsAnyExpression,
+    JsAnyFormalParameter, JsAnyFunction, JsAnyFunctionBody, JsAnyParameter, JsArrayExpression,
+    JsArrayExpressionFields, JsFormalParameter, JsFormalParameterFields, JsFunctionBodyFields,
     JsIdentifierBindingFields, JsObjectExpression, JsObjectExpressionFields, JsParameters,
     JsParametersFields, JsSyntaxToken,
 };
 use rome_rowan::{AstNode, AstSeparatedList, SyntaxResult};
 
 /// Returns true is the passed [JsAnyExpression] is a simple function, array or object expression
-pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> {
-    if let Some(func) = JsAnyFunction::cast(node.syntax().clone()) {
-        is_simple_function_expression(func)
-    } else if let Some(array) = JsArrayExpression::cast(node.syntax().clone()) {
-        is_simple_array_expression(array)
-    } else if let Some(object) = JsObjectExpression::cast(node.syntax().clone()) {
-        is_simple_object_expression(object)
-    } else {
-        Ok(false)
+pub(crate) fn is_simple_expression(node: &JsAnyExpression) -> SyntaxResult<bool> {
+    match node {
+        JsAnyExpression::JsArrayExpression(array) => is_simple_array_expression(array),
+        JsAnyExpression::JsObjectExpression(object) => is_simple_object_expression(object),
+        node => {
+            if let Some(func) = JsAnyFunction::cast(node.syntax().clone()) {
+                is_simple_function_expression(func)
+            } else {
+                Ok(false)
+            }
+        }
     }
 }
 
@@ -64,19 +67,19 @@ pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> 
 /// parameters, return type annotation and simple parameters (see [is_simple_function_parameters])
 pub(crate) fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult<bool> {
     if let Some(token) = func.async_token() {
-        if token_has_comments(token) {
+        if token_has_comments(&token) {
             return Ok(false);
         }
     }
 
     if let Some(token) = func.function_token()? {
-        if token_has_comments(token) {
+        if token_has_comments(&token) {
             return Ok(false);
         }
     }
 
     if let Some(token) = func.star_token() {
-        if token_has_comments(token) {
+        if token_has_comments(&token) {
             return Ok(false);
         }
     }
@@ -91,13 +94,22 @@ pub(crate) fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult
         return Ok(false);
     }
 
-    match JsParameters::cast(func.parameters()?.syntax().clone()) {
-        Some(params) => {
-            if !is_simple_function_parameters(params)? {
+    match func.parameters()? {
+        JsAnyArrowFunctionParameters::JsAnyBinding(JsAnyBinding::JsIdentifierBinding(
+            identifier,
+        )) => {
+            if token_has_comments(&identifier.name_token()?) {
                 return Ok(false);
             }
         }
-        None => return Ok(false),
+        JsAnyArrowFunctionParameters::JsParameters(parameters) => {
+            if !is_simple_function_parameters(parameters)? {
+                return Ok(false);
+            }
+        }
+        _ => {
+            return Ok(false);
+        }
     }
 
     if func.return_type_annotation().is_some() {
@@ -125,7 +137,7 @@ pub(crate) fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult
     Ok(true)
 }
 
-fn is_simple_array_expression(node: JsArrayExpression) -> SyntaxResult<bool> {
+fn is_simple_array_expression(node: &JsArrayExpression) -> SyntaxResult<bool> {
     let JsArrayExpressionFields {
         l_brack_token,
         elements: _,
@@ -139,7 +151,7 @@ fn is_simple_array_expression(node: JsArrayExpression) -> SyntaxResult<bool> {
     Ok(true)
 }
 
-fn is_simple_object_expression(node: JsObjectExpression) -> SyntaxResult<bool> {
+fn is_simple_object_expression(node: &JsObjectExpression) -> SyntaxResult<bool> {
     let JsObjectExpressionFields {
         l_curly_token,
         members: _,
@@ -162,22 +174,22 @@ fn is_simple_function_parameters(node: JsParameters) -> SyntaxResult<bool> {
         r_paren_token,
     } = node.as_fields();
 
-    if token_has_comments(l_paren_token?) || token_has_comments(r_paren_token?) {
+    if token_has_comments(&l_paren_token?) || token_has_comments(&r_paren_token?) {
         return Ok(false);
     }
 
-    if items.syntax_list().len() >= 3 {
+    if items.len() >= 3 {
         return Ok(false);
     }
 
     for item in &items {
-        match JsFormalParameter::cast(item?.syntax().clone()) {
-            Some(node) => {
+        match item? {
+            JsAnyParameter::JsAnyFormalParameter(JsAnyFormalParameter::JsFormalParameter(node)) => {
                 if !is_simple_parameter(node)? {
                     return Ok(false);
                 }
             }
-            None => return Ok(false),
+            _ => return Ok(false),
         }
     }
 
@@ -194,25 +206,17 @@ fn is_simple_parameter(node: JsFormalParameter) -> SyntaxResult<bool> {
         initializer,
     } = node.as_fields();
 
-    match JsIdentifierBinding::cast(binding?.syntax().clone()) {
-        Some(ident) => {
+    match binding? {
+        JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsIdentifierBinding(ident)) => {
             let JsIdentifierBindingFields { name_token } = ident.as_fields();
-            if token_has_comments(name_token?) {
+            if token_has_comments(&name_token?) {
                 return Ok(false);
             }
         }
-        None => return Ok(false),
+        _ => return Ok(false),
     }
 
-    if question_mark_token.is_some() {
-        return Ok(false);
-    }
-
-    if type_annotation.is_some() {
-        return Ok(false);
-    }
-
-    if initializer.is_some() {
+    if question_mark_token.is_some() || type_annotation.is_some() || initializer.is_some() {
         return Ok(false);
     }
 
@@ -220,6 +224,6 @@ fn is_simple_parameter(node: JsFormalParameter) -> SyntaxResult<bool> {
 }
 
 /// Returns true if the passed [SyntaxToken] has any comments
-pub(crate) fn token_has_comments(token: JsSyntaxToken) -> bool {
+pub(crate) fn token_has_comments(token: &JsSyntaxToken) -> bool {
     token.has_leading_comments() || token.has_trailing_comments()
 }

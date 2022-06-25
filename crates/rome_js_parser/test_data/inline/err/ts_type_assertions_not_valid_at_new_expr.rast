@@ -13,31 +13,36 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@10..12 "=" [] [Whitespace(" ")],
-                            expression: JsNewExpression {
-                                new_token: NEW_KW@12..16 "new" [] [Whitespace(" ")],
-                                callee: TsTypeAssertionExpression {
-                                    l_angle_token: L_ANGLE@16..17 "<" [] [],
-                                    ty: TsAnyType {
-                                        any_token: ANY_KW@17..20 "any" [] [],
-                                    },
-                                    r_angle_token: R_ANGLE@20..21 ">" [] [],
-                                    expression: JsCallExpression {
-                                        callee: JsIdentifierExpression {
-                                            name: JsReferenceIdentifier {
-                                                value_token: IDENT@21..26 "Test2" [] [],
-                                            },
-                                        },
-                                        optional_chain_token: missing (optional),
+                            expression: JsBinaryExpression {
+                                left: JsBinaryExpression {
+                                    left: JsNewExpression {
+                                        new_token: NEW_KW@12..16 "new" [] [Whitespace(" ")],
+                                        callee: missing (required),
                                         type_arguments: missing (optional),
-                                        arguments: JsCallArguments {
-                                            l_paren_token: L_PAREN@26..27 "(" [] [],
-                                            args: JsCallArgumentList [],
-                                            r_paren_token: R_PAREN@27..28 ")" [] [],
+                                        arguments: missing (optional),
+                                    },
+                                    operator_token: L_ANGLE@16..17 "<" [] [],
+                                    right: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@17..20 "any" [] [],
                                         },
                                     },
                                 },
-                                type_arguments: missing (optional),
-                                arguments: missing (optional),
+                                operator_token: R_ANGLE@20..21 ">" [] [],
+                                right: JsCallExpression {
+                                    callee: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@21..26 "Test2" [] [],
+                                        },
+                                    },
+                                    optional_chain_token: missing (optional),
+                                    type_arguments: missing (optional),
+                                    arguments: JsCallArguments {
+                                        l_paren_token: L_PAREN@26..27 "(" [] [],
+                                        args: JsCallArgumentList [],
+                                        r_paren_token: R_PAREN@27..28 ")" [] [],
+                                    },
+                                },
                             },
                         },
                     },
@@ -63,33 +68,36 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@10..28
               0: EQ@10..12 "=" [] [Whitespace(" ")]
-              1: JS_NEW_EXPRESSION@12..28
-                0: NEW_KW@12..16 "new" [] [Whitespace(" ")]
-                1: TS_TYPE_ASSERTION_EXPRESSION@16..28
-                  0: L_ANGLE@16..17 "<" [] []
-                  1: TS_ANY_TYPE@17..20
-                    0: ANY_KW@17..20 "any" [] []
-                  2: R_ANGLE@20..21 ">" [] []
-                  3: JS_CALL_EXPRESSION@21..28
-                    0: JS_IDENTIFIER_EXPRESSION@21..26
-                      0: JS_REFERENCE_IDENTIFIER@21..26
-                        0: IDENT@21..26 "Test2" [] []
+              1: JS_BINARY_EXPRESSION@12..28
+                0: JS_BINARY_EXPRESSION@12..20
+                  0: JS_NEW_EXPRESSION@12..16
+                    0: NEW_KW@12..16 "new" [] [Whitespace(" ")]
                     1: (empty)
                     2: (empty)
-                    3: JS_CALL_ARGUMENTS@26..28
-                      0: L_PAREN@26..27 "(" [] []
-                      1: JS_CALL_ARGUMENT_LIST@27..27
-                      2: R_PAREN@27..28 ")" [] []
-                2: (empty)
-                3: (empty)
+                    3: (empty)
+                  1: L_ANGLE@16..17 "<" [] []
+                  2: JS_IDENTIFIER_EXPRESSION@17..20
+                    0: JS_REFERENCE_IDENTIFIER@17..20
+                      0: IDENT@17..20 "any" [] []
+                1: R_ANGLE@20..21 ">" [] []
+                2: JS_CALL_EXPRESSION@21..28
+                  0: JS_IDENTIFIER_EXPRESSION@21..26
+                    0: JS_REFERENCE_IDENTIFIER@21..26
+                      0: IDENT@21..26 "Test2" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@26..28
+                    0: L_PAREN@26..27 "(" [] []
+                    1: JS_CALL_ARGUMENT_LIST@27..27
+                    2: R_PAREN@27..28 ")" [] []
       1: SEMICOLON@28..29 ";" [] []
   3: EOF@29..30 "" [Newline("\n")] []
 --
-error[SyntaxError]: Type assertions cannot be used at 'new' expressions.
+error[SyntaxError]: expected an expression but instead found '<'
   ┌─ ts_type_assertions_not_valid_at_new_expr.ts:1:17
   │
 1 │ var test2 = new <any>Test2();
-  │                 ^^^^^^^^^^^^
+  │                 ^ Expected an expression here
 
 --
 var test2 = new <any>Test2();

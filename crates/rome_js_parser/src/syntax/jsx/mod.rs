@@ -35,11 +35,12 @@ use super::typescript::parse_ts_type_arguments;
 // <div />
 
 // test_err jsx_or_type_assertion
+// // SCRIPT
 // function f() {
 //     let a = <div>a</div>; // JSX
-//     let b = <string>b; //type assertion
+//     let b = <string>b; // type assertion
 //     let c = <string>b<a>d; // type assertion
-//     let d = <div>a</div>/; // ambigous: JSX or "type assertion a less than regex /div>/". Probably JSX.
+//     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
 //     let d = <string>a</string>/;
 // }
 
@@ -57,12 +58,10 @@ pub(crate) fn parse_jsx_tag_expression(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
 
-    if parse_any_jsx_tag(p, true).is_present() {
-        Present(m.complete(p, JSX_TAG_EXPRESSION))
-    } else {
-        m.abandon(p);
-        Absent
-    }
+    // Safety: Safe because `parse_any_jsx_tag only returns Absent if the parser isn't positioned
+    // at the `<` token which is tested for at the beginning of the function.
+    parse_any_jsx_tag(p, true).unwrap();
+    Present(m.complete(p, JSX_TAG_EXPRESSION))
 }
 
 // <a ...> or <a ... />
@@ -107,12 +106,8 @@ fn parse_any_jsx_tag(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
 
             parse_jsx_children(p);
 
-            if expect_closing_element(p, in_expression, name, opening_range).is_none() {
-                element.abandon(p);
-                Absent
-            } else {
-                Present(element.complete(p, JSX_ELEMENT))
-            }
+            expect_closing_element(p, in_expression, name, opening_range);
+            Present(element.complete(p, JSX_ELEMENT))
         }
         None => Absent,
     }
@@ -221,18 +216,11 @@ fn expect_closing_element(
     in_expression: bool,
     opening_name_marker: Option<CompletedMarker>,
     opening_range: TextRange,
-) -> Option<CompletedMarker> {
+) -> CompletedMarker {
     let m = p.start();
 
-    if !p.expect(T![<]) {
-        m.abandon(p);
-        return None;
-    }
-
-    if !p.expect(T![/]) {
-        m.abandon(p);
-        return None;
-    }
+    p.expect(T![<]);
+    p.expect(T![/]);
 
     let name_marker = parse_jsx_any_element_name(p);
 
@@ -287,7 +275,7 @@ fn expect_closing_element(
     // <><test>abcd</test more content follows here</>
     expect_jsx_token(p, T![>], !in_expression);
 
-    Some(m.complete(p, JSX_CLOSING_ELEMENT))
+    m.complete(p, JSX_CLOSING_ELEMENT)
 }
 
 /// Expects a JSX token that may be followed by JSX child content.

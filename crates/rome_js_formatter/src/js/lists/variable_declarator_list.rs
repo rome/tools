@@ -1,58 +1,61 @@
-use crate::{
-    concat_elements, empty_element, format_elements, format_traits::FormatOptional, group_elements,
-    indent, join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter,
-};
-use rome_formatter::FormatResult;
-use rome_js_syntax::JsVariableDeclaratorList;
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
+
+use crate::AsFormat;
+use rome_js_syntax::{JsSyntaxKind, JsVariableDeclaratorList};
 use rome_rowan::AstSeparatedList;
 
-impl Format for JsVariableDeclaratorList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let last_index = self.len().saturating_sub(1);
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableDeclaratorList;
 
-        let declarators = self
-            .elements()
-            .enumerate()
-            .map(|(index, element)| {
-                let node = element.node().format(formatter)?;
-                let separator = element.trailing_separator().format_with_or(
-                    formatter,
-                    |separator| {
-                        if index == last_index {
-                            Ok(empty_element())
-                        } else {
-                            Ok(separator)
-                        }
-                    },
-                    || {
-                        if index == last_index {
-                            Ok(empty_element())
-                        } else {
-                            Ok(token(","))
-                        }
-                    },
-                )?;
+impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
+    type Context = JsFormatContext;
 
-                Ok(format_elements![node, separator])
+    fn fmt(&self, node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
+        let last_index = node.len().saturating_sub(1);
+
+        let mut declarators = node.elements().enumerate().map(|(index, element)| {
+            format_with(move |f| {
+                write!(f, [group_elements(&element.node().format())])?;
+
+                match element.trailing_separator()? {
+                    None => {
+                        if index != last_index {
+                            format_inserted(JsSyntaxKind::COMMA).fmt(f)?;
+                        }
+                    }
+                    Some(separator) => {
+                        if index != last_index {
+                            write!(f, [separator.format()])?;
+                        }
+                    }
+                };
+
+                Ok(())
             })
-            .collect::<FormatResult<Vec<_>>>()?;
+        });
 
-        let mut items = declarators.into_iter();
+        let leading_element = declarators.next().ok_or(FormatError::SyntaxError)?;
 
-        let leading_element = items.next();
-        let trailing_elements = join_elements(soft_line_break_or_space(), items);
+        let other_declarators = format_once(|f| {
+            if node.len() == 1 {
+                // No more declarators, avoid single line break
+                return Ok(());
+            }
 
-        Ok(group_elements(concat_elements(
-            leading_element
-                .into_iter()
-                .chain(if !trailing_elements.is_empty() {
-                    Some(indent(format_elements![
-                        soft_line_break_or_space(),
-                        trailing_elements
-                    ]))
-                } else {
-                    None
-                }),
-        )))
+            write!(f, [soft_line_break_or_space()])?;
+
+            f.join_with(&soft_line_break_or_space())
+                .entries(declarators)
+                .finish()
+        });
+
+        write!(
+            f,
+            [group_elements(&format_args!(
+                leading_element,
+                indent(&other_declarators)
+            ))]
+        )
     }
 }

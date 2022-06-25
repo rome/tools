@@ -1,14 +1,14 @@
-use crate::{format_node, FormatOptions};
+use crate::{format_node, JsFormatContext};
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_js_parser::{parse, SourceType};
-use rome_js_syntax::JsSyntaxNode;
+use rome_js_parser::parse;
+use rome_js_syntax::{JsSyntaxNode, SourceType};
 
 pub struct CheckReformatParams<'a> {
     pub root: &'a JsSyntaxNode,
     pub text: &'a str,
     pub source_type: SourceType,
     pub file_name: &'a str,
-    pub format_options: FormatOptions,
+    pub format_context: JsFormatContext,
 }
 
 /// Perform a second pass of formatting on a file, printing a diff if the
@@ -19,7 +19,7 @@ pub fn check_reformat(params: CheckReformatParams) {
         text,
         source_type,
         file_name,
-        format_options,
+        format_context: context,
     } = params;
 
     let re_parse = parse(text, 0, source_type);
@@ -44,11 +44,11 @@ pub fn check_reformat(params: CheckReformatParams) {
         )
     }
 
-    let formatted = format_node(format_options, &re_parse.syntax()).unwrap();
+    let formatted = format_node(context.clone(), &re_parse.syntax()).unwrap();
     let printed = formatted.print();
 
     if text != printed.as_code() {
-        let input_formatted = format_node(format_options, root).unwrap();
+        let input_formatted = format_node(context, root).unwrap();
 
         // Print a diff of the Formatter IR emitted for the input and the output
         let diff =

@@ -4,7 +4,7 @@ function f() {
       entity &&
       entity.isInstallAvailable() &&
       !entity.isQueue() &&
-      entity.isDisabled()
+      entity.isDisabled(),
   );
 }
 
@@ -16,7 +16,7 @@ function f2() {
       !entity.isQueue() &&
       entity.isDisabled() && {
         id: entity.id,
-      }
+      },
   );
 }
 

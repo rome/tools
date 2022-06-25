@@ -1,13 +1,15 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::JsxAnyAttribute;
-impl Format for JsxAnyAttribute {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsxAttribute(node) => node.format(formatter),
-            Self::JsxSpreadAttribute(node) => node.format(formatter),
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxAnyAttribute;
+impl FormatRule<JsxAnyAttribute> for FormatJsxAnyAttribute {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &JsxAnyAttribute, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsxAnyAttribute::JsxAttribute(node) => node.format().fmt(f),
+            JsxAnyAttribute::JsxSpreadAttribute(node) => node.format().fmt(f),
         }
     }
 }

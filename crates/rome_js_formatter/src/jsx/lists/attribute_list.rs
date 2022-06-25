@@ -1,8 +1,20 @@
-use crate::{Format, FormatElement, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::write;
 use rome_js_syntax::JsxAttributeList;
-impl Format for JsxAttributeList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(self.clone()))
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxAttributeList;
+
+impl FormatRule<JsxAttributeList> for FormatJsxAttributeList {
+    type Context = JsFormatContext;
+
+    fn fmt(&self, node: &JsxAttributeList, f: &mut JsFormatter) -> FormatResult<()> {
+        let attributes = format_with(|f| {
+            f.join_with(&soft_line_break_or_space())
+                .entries(node.iter().formatted())
+                .finish()
+        });
+
+        write!(f, [group_elements(&soft_block_indent(&attributes))])
     }
 }

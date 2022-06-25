@@ -30,55 +30,66 @@ This will automatically build and open a browser tab to the documentation.
 ## Rules to follow when implementing a formatter
 
 1. Use the `*Fields` struct to extract all the tokens/nodes
-   ```rust
-    impl FormatNode for JsExportDefaultExpressionClause {
-        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+	```rust
+	#[derive(Debug, Clone, Default)]
+	pub struct FormatJsExportDefaultExpressionClause;
+
+	impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses {
+       fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression,
                 semicolon_token,
-            } = self.as_fields();
-        }
+            }  = node.as_fields();
+       }
    }
-   ```
+	```
 2. When using `.as_fields()` with the destructuring, don't use the `..` feature. Prefer extracting all fields and ignore them
    using the `_`
    ```rust
-   impl FormatNode for JsExportDefaultExpressionClause {
-        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+   #[derive(Debug, Clone, Default)]
+   pub struct FormatJsExportDefaultExpressionClause;
+
+   impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses {
+       fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression: _,
                 semicolon_token
-            } = self.as_fields();
+            } = node.as_fields();
         }
    }
    ```
    The reason why we want to promote this pattern is because we want to make explicit when a token/node is excluded;
-3. Use the APIs provided by `format_element.rs` and `formatter` and `format_traits.rs`.
-   1. `formatter_element.rs` exposes a series of utilities to craft the formatter IR; please refer to their internal
+3. Use the APIs provided by `builders.rs`, `formetter` and `format_extensions.rs`.
+   1. `builders.rs` exposes a series of utilities to craft the formatter IR; please refer to their internal
    documentation to understand what the utilities are for;
    2. `formatter` exposes a set of functions to help to format some recurring patterns; please refer to their internal
    documentation to understand how to use them and when;
-   3. `format_traits.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
+   3. `format_extensions.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
    that are exposed based on its type. If you have a good IDE support, this feature will help you. For example:
    ```rust
-      impl FormatNode for JsExportDefaultExpressionClause {
-        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+   #[derive(Debug, Clone, Default)]
+   pub struct FormatJsExportDefaultExpressionClause;
+
+   impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses{
+        fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression, // it's a mandatory node
                 semicolon_token, // this is not a mandatory node
-            } = self.as_fields();
-            let element = expression.format(formatter)?;
-            let element = expression.format_with(formatter, |element| {
-                format_element![element , space_token()]
-            })?;
-            let semicolon = semicolon_token.format_or(formatter, || space_token())?;
-            let semicolon = semicolon_token.format_or_empty(formatter)?;
-            let semicolon = semicolon_token.format_with_or_empty(formatter, |semicolon_element| {
-                format_element![semicolon_element, space_token()]
-            })?;
+            } = node.as_fields();
+            let element = expression.format();
+
+            if let Some(expression) = &expression? {
+                write!(f, [expression.format(), space_token()])?;
+            }
+
+            if let Some(semicolon) = &semicolon_token {
+                write!(f, [semicolon.format()])?;
+            } else {
+                write!(f, [space_token()])?;
+            }
         }
    }
    ```

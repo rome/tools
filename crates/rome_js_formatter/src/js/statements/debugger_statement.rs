@@ -1,21 +1,27 @@
-use crate::utils::format_with_semicolon;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
+
+use crate::utils::FormatWithSemicolon;
 
 use rome_js_syntax::JsDebuggerStatement;
 use rome_js_syntax::JsDebuggerStatementFields;
 
-impl FormatNode for JsDebuggerStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsDebuggerStatement;
+
+impl FormatNodeRule<JsDebuggerStatement> for FormatJsDebuggerStatement {
+    fn fmt_fields(&self, node: &JsDebuggerStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDebuggerStatementFields {
             debugger_token,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        format_with_semicolon(
-            formatter,
-            format_elements![debugger_token.format(formatter)?],
-            semicolon_token,
+        write!(
+            f,
+            [FormatWithSemicolon::new(
+                &format_args!(debugger_token.format()),
+                semicolon_token.as_ref()
+            ),]
         )
     }
 }

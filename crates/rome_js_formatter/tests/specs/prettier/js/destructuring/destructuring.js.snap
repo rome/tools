@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 184
 expression: destructuring.js
 ---
 # Input
@@ -58,11 +59,15 @@ const [one, two = null, three = null] = arr;
 a = ([s = 1]) => 1;
 const { children, ...props } = this.props;
 
-const { user: { firstName, lastName } } = this.props;
+const {
+  user: { firstName, lastName },
+} = this.props;
 
 const {
   name: { first, last },
-  organisation: { address: { street: orgStreetAddress, postcode: orgPostcode } },
+  organisation: {
+    address: { street: orgStreetAddress, postcode: orgPostcode },
+  },
 } = user;
 
 function f({ data: { name } }) {}
@@ -78,7 +83,12 @@ const UserComponent = function (
   return;
 };
 
-const { a, b, c, d: { e } } = someObject;
+const {
+  a,
+  b,
+  c,
+  d: { e },
+} = someObject;
 
 try {
   // code
@@ -106,8 +116,4 @@ class A {
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    9:   organisation: { address: { street: orgStreetAddress, postcode: orgPostcode } },
-```
 

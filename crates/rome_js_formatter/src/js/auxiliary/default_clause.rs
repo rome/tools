@@ -1,43 +1,43 @@
-use crate::{
-    format_elements, hard_line_break, indent, space_token, FormatElement, FormatNode, Formatter,
-};
-use crate::{Format, JsFormatter};
-use rome_formatter::FormatResult;
-
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
 
-impl FormatNode for JsDefaultClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsDefaultClause;
+
+impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
+    fn fmt_fields(&self, node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsDefaultClauseFields {
             default_token,
             colon_token,
             consequent,
-        } = self.as_fields();
+        } = node.as_fields();
 
         let first_child_is_block_stmt = matches!(
             consequent.iter().next(),
             Some(JsAnyStatement::JsBlockStatement(_))
         );
 
-        let default = default_token.format(formatter)?;
-        let colon = colon_token.format(formatter)?;
-        let statements = formatter.format_list(consequent);
+        write!(
+            f,
+            [default_token.format(), colon_token.format(), space_token()]
+        )?;
 
-        let formatted_cons = if statements.is_empty() {
-            hard_line_break()
+        if consequent.is_empty() {
+            write!(f, [hard_line_break()])
         } else if first_child_is_block_stmt {
-            format_elements![space_token(), statements]
+            write!(f, [space_token(), consequent.format()])
         } else {
             // no line break needed after because it is added by the indent in the switch statement
-            indent(format_elements![hard_line_break(), statements])
-        };
-        Ok(format_elements![
-            default,
-            colon,
-            space_token(),
-            formatted_cons
-        ])
+            write!(
+                f,
+                [indent(&format_args!(
+                    hard_line_break(),
+                    consequent.format()
+                ))]
+            )
+        }
     }
 }

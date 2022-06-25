@@ -8,5 +8,9 @@ members = [
 	"xtask/bench",
 	"xtask/codegen",
 	"xtask/coverage",
+	"xtask/lintdoc",
 ]
 
+[profile.release-with-debug]
+inherits = "release"
+debug = true

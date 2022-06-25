@@ -1,14 +1,16 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{Format, Formatter};
-use rome_formatter::{FormatElement, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::JsxAnyObjectName;
-impl Format for JsxAnyObjectName {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsxReferenceIdentifier(node) => node.format(formatter),
-            Self::JsxMemberName(node) => node.format(formatter),
-            Self::JsxNamespaceName(node) => node.format(formatter),
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxAnyObjectName;
+impl FormatRule<JsxAnyObjectName> for FormatJsxAnyObjectName {
+    type Context = JsFormatContext;
+    fn fmt(&self, node: &JsxAnyObjectName, f: &mut JsFormatter) -> FormatResult<()> {
+        match node {
+            JsxAnyObjectName::JsxReferenceIdentifier(node) => node.format().fmt(f),
+            JsxAnyObjectName::JsxMemberName(node) => node.format().fmt(f),
+            JsxAnyObjectName::JsxNamespaceName(node) => node.format().fmt(f),
         }
     }
 }

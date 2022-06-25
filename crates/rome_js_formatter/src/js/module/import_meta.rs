@@ -1,21 +1,30 @@
-use rome_formatter::FormatResult;
-use rome_js_syntax::ImportMeta;
+use crate::prelude::*;
 
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::write;
+use rome_js_syntax::ImportMeta;
 use rome_js_syntax::ImportMetaFields;
 
-impl FormatNode for ImportMeta {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatImportMeta;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsImportMeta;
+
+impl FormatNodeRule<ImportMeta> for FormatImportMeta {
+    fn fmt_fields(&self, node: &ImportMeta, f: &mut JsFormatter) -> FormatResult<()> {
         let ImportMetaFields {
             import_token,
             dot_token,
             meta_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        Ok(format_elements![
-            import_token.format(formatter)?,
-            dot_token.format(formatter)?,
-            meta_token.format(formatter)?,
-        ])
+        write![
+            f,
+            [
+                import_token.format(),
+                dot_token.format(),
+                meta_token.format(),
+            ]
+        ]
     }
 }
