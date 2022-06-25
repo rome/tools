@@ -2,7 +2,9 @@ use crate::{GroupId, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
-use std::any::{type_name, TypeId};
+#[cfg(debug_assertions)]
+use std::any::type_name;
+use std::any::TypeId;
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
