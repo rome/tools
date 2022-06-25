@@ -70,8 +70,8 @@ impl From<TokenKind> for JsonSyntaxKind {
             TokenKind::True => T![true],
             TokenKind::False => T![false],
             TokenKind::Null => T![null],
-            TokenKind::String => JsonSyntaxKind::JSON_STRING,
-            TokenKind::Number => JsonSyntaxKind::JSON_NUMBER,
+            TokenKind::String => JsonSyntaxKind::JSON_STRING_LITERAL,
+            TokenKind::Number => JsonSyntaxKind::JSON_NUMBER_LITERAL,
             TokenKind::Whitespace => JsonSyntaxKind::WHITESPACE,
             TokenKind::NewLine => JsonSyntaxKind::NEWLINE,
             TokenKind::Error => JsonSyntaxKind::JSON_UNKNOWN,
@@ -91,8 +91,8 @@ impl From<&TokenKind> for JsonSyntaxKind {
             TokenKind::True => T![true],
             TokenKind::False => T![false],
             TokenKind::Null => T![null],
-            TokenKind::String => JsonSyntaxKind::JSON_STRING,
-            TokenKind::Number => JsonSyntaxKind::JSON_NUMBER,
+            TokenKind::String => JsonSyntaxKind::JSON_STRING_LITERAL,
+            TokenKind::Number => JsonSyntaxKind::JSON_NUMBER_LITERAL,
             TokenKind::Whitespace => JsonSyntaxKind::WHITESPACE,
             TokenKind::NewLine => JsonSyntaxKind::NEWLINE,
             TokenKind::Error => JsonSyntaxKind::JSON_UNKNOWN,
@@ -100,6 +100,7 @@ impl From<&TokenKind> for JsonSyntaxKind {
     }
 }
 
+#[derive(Debug)]
 pub struct Lexer<'a> {
     tokens_with_span: Vec<(TokenKind, Span)>,
     source: &'a str,

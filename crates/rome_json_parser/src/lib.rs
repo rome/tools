@@ -8,6 +8,7 @@ pub(crate) mod token_set;
 pub mod token_source;
 
 pub(crate) use parser::Parser;
+pub use parse::parse;
 pub fn parse_json_root() {
     // let parser = rome_js_parser::Parser::new("", 0, SourceType::js_module());
     // let source = "(void b)";

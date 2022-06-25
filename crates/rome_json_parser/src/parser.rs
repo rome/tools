@@ -76,6 +76,7 @@ impl<'s> Parser<'s> {
     /// Creates a new parser that parses the `source`.
     pub fn new(source: &'s str, file_id: usize) -> Parser<'s> {
         let token_source = TokenSource::from_str(source, file_id);
+        println!("{:?}", token_source);
 
         Parser {
             file_id,
@@ -239,11 +240,11 @@ impl<'s> Parser<'s> {
         let range = self.cur_range();
         self.push_token(kind, range.end());
 
-        if self.skipping {
-            // self.tokens.skip_as_trivia();
-        } else {
-            self.tokens.bump();
-        }
+        self.tokens.bump();
+        // if self.skipping {
+        //     // self.tokens.skip_as_trivia();
+        // } else {
+        // }
     }
 
     fn push_token(&mut self, kind: JsonSyntaxKind, end: TextSize) {

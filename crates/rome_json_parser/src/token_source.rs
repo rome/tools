@@ -50,8 +50,9 @@ impl Trivia {
 }
 
 /// Token source for the parser that skips over any non-trivia token.
+#[derive(Debug)]
 pub struct TokenSource<'l> {
-    lexer: Lexer<'l>,
+    pub(crate) lexer: Lexer<'l>,
 
     /// List of the skipped trivia. Needed to construct the CST and compute the non-trivia token offsets.
     pub trivia_list: Vec<Trivia>,
