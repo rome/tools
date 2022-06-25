@@ -265,10 +265,14 @@ impl JsonRoot {
     pub fn as_fields(&self) -> JsonRootFields {
         JsonRootFields {
             json_value: self.json_value(),
+            eof_token: self.eof_token(),
         }
     }
     pub fn json_value(&self) -> SyntaxResult<JsonValue> {
         support::required_node(&self.syntax, 0usize)
+    }
+    pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -283,6 +287,7 @@ impl Serialize for JsonRoot {
 #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonRootFields {
     pub json_value: SyntaxResult<JsonValue>,
+    pub eof_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonString {
@@ -575,6 +580,7 @@ impl std::fmt::Debug for JsonRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsonRoot")
             .field("json_value", &support::DebugSyntaxResult(self.json_value()))
+            .field("eof_token", &support::DebugSyntaxResult(self.eof_token()))
             .finish()
     }
 }

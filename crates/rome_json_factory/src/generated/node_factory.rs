@@ -96,10 +96,13 @@ impl JsonObjectBuilder {
         ))
     }
 }
-pub fn json_root(json_value: JsonValue) -> JsonRoot {
+pub fn json_root(json_value: JsonValue, eof_token: SyntaxToken) -> JsonRoot {
     JsonRoot::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_ROOT,
-        [Some(SyntaxElement::Node(json_value.into_syntax()))],
+        [
+            Some(SyntaxElement::Node(json_value.into_syntax())),
+            Some(SyntaxElement::Token(eof_token)),
+        ],
     ))
 }
 pub fn json_string(json_string_literal_token: SyntaxToken) -> JsonString {
