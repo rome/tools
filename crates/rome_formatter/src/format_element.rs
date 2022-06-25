@@ -2,6 +2,7 @@ use crate::{GroupId, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
+use std::any::{type_name, TypeId};
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -361,29 +362,46 @@ impl Deref for Interned {
     }
 }
 
-#[derive(Clone, PartialEq, Eq)]
-pub struct Label {
-    pub(crate) content: Box<[FormatElement]>,
+#[derive(Eq, PartialEq, Copy, Clone, Debug)]
+pub struct LabelId {
+    id: TypeId,
+    #[cfg(debug_assertions)]
     label: &'static str,
 }
 
+impl LabelId {
+    pub fn of<T: ?Sized + 'static>() -> Self {
+        Self {
+            id: TypeId::of::<T>(),
+            #[cfg(debug_assertions)]
+            label: type_name::<T>(),
+        }
+    }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+pub struct Label {
+    pub(crate) content: Box<[FormatElement]>,
+    label_id: LabelId,
+}
+
 impl Label {
-    pub fn new(label: &'static str, content: Vec<FormatElement>) -> Self {
+    pub fn new(label_id: LabelId, content: Vec<FormatElement>) -> Self {
         Self {
             content: content.into_boxed_slice(),
-            label,
+            label_id,
         }
     }
 
-    pub fn label(&self) -> &'static str {
-        self.label
+    pub fn label_id(&self) -> LabelId {
+        self.label_id
     }
 }
 
 impl Debug for Label {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
         fmt.debug_struct("")
-            .field("label", &self.label)
+            .field("label_id", &self.label_id)
             .field("content", &self.content)
             .finish()
     }

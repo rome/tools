@@ -52,7 +52,9 @@ pub use builders::{
     BestFitting,
 };
 pub use comments::{CommentContext, CommentKind, SourceComment};
-pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
+pub use format_element::{
+    normalize_newlines, FormatElement, LabelId, Token, Verbatim, LINE_TERMINATORS,
+};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
 use rome_rowan::{

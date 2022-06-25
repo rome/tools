@@ -532,14 +532,18 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 ///
 /// ```rust
 /// use rome_formatter::prelude::*;
-/// use rome_formatter::{format, write};
+/// use rome_formatter::{format, write, LabelId};
+///
+/// enum SomeLabelId {}
 ///
 /// #[derive(Default)]
 /// struct Labelled;
 ///
 /// impl Format<SimpleFormatContext> for Labelled {
 ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-///         write!(f, [labelled("some-label", &token("labelled"))])?;
+///         let label_id = LabelId::of::<SomeLabelId>();
+///
+///         write!(f, [labelled(label_id, &token("labelled"))])?;
 ///         Ok(())
 ///     }
 /// }
@@ -547,9 +551,10 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 /// let content = format_with(|f| {
 ///     let mut labelled = Labelled::default().memoized();
 ///     let labelled_content = labelled.inspect(f)?;
+///     let label_id = LabelId::of::<SomeLabelId>();
 ///
 ///     let is_labelled = match labelled_content {
-///         FormatElement::Label(label) => label.label() == "some-label",
+///         FormatElement::Label(labelled) => labelled.label() == label_id,
 ///         _ => false,
 ///     };
 ///
@@ -564,22 +569,19 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 /// assert_eq!("This is labelled", formatted.print().as_code())
 /// ```
 #[inline]
-pub fn labelled<'a, Content, Context>(
-    label: &'static str,
-    content: &'a Content,
-) -> FormatLabelled<'a, Context>
+pub fn labelled<Content, Context>(label_id: LabelId, content: &Content) -> FormatLabelled<Context>
 where
     Content: Format<Context>,
 {
     FormatLabelled {
-        label,
+        label_id,
         content: Argument::new(content),
     }
 }
 
 #[derive(Copy, Clone)]
 pub struct FormatLabelled<'a, Context> {
-    label: &'static str,
+    label_id: LabelId,
     content: Argument<'a, Context>,
 }
 
@@ -590,7 +592,7 @@ impl<Context> Format<Context> for FormatLabelled<'_, Context> {
         buffer.write_fmt(Arguments::from(&self.content))?;
         let content = buffer.into_vec();
 
-        let label = Label::new(self.label, content);
+        let label = Label::new(self.label_id, content);
 
         f.write_element(FormatElement::Label(label))
     }
@@ -599,7 +601,7 @@ impl<Context> Format<Context> for FormatLabelled<'_, Context> {
 impl<Context> std::fmt::Debug for FormatLabelled<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("Label")
-            .field(&self.label)
+            .field(&self.label_id)
             .field(&"{{content}}")
             .finish()
     }
