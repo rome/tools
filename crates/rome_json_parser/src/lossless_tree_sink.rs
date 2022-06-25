@@ -1,8 +1,7 @@
 use crate::token_source::Trivia;
-use crate::ParseDiagnostic;
-use rome_js_factory::JsSyntaxTreeBuilder;
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TextRange, TextSize};
-use rome_parse::TreeSink;
+use rome_json_factory::JsonSyntaxTreeBuilder;
+use rome_json_syntax::{JsonSyntaxElement, JsonSyntaxKind, JsonSyntaxNode, TextRange, TextSize};
+use rome_parse::{ParseDiagnostic, TreeSink};
 use rome_rowan::TriviaPiece;
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.
@@ -16,19 +15,19 @@ pub struct LosslessTreeSink<'a> {
     trivia_pos: usize,
     parents_count: usize,
     errors: Vec<ParseDiagnostic>,
-    inner: JsSyntaxTreeBuilder,
+    inner: JsonSyntaxTreeBuilder,
     /// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
     needs_eof: bool,
     trivia_pieces: Vec<TriviaPiece>,
 }
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
-    type Kind = JsSyntaxKind;
-    fn token(&mut self, kind: JsSyntaxKind, end: TextSize) {
+    type Kind = JsonSyntaxKind;
+    fn token(&mut self, kind: JsonSyntaxKind, end: TextSize) {
         self.do_token(kind, end);
     }
 
-    fn start_node(&mut self, kind: JsSyntaxKind) {
+    fn start_node(&mut self, kind: JsonSyntaxKind) {
         self.inner.start_node(kind);
         self.parents_count += 1;
     }
@@ -37,7 +36,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
         self.parents_count -= 1;
 
         if self.parents_count == 0 && self.needs_eof {
-            self.do_token(JsSyntaxKind::EOF, TextSize::from(self.text.len() as u32));
+            self.do_token(JsonSyntaxKind::EOF, TextSize::from(self.text.len() as u32));
         }
 
         self.inner.finish_node();
@@ -56,7 +55,7 @@ impl<'a> LosslessTreeSink<'a> {
             text_pos: 0.into(),
             trivia_pos: 0,
             parents_count: 0,
-            inner: JsSyntaxTreeBuilder::default(),
+            inner: JsonSyntaxTreeBuilder::default(),
             errors: vec![],
             needs_eof: true,
             trivia_pieces: Vec::with_capacity(128),
@@ -67,13 +66,13 @@ impl<'a> LosslessTreeSink<'a> {
     ///
     /// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
     /// will be appended to its leading trivia.
-    pub fn finish(self) -> (JsSyntaxNode, Vec<ParseDiagnostic>) {
+    pub fn finish(self) -> (JsonSyntaxNode, Vec<ParseDiagnostic>) {
         (self.inner.finish(), self.errors)
     }
 
     #[inline]
-    fn do_token(&mut self, kind: JsSyntaxKind, token_end: TextSize) {
-        if kind == JsSyntaxKind::EOF {
+    fn do_token(&mut self, kind: JsonSyntaxKind, token_end: TextSize) {
+        if kind == JsonSyntaxKind::EOF {
             self.needs_eof = false;
         }
 

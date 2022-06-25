@@ -23,8 +23,8 @@ use rome_rowan::{SyntaxKind, TextSize};
 use crate::event::Event;
 use crate::parse_error::ToDiagnostic;
 use crate::token_set::TokenSet;
+use crate::token_source::{TokenSource, Trivia};
 use crate::*;
-use crate::{TokenSource, Trivia};
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
@@ -337,11 +337,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Bump and add an error event
-    pub fn err_and_bump(
-        &mut self,
-        err: impl ToDiagnostic,
-        unknown_syntax_kind: JsonSyntaxKind,
-    ) {
+    pub fn err_and_bump(&mut self, err: impl ToDiagnostic, unknown_syntax_kind: JsonSyntaxKind) {
         let m = self.start();
         self.bump_any();
         m.complete(self, unknown_syntax_kind);

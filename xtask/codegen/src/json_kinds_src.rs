@@ -4,8 +4,6 @@ pub const JSON_KINDS_SRC: KindsSrc = KindsSrc {
     punct: &[
         (":", "COLON"),
         (",", "COMMA"),
-        ("(", "L_PAREN"),
-        (")", "R_PAREN"),
         ("{", "L_CURLY"),
         ("}", "R_CURLY"),
         ("[", "L_BRACK"),

@@ -127,6 +127,7 @@ impl<'a> Lexer<'a> {
         self.cursor += 1;
         ret
     }
+
     pub fn advance(&mut self) {
         self.cursor += 1;
     }
@@ -156,10 +157,6 @@ impl<'a> Lexer<'a> {
                 TextSize::from(self.source.len() as u32),
             ),
         }
-    }
-
-    pub fn has_preceding_line_break(&self) -> bool {
-        todo!()
     }
 
     pub fn source(&self) -> &'a str {

@@ -93,22 +93,6 @@ use rome_diagnostics::Diagnostic;
 use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
 use rome_rowan::TextSize;
 
-/// An abstraction for syntax tree implementations
-pub trait TreeSink {
-    /// Adds new token to the current branch.
-    fn token(&mut self, kind: JsSyntaxKind, end: TextSize);
-
-    /// Start new branch and make it current.
-    fn start_node(&mut self, kind: JsSyntaxKind);
-
-    /// Finish current branch and restore previous
-    /// branch as current.
-    fn finish_node(&mut self);
-
-    /// Emit errors
-    fn errors(&mut self, errors: Vec<ParseDiagnostic>);
-}
-
 /// A syntax feature that may or may not be supported depending on the file type and parser configuration
 pub(crate) trait SyntaxFeature: Sized {
     /// Returns `true` if the current parsing context supports this syntax feature.

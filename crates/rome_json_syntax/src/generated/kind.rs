@@ -12,8 +12,6 @@ pub enum JsonSyntaxKind {
     EOF,
     COLON,
     COMMA,
-    L_PAREN,
-    R_PAREN,
     L_CURLY,
     R_CURLY,
     L_BRACK,
@@ -45,7 +43,7 @@ use self::JsonSyntaxKind::*;
 impl JsonSyntaxKind {
     pub const fn is_punct(self) -> bool {
         match self {
-            COLON | COMMA | L_PAREN | R_PAREN | L_CURLY | R_CURLY | L_BRACK | R_BRACK => true,
+            COLON | COMMA | L_CURLY | R_CURLY | L_BRACK | R_BRACK => true,
             _ => false,
         }
     }
@@ -74,8 +72,6 @@ impl JsonSyntaxKind {
         let tok = match self {
             COLON => ":",
             COMMA => ",",
-            L_PAREN => "(",
-            R_PAREN => ")",
             L_CURLY => "{",
             R_CURLY => "}",
             L_BRACK => "[",
@@ -91,4 +87,4 @@ impl JsonSyntaxKind {
 }
 #[doc = r" Utility macro for creating a SyntaxKind through simple macro syntax"]
 #[macro_export]
-macro_rules ! T { [:] => { $ crate :: JsonSyntaxKind :: COLON } ; [,] => { $ crate :: JsonSyntaxKind :: COMMA } ; ['('] => { $ crate :: JsonSyntaxKind :: L_PAREN } ; [')'] => { $ crate :: JsonSyntaxKind :: R_PAREN } ; ['{'] => { $ crate :: JsonSyntaxKind :: L_CURLY } ; ['}'] => { $ crate :: JsonSyntaxKind :: R_CURLY } ; ['['] => { $ crate :: JsonSyntaxKind :: L_BRACK } ; [']'] => { $ crate :: JsonSyntaxKind :: R_BRACK } ; [null] => { $ crate :: JsonSyntaxKind :: NULL_KW } ; [true] => { $ crate :: JsonSyntaxKind :: TRUE_KW } ; [false] => { $ crate :: JsonSyntaxKind :: FALSE_KW } ; [ident] => { $ crate :: JsonSyntaxKind :: IDENT } ; [EOF] => { $ crate :: JsonSyntaxKind :: EOF } ; [#] => { $ crate :: JsonSyntaxKind :: HASH } ; }
+macro_rules ! T { [:] => { $ crate :: JsonSyntaxKind :: COLON } ; [,] => { $ crate :: JsonSyntaxKind :: COMMA } ; ['{'] => { $ crate :: JsonSyntaxKind :: L_CURLY } ; ['}'] => { $ crate :: JsonSyntaxKind :: R_CURLY } ; ['['] => { $ crate :: JsonSyntaxKind :: L_BRACK } ; [']'] => { $ crate :: JsonSyntaxKind :: R_BRACK } ; [null] => { $ crate :: JsonSyntaxKind :: NULL_KW } ; [true] => { $ crate :: JsonSyntaxKind :: TRUE_KW } ; [false] => { $ crate :: JsonSyntaxKind :: FALSE_KW } ; [ident] => { $ crate :: JsonSyntaxKind :: IDENT } ; [EOF] => { $ crate :: JsonSyntaxKind :: EOF } ; [#] => { $ crate :: JsonSyntaxKind :: HASH } ; }

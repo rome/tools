@@ -4,8 +4,11 @@ use std::mem;
 use std::num::NonZeroU32;
 
 // use crate::{ParseDiagnostic, Parser, TreeSink};
-use rome_json_syntax::{JsonSyntaxKind::{self, *}, TextSize};
-use rome_parse::{TreeSink, ParseDiagnostic};
+use rome_json_syntax::{
+    JsonSyntaxKind::{self, *},
+    TextSize,
+};
+use rome_parse::{ParseDiagnostic, TreeSink};
 
 /// Events emitted by the Parser, these events are later
 /// made into a syntax tree with `process` into TreeSink.
@@ -45,7 +48,11 @@ impl Event {
 
 /// Generate the syntax tree with the control of events.
 #[inline]
-pub fn process(sink: &mut impl TreeSink<Kind = JsonSyntaxKind>, mut events: Vec<Event>, errors: Vec<ParseDiagnostic>) {
+pub fn process(
+    sink: &mut impl TreeSink<Kind = JsonSyntaxKind>,
+    mut events: Vec<Event>,
+    errors: Vec<ParseDiagnostic>,
+) {
     sink.errors(errors);
     let mut forward_parents = Vec::new();
 

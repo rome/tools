@@ -1498,6 +1498,7 @@ dependencies = [
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_syntax",
+ "rome_parse",
  "rome_rowan",
  "smallvec",
  "tests_macros",
@@ -1540,7 +1541,9 @@ dependencies = [
  "drop_bomb",
  "logos",
  "rome_diagnostics",
+ "rome_json_factory",
  "rome_json_syntax",
+ "rome_parse",
  "rome_rowan",
 ]
 
@@ -1585,6 +1588,14 @@ dependencies = [
  "proc-macro-error",
  "proc-macro2",
  "quote",
+]
+
+[[package]]
+name = "rome_parse"
+version = "0.1.0"
+dependencies = [
+ "rome_diagnostics",
+ "rome_rowan",
 ]
 
 [[package]]

@@ -6,8 +6,9 @@ use std::num::NonZeroU32;
 use crate::lexer::TextSize;
 use crate::parser::rewrite_parser::{RewriteParser, RewriteToken};
 use crate::parser::Checkpoint;
-use crate::{ParseDiagnostic, Parser, TreeSink};
+use crate::{ParseDiagnostic, Parser};
 use rome_js_syntax::JsSyntaxKind::{self, *};
+use rome_parse::TreeSink;
 
 /// Events emitted by the Parser, these events are later
 /// made into a syntax tree with `process` into TreeSink.
@@ -47,7 +48,11 @@ impl Event {
 
 /// Generate the syntax tree with the control of events.
 #[inline]
-pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<ParseDiagnostic>) {
+pub fn process(
+    sink: &mut impl TreeSink<Kind = JsSyntaxKind>,
+    mut events: Vec<Event>,
+    errors: Vec<ParseDiagnostic>,
+) {
     sink.errors(errors);
     let mut forward_parents = Vec::new();
 
@@ -107,6 +112,7 @@ struct RewriteParseEventsTreeSink<'r, 'p, T> {
 }
 
 impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
+    type Kind = JsSyntaxKind;
     fn token(&mut self, kind: JsSyntaxKind, end: TextSize) {
         self.reparse
             .token(RewriteToken::new(kind, end), &mut self.parser);
