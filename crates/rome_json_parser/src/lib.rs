@@ -1,4 +1,4 @@
-mod lexer;
+pub mod lexer;
 pub fn parse_json_root() {
     // let parser = rome_js_parser::Parser::new("", 0, SourceType::js_module());
     // let source = "(void b)";
@@ -111,19 +111,6 @@ pub struct TokenSource<'l> {
 
     /// List of the skipped trivia. Needed to construct the CST and compute the non-trivia token offsets.
     pub trivia_list: Vec<Trivia>,
-
-    /// Cache for the non-trivia token lookahead. For example for the source `let a = 10;` if the
-    /// [TokenSource]'s currently positioned at the start of the file (`let`). The `nth(2)` non-trivia token,
-    /// as returned by the [TokenSource], is the `=` token but retrieving it requires skipping over the
-    /// two whitespace trivia tokens (first between `let` and `a`, second between `a` and `=`).
-    /// The [TokenSource] state then is:
-    ///
-    /// * `non_trivia_lookahead`: [IDENT: 'a', EQ]
-    /// * `lookahead_offset`: 4 (the `=` is the 4th token after the `let` keyword)
-    non_trivia_lookahead: VecDeque<Lookahead>,
-
-    /// Offset of the last cached lookahead token from the current [BufferedLexer] token.
-    lookahead_offset: usize,
 }
 
 #[derive(Debug, Copy, Clone)]
@@ -138,8 +125,6 @@ impl<'l> TokenSource<'l> {
         TokenSource {
             lexer,
             trivia_list: vec![],
-            lookahead_offset: 0,
-            non_trivia_lookahead: VecDeque::new(),
         }
     }
 
@@ -153,16 +138,12 @@ impl<'l> TokenSource<'l> {
     }
 
     #[inline]
-    fn next_non_trivia_token(&mut self, first_token: bool) {
-        let mut processed_tokens = 0;
+    pub fn next_non_trivia_token(&mut self, first_token: bool) {
         let mut trailing = !first_token;
 
-        // Drop the last cached lookahead, we're now moving past it
-        self.non_trivia_lookahead.pop_front();
 
         loop {
-            let kind = self.lexer.next_token();
-            processed_tokens += 1;
+            let kind = self.lexer.current_token();
 
             let trivia_kind = TriviaPieceKind::try_from(kind);
 
@@ -178,18 +159,15 @@ impl<'l> TokenSource<'l> {
                         .push(Trivia::new(trivia_kind, current_range, trailing));
                 }
             }
+            self.lexer.advance();
         }
 
-        if self.lookahead_offset != 0 {
-            debug_assert!(self.lookahead_offset >= processed_tokens);
-            self.lookahead_offset -= processed_tokens;
-        }
     }
 
     /// Returns the kind of the current non-trivia token
     #[inline(always)]
     pub fn current(&mut self) -> JsonSyntaxKind {
-        self.lexer.current()
+        self.lexer.current_token()
     }
 
     /// Returns the range of the current non-trivia token
@@ -303,6 +281,10 @@ impl<'l> TokenSource<'l> {
 
             self.next_non_trivia_token(false);
         }
+    }
+
+    pub fn advance(&mut self) {
+        self.lexer.advance();
     }
 
     /// Skips the current token as skipped token trivia
