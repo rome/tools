@@ -145,7 +145,7 @@ impl<'a> Lexer<'a> {
         self.tokens_with_span.get(self.cursor)
     }
 
-    pub fn current_range(&mut self) -> TextRange {
+    pub fn current_range(&self) -> TextRange {
         match self.current() {
             Some((_, range)) => TextRange::new(
                 TextSize::from(range.start as u32),

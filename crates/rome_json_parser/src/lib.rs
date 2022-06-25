@@ -1,4 +1,9 @@
 pub mod lexer;
+pub(crate) mod parser;
+pub(crate) mod event;
+pub(crate) mod token_set;
+pub (crate) mod parse_error;
+
 pub fn parse_json_root() {
     // let parser = rome_js_parser::Parser::new("", 0, SourceType::js_module());
     // let source = "(void b)";
@@ -166,13 +171,13 @@ impl<'l> TokenSource<'l> {
 
     /// Returns the kind of the current non-trivia token
     #[inline(always)]
-    pub fn current(&mut self) -> JsonSyntaxKind {
+    pub fn current(&self) -> JsonSyntaxKind {
         self.lexer.current_token()
     }
 
     /// Returns the range of the current non-trivia token
     #[inline(always)]
-    pub fn current_range(&mut self) -> TextRange {
+    pub fn current_range(&self) -> TextRange {
         self.lexer.current_range()
     }
 
@@ -321,7 +326,7 @@ impl<'l> TokenSource<'l> {
 
     /// Returns the byte offset of the current token from the start of the source document
     #[inline(always)]
-    pub fn position(&mut self) -> TextSize {
+    pub fn position(&self) -> TextSize {
         self.current_range().start()
     }
 
