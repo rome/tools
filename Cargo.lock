@@ -1547,6 +1547,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_parse"
+version = "0.1.0"
+dependencies = [
+ "rome_diagnostics",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_playground"
 version = "0.0.0"
 dependencies = [
