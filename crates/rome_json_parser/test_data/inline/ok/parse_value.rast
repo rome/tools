@@ -1,0 +1,31 @@
+JsonRoot {
+    json_value: JsonObject {
+        l_curly_token: L_CURLY@0..1 "{" [] [],
+        json_member_list: JsonMemberList [
+            JsonMember {
+                key: JsonString {
+                    json_string_literal_token: JSON_STRING_LITERAL@1..7 "\"test\"" [] [],
+                },
+                colon_token: COLON@7..9 ":" [] [Whitespace(" ")],
+                value: JsonNumber {
+                    json_number_literal_token: JSON_NUMBER_LITERAL@9..11 "20" [] [],
+                },
+            },
+        ],
+        r_curly_token: R_CURLY@11..12 "}" [] [],
+    },
+    eof_token: EOF@12..13 "" [Newline("\n")] [],
+}
+
+0: JSON_ROOT@0..13
+  0: JSON_OBJECT@0..12
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_MEMBER_LIST@1..11
+      0: JSON_MEMBER@1..11
+        0: JSON_STRING@1..7
+          0: JSON_STRING_LITERAL@1..7 "\"test\"" [] []
+        1: COLON@7..9 ":" [] [Whitespace(" ")]
+        2: JSON_NUMBER@9..11
+          0: JSON_NUMBER_LITERAL@9..11 "20" [] []
+    2: R_CURLY@11..12 "}" [] []
+  1: EOF@12..13 "" [Newline("\n")] []

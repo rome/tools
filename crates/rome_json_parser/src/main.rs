@@ -4,8 +4,8 @@ use std::time::Instant;
 // use rome_js_parser::{LexContext, Parser, SourceType};
 // use rome_js_syntax::T;
 use rome_json_parser::lexer::Lexer;
+use rome_json_parser::parse;
 use rome_json_parser::token_source::TokenSource;
-use rome_json_parser::{parse, parse_json_root};
 use rome_json_syntax::JsonSyntaxKind;
 fn main() {
     let text = r#" ["test", {"test": 2 }] "#;

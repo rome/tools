@@ -24,7 +24,7 @@ logos = "0.12.0"
 # tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 
 [dev-dependencies]
-# tests_macros = { path = "../tests_macros" }
-# expect-test = "1.2.2"
+tests_macros = { path = "../tests_macros" }
+expect-test = "1.2.2"
 # quickcheck = "1.0.3"
 # quickcheck_macros = "1.0.0"

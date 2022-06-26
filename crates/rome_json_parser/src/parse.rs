@@ -41,7 +41,7 @@ impl<T> Parse<T> {
 
     /// The syntax node represented by this Parse result
     ///
-    /// ```
+    /// ```ignore
     /// use rome_js_parser::parse_script;
     /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
     /// use rome_rowan::{AstNode, AstNodeList};
@@ -141,7 +141,7 @@ fn parse_root(p: &mut Parser) -> CompletedMarker {
     }
 }
 
-// test json value_parse
+// test json parse_value
 // {"test": 20}
 fn parse_value(p: &mut Parser) -> CompletedMarker {
     match p.cur() {

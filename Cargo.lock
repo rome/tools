@@ -1539,12 +1539,14 @@ name = "rome_json_parser"
 version = "0.1.0"
 dependencies = [
  "drop_bomb",
+ "expect-test",
  "logos",
  "rome_diagnostics",
  "rome_json_factory",
  "rome_json_syntax",
  "rome_parse",
  "rome_rowan",
+ "tests_macros",
 ]
 
 [[package]]

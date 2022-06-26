@@ -10,6 +10,7 @@
 // pub(crate) mod single_token_parse_recovery;
 
 use drop_bomb::DebugDropBomb;
+use rome_diagnostics::Diagnostic;
 use rome_json_syntax::{JsonSyntaxKind, TextRange};
 use rome_parse::ParseDiagnostic;
 use std::num::NonZeroU32;
