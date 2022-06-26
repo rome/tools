@@ -132,15 +132,40 @@ JsonRoot {
     2: R_BRACK@58..60 "]" [Newline("\n")] []
   1: EOF@60..61 "" [Newline("\n")] []
 --
-array.json: note[,]: Unexpected trailing comma
+error[SyntaxError]: SyntaxError
+  ┌─ array.json:4:10
+  │
+4 │   [1,null,],
+  │          ^ Unexpected trailing comma
+
 --
-array.json: note[,]: Unexpected trailing comma
+error[SyntaxError]: SyntaxError
+  ┌─ array.json:5:8
+  │
+5 │   [null,],
+  │        ^ Unexpected trailing comma
+
 --
-array.json: note[,]: Unexpected trailing comma
+error[SyntaxError]: SyntaxError
+  ┌─ array.json:6:5
+  │
+6 │   [0,],
+  │     ^ Unexpected trailing comma
+
 --
-array.json: note[,]: Unexpected trailing comma
+error[SyntaxError]: SyntaxError
+  ┌─ array.json:7:9
+  │
+7 │   [false,],
+  │         ^ Unexpected trailing comma
+
 --
-array.json: note[,]: Unexpected trailing comma
+error[SyntaxError]: SyntaxError
+  ┌─ array.json:7:11
+  │
+7 │   [false,],
+  │           ^ Unexpected trailing comma
+
 --
 [
   [

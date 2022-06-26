@@ -34,6 +34,11 @@ JsonRoot {
     2: R_CURLY@13..14 "}" [] []
   1: EOF@14..15 "" [Newline("\n")] []
 --
-parse_value.json: note[,]: Unexpected trailing comma
+error[SyntaxError]: SyntaxError
+  ┌─ parse_value.json:1:12
+  │
+1 │ {"test": 20, }
+  │            ^ Unexpected trailing comma
+
 --
 {"test": 20, }

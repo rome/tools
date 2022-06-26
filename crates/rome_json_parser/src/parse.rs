@@ -346,10 +346,12 @@ impl UnexpectedTrailingComma {
 
 impl ToDiagnostic for UnexpectedTrailingComma {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic {
-        Diagnostic::note(
-            p.file_id(),
-            p.source(self.range),
-            "Unexpected trailing comma",
-        )
+        p.err_builder(&format!("SyntaxError",))
+            .primary(self.range, "Unexpected trailing comma")
+        // Diagnostic::note(
+        //     p.file_id(),
+        //     p.source(self.range),
+        //     "",
+        // )
     }
 }
