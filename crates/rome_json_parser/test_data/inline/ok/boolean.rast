@@ -2,10 +2,10 @@ JsonRoot {
     json_value: JsonBoolean {
         value_token: TRUE_KW@0..4 "true" [] [],
     },
-    eof_token: EOF@4..5 "\n" [] [],
+    eof_token: EOF@4..5 "" [Newline("\n")] [],
 }
 
 0: JSON_ROOT@0..5
   0: JSON_BOOLEAN@0..4
     0: TRUE_KW@0..4 "true" [] []
-  1: EOF@4..5 "\n" [] []
+  1: EOF@4..5 "" [Newline("\n")] []

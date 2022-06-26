@@ -96,12 +96,15 @@ impl<'s> Parser<'s> {
         (self.events, trivia, self.diagnostics)
     }
 
-    /// Gets the current token kind of the parser
+    /// Gets the current none trivia token kind of the parser
     #[inline]
     pub fn cur(&self) -> JsonSyntaxKind {
         self.tokens.current()
     }
 
+    pub fn has_un_consume_trivia(&self) -> bool {
+        self.tokens.has_un_consume_trivia()
+    }
     pub fn file_id(&self) -> usize {
         self.file_id
     }

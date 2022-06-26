@@ -2,10 +2,10 @@ JsonRoot {
     json_value: JsonNumber {
         json_number_literal_token: JSON_NUMBER_LITERAL@0..12 "20000000.000" [] [],
     },
-    eof_token: EOF@12..13 "\n" [] [],
+    eof_token: EOF@12..13 "" [Newline("\n")] [],
 }
 
 0: JSON_ROOT@0..13
   0: JSON_NUMBER@0..12
     0: JSON_NUMBER_LITERAL@0..12 "20000000.000" [] []
-  1: EOF@12..13 "\n" [] []
+  1: EOF@12..13 "" [Newline("\n")] []

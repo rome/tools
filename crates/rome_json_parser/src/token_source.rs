@@ -78,6 +78,17 @@ impl<'l> TokenSource<'l> {
         source
     }
 
+    // All tokens length, including trivia.
+    pub fn token_length(&self) -> usize {
+        self.lexer.len()
+    }
+
+    pub fn has_un_consume_trivia(&self) -> bool {
+        dbg!(&self.lexer.current_none_trivia_cursor());
+        dbg!(&self.token_length());
+        self.lexer.current_none_trivia_cursor() < self.token_length()
+    }
+
     #[inline]
     pub fn next_non_trivia_token(&mut self, first_token: bool) {
         let mut trailing = !first_token;
@@ -90,6 +101,7 @@ impl<'l> TokenSource<'l> {
                 self.lexer.next_none_trivia_cursor(),
             )
         };
+        println!("{}, {}", left, right);
         for i in left..right {
             let (kind, range) = self.lexer.token_at(i);
             match TriviaPieceKind::try_from(kind) {
@@ -102,7 +114,7 @@ impl<'l> TokenSource<'l> {
                 }
                 Err(_) => {
                     panic!("Unexpected token kind: {:?}", kind);
-                },
+                }
             }
             // self.lexer.advance();
         }
@@ -233,12 +245,18 @@ impl<'l> TokenSource<'l> {
     /// Bumps the current token and moves the parser to the next non-trivia token
     #[inline(always)]
     pub fn bump(&mut self) {
+        dbg!(&self.lexer.current_none_trivia_cursor());
+        dbg!(&self.current());
         if self.current() != JsonSyntaxKind::EOF {
             // if !context.is_regular() {
             //     self.lookahead_offset = 0;
             //     self.non_trivia_lookahead.clear();
             // }
+            self.next_non_trivia_token(false);
             self.lexer.advance();
+        } else if self.lexer.current_none_trivia_cursor() < self.token_length() {
+            // If current token is EOF, but there are still some trivia has not been consumed,
+            // we need to call next_non_trivia_token to consume the trivia.
             self.next_non_trivia_token(false);
         }
     }

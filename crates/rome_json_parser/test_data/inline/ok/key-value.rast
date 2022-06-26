@@ -4,7 +4,7 @@ JsonRoot {
         json_member_list: JsonMemberList [
             JsonMember {
                 key: JsonString {
-                    json_string_literal_token: JSON_STRING_LITERAL@1..14 "\n    \"string\"" [] [],
+                    json_string_literal_token: JSON_STRING_LITERAL@1..14 "\"string\"" [Newline("\n"), Whitespace("    ")] [],
                 },
                 colon_token: COLON@14..16 ":" [] [Whitespace(" ")],
                 value: JsonString {
@@ -43,7 +43,7 @@ JsonRoot {
     1: JSON_MEMBER_LIST@1..324
       0: JSON_MEMBER@1..108
         0: JSON_STRING@1..14
-          0: JSON_STRING_LITERAL@1..14 "\n    \"string\"" [] []
+          0: JSON_STRING_LITERAL@1..14 "\"string\"" [Newline("\n"), Whitespace("    ")] []
         1: COLON@14..16 ":" [] [Whitespace(" ")]
         2: JSON_STRING@16..108
           0: JSON_STRING_LITERAL@16..108 "\"stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring\"" [] []

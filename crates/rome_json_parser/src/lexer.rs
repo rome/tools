@@ -127,6 +127,7 @@ impl<'a> Lexer<'a> {
                 non_trivia_index_list.push(i);
             }
         }
+        dbg!(&tokens_with_span);
         Self {
             tokens_with_span,
             source,
@@ -147,6 +148,10 @@ impl<'a> Lexer<'a> {
         }
     }
 
+    #[inline]
+    pub fn len(&self) -> usize {
+        self.tokens_with_span.len()
+    }
     pub fn advance(&mut self) {
         self.none_trivia_cursor += 1;
     }

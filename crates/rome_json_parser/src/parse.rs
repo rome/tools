@@ -113,8 +113,9 @@ impl<T: AstNode<Language = JsonLanguage>> Parse<T> {
 }
 
 pub fn parse(text: &str, file_id: usize) -> Parse<JsonRoot> {
-    let (events, errors, tokens) = parse_common(text, file_id);
-    let mut tree_sink = LosslessTreeSink::new(text, &tokens);
+    let (events, errors, trivia_list) = parse_common(text, file_id);
+    println!("{:?}", trivia_list);
+    let mut tree_sink = LosslessTreeSink::new(text, &trivia_list);
     crate::event::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
     Parse::new(green, parse_errors)
@@ -137,15 +138,18 @@ pub fn parse_common(text: &str, file_id: usize) -> (Vec<Event>, Vec<ParseDiagnos
 fn parse_root(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     parse_value(p);
-    match p.cur() {
-        JsonSyntaxKind::EOF => marker.complete(p, JsonSyntaxKind::JSON_ROOT),
-        _ => {
-            p.error(expected_node("EOF", p.cur_range()));
-            while !p.at(JsonSyntaxKind::EOF) {
-                p.bump_any();
-            }
-            marker.complete(p, JsonSyntaxKind::JSON_UNKNOWN)
+    if p.at(JsonSyntaxKind::EOF) {
+        if p.has_un_consume_trivia() {
+            p.tokens.next_non_trivia_token(false);
         }
+        dbg!(&p.tokens.trivia_list);
+        marker.complete(p, JsonSyntaxKind::JSON_ROOT)
+    } else {
+        p.error(expected_node("EOF", p.cur_range()));
+        while !p.at(JsonSyntaxKind::EOF) {
+            p.bump_any();
+        }
+        marker.complete(p, JsonSyntaxKind::JSON_UNKNOWN)
     }
 }
 
@@ -239,6 +243,7 @@ fn parse_string(p: &mut Parser) -> CompletedMarker {
 fn parse_boolean(p: &mut Parser) -> CompletedMarker {
     assert!(p.at(T![true]) || p.at(T![false]));
     let marker = p.start();
+    println!("fuck bump");
     p.bump_any();
     marker.complete(p, JsonSyntaxKind::JSON_BOOLEAN)
 }
