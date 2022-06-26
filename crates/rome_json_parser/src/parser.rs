@@ -21,7 +21,7 @@ use rome_rowan::{SyntaxKind, TextSize};
 
 // pub(crate) use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::event::Event;
-use crate::parse_error::ToDiagnostic;
+use crate::parse_error::{ToDiagnostic, expected_token};
 use crate::token_set::TokenSet;
 use crate::token_source::{TokenSource, Trivia};
 use crate::*;
@@ -100,6 +100,9 @@ impl<'s> Parser<'s> {
         self.tokens.current()
     }
 
+    pub fn file_id(&self) -> usize {
+        self.file_id
+    }
     /// Gets the range of the current token
     #[inline]
     pub fn cur_range(&self) -> TextRange {
@@ -112,11 +115,11 @@ impl<'s> Parser<'s> {
         self.cur() == kind
     }
 
-    // /// Look ahead at a token and get its kind.
-    // #[inline]
-    // pub fn nth(&mut self, n: usize) -> JsonSyntaxKind {
-    //     self.tokens.nth(n)
-    // }
+    /// Look ahead at a token and get its kind.
+    #[inline]
+    pub fn nth(&mut self, n: usize) -> JsonSyntaxKind {
+        self.tokens.nth(n)
+    }
 
     // /// Checks if a token lookahead is something
     // #[inline]
@@ -265,8 +268,7 @@ impl<'s> Parser<'s> {
         if self.eat(kind) {
             true
         } else {
-            // TODO: handle this
-            // self.error(expected_token(kind));
+            self.error(expected_token(kind));
             false
         }
     }

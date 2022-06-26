@@ -129,6 +129,14 @@ impl<'a> Lexer<'a> {
         ret
     }
 
+    pub fn nth(&self, n: usize) -> JsonSyntaxKind {
+        let cursor = self.cursor + n;
+        match self.tokens_with_span.get(cursor) {
+            Some((kind, _)) => kind.into(),
+            None => JsonSyntaxKind::EOF,
+        }
+    }
+
     pub fn advance(&mut self) {
         self.cursor += 1;
     }

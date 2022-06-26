@@ -1,16 +1,17 @@
 use std::marker::PhantomData;
 
 use rome_diagnostics::{Diagnostic, Severity};
-use rome_json_syntax::{JsonSyntaxKind, T, JsonSyntaxNode, JsonLanguage, JsonRoot};
+use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxKind, JsonSyntaxNode, TextRange, T};
 use rome_parse::ParseDiagnostic;
 use rome_rowan::AstNode;
 
 use crate::{
     event::Event,
-    parse_error::{expected_any, expected_node},
+    lossless_tree_sink::LosslessTreeSink,
+    parse_error::{expected_any, expected_node, expected_token, ToDiagnostic},
     parser::CompletedMarker,
     token_source::Trivia,
-    Parser, lossless_tree_sink::LosslessTreeSink,
+    Parser,
 };
 
 /// A utility struct for managing the result of a parser job
@@ -129,9 +130,7 @@ fn parse_root(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     parse_value(p);
     match p.cur() {
-        JsonSyntaxKind::EOF => {
-            marker.complete(p, JsonSyntaxKind::JSON_ROOT)
-        },
+        JsonSyntaxKind::EOF => marker.complete(p, JsonSyntaxKind::JSON_ROOT),
         _ => {
             p.error(expected_node("EOF", p.cur_range()));
             while !p.at(JsonSyntaxKind::EOF) {
@@ -165,7 +164,7 @@ fn parse_value(p: &mut Parser) -> CompletedMarker {
             );
         }
         JsonSyntaxKind::L_CURLY => {
-            parse_object(p);
+            return parse_object(p);
         }
         JsonSyntaxKind::R_CURLY => {
             // TODO: Recover
@@ -175,7 +174,7 @@ fn parse_value(p: &mut Parser) -> CompletedMarker {
             );
         }
         JsonSyntaxKind::L_BRACK => {
-            parse_array(p);
+            return parse_array(p);
         }
         JsonSyntaxKind::R_BRACK => {
             // TODO: Recover
@@ -241,5 +240,45 @@ fn parse_object(p: &mut Parser) -> CompletedMarker {
 }
 
 fn parse_array(p: &mut Parser) -> CompletedMarker {
-    todo!()
+    let marker = p.start();
+    if !p.expect(T!['[']) {
+        // TODO: return [Absent]
+        p.error(expected_token(T!['[']));
+        return marker.complete(p, JsonSyntaxKind::JSON_ARRAY);
+    }
+    if !p.at(T![']']) {
+        parse_array_element_list(p);
+    }
+    p.bump(T![']']);
+    marker.complete(p, JsonSyntaxKind::JSON_ARRAY)
+}
+
+fn parse_array_element_list(p: &mut Parser) -> CompletedMarker {
+    let marker = p.start();
+    parse_value(p);
+    while !p.at(T![']']) {
+        if p.at(T![,]) && p.nth(1) == T![']'] {
+            p.error(UnexpectedTrailingComma::new(p.cur_range()));
+            p.bump(T![,]);
+            break;
+        }
+        p.expect(T![,]);
+        parse_value(p);
+    }
+    marker.complete(p, JsonSyntaxKind::JSON_ARRAY_ELEMENT_LIST)
+}
+
+struct UnexpectedTrailingComma {
+    range: TextRange,
+}
+
+impl UnexpectedTrailingComma {
+    fn new(range: TextRange) -> Self { Self { range } }
+}
+
+
+impl ToDiagnostic for UnexpectedTrailingComma {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+        Diagnostic::help(p.file_id(), p.source(self.range), "Unexpected trailing comma")
+    }
 }

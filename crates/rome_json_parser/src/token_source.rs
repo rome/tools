@@ -117,14 +117,10 @@ impl<'l> TokenSource<'l> {
     }
 
     /// Gets the kind of the nth non-trivia token
-    // #[inline(always)]
-    // pub fn nth(&mut self, n: usize) -> JsonSyntaxKind {
-    //     if n == 0 {
-    //         self.current()
-    //     } else {
-    //         self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
-    //     }
-    // }
+    #[inline(always)]
+    pub fn nth(&mut self, n: usize) -> JsonSyntaxKind {
+        self.lexer.nth(n)
+    }
 
     /// Returns true if the current token is preceded by a line break
     #[inline(always)]
