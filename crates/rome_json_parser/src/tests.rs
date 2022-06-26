@@ -99,6 +99,15 @@ mod parser {
     }
 }
 
+mod prettier {
+    mod ok {
+        tests_macros::gen_tests! {"test_data/prettier/ok/**/*.{json}", crate::tests::run_and_expect_no_errors, ""}
+    }
+    mod err {
+        tests_macros::gen_tests! {"test_data/prettier/err/**/*.{json}", crate::tests::run_and_expect_errors, ""}
+    }
+}
+
 fn assert_errors_are_present(program: &Parse<JsonRoot>, path: &Path) {
     assert!(
         !program.diagnostics().is_empty(),

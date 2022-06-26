@@ -1,0 +1,851 @@
+JsonRoot {
+    json_value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonString {
+                json_string_literal_token: JSON_STRING_LITERAL@1..29 "\"JSON Test Pattern pass1\"" [Newline("\n"), Whitespace("  ")] [],
+            },
+            COMMA@29..30 "," [] [],
+            JsonObject {
+                l_curly_token: L_CURLY@30..34 "{" [Newline("\n"), Whitespace("  ")] [],
+                json_member_list: JsonMemberList [
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@34..56 "\"object with 1 member\"" [] [],
+                        },
+                        colon_token: COLON@56..57 ":" [] [],
+                        value: JsonArray {
+                            l_brack_token: L_BRACK@57..58 "[" [] [],
+                            elements: JsonArrayElementList [
+                                JsonString {
+                                    json_string_literal_token: JSON_STRING_LITERAL@58..80 "\"array with 1 element\"" [] [],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@80..81 "]" [] [],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@81..82 "}" [] [],
+            },
+            COMMA@82..83 "," [] [],
+            JsonObject {
+                l_curly_token: L_CURLY@83..87 "{" [Newline("\n"), Whitespace("  ")] [],
+                json_member_list: JsonMemberList [],
+                r_curly_token: R_CURLY@87..88 "}" [] [],
+            },
+            COMMA@88..89 "," [] [],
+            JsonArray {
+                l_brack_token: L_BRACK@89..93 "[" [Newline("\n"), Whitespace("  ")] [],
+                elements: JsonArrayElementList [],
+                r_brack_token: R_BRACK@93..94 "]" [] [],
+            },
+            COMMA@94..95 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@95..101 "-42" [Newline("\n"), Whitespace("  ")] [],
+            },
+            COMMA@101..102 "," [] [],
+            JsonBoolean {
+                value_token: TRUE_KW@102..109 "true" [Newline("\n"), Whitespace("  ")] [],
+            },
+            COMMA@109..110 "," [] [],
+            JsonBoolean {
+                value_token: FALSE_KW@110..118 "false" [Newline("\n"), Whitespace("  ")] [],
+            },
+            COMMA@118..119 "," [] [],
+            JsonNull {
+                null_token: NULL_KW@119..126 "null" [Newline("\n"), Whitespace("  ")] [],
+            },
+            COMMA@126..127 "," [] [],
+            JsonObject {
+                l_curly_token: L_CURLY@127..131 "{" [Newline("\n"), Whitespace("  ")] [],
+                json_member_list: JsonMemberList [
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@131..147 "\"integer\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@147..149 ":" [] [Whitespace(" ")],
+                        value: JsonNumber {
+                            json_number_literal_token: JSON_NUMBER_LITERAL@149..159 "1234567890" [] [],
+                        },
+                    },
+                    COMMA@159..160 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@160..173 "\"real\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@173..175 ":" [] [Whitespace(" ")],
+                        value: JsonNumber {
+                            json_number_literal_token: JSON_NUMBER_LITERAL@175..187 "-9876.543210" [] [],
+                        },
+                    },
+                    COMMA@187..188 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@188..198 "\"e\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@198..200 ":" [] [Whitespace(" ")],
+                        value: JsonNumber {
+                            json_number_literal_token: JSON_NUMBER_LITERAL@200..215 "0.123456789e-12" [] [],
+                        },
+                    },
+                    COMMA@215..216 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@216..226 "\"E\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@226..228 ":" [] [Whitespace(" ")],
+                        value: JsonNumber {
+                            json_number_literal_token: JSON_NUMBER_LITERAL@228..243 "1.234567890E+34" [] [],
+                        },
+                    },
+                    COMMA@243..244 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@244..253 "\"\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@253..256 ":" [] [Whitespace("  ")],
+                        value: JsonNumber {
+                            json_number_literal_token: JSON_NUMBER_LITERAL@256..270 "23456789012E66" [] [],
+                        },
+                    },
+                    COMMA@270..271 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@271..284 "\"zero\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@284..286 ":" [] [Whitespace(" ")],
+                        value: JsonNumber {
+                            json_number_literal_token: JSON_NUMBER_LITERAL@286..287 "0" [] [],
+                        },
+                    },
+                    COMMA@287..288 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@288..300 "\"one\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@300..302 ":" [] [Whitespace(" ")],
+                        value: JsonNumber {
+                            json_number_literal_token: JSON_NUMBER_LITERAL@302..303 "1" [] [],
+                        },
+                    },
+                    COMMA@303..304 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@304..318 "\"space\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@318..320 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@320..323 "\" \"" [] [],
+                        },
+                    },
+                    COMMA@323..324 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@324..338 "\"quote\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@338..340 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@340..344 "\"\\\"\"" [] [],
+                        },
+                    },
+                    COMMA@344..345 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@345..363 "\"backslash\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@363..365 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@365..369 "\"\\\\\"" [] [],
+                        },
+                    },
+                    COMMA@369..370 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@370..387 "\"controls\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@387..389 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@389..401 "\"\\b\\f\\n\\r\\t\"" [] [],
+                        },
+                    },
+                    COMMA@401..402 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@402..416 "\"slash\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@416..418 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@418..426 "\"/ & \\/\"" [] [],
+                        },
+                    },
+                    COMMA@426..427 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@427..441 "\"alpha\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@441..443 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@443..470 "\"abcdefghijklmnopqrstuvwyz\"" [] [],
+                        },
+                    },
+                    COMMA@470..471 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@471..485 "\"ALPHA\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@485..487 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@487..514 "\"ABCDEFGHIJKLMNOPQRSTUVWYZ\"" [] [],
+                        },
+                    },
+                    COMMA@514..515 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@515..529 "\"digit\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@529..531 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@531..543 "\"0123456789\"" [] [],
+                        },
+                    },
+                    COMMA@543..544 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@544..563 "\"0123456789\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@563..565 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@565..572 "\"digit\"" [] [],
+                        },
+                    },
+                    COMMA@572..573 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@573..589 "\"special\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@589..591 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@591..624 "\"`1~!@#$%^&*()_+-={':[,]}|;.</>?\"" [] [],
+                        },
+                    },
+                    COMMA@624..625 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@625..637 "\"hex\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@637..639 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@639..677 "\"\\u0123\\u4567\\u89AB\\uCDEF\\uabcd\\uef4A\"" [] [],
+                        },
+                    },
+                    COMMA@677..678 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@678..691 "\"true\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@691..693 ":" [] [Whitespace(" ")],
+                        value: JsonBoolean {
+                            value_token: TRUE_KW@693..697 "true" [] [],
+                        },
+                    },
+                    COMMA@697..698 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@698..712 "\"false\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@712..714 ":" [] [Whitespace(" ")],
+                        value: JsonBoolean {
+                            value_token: FALSE_KW@714..719 "false" [] [],
+                        },
+                    },
+                    COMMA@719..720 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@720..733 "\"null\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@733..735 ":" [] [Whitespace(" ")],
+                        value: JsonNull {
+                            null_token: NULL_KW@735..739 "null" [] [],
+                        },
+                    },
+                    COMMA@739..740 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@740..754 "\"array\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@754..755 ":" [] [],
+                        value: JsonArray {
+                            l_brack_token: L_BRACK@755..758 "[" [] [Whitespace("  ")],
+                            elements: JsonArrayElementList [],
+                            r_brack_token: R_BRACK@758..759 "]" [] [],
+                        },
+                    },
+                    COMMA@759..760 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@760..775 "\"object\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@775..776 ":" [] [],
+                        value: JsonObject {
+                            l_curly_token: L_CURLY@776..779 "{" [] [Whitespace("  ")],
+                            json_member_list: JsonMemberList [],
+                            r_curly_token: R_CURLY@779..780 "}" [] [],
+                        },
+                    },
+                    COMMA@780..781 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@781..797 "\"address\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@797..799 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@799..820 "\"50 St. James Street\"" [] [],
+                        },
+                    },
+                    COMMA@820..821 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@821..833 "\"url\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@833..835 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@835..857 "\"http://www.JSON.org/\"" [] [],
+                        },
+                    },
+                    COMMA@857..858 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@858..874 "\"comment\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@874..876 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@876..891 "\"// /* <!-- --\"" [] [],
+                        },
+                    },
+                    COMMA@891..892 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@892..912 "\"# -- --> */\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@912..914 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@914..917 "\" \"" [] [],
+                        },
+                    },
+                    COMMA@917..918 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@918..941 "\" s p a c e d \"" [Newline("\n"), Whitespace("      ")] [Whitespace(" ")],
+                        },
+                        colon_token: COLON@941..942 ":" [] [],
+                        value: JsonArray {
+                            l_brack_token: L_BRACK@942..943 "[" [] [],
+                            elements: JsonArrayElementList [
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@943..944 "1" [] [],
+                                },
+                                COMMA@944..945 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@945..947 "2" [] [Whitespace(" ")],
+                                },
+                                COMMA@947..949 "," [] [Whitespace(" ")],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@949..950 "3" [] [],
+                                },
+                                COMMA@950..953 "," [Newline("\n"), Newline("\n")] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@953..957 "4" [Newline("\n"), Newline("\n")] [Whitespace(" ")],
+                                },
+                                COMMA@957..959 "," [] [Whitespace(" ")],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@959..968 "5" [] [Whitespace("        ")],
+                                },
+                                COMMA@968..979 "," [] [Whitespace("          ")],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@979..991 "6" [] [Whitespace("           ")],
+                                },
+                                COMMA@991..992 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@992..1001 "7" [] [Whitespace("        ")],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@1001..1002 "]" [] [],
+                        },
+                    },
+                    COMMA@1002..1003 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@1003..1012 "\"compact\"" [] [],
+                        },
+                        colon_token: COLON@1012..1013 ":" [] [],
+                        value: JsonArray {
+                            l_brack_token: L_BRACK@1013..1014 "[" [] [],
+                            elements: JsonArrayElementList [
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@1014..1015 "1" [] [],
+                                },
+                                COMMA@1015..1016 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@1016..1017 "2" [] [],
+                                },
+                                COMMA@1017..1018 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@1018..1019 "3" [] [],
+                                },
+                                COMMA@1019..1020 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@1020..1021 "4" [] [],
+                                },
+                                COMMA@1021..1022 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@1022..1023 "5" [] [],
+                                },
+                                COMMA@1023..1024 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@1024..1025 "6" [] [],
+                                },
+                                COMMA@1025..1026 "," [] [],
+                                JsonNumber {
+                                    json_number_literal_token: JSON_NUMBER_LITERAL@1026..1027 "7" [] [],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@1027..1028 "]" [] [],
+                        },
+                    },
+                    COMMA@1028..1029 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@1029..1046 "\"jsontext\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@1046..1048 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@1048..1103 "\"{\\\"object with 1 member\\\":[\\\"array with 1 element\\\"]}\"" [] [],
+                        },
+                    },
+                    COMMA@1103..1104 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@1104..1119 "\"quotes\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@1119..1121 ":" [] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@1121..1155 "\"&#34; \\u0022 %22 0x22 034 &#x22;\"" [] [],
+                        },
+                    },
+                    COMMA@1155..1156 "," [] [],
+                    JsonMember {
+                        key: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@1156..1248 "\"\\/\\\\\\\"\\uCAFE\\uBABE\\uAB98\\uFCDE\\ubcda\\uef4A\\b\\f\\n\\r\\t`1~!@#$%^&*()_+-=[]{}|;:',./<>?\"" [Newline("\n"), Whitespace("      ")] [],
+                        },
+                        colon_token: COLON@1248..1251 ":" [Newline("\n")] [Whitespace(" ")],
+                        value: JsonString {
+                            json_string_literal_token: JSON_STRING_LITERAL@1251..1276 "\"A key can be any string\"" [] [],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@1276..1280 "}" [Newline("\n"), Whitespace("  ")] [],
+            },
+            COMMA@1280..1281 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1281..1288 "0.5" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
+            },
+            COMMA@1288..1289 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1289..1293 "98.6" [] [],
+            },
+            COMMA@1293..1295 "," [Newline("\n")] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1295..1301 "99.44" [Newline("\n")] [],
+            },
+            COMMA@1301..1303 "," [Newline("\n")] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1303..1309 "1066" [Newline("\n"), Newline("\n")] [],
+            },
+            COMMA@1309..1310 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1310..1314 "1e1" [Newline("\n")] [],
+            },
+            COMMA@1314..1315 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1315..1321 "0.1e1" [Newline("\n")] [],
+            },
+            COMMA@1321..1322 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1322..1327 "1e-1" [Newline("\n")] [],
+            },
+            COMMA@1327..1328 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1328..1333 "1e00" [Newline("\n")] [],
+            },
+            COMMA@1333..1334 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1334..1339 "2e+00" [] [],
+            },
+            COMMA@1339..1340 "," [] [],
+            JsonNumber {
+                json_number_literal_token: JSON_NUMBER_LITERAL@1340..1345 "2e-00" [] [],
+            },
+            COMMA@1345..1347 "," [Newline("\n")] [],
+            JsonString {
+                json_string_literal_token: JSON_STRING_LITERAL@1347..1356 "\"rosebud\"" [] [],
+            },
+        ],
+        r_brack_token: R_BRACK@1356..1357 "]" [] [],
+    },
+    eof_token: EOF@1357..1357 "" [] [],
+}
+
+0: JSON_ROOT@0..1357
+  0: JSON_ARRAY@0..1357
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..1356
+      0: JSON_STRING@1..29
+        0: JSON_STRING_LITERAL@1..29 "\"JSON Test Pattern pass1\"" [Newline("\n"), Whitespace("  ")] []
+      1: COMMA@29..30 "," [] []
+      2: JSON_OBJECT@30..82
+        0: L_CURLY@30..34 "{" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_MEMBER_LIST@34..81
+          0: JSON_MEMBER@34..81
+            0: JSON_STRING@34..56
+              0: JSON_STRING_LITERAL@34..56 "\"object with 1 member\"" [] []
+            1: COLON@56..57 ":" [] []
+            2: JSON_ARRAY@57..81
+              0: L_BRACK@57..58 "[" [] []
+              1: JSON_ARRAY_ELEMENT_LIST@58..80
+                0: JSON_STRING@58..80
+                  0: JSON_STRING_LITERAL@58..80 "\"array with 1 element\"" [] []
+              2: R_BRACK@80..81 "]" [] []
+        2: R_CURLY@81..82 "}" [] []
+      3: COMMA@82..83 "," [] []
+      4: JSON_OBJECT@83..88
+        0: L_CURLY@83..87 "{" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_MEMBER_LIST@87..87
+        2: R_CURLY@87..88 "}" [] []
+      5: COMMA@88..89 "," [] []
+      6: JSON_ARRAY@89..94
+        0: L_BRACK@89..93 "[" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_ARRAY_ELEMENT_LIST@93..93
+        2: R_BRACK@93..94 "]" [] []
+      7: COMMA@94..95 "," [] []
+      8: JSON_NUMBER@95..101
+        0: JSON_NUMBER_LITERAL@95..101 "-42" [Newline("\n"), Whitespace("  ")] []
+      9: COMMA@101..102 "," [] []
+      10: JSON_BOOLEAN@102..109
+        0: TRUE_KW@102..109 "true" [Newline("\n"), Whitespace("  ")] []
+      11: COMMA@109..110 "," [] []
+      12: JSON_BOOLEAN@110..118
+        0: FALSE_KW@110..118 "false" [Newline("\n"), Whitespace("  ")] []
+      13: COMMA@118..119 "," [] []
+      14: JSON_NULL@119..126
+        0: NULL_KW@119..126 "null" [Newline("\n"), Whitespace("  ")] []
+      15: COMMA@126..127 "," [] []
+      16: JSON_OBJECT@127..1280
+        0: L_CURLY@127..131 "{" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_MEMBER_LIST@131..1276
+          0: JSON_MEMBER@131..159
+            0: JSON_STRING@131..147
+              0: JSON_STRING_LITERAL@131..147 "\"integer\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@147..149 ":" [] [Whitespace(" ")]
+            2: JSON_NUMBER@149..159
+              0: JSON_NUMBER_LITERAL@149..159 "1234567890" [] []
+          1: COMMA@159..160 "," [] []
+          2: JSON_MEMBER@160..187
+            0: JSON_STRING@160..173
+              0: JSON_STRING_LITERAL@160..173 "\"real\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@173..175 ":" [] [Whitespace(" ")]
+            2: JSON_NUMBER@175..187
+              0: JSON_NUMBER_LITERAL@175..187 "-9876.543210" [] []
+          3: COMMA@187..188 "," [] []
+          4: JSON_MEMBER@188..215
+            0: JSON_STRING@188..198
+              0: JSON_STRING_LITERAL@188..198 "\"e\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@198..200 ":" [] [Whitespace(" ")]
+            2: JSON_NUMBER@200..215
+              0: JSON_NUMBER_LITERAL@200..215 "0.123456789e-12" [] []
+          5: COMMA@215..216 "," [] []
+          6: JSON_MEMBER@216..243
+            0: JSON_STRING@216..226
+              0: JSON_STRING_LITERAL@216..226 "\"E\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@226..228 ":" [] [Whitespace(" ")]
+            2: JSON_NUMBER@228..243
+              0: JSON_NUMBER_LITERAL@228..243 "1.234567890E+34" [] []
+          7: COMMA@243..244 "," [] []
+          8: JSON_MEMBER@244..270
+            0: JSON_STRING@244..253
+              0: JSON_STRING_LITERAL@244..253 "\"\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@253..256 ":" [] [Whitespace("  ")]
+            2: JSON_NUMBER@256..270
+              0: JSON_NUMBER_LITERAL@256..270 "23456789012E66" [] []
+          9: COMMA@270..271 "," [] []
+          10: JSON_MEMBER@271..287
+            0: JSON_STRING@271..284
+              0: JSON_STRING_LITERAL@271..284 "\"zero\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@284..286 ":" [] [Whitespace(" ")]
+            2: JSON_NUMBER@286..287
+              0: JSON_NUMBER_LITERAL@286..287 "0" [] []
+          11: COMMA@287..288 "," [] []
+          12: JSON_MEMBER@288..303
+            0: JSON_STRING@288..300
+              0: JSON_STRING_LITERAL@288..300 "\"one\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@300..302 ":" [] [Whitespace(" ")]
+            2: JSON_NUMBER@302..303
+              0: JSON_NUMBER_LITERAL@302..303 "1" [] []
+          13: COMMA@303..304 "," [] []
+          14: JSON_MEMBER@304..323
+            0: JSON_STRING@304..318
+              0: JSON_STRING_LITERAL@304..318 "\"space\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@318..320 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@320..323
+              0: JSON_STRING_LITERAL@320..323 "\" \"" [] []
+          15: COMMA@323..324 "," [] []
+          16: JSON_MEMBER@324..344
+            0: JSON_STRING@324..338
+              0: JSON_STRING_LITERAL@324..338 "\"quote\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@338..340 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@340..344
+              0: JSON_STRING_LITERAL@340..344 "\"\\\"\"" [] []
+          17: COMMA@344..345 "," [] []
+          18: JSON_MEMBER@345..369
+            0: JSON_STRING@345..363
+              0: JSON_STRING_LITERAL@345..363 "\"backslash\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@363..365 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@365..369
+              0: JSON_STRING_LITERAL@365..369 "\"\\\\\"" [] []
+          19: COMMA@369..370 "," [] []
+          20: JSON_MEMBER@370..401
+            0: JSON_STRING@370..387
+              0: JSON_STRING_LITERAL@370..387 "\"controls\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@387..389 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@389..401
+              0: JSON_STRING_LITERAL@389..401 "\"\\b\\f\\n\\r\\t\"" [] []
+          21: COMMA@401..402 "," [] []
+          22: JSON_MEMBER@402..426
+            0: JSON_STRING@402..416
+              0: JSON_STRING_LITERAL@402..416 "\"slash\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@416..418 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@418..426
+              0: JSON_STRING_LITERAL@418..426 "\"/ & \\/\"" [] []
+          23: COMMA@426..427 "," [] []
+          24: JSON_MEMBER@427..470
+            0: JSON_STRING@427..441
+              0: JSON_STRING_LITERAL@427..441 "\"alpha\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@441..443 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@443..470
+              0: JSON_STRING_LITERAL@443..470 "\"abcdefghijklmnopqrstuvwyz\"" [] []
+          25: COMMA@470..471 "," [] []
+          26: JSON_MEMBER@471..514
+            0: JSON_STRING@471..485
+              0: JSON_STRING_LITERAL@471..485 "\"ALPHA\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@485..487 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@487..514
+              0: JSON_STRING_LITERAL@487..514 "\"ABCDEFGHIJKLMNOPQRSTUVWYZ\"" [] []
+          27: COMMA@514..515 "," [] []
+          28: JSON_MEMBER@515..543
+            0: JSON_STRING@515..529
+              0: JSON_STRING_LITERAL@515..529 "\"digit\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@529..531 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@531..543
+              0: JSON_STRING_LITERAL@531..543 "\"0123456789\"" [] []
+          29: COMMA@543..544 "," [] []
+          30: JSON_MEMBER@544..572
+            0: JSON_STRING@544..563
+              0: JSON_STRING_LITERAL@544..563 "\"0123456789\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@563..565 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@565..572
+              0: JSON_STRING_LITERAL@565..572 "\"digit\"" [] []
+          31: COMMA@572..573 "," [] []
+          32: JSON_MEMBER@573..624
+            0: JSON_STRING@573..589
+              0: JSON_STRING_LITERAL@573..589 "\"special\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@589..591 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@591..624
+              0: JSON_STRING_LITERAL@591..624 "\"`1~!@#$%^&*()_+-={':[,]}|;.</>?\"" [] []
+          33: COMMA@624..625 "," [] []
+          34: JSON_MEMBER@625..677
+            0: JSON_STRING@625..637
+              0: JSON_STRING_LITERAL@625..637 "\"hex\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@637..639 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@639..677
+              0: JSON_STRING_LITERAL@639..677 "\"\\u0123\\u4567\\u89AB\\uCDEF\\uabcd\\uef4A\"" [] []
+          35: COMMA@677..678 "," [] []
+          36: JSON_MEMBER@678..697
+            0: JSON_STRING@678..691
+              0: JSON_STRING_LITERAL@678..691 "\"true\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@691..693 ":" [] [Whitespace(" ")]
+            2: JSON_BOOLEAN@693..697
+              0: TRUE_KW@693..697 "true" [] []
+          37: COMMA@697..698 "," [] []
+          38: JSON_MEMBER@698..719
+            0: JSON_STRING@698..712
+              0: JSON_STRING_LITERAL@698..712 "\"false\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@712..714 ":" [] [Whitespace(" ")]
+            2: JSON_BOOLEAN@714..719
+              0: FALSE_KW@714..719 "false" [] []
+          39: COMMA@719..720 "," [] []
+          40: JSON_MEMBER@720..739
+            0: JSON_STRING@720..733
+              0: JSON_STRING_LITERAL@720..733 "\"null\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@733..735 ":" [] [Whitespace(" ")]
+            2: JSON_NULL@735..739
+              0: NULL_KW@735..739 "null" [] []
+          41: COMMA@739..740 "," [] []
+          42: JSON_MEMBER@740..759
+            0: JSON_STRING@740..754
+              0: JSON_STRING_LITERAL@740..754 "\"array\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@754..755 ":" [] []
+            2: JSON_ARRAY@755..759
+              0: L_BRACK@755..758 "[" [] [Whitespace("  ")]
+              1: JSON_ARRAY_ELEMENT_LIST@758..758
+              2: R_BRACK@758..759 "]" [] []
+          43: COMMA@759..760 "," [] []
+          44: JSON_MEMBER@760..780
+            0: JSON_STRING@760..775
+              0: JSON_STRING_LITERAL@760..775 "\"object\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@775..776 ":" [] []
+            2: JSON_OBJECT@776..780
+              0: L_CURLY@776..779 "{" [] [Whitespace("  ")]
+              1: JSON_MEMBER_LIST@779..779
+              2: R_CURLY@779..780 "}" [] []
+          45: COMMA@780..781 "," [] []
+          46: JSON_MEMBER@781..820
+            0: JSON_STRING@781..797
+              0: JSON_STRING_LITERAL@781..797 "\"address\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@797..799 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@799..820
+              0: JSON_STRING_LITERAL@799..820 "\"50 St. James Street\"" [] []
+          47: COMMA@820..821 "," [] []
+          48: JSON_MEMBER@821..857
+            0: JSON_STRING@821..833
+              0: JSON_STRING_LITERAL@821..833 "\"url\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@833..835 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@835..857
+              0: JSON_STRING_LITERAL@835..857 "\"http://www.JSON.org/\"" [] []
+          49: COMMA@857..858 "," [] []
+          50: JSON_MEMBER@858..891
+            0: JSON_STRING@858..874
+              0: JSON_STRING_LITERAL@858..874 "\"comment\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@874..876 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@876..891
+              0: JSON_STRING_LITERAL@876..891 "\"// /* <!-- --\"" [] []
+          51: COMMA@891..892 "," [] []
+          52: JSON_MEMBER@892..917
+            0: JSON_STRING@892..912
+              0: JSON_STRING_LITERAL@892..912 "\"# -- --> */\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@912..914 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@914..917
+              0: JSON_STRING_LITERAL@914..917 "\" \"" [] []
+          53: COMMA@917..918 "," [] []
+          54: JSON_MEMBER@918..1002
+            0: JSON_STRING@918..941
+              0: JSON_STRING_LITERAL@918..941 "\" s p a c e d \"" [Newline("\n"), Whitespace("      ")] [Whitespace(" ")]
+            1: COLON@941..942 ":" [] []
+            2: JSON_ARRAY@942..1002
+              0: L_BRACK@942..943 "[" [] []
+              1: JSON_ARRAY_ELEMENT_LIST@943..1001
+                0: JSON_NUMBER@943..944
+                  0: JSON_NUMBER_LITERAL@943..944 "1" [] []
+                1: COMMA@944..945 "," [] []
+                2: JSON_NUMBER@945..947
+                  0: JSON_NUMBER_LITERAL@945..947 "2" [] [Whitespace(" ")]
+                3: COMMA@947..949 "," [] [Whitespace(" ")]
+                4: JSON_NUMBER@949..950
+                  0: JSON_NUMBER_LITERAL@949..950 "3" [] []
+                5: COMMA@950..953 "," [Newline("\n"), Newline("\n")] []
+                6: JSON_NUMBER@953..957
+                  0: JSON_NUMBER_LITERAL@953..957 "4" [Newline("\n"), Newline("\n")] [Whitespace(" ")]
+                7: COMMA@957..959 "," [] [Whitespace(" ")]
+                8: JSON_NUMBER@959..968
+                  0: JSON_NUMBER_LITERAL@959..968 "5" [] [Whitespace("        ")]
+                9: COMMA@968..979 "," [] [Whitespace("          ")]
+                10: JSON_NUMBER@979..991
+                  0: JSON_NUMBER_LITERAL@979..991 "6" [] [Whitespace("           ")]
+                11: COMMA@991..992 "," [] []
+                12: JSON_NUMBER@992..1001
+                  0: JSON_NUMBER_LITERAL@992..1001 "7" [] [Whitespace("        ")]
+              2: R_BRACK@1001..1002 "]" [] []
+          55: COMMA@1002..1003 "," [] []
+          56: JSON_MEMBER@1003..1028
+            0: JSON_STRING@1003..1012
+              0: JSON_STRING_LITERAL@1003..1012 "\"compact\"" [] []
+            1: COLON@1012..1013 ":" [] []
+            2: JSON_ARRAY@1013..1028
+              0: L_BRACK@1013..1014 "[" [] []
+              1: JSON_ARRAY_ELEMENT_LIST@1014..1027
+                0: JSON_NUMBER@1014..1015
+                  0: JSON_NUMBER_LITERAL@1014..1015 "1" [] []
+                1: COMMA@1015..1016 "," [] []
+                2: JSON_NUMBER@1016..1017
+                  0: JSON_NUMBER_LITERAL@1016..1017 "2" [] []
+                3: COMMA@1017..1018 "," [] []
+                4: JSON_NUMBER@1018..1019
+                  0: JSON_NUMBER_LITERAL@1018..1019 "3" [] []
+                5: COMMA@1019..1020 "," [] []
+                6: JSON_NUMBER@1020..1021
+                  0: JSON_NUMBER_LITERAL@1020..1021 "4" [] []
+                7: COMMA@1021..1022 "," [] []
+                8: JSON_NUMBER@1022..1023
+                  0: JSON_NUMBER_LITERAL@1022..1023 "5" [] []
+                9: COMMA@1023..1024 "," [] []
+                10: JSON_NUMBER@1024..1025
+                  0: JSON_NUMBER_LITERAL@1024..1025 "6" [] []
+                11: COMMA@1025..1026 "," [] []
+                12: JSON_NUMBER@1026..1027
+                  0: JSON_NUMBER_LITERAL@1026..1027 "7" [] []
+              2: R_BRACK@1027..1028 "]" [] []
+          57: COMMA@1028..1029 "," [] []
+          58: JSON_MEMBER@1029..1103
+            0: JSON_STRING@1029..1046
+              0: JSON_STRING_LITERAL@1029..1046 "\"jsontext\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@1046..1048 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@1048..1103
+              0: JSON_STRING_LITERAL@1048..1103 "\"{\\\"object with 1 member\\\":[\\\"array with 1 element\\\"]}\"" [] []
+          59: COMMA@1103..1104 "," [] []
+          60: JSON_MEMBER@1104..1155
+            0: JSON_STRING@1104..1119
+              0: JSON_STRING_LITERAL@1104..1119 "\"quotes\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@1119..1121 ":" [] [Whitespace(" ")]
+            2: JSON_STRING@1121..1155
+              0: JSON_STRING_LITERAL@1121..1155 "\"&#34; \\u0022 %22 0x22 034 &#x22;\"" [] []
+          61: COMMA@1155..1156 "," [] []
+          62: JSON_MEMBER@1156..1276
+            0: JSON_STRING@1156..1248
+              0: JSON_STRING_LITERAL@1156..1248 "\"\\/\\\\\\\"\\uCAFE\\uBABE\\uAB98\\uFCDE\\ubcda\\uef4A\\b\\f\\n\\r\\t`1~!@#$%^&*()_+-=[]{}|;:',./<>?\"" [Newline("\n"), Whitespace("      ")] []
+            1: COLON@1248..1251 ":" [Newline("\n")] [Whitespace(" ")]
+            2: JSON_STRING@1251..1276
+              0: JSON_STRING_LITERAL@1251..1276 "\"A key can be any string\"" [] []
+        2: R_CURLY@1276..1280 "}" [Newline("\n"), Whitespace("  ")] []
+      17: COMMA@1280..1281 "," [] []
+      18: JSON_NUMBER@1281..1288
+        0: JSON_NUMBER_LITERAL@1281..1288 "0.5" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+      19: COMMA@1288..1289 "," [] []
+      20: JSON_NUMBER@1289..1293
+        0: JSON_NUMBER_LITERAL@1289..1293 "98.6" [] []
+      21: COMMA@1293..1295 "," [Newline("\n")] []
+      22: JSON_NUMBER@1295..1301
+        0: JSON_NUMBER_LITERAL@1295..1301 "99.44" [Newline("\n")] []
+      23: COMMA@1301..1303 "," [Newline("\n")] []
+      24: JSON_NUMBER@1303..1309
+        0: JSON_NUMBER_LITERAL@1303..1309 "1066" [Newline("\n"), Newline("\n")] []
+      25: COMMA@1309..1310 "," [] []
+      26: JSON_NUMBER@1310..1314
+        0: JSON_NUMBER_LITERAL@1310..1314 "1e1" [Newline("\n")] []
+      27: COMMA@1314..1315 "," [] []
+      28: JSON_NUMBER@1315..1321
+        0: JSON_NUMBER_LITERAL@1315..1321 "0.1e1" [Newline("\n")] []
+      29: COMMA@1321..1322 "," [] []
+      30: JSON_NUMBER@1322..1327
+        0: JSON_NUMBER_LITERAL@1322..1327 "1e-1" [Newline("\n")] []
+      31: COMMA@1327..1328 "," [] []
+      32: JSON_NUMBER@1328..1333
+        0: JSON_NUMBER_LITERAL@1328..1333 "1e00" [Newline("\n")] []
+      33: COMMA@1333..1334 "," [] []
+      34: JSON_NUMBER@1334..1339
+        0: JSON_NUMBER_LITERAL@1334..1339 "2e+00" [] []
+      35: COMMA@1339..1340 "," [] []
+      36: JSON_NUMBER@1340..1345
+        0: JSON_NUMBER_LITERAL@1340..1345 "2e-00" [] []
+      37: COMMA@1345..1347 "," [Newline("\n")] []
+      38: JSON_STRING@1347..1356
+        0: JSON_STRING_LITERAL@1347..1356 "\"rosebud\"" [] []
+    2: R_BRACK@1356..1357 "]" [] []
+  1: EOF@1357..1357 "" [] []

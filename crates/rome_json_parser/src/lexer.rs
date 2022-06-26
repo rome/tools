@@ -33,7 +33,7 @@ pub enum TokenKind {
     #[token("null")]
     Null,
 
-    #[regex(r#""([^"\\]|\\u[0-9a-f][0-9a-f][0-9a-f][0-9a-f]|\\["\\/bfnrt])*""#)]
+    #[regex(r#""([^"\\]|\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]|\\["\\/bfnrt])*""#)]
     String,
     // #[regex(r#"\."#)]
     // Text1,
@@ -74,7 +74,7 @@ impl From<TokenKind> for JsonSyntaxKind {
             TokenKind::Number => JsonSyntaxKind::JSON_NUMBER_LITERAL,
             TokenKind::Whitespace => JsonSyntaxKind::WHITESPACE,
             TokenKind::NewLine => JsonSyntaxKind::NEWLINE,
-            TokenKind::Error => JsonSyntaxKind::JSON_UNKNOWN,
+            TokenKind::Error => JsonSyntaxKind::ERROR_TOKEN,
         }
     }
 }
@@ -95,7 +95,7 @@ impl From<&TokenKind> for JsonSyntaxKind {
             TokenKind::Number => JsonSyntaxKind::JSON_NUMBER_LITERAL,
             TokenKind::Whitespace => JsonSyntaxKind::WHITESPACE,
             TokenKind::NewLine => JsonSyntaxKind::NEWLINE,
-            TokenKind::Error => JsonSyntaxKind::JSON_UNKNOWN,
+            TokenKind::Error => JsonSyntaxKind::ERROR_TOKEN,
         }
     }
 }

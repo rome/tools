@@ -216,7 +216,9 @@ fn parse_value(p: &mut Parser) -> CompletedMarker {
                 p.cur_range(),
             );
         }
-        _ => unreachable!(),
+        _ => {
+            unreachable!()
+        },
     }
     todo!()
     // let mut marker = p.start();
@@ -268,6 +270,8 @@ fn parse_object(p: &mut Parser) -> CompletedMarker {
     }
     if !p.at(T!['}']) {
         parse_object_member_list(p);
+    } else {
+        p.start().complete(p, JsonSyntaxKind::JSON_MEMBER_LIST);
     }
     p.bump(T!['}']);
     marker.complete(p, JsonSyntaxKind::JSON_OBJECT)
@@ -314,6 +318,8 @@ fn parse_array(p: &mut Parser) -> CompletedMarker {
     }
     if !p.at(T![']']) {
         parse_array_element_list(p);
+    } else {
+        p.start().complete(p, JsonSyntaxKind::JSON_ARRAY_ELEMENT_LIST);
     }
     p.bump(T![']']);
     marker.complete(p, JsonSyntaxKind::JSON_ARRAY)
