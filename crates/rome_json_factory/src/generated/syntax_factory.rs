@@ -48,17 +48,10 @@ impl SyntaxFactory for JsonSyntaxFactory {
             }
             JSON_BOOLEAN => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == T![true] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![false] {
+                    if matches!(element.kind(), T![true] | T![false]) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
