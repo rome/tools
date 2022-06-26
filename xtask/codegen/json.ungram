@@ -44,13 +44,13 @@ JsonRoot = JsonValue
 
 JsonValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject | JsonUnknown
 
-JsonObject = '{' JsonMemberList? '}'
+JsonObject = '{' JsonMemberList '}'
 
 JsonMemberList = (JsonMember (',' JsonMember)* )
 
 JsonMember = key: JsonString ':' value: JsonValue
 
-JsonArray = '[' elements: JsonArrayElementList? ']'
+JsonArray = '[' elements: JsonArrayElementList ']'
 
 JsonArrayElementList = (JsonValue (',' JsonValue)* )
 

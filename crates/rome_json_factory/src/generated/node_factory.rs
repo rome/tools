@@ -7,34 +7,19 @@ use rome_json_syntax::{
     JsonSyntaxToken as SyntaxToken, *,
 };
 use rome_rowan::AstNode;
-pub fn json_array(l_brack_token: SyntaxToken, r_brack_token: SyntaxToken) -> JsonArrayBuilder {
-    JsonArrayBuilder {
-        l_brack_token,
-        r_brack_token,
-        elements: None,
-    }
-}
-pub struct JsonArrayBuilder {
+pub fn json_array(
     l_brack_token: SyntaxToken,
+    elements: JsonArrayElementList,
     r_brack_token: SyntaxToken,
-    elements: Option<JsonArrayElementList>,
-}
-impl JsonArrayBuilder {
-    pub fn with_elements(mut self, elements: JsonArrayElementList) -> Self {
-        self.elements = Some(elements);
-        self
-    }
-    pub fn build(self) -> JsonArray {
-        JsonArray::unwrap_cast(SyntaxNode::new_detached(
-            JsonSyntaxKind::JSON_ARRAY,
-            [
-                Some(SyntaxElement::Token(self.l_brack_token)),
-                self.elements
-                    .map(|token| SyntaxElement::Node(token.into_syntax())),
-                Some(SyntaxElement::Token(self.r_brack_token)),
-            ],
-        ))
-    }
+) -> JsonArray {
+    JsonArray::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_ARRAY,
+        [
+            Some(SyntaxElement::Token(l_brack_token)),
+            Some(SyntaxElement::Node(elements.into_syntax())),
+            Some(SyntaxElement::Token(r_brack_token)),
+        ],
+    ))
 }
 pub fn json_boolean(value_token_token: SyntaxToken) -> JsonBoolean {
     JsonBoolean::unwrap_cast(SyntaxNode::new_detached(
@@ -64,34 +49,19 @@ pub fn json_number(json_number_literal_token: SyntaxToken) -> JsonNumber {
         [Some(SyntaxElement::Token(json_number_literal_token))],
     ))
 }
-pub fn json_object(l_curly_token: SyntaxToken, r_curly_token: SyntaxToken) -> JsonObjectBuilder {
-    JsonObjectBuilder {
-        l_curly_token,
-        r_curly_token,
-        json_member_list: None,
-    }
-}
-pub struct JsonObjectBuilder {
+pub fn json_object(
     l_curly_token: SyntaxToken,
+    json_member_list: JsonMemberList,
     r_curly_token: SyntaxToken,
-    json_member_list: Option<JsonMemberList>,
-}
-impl JsonObjectBuilder {
-    pub fn with_json_member_list(mut self, json_member_list: JsonMemberList) -> Self {
-        self.json_member_list = Some(json_member_list);
-        self
-    }
-    pub fn build(self) -> JsonObject {
-        JsonObject::unwrap_cast(SyntaxNode::new_detached(
-            JsonSyntaxKind::JSON_OBJECT,
-            [
-                Some(SyntaxElement::Token(self.l_curly_token)),
-                self.json_member_list
-                    .map(|token| SyntaxElement::Node(token.into_syntax())),
-                Some(SyntaxElement::Token(self.r_curly_token)),
-            ],
-        ))
-    }
+) -> JsonObject {
+    JsonObject::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_OBJECT,
+        [
+            Some(SyntaxElement::Token(l_curly_token)),
+            Some(SyntaxElement::Node(json_member_list.into_syntax())),
+            Some(SyntaxElement::Token(r_curly_token)),
+        ],
+    ))
 }
 pub fn json_root(json_value: JsonValue, eof_token: SyntaxToken) -> JsonRoot {
     JsonRoot::unwrap_cast(SyntaxNode::new_detached(
