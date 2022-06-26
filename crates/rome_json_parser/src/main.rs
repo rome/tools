@@ -6,7 +6,7 @@ use rome_json_parser::token_source::TokenSource;
 use rome_json_parser::{parse, parse_json_root};
 use rome_json_syntax::JsonSyntaxKind;
 fn main() {
-    let text = r#" ["test",] "#;
+    let text = r#" ["test", {"test": 2 }] "#;
     let root = parse(text, 0);
     println!("{:#?}", root.tree());
     // let mut res = TokenSource::from_str();

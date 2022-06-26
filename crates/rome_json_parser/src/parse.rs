@@ -236,7 +236,40 @@ fn parse_null(p: &mut Parser) -> CompletedMarker {
 }
 
 fn parse_object(p: &mut Parser) -> CompletedMarker {
-    todo!()
+    let marker = p.start();
+    if !p.expect(T!['{']) {
+        // TODO: return [Absent]
+        p.error(expected_token(T!['{']));
+        return marker.complete(p, JsonSyntaxKind::JSON_OBJECT);
+    }
+    if !p.at(T!['}']) {
+        parse_object_member_list(p);
+    }
+    p.bump(T!['}']);
+    marker.complete(p, JsonSyntaxKind::JSON_OBJECT)
+}
+
+fn parse_object_member_list(p: &mut Parser) -> CompletedMarker {
+    let marker = p.start();
+    parse_member(p);
+    while !p.at(T!['}']) {
+        if p.at(T![,]) && p.nth(1) == T!['}'] {
+            p.error(UnexpectedTrailingComma::new(p.cur_range()));
+            p.bump(T![,]);
+            break;
+        }
+        p.expect(T![,]);
+        parse_member(p);
+    }
+    marker.complete(p, JsonSyntaxKind::JSON_MEMBER_LIST)
+}
+
+fn parse_member(p: &mut Parser) -> CompletedMarker {
+    let marker = p.start();
+    parse_string(p);
+    p.expect(T![:]);
+    parse_value(p);
+    marker.complete(p, JsonSyntaxKind::JSON_MEMBER)
 }
 
 fn parse_array(p: &mut Parser) -> CompletedMarker {
@@ -273,12 +306,17 @@ struct UnexpectedTrailingComma {
 }
 
 impl UnexpectedTrailingComma {
-    fn new(range: TextRange) -> Self { Self { range } }
+    fn new(range: TextRange) -> Self {
+        Self { range }
+    }
 }
-
 
 impl ToDiagnostic for UnexpectedTrailingComma {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic {
-        Diagnostic::help(p.file_id(), p.source(self.range), "Unexpected trailing comma")
+        Diagnostic::help(
+            p.file_id(),
+            p.source(self.range),
+            "Unexpected trailing comma",
+        )
     }
 }
