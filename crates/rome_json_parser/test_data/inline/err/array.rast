@@ -1,0 +1,152 @@
+JsonRoot {
+    json_value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonArray {
+                l_brack_token: L_BRACK@1..5 "[" [Newline("\n"), Whitespace("  ")] [],
+                elements: JsonArrayElementList [
+                    JsonNumber {
+                        json_number_literal_token: JSON_NUMBER_LITERAL@5..7 "1" [Newline("\n")] [],
+                    },
+                    COMMA@7..8 "," [] [],
+                    JsonNull {
+                        null_token: NULL_KW@8..12 "null" [] [],
+                    },
+                ],
+                r_brack_token: R_BRACK@12..13 "]" [] [],
+            },
+            COMMA@13..14 "," [] [],
+            JsonArray {
+                l_brack_token: L_BRACK@14..18 "[" [Newline("\n"), Whitespace("  ")] [],
+                elements: JsonArrayElementList [
+                    JsonNumber {
+                        json_number_literal_token: JSON_NUMBER_LITERAL@18..19 "1" [] [],
+                    },
+                    COMMA@19..20 "," [] [],
+                    JsonNull {
+                        null_token: NULL_KW@20..24 "null" [] [],
+                    },
+                    COMMA@24..25 "," [] [],
+                    missing element,
+                ],
+                r_brack_token: R_BRACK@25..26 "]" [] [],
+            },
+            COMMA@26..27 "," [] [],
+            JsonArray {
+                l_brack_token: L_BRACK@27..31 "[" [Newline("\n"), Whitespace("  ")] [],
+                elements: JsonArrayElementList [
+                    JsonNull {
+                        null_token: NULL_KW@31..35 "null" [] [],
+                    },
+                    COMMA@35..36 "," [] [],
+                    missing element,
+                ],
+                r_brack_token: R_BRACK@36..37 "]" [] [],
+            },
+            COMMA@37..38 "," [] [],
+            JsonArray {
+                l_brack_token: L_BRACK@38..42 "[" [Newline("\n"), Whitespace("  ")] [],
+                elements: JsonArrayElementList [
+                    JsonNumber {
+                        json_number_literal_token: JSON_NUMBER_LITERAL@42..43 "0" [] [],
+                    },
+                    COMMA@43..44 "," [] [],
+                    missing element,
+                ],
+                r_brack_token: R_BRACK@44..45 "]" [] [],
+            },
+            COMMA@45..46 "," [] [],
+            JsonArray {
+                l_brack_token: L_BRACK@46..50 "[" [Newline("\n"), Whitespace("  ")] [],
+                elements: JsonArrayElementList [
+                    JsonBoolean {
+                        value_token: FALSE_KW@50..55 "false" [] [],
+                    },
+                    COMMA@55..56 "," [] [],
+                    missing element,
+                ],
+                r_brack_token: R_BRACK@56..57 "]" [] [],
+            },
+            COMMA@57..58 "," [] [],
+            missing element,
+        ],
+        r_brack_token: R_BRACK@58..60 "]" [Newline("\n")] [],
+    },
+    eof_token: EOF@60..61 "" [Newline("\n")] [],
+}
+
+0: JSON_ROOT@0..61
+  0: JSON_ARRAY@0..60
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..58
+      0: JSON_ARRAY@1..13
+        0: L_BRACK@1..5 "[" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_ARRAY_ELEMENT_LIST@5..12
+          0: JSON_NUMBER@5..7
+            0: JSON_NUMBER_LITERAL@5..7 "1" [Newline("\n")] []
+          1: COMMA@7..8 "," [] []
+          2: JSON_NULL@8..12
+            0: NULL_KW@8..12 "null" [] []
+        2: R_BRACK@12..13 "]" [] []
+      1: COMMA@13..14 "," [] []
+      2: JSON_ARRAY@14..26
+        0: L_BRACK@14..18 "[" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_ARRAY_ELEMENT_LIST@18..25
+          0: JSON_NUMBER@18..19
+            0: JSON_NUMBER_LITERAL@18..19 "1" [] []
+          1: COMMA@19..20 "," [] []
+          2: JSON_NULL@20..24
+            0: NULL_KW@20..24 "null" [] []
+          3: COMMA@24..25 "," [] []
+          4: (empty)
+        2: R_BRACK@25..26 "]" [] []
+      3: COMMA@26..27 "," [] []
+      4: JSON_ARRAY@27..37
+        0: L_BRACK@27..31 "[" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_ARRAY_ELEMENT_LIST@31..36
+          0: JSON_NULL@31..35
+            0: NULL_KW@31..35 "null" [] []
+          1: COMMA@35..36 "," [] []
+          2: (empty)
+        2: R_BRACK@36..37 "]" [] []
+      5: COMMA@37..38 "," [] []
+      6: JSON_ARRAY@38..45
+        0: L_BRACK@38..42 "[" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_ARRAY_ELEMENT_LIST@42..44
+          0: JSON_NUMBER@42..43
+            0: JSON_NUMBER_LITERAL@42..43 "0" [] []
+          1: COMMA@43..44 "," [] []
+          2: (empty)
+        2: R_BRACK@44..45 "]" [] []
+      7: COMMA@45..46 "," [] []
+      8: JSON_ARRAY@46..57
+        0: L_BRACK@46..50 "[" [Newline("\n"), Whitespace("  ")] []
+        1: JSON_ARRAY_ELEMENT_LIST@50..56
+          0: JSON_BOOLEAN@50..55
+            0: FALSE_KW@50..55 "false" [] []
+          1: COMMA@55..56 "," [] []
+          2: (empty)
+        2: R_BRACK@56..57 "]" [] []
+      9: COMMA@57..58 "," [] []
+      10: (empty)
+    2: R_BRACK@58..60 "]" [Newline("\n")] []
+  1: EOF@60..61 "" [Newline("\n")] []
+--
+array.json: note[,]: Unexpected trailing comma
+--
+array.json: note[,]: Unexpected trailing comma
+--
+array.json: note[,]: Unexpected trailing comma
+--
+array.json: note[,]: Unexpected trailing comma
+--
+array.json: note[,]: Unexpected trailing comma
+--
+[
+  [
+1,null],
+  [1,null,],
+  [null,],
+  [0,],
+  [false,],
+]

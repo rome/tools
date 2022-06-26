@@ -296,7 +296,7 @@ fn parse_member(p: &mut Parser) -> CompletedMarker {
     marker.complete(p, JsonSyntaxKind::JSON_MEMBER)
 }
 
-/// test_err json array
+// test_err json array
 // [
 //   [
 // 1,null],
