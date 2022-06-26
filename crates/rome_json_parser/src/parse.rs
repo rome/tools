@@ -1,7 +1,9 @@
 use std::marker::PhantomData;
 
 use rome_diagnostics::{Diagnostic, Severity};
-use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxKind, JsonSyntaxNode, TextRange, T};
+use rome_json_syntax::{
+    JsonLanguage, JsonRoot, JsonSyntaxKind, JsonSyntaxNode, TextRange, TextSize, T,
+};
 use rome_parse::ParseDiagnostic;
 use rome_rowan::AstNode;
 
@@ -126,6 +128,12 @@ pub fn parse_common(text: &str, file_id: usize) -> (Vec<Event>, Vec<ParseDiagnos
     (events, errors, trivia)
 }
 
+/// test json multiline
+// {"key1":[true,false,null],"key2":{"key3":[1,2,"3",
+// 1e10,1e-3]}}
+
+/// test json single-line
+// {"key1":[true,false,null],"key2":{"key3":[1,2,"3",1e10,1e-3]}}
 fn parse_root(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     parse_value(p);
@@ -141,8 +149,8 @@ fn parse_root(p: &mut Parser) -> CompletedMarker {
     }
 }
 
-// test json parse_value
-// {"test": 20}
+/// test_err json parse_value
+// {"test": 20, }
 fn parse_value(p: &mut Parser) -> CompletedMarker {
     match p.cur() {
         JsonSyntaxKind::EOF => {
@@ -210,6 +218,8 @@ fn parse_value(p: &mut Parser) -> CompletedMarker {
     // let mut marker = p.start();
     // marker.complete(p, JsonSyntaxKind::JSON_ROOT)
 }
+// test json number
+// 20000000.000
 
 fn parse_number(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
@@ -217,24 +227,35 @@ fn parse_number(p: &mut Parser) -> CompletedMarker {
     marker.complete(p, JsonSyntaxKind::JSON_NUMBER)
 }
 
+/// test json string
+// "test string\u2233"
 fn parse_string(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     p.bump(JsonSyntaxKind::JSON_STRING_LITERAL);
     marker.complete(p, JsonSyntaxKind::JSON_STRING)
 }
 
+/// test json boolean
+// true
 fn parse_boolean(p: &mut Parser) -> CompletedMarker {
     assert!(p.at(T![true]) || p.at(T![false]));
     let marker = p.start();
     p.bump_any();
     marker.complete(p, JsonSyntaxKind::JSON_BOOLEAN)
 }
-
+// test json null
+// null
 fn parse_null(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     p.bump(T![null]);
     marker.complete(p, JsonSyntaxKind::JSON_NULL)
 }
+/// test json key-value
+// {
+//     "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
+//     "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
+//     "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
+// }
 
 fn parse_object(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
@@ -273,6 +294,15 @@ fn parse_member(p: &mut Parser) -> CompletedMarker {
     marker.complete(p, JsonSyntaxKind::JSON_MEMBER)
 }
 
+/// test_err json array
+// [
+//   [
+// 1,null],
+//   [1,null,],
+//   [null,],
+//   [0,],
+//   [false,],
+// ]
 fn parse_array(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     if !p.expect(T!['[']) {
