@@ -193,7 +193,6 @@ fn parse_value(p: &mut Parser) -> CompletedMarker {
             return parse_string(p);
         }
         JsonSyntaxKind::JSON_NUMBER_LITERAL => {
-            println!("number {:?}", p.cur());
             return parse_number(p);
         }
         JsonSyntaxKind::ERROR_TOKEN => {

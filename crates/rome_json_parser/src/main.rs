@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 // use rome_js_parser::lexer::Lexer;
 // use rome_js_parser::{LexContext, Parser, SourceType};
 // use rome_js_syntax::T;
@@ -7,8 +9,11 @@ use rome_json_parser::{parse, parse_json_root};
 use rome_json_syntax::JsonSyntaxKind;
 fn main() {
     let text = r#" ["test", {"test": 2 }] "#;
-    let root = parse(text, 0);
-    println!("{:#?}", root.tree());
+    let text = include_str!("../big.json");
+    let start = Instant::now();
+    let _root = parse(text, 0);
+    println!("{:?}", start.elapsed());
+    // println!("{:#?}", root.tree());
     // let mut res = TokenSource::from_str();
     // loop {
     //     println!("{:?}, {:?}", res.current(), res.current_range());

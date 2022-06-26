@@ -13,6 +13,7 @@ use drop_bomb::DebugDropBomb;
 use rome_json_syntax::{JsonSyntaxKind, TextRange};
 use rome_parse::ParseDiagnostic;
 use std::num::NonZeroU32;
+use std::time::Instant;
 
 // pub(crate) use parse_error::*;
 // pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
@@ -75,9 +76,9 @@ pub(crate) struct Parser<'s> {
 impl<'s> Parser<'s> {
     /// Creates a new parser that parses the `source`.
     pub fn new(source: &'s str, file_id: usize) -> Parser<'s> {
+        let start = Instant::now();
         let token_source = TokenSource::from_str(source, file_id);
-        println!("{:?}", token_source);
-
+        println!("{:?}", start.elapsed());
         Parser {
             file_id,
             events: vec![],
