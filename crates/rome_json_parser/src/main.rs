@@ -8,9 +8,12 @@ use rome_json_parser::parse;
 use rome_json_parser::token_source::TokenSource;
 use rome_json_syntax::JsonSyntaxKind;
 fn main() {
-    let text = r#" ["test", {"test": 2 }] "#;
+    let text = r#"{"key1":[true,false,null],"key2":{"key3":[1,2,"3",1e10,1e-3]}}"#;
     let start = Instant::now();
     let _root = parse(text, 0);
+    for ele in _root.diagnostics() {
+        println!("{:?}", ele);
+    }
     println!("{:?}", start.elapsed());
     // println!("{:#?}", root.tree());
     // let mut res = TokenSource::from_str();

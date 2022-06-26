@@ -82,26 +82,50 @@ impl<'l> TokenSource<'l> {
     pub fn next_non_trivia_token(&mut self, first_token: bool) {
         let mut trailing = !first_token;
 
-        loop {
-            let kind = self.lexer.current_token();
-
-            let trivia_kind = TriviaPieceKind::try_from(kind);
-
-            match trivia_kind {
-                Err(_) => break,
+        let (left, right) = if first_token {
+            (0, self.lexer.current_none_trivia_cursor())
+        } else {
+            (
+                self.lexer.current_none_trivia_cursor() + 1,
+                self.lexer.next_none_trivia_cursor(),
+            )
+        };
+        for i in left..right {
+            let (kind, range) = self.lexer.token_at(i);
+            match TriviaPieceKind::try_from(kind) {
                 Ok(trivia_kind) => {
-                    // Trivia after and including the newline is considered the leading trivia of the next token
                     if trivia_kind.is_newline() {
                         trailing = false;
-                        self.after_newline = true;
                     }
-                    let current_range = self.current_range();
-                    self.trivia_list
-                        .push(Trivia::new(trivia_kind, current_range, trailing));
+                    let trivia = Trivia::new(trivia_kind, range, trailing);
+                    self.trivia_list.push(trivia);
                 }
+                Err(_) => {
+                    panic!("Unexpected token kind: {:?}", kind);
+                },
             }
-            self.lexer.advance();
+            // self.lexer.advance();
         }
+        // loop {
+        //     let kind = self.lexer.current_token();
+
+        //     let trivia_kind = TriviaPieceKind::try_from(kind);
+
+        //     match trivia_kind {
+        //         Err(_) => break,
+        //         Ok(trivia_kind) => {
+        //             // Trivia after and including the newline is considered the leading trivia of the next token
+        //             if trivia_kind.is_newline() {
+        //                 trailing = false;
+        //                 self.after_newline = true;
+        //             }
+        //             let current_range = self.current_range();
+        //             self.trivia_list
+        //                 .push(Trivia::new(trivia_kind, current_range, trailing));
+        //         }
+        //     }
+        //     self.lexer.advance();
+        // }
     }
 
     /// Returns the kind of the current non-trivia token

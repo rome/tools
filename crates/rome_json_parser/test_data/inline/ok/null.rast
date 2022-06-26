@@ -2,10 +2,10 @@ JsonRoot {
     json_value: JsonNull {
         null_token: NULL_KW@0..4 "null" [] [],
     },
-    eof_token: EOF@4..5 "" [Newline("\n")] [],
+    eof_token: EOF@4..5 "\n" [] [],
 }
 
 0: JSON_ROOT@0..5
   0: JSON_NULL@0..4
     0: NULL_KW@0..4 "null" [] []
-  1: EOF@4..5 "" [Newline("\n")] []
+  1: EOF@4..5 "\n" [] []

@@ -102,43 +102,53 @@ impl From<&TokenKind> for JsonSyntaxKind {
 
 #[derive(Debug)]
 pub struct Lexer<'a> {
-    tokens_with_span: Vec<(TokenKind, Span)>,
+    tokens_with_span: Vec<(JsonSyntaxKind, TextRange)>,
     source: &'a str,
     file_id: usize,
-    cursor: usize,
+    none_trivia_cursor: usize,
+    non_trivia_index_list: Vec<usize>,
 }
 
 impl<'a> Lexer<'a> {
     // let lexer = Lexer::from_str(source, file_id);
     pub fn from_str(source: &'a str, file_id: usize) -> Self {
         let lexer = LogosLexer::new(source);
+        let mut tokens_with_span = vec![];
+        let mut non_trivia_index_list = vec![];
+        for (i, (kind, range)) in lexer.into_iter().enumerate() {
+            tokens_with_span.push((
+                kind.into(),
+                TextRange::new(
+                    TextSize::from(range.start as u32),
+                    TextSize::from(range.end as u32),
+                ),
+            ));
+            if !matches!(kind, TokenKind::Whitespace | TokenKind::NewLine) {
+                non_trivia_index_list.push(i);
+            }
+        }
         Self {
-            tokens_with_span: lexer.into_iter().collect::<Vec<_>>(),
+            tokens_with_span,
             source,
             file_id,
-            cursor: 0,
+            none_trivia_cursor: 0,
+            non_trivia_index_list,
         }
     }
 
-    pub fn next_with_token(&mut self) -> JsonSyntaxKind {
-        let ret = match self.tokens_with_span.get(self.cursor) {
-            Some((kind, _)) => kind.into(),
-            None => JsonSyntaxKind::EOF,
-        };
-        self.cursor += 1;
-        ret
-    }
-
     pub fn nth(&self, n: usize) -> JsonSyntaxKind {
-        let cursor = self.cursor + n;
-        match self.tokens_with_span.get(cursor) {
-            Some((kind, _)) => kind.into(),
+        let index = self.none_trivia_cursor + n;
+        match self.non_trivia_index_list.get(index) {
+            Some(i) => {
+                let (kind, _) = &self.tokens_with_span[*i];
+                *kind
+            }
             None => JsonSyntaxKind::EOF,
         }
     }
 
     pub fn advance(&mut self) {
-        self.cursor += 1;
+        self.none_trivia_cursor += 1;
     }
 
     pub fn file_id(&self) -> usize {
@@ -148,19 +158,30 @@ impl<'a> Lexer<'a> {
     pub fn current_token(&self) -> JsonSyntaxKind {
         self.current()
             .map(|item| item.0.into())
-            .unwrap_or(JsonSyntaxKind::EOF)
+            .unwrap_or_else(|| JsonSyntaxKind::EOF)
     }
 
-    fn current(&self) -> Option<&(TokenKind, Span)> {
-        self.tokens_with_span.get(self.cursor)
+    fn current(&self) -> Option<&(JsonSyntaxKind, TextRange)> {
+        self.non_trivia_index_list
+            .get(self.none_trivia_cursor)
+            .map(|i| &self.tokens_with_span[*i])
+    }
+
+    pub fn token_at(&self, i: usize) -> (JsonSyntaxKind, TextRange) {
+        *self.tokens_with_span.get(i).unwrap_or({
+            &(
+                JsonSyntaxKind::EOF,
+                TextRange::new(
+                    TextSize::from(self.source.len() as u32),
+                    TextSize::from(self.source.len() as u32),
+                ),
+            )
+        })
     }
 
     pub fn current_range(&self) -> TextRange {
         match self.current() {
-            Some((_, range)) => TextRange::new(
-                TextSize::from(range.start as u32),
-                TextSize::from(range.end as u32),
-            ),
+            Some((_, range)) => *range,
             None => TextRange::new(
                 TextSize::from(self.source.len() as u32),
                 TextSize::from(self.source.len() as u32),
@@ -177,6 +198,17 @@ impl<'a> Lexer<'a> {
         vec![]
     }
 
+    #[inline]
+    pub fn current_none_trivia_cursor(&self) -> usize {
+        *(self.non_trivia_index_list.get(self.none_trivia_cursor))
+            .unwrap_or(&self.tokens_with_span.len())
+    }
+
+    #[inline]
+    pub fn next_none_trivia_cursor(&self) -> usize {
+        *(self.non_trivia_index_list.get(self.none_trivia_cursor + 1))
+            .unwrap_or(&self.tokens_with_span.len())
+    }
     // pub fn lookahead(&self) -> It {
     //     todo!()
     // }

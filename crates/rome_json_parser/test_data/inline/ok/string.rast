@@ -1,0 +1,11 @@
+JsonRoot {
+    json_value: JsonString {
+        json_string_literal_token: JSON_STRING_LITERAL@0..19 "\"test string\\u2233\"" [] [],
+    },
+    eof_token: EOF@19..20 "\n" [] [],
+}
+
+0: JSON_ROOT@0..20
+  0: JSON_STRING@0..19
+    0: JSON_STRING_LITERAL@0..19 "\"test string\\u2233\"" [] []
+  1: EOF@19..20 "\n" [] []

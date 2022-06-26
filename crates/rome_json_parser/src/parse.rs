@@ -128,11 +128,11 @@ pub fn parse_common(text: &str, file_id: usize) -> (Vec<Event>, Vec<ParseDiagnos
     (events, errors, trivia)
 }
 
-/// test json multiline
+// test json multiline
 // {"key1":[true,false,null],"key2":{"key3":[1,2,"3",
 // 1e10,1e-3]}}
 
-/// test json single-line
+// test json single-line
 // {"key1":[true,false,null],"key2":{"key3":[1,2,"3",1e10,1e-3]}}
 fn parse_root(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
@@ -149,7 +149,7 @@ fn parse_root(p: &mut Parser) -> CompletedMarker {
     }
 }
 
-/// test_err json parse_value
+// test_err json parse_value
 // {"test": 20, }
 fn parse_value(p: &mut Parser) -> CompletedMarker {
     match p.cur() {
@@ -220,14 +220,13 @@ fn parse_value(p: &mut Parser) -> CompletedMarker {
 }
 // test json number
 // 20000000.000
-
 fn parse_number(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     p.bump(JsonSyntaxKind::JSON_NUMBER_LITERAL);
     marker.complete(p, JsonSyntaxKind::JSON_NUMBER)
 }
 
-/// test json string
+// test json string
 // "test string\u2233"
 fn parse_string(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
@@ -235,7 +234,7 @@ fn parse_string(p: &mut Parser) -> CompletedMarker {
     marker.complete(p, JsonSyntaxKind::JSON_STRING)
 }
 
-/// test json boolean
+// test json boolean
 // true
 fn parse_boolean(p: &mut Parser) -> CompletedMarker {
     assert!(p.at(T![true]) || p.at(T![false]));
@@ -250,13 +249,12 @@ fn parse_null(p: &mut Parser) -> CompletedMarker {
     p.bump(T![null]);
     marker.complete(p, JsonSyntaxKind::JSON_NULL)
 }
-/// test json key-value
+// test json key-value
 // {
 //     "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
 //     "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
 //     "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
 // }
-
 fn parse_object(p: &mut Parser) -> CompletedMarker {
     let marker = p.start();
     if !p.expect(T!['{']) {
@@ -344,7 +342,7 @@ impl UnexpectedTrailingComma {
 
 impl ToDiagnostic for UnexpectedTrailingComma {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic {
-        Diagnostic::help(
+        Diagnostic::note(
             p.file_id(),
             p.source(self.range),
             "Unexpected trailing comma",

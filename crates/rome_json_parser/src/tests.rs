@@ -122,10 +122,11 @@ where
     let syntax = program.syntax();
     let debug_tree = format!("{:?}", program.tree());
     let has_missing_children = debug_tree.contains("missing (required)");
-
+    println!("fuck: {}, {}, {}", program.diagnostics().len(), program.has_errors(), has_missing_children);
     if !program.has_errors() && !has_unknown_nodes(&syntax) && !has_missing_children {
         return;
     }
+    println!("{}", debug_tree);
 
     let file = SimpleFile::new(path.to_str().unwrap().to_string(), syntax.to_string());
     let mut emitter = Emitter::new(&file);

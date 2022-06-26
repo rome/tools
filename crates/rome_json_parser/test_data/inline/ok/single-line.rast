@@ -1,0 +1,130 @@
+JsonRoot {
+    json_value: JsonObject {
+        l_curly_token: L_CURLY@0..1 "{" [] [],
+        json_member_list: JsonMemberList [
+            JsonMember {
+                key: JsonString {
+                    json_string_literal_token: JSON_STRING_LITERAL@1..7 "\"key1\"" [] [],
+                },
+                colon_token: COLON@7..8 ":" [] [],
+                value: JsonArray {
+                    l_brack_token: L_BRACK@8..9 "[" [] [],
+                    elements: JsonArrayElementList [
+                        JsonBoolean {
+                            value_token: TRUE_KW@9..13 "true" [] [],
+                        },
+                        COMMA@13..14 "," [] [],
+                        JsonBoolean {
+                            value_token: FALSE_KW@14..19 "false" [] [],
+                        },
+                        COMMA@19..20 "," [] [],
+                        JsonNull {
+                            null_token: NULL_KW@20..24 "null" [] [],
+                        },
+                    ],
+                    r_brack_token: R_BRACK@24..25 "]" [] [],
+                },
+            },
+            COMMA@25..26 "," [] [],
+            JsonMember {
+                key: JsonString {
+                    json_string_literal_token: JSON_STRING_LITERAL@26..32 "\"key2\"" [] [],
+                },
+                colon_token: COLON@32..33 ":" [] [],
+                value: JsonObject {
+                    l_curly_token: L_CURLY@33..34 "{" [] [],
+                    json_member_list: JsonMemberList [
+                        JsonMember {
+                            key: JsonString {
+                                json_string_literal_token: JSON_STRING_LITERAL@34..40 "\"key3\"" [] [],
+                            },
+                            colon_token: COLON@40..41 ":" [] [],
+                            value: JsonArray {
+                                l_brack_token: L_BRACK@41..42 "[" [] [],
+                                elements: JsonArrayElementList [
+                                    JsonNumber {
+                                        json_number_literal_token: JSON_NUMBER_LITERAL@42..43 "1" [] [],
+                                    },
+                                    COMMA@43..44 "," [] [],
+                                    JsonNumber {
+                                        json_number_literal_token: JSON_NUMBER_LITERAL@44..45 "2" [] [],
+                                    },
+                                    COMMA@45..46 "," [] [],
+                                    JsonString {
+                                        json_string_literal_token: JSON_STRING_LITERAL@46..49 "\"3\"" [] [],
+                                    },
+                                    COMMA@49..50 "," [] [],
+                                    JsonNumber {
+                                        json_number_literal_token: JSON_NUMBER_LITERAL@50..54 "1e10" [] [],
+                                    },
+                                    COMMA@54..55 "," [] [],
+                                    JsonNumber {
+                                        json_number_literal_token: JSON_NUMBER_LITERAL@55..59 "1e-3" [] [],
+                                    },
+                                ],
+                                r_brack_token: R_BRACK@59..60 "]" [] [],
+                            },
+                        },
+                    ],
+                    r_curly_token: R_CURLY@60..61 "}" [] [],
+                },
+            },
+        ],
+        r_curly_token: R_CURLY@61..62 "}" [] [],
+    },
+    eof_token: EOF@62..63 "" [Newline("\n")] [],
+}
+
+0: JSON_ROOT@0..63
+  0: JSON_OBJECT@0..62
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_MEMBER_LIST@1..61
+      0: JSON_MEMBER@1..25
+        0: JSON_STRING@1..7
+          0: JSON_STRING_LITERAL@1..7 "\"key1\"" [] []
+        1: COLON@7..8 ":" [] []
+        2: JSON_ARRAY@8..25
+          0: L_BRACK@8..9 "[" [] []
+          1: JSON_ARRAY_ELEMENT_LIST@9..24
+            0: JSON_BOOLEAN@9..13
+              0: TRUE_KW@9..13 "true" [] []
+            1: COMMA@13..14 "," [] []
+            2: JSON_BOOLEAN@14..19
+              0: FALSE_KW@14..19 "false" [] []
+            3: COMMA@19..20 "," [] []
+            4: JSON_NULL@20..24
+              0: NULL_KW@20..24 "null" [] []
+          2: R_BRACK@24..25 "]" [] []
+      1: COMMA@25..26 "," [] []
+      2: JSON_MEMBER@26..61
+        0: JSON_STRING@26..32
+          0: JSON_STRING_LITERAL@26..32 "\"key2\"" [] []
+        1: COLON@32..33 ":" [] []
+        2: JSON_OBJECT@33..61
+          0: L_CURLY@33..34 "{" [] []
+          1: JSON_MEMBER_LIST@34..60
+            0: JSON_MEMBER@34..60
+              0: JSON_STRING@34..40
+                0: JSON_STRING_LITERAL@34..40 "\"key3\"" [] []
+              1: COLON@40..41 ":" [] []
+              2: JSON_ARRAY@41..60
+                0: L_BRACK@41..42 "[" [] []
+                1: JSON_ARRAY_ELEMENT_LIST@42..59
+                  0: JSON_NUMBER@42..43
+                    0: JSON_NUMBER_LITERAL@42..43 "1" [] []
+                  1: COMMA@43..44 "," [] []
+                  2: JSON_NUMBER@44..45
+                    0: JSON_NUMBER_LITERAL@44..45 "2" [] []
+                  3: COMMA@45..46 "," [] []
+                  4: JSON_STRING@46..49
+                    0: JSON_STRING_LITERAL@46..49 "\"3\"" [] []
+                  5: COMMA@49..50 "," [] []
+                  6: JSON_NUMBER@50..54
+                    0: JSON_NUMBER_LITERAL@50..54 "1e10" [] []
+                  7: COMMA@54..55 "," [] []
+                  8: JSON_NUMBER@55..59
+                    0: JSON_NUMBER_LITERAL@55..59 "1e-3" [] []
+                2: R_BRACK@59..60 "]" [] []
+          2: R_CURLY@60..61 "}" [] []
+    2: R_CURLY@61..62 "}" [] []
+  1: EOF@62..63 "" [Newline("\n")] []
