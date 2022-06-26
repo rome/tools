@@ -141,6 +141,8 @@ fn parse_root(p: &mut Parser) -> CompletedMarker {
     }
 }
 
+// test json value_parse
+// {"test": 20}
 fn parse_value(p: &mut Parser) -> CompletedMarker {
     match p.cur() {
         JsonSyntaxKind::EOF => {

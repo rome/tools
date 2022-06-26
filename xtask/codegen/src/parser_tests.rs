@@ -43,52 +43,66 @@ fn extract_comment_blocks(
 }
 
 pub fn generate_parser_tests(mode: Mode) -> Result<()> {
-    let tests = tests_from_dir(&project_root().join(Path::new("crates/rome_js_parser/src")))?;
-    fn install_tests(tests: &HashMap<String, Test>, into: &str, mode: Mode) -> Result<bool> {
-        let tests_dir = project_root().join(into);
-        if !tests_dir.is_dir() {
-            fs::create_dir_all(&tests_dir)?;
-        }
-        // ok is never actually read, but it needs to be specified to create a Test in existing_tests
-        let existing = existing_tests(&tests_dir, true)?;
-        for t in existing.keys().filter(|&t| !tests.contains_key(t)) {
-            panic!("Test is deleted: '{}'", t);
-        }
+    let js_tests = tests_from_dir(&project_root().join(Path::new("crates/rome_js_parser/src")))?;
+    let json_tests =
+        tests_from_dir(&project_root().join(Path::new("crates/rome_json_parser/src")))?;
 
-        let mut some_file_was_updated = false;
+    generate_tests_of_crate(js_tests, "crates/rome_js_parser", mode)?;
+    generate_tests_of_crate(json_tests, "crates/rome_json_parser", mode)?;
 
-        for (name, test) in tests {
-            let path = match existing.get(name) {
-                Some((path, _test)) => path.clone(),
-                None => tests_dir
-                    .join(name)
-                    .with_extension(test.language.extension()),
-            };
-            if let crate::UpdateResult::Updated = update(&path, &test.text, &mode)? {
-                some_file_was_updated = true;
-            }
-        }
+    Ok(())
+}
 
-        Ok(some_file_was_updated)
+fn install_tests(tests: &HashMap<String, Test>, into: &str, mode: Mode) -> Result<bool> {
+    let tests_dir = project_root().join(into);
+    if !tests_dir.is_dir() {
+        fs::create_dir_all(&tests_dir)?;
+    }
+    // ok is never actually read, but it needs to be specified to create a Test in existing_tests
+    let existing = existing_tests(&tests_dir, true)?;
+    for t in existing.keys().filter(|&t| !tests.contains_key(t)) {
+        panic!("Test is deleted: '{}'", t);
     }
 
     let mut some_file_was_updated = false;
-    some_file_was_updated |=
-        install_tests(&tests.ok, "crates/rome_js_parser/test_data/inline/ok", mode)?;
-    some_file_was_updated |= install_tests(
-        &tests.err,
-        "crates/rome_js_parser/test_data/inline/err",
-        mode,
-    )?;
 
-    if some_file_was_updated {
-        let _ = filetime::set_file_mtime(
-            "crates/rome_js_parser/src/tests.rs",
-            filetime::FileTime::now(),
-        );
+    for (name, test) in tests {
+        let path = match existing.get(name) {
+            Some((path, _test)) => path.clone(),
+            None => tests_dir
+                .join(name)
+                .with_extension(test.language.extension()),
+        };
+        if let crate::UpdateResult::Updated = update(&path, &test.text, &mode)? {
+            some_file_was_updated = true;
+        }
     }
 
-    Ok(())
+    Ok(some_file_was_updated)
+}
+/// generate tests for a specific parser crate
+fn generate_tests_of_crate(
+    tests: Tests,
+    crate_path: &str,
+    mode: Mode,
+) -> Result<(), anyhow::Error> {
+    let mut some_file_was_updated = false;
+    some_file_was_updated |= install_tests(
+        &tests.ok,
+        &format!("{crate_path}/test_data/inline/ok"),
+        mode,
+    )?;
+    some_file_was_updated |= install_tests(
+        &tests.err,
+        &format!("{crate_path}/test_data/inline/err"),
+        mode,
+    )?;
+    Ok(if some_file_was_updated {
+        let _ = filetime::set_file_mtime(
+            &format!("{crate_path}/src/tests.rs"),
+            filetime::FileTime::now(),
+        );
+    })
 }
 
 #[derive(Debug)]
@@ -105,6 +119,7 @@ enum Language {
     TypeScript,
     Jsx,
     Tsx,
+    Json,
 }
 
 impl Language {
@@ -114,6 +129,7 @@ impl Language {
             Language::TypeScript => "ts",
             Language::Jsx => "jsx",
             Language::Tsx => "tsx",
+            Language::Json => "json",
         }
     }
 
@@ -123,9 +139,8 @@ impl Language {
             "ts" => Language::TypeScript,
             "jsx" => Language::Jsx,
             "tsx" => Language::Tsx,
-            _ => {
-                return None;
-            }
+            "json" => Language::Json,
+            _ => return None,
         };
 
         Some(language)
@@ -154,6 +169,7 @@ fn collect_tests(s: &str) -> Vec<Test> {
             Some(("js", name)) => (Language::JavaScript, name),
             Some(("ts", name)) => (Language::TypeScript, name),
             Some(("tsx", name)) => (Language::Tsx, name),
+            Some(("json", name)) => (Language::Json, name),
             Some((name, _)) => (Language::JavaScript, name),
             _ => (Language::JavaScript, suffix),
         };

@@ -1,6 +1,6 @@
-use crate::Parser;
 use crate::parser::CompletedMarker;
 use crate::token_set::TokenSet;
+use crate::Parser;
 use rome_json_syntax::JsonSyntaxKind::{self, EOF};
 use std::error::Error;
 use std::fmt::{Display, Formatter};
@@ -89,7 +89,6 @@ impl ParseRecovery {
         if self.recovered(p) {
             return Err(RecoveryError::AlreadyRecovered);
         }
-
 
         let m = p.start();
 

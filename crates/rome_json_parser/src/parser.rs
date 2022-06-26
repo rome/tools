@@ -22,7 +22,7 @@ use rome_rowan::{SyntaxKind, TextSize};
 
 // pub(crate) use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::event::Event;
-use crate::parse_error::{ToDiagnostic, expected_token};
+use crate::parse_error::{expected_token, ToDiagnostic};
 use crate::token_set::TokenSet;
 use crate::token_source::{TokenSource, Trivia};
 use crate::*;

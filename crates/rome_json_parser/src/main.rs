@@ -9,7 +9,6 @@ use rome_json_parser::{parse, parse_json_root};
 use rome_json_syntax::JsonSyntaxKind;
 fn main() {
     let text = r#" ["test", {"test": 2 }] "#;
-    let text = include_str!("../big.json");
     let start = Instant::now();
     let _root = parse(text, 0);
     println!("{:?}", start.elapsed());

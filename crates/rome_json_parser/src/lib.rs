@@ -3,14 +3,14 @@ pub mod lexer;
 pub(crate) mod lossless_tree_sink;
 pub(crate) mod parse;
 pub(crate) mod parse_error;
+pub(crate) mod parse_recovery;
+pub(crate) mod parse_syntax;
 pub(crate) mod parser;
-pub (crate) mod parse_syntax;
-pub (crate) mod parse_recovery;
 pub(crate) mod token_set;
 pub mod token_source;
 
-pub(crate) use parser::Parser;
 pub use parse::parse;
+pub(crate) use parser::Parser;
 pub fn parse_json_root() {
     // let parser = rome_js_parser::Parser::new("", 0, SourceType::js_module());
     // let source = "(void b)";

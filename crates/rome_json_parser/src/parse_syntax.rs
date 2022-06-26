@@ -1,7 +1,7 @@
 use crate::parse_error::ToDiagnostic;
 use crate::parse_recovery::{ParseRecovery, RecoveryResult};
 use crate::parse_syntax::ParsedSyntax::{Absent, Present};
-use crate::parser::{CompletedMarker, Parser, Marker};
+use crate::parser::{CompletedMarker, Marker, Parser};
 // use crate::parser::parse_recovery::RecoveryResult;
 // use crate::parser::ParseRecovery;
 use rome_diagnostics::Diagnostic;
