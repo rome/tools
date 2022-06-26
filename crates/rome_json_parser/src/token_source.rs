@@ -84,8 +84,8 @@ impl<'l> TokenSource<'l> {
     }
 
     pub fn has_un_consume_trivia(&self) -> bool {
-        dbg!(&self.lexer.current_none_trivia_cursor());
-        dbg!(&self.token_length());
+        // dbg!(&self.lexer.current_none_trivia_cursor());
+        // dbg!(&self.token_length());
         self.lexer.current_none_trivia_cursor() < self.token_length()
     }
 
@@ -101,7 +101,7 @@ impl<'l> TokenSource<'l> {
                 self.lexer.next_none_trivia_cursor(),
             )
         };
-        println!("{}, {}", left, right);
+        // println!("{}, {}", left, right);
         for i in left..right {
             let (kind, range) = self.lexer.token_at(i);
             match TriviaPieceKind::try_from(kind) {
@@ -245,8 +245,8 @@ impl<'l> TokenSource<'l> {
     /// Bumps the current token and moves the parser to the next non-trivia token
     #[inline(always)]
     pub fn bump(&mut self) {
-        dbg!(&self.lexer.current_none_trivia_cursor());
-        dbg!(&self.current());
+        // dbg!(&self.lexer.current_none_trivia_cursor());
+        // dbg!(&self.current());
         if self.current() != JsonSyntaxKind::EOF {
             // if !context.is_regular() {
             //     self.lookahead_offset = 0;

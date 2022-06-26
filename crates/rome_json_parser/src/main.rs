@@ -12,11 +12,11 @@ fn main() {
     "#;
     let start = Instant::now();
     let _root = parse(text, 0);
-    for ele in _root.diagnostics() {
-        println!("{:?}", ele);
-    }
+    // for ele in _root.diagnostics() {
+    //     println!("{:?}", ele);
+    // }
     println!("{:?}", start.elapsed());
-    println!("{:#?}", _root.tree());
+    // println!("{:#?}", _root.tree());
     // let mut res = TokenSource::from_str();
     // loop {
     //     println!("{:?}, {:?}", res.current(), res.current_range());

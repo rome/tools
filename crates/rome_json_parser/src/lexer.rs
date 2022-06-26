@@ -127,7 +127,7 @@ impl<'a> Lexer<'a> {
                 non_trivia_index_list.push(i);
             }
         }
-        dbg!(&tokens_with_span);
+        // dbg!(&tokens_with_span);
         Self {
             tokens_with_span,
             source,
