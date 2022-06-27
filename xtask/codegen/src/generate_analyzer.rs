@@ -87,19 +87,13 @@ fn update_registry_builder(analyzers: Vec<String>, assists: Vec<String>) -> Resu
         .collect();
 
     let tokens = xtask::reformat(quote! {
-        use rome_analyze::{AnalyzerSignal, AnalysisFilter, ControlFlow, RuleRegistry};
+        use rome_analyze::{AnalysisFilter, RuleRegistry};
         use rome_js_syntax::JsLanguage;
 
         use crate::{analyzers::*, semantic_analyzers::*, assists::*};
 
-        pub(crate) fn build_registry<'a, F, B>(
-            filter: &AnalysisFilter,
-            callback: F,
-        ) -> RuleRegistry<'a, JsLanguage, B>
-        where
-            F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
-        {
-            let mut rules = RuleRegistry::new(callback);
+        pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage> {
+            let mut rules = RuleRegistry::default();
             #( #rules )*
             rules
         }

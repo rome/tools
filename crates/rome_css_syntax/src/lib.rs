@@ -56,6 +56,10 @@ impl rome_rowan::SyntaxKind for CssSyntaxKind {
         matches!(self, CSS_UNKNOWN)
     }
 
+    fn is_list(&self) -> bool {
+        CssSyntaxKind::is_list(*self)
+    }
+
     fn to_unknown(&self) -> Self {
         todo!()
     }

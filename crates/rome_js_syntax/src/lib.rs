@@ -92,6 +92,10 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
         )
     }
 
+    fn is_list(&self) -> bool {
+        JsSyntaxKind::is_list(*self)
+    }
+
     fn to_unknown(&self) -> JsSyntaxKind {
         match self {
             JS_BLOCK_STATEMENT

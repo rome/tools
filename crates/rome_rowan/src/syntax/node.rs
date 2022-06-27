@@ -274,6 +274,10 @@ impl<L: Language> SyntaxNode<L> {
         }
     }
 
+    pub fn tokens(&self) -> impl Iterator<Item = SyntaxToken<L>> + DoubleEndedIterator + '_ {
+        self.raw.tokens().map(SyntaxToken::from)
+    }
+
     pub fn first_child(&self) -> Option<SyntaxNode<L>> {
         self.raw.first_child().map(Self::from)
     }

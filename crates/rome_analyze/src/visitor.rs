@@ -1,39 +1,40 @@
-use std::ops::ControlFlow;
+use std::collections::VecDeque;
 
 use rome_diagnostics::file::FileId;
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
-use crate::{registry::NodeLanguage, LanguageRoot, QueryMatch};
+use crate::{
+    registry::{NodeLanguage, Phases},
+    LanguageRoot, QueryMatch, ServiceBag,
+};
 
 /// Mutable context objects shared by all visitors
-pub struct VisitorContext<'a, L: Language, B> {
+pub struct VisitorContext<L: Language> {
+    pub phase: Phases,
     pub file_id: FileId,
     pub root: LanguageRoot<L>,
+    pub services: ServiceBag,
     pub range: Option<TextRange>,
-    pub match_query: MatchQuery<'a, L, B>,
+    pub match_queue: VecDeque<QueryMatch<L>>,
 }
 
-type MatchQuery<'a, L, B> =
-    Box<dyn FnMut(FileId, &LanguageRoot<L>, &QueryMatch<L>) -> ControlFlow<B> + 'a>;
-
-impl<'a, L: Language, B> VisitorContext<'a, L, B> {
-    /// Run all the rules with a `Query` matching `query_match`
-    pub fn match_query(&mut self, query_match: &QueryMatch<L>) -> ControlFlow<B> {
-        (self.match_query)(self.file_id, &self.root, query_match)
+impl<L: Language> VisitorContext<L> {
+    pub fn match_query(&mut self, query_match: QueryMatch<L>) {
+        self.match_queue.push_back(query_match)
     }
 }
 
 /// Visitors are the main building blocks of the analyzer: they receive syntax
 /// [WalkEvent]s, process these events to build secondary data structures from
 /// the syntax tree, and emit rule query matches through the [crate::RuleRegistry]
-pub trait Visitor<B> {
+pub trait Visitor {
     type Language: Language;
 
     fn visit(
         &mut self,
         event: &WalkEvent<SyntaxNode<Self::Language>>,
-        ctx: &mut VisitorContext<Self::Language, B>,
-    ) -> ControlFlow<B>;
+        ctx: &mut VisitorContext<Self::Language>,
+    );
 }
 
 /// A node visitor is a special kind of visitor that does not have a persistent
@@ -44,21 +45,21 @@ pub trait Visitor<B> {
 /// Due to these specificities node visitors do not implement [Visitor]
 /// directly, instead one or more of these must the merged into a single
 /// visitor type using the [merge_node_visitors] macro
-pub trait NodeVisitor<V, B>: Sized {
+pub trait NodeVisitor<V>: Sized {
     type Node: AstNode;
 
     fn enter(
         node: Self::Node,
-        ctx: &mut VisitorContext<NodeLanguage<Self::Node>, B>,
+        ctx: &mut VisitorContext<NodeLanguage<Self::Node>>,
         stack: &mut V,
-    ) -> ControlFlow<B, Self>;
+    ) -> Self;
 
     fn exit(
         self,
         node: Self::Node,
-        ctx: &mut VisitorContext<NodeLanguage<Self::Node>, B>,
+        ctx: &mut VisitorContext<NodeLanguage<Self::Node>>,
         stack: &mut V,
-    ) -> ControlFlow<B>;
+    );
 }
 
 /// Creates a single struct implementing [Visitor] over a collection of type
@@ -97,46 +98,43 @@ pub trait NodeVisitor<V, B>: Sized {
 #[macro_export]
 macro_rules! merge_node_visitors {
     ( $vis:vis $name:ident { $( $id:ident: $visitor:ty, )+ } ) => {
-        $vis struct $name<B> {
+        $vis struct $name {
             stack: Vec<(::std::any::TypeId, usize)>,
             $( $vis $id: Vec<(usize, $visitor)>, )*
-            _lang: ::std::marker::PhantomData<B>,
         }
 
-        impl<B> $name<B> {
+        impl $name {
             $vis fn new() -> Self {
                 Self {
                     stack: Vec::new(),
                     $( $id: Vec::new(), )*
-                    _lang: ::std::marker::PhantomData,
                 }
             }
         }
 
-        impl<B> $crate::Visitor<B> for $name<B> {
-            type Language = <( $( <$visitor as $crate::NodeVisitor<$name<B>, B>>::Node, )* ) as ::rome_rowan::macros::UnionLanguage>::Language;
+        impl $crate::Visitor for $name {
+            type Language = <( $( <$visitor as $crate::NodeVisitor<$name>>::Node, )* ) as ::rome_rowan::macros::UnionLanguage>::Language;
 
             fn visit(
                 &mut self,
                 event: &::rome_rowan::WalkEvent<::rome_rowan::SyntaxNode<Self::Language>>,
-                ctx: &mut $crate::VisitorContext<Self::Language, B>,
-            ) -> ::std::ops::ControlFlow<B> {
+                ctx: &mut $crate::VisitorContext<Self::Language>,
+            ) {
                 match event {
                     ::rome_rowan::WalkEvent::Enter(node) => {
                         let kind = node.kind();
 
                         $(
-                            if <<$visitor as $crate::NodeVisitor<$name<B>, B>>::Node as ::rome_rowan::AstNode>::can_cast(kind) {
-                                let node = <<$visitor as $crate::NodeVisitor<$name<B>, B>>::Node as ::rome_rowan::AstNode>::unwrap_cast(node.clone());
-                                let state = <$visitor as $crate::NodeVisitor<$name<B>, B>>::enter(node, ctx, self)?;
+                            if <<$visitor as $crate::NodeVisitor<$name>>::Node as ::rome_rowan::AstNode>::can_cast(kind) {
+                                let node = <<$visitor as $crate::NodeVisitor<$name>>::Node as ::rome_rowan::AstNode>::unwrap_cast(node.clone());
+                                let state = <$visitor as $crate::NodeVisitor<$name>>::enter(node, ctx, self);
 
                                 let stack_index = self.stack.len();
                                 let ty_index = self.$id.len();
 
                                 self.$id.push((stack_index, state));
                                 self.stack.push((::std::any::TypeId::of::<$visitor>(), ty_index));
-
-                                return ::std::ops::ControlFlow::Continue(());
+                                return;
                             }
                         )*
                     }
@@ -144,18 +142,17 @@ macro_rules! merge_node_visitors {
                         let kind = node.kind();
 
                         $(
-                            if <<$visitor as $crate::NodeVisitor<$name<B>, B>>::Node as ::rome_rowan::AstNode>::can_cast(kind) {
+                            if <<$visitor as $crate::NodeVisitor<$name>>::Node as ::rome_rowan::AstNode>::can_cast(kind) {
                                 self.stack.pop().unwrap();
                                 let (_, state) = self.$id.pop().unwrap();
 
-                                let node = <<$visitor as $crate::NodeVisitor<$name<B>, B>>::Node as ::rome_rowan::AstNode>::unwrap_cast(node.clone());
-                                return <$visitor as $crate::NodeVisitor<$name<B>, B>>::exit(state, node, ctx, self);
+                                let node = <<$visitor as $crate::NodeVisitor<$name>>::Node as ::rome_rowan::AstNode>::unwrap_cast(node.clone());
+                                <$visitor as $crate::NodeVisitor<$name>>::exit(state, node, ctx, self);
+                                return;
                             }
                         )*
                     }
                 }
-
-                ::std::ops::ControlFlow::Continue(())
             }
         }
     };

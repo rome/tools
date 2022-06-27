@@ -66,7 +66,7 @@ fn main() -> Result<()> {
     };
 
     // Ensure the list of rules is stored alphabetically
-    let mut rules: Vec<_> = metadata(filter);
+    let mut rules: Vec<_> = metadata(filter).collect();
     rules.sort_unstable_by_key(|(name, _)| *name);
 
     for (name, docs) in rules {

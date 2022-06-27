@@ -1,4 +1,4 @@
-use std::{any::TypeId, ops::ControlFlow};
+use std::any::TypeId;
 
 use rome_analyze::{merge_node_visitors, QueryMatch, Visitor, VisitorContext};
 use rome_js_syntax::{
@@ -11,7 +11,7 @@ use rome_rowan::{declare_node_union, AstNode, SyntaxError, SyntaxResult};
 use super::{nodes::*, FunctionBuilder};
 
 /// Return a new instance of the [ControlFlowVisitor]
-pub(crate) fn make_visitor<B>() -> impl Visitor<B, Language = JsLanguage> {
+pub(crate) fn make_visitor() -> impl Visitor<Language = JsLanguage> {
     ControlFlowVisitor::new()
 }
 
@@ -35,7 +35,7 @@ macro_rules! declare_visitor {
         impl<'a> StatementStack<'a> {
             /// Split the visitor state at the topmost function, returning the
             /// corresponding function visitor and the rest of the stack above it
-            fn new<B>(visitor: &'a mut $name<B>) -> Option<(&mut FunctionVisitor, Self)> {
+            fn new(visitor: &'a mut $name) -> Option<(&mut FunctionVisitor, Self)> {
                 let (index, builder) = visitor.function.last_mut()?;
 
                 Some((builder, Self {
@@ -147,36 +147,29 @@ declare_node_union! {
         | JsSetterClassMember
 }
 
-impl<B> rome_analyze::NodeVisitor<ControlFlowVisitor<B>, B> for FunctionVisitor {
+impl rome_analyze::NodeVisitor<ControlFlowVisitor> for FunctionVisitor {
     type Node = JsAnyControlFlowRoot;
 
     fn enter(
         _: Self::Node,
-        _: &mut VisitorContext<JsLanguage, B>,
-        _: &mut ControlFlowVisitor<B>,
-    ) -> ControlFlow<B, Self> {
-        ControlFlow::Continue(Self {
+        _: &mut VisitorContext<JsLanguage>,
+        _: &mut ControlFlowVisitor,
+    ) -> Self {
+        Self {
             builder: Some(FunctionBuilder::default()),
-        })
+        }
     }
 
-    fn exit(
-        self,
-        _: Self::Node,
-        ctx: &mut VisitorContext<JsLanguage, B>,
-        _: &mut ControlFlowVisitor<B>,
-    ) -> ControlFlow<B> {
+    fn exit(self, _: Self::Node, ctx: &mut VisitorContext<JsLanguage>, _: &mut ControlFlowVisitor) {
         if let Some(builder) = self.builder {
-            return ctx.match_query(&QueryMatch::ControlFlowGraph(builder.finish()));
+            ctx.match_query(QueryMatch::ControlFlowGraph(builder.finish()));
         }
-
-        ControlFlow::Continue(())
     }
 }
 
 /// Wrapper trait for [rome_analyze::NodeVisitor] adding control flow specific
 /// utilities (error handling and automatic [FunctionBuilder] injection)
-pub(super) trait NodeVisitor<B>: Sized {
+pub(super) trait NodeVisitor: Sized {
     type Node: AstNode<Language = JsLanguage>;
 
     fn enter(
@@ -194,20 +187,20 @@ pub(super) trait NodeVisitor<B>: Sized {
 /// implementing the control-flow specific [NodeVisitor] trait
 pub(super) struct VisitorAdapter<V>(SyntaxResult<V>);
 
-impl<B, V> rome_analyze::NodeVisitor<ControlFlowVisitor<B>, B> for VisitorAdapter<V>
+impl<V> rome_analyze::NodeVisitor<ControlFlowVisitor> for VisitorAdapter<V>
 where
-    V: NodeVisitor<B>,
+    V: NodeVisitor,
 {
     type Node = V::Node;
 
     fn enter(
         node: Self::Node,
-        _: &mut VisitorContext<JsLanguage, B>,
-        stack: &mut ControlFlowVisitor<B>,
-    ) -> ControlFlow<B, Self> {
+        _: &mut VisitorContext<JsLanguage>,
+        stack: &mut ControlFlowVisitor,
+    ) -> Self {
         let (visitor, stack) = match StatementStack::new(stack) {
             Some((builder, stack)) => (builder, stack),
-            None => return ControlFlow::Continue(Self(Err(SyntaxError::MissingRequiredChild))),
+            None => return Self(Err(SyntaxError::MissingRequiredChild)),
         };
 
         let result = if let Some(builder) = visitor.builder.as_mut() {
@@ -222,23 +215,23 @@ where
             Err(SyntaxError::MissingRequiredChild)
         };
 
-        ControlFlow::Continue(Self(result))
+        Self(result)
     }
 
     fn exit(
         self,
         node: Self::Node,
-        _: &mut VisitorContext<JsLanguage, B>,
-        stack: &mut ControlFlowVisitor<B>,
-    ) -> ControlFlow<B> {
+        _: &mut VisitorContext<JsLanguage>,
+        stack: &mut ControlFlowVisitor,
+    ) {
         let state = match self {
             Self(Ok(state)) => state,
-            _ => return ControlFlow::Continue(()),
+            _ => return,
         };
 
         let (visitor, stack) = match StatementStack::new(stack) {
             Some((builder, stack)) => (builder, stack),
-            None => return ControlFlow::Continue(()),
+            None => return,
         };
 
         if let Some(builder) = visitor.builder.as_mut() {
@@ -246,7 +239,5 @@ where
                 visitor.builder.take();
             }
         }
-
-        ControlFlow::Continue(())
     }
 }

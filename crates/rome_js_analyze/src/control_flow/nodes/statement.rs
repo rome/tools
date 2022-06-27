@@ -14,7 +14,7 @@ declare_node_union! {
 
 pub(in crate::control_flow) struct StatementVisitor;
 
-impl<B> NodeVisitor<B> for StatementVisitor {
+impl NodeVisitor for StatementVisitor {
     type Node = JsSimpleStatement;
 
     fn enter(

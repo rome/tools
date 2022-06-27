@@ -31,6 +31,7 @@ pub trait Queryable: Sized {
 }
 
 /// Enumerate all the types of [Queryable] analyzer visitors may emit
+#[derive(Clone, Debug)]
 pub enum QueryMatch<L: Language> {
     Syntax(SyntaxNode<L>),
     ControlFlowGraph(ControlFlowGraph<L>),

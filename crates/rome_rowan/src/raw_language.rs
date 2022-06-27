@@ -44,6 +44,13 @@ impl SyntaxKind for RawLanguageKind {
         self == &RawLanguageKind::UNKNOWN
     }
 
+    fn is_list(&self) -> bool {
+        matches!(
+            self,
+            Self::EXPRESSION_LIST | Self::SEPARATED_EXPRESSION_LIST
+        )
+    }
+
     fn to_unknown(&self) -> Self {
         RawLanguageKind::UNKNOWN
     }

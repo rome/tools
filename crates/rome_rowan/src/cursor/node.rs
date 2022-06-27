@@ -176,6 +176,20 @@ impl SyntaxNode {
         SyntaxElementChildren::new(self.clone())
     }
 
+    #[inline]
+    pub fn tokens(&self) -> impl Iterator<Item = SyntaxToken> + DoubleEndedIterator + '_ {
+        self.green().children().filter_map(|child| {
+            child.element().into_token().map(|token| {
+                SyntaxToken::new(
+                    token,
+                    self.clone(),
+                    child.slot() as u32,
+                    self.offset() + child.rel_offset(),
+                )
+            })
+        })
+    }
+
     pub fn first_child(&self) -> Option<SyntaxNode> {
         self.green().children().find_map(|child| {
             child.element().into_node().map(|green| {
