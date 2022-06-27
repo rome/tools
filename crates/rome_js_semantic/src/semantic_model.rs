@@ -172,6 +172,7 @@ impl SemanticModel {
                 data: self.data.clone(),
                 id: interval.val,
             },
+            // We always have at least one scope, the global one.
             None => unreachable!(),
         }
     }
