@@ -12,6 +12,10 @@ struct SemanticModelScopeData {
     bindings_by_name: HashMap<SyntaxTokenText, TextRange>,
 }
 
+/// Contains all the data of the [SemanticModel] and only lives behind an [Arc].
+///
+/// That allows any returned struct (like [Scope], [Binding])
+/// to outlive the [SemanticModel], and to not include lifetimes.
 struct SemanticModelData {
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
@@ -19,8 +23,8 @@ struct SemanticModelData {
     declarations_by_range: HashMap<TextRange, TextRange>,
 }
 
-impl SemanticModelData {}
-
+/// Provides all information regarding a specific scope.
+/// Allows navigation to parent and children scope and binding information.
 pub struct Scope {
     data: Arc<SemanticModelData>,
     id: usize,
@@ -37,6 +41,7 @@ impl std::fmt::Debug for Scope {
 }
 
 impl Scope {
+    /// Return this scope parent.
     pub fn parent(&self) -> Option<Scope> {
         let parent = self.data.scopes[self.id].parent?;
         Some(Scope {
@@ -45,6 +50,8 @@ impl Scope {
         })
     }
 
+    /// Return all bindings that were bound in this scope. It **does
+    /// not** return bindings of parent scopes.
     pub fn bindings(&self) -> ScopeBindingsIter {
         ScopeBindingsIter {
             data: self.data.clone(),
@@ -53,6 +60,7 @@ impl Scope {
         }
     }
 
+    /// Return a binding by its name, like it appears on code.
     pub fn get_binding(&self, name: &str) -> Option<Binding> {
         let data = &self.data.scopes[self.id];
 
@@ -63,11 +71,13 @@ impl Scope {
     }
 }
 
+/// Provides all information regarding to a specific binding.
 pub struct Binding {
     node: JsSyntaxNode,
 }
 
 impl Binding {
+    /// Returns the syntax node associated with the binding.
     pub fn syntax(&self) -> &JsSyntaxNode {
         &self.node
     }
@@ -99,6 +109,11 @@ impl Iterator for ScopeBindingsIter {
     }
 }
 
+/// The façade for all semantic information.
+/// - Scope: [scope]
+/// - Declrations: [declaration]
+///
+/// See [SemanticModelData] for more information about the internals.
 pub struct SemanticModel {
     data: Arc<SemanticModelData>,
 }
@@ -110,6 +125,28 @@ impl SemanticModel {
         }
     }
 
+    /// Return the [Scope] which the syntax is part of.
+    /// Can also be called from [AstNode]::scope extension method.
+    ///
+    /// ```rust
+    /// use rome_rowan::{AstNode, SyntaxNodeCast};
+    /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
+    /// use rome_js_semantic::{semantic_model, SemanticScopeExtensions};
+    ///
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
+    /// let model = semantic_model(&r.tree());
+    ///
+    /// let arguments_reference = r
+    ///     .syntax()
+    ///     .descendants()
+    ///     .filter_map(|x| x.cast::<JsReferenceIdentifier>())
+    ///     .find(|x| x.text() == "arguments")
+    ///     .unwrap();
+    ///
+    /// let block_scope = model.scope(&arguments_reference.syntax());
+    /// // or
+    /// let block_scope = arguments_reference.scope(&model);
+    /// ```
     pub fn scope(&self, node: &JsSyntaxNode) -> Scope {
         let range = node.text_range();
         let scopes = self
@@ -126,6 +163,28 @@ impl SemanticModel {
         }
     }
 
+    /// Return the [Declaration] of a reference.
+    /// Can also be called from [JsReferenceIdentifier]::declaration extension method.
+    ///
+    /// ```rust
+    /// use rome_rowan::{AstNode, SyntaxNodeCast};
+    /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
+    /// use rome_js_semantic::{semantic_model, JsReferenceIdentifierExtensions};
+    ///
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
+    /// let model = semantic_model(&r.tree());
+    ///
+    /// let arguments_reference = r
+    ///     .syntax()
+    ///     .descendants()
+    ///     .filter_map(|x| x.cast::<JsReferenceIdentifier>())
+    ///     .find(|x| x.text() == "arguments")
+    ///     .unwrap();
+    ///
+    /// let arguments_declaration = model.declaration(&arguments_reference);
+    /// // or
+    /// let arguments_declaration = arguments_reference.declaration(&model);
+    /// ```
     pub fn declaration(&self, reference: &JsReferenceIdentifier) -> Option<Binding> {
         let declaration_range = self
             .data
@@ -158,6 +217,12 @@ impl JsReferenceIdentifierExtensions for JsReferenceIdentifier {
     }
 }
 
+/// Builds the [SemanticModel] consuming [SemanticEvent] and [SyntaxNode].
+/// For a good example on how to use it see [semantic_model].
+///
+/// [SemanticModelBuilder] consumes all the [SemanticEvents] and build all the
+/// data necessary to build a [SemanticModelData], that is allocated with an [Arc]
+/// and stored inside the [SemanticModel].
 #[derive(Default)]
 pub struct SemanticModelBuilder {
     scope_stack: Vec<usize>,
@@ -237,6 +302,8 @@ impl SemanticModelBuilder {
     }
 }
 
+/// Build the complete [SemanticModel] of a parsed file.
+/// For a push based model to build the [SemanticModel], see [SemanticModelBuilder].
 pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
     let mut extractor = SemanticEventExtractor::default();
     let mut sink = SemanticModelBuilder::default();
