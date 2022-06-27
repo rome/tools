@@ -36,22 +36,22 @@ export type a =
 # Output
 ```js
 export type a =
-  // foo
-  | foo1 & foo2
-  // bar
-  | bar1 & bar2
-  // prettier-ignore
-  | qux1 & qux2;
+    // foo
+    | foo1 & foo2
+    // bar
+    | bar1 & bar2
+    // prettier-ignore
+    | qux1 & qux2;
 
 export type a =
-  // foo
-  | foo1 & foo2
-  // bar
-  | bar1 & bar2
-  // prettier-ignore
-  | qux1 & qux2
-  // baz
-  | baz1 & baz2;
+    // foo
+    | foo1 & foo2
+    // bar
+    | bar1 & bar2
+    // prettier-ignore
+    | qux1 & qux2
+    // baz
+    | baz1 & baz2;
 
 export type a =
   // prettier-ignore
