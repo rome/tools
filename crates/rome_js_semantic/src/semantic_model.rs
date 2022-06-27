@@ -83,6 +83,8 @@ impl Binding {
     }
 }
 
+/// Iterate all bindings that were bound in a given scope. It **does
+/// not** return bindings of parent scopes.
 pub struct ScopeBindingsIter {
     data: Arc<SemanticModelData>,
     scope_id: usize,
