@@ -216,7 +216,11 @@ impl SemanticModel {
 
 // Extensions
 
+/// Extension method to allow [AstNode] to easily
+/// get its [Scope].
 pub trait SemanticScopeExtensions {
+    /// Return the [Scope] which this object is part of.
+    /// See [scope](semantic_model::SemanticModel::scope)
     fn scope(&self, model: &SemanticModel) -> Scope;
 }
 
@@ -226,7 +230,10 @@ impl<T: AstNode<Language = JsLanguage>> SemanticScopeExtensions for T {
     }
 }
 
+/// Extension method to allow [JsReferenceIdentifier] to easily
+/// get its declaration.
 pub trait JsReferenceIdentifierExtensions {
+    /// Return the [Binding] that declared the symbol this reference references.
     fn declaration(&self, model: &SemanticModel) -> Option<Binding>;
 }
 
