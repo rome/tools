@@ -247,23 +247,24 @@ const b = `${
 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
 }`;
 
-const a = (
-	aa &&
-		bb &&
-		something &&
-		elsewhere &&
-		happy &&
-		thoughts &&
-		somethingsomethingsomethingsomething
-) || (
-	aa &&
-		bb &&
-		something &&
-		elsewhere &&
-		happy &&
-		thoughts &&
-		somethingsomethingsomethingsomething
-);
+const a =
+	(
+		aa &&
+			bb &&
+			something &&
+			elsewhere &&
+			happy &&
+			thoughts &&
+			somethingsomethingsomethingsomething
+	) || (
+		aa &&
+			bb &&
+			something &&
+			elsewhere &&
+			happy &&
+			thoughts &&
+			somethingsomethingsomethingsomething
+	);
 
 (
 	lorem && // foo

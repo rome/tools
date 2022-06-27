@@ -16,7 +16,7 @@ impl FormatRule<TsEnumMemberList> for FormatTsEnumMemberList {
         } else {
             soft_line_break_or_space()
         })
-        .entries(node.format_separated(JsSyntaxKind::COMMA))
+        .entries(node.format_separated(JsSyntaxKind::COMMA).nodes_grouped())
         .finish()
     }
 }

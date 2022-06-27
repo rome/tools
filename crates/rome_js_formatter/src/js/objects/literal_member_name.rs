@@ -20,7 +20,7 @@ impl FormatNodeRule<JsLiteralMemberName> for FormatJsLiteralMemberName {
                     f,
                     [FormatLiteralStringToken::new(
                         &value,
-                        StringLiteralParentKind::Expression
+                        StringLiteralParentKind::Member
                     )]
                 ]
             }

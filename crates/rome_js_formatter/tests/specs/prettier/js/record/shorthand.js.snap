@@ -13,7 +13,7 @@ console.log(record.url) // https://github.com/tc39/proposal-record-tuple
 # Output
 ```js
 const url = "https://github.com/tc39/proposal-record-tuple";
-const record = #
+const record = #;
 {
   url;
 }

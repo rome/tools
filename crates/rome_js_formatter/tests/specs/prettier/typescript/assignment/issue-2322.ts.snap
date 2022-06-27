@@ -10,12 +10,13 @@ export const listAuthorizedSitesForDefaultHandler: ListAuthorizedSitesForHandler
 
 # Output
 ```js
-export const listAuthorizedSitesForDefaultHandler: ListAuthorizedSitesForHandler = aListAuthorizedSitesForResponse;
+export const listAuthorizedSitesForDefaultHandler: ListAuthorizedSitesForHandler =
+  aListAuthorizedSitesForResponse;
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-    1: export const listAuthorizedSitesForDefaultHandler: ListAuthorizedSitesForHandler = aListAuthorizedSitesForResponse;
+    1: export const listAuthorizedSitesForDefaultHandler: ListAuthorizedSitesForHandler =
 ```
 

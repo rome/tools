@@ -21,9 +21,10 @@ impl FormatRule<JsParameterList> for FormatJsParameterList {
         };
 
         f.join_with(&soft_line_break_or_space())
-            .entries(node.format_separated(JsSyntaxKind::COMMA).with_options(
-                FormatSeparatedOptions::default().with_trailing_separator(trailing_separator),
-            ))
+            .entries(
+                node.format_separated(JsSyntaxKind::COMMA)
+                    .with_trailing_separator(trailing_separator),
+            )
             .finish()
     }
 }

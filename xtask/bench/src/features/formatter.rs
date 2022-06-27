@@ -1,3 +1,5 @@
+#[cfg(feature = "dhat-on")]
+use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use rome_formatter::Printed;
 use rome_js_formatter::context::JsFormatContext;
@@ -23,9 +25,31 @@ pub fn benchmark_format_lib(id: &str, root: &JsSyntaxNode) -> BenchmarkSummary {
 }
 
 pub fn run_format(root: &JsSyntaxNode) -> Printed {
-    format_node(JsFormatContext::default(), root)
-        .unwrap()
-        .print()
+    #[cfg(feature = "dhat-on")]
+    let stats = {
+        println!("Start");
+        dhat::get_stats().unwrap()
+    };
+
+    let formatted = format_node(JsFormatContext::default(), root).unwrap();
+
+    #[cfg(feature = "dhat-on")]
+    let stats = {
+        println!("Formatted");
+        print_diff(stats, dhat::get_stats().unwrap())
+    };
+
+    let printed = formatted.print();
+    drop(formatted);
+
+    #[cfg(feature = "dhat-on")]
+    {
+        println!("Printed");
+        print_diff(stats, dhat::get_stats().unwrap());
+    }
+
+    #[allow(clippy::let_and_return)]
+    printed
 }
 
 impl FormatterMeasurement {

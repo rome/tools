@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
+assertion_line: 184
 expression: test_declarations.js
 ---
 # Input
@@ -174,47 +174,33 @@ it(
 ```js
 // Shouldn't break
 
-it(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {
-    console.log("hello!");
-  },
-);
+it("does something really long and complicated so I have to write a very long name for the test", () => {
+  console.log("hello!");
+});
 
-it(
-  "does something really long and complicated so I have to write a very long name for the test",
-  function () {
-    console.log("hello!");
-  },
-);
+it("does something really long and complicated so I have to write a very long name for the test", function () {
+  console.log("hello!");
+});
 
-it(
-  "does something really long and complicated so I have to write a very long name for the test",
-  function (done) {
-    console.log("hello!");
-  },
-);
+it("does something really long and complicated so I have to write a very long name for the test", function (
+  done,
+) {
+  console.log("hello!");
+});
 
-it(
-  "does something really long and complicated so I have to write a very long name for the test",
-  function myAssertions(done) {
-    console.log("hello!");
-  },
-);
+it("does something really long and complicated so I have to write a very long name for the test", function myAssertions(
+  done,
+) {
+  console.log("hello!");
+});
 
-it(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  function () {
-    console.log("hello!");
-  },
-);
+it(`does something really long and complicated so I have to write a very long name for the test`, function () {
+  console.log("hello!");
+});
 
-it(
-  `{foo + bar} does something really long and complicated so I have to write a very long name for the test`,
-  function () {
-    console.log("hello!");
-  },
-);
+it(`{foo + bar} does something really long and complicated so I have to write a very long name for the test`, function () {
+  console.log("hello!");
+});
 
 it(`handles
   some
@@ -223,186 +209,91 @@ it(`handles
   console.log("hello!");
 });
 
-test(
-  "does something really long and complicated so I have to write a very long name for the test",
-  (done) => {
+test("does something really long and complicated so I have to write a very long name for the test", (
+  done,
+) => {
+  console.log("hello!");
+});
+
+test(`does something really long and complicated so I have to write a very long name for the test`, (
+  done,
+) => {
+  console.log("hello!");
+});
+
+describe("does something really long and complicated so I have to write a very long name for the describe block", () => {
+  it("an example test", (done) => {
     console.log("hello!");
-  },
-);
+  });
+});
 
-test(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  (done) => {
+describe(`does something really long and complicated so I have to write a very long name for the describe block`, () => {
+  it(`an example test`, (done) => {
     console.log("hello!");
-  },
-);
+  });
+});
 
-describe(
-  "does something really long and complicated so I have to write a very long name for the describe block",
-  () => {
-    it("an example test", (done) => {
-      console.log("hello!");
-    });
-  },
-);
+xdescribe("does something really long and complicated so I have to write a very long name for the describe block", () => {});
 
-describe(
-  `does something really long and complicated so I have to write a very long name for the describe block`,
-  () => {
-    it(`an example test`, (done) => {
-      console.log("hello!");
-    });
-  },
-);
+fdescribe("does something really long and complicated so I have to write a very long name for the describe block", () => {});
 
-xdescribe(
-  "does something really long and complicated so I have to write a very long name for the describe block",
-  () => {},
-);
+describe.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-fdescribe(
-  "does something really long and complicated so I have to write a very long name for the describe block",
-  () => {},
-);
+describe.skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-describe.only(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+fit("does something really long and complicated so I have to write a very long name for the describe block", () => {});
 
-describe.skip(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+xit("does something really long and complicated so I have to write a very long name for the describe block", () => {});
 
-fit(
-  "does something really long and complicated so I have to write a very long name for the describe block",
-  () => {},
-);
+it.only("does something really long and complicated so I have to write a very long name for the test", () => {
+  console.log("hello!");
+});
 
-xit(
-  "does something really long and complicated so I have to write a very long name for the describe block",
-  () => {},
-);
+it.only(`does something really long and complicated so I have to write a very long name for the test`, () => {
+  console.log("hello!");
+});
 
-it.only(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {
-    console.log("hello!");
-  },
-);
+it.skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-it.only(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {
-    console.log("hello!");
-  },
-);
+test.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-it.skip(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+test.skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-test.only(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+ftest("does something really long and complicated so I have to write a very long name for the describe block", () => {});
 
-test.skip(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+xtest("does something really long and complicated so I have to write a very long name for the describe block", () => {});
 
-ftest(
-  "does something really long and complicated so I have to write a very long name for the describe block",
-  () => {},
-);
+skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-xtest(
-  "does something really long and complicated so I have to write a very long name for the describe block",
-  () => {},
-);
+skip("does something really long and complicated so I have to write a very long name for the test", () => {});
 
-skip(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+test.step("does something really long and complicated so I have to write a very long name for the test", () => {});
 
-skip(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
+test.step(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-test.step(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
+test.describe("does something really long and complicated so I have to write a very long name for the test", () => {});
 
-test.step(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+test.describe(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-test.describe(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
+test.describe.only("does something really long and complicated so I have to write a very long name for the test", () => {});
 
-test.describe(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+test.describe.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-test.describe.only(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
+test.describe.parallel("does something really long and complicated so I have to write a very long name for the test", () => {});
 
-test.describe.only(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+test.describe.parallel(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-test.describe.parallel(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
+test.describe.parallel.only("does something really long and complicated so I have to write a very long name for the testThis is a very", () => {});
 
-test.describe.parallel(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+test.describe.parallel.only(`does something really long and complicated so I have to write a very long name for the testThis is a very`, () => {});
 
-test.describe.parallel.only(
-  "does something really long and complicated so I have to write a very long name for the testThis is a very",
-  () => {},
-);
+test.describe.serial("does something really long and complicated so I have to write a very long name for the test", () => {});
 
-test.describe.parallel.only(
-  `does something really long and complicated so I have to write a very long name for the testThis is a very`,
-  () => {},
-);
+test.describe.serial(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
-test.describe.serial(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
+test.describe.serial.only("does something really long and complicated so I have to write a very long name for the test", () => {});
 
-test.describe.serial(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
-
-test.describe.serial.only(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
-
-test.describe.serial.only(
-  `does something really long and complicated so I have to write a very long name for the test`,
-  () => {},
-);
+test.describe.serial.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
 
 // Should break
 
@@ -433,10 +324,7 @@ xskip(
   () => {},
 );
 
-test.describe.only.parallel(
-  "does something really long and complicated so I have to write a very long name for the test",
-  () => {},
-);
+test.describe.only.parallel("does something really long and complicated so I have to write a very long name for the test", () => {});
 
 test.describe.parallel.serial(
   "does something really long and complicated so I have to write a very long name for the testThis is a very",
@@ -455,29 +343,19 @@ test.describe.dummy.serial(
 
 // timeout
 
-it(
-  `handles
+it(`handles
   some
     newlines
-  does something really long and complicated so I have to write a very long name for the test`,
-  () => {
-    console.log("hello!");
-  },
-  2500,
-);
+  does something really long and complicated so I have to write a very long name for the test`, () => {
+  console.log("hello!");
+}, 2500);
 
-it(
-  "does something quick",
-  () => {
-    console.log("hello!");
-  },
-  1000000000,
-);
+it("does something quick", () => {
+  console.log("hello!");
+}, 1000000000);
 
-it(
-  "succeeds if the test finishes in time",
-  () => new Promise((resolve) => setTimeout(resolve, 10)),
-);
+it("succeeds if the test finishes in time", () =>
+  new Promise((resolve) => setTimeout(resolve, 10)));
 
 it(
   "succeeds if the test finishes in time",
@@ -489,54 +367,54 @@ it(
 
 # Lines exceeding max width of 80 characters
 ```
-    4:   "does something really long and complicated so I have to write a very long name for the test",
-   11:   "does something really long and complicated so I have to write a very long name for the test",
-   18:   "does something really long and complicated so I have to write a very long name for the test",
-   25:   "does something really long and complicated so I have to write a very long name for the test",
-   32:   `does something really long and complicated so I have to write a very long name for the test`,
-   39:   `{foo + bar} does something really long and complicated so I have to write a very long name for the test`,
-   48:   does something really long and complicated so I have to write a very long name for the test`, () => {
-   53:   "does something really long and complicated so I have to write a very long name for the test",
-   60:   `does something really long and complicated so I have to write a very long name for the test`,
-   67:   "does something really long and complicated so I have to write a very long name for the describe block",
-   76:   `does something really long and complicated so I have to write a very long name for the describe block`,
-   85:   "does something really long and complicated so I have to write a very long name for the describe block",
-   90:   "does something really long and complicated so I have to write a very long name for the describe block",
-   95:   `does something really long and complicated so I have to write a very long name for the test`,
-  100:   `does something really long and complicated so I have to write a very long name for the test`,
-  105:   "does something really long and complicated so I have to write a very long name for the describe block",
-  110:   "does something really long and complicated so I have to write a very long name for the describe block",
-  115:   "does something really long and complicated so I have to write a very long name for the test",
-  122:   `does something really long and complicated so I have to write a very long name for the test`,
-  129:   `does something really long and complicated so I have to write a very long name for the test`,
-  134:   `does something really long and complicated so I have to write a very long name for the test`,
-  139:   `does something really long and complicated so I have to write a very long name for the test`,
-  144:   "does something really long and complicated so I have to write a very long name for the describe block",
-  149:   "does something really long and complicated so I have to write a very long name for the describe block",
-  154:   `does something really long and complicated so I have to write a very long name for the test`,
-  159:   "does something really long and complicated so I have to write a very long name for the test",
-  164:   "does something really long and complicated so I have to write a very long name for the test",
-  169:   `does something really long and complicated so I have to write a very long name for the test`,
-  174:   "does something really long and complicated so I have to write a very long name for the test",
-  179:   `does something really long and complicated so I have to write a very long name for the test`,
-  184:   "does something really long and complicated so I have to write a very long name for the test",
-  189:   `does something really long and complicated so I have to write a very long name for the test`,
-  194:   "does something really long and complicated so I have to write a very long name for the test",
-  199:   `does something really long and complicated so I have to write a very long name for the test`,
-  204:   "does something really long and complicated so I have to write a very long name for the testThis is a very",
-  209:   `does something really long and complicated so I have to write a very long name for the testThis is a very`,
-  214:   "does something really long and complicated so I have to write a very long name for the test",
-  219:   `does something really long and complicated so I have to write a very long name for the test`,
-  224:   "does something really long and complicated so I have to write a very long name for the test",
-  229:   `does something really long and complicated so I have to write a very long name for the test`,
-  236:   "does something really long and complicated so I have to write a very long name for the test",
-  244:   "does something really long and complicated so I have to write a very long name for the test",
-  251:   "does something really long and complicated so I have to write a very long name for the test",
-  258:   "does something really long and complicated so I have to write a very long name for the test",
-  263:   "does something really long and complicated so I have to write a very long name for the test",
-  268:   "does something really long and complicated so I have to write a very long name for the testThis is a very",
-  273:   "does something really long and complicated so I have to write a very long name for the test",
-  278:   "does something really long and complicated so I have to write a very long name for the test",
-  288:   does something really long and complicated so I have to write a very long name for the test`,
+    3: it("does something really long and complicated so I have to write a very long name for the test", () => {
+    7: it("does something really long and complicated so I have to write a very long name for the test", function () {
+   11: it("does something really long and complicated so I have to write a very long name for the test", function (
+   17: it("does something really long and complicated so I have to write a very long name for the test", function myAssertions(
+   23: it(`does something really long and complicated so I have to write a very long name for the test`, function () {
+   27: it(`{foo + bar} does something really long and complicated so I have to write a very long name for the test`, function () {
+   34:   does something really long and complicated so I have to write a very long name for the test`, () => {
+   38: test("does something really long and complicated so I have to write a very long name for the test", (
+   44: test(`does something really long and complicated so I have to write a very long name for the test`, (
+   50: describe("does something really long and complicated so I have to write a very long name for the describe block", () => {
+   56: describe(`does something really long and complicated so I have to write a very long name for the describe block`, () => {
+   62: xdescribe("does something really long and complicated so I have to write a very long name for the describe block", () => {});
+   64: fdescribe("does something really long and complicated so I have to write a very long name for the describe block", () => {});
+   66: describe.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+   68: describe.skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+   70: fit("does something really long and complicated so I have to write a very long name for the describe block", () => {});
+   72: xit("does something really long and complicated so I have to write a very long name for the describe block", () => {});
+   74: it.only("does something really long and complicated so I have to write a very long name for the test", () => {
+   78: it.only(`does something really long and complicated so I have to write a very long name for the test`, () => {
+   82: it.skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+   84: test.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+   86: test.skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+   88: ftest("does something really long and complicated so I have to write a very long name for the describe block", () => {});
+   90: xtest("does something really long and complicated so I have to write a very long name for the describe block", () => {});
+   92: skip(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+   94: skip("does something really long and complicated so I have to write a very long name for the test", () => {});
+   96: test.step("does something really long and complicated so I have to write a very long name for the test", () => {});
+   98: test.step(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+  100: test.describe("does something really long and complicated so I have to write a very long name for the test", () => {});
+  102: test.describe(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+  104: test.describe.only("does something really long and complicated so I have to write a very long name for the test", () => {});
+  106: test.describe.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+  108: test.describe.parallel("does something really long and complicated so I have to write a very long name for the test", () => {});
+  110: test.describe.parallel(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+  112: test.describe.parallel.only("does something really long and complicated so I have to write a very long name for the testThis is a very", () => {});
+  114: test.describe.parallel.only(`does something really long and complicated so I have to write a very long name for the testThis is a very`, () => {});
+  116: test.describe.serial("does something really long and complicated so I have to write a very long name for the test", () => {});
+  118: test.describe.serial(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+  120: test.describe.serial.only("does something really long and complicated so I have to write a very long name for the test", () => {});
+  122: test.describe.serial.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+  127:   "does something really long and complicated so I have to write a very long name for the test",
+  135:   "does something really long and complicated so I have to write a very long name for the test",
+  142:   "does something really long and complicated so I have to write a very long name for the test",
+  149:   "does something really long and complicated so I have to write a very long name for the test",
+  153: test.describe.only.parallel("does something really long and complicated so I have to write a very long name for the test", () => {});
+  156:   "does something really long and complicated so I have to write a very long name for the testThis is a very",
+  161:   "does something really long and complicated so I have to write a very long name for the test",
+  166:   "does something really long and complicated so I have to write a very long name for the test",
+  175:   does something really long and complicated so I have to write a very long name for the test`, () => {
 ```
 

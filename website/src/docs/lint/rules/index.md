@@ -114,6 +114,13 @@ JavaScript allows the omission of curly braces when a block contains only one st
 Prevent extra closing tags for components without children
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useShorthandArrayType">
+	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType</a>
+	<a class="header-anchor" href="#useShorthandArrayType"></a>
+</h3>
+When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">
 	<a href="/docs/lint/rules/useSingleCaseStatement">useSingleCaseStatement</a>
 	<a class="header-anchor" href="#useSingleCaseStatement"></a>

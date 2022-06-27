@@ -16,14 +16,18 @@ const bifornCringerMoshedPerplexSawder = // !!!
 
 # Output
 ```js
-const kochabCooieGameOnOboleUnweave = annularCooeedSplicesWalksWayWay; // ???
+const kochabCooieGameOnOboleUnweave =
+  // ???
+  annularCooeedSplicesWalksWayWay;
 
-const bifornCringerMoshedPerplexSawder = glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol; // !!!
+const bifornCringerMoshedPerplexSawder =
+  // !!!
+  glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol;
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-    3: const bifornCringerMoshedPerplexSawder = glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol; // !!!
+    7:   glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol;
 ```
 

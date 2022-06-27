@@ -1,7 +1,7 @@
 use rome_formatter::LineWidth;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
-use rome_js_formatter::context::{JsFormatContext, JsFormatOptions, QuoteStyle};
+use rome_js_formatter::context::{JsFormatContext, QuoteStyle};
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
 use rome_js_syntax::{ModuleKind, SourceType};
@@ -62,21 +62,20 @@ pub struct SerializableFormatContext {
 
 impl From<SerializableFormatContext> for JsFormatContext {
     fn from(test: SerializableFormatContext) -> Self {
-        Self {
-            indent_style: test
-                .indent_style
-                .map_or_else(|| IndentStyle::Tab, |value| value.into()),
-            line_width: test
-                .line_width
-                .and_then(|width| LineWidth::try_from(width).ok())
-                .unwrap_or_default(),
-            options: JsFormatOptions {
-                quote_style: test
-                    .quote_style
+        Self::new(SourceType::default())
+            .with_indent_style(
+                test.indent_style
+                    .map_or_else(|| IndentStyle::Tab, |value| value.into()),
+            )
+            .with_line_width(
+                test.line_width
+                    .and_then(|width| LineWidth::try_from(width).ok())
+                    .unwrap_or_default(),
+            )
+            .with_quote_style(
+                test.quote_style
                     .map_or_else(|| QuoteStyle::Double, |value| value.into()),
-            },
-            source_type: SourceType::default(),
-        }
+            )
     }
 }
 
@@ -92,7 +91,7 @@ struct SnapshotContent {
 }
 
 impl SnapshotContent {
-    fn add_output(&mut self, formatted: Printed, options: JsFormatContext) {
+    fn add_output(&mut self, formatted: Printed, context: JsFormatContext) {
         let code = formatted.as_code();
         let mut output: String = code.to_string();
         if !formatted.verbatim_ranges().is_empty() {
@@ -104,7 +103,7 @@ impl SnapshotContent {
             }
         }
 
-        let line_width_limit = options.line_width.value() as usize;
+        let line_width_limit = context.line_width().value() as usize;
         let mut exceeding_lines = code
             .lines()
             .enumerate()
@@ -122,7 +121,7 @@ impl SnapshotContent {
             }
         }
 
-        self.output.push((output, options));
+        self.output.push((output, context));
     }
 
     fn set_input(&mut self, content: impl Into<String>) {
@@ -231,8 +230,8 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     let mut format_context: JsFormatContext = test_case.into();
                     // we don't track the source type inside the serializable structs, so we
                     // inject it here
-                    format_context.source_type = source_type;
-                    let formatted = format_node(format_context, &root).unwrap();
+                    format_context = format_context.with_source_type(source_type);
+                    let formatted = format_node(format_context.clone(), &root).unwrap();
                     let printed = formatted.print();
 
                     if !has_errors {
@@ -241,7 +240,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                             text: printed.as_code(),
                             source_type,
                             file_name,
-                            format_context,
+                            format_context: format_context.clone(),
                         });
                     }
 

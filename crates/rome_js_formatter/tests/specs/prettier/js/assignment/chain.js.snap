@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: chain.js
 ---
 # Input
@@ -37,12 +36,13 @@ a=b=c;
 
 # Output
 ```js
-let bifornCringerMoshedPerplexSawder = askTrovenaBeenaDependsRowans =
-  glimseGlyphsHazardNoopsTieTie =
-  averredBathersBoxroomBuggyNurl =
-  anodyneCondosMalateOverateRetinol =
-  annularCooeedSplicesWalksWayWay =
-    kochabCooieGameOnOboleUnweave;
+let bifornCringerMoshedPerplexSawder =
+  askTrovenaBeenaDependsRowans =
+    glimseGlyphsHazardNoopsTieTie =
+    averredBathersBoxroomBuggyNurl =
+    anodyneCondosMalateOverateRetinol =
+    annularCooeedSplicesWalksWayWay =
+      kochabCooieGameOnOboleUnweave;
 
 bifornCringerMoshedPerplexSawder =
   askTrovenaBeenaDependsRowans =

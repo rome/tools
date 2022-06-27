@@ -77,20 +77,20 @@ fnNumber =
   3;
 
 var fnNumber =
-// Comment
+  // Comment
 
-3;
+  3;
 
 var fnNumber =
-// Comment0
-// Comment1
-3;
+  // Comment0
+  // Comment1
+  3;
 
 var fnNumber = /* comment */ 3;
 
 var fnNumber = /* comments0 */
-/* comments1 */
-3;
+  /* comments1 */
+  3;
 
 ```
 

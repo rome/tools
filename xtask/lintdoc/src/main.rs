@@ -354,7 +354,10 @@ fn assert_lint(
                 "analysis returned multiple diagnostics"
             );
         } else {
-            bail!("analysis returned an unexpected diagnostic");
+            bail!(format!(
+                "analysis returned an unexpected diagnostic, code snippet:\n\n{}",
+                diag.code.unwrap_or_else(|| "".to_string())
+            ));
         }
 
         Formatter::new(&mut write).write_markup(markup! {

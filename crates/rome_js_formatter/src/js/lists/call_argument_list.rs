@@ -17,10 +17,9 @@ impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
         write!(
             f,
             [&group_elements(&soft_block_indent(&format_with(|f| {
-                let separated = node.format_separated(JsSyntaxKind::COMMA).with_options(
-                    FormatSeparatedOptions::default()
-                        .with_trailing_separator(TrailingSeparator::Omit),
-                );
+                let separated = node
+                    .format_separated(JsSyntaxKind::COMMA)
+                    .with_trailing_separator(TrailingSeparator::Omit);
                 write_arguments_multi_line(separated, f)
             })))]
         )
