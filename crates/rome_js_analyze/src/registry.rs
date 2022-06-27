@@ -4,7 +4,7 @@ use crate::{analyzers::*, assists::*};
 use rome_analyze::{AnalysisFilter, RuleRegistry};
 use rome_js_syntax::JsLanguage;
 pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage> {
-    let mut rules = RuleRegistry::empty();
+    let mut rules = RuleRegistry::default();
     if filter.match_rule::<NoAsyncPromiseExecutor>() {
         rules.push::<NoAsyncPromiseExecutor>();
     }

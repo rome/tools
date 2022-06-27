@@ -9,18 +9,15 @@ use crate::{
     ControlFlow, Rule,
 };
 
+#[derive(Default)]
 /// The rule registry holds type-erased instances of all active analysis rules
 pub struct RuleRegistry<L: Language> {
     /// Holds a collection of rules for each [SyntaxKind] node type that has
     /// lint rules associated with it
-    nodes: Vec<KindRules<L>>,
+    nodes: Vec<SyntaxKindRules<L>>,
 }
 
 impl<L: Language> RuleRegistry<L> {
-    pub fn empty() -> Self {
-        Self { nodes: Vec::new() }
-    }
-
     /// Add the rule `R` to the list of rules stores in this registry instance
     pub fn push<R>(&mut self)
     where
@@ -35,12 +32,12 @@ impl<L: Language> RuleRegistry<L> {
             let index = usize::from(index);
 
             // Ensure the vector has enough capacity by inserting empty
-            // `KindRules` as required
+            // `SyntaxKindRules` as required
             if self.nodes.len() <= index {
-                self.nodes.resize_with(index + 1, KindRules::empty);
+                self.nodes.resize_with(index + 1, SyntaxKindRules::new);
             }
 
-            // Insert a handle to the rule `R` into the `KindRules` entry
+            // Insert a handle to the rule `R` into the `SyntaxKindRules` entry
             // corresponding to the SyntaxKind index
             let node = &mut self.nodes[index];
             node.rules.push(RegistryRule::of::<R>());
@@ -59,13 +56,13 @@ impl<L: Language> RuleRegistry<L> {
     }
 }
 
-/// [KindRules] holds a collection of [Rule]s that match a specific [SyntaxKind] value
-struct KindRules<L: Language> {
+/// [SyntaxKindRules] holds a collection of [Rule]s that match a specific [SyntaxKind] value
+struct SyntaxKindRules<L: Language> {
     rules: Vec<RegistryRule<L>>,
 }
 
-impl<L: Language> KindRules<L> {
-    fn empty() -> Self {
+impl<L: Language> SyntaxKindRules<L> {
+    fn new() -> Self {
         Self { rules: Vec::new() }
     }
 }
