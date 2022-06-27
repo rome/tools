@@ -1,8 +1,8 @@
 mod events;
 
-mod model;
+mod semantic_model;
 #[cfg(test)]
 mod tests;
 
 pub use events::*;
-pub use model::*;
+pub use semantic_model::*;
