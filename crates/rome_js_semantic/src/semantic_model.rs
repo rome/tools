@@ -1,7 +1,7 @@
 use rome_js_syntax::{JsAnyRoot, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, TextRange};
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::HashMap, iter::FusedIterator, sync::Arc};
 
 use crate::{SemanticEvent, SemanticEventExtractor};
 
@@ -99,22 +99,28 @@ impl Iterator for ScopeBindingsIter {
         // it was created by [Scope::bindings] method.
         debug_assert!(self.scope_id < self.data.scopes.len());
 
-        let result = match self.data.scopes[self.scope_id]
+        let range = self.data.scopes[self.scope_id]
             .bindings
-            .get(self.binding_index)
-        {
-            Some(range) => {
-                let node = self.data.node_by_range.get(range).unwrap();
-                Some(Binding { node: node.clone() })
-            }
-            None => None,
-        };
+            .get(self.binding_index)?;
+        let node = self.data.node_by_range.get(range)?;
 
         self.binding_index += 1;
 
-        result
+        Some(Binding { node: node.clone() })
     }
 }
+
+impl ExactSizeIterator for ScopeBindingsIter {
+    fn len(&self) -> usize {
+        // scope_id will always be a valid scope because
+        // it was created by [Scope::bindings] method.
+        debug_assert!(self.scope_id < self.data.scopes.len());
+
+        self.data.scopes[self.scope_id].bindings.len()
+    }
+}
+
+impl FusedIterator for ScopeBindingsIter {}
 
 /// The façade for all semantic information.
 /// - Scope: [scope]
