@@ -55,7 +55,7 @@ impl Scope {
     pub fn bindings(&self) -> ScopeBindingsIter {
         ScopeBindingsIter {
             data: self.data.clone(),
-            id: self.id,
+            scope_id: self.id,
             binding_index: 0,
         }
     }
@@ -85,7 +85,7 @@ impl Binding {
 
 pub struct ScopeBindingsIter {
     data: Arc<SemanticModelData>,
-    id: usize,
+    scope_id: usize,
     binding_index: usize,
 }
 
@@ -93,9 +93,14 @@ impl Iterator for ScopeBindingsIter {
     type Item = Binding;
 
     fn next(&mut self) -> Option<Self::Item> {
-        debug_assert!(self.id < self.data.scopes.len());
+        // scope_id will always be a valid scope because
+        // it was created by [Scope::bindings] method.
+        debug_assert!(self.scope_id < self.data.scopes.len());
 
-        let result = match self.data.scopes[self.id].bindings.get(self.binding_index) {
+        let result = match self.data.scopes[self.scope_id]
+            .bindings
+            .get(self.binding_index)
+        {
             Some(range) => {
                 let node = self.data.node_by_range.get(range).unwrap();
                 Some(Binding { node: node.clone() })
@@ -268,6 +273,7 @@ impl SemanticModelBuilder {
                 self.scope_stack.pop();
             }
             DeclarationFound { name, range, .. } => {
+                // We must always have one scope, at least, the global one
                 debug_assert!(!self.scope_stack.is_empty());
 
                 let scope = &mut self.scopes[*self.scope_stack.last().unwrap()];
