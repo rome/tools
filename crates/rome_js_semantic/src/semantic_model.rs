@@ -43,6 +43,10 @@ impl std::fmt::Debug for Scope {
 impl Scope {
     /// Return this scope parent.
     pub fn parent(&self) -> Option<Scope> {
+        // id will always be a valid scope because
+        // it was created by [SemanticModel::scope] method.
+        debug_assert!(self.id < self.data.scopes.len());
+
         let parent = self.data.scopes[self.id].parent?;
         Some(Scope {
             data: self.data.clone(),
