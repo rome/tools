@@ -1,0 +1,24 @@
+[package]
+edition = "2021"
+name = "rome_json_parser"
+version = "0.1.0"
+authors = [""]
+license = "MIT"
+description = "An JSON parser made for rome project"
+
+[dependencies]
+# rome_js_parser = { path = "../rome_js_parser" }
+rome_json_syntax = { path = "../rome_json_syntax" }
+# rome_json_factory = { path = "../rome_json_factory" }
+
+# rome_parse = {path = "../rome_parse"}
+rome_rowan = { path = "../rome_rowan" }
+rome_diagnostics = { path = "../rome_diagnostics" }
+# drop_bomb = "0.1.5"
+logos = "0.12.0"
+
+[dev-dependencies]
+tests_macros = { path = "../tests_macros" }
+expect-test = "1.2.2"
+# quickcheck = "1.0.3"
+# quickcheck_macros = "1.0.0"
