@@ -1,5 +1,5 @@
 use rome_js_syntax::{JsAnyRoot, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, TextRange};
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use std::{collections::HashMap, sync::Arc};
 
@@ -9,7 +9,7 @@ struct SemanticModelScopeData {
     parent: Option<usize>,
     children: Vec<usize>,
     bindings: Vec<TextRange>,
-    bindings_by_name: HashMap<String, TextRange>,
+    bindings_by_name: HashMap<SyntaxTokenText, TextRange>,
 }
 
 struct SemanticModelData {
@@ -202,15 +202,13 @@ impl SemanticModelBuilder {
             ScopeEnded { .. } => {
                 self.scope_stack.pop();
             }
-            DeclarationFound { range, .. } => {
+            DeclarationFound { name, range, .. } => {
                 debug_assert!(!self.scope_stack.is_empty());
 
                 let scope = &mut self.scopes[*self.scope_stack.last().unwrap()];
                 scope.bindings.push(range);
 
-                let node = self.node_by_range.get(&range).unwrap();
-                let text = node.text_trimmed().to_string();
-                scope.bindings_by_name.insert(text, range);
+                scope.bindings_by_name.insert(name, range);
             }
             Read {
                 range,
