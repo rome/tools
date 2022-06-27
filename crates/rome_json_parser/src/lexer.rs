@@ -111,7 +111,7 @@ pub struct Lexer<'a> {
     /// let index = lexer.non_trivia_index_list[lexer.none_trivia_index_cursor];
     /// let (token_kind, token_range) = lexer.token_with_span[index];
     /// ```
-    /// The benefit of doing so is we could easily collecting trivia token between latest none trivia token and next none trivia token by 
+    /// The benefit of doing so is we could easily collecting trivia token between latest none trivia token and next none trivia token by
     /// just iterating `tokens_with_span` vector from index of latest none trivia token to index of next none trivia token.
     /// ```rs
     /// let left = lexer.current_none_trivia_cursor();
@@ -182,10 +182,10 @@ impl<'a> Lexer<'a> {
     /// Get current token_kind of latest non trivia token.
     pub fn current_token_kind(&self) -> JsonSyntaxKind {
         self.current()
-            .map(|item| item.0.into())
+            .map(|item| item.0)
             .unwrap_or_else(|| JsonSyntaxKind::EOF)
     }
-    
+
     /// Get current (token_kind, range) of latest non trivia token.
     fn current(&self) -> Option<&(JsonSyntaxKind, TextRange)> {
         self.non_trivia_index_list
