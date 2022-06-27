@@ -380,15 +380,28 @@ mod test {
 
         // Bindings
 
-        let mut bindings = block_scope.bindings();
+        // block scope must have two bindings: a and b
+        let bindings = block_scope.bindings().collect::<Vec<_>>();
+        match bindings.as_slice() {
+            [a, b] => {
+                assert_eq!("a", a.syntax().text_trimmed());
+                assert_eq!("b", b.syntax().text_trimmed());
+            }
+            _ => {
+                panic!("wrong number of bindings");
+            }
+        }
 
-        let binding0 = bindings.next().unwrap();
-        assert_eq!("a", binding0.syntax().text_trimmed());
-
-        let binding1 = bindings.next().unwrap();
-        assert_eq!("b", binding1.syntax().text_trimmed());
-
-        assert!(bindings.next().is_none());
+        // function scope must have one binding: f
+        let bindings = func_scope.bindings().collect::<Vec<_>>();
+        match bindings.as_slice() {
+            [f] => {
+                assert_eq!("f", f.syntax().text_trimmed());
+            }
+            _ => {
+                panic!("wrong number of bindings");
+            }
+        }
 
         // Binding by name
 
