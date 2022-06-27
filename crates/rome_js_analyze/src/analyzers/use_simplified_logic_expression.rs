@@ -17,16 +17,6 @@ declare_rule! {
     ///
     /// ## Examples
     ///
-    /// ### Valid
-    /// ```js
-    /// const boolExpr3 = true;
-    /// const boolExpr4 = false;
-    /// const r5 = !(boolExpr1 && boolExpr2);
-    /// const boolExpr5 = true;
-    /// const boolExpr6 = false;
-    /// const r6 = !!boolExpr1 || !!boolExpr2;
-    /// ```
-    ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
@@ -48,6 +38,15 @@ declare_rule! {
     /// const boolExpr1 = true;
     /// const boolExpr2 = false;
     /// const r4 = !boolExpr1 || !boolExpr2;
+    /// ```
+    /// ### Valid
+    /// ```js
+    /// const boolExpr3 = true;
+    /// const boolExpr4 = false;
+    /// const r5 = !(boolExpr1 && boolExpr2);
+    /// const boolExpr5 = true;
+    /// const boolExpr6 = false;
+    /// const r6 = !!boolExpr1 || !!boolExpr2;
     /// ```
     ///
     pub(crate) UseSimplifiedLogicExpression = "useSimplifiedLogicExpression"

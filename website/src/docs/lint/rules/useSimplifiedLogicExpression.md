@@ -9,17 +9,6 @@ This rule simplified your logic expressions.
 
 ## Examples
 
-### Valid
-
-```jsx
-const boolExpr3 = true;
-const boolExpr4 = false;
-const r5 = !(boolExpr1 && boolExpr2);
-const boolExpr5 = true;
-const boolExpr6 = false;
-const r6 = !!boolExpr1 || !!boolExpr2;
-```
-
 ### Invalid
 
 ```jsx
@@ -99,4 +88,15 @@ const r4 = !boolExpr1 || !boolExpr2;
   2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const r4 = !(boolExpr1 &amp;&amp; boolExpr2);</span>
 
 </code></pre>{% endraw %}
+
+### Valid
+
+```jsx
+const boolExpr3 = true;
+const boolExpr4 = false;
+const r5 = !(boolExpr1 && boolExpr2);
+const boolExpr5 = true;
+const boolExpr6 = false;
+const r6 = !!boolExpr1 || !!boolExpr2;
+```
 
