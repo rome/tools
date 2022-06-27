@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: template_type.ts
 ---
 # Input
@@ -18,14 +19,14 @@ Quote style: Double Quotes
 type TemplateType = `
     text
     ${
-	| "lorem"
-	| "ipsum"
-	| "dolor"
-	| "sit"
-	| "amet"
-	| "consectetur"
-	| "adipiscing"
-	| "elit"
-	| "sed"}
+| "lorem"
+| "ipsum"
+| "dolor"
+| "sit"
+| "amet"
+| "consectetur"
+| "adipiscing"
+| "elit"
+| "sed"}
 `;
 

@@ -17,14 +17,14 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
 
         write![
             f,
-            [group_elements(&indent(&format_args![
+            [group_elements(&format_args![
                 soft_line_break(),
                 FormatTypeSetLeadingSeparator {
                     separator: JsSyntaxKind::PIPE,
                     leading_separator: leading_separator_token.as_ref()
                 },
                 types.format()
-            ]))]
+            ])]
         ]
     }
 }

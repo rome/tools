@@ -7,7 +7,8 @@ use rome_js_syntax::{
     JsAnyObjectAssignmentPatternMember, JsAnyObjectBindingPatternMember, JsAnyObjectMemberName,
     JsAssignmentExpression, JsInitializerClause, JsObjectAssignmentPattern,
     JsObjectAssignmentPatternProperty, JsObjectBindingPattern, JsPropertyObjectMember,
-    JsSyntaxKind, JsVariableDeclarator, TsAnyVariableAnnotation, TsType,
+    JsSyntaxKind, JsVariableDeclarator, TsAnyVariableAnnotation, TsIdentifierBinding, TsType,
+    TsTypeAliasDeclaration,
 };
 use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
@@ -17,15 +18,16 @@ declare_node_union! {
         JsPropertyObjectMember |
         JsAssignmentExpression |
         JsObjectAssignmentPatternProperty |
-        JsVariableDeclarator
+        JsVariableDeclarator |
+        TsTypeAliasDeclaration
 }
 
 declare_node_union! {
-    pub(crate) LeftAssignmentLike = JsAnyAssignmentPattern | JsAnyObjectMemberName | JsAnyBindingPattern
+    pub(crate) LeftAssignmentLike = JsAnyAssignmentPattern | JsAnyObjectMemberName | JsAnyBindingPattern | TsIdentifierBinding
 }
 
 declare_node_union! {
-    pub(crate) RightAssignmentLike = JsAnyExpression | JsAnyAssignmentPattern | JsInitializerClause
+    pub(crate) RightAssignmentLike = JsAnyExpression | JsAnyAssignmentPattern | JsInitializerClause | TsType
 }
 
 declare_node_union! {
@@ -151,6 +153,8 @@ impl RightAssignmentLike {
             RightAssignmentLike::JsAnyExpression(expression) => Some(expression.clone()),
             RightAssignmentLike::JsInitializerClause(initializer) => initializer.expression().ok(),
             RightAssignmentLike::JsAnyAssignmentPattern(_) => None,
+            // TODO: check here
+            RightAssignmentLike::TsType(_) => None,
         }
     }
 }
@@ -166,6 +170,9 @@ impl Format<JsFormatContext> for RightAssignmentLike {
             }
             RightAssignmentLike::JsInitializerClause(initializer) => {
                 write!(f, [space_token(), initializer.format()])
+            }
+            RightAssignmentLike::TsType(ty) => {
+                write!(f, [space_token(), ty.format()])
             }
         }
     }
@@ -294,6 +301,9 @@ impl JsAnyAssignmentLike {
                 // SAFETY: Calling `unwrap` here is safe because we check `should_only_left` variant at the beginning of the `layout` function
                 Ok(variable_declarator.initializer().unwrap().into())
             }
+            JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
+                Ok(type_alias_declaration.ty()?.into())
+            }
         }
     }
 
@@ -308,6 +318,9 @@ impl JsAnyAssignmentLike {
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 Ok(variable_declarator.id()?.into())
+            }
+            JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
+                Ok(type_alias_declaration.binding_identifier()?.into())
             }
         }
     }
@@ -347,7 +360,18 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 let id = variable_declarator.id()?;
                 let variable_annotation = variable_declarator.variable_annotation();
+
                 write!(f, [id.format(), variable_annotation.format()])?;
+                Ok(false)
+            }
+            JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
+                let binding_identifier = type_alias_declaration.binding_identifier()?;
+                let type_parameters = type_alias_declaration.type_parameters();
+
+                write!(f, [binding_identifier.format()])?;
+                if let Some(type_parameters) = type_parameters {
+                    write!(f, [type_parameters.format(),])?;
+                }
                 Ok(false)
             }
         }
@@ -373,6 +397,10 @@ impl JsAnyAssignmentLike {
                     write!(f, [space_token(), eq_token.format()])?
                 }
                 Ok(())
+            }
+            JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
+                let eq_token = type_alias_declaration.eq_token()?;
+                write!(f, [space_token(), eq_token.format()])
             }
         }
     }
@@ -403,6 +431,10 @@ impl JsAnyAssignmentLike {
                 }
                 Ok(())
             }
+            JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
+                let ty = type_alias_declaration.ty()?;
+                write!(f, [space_token(), ty.format()])
+            }
         }
     }
 
@@ -423,10 +455,8 @@ impl JsAnyAssignmentLike {
             return Ok(AssignmentLikeLayout::BreakLeftHandSide);
         }
 
-        if let Some(expression) = &right {
-            if should_break_after_operator(expression)? {
-                return Ok(AssignmentLikeLayout::BreakAfterOperator);
-            }
+        if self.should_break_after_operator()? {
+            return Ok(AssignmentLikeLayout::BreakAfterOperator);
         }
 
         if is_left_short {
@@ -559,6 +589,35 @@ impl JsAnyAssignmentLike {
         Ok(false)
     }
 
+    fn is_complex_type_alias(&self) -> SyntaxResult<bool> {
+        let result = if let JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) =
+            self
+        {
+            let type_parameters = type_alias_declaration.type_parameters();
+
+            if let Some(type_parameters) = type_parameters {
+                let items = type_parameters.items();
+                if items.len() <= 1 {
+                    return Ok(false);
+                };
+                for type_parameter in type_parameters.items() {
+                    let type_parameter = type_parameter?;
+
+                    if type_parameter.constraint().is_some() || type_parameter.default().is_some() {
+                        return Ok(true);
+                    }
+                }
+                return Ok(false);
+            } else {
+                false
+            }
+        } else {
+            false
+        };
+
+        Ok(result)
+    }
+
     /// Particular function that checks if the left hand side of a [JsAnyAssignmentLike] should
     /// be broken on multiple lines
     fn should_break_left_hand_side(&self) -> SyntaxResult<bool> {
@@ -573,7 +632,25 @@ impl JsAnyAssignmentLike {
             .and_then(|annotation| is_complex_type_annotation(annotation).ok())
             .unwrap_or(false);
 
-        Ok(is_complex_destructuring || has_complex_type_annotation)
+        let is_complex_type_alias = self.is_complex_type_alias()?;
+
+        Ok(is_complex_destructuring || has_complex_type_annotation || is_complex_type_alias)
+    }
+
+    /// Checks if the the current assignment is eligible for [AssignmentLikeLayout::BreakAfterOperator]
+    ///
+    /// This function is small wrapper around [should_break_after_operator] because it has to work
+    /// for nodes that belong to TypeScript too.
+    fn should_break_after_operator(&self) -> SyntaxResult<bool> {
+        let right = self.right()?;
+
+        let result = if let Some(expression) = right.as_expression() {
+            should_break_after_operator(&expression)?
+        } else {
+            has_new_line_before_comment(right.syntax())
+        };
+
+        Ok(result)
     }
 }
 

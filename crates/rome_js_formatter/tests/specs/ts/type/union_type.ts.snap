@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: union_type.ts
 ---
 # Input
@@ -28,32 +29,32 @@ Quote style: Double Quotes
 type ShortUnion = A | B;
 
 type LongUnion =
-	| A
-	| B
-	| C
-	| D
-	| E
-	| F
-	| G
-	| H
-	| I
-	| J
-	| K
-	| L
-	| M
-	| N
-	| O
-	| P
-	| Q
-	| R
-	| S
-	| T
-	| U
-	| V
-	| W
-	| X
-	| Y
-	| Z;
+| A
+| B
+| C
+| D
+| E
+| F
+| G
+| H
+| I
+| J
+| K
+| L
+| M
+| N
+| O
+| P
+| Q
+| R
+| S
+| T
+| U
+| V
+| W
+| X
+| Y
+| Z;
 
 type Comments =
 	// leading separator

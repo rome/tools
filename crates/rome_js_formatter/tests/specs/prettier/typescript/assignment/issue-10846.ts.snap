@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-10846.ts
 ---
 # Input
@@ -56,19 +57,19 @@ const foo = call<
 >();
 
 export const CallRecorderContext = createContext<
-    | {
-      deleteRecording: (id: string) => void;
-      deleteAll: () => void;
-    }
-    | null
+  | {
+    deleteRecording: (id: string) => void;
+    deleteAll: () => void;
+  }
+  | null
 >(null);
 
 export const CallRecorderContext = createContext<
-    | {
-      deleteRecording: (id: string) => void;
-      deleteAll: () => void;
-    }
-    | null
+  | {
+    deleteRecording: (id: string) => void;
+    deleteAll: () => void;
+  }
+  | null
 >(null, "useless");
 
 const foo = call<
