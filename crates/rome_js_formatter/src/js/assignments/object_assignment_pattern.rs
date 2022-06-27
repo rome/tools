@@ -1,23 +1,17 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+use crate::utils::JsObjectPatternLike;
 use rome_formatter::write;
 use rome_js_syntax::JsObjectAssignmentPattern;
-use rome_js_syntax::JsObjectAssignmentPatternFields;
 
-impl FormatNodeFields<JsObjectAssignmentPattern> for FormatNodeRule<JsObjectAssignmentPattern> {
-    fn fmt_fields(node: &JsObjectAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {
-        let JsObjectAssignmentPatternFields {
-            l_curly_token,
-            properties,
-            r_curly_token,
-        } = node.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsObjectAssignmentPattern;
 
-        write!(
-            f,
-            [
-                format_delimited(&l_curly_token?, &properties.format(), &r_curly_token?,)
-                    .soft_block_spaces()
-            ]
-        )
+impl FormatNodeRule<JsObjectAssignmentPattern> for FormatJsObjectAssignmentPattern {
+    fn fmt_fields(
+        &self,
+        node: &JsObjectAssignmentPattern,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        write!(f, [JsObjectPatternLike::from(node.clone())])
     }
 }

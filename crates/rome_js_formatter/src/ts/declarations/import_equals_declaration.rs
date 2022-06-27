@@ -1,12 +1,19 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::TsImportEqualsDeclaration;
 use rome_js_syntax::TsImportEqualsDeclarationFields;
 
-impl FormatNodeFields<TsImportEqualsDeclaration> for FormatNodeRule<TsImportEqualsDeclaration> {
-    fn fmt_fields(node: &TsImportEqualsDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsImportEqualsDeclaration;
+
+impl FormatNodeRule<TsImportEqualsDeclaration> for FormatTsImportEqualsDeclaration {
+    fn fmt_fields(
+        &self,
+        node: &TsImportEqualsDeclaration,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsImportEqualsDeclarationFields {
             import_token,
             type_token,

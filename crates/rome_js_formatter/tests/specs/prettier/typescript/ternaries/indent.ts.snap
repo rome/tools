@@ -60,11 +60,13 @@ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
 # Output
 ```js
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
+    .parent : callNode.parent
 ).TSESTree!.BinaryExpression;
 
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
+    .parent : callNode.parent
 ).TSESTree!.BinaryExpression;
 
 bifornCringerMoshedPerplexSawder = (
@@ -74,11 +76,13 @@ bifornCringerMoshedPerplexSawder = (
 )!.annularCooeedSplicesWalksWayWay();
 
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
+    .parent : callNode.parent
 ).TSESTree!.BinaryExpression!;
 
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
+    .parent : callNode.parent
 ).TSESTree!.BinaryExpression!;
 
 bifornCringerMoshedPerplexSawder = (
@@ -104,14 +108,10 @@ foo = (
 
 # Lines exceeding max width of 80 characters
 ```
-    2:   callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
-    6:   callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
-   10:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-   16:   callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
-   20:   callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
-   24:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-   31:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-   35:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   12:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+   28:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+   35:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
    39:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   43:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
 ```
 

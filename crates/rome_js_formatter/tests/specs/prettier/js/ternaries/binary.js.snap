@@ -21,11 +21,10 @@ room = room.map((row, rowIndex) => (
 
 # Output
 ```js
-const funnelSnapshotCard = (
-  report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2
-) || (
-  report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
-) ? <ReportMetricsFunnelSnapshotCard metrics={metrics} /> : null;
+const funnelSnapshotCard =
+  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) || (
+    report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
+  ) ? <ReportMetricsFunnelSnapshotCard metrics={metrics} /> : null;
 
 room = room.map(
   (row, rowIndex) => (
@@ -46,6 +45,6 @@ room = room.map(
 
 # Lines exceeding max width of 80 characters
 ```
-    4:   report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
+    3:     report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
 ```
 

@@ -1,11 +1,12 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyExportClause;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyExportClause;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyExportClause;
 impl FormatRule<JsAnyExportClause> for FormatJsAnyExportClause {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyExportClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyExportClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyExportClause::JsExportDefaultDeclarationClause(node) => node.format().fmt(f),
             JsAnyExportClause::JsExportDefaultExpressionClause(node) => node.format().fmt(f),

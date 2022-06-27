@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::TsImplementsClause;
 use rome_js_syntax::TsImplementsClauseFields;
 
-impl FormatNodeFields<TsImplementsClause> for FormatNodeRule<TsImplementsClause> {
-    fn fmt_fields(node: &TsImplementsClause, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsImplementsClause;
+
+impl FormatNodeRule<TsImplementsClause> for FormatTsImplementsClause {
+    fn fmt_fields(&self, node: &TsImplementsClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsImplementsClauseFields {
             implements_token,
             types,

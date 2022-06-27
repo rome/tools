@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsParenthesizedType;
 use rome_js_syntax::TsParenthesizedTypeFields;
 
-impl FormatNodeFields<TsParenthesizedType> for FormatNodeRule<TsParenthesizedType> {
-    fn fmt_fields(node: &TsParenthesizedType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsParenthesizedType;
+
+impl FormatNodeRule<TsParenthesizedType> for FormatTsParenthesizedType {
+    fn fmt_fields(&self, node: &TsParenthesizedType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsParenthesizedTypeFields {
             l_paren_token,
             ty,

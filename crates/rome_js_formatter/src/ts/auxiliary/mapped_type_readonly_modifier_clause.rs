@@ -1,13 +1,17 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsMappedTypeReadonlyModifierClause;
 use rome_js_syntax::TsMappedTypeReadonlyModifierClauseFields;
 
-impl FormatNodeFields<TsMappedTypeReadonlyModifierClause>
-    for FormatNodeRule<TsMappedTypeReadonlyModifierClause>
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsMappedTypeReadonlyModifierClause;
+
+impl FormatNodeRule<TsMappedTypeReadonlyModifierClause>
+    for FormatTsMappedTypeReadonlyModifierClause
 {
     fn fmt_fields(
+        &self,
         node: &TsMappedTypeReadonlyModifierClause,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

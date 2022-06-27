@@ -1,10 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{JsxClosingFragment, JsxClosingFragmentFields};
 
-impl FormatNodeFields<JsxClosingFragment> for FormatNodeRule<JsxClosingFragment> {
-    fn fmt_fields(node: &JsxClosingFragment, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsxClosingFragment;
+
+impl FormatNodeRule<JsxClosingFragment> for FormatJsxClosingFragment {
+    fn fmt_fields(&self, node: &JsxClosingFragment, f: &mut JsFormatter) -> FormatResult<()> {
         let JsxClosingFragmentFields {
             r_angle_token,
             slash_token,

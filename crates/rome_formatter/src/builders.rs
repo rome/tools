@@ -409,8 +409,8 @@ impl<Context> Format<Context> for LineSuffix<'_, Context> {
         let mut buffer = VecBuffer::new(f.state_mut());
         buffer.write_fmt(Arguments::from(&self.content))?;
 
-        let content = buffer.into_element();
-        f.write_element(FormatElement::LineSuffix(Box::new(content)))
+        let content = buffer.into_vec();
+        f.write_element(FormatElement::LineSuffix(content.into_boxed_slice()))
     }
 }
 
@@ -607,8 +607,8 @@ impl<Context> Format<Context> for Indent<'_, Context> {
             return Ok(());
         }
 
-        let content = buffer.into_element();
-        f.write_element(FormatElement::Indent(Box::new(content)))
+        let content = buffer.into_vec();
+        f.write_element(FormatElement::Indent(content.into_boxed_slice()))
     }
 }
 
@@ -820,9 +820,9 @@ impl<Context> Format<Context> for BlockIndent<'_, Context> {
             return Ok(());
         }
 
-        let content = buffer.into_element();
+        let content = buffer.into_vec();
 
-        f.write_element(FormatElement::Indent(Box::new(content)))?;
+        f.write_element(FormatElement::Indent(content.into_boxed_slice()))?;
 
         match self.mode {
             IndentMode::Soft => write!(f, [soft_line_break()])?,
@@ -1381,9 +1381,10 @@ impl<Context> Format<Context> for IfGroupBreaks<'_, Context> {
             return Ok(());
         }
 
-        let content = buffer.into_element();
+        let content = buffer.into_vec();
         f.write_element(FormatElement::ConditionalGroupContent(
-            ConditionalGroupContent::new(content, self.mode).with_group_id(self.group_id),
+            ConditionalGroupContent::new(content.into_boxed_slice(), self.mode)
+                .with_group_id(self.group_id),
         ))
     }
 }
@@ -1768,6 +1769,40 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
         self
     }
 
+    /// Adds an iterator of entries to the fill output, flattening any [FormatElement::List]
+    /// entries by adding the list's elements to the fill output.
+    ///
+    /// ## Warning
+    ///
+    /// The usage of this method is highly discouraged and it's better to use
+    /// other APIs on ways: for example progressively format the items based on their type.
+    pub fn flatten_entries<F, I>(&mut self, entries: I) -> &mut Self
+    where
+        F: Format<Context>,
+        I: IntoIterator<Item = F>,
+    {
+        for entry in entries {
+            self.flatten_entry(&entry);
+        }
+
+        self
+    }
+
+    /// Adds a new entry to the fill output. If the entry is a [FormatElement::List],
+    /// then adds the list's entries to the fill output instead of the list itself.
+    pub fn flatten_entry(&mut self, entry: &dyn Format<Context>) -> &mut Self {
+        self.result = self.result.and_then(|_| {
+            let mut buffer = VecBuffer::new(self.fmt.state_mut());
+            write!(buffer, [entry])?;
+
+            self.items.extend(buffer.into_vec());
+
+            Ok(())
+        });
+
+        self
+    }
+
     /// Adds a new entry to the fill output.
     pub fn entry(&mut self, entry: &dyn Format<Context>) -> &mut Self {
         self.result = self.result.and_then(|_| {
@@ -1794,13 +1829,10 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
             match items.len() {
                 0 => Ok(()),
                 1 => self.fmt.write_element(items.pop().unwrap()),
-                _ => self.fmt.write_element(FormatElement::Fill(Box::new(Fill {
-                    list: List::new(items),
-                    separator: std::mem::replace(
-                        &mut self.separator,
-                        FormatElement::List(List::default()),
-                    ),
-                }))),
+                _ => self.fmt.write_element(FormatElement::Fill(Fill {
+                    content: items.into_boxed_slice(),
+                    separator: Box::new(self.separator.clone()),
+                })),
             }
         })
     }

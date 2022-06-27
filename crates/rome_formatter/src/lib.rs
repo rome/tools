@@ -19,8 +19,6 @@
 //! * [`format_args!`]: Concatenates a sequence of Format objects.
 //! * [`write!`]: Writes a sequence of formatable objects into an output buffer.
 
-extern crate core;
-
 mod arguments;
 mod buffer;
 mod builders;
@@ -53,7 +51,7 @@ pub use builders::{
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
-pub use comments::{CommentKind, SourceComment};
+pub use comments::{CommentContext, CommentKind, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
@@ -63,7 +61,6 @@ use rome_rowan::{
 };
 use std::error::Error;
 use std::fmt;
-use std::marker::PhantomData;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -451,7 +448,15 @@ impl<Context> Format<Context> for () {
 pub trait FormatRule<T> {
     type Context;
 
-    fn fmt(item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+    fn fmt(&self, item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+}
+
+/// Rule that supports customizing how it formats an object of type [T].
+pub trait FormatRuleWithOptions<T>: FormatRule<T> {
+    type Options;
+
+    /// Returns a new rule that uses the given options to format an object.
+    fn with_options(self, options: Self::Options) -> Self;
 }
 
 /// Trait for an object that formats an object with a specified rule.
@@ -487,23 +492,31 @@ pub trait FormatWithRule<Context>: Format<Context> {
 }
 
 /// Formats the referenced `item` with the specified rule.
+#[derive(Debug, Copy, Clone)]
 pub struct FormatRefWithRule<'a, T, R>
 where
     R: FormatRule<T>,
 {
     item: &'a T,
-    rule: PhantomData<R>,
+    rule: R,
 }
 
 impl<'a, T, R> FormatRefWithRule<'a, T, R>
 where
     R: FormatRule<T>,
 {
-    pub fn new(item: &'a T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
+    pub fn new(item: &'a T, rule: R) -> Self {
+        Self { item, rule }
+    }
+}
+
+impl<T, R, O> FormatRefWithRule<'_, T, R>
+where
+    R: FormatRuleWithOptions<T, Options = O>,
+{
+    pub fn with_options(mut self, options: O) -> Self {
+        self.rule = self.rule.with_options(options);
+        self
     }
 }
 
@@ -524,28 +537,26 @@ where
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::fmt(self.item, f)
+        self.rule.fmt(self.item, f)
     }
 }
 
 /// Formats the `item` with the specified rule.
+#[derive(Debug, Clone)]
 pub struct FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
     item: T,
-    rule: PhantomData<R>,
+    rule: R,
 }
 
 impl<T, R> FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    pub fn new(item: T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
+    pub fn new(item: T, rule: R) -> Self {
+        Self { item, rule }
     }
 
     pub fn with_item(mut self, item: T) -> Self {
@@ -564,7 +575,17 @@ where
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::fmt(&self.item, f)
+        self.rule.fmt(&self.item, f)
+    }
+}
+
+impl<T, R, O> FormatOwnedWithRule<T, R>
+where
+    R: FormatRuleWithOptions<T, Options = O>,
+{
+    pub fn with_options(mut self, options: O) -> Self {
+        self.rule = self.rule.with_options(options);
+        self
     }
 }
 
@@ -755,7 +776,7 @@ pub fn format_range<Context, L, R, P>(
 where
     Context: FormatContext,
     L: Language,
-    R: FormatRule<SyntaxNode<L>, Context = Context>,
+    R: FormatRule<SyntaxNode<L>, Context = Context> + Default,
     P: FnMut(&SyntaxNode<L>) -> bool,
 {
     if range.is_empty() {
@@ -897,7 +918,10 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_sub_tree(context, &FormatRefWithRule::<_, R>::new(common_root))?;
+    let formatted = format_sub_tree(
+        context,
+        &FormatRefWithRule::<_, R>::new(common_root, R::default()),
+    )?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
@@ -1130,7 +1154,7 @@ impl<Context> FormatState<Context> {
     }
 
     /// Sets whether the last written content is an inline comment that has no trailing whitespace.
-    pub fn set_last_content_is_inline_comment(&mut self, has_comment: bool) {
+    pub fn set_last_content_inline_comment(&mut self, has_comment: bool) {
         self.last_content_inline_comment = has_comment;
     }
 
@@ -1141,13 +1165,14 @@ impl<Context> FormatState<Context> {
 
     /// Sets the kind of the last formatted token and sets `last_content_inline_comment` to `false`.
     pub fn set_last_token_kind<Kind: SyntaxKind + 'static>(&mut self, kind: Kind) {
-        // Reset the last comment kind before token because we've now seen a token.
-        self.last_content_inline_comment = false;
-
-        self.last_token_kind = Some(LastTokenKind {
+        self.set_last_token_kind_raw(Some(LastTokenKind {
             kind_type: TypeId::of::<Kind>(),
             kind: kind.to_raw(),
-        });
+        }));
+    }
+
+    pub fn set_last_token_kind_raw(&mut self, kind: Option<LastTokenKind>) {
+        self.last_token_kind = kind;
     }
 
     /// Mark the passed comment as formatted. This is necessary if a comment from a token is formatted
@@ -1276,20 +1301,18 @@ pub struct FormatStateSnapshot {
 }
 
 /// Defines how to format comments for a specific [Language].
-pub trait CommentStyle: Copy {
-    type Language: Language;
-
+pub trait CommentStyle<L: Language>: Copy {
     /// Returns the kind of the comment
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<L>) -> CommentKind;
 
     /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are:
     /// * left parentheses: `(`, `[`, `{`
-    fn is_group_start_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
+    fn is_group_start_token(&self, kind: L::Kind) -> bool;
 
     /// Returns `true` if a token with the passed `kind` marks the end of a group. Common group end tokens are:
     /// * right parentheses: `)`, `]`, `}`
     /// * end of statement token: `;`
     /// * element separator: `,` or `.`.
     /// * end of file token: `EOF`
-    fn is_group_end_token(&self, kind: <Self::Language as Language>::Kind) -> bool;
+    fn is_group_end_token(&self, kind: L::Kind) -> bool;
 }

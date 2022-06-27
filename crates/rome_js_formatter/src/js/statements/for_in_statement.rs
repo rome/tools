@@ -1,12 +1,15 @@
 use crate::prelude::*;
 use crate::utils::FormatBodyStatement;
-use crate::FormatNodeFields;
+
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsForInStatement;
 use rome_js_syntax::JsForInStatementFields;
 
-impl FormatNodeFields<JsForInStatement> for FormatNodeRule<JsForInStatement> {
-    fn fmt_fields(node: &JsForInStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsForInStatement;
+
+impl FormatNodeRule<JsForInStatement> for FormatJsForInStatement {
+    fn fmt_fields(&self, node: &JsForInStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForInStatementFields {
             for_token,
             l_paren_token,

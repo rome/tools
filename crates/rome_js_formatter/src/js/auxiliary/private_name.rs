@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsPrivateName;
 use rome_js_syntax::JsPrivateNameFields;
 
-impl FormatNodeFields<JsPrivateName> for FormatNodeRule<JsPrivateName> {
-    fn fmt_fields(node: &JsPrivateName, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsPrivateName;
+
+impl FormatNodeRule<JsPrivateName> for FormatJsPrivateName {
+    fn fmt_fields(&self, node: &JsPrivateName, f: &mut JsFormatter) -> FormatResult<()> {
         let JsPrivateNameFields {
             hash_token,
             value_token,

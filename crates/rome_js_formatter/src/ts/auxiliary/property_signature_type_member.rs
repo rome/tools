@@ -1,13 +1,18 @@
 use crate::prelude::*;
-use crate::utils::{FormatMemberName, FormatTypeMemberSeparator};
-use crate::FormatNodeFields;
+use crate::utils::FormatTypeMemberSeparator;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsPropertySignatureTypeMember, TsPropertySignatureTypeMemberFields};
 
-impl FormatNodeFields<TsPropertySignatureTypeMember>
-    for FormatNodeRule<TsPropertySignatureTypeMember>
-{
-    fn fmt_fields(node: &TsPropertySignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsPropertySignatureTypeMember;
+
+impl FormatNodeRule<TsPropertySignatureTypeMember> for FormatTsPropertySignatureTypeMember {
+    fn fmt_fields(
+        &self,
+        node: &TsPropertySignatureTypeMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsPropertySignatureTypeMemberFields {
             readonly_token,
             name,
@@ -21,7 +26,7 @@ impl FormatNodeFields<TsPropertySignatureTypeMember>
             [
                 readonly_token.format(),
                 space_token(),
-                FormatMemberName::from(name?),
+                name.format(),
                 optional_token.format(),
                 type_annotation.format(),
                 FormatTypeMemberSeparator::new(separator_token.as_ref())

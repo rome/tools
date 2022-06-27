@@ -1,11 +1,16 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyObjectAssignmentPatternMember;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyObjectAssignmentPatternMember;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyObjectAssignmentPatternMember;
 impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignmentPatternMember {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyObjectAssignmentPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(
+        &self,
+        node: &JsAnyObjectAssignmentPatternMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         match node {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
                 node,

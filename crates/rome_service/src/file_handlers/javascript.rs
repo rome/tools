@@ -3,7 +3,7 @@ use rome_diagnostics::{Applicability, Diagnostic};
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::analyze;
-use rome_js_formatter::context::{JsFormatOptions, QuoteStyle};
+use rome_js_formatter::context::QuoteStyle;
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
@@ -40,20 +40,20 @@ impl Language for JsLanguage {
         editor: IndentStyle,
         path: &RomePath,
     ) -> JsFormatContext {
-        JsFormatContext {
-            indent_style: language
-                .indent_style
-                .or(global.indent_style)
-                .unwrap_or(editor),
-            line_width: language
-                .line_width
-                .or(global.line_width)
-                .unwrap_or_default(),
-            options: JsFormatOptions {
-                quote_style: language.quote_style.unwrap_or_default(),
-            },
-            source_type: path.as_path().try_into().unwrap_or_default(),
-        }
+        JsFormatContext::new(path.as_path().try_into().unwrap_or_default())
+            .with_indent_style(
+                language
+                    .indent_style
+                    .or(global.indent_style)
+                    .unwrap_or(editor),
+            )
+            .with_line_width(
+                language
+                    .line_width
+                    .or(global.line_width)
+                    .unwrap_or_default(),
+            )
+            .with_quote_style(language.quote_style.unwrap_or_default())
     }
 }
 

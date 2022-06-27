@@ -1,12 +1,14 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::{JsEmptyStatement, JsEmptyStatementFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-impl FormatNodeFields<JsEmptyStatement> for FormatNodeRule<JsEmptyStatement> {
-    fn fmt_fields(node: &JsEmptyStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsEmptyStatement;
+
+impl FormatNodeRule<JsEmptyStatement> for FormatJsEmptyStatement {
+    fn fmt_fields(&self, node: &JsEmptyStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsEmptyStatementFields { semicolon_token } = node.as_fields();
         let parent_kind = node.syntax().parent().map(|p| p.kind());
 

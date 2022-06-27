@@ -1,13 +1,15 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsCaseClause;
 use rome_js_syntax::JsCaseClauseFields;
 use rome_rowan::AstNodeList;
 
-impl FormatNodeFields<JsCaseClause> for FormatNodeRule<JsCaseClause> {
-    fn fmt_fields(node: &JsCaseClause, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsCaseClause;
+
+impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
+    fn fmt_fields(&self, node: &JsCaseClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsCaseClauseFields {
             case_token,
             test,

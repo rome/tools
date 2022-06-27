@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsTryStatement;
 use rome_js_syntax::JsTryStatementFields;
 
-impl FormatNodeFields<JsTryStatement> for FormatNodeRule<JsTryStatement> {
-    fn fmt_fields(node: &JsTryStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsTryStatement;
+
+impl FormatNodeRule<JsTryStatement> for FormatJsTryStatement {
+    fn fmt_fields(&self, node: &JsTryStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsTryStatementFields {
             try_token,
             body,

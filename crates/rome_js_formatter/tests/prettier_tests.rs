@@ -60,10 +60,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
-    let context = JsFormatContext {
-        indent_style: IndentStyle::Space(2),
-        ..JsFormatContext::default()
-    };
+    let context = JsFormatContext::default().with_indent_style(IndentStyle::Space(2));
 
     let result = match (range_start_index, range_end_index) {
         (Some(start), Some(end)) => {
@@ -74,7 +71,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             }
 
             rome_js_formatter::format_range(
-                context,
+                context.clone(),
                 &syntax,
                 TextRange::new(
                     TextSize::try_from(start).unwrap(),
@@ -82,7 +79,8 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                 ),
             )
         }
-        _ => rome_js_formatter::format_node(context, &syntax).map(|formatted| formatted.print()),
+        _ => rome_js_formatter::format_node(context.clone(), &syntax)
+            .map(|formatted| formatted.print()),
     };
 
     let formatted = result.expect("formatting failed");
@@ -106,7 +104,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                     text: &result,
                     source_type,
                     file_name,
-                    format_context: context,
+                    format_context: context.clone(),
                 });
             }
 
@@ -155,7 +153,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         writeln!(snapshot).unwrap();
     }
 
-    let max_width = context.line_width.value() as usize;
+    let max_width = context.line_width().value() as usize;
     let mut lines_exceeding_max_width = formatted
         .lines()
         .enumerate()
@@ -483,23 +481,11 @@ impl DiffReport {
             .unwrap();
         }
         // extra two space force markdown render insert a new line
-        writeln!(
-            report,
-            "**File Based Average Prettier Similarity**: {:.2}%  ",
+        report = format!(
+            "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \nthe definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893\n",
             report_metric_data.file_based_average_prettier_similarity * 100_f64,
-        )
-        .unwrap();
-        writeln!(
-            report,
-            "**Line Based Average Prettier Similarity**: {:.2}%  ",
             report_metric_data.line_based_average_prettier_similarity * 100_f64
-        )
-        .unwrap();
-        writeln!(
-            report,
-            " the definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893",
-        ).unwrap();
-        // write report content to target file_name
+        ) + &report;
         write(report_filename, report).unwrap();
     }
 

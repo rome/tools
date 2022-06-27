@@ -7,7 +7,7 @@ use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
 use std::rc::Rc;
 
-type Content = Box<FormatElement>;
+type Content = Box<[FormatElement]>;
 
 /// Language agnostic IR for formatting source code.
 ///
@@ -42,7 +42,7 @@ pub enum FormatElement {
 
     /// Concatenates multiple elements together with a given separator printed in either
     /// flat or expanded mode to fill the print width. See [fill_elements].
-    Fill(Box<Fill>),
+    Fill(Fill),
 
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
@@ -88,27 +88,27 @@ pub struct Verbatim {
     /// The reason this range is using verbatim formatting
     pub kind: VerbatimKind,
     /// The [FormatElement] version of the node/token
-    pub element: Box<FormatElement>,
+    pub content: Box<[FormatElement]>,
 }
 
 impl Verbatim {
-    pub fn new_verbatim(element: FormatElement, length: TextSize) -> Self {
+    pub fn new_verbatim(content: Box<[FormatElement]>, length: TextSize) -> Self {
         Self {
-            element: Box::new(element),
+            content,
             kind: VerbatimKind::Verbatim { length },
         }
     }
 
-    pub fn new_unknown(element: FormatElement) -> Self {
+    pub fn new_unknown(content: Box<[FormatElement]>) -> Self {
         Self {
-            element: Box::new(element),
+            content,
             kind: VerbatimKind::Unknown,
         }
     }
 
-    pub fn new_suppressed(element: FormatElement) -> Self {
+    pub fn new_suppressed(content: Box<[FormatElement]>) -> Self {
         Self {
-            element: Box::new(element),
+            content,
             kind: VerbatimKind::Suppressed,
         }
     }
@@ -142,7 +142,7 @@ impl Debug for FormatElement {
             FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
-                .field(&verbatim.element)
+                .field(&verbatim.content)
                 .finish(),
             FormatElement::BestFitting(best_fitting) => {
                 write!(fmt, "BestFitting")?;
@@ -183,7 +183,7 @@ impl List {
         Self { content }
     }
 
-    pub(crate) fn into_vec(self) -> Vec<FormatElement> {
+    pub fn into_vec(self) -> Vec<FormatElement> {
         self.content
     }
 }
@@ -202,13 +202,13 @@ impl Deref for List {
 /// reaches the specified `line_width`.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Fill {
-    pub(super) list: List,
-    pub(super) separator: FormatElement,
+    pub(super) content: Content,
+    pub(super) separator: Box<FormatElement>,
 }
 
 impl Fill {
-    pub fn list(&self) -> &List {
-        &self.list
+    pub fn content(&self) -> &[FormatElement] {
+        &self.content
     }
 
     pub fn separator(&self) -> &FormatElement {
@@ -367,9 +367,9 @@ pub struct ConditionalGroupContent {
 }
 
 impl ConditionalGroupContent {
-    pub fn new(content: FormatElement, mode: PrintMode) -> Self {
+    pub fn new(content: Box<[FormatElement]>, mode: PrintMode) -> Self {
         Self {
-            content: Box::new(content),
+            content,
             mode,
             group_id: None,
         }
@@ -508,16 +508,15 @@ impl FormatElement {
         match self {
             FormatElement::Space => false,
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
-            FormatElement::Indent(content) => content.will_break(),
-            FormatElement::Group(Group { content, .. }) | FormatElement::Comment(content) => {
-                content.iter().any(FormatElement::will_break)
-            }
-            FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
+            FormatElement::Group(Group { content, .. })
+            | FormatElement::ConditionalGroupContent(ConditionalGroupContent { content, .. })
+            | FormatElement::Comment(content)
+            | FormatElement::Fill(Fill { content, .. })
+            | FormatElement::Verbatim(Verbatim { content, .. })
+            | FormatElement::Indent(content) => content.iter().any(FormatElement::will_break),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
-            FormatElement::Fill(fill) => fill.list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
-            FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
             FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
             FormatElement::ExpandParent => true,
@@ -526,26 +525,19 @@ impl FormatElement {
     }
 
     /// Utility function to get the "last element" of a [FormatElement], recursing
-    /// into lists and groups for find the last element that's not an empty element,
-    /// a line break or a comment
+    /// into lists and groups to find the last element that's not
+    /// a line break, verbatim or a comment.
     pub fn last_element(&self) -> Option<&FormatElement> {
         match self {
-            FormatElement::Fill(fill) => fill
-                .list
-                .iter()
-                .rev()
-                .find_map(|element| element.last_element()),
             FormatElement::List(list) => {
                 list.iter().rev().find_map(|element| element.last_element())
             }
             FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
-            FormatElement::Indent(indent) => indent.last_element(),
-            FormatElement::Group(group) => group
-                .content
-                .iter()
-                .rev()
-                .find_map(FormatElement::last_element),
+            FormatElement::Group(Group { content, .. }) | FormatElement::Indent(content) => {
+                content.iter().rev().find_map(FormatElement::last_element)
+            }
+            FormatElement::Interned(Interned(inner)) => inner.last_element(),
 
             _ => Some(self),
         }
@@ -553,12 +545,11 @@ impl FormatElement {
 
     /// Interns a format element.
     ///
-    /// Returns `self` for an empty list AND an already interned elements.
-    pub fn intern(self) -> FormatElement {
+    /// Returns `self` for an already interned element.
+    pub fn intern(self) -> Interned {
         match self {
-            FormatElement::List(list) if list.is_empty() => list.into(),
-            element @ FormatElement::Interned(_) => element,
-            element => FormatElement::Interned(Interned(Rc::new(element))),
+            FormatElement::Interned(interned) => interned,
+            element => Interned(Rc::new(element)),
         }
     }
 }
@@ -628,14 +619,14 @@ static_assert!(std::mem::size_of::<rome_rowan::TextRange>() == 8usize);
 static_assert!(std::mem::size_of::<crate::format_element::VerbatimKind>() == 8usize);
 
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 16usize);
+static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 24usize);
 
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::Token>() == 24usize);
 
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::ConditionalGroupContent>() == 16usize);
+static_assert!(std::mem::size_of::<crate::format_element::ConditionalGroupContent>() == 24usize);
 
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::List>() == 24usize);

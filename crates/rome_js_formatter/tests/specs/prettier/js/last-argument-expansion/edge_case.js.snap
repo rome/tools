@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 184
 expression: edge_case.js
 ---
 # Input
@@ -83,13 +84,18 @@ exports.examples = [
     ) {
       return (
         <div>
-            <InlineBlock>
-              <img
-                src={data[1234567890].image.uri}
-                style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
-              />
-            </InlineBlock>
-          </div>
+          <InlineBlock>
+            <img
+              src={data[1234567890].image.uri}
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "0",
+                zIndex: "-1",
+              }}
+            />
+          </InlineBlock>
+        </div>
       );
     }),
   },
@@ -135,6 +141,6 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
 ```
     2:   SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong,
     5:       SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong: 1,
-   30: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a(
+   35: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a(
 ```
 

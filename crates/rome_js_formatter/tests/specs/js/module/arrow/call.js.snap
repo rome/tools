@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: call.js
 ---
 # Input
@@ -107,11 +106,7 @@ const composition = (ViewComponent, ContainerComponent) =>
 
 romise.then(
 	(result) =>
-		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+		result.veryLongVariable
+			.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 );
-
-
-## Lines exceeding width of 80 characters
-
-   51: 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 

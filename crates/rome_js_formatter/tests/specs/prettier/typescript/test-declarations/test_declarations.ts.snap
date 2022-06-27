@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 184
 expression: test_declarations.ts
 ---
 # Input
@@ -12,17 +13,16 @@ test("does something really long and complicated so I have to write a very long 
 
 # Output
 ```js
-test(
-  "does something really long and complicated so I have to write a very long name for the test",
-  <T>(done) => {
-    console.log("hello!");
-  },
-);
+test("does something really long and complicated so I have to write a very long name for the test", <
+  T,
+>(done) => {
+  console.log("hello!");
+});
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-    2:   "does something really long and complicated so I have to write a very long name for the test",
+    1: test("does something really long and complicated so I have to write a very long name for the test", <
 ```
 

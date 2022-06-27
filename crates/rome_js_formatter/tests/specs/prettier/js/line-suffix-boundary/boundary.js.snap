@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 181
 expression: boundary.js
 ---
 # Input
@@ -58,14 +59,12 @@ ${
 `;
 
 <div>
-{ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
-}
+  {ExampleStory.getFragment(
+    "story",
+  ) // $FlowFixMe found when converting React.createClass to ES6
+  }
 </div>;
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   26: {ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
-```
 

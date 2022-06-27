@@ -2,12 +2,15 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsContinueStatement;
 use rome_js_syntax::JsContinueStatementFields;
 
-impl FormatNodeFields<JsContinueStatement> for FormatNodeRule<JsContinueStatement> {
-    fn fmt_fields(node: &JsContinueStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsContinueStatement;
+
+impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
+    fn fmt_fields(&self, node: &JsContinueStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsContinueStatementFields {
             continue_token,
             label_token,

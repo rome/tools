@@ -14,6 +14,16 @@ eleventyNavigation:
 <section>
 <h2>JavaScript</h2>
 <div class="rule">
+<h3 data-toc-exclude id="noAsyncPromiseExecutor">
+	<a href="/docs/lint/rules/noAsyncPromiseExecutor">noAsyncPromiseExecutor</a>
+	<a class="header-anchor" href="#noAsyncPromiseExecutor"></a>
+</h3>
+Disallows using an async function as a Promise executor.
+The executor function can also be an async function. However, this is usually a mistake, for a few reasons:
+If an async executor function throws an error, the error will be lost and won't cause the newly-constructed <code>Promise</code> to reject. This could make it difficult to debug and handle some errors.
+If a Promise executor function is using <code>await</code>, this is usually a sign that it is not actually necessary to use the <code>new Promise</code> constructor, or the scope of the <code>new Promise</code> constructor can be reduced.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noCompareNegZero">
 	<a href="/docs/lint/rules/noCompareNegZero">noCompareNegZero</a>
 	<a class="header-anchor" href="#noCompareNegZero"></a>
@@ -40,6 +50,13 @@ Disallow the use of the <code>delete</code> operator
 	<a class="header-anchor" href="#noDoubleEquals"></a>
 </h3>
 Require the use of <code>===</code> and <code>!==</code>
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noEmptyPattern">
+	<a href="/docs/lint/rules/noEmptyPattern">noEmptyPattern</a>
+	<a class="header-anchor" href="#noEmptyPattern"></a>
+</h3>
+Disallows empty destructuring patterns.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noImplicitBoolean">
@@ -70,6 +87,13 @@ Disallow negation in the condition of an <code>if</code> statement if it has an 
 Disallow sparse arrays
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noUnsafeNegation">
+	<a href="/docs/lint/rules/noUnsafeNegation">noUnsafeNegation</a>
+	<a class="header-anchor" href="#noUnsafeNegation"></a>
+</h3>
+Disallow using unsafe negation.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noUnusedTemplateLiteral">
 	<a href="/docs/lint/rules/noUnusedTemplateLiteral">noUnusedTemplateLiteral</a>
 	<a class="header-anchor" href="#noUnusedTemplateLiteral"></a>
@@ -77,11 +101,26 @@ Disallow sparse arrays
 Disallow template literals if interpolation and special-character handling are not needed
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useBlockStatements">
+	<a href="/docs/lint/rules/useBlockStatements">useBlockStatements</a>
+	<a class="header-anchor" href="#useBlockStatements"></a>
+</h3>
+Requires following curly brace conventions.
+JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSelfClosingElements">
 	<a href="/docs/lint/rules/useSelfClosingElements">useSelfClosingElements</a>
 	<a class="header-anchor" href="#useSelfClosingElements"></a>
 </h3>
 Prevent extra closing tags for components without children
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useShorthandArrayType">
+	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType</a>
+	<a class="header-anchor" href="#useShorthandArrayType"></a>
+</h3>
+When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">

@@ -1,5 +1,4 @@
 use crate::prelude::*;
-
 use crate::utils::FormatLiteralStringToken;
 use crate::utils::StringLiteralParentKind;
 use rome_formatter::write;
@@ -20,17 +19,17 @@ pub(crate) fn write_member_name(
                 let format = FormatLiteralStringToken::new(&value, StringLiteralParentKind::Member);
                 let cleaned = format.clean_text(f.context());
 
-                cleaned.fmt(f)?;
+                write!(f, [cleaned])?;
 
                 Ok(cleaned.width())
             } else {
-                name.format().fmt(f)?;
+                write!(f, [name.format()])?;
 
                 Ok(value.text_trimmed().width())
             }
         }
         name => {
-            write!(f, [group_elements(&name.format())])?;
+            write!(f, [&name.format()])?;
             Ok(name.text().width())
         }
     }

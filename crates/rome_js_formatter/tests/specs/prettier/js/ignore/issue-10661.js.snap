@@ -37,9 +37,9 @@ because the prettier-ignore comment is attached as MemberExpression leading comm
 ```js
 verylongidentifierthatwillwrap123123123123123(
   a.b
-  // prettier-ignore
-  // Some other comment here
-  .c,
+    // prettier-ignore
+    // Some other comment here
+    .c,
 );
 
 call(
@@ -59,8 +59,8 @@ because the prettier-ignore comment is attached as MemberExpression leading comm
     2.0000,
     3,
   )
-  // prettier-ignore
-  .c,
+    // prettier-ignore
+    .c,
 );
 
 ```

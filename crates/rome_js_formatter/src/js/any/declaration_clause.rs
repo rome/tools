@@ -1,11 +1,12 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::generated::FormatJsAnyDeclarationClause;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyDeclarationClause;
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyDeclarationClause;
 impl FormatRule<JsAnyDeclarationClause> for FormatJsAnyDeclarationClause {
     type Context = JsFormatContext;
-    fn fmt(node: &JsAnyDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyDeclarationClause::JsClassDeclaration(node) => node.format().fmt(f),
             JsAnyDeclarationClause::JsFunctionDeclaration(node) => node.format().fmt(f),

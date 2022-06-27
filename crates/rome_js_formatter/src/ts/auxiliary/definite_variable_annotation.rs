@@ -1,13 +1,18 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsDefiniteVariableAnnotation;
 use rome_js_syntax::TsDefiniteVariableAnnotationFields;
 
-impl FormatNodeFields<TsDefiniteVariableAnnotation>
-    for FormatNodeRule<TsDefiniteVariableAnnotation>
-{
-    fn fmt_fields(node: &TsDefiniteVariableAnnotation, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsDefiniteVariableAnnotation;
+
+impl FormatNodeRule<TsDefiniteVariableAnnotation> for FormatTsDefiniteVariableAnnotation {
+    fn fmt_fields(
+        &self,
+        node: &TsDefiniteVariableAnnotation,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsDefiniteVariableAnnotationFields {
             excl_token,
             type_annotation,

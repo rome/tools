@@ -11,10 +11,9 @@ const kochabCooieGameOnOboleUnweave = // ???
 
 # Output
 ```js
-const kochabCooieGameOnOboleUnweave = rhubarbRhubarb(
+const kochabCooieGameOnOboleUnweave =
   // ???
-  annularCooeedSplicesWalksWayWay,
-);
+  rhubarbRhubarb(annularCooeedSplicesWalksWayWay);
 
 ```
 
