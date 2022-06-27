@@ -239,10 +239,10 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
             })]
         )?;
 
-        let content = buffer.into_element();
+        let content = buffer.into_vec();
 
         let verbatim = Verbatim {
-            element: Box::new(content),
+            content: content.into_boxed_slice(),
             kind: self.kind,
         };
 

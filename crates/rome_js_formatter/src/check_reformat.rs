@@ -19,7 +19,7 @@ pub fn check_reformat(params: CheckReformatParams) {
         text,
         source_type,
         file_name,
-        format_context: format_options,
+        format_context: context,
     } = params;
 
     let re_parse = parse(text, 0, source_type);
@@ -44,11 +44,11 @@ pub fn check_reformat(params: CheckReformatParams) {
         )
     }
 
-    let formatted = format_node(format_options, &re_parse.syntax()).unwrap();
+    let formatted = format_node(context.clone(), &re_parse.syntax()).unwrap();
     let printed = formatted.print();
 
     if text != printed.as_code() {
-        let input_formatted = format_node(format_options, root).unwrap();
+        let input_formatted = format_node(context, root).unwrap();
 
         // Print a diff of the Formatter IR emitted for the input and the output
         let diff =

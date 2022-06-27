@@ -158,21 +158,6 @@ pub fn run(args: RunArgs) {
                         }
                     });
                     group.finish();
-                } else {
-                    //warmup
-                    match args.feature {
-                        FeatureToBenchmark::Parser => {
-                            run_parse(code, source_type);
-                        }
-                        FeatureToBenchmark::Formatter => {
-                            let root = parse(code, 0, source_type).syntax();
-                            run_format(&root);
-                        }
-                        FeatureToBenchmark::Analyzer => {
-                            let root = parse(code, 0, source_type).tree();
-                            run_analyzer(&root);
-                        }
-                    }
                 }
 
                 let result = match args.feature {

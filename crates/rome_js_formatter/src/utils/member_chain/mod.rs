@@ -238,7 +238,7 @@ fn compute_groups(
     f: &JsFormatter,
 ) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
-    let mut groups = Groups::new(in_expression_statement, *f.context());
+    let mut groups = Groups::new(in_expression_statement, f.context().tab_width());
     for item in flatten_items {
         let has_trailing_comments = item.as_syntax().has_trailing_comments();
 

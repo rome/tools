@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use std::cell::RefCell;
 use std::marker::PhantomData;
+use std::ops::Deref;
 
-use crate::{write, Buffer, VecBuffer};
+use crate::Buffer;
 
 /// Utility trait used to simplify the formatting of optional objects that are formattable.
 ///
@@ -144,7 +145,7 @@ impl<T, Context> MemoizeFormat<Context> for T where T: Format<Context> {}
 #[derive(Debug)]
 pub struct Memoized<F, Context> {
     inner: F,
-    memory: RefCell<Option<FormatResult<FormatElement>>>,
+    memory: RefCell<Option<FormatResult<Interned>>>,
     options: PhantomData<Context>,
 }
 
@@ -159,6 +160,71 @@ where
             options: PhantomData,
         }
     }
+
+    /// Gives access to the memoized content.
+    ///
+    /// Performs the formatting if the content hasn't been formatted at this point.
+    ///
+    /// # Example
+    ///
+    /// Inspect if some memoized content breaks.
+    ///
+    /// ```rust
+    /// use std::cell::Cell;
+    /// use rome_formatter::{format, write};
+    /// use rome_formatter::prelude::*;
+    /// use rome_rowan::TextSize;
+    ///
+    /// #[derive(Default)]
+    /// struct Counter {
+    ///   value: Cell<u64>
+    /// }
+    ///
+    /// impl Format<SimpleFormatContext> for Counter {
+    ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
+    ///         let current = self.value.get();
+    ///
+    ///         write!(f, [
+    ///             token("Count:"),
+    ///             space_token(),
+    ///             dynamic_token(&std::format!("{current}"), TextSize::default()),
+    ///             hard_line_break()
+    ///         ])?;
+    ///
+    ///         self.value.set(current + 1);
+    ///         Ok(())
+    ///     }
+    /// }
+    ///
+    /// let content = format_with(|f| {
+    ///     let mut counter = Counter::default().memoized();
+    ///     let counter_content = counter.inspect(f)?;
+    ///
+    ///     if counter_content.will_break() {
+    ///         write!(f, [token("Counter:"), block_indent(&counter)])
+    ///     } else {
+    ///         write!(f, [token("Counter:"), counter])
+    ///     }?;
+    ///
+    ///     write!(f, [counter])
+    /// });
+    ///
+    ///
+    /// let formatted = format!(SimpleFormatContext::default(), [content]).unwrap();
+    /// assert_eq!("Counter:\n\tCount: 0\nCount: 0\n", formatted.print().as_code())
+    ///
+    /// ```
+    pub fn inspect(&mut self, f: &mut Formatter<Context>) -> FormatResult<&FormatElement> {
+        let result = self
+            .memory
+            .get_mut()
+            .get_or_insert_with(|| f.intern(&self.inner));
+
+        match result.as_ref() {
+            Ok(content) => Ok(content.deref()),
+            Err(error) => Err(*error),
+        }
+    }
 }
 
 impl<F, Context> Format<Context> for Memoized<F, Context>
@@ -166,36 +232,16 @@ where
     F: Format<Context>,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        // Cached
-        if let Some(memory) = self.memory.borrow().as_ref() {
-            return match memory {
-                Ok(elements) => {
-                    f.write_element(elements.clone())?;
-
-                    Ok(())
-                }
-                Err(err) => Err(*err),
-            };
-        }
-        let mut buffer = VecBuffer::new(f.state_mut());
-
-        let result = write!(buffer, [self.inner]);
+        let mut memory = self.memory.borrow_mut();
+        let result = memory.get_or_insert_with(|| f.intern(&self.inner));
 
         match result {
-            Ok(_) => {
-                let elements = buffer.into_element();
-                let interned = elements.intern();
-
-                f.write_element(interned.clone())?;
-
-                *self.memory.borrow_mut() = Some(Ok(interned));
+            Ok(elements) => {
+                f.write_element(FormatElement::Interned(elements.clone()))?;
 
                 Ok(())
             }
-            Err(err) => {
-                *self.memory.borrow_mut() = Some(Err(err));
-                Err(err)
-            }
+            Err(err) => Err(*err),
         }
     }
 }

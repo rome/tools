@@ -198,11 +198,6 @@ impl<'a, Context> VecBuffer<'a, Context> {
             FormatElement::List(List::new(std::mem::take(&mut self.elements)))
         }
     }
-
-    /// Returns a reference to the current context
-    pub fn context(&self) -> &Context {
-        &self.state.context
-    }
 }
 
 impl<Context> Deref for VecBuffer<'_, Context> {
@@ -224,13 +219,7 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         match element {
-            FormatElement::List(list) => {
-                if self.elements.is_empty() {
-                    self.elements = list.into_vec()
-                } else {
-                    self.elements.extend(list.into_vec())
-                }
-            }
+            FormatElement::List(list) => self.elements.extend(list.into_vec()),
             element => self.elements.push(element),
         }
 

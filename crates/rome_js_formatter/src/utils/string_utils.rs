@@ -79,7 +79,7 @@ impl<'token> FormatLiteralStringToken<'token> {
         let chosen_quote_style = context.quote_style();
         let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
 
-        let content = string_cleaner.normalise_text(context.source_type.into());
+        let content = string_cleaner.normalise_text(context.source_type().into());
         let normalized_text_width = content.width();
 
         CleanedStringLiteralText {

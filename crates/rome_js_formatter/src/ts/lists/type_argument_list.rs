@@ -11,8 +11,7 @@ impl FormatRule<TsTypeArgumentList> for FormatTsTypeArgumentList {
         f.join_with(&soft_line_break_or_space())
             .entries(
                 node.format_separated(JsSyntaxKind::COMMA)
-                    .with_trailing_separator(TrailingSeparator::Disallowed)
-                    .group_nodes(false),
+                    .with_trailing_separator(TrailingSeparator::Disallowed),
             )
             .finish()
     }

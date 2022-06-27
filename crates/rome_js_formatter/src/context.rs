@@ -8,25 +8,24 @@ use std::fmt;
 use std::fmt::Debug;
 use std::str::FromStr;
 
-#[derive(Debug, Copy, Clone, Default)]
+#[derive(Debug, Clone, Default)]
 pub struct JsFormatContext {
     /// The indent style.
-    pub indent_style: IndentStyle,
+    indent_style: IndentStyle,
 
     /// What's the max width of a line. Defaults to 80.
-    pub line_width: LineWidth,
+    line_width: LineWidth,
 
-    /// Options of current instance of the formatter
-    pub options: JsFormatOptions,
+    /// The style for quotes. Defaults to double.
+    quote_style: QuoteStyle,
 
     /// Information relative to the current file
-    pub source_type: SourceType,
+    source_type: SourceType,
 }
 
 impl JsFormatContext {
-    pub fn new(options: JsFormatOptions, source_type: SourceType) -> Self {
+    pub fn new(source_type: SourceType) -> Self {
         Self {
-            options,
             source_type,
             ..JsFormatContext::default()
         }
@@ -42,22 +41,49 @@ impl JsFormatContext {
         self
     }
 
+    pub fn with_quote_style(mut self, quote_style: QuoteStyle) -> Self {
+        self.quote_style = quote_style;
+        self
+    }
+
+    pub fn with_source_type(mut self, source_type: SourceType) -> Self {
+        self.source_type = source_type;
+        self
+    }
+
+    pub fn line_width(&self) -> LineWidth {
+        self.line_width
+    }
+
     pub fn quote_style(&self) -> QuoteStyle {
-        self.options.quote_style
+        self.quote_style
+    }
+
+    pub fn source_type(&self) -> SourceType {
+        self.source_type
     }
 }
 
-#[derive(Debug, Copy, Clone, Default)]
-pub struct JsFormatOptions {
-    // The style for quotes. Defaults to double.
-    pub quote_style: QuoteStyle,
+#[derive(Eq, PartialEq, Debug, Copy, Clone, Hash)]
+pub struct TabWidth(u8);
+
+impl From<u8> for TabWidth {
+    fn from(value: u8) -> Self {
+        TabWidth(value)
+    }
+}
+
+impl From<TabWidth> for u8 {
+    fn from(width: TabWidth) -> Self {
+        width.0
+    }
 }
 
 impl JsFormatContext {
-    pub fn tab_width(&self) -> u8 {
+    pub fn tab_width(&self) -> TabWidth {
         match self.indent_style {
-            IndentStyle::Tab => 2,
-            IndentStyle::Space(quantities) => quantities,
+            IndentStyle::Tab => 2.into(),
+            IndentStyle::Space(quantities) => quantities.into(),
         }
     }
 }
@@ -82,8 +108,7 @@ impl fmt::Display for JsFormatContext {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
-        write!(f, "{}", self.options)?;
-        Ok(())
+        writeln!(f, "Quote style: {}", self.quote_style)
     }
 }
 
@@ -129,13 +154,6 @@ impl CommentStyle<JsLanguage> for JsCommentStyle {
                 | JsSyntaxKind::DOT
                 | JsSyntaxKind::EOF
         )
-    }
-}
-
-impl fmt::Display for JsFormatOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Quote style: {}", self.quote_style)?;
-        Ok(())
     }
 }
 
