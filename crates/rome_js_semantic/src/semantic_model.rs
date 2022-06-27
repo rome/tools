@@ -9,7 +9,7 @@ struct SemanticModelScopeData {
     parent: Option<usize>,
     children: Vec<usize>,
     bindings: Vec<TextRange>,
-    bindings_by_name: HashMap<SyntaxTokenText, TextRange>,
+    bindings_by_name: HashMap<SyntaxTokenText, usize>,
 }
 
 /// Contains all the data of the [SemanticModel] and only lives behind an [Arc].
@@ -64,7 +64,8 @@ impl Scope {
     pub fn get_binding(&self, name: &str) -> Option<Binding> {
         let data = &self.data.scopes[self.id];
 
-        let range = data.bindings_by_name.get(name)?;
+        let i = data.bindings_by_name.get(name)?;
+        let range = &data.bindings[*i];
         let node = self.data.node_by_range.get(range)?;
 
         Some(Binding { node: node.clone() })
@@ -288,7 +289,9 @@ impl SemanticModelBuilder {
                 let scope = &mut self.scopes[*self.scope_stack.last().unwrap()];
                 scope.bindings.push(range);
 
-                scope.bindings_by_name.insert(name, range);
+                scope
+                    .bindings_by_name
+                    .insert(name, scope.bindings.len() - 1);
             }
             Read {
                 range,
