@@ -66,3 +66,7 @@ f()"#,
 }
 f()"#,
 }
+
+assert_semantics! {
+    ok_unmatched_reference, r#"a/*?*/"#,
+}
