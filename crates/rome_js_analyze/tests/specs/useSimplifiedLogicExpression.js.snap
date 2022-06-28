@@ -33,7 +33,7 @@ warning[useSimplifiedLogicExpression]: Logical expression contains unnecessary c
 10 │ const r = true && boolExp;
    │           ---------------
 
-Suggested fix: Simplified your logic expression
+Suggested fix: Discard redundant terms from logical expressions
       | @@ -7,7 +7,7 @@
  6  6 |   const r6 = !!boolExpr1 || !!boolExpr2;
  7  7 |   // invalid
@@ -54,7 +54,7 @@ warning[useSimplifiedLogicExpression]: Logical expression contains unnecessary c
 12 │ const r2 = boolExp || true;
    │            ---------------
 
-Suggested fix: Simplified your logic expression
+Suggested fix: Discard redundant terms from logical expressions
       | @@ -9,7 +9,7 @@
  8  8 |   const boolExp = true;
  9  9 |   const r = true && boolExp;
@@ -75,7 +75,7 @@ warning[useSimplifiedLogicExpression]: Logical expression contains unnecessary c
 14 │ const r3 = null ?? nonNullExp;
    │            ------------------
 
-Suggested fix: Simplified your logic expression
+Suggested fix: Discard redundant terms from logical expressions
       | @@ -11,7 +11,7 @@
 10 10 |   const boolExp2 = true;
 11 11 |   const r2 = boolExp || true;
@@ -96,7 +96,7 @@ warning[useSimplifiedLogicExpression]: Logical expression contains unnecessary c
 17 │ const r4 = !boolExpr1 || !boolExpr2;
    │            ------------------------
 
-Suggested fix: Simplified your logic expression
+Suggested fix: Discard redundant terms from logical expressions
       | @@ -14,4 +14,4 @@
 13 13 |   const r3 = null ?? nonNullExp;
 14 14 |   const boolExpr1 = true;

@@ -13,7 +13,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// This rule simplified your logic expressions.
+    /// Discard redundant terms from logical expressions.
     ///
     /// ## Examples
     ///
@@ -136,7 +136,7 @@ impl Rule for UseSimplifiedLogicExpression {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Simplified your logic expression" }.to_owned(),
+            message: markup! { "Discard redundant terms from logical expressions" }.to_owned(),
             root,
         })
     }

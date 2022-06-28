@@ -127,7 +127,7 @@ When expressing array types, this rule promotes the usage of <code>T[]</code> sh
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
 </h3>
-This rule simplified your logic expressions.
+Discard redundant terms from logical expressions.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">
