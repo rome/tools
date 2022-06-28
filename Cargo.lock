@@ -1484,6 +1484,7 @@ dependencies = [
  "rome_js_syntax",
  "rome_markup",
  "rome_rowan",
+ "rust-lapper",
 ]
 
 [[package]]
@@ -1599,6 +1600,15 @@ name = "rome_text_edit"
 version = "0.1.0"
 dependencies = [
  "rome_rowan",
+]
+
+[[package]]
+name = "rust-lapper"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c0da7f82898b906bf29d705adb2c36a461c9cc9e33c1417041c86229d569c144"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]

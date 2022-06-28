@@ -21,6 +21,7 @@ pub enum SemanticEvent {
     DeclarationFound {
         range: TextRange,
         scope_started_at: TextSize,
+        name: SyntaxTokenText,
     },
 
     /// Tracks when a symbol is read.
@@ -410,13 +411,14 @@ impl SemanticEventExtractor {
 
         debug_assert!(scope_idx < self.scopes.len());
         let scope = &mut self.scopes[scope_idx];
-        scope.bindings.push(Binding { name });
+        scope.bindings.push(Binding { name: name.clone() });
         scope.shadowed.extend(shadowed);
         let scope_started_at = scope.started_at;
 
         self.stash.push_back(SemanticEvent::DeclarationFound {
             range: declaration_range,
             scope_started_at,
+            name,
         });
     }
 }
