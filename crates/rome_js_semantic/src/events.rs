@@ -392,7 +392,7 @@ impl SemanticEventExtractor {
             Some(idx) => idx,
             // Worst case this will fallback to the global scope
             // which will be idx = 0
-            None => unreachable!(),
+            None => unreachable!("We must have a least of scope."),
         }
     }
 
