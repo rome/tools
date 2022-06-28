@@ -65,7 +65,11 @@ fn main() -> Result<()> {
         ..AnalysisFilter::default()
     };
 
-    for (name, docs) in metadata(filter) {
+    // Ensure the list of rules is stored alphabetically
+    let mut rules: Vec<_> = metadata(filter).collect();
+    rules.sort_unstable_by_key(|(name, _)| *name);
+
+    for (name, docs) in rules {
         match generate_rule(&root, name, docs) {
             Ok(summary) => {
                 writeln!(index, "<div class=\"rule\">")?;
@@ -143,7 +147,7 @@ fn parse_documentation(
     // Tracks the content of the current code block if it's using a
     // language supported for analysis
     let mut language = None;
-
+    let mut list_order = None;
     for event in parser {
         if is_summary {
             if matches!(event, Event::End(Tag::Paragraph)) {
@@ -245,6 +249,28 @@ fn parse_documentation(
                 writeln!(content)?;
             }
 
+            Event::Start(Tag::List(num)) => {
+                if let Some(num) = num {
+                    list_order = Some(num);
+                }
+            }
+
+            Event::End(Tag::List(_)) => {
+                list_order = None;
+            }
+            Event::Start(Tag::Item) => {
+                if let Some(num) = list_order {
+                    write!(content, "{num}. ")?;
+                } else {
+                    write!(content, "- ")?;
+                }
+            }
+
+            Event::End(Tag::Item) => {
+                list_order = list_order.map(|item| item + 1);
+                writeln!(content)?;
+            }
+
             _ => {
                 // TODO: Implement remaining events as required
                 bail!("unimplemented event {event:?}")
@@ -332,7 +358,10 @@ fn assert_lint(
                 "analysis returned multiple diagnostics"
             );
         } else {
-            bail!("analysis returned an unexpected diagnostic");
+            bail!(format!(
+                "analysis returned an unexpected diagnostic, code snippet:\n\n{}",
+                diag.code.unwrap_or_else(|| "".to_string())
+            ));
         }
 
         Formatter::new(&mut write).write_markup(markup! {

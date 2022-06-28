@@ -12,6 +12,13 @@ use crate::{AstNode, Language};
 /// ```
 #[macro_export]
 macro_rules! declare_node_union {
+    (@merge_kind $head:ident ) => {
+        $head::KIND_SET
+    };
+    (@merge_kind $head:ident $( $rest:ident )* ) => {
+        $head::KIND_SET.union($crate::declare_node_union!( @merge_kind $( $rest )* ))
+    };
+
     ( $( #[$attr:meta] )* $vis:vis $name:ident = $( $variant:ident )|* ) => {
         $( #[$attr] )*
         #[allow(clippy::enum_variant_names)]
@@ -22,6 +29,8 @@ macro_rules! declare_node_union {
 
         impl AstNode for $name {
             type Language = <( $( $variant, )* ) as $crate::macros::UnionLanguage>::Language;
+
+            const KIND_SET: $crate::SyntaxKindSet<Self::Language> = $crate::declare_node_union!( @merge_kind $( $variant )* );
 
             fn can_cast(kind: <Self::Language as $crate::Language>::Kind) -> bool {
                 $( $variant::can_cast(kind) )||*

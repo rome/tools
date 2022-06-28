@@ -19,9 +19,6 @@ eleventyNavigation:
 	<a class="header-anchor" href="#noAsyncPromiseExecutor"></a>
 </h3>
 Disallows using an async function as a Promise executor.
-The executor function can also be an async function. However, this is usually a mistake, for a few reasons:
-If an async executor function throws an error, the error will be lost and won't cause the newly-constructed <code>Promise</code> to reject. This could make it difficult to debug and handle some errors.
-If a Promise executor function is using <code>await</code>, this is usually a sign that it is not actually necessary to use the <code>new Promise</code> constructor, or the scope of the <code>new Promise</code> constructor can be reduced.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noCompareNegZero">
@@ -114,6 +111,13 @@ JavaScript allows the omission of curly braces when a block contains only one st
 	<a class="header-anchor" href="#useSelfClosingElements"></a>
 </h3>
 Prevent extra closing tags for components without children
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useShorthandArrayType">
+	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType</a>
+	<a class="header-anchor" href="#useShorthandArrayType"></a>
+</h3>
+When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">

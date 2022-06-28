@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: prettier-ignore.ts
 ---
 # Input
@@ -35,25 +36,25 @@ export type a =
 # Output
 ```js
 export type a =
-  // foo
-  | foo1 & foo2
-  // bar
-  | bar1 & bar2
-  // prettier-ignore
-  | qux1 & qux2;
+    // foo
+    | foo1 & foo2
+    // bar
+    | bar1 & bar2
+    // prettier-ignore
+    | qux1 & qux2;
 
 export type a =
-  // foo
-  | foo1 & foo2
-  // bar
-  | bar1 & bar2
-  // prettier-ignore
-  | qux1 & qux2
-  // baz
-  | baz1 & baz2;
+    // foo
+    | foo1 & foo2
+    // bar
+    | bar1 & bar2
+    // prettier-ignore
+    | qux1 & qux2
+    // baz
+    | baz1 & baz2;
 
 export type a =
-// prettier-ignore
+  // prettier-ignore
   | foo1&foo2
   // bar
   | bar1&bar2

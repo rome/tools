@@ -457,10 +457,15 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
+export type a =
+  // foo
+  | foo1 & foo2
+  // bar
+  | bar1 & bar2
+  // prettier-ignore
+  | qux1 & qux2;
 
-it(`does something really long and complicated so I have to write a very long name for the test`, function () {
-  console.log("hello!");
- });
+
 
         "#;
         let syntax = SourceType::tsx();
