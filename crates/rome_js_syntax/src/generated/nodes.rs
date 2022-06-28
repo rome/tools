@@ -9624,9 +9624,7 @@ impl TsMappedTypeOptionalModifierClause {
             question_mark_token: self.question_mark_token(),
         }
     }
-    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
+    pub fn operator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -9642,7 +9640,7 @@ impl Serialize for TsMappedTypeOptionalModifierClause {
 }
 #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMappedTypeOptionalModifierClauseFields {
-    pub operator_token: SyntaxResult<SyntaxToken>,
+    pub operator_token: Option<SyntaxToken>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -22177,7 +22175,7 @@ impl std::fmt::Debug for TsMappedTypeOptionalModifierClause {
         f.debug_struct("TsMappedTypeOptionalModifierClause")
             .field(
                 "operator_token",
-                &support::DebugSyntaxResult(self.operator_token()),
+                &support::DebugOptionalElement(self.operator_token()),
             )
             .field(
                 "question_mark_token",

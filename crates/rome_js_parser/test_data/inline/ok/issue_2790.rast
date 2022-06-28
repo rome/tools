@@ -1,0 +1,97 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: VAR_KW@0..4 "var" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..5 "x" [] [],
+                        },
+                        variable_annotation: TsTypeAnnotation {
+                            colon_token: COLON@5..7 ":" [] [Whitespace(" ")],
+                            ty: TsMappedType {
+                                l_curly_token: L_CURLY@7..8 "{" [] [],
+                                readonly_modifier: missing (optional),
+                                l_brack_token: L_BRACK@8..12 "[" [Newline("\n"), Whitespace("  ")] [],
+                                property_name: TsTypeParameterName {
+                                    ident_token: IDENT@12..14 "A" [] [Whitespace(" ")],
+                                },
+                                in_token: IN_KW@14..17 "in" [] [Whitespace(" ")],
+                                keys_type: TsTypeOperatorType {
+                                    operator_token: KEYOF_KW@17..23 "keyof" [] [Whitespace(" ")],
+                                    ty: TsReferenceType {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@23..24 "B" [] [],
+                                        },
+                                        type_arguments: missing (optional),
+                                    },
+                                },
+                                as_clause: missing (optional),
+                                r_brack_token: R_BRACK@24..25 "]" [] [],
+                                optional_modifier: TsMappedTypeOptionalModifierClause {
+                                    operator_token: missing (optional),
+                                    question_mark_token: QUESTION@25..26 "?" [] [],
+                                },
+                                mapped_type: TsTypeAnnotation {
+                                    colon_token: COLON@26..28 ":" [] [Whitespace(" ")],
+                                    ty: TsAnyType {
+                                        any_token: ANY_KW@28..31 "any" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@31..32 ";" [] [],
+                                r_curly_token: R_CURLY@32..34 "}" [Newline("\n")] [],
+                            },
+                        },
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@34..35 ";" [] [],
+        },
+    ],
+    eof_token: EOF@35..36 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..36
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..35
+    0: JS_VARIABLE_STATEMENT@0..35
+      0: JS_VARIABLE_DECLARATION@0..34
+        0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@4..34
+          0: JS_VARIABLE_DECLARATOR@4..34
+            0: JS_IDENTIFIER_BINDING@4..5
+              0: IDENT@4..5 "x" [] []
+            1: TS_TYPE_ANNOTATION@5..34
+              0: COLON@5..7 ":" [] [Whitespace(" ")]
+              1: TS_MAPPED_TYPE@7..34
+                0: L_CURLY@7..8 "{" [] []
+                1: (empty)
+                2: L_BRACK@8..12 "[" [Newline("\n"), Whitespace("  ")] []
+                3: TS_TYPE_PARAMETER_NAME@12..14
+                  0: IDENT@12..14 "A" [] [Whitespace(" ")]
+                4: IN_KW@14..17 "in" [] [Whitespace(" ")]
+                5: TS_TYPE_OPERATOR_TYPE@17..24
+                  0: KEYOF_KW@17..23 "keyof" [] [Whitespace(" ")]
+                  1: TS_REFERENCE_TYPE@23..24
+                    0: JS_REFERENCE_IDENTIFIER@23..24
+                      0: IDENT@23..24 "B" [] []
+                    1: (empty)
+                6: (empty)
+                7: R_BRACK@24..25 "]" [] []
+                8: TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE@25..26
+                  0: (empty)
+                  1: QUESTION@25..26 "?" [] []
+                9: TS_TYPE_ANNOTATION@26..31
+                  0: COLON@26..28 ":" [] [Whitespace(" ")]
+                  1: TS_ANY_TYPE@28..31
+                    0: ANY_KW@28..31 "any" [] []
+                10: SEMICOLON@31..32 ";" [] []
+                11: R_CURLY@32..34 "}" [Newline("\n")] []
+            2: (empty)
+      1: SEMICOLON@34..35 ";" [] []
+  3: EOF@35..36 "" [Newline("\n")] []

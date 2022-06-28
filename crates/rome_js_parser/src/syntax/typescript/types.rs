@@ -576,6 +576,11 @@ fn is_at_start_of_mapped_type(p: &mut Parser) -> bool {
         && p.nth_at(offset + 2, T![in])
 }
 
+// test ts issue_2790
+// var x: {
+//   [A in keyof B]?: any;
+// };
+
 // test ts ts_mapped_type
 // type A = { [test in "a" | "b"] }
 // type OptionsFlags<Type> = {

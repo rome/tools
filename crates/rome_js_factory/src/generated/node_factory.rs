@@ -5095,16 +5095,32 @@ pub fn ts_mapped_type_as_clause(as_token: SyntaxToken, ty: TsType) -> TsMappedTy
     ))
 }
 pub fn ts_mapped_type_optional_modifier_clause(
-    operator_token_token: SyntaxToken,
     question_mark_token: SyntaxToken,
-) -> TsMappedTypeOptionalModifierClause {
-    TsMappedTypeOptionalModifierClause::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE,
-        [
-            Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Token(question_mark_token)),
-        ],
-    ))
+) -> TsMappedTypeOptionalModifierClauseBuilder {
+    TsMappedTypeOptionalModifierClauseBuilder {
+        question_mark_token,
+        operator_token_token: None,
+    }
+}
+pub struct TsMappedTypeOptionalModifierClauseBuilder {
+    question_mark_token: SyntaxToken,
+    operator_token_token: Option<SyntaxToken>,
+}
+impl TsMappedTypeOptionalModifierClauseBuilder {
+    pub fn with_operator_token_token(mut self, operator_token_token: SyntaxToken) -> Self {
+        self.operator_token_token = Some(operator_token_token);
+        self
+    }
+    pub fn build(self) -> TsMappedTypeOptionalModifierClause {
+        TsMappedTypeOptionalModifierClause::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE,
+            [
+                self.operator_token_token
+                    .map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Token(self.question_mark_token)),
+            ],
+        ))
+    }
 }
 pub fn ts_mapped_type_readonly_modifier_clause(
     operator_token_token: SyntaxToken,

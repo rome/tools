@@ -2017,7 +2017,7 @@ TsMappedTypeAsClause =
 	type: TsType
 
 TsMappedTypeOptionalModifierClause =
-	operator_token: ('+' | '-')
+	operator_token: ('+' | '-')?
 	'?'
 
 TsMappedTypeReadonlyModifierClause =

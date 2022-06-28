@@ -4795,10 +4795,10 @@ impl TsMappedTypeAsClause {
     }
 }
 impl TsMappedTypeOptionalModifierClause {
-    pub fn with_operator_token_token(self, element: SyntaxToken) -> Self {
+    pub fn with_operator_token_token(self, element: Option<SyntaxToken>) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.into()))),
+                .splice_slots(0usize..=0usize, once(element.map(|element| element.into()))),
         )
     }
     pub fn with_question_mark_token(self, element: SyntaxToken) -> Self {
