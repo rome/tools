@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: union_type.ts
 ---
 # Input
@@ -56,10 +57,10 @@ type LongUnion =
 	| Z;
 
 type Comments =
-	// leading separator
-	|
-	// leading type
-	A
-	| B /*
+		// leading separator
+		|
+		// leading type
+		A
+		| B /*
 trailing type */;
 

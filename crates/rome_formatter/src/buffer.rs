@@ -518,15 +518,15 @@ pub trait BufferExtensions: Buffer + Sized {
     ///     }).memoized();
     ///
     ///     let will_break =  {
-    ///         let mut null_buffer =  f.inspect_null(f);
+    ///         let mut null_buffer =  f.inspect_null();
     ///         let mut buffer = null_buffer.inspect_will_break();
     ///         write!(buffer, [element])?;
     ///         buffer.finish()
     ///     };
     ///
     ///
-    ///     if does_element_break {
-    ///         write!(f, [hard_line_break(), token("break"), &element])
+    ///     if will_break {
+    ///         write!(f, [token("break"), hard_line_break(), &element])
     ///     } else {
     ///         write!(f, [token("did not break")])
     ///     }   
@@ -534,7 +534,7 @@ pub trait BufferExtensions: Buffer + Sized {
     /// })]).unwrap();
     ///
     /// assert_eq!(
-    ///     "hello\nworld!\nbreak",
+    ///     "break\nhello\nworld!",
     ///     formatted.print().as_code()
     /// );
     /// ```

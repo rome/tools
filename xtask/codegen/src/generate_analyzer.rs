@@ -92,7 +92,7 @@ fn update_registry_builder(analyzers: Vec<String>, assists: Vec<String>) -> Resu
         use crate::{analyzers::*, assists::*};
 
         pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage> {
-            let mut rules = RuleRegistry::empty();
+            let mut rules = RuleRegistry::default();
             #( #rules )*
             rules
         }

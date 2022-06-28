@@ -5,7 +5,7 @@ mod rule;
 mod signals;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
-pub use crate::registry::{LanguageRoot, MetadataIter, RuleRegistry};
+pub use crate::registry::{LanguageRoot, RuleRegistry};
 pub use crate::rule::{Rule, RuleAction, RuleDiagnostic, RuleMeta};
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 use rome_diagnostics::file::FileId;

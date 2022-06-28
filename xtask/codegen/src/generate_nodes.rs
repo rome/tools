@@ -197,6 +197,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     impl AstNode for #name {
                         type Language = Language;
 
+                        const KIND_SET: SyntaxKindSet<Language> =
+                            SyntaxKindSet::from_raw(RawSyntaxKind(#node_kind as u16));
+
                         fn can_cast(kind: SyntaxKind) -> bool {
                             kind == #node_kind
                         }
@@ -404,6 +407,20 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             };
 
+            let kind_set: Vec<_> = union
+                .variants
+                .iter()
+                .enumerate()
+                .map(|(index, v)| {
+                    let ident = format_ident!("{}", v);
+                    if index == 0 {
+                        quote!( #ident::KIND_SET )
+                    } else {
+                        quote!( .union(#ident::KIND_SET) )
+                    }
+                })
+                .collect();
+
             let (variant_syntax, variant_into_syntax): (Vec<_>, Vec<_>) = simple_variants
                 .iter()
                 .map(|_| {
@@ -449,6 +466,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                     impl AstNode for #name {
                         type Language = Language;
+
+                        const KIND_SET: SyntaxKindSet<Language> = #( #kind_set )*;
 
                         fn can_cast(kind: SyntaxKind) -> bool {
                             #can_cast_fn
@@ -556,6 +575,10 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
             impl AstNode for #name {
                 type Language = Language;
+
+                const KIND_SET: SyntaxKindSet<Language> =
+                    SyntaxKindSet::from_raw(RawSyntaxKind(#kind as u16));
+
                 fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #kind
                 }
@@ -617,6 +640,10 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
             impl AstNode for #list_name {
                 type Language = Language;
+
+                const KIND_SET: SyntaxKindSet<Language> =
+                    SyntaxKindSet::from_raw(RawSyntaxKind(#list_kind as u16));
+
                 fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #list_kind
                 }
@@ -787,7 +814,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         use rome_rowan::{
             AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator
         };
-        use rome_rowan::{support, AstNode, SyntaxResult};
+        use rome_rowan::{support, AstNode, SyntaxKindSet, RawSyntaxKind, SyntaxResult};
         use std::fmt::{Debug, Formatter};
         #serde_import
 

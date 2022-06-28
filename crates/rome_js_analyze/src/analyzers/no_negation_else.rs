@@ -5,10 +5,9 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
-    JsUnaryExpression, JsUnaryOperator,
+    JsAnyExpression, JsConditionalExpression, JsIfStatement, JsUnaryExpression, JsUnaryOperator,
 };
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
@@ -134,48 +133,6 @@ fn is_negation(node: &JsAnyExpression) -> Option<bool> {
     }
 }
 
-#[derive(Debug, Clone)]
-pub enum JsAnyCondition {
-    JsConditionalExpression(JsConditionalExpression),
-    JsIfStatement(JsIfStatement),
-}
-
-impl AstNode for JsAnyCondition {
-    type Language = JsLanguage;
-
-    fn can_cast(kind: <Self::Language as rome_rowan::Language>::Kind) -> bool {
-        matches!(
-            kind,
-            JsSyntaxKind::JS_CONDITIONAL_EXPRESSION | JsSyntaxKind::JS_IF_STATEMENT
-        )
-    }
-
-    fn cast(syntax: rome_rowan::SyntaxNode<Self::Language>) -> Option<Self>
-    where
-        Self: Sized,
-    {
-        match syntax.kind() {
-            JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-                JsConditionalExpression::cast(syntax).map(JsAnyCondition::JsConditionalExpression)
-            }
-            JsSyntaxKind::JS_IF_STATEMENT => {
-                JsIfStatement::cast(syntax).map(JsAnyCondition::JsIfStatement)
-            }
-            _ => None,
-        }
-    }
-
-    fn syntax(&self) -> &rome_rowan::SyntaxNode<Self::Language> {
-        match self {
-            JsAnyCondition::JsConditionalExpression(expr) => expr.syntax(),
-            JsAnyCondition::JsIfStatement(stmt) => stmt.syntax(),
-        }
-    }
-
-    fn into_syntax(self) -> rome_rowan::SyntaxNode<Self::Language> {
-        match self {
-            JsAnyCondition::JsConditionalExpression(expr) => expr.into_syntax(),
-            JsAnyCondition::JsIfStatement(stmt) => stmt.into_syntax(),
-        }
-    }
+declare_node_union! {
+    pub JsAnyCondition = JsConditionalExpression | JsIfStatement
 }
