@@ -457,12 +457,7 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-deepCopyAndAsyncMapLeavesC(
-  { source: sourceedeefeffeefefefValue, destination: destination[sourceKey] },
-  1337,
-  { valueMapper, overwriteExistingKeys }
-)
-
+const fooo: SomeThing<{ [P in "x" | "y"]: number }> = func();
 
         "#;
         let syntax = SourceType::tsx();

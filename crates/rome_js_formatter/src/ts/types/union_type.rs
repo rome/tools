@@ -17,13 +17,16 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
 
         let should_indent = {
             let parent_kind = node.syntax().parent().map(|p| p.kind());
+
             !matches!(
                 parent_kind,
                 Some(
                     JsSyntaxKind::TS_REFERENCE_TYPE
-                        | JsSyntaxKind::TS_TYPE_ANNOTATION
+                        | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
                         | JsSyntaxKind::TS_TUPLE_TYPE
                         | JsSyntaxKind::TS_TYPE_ASSERTION_ASSIGNMENT
+                        | JsSyntaxKind::TS_FUNCTION_TYPE
+                        | JsSyntaxKind::TS_TYPE_ARGUMENTS
                 )
             )
         };
