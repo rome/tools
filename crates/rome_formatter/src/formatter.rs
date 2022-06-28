@@ -176,7 +176,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
 impl<Context> Formatter<'_, Context> {
     /// Take a snapshot of the state of the formatter
     #[inline]
-    pub fn snapshot(&self) -> FormatterSnapshot {
+    pub fn state_snapshot(&self) -> FormatterSnapshot {
         FormatterSnapshot {
             buffer: self.buffer.snapshot(),
             state: self.state().snapshot(),
@@ -185,7 +185,7 @@ impl<Context> Formatter<'_, Context> {
 
     #[inline]
     /// Restore the state of the formatter to a previous snapshot
-    pub fn restore_snapshot(&mut self, snapshot: FormatterSnapshot) {
+    pub fn restore_state_snapshot(&mut self, snapshot: FormatterSnapshot) {
         self.state_mut().restore_snapshot(snapshot.state);
         self.buffer.restore_snapshot(snapshot.buffer);
     }

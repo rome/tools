@@ -25,13 +25,13 @@ where
     Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
 {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let snapshot = Formatter::snapshot(f);
+        let snapshot = Formatter::state_snapshot(f);
 
         match self.node.format().fmt(f) {
             Ok(result) => Ok(result),
 
             Err(_) => {
-                f.restore_snapshot(snapshot);
+                f.restore_state_snapshot(snapshot);
 
                 // Lists that yield errors are formatted as they were unknown nodes.
                 // Doing so, the formatter formats the nodes/tokens as is.

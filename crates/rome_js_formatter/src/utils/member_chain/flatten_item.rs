@@ -156,21 +156,18 @@ impl Format<JsFormatContext> for FlattenItem {
             FlattenItem::CallExpression(call_expression) => {
                 let JsCallExpressionFields {
                     // Formatted as part of the previous item
-                    callee,
+                    callee: _,
                     optional_chain_token,
                     type_arguments,
                     arguments,
                 } = call_expression.as_fields();
-
-                let arguments = arguments?;
-                let arguments = arguments.format().with_options(Some(callee?));
 
                 write!(
                     f,
                     [
                         optional_chain_token.format(),
                         type_arguments.format(),
-                        arguments
+                        arguments.format()
                     ]
                 )
             }

@@ -1,5 +1,4 @@
 use super::{write, Arguments, FormatElement};
-use crate::builders::WillBreakBuffer;
 use crate::format_element::List;
 use crate::{Format, FormatResult, FormatState};
 use std::any::{Any, TypeId};
@@ -439,9 +438,147 @@ pub trait BufferExtensions: Buffer + Sized {
         Ok(())
     }
 
-    fn will_break(&mut self) -> WillBreakBuffer<Self::Context> {
+    /// It emits a custom buffer called [WillBreakBuffer], which tracks
+    /// it he last element written in the main buffer breaks, it does so by
+    /// checking if their IR emits an [element](FormatElement) that breaks.
+    ///
+    /// This functionality can be used only one element and only after the element
+    /// is written in the buffer.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_formatter::{format, format_args, write, LineWidth};
+    /// use rome_formatter::prelude::*;
+    ///
+    /// let context = SimpleFormatContext {
+    ///     line_width: LineWidth::try_from(20).unwrap(),
+    ///     ..SimpleFormatContext::default()
+    /// };
+    ///
+    ///
+    /// let formatted = format!(context, [format_with(|f| {
+    ///     
+    ///     let element = format_with(|f| {
+    ///         write!(f, [
+    ///             token("hello"),
+    ///             hard_line_break(),
+    ///             token("world!")
+    ///         ])
+    ///     });
+    ///     let mut buffer = f.inspect_will_break();
+    ///     write!(buffer, [element])?;
+    ///     let does_element_break = buffer.finish();
+    ///
+    ///     if does_element_break {
+    ///         write!(f, [hard_line_break(), token("break")])
+    ///     } else {
+    ///         write!(f, [token("did not break")])
+    ///     }   
+    ///    
+    /// })]).unwrap();
+    ///
+    /// assert_eq!(
+    ///     "hello\nworld!\nbreak",
+    ///     formatted.print().as_code()
+    /// );
+    fn inspect_will_break(&mut self) -> WillBreakBuffer<Self::Context> {
         WillBreakBuffer::new(self)
+    }
+
+    #[must_use]
+    fn dump(&mut self) -> NullBuffer<Self::Context> {
+        NullBuffer::new(self)
     }
 }
 
 impl<T> BufferExtensions for T where T: Buffer {}
+
+#[must_use = "must eventually call `finish()` to retrieve the information"]
+pub struct WillBreakBuffer<'buffer, Context> {
+    breaks: bool,
+    inner: &'buffer mut dyn Buffer<Context = Context>,
+}
+
+impl<'buffer, Context> WillBreakBuffer<'buffer, Context> {
+    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
+        Self {
+            breaks: false,
+            inner: buffer,
+        }
+    }
+
+    pub fn finish(&self) -> bool {
+        self.breaks
+    }
+}
+
+impl<Context> Buffer for WillBreakBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        self.breaks = self.breaks || element.will_break();
+        self.inner.write_element(element)
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Any(Box::new(WillBreakSnapshot {
+            inner: self.inner.snapshot(),
+            breaks: self.breaks,
+        }))
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        let snapshot = snapshot.unwrap_any::<WillBreakSnapshot>();
+        self.inner.restore_snapshot(snapshot.inner);
+        self.breaks = snapshot.breaks;
+    }
+}
+
+struct WillBreakSnapshot {
+    inner: BufferSnapshot,
+    breaks: bool,
+}
+
+pub struct NullBuffer<'buffer, Context> {
+    inner: &'buffer mut dyn Buffer<Context = Context>,
+}
+
+impl<'buffer, Context> NullBuffer<'buffer, Context> {
+    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
+        Self { inner: buffer }
+    }
+}
+
+impl<Context> Buffer for NullBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        drop(element);
+        Ok(())
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Position(0)
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        drop(snapshot);
+    }
+}

@@ -1,4 +1,4 @@
-const testResults = results.testResults.map(testResult =>
+argconst testResults = results.testResults.map(testResult =>
     formatResult(testResult, formatter, reporter)
   );
 
