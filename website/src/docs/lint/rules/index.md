@@ -120,6 +120,13 @@ Prevent extra closing tags for components without children
 When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useSimplifiedLogicExpression">
+	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression</a>
+	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
+</h3>
+Discard redundant terms from logical expressions.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">
 	<a href="/docs/lint/rules/useSingleCaseStatement">useSingleCaseStatement</a>
 	<a class="header-anchor" href="#useSingleCaseStatement"></a>
