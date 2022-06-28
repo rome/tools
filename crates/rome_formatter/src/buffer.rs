@@ -482,12 +482,64 @@ pub trait BufferExtensions: Buffer + Sized {
     ///     "hello\nworld!\nbreak",
     ///     formatted.print().as_code()
     /// );
+    /// ```
     fn inspect_will_break(&mut self) -> WillBreakBuffer<Self::Context> {
         WillBreakBuffer::new(self)
     }
 
+    /// It creates a buffer where all the elements are ignored, so the elements
+    /// are not written anywhere at all.
+    ///
+    /// This can be useful when formatters are not yet written inside the main buffer
+    /// and the consumer needs to inspect them, to decide the formatting layout in advance.
+    ///
+    /// ## Examples
+    ///
+    /// The following example shows how to use it with the `will_break` functionality
+    ///
+    /// ```
+    /// use rome_formatter::{format, format_args, write, LineWidth};
+    /// use rome_formatter::prelude::*;
+    ///
+    /// let context = SimpleFormatContext {
+    ///     line_width: LineWidth::try_from(20).unwrap(),
+    ///     ..SimpleFormatContext::default()
+    /// };
+    ///
+    ///
+    /// let formatted = format!(context, [format_with(|f| {
+    ///
+    ///     let element = format_with(|f| {
+    ///         write!(f, [
+    ///             token("hello"),
+    ///             hard_line_break(),
+    ///             token("world!")
+    ///         ])
+    ///     }).memoized();
+    ///
+    ///     let will_break =  {
+    ///         let mut null_buffer =  f.inspect_null(f);
+    ///         let mut buffer = null_buffer.inspect_will_break();
+    ///         write!(buffer, [element])?;
+    ///         buffer.finish()
+    ///     };
+    ///
+    ///
+    ///     if does_element_break {
+    ///         write!(f, [hard_line_break(), token("break"), &element])
+    ///     } else {
+    ///         write!(f, [token("did not break")])
+    ///     }   
+    ///    
+    /// })]).unwrap();
+    ///
+    /// assert_eq!(
+    ///     "hello\nworld!\nbreak",
+    ///     formatted.print().as_code()
+    /// );
+    /// ```
     #[must_use]
-    fn dump(&mut self) -> NullBuffer<Self::Context> {
+    fn inspect_null(&mut self) -> NullBuffer<Self::Context> {
         NullBuffer::new(self)
     }
 }
