@@ -5123,16 +5123,32 @@ impl TsMappedTypeOptionalModifierClauseBuilder {
     }
 }
 pub fn ts_mapped_type_readonly_modifier_clause(
-    operator_token_token: SyntaxToken,
     readonly_token: SyntaxToken,
-) -> TsMappedTypeReadonlyModifierClause {
-    TsMappedTypeReadonlyModifierClause::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE,
-        [
-            Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Token(readonly_token)),
-        ],
-    ))
+) -> TsMappedTypeReadonlyModifierClauseBuilder {
+    TsMappedTypeReadonlyModifierClauseBuilder {
+        readonly_token,
+        operator_token_token: None,
+    }
+}
+pub struct TsMappedTypeReadonlyModifierClauseBuilder {
+    readonly_token: SyntaxToken,
+    operator_token_token: Option<SyntaxToken>,
+}
+impl TsMappedTypeReadonlyModifierClauseBuilder {
+    pub fn with_operator_token_token(mut self, operator_token_token: SyntaxToken) -> Self {
+        self.operator_token_token = Some(operator_token_token);
+        self
+    }
+    pub fn build(self) -> TsMappedTypeReadonlyModifierClause {
+        TsMappedTypeReadonlyModifierClause::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE,
+            [
+                self.operator_token_token
+                    .map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Token(self.readonly_token)),
+            ],
+        ))
+    }
 }
 pub fn ts_method_signature_class_member(
     modifiers: TsMethodSignatureModifierList,

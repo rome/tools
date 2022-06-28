@@ -2021,7 +2021,7 @@ TsMappedTypeOptionalModifierClause =
 	'?'
 
 TsMappedTypeReadonlyModifierClause =
-	operator_token: ('+' | '-')
+	operator_token: ('+' | '-')?
 	'readonly'
 
 // a: import("./test").T<typeof X>

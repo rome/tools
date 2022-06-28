@@ -9661,9 +9661,7 @@ impl TsMappedTypeReadonlyModifierClause {
             readonly_token: self.readonly_token(),
         }
     }
-    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
+    pub fn operator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -9679,7 +9677,7 @@ impl Serialize for TsMappedTypeReadonlyModifierClause {
 }
 #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct TsMappedTypeReadonlyModifierClauseFields {
-    pub operator_token: SyntaxResult<SyntaxToken>,
+    pub operator_token: Option<SyntaxToken>,
     pub readonly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -22208,7 +22206,7 @@ impl std::fmt::Debug for TsMappedTypeReadonlyModifierClause {
         f.debug_struct("TsMappedTypeReadonlyModifierClause")
             .field(
                 "operator_token",
-                &support::DebugSyntaxResult(self.operator_token()),
+                &support::DebugOptionalElement(self.operator_token()),
             )
             .field(
                 "readonly_token",
