@@ -153,7 +153,6 @@ impl RightAssignmentLike {
             RightAssignmentLike::JsAnyExpression(expression) => Some(expression.clone()),
             RightAssignmentLike::JsInitializerClause(initializer) => initializer.expression().ok(),
             RightAssignmentLike::JsAnyAssignmentPattern(_) => None,
-            // TODO: check here
             RightAssignmentLike::TsType(_) => None,
         }
     }
