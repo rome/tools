@@ -2,13 +2,17 @@ use rome_rowan::{AstNode, Language, SyntaxKindSet, SyntaxNode};
 
 use crate::registry::NodeLanguage;
 
-/// Trait implemented for all types that lint rules can query for
+/// Trait implemented for all types, for example lint rules can query them to emit diagnostics or code actions.
 pub trait Queryable: Sized {
     type Language: Language;
 
     const KEY: QueryKey<Self::Language>;
 
-    /// Unwrap an instance of `Self` from a [QueryMatch], panics if the type is mismatched
+    /// Unwrap an instance of `Self` from a [QueryMatch].
+    ///
+    /// ## Panics
+    ///
+    /// If the type is mismatched
     fn unwrap_match(query: &QueryMatch<Self::Language>) -> Self;
 }
 
@@ -20,7 +24,7 @@ pub enum QueryMatch<L: Language> {
     Syntax(SyntaxNode<L>),
 }
 
-/// Quary type usable bi lint rules to match on specific [AstNode] types
+/// Query type usable by lint rules to match on specific [AstNode] types
 #[derive(Clone)]
 pub struct Ast<N>(pub N);
 
