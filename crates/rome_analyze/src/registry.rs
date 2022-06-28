@@ -1,7 +1,7 @@
-use std::{iter::Map, vec::IntoIter};
+use std::collections::HashSet;
 
 use rome_diagnostics::file::FileId;
-use rome_rowan::{AstNode, Language, SyntaxNode};
+use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 
 use crate::{
     context::RuleContext,
@@ -9,33 +9,63 @@ use crate::{
     ControlFlow, Rule,
 };
 
+#[derive(Default)]
 /// The rule registry holds type-erased instances of all active analysis rules
 pub struct RuleRegistry<L: Language> {
-    rules: Vec<RegistryRule<L>>,
+    /// Holds a collection of rules for each [SyntaxKind] node type that has
+    /// lint rules associated with it
+    nodes: Vec<SyntaxKindRules<L>>,
 }
 
 impl<L: Language> RuleRegistry<L> {
-    pub fn empty() -> Self {
-        Self { rules: Vec::new() }
-    }
-
+    /// Add the rule `R` to the list of rules stores in this registry instance
     pub fn push<R>(&mut self)
     where
         R: Rule + 'static,
         R::Query: AstNode<Language = L>,
     {
-        self.rules.push(RegistryRule::of::<R>());
+        // Iterate on all the SyntaxKind variants this node can match
+        for kind in <R::Query as AstNode>::KIND_SET.iter() {
+            // Convert the numerical value of `kind` to an index in the
+            // `nodes` vector
+            let RawSyntaxKind(index) = kind.to_raw();
+            let index = usize::from(index);
+
+            // Ensure the vector has enough capacity by inserting empty
+            // `SyntaxKindRules` as required
+            if self.nodes.len() <= index {
+                self.nodes.resize_with(index + 1, SyntaxKindRules::new);
+            }
+
+            // Insert a handle to the rule `R` into the `SyntaxKindRules` entry
+            // corresponding to the SyntaxKind index
+            let node = &mut self.nodes[index];
+            node.rules.push(RegistryRule::of::<R>());
+        }
     }
 
     /// Returns an iterator over the name and documentation of all active rules
     /// in this instance of the registry
-    pub fn metadata(self) -> MetadataIter<L> {
-        self.rules.into_iter().map(|rule| (rule.name, rule.docs))
+    pub fn metadata(self) -> impl Iterator<Item = (&'static str, &'static str)> {
+        let mut unique = HashSet::new();
+        self.nodes
+            .into_iter()
+            .flat_map(|node| node.rules)
+            .map(|rule| (rule.name, rule.docs))
+            .filter(move |(name, _)| unique.insert(name.as_ptr() as u64))
     }
 }
 
-pub type MetadataIter<L> =
-    Map<IntoIter<RegistryRule<L>>, fn(RegistryRule<L>) -> (&'static str, &'static str)>;
+/// [SyntaxKindRules] holds a collection of [Rule]s that match a specific [SyntaxKind] value
+struct SyntaxKindRules<L: Language> {
+    rules: Vec<RegistryRule<L>>,
+}
+
+impl<L: Language> SyntaxKindRules<L> {
+    fn new() -> Self {
+        Self { rules: Vec::new() }
+    }
+}
 
 pub(crate) type RuleLanguage<R> = NodeLanguage<<R as Rule>::Query>;
 pub(crate) type NodeLanguage<N> = <N as AstNode>::Language;
@@ -55,7 +85,19 @@ where
         node: SyntaxNode<L>,
         callback: &mut impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B>,
     ) -> ControlFlow<B> {
-        for rule in &self.rules {
+        // Convert the numerical value of the SyntaxKind to an index in the
+        // `nodes` vector
+        let RawSyntaxKind(kind) = node.kind().to_raw();
+        let kind = usize::from(kind);
+
+        // Lookup the nodes entry corresponding to the SyntaxKind index
+        let rules = match self.nodes.get(kind) {
+            Some(entry) => &entry.rules,
+            None => return ControlFlow::Continue(()),
+        };
+
+        // Run all the rules registered to this SyntaxKind
+        for rule in rules {
             if let Some(event) = (rule.run)(file_id, root, &node) {
                 if let ControlFlow::Break(b) = callback(&*event) {
                     return ControlFlow::Break(b);
@@ -94,11 +136,9 @@ impl<L: Language> RegistryRule<L> {
             root: &'a RuleRoot<R>,
             node: &'a SyntaxNode<<R::Query as AstNode>::Language>,
         ) -> Option<Box<dyn AnalyzerSignal<RuleLanguage<R>> + 'a>> {
-            if !<R::Query>::can_cast(node.kind()) {
-                return None;
-            }
-
-            let query_result = <R::Query>::cast(node.clone())?;
+            // SAFETY: The rule should never get executed in the first place
+            // if the query doesn't match
+            let query_result = <R::Query>::unwrap_cast(node.clone());
             let ctx = RuleContext::new(query_result.clone(), root.clone());
 
             let result = R::run(&ctx)?;

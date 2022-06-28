@@ -65,7 +65,11 @@ fn main() -> Result<()> {
         ..AnalysisFilter::default()
     };
 
-    for (name, docs) in metadata(filter) {
+    // Ensure the list of rules is stored alphabetically
+    let mut rules: Vec<_> = metadata(filter).collect();
+    rules.sort_unstable_by_key(|(name, _)| *name);
+
+    for (name, docs) in rules {
         match generate_rule(&root, name, docs) {
             Ok(summary) => {
                 writeln!(index, "<div class=\"rule\">")?;
