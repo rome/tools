@@ -468,7 +468,7 @@ pub trait BufferExtensions: Buffer + Sized {
     ///     });
     ///     let mut buffer = f.inspect_will_break();
     ///     write!(buffer, [element])?;
-    ///     let does_element_break = buffer.finish();
+    ///     let does_element_break = buffer.will_break();
     ///
     ///     if does_element_break {
     ///         write!(f, [hard_line_break(), token("break")])
@@ -521,7 +521,7 @@ pub trait BufferExtensions: Buffer + Sized {
     ///         let mut null_buffer =  f.inspect_null();
     ///         let mut buffer = null_buffer.inspect_will_break();
     ///         write!(buffer, [element])?;
-    ///         buffer.finish()
+    ///         buffer.will_break()
     ///     };
     ///
     ///
@@ -560,7 +560,7 @@ impl<'buffer, Context> WillBreakBuffer<'buffer, Context> {
         }
     }
 
-    pub fn finish(&self) -> bool {
+    pub fn will_break(&self) -> bool {
         self.breaks
     }
 }
