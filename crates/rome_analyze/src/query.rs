@@ -6,22 +6,28 @@ use crate::registry::NodeLanguage;
 pub trait Queryable: Sized {
     type Language: Language;
 
+    /// Statically declares which [QueryMatch] variant is matched by this
+    /// [Queryable] type. For instance the [Ast] queryable matches on
+    /// [QueryMatch::Syntax], so its key is defined as [QueryKey::Syntax]
     const KEY: QueryKey<Self::Language>;
 
     /// Unwrap an instance of `Self` from a [QueryMatch].
     ///
     /// ## Panics
     ///
-    /// If the type is mismatched
+    /// If the [QueryMatch] variant of `query` doesn't match `Self::KEY`
     fn unwrap_match(query: &QueryMatch<Self::Language>) -> Self;
 }
 
-pub enum QueryKey<L: Language> {
-    Syntax(SyntaxKindSet<L>),
-}
-
+/// Enumerate all the types of [Queryable] analyzer visitors may emit
 pub enum QueryMatch<L: Language> {
     Syntax(SyntaxNode<L>),
+}
+
+/// Mirrors the variants of [QueryMatch] to statically compute which queries a
+/// given [Queryable] type can match
+pub enum QueryKey<L: Language> {
+    Syntax(SyntaxKindSet<L>),
 }
 
 /// Query type usable by lint rules to match on specific [AstNode] types

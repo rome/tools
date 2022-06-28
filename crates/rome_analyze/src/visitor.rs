@@ -17,6 +17,7 @@ type MatchQuery<'a, L, B> =
     Box<dyn FnMut(FileId, &LanguageRoot<L>, &QueryMatch<L>) -> ControlFlow<B> + 'a>;
 
 impl<'a, L: Language, B> VisitorContext<'a, L, B> {
+    /// Run all the rules with a `Query` matching `quary_match`
     pub fn match_query(&mut self, query_match: &QueryMatch<L>) -> ControlFlow<B> {
         (self.match_query)(self.file_id, &self.root, query_match)
     }
@@ -60,7 +61,13 @@ pub trait NodeVisitor<V, B>: Sized {
     ) -> ControlFlow<B>;
 }
 
-/// Create a single unified [Visitor] type from a set of [NodeVisitor]s
+/// Creates a single struct implementing [Visitor] over a collection of type
+/// implementing the [NodeVisitor] helper trait. Unlike the global [Visitor],
+/// node visitors are transient: they get instantiated when the traversal
+/// enters the corresponding node and destroyed when the node is exited. They
+/// are intended as a building blocks for creating and managing the state of
+/// complex visitors by allowing the implementation to be split over multiple
+/// smaller components.
 ///
 /// # Example
 ///
@@ -121,20 +128,15 @@ macro_rules! merge_node_visitors {
                         $(
                             if <<$visitor as $crate::NodeVisitor<$name<B>, B>>::Node as ::rome_rowan::AstNode>::can_cast(kind) {
                                 let node = <<$visitor as $crate::NodeVisitor<$name<B>, B>>::Node as ::rome_rowan::AstNode>::unwrap_cast(node.clone());
-                                return match <$visitor as $crate::NodeVisitor<$name<B>, B>>::enter(node, ctx, self) {
-                                    ::std::ops::ControlFlow::Continue(state) => {
-                                        let stack_index = self.stack.len();
-                                        let ty_index = self.$id.len();
+                                let state = <$visitor as $crate::NodeVisitor<$name<B>, B>>::enter(node, ctx, self)?;
 
-                                        self.$id.push((stack_index, state));
-                                        self.stack.push((::std::any::TypeId::of::<$visitor>(), ty_index));
+                                let stack_index = self.stack.len();
+                                let ty_index = self.$id.len();
 
-                                        ::std::ops::ControlFlow::Continue(())
-                                    }
-                                    ::std::ops::ControlFlow::Break(value) => {
-                                        ::std::ops::ControlFlow::Break(value)
-                                    }
-                                };
+                                self.$id.push((stack_index, state));
+                                self.stack.push((::std::any::TypeId::of::<$visitor>(), ty_index));
+
+                                return ::std::ops::ControlFlow::Continue(());
                             }
                         )*
                     }

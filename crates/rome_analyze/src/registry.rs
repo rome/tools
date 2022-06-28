@@ -114,10 +114,7 @@ where
 
         // Run all the rules registered to this QueryMatch
         for rule in rules {
-            let result = (rule.run)(file_id, root, query, &mut self.emit_signal);
-            if let ControlFlow::Break(b) = result {
-                return ControlFlow::Break(b);
-            }
+            (rule.run)(file_id, root, query, &mut self.emit_signal)?;
         }
 
         ControlFlow::Continue(())
@@ -163,10 +160,7 @@ impl<L: Language, B> RegistryRule<L, B> {
 
             for result in R::run(&ctx) {
                 let signal = RuleSignal::<R>::new(file_id, root, &query_result, result);
-
-                if let ControlFlow::Break(b) = callback(&signal) {
-                    return ControlFlow::Break(b);
-                }
+                callback(&signal)?;
             }
 
             ControlFlow::Continue(())

@@ -7,6 +7,10 @@ use crate::{ControlFlow, QueryMatch, Visitor, VisitorContext};
 /// event for the [SyntaxNode] being entered
 pub struct SyntaxVisitor<L: Language, F> {
     has_suppressions: F,
+    /// If a subtree is currently being skipped by the visitor, for instance
+    /// because it has a suppression comment, this stores the root [SyntaxNode]
+    /// of that subtree. The visitor will then ignore all events until it
+    /// receives a [WalkEvent::Leave] for the `skip_subtree` node
     skip_subtree: Option<SyntaxNode<L>>,
 }
 
@@ -38,7 +42,7 @@ where
             WalkEvent::Leave(node) => {
                 if let Some(skip_subtree) = &self.skip_subtree {
                     if skip_subtree == node {
-                        self.skip_subtree.take();
+                        self.skip_subtree = None;
                     }
                 }
 
