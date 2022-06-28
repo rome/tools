@@ -370,11 +370,11 @@ impl SemanticEventExtractor {
     /// }
     /// ```
     ///
-    /// ```a``` declaration will be hoisted to the scope of
-    /// function ```f```.
+    /// `a` declaration will be hoisted to the scope of
+    /// function `f`.
     ///
-    /// This method when called inside the ```if``` scope will return
-    /// the ```f``` scope index.
+    /// This method when called inside the `f` scope will return
+    /// the `f` scope index.
     fn scope_index_to_hoist_declarations(&mut self) -> usize {
         // We should at least have the global scope
         // that do not hoist
