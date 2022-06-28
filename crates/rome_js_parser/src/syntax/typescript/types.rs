@@ -578,7 +578,7 @@ fn is_at_start_of_mapped_type(p: &mut Parser) -> bool {
 
 // test ts issue_2790
 // var x: {
-//   [A in keyof B]?: any;
+//   readonly [A in keyof B]?: any;
 // };
 
 // test ts ts_mapped_type
@@ -628,10 +628,6 @@ fn parse_ts_mapped_type_as_clause(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_MAPPED_TYPE_AS_CLAUSE))
 }
 
-// test ts ts_mapped_type_readonly_modifier_clause
-// type OptionsFlags<Type> = {
-//   readonly [Property in keyof Type]: boolean;
-// };
 fn parse_ts_mapped_type_readonly_modifier_clause(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![readonly]) {
         let m = p.start();

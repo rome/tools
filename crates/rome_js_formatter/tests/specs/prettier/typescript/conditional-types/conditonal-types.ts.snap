@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: conditonal-types.ts
 ---
 # Input
@@ -58,7 +59,7 @@ type NonFunctionPropertyNames<T> = {
 interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
 
 type DeepReadonlyObject<T> = {
-    readonly [P in NonFunctionPropertyNames<T>]: DeepReadonly<T[P]>;
+  readonly [P in NonFunctionPropertyNames<T>]: DeepReadonly<T[P]>;
 };
 
 type TypeName<T> = T extends string
