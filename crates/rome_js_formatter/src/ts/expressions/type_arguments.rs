@@ -36,36 +36,23 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
                     // meaning four levels up
                     let maybe_type_annotation = first_argument.syntax().ancestors().nth(4);
 
-                    if let Some(maybe_type_annotation) = maybe_type_annotation {
-                        if maybe_type_annotation.kind() == JsSyntaxKind::TS_TYPE_ANNOTATION {
-                            let parent = maybe_type_annotation.parent();
-                            if let Some(parent) = parent {
-                                // is so, we try to cast the parent into a variable declarator
-
-                                if let Some(variable_declarator) =
-                                    JsVariableDeclarator::cast(parent)
-                                {
-                                    // we extract the initializer
-                                    let initializer = variable_declarator.initializer();
-                                    if let Some(initializer) = initializer {
-                                        // we verify if we have an arrow function expression
-                                        let expression = initializer.expression()?;
-                                        matches!(
-                                            expression,
-                                            JsAnyExpression::JsArrowFunctionExpression(_)
-                                        )
-                                    } else {
-                                        false
-                                    }
-                                } else {
-                                    false
-                                }
+                    let initializer = maybe_type_annotation
+                        .and_then(|maybe_type_annotation| {
+                            if maybe_type_annotation.kind() == JsSyntaxKind::TS_TYPE_ANNOTATION {
+                                maybe_type_annotation.parent()
                             } else {
-                                false
+                                None
                             }
-                        } else {
-                            false
-                        }
+                        })
+                        // is so, we try to cast the parent into a variable declarator
+                        .and_then(JsVariableDeclarator::cast)
+                        // we extract the initializer
+                        .and_then(|variable_declarator| variable_declarator.initializer());
+
+                    if let Some(initializer) = initializer {
+                        // we verify if we have an arrow function expression
+                        let expression = initializer.expression()?;
+                        matches!(expression, JsAnyExpression::JsArrowFunctionExpression(_))
                     } else {
                         false
                     }

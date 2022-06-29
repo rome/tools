@@ -42,7 +42,7 @@ pub(crate) fn should_hug_type(ty: &TsType) -> bool {
         return true;
     }
 
-    // @ematipico: someone has to explain me this logic and its meaning...
+    // Checking for unions where all types but one are "void types", so things like `TypeName | null | void`
     if let TsType::TsUnionType(union_type) = ty {
         let mut iter = union_type.types().iter();
 
