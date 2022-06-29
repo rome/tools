@@ -35,6 +35,9 @@ pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage
     if filter.match_rule::<NoSparseArray>() {
         rules.push::<NoSparseArray>();
     }
+    if filter.match_rule::<NoUnnecessaryContinue>() {
+        rules.push::<NoUnnecessaryContinue>();
+    }
     if filter.match_rule::<NoUnsafeNegation>() {
         rules.push::<NoUnsafeNegation>();
     }

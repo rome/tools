@@ -20,6 +20,8 @@ mod no_negation_else;
 pub(crate) use no_negation_else::NoNegationElse;
 mod no_sparse_array;
 pub(crate) use no_sparse_array::NoSparseArray;
+mod no_unnecessary_continue;
+pub(crate) use no_unnecessary_continue::NoUnnecessaryContinue;
 mod no_unsafe_negation;
 pub(crate) use no_unsafe_negation::NoUnsafeNegation;
 mod no_unused_template_literal;
