@@ -63,6 +63,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
                     JsAnyExpression::JsObjectExpression(_)
                         | JsAnyExpression::JsArrayExpression(_)
                         | JsAnyExpression::JsCallExpression(_)
+                        | JsAnyExpression::JsArrowFunctionExpression(_)
                 ) {
                     write!(f, [expression.format()])?;
                 } else {

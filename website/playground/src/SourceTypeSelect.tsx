@@ -23,7 +23,6 @@ export default function SourceTypeSelect(
 		<div className="p-5 sm:pr-0 sm:pt-0">
 			<fieldset className="flex items-center">
 				<legend className="sr-only">File Type</legend>
-
 				<div className="relative flex items-start">
 					<div>
 						<label
@@ -48,7 +47,6 @@ export default function SourceTypeSelect(
 						</select>
 					</div>
 				</div>
-
 				<div className="relative flex p-5 pb-0">
 					<div className="flex items-center h-5">
 						<input
@@ -87,9 +85,7 @@ export default function SourceTypeSelect(
 						/>
 					</div>
 					<div className="ml-1 text-sm">
-						<label htmlFor="jsx" className="font-medium text-gray-700">
-							JSX
-						</label>
+						<label htmlFor="jsx" className="font-medium text-gray-700">JSX</label>
 						<span id="jsx-description" className="text-gray-500">
 							<span className="sr-only">JSX</span>
 						</span>

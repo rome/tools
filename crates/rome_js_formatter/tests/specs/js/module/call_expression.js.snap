@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
+assertion_line: 256
 expression: call_expression.js
 ---
 # Input
@@ -21,6 +21,12 @@ useMemo(() => {
     ,
     [a, b]
 )
+
+useEffect(() => {
+    if (clipboardStatus !== "normal") {
+        setClipboardStatus("normal");
+    }
+}, [formatter_ir]);
 
 test.expect(t => {
     t.true(a)
@@ -62,6 +68,12 @@ useMemo(() => {
 }, [a, b]);
 
 useMemo(() => {}, [a, b]); // some comment
+
+useEffect(() => {
+	if (clipboardStatus !== "normal") {
+		setClipboardStatus("normal");
+	}
+}, [formatter_ir]);
 
 test.expect((t) => {
 	t.true(a);

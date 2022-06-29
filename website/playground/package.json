@@ -10,7 +10,7 @@
 		"build:wasm": "wasm-pack build --target web --release",
 		"build:wasm-dev": "wasm-pack build --target web --dev",
 		"format": "cargo run -p rome_cli --release -- format --write ./src",
-		"format:rome": "rome format src --write ."
+		"format:rome": "rome format --write src ."
 	},
 	"dependencies": {
 		"@uiw/react-textarea-code-editor": "^1.4.16",
@@ -30,7 +30,7 @@
 		"@vitejs/plugin-react": "^1.0.7",
 		"autoprefixer": "^10.4.2",
 		"postcss": "^8.4.6",
-		"rome": "0.6.0-next",
+		"rome": "0.6.1-next",
 		"tailwindcss": "^3.0.19",
 		"typescript": "^4.4.4",
 		"vite": "^2.7.2"
