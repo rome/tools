@@ -11,8 +11,7 @@ use rome_rowan::{AstNode, SyntaxElement};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce the use of `while` loops instead of `for` loops when the
-    /// initializer and update expressions are not needed
+    /// Enforce avoiding use unnecessary `continue` statement.
     ///
     /// ## Examples
     ///

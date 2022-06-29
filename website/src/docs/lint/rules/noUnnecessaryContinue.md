@@ -5,8 +5,7 @@ layout: layouts/rule.liquid
 
 # noUnnecessaryContinue
 
-Enforce the use of `while` loops instead of `for` loops when the
-initializer and update expressions are not needed
+Enforce avoiding use unnecessary `continue` statement.
 
 ## Examples
 
