@@ -559,10 +559,8 @@ impl JsAnyAssignmentLike {
             declarator.initializer().is_none()
         } else if let JsAnyAssignmentLike::JsPropertyClassMember(class_member) = self {
             class_member.value().is_none()
-        } else if let JsAnyAssignmentLike::TsPropertySignatureClassMember(_) = self {
-            true
         } else {
-            false
+            matches!(self, JsAnyAssignmentLike::TsPropertySignatureClassMember(_))
         }
     }
 
