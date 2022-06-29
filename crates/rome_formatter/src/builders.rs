@@ -526,48 +526,10 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 /// Marks some content with a label.
 ///
 /// This does not directly influence how this content will be printed, but some
-/// parts of the formatter may inspect the `FormatElement::Label` and chose to handle this element in a specific way
+/// parts of the formatter may inspect the [labelled element](FormatElement::Label)
+/// using `inspect_is_labelled` buffer extension and choose a different formatting layout.
 ///
-/// # Example
-///
-/// ```rust
-/// use rome_formatter::prelude::*;
-/// use rome_formatter::{format, write, LabelId};
-///
-/// enum SomeLabelId {}
-///
-/// #[derive(Default)]
-/// struct Labelled;
-///
-/// impl Format<SimpleFormatContext> for Labelled {
-///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-///         let label_id = LabelId::of::<SomeLabelId>();
-///
-///         write!(f, [labelled(label_id, &token("labelled"))])?;
-///         Ok(())
-///     }
-/// }
-///
-/// let content = format_with(|f| {
-///     let mut labelled = Labelled::default().memoized();
-///     let labelled_content = labelled.inspect(f)?;
-///     let label_id = LabelId::of::<SomeLabelId>();
-///
-///     let is_labelled = match labelled_content {
-///         FormatElement::Label(labelled) => labelled.label_id() == label_id,
-///         _ => false,
-///     };
-///
-///     if is_labelled {
-///         write!(f, [token("This is "), &labelled])
-///     } else {
-///         write!(f, [token("This is not "), &labelled])
-///     }
-/// });
-///
-/// let formatted = format!(SimpleFormatContext::default(), [content]).unwrap();
-/// assert_eq!("This is labelled", formatted.print().as_code())
-/// ```
+/// See [inspect_is_labelled](BufferExtensions::inspect_is_labelled) for documentation.
 #[inline]
 pub fn labelled<Content, Context>(label_id: LabelId, content: &Content) -> FormatLabelled<Context>
 where

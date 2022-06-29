@@ -45,8 +45,8 @@ use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{
-    Buffer, BufferExtensions, BufferSnapshot, Inspect, NullBuffer, PreambleBuffer, VecBuffer,
-    WillBreakBuffer,
+    Buffer, BufferExtensions, BufferSnapshot, Inspect, IsLabelledBuffer, NullBuffer,
+    PreambleBuffer, VecBuffer, WillBreakBuffer,
 };
 pub use builders::{
     block_indent, comment, empty_line, get_lines_before, group_elements, hard_line_break,
@@ -55,9 +55,7 @@ pub use builders::{
     BestFitting,
 };
 pub use comments::{CommentContext, CommentKind, SourceComment};
-pub use format_element::{
-    normalize_newlines, FormatElement, LabelId, Token, Verbatim, LINE_TERMINATORS,
-};
+pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
 use rome_rowan::{

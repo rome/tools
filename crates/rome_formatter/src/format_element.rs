@@ -76,6 +76,7 @@ pub enum FormatElement {
 
     /// Special semantic element marking the content with a label.
     /// This does not directly influence how the content will be printed.
+    ///
     /// See [crate::labelled] for documentation.
     Label(Label),
 }
@@ -372,7 +373,7 @@ pub struct LabelId {
 }
 
 impl LabelId {
-    pub fn of<T: ?Sized + 'static>() -> Self {
+    pub(crate) fn of<T: ?Sized + 'static>() -> Self {
         Self {
             id: TypeId::of::<T>(),
             #[cfg(debug_assertions)]
