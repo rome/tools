@@ -1,6 +1,6 @@
-use rome_rowan::Language;
+use rome_rowan::{Language, SyntaxNode};
 
-use crate::{BasicBlock, ControlFlowGraph, Instruction};
+use crate::{BasicBlock, ControlFlowGraph, Instruction, InstructionKind};
 
 /// Identifier for a block in a [ControlFlowGraph]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
@@ -62,14 +62,40 @@ impl<L: Language> FunctionBuilder<L> {
         self.block_cursor = block;
     }
 
-    /// Insert an instruction at the current position of the cursor
-    pub fn append_instruction(&mut self, inst: Instruction<L>) {
-        let index = self.block_cursor.index as usize;
-        self.result.blocks[index].instructions.push(inst);
-    }
-
     /// Add a block to the list of entry points for the function
     pub fn add_entry_block(&mut self, block: BlockId) {
         self.result.entry_blocks.push(block.index());
+    }
+
+    /// Insert an instruction at the current position of the cursor
+    fn append_instruction(&mut self, kind: InstructionKind) -> InstructionBuilder<L> {
+        let index = self.block_cursor.index as usize;
+        let block = &mut self.result.blocks[index];
+
+        let index = block.instructions.len();
+        block.instructions.push(Instruction { kind, node: None });
+
+        InstructionBuilder(&mut block.instructions[index])
+    }
+
+    pub fn append_statement(&mut self) -> InstructionBuilder<L> {
+        self.append_instruction(InstructionKind::Statement)
+    }
+
+    pub fn append_return(&mut self) -> InstructionBuilder<L> {
+        self.append_instruction(InstructionKind::Return)
+    }
+
+    pub fn append_jump(&mut self, conditional: bool, block: BlockId) -> InstructionBuilder<L> {
+        self.append_instruction(InstructionKind::Jump { conditional, block })
+    }
+}
+
+pub struct InstructionBuilder<'a, L: Language>(&'a mut Instruction<L>);
+
+impl<'a, L: Language> InstructionBuilder<'a, L> {
+    pub fn with_node(mut self, node: SyntaxNode<L>) -> Self {
+        self.0.node = Some(node);
+        self
     }
 }
