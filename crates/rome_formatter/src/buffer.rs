@@ -437,6 +437,200 @@ pub trait BufferExtensions: Buffer + Sized {
 
         Ok(())
     }
+
+    /// It emits a custom buffer called [WillBreakBuffer], which tracks
+    /// it he last element written in the main buffer breaks, it does so by
+    /// checking if their IR emits an [element](FormatElement) that breaks.
+    ///
+    /// This functionality can be used only one element and only after the element
+    /// is written in the buffer.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_formatter::{format, format_args, write, LineWidth};
+    /// use rome_formatter::prelude::*;
+    ///
+    /// let context = SimpleFormatContext {
+    ///     line_width: LineWidth::try_from(20).unwrap(),
+    ///     ..SimpleFormatContext::default()
+    /// };
+    ///
+    ///
+    /// let formatted = format!(context, [format_with(|f| {
+    ///     
+    ///     let element = format_with(|f| {
+    ///         write!(f, [
+    ///             token("hello"),
+    ///             hard_line_break(),
+    ///             token("world!")
+    ///         ])
+    ///     });
+    ///     let mut buffer = f.inspect_will_break();
+    ///     write!(buffer, [element])?;
+    ///     let does_element_break = buffer.will_break();
+    ///
+    ///     if does_element_break {
+    ///         write!(f, [hard_line_break(), token("break")])
+    ///     } else {
+    ///         write!(f, [token("did not break")])
+    ///     }   
+    ///    
+    /// })]).unwrap();
+    ///
+    /// assert_eq!(
+    ///     "hello\nworld!\nbreak",
+    ///     formatted.print().as_code()
+    /// );
+    /// ```
+    fn inspect_will_break(&mut self) -> WillBreakBuffer<Self::Context> {
+        WillBreakBuffer::new(self)
+    }
+
+    /// It creates a buffer where all the elements are ignored, so the elements
+    /// are not written anywhere at all.
+    ///
+    /// This can be useful when formatters are not yet written inside the main buffer
+    /// and the consumer needs to inspect them, to decide the formatting layout in advance.
+    ///
+    /// ## Examples
+    ///
+    /// The following example shows how to use it with the `will_break` functionality
+    ///
+    /// ```
+    /// use rome_formatter::{format, format_args, write, LineWidth};
+    /// use rome_formatter::prelude::*;
+    ///
+    /// let context = SimpleFormatContext {
+    ///     line_width: LineWidth::try_from(20).unwrap(),
+    ///     ..SimpleFormatContext::default()
+    /// };
+    ///
+    ///
+    /// let formatted = format!(context, [format_with(|f| {
+    ///
+    ///     let element = format_with(|f| {
+    ///         write!(f, [
+    ///             token("hello"),
+    ///             hard_line_break(),
+    ///             token("world!")
+    ///         ])
+    ///     }).memoized();
+    ///
+    ///     let will_break =  {
+    ///         let mut null_buffer =  f.inspect_null();
+    ///         let mut buffer = null_buffer.inspect_will_break();
+    ///         write!(buffer, [element])?;
+    ///         buffer.will_break()
+    ///     };
+    ///
+    ///
+    ///     if will_break {
+    ///         write!(f, [token("break"), hard_line_break(), &element])
+    ///     } else {
+    ///         write!(f, [token("did not break")])
+    ///     }   
+    ///    
+    /// })]).unwrap();
+    ///
+    /// assert_eq!(
+    ///     "break\nhello\nworld!",
+    ///     formatted.print().as_code()
+    /// );
+    /// ```
+    #[must_use]
+    fn inspect_null(&mut self) -> NullBuffer<Self::Context> {
+        NullBuffer::new(self)
+    }
 }
 
 impl<T> BufferExtensions for T where T: Buffer {}
+
+#[must_use = "must eventually call `finish()` to retrieve the information"]
+pub struct WillBreakBuffer<'buffer, Context> {
+    breaks: bool,
+    inner: &'buffer mut dyn Buffer<Context = Context>,
+}
+
+impl<'buffer, Context> WillBreakBuffer<'buffer, Context> {
+    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
+        Self {
+            breaks: false,
+            inner: buffer,
+        }
+    }
+
+    pub fn will_break(&self) -> bool {
+        self.breaks
+    }
+}
+
+impl<Context> Buffer for WillBreakBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        self.breaks = self.breaks || element.will_break();
+        self.inner.write_element(element)
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Any(Box::new(WillBreakSnapshot {
+            inner: self.inner.snapshot(),
+            breaks: self.breaks,
+        }))
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        let snapshot = snapshot.unwrap_any::<WillBreakSnapshot>();
+        self.inner.restore_snapshot(snapshot.inner);
+        self.breaks = snapshot.breaks;
+    }
+}
+
+struct WillBreakSnapshot {
+    inner: BufferSnapshot,
+    breaks: bool,
+}
+
+pub struct NullBuffer<'buffer, Context> {
+    inner: &'buffer mut dyn Buffer<Context = Context>,
+}
+
+impl<'buffer, Context> NullBuffer<'buffer, Context> {
+    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
+        Self { inner: buffer }
+    }
+}
+
+impl<Context> Buffer for NullBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        drop(element);
+        Ok(())
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Position(0)
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        drop(snapshot);
+    }
+}

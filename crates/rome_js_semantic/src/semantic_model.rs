@@ -306,13 +306,13 @@ impl SemanticModelBuilder {
             }
             Read {
                 range,
-                declaration_at: Some(declaration_at),
+                declated_at: declaration_at,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
             }
             HoistedRead {
                 range,
-                declaration_at,
+                declared_at: declaration_at,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
             }
