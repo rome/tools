@@ -77,7 +77,7 @@ warning[noUnnecessaryContinue]: Unnecessary continue statement
 3 │     continue loop;
   │     --------------
 
-Suggested fix: Use a while loop
+Suggested fix: Delete the unnecessary continue statement
     | @@ -1,6 +1,5 @@
 0 0 |   // invalid
 1 1 |   loop: for (let i = 0; i < 5; i++) {
@@ -96,7 +96,7 @@ warning[noUnnecessaryContinue]: Unnecessary continue statement
 6 │     continue;
   │     ---------
 
-Suggested fix: Use a while loop
+Suggested fix: Delete the unnecessary continue statement
     | @@ -3,7 +3,6 @@
 2 2 |   	continue loop;
 3 3 |   }
@@ -116,7 +116,7 @@ warning[noUnnecessaryContinue]: Unnecessary continue statement
 9 │     continue;
   │     ---------
 
-Suggested fix: Use a while loop
+Suggested fix: Delete the unnecessary continue statement
     | @@ -6,7 +6,6 @@
 5 5 |   	continue;
 6 6 |   }
@@ -136,7 +136,7 @@ warning[noUnnecessaryContinue]: Unnecessary continue statement
 14 │         continue;
    │         ---------
 
-Suggested fix: Use a while loop
+Suggested fix: Delete the unnecessary continue statement
       | @@ -11,7 +11,6 @@
 10 10 |   for (let i = 0; i < 10; i++) {
 11 11 |   	if (i > 5) {
@@ -156,7 +156,7 @@ warning[noUnnecessaryContinue]: Unnecessary continue statement
 22 │     continue;
    │     ---------
 
-Suggested fix: Use a while loop
+Suggested fix: Delete the unnecessary continue statement
       | @@ -19,7 +19,6 @@
 18 18 |   	}
 19 19 |   }
