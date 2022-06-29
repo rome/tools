@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::utils::should_hug_type;
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsSyntaxKind, JsVariableDeclarator, TsType, TsTypeArguments,
@@ -58,8 +59,15 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
                 .unwrap_or(false)
         };
 
+        let first_argument_can_be_hugged_or_is_null_type = ts_type_argument_list.len() == 1
+            && ts_type_argument_list.iter().next().map_or(false, |node| {
+                node.map_or(false, |node| {
+                    matches!(node, TsType::TsNullLiteralType(_)) || should_hug_type(&node)
+                })
+            });
+
         let should_inline = !is_arrow_function_variables
-            && (ts_type_argument_list.len() == 0 || ts_type_argument_list.len() == 1);
+            && (ts_type_argument_list.len() == 0 || first_argument_can_be_hugged_or_is_null_type);
 
         if should_inline {
             write!(

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: issue-9874.ts
 ---
 # Input
@@ -10,9 +11,8 @@ export type RequestNextDealAction = BaseAction<DealsActionTypes.REQUEST_NEXT_DEA
 
 # Output
 ```js
-export type RequestNextDealAction = BaseAction<
-  DealsActionTypes.REQUEST_NEXT_DEAL
->;
+export type RequestNextDealAction =
+  BaseAction<DealsActionTypes.REQUEST_NEXT_DEAL>;
 
 ```
 
