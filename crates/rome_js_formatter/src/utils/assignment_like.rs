@@ -3,11 +3,12 @@ use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
 use rome_formatter::{format_args, write, VecBuffer};
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyExpression, JsAnyFunctionBody,
-    JsAnyObjectAssignmentPatternMember, JsAnyObjectBindingPatternMember, JsAnyObjectMemberName,
-    JsAssignmentExpression, JsInitializerClause, JsObjectAssignmentPattern,
-    JsObjectAssignmentPatternProperty, JsObjectBindingPattern, JsPropertyObjectMember,
-    JsSyntaxKind, JsVariableDeclarator, TsAnyVariableAnnotation, TsIdentifierBinding, TsType,
+    JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyClassMemberName, JsAnyExpression,
+    JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember, JsAnyObjectBindingPatternMember,
+    JsAnyObjectMemberName, JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName,
+    JsObjectAssignmentPattern, JsObjectAssignmentPatternProperty, JsObjectBindingPattern,
+    JsPropertyClassMember, JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind,
+    JsVariableDeclarator, TsAnyVariableAnnotation, TsIdentifierBinding, TsType,
     TsTypeAliasDeclaration,
 };
 use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
@@ -19,11 +20,18 @@ declare_node_union! {
         JsAssignmentExpression |
         JsObjectAssignmentPatternProperty |
         JsVariableDeclarator |
-        TsTypeAliasDeclaration
+        TsTypeAliasDeclaration |
+        JsPropertyClassMember
 }
 
 declare_node_union! {
-    pub(crate) LeftAssignmentLike = JsAnyAssignmentPattern | JsAnyObjectMemberName | JsAnyBindingPattern | TsIdentifierBinding
+    pub(crate) LeftAssignmentLike =
+        JsAnyAssignmentPattern |
+        JsAnyObjectMemberName |
+        JsAnyBindingPattern |
+        TsIdentifierBinding |
+        JsLiteralMemberName |
+        JsAnyClassMemberName
 }
 
 declare_node_union! {
@@ -297,11 +305,15 @@ impl JsAnyAssignmentLike {
                 Ok(assignment_pattern.pattern()?.into())
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
-                // SAFETY: Calling `unwrap` here is safe because we check `should_only_left` variant at the beginning of the `layout` function
+                // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
                 Ok(variable_declarator.initializer().unwrap().into())
             }
             JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
                 Ok(type_alias_declaration.ty()?.into())
+            }
+            JsAnyAssignmentLike::JsPropertyClassMember(n) => {
+                // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
+                Ok(n.value().unwrap().into())
             }
         }
     }
@@ -321,6 +333,7 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
                 Ok(type_alias_declaration.binding_identifier()?.into())
             }
+            JsAnyAssignmentLike::JsPropertyClassMember(n) => Ok(n.name()?.into()),
         }
     }
 
@@ -340,7 +353,7 @@ impl JsAnyAssignmentLike {
     fn write_left(&self, f: &mut JsFormatter) -> FormatResult<bool> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
-                let width = write_member_name(&property.name()?, f)?;
+                let width = write_member_name(&property.name()?.into(), f)?;
                 let text_width_for_break =
                     (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
@@ -351,7 +364,7 @@ impl JsAnyAssignmentLike {
                 Ok(false)
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
-                let width = write_member_name(&property.member()?, f)?;
+                let width = write_member_name(&property.member()?.into(), f)?;
                 let text_width_for_break =
                     (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
@@ -372,6 +385,21 @@ impl JsAnyAssignmentLike {
                     write!(f, [type_parameters.format(),])?;
                 }
                 Ok(false)
+            }
+            JsAnyAssignmentLike::JsPropertyClassMember(property_class_member) => {
+                let JsPropertyClassMemberFields {
+                    modifiers,
+                    name,
+                    property_annotation,
+                    value: _,
+                    semicolon_token: _,
+                } = property_class_member.as_fields();
+                write!(f, [modifiers.format(), space_token()])?;
+                let width = write_member_name(&name?.into(), f)?;
+                write!(f, [property_annotation.format()])?;
+                let text_width_for_break =
+                    (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                Ok(width < text_width_for_break)
             }
         }
     }
@@ -400,6 +428,13 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
                 let eq_token = type_alias_declaration.eq_token()?;
                 write!(f, [space_token(), eq_token.format()])
+            }
+            JsAnyAssignmentLike::JsPropertyClassMember(property_class_member) => {
+                if let Some(initializer) = property_class_member.value() {
+                    let eq_token = initializer.eq_token()?;
+                    write!(f, [space_token(), eq_token.format()])?
+                }
+                Ok(())
             }
         }
     }
@@ -433,6 +468,13 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
                 let ty = type_alias_declaration.ty()?;
                 write!(f, [space_token(), ty.format()])
+            }
+            JsAnyAssignmentLike::JsPropertyClassMember(property_class_member) => {
+                if let Some(initializer) = property_class_member.value() {
+                    let expression = initializer.expression()?;
+                    write!(f, [space_token(), expression.format()])?;
+                }
+                Ok(())
             }
         }
     }
@@ -482,6 +524,8 @@ impl JsAnyAssignmentLike {
     fn has_only_left_hand_side(&self) -> bool {
         if let JsAnyAssignmentLike::JsVariableDeclarator(declarator) = self {
             declarator.initializer().is_none()
+        } else if let JsAnyAssignmentLike::JsPropertyClassMember(class_member) = self {
+            class_member.value().is_none()
         } else {
             false
         }
