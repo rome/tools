@@ -7,18 +7,6 @@ declare_rule! {
     /// Disallows empty destructuring patterns.
     /// ## Examples
     ///
-    /// ### Valid
-    /// The following cases are valid because they create new bindings.
-    ///
-    /// ```js
-    /// var {a = {}} = foo;
-    /// var {a, b = {}} = foo;
-    /// var {a = []} = foo;
-    /// function foo({a = {}}) {}
-    /// function foo({a = []}) {}
-    /// var [a] = foo;
-    /// ```
-    ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
@@ -33,6 +21,17 @@ declare_rule! {
     /// function foo({}) {}
     /// ```
     ///
+    /// ### Valid
+    /// The following cases are valid because they create new bindings.
+    ///
+    /// ```js
+    /// var {a = {}} = foo;
+    /// var {a, b = {}} = foo;
+    /// var {a = []} = foo;
+    /// function foo({a = {}}) {}
+    /// function foo({a = []}) {}
+    /// var [a] = foo;
+    /// ```
     pub(crate) NoEmptyPattern = "noEmptyPattern"
 }
 

@@ -9,17 +9,6 @@ Disallow using unsafe negation.
 
 ## Examples
 
-### Valid
-
-```jsx
--1 in [1,2];
-~1 in [1,2];
-typeof 1 in [1,2];
-void 1 in [1,2];
-delete 1 in [1,2];
-+1 instanceof [1,2];
-```
-
 ### Invalid
 
 ```jsx
@@ -55,4 +44,15 @@ delete 1 in [1,2];
   0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">/**test*/!/** test*/(1 instanceof [1,2]);</span>
 
 </code></pre>{% endraw %}
+
+### Valid
+
+```jsx
+-1 in [1,2];
+~1 in [1,2];
+typeof 1 in [1,2];
+void 1 in [1,2];
+delete 1 in [1,2];
++1 instanceof [1,2];
+```
 
