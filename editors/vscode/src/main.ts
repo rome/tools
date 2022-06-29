@@ -44,6 +44,8 @@ export async function activate(context: ExtensionContext) {
 		documentSelector: [
 			{ scheme: "file", language: "javascript" },
 			{ scheme: "file", language: "typescript" },
+			{ scheme: "file", language: "javascriptreact" },
+			{ scheme: "file", language: "typescriptreact" },
 		],
 	};
 
