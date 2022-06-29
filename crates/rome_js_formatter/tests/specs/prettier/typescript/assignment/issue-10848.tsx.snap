@@ -70,26 +70,28 @@ const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = (
   return <div>x = {x}; y = {y}; a = {a}</div>;
 };
 
-const MyComponentWithLongName1: React.VoidFunctionComponent<MyComponentWithLongNameProps> =
-  ({ x, y }) => {
-    const a = useA();
-    return <div>x = {x}; y = {y}; a = {a}</div>;
-  };
+const MyComponentWithLongName1: React.VoidFunctionComponent<
+  MyComponentWithLongNameProps
+> = ({ x, y }) => {
+  const a = useA();
+  return <div>x = {x}; y = {y}; a = {a}</div>;
+};
 
-const MyComponentWithLongName2: React.VoidFunctionComponent<MyComponentWithLongNameProps> =
-  (
-    {
-      x,
-      y,
-      anotherPropWithLongName1,
-      anotherPropWithLongName2,
-      anotherPropWithLongName3,
-      anotherPropWithLongName4,
-    },
-  ) => {
-    const a = useA();
-    return <div>x = {x}; y = {y}; a = {a}</div>;
-  };
+const MyComponentWithLongName2: React.VoidFunctionComponent<
+  MyComponentWithLongNameProps
+> = (
+  {
+    x,
+    y,
+    anotherPropWithLongName1,
+    anotherPropWithLongName2,
+    anotherPropWithLongName3,
+    anotherPropWithLongName4,
+  },
+) => {
+  const a = useA();
+  return <div>x = {x}; y = {y}; a = {a}</div>;
+};
 
 const MyGenericComponent: React.VoidFunctionComponent<
   MyGenericComponentProps<number>
@@ -128,9 +130,4 @@ const Query: FunctionComponent<QueryProps> = (
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   13: const MyComponentWithLongName1: React.VoidFunctionComponent<MyComponentWithLongNameProps> =
-   19: const MyComponentWithLongName2: React.VoidFunctionComponent<MyComponentWithLongNameProps> =
-```
 

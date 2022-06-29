@@ -28,15 +28,20 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
                 .iter()
                 .next()
                 .and_then(|ty| ty.ok())
-                // first argument is mapped type or object type
+                // first argument is not mapped type or object type
                 .and_then(|ty| {
-                    if matches!(ty, TsType::TsObjectType(_) | TsType::TsMappedType(_)) {
-                        ty.syntax().parent().and_then(|p| p.parent())
+                    if !matches!(ty, TsType::TsObjectType(_) | TsType::TsMappedType(_)) {
+                        // we then go up until we can find a potential type annotation,
+                        // meaning four levels up
+                        ty.syntax()
+                            .parent()
+                            .and_then(|p| p.parent())
+                            .and_then(|p| p.parent())
+                            .and_then(|p| p.parent())
                     } else {
                         None
                     }
                 })
-                // we then go up two levels and see if we are inside a type annotation
                 .and_then(|great_parent| {
                     if great_parent.kind() == JsSyntaxKind::TS_TYPE_ANNOTATION {
                         great_parent.parent()
