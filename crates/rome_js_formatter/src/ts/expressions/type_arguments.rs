@@ -24,44 +24,57 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
         //                      |_________________________|
         //                      that's where we start from
         let is_arrow_function_variables = {
-            ts_type_argument_list
-                .iter()
-                .next()
-                .and_then(|ty| ty.ok())
+            if let Some(first_argument) = ts_type_argument_list.iter().next() {
+                let first_argument = first_argument?;
+
                 // first argument is not mapped type or object type
-                .and_then(|ty| {
-                    if !matches!(ty, TsType::TsObjectType(_) | TsType::TsMappedType(_)) {
-                        // we then go up until we can find a potential type annotation,
-                        // meaning four levels up
-                        ty.syntax()
-                            .parent()
-                            .and_then(|p| p.parent())
-                            .and_then(|p| p.parent())
-                            .and_then(|p| p.parent())
+                if !matches!(
+                    first_argument,
+                    TsType::TsObjectType(_) | TsType::TsMappedType(_)
+                ) {
+                    // we then go up until we can find a potential type annotation,
+                    // meaning four levels up
+                    let maybe_type_annotation = first_argument.syntax().ancestors().nth(4);
+
+                    if let Some(maybe_type_annotation) = maybe_type_annotation {
+                        if maybe_type_annotation.kind() == JsSyntaxKind::TS_TYPE_ANNOTATION {
+                            let parent = maybe_type_annotation.parent();
+                            if let Some(parent) = parent {
+                                // is so, we try to cast the parent into a variable declarator
+
+                                if let Some(variable_declarator) =
+                                    JsVariableDeclarator::cast(parent)
+                                {
+                                    // we extract the initializer
+                                    let initializer = variable_declarator.initializer();
+                                    if let Some(initializer) = initializer {
+                                        // we verify if we have an arrow function expression
+                                        let expression = initializer.expression()?;
+                                        matches!(
+                                            expression,
+                                            JsAnyExpression::JsArrowFunctionExpression(_)
+                                        )
+                                    } else {
+                                        false
+                                    }
+                                } else {
+                                    false
+                                }
+                            } else {
+                                false
+                            }
+                        } else {
+                            false
+                        }
                     } else {
-                        None
+                        false
                     }
-                })
-                .and_then(|great_parent| {
-                    if great_parent.kind() == JsSyntaxKind::TS_TYPE_ANNOTATION {
-                        great_parent.parent()
-                    } else {
-                        None
-                    }
-                })
-                // is so, we try to cast the parent into a variable declarator
-                .and_then(JsVariableDeclarator::cast)
-                // we extract the initializer
-                .and_then(|variable_declarator| variable_declarator.initializer())
-                // we verify if we have an arrow function expression
-                .map(|initializer| {
-                    let expression = initializer.expression().ok();
-                    matches!(
-                        expression,
-                        Some(JsAnyExpression::JsArrowFunctionExpression(_))
-                    )
-                })
-                .unwrap_or(false)
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
         };
 
         let first_argument_can_be_hugged_or_is_null_type = ts_type_argument_list.len() == 1
