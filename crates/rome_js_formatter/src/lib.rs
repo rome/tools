@@ -457,14 +457,11 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-export type a =
-  // foo
-  | foo1 & foo2
-  // bar
-  | bar1 & bar2
-  // prettier-ignore
-  | qux1 & qux2;
-
+deepCopyAndAsyncMapLeavesC(
+  { source: sourceedeefeffeefefefValue, destination: destination[sourceKey] },
+  1337,
+  { valueMapper, overwriteExistingKeys }
+)
 
 
         "#;
