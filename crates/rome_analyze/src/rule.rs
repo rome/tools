@@ -3,12 +3,12 @@ use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::file::FileSpan;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{Diagnostic, DiagnosticTag, Footer, Span, SubDiagnostic};
-use rome_rowan::{AstNode, Language, TextRange};
+use rome_rowan::{Language, TextRange};
 
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::RuleLanguage;
-use crate::LanguageRoot;
+use crate::{LanguageRoot, Queryable};
 
 pub trait RuleMeta {
     /// The name of this rule, displayed in the diagnostics it emits
@@ -96,18 +96,21 @@ pub trait Rule: RuleMeta {
     const CATEGORY: RuleCategory;
 
     /// The type of AstNode this rule is interested in
-    type Query: AstNode;
+    type Query: Queryable;
     /// A generic type that will be kept in memory between a call to `run` and
     /// subsequent executions of `diagnostic` or `action`, allows the rule to
     /// hold some temporary state between the moment a signal is raised and
     /// when a diagnostic or action needs to be built
     type State;
+    /// An iterator type returned by `run` to yield zero or more signals to the
+    /// analyzer
+    type Signals: IntoIterator<Item = Self::State>;
 
     /// This function is called once for each node matching `Query` in the tree
     /// being analyzed. If it returns `Some` the state object will be wrapped
     /// in a generic `AnalyzerSignal`, and the consumer of the analyzer may call
     /// `diagnostic` or `action` on it
-    fn run(ctx: &RuleContext<Self>) -> Option<Self::State>;
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals;
 
     /// Called by the consumer of the analyzer to try to generate a diagnostic
     /// from a signal raised by `run`

@@ -1,5 +1,7 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, ActionCategory, Rule, RuleAction, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    declare_rule, ActionCategory, Ast, Rule, RuleAction, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -64,11 +66,12 @@ declare_rule! {
 impl Rule for UseBlockStatements {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsAnyStatement;
+    type Query = Ast<JsAnyStatement>;
     type State = UseBlockStatementsOperationType;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         match node {
             JsAnyStatement::JsIfStatement(stmt) => {
                 let JsIfStatementFields {
@@ -124,7 +127,7 @@ impl Rule for UseBlockStatements {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -137,7 +140,7 @@ impl Rule for UseBlockStatements {
         ctx: &RuleContext<Self>,
         nodes_need_to_replaced: &Self::State,
     ) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let root = ctx.root();
         let root = match nodes_need_to_replaced {
             UseBlockStatementsOperationType::Wrap(stmt) => root.replace_node(

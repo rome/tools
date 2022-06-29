@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsAnyExpression, JsAnyFunction, JsNewExpression, JsNewExpressionFields};
 use rome_rowan::{AstNode, AstSeparatedList};
@@ -39,11 +39,12 @@ declare_rule! {
 impl Rule for NoAsyncPromiseExecutor {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsNewExpression;
+    type Query = Ast<JsNewExpression>;
     type State = JsAnyFunction;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let JsNewExpressionFields {
             new_token: _,
             callee,

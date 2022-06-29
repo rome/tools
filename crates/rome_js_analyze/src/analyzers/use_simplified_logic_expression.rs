@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -55,11 +55,12 @@ declare_rule! {
 impl Rule for UseSimplifiedLogicExpression {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsLogicalExpression;
+    type Query = Ast<JsLogicalExpression>;
     type State = JsAnyExpression;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let left = node.left().ok()?;
         let right = node.right().ok()?;
         match node.operator().ok()? {
@@ -117,7 +118,7 @@ impl Rule for UseSimplifiedLogicExpression {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -128,7 +129,7 @@ impl Rule for UseSimplifiedLogicExpression {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let root = ctx.root().replace_node(
             JsAnyExpression::JsLogicalExpression(node.clone()),
             state.clone(),

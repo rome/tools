@@ -1,7 +1,7 @@
 use std::iter;
 
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -36,15 +36,16 @@ declare_rule! {
 impl Rule for UseSingleVarDeclarator {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsVariableStatement;
+    type Query = Ast<JsVariableStatement>;
     type State = (
         JsSyntaxToken,
         JsVariableDeclaratorList,
         Option<JsSyntaxToken>,
     );
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         let JsVariableStatementFields {
             declaration,
@@ -63,7 +64,7 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -72,7 +73,7 @@ impl Rule for UseSingleVarDeclarator {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         let (kind, declarators, semicolon_token) = state;
 
