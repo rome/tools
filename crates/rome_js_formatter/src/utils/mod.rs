@@ -31,7 +31,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
 use std::fmt::Debug;
-pub(crate) use typescript::{is_simple_type, should_hug_type};
+pub(crate) use typescript::should_hug_type;
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;

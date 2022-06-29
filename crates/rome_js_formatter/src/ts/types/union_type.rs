@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use crate::ts::types::intersection_type::FormatTypeSetLeadingSeparator;
-
-use rome_formatter::{format_args, write, Buffer};
+use rome_formatter::{write, Buffer};
 use rome_js_syntax::TsUnionTypeFields;
 use rome_js_syntax::{JsSyntaxKind, TsUnionType};
 
