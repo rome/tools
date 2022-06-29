@@ -20,9 +20,7 @@ export default function TreeView(
 				treeStyle={treeStyle}
 				setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
 			/>
-			{treeStyle === TreeStyle.Json ? (
-				<ReactJson src={JSON.parse(tree)} />
-			) : (
+			{treeStyle === TreeStyle.Json ? <ReactJson src={JSON.parse(tree)} /> : (
 				<pre>{tree}</pre>
 			)}
 		</div>

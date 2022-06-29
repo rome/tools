@@ -16,7 +16,7 @@ specifiers:
   react-dom: ^17.0.2
   react-json-view: ^1.21.3
   react-tabs: ^3.2.3
-  rome: 0.6.0-next
+  rome: 0.6.1-next
   tailwindcss: ^3.0.19
   typescript: ^4.4.4
   vite: ^2.7.2
@@ -39,7 +39,7 @@ devDependencies:
   '@vitejs/plugin-react': 1.1.4
   autoprefixer: 10.4.2_postcss@8.4.6
   postcss: 8.4.6
-  rome: 0.6.0-next
+  rome: 0.6.1-next
   tailwindcss: 3.0.19_qm7bagfnbv4vjkuayu3hle4sne
   typescript: 4.5.5
   vite: 2.7.13
@@ -389,48 +389,48 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rometools/cli-darwin-arm64/0.6.0-next:
-    resolution: {integrity: sha512-DQzlRUlTRnxhFXG/50aBNQjb60mTpEn2Ko5yWLwW9m4sQiUhG1xK1NXxbCI8MfGnymcUiV1vQDv7ScC51MXLzg==}
+  /@rometools/cli-darwin-arm64/0.6.1-next:
+    resolution: {integrity: sha512-ioi10s2or6U23rw43oS41xMzBzCd7uPTFQpIXHVfX+t18D5WXkdzxd0jnKmWGyvUyw+ovG+kK1sVmRxMp2gsOg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-darwin-x64/0.6.0-next:
-    resolution: {integrity: sha512-/0ubFXniAgdp6GJuZjfH7i+YkGY0Dvr8271OvybeWhcLh72f9JosYp2VIcjgox/eIl9b+iKoAn8IpiBSirTodA==}
+  /@rometools/cli-darwin-x64/0.6.1-next:
+    resolution: {integrity: sha512-iFvxrcw5EOiBJPSP8NwM1U92Ov9a5WCteZ3D4yvu/Yh+wRZ6tUQTu9w/6UH5kvRqtI/rRBYJnqXBGKRFDWm74w==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-arm64/0.6.0-next:
-    resolution: {integrity: sha512-TC8g4dABlYghMMMXHcvtvm08ATkCbSbYcyk4fv4/utOxUTmzDlguGXj8uulMvKCGhTSuKSwdzQztg+QMVhF4Xg==}
+  /@rometools/cli-linux-arm64/0.6.1-next:
+    resolution: {integrity: sha512-+dPAD9mPxVufN9SiZTmOC4qzWri+hjrs5aeVuzi6/SCkRCu7Tc1D+Tg81qakq2bw8obnS96pNuvbfr3QzGvXwA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-x64/0.6.0-next:
-    resolution: {integrity: sha512-YUym0jh5aZx/DmnwiEawEdw+kcOJti6ym+0FkGsOGiW/Zsaw5K0rzC5T+ucK+TV1TS8Aq7UT244oN3KdbYJkCA==}
+  /@rometools/cli-linux-x64/0.6.1-next:
+    resolution: {integrity: sha512-lK4wPWh/als3nDVOpQ7RrKfx1VM+2jwA6qdSvDPF4Chsn8ZuzEW4C6f+qayYPmSAnyS1KCSl6+T45IpMyPqTTQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-arm64/0.6.0-next:
-    resolution: {integrity: sha512-H6swDALdEm2VGAz3xmYylI52/ZjbOjJtTobY/qXHvVOY2BgFNT8SfDCaAfF3rrBm6PPPRqLW5bcP6C0rZh9LOQ==}
+  /@rometools/cli-win32-arm64/0.6.1-next:
+    resolution: {integrity: sha512-f0kIFqnqrWF2FpEmuFfUnlIpp+Wfhqc4Vp8hnM04+XS+A54ZAvRQmPVctbNElZoC3dq+hvGonRO1miCkGQsIDw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-x64/0.6.0-next:
-    resolution: {integrity: sha512-KxV4LHYXnO/8bRYsuon5codT4C9VwXokdw/fxAQ128rGrt8G3o0hei0XqdZiS3T0ktiwl0hDxufujNgVPpDUkQ==}
+  /@rometools/cli-win32-x64/0.6.1-next:
+    resolution: {integrity: sha512-TlPEzsOdJ1tT/bwdJ5DHrpH45D3i2cV+ihKIRsNXiGf/haqfTCP9BClFRs6egwceQKMNb5pM2JwHQDohTASgCw==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -572,6 +572,7 @@ packages:
 
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
+    dev: true
 
   /@types/react-dom/17.0.11:
     resolution: {integrity: sha512-f96K3k+24RaLGVu/Y2Ng3e1EbZ8/cVJvypZWd7cy0ofCBaf2lcM46xNhycMZ2xGwbBjRql7hOlZ+e2WlJ5MH3Q==}
@@ -591,6 +592,7 @@ packages:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
       csstype: 3.0.10
+    dev: true
 
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
@@ -600,6 +602,7 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: true
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
@@ -1125,6 +1128,7 @@ packages:
 
   /csstype/3.0.10:
     resolution: {integrity: sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==}
+    dev: true
 
   /debug/4.3.3:
     resolution: {integrity: sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==}
@@ -2958,18 +2962,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rome/0.6.0-next:
-    resolution: {integrity: sha512-6XFNdUYs/tJ5pMi/aI+iF15nD1lEnYbGMLL7S9BzIRKZo6+2hLd3/cqEtcjT+V58eJoXuQvyIgZg2RFkAYBpAw==}
+  /rome/0.6.1-next:
+    resolution: {integrity: sha512-26m2dWFuzvEnW2Z2A3rWu5eFS9mWsxVewjRRClbBWAExrcknVJXB0qIYuwjo5oww7I9a6I3W8XU4xyNczH7EyA==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@rometools/cli-darwin-arm64': 0.6.0-next
-      '@rometools/cli-darwin-x64': 0.6.0-next
-      '@rometools/cli-linux-arm64': 0.6.0-next
-      '@rometools/cli-linux-x64': 0.6.0-next
-      '@rometools/cli-win32-arm64': 0.6.0-next
-      '@rometools/cli-win32-x64': 0.6.0-next
+      '@rometools/cli-darwin-arm64': 0.6.1-next
+      '@rometools/cli-darwin-x64': 0.6.1-next
+      '@rometools/cli-linux-arm64': 0.6.1-next
+      '@rometools/cli-linux-x64': 0.6.1-next
+      '@rometools/cli-win32-arm64': 0.6.1-next
+      '@rometools/cli-win32-x64': 0.6.1-next
     dev: true
 
   /run-async/2.4.1:

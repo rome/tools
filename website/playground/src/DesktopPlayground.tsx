@@ -64,10 +64,12 @@ export default function DesktopPlayground(
 						language={language}
 						placeholder="Enter some code here"
 						onChange={(evn) => {
-							setPlaygroundState((state) => ({
-								...state,
-								code: evn.target.value,
-							}));
+							setPlaygroundState(
+								(state) => ({
+									...state,
+									code: evn.target.value,
+								}),
+							);
 						}}
 						style={{
 							fontSize: 12,
@@ -132,10 +134,21 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<button className="bg-gray-300 px-2 py-2 text-white absolute right-0 top--1 mr-5 flex items-center rounded-md" onClick={copyToClipboard}>
-								{clipboardStatus === 'success' && <SuccessIcon style={{width: 16, height: 16, marginRight: 5}} />}
-								{clipboardStatus === 'failed' && <FailedIcon style={{width: 16, height: 16, marginRight: 5}} />}
-								<CopyIcon style={{width: 16, height: 16}} />
+							<button
+								className="bg-gray-300 px-2 py-2 text-white absolute right-0 top--1 mr-5 flex items-center rounded-md"
+								onClick={copyToClipboard}
+							>
+								{clipboardStatus === "success" && (
+									<SuccessIcon
+										style={{ width: 16, height: 16, marginRight: 5 }}
+									/>
+								)}
+								{clipboardStatus === "failed" && (
+									<FailedIcon
+										style={{ width: 16, height: 16, marginRight: 5 }}
+									/>
+								)}
+								<CopyIcon style={{ width: 16, height: 16 }} />
 							</button>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
@@ -143,7 +156,9 @@ export default function DesktopPlayground(
 							<pre className="h-screen overflow-scroll">{prettierOutput.ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">
+							<pre
+								className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs"
+							>
 								{errors}
 							</pre>
 						</TabPanel>

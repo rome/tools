@@ -18,12 +18,10 @@ expression: jsx.js
 # Output
 ```js
 <div
-  onClick={
-    () =>
-      doSomething({
-        foo: bar,
-      })
-  }
+  onClick={() =>
+    doSomething({
+      foo: bar,
+    })}
 />;
 
 ```

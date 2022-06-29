@@ -133,7 +133,10 @@ export function formatWithPrettier(
 		).formatted;
 		const ir = debug.formatDoc(
 			document,
-			{ parser: "babel", plugins: [parserBabel] },
+			{
+				parser: "babel",
+				plugins: [parserBabel],
+			},
 		);
 		return { code: formattedCode, ir };
 	} catch (err: any) {
