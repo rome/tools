@@ -169,6 +169,11 @@ struct UniqueAssertion {
 }
 
 #[derive(Clone, Debug)]
+struct UnmatchedAssertion {
+    range: TextRange,
+}
+
+#[derive(Clone, Debug)]
 enum SemanticAssertion {
     Declaration(DeclarationAssertion),
     Read(ReadAssertion),
@@ -177,6 +182,7 @@ enum SemanticAssertion {
     AtScope(AtScopeAssertion),
     NoEvent(NoEventAssertion),
     Unique(UniqueAssertion),
+    Unmatched(UnmatchedAssertion),
 }
 
 impl SemanticAssertion {
@@ -246,6 +252,10 @@ impl SemanticAssertion {
             Some(SemanticAssertion::Unique(UniqueAssertion {
                 range: token.text_range(),
             }))
+        } else if assertion_text.contains("/*?") {
+            Some(SemanticAssertion::Unmatched(UnmatchedAssertion {
+                range: token.text_range(),
+            }))
         } else {
             None
         }
@@ -261,6 +271,7 @@ struct SemanticAssertions {
     scope_end_assertions: Vec<ScopeEndAssertion>,
     no_events: Vec<NoEventAssertion>,
     uniques: Vec<UniqueAssertion>,
+    unmatched: Vec<UnmatchedAssertion>,
 }
 
 impl SemanticAssertions {
@@ -272,6 +283,7 @@ impl SemanticAssertions {
         let mut scope_end_assertions = vec![];
         let mut no_events = vec![];
         let mut uniques = vec![];
+        let mut unmatched = vec![];
 
         for node in root
             .syntax()
@@ -320,7 +332,9 @@ impl SemanticAssertions {
                         Some(SemanticAssertion::Unique(assertion)) => {
                             uniques.push(assertion);
                         }
-
+                        Some(SemanticAssertion::Unmatched(assertion)) => {
+                            unmatched.push(assertion);
+                        }
                         None => {}
                     };
                 }
@@ -335,6 +349,7 @@ impl SemanticAssertions {
             scope_end_assertions,
             no_events,
             uniques,
+            unmatched,
         }
     }
 
@@ -396,8 +411,14 @@ impl SemanticAssertions {
 
             let at_least_one_match = events.iter().any(|e| {
                 let declaration_at_range = match &e {
-                    SemanticEvent::Read { declaration_at, .. } => *declaration_at,
-                    SemanticEvent::HoistedRead { declaration_at, .. } => Some(*declaration_at),
+                    SemanticEvent::Read {
+                        declated_at: declaration_at,
+                        ..
+                    } => Some(*declaration_at),
+                    SemanticEvent::HoistedRead {
+                        declared_at: declaration_at,
+                        ..
+                    } => Some(*declaration_at),
                     _ => None,
                 };
 
@@ -531,7 +552,7 @@ impl SemanticAssertions {
             }
         }
 
-        // Check every unique  assertion
+        // Check every unique assertion
 
         for unique in self.uniques.iter() {
             match events_by_pos.get(&unique.range.start()) {
@@ -557,6 +578,24 @@ impl SemanticAssertions {
                 }
                 None => {
                     // Ok
+                }
+            }
+        }
+
+        // Check every unmatched assertion
+
+        for unmatched in self.unmatched.iter() {
+            match events_by_pos.get(&unmatched.range.start()) {
+                Some(v) => {
+                    let ok = v
+                        .iter()
+                        .any(|e| matches!(e, SemanticEvent::UnresolvedReference { .. }));
+                    if !ok {
+                        panic!("No UnresolvedReference event found");
+                    }
+                }
+                None => {
+                    panic!("No UnresolvedReference event found");
                 }
             }
         }

@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -25,11 +25,12 @@ declare_rule! {
 impl Rule for NoSparseArray {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsArrayExpression;
+    type Query = Ast<JsArrayExpression>;
     type State = ();
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         // We defer collect `JsHole` index until user want to apply code action.
         node.elements().iter().find_map(|element| {
@@ -42,7 +43,7 @@ impl Rule for NoSparseArray {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
@@ -54,7 +55,7 @@ markup! {
     }
 
     fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         let mut final_array_element_list = node.elements();
 

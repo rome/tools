@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -52,11 +52,12 @@ declare_rule! {
 impl Rule for NoDoubleEquals {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsBinaryExpression;
+    type Query = Ast<JsBinaryExpression>;
     type State = JsSyntaxToken;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query();
+        let Ast(n) = ctx.query();
 
         let op = n.operator_token().ok()?;
 

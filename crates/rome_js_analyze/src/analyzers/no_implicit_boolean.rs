@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -49,11 +49,12 @@ declare_rule! {
 impl Rule for NoImplicitBoolean {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsxAttribute;
+    type Query = Ast<JsxAttribute>;
     type State = ();
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query();
+        let Ast(n) = ctx.query();
 
         match n.initializer() {
             Some(_) => None,
@@ -62,7 +63,7 @@ impl Rule for NoImplicitBoolean {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let n = ctx.query();
+        let Ast(n) = ctx.query();
 
         Some(RuleDiagnostic::warning(
             n.range(),
@@ -74,7 +75,7 @@ impl Rule for NoImplicitBoolean {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let n = ctx.query();
+        let Ast(n) = ctx.query();
 
         let JsxAttributeFields {
             name,

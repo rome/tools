@@ -61,15 +61,16 @@ h(
   ),
 );
 
-deepCopyAndAsyncMapLeavesA({
-  source: sourceValue,
-  destination: destination[sourceKey],
-}, { valueMapper, overwriteExistingKeys });
+deepCopyAndAsyncMapLeavesA(
+  { source: sourceValue, destination: destination[sourceKey] },
+  { valueMapper, overwriteExistingKeys },
+);
 
-deepCopyAndAsyncMapLeavesB(1337, {
-  source: sourceValue,
-  destination: destination[sourceKey],
-}, { valueMapper, overwriteExistingKeys });
+deepCopyAndAsyncMapLeavesB(
+  1337,
+  { source: sourceValue, destination: destination[sourceKey] },
+  { valueMapper, overwriteExistingKeys },
+);
 
 deepCopyAndAsyncMapLeavesC({
   source: sourceValue,

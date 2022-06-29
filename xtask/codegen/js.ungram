@@ -2017,11 +2017,11 @@ TsMappedTypeAsClause =
 	type: TsType
 
 TsMappedTypeOptionalModifierClause =
-	operator_token: ('+' | '-')
+	operator_token: ('+' | '-')?
 	'?'
 
 TsMappedTypeReadonlyModifierClause =
-	operator_token: ('+' | '-')
+	operator_token: ('+' | '-')?
 	'readonly'
 
 // a: import("./test").T<typeof X>

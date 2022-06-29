@@ -262,6 +262,7 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
 
 /// Checks if the last group requires grouping
 fn should_group_last_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
+    let list_len = list.len();
     let mut iter = list.iter().rev();
     let last = iter.next();
     let penultimate = iter.next();
@@ -270,9 +271,15 @@ fn should_group_last_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
         let last = last?;
         let check_with_penultimate = if let Some(penultimate) = penultimate {
             let penultimate = penultimate?;
-            (last.syntax().kind() != penultimate.syntax().kind())
-                && !JsArrayExpression::can_cast(penultimate.syntax().kind())
-                || !JsArrowFunctionExpression::can_cast(last.syntax().kind())
+            let different_kind = last.syntax().kind() != penultimate.syntax().kind();
+
+            let no_array_and_arrow_function = list_len != 2
+                || !JsArrayExpression::can_cast(penultimate.syntax().kind())
+                || !JsArrowFunctionExpression::can_cast(last.syntax().kind());
+
+            let _no_poor_printed_array =
+                !list_len > 1 && JsArrayExpression::can_cast(last.syntax().kind());
+            different_kind && no_array_and_arrow_function
         } else {
             true
         };

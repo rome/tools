@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: abstract-construct-types.ts
 ---
 # Input
@@ -13,9 +14,9 @@ type T = abstract
 
 # Output
 ```js
-type T = abstract new() => void;
-type T = abstract new() => void;
-type T = abstract new() => void;
+type T = abstract new () => void;
+type T = abstract new () => void;
+type T = abstract new () => void;
 
 ```
 

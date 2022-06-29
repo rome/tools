@@ -27,7 +27,7 @@ macro_rules! declare_node_union {
             $( $variant($variant), )*
         }
 
-        impl AstNode for $name {
+        impl $crate::AstNode for $name {
             type Language = <( $( $variant, )* ) as $crate::macros::UnionLanguage>::Language;
 
             const KIND_SET: $crate::SyntaxKindSet<Self::Language> = $crate::declare_node_union!( @merge_kind $( $variant )* );
@@ -118,4 +118,7 @@ macro_rules! impl_union_language {
     () => {};
 }
 
-impl_union_language!(T00, T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11);
+impl_union_language!(
+    T00, T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18,
+    T19
+);

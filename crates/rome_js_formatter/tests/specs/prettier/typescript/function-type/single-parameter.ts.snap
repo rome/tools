@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: single-parameter.ts
 ---
 # Input
@@ -13,7 +14,7 @@ type Y = new (options:{ a: string; b: AbstractCompositeThingamabobberFactoryProv
 type X = (
   options: { a: string; b: AbstractCompositeThingamabobberFactoryProvider },
 ) => {};
-type Y = new(
+type Y = new (
   options: { a: string; b: AbstractCompositeThingamabobberFactoryProvider },
 ) => {};
 
