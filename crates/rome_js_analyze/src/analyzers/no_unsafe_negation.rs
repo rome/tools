@@ -13,6 +13,16 @@ declare_rule! {
     ///
     /// ## Examples
     ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// !1 in [1,2];
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// /**test*/!/** test*/1 instanceof [1,2];
+    /// ```
+    ///
     /// ### Valid
     /// ```js
     /// -1 in [1,2];
@@ -21,13 +31,6 @@ declare_rule! {
     /// void 1 in [1,2];
     /// delete 1 in [1,2];
     /// +1 instanceof [1,2];
-    /// ```
-    /// ### Invalid
-    /// ```js,expect_diagnostic
-    /// !1 in [1,2];
-    /// ```
-    /// ```js,expect_diagnostic
-    /// /**test*/!/** test*/1 instanceof [1,2];
     /// ```
     pub(crate) NoUnsafeNegation = "noUnsafeNegation"
 }

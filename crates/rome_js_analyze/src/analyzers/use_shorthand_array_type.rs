@@ -15,14 +15,6 @@ declare_rule! {
     ///
     /// ## Examples
     ///
-    /// ### Valid
-    ///
-    /// ```ts
-    /// let valid: Array<Foo | Bar>;
-    /// let valid: Array<keyof Bar>;
-    /// let valid: Array<foo | bar>;
-    /// ```
-    ///
     /// ### Invalid
     /// ```ts,expect_diagnostic
     /// let valid: Array<foo>;
@@ -42,6 +34,14 @@ declare_rule! {
     ///
     /// ```ts,expect_diagnostic
     /// let invalid: Array<[number, number]>;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```ts
+    /// let valid: Array<Foo | Bar>;
+    /// let valid: Array<keyof Bar>;
+    /// let valid: Array<foo | bar>;
     /// ```
     pub(crate) UseShorthandArrayType = "useShorthandArrayType"
 }

@@ -11,14 +11,6 @@ declare_rule! {
     /// 2. If a Promise executor function is using `await`, this is usually a sign that it is not actually necessary to use the `new Promise` constructor, or the scope of the `new Promise` constructor can be reduced.
     ///
     /// ## Examples
-    /// ### Valid
-    ///
-    /// ```js
-    ///   new Promise((resolve, reject) => {})
-    ///   new Promise((resolve, reject) => {}, async function unrelated() {})
-    ///   new Foo(async (resolve, reject) => {})
-    ///   new Foo((( (resolve, reject) => {} )))
-    /// ```
     ///
     /// ### Invalid
     ///
@@ -32,6 +24,15 @@ declare_rule! {
     ///
     /// ```js,expect_diagnostic
     ///   new Promise(((((async () => {})))))
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    ///   new Promise((resolve, reject) => {})
+    ///   new Promise((resolve, reject) => {}, async function unrelated() {})
+    ///   new Foo(async (resolve, reject) => {})
+    ///   new Foo((( (resolve, reject) => {} )))
     /// ```
     pub(crate) NoAsyncPromiseExecutor = "noAsyncPromiseExecutor"
 }

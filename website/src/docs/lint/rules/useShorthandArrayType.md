@@ -9,14 +9,6 @@ When expressing array types, this rule promotes the usage of `T[]` shorthand ins
 
 ## Examples
 
-### Valid
-
-```ts
-let valid: Array<Foo | Bar>;
-let valid: Array<keyof Bar>;
-let valid: Array<foo | bar>;
-```
-
 ### Invalid
 
 ```ts
@@ -103,4 +95,12 @@ let invalid: Array<[number, number]>;
   0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">let invalid: [number, number][];</span>
 
 </code></pre>{% endraw %}
+
+### Valid
+
+```ts
+let valid: Array<Foo | Bar>;
+let valid: Array<keyof Bar>;
+let valid: Array<foo | bar>;
+```
 
