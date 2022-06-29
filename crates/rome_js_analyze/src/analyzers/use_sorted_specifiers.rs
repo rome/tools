@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic, declare_rule, context::RuleContext};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -20,16 +20,35 @@ use rome_rowan::{
 
 use crate::{utils::natural_compare, JsRuleAction};
 
+declare_rule! {
+    /// Disallow multiple variable declarations in the same variable statement
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// let foo, bar;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// for (let i = 0, x = 1; i < arr.length; i++) {}
+    /// ```
+    pub(crate) UseSortedSpecifiers = "useSortedSpecifiers"
+}
+
 pub(crate) enum UseSortedSpecifiers {}
 
 impl Rule for UseSortedSpecifiers {
-    const NAME: &'static str = "useSortedSpecifiers";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsAnyEImport;
+    type Signals = Option<Self::State>;
     type State = Vec<JsAnyNamedImportSpecifier>;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(n: &RuleContext<Self>) -> Option<Self::State> {
         match n {
             JsAnyEImport::JsImport(import) => {
                 let import_clause = import.import_clause().ok()?;
