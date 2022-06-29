@@ -88,7 +88,7 @@ Disallow sparse arrays
 	<a href="/docs/lint/rules/noUnnecessaryContinue">noUnnecessaryContinue</a>
 	<a class="header-anchor" href="#noUnnecessaryContinue"></a>
 </h3>
-Enforce avoiding use unnecessary <code>continue</code> statement.
+Avoid using unnecessary <code>ContinueStatement</code>.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUnsafeNegation">

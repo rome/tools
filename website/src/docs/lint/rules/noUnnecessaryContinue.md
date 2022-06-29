@@ -5,7 +5,7 @@ layout: layouts/rule.liquid
 
 # noUnnecessaryContinue
 
-Enforce avoiding use unnecessary `continue` statement.
+Avoid using unnecessary `ContinueStatement`.
 
 ## Examples
 

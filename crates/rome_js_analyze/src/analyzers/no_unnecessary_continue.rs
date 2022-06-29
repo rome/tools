@@ -11,7 +11,7 @@ use rome_rowan::{AstNode, SyntaxElement};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce avoiding use unnecessary `continue` statement.
+    /// Avoid using unnecessary `ContinueStatement`.
     ///
     /// ## Examples
     ///
