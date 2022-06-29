@@ -1,6 +1,8 @@
 use std::cmp::Ordering;
 
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic, declare_rule, context::RuleContext};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -39,17 +41,17 @@ declare_rule! {
     pub(crate) UseSortedSpecifiers = "useSortedSpecifiers"
 }
 
-pub(crate) enum UseSortedSpecifiers {}
 
 impl Rule for UseSortedSpecifiers {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsAnyEImport;
+    type Query = Ast<JsAnyEImport>;
     type Signals = Option<Self::State>;
     type State = Vec<JsAnyNamedImportSpecifier>;
 
-    fn run(n: &RuleContext<Self>) -> Option<Self::State> {
-        match n {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(node) = ctx.query();
+        match node {
             JsAnyEImport::JsImport(import) => {
                 let import_clause = import.import_clause().ok()?;
                 match import_clause {
@@ -64,28 +66,24 @@ impl Rule for UseSortedSpecifiers {
                                 // specifiers.separators();
                                 // I use `vector collect` instead of `iter().is_sorted_by` because `iter().is_sorted_by` is not stable now
                                 // reference https://github.com/rust-lang/rust/issues/53485
-                                let specifier_vec = specifiers.iter().collect::<Vec<_>>();
-                                // println!("{:#?}", specifier_vec);
-                                let (sorted_specifier_vec, has_error) =
-                                    sort_specifier_vec(specifier_vec);
-                                // println!("{:#?}", sorted_specifier_vec);
-                                if has_error {
-                                    return None;
+                                let mut specifier_vec = Vec::with_capacity(specifiers.len());
+                                for specifier in specifiers.iter() {
+                                    specifier_vec.push(specifier.ok()?);
                                 }
+                                let sorted_specifier_vec = sort_specifier_vec(specifier_vec);
+                                // println!("{:#?}", sorted_specifier_vec);
                                 let has_diff = specifiers
                                     .iter()
                                     .zip(sorted_specifier_vec.iter())
                                     .any(|(a, b)| {
-                                        // SAFETY: if any specifier has `Err` would early return because we use `has_error` checked above
                                         let a = a.unwrap();
-                                        let b = b.clone().unwrap();
+                                        // SAFETY: if any specifier has `Err` would early return because we use `has_error` checked above
                                         a.to_string() != b.to_string()
                                     });
                                 if has_diff {
                                     Some(
                                         sorted_specifier_vec
                                             .into_iter()
-                                            .filter_map(|item| item.ok())
                                             .map(|item| {
                                                 // drop the leading whitespace trivia and trailing whitespace trivia
                                                 let syntax = item.into_syntax();
@@ -106,7 +104,8 @@ impl Rule for UseSortedSpecifiers {
                                                             leading_trivia.kind(),
                                                             TriviaPieceKind::Whitespace
                                                         ) {
-                                                            last_none_whitespace_index = index as i32;
+                                                            last_none_whitespace_index =
+                                                                index as i32;
                                                             // break;
                                                         } else {
                                                             // token_text += leading_trivia.text();
@@ -120,7 +119,10 @@ impl Rule for UseSortedSpecifiers {
                                                     let none_whitespace_trivia_len = last
                                                         .trailing_trivia()
                                                         .pieces()
-                                                        .take((last_none_whitespace_index + 1) as usize)
+                                                        .take(
+                                                            (last_none_whitespace_index + 1)
+                                                                as usize,
+                                                        )
                                                         .fold(0usize, |acc, item| {
                                                             let len: usize = item.text_len().into();
                                                             acc + len
@@ -163,14 +165,17 @@ impl Rule for UseSortedSpecifiers {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(node) = ctx.query();
         Some(RuleDiagnostic::warning(
             node.range(),
             "The specifiers of the import declaration should be sorted alphabetically.",
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let Ast(node) = ctx.query();
+        let root = ctx.root();
         let root = match node {
             JsAnyEImport::JsImport(import) => {
                 let import_clause = import.import_clause().ok()?;
@@ -188,17 +193,21 @@ impl Rule for UseSortedSpecifiers {
                                 let l_curly_token = named_import_specifiers.l_curly_token();
                                 let r_curly_token = named_import_specifiers.r_curly_token();
                                 let mut separators = specifiers.separators();
-                                let root =
-                                    root.replace_node(
-                                        named_import_specifiers,
-                                        make::js_named_import_specifiers(
-                                            l_curly_token.ok()?,
-                                            make::js_named_import_specifier_list(state.iter().map(
-                                                |item| (item.clone(), separators.next().and_then(|item| item.ok())),
-                                            )),
-                                            r_curly_token.ok()?,
-                                        ),
-                                    );
+                                let root = root.replace_node(
+                                    named_import_specifiers,
+                                    make::js_named_import_specifiers(
+                                        l_curly_token.ok()?,
+                                        make::js_named_import_specifier_list(state.iter().map(
+                                            |item| {
+                                                (
+                                                    item.clone(),
+                                                    separators.next().and_then(|item| item.ok()),
+                                                )
+                                            },
+                                        )),
+                                        r_curly_token.ok()?,
+                                    ),
+                                );
                                 println!("root: {}", root.clone()?);
                                 root
                             }
@@ -219,32 +228,20 @@ impl Rule for UseSortedSpecifiers {
 }
 
 fn sort_specifier_vec(
-    mut specifier_vec: Vec<Result<JsAnyNamedImportSpecifier, SyntaxError>>,
-) -> (Vec<Result<JsAnyNamedImportSpecifier, SyntaxError>>, bool) {
-    let mut has_error = false;
+    mut specifier_vec: Vec<JsAnyNamedImportSpecifier>,
+) -> Vec<JsAnyNamedImportSpecifier> {
     specifier_vec.sort_by(|a, b| {
-        if a.is_err() || b.is_err() {
-            has_error = true;
-            return Ordering::Equal;
-        }
-        // SAFETY: We have been check if a, b specifier is error above.
-        let a = a.clone().unwrap();
-        let b = b.clone().unwrap();
         let a_local = match &a {
             rome_js_syntax::JsAnyNamedImportSpecifier::JsNamedImportSpecifier(specifier) => {
                 match specifier.local_name() {
                     Ok(name) => name.to_string(),
-                    Err(_) => {
-                        has_error = true;
-                        String::new()
-                    }
+                    Err(_) => String::new(),
                 }
             }
             rome_js_syntax::JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                 specifier,
             ) => specifier.to_string(),
             rome_js_syntax::JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
-                has_error = true;
                 String::new()
             }
         };
@@ -252,17 +249,13 @@ fn sort_specifier_vec(
             rome_js_syntax::JsAnyNamedImportSpecifier::JsNamedImportSpecifier(specifier) => {
                 match specifier.local_name() {
                     Ok(name) => name.to_string(),
-                    Err(_) => {
-                        has_error = true;
-                        String::new()
-                    }
+                    Err(_) => String::new(),
                 }
             }
             rome_js_syntax::JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                 specifier,
             ) => specifier.to_string(),
             rome_js_syntax::JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
-                has_error = true;
                 String::new()
             }
         };
@@ -272,17 +265,13 @@ fn sort_specifier_vec(
                 rome_js_syntax::JsAnyNamedImportSpecifier::JsNamedImportSpecifier(specifier) => {
                     match specifier.name() {
                         Ok(name) => name.to_string(),
-                        Err(_) => {
-                            has_error = true;
-                            String::new()
-                        }
+                        Err(_) => String::new(),
                     }
                 }
                 rome_js_syntax::JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                     specifier,
                 ) => specifier.to_string(),
                 rome_js_syntax::JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
-                    has_error = true;
                     String::new()
                 }
             };
@@ -290,17 +279,13 @@ fn sort_specifier_vec(
                 rome_js_syntax::JsAnyNamedImportSpecifier::JsNamedImportSpecifier(specifier) => {
                     match specifier.name() {
                         Ok(name) => name.to_string(),
-                        Err(_) => {
-                            has_error = true;
-                            String::new()
-                        }
+                        Err(_) => String::new(),
                     }
                 }
                 rome_js_syntax::JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                     specifier,
                 ) => specifier.to_string(),
                 rome_js_syntax::JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
-                    has_error = true;
                     String::new()
                 }
             };
@@ -318,7 +303,7 @@ fn sort_specifier_vec(
             return Ordering::Greater;
         }
     });
-    (specifier_vec, has_error)
+    specifier_vec
 }
 
 declare_node_union! {
