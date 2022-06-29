@@ -14,14 +14,14 @@ use crate::{
 pub struct RuleRegistry<'a, L: Language, B> {
     /// Holds a collection of rules for each [SyntaxKind] node type that has
     /// lint rules associated with it
-    syntax: Vec<SyntaxKindRules<L, B>>,
+    ast_rules: Vec<SyntaxKindRules<L, B>>,
     emit_signal: Box<dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B> + 'a>,
 }
 
 impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
     pub fn new(emit_signal: impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B> + 'a) -> Self {
         Self {
-            syntax: Vec::new(),
+            ast_rules: Vec::new(),
             emit_signal: Box::new(emit_signal),
         }
     }
@@ -43,13 +43,13 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
 
                     // Ensure the vector has enough capacity by inserting empty
                     // `SyntaxKindRules` as required
-                    if self.syntax.len() <= index {
-                        self.syntax.resize_with(index + 1, SyntaxKindRules::new);
+                    if self.ast_rules.len() <= index {
+                        self.ast_rules.resize_with(index + 1, SyntaxKindRules::new);
                     }
 
                     // Insert a handle to the rule `R` into the `SyntaxKindRules` entry
                     // corresponding to the SyntaxKind index
-                    let node = &mut self.syntax[index];
+                    let node = &mut self.ast_rules[index];
                     node.rules.push(RegistryRule::of::<R>());
                 }
             }
@@ -60,7 +60,7 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
     /// in this instance of the registry
     pub fn metadata(self) -> impl Iterator<Item = (&'static str, &'static str)> {
         let mut unique = HashSet::new();
-        self.syntax
+        self.ast_rules
             .into_iter()
             .flat_map(|node| node.rules)
             .map(|rule| (rule.name, rule.docs))
@@ -105,7 +105,7 @@ where
                 let kind = usize::from(kind);
 
                 // Lookup the syntax entry corresponding to the SyntaxKind index
-                match self.syntax.get(kind) {
+                match self.ast_rules.get(kind) {
                     Some(entry) => &entry.rules,
                     None => return ControlFlow::Continue(()),
                 }

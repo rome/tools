@@ -61,6 +61,9 @@ where
             }
         }
 
+        // TODO: Checking for suppression comments is currently incomplete,
+        // it can only completely suppress linting and has a high performance
+        // cost due to eagerly looking up the first token of each node
         if (self.has_suppressions)(node) {
             self.skip_subtree = Some(node.clone());
             return ControlFlow::Continue(());

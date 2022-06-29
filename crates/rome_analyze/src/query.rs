@@ -40,6 +40,8 @@ where
 {
     type Language = NodeLanguage<N>;
 
+    /// Match on [QueryMatch::Syntax] if the kind of the syntax node matches
+    /// the kind set of `N`
     const KEY: QueryKey<Self::Language> = QueryKey::Syntax(N::KIND_SET);
 
     fn unwrap_match(query: &QueryMatch<Self::Language>) -> Self {
