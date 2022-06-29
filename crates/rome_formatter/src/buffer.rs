@@ -643,11 +643,9 @@ impl<Context> Buffer for IsLabelledBuffer<'_, Context> {
                 _ => None,
             };
 
-            if let Some(label) = label {
-                if label.label_id() == self.label_id {
-                    self.is_labelled = true;
-                }
-            }
+            self.is_labelled = label
+                .map(|label| label.label_id() == self.label_id)
+                .unwrap_or(false);
         }
 
         self.inner.write_element(element)
