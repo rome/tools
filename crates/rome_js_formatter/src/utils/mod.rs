@@ -13,6 +13,7 @@ mod object_like;
 mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
+mod typescript;
 
 use crate::prelude::*;
 pub(crate) use assignment_like::{should_break_after_operator, JsAnyAssignmentLike};
@@ -30,6 +31,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
 use std::fmt::Debug;
+pub(crate) use typescript::should_hug_type;
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
@@ -409,7 +411,7 @@ impl FormatPrecedence {
 
 /// Format a some code followed by an optional semicolon, and performs
 /// semicolon insertion if it was missing in the input source and the
-/// preceeding element wasn't an unknown node
+/// preceding element wasn't an unknown node
 pub struct FormatWithSemicolon<'a> {
     content: &'a dyn Format<JsFormatContext>,
     semicolon: Option<&'a JsSyntaxToken>,

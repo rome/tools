@@ -57,20 +57,18 @@ const foo = call<
 >();
 
 export const CallRecorderContext = createContext<
-    | {
-      deleteRecording: (id: string) => void;
-      deleteAll: () => void;
-    }
-    | null
->(null);
+  | {
+    deleteRecording: (id: string) => void;
+    deleteAll: () => void;
+  }
+  | null>(null);
 
 export const CallRecorderContext = createContext<
-    | {
-      deleteRecording: (id: string) => void;
-      deleteAll: () => void;
-    }
-    | null
->(null, "useless");
+  | {
+    deleteRecording: (id: string) => void;
+    deleteAll: () => void;
+  }
+  | null>(null, "useless");
 
 const foo = call<
   Foooooo,
