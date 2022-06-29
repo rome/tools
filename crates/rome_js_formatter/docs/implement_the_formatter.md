@@ -30,22 +30,28 @@ This will automatically build and open a browser tab to the documentation.
 ## Rules to follow when implementing a formatter
 
 1. Use the `*Fields` struct to extract all the tokens/nodes
-   ```rust
-    impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
-   		fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
+	```rust
+	#[derive(Debug, Clone, Default)]
+	pub struct FormatJsExportDefaultExpressionClause;
+
+	impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses {
+       fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression,
                 semicolon_token,
             }  = node.as_fields();
-        }
+       }
    }
-   ```
+	```
 2. When using `.as_fields()` with the destructuring, don't use the `..` feature. Prefer extracting all fields and ignore them
    using the `_`
    ```rust
-   impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
-   		fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
+   #[derive(Debug, Clone, Default)]
+   pub struct FormatJsExportDefaultExpressionClause;
+
+   impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses {
+       fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression: _,
@@ -63,8 +69,11 @@ This will automatically build and open a browser tab to the documentation.
    3. `format_extensions.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
    that are exposed based on its type. If you have a good IDE support, this feature will help you. For example:
    ```rust
-      impl FormatNodeFields<JsExportDefaultExpressionClause> for FormatNodeRule<JsExportDefaultExpressionClause> {
-   			fn fmt_fields(node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
+   #[derive(Debug, Clone, Default)]
+   pub struct FormatJsExportDefaultExpressionClause;
+
+   impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses{
+        fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression, // it's a mandatory node
@@ -72,15 +81,15 @@ This will automatically build and open a browser tab to the documentation.
             } = node.as_fields();
             let element = expression.format();
 
-   					if let Some(expression) = &expression? {
-   						write!(f, [expression.format(), space_token()])?;
-   					}
+            if let Some(expression) = &expression? {
+                write!(f, [expression.format(), space_token()])?;
+            }
 
-   					if let Some(semicolon) = &semicolon_token {
-   						write!(f, [semicolon.format()])?;
-   					} else {
-   						write!(f, [space_token()])?;
-   					}
+            if let Some(semicolon) = &semicolon_token {
+                write!(f, [semicolon.format()])?;
+            } else {
+                write!(f, [space_token()])?;
+            }
         }
    }
    ```

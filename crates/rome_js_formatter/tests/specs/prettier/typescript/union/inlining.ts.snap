@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: inlining.ts
 ---
 # Input
@@ -56,11 +57,10 @@ interface RelayProps {
 interface RelayProps {
   articles:
     | Array<
-        | {
-          __id: string;
-        }
-        | null
-    >
+      | {
+        __id: string;
+      }
+      | null>
     | null
     | void;
 }

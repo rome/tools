@@ -21,7 +21,7 @@ const fn2 = () => {
 ```js
 const fn1 = () => {
   return;
-} /* foo */ ;
+} /* foo */;
 
 const fn2 = () => {
   return;

@@ -1,5 +1,6 @@
 use rome_analyze::{
-    AnalysisFilter, Analyzer, AnalyzerSignal, ControlFlow, LanguageRoot, RuleAction,
+    AnalysisFilter, Analyzer, AnalyzerSignal, ControlFlow, LanguageRoot, Never, RuleAction,
+    SyntaxVisitor, VisitorContext,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
@@ -16,22 +17,46 @@ use crate::registry::build_registry;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
+/// Return an iterator over the name and documentation of all the rules
+/// implemented by the JS analyzer
+pub fn metadata(filter: AnalysisFilter) -> impl Iterator<Item = (&'static str, &'static str)> {
+    fn dummy_signal(_: &dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<Never> {
+        panic!()
+    }
+
+    build_registry(&filter, dummy_signal).metadata()
+}
+
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
 /// then call the `callback` when an analysis rule emits a diagnostic or action
-pub fn analyze<B>(
+pub fn analyze<F, B>(
     file_id: FileId,
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
-    callback: impl FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B>,
-) -> Option<B> {
-    let registry = build_registry(&filter);
+    callback: F,
+) -> Option<B>
+where
+    F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B>,
+    B: 'static,
+{
+    let mut analyzer = Analyzer::<JsLanguage, B>::empty();
 
-    let analyzer = Analyzer::new(registry, |node| {
+    analyzer.add_visitor(SyntaxVisitor::new(|node| {
         has_suppressions_category(SuppressionCategory::Lint, node)
-    });
+    }));
 
-    analyzer.analyze(file_id, root, filter.range, callback)
+    let mut registry = build_registry(&filter, callback);
+    let mut ctx = VisitorContext {
+        file_id,
+        root: root.clone(),
+        range: filter.range,
+        match_query: Box::new(move |file_id, root, query_match| {
+            registry.match_query(file_id, root, query_match)
+        }),
+    };
+
+    analyzer.run(&mut ctx)
 }
 
 #[cfg(test)]

@@ -1,32 +1,70 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyLiteralExpression, JsAnyRoot, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute,
-    JsxAttributeFields, T,
+    JsAnyLiteralExpression, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute, JsxAttributeFields, T,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoImplicitBoolean {}
+declare_rule! {
+    /// Disallow implicit `true` values on JSX boolean attributes
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <input disabled />
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```jsx
+    /// <input disabled={false} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled={''} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled={0} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled={undefined} />
+    ///```
+    ///
+    /// ```jsx
+    /// <input disabled='false' />
+    ///```
+    pub(crate) NoImplicitBoolean = "noImplicitBoolean"
+}
 
 impl Rule for NoImplicitBoolean {
-    const NAME: &'static str = "noImplicitBoolean";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsxAttribute;
+    type Query = Ast<JsxAttribute>;
     type State = ();
+    type Signals = Option<Self::State>;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(n) = ctx.query();
+
         match n.initializer() {
             Some(_) => None,
             None => Some(()),
         }
     }
 
-    fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(n) = ctx.query();
+
         Some(RuleDiagnostic::warning(
             n.range(),
             markup! {
@@ -36,7 +74,9 @@ impl Rule for NoImplicitBoolean {
         ))
     }
 
-    fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let Ast(n) = ctx.query();
+
         let JsxAttributeFields {
             name,
             initializer: _,
@@ -77,7 +117,7 @@ impl Rule for NoImplicitBoolean {
         );
         let next_attr = next_attr.build();
 
-        let root = root.replace_node(n.clone(), next_attr)?;
+        let root = ctx.root().replace_node(n.clone(), next_attr)?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: multiple-members.js
 ---
 # Input
@@ -42,28 +43,22 @@ wrapper.find('SomewhatLongNodeName').prop('longPropFunctionName')('argument', 's
 # Output
 ```js
 if (testConfig.ENABLE_ONLINE_TESTS === "true") {
-  describe(
-    "POST /users/me/pet",
-    function () {
-      it(
-        "saves pet",
-        function () {
-          function assert(pet) {
-            expect(pet).to.have
-              .property("OwnerAddress")
-              .that.deep.equals({
-                AddressLine1: "Alexanderstrasse",
-                AddressLine2: "",
-                PostalCode: "10999",
-                Region: "Berlin",
-                City: "Berlin",
-                Country: "DE",
-              },);
-          }
-        },
-      );
-    },
-  );
+  describe("POST /users/me/pet", function () {
+    it("saves pet", function () {
+      function assert(pet) {
+        expect(pet).to.have
+          .property("OwnerAddress")
+          .that.deep.equals({
+            AddressLine1: "Alexanderstrasse",
+            AddressLine2: "",
+            PostalCode: "10999",
+            Region: "Berlin",
+            City: "Berlin",
+            Country: "DE",
+          });
+      }
+    });
+  });
 }
 
 wrapper
@@ -71,14 +66,14 @@ wrapper
   .prop("longPropFunctionName")()
   .then(function () {
     doSomething();
-  },);
+  });
 
 wrapper
   .find("SomewhatLongNodeName")
   .prop("longPropFunctionName")("argument")
   .then(function () {
     doSomething();
-  },);
+  });
 
 wrapper
   .find("SomewhatLongNodeName")
@@ -88,7 +83,7 @@ wrapper
   )("argument")
   .then(function () {
     doSomething();
-  },);
+  });
 
 wrapper
   .find("SomewhatLongNodeName")
@@ -98,7 +93,7 @@ wrapper
   )
   .then(function () {
     doSomething();
-  },);
+  });
 
 ```
 

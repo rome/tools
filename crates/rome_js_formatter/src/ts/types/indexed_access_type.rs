@@ -1,11 +1,14 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsIndexedAccessType;
 use rome_js_syntax::TsIndexedAccessTypeFields;
 
-impl FormatNodeFields<TsIndexedAccessType> for FormatNodeRule<TsIndexedAccessType> {
-    fn fmt_fields(node: &TsIndexedAccessType, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIndexedAccessType;
+
+impl FormatNodeRule<TsIndexedAccessType> for FormatTsIndexedAccessType {
+    fn fmt_fields(&self, node: &TsIndexedAccessType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsIndexedAccessTypeFields {
             object_type,
             l_brack_token,

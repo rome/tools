@@ -135,16 +135,20 @@ pub fn format_call_expression(syntax_node: &JsSyntaxNode, f: &mut JsFormatter) -
 
     // as explained before, the first group is particular, so we calculate it
     let index_to_split_at = compute_first_group_index(&flattened_items);
-    let mut flattened_items = flattened_items.into_iter();
 
     // we have the index where we want to take the first group
-    let first_group: Vec<_> = (&mut flattened_items).take(index_to_split_at).collect();
+    let remaining_groups = flattened_items.split_off(index_to_split_at);
+    let first_group = flattened_items;
 
     let mut head_group = HeadGroup::new(first_group);
 
     // `flattened_items` now contains only the nodes that should have a sequence of
     // `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
-    let mut rest_of_groups = compute_groups(flattened_items, parent_is_expression_statement, f)?;
+    let mut rest_of_groups = compute_groups(
+        remaining_groups.into_iter(),
+        parent_is_expression_statement,
+        f,
+    )?;
 
     // Here we check if the first element of Groups::groups can be moved inside the head.
     // If so, then we extract it and concatenate it together with the head.
@@ -234,7 +238,7 @@ fn compute_groups(
     f: &JsFormatter,
 ) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
-    let mut groups = Groups::new(in_expression_statement, *f.context());
+    let mut groups = Groups::new(in_expression_statement, f.context().tab_width());
     for item in flatten_items {
         let has_trailing_comments = item.as_syntax().has_trailing_comments();
 

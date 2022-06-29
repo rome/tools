@@ -15,12 +15,12 @@ new it(/* comment */)
 
 # Output
 ```js
-require( /* comment */ );
-new require( /* comment */ );
-define( /* comment */ );
-new define( /* comment */ );
-it( /* comment */ );
-new it( /* comment */ );
+require(/* comment */);
+new require(/* comment */);
+define(/* comment */);
+new define(/* comment */);
+it(/* comment */);
+new it(/* comment */);
 
 ```
 

@@ -1,6 +1,6 @@
 use crate::GreenToken;
-use std::fmt::Formatter;
 use std::ops::Deref;
+use std::{borrow::Borrow, fmt::Formatter};
 use text_size::{TextRange, TextSize};
 
 /// Reference to the text of a SyntaxToken without having to worry about the lifetime of `&str`.
@@ -12,9 +12,20 @@ pub struct SyntaxTokenText {
     range: TextRange,
 }
 
+impl std::hash::Hash for SyntaxTokenText {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.text().hash(state);
+    }
+}
+
 impl SyntaxTokenText {
     pub(crate) fn new(token: GreenToken) -> SyntaxTokenText {
         let range = TextRange::at(TextSize::default(), token.text_len());
+        Self { token, range }
+    }
+
+    pub(crate) fn with_range(token: GreenToken, range: TextRange) -> SyntaxTokenText {
+        debug_assert!(range.end() <= token.text_len());
         Self { token, range }
     }
 
@@ -64,6 +75,7 @@ impl std::fmt::Debug for SyntaxTokenText {
         write!(f, "{:?}", self.text())
     }
 }
+
 impl PartialEq for SyntaxTokenText {
     fn eq(&self, other: &Self) -> bool {
         **self == **other
@@ -79,5 +91,11 @@ impl PartialEq<&'_ str> for SyntaxTokenText {
 impl PartialEq<SyntaxTokenText> for &'_ str {
     fn eq(&self, other: &SyntaxTokenText) -> bool {
         **self == **other
+    }
+}
+
+impl Borrow<str> for SyntaxTokenText {
+    fn borrow(&self) -> &str {
+        self.text()
     }
 }

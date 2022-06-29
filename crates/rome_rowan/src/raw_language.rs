@@ -2,7 +2,7 @@ use crate::raw_language::RawLanguageKind::{COMMA_TOKEN, LITERAL_EXPRESSION, ROOT
 ///! Provides a sample language implementation that is useful in API explanation or tests
 use crate::{
     AstNode, AstSeparatedList, Language, ParsedChildren, RawNodeSlots, RawSyntaxKind,
-    RawSyntaxNode, SyntaxFactory, SyntaxKind, SyntaxList, SyntaxNode, TreeBuilder,
+    RawSyntaxNode, SyntaxFactory, SyntaxKind, SyntaxKindSet, SyntaxList, SyntaxNode, TreeBuilder,
 };
 
 #[doc(hidden)]
@@ -69,6 +69,9 @@ pub struct RawLanguageRoot {
 impl AstNode for RawLanguageRoot {
     type Language = RawLanguage;
 
+    const KIND_SET: SyntaxKindSet<RawLanguage> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(ROOT as u16));
+
     fn can_cast(kind: RawLanguageKind) -> bool {
         kind == ROOT
     }
@@ -94,13 +97,16 @@ impl AstNode for RawLanguageRoot {
 }
 
 #[doc(hidden)]
-#[derive(Eq, PartialEq, Debug)]
+#[derive(Clone, Eq, PartialEq, Debug)]
 pub struct LiteralExpression {
     node: SyntaxNode<RawLanguage>,
 }
 
 impl AstNode for LiteralExpression {
     type Language = RawLanguage;
+
+    const KIND_SET: SyntaxKindSet<RawLanguage> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(LITERAL_EXPRESSION as u16));
 
     fn can_cast(kind: RawLanguageKind) -> bool {
         kind == LITERAL_EXPRESSION

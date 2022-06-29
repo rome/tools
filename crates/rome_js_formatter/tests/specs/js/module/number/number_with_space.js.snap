@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: number_with_space.js
 ---
 # Input
@@ -21,7 +20,7 @@ Quote style: Double Quotes
 -----
 (123).toString;
 (123)
-/****/ .toString;
-(123) /**/ .toString;
+	/****/.toString;
+(123) /**/.toString;
 (123).toString;
 

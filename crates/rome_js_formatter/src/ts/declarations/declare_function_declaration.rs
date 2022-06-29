@@ -1,14 +1,19 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsDeclareFunctionDeclaration;
 use rome_js_syntax::TsDeclareFunctionDeclarationFields;
 
-impl FormatNodeFields<TsDeclareFunctionDeclaration>
-    for FormatNodeRule<TsDeclareFunctionDeclaration>
-{
-    fn fmt_fields(node: &TsDeclareFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsDeclareFunctionDeclaration;
+
+impl FormatNodeRule<TsDeclareFunctionDeclaration> for FormatTsDeclareFunctionDeclaration {
+    fn fmt_fields(
+        &self,
+        node: &TsDeclareFunctionDeclaration,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsDeclareFunctionDeclarationFields {
             async_token,
             function_token,

@@ -1,13 +1,17 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::TsEmptyExternalModuleDeclarationBody;
 use rome_js_syntax::TsEmptyExternalModuleDeclarationBodyFields;
 
-impl FormatNodeFields<TsEmptyExternalModuleDeclarationBody>
-    for FormatNodeRule<TsEmptyExternalModuleDeclarationBody>
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsEmptyExternalModuleDeclarationBody;
+
+impl FormatNodeRule<TsEmptyExternalModuleDeclarationBody>
+    for FormatTsEmptyExternalModuleDeclarationBody
 {
     fn fmt_fields(
+        &self,
         node: &TsEmptyExternalModuleDeclarationBody,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {

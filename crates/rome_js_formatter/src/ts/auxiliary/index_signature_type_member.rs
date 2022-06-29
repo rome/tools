@@ -1,11 +1,18 @@
 use crate::prelude::*;
 use crate::utils::FormatTypeMemberSeparator;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::{TsIndexSignatureTypeMember, TsIndexSignatureTypeMemberFields};
 
-impl FormatNodeFields<TsIndexSignatureTypeMember> for FormatNodeRule<TsIndexSignatureTypeMember> {
-    fn fmt_fields(node: &TsIndexSignatureTypeMember, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsIndexSignatureTypeMember;
+
+impl FormatNodeRule<TsIndexSignatureTypeMember> for FormatTsIndexSignatureTypeMember {
+    fn fmt_fields(
+        &self,
+        node: &TsIndexSignatureTypeMember,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsIndexSignatureTypeMemberFields {
             readonly_token,
             l_brack_token,

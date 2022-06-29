@@ -51,7 +51,7 @@ try {
 ) {}
 
 try {
-} catch (foo /* comment */ ) {}
+} catch (foo /* comment */) {}
 
 try {
 } catch (

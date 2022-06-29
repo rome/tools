@@ -9,7 +9,7 @@ use crate::{
     CssSyntaxKind::{self as SyntaxKind, *},
     CssSyntaxList as SyntaxList, CssSyntaxNode as SyntaxNode, CssSyntaxToken as SyntaxToken,
 };
-use rome_rowan::{support, AstNode, SyntaxResult};
+use rome_rowan::{support, AstNode, RawSyntaxKind, SyntaxKindSet, SyntaxResult};
 #[allow(unused)]
 use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
@@ -2044,6 +2044,8 @@ impl CssAnyValue {
 }
 impl AstNode for CssAnyFunction {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ANY_FUNCTION as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ANY_FUNCTION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2073,6 +2075,8 @@ impl From<CssAnyFunction> for SyntaxElement {
 }
 impl AstNode for CssAtKeyframes {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_KEYFRAMES as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_KEYFRAMES }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2106,6 +2110,8 @@ impl From<CssAtKeyframes> for SyntaxElement {
 }
 impl AstNode for CssAtKeyframesBody {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_KEYFRAMES_BODY as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_KEYFRAMES_BODY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2140,6 +2146,8 @@ impl From<CssAtKeyframesBody> for SyntaxElement {
 }
 impl AstNode for CssAtMedia {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2180,6 +2188,8 @@ impl From<CssAtMedia> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQuery {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2219,6 +2229,8 @@ impl From<CssAtMediaQuery> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQueryConsequent {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_CONSEQUENT as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_CONSEQUENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2250,6 +2262,8 @@ impl From<CssAtMediaQueryConsequent> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQueryFeature {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_FEATURE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2284,6 +2298,8 @@ impl From<CssAtMediaQueryFeature> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQueryFeatureBoolean {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_FEATURE_BOOLEAN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_BOOLEAN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2313,6 +2329,8 @@ impl From<CssAtMediaQueryFeatureBoolean> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQueryFeatureCompare {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_FEATURE_COMPARE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_COMPARE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2341,6 +2359,8 @@ impl From<CssAtMediaQueryFeatureCompare> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQueryFeaturePlain {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_FEATURE_PLAIN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_PLAIN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2372,6 +2392,8 @@ impl From<CssAtMediaQueryFeaturePlain> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQueryFeatureRange {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_FEATURE_RANGE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_RANGE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2414,6 +2436,8 @@ impl From<CssAtMediaQueryFeatureRange> for SyntaxElement {
 }
 impl AstNode for CssAtMediaQueryRange {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_RANGE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_RANGE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2455,6 +2479,8 @@ impl From<CssAtMediaQueryRange> for SyntaxElement {
 }
 impl AstNode for CssAttribute {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ATTRIBUTE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2496,6 +2522,8 @@ impl From<CssAttribute> for SyntaxElement {
 }
 impl AstNode for CssAttributeMatcher {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ATTRIBUTE_MATCHER as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_MATCHER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2550,6 +2578,8 @@ impl From<CssAttributeMatcher> for SyntaxElement {
 }
 impl AstNode for CssAttributeMeta {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ATTRIBUTE_META as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_META }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2583,6 +2613,8 @@ impl From<CssAttributeMeta> for SyntaxElement {
 }
 impl AstNode for CssAttributeModifier {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ATTRIBUTE_MODIFIER as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2609,6 +2641,8 @@ impl From<CssAttributeModifier> for SyntaxElement {
 }
 impl AstNode for CssAttributeName {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ATTRIBUTE_NAME as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2635,6 +2669,8 @@ impl From<CssAttributeName> for SyntaxElement {
 }
 impl AstNode for CssAttributeSelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ATTRIBUTE_SELECTOR_PATTERN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_SELECTOR_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2662,6 +2698,8 @@ impl From<CssAttributeSelectorPattern> for SyntaxElement {
 }
 impl AstNode for CssBlock {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_BLOCK as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_BLOCK }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2696,6 +2734,8 @@ impl From<CssBlock> for SyntaxElement {
 }
 impl AstNode for CssClassSelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_CLASS_SELECTOR_PATTERN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_CLASS_SELECTOR_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2723,6 +2763,8 @@ impl From<CssClassSelectorPattern> for SyntaxElement {
 }
 impl AstNode for CssCombinatorSelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_COMBINATOR_SELECTOR_PATTERN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_COMBINATOR_SELECTOR_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2763,6 +2805,8 @@ impl From<CssCombinatorSelectorPattern> for SyntaxElement {
 }
 impl AstNode for CssCustomProperty {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_CUSTOM_PROPERTY as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_CUSTOM_PROPERTY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2792,6 +2836,8 @@ impl From<CssCustomProperty> for SyntaxElement {
 }
 impl AstNode for CssDeclaration {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_DECLARATION as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2831,6 +2877,8 @@ impl From<CssDeclaration> for SyntaxElement {
 }
 impl AstNode for CssDeclarationImportant {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_DECLARATION_IMPORTANT as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DECLARATION_IMPORTANT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2861,6 +2909,8 @@ impl From<CssDeclarationImportant> for SyntaxElement {
 }
 impl AstNode for CssDimension {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_DIMENSION as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DIMENSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2888,6 +2938,8 @@ impl From<CssDimension> for SyntaxElement {
 }
 impl AstNode for CssIdSelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ID_SELECTOR_PATTERN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ID_SELECTOR_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2915,6 +2967,8 @@ impl From<CssIdSelectorPattern> for SyntaxElement {
 }
 impl AstNode for CssIdentifier {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_IDENTIFIER as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_IDENTIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2944,6 +2998,8 @@ impl From<CssIdentifier> for SyntaxElement {
 }
 impl AstNode for CssKeyframesBlock {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_KEYFRAMES_BLOCK as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_KEYFRAMES_BLOCK }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -2979,6 +3035,8 @@ impl From<CssKeyframesBlock> for SyntaxElement {
 }
 impl AstNode for CssKeyframesSelector {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_KEYFRAMES_SELECTOR as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_KEYFRAMES_SELECTOR }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3010,6 +3068,8 @@ impl From<CssKeyframesSelector> for SyntaxElement {
 }
 impl AstNode for CssNumber {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_NUMBER as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_NUMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3039,6 +3099,8 @@ impl From<CssNumber> for SyntaxElement {
 }
 impl AstNode for CssParameter {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_PARAMETER as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3068,6 +3130,8 @@ impl From<CssParameter> for SyntaxElement {
 }
 impl AstNode for CssPercentage {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_PERCENTAGE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PERCENTAGE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3098,6 +3162,8 @@ impl From<CssPercentage> for SyntaxElement {
 }
 impl AstNode for CssPseudoClassSelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_PSEUDO_CLASS_SELECTOR_PATTERN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PSEUDO_CLASS_SELECTOR_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3132,6 +3198,9 @@ impl From<CssPseudoClassSelectorPattern> for SyntaxElement {
 }
 impl AstNode for CssPseudoClassSelectorPatternParameters {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = SyntaxKindSet::from_raw(RawSyntaxKind(
+        CSS_PSEUDO_CLASS_SELECTOR_PATTERN_PARAMETERS as u16,
+    ));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PSEUDO_CLASS_SELECTOR_PATTERN_PARAMETERS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3166,6 +3235,8 @@ impl From<CssPseudoClassSelectorPatternParameters> for SyntaxElement {
 }
 impl AstNode for CssRatio {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_RATIO as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_RATIO }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3196,6 +3267,8 @@ impl From<CssRatio> for SyntaxElement {
 }
 impl AstNode for CssRule {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_RULE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_RULE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3223,6 +3296,8 @@ impl From<CssRule> for SyntaxElement {
 }
 impl AstNode for CssSelector {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_SELECTOR as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_SELECTOR }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3249,6 +3324,8 @@ impl From<CssSelector> for SyntaxElement {
 }
 impl AstNode for CssSimpleFunction {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_SIMPLE_FUNCTION as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_SIMPLE_FUNCTION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3284,6 +3361,8 @@ impl From<CssSimpleFunction> for SyntaxElement {
 }
 impl AstNode for CssString {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_STRING as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_STRING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3313,6 +3392,8 @@ impl From<CssString> for SyntaxElement {
 }
 impl AstNode for CssTypeSelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_TYPE_SELECTOR_PATTERN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_TYPE_SELECTOR_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3339,6 +3420,8 @@ impl From<CssTypeSelectorPattern> for SyntaxElement {
 }
 impl AstNode for CssUniversalSelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_UNIVERSAL_SELECTOR_PATTERN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_UNIVERSAL_SELECTOR_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3365,6 +3448,8 @@ impl From<CssUniversalSelectorPattern> for SyntaxElement {
 }
 impl AstNode for CssVarFunction {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_VAR_FUNCTION as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_VAR_FUNCTION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3401,6 +3486,8 @@ impl From<CssVarFunction> for SyntaxElement {
 }
 impl AstNode for CssVarFunctionValue {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_VAR_FUNCTION_VALUE as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_VAR_FUNCTION_VALUE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -3451,6 +3538,10 @@ impl From<CssAtMediaQueryFeatureRange> for CssAnyAtMediaQueryFeatureType {
 }
 impl AstNode for CssAnyAtMediaQueryFeatureType {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = CssAtMediaQueryFeatureBoolean::KIND_SET
+        .union(CssAtMediaQueryFeatureCompare::KIND_SET)
+        .union(CssAtMediaQueryFeaturePlain::KIND_SET)
+        .union(CssAtMediaQueryFeatureRange::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -3549,6 +3640,8 @@ impl From<CssIdentifier> for CssAnyAtMediaQueryType {
 }
 impl AstNode for CssAnyAtMediaQueryType {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        CssAtMediaQueryFeature::KIND_SET.union(CssIdentifier::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, CSS_AT_MEDIA_QUERY_FEATURE | CSS_IDENTIFIER)
     }
@@ -3605,6 +3698,7 @@ impl From<CssAtMedia> for CssAnyAtRule {
 }
 impl AstNode for CssAnyAtRule {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = CssAtKeyframes::KIND_SET.union(CssAtMedia::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, CSS_AT_KEYFRAMES | CSS_AT_MEDIA) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
@@ -3654,6 +3748,7 @@ impl From<CssRule> for CssAnyRule {
 }
 impl AstNode for CssAnyRule {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = CssAnyAtRule::KIND_SET.union(CssRule::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             CSS_RULE => true,
@@ -3745,6 +3840,13 @@ impl From<CssUniversalSelectorPattern> for CssAnySelectorPattern {
 }
 impl AstNode for CssAnySelectorPattern {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = CssAttributeSelectorPattern::KIND_SET
+        .union(CssClassSelectorPattern::KIND_SET)
+        .union(CssCombinatorSelectorPattern::KIND_SET)
+        .union(CssIdSelectorPattern::KIND_SET)
+        .union(CssPseudoClassSelectorPattern::KIND_SET)
+        .union(CssTypeSelectorPattern::KIND_SET)
+        .union(CssUniversalSelectorPattern::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -3870,6 +3972,13 @@ impl From<CssString> for CssAnyValue {
 }
 impl AstNode for CssAnyValue {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = CssAnyFunction::KIND_SET
+        .union(CssCustomProperty::KIND_SET)
+        .union(CssDimension::KIND_SET)
+        .union(CssIdentifier::KIND_SET)
+        .union(CssNumber::KIND_SET)
+        .union(CssRatio::KIND_SET)
+        .union(CssString::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -4213,6 +4322,8 @@ impl CssUnknown {
 }
 impl AstNode for CssUnknown {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_UNKNOWN as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_UNKNOWN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -4256,6 +4367,8 @@ impl CssAnySelectorPatternList {
 }
 impl AstNode for CssAnySelectorPatternList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ANY_SELECTOR_PATTERN_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ANY_SELECTOR_PATTERN_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssAnySelectorPatternList> {
         if Self::can_cast(syntax.kind()) {
@@ -4323,6 +4436,8 @@ impl CssAtKeyframesItemList {
 }
 impl AstNode for CssAtKeyframesItemList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_KEYFRAMES_ITEM_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_KEYFRAMES_ITEM_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssAtKeyframesItemList> {
         if Self::can_cast(syntax.kind()) {
@@ -4390,6 +4505,8 @@ impl CssAtMediaQueryList {
 }
 impl AstNode for CssAtMediaQueryList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_AT_MEDIA_QUERY_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssAtMediaQueryList> {
         if Self::can_cast(syntax.kind()) {
@@ -4457,6 +4574,8 @@ impl CssAttributeList {
 }
 impl AstNode for CssAttributeList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ATTRIBUTE_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssAttributeList> {
         if Self::can_cast(syntax.kind()) {
@@ -4524,6 +4643,8 @@ impl CssDeclarationList {
 }
 impl AstNode for CssDeclarationList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_DECLARATION_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DECLARATION_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssDeclarationList> {
         if Self::can_cast(syntax.kind()) {
@@ -4591,6 +4712,8 @@ impl CssKeyframesSelectorList {
 }
 impl AstNode for CssKeyframesSelectorList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_KEYFRAMES_SELECTOR_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_KEYFRAMES_SELECTOR_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssKeyframesSelectorList> {
         if Self::can_cast(syntax.kind()) {
@@ -4658,6 +4781,8 @@ impl CssParameterList {
 }
 impl AstNode for CssParameterList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_PARAMETER_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PARAMETER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssParameterList> {
         if Self::can_cast(syntax.kind()) {
@@ -4725,6 +4850,8 @@ impl CssRoot {
 }
 impl AstNode for CssRoot {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ROOT as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ROOT }
     fn cast(syntax: SyntaxNode) -> Option<CssRoot> {
         if Self::can_cast(syntax.kind()) {
@@ -4792,6 +4919,8 @@ impl CssSelectorList {
 }
 impl AstNode for CssSelectorList {
     type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_SELECTOR_LIST as u16));
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_SELECTOR_LIST }
     fn cast(syntax: SyntaxNode) -> Option<CssSelectorList> {
         if Self::can_cast(syntax.kind()) {

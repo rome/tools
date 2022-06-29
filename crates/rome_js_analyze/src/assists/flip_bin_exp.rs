@@ -1,24 +1,35 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
+    JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
 };
 use rome_rowan::AstNodeExt;
 
 use crate::JsRuleAction;
 
-pub(crate) enum FlipBinExp {}
+declare_rule! {
+    /// Provides a refactor to invert the left and right hand side of a binary expression
+    ///
+    /// ## Examples
+    ///
+    /// ```js
+    /// (a < b)
+    /// ```
+    pub(crate) FlipBinExp = "flipBinExp"
+}
 
 impl Rule for FlipBinExp {
-    const NAME: &'static str = "flipBinExp";
     const CATEGORY: RuleCategory = RuleCategory::Action;
 
-    type Query = JsBinaryExpression;
+    type Query = Ast<JsBinaryExpression>;
     type State = JsSyntaxKind;
+    type Signals = Option<Self::State>;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(node) = ctx.query();
+
         let JsBinaryExpressionFields {
             left,
             operator_token: _,
@@ -32,7 +43,9 @@ impl Rule for FlipBinExp {
         invert_op(node.operator().ok()?)
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, op: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
+        let Ast(node) = ctx.query();
+
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;
         let new_node = node.clone().replace_node(prev_left, new_left)?;
@@ -49,7 +62,7 @@ impl Rule for FlipBinExp {
             category: ActionCategory::Refactor,
             applicability: Applicability::Always,
             message: markup! { "Flip Binary Expression" }.to_owned(),
-            root: root.replace_node(node.clone(), new_node)?,
+            root: ctx.root().replace_node(node.clone(), new_node)?,
         })
     }
 }

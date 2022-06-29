@@ -1,15 +1,59 @@
 use std::ops;
 
-use rome_diagnostics::file::FileId;
-use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
-
 mod categories;
+pub mod context;
+mod query;
 mod registry;
+mod rule;
 mod signals;
+mod syntax;
+mod visitor;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
-pub use crate::registry::{LanguageRoot, Rule, RuleAction, RuleDiagnostic, RuleRegistry};
+pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
+pub use crate::registry::{LanguageRoot, RuleRegistry};
+pub use crate::rule::{Rule, RuleAction, RuleDiagnostic, RuleMeta};
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
+pub use crate::syntax::SyntaxVisitor;
+pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext};
+use rome_rowan::{AstNode, Language, TextRange};
+
+/// The analyzer is the main entry point into the `rome_analyze` infrastructure.
+/// Its role is to run a collection of [Visitor]s over a syntax tree, with each
+/// visitor implementing various analysis over this syntax tree to generate
+/// auxiliary data structures as well as emit "query match" events to be
+/// processed by lint rules and in turn emit "analyzer signals" in the form of
+/// diagnostics, code actions or both
+pub struct Analyzer<L, B> {
+    visitors: Vec<Box<dyn Visitor<B, Language = L>>>,
+}
+
+impl<L: Language, B> Analyzer<L, B> {
+    pub fn empty() -> Self {
+        Self {
+            visitors: Vec::new(),
+        }
+    }
+
+    pub fn add_visitor<V>(&mut self, visitor: V)
+    where
+        V: Visitor<B, Language = L> + 'static,
+    {
+        self.visitors.push(Box::new(visitor));
+    }
+
+    pub fn run(mut self, ctx: &mut VisitorContext<L, B>) -> Option<B> {
+        for event in ctx.root.syntax().preorder() {
+            for visitor in &mut self.visitors {
+                if let ControlFlow::Break(br) = visitor.visit(&event, ctx) {
+                    return Some(br);
+                }
+            }
+        }
+
+        None
+    }
+}
 
 /// Allows filtering the list of rules that will be executed in a run of the analyzer,
 /// and at what source code range signals (diagnostics or actions) may be raised
@@ -58,61 +102,3 @@ pub enum Never {}
 /// (`Option<Never>` has a size of 0 and can be elided, while `Option<()>` has
 /// a size of 1 as it still need to store a discriminant)
 pub type ControlFlow<B = Never> = ops::ControlFlow<B>;
-
-/// The [Analyzer] is intended is an executor for a set of rules contained in a
-/// [RuleRegistry]: these rules can query the syntax tree and emit [AnalyzerSignal]
-/// objects in response to a query match, with a signal being a generic object
-/// containing a diagnostic, a code action or both.
-pub struct Analyzer<L: Language> {
-    registry: RuleRegistry<L>,
-    has_suppressions: fn(&SyntaxNode<L>) -> bool,
-}
-
-impl<L: Language> Analyzer<L> {
-    /// Create a new instance of the analyzer from a registry instance, and a
-    /// language-specific suppression parser
-    pub fn new(registry: RuleRegistry<L>, has_suppressions: fn(&SyntaxNode<L>) -> bool) -> Self {
-        Self {
-            registry,
-            has_suppressions,
-        }
-    }
-
-    /// Run the analyzer on the provided `root`: this process will use the given `filter`
-    /// to selectively restrict analysis to specific rules / a specific source range,
-    /// then call the `callback` when an analysis rule emits a diagnostic or action
-    pub fn analyze<B>(
-        self,
-        file_id: FileId,
-        root: &LanguageRoot<L>,
-        range: Option<TextRange>,
-        mut callback: impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B>,
-    ) -> Option<B> {
-        let mut iter = root.syntax().preorder();
-        while let Some(event) = iter.next() {
-            let node = match event {
-                WalkEvent::Enter(node) => node,
-                WalkEvent::Leave(_) => continue,
-            };
-
-            if let Some(range) = range {
-                if node.text_range().ordering(range).is_ne() {
-                    iter.skip_subtree();
-                    continue;
-                }
-            }
-
-            if (self.has_suppressions)(&node) {
-                iter.skip_subtree();
-                continue;
-            }
-
-            if let ControlFlow::Break(b) = self.registry.analyze(file_id, root, node, &mut callback)
-            {
-                return Some(b);
-            }
-        }
-
-        None
-    }
-}

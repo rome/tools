@@ -1,28 +1,88 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinaryExpression,
-    JsBinaryExpressionFields, JsBinaryOperator, JsUnaryOperator, TextRange,
+    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryExpressionFields,
+    JsBinaryOperator, JsUnaryOperator, TextRange,
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-/// This rule verifies the result of `typeof $expr` unary expressions is being
-/// compared to valid values, either string literals containing valid type
-/// names or other `typeof` expressions
-pub(crate) enum UseValidTypeof {}
+declare_rule! {
+    /// This rule verifies the result of `typeof $expr` unary expressions is being
+    /// compared to valid values, either string literals containing valid type
+    /// names or other `typeof` expressions
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo === "strnig"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo == "undefimed"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof bar != "nunber"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof bar !== "fucntion"
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo === undefined
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof bar == Object
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo === baz
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo == 5
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// typeof foo == -5
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// typeof foo === "string"
+    /// ```
+    ///
+    /// ```js
+    /// typeof bar == "undefined"
+    /// ```
+    ///
+    /// ```js
+    /// typeof bar === typeof qux
+    /// ```
+    pub(crate) UseValidTypeof = "useValidTypeof"
+}
 
 impl Rule for UseValidTypeof {
-    const NAME: &'static str = "useValidTypeof";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsBinaryExpression;
+    type Query = Ast<JsBinaryExpression>;
     type State = (TypeofError, Option<(JsAnyExpression, JsTypeName)>);
+    type Signals = Option<Self::State>;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(n) = ctx.query();
+
         let JsBinaryExpressionFields {
             left,
             operator_token: _,
@@ -140,7 +200,7 @@ impl Rule for UseValidTypeof {
         Some((TypeofError::InvalidExpression(range), None))
     }
 
-    fn diagnostic(_: &Self::Query, (err, _): &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, (err, _): &Self::State) -> Option<RuleDiagnostic> {
         const TITLE: &str = "Invalid `typeof` comparison value";
 
         Some(match err {
@@ -153,11 +213,9 @@ impl Rule for UseValidTypeof {
         })
     }
 
-    fn action(
-        root: JsAnyRoot,
-        _node: &Self::Query,
-        (_, suggestion): &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, (_, suggestion): &Self::State) -> Option<JsRuleAction> {
+        let root = ctx.root();
+
         let (expr, type_name) = suggestion.as_ref()?;
 
         let root = root.replace_node(

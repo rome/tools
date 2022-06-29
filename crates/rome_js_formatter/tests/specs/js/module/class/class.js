@@ -55,3 +55,17 @@ x = class foo extends Boar {
 
 x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb {
 }
+
+
+export class Task {
+
+
+	constructor(
+		script,
+		duration,
+		threadCount,
+		...args
+	) {
+		this.args = args;
+	}
+}

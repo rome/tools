@@ -52,14 +52,11 @@ const testResults = results.testResults.map(
   (testResult) => formatResult(testResult, formatter, reporter),
 );
 
-it(
-  "mocks regexp instances",
-  () => {
-    expect(
-      () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
-    ).not.toThrow();
-  },
-);
+it("mocks regexp instances", () => {
+  expect(
+    () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
+  ).not.toThrow();
+});
 
 expect(() => asyncRequest({ url: "/test-endpoint" })).toThrowError(
   /Required parameter/,
@@ -99,13 +96,10 @@ func(
 
 promise.then(
   (result) =>
-    result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+    result.veryLongVariable
+      .veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 );
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-   52:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
-```
 

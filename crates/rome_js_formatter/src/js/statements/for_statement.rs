@@ -1,13 +1,15 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
-use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsForStatement;
 use rome_js_syntax::JsForStatementFields;
+use rome_js_syntax::{JsAnyStatement, JsSyntaxKind};
 
-impl FormatNodeFields<JsForStatement> for FormatNodeRule<JsForStatement> {
-    fn fmt_fields(node: &JsForStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsForStatement;
+
+impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
+    fn fmt_fields(&self, node: &JsForStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForStatementFields {
             for_token,
             l_paren_token,
@@ -53,7 +55,7 @@ impl FormatNodeFields<JsForStatement> for FormatNodeRule<JsForStatement> {
             // Force semicolon insertion for empty bodies
             match body.as_ref()? {
                 JsAnyStatement::JsEmptyStatement(body) => {
-                    write![f, [body.format(), token(";")]]
+                    write![f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)]]
                 }
                 body => {
                     write!(f, [space_token(), body.format()])

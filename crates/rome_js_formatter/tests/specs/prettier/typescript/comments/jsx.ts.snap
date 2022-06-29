@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 181
 expression: jsx.ts
 ---
 # Input
@@ -16,13 +17,9 @@ var example2 = <div>
 
 # Output
 ```js
-var example1 = <div>
-	https://test
-</div>;
+var example1 = <div>https://test</div>;
 
-var example2 = <div>
-	/*test*/
-</div>;
+var example2 = <div>/*test*/</div>;
 
 ```
 

@@ -115,6 +115,10 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.token_text()
     }
 
+    pub fn token_text_trimmed(&self) -> SyntaxTokenText {
+        self.raw.token_text_trimmed()
+    }
+
     /// Returns the text of the token, excluding all trivia.
     ///
     /// ```

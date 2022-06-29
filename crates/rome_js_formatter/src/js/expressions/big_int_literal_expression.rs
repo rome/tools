@@ -4,12 +4,18 @@ use std::borrow::Cow;
 use crate::prelude::*;
 use crate::utils::string_utils::ToAsciiLowercaseCow;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsBigIntLiteralExpression;
 use rome_js_syntax::JsBigIntLiteralExpressionFields;
 
-impl FormatNodeFields<JsBigIntLiteralExpression> for FormatNodeRule<JsBigIntLiteralExpression> {
-    fn fmt_fields(node: &JsBigIntLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsBigIntLiteralExpression;
+
+impl FormatNodeRule<JsBigIntLiteralExpression> for FormatJsBigIntLiteralExpression {
+    fn fmt_fields(
+        &self,
+        node: &JsBigIntLiteralExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let JsBigIntLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
 

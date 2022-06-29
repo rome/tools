@@ -5,8 +5,9 @@ use rome_rowan::SyntaxTokenText;
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
+use std::rc::Rc;
 
-type Content = Box<FormatElement>;
+type Content = Box<[FormatElement]>;
 
 /// Language agnostic IR for formatting source code.
 ///
@@ -41,7 +42,7 @@ pub enum FormatElement {
 
     /// Concatenates multiple elements together with a given separator printed in either
     /// flat or expanded mode to fill the print width. See [fill_elements].
-    Fill(Box<Fill>),
+    Fill(Fill),
 
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
@@ -54,10 +55,10 @@ pub enum FormatElement {
     LineSuffixBoundary,
 
     /// Special semantic element letting the printer and formatter know this is
-    /// a trivia content, and it should only have a limited influence on the
+    /// a comment content, and it should only have a limited influence on the
     /// formatting (for instance line breaks contained within will not cause
-    /// the parent group to break if this element is at the start of it)
-    Comment(Content),
+    /// the parent group to break if this element is at the start of it).
+    Comment(Box<[FormatElement]>),
 
     /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
     Verbatim(Verbatim),
@@ -65,6 +66,10 @@ pub enum FormatElement {
     /// A list of different variants representing the same content. The printer picks the best fitting content.
     /// Line breaks inside of a best fitting don't propagate to parent groups.
     BestFitting(BestFitting),
+
+    /// An interned format element. Useful when the same content must be emitted multiple times to avoid
+    /// deep cloning the IR when using the `best_fitting!` macro or `if_group_fits_on_line` and `if_group_breaks`.
+    Interned(Interned),
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
@@ -83,27 +88,27 @@ pub struct Verbatim {
     /// The reason this range is using verbatim formatting
     pub kind: VerbatimKind,
     /// The [FormatElement] version of the node/token
-    pub element: Box<FormatElement>,
+    pub content: Box<[FormatElement]>,
 }
 
 impl Verbatim {
-    pub fn new_verbatim(element: FormatElement, length: TextSize) -> Self {
+    pub fn new_verbatim(content: Box<[FormatElement]>, length: TextSize) -> Self {
         Self {
-            element: Box::new(element),
+            content,
             kind: VerbatimKind::Verbatim { length },
         }
     }
 
-    pub fn new_unknown(element: FormatElement) -> Self {
+    pub fn new_unknown(content: Box<[FormatElement]>) -> Self {
         Self {
-            element: Box::new(element),
+            content,
             kind: VerbatimKind::Unknown,
         }
     }
 
-    pub fn new_suppressed(element: FormatElement) -> Self {
+    pub fn new_suppressed(content: Box<[FormatElement]>) -> Self {
         Self {
-            element: Box::new(element),
+            content,
             kind: VerbatimKind::Suppressed,
         }
     }
@@ -137,13 +142,14 @@ impl Debug for FormatElement {
             FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
-                .field(&verbatim.element)
+                .field(&verbatim.content)
                 .finish(),
             FormatElement::BestFitting(best_fitting) => {
                 write!(fmt, "BestFitting")?;
                 best_fitting.fmt(fmt)
             }
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
+            FormatElement::Interned(inner) => inner.fmt(fmt),
         }
     }
 }
@@ -177,7 +183,7 @@ impl List {
         Self { content }
     }
 
-    pub(crate) fn into_vec(self) -> Vec<FormatElement> {
+    pub fn into_vec(self) -> Vec<FormatElement> {
         self.content
     }
 }
@@ -196,13 +202,13 @@ impl Deref for List {
 /// reaches the specified `line_width`.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Fill {
-    pub(super) list: List,
-    pub(super) separator: FormatElement,
+    pub(super) content: Content,
+    pub(super) separator: Box<FormatElement>,
 }
 
 impl Fill {
-    pub fn list(&self) -> &List {
-        &self.list
+    pub fn content(&self) -> &[FormatElement] {
+        &self.content
     }
 
     pub fn separator(&self) -> &FormatElement {
@@ -216,7 +222,7 @@ impl Fill {
 /// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
 #[derive(Clone, PartialEq, Eq)]
 pub struct Group {
-    pub(crate) content: Content,
+    pub(crate) content: Box<[FormatElement]>,
     pub(crate) id: Option<GroupId>,
 }
 
@@ -234,9 +240,9 @@ impl Debug for Group {
 }
 
 impl Group {
-    pub fn new(content: FormatElement) -> Self {
+    pub fn new(content: Vec<FormatElement>) -> Self {
         Self {
-            content: Box::new(content),
+            content: content.into_boxed_slice(),
             id: None,
         }
     }
@@ -323,6 +329,29 @@ impl Debug for BestFitting {
     }
 }
 
+#[derive(Clone, Eq, PartialEq)]
+pub struct Interned(Rc<FormatElement>);
+
+impl Interned {
+    pub(crate) fn try_unwrap(this: Interned) -> Result<FormatElement, Interned> {
+        Rc::try_unwrap(this.0).map_err(Interned)
+    }
+}
+
+impl Debug for Interned {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        self.0.fmt(f)
+    }
+}
+
+impl Deref for Interned {
+    type Target = FormatElement;
+
+    fn deref(&self) -> &Self::Target {
+        self.0.deref()
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ConditionalGroupContent {
     pub(crate) content: Content,
@@ -338,9 +367,9 @@ pub struct ConditionalGroupContent {
 }
 
 impl ConditionalGroupContent {
-    pub fn new(content: FormatElement, mode: PrintMode) -> Self {
+    pub fn new(content: Box<[FormatElement]>, mode: PrintMode) -> Self {
         Self {
-            content: Box::new(content),
+            content,
             mode,
             group_id: None,
         }
@@ -479,95 +508,48 @@ impl FormatElement {
         match self {
             FormatElement::Space => false,
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
-            FormatElement::Indent(content) => content.will_break(),
-            FormatElement::Group(group) => group.content.will_break(),
-            FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
+            FormatElement::Group(Group { content, .. })
+            | FormatElement::ConditionalGroupContent(ConditionalGroupContent { content, .. })
+            | FormatElement::Comment(content)
+            | FormatElement::Fill(Fill { content, .. })
+            | FormatElement::Verbatim(Verbatim { content, .. })
+            | FormatElement::Indent(content) => content.iter().any(FormatElement::will_break),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
-            FormatElement::Fill(fill) => fill.list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
-            FormatElement::Comment(content) => content.will_break(),
-            FormatElement::Verbatim(verbatim) => verbatim.element.will_break(),
             FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
             FormatElement::ExpandParent => true,
-        }
-    }
-
-    /// Splits off the leading and trailing trivias (comments) from this [FormatElement]
-    ///
-    /// For [FormatElement::HardGroup], the trailing trivia
-    /// is automatically moved  outside of the group. The group itself is then recreated around the
-    /// content itself.
-    pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
-        match self {
-            FormatElement::List(mut list) => {
-                // Find the index of the first non-comment element in the list
-                let content_start = list
-                    .content
-                    .iter()
-                    .position(|elem| !matches!(elem, FormatElement::Comment(_)));
-
-                // List contains at least one non trivia element.
-                if let Some(content_start) = content_start {
-                    let (leading, mut content) = if content_start > 0 {
-                        let content = list.content.split_off(content_start);
-                        (FormatElement::List(list), content)
-                    } else {
-                        // No leading trivia
-                        (FormatElement::List(List::default()), list.content)
-                    };
-
-                    let content_end = content
-                        .iter()
-                        .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
-                        .expect("List guaranteed to contain at least one non trivia element.");
-                    let trailing_start = content_end + 1;
-
-                    let trailing = if trailing_start < content.len() {
-                        FormatElement::List(List::new(content.split_off(trailing_start)))
-                    } else {
-                        FormatElement::List(List::default())
-                    };
-
-                    (leading, FormatElement::List(List::new(content)), trailing)
-                } else {
-                    // All leading trivia
-                    (
-                        FormatElement::List(list),
-                        FormatElement::List(List::default()),
-                        FormatElement::List(List::default()),
-                    )
-                }
-            }
-            // Non-list elements are returned directly
-            _ => (
-                FormatElement::List(List::default()),
-                self,
-                FormatElement::List(List::default()),
-            ),
+            FormatElement::Interned(inner) => inner.0.will_break(),
         }
     }
 
     /// Utility function to get the "last element" of a [FormatElement], recursing
-    /// into lists and groups for find the last element that's not an empty element,
-    /// a line break or a comment
+    /// into lists and groups to find the last element that's not
+    /// a line break, verbatim or a comment.
     pub fn last_element(&self) -> Option<&FormatElement> {
         match self {
-            FormatElement::Fill(fill) => fill
-                .list
-                .iter()
-                .rev()
-                .find_map(|element| element.last_element()),
             FormatElement::List(list) => {
                 list.iter().rev().find_map(|element| element.last_element())
             }
             FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
-            FormatElement::Indent(indent) => indent.last_element(),
-            FormatElement::Group(group) => group.content.last_element(),
+            FormatElement::Group(Group { content, .. }) | FormatElement::Indent(content) => {
+                content.iter().rev().find_map(FormatElement::last_element)
+            }
+            FormatElement::Interned(Interned(inner)) => inner.last_element(),
 
             _ => Some(self),
+        }
+    }
+
+    /// Interns a format element.
+    ///
+    /// Returns `self` for an already interned element.
+    pub fn intern(self) -> Interned {
+        match self {
+            FormatElement::Interned(interned) => interned,
+            element => Interned(Rc::new(element)),
         }
     }
 }
@@ -637,14 +619,14 @@ static_assert!(std::mem::size_of::<rome_rowan::TextRange>() == 8usize);
 static_assert!(std::mem::size_of::<crate::format_element::VerbatimKind>() == 8usize);
 
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 16usize);
+static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 24usize);
 
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::Token>() == 24usize);
 
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::ConditionalGroupContent>() == 16usize);
+static_assert!(std::mem::size_of::<crate::format_element::ConditionalGroupContent>() == 24usize);
 
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::List>() == 24usize);

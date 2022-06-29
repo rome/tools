@@ -19,11 +19,10 @@
 //! * [`format_args!`]: Concatenates a sequence of Format objects.
 //! * [`write!`]: Writes a sequence of formatable objects into an output buffer.
 
-extern crate core;
-
 mod arguments;
 mod buffer;
 mod builders;
+mod comments;
 pub mod format_element;
 mod format_extensions;
 pub mod formatter;
@@ -34,31 +33,37 @@ pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
+pub mod token;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
 use crate::prelude::syntax_token_cow_slice;
+use std::any::TypeId;
 
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
-pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
+pub use buffer::{
+    Buffer, BufferExtensions, BufferSnapshot, Inspect, NullBuffer, PreambleBuffer, VecBuffer,
+    WillBreakBuffer,
+};
 pub use builders::{
-    block_indent, comment, empty_element, empty_line, group_elements, hard_line_break,
+    block_indent, comment, empty_line, get_lines_before, group_elements, hard_line_break,
     if_group_breaks, if_group_fits_on_line, indent, line_suffix, soft_block_indent,
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
+pub use comments::{CommentContext, CommentKind, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
+use indexmap::IndexSet;
 use rome_rowan::{
-    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken,
-    SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
+    Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxKind, SyntaxNode, SyntaxResult,
+    SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
 use std::error::Error;
 use std::fmt;
-use std::marker::PhantomData;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -446,7 +451,15 @@ impl<Context> Format<Context> for () {
 pub trait FormatRule<T> {
     type Context;
 
-    fn fmt(item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+    fn fmt(&self, item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+}
+
+/// Rule that supports customizing how it formats an object of type [T].
+pub trait FormatRuleWithOptions<T>: FormatRule<T> {
+    type Options;
+
+    /// Returns a new rule that uses the given options to format an object.
+    fn with_options(self, options: Self::Options) -> Self;
 }
 
 /// Trait for an object that formats an object with a specified rule.
@@ -482,23 +495,31 @@ pub trait FormatWithRule<Context>: Format<Context> {
 }
 
 /// Formats the referenced `item` with the specified rule.
+#[derive(Debug, Copy, Clone)]
 pub struct FormatRefWithRule<'a, T, R>
 where
     R: FormatRule<T>,
 {
     item: &'a T,
-    rule: PhantomData<R>,
+    rule: R,
 }
 
 impl<'a, T, R> FormatRefWithRule<'a, T, R>
 where
     R: FormatRule<T>,
 {
-    pub fn new(item: &'a T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
+    pub fn new(item: &'a T, rule: R) -> Self {
+        Self { item, rule }
+    }
+}
+
+impl<T, R, O> FormatRefWithRule<'_, T, R>
+where
+    R: FormatRuleWithOptions<T, Options = O>,
+{
+    pub fn with_options(mut self, options: O) -> Self {
+        self.rule = self.rule.with_options(options);
+        self
     }
 }
 
@@ -519,28 +540,26 @@ where
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::fmt(self.item, f)
+        self.rule.fmt(self.item, f)
     }
 }
 
 /// Formats the `item` with the specified rule.
+#[derive(Debug, Clone)]
 pub struct FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
     item: T,
-    rule: PhantomData<R>,
+    rule: R,
 }
 
 impl<T, R> FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    pub fn new(item: T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
+    pub fn new(item: T, rule: R) -> Self {
+        Self { item, rule }
     }
 
     pub fn with_item(mut self, item: T) -> Self {
@@ -559,7 +578,17 @@ where
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
-        R::fmt(&self.item, f)
+        self.rule.fmt(&self.item, f)
+    }
+}
+
+impl<T, R, O> FormatOwnedWithRule<T, R>
+where
+    R: FormatRuleWithOptions<T, Options = O>,
+{
+    pub fn with_options(mut self, options: O) -> Self {
+        self.rule = self.rule.with_options(options);
+        self
     }
 }
 
@@ -750,7 +779,7 @@ pub fn format_range<Context, L, R, P>(
 where
     Context: FormatContext,
     L: Language,
-    R: FormatRule<SyntaxNode<L>, Context = Context>,
+    R: FormatRule<SyntaxNode<L>, Context = Context> + Default,
     P: FnMut(&SyntaxNode<L>) -> bool,
 {
     if range.is_empty() {
@@ -892,7 +921,10 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_sub_tree(context, &FormatRefWithRule::<_, R>::new(common_root))?;
+    let formatted = format_sub_tree(
+        context,
+        &FormatRefWithRule::<_, R>::new(common_root, R::default()),
+    )?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
@@ -1064,6 +1096,22 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
 pub struct FormatState<Context> {
     context: Context,
     group_id_builder: UniqueGroupIdBuilder,
+
+    /// `true` if the last formatted output is an inline comment that may need a space between the next token or comment.
+    last_content_inline_comment: bool,
+
+    /// The kind of the last formatted token
+    last_token_kind: Option<LastTokenKind>,
+
+    /// Tracks comments that have been formatted manually and shouldn't be emitted again
+    /// when formatting the token the comments belong to.
+    ///
+    /// The map stores the absolute position of the manually formatted comments.
+    /// Storing the position is sufficient because comments are guaranteed to not be empty
+    /// (all start with a specific comment sequence) and thus, no two comments can have the same
+    /// absolute position.
+    manually_formatted_comments: IndexSet<TextSize>,
+
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
@@ -1077,6 +1125,11 @@ where
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("FormatState")
             .field("context", &self.context)
+            .field(
+                "has_trailing_inline_comment",
+                &self.last_content_inline_comment,
+            )
+            .field("last_token_kind", &self.last_token_kind)
             .finish()
     }
 }
@@ -1087,9 +1140,80 @@ impl<Context> FormatState<Context> {
         Self {
             context,
             group_id_builder: Default::default(),
+            last_content_inline_comment: false,
+            last_token_kind: None,
+            manually_formatted_comments: IndexSet::default(),
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
+    }
+
+    /// Returns `true` if the last written content is an inline comment with no trailing whitespace.
+    ///
+    /// The formatting of the next content may need to insert a whitespace to separate the
+    /// inline comment from the next content.
+    pub fn is_last_content_inline_comment(&self) -> bool {
+        self.last_content_inline_comment
+    }
+
+    /// Sets whether the last written content is an inline comment that has no trailing whitespace.
+    pub fn set_last_content_inline_comment(&mut self, has_comment: bool) {
+        self.last_content_inline_comment = has_comment;
+    }
+
+    /// Returns the kind of the last formatted token.
+    pub fn last_token_kind(&self) -> Option<LastTokenKind> {
+        self.last_token_kind
+    }
+
+    /// Sets the kind of the last formatted token and sets `last_content_inline_comment` to `false`.
+    pub fn set_last_token_kind<Kind: SyntaxKind + 'static>(&mut self, kind: Kind) {
+        self.set_last_token_kind_raw(Some(LastTokenKind {
+            kind_type: TypeId::of::<Kind>(),
+            kind: kind.to_raw(),
+        }));
+    }
+
+    pub fn set_last_token_kind_raw(&mut self, kind: Option<LastTokenKind>) {
+        self.last_token_kind = kind;
+    }
+
+    /// Mark the passed comment as formatted. This is necessary if a comment from a token is formatted
+    /// to avoid that the comment gets emitted again when formatting that token.
+    ///
+    /// # Examples
+    /// This can be useful when you want to move comments from one token to another.
+    /// For example, when parenthesising an expression:
+    ///
+    /// ```javascript
+    /// console.log("test");
+    /// /* leading */ "string" /* trailing */;
+    /// ```
+    ///
+    /// It is then desired that the leading and trailing comments are outside of the parentheses.
+    ///
+    /// ```javascript
+    /// /* leading */ ("string") /* trailing */;
+    /// ```
+    ///
+    /// This can be accomplished by manually formatting the leading/trailing trivia of the string literal expression
+    /// before/after the close parentheses and then mark the comments as handled.
+    pub fn mark_comment_as_formatted<L: Language>(
+        &mut self,
+        comment: &SyntaxTriviaPieceComments<L>,
+    ) {
+        self.manually_formatted_comments
+            .insert(comment.text_range().start());
+    }
+
+    /// Returns `true` if this comment has already been formatted manually
+    /// and shouldn't be formatted again when formatting the token to which the comment belongs.
+    pub fn is_comment_formatted<L: Language>(
+        &self,
+        comment: &SyntaxTriviaPieceComments<L>,
+    ) -> bool {
+        self.manually_formatted_comments
+            .contains(&comment.text_range().start())
     }
 
     /// Returns the context specifying how to format the current CST
@@ -1100,6 +1224,28 @@ impl<Context> FormatState<Context> {
     /// Returns a mutable reference to the context
     pub fn context_mut(&mut self) -> &mut Context {
         &mut self.context
+    }
+
+    pub fn snapshot(&self) -> FormatStateSnapshot {
+        FormatStateSnapshot {
+            last_content_inline_comment: self.last_content_inline_comment,
+            last_token_kind: self.last_token_kind,
+            manual_handled_comments_len: self.manually_formatted_comments.len(),
+            #[cfg(debug_assertions)]
+            printed_tokens: self.printed_tokens.clone(),
+        }
+    }
+
+    pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
+        self.last_content_inline_comment = snapshot.last_content_inline_comment;
+        self.last_token_kind = snapshot.last_token_kind;
+        self.manually_formatted_comments
+            .truncate(snapshot.manual_handled_comments_len);
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                self.printed_tokens = snapshot.printed_tokens;
+            }
+        }
     }
 
     /// Creates a new group id that is unique to this document. The passed debug name is used in the
@@ -1131,4 +1277,45 @@ impl<Context> FormatState<Context> {
             }
         }
     }
+}
+
+#[derive(Eq, PartialEq, Debug, Copy, Clone)]
+pub struct LastTokenKind {
+    kind_type: TypeId,
+    kind: RawSyntaxKind,
+}
+
+impl LastTokenKind {
+    pub fn as_language<L: Language + 'static>(&self) -> Option<L::Kind> {
+        if self.kind_type == TypeId::of::<L::Kind>() {
+            Some(L::Kind::from_raw(self.kind))
+        } else {
+            None
+        }
+    }
+}
+
+pub struct FormatStateSnapshot {
+    last_content_inline_comment: bool,
+    last_token_kind: Option<LastTokenKind>,
+    manual_handled_comments_len: usize,
+    #[cfg(debug_assertions)]
+    printed_tokens: PrintedTokens,
+}
+
+/// Defines how to format comments for a specific [Language].
+pub trait CommentStyle<L: Language>: Copy {
+    /// Returns the kind of the comment
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<L>) -> CommentKind;
+
+    /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are:
+    /// * left parentheses: `(`, `[`, `{`
+    fn is_group_start_token(&self, kind: L::Kind) -> bool;
+
+    /// Returns `true` if a token with the passed `kind` marks the end of a group. Common group end tokens are:
+    /// * right parentheses: `)`, `]`, `}`
+    /// * end of statement token: `;`
+    /// * element separator: `,` or `.`.
+    /// * end of file token: `EOF`
+    fn is_group_end_token(&self, kind: L::Kind) -> bool;
 }

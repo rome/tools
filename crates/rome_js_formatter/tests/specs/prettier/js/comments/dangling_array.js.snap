@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: dangling_array.js
 ---
 # Input
@@ -16,9 +17,9 @@ expect(() => {}).toTriggerReadyStateChanges([
 ```js
 expect(() => {}).toTriggerReadyStateChanges([
   // Nothing.
-],);
+]);
 
-[1 /* first comment */ , 2 /* second comment */ , 3];
+[1 /* first comment */, 2 /* second comment */, 3];
 
 ```
 

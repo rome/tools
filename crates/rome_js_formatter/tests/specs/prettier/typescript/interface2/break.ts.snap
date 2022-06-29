@@ -7,7 +7,7 @@ expression: break.ts
 export interface Environment1 extends GenericEnvironment<
   SomeType,
   AnotherType,
-  YetAnotherType,
+  YetAnotherType
 > {
   m(): void;
 };
@@ -18,7 +18,7 @@ export class Environment2 extends GenericEnvironment<
   DifferentType1,
   DifferentType2,
   DifferentType3,
-  DifferentType4,
+  DifferentType4
 > {
   m() {};
 };
@@ -75,11 +75,8 @@ export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTyp
 
 # Output
 ```js
-export interface Environment1 extends GenericEnvironment<
-  SomeType,
-  AnotherType,
-  YetAnotherType,
-> {
+export interface Environment1
+  extends GenericEnvironment<SomeType, AnotherType, YetAnotherType> {
   m(): void;
 }
 export class Environment2 extends GenericEnvironment<
@@ -89,9 +86,9 @@ export class Environment2 extends GenericEnvironment<
   DifferentType1,
   DifferentType2,
   DifferentType3,
-  DifferentType4,
+  DifferentType4
 > {
-  m() {};
+  m() {}
 }
 
 // Declare Interface Break
@@ -100,22 +97,18 @@ declare interface ExtendsOne extends ASingleInterface {
 }
 
 declare interface ExtendsLarge
-  extends
-    ASingleInterfaceWithAReallyReallyReallyReallyLongName
-{
+  extends ASingleInterfaceWithAReallyReallyReallyReallyLongName {
   x: string;
 }
 
 declare interface ExtendsMany
-  extends
-    Interface1,
+  extends Interface1,
     Interface2,
     Interface3,
     Interface4,
     Interface5,
     Interface6,
-    Interface7
-{
+    Interface7 {
   x: string;
 }
 
@@ -125,22 +118,18 @@ interface ExtendsOne extends ASingleInterface {
 }
 
 interface ExtendsLarge
-  extends
-    ASingleInterfaceWithAReallyReallyReallyReallyLongName
-{
+  extends ASingleInterfaceWithAReallyReallyReallyReallyLongName {
   x: string;
 }
 
 interface ExtendsMany
-  extends
-    Interface1,
+  extends Interface1,
     Interface2,
     Interface3,
     Interface4,
     Interface5,
     Interface6,
-    Interface7
-{
+    Interface7 {
   s: string;
 }
 
@@ -150,15 +139,12 @@ interface ExtendsOne extends ASingleInterface<string> {
 }
 
 interface ExtendsLarge
-  extends
-    ASingleInterfaceWithAReallyReallyReallyReallyLongName<string>
-{
+  extends ASingleInterfaceWithAReallyReallyReallyReallyLongName<string> {
   x: string;
 }
 
 interface ExtendsMany
-  extends
-    ASingleGenericInterface<
+  extends ASingleGenericInterface<
       Interface1,
       Interface2,
       Interface3,
@@ -166,14 +152,12 @@ interface ExtendsMany
       Interface5,
       Interface6,
       Interface7
-    >
-{
+    > {
   x: string;
 }
 
 interface ExtendsManyWithGenerics
-  extends
-    InterfaceOne,
+  extends InterfaceOne,
     InterfaceTwo,
     ASingleGenericInterface<
       Interface1,
@@ -184,35 +168,15 @@ interface ExtendsManyWithGenerics
       Interface6,
       Interface7
     >,
-    InterfaceThree
-{
+    InterfaceThree {
   x: string;
 }
 
 export interface ExtendsLongOneWithGenerics
-  extends
-    Bar<
+  extends Bar<
       SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
       ToBreakLineToBreakLineToBreakLine
-    >
-{}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a type parameter but instead found '>'
-  ┌─ break.ts:5:1
-  │
-5 │ > {
-  │ ^ Expected a type parameter here
-
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ break.ts:16:1
-   │
-16 │ > {
-   │ ^ Expected a type parameter here
-
+    > {}
 
 ```
 

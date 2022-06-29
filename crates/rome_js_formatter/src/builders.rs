@@ -1,296 +1,9 @@
 use crate::prelude::*;
 use crate::AsFormat;
+use rome_formatter::token::{FormatInserted, FormatInsertedCloseParen, FormatInsertedOpenParen};
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, Direction, Language, SyntaxTriviaPiece, SyntaxTriviaPieceComments};
-
-/// Formats a token without its leading or trailing trivia
-///
-/// ## Warning
-/// It's your responsibility to format leading or trailing comments and skipped trivia.
-pub const fn format_trimmed_token(token: &JsSyntaxToken) -> FormatTrimmedToken {
-    FormatTrimmedToken { token }
-}
-#[derive(Debug, Eq, PartialEq, Copy, Clone)]
-pub struct FormatTrimmedToken<'a> {
-    token: &'a JsSyntaxToken,
-}
-
-impl Format<JsFormatContext> for FormatTrimmedToken<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let trimmed_range = self.token.text_trimmed_range();
-
-        syntax_token_text_slice(self.token, trimmed_range).fmt(f)
-    }
-}
-
-/// Formats the leading trivia (comments, skipped token trivia) of a token
-pub const fn format_leading_trivia(
-    token: &JsSyntaxToken,
-    trim_mode: TriviaPrintMode,
-) -> FormatLeadingTrivia {
-    FormatLeadingTrivia { token, trim_mode }
-}
-
-/// Determines if the whitespace separating comment trivias
-/// from their associated tokens should be printed or trimmed
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
-pub enum TriviaPrintMode {
-    Full,
-    Trim,
-}
-
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
-pub struct FormatLeadingTrivia<'a> {
-    token: &'a JsSyntaxToken,
-    trim_mode: TriviaPrintMode,
-}
-
-impl Format<JsFormatContext> for FormatLeadingTrivia<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut lines_before = 0;
-        let mut comments = Vec::new();
-        let mut pieces = self.token.leading_trivia().pieces();
-
-        while let Some(piece) = pieces.next() {
-            if let Some(comment) = piece.as_comments() {
-                comments.push(Comment {
-                    lines_before,
-                    piece: comment,
-                });
-                lines_before = 0;
-            } else if piece.is_newline() {
-                lines_before += 1;
-            } else if piece.is_skipped() {
-                // Special handling for tokens that have skipped trivia:
-                //
-                // ```
-                // class {
-                //   // comment
-                //   @test(/* inner */) // trailing
-                //   /* token leading */
-                //   method() {}
-                // }
-                // ```
-                // If `@test(/*inner)` are skipped trivia that are part of the `method` tokens leading trivia, then the
-                // following code splits the trivia into for parts:
-                // 1. The first skipped trivia's leading comments: Comments that come before the first skipped trivia `@`: The `// comment`
-                // 2. Skipped trivia: All trivia pieces between the first and last skipped trivia: `@test(/* inner *)`. Gets formatted as verbatim
-                // 3. Trailing comments of the last skipped token: All comments that are on the same line as the last skipped trivia. The `// trailing` comment
-                // 4. The token's leading trivia: All comments that are not on the same line as the last skipped token trivia: `/* token leading */`
-
-                // Format the 1. part, the skipped trivia's leading comments
-                FormatLeadingComments {
-                    comments: &comments,
-                    trim_mode: TriviaPrintMode::Full,
-                    lines_before_token: lines_before,
-                }
-                .fmt(f)?;
-
-                comments.clear();
-                lines_before = 0;
-
-                // Count the whitespace between the last skipped token trivia and the token
-                let mut spaces = 0;
-                // The range that covers from the first to the last skipped token trivia
-                let mut skipped_trivia_range = piece.text_range();
-
-                for piece in pieces {
-                    if piece.is_whitespace() {
-                        spaces += 1;
-                        continue;
-                    }
-
-                    spaces = 0;
-
-                    // If this is another skipped trivia, then extend the skipped range and
-                    // clear all accumulated comments because they are formatted as verbatim as part of the
-                    // skipped token trivia
-                    if piece.is_skipped() {
-                        skipped_trivia_range = skipped_trivia_range.cover(piece.text_range());
-                        comments.clear();
-                        lines_before = 0;
-                    } else if let Some(comment) = piece.as_comments() {
-                        comments.push(Comment {
-                            piece: comment,
-                            lines_before,
-                        });
-                        lines_before = 0;
-                    } else if piece.is_newline() {
-                        lines_before += 1;
-                    }
-                }
-
-                // Format the skipped token trivia range
-                syntax_token_text_slice(self.token, skipped_trivia_range).fmt(f)?;
-
-                // Find the start position of the next token's leading comments.
-                // The start is the first comment that is preceded by a line break.
-                let first_token_leading_comment = comments
-                    .iter()
-                    .position(|comment| comment.lines_before > 0)
-                    .unwrap_or(comments.len());
-
-                // Everything before the start position are trailing comments of the last skipped token
-                let (skipped_trailing_comments, token_leading_comments) =
-                    comments.split_at(first_token_leading_comment);
-
-                // Format the trailing comments of the last skipped token trivia
-                FormatTrailingTriviaPieces {
-                    pieces: skipped_trailing_comments
-                        .iter()
-                        .map(|comment| comment.piece.clone()),
-                }
-                .fmt(f)?;
-
-                // Ensure that there's some whitespace between the last skipped token trivia and the
-                // next token except if there was no whitespace present in the source.
-                if lines_before > 0 {
-                    write!(f, [hard_line_break()])?;
-                } else if spaces > 0 {
-                    write!(f, [space_token()])?;
-                };
-
-                // Write  leading comments of the next token
-                return FormatLeadingComments {
-                    comments: token_leading_comments,
-                    lines_before_token: lines_before,
-                    trim_mode: self.trim_mode,
-                }
-                .fmt(f);
-            }
-        }
-
-        FormatLeadingComments {
-            comments: &comments,
-            trim_mode: self.trim_mode,
-            lines_before_token: lines_before,
-        }
-        .fmt(f)
-    }
-}
-
-struct Comment {
-    lines_before: u32,
-    piece: SyntaxTriviaPieceComments<JsLanguage>,
-}
-
-impl Comment {
-    pub fn kind(&self) -> CommentKind {
-        if self.piece.text().starts_with("/*") {
-            if self.piece.has_newline() {
-                CommentKind::Block
-            } else {
-                CommentKind::InlineBlock
-            }
-        } else {
-            CommentKind::Line
-        }
-    }
-}
-
-enum CommentKind {
-    InlineBlock,
-    Block,
-    Line,
-}
-
-struct FormatLeadingComments<'a> {
-    comments: &'a [Comment],
-    trim_mode: TriviaPrintMode,
-    lines_before_token: u32,
-}
-
-impl Format<JsFormatContext> for FormatLeadingComments<'_> {
-    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        for (index, comment) in self.comments.iter().enumerate() {
-            let is_line_comment = matches!(comment.kind(), CommentKind::Line);
-            let lines_after = self
-                .comments
-                .get(index + 1)
-                .map(|comment| comment.lines_before)
-                .unwrap_or_else(|| match self.trim_mode {
-                    TriviaPrintMode::Full => self.lines_before_token,
-                    TriviaPrintMode::Trim => 0,
-                });
-
-            let format_content = format_with(|f| {
-                if comment.lines_before > 0 && index == 0 {
-                    write!(f, [hard_line_break()])?;
-                } else {
-                    write!(f, [space_token()])?;
-                };
-
-                write!(f, [&comment.piece])?;
-
-                if is_line_comment {
-                    match lines_after {
-                        0 | 1 => write!(f, [hard_line_break()])?,
-                        _ => write!(f, [empty_line()])?,
-                    }
-                } else {
-                    match lines_after {
-                        0 => write!(f, [space_token()])?,
-                        1 => write!(f, [hard_line_break()])?,
-                        _ => write!(f, [empty_line()])?,
-                    }
-                };
-
-                Ok(())
-            });
-
-            write!(f, [rome_formatter::comment(&format_content)])?;
-        }
-
-        Ok(())
-    }
-}
-
-/// Formats the trailing trivia (comments) of a token
-pub fn format_trailing_trivia(token: &JsSyntaxToken) -> impl Format<JsFormatContext> {
-    FormatTrailingTriviaPieces {
-        pieces: token
-            .trailing_trivia()
-            .pieces()
-            .filter_map(|piece| piece.as_comments()),
-    }
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct FormatTrailingTriviaPieces<I> {
-    pieces: I,
-}
-
-impl<I> Format<JsFormatContext> for FormatTrailingTriviaPieces<I>
-where
-    I: Iterator<Item = SyntaxTriviaPieceComments<JsLanguage>> + Clone,
-{
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let pieces = self.pieces.clone();
-
-        for piece in pieces {
-            let is_single_line = piece.text().trim_start().starts_with("//");
-
-            let content = format_with(|f| {
-                if !is_single_line {
-                    write!(f, [space_token(), piece, space_token()])
-                } else {
-                    write![
-                        f,
-                        [
-                            line_suffix(&format_args![space_token(), piece]),
-                            expand_parent()
-                        ]
-                    ]
-                }
-            });
-
-            comment(&content).fmt(f)?;
-        }
-
-        Ok(())
-    }
-}
+use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
+use rome_rowan::{AstNode, Direction, Language, SyntaxTriviaPiece};
 
 /// Formats a node using its [`AsFormat`] implementation but falls back to printing the node as
 /// it is in the source document if the formatting returns an [`FormatError`].
@@ -312,13 +25,13 @@ where
     Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
 {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let snapshot = Formatter::snapshot(f);
+        let snapshot = Formatter::state_snapshot(f);
 
         match self.node.format().fmt(f) {
             Ok(result) => Ok(result),
 
             Err(_) => {
-                f.restore_snapshot(snapshot);
+                f.restore_state_snapshot(snapshot);
 
                 // Lists that yield errors are formatted as they were unknown nodes.
                 // Doing so, the formatter formats the nodes/tokens as is.
@@ -328,33 +41,116 @@ where
     }
 }
 
-/// Print out a `token` from the original source with a different `content`.
+pub fn format_inserted(kind: JsSyntaxKind) -> FormatInserted<JsLanguage> {
+    FormatInserted::new(
+        kind,
+        kind.to_string().expect("Expected a punctuation token"),
+    )
+}
+
+pub fn format_inserted_open_paren(
+    before_token: Option<JsSyntaxToken>,
+    kind: JsSyntaxKind,
+) -> FormatInsertedOpenParen<JsLanguage> {
+    FormatInsertedOpenParen::new(
+        before_token,
+        kind,
+        kind.to_string()
+            .expect("Expected a punctuation token as the open paren token."),
+    )
+}
+
+pub fn format_inserted_close_paren(
+    after_token: &Option<JsSyntaxToken>,
+    kind: JsSyntaxKind,
+    f: &mut JsFormatter,
+) -> FormatInsertedCloseParen<JsLanguage> {
+    FormatInsertedCloseParen::after_token(
+        after_token,
+        kind,
+        kind.to_string()
+            .expect("Expected a punctuation token as the close paren token."),
+        f,
+    )
+}
+
+/// Adds parentheses around some content
+/// Ensures that the leading trivia of the `first_content_token` is moved
+/// before the opening parentheses and the trailing trivia of the `last_content_token`
+/// is moved after the closing parentheses.
 ///
-/// This will print the trivia that belong to `token` to `content`;
-/// `token` is then marked as consumed by the formatter.
-pub fn format_replaced<'a, 'content>(
-    token: &'a JsSyntaxToken,
-    content: &'content impl Format<JsFormatContext>,
-) -> FormatReplaced<'a, 'content> {
-    FormatReplaced {
-        token,
+/// # Examples
+/// Adding parentheses around the string literal
+///
+/// ```javascript
+/// /* leading */ "test" /* trailing */;
+/// ```
+///
+/// becomes
+///
+/// ```javascript
+/// /* leading */ ("test") /* trailing */;
+/// ```
+pub fn format_parenthesize<Content>(
+    first_content_token: Option<JsSyntaxToken>,
+    content: &Content,
+    last_content_token: Option<JsSyntaxToken>,
+) -> FormatParenthesize
+where
+    Content: Format<JsFormatContext>,
+{
+    FormatParenthesize {
+        first_content_token,
         content: Argument::new(content),
+        last_content_token,
+        grouped: false,
     }
 }
 
-#[derive(Copy, Clone)]
-pub struct FormatReplaced<'a, 'content> {
-    token: &'a JsSyntaxToken,
+/// Adds parentheses around an expression
+#[derive(Clone)]
+pub struct FormatParenthesize<'content> {
+    grouped: bool,
+    first_content_token: Option<JsSyntaxToken>,
     content: Argument<'content, JsFormatContext>,
+    last_content_token: Option<JsSyntaxToken>,
 }
 
-impl Format<JsFormatContext> for FormatReplaced<'_, '_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        f.state_mut().track_token(self.token);
+impl FormatParenthesize<'_> {
+    /// Groups the open parenthesis, the content, and the closing parenthesis inside of a group
+    /// and indents the content with a soft block indent.
+    pub fn grouped_with_soft_block_indent(mut self) -> Self {
+        self.grouped = true;
+        self
+    }
+}
 
-        format_leading_trivia(self.token, TriviaPrintMode::Full).fmt(f)?;
-        f.write_fmt(Arguments::from(&self.content))?;
-        format_trailing_trivia(self.token).fmt(f)
+impl Format<JsFormatContext> for FormatParenthesize<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let format_open_paren =
+            format_inserted_open_paren(self.first_content_token.clone(), JsSyntaxKind::L_PAREN);
+        let format_close_paren =
+            format_inserted_close_paren(&self.last_content_token, JsSyntaxKind::R_PAREN, f);
+
+        if self.grouped {
+            write!(
+                f,
+                [group_elements(&format_args![
+                    format_open_paren,
+                    soft_block_indent(&Arguments::from(&self.content)),
+                    format_close_paren
+                ])]
+            )
+        } else {
+            write!(
+                f,
+                [
+                    format_open_paren,
+                    Arguments::from(&self.content),
+                    format_close_paren
+                ]
+            )
+        }
     }
 }
 
@@ -443,10 +239,10 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
             })]
         )?;
 
-        let content = buffer.into_element();
+        let content = buffer.into_vec();
 
         let verbatim = Verbatim {
-            element: Box::new(content),
+            content: content.into_boxed_slice(),
             kind: self.kind,
         };
 
@@ -567,38 +363,17 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
             mode,
         } = self;
 
-        f.state_mut().track_token(open_token);
-        f.state_mut().track_token(close_token);
+        let open_delimiter = format_open_delimiter(open_token);
+        let close_delimiter = format_close_delimiter(close_token);
 
-        format_leading_trivia(open_token, TriviaPrintMode::Full).fmt(f)?;
+        open_delimiter.format_leading_trivia().fmt(f)?;
 
-        let open_token_trailing_trivia = format_with(|f| {
-            // Not really interested in the pre-amble, but want to know if it was written
-            let mut buffer = VecBuffer::new(f.state_mut());
+        let open_token_trailing_trivia = open_delimiter.format_trailing_trivia();
 
-            write!(buffer, [format_trailing_trivia(open_token)])?;
-
-            let trivia = buffer.into_vec();
-
-            if !trivia.is_empty() {
-                f.write_elements(trivia)?;
-                soft_line_break_or_space().fmt(f)?;
-            }
-
-            Ok(())
-        });
-
-        let close_token_leading_trivia = format_with(|f| {
-            let mut buffer = PreambleBuffer::new(f, soft_line_break_or_space());
-
-            write!(
-                buffer,
-                [format_leading_trivia(close_token, TriviaPrintMode::Trim)]
-            )
-        });
+        let close_token_leading_trivia = close_delimiter.format_leading_trivia();
 
         let delimited = format_with(|f| {
-            format_trimmed_token(open_token).fmt(f)?;
+            open_delimiter.format_token().fmt(f)?;
 
             let format_content = format_with(|f| f.write_fmt(Arguments::from(content)));
 
@@ -641,10 +416,10 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                 }
             };
 
-            format_trimmed_token(close_token).fmt(f)
+            close_delimiter.format_token().fmt(f)
         });
 
-        let _grouped = match mode {
+        match mode {
             // Group is useless, the block indent would expand it right anyway
             DelimitedMode::BlockIndent => write!(f, [delimited])?,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
@@ -667,4 +442,96 @@ enum DelimitedMode {
     BlockIndent,
     SoftBlockIndent(Option<GroupId>),
     SoftBlockSpaces(Option<GroupId>),
+}
+
+/// Use this function to create an open delimiter, where you can extract the formatting of
+/// trivias and token, separately.
+///
+/// This function assumes that you will use the token to replicate [format_delimited], which means
+/// that it will add possible line breaks
+pub(crate) fn format_open_delimiter(open_token: &JsSyntaxToken) -> OpenDelimiter {
+    OpenDelimiter::new(open_token)
+}
+
+/// Use this function to create an close delimiter, where you can extract the formatting of
+/// trivias and token, separately.
+///
+/// This function assumes that you will use the token to replicate [format_delimited], which means
+/// that it will add possible line breaks
+pub(crate) fn format_close_delimiter(close_token: &JsSyntaxToken) -> CloseDelimiter {
+    CloseDelimiter::new(close_token)
+}
+
+pub(crate) struct OpenDelimiter<'t> {
+    open_token: &'t JsSyntaxToken,
+}
+
+impl<'t> OpenDelimiter<'t> {
+    pub(crate) fn new(open_token: &'t JsSyntaxToken) -> Self {
+        Self { open_token }
+    }
+
+    /// It extracts the formatted leading trivia of the token, without writing it in the buffer
+    pub(crate) fn format_leading_trivia(&self) -> impl Format<JsFormatContext> + 't {
+        format_leading_trivia(self.open_token)
+    }
+
+    /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
+    pub(crate) fn format_trailing_trivia(&self) -> impl Format<JsFormatContext> + 't {
+        format_with(|f| {
+            // Not really interested in the pre-amble, but want to know if it was written
+            let mut buffer = VecBuffer::new(f.state_mut());
+
+            write!(buffer, [format_trailing_trivia(self.open_token)])?;
+
+            let trivia = buffer.into_vec();
+
+            if !trivia.is_empty() {
+                f.write_elements(trivia)?;
+                soft_line_break().fmt(f)?;
+            }
+
+            Ok(())
+        })
+    }
+
+    /// It extracts the formatted token, without writing it in the buffer
+    pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
+        format_with(|f| {
+            f.state_mut().track_token(self.open_token);
+            write!(f, [format_trimmed_token(self.open_token)])
+        })
+    }
+}
+
+pub(crate) struct CloseDelimiter<'t> {
+    close_token: &'t JsSyntaxToken,
+}
+
+impl<'t> CloseDelimiter<'t> {
+    pub(crate) fn new(close_token: &'t JsSyntaxToken) -> Self {
+        Self { close_token }
+    }
+
+    /// It extracts the formatted leading trivia of the token, without writing it in the buffer
+    pub(crate) fn format_trailing_trivia(&self) -> impl Format<JsFormatContext> + 't {
+        format_trailing_trivia(self.close_token)
+    }
+
+    /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
+    pub(crate) fn format_leading_trivia(&self) -> impl Format<JsFormatContext> + 't {
+        format_with(|f| {
+            let mut buffer = PreambleBuffer::new(f, soft_line_break());
+
+            write!(buffer, [format_leading_trivia(self.close_token,)])
+        })
+    }
+
+    /// It extracts the formatted token, without writing it in the buffer
+    pub(crate) fn format_token(&self) -> impl Format<JsFormatContext> + 't {
+        format_with(|f| {
+            f.state_mut().track_token(self.close_token);
+            write!(f, [format_trimmed_token(self.close_token)])
+        })
+    }
 }

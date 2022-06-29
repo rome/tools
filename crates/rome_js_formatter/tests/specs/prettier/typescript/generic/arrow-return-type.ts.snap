@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: arrow-return-type.ts
 ---
 # Input
@@ -68,13 +69,13 @@ export const getVehicleDescriptor = async (
 
 # Output
 ```js
-export const getVehicleDescriptor = async (vehicleId: string): Promise<
-  Descriptor
-> => {};
+export const getVehicleDescriptor = async (
+  vehicleId: string,
+): Promise<Descriptor> => {};
 
-export const getVehicleDescriptor = async (vehicleId: string): Promise<
-  Collections.Parts.PrintedCircuitBoardAssemblyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-> => {};
+export const getVehicleDescriptor = async (
+  vehicleId: string,
+): Promise<Collections.Parts.PrintedCircuitBoardAssemblyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy> => {};
 
 export const getVehicleDescriptor = async (vehicleId: string): Promise<
   Descriptor | undefined
@@ -120,6 +121,7 @@ export const getVehicleDescriptor = async (vehicleId: string): Promise<
 
 # Lines exceeding max width of 80 characters
 ```
+    7: ): Promise<Collections.Parts.PrintedCircuitBoardAssemblyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy> => {};
    30:   Collections.Parts.PrintedCircuitBoardAssembly["attributessssssssssssssssssssssss"]
    38:   keyof Collections.Parts.PrintedCircuitBoardAssemblyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 ```

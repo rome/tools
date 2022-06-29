@@ -2,12 +2,15 @@ use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
 use crate::utils::FormatWithSemicolon;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsThrowStatement;
 use rome_js_syntax::JsThrowStatementFields;
 
-impl FormatNodeFields<JsThrowStatement> for FormatNodeRule<JsThrowStatement> {
-    fn fmt_fields(node: &JsThrowStatement, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsThrowStatement;
+
+impl FormatNodeRule<JsThrowStatement> for FormatJsThrowStatement {
+    fn fmt_fields(&self, node: &JsThrowStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsThrowStatementFields {
             throw_token,
             argument,

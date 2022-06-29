@@ -1,12 +1,14 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsAssignmentWithDefault;
 use rome_js_syntax::JsAssignmentWithDefaultFields;
 
-impl FormatNodeFields<JsAssignmentWithDefault> for FormatNodeRule<JsAssignmentWithDefault> {
-    fn fmt_fields(node: &JsAssignmentWithDefault, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAssignmentWithDefault;
+
+impl FormatNodeRule<JsAssignmentWithDefault> for FormatJsAssignmentWithDefault {
+    fn fmt_fields(&self, node: &JsAssignmentWithDefault, f: &mut JsFormatter) -> FormatResult<()> {
         let JsAssignmentWithDefaultFields {
             pattern,
             eq_token,

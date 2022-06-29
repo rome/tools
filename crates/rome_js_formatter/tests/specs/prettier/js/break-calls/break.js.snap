@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: break.js
 ---
 # Input
@@ -56,7 +57,7 @@ h(
   f(
     g(() => {
       a;
-    },),
+    }),
   ),
 );
 
@@ -71,11 +72,10 @@ deepCopyAndAsyncMapLeavesB(
   { valueMapper, overwriteExistingKeys },
 );
 
-deepCopyAndAsyncMapLeavesC(
-  { source: sourceValue, destination: destination[sourceKey] },
-  1337,
-  { valueMapper, overwriteExistingKeys },
-);
+deepCopyAndAsyncMapLeavesC({
+  source: sourceValue,
+  destination: destination[sourceKey],
+}, 1337, { valueMapper, overwriteExistingKeys });
 
 function someFunction(url) {
   return get(url).then(
@@ -93,12 +93,12 @@ expect(
   new LongLongLongLongLongRange([0, 0], [0, 0]),
 ).toEqualAtomLongLongLongLongRange(new LongLongLongRange([0, 0], [0, 0]));
 
-["red", "white", "blue", "black", "hotpink", "rebeccapurple"].reduce(
-  (allColors, color) => {
-    return allColors.concat(color);
-  },
-  [],
-);
+["red", "white", "blue", "black", "hotpink", "rebeccapurple"].reduce((
+  allColors,
+  color,
+) => {
+  return allColors.concat(color);
+}, []);
 
 ```
 

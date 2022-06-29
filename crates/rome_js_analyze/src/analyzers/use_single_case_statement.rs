@@ -1,28 +1,58 @@
 use std::iter;
 
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
+    JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 
 use crate::JsRuleAction;
 
-/// Enforces case clauses have a single statement, emits a quick fix wrapping
-/// the statements in a block
-pub(crate) enum UseSingleCaseStatement {}
+declare_rule! {
+    /// Enforces case clauses have a single statement, emits a quick fix wrapping
+    /// the statements in a block
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// switch (foo) {
+    ///     case true:
+    ///     case false:
+    ///         let foo = '';
+    ///         foo;
+    /// }
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// switch (foo) {
+    ///     case true:
+    ///     case false: {
+    ///         let foo = '';
+    ///         foo;
+    ///     }
+    /// }
+    /// ```
+    pub(crate) UseSingleCaseStatement = "useSingleCaseStatement"
+}
 
 impl Rule for UseSingleCaseStatement {
-    const NAME: &'static str = "useSingleCaseStatement";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsCaseClause;
+    type Query = Ast<JsCaseClause>;
     type State = ();
+    type Signals = Option<Self::State>;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(n) = ctx.query();
         if n.consequent().len() > 1 {
             Some(())
         } else {
@@ -30,7 +60,9 @@ impl Rule for UseSingleCaseStatement {
         }
     }
 
-    fn diagnostic(n: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(n) = ctx.query();
+
         Some(RuleDiagnostic::warning(
             n.consequent().range(),
             markup! {
@@ -39,7 +71,9 @@ impl Rule for UseSingleCaseStatement {
         ))
     }
 
-    fn action(root: JsAnyRoot, n: &Self::Query, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let Ast(n) = ctx.query();
+
         let JsCaseClauseFields {
             case_token,
             colon_token,
@@ -102,7 +136,8 @@ impl Rule for UseSingleCaseStatement {
             node
         };
 
-        let root = root
+        let root = ctx
+            .root()
             .replace_node(n.clone(), node)
             .expect("failed to replace node");
 

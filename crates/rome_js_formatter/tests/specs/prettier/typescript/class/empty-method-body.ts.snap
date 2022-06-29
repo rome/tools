@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: empty-method-body.ts
 ---
 # Input
@@ -22,12 +23,12 @@ class Test {
 // #9324
 
 class foo1 {
-  bar() /* bat */ ;
+  bar() /* bat */;
 }
 
 // #9367
 class Test {
-  foo( /* 2 */ ) /* 3 */ ;
+  foo(/* 2 */) /* 3 */;
 }
 
 ```

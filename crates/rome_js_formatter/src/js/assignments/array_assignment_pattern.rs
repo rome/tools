@@ -1,11 +1,13 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
 use rome_formatter::write;
 use rome_js_syntax::JsArrayAssignmentPattern;
 use rome_js_syntax::JsArrayAssignmentPatternFields;
 
-impl FormatNodeFields<JsArrayAssignmentPattern> for FormatNodeRule<JsArrayAssignmentPattern> {
-    fn fmt_fields(node: &JsArrayAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsArrayAssignmentPattern;
+
+impl FormatNodeRule<JsArrayAssignmentPattern> for FormatJsArrayAssignmentPattern {
+    fn fmt_fields(&self, node: &JsArrayAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {
         let JsArrayAssignmentPatternFields {
             l_brack_token,
             elements,

@@ -1,3 +1,4 @@
+use rome_js_syntax::JsAnyExpression;
 ///
 /// ```rust
 /// use rome_js_analyze::utils::natural_compare;
@@ -97,4 +98,14 @@ pub fn natural_compare(a: &str, b: &str, intensive: bool) -> i32 {
         b_index += 1;
     }
     return len_a as i32 - len_b as i32;
+}
+
+
+pub fn is_boolean_literal(expr: JsAnyExpression) -> bool {
+    matches!(
+        expr,
+        JsAnyExpression::JsAnyLiteralExpression(
+            rome_js_syntax::JsAnyLiteralExpression::JsBooleanLiteralExpression(_)
+        )
+    )
 }

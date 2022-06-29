@@ -1,25 +1,53 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyRoot, JsConditionalExpression, JsIfStatement, JsLanguage, JsSyntaxKind,
-    JsUnaryExpression, JsUnaryOperator,
+    JsAnyExpression, JsConditionalExpression, JsIfStatement, JsUnaryExpression, JsUnaryOperator,
 };
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoNegationElse {}
+declare_rule! {
+    /// Disallow negation in the condition of an `if` statement if it has an `else` clause
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// if (!true) {consequent;} else {alternate;}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// !true ? consequent : alternate
+    ///```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// if (!true) {consequent;}
+    ///```
+    ///
+    /// ```js
+    /// true ? consequent : alternate
+    ///```
+    pub(crate) NoNegationElse = "noNegationElse"
+}
 
 impl Rule for NoNegationElse {
-    const NAME: &'static str = "noNegationElse";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsAnyCondition;
+    type Query = Ast<JsAnyCondition>;
     type State = JsUnaryExpression;
+    type Signals = Option<Self::State>;
 
-    fn run(n: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(n) = ctx.query();
+
         match n {
             JsAnyCondition::JsConditionalExpression(expr) => {
                 if is_negation(&expr.test().ok()?).unwrap_or(false) {
@@ -39,7 +67,9 @@ impl Rule for NoNegationElse {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(node) = ctx.query();
+
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -48,7 +78,9 @@ impl Rule for NoNegationElse {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let Ast(node) = ctx.query();
+
         let root = match node {
             JsAnyCondition::JsConditionalExpression(expr) => {
                 let mut next_expr = expr
@@ -60,7 +92,7 @@ impl Rule for NoNegationElse {
                 next_expr = next_expr
                     .clone()
                     .replace_node(next_expr.consequent().ok()?, expr.alternate().ok()?)?;
-                root.replace_node(
+                ctx.root().replace_node(
                     node.clone(),
                     JsAnyCondition::JsConditionalExpression(next_expr),
                 )
@@ -80,7 +112,8 @@ impl Rule for NoNegationElse {
                     next_stmt.consequent().ok()?,
                     stmt.else_clause()?.alternate().ok()?,
                 )?;
-                root.replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
+                ctx.root()
+                    .replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
             }
         }?;
         Some(JsRuleAction {
@@ -101,48 +134,6 @@ fn is_negation(node: &JsAnyExpression) -> Option<bool> {
     }
 }
 
-#[derive(Debug, Clone)]
-pub enum JsAnyCondition {
-    JsConditionalExpression(JsConditionalExpression),
-    JsIfStatement(JsIfStatement),
-}
-
-impl AstNode for JsAnyCondition {
-    type Language = JsLanguage;
-
-    fn can_cast(kind: <Self::Language as rome_rowan::Language>::Kind) -> bool {
-        matches!(
-            kind,
-            JsSyntaxKind::JS_CONDITIONAL_EXPRESSION | JsSyntaxKind::JS_IF_STATEMENT
-        )
-    }
-
-    fn cast(syntax: rome_rowan::SyntaxNode<Self::Language>) -> Option<Self>
-    where
-        Self: Sized,
-    {
-        match syntax.kind() {
-            JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-                JsConditionalExpression::cast(syntax).map(JsAnyCondition::JsConditionalExpression)
-            }
-            JsSyntaxKind::JS_IF_STATEMENT => {
-                JsIfStatement::cast(syntax).map(JsAnyCondition::JsIfStatement)
-            }
-            _ => None,
-        }
-    }
-
-    fn syntax(&self) -> &rome_rowan::SyntaxNode<Self::Language> {
-        match self {
-            JsAnyCondition::JsConditionalExpression(expr) => expr.syntax(),
-            JsAnyCondition::JsIfStatement(stmt) => stmt.syntax(),
-        }
-    }
-
-    fn into_syntax(self) -> rome_rowan::SyntaxNode<Self::Language> {
-        match self {
-            JsAnyCondition::JsConditionalExpression(expr) => expr.into_syntax(),
-            JsAnyCondition::JsIfStatement(stmt) => stmt.into_syntax(),
-        }
-    }
+declare_node_union! {
+    pub JsAnyCondition = JsConditionalExpression | JsIfStatement
 }

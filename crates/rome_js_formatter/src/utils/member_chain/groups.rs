@@ -2,6 +2,7 @@ use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
 
+use crate::context::TabWidth;
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 use std::mem;
@@ -23,17 +24,17 @@ pub(crate) struct Groups {
     /// By default, it's 2, meaning that we start breaking after the second group.
     cutoff: u8,
 
-    context: JsFormatContext,
+    tab_width: TabWidth,
 }
 
 impl Groups {
-    pub fn new(in_expression_statement: bool, context: JsFormatContext) -> Self {
+    pub fn new(in_expression_statement: bool, tab_width: TabWidth) -> Self {
         Self {
             in_expression_statement,
             groups: Vec::new(),
             current_group: Vec::new(),
             cutoff: 2,
-            context,
+            tab_width,
         }
     }
 
@@ -145,7 +146,7 @@ impl Groups {
     /// This is an heuristic needed to check when the first element of the group
     /// Should be part of the "head" or the "tail".
     fn should_not_wrap(&self, first_group: &HeadGroup) -> SyntaxResult<bool> {
-        let tab_with = self.context.tab_width();
+        let tab_with = self.tab_width;
         let has_computed_property = if self.groups.len() > 1 {
             // SAFETY: guarded by the previous check
             let group = &self.groups[0];

@@ -2,12 +2,14 @@ use crate::prelude::*;
 use crate::utils::FormatInterpreterToken;
 use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsScript;
 use rome_js_syntax::JsScriptFields;
 
-impl FormatNodeFields<JsScript> for FormatNodeRule<JsScript> {
-    fn fmt_fields(node: &JsScript, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsScript;
+
+impl FormatNodeRule<JsScript> for FormatJsScript {
+    fn fmt_fields(&self, node: &JsScript, f: &mut JsFormatter) -> FormatResult<()> {
         let JsScriptFields {
             interpreter_token,
             directives,
@@ -27,7 +29,7 @@ impl FormatNodeFields<JsScript> for FormatNodeRule<JsScript> {
             f,
             [
                 statements.format(),
-                format_replaced(&eof_token?, &empty_element()),
+                format_removed(&eof_token?),
                 hard_line_break()
             ]
         ]

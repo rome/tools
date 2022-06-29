@@ -1,9 +1,7 @@
 use crate::buffer::BufferSnapshot;
-use crate::builders::{FillBuilder, JoinBuilder};
+use crate::builders::{FillBuilder, JoinBuilder, JoinNodesBuilder, Line};
 use crate::prelude::*;
-#[cfg(debug_assertions)]
-use crate::printed_tokens::PrintedTokens;
-use crate::{Arguments, Buffer, FormatState, GroupId};
+use crate::{Arguments, Buffer, FormatState, FormatStateSnapshot, GroupId, VecBuffer};
 
 /// Handles the formatting of a CST and stores the context how the CST should be formatted (user preferences).
 /// The formatter is passed to the [Format] implementation of every node in the CST so that they
@@ -164,28 +162,32 @@ impl<'buf, Context> Formatter<'buf, Context> {
     {
         FillBuilder::new(self, separator)
     }
+
+    /// Formats `content` into an interned element without writing it to the formatter's buffer.
+    pub fn intern(&mut self, content: &dyn Format<Context>) -> FormatResult<Interned> {
+        let mut buffer = VecBuffer::new(self.state_mut());
+
+        crate::write!(&mut buffer, [content])?;
+
+        Ok(buffer.into_element().intern())
+    }
 }
 
 impl<Context> Formatter<'_, Context> {
     /// Take a snapshot of the state of the formatter
     #[inline]
-    pub fn snapshot(&self) -> FormatterSnapshot {
+    pub fn state_snapshot(&self) -> FormatterSnapshot {
         FormatterSnapshot {
             buffer: self.buffer.snapshot(),
-            #[cfg(debug_assertions)]
-            printed_tokens: self.state().printed_tokens.clone(),
+            state: self.state().snapshot(),
         }
     }
 
     #[inline]
     /// Restore the state of the formatter to a previous snapshot
-    pub fn restore_snapshot(&mut self, snapshot: FormatterSnapshot) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.state_mut().printed_tokens = snapshot.printed_tokens;
-            }
-        }
-        self.buffer.restore_snapshot(snapshot.buffer)
+    pub fn restore_state_snapshot(&mut self, snapshot: FormatterSnapshot) {
+        self.state_mut().restore_snapshot(snapshot.state);
+        self.buffer.restore_snapshot(snapshot.buffer);
     }
 }
 
@@ -228,6 +230,5 @@ impl<Context> Buffer for Formatter<'_, Context> {
 /// mode and compiled to nothing in release mode
 pub struct FormatterSnapshot {
     buffer: BufferSnapshot,
-    #[cfg(debug_assertions)]
-    printed_tokens: PrintedTokens,
+    state: FormatStateSnapshot,
 }

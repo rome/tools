@@ -2,11 +2,17 @@ use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::TsTypeAssertionAssignmentFields;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::TsTypeAssertionAssignment;
 
-impl FormatNodeFields<TsTypeAssertionAssignment> for FormatNodeRule<TsTypeAssertionAssignment> {
-    fn fmt_fields(node: &TsTypeAssertionAssignment, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsTypeAssertionAssignment;
+
+impl FormatNodeRule<TsTypeAssertionAssignment> for FormatTsTypeAssertionAssignment {
+    fn fmt_fields(
+        &self,
+        node: &TsTypeAssertionAssignment,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
         let TsTypeAssertionAssignmentFields {
             l_angle_token,
             ty,

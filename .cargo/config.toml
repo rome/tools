@@ -2,6 +2,7 @@
 lint = "clippy --workspace --all-targets --verbose -- --deny warnings"
 format = "fmt --all --verbose"
 codegen = "run -p xtask_codegen --"
+lintdoc = "run -p xtask_lintdoc --"
 bench_parser = "run -p xtask_bench --release -- --feature parser"
 bench_formatter = "run -p xtask_bench --release -- --feature formatter"
 bench_analyzer = "run -p xtask_bench --release -- --feature analyzer"

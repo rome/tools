@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: reduce.js
 ---
 # Input
@@ -18,15 +19,17 @@ const [ first2 ] = array.reduce(
 
 # Output
 ```js
-const [first1] = array.reduce(
-  () => [accumulator, element, accumulator, element],
-  [fullName],
-);
+const [first1] = array.reduce(() => [
+  accumulator,
+  element,
+  accumulator,
+  element,
+], [fullName]);
 
-const [first2] = array.reduce(
-  (accumulator, element) => [accumulator, element],
-  [fullName],
-);
+const [first2] = array.reduce((accumulator, element) => [
+  accumulator,
+  element,
+], [fullName]);
 
 ```
 

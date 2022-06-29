@@ -2,12 +2,15 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
-use crate::FormatNodeFields;
+
 use rome_js_syntax::JsImportAssertionEntryFields;
 use rome_js_syntax::{JsImportAssertionEntry, JsSyntaxKind};
 
-impl FormatNodeFields<JsImportAssertionEntry> for FormatNodeRule<JsImportAssertionEntry> {
-    fn fmt_fields(node: &JsImportAssertionEntry, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsImportAssertionEntry;
+
+impl FormatNodeRule<JsImportAssertionEntry> for FormatJsImportAssertionEntry {
+    fn fmt_fields(&self, node: &JsImportAssertionEntry, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportAssertionEntryFields {
             key,
             colon_token,

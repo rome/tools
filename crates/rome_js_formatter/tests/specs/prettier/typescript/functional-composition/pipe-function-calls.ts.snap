@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: pipe-function-calls.ts
 ---
 # Input
@@ -37,14 +38,12 @@ expression: pipe-function-calls.ts
     TE.chain(flow(publishServiceEvent(analytics), TE.mapLeft(nackFromError))),
   )()
     .then(messageResponse(logger, msg))
-    .catch(
-      (err: Error) => {
-        logger.error(
-          pipe(O.fromNullable(err.stack), O.getOrElse(constant(err.message))),
-        );
-        process.exit(1);
-      },
-    );
+    .catch((err: Error) => {
+      logger.error(
+        pipe(O.fromNullable(err.stack), O.getOrElse(constant(err.message))),
+      );
+      process.exit(1);
+    });
 })();
 
 ```

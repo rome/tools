@@ -1,33 +1,13 @@
 use crate::prelude::*;
-use crate::utils::has_leading_newline;
-use crate::FormatNodeFields;
+use crate::utils::JsObjectLike;
 use rome_formatter::write;
-use rome_js_syntax::{TsObjectType, TsObjectTypeFields};
+use rome_js_syntax::TsObjectType;
 
-impl FormatNodeFields<TsObjectType> for FormatNodeRule<TsObjectType> {
-    fn fmt_fields(node: &TsObjectType, f: &mut JsFormatter) -> FormatResult<()> {
-        let TsObjectTypeFields {
-            l_curly_token,
-            members,
-            r_curly_token,
-        } = node.as_fields();
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsObjectType;
 
-        if has_leading_newline(members.syntax()) {
-            write!(
-                f,
-                [
-                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?)
-                        .block_indent()
-                ]
-            )
-        } else {
-            write!(
-                f,
-                [
-                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
-                        .soft_block_spaces()
-                ]
-            )
-        }
+impl FormatNodeRule<TsObjectType> for FormatTsObjectType {
+    fn fmt_fields(&self, node: &TsObjectType, f: &mut JsFormatter) -> FormatResult<()> {
+        write!(f, [JsObjectLike::from(node.clone())])
     }
 }

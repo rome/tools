@@ -1,10 +1,10 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-mod declare_function_declaration;
-mod enum_declaration;
-mod external_module_declaration;
-mod global_declaration;
-mod import_equals_declaration;
-mod interface_declaration;
-mod module_declaration;
-mod type_alias_declaration;
+pub(crate) mod declare_function_declaration;
+pub(crate) mod enum_declaration;
+pub(crate) mod external_module_declaration;
+pub(crate) mod global_declaration;
+pub(crate) mod import_equals_declaration;
+pub(crate) mod interface_declaration;
+pub(crate) mod module_declaration;
+pub(crate) mod type_alias_declaration;

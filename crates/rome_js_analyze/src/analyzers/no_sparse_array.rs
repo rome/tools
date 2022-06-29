@@ -1,24 +1,37 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyArrayElement, JsAnyExpression, JsAnyRoot, JsArrayExpression, TriviaPieceKind,
-};
+use rome_js_syntax::{JsAnyArrayElement, JsAnyExpression, JsArrayExpression, TriviaPieceKind};
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoSparseArray {}
+declare_rule! {
+    /// Disallow sparse arrays
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// [1,,2]
+    /// ```
+    pub(crate) NoSparseArray = "noSparseArray"
+}
 
 impl Rule for NoSparseArray {
-    const NAME: &'static str = "noSparseArray";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsArrayExpression;
+    type Query = Ast<JsArrayExpression>;
     type State = ();
+    type Signals = Option<Self::State>;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(node) = ctx.query();
+
         // We defer collect `JsHole` index until user want to apply code action.
         node.elements().iter().find_map(|element| {
             if matches!(element.ok()?, JsAnyArrayElement::JsArrayHole(_),) {
@@ -29,7 +42,9 @@ impl Rule for NoSparseArray {
         })
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(node) = ctx.query();
+
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
 markup! {
@@ -39,7 +54,9 @@ markup! {
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, _state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
+        let Ast(node) = ctx.query();
+
         let mut final_array_element_list = node.elements();
 
         for (i, item) in final_array_element_list.iter().enumerate() {
@@ -64,7 +81,7 @@ markup! {
             }
         }
 
-        let root = root.replace_node(
+        let root = ctx.root().replace_node(
             node.clone(),
             make::js_array_expression(
                 node.l_brack_token().ok()?,

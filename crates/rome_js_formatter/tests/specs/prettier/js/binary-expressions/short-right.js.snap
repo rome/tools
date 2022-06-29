@@ -38,13 +38,12 @@ foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(
   aaaaaaaaaaaaaaaaaaa,
 ) + a;
 
-const isPartOfPackageJSON = dependenciesArray.indexOf(
-  dependencyWithOutRelativePath.split("/")[0],
-) !== -1;
+const isPartOfPackageJSON =
+  dependenciesArray.indexOf(dependencyWithOutRelativePath.split("/")[0]) !== -1;
 
 defaultContent.filter((defaultLocale) => {
   // ...
-},)[0] || null;
+})[0] || null;
 
 ```
 

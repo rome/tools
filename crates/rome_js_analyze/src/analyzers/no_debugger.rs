@@ -1,4 +1,6 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -9,20 +11,40 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 
-pub(crate) enum NoDebugger {}
+declare_rule! {
+    /// Disallow the use of `debugger`
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// debugger;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const test = { debugger: 1 };
+    /// test.debugger;
+    ///```
+    pub(crate) NoDebugger = "noDebugger"
+}
 
 impl Rule for NoDebugger {
-    const NAME: &'static str = "noDebugger";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsDebuggerStatement;
+    type Query = Ast<JsDebuggerStatement>;
     type State = ();
+    type Signals = Option<Self::State>;
 
-    fn run(_: &Self::Query) -> Option<Self::State> {
+    fn run(_: &RuleContext<Self>) -> Option<Self::State> {
         Some(())
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(node) = ctx.query();
+
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
             markup! {
@@ -32,11 +54,9 @@ impl Rule for NoDebugger {
         ))
     }
 
-    fn action(
-        root: rome_js_syntax::JsAnyRoot,
-        node: &Self::Query,
-        _state: &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let Ast(node) = ctx.query();
+
         let prev_parent = node.syntax().parent()?;
 
         let root = if JsStatementList::can_cast(prev_parent.kind())
@@ -52,11 +72,12 @@ impl Rule for NoDebugger {
 
             // SAFETY: We know the kind of root is `JsAnyRoot` so cast `root.into_syntax()` will not panic
             JsAnyRoot::unwrap_cast(
-                root.into_syntax()
+                ctx.root()
+                    .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             )
         } else {
-            root.replace_node(
+            ctx.root().replace_node(
                 JsAnyStatement::JsDebuggerStatement(node.clone()),
                 JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
             )?

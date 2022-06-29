@@ -1,13 +1,15 @@
-use crate::generated::FormatJsExportNamedSpecifierList;
 use crate::prelude::*;
-use rome_js_syntax::JsExportNamedSpecifierList;
+use rome_js_syntax::{JsExportNamedSpecifierList, JsSyntaxKind};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsExportNamedSpecifierList;
 
 impl FormatRule<JsExportNamedSpecifierList> for FormatJsExportNamedSpecifierList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsExportNamedSpecifierList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsExportNamedSpecifierList, f: &mut JsFormatter) -> FormatResult<()> {
         f.join_with(&soft_line_break_or_space())
-            .entries(node.format_separated(token(",")))
+            .entries(node.format_separated(JsSyntaxKind::COMMA))
             .finish()
     }
 }

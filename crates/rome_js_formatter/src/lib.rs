@@ -18,10 +18,7 @@ use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
-use crate::builders::{
-    format_leading_trivia, format_suppressed_node, format_trailing_trivia, format_trimmed_token,
-    TriviaPrintMode,
-};
+use crate::builders::format_suppressed_node;
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
 use std::iter::FusedIterator;
@@ -167,38 +164,23 @@ where
 {
 }
 
-pub struct FormatNodeRule<T>
-where
-    T: AstNode<Language = JsLanguage>,
-{
-    node: PhantomData<T>,
-}
-
-impl<N> FormatRule<N> for FormatNodeRule<N>
+pub trait FormatNodeRule<N>
 where
     N: AstNode<Language = JsLanguage>,
-    FormatNodeRule<N>: FormatNodeFields<N>,
 {
-    type Context = JsFormatContext;
-
-    fn fmt(node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
         if has_formatter_suppressions(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
         } else {
-            Self::fmt_fields(node, f)?;
+            self.fmt_fields(node, f)?;
         };
 
         Ok(())
     }
-}
 
-pub trait FormatNodeFields<T>
-where
-    T: AstNode<Language = JsLanguage>,
-{
     /// Formats the node's fields.
-    fn fmt_fields(item: &T, f: &mut JsFormatter) -> FormatResult<()>;
+    fn fmt_fields(&self, item: &N, f: &mut JsFormatter) -> FormatResult<()>;
 }
 
 /// Format implementation specific to JavaScript tokens.
@@ -207,13 +189,13 @@ pub struct FormatJsSyntaxToken;
 impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
     type Context = JsFormatContext;
 
-    fn fmt(token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, token: &JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
         f.state_mut().track_token(token);
 
         write!(
             f,
             [
-                format_leading_trivia(token, TriviaPrintMode::Full),
+                format_leading_trivia(token),
                 format_trimmed_token(token),
                 format_trailing_trivia(token),
             ]
@@ -225,7 +207,7 @@ impl<'a> AsFormat<'a> for JsSyntaxToken {
     type Format = FormatRefWithRule<'a, JsSyntaxToken, FormatJsSyntaxToken>;
 
     fn format(&'a self) -> Self::Format {
-        FormatRefWithRule::new(self)
+        FormatRefWithRule::new(self, FormatJsSyntaxToken)
     }
 }
 
@@ -233,7 +215,7 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
     type Format = FormatOwnedWithRule<JsSyntaxToken, FormatJsSyntaxToken>;
 
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule::new(self)
+        FormatOwnedWithRule::new(self, FormatJsSyntaxToken)
     }
 }
 
@@ -340,10 +322,7 @@ while(
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -351,7 +330,7 @@ while(
         let result = result.expect("range formatting failed");
         assert_eq!(
             result.as_code(),
-            "function func() {\n        func( /* comment */ );\n\n        let array = [1, 2];\n    }\n\n    function func2() {\n        const no_format = () => {};\n    }"
+            "function func() {\n        func(/* comment */);\n\n        let array = [1, 2];\n    }\n\n    function func2() {\n        const no_format = () => {};\n    }"
         );
         assert_eq!(
             result.range(),
@@ -375,10 +354,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -409,10 +385,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -431,10 +404,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -456,10 +426,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext {
-                indent_style: IndentStyle::Space(4),
-                ..JsFormatContext::default()
-            },
+            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -489,7 +456,18 @@ mod test {
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"if (true) {}"#;
+        let src = r#"
+const MyComponentWithLongName2: React.VoidFunctionComponent<
+  MyComponentWithLongNameProps
+> = ({
+  x,
+}) => {
+  const a = useA();
+  return (
+   f
+  );
+};
+        "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
@@ -504,8 +482,7 @@ mod test {
         });
         assert_eq!(
             result.as_code(),
-            r#""\a";
-"#
+            "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
         );
     }
 }

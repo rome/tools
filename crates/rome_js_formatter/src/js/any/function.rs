@@ -1,4 +1,3 @@
-use crate::generated::FormatJsAnyFunction;
 use crate::prelude::*;
 use crate::utils::is_simple_expression;
 use rome_formatter::{format_args, write};
@@ -6,10 +5,13 @@ use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
 
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsAnyFunction;
+
 impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(async_token) = node.async_token() {
             write!(f, [async_token.format(), space_token()])?;
         }
@@ -35,14 +37,12 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
         match node.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
-                [group_elements(&format_args![
-                    token("("),
-                    soft_block_indent(&format_args![
-                        binding.format(),
-                        if_group_breaks(&token(",")),
-                    ]),
-                    token(")"),
-                ])]
+                [format_parenthesize(
+                    binding.syntax().first_token(),
+                    &format_args![binding.format(), if_group_breaks(&token(",")),],
+                    binding.syntax().last_token(),
+                )
+                .grouped_with_soft_block_indent()]
             )?,
             JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,
         }
@@ -91,6 +91,7 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
             JsAnyFunctionBody::JsAnyExpression(expr) => match expr {
                 JsAnyExpression::JsArrowFunctionExpression(_) => true,
                 JsAnyExpression::JsParenthesizedExpression(_) => true,
+                JsAnyExpression::JsxTagExpression(_) => true,
                 expr => is_simple_expression(&expr)?,
             },
         };

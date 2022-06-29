@@ -1,32 +1,37 @@
 pub(crate) mod array;
+mod assignment_like;
 mod binary_like_expression;
 mod format_conditional;
-mod object;
 mod simple;
 pub mod string_utils;
 
+pub(crate) mod format_class;
+pub mod jsx_utils;
 mod member_chain;
+mod object;
+mod object_like;
+mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
+mod typescript;
 
 use crate::prelude::*;
+pub(crate) use assignment_like::{should_break_after_operator, JsAnyAssignmentLike};
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
-pub(crate) use object::{
-    is_break_after_colon, property_object_member_layout, write_member_name,
-    PropertyObjectMemberLayout,
-};
-use rome_formatter::{normalize_newlines, write, Buffer, VecBuffer};
+pub(crate) use object_like::JsObjectLike;
+pub(crate) use object_pattern_like::JsObjectPatternLike;
+use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
-use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{
-    JsAnyClassMemberName, JsAnyExpression, JsAnyFunction, JsAnyObjectMemberName, JsAnyStatement,
-    JsComputedMemberName, JsInitializerClause, JsLanguage, JsLiteralMemberName,
-    JsPrivateClassMemberName, JsTemplateElement, Modifiers, TsTemplateElement, TsType,
+    JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
+    JsTemplateElement, Modifiers, TsTemplateElement, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
+use std::fmt::Debug;
+pub(crate) use typescript::should_hug_type;
 
 pub(crate) use simple::*;
 pub(crate) use string_utils::*;
@@ -37,7 +42,7 @@ pub(crate) use string_utils::*;
 /// We can have two kind of separators: `,`, `;` or ASI.
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
 /// So here, we create - on purpose - an empty node.
-pub(crate) struct FormatTypeMemberSeparator<'a> {
+pub struct FormatTypeMemberSeparator<'a> {
     token: Option<&'a JsSyntaxToken>,
 }
 
@@ -50,7 +55,7 @@ impl<'a> FormatTypeMemberSeparator<'a> {
 impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(separator) = self.token {
-            write!(f, [format_replaced(separator, &empty_element())])
+            format_removed(separator).fmt(f)
         } else {
             Ok(())
         }
@@ -137,7 +142,7 @@ pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
 }
 
 /// Returns true if this node contains newlines in trivias.
-pub(crate) fn has_leading_newline(node: &JsSyntaxNode) -> bool {
+pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
     if let Some(leading_trivia) = node.first_leading_trivia() {
         for piece in leading_trivia.pieces() {
             if piece.is_newline() {
@@ -167,7 +172,7 @@ impl Format<JsFormatContext> for FormatBodyStatement<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self.body {
             JsAnyStatement::JsEmptyStatement(body) => {
-                write!(f, [body.format(), token(";")])
+                write!(f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)])
             }
             body => {
                 write!(f, [space_token(), body.format()])
@@ -406,7 +411,7 @@ impl FormatPrecedence {
 
 /// Format a some code followed by an optional semicolon, and performs
 /// semicolon insertion if it was missing in the input source and the
-/// preceeding element wasn't an unknown node
+/// preceding element wasn't an unknown node
 pub struct FormatWithSemicolon<'a> {
     content: &'a dyn Format<JsFormatContext>,
     semicolon: Option<&'a JsSyntaxToken>,
@@ -439,7 +444,7 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
         if let Some(semicolon) = self.semicolon {
             write!(f, [semicolon.format()])?;
         } else if !is_unknown {
-            write!(f, [token(";")])?;
+            format_inserted(JsSyntaxKind::SEMICOLON).fmt(f)?;
         }
         Ok(())
     }
@@ -459,67 +464,26 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
     )
 }
 
-/// Data structure used to merge into one the following nodes:
-///
-/// - [JsAnyObjectMemberName]
-/// - [JsAnyClassMemberName]
-/// - [JsLiteralMemberName]
-///
-/// Once merged, the enum is used to get specific members (the literal ones) and elide
-/// the quotes from them, when the algorithm sees fit
-pub(crate) enum FormatMemberName {
-    Computed(JsComputedMemberName),
-    Private(JsPrivateClassMemberName),
-    Literal(JsLiteralMemberName),
-}
+/// This function is in charge to format the call arguments.
+pub(crate) fn write_arguments_multi_line<S: Format<JsFormatContext>, I>(
+    separated: I,
+    f: &mut JsFormatter,
+) -> FormatResult<()>
+where
+    I: Iterator<Item = S>,
+{
+    let mut iterator = separated.peekable();
+    let mut join_with = f.join_with(soft_line_break_or_space());
 
-impl From<JsAnyClassMemberName> for FormatMemberName {
-    fn from(node: JsAnyClassMemberName) -> Self {
-        match node {
-            JsAnyClassMemberName::JsComputedMemberName(node) => Self::Computed(node),
-            JsAnyClassMemberName::JsLiteralMemberName(node) => Self::Literal(node),
-            JsAnyClassMemberName::JsPrivateClassMemberName(node) => Self::Private(node),
+    while let Some(element) = iterator.next() {
+        let last = iterator.peek().is_none();
+
+        if last {
+            join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
+        } else {
+            join_with.entry(&element);
         }
     }
-}
 
-impl From<JsAnyObjectMemberName> for FormatMemberName {
-    fn from(node: JsAnyObjectMemberName) -> Self {
-        match node {
-            JsAnyObjectMemberName::JsComputedMemberName(node) => Self::Computed(node),
-            JsAnyObjectMemberName::JsLiteralMemberName(node) => Self::Literal(node),
-        }
-    }
-}
-
-impl From<JsLiteralMemberName> for FormatMemberName {
-    fn from(literal: JsLiteralMemberName) -> Self {
-        Self::Literal(literal)
-    }
-}
-
-impl Format<JsFormatContext> for FormatMemberName {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        match self {
-            FormatMemberName::Computed(node) => {
-                write![f, [node.format()]]
-            }
-            FormatMemberName::Private(node) => {
-                write![f, [node.format()]]
-            }
-            FormatMemberName::Literal(literal) => {
-                let value = literal.value()?;
-
-                if value.kind() == JS_STRING_LITERAL {
-                    FormatLiteralStringToken::new(
-                        &literal.value()?,
-                        StringLiteralParentKind::Member,
-                    )
-                    .fmt(f)
-                } else {
-                    value.format().fmt(f)
-                }
-            }
-        }
-    }
+    join_with.finish()
 }

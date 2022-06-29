@@ -2,9 +2,7 @@ mod printer_options;
 
 pub use printer_options::*;
 
-use crate::format_element::{
-    ConditionalGroupContent, Group, LineMode, List, PrintMode, VerbatimKind,
-};
+use crate::format_element::{ConditionalGroupContent, Group, LineMode, PrintMode, VerbatimKind};
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
@@ -129,7 +127,7 @@ impl<'a> Printer<'a> {
                     PrintMode::Flat if self.state.measured_group_fits => {
                         // A parent group has already verified that this group fits on a single line
                         // Thus, just continue in flat mode
-                        queue.enqueue(PrintElementCall::new(content.as_ref(), args));
+                        queue.extend_with_args(content.iter(), args);
                         PrintMode::Flat
                     }
                     // The printer is either in expanded mode or it's necessary to re-measure if the group fits
@@ -139,38 +137,35 @@ impl<'a> Printer<'a> {
                         // print the group in "flat" mode, otherwise continue in expanded mode
 
                         let flat_args = args.with_print_mode(PrintMode::Flat);
-                        if fits_on_line(&[content], flat_args, queue, self) {
-                            queue.enqueue(PrintElementCall::new(content, flat_args));
+                        if fits_on_line(content.iter(), flat_args, queue, self) {
+                            queue.extend_with_args(content.iter(), flat_args);
                             self.state.measured_group_fits = true;
                             PrintMode::Flat
                         } else {
-                            queue.enqueue(PrintElementCall::new(
-                                content,
+                            queue.extend_with_args(
+                                content.iter(),
                                 args.with_print_mode(PrintMode::Expanded),
-                            ));
+                            );
                             PrintMode::Expanded
                         }
                     }
                 };
 
                 if let Some(id) = id {
-                    self.state.insert_group_mode(*id, group_mode);
+                    self.state.group_modes.insert_print_mode(*id, group_mode);
                 }
             }
 
             FormatElement::Fill(fill) => {
-                self.print_fill(queue, fill.list(), fill.separator(), args);
+                self.print_fill(queue, fill.content(), fill.separator(), args);
             }
 
             FormatElement::List(list) => {
-                queue.extend(list.iter().map(|t| PrintElementCall::new(t, args)));
+                queue.extend_with_args(list.iter(), args);
             }
 
             FormatElement::Indent(content) => {
-                queue.enqueue(PrintElementCall::new(
-                    content,
-                    args.with_incremented_indent(),
-                ));
+                queue.extend_with_args(content.iter(), args.with_incremented_indent());
             }
 
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
@@ -180,15 +175,11 @@ impl<'a> Printer<'a> {
             }) => {
                 let group_mode = match group_id {
                     None => args.mode,
-                    Some(id) => {
-                        self.state.get_print_mode(*id).unwrap_or_else(||
-                            panic!("Expected group with id {id:?} to exist but it wasn't present in the document. Ensure that a group with such a document appears in the document before the element {element:?}.")
-                        )
-                    }
+                    Some(id) => self.state.group_modes.unwrap_print_mode(*id, element),
                 };
 
                 if &group_mode == mode {
-                    queue.enqueue(PrintElementCall::new(content, args));
+                    queue.extend_with_args(content.iter(), args);
                 }
             }
 
@@ -225,7 +216,7 @@ impl<'a> Printer<'a> {
             FormatElement::LineSuffix(suffix) => {
                 self.state
                     .line_suffixes
-                    .push(PrintElementCall::new(&**suffix, args));
+                    .extend(suffix.iter().map(|e| PrintElementCall::new(e, args)));
             }
             FormatElement::LineSuffixBoundary => {
                 const HARD_BREAK: &FormatElement = &FormatElement::Line(LineMode::Hard);
@@ -233,7 +224,7 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Comment(content) => {
-                queue.enqueue(PrintElementCall::new(content.as_ref(), args));
+                queue.extend_with_args(content.iter(), args);
             }
 
             FormatElement::Verbatim(verbatim) => {
@@ -244,7 +235,7 @@ impl<'a> Printer<'a> {
                     ));
                 }
 
-                queue.enqueue(PrintElementCall::new(&verbatim.element, args));
+                queue.extend_with_args(verbatim.content.iter(), args);
             }
             FormatElement::ExpandParent => {
                 // No-op, only has an effect on `fits`
@@ -279,10 +270,9 @@ impl<'a> Printer<'a> {
                                     PrintMode::Expanded
                                 };
 
-                                if fits_on_line(&[variant], args.with_print_mode(mode), queue, self)
+                                if fits_on_line([variant], args.with_print_mode(mode), queue, self)
                                 {
                                     self.state.measured_group_fits = true;
-
                                     queue.enqueue(PrintElementCall::new(
                                         variant,
                                         args.with_print_mode(mode),
@@ -294,6 +284,7 @@ impl<'a> Printer<'a> {
                     }
                 }
             }
+            FormatElement::Interned(content) => queue.enqueue(PrintElementCall::new(content, args)),
         }
     }
 
@@ -345,7 +336,7 @@ impl<'a> Printer<'a> {
     fn print_fill(
         &mut self,
         queue: &mut ElementCallQueue<'a>,
-        content: &'a List,
+        content: &'a [FormatElement],
         separator: &'a FormatElement,
         args: PrintElementArgs,
     ) {
@@ -362,7 +353,7 @@ impl<'a> Printer<'a> {
         };
 
         let mut current_fits = fits_on_line(
-            &[current_content],
+            [current_content],
             args.with_print_mode(PrintMode::Flat),
             &empty_rest,
             self,
@@ -384,7 +375,7 @@ impl<'a> Printer<'a> {
             // otherwise see if both contents fit on the line.
             let current_and_next_fit = current_fits
                 && fits_on_line(
-                    &[separator, next_item],
+                    [separator, next_item],
                     args.with_print_mode(PrintMode::Flat),
                     &empty_rest,
                     self,
@@ -406,7 +397,7 @@ impl<'a> Printer<'a> {
                 );
 
                 let next_fits = fits_on_line(
-                    &[next_item],
+                    [next_item],
                     args.with_print_mode(PrintMode::Flat),
                     &empty_rest,
                     self,
@@ -439,11 +430,7 @@ impl<'a> Printer<'a> {
     ) {
         let min_queue_length = queue.0.len();
 
-        queue.extend(
-            elements
-                .iter()
-                .map(|element| PrintElementCall::new(element, args)),
-        );
+        queue.extend(elements.iter().map(|e| PrintElementCall::new(e, args)));
 
         while let Some(call) = queue.dequeue() {
             self.print_element(queue, call.element, call.args);
@@ -500,27 +487,36 @@ struct PrinterState<'a> {
     has_empty_line: bool,
     line_suffixes: Vec<PrintElementCall<'a>>,
     verbatim_markers: Vec<TextRange>,
-    /// Tracks the mode in which groups with ids are printed. Stores the groups at `group.id()` index.
-    /// This is based on the assumption that the group ids for a single document are dense.
-    group_modes: Vec<Option<PrintMode>>,
+    group_modes: GroupModes,
     // Re-used queue to measure if a group fits. Optimisation to avoid re-allocating a new
     // vec everytime a group gets measured
     measure_queue: Vec<PrintElementCall<'a>>,
 }
 
-impl PrinterState<'_> {
-    fn insert_group_mode(&mut self, group_id: GroupId, mode: PrintMode) {
+/// Tracks the mode in which groups with ids are printed. Stores the groups at `group.id()` index.
+/// This is based on the assumption that the group ids for a single document are dense.
+#[derive(Debug, Default)]
+struct GroupModes(Vec<Option<PrintMode>>);
+
+impl GroupModes {
+    fn insert_print_mode(&mut self, group_id: GroupId, mode: PrintMode) {
         let index = u32::from(group_id) as usize;
 
-        self.group_modes.resize(index + 1, None);
-        self.group_modes[index] = Some(mode);
+        self.0.resize(index + 1, None);
+        self.0[index] = Some(mode);
     }
 
     fn get_print_mode(&self, group_id: GroupId) -> Option<PrintMode> {
         let index = u32::from(group_id) as usize;
-        self.group_modes
+        self.0
             .get(index)
             .and_then(|option| option.as_ref().copied())
+    }
+
+    fn unwrap_print_mode(&self, group_id: GroupId, next_element: &FormatElement) -> PrintMode {
+        self.get_print_mode(group_id).unwrap_or_else(||
+            panic!("Expected group with id {group_id:?} to exist but it wasn't present in the document. Ensure that a group with such a document appears in the document before the element {next_element:?}.")
+        )
     }
 }
 
@@ -606,6 +602,18 @@ impl<'a> ElementCallQueue<'a> {
         self.0.extend(calls.into_iter().rev());
     }
 
+    fn extend_with_args<I>(&mut self, elements: I, args: PrintElementArgs)
+    where
+        I: IntoIterator<Item = &'a FormatElement>,
+        I::IntoIter: DoubleEndedIterator,
+    {
+        self.extend(
+            elements
+                .into_iter()
+                .map(|element| PrintElementCall::new(element, args)),
+        )
+    }
+
     pub fn enqueue(&mut self, call: PrintElementCall<'a>) {
         self.0.push(call);
     }
@@ -626,12 +634,16 @@ impl<'a> ElementCallQueue<'a> {
 /// Tests if it's possible to print the content of the queue up to the first hard line break
 /// or the end of the document on a single line without exceeding the line width.
 #[must_use = "Only determines if content fits on a single line but doesn't print it"]
-fn fits_on_line<'a>(
-    elements: &[&'a FormatElement],
+fn fits_on_line<'a, I>(
+    elements: I,
     args: PrintElementArgs,
     queue: &ElementCallQueue<'a>,
     printer: &mut Printer<'a>,
-) -> bool {
+) -> bool
+where
+    I: IntoIterator<Item = &'a FormatElement>,
+    I::IntoIter: DoubleEndedIterator,
+{
     let shared_buffer = std::mem::take(&mut printer.state.measure_queue);
     debug_assert!(shared_buffer.is_empty());
 
@@ -639,17 +651,14 @@ fn fits_on_line<'a>(
         .with_rest(queue)
         .with_queue(ElementCallQueue::new(shared_buffer));
 
-    measure_queue.extend(
-        elements
-            .iter()
-            .map(|element| PrintElementCall::new(element, args)),
-    );
+    measure_queue.extend(elements.into_iter(), args);
 
     let mut measure_state = MeasureState {
         pending_indent: printer.state.pending_indent,
         pending_space: printer.state.pending_space,
         line_width: printer.state.line_width,
         has_line_suffix: !printer.state.line_suffixes.is_empty(),
+        group_modes: &mut printer.state.group_modes,
     };
 
     let result = loop {
@@ -721,30 +730,42 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Indent(content) => queue.enqueue(PrintElementCall::new(
-            content,
-            args.with_incremented_indent(),
-        )),
+        FormatElement::Indent(content) => {
+            queue.extend(content.iter(), args.with_incremented_indent())
+        }
 
-        FormatElement::Group(group) => queue.enqueue(PrintElementCall::new(&group.content, args)),
+        FormatElement::Group(group) => {
+            queue.extend(group.content.iter(), args);
 
-        FormatElement::ConditionalGroupContent(conditional) => {
-            if args.mode == conditional.mode {
-                queue.enqueue(PrintElementCall::new(&conditional.content, args))
+            if let Some(id) = group.id {
+                state.group_modes.insert_print_mode(id, args.mode);
             }
         }
 
-        FormatElement::List(list) => {
-            queue.extend(list.iter().map(|t| PrintElementCall::new(t, args)))
+        FormatElement::ConditionalGroupContent(conditional) => {
+            let group_mode = match conditional.group_id {
+                None => args.mode,
+                Some(group_id) => state
+                    .group_modes
+                    .get_print_mode(group_id)
+                    .unwrap_or(args.mode),
+            };
+
+            if group_mode == conditional.mode {
+                queue.extend(conditional.content.iter(), args);
+            }
         }
 
+        FormatElement::List(list) => queue.extend(list.iter(), args),
+
         FormatElement::Fill(fill) => queue.queue.0.extend(
-            Intersperse::new(fill.list().iter().rev(), fill.separator())
+            Intersperse::new(fill.content().iter().rev(), fill.separator())
                 .map(|t| PrintElementCall::new(t, args)),
         ),
 
         FormatElement::Token(token) => {
             state.line_width += state.pending_indent as usize * options.indent_string.len();
+            state.pending_indent = 0;
 
             if state.pending_space {
                 state.line_width += 1;
@@ -769,7 +790,6 @@ fn fits_element_on_line<'a, 'rest>(
             }
 
             state.pending_space = false;
-            state.pending_indent = 0;
         }
 
         FormatElement::LineSuffix(_) => {
@@ -782,11 +802,9 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Comment(content) => queue.enqueue(PrintElementCall::new(content, args)),
+        FormatElement::Comment(content) => queue.extend(content.iter(), args),
 
-        FormatElement::Verbatim(verbatim) => {
-            queue.enqueue(PrintElementCall::new(&verbatim.element, args))
-        }
+        FormatElement::Verbatim(verbatim) => queue.extend(verbatim.content.iter(), args),
         FormatElement::BestFitting(best_fitting) => {
             let content = match args.mode {
                 PrintMode::Flat => best_fitting.most_flat(),
@@ -800,6 +818,7 @@ fn fits_element_on_line<'a, 'rest>(
                 return Fits::No;
             }
         }
+        FormatElement::Interned(content) => queue.enqueue(PrintElementCall::new(content, args)),
     }
 
     Fits::Maybe
@@ -826,11 +845,12 @@ impl From<bool> for Fits {
 
 /// State used when measuring if a group fits on a single line
 #[derive(Debug)]
-struct MeasureState {
+struct MeasureState<'group> {
     pending_indent: u16,
     pending_space: bool,
     has_line_suffix: bool,
     line_width: usize,
+    group_modes: &'group mut GroupModes,
 }
 
 #[derive(Debug)]
@@ -866,14 +886,19 @@ impl<'a, 'rest> MeasureQueue<'a, 'rest> {
         self.queue.enqueue(call);
     }
 
-    fn extend<T>(&mut self, calls: T)
+    fn extend<T>(&mut self, elements: T, args: PrintElementArgs)
     where
-        T: IntoIterator<Item = PrintElementCall<'a>>,
+        T: IntoIterator<Item = &'a FormatElement>,
         T::IntoIter: DoubleEndedIterator,
     {
         // Reverse the calls because elements are removed from the back of the vec
         // in reversed insertion order
-        self.queue.0.extend(calls.into_iter().rev());
+        self.queue.0.extend(
+            elements
+                .into_iter()
+                .rev()
+                .map(|element| PrintElementCall::new(element, args)),
+        );
     }
 
     fn dequeue(&mut self) -> Option<(&'a FormatElement, PrintElementArgs)> {
@@ -1163,10 +1188,37 @@ two lines`,
                 space_token(),
                 token("// trailing"),
                 space_token()
-            ]))
+            ]),)
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")
+    }
+
+    #[test]
+    fn conditional_with_group_id_in_fits() {
+        let content = format_with(|f| {
+            let group_id = f.group_id("test");
+            write!(
+                f,
+                [
+                    group_elements(&format_args![
+                        token("The referenced group breaks."),
+                        hard_line_break()
+                    ])
+                    .with_group_id(Some(group_id)),
+                    group_elements(&format_args![
+                        token("This group breaks because:"),
+                        soft_line_break_or_space(),
+                        if_group_fits_on_line(&token("This content fits but should not be printed.")).with_group_id(Some(group_id)),
+                        if_group_breaks(&token("It measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.")).with_group_id(Some(group_id)),
+                    ])
+                ]
+            )
+        });
+
+        let printed = format(&content);
+
+        assert_eq!(printed.as_code(), "The referenced group breaks.\nThis group breaks because:\nIt measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.");
     }
 
     struct FormatArrayElements<'a> {

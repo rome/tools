@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_formatter::write;
 use rome_js_syntax::JsAnyNamedImport;
 use rome_js_syntax::JsAnyNamedImportSpecifier;
@@ -7,8 +7,11 @@ use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
-impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClause> {
-    fn fmt_fields(node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsImportNamedClause;
+
+impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
+    fn fmt_fields(&self, node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportNamedClauseFields {
             type_token,
             default_specifier,
@@ -52,28 +55,38 @@ impl FormatNodeFields<JsImportNamedClause> for FormatNodeRule<JsImportNamedClaus
                     if specifiers.specifiers().len() == 1 =>
                 {
                     // SAFETY: we know that the `specifiers.specifiers().len() == 1`, so unwrap `iter().next()` is safe.
-                    let first_specifier = specifiers.specifiers().iter().next().unwrap();
-                    match first_specifier {
-                        Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_)) => {
-                            let syntax_node = specifiers.syntax();
-                            if syntax_node.has_comments_direct() {
-                                write![f, [named_import.format()]]
+                    let first_specifier = specifiers.specifiers().elements().next().unwrap();
+                    match (first_specifier.node(), first_specifier.trailing_separator()) {
+                        (
+                            Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
+                                specifier,
+                            )),
+                            Ok(separator),
+                        ) => {
+                            if specifier.syntax().has_comments_direct()
+                                || separator
+                                    .map(|sep| {
+                                        sep.has_leading_comments() || sep.has_trailing_comments()
+                                    })
+                                    .unwrap_or(false)
+                            {
+                                write!(f, [named_import.format()])
                             } else {
                                 let JsNamedImportSpecifiersFields {
                                     l_curly_token,
                                     specifiers: _,
                                     r_curly_token,
                                 } = specifiers.as_fields();
-                                write![
+                                write!(
                                     f,
-                                    [
-                                        l_curly_token.format(),
-                                        space_token(),
-                                        first_specifier.format(),
-                                        space_token(),
-                                        r_curly_token.format()
-                                    ]
-                                ]
+                                    [l_curly_token.format(), space_token(), specifier.format(),]
+                                )?;
+
+                                if let Some(separator) = separator {
+                                    format_removed(separator).fmt(f)?;
+                                }
+
+                                write!(f, [space_token(), r_curly_token.format()])
                             }
                         }
                         _ => write![f, [named_import.format()]],

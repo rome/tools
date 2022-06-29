@@ -1,14 +1,16 @@
 use crate::prelude::*;
 use crate::utils::is_simple_expression;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
-use crate::FormatNodeFields;
 use rome_js_syntax::JsPreUpdateOperator;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
-impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
-    fn fmt_fields(node: &JsUnaryExpression, f: &mut JsFormatter) -> FormatResult<()> {
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsUnaryExpression;
+
+impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
+    fn fmt_fields(&self, node: &JsUnaryExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsUnaryExpressionFields {
             operator_token,
             argument,
@@ -54,28 +56,18 @@ impl FormatNodeFields<JsUnaryExpression> for FormatNodeRule<JsUnaryExpression> {
         };
 
         if is_ambiguous_expression {
+            operator_token.format().fmt(f)?;
+
+            let first_token = argument.syntax().first_token();
+            let last_token = argument.syntax().last_token();
+            let format_argument = argument.format();
+
+            let parenthesize = format_parenthesize(first_token, &format_argument, last_token);
+
             if is_simple_expression(&argument)? {
-                write![
-                    f,
-                    [
-                        operator_token.format(),
-                        token("("),
-                        argument.format(),
-                        token(")"),
-                    ]
-                ]
+                parenthesize.fmt(f)
             } else {
-                write![
-                    f,
-                    [
-                        operator_token.format(),
-                        group_elements(&format_args![
-                            token("("),
-                            soft_block_indent(&argument.format()),
-                            token(")"),
-                        ]),
-                    ]
-                ]
+                parenthesize.grouped_with_soft_block_indent().fmt(f)
             }
         } else {
             write![f, [operator_token.format(), argument.format(),]]

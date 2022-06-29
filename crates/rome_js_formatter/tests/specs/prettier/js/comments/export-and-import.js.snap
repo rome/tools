@@ -51,9 +51,7 @@ export {
 
 import {
   foo,
-  bar
-  as // comment
-  baz,
+  bar as baz, // comment
 } from "foo";
 
 ```

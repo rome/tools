@@ -744,9 +744,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "1.8.0"
+version = "1.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "282a6247722caba404c065016bbfa522806e51714c34f5dfc3e4a3a46fcb4223"
+checksum = "e6012d540c5baa3589337a98ce73408de9b5a25ec9fc2c6fd6be8f0d39e0ca5a"
 dependencies = [
  "autocfg",
  "hashbrown",
@@ -1156,6 +1156,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "pulldown-cmark"
+version = "0.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "34f197a544b0c9ab3ae46c359a7ec9cbbb5c7bf97054266fecb7ead794a181d6"
+dependencies = [
+ "bitflags",
+ "memchr",
+ "unicase",
+]
+
+[[package]]
 name = "quickcheck"
 version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1375,6 +1386,7 @@ name = "rome_formatter"
 version = "0.1.0"
 dependencies = [
  "cfg-if",
+ "indexmap",
  "rome_rowan",
  "tracing",
 ]
@@ -1472,6 +1484,7 @@ dependencies = [
  "rome_js_syntax",
  "rome_markup",
  "rome_rowan",
+ "rust-lapper",
 ]
 
 [[package]]
@@ -1587,6 +1600,15 @@ name = "rome_text_edit"
 version = "0.1.0"
 dependencies = [
  "rome_rowan",
+]
+
+[[package]]
+name = "rust-lapper"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c0da7f82898b906bf29d705adb2c36a461c9cc9e33c1417041c86229d569c144"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
@@ -2137,6 +2159,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "66be59c2fd880e3d76d1a6cf6d34114008f1d8af2748d4ad9d39ea712f14fda9"
 
 [[package]]
+name = "unicase"
+version = "2.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "50f37be617794602aabbeee0be4f259dc1778fabe05e2d67ee8f79326d5cb4f6"
+dependencies = [
+ "version_check",
+]
+
+[[package]]
 name = "unicode-bidi"
 version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2476,6 +2507,20 @@ dependencies = [
  "walkdir",
  "xtask",
  "yastl",
+]
+
+[[package]]
+name = "xtask_lintdoc"
+version = "0.0.0"
+dependencies = [
+ "pulldown-cmark",
+ "rome_analyze",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_js_analyze",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "xtask",
 ]
 
 [[package]]

@@ -1,15 +1,17 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
-use crate::generated::FormatJsVariableDeclaratorList;
 use crate::AsFormat;
-use rome_js_syntax::JsVariableDeclaratorList;
+use rome_js_syntax::{JsSyntaxKind, JsVariableDeclaratorList};
 use rome_rowan::AstSeparatedList;
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatJsVariableDeclaratorList;
 
 impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         let mut declarators = node.elements().enumerate().map(|(index, element)| {
@@ -19,7 +21,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
                 match element.trailing_separator()? {
                     None => {
                         if index != last_index {
-                            write!(f, [token(",")])?;
+                            format_inserted(JsSyntaxKind::COMMA).fmt(f)?;
                         }
                     }
                     Some(separator) => {

@@ -11,9 +11,8 @@ path.scope.getProgramParent().path.get("body")[0].node;
 
 # Output
 ```js
-const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[
-  0
-].node;
+const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[0]
+  .node;
 
 ```
 

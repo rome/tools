@@ -1,6 +1,8 @@
 use std::iter;
 
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -12,20 +14,39 @@ use rome_rowan::{AstNode, AstSeparatedList};
 
 use crate::JsRuleAction;
 
-pub(crate) enum UseSingleVarDeclarator {}
+declare_rule! {
+    /// Disallow multiple variable declarations in the same variable statement
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// let foo, bar;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// for (let i = 0, x = 1; i < arr.length; i++) {}
+    /// ```
+    pub(crate) UseSingleVarDeclarator = "useSingleVarDeclarator"
+}
 
 impl Rule for UseSingleVarDeclarator {
-    const NAME: &'static str = "useSingleVarDeclarator";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsVariableStatement;
+    type Query = Ast<JsVariableStatement>;
     type State = (
         JsSyntaxToken,
         JsVariableDeclaratorList,
         Option<JsSyntaxToken>,
     );
+    type Signals = Option<Self::State>;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(node) = ctx.query();
+
         let JsVariableStatementFields {
             declaration,
             semicolon_token,
@@ -42,14 +63,18 @@ impl Rule for UseSingleVarDeclarator {
         Some((kind, declarators, semicolon_token))
     }
 
-    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(node) = ctx.query();
+
         Some(RuleDiagnostic::warning(
             node.range(),
             "Declare variables separately",
         ))
     }
 
-    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let Ast(node) = ctx.query();
+
         let (kind, declarators, semicolon_token) = state;
 
         let prev_parent = node.syntax().parent()?;
@@ -96,7 +121,8 @@ impl Rule for UseSingleVarDeclarator {
             applicability: Applicability::Always,
             message: markup! { "Break out into multiple declarations" }.to_owned(),
             root: JsAnyRoot::unwrap_cast(
-                root.into_syntax()
+                ctx.root()
+                    .into_syntax()
                     .replace_child(prev_parent.into(), next_parent.into())?,
             ),
         })

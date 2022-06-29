@@ -1,0 +1,91 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 257
+expression: call_expression.js
+---
+# Input
+
+useEffect(() => {
+
+}, [a, b])
+
+useMemo(() => {
+    return {
+        d, e
+    }
+}, [a, b])
+
+useMemo(() => {
+
+    } // some comment
+    ,
+    [a, b]
+)
+
+test.expect(t => {
+    t.true(a)
+})
+
+test.expect(t => {
+    t.true(a)
+}, false)
+
+test.something(t => {
+    t.true()
+}, context => {
+    context.flush()
+})
+
+// trailing separator omitted
+test.expect(t => {
+    t.true(a)
+}, false,)
+
+test.expect(t => {
+    t.true(a)
+}, false, /* something */)
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+useEffect(() => {}, [a, b]);
+
+useMemo(() => {
+	return {
+		d,
+		e,
+	};
+}, [a, b]);
+
+useMemo(() => {}, [a, b]); // some comment
+
+test.expect((t) => {
+	t.true(a);
+});
+
+test.expect((t) => {
+	t.true(a);
+}, false);
+
+test.something(
+	(t) => {
+		t.true();
+	},
+	(context) => {
+		context.flush();
+	},
+);
+
+// trailing separator omitted
+test.expect((t) => {
+	t.true(a);
+}, false);
+
+test.expect((t) => {
+	t.true(a);
+}, false /* something */);
+

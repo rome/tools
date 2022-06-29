@@ -1,13 +1,15 @@
-use crate::generated::FormatTsUnionTypeVariantList;
 use crate::prelude::*;
 use rome_formatter::write;
-use rome_js_syntax::{JsLanguage, TsType, TsUnionTypeVariantList};
+use rome_js_syntax::{JsLanguage, JsSyntaxKind, TsType, TsUnionTypeVariantList};
 use rome_rowan::{AstSeparatedElement, AstSeparatedList};
+
+#[derive(Debug, Clone, Default)]
+pub struct FormatTsUnionTypeVariantList;
 
 impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
     type Context = JsFormatContext;
 
-    fn fmt(node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
         let last_index = node.len().saturating_sub(1);
 
         f.join()
@@ -37,7 +39,7 @@ impl Format<JsFormatContext> for FormatTypeVariant {
         match separator {
             Some(token) => {
                 if self.last {
-                    write!(f, [format_replaced(token, &empty_element())])?;
+                    write!(f, [format_removed(token)])?;
                 } else {
                     write![
                         f,
@@ -47,7 +49,14 @@ impl Format<JsFormatContext> for FormatTypeVariant {
             }
             None => {
                 if !self.last {
-                    write![f, [soft_line_break_or_space(), token("|"), space_token()]]?;
+                    write![
+                        f,
+                        [
+                            soft_line_break_or_space(),
+                            format_inserted(JsSyntaxKind::PIPE),
+                            space_token()
+                        ]
+                    ]?;
                 }
             }
         }

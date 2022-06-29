@@ -1,4 +1,6 @@
-use rome_analyze::{ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -14,16 +16,36 @@ pub struct NoCompareNegZeroState {
     left_need_replaced: bool,
     right_need_replaced: bool,
 }
-pub(crate) enum NoCompareNegZero {}
+
+declare_rule! {
+    /// Disallow comparing against `-0`
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// (1 >= -0)
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// (1 >= 0)
+    ///```
+    pub(crate) NoCompareNegZero = "noCompareNegZero"
+}
 
 impl Rule for NoCompareNegZero {
-    const NAME: &'static str = "noCompareNegZero";
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsBinaryExpression;
+    type Query = Ast<JsBinaryExpression>;
     type State = NoCompareNegZeroState;
+    type Signals = Option<Self::State>;
 
-    fn run(node: &Self::Query) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        let Ast(node) = ctx.query();
+
         if !node.is_comparison_operator() {
             return None;
         }
@@ -48,7 +70,9 @@ impl Rule for NoCompareNegZero {
         }
     }
 
-    fn diagnostic(node: &Self::Query, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(node) = ctx.query();
+
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -56,11 +80,9 @@ impl Rule for NoCompareNegZero {
             },
         ))
     }
-    fn action(
-        root: rome_js_syntax::JsAnyRoot,
-        node: &Self::Query,
-        state: &Self::State,
-    ) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let Ast(node) = ctx.query();
+        let root = ctx.root();
         let root = if state.left_need_replaced && state.right_need_replaced {
             let binary = node.clone().replace_node(
                 node.left().ok()?,
