@@ -1,6 +1,6 @@
 use crate::JsRuleAction;
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -13,6 +13,16 @@ declare_rule! {
     ///
     /// ## Examples
     ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// !1 in [1,2];
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// /**test*/!/** test*/1 instanceof [1,2];
+    /// ```
+    ///
     /// ### Valid
     /// ```js
     /// -1 in [1,2];
@@ -22,24 +32,18 @@ declare_rule! {
     /// delete 1 in [1,2];
     /// +1 instanceof [1,2];
     /// ```
-    /// ### Invalid
-    /// ```js,expect_diagnostic
-    /// !1 in [1,2];
-    /// ```
-    /// ```js,expect_diagnostic
-    /// /**test*/!/** test*/1 instanceof [1,2];
-    /// ```
     pub(crate) NoUnsafeNegation = "noUnsafeNegation"
 }
 
 impl Rule for NoUnsafeNegation {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsInOrInstanceOfExpression;
+    type Query = Ast<JsInOrInstanceOfExpression>;
     type State = ();
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         match node {
             JsInOrInstanceOfExpression::JsInstanceofExpression(expr) => {
                 let left = expr.left().ok()?;
@@ -69,8 +73,9 @@ impl Rule for NoUnsafeNegation {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let Ast(node) = ctx.query();
         Some(RuleDiagnostic::warning(
-            ctx.query().range(),
+            node.range(),
             markup! {
                 "The negation operator is used unsafely on the left side of this binary expression."
             },
@@ -78,7 +83,7 @@ impl Rule for NoUnsafeNegation {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let mut root = ctx.root();
         // The action could be splitted to three steps
         // 1. Remove `!` operator of unary expression

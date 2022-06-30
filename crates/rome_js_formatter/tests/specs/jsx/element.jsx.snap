@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
+assertion_line: 256
 expression: element.jsx
 ---
 # Input
@@ -191,16 +191,14 @@ function Tabs() {
 					value={code}
 					language={language}
 					placeholder="Enter some code here"
-					onChange={
-						(evn) => {
-							setPlaygroundState(
-								(state) => ({
-									...state,
-									code: evn.target.value,
-								}),
-							);
-						}
-					}
+					onChange={(evn) => {
+						setPlaygroundState(
+							(state) => ({
+								...state,
+								code: evn.target.value,
+							}),
+						);
+					}}
 					style={{
 						fontSize: 12,
 						height: "100vh",
@@ -277,12 +275,10 @@ function Tabs() {
 function LoginForm() {
 	return (
 		<form
-			onChange={
-				(e) => {
-					e.preventDefault();
-					console.log("Submitted form!");
-				}
-			}
+			onChange={(e) => {
+				e.preventDefault();
+				console.log("Submitted form!");
+			}}
 		>
 			<input value={username} onChange={(e) => setUsername(e.target.value)} />
 			<input
@@ -354,9 +350,9 @@ let a = <a>{/* comment */ " "}</a>;
 ## Lines exceeding width of 80 characters
 
     5: 		The films of Wong Kar-Wai exemplify the synthesis of French New Wave cinema—specifically the unrelenting experimental technique and fascination with American/western culture—with more conventional melodramatic, romantic narratives.
-   41: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   62: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   75: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  101: 					className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
-  159: 					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
+   39: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   60: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   73: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   99: 					className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
+  155: 					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
 

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: mixinClassesAnnotated.ts
 ---
 # Input
@@ -71,7 +72,7 @@ class Thing3 extends Thing2 {
 ```js
 // @declaration: true
 
-type Constructor<T> = new(...args: any[]) => T;
+type Constructor<T> = new (...args: any[]) => T;
 
 class Base {
   constructor(public x: number, public y: number) {}

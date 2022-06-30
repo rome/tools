@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsAnyExpression, JsAnyFunction, JsNewExpression, JsNewExpressionFields};
 use rome_rowan::{AstNode, AstSeparatedList};
@@ -11,14 +11,6 @@ declare_rule! {
     /// 2. If a Promise executor function is using `await`, this is usually a sign that it is not actually necessary to use the `new Promise` constructor, or the scope of the `new Promise` constructor can be reduced.
     ///
     /// ## Examples
-    /// ### Valid
-    ///
-    /// ```js
-    ///   new Promise((resolve, reject) => {})
-    ///   new Promise((resolve, reject) => {}, async function unrelated() {})
-    ///   new Foo(async (resolve, reject) => {})
-    ///   new Foo((( (resolve, reject) => {} )))
-    /// ```
     ///
     /// ### Invalid
     ///
@@ -33,17 +25,27 @@ declare_rule! {
     /// ```js,expect_diagnostic
     ///   new Promise(((((async () => {})))))
     /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    ///   new Promise((resolve, reject) => {})
+    ///   new Promise((resolve, reject) => {}, async function unrelated() {})
+    ///   new Foo(async (resolve, reject) => {})
+    ///   new Foo((( (resolve, reject) => {} )))
+    /// ```
     pub(crate) NoAsyncPromiseExecutor = "noAsyncPromiseExecutor"
 }
 
 impl Rule for NoAsyncPromiseExecutor {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsNewExpression;
+    type Query = Ast<JsNewExpression>;
     type State = JsAnyFunction;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
         let JsNewExpressionFields {
             new_token: _,
             callee,

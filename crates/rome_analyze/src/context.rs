@@ -1,23 +1,23 @@
 use crate::{registry::RuleRoot, Rule};
 
-pub struct RuleContext<R>
+pub struct RuleContext<'a, R>
 where
     R: ?Sized + Rule,
 {
-    query_result: <R as Rule>::Query,
-    root: RuleRoot<R>,
+    query_result: &'a <R as Rule>::Query,
+    root: &'a RuleRoot<R>,
 }
 
-impl<R> RuleContext<R>
+impl<'a, R> RuleContext<'a, R>
 where
     R: Rule,
 {
-    pub fn new(query_result: <R as Rule>::Query, root: RuleRoot<R>) -> Self {
+    pub fn new(query_result: &'a <R as Rule>::Query, root: &'a RuleRoot<R>) -> Self {
         Self { query_result, root }
     }
 
     pub fn query(&self) -> &<R as Rule>::Query {
-        &self.query_result
+        self.query_result
     }
 
     pub fn root(&self) -> RuleRoot<R> {

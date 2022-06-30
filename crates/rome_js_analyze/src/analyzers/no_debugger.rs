@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -34,15 +34,16 @@ declare_rule! {
 impl Rule for NoDebugger {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsDebuggerStatement;
+    type Query = Ast<JsDebuggerStatement>;
     type State = ();
+    type Signals = Option<Self::State>;
 
     fn run(_: &RuleContext<Self>) -> Option<Self::State> {
         Some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
@@ -54,7 +55,7 @@ impl Rule for NoDebugger {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         let prev_parent = node.syntax().parent()?;
 

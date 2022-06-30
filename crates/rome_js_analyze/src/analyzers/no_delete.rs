@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -42,11 +42,12 @@ declare_rule! {
 impl Rule for NoDelete {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsUnaryExpression;
+    type Query = Ast<JsUnaryExpression>;
     type State = MemberExpression;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         let op = node.operator().ok()?;
         if op != JsUnaryOperator::Delete {
@@ -58,7 +59,7 @@ impl Rule for NoDelete {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         Some(
             RuleDiagnostic::warning(node.range(), markup! {
@@ -69,7 +70,7 @@ impl Rule for NoDelete {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         let root = ctx.root().replace_node(
             JsAnyExpression::from(node.clone()),

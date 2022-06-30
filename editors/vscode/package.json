@@ -7,7 +7,9 @@
 	"icon": "icon.png",
 	"activationEvents": [
 		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
 		"onLanguage:typescript",
+		"onLanguage:typescriptreact",
 		"onCommand:rome.syntaxTree"
 	],
 	"main": "./out/main.js",
@@ -19,7 +21,7 @@
 		"url": "https://github.com/rome/tools/issues"
 	},
 	"engines": {
-		"vscode": "^1.63.0",
+		"vscode": "^1.68.1",
 		"npm": "^8"
 	},
 	"contributes": {
@@ -144,16 +146,17 @@
 		"package": "vsce package -o rome_lsp.vsix",
 		"build": "npm run compile -- --minify && npm run package",
 		"install-extension": "code --install-extension rome_lsp.vsix",
-		"format": "cargo run --bin rome format ./src/ ./scripts"
+		"format": "cargo run --bin rome format ./src/ ./scripts",
+		"tsc": "tsc"
 	},
 	"dependencies": {
-		"vscode-languageclient": "^8.0.0-next.13"
+		"vscode-languageclient": "^8.0.1"
 	},
 	"devDependencies": {
-		"@types/node": "^16.11.9",
-		"@types/vscode": "^1.52.0",
+		"@types/node": "^18.0.0",
+		"@types/vscode": "^1.68.1",
 		"typescript": "^4.5.2",
-		"vsce": "^2.7.0",
-		"esbuild": "^0.14.27"
+		"vsce": "^2.9.2",
+		"esbuild": "^0.14.47"
 	}
 }

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: type_expression.ts
 ---
 # Input
@@ -216,11 +217,11 @@ function test(a: string): a is string {
 
 type AbstractCompositeThingamabobberFactoryProvider = string;
 
-type ConstructorType = new(
+type ConstructorType = new (
 	options: { a: string; b: AbstractCompositeThingamabobberFactoryProvider },
 ) => {};
 
-type Constructor<T> = new(...args: any[]) => T;
+type Constructor<T> = new (...args: any[]) => T;
 
 function test2(a: string): asserts a is string {}
 

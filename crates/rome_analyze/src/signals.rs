@@ -78,36 +78,44 @@ where
 pub(crate) struct RuleSignal<'a, R: Rule> {
     file_id: FileId,
     root: &'a RuleRoot<R>,
-    node: R::Query,
+    query_result: &'a R::Query,
     state: R::State,
     _rule: PhantomData<R>,
 }
 
-impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
-    pub(crate) fn new_boxed(
+impl<'a, R> RuleSignal<'a, R>
+where
+    R: Rule + 'static,
+    R::Query: Clone,
+{
+    pub(crate) fn new(
         file_id: FileId,
         root: &'a RuleRoot<R>,
-        node: R::Query,
+        query_result: &'a R::Query,
         state: R::State,
-    ) -> Box<dyn AnalyzerSignal<RuleLanguage<R>> + 'a> {
-        Box::new(Self {
+    ) -> Self {
+        Self {
             file_id,
             root,
-            node,
+            query_result,
             state,
             _rule: PhantomData,
-        })
+        }
     }
 }
 
-impl<'a, R: Rule> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R> {
+impl<'a, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R>
+where
+    R: Rule,
+    R::Query: Clone,
+{
     fn diagnostic(&self) -> Option<Diagnostic> {
-        let ctx = RuleContext::new(self.node.clone(), self.root.clone());
+        let ctx = RuleContext::new(self.query_result, self.root);
         R::diagnostic(&ctx, &self.state).map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
-        let ctx = RuleContext::new(self.node.clone(), self.root.clone());
+        let ctx = RuleContext::new(self.query_result, self.root);
         R::action(&ctx, &self.state).and_then(|action| {
             let (original_range, new_range) =
                 find_diff_range(self.root.syntax(), action.root.syntax())?;

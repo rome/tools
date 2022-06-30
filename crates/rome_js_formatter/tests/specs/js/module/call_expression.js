@@ -16,6 +16,12 @@ useMemo(() => {
     [a, b]
 )
 
+useEffect(() => {
+    if (clipboardStatus !== "normal") {
+        setClipboardStatus("normal");
+    }
+}, [formatter_ir]);
+
 test.expect(t => {
     t.true(a)
 })

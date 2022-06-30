@@ -13,15 +13,6 @@ The executor function can also be an async function. However, this is usually a 
 2. If a Promise executor function is using `await`, this is usually a sign that it is not actually necessary to use the `new Promise` constructor, or the scope of the `new Promise` constructor can be reduced.
 ## Examples
 
-### Valid
-
-```jsx
-  new Promise((resolve, reject) => {})
-  new Promise((resolve, reject) => {}, async function unrelated() {})
-  new Foo(async (resolve, reject) => {})
-  new Foo((( (resolve, reject) => {} )))
-```
-
 ### Invalid
 
 ```jsx
@@ -59,4 +50,13 @@ new Promise(async function foo(resolve, reject) {})
   <span style="color: rgb(38, 148, 255);">│</span>                   <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
 </code></pre>{% endraw %}
+
+### Valid
+
+```jsx
+  new Promise((resolve, reject) => {})
+  new Promise((resolve, reject) => {}, async function unrelated() {})
+  new Foo(async (resolve, reject) => {})
+  new Foo((( (resolve, reject) => {} )))
+```
 

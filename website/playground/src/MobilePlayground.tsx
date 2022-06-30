@@ -28,9 +28,7 @@ export function MobilePlayground(
 					<Tab selectedClassName="bg-slate-300">AST</Tab>
 					<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
 					<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
-					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
-						Errors
-					</Tab>
+					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">Errors</Tab>
 				</TabList>
 				<TabPanel>
 					<CodeEditor
@@ -38,10 +36,12 @@ export function MobilePlayground(
 						language={language}
 						placeholder="Enter some code here"
 						onChange={(evn) => {
-							setPlaygroundState((state) => ({
-								...state,
-								code: evn.target.value,
-							}));
+							setPlaygroundState(
+								(state) => ({
+									...state,
+									code: evn.target.value,
+								}),
+							);
 						}}
 						style={{
 							fontSize: 12,
@@ -106,7 +106,9 @@ export function MobilePlayground(
 					<pre className="h-screen overflow-y-scroll">{prettierOutput.ir}</pre>
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
+					<pre
+						className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
+					>
 						{errors}
 					</pre>
 				</TabPanel>

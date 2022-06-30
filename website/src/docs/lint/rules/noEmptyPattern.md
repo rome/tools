@@ -9,19 +9,6 @@ Disallows empty destructuring patterns.
 
 ## Examples
 
-### Valid
-
-The following cases are valid because they create new bindings.
-
-```jsx
-var {a = {}} = foo;
-var {a, b = {}} = foo;
-var {a = []} = foo;
-function foo({a = {}}) {}
-function foo({a = []}) {}
-var [a] = foo;
-```
-
 ### Invalid
 
 ```jsx
@@ -59,4 +46,17 @@ function foo({}) {}
   <span style="color: rgb(38, 148, 255);">│</span>              <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
 </code></pre>{% endraw %}
+
+### Valid
+
+The following cases are valid because they create new bindings.
+
+```jsx
+var {a = {}} = foo;
+var {a, b = {}} = foo;
+var {a = []} = foo;
+function foo({a = {}}) {}
+function foo({a = []}) {}
+var [a] = foo;
+```
 

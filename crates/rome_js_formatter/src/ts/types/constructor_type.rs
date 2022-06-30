@@ -26,6 +26,7 @@ impl FormatNodeRule<TsConstructorType> for FormatTsConstructorType {
             f,
             [
                 new_token.format(),
+                space_token(),
                 type_parameters.format(),
                 parameters.format(),
                 space_token(),

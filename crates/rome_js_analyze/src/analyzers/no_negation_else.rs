@@ -1,5 +1,5 @@
 use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -41,11 +41,12 @@ declare_rule! {
 impl Rule for NoNegationElse {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = JsAnyCondition;
+    type Query = Ast<JsAnyCondition>;
     type State = JsUnaryExpression;
+    type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let n = ctx.query();
+        let Ast(n) = ctx.query();
 
         match n {
             JsAnyCondition::JsConditionalExpression(expr) => {
@@ -67,7 +68,7 @@ impl Rule for NoNegationElse {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -78,7 +79,7 @@ impl Rule for NoNegationElse {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let node = ctx.query();
+        let Ast(node) = ctx.query();
 
         let root = match node {
             JsAnyCondition::JsConditionalExpression(expr) => {

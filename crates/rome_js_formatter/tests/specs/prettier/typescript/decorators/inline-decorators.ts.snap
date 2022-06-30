@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: inline-decorators.ts
 ---
 # Input
@@ -104,11 +105,13 @@ class Bar {
 }
 
 class MyContainerComponent {
-  @ContentChildren(MyComponent) components: QueryListSomeBigName<
-    MyComponentThat
-  >;
+  @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 }
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   47:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+```
 
