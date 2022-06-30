@@ -171,7 +171,7 @@ fn contains_parent_loop_label(node: JsSyntaxNode, loop_stmt: JsSyntaxNode) -> Op
 }
 
 fn is_continue_inside_last_ancestors(
-    ancestors: &Vec<JsSyntaxNode>,
+    ancestors: &[JsSyntaxNode],
     syntax: JsSyntaxNode,
 ) -> Option<bool> {
     let len = ancestors.len();
