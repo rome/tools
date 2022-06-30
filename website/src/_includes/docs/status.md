@@ -21,9 +21,9 @@ We plan on covering the following areas:
 
 | Language                           | Parsing                                                 | Formatting                                              | Linting                                                 |
 |------------------------------------|---------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------|
-| [JavaScript](/#javascript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Not in Progress" role="img">🚫</span>       |
-| [TypeScript](/#typescript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Not in Progress" role="img">🚫</span> |
-| JSX                                | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="In Progress" role="img">⌛️</span>     | <span aria-label="Not in Progress" role="img">🚫</span> |
+| [JavaScript](/#javascript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        |
+| [TypeScript](/#typescript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        |
+| JSX                                | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅️</span>       | <span aria-label="Supported" role="img">✅</span>        |
 | JSON                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | HTML                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | CSS                                | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |

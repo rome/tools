@@ -1,4 +1,4 @@
-# CLI options
+## CLI
 
 Rome CLI offers some options that can be used with all commands:
 
