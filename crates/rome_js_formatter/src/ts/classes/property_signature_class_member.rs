@@ -1,9 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
-
-use crate::utils::FormatWithSemicolon;
-
-use rome_js_syntax::{TsPropertySignatureClassMember, TsPropertySignatureClassMemberFields};
+use crate::utils::{FormatWithSemicolon, JsAnyAssignmentLike};
+use rome_formatter::write;
+use rome_js_syntax::TsPropertySignatureClassMember;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsPropertySignatureClassMember;
@@ -14,24 +12,11 @@ impl FormatNodeRule<TsPropertySignatureClassMember> for FormatTsPropertySignatur
         node: &TsPropertySignatureClassMember,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        let TsPropertySignatureClassMemberFields {
-            modifiers,
-            name,
-            property_annotation,
-            semicolon_token,
-        } = node.as_fields();
-
+        let semicolon_token = node.semicolon_token();
+        let body = format_with(|f| write!(f, [JsAnyAssignmentLike::from(node.clone())]));
         write!(
             f,
-            [FormatWithSemicolon::new(
-                &format_args!(
-                    modifiers.format(),
-                    space_token(),
-                    name.format(),
-                    property_annotation.format(),
-                ),
-                semicolon_token.as_ref()
-            )]
+            [FormatWithSemicolon::new(&body, semicolon_token.as_ref())]
         )
     }
 }

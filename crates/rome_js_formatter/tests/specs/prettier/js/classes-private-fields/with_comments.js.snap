@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: with_comments.js
 ---
 # Input
@@ -18,10 +19,10 @@ class A {
 ```js
 class A {
   #foobar =
-  // comment to break
-  1 +
-    // comment to break again
-    2;
+    // comment to break
+    1 +
+      // comment to break again
+      2;
 }
 
 ```

@@ -294,7 +294,7 @@ fn write_groups(
     // TODO use Alternatives once available
     write!(f, [head_group])?;
 
-    if groups.groups_should_break(calls_count)? {
+    if groups.groups_should_break(calls_count, &head_group)? {
         write!(
             f,
             [indent(&format_args!(

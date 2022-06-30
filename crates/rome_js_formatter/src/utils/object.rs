@@ -2,17 +2,39 @@ use crate::prelude::*;
 use crate::utils::FormatLiteralStringToken;
 use crate::utils::StringLiteralParentKind;
 use rome_formatter::write;
-use rome_js_syntax::JsAnyObjectMemberName;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
-use rome_rowan::AstNode;
+use rome_js_syntax::{JsAnyClassMemberName, JsAnyObjectMemberName};
+use rome_rowan::{declare_node_union, AstNode};
 use unicode_width::UnicodeWidthStr;
 
+declare_node_union! {
+    pub(crate) JsAnyMemberName = JsAnyObjectMemberName | JsAnyClassMemberName
+}
+
+impl Format<JsFormatContext> for JsAnyMemberName {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        match self {
+            JsAnyMemberName::JsAnyObjectMemberName(node) => {
+                write!(f, [node.format()])
+            }
+            JsAnyMemberName::JsAnyClassMemberName(node) => {
+                write!(f, [node.format()])
+            }
+        }
+    }
+}
+
 pub(crate) fn write_member_name(
-    name: &JsAnyObjectMemberName,
+    name: &JsAnyMemberName,
     f: &mut JsFormatter,
 ) -> FormatResult<usize> {
     match name {
-        name @ JsAnyObjectMemberName::JsLiteralMemberName(literal) => {
+        name @ JsAnyMemberName::JsAnyClassMemberName(JsAnyClassMemberName::JsLiteralMemberName(
+            literal,
+        ))
+        | name @ JsAnyMemberName::JsAnyObjectMemberName(
+            JsAnyObjectMemberName::JsLiteralMemberName(literal),
+        ) => {
             let value = literal.value()?;
 
             if value.kind() == JS_STRING_LITERAL {
@@ -23,13 +45,13 @@ pub(crate) fn write_member_name(
 
                 Ok(cleaned.width())
             } else {
-                write!(f, [name.format()])?;
+                write!(f, [name])?;
 
                 Ok(value.text_trimmed().width())
             }
         }
         name => {
-            write!(f, [&name.format()])?;
+            write!(f, [&name])?;
             Ok(name.text().width())
         }
     }
