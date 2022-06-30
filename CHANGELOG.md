@@ -1,5 +1,27 @@
 # Rome changelog
 
+## 0.7.0
+
+### CLI
+
+- Added `--no-colors` argument.
+
+### Formatter
+
+- JSX and TSX are now formatted by default! Make sure to enable it as default formatter in the VSCode extension.
+- Improved the consistency of formatting of various statements:
+  - call arguments;
+  - object property members;
+  - variable declarations;
+  - object patterns;
+  - class property members;
+- Fixed a bunch of issues in the TypeScript formatting.
+
+### Linter
+
+- Added the new `--apply` argument to the `rome check` command; 
+- New rules added to the linter, check the [website](https://rome.tools/docs/lint/rules/);
+
 ## 0.6.1
 
 Fixes a regression introduced in the `rome format` command ([#2670](https://github.com/rome/tools/issues/2670))
