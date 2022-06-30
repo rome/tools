@@ -13,3 +13,4 @@ rome ci
 
 This command will:
 - run the formatter in check mode
+- run the linter in check mode
