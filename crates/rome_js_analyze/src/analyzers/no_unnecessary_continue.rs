@@ -99,7 +99,9 @@ impl Rule for NoUnnecessaryContinue {
         // Get parent of `ContinueStatement` SyntaxNode .
         let parent = syntax.parent()?;
         // Find index of `ContinueStatement` SyntaxNode in parent.
-        let index = parent.children().position(|n| n == syntax)?;
+		let wrapper_syntax_node = SyntaxElement::Node(syntax);
+        let index = parent.children_with_tokens().position(|n| n == wrapper_syntax_node)?;
+		println!("{}\n {},\n {:?}", parent, node, index);
         // Remove `ContinueStatement` SyntaxNode from parent.
         let next_parent = parent.clone().splice_slots(index..=index, []);
         let next_root_syntax = root_syntax.replace_child(
