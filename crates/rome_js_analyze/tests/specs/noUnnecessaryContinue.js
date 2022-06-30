@@ -28,6 +28,12 @@ test2: do {
 	continue test2;
 } while (true);
 // valid
+test3: do {
+	if (i < 2) {
+		continue test3;
+	}
+	i++;
+} while (true);
 while (i) {
 	if (i > 5) {
 		continue;

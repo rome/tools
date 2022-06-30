@@ -49,6 +49,12 @@ declare_rule! {
     /// }
     /// ```
     ///
+    /// ```js, expect_diagnostic
+    /// test2: do {
+    /// 	continue test2;
+    /// } while (true);
+    /// ```
+    ///
     /// ### Valid
     /// ```js
     /// while (i) {
@@ -103,7 +109,6 @@ impl Rule for NoUnnecessaryContinue {
         let index = parent
             .children_with_tokens()
             .position(|n| n == wrapper_syntax_node)?;
-        println!("{}\n {},\n {:?}", parent, node, index);
         // Remove `ContinueStatement` SyntaxNode from parent.
         let next_parent = parent.clone().splice_slots(index..=index, []);
         let next_root_syntax = root_syntax.replace_child(

@@ -122,6 +122,26 @@ for (let i = 0; i < 9; i++) {
 
 </code></pre>{% endraw %}
 
+```jsx
+test2: do {
+	continue test2;
+} while (true);
+```
+
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noUnnecessaryContinue</span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> noUnnecessaryContinue.js:2:2
+  <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     continue test2;
+  <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
+
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Delete the unnecessary continue statement</span>
+    | <span style="color: rgb(38, 148, 255);">@@ -1,3 +1,2 @@</span>
+0 0 |   test2: do {
+1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">	continue test2;</span>
+2 1 |   } while (true);
+
+</code></pre>{% endraw %}
+
 ### Valid
 
 ```jsx

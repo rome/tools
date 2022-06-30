@@ -35,6 +35,12 @@ test2: do {
 	continue test2;
 } while (true);
 // valid
+test3: do {
+	if (i < 2) {
+		continue test3;
+	}
+	i++;
+} while (true);
 while (i) {
 	if (i > 5) {
 		continue;
@@ -211,7 +217,7 @@ Suggested fix: Delete the unnecessary continue statement
 27    | - 	continue test2;
 28 27 |   } while (true);
 29 28 |   // valid
-30 29 |   while (i) {
+30 29 |   test3: do {
 
 
 ```
