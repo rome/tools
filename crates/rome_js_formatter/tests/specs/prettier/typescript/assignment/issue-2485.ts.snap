@@ -16,15 +16,10 @@ class x {
 # Output
 ```js
 class x {
-  private readonly rawConfigFromFile$: BehaviorSubject<any> = new BehaviorSubject(
-    notRead,
-  );
+  private readonly rawConfigFromFile$: BehaviorSubject<any> =
+    new BehaviorSubject(notRead);
 }
 
 ```
 
-# Lines exceeding max width of 80 characters
-```
-    2:   private readonly rawConfigFromFile$: BehaviorSubject<any> = new BehaviorSubject(
-```
 
