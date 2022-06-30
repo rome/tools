@@ -99,9 +99,11 @@ impl Rule for NoUnnecessaryContinue {
         // Get parent of `ContinueStatement` SyntaxNode .
         let parent = syntax.parent()?;
         // Find index of `ContinueStatement` SyntaxNode in parent.
-		let wrapper_syntax_node = SyntaxElement::Node(syntax);
-        let index = parent.children_with_tokens().position(|n| n == wrapper_syntax_node)?;
-		println!("{}\n {},\n {:?}", parent, node, index);
+        let wrapper_syntax_node = SyntaxElement::Node(syntax);
+        let index = parent
+            .children_with_tokens()
+            .position(|n| n == wrapper_syntax_node)?;
+        println!("{}\n {},\n {:?}", parent, node, index);
         // Remove `ContinueStatement` SyntaxNode from parent.
         let next_parent = parent.clone().splice_slots(index..=index, []);
         let next_root_syntax = root_syntax.replace_child(
@@ -148,9 +150,9 @@ fn is_continue_un_necessary(node: &JsContinueStatement) -> Option<bool> {
 }
 
 fn is_continue_last_statement(ancestors: &[JsSyntaxNode], syntax: JsSyntaxNode) -> Option<bool> {
-    let first_node = ancestors.get(0).unwrap();
+    let first_node = ancestors.first()?;
     if first_node.kind() == JsSyntaxKind::JS_STATEMENT_LIST {
-        Some(first_node.children().last().unwrap() == syntax)
+        Some(first_node.children().last()? == syntax)
     } else {
         None
     }
@@ -173,16 +175,13 @@ fn is_continue_inside_last_ancestors(
     syntax: JsSyntaxNode,
 ) -> Option<bool> {
     let len = ancestors.len();
-    for i in (2..=len).rev() {
-        let ancestor = &ancestors[i - 1];
-        if ancestor.kind() == JsSyntaxKind::JS_STATEMENT_LIST
-            && ancestor.children().next().is_some()
-        {
-            let body = ancestor.children();
+    for ancestor_window in ancestors.windows(2).rev() {
+        let parent = &ancestor_window[1];
+        let child = &ancestor_window[0];
+        if parent.kind() == JsSyntaxKind::JS_STATEMENT_LIST {
+            let body = parent.children();
             let last_body_node = body.last()?;
-            if !((len == 1 && last_body_node == syntax)
-                || (len > 1 && last_body_node == ancestors[i - 2]))
-            {
+            if !((len == 1 && last_body_node == syntax) || (len > 1 && &last_body_node == child)) {
                 return Some(false);
             }
         }
