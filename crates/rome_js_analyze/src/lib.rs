@@ -16,6 +16,7 @@ mod control_flow;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;
+pub (crate) mod utils;
 
 use crate::registry::build_registry;
 

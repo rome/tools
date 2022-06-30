@@ -1,0 +1,175 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: useTemplate.js
+---
+# Input
+```js
+// valid
+console.log("foo" + "bar");
+console.log(foo() + "\n");
+// invalid
+const foo = "bar";
+console.log(foo + "baz");
+console.log(1 * 2 + "foo");
+console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+console.log((1 + "foo") * 2);
+console.log(1 * (2 + "foo") + "bar");
+console.log("foo" + 1);
+console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+console.log("foo" + 1 + 2);
+
+```
+
+# Diagnostics
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:6:13
+  │
+6 │ console.log(foo + "baz");
+  │             -----------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:7:13
+  │
+7 │ console.log(1 * 2 + "foo");
+  │             -------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:8:13
+  │
+8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+  │             ---------------------------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:8:13
+  │
+8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+  │             -----------------------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:8:13
+  │
+8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+  │             ---------------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:8:13
+  │
+8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+  │             -------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:8:13
+  │
+8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+  │             ---------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+  ┌─ useTemplate.js:9:14
+  │
+9 │ console.log((1 + "foo") * 2);
+  │              ---------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+   ┌─ useTemplate.js:10:13
+   │
+10 │ console.log(1 * (2 + "foo") + "bar");
+   │             -----------------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+   ┌─ useTemplate.js:10:18
+   │
+10 │ console.log(1 * (2 + "foo") + "bar");
+   │                  ---------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+   ┌─ useTemplate.js:11:13
+   │
+11 │ console.log("foo" + 1);
+   │             ---------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+   ┌─ useTemplate.js:12:13
+   │
+12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+   │             ---------------------------------------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+   ┌─ useTemplate.js:12:13
+   │
+12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+   │             -------------------------------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+   ┌─ useTemplate.js:13:13
+   │
+13 │ console.log("foo" + 1 + 2);
+   │             -------------
+
+
+```
+
+```
+warning[useTemplate]: Template literals are preferred over string concatenation.
+   ┌─ useTemplate.js:13:13
+   │
+13 │ console.log("foo" + 1 + 2);
+   │             ---------
+
+
+```
+
+
