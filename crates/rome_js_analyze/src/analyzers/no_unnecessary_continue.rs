@@ -129,7 +129,11 @@ fn is_continue_un_necessary(node: &JsContinueStatement) -> Option<bool> {
     while let Some(parent) = current.parent() {
         if !matches!(
             parent.kind(),
-            JS_FOR_IN_STATEMENT | JS_FOR_OF_STATEMENT | JS_FOR_STATEMENT | JS_WHILE_STATEMENT
+            JS_FOR_IN_STATEMENT
+                | JS_FOR_OF_STATEMENT
+                | JS_FOR_STATEMENT
+                | JS_WHILE_STATEMENT
+                | JS_DO_WHILE_STATEMENT
         ) {
             ancestors.push(parent.clone());
         } else {

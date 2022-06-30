@@ -22,9 +22,11 @@ for (let i = 0; i < 9; i++) {
 	continue;
 }
 
-test: for (let i = 0; i < 9; i++)
-	continue test;
+test: for (let i = 0; i < 9; i++) continue test;
 
+test2: do {
+	continue test2;
+} while (true);
 // valid
 while (i) {
 	if (i > 5) {
