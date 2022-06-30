@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: call.js
 ---
 # Input
@@ -77,9 +78,8 @@ expect(
 );
 // .toThrowError(/Required parameter/);
 
-expect(
-	() => asyncRequest({ type: "foo", url: "/test-endpoint" }),
-).not.toThrowError();
+expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not
+	.toThrowError();
 
 expect(
 	() => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
