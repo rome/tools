@@ -1305,6 +1305,7 @@ version = "0.1.0"
 dependencies = [
  "bitflags",
  "rome_console",
+ "rome_control_flow",
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_syntax",
@@ -1344,6 +1345,13 @@ dependencies = [
  "text-size",
  "trybuild",
  "unicode-width",
+]
+
+[[package]]
+name = "rome_control_flow"
+version = "0.1.0"
+dependencies = [
+ "rome_rowan",
 ]
 
 [[package]]

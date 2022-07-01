@@ -119,6 +119,7 @@ mod tests {
                     nodes.push(node.kind());
                     ControlFlow::Continue(())
                 }
+                _ => panic!("unexpected QueryMatch variant"),
             }),
         };
 

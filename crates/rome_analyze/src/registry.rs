@@ -15,6 +15,7 @@ pub struct RuleRegistry<'a, L: Language, B> {
     /// Holds a collection of rules for each [SyntaxKind] node type that has
     /// lint rules associated with it
     ast_rules: Vec<SyntaxKindRules<L, B>>,
+    control_flow: Vec<RegistryRule<L, B>>,
     emit_signal: Box<dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B> + 'a>,
 }
 
@@ -22,6 +23,7 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
     pub fn new(emit_signal: impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B> + 'a) -> Self {
         Self {
             ast_rules: Vec::new(),
+            control_flow: Vec::new(),
             emit_signal: Box::new(emit_signal),
         }
     }
@@ -52,6 +54,9 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
                     let node = &mut self.ast_rules[index];
                     node.rules.push(RegistryRule::of::<R>());
                 }
+            }
+            QueryKey::ControlFlowGraph => {
+                self.control_flow.push(RegistryRule::of::<R>());
             }
         }
     }
@@ -110,6 +115,7 @@ where
                     None => return ControlFlow::Continue(()),
                 }
             }
+            QueryMatch::ControlFlowGraph(_) => &self.control_flow,
         };
 
         // Run all the rules registered to this QueryMatch
