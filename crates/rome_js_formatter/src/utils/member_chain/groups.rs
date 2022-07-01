@@ -1,8 +1,7 @@
+use crate::context::TabWidth;
 use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
-
-use crate::context::TabWidth;
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 use std::mem;
@@ -78,7 +77,11 @@ impl Groups {
     }
 
     /// It tells if the groups should be break on multiple lines
-    pub fn groups_should_break(&self, calls_count: usize) -> SyntaxResult<bool> {
+    pub fn groups_should_break(
+        &self,
+        calls_count: usize,
+        head_group: &HeadGroup,
+    ) -> FormatResult<bool> {
         // Do not allow the group to break if it only contains a single call expression
         if calls_count <= 1 {
             return Ok(false);
@@ -90,7 +93,50 @@ impl Groups {
         let call_expressions_are_not_simple =
             calls_count > 2 && self.call_expressions_are_not_simple()?;
 
-        Ok(call_expressions_are_not_simple)
+        // TODO: add here will_break logic
+
+        let node_has_comments = self.has_comments()? || head_group.has_comments();
+
+        let should_break = node_has_comments || call_expressions_are_not_simple;
+
+        Ok(should_break)
+    }
+
+    /// Checks if the groups contain comments.
+    pub fn has_comments(&self) -> SyntaxResult<bool> {
+        let mut has_leading_comments = false;
+
+        let flat_groups = self.groups.iter().flat_map(|item| item.iter());
+        for item in flat_groups {
+            if item.has_leading_comments()? {
+                has_leading_comments = true;
+                break;
+            }
+        }
+
+        let has_trailing_comments = self
+            .groups
+            .iter()
+            .flat_map(|item| item.iter())
+            .any(|item| item.has_trailing_comments());
+
+        let cutoff_has_leading_comments = if self.groups.len() >= self.cutoff as usize {
+            let group = self.groups.get(self.cutoff as usize);
+            if let Some(group) = group {
+                let first_item = group.first();
+                if let Some(first_item) = first_item {
+                    first_item.has_leading_comments()?
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        } else {
+            false
+        };
+
+        Ok(has_leading_comments || has_trailing_comments || cutoff_has_leading_comments)
     }
 
     /// Format groups on multiple lines
@@ -109,6 +155,10 @@ impl Groups {
     ///
     /// It's up to the printer to decide which one to use.
     pub fn write(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        if self.groups.is_empty() {
+            return Ok(());
+        }
+
         f.join()
             .entries(self.groups.iter().flat_map(|group| group.iter()))
             .finish()
@@ -218,6 +268,10 @@ impl HeadGroup {
 
     pub fn expand_group(&mut self, group: Vec<FlattenItem>) {
         self.items.extend(group)
+    }
+
+    fn has_comments(&self) -> bool {
+        self.items.iter().any(|item| item.has_trailing_comments())
     }
 }
 

@@ -180,8 +180,11 @@ somePromise
 
 // you can still force multi-line chaining with a comment:
 const sha256_2 = (data) =>
-  crypto // breakme
-  .createHash("sha256").update(data).digest("hex");
+  crypto
+    // breakme
+    .createHash("sha256")
+    .update(data)
+    .digest("hex");
 
 // examples from https://github.com/prettier/prettier/pull/4765
 
@@ -241,10 +244,10 @@ const date = moment.utc(userInput).hour(0).minute(0).second(0);
 
 fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
 
-fetchUser(
-  id,
-) //
-.then(fetchAccountForUser).catch(handleFetchError);
+fetchUser(id)
+  //
+  .then(fetchAccountForUser)
+  .catch(handleFetchError);
 
 // examples from https://github.com/prettier/prettier/issues/3107
 

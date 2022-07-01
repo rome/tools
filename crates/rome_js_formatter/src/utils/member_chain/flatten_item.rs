@@ -73,6 +73,17 @@ impl FlattenItem {
         }
     }
 
+    pub(crate) fn has_leading_comments(&self) -> SyntaxResult<bool> {
+        Ok(match self {
+            FlattenItem::StaticMember(node) => {
+                node.syntax().has_comments_direct() || node.operator_token()?.has_leading_comments()
+            }
+            FlattenItem::CallExpression(node) => node.syntax().has_leading_comments(),
+            FlattenItem::ComputedMember(node) => node.syntax().has_leading_comments(),
+            FlattenItem::Node(node) => node.has_leading_comments(),
+        })
+    }
+
     /// There are cases like Object.keys(), Observable.of(), _.values() where
     /// they are the subject of all the chained calls and therefore should
     /// be kept on the same line:
