@@ -1,4 +1,4 @@
-//! This module is a fork of https://github.com/brendanzab/codespan
+//! This module is a fork of <https://github.com/brendanzab/codespan>
 //! adapted to use the `rome_console` markup for formatting
 use std::collections::BTreeMap;
 use std::io;

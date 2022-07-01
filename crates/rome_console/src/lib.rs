@@ -27,7 +27,7 @@ pub enum LogLevel {
 /// Generic abstraction over printing markup and diagnostics to an output,
 /// which can be a terminal, a file, a memory buffer ...
 pub trait Console: Send + Sync + RefUnwindSafe {
-    /// Prints a message (formatted using [markup]) to the console
+    /// Prints a message (formatted using [markup!]) to the console
     fn print(&mut self, level: LogLevel, args: Markup);
 }
 
