@@ -426,7 +426,7 @@ impl<'token> LiteralStringNormaliser<'token> {
                                     // of the raw content:
                                     // ("\\")
                                     // The second backslash is at the end.
-                                    && next_index + 1 <= bytes.len()
+                                    && *next_index < bytes.len()
                                 {
                                     match signal {
                                         CharSignal::Keep => {
@@ -437,36 +437,32 @@ impl<'token> LiteralStringNormaliser<'token> {
                                             signal = AlreadyPrinted(alternate_quote.as_char());
                                         }
                                     }
+                                } else if signal == CharSignal::Keep {
+                                    reduced_string.push(current_char);
+                                }
+                                // The next character is another backslash, or
+                                // a character that should be kept in the next iteration
+                                else if matches!(
+                                    next_character,
+                                    '\\' | 'v' | 'b' | 'f' | 'n' | 't' | 'r' | 'u' | 'x'
+                                ) {
+                                    signal = CharSignal::Keep;
+                                    // fallback, keep the backslash
+                                    reduced_string.push(current_char);
+                                }
+                                // these are character that should stay, but
+                                // the next iteration should decide if to keep them or not
+                                else if !next_character.is_alphabetic()
+                                    && *next_character != alternate_quote.as_char()
+                                    && *next_character != preferred_quote.as_char()
+                                {
+                                    reduced_string.push(current_char);
                                 } else {
-                                    if signal == CharSignal::Keep {
-                                        reduced_string.push(current_char);
-                                    } else {
-                                        // The next character is another backslash, or
-                                        // a character that should be kept in the next iteration
-                                        if matches!(
-                                            next_character,
-                                            '\\' | 'v' | 'b' | 'f' | 'n' | 't' | 'r' | 'u' | 'x'
-                                        ) {
-                                            signal = CharSignal::Keep;
-                                            // fallback, keep the backslash
-                                            reduced_string.push(current_char);
-                                        } else {
-                                            // these are character that should stay, but
-                                            // the next iteration should decide if to keep them or not
-                                            if !next_character.is_alphabetic()
-                                                && *next_character != alternate_quote.as_char()
-                                                && *next_character != preferred_quote.as_char()
-                                            {
-                                                reduced_string.push(current_char);
-                                            } else {
-                                                // these, usually characters that can have their
-                                                // escape removed: "\a" => "a"
-                                                // So we ignore the current slash and we continue
-                                                // to the next iteration
-                                                continue;
-                                            }
-                                        }
-                                    }
+                                    // these, usually characters that can have their
+                                    // escape removed: "\a" => "a"
+                                    // So we ignore the current slash and we continue
+                                    // to the next iteration
+                                    continue;
                                 }
                             } else {
                                 // fallback, keep the backslash
