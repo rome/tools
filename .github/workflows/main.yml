@@ -89,6 +89,25 @@ jobs:
       - name: Clean cache
         run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
 
+  documentation:
+    name: Documentation check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install toolchain
+        run: rustup show
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+      - name: Compile for tests
+        uses: actions-rs/cargo@v1
+      - name: Run doc command
+        uses: actions-rs/cargo@v1
+        with:
+          command: doc
+          args: -p rome_formatter -p rome_control_flow -p rome_analyze --no-deps
+
   coverage:
     name: Test262 Coverage
     runs-on: ${{ matrix.os }}
