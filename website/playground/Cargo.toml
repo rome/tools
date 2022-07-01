@@ -10,6 +10,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.79"
+js-sys = "0.3.58"
+web-sys = "0.3.58"
 rome_js_formatter = { path = "../../crates/rome_js_formatter" }
 rome_formatter = { path = "../../crates/rome_formatter" }
 rome_js_parser = { path = "../../crates/rome_js_parser", features = ["serde"] }
@@ -19,4 +21,3 @@ rome_analyze = { path = "../../crates/rome_analyze" }
 rome_js_analyze = { path = "../../crates/rome_js_analyze" }
 rome_console = { path = "../../crates/rome_console" }
 serde_json = "1.0.79"
-ansi-to-html = "0.1.0"

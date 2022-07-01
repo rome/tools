@@ -19,6 +19,12 @@ extern "C" {
     // `log(..)`
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
+
+    #[wasm_bindgen(js_namespace = performance)]
+    fn mark(name: &str);
+
+    #[wasm_bindgen(js_namespace = performance)]
+    fn measure(name: &str, begin: &str, end: &str) -> JsValue;
 }
 
 #[allow(unused_macros)]
@@ -163,6 +169,12 @@ impl PlaygroundFormatOptions {
     }
 }
 
+fn measure_and_print(name: &str, begin: &str, end: &str) {
+    let parse_measure = measure(name, begin, end);
+    let parse_measure = js_sys::JSON::stringify(&parse_measure).unwrap();
+    log(&parse_measure.as_string().unwrap());
+}
+
 #[wasm_bindgen]
 pub fn run(
     code: String,
@@ -191,7 +203,12 @@ pub fn run(
         }
     };
 
+    mark("rome::begin");
+    mark("rome::parse::begin");
     let parse = parse(&code, main_file_id, source_type);
+    mark("rome::parse::end");
+    measure_and_print("rome::parse", "rome::parse::begin", "rome::parse::end");
+
     let syntax = parse.syntax();
 
     let indent_style = if let Some(width) = options.indent_width {
@@ -221,8 +238,11 @@ pub fn run(
         (format!("{:#?}", syntax), format!("{:#?}", parse.tree()))
     };
 
+    mark("rome::format::begin");
     let formatted = format_node(context, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
+    mark("rome::format::end");
+    measure_and_print("rome::format", "rome::format::begin", "rome::format::end");
 
     let root_element = formatted.into_format_element();
     let formatter_ir = format!("{:#?}", root_element);
@@ -234,6 +254,7 @@ pub fn run(
             .unwrap();
     }
 
+    mark("rome::analyze::begin");
     rome_js_analyze::analyze(
         main_file_id,
         &parse.tree(),
@@ -252,6 +273,15 @@ pub fn run(
             ControlFlow::<Never>::Continue(())
         },
     );
+    mark("rome::analyze::end");
+    measure_and_print(
+        "rome::analyze",
+        "rome::analyze::begin",
+        "rome::analyze::end",
+    );
+
+    mark("rome::end");
+    measure_and_print("rome", "rome::begin", "rome::end");
 
     RomeOutput {
         cst,
