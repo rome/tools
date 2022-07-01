@@ -14,6 +14,13 @@ eleventyNavigation:
 <section>
 <h2>JavaScript</h2>
 <div class="rule">
+<h3 data-toc-exclude id="noArguments">
+	<a href="/docs/lint/rules/noArguments">noArguments</a>
+	<a class="header-anchor" href="#noArguments"></a>
+</h3>
+Disallow the use of <code>arguments</code>
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noAsyncPromiseExecutor">
 	<a href="/docs/lint/rules/noAsyncPromiseExecutor">noAsyncPromiseExecutor</a>
 	<a class="header-anchor" href="#noAsyncPromiseExecutor"></a>
