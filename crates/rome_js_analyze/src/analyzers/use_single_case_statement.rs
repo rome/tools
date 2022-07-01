@@ -52,7 +52,7 @@ impl Rule for UseSingleCaseStatement {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(n) = ctx.query();
+        let n = ctx.query();
         if n.consequent().len() > 1 {
             Some(())
         } else {
@@ -61,7 +61,7 @@ impl Rule for UseSingleCaseStatement {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(n) = ctx.query();
+        let n = ctx.query();
 
         Some(RuleDiagnostic::warning(
             n.consequent().range(),
@@ -72,7 +72,7 @@ impl Rule for UseSingleCaseStatement {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let Ast(n) = ctx.query();
+        let n = ctx.query();
 
         let JsCaseClauseFields {
             case_token,

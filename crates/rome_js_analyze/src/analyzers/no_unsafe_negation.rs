@@ -43,7 +43,7 @@ impl Rule for NoUnsafeNegation {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         match node {
             JsInOrInstanceOfExpression::JsInstanceofExpression(expr) => {
                 let left = expr.left().ok()?;
@@ -73,7 +73,7 @@ impl Rule for NoUnsafeNegation {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -83,7 +83,7 @@ impl Rule for NoUnsafeNegation {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let mut root = ctx.root();
         // The action could be splitted to three steps
         // 1. Remove `!` operator of unary expression

@@ -132,6 +132,7 @@ impl FusedIterator for ScopeBindingsIter {}
 /// - Declrations: [declaration]
 ///
 /// See [SemanticModelData] for more information about the internals.
+#[derive(Clone)]
 pub struct SemanticModel {
     data: Arc<SemanticModelData>,
 }
@@ -335,13 +336,13 @@ impl SemanticModelBuilder {
 /// For a push based model to build the [SemanticModel], see [SemanticModelBuilder].
 pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
     let mut extractor = SemanticEventExtractor::default();
-    let mut sink = SemanticModelBuilder::default();
+    let mut builder = SemanticModelBuilder::default();
 
     let root = root.syntax();
     for node in root.preorder() {
         match node {
             rome_js_syntax::WalkEvent::Enter(node) => {
-                sink.push_node(&node);
+                builder.push_node(&node);
                 extractor.enter(&node);
             }
             rome_js_syntax::WalkEvent::Leave(node) => extractor.leave(&node),
@@ -349,10 +350,10 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
     }
 
     while let Some(e) = extractor.pop() {
-        sink.push_event(e);
+        builder.push_event(e);
     }
 
-    sink.build()
+    builder.build()
 }
 
 #[cfg(test)]

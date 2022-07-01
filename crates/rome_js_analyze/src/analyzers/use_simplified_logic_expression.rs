@@ -60,7 +60,7 @@ impl Rule for UseSimplifiedLogicExpression {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let left = node.left().ok()?;
         let right = node.right().ok()?;
         match node.operator().ok()? {
@@ -118,7 +118,7 @@ impl Rule for UseSimplifiedLogicExpression {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -129,7 +129,7 @@ impl Rule for UseSimplifiedLogicExpression {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let root = ctx.root().replace_node(
             JsAnyExpression::JsLogicalExpression(node.clone()),
             state.clone(),

@@ -6,15 +6,30 @@ use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind};
 use crate::{
     context::RuleContext,
     query::{QueryKey, QueryMatch, Queryable},
+    services::ServiceBag,
     signals::{AnalyzerSignal, RuleSignal},
     ControlFlow, Rule,
 };
 
+#[repr(usize)]
+pub enum Phases {
+    Syntax = 0,
+    Semantic = 1,
+}
+
+pub trait Phase {
+    fn phase() -> Phases {
+        Phases::Syntax
+    }
+}
+
+impl Phase for () {}
+
 /// The rule registry holds type-erased instances of all active analysis rules
 pub struct RuleRegistry<'a, L: Language, B> {
     /// Holds a collection of rules for each [SyntaxKind] node type that has
-    /// lint rules associated with it
-    ast_rules: Vec<SyntaxKindRules<L, B>>,
+    /// lint rules associated with it for each phase
+    phases: [Vec<SyntaxKindRules<L, B>>; 2],
     control_flow: Vec<RegistryRule<L, B>>,
     emit_signal: Box<dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B> + 'a>,
 }
@@ -22,7 +37,7 @@ pub struct RuleRegistry<'a, L: Language, B> {
 impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
     pub fn new(emit_signal: impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B> + 'a) -> Self {
         Self {
-            ast_rules: Vec::new(),
+            phases: [Vec::new(), Vec::new()],
             control_flow: Vec::new(),
             emit_signal: Box::new(emit_signal),
         }
@@ -34,6 +49,8 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
         R: Rule + 'static,
         R::Query: Queryable<Language = L> + Clone,
     {
+        let phase = R::phase() as usize;
+
         match <R::Query as Queryable>::KEY {
             QueryKey::Syntax(key) => {
                 // Iterate on all the SyntaxKind variants this node can match
@@ -45,13 +62,13 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
 
                     // Ensure the vector has enough capacity by inserting empty
                     // `SyntaxKindRules` as required
-                    if self.ast_rules.len() <= index {
-                        self.ast_rules.resize_with(index + 1, SyntaxKindRules::new);
+                    if self.phases[phase].len() <= index {
+                        self.phases[phase].resize_with(index + 1, SyntaxKindRules::new);
                     }
 
                     // Insert a handle to the rule `R` into the `SyntaxKindRules` entry
                     // corresponding to the SyntaxKind index
-                    let node = &mut self.ast_rules[index];
+                    let node = &mut self.phases[phase][index];
                     node.rules.push(RegistryRule::of::<R>());
                 }
             }
@@ -63,13 +80,27 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
 
     /// Returns an iterator over the name and documentation of all active rules
     /// in this instance of the registry
-    pub fn metadata(self) -> impl Iterator<Item = (&'static str, &'static str)> {
+    pub fn metadata(&self) -> Vec<(&'static str, &'static str)> {
         let mut unique = HashSet::new();
-        self.ast_rules
-            .into_iter()
-            .flat_map(|node| node.rules)
+
+        let [phase0, phase1] = &self.phases;
+
+        let mut m: Vec<_> = phase0
+            .iter()
+            .flat_map(|node| node.rules.iter())
             .map(|rule| (rule.name, rule.docs))
-            .filter(move |(name, _)| unique.insert(name.as_ptr() as u64))
+            .filter(|(name, _)| unique.insert(name.as_ptr() as u64))
+            .collect();
+
+        m.extend(
+            phase1
+                .iter()
+                .flat_map(|node| node.rules.iter())
+                .map(|rule| (rule.name, rule.docs))
+                .filter(|(name, _)| unique.insert(name.as_ptr() as u64)),
+        );
+
+        m
     }
 }
 
@@ -98,10 +129,14 @@ where
     // Run all rules known to the registry associated with nodes of type N
     pub fn match_query(
         &mut self,
+        phase: Phases,
         file_id: FileId,
         root: &LanguageRoot<L>,
         query: &QueryMatch<L>,
+        services: &ServiceBag,
     ) -> ControlFlow<B> {
+        let phase = phase as usize;
+
         let rules = match query {
             QueryMatch::Syntax(node) => {
                 // Convert the numerical value of the SyntaxKind to an index in the
@@ -110,7 +145,7 @@ where
                 let kind = usize::from(kind);
 
                 // Lookup the syntax entry corresponding to the SyntaxKind index
-                match self.ast_rules.get(kind) {
+                match self.phases[phase].get(kind) {
                     Some(entry) => &entry.rules,
                     None => return ControlFlow::Continue(()),
                 }
@@ -120,7 +155,7 @@ where
 
         // Run all the rules registered to this QueryMatch
         for rule in rules {
-            (rule.run)(file_id, root, query, &mut self.emit_signal)?;
+            (rule.run)(file_id, root, query, services, &mut self.emit_signal)?;
         }
 
         ControlFlow::Continue(())
@@ -132,6 +167,7 @@ type RuleExecutor<L, B> = for<'a> fn(
     FileId,
     &'a LanguageRoot<L>,
     &'a QueryMatch<L>,
+    &'a ServiceBag,
     &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B>,
 ) -> ControlFlow<B>;
 
@@ -153,6 +189,7 @@ impl<L: Language, B> RegistryRule<L, B> {
             file_id: FileId,
             root: &'a RuleRoot<R>,
             query: &'a QueryMatch<RuleLanguage<R>>,
+            services: &'a ServiceBag,
             callback: &'a mut dyn FnMut(&dyn AnalyzerSignal<RuleLanguage<R>>) -> ControlFlow<B>,
         ) -> ControlFlow<B>
         where
@@ -162,10 +199,14 @@ impl<L: Language, B> RegistryRule<L, B> {
             // SAFETY: The rule should never get executed in the first place
             // if the query doesn't match
             let query_result = <R::Query as Queryable>::unwrap_match(query);
-            let ctx = RuleContext::new(&query_result, root);
+            let ctx = match RuleContext::new(&query_result, root, services.clone()) {
+                Ok(ctx) => ctx,
+                Err(_) => return ControlFlow::Continue(()),
+            };
 
             for result in R::run(&ctx) {
-                let signal = RuleSignal::<R>::new(file_id, root, &query_result, result);
+                let signal =
+                    RuleSignal::<R>::new(file_id, root, &query_result, result, services.clone());
                 callback(&signal)?;
             }
 

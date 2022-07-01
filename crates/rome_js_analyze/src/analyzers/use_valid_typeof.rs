@@ -81,7 +81,7 @@ impl Rule for UseValidTypeof {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(n) = ctx.query();
+        let n = ctx.query();
 
         let JsBinaryExpressionFields {
             left,

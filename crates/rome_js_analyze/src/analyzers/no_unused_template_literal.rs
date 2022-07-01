@@ -47,7 +47,7 @@ impl Rule for NoUnusedTemplateLiteral {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         if node.tag().is_none() && can_convert_to_string_literal(node) {
             Some(())
@@ -57,7 +57,7 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(node.range(),markup! {
             "Do not use template literals if interpolation and special-character handling are not needed."
@@ -66,7 +66,7 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         // join all template content
         let inner_content = node

@@ -28,7 +28,7 @@ impl Rule for FlipBinExp {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let JsBinaryExpressionFields {
             left,
@@ -44,7 +44,7 @@ impl Rule for FlipBinExp {
     }
 
     fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;

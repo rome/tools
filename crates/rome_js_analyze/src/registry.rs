@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{analyzers::*, assists::*};
+use crate::{analyzers::*, assists::*, semantic_analyzers::*};
 use rome_analyze::{AnalysisFilter, AnalyzerSignal, ControlFlow, RuleRegistry};
 use rome_js_syntax::JsLanguage;
+
 pub(crate) fn build_registry<'a, F, B>(
     filter: &AnalysisFilter,
     callback: F,
@@ -11,6 +12,10 @@ where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
 {
     let mut rules = RuleRegistry::new(callback);
+
+    if filter.match_rule::<NoArguments>() {
+        rules.push::<NoArguments>();
+    }
     if filter.match_rule::<NoAsyncPromiseExecutor>() {
         rules.push::<NoAsyncPromiseExecutor>();
     }

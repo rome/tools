@@ -17,7 +17,7 @@ type MatchQuery<'a, L, B> =
     Box<dyn FnMut(FileId, &LanguageRoot<L>, &QueryMatch<L>) -> ControlFlow<B> + 'a>;
 
 impl<'a, L: Language, B> VisitorContext<'a, L, B> {
-    /// Run all the rules with a `Query` matching `quary_match`
+    /// Run all the rules with a `Query` matching `query_match`
     pub fn match_query(&mut self, query_match: &QueryMatch<L>) -> ControlFlow<B> {
         (self.match_query)(self.file_id, &self.root, query_match)
     }

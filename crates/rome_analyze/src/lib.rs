@@ -7,14 +7,16 @@ pub mod context;
 mod query;
 mod registry;
 mod rule;
+mod services;
 mod signals;
 mod syntax;
 mod visitor;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
-pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
-pub use crate::registry::{LanguageRoot, RuleRegistry};
+pub use crate::query::{Ast, CannotCreateServicesError, QueryKey, QueryMatch, Queryable};
+pub use crate::registry::{LanguageRoot, Phase, Phases, RuleRegistry};
 pub use crate::rule::{Rule, RuleAction, RuleDiagnostic, RuleMeta};
+pub use crate::services::{ServiceBag, ServiceBagData};
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext};
@@ -44,10 +46,10 @@ impl<L: Language, B> Analyzer<L, B> {
         self.visitors.push(Box::new(visitor));
     }
 
-    pub fn run(mut self, ctx: &mut VisitorContext<L, B>) -> Option<B> {
+    pub fn run(&mut self, mut ctx: VisitorContext<L, B>) -> Option<B> {
         for event in ctx.root.syntax().preorder() {
             for visitor in &mut self.visitors {
-                if let ControlFlow::Break(br) = visitor.visit(&event, ctx) {
+                if let ControlFlow::Break(br) = visitor.visit(&event, &mut ctx) {
                     return Some(br);
                 }
             }

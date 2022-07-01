@@ -5,7 +5,7 @@ use crate::{ControlFlow, QueryMatch, Visitor, VisitorContext};
 /// The [SyntaxVisitor] is the simplest form of visitor implemented for the
 /// analyzer, it simply broadcast each [WalkEvent::Enter] as a query match
 /// event for the [SyntaxNode] being entered
-pub struct SyntaxVisitor<L: Language, F> {
+pub struct SyntaxVisitor<L: Language, F: Send> {
     has_suppressions: F,
     /// If a subtree is currently being skipped by the visitor, for instance
     /// because it has a suppression comment, this stores the root [SyntaxNode]
@@ -14,7 +14,7 @@ pub struct SyntaxVisitor<L: Language, F> {
     skip_subtree: Option<SyntaxNode<L>>,
 }
 
-impl<L: Language, F> SyntaxVisitor<L, F>
+impl<L: Language, F: Send> SyntaxVisitor<L, F>
 where
     F: Fn(&SyntaxNode<L>) -> bool,
 {
@@ -26,7 +26,7 @@ where
     }
 }
 
-impl<L: Language, F, B> Visitor<B> for SyntaxVisitor<L, F>
+impl<L: Language, F: Send, B> Visitor<B> for SyntaxVisitor<L, F>
 where
     F: Fn(&SyntaxNode<L>) -> bool,
 {
@@ -110,7 +110,7 @@ mod tests {
         analyzer.add_visitor(SyntaxVisitor::new(|_| false));
 
         let mut nodes = Vec::new();
-        let mut ctx: VisitorContext<RawLanguage, Never> = VisitorContext {
+        let ctx: VisitorContext<RawLanguage, Never> = VisitorContext {
             file_id: 0,
             root,
             range: None,
@@ -123,10 +123,8 @@ mod tests {
             }),
         };
 
-        let result = analyzer.run(&mut ctx);
+        let result = analyzer.run(ctx);
         assert!(result.is_none());
-
-        drop(ctx);
 
         assert_eq!(
             nodes.as_slice(),

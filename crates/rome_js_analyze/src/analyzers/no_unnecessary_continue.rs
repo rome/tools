@@ -84,12 +84,12 @@ impl Rule for NoUnnecessaryContinue {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         is_continue_un_necessary(node)?.then(|| ())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
@@ -99,7 +99,7 @@ impl Rule for NoUnnecessaryContinue {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let root_syntax = ctx.root().into_syntax();
         let syntax = node.clone().into_syntax();
         // Get parent of `ContinueStatement` SyntaxNode .
