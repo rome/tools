@@ -2,6 +2,9 @@ use crate::{GroupId, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
+#[cfg(debug_assertions)]
+use std::any::type_name;
+use std::any::TypeId;
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -70,6 +73,12 @@ pub enum FormatElement {
     /// An interned format element. Useful when the same content must be emitted multiple times to avoid
     /// deep cloning the IR when using the `best_fitting!` macro or `if_group_fits_on_line` and `if_group_breaks`.
     Interned(Interned),
+
+    /// Special semantic element marking the content with a label.
+    /// This does not directly influence how the content will be printed.
+    ///
+    /// See [crate::labelled] for documentation.
+    Label(Label),
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
@@ -150,6 +159,10 @@ impl Debug for FormatElement {
             }
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
             FormatElement::Interned(inner) => inner.fmt(fmt),
+            FormatElement::Label(label) => {
+                write!(fmt, "Label")?;
+                label.fmt(fmt)
+            }
         }
     }
 }
@@ -352,6 +365,51 @@ impl Deref for Interned {
     }
 }
 
+#[derive(Eq, PartialEq, Copy, Clone, Debug)]
+pub struct LabelId {
+    id: TypeId,
+    #[cfg(debug_assertions)]
+    label: &'static str,
+}
+
+impl LabelId {
+    pub(crate) fn of<T: ?Sized + 'static>() -> Self {
+        Self {
+            id: TypeId::of::<T>(),
+            #[cfg(debug_assertions)]
+            label: type_name::<T>(),
+        }
+    }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+pub struct Label {
+    pub(crate) content: Box<[FormatElement]>,
+    label_id: LabelId,
+}
+
+impl Label {
+    pub fn new(label_id: LabelId, content: Vec<FormatElement>) -> Self {
+        Self {
+            content: content.into_boxed_slice(),
+            label_id,
+        }
+    }
+
+    pub fn label_id(&self) -> LabelId {
+        self.label_id
+    }
+}
+
+impl Debug for Label {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        fmt.debug_struct("")
+            .field("label_id", &self.label_id)
+            .field("content", &self.content)
+            .finish()
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ConditionalGroupContent {
     pub(crate) content: Content,
@@ -513,6 +571,7 @@ impl FormatElement {
             | FormatElement::Comment(content)
             | FormatElement::Fill(Fill { content, .. })
             | FormatElement::Verbatim(Verbatim { content, .. })
+            | FormatElement::Label(Label { content, .. })
             | FormatElement::Indent(content) => content.iter().any(FormatElement::will_break),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
             FormatElement::Token(token) => token.contains('\n'),

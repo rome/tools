@@ -285,6 +285,12 @@ impl<'a> Printer<'a> {
                 }
             }
             FormatElement::Interned(content) => queue.enqueue(PrintElementCall::new(content, args)),
+            FormatElement::Label(label) => queue.extend(
+                label
+                    .content
+                    .iter()
+                    .map(|element| PrintElementCall::new(element, args)),
+            ),
         }
     }
 
@@ -819,6 +825,7 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
         FormatElement::Interned(content) => queue.enqueue(PrintElementCall::new(content, args)),
+        FormatElement::Label(label) => queue.extend(label.content.iter(), args),
     }
 
     Fits::Maybe

@@ -1,5 +1,5 @@
 use super::{write, Arguments, FormatElement};
-use crate::format_element::List;
+use crate::format_element::{LabelId, List};
 use crate::{Format, FormatResult, FormatState};
 use std::any::{Any, TypeId};
 use std::fmt::Debug;
@@ -487,6 +487,60 @@ pub trait BufferExtensions: Buffer + Sized {
         WillBreakBuffer::new(self)
     }
 
+    /// It emits a custom buffer called [IsLabelledBuffer], which tracks
+    /// labelled elements written in the main buffer, it does so by
+    /// checking if [element](FormatElement) is [label](FormatElement::Label)
+    /// with expected [label_id](LabelId).
+    ///
+    /// This functionality can be used only on one element and only after the element
+    /// is written in the buffer.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use rome_formatter::prelude::*;
+    /// use rome_formatter::{format, write, LineWidth};
+    ///
+    /// enum SomeLabelId {}
+    ///
+    /// let context = SimpleFormatContext {
+    ///     line_width: LineWidth::try_from(20).unwrap(),
+    ///     ..SimpleFormatContext::default()
+    /// };
+    ///
+    /// let formatted = format!(
+    ///     context,
+    ///     [format_with(|f| {
+    ///         let element = format_with(|f| {
+    ///             let label_id = f.label_of::<SomeLabelId>();
+    ///
+    ///             write!(f, [labelled(label_id, &token("labelled")),])
+    ///         })
+    ///         .memoized();
+    ///
+    ///         let is_labelled = {
+    ///             let mut null_buffer = f.inspect_null();
+    ///             let mut buffer = null_buffer.inspect_is_labelled::<SomeLabelId>();
+    ///             write!(buffer, [element])?;
+    ///             buffer.is_labelled()
+    ///         };
+    ///
+    ///         if is_labelled {
+    ///             write!(f, [token("This is "), &element])
+    ///         } else {
+    ///             write!(f, [token("This is not "), &element])
+    ///         }
+    ///     })]
+    /// )
+    /// .unwrap();
+    ///
+    /// assert_eq!("This is labelled", formatted.print().as_code());
+    /// ```
+    fn inspect_is_labelled<T: ?Sized + 'static>(&mut self) -> IsLabelledBuffer<Self::Context> {
+        let label_id = self.label_of::<T>();
+        IsLabelledBuffer::new(self, label_id)
+    }
+
     /// It creates a buffer where all the elements are ignored, so the elements
     /// are not written anywhere at all.
     ///
@@ -542,11 +596,92 @@ pub trait BufferExtensions: Buffer + Sized {
     fn inspect_null(&mut self) -> NullBuffer<Self::Context> {
         NullBuffer::new(self)
     }
+
+    #[must_use]
+    fn label_of<T: ?Sized + 'static>(&self) -> LabelId {
+        LabelId::of::<T>()
+    }
 }
 
 impl<T> BufferExtensions for T where T: Buffer {}
 
-#[must_use = "must eventually call `finish()` to retrieve the information"]
+#[must_use = "must eventually call `is_labelled()` to retrieve the information"]
+pub struct IsLabelledBuffer<'buffer, Context> {
+    inner: &'buffer mut dyn Buffer<Context = Context>,
+    label_id: LabelId,
+    is_labelled: bool,
+}
+
+impl<'buffer, Context> IsLabelledBuffer<'buffer, Context> {
+    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>, label_id: LabelId) -> Self {
+        Self {
+            inner: buffer,
+            label_id,
+            is_labelled: false,
+        }
+    }
+
+    pub fn is_labelled(&self) -> bool {
+        self.is_labelled
+    }
+}
+
+impl<Context> Buffer for IsLabelledBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        if !self.is_labelled {
+            let label = match &element {
+                FormatElement::Label(label) => Some(label),
+                FormatElement::Interned(inner) => {
+                    if let FormatElement::Label(label) = inner.deref() {
+                        Some(label)
+                    } else {
+                        None
+                    }
+                }
+                _ => None,
+            };
+
+            self.is_labelled = label
+                .map(|label| label.label_id() == self.label_id)
+                .unwrap_or(false);
+        }
+
+        self.inner.write_element(element)
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        BufferSnapshot::Any(Box::new(IsLabelledSnapshot {
+            inner: self.inner.snapshot(),
+            label_id: self.label_id,
+            is_labelled: self.is_labelled,
+        }))
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        let snapshot = snapshot.unwrap_any::<IsLabelledSnapshot>();
+        self.inner.restore_snapshot(snapshot.inner);
+        self.is_labelled = snapshot.is_labelled;
+        self.label_id = snapshot.label_id;
+    }
+}
+
+struct IsLabelledSnapshot {
+    inner: BufferSnapshot,
+    label_id: LabelId,
+    is_labelled: bool,
+}
+
+#[must_use = "must eventually call `will_break()` to retrieve the information"]
 pub struct WillBreakBuffer<'buffer, Context> {
     breaks: bool,
     inner: &'buffer mut dyn Buffer<Context = Context>,
