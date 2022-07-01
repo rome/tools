@@ -82,9 +82,8 @@ jobs:
           args: --workspace --verbose
 
   documentation:
-    name: Documentation check
+    name: Documentation
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

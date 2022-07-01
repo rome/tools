@@ -1,3 +1,5 @@
+#![deny(rustdoc::broken_intra_doc_links)]
+
 use std::{
     collections::HashMap,
     fmt::{self, Display, Formatter},

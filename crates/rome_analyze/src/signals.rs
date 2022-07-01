@@ -14,15 +14,15 @@ use crate::{
     rule::Rule,
 };
 
-/// Event raised by the analyzer when a [Rule](crate::registry::Rule)
+/// Event raised by the analyzer when a [Rule](crate::Rule)
 /// emits a diagnostic, a code action, or both
 pub trait AnalyzerSignal<L: Language> {
     fn diagnostic(&self) -> Option<Diagnostic>;
     fn action(&self) -> Option<AnalyzerAction<L>>;
 }
 
-/// Code Action object returned by the analyzer, generated from a [RuleAction](crate::registry::RuleAction)
-/// with additional informations about the rule injected by the analyzer
+/// Code Action object returned by the analyzer, generated from a [crate::RuleAction]
+/// with additional information about the rule injected by the analyzer
 ///
 /// This struct can be converted into a [CodeSuggestion] and injected into
 /// a diagnostic emitted by the same signal

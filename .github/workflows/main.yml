@@ -90,9 +90,8 @@ jobs:
         run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
 
   documentation:
-    name: Documentation check
+    name: Documentation
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

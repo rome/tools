@@ -1,3 +1,5 @@
+#![deny(rustdoc::broken_intra_doc_links)]
+
 use std::ops;
 
 mod categories;
@@ -76,7 +78,7 @@ impl AnalysisFilter<'_> {
 }
 
 /// Utility type to be used as a default value for the `B` generic type on
-/// [analyze] when the provided callback never breaks
+/// `analyze` when the provided callback never breaks
 ///
 /// This should eventually get replaced with the `!` type when it gets stabilized
 pub enum Never {}
@@ -91,7 +93,7 @@ pub enum Never {}
 /// In practice it's not really a `loop` but a `for` because it's iterating on
 /// all nodes in the syntax tree, so when it reaches the end of the iterator
 /// the loop will exit but without producing a value of type `B`: for this
-/// reason the [analyze] function returns an `Option<B>` that's set to
+/// reason the `analyze` function returns an `Option<B>` that's set to
 /// `Some(B)` if the callback did break, and `None` if the analysis reached the
 /// end of the file.
 ///
