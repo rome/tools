@@ -6,9 +6,9 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyStatement, JsBinaryExpression, JsBinaryOperator, JsForStatement,
-    JsForStatementFields, T,
+    JsForStatementFields, JsTemplateElement, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, declare_node_union};
+use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
 
 use crate::{utils::interpret_escaped_string, JsRuleAction};
 
@@ -187,25 +187,11 @@ fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<JsAnyE
 // 	return parts;
 // }
 
-
-fn flatten_expressions_to_template_parts(exprs: Vec<JsAnyExpression>) -> Vec<>  {
-    let mut parts = vec![];
-    let mut queue = vec![];
-    queue.extend(exprs);
-
-    while let Some(node) = queue.pop() {
-        if let JsAnyExpression::JsTemplate(template) = node {
-            queue.extend(template.expressions().iter().cloned());
-        } else {
-            parts.push(node);
-        }
-    }
-
-    parts
+fn flatten_expressions_to_template_parts(exprs: Vec<JsAnyExpression>) -> Vec<JsAnyExpression> {
 }
 
 declare_node_union! {
 
     /// Matches an if statement or a conditional expression
-    pub(crate) TemplatePart = JsAnyExpression | JsTemplate
+    pub(crate) TemplatePart = JsAnyExpression | JsTemplateElement
 }
