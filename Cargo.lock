@@ -27,6 +27,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ansi-to-html"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "19ee82de0545b181a17cbdef44fce80ecaf394e001da7ea279008bf2e0944bee"
+dependencies = [
+ "regex",
+ "thiserror",
+]
+
+[[package]]
 name = "ansi_rgb"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1580,6 +1590,7 @@ dependencies = [
 name = "rome_playground"
 version = "0.0.0"
 dependencies = [
+ "ansi-to-html",
  "rome_analyze",
  "rome_console",
  "rome_diagnostics",
