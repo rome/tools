@@ -24,9 +24,9 @@ use crate::{
     kinds_src::{AstEnumSrc, AstNodeSrc, JS_KINDS_SRC},
     update, LanguageKind,
 };
+use std::fmt::Write;
 use ungrammar::{Grammar, Rule, Token};
 use xtask::{project_root, Result};
-
 // these node won't generate any code
 pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
@@ -144,10 +144,12 @@ fn check_unions(unions: &[AstEnumSrc]) {
                 // The variant is a compound variant
                 // Get the struct from the map
                 let current_union = union_map[variant];
-                stack_string.push_str(&format!(
+                write!(
+                    stack_string,
                     "\nSUB-ENUM CHECK : {}, variants : {:?}",
                     current_union.name, current_union.variants
-                ));
+                )
+                .unwrap();
                 // Try to insert the current variant into the set
                 if union_set.insert(&current_union.name) {
                     // Add all variants into the BFS queue
@@ -159,7 +161,8 @@ fn check_unions(unions: &[AstEnumSrc]) {
                 }
             } else {
                 // The variant isn't another enum
-                stack_string.push_str(&format!("\nBASE-VAR CHECK : {}", variant));
+                // stack_string.push_str(&format!());
+                write!(stack_string, "\nBASE-VAR CHECK : {}", variant).unwrap();
                 if !union_set.insert(variant) {
                     // The variant already used
                     println!("{}", stack_string);
