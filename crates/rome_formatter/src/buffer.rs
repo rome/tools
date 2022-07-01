@@ -492,7 +492,7 @@ pub trait BufferExtensions: Buffer + Sized {
     /// checking if [element](FormatElement) is [label](FormatElement::Label)
     /// with expected [label_id](LabelId).
     ///
-    /// This functionality can be used only one element and only after the element
+    /// This functionality can be used only on one element and only after the element
     /// is written in the buffer.
     ///
     /// ## Examples
