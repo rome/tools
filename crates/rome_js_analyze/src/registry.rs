@@ -3,7 +3,6 @@
 use crate::{analyzers::*, assists::*, semantic_analyzers::*};
 use rome_analyze::{AnalysisFilter, AnalyzerSignal, ControlFlow, RuleRegistry};
 use rome_js_syntax::JsLanguage;
-
 pub(crate) fn build_registry<'a, F, B>(
     filter: &AnalysisFilter,
     callback: F,
@@ -12,7 +11,6 @@ where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
 {
     let mut rules = RuleRegistry::new(callback);
-
     if filter.match_rule::<NoArguments>() {
         rules.push::<NoArguments>();
     }
