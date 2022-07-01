@@ -65,6 +65,22 @@ f()"#,
     console.log(a/*READ A*/);
 }
 f()"#,
+
+    ok_hoisting_let_after_reference_same_scope, r#"var a = 1;
+function f() {
+    console.log(a/*READ A*/);
+    let a/*#A*/ = 2;
+}
+f()"#,
+
+ok_hoisting_let_after_reference_different_scope, r#"var a/*#A*/ = 1;
+function f() {
+    console.log(a/*READ A*/);
+    if (true) {
+        let a = 2;
+    }
+}
+f()"#,
 }
 
 assert_semantics! {
