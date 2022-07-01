@@ -41,8 +41,6 @@ impl ToAsciiLowercaseCow for String {
     }
 }
 
-const CHARACTERS_THAT_COULD_KEEP_THE_ESCAPE: [char; 4] = ['\\', '\'', '"', '\r'];
-
 #[derive(Eq, PartialEq, Debug)]
 pub(crate) enum StringLiteralParentKind {
     /// Variant to track tokens that are inside an expression
@@ -194,6 +192,7 @@ impl FormatLiteralStringToken<'_> {
 }
 
 /// This signal is used to tell to the next character what it should do
+#[derive(Eq, PartialEq)]
 enum CharSignal {
     /// There hasn't been any signal
     None,
@@ -256,12 +255,8 @@ impl<'token> LiteralStringNormaliser<'token> {
         self.token.token()
     }
 
-    fn can_reduce_escapes(&self, string_information: &StringInformation) -> bool {
-        if matches!(self.token.parent_kind, StringLiteralParentKind::Directive) {
-            !string_information.raw_content_has_quotes
-        } else {
-            true
-        }
+    fn can_reduce_escapes(&self) -> bool {
+        !matches!(self.token.parent_kind, StringLiteralParentKind::Directive)
     }
 
     fn normalise_directive(&mut self, string_information: &StringInformation) -> Cow<'token, str> {
@@ -393,49 +388,49 @@ impl<'token> LiteralStringNormaliser<'token> {
 
         let alternate_quote = preferred_quote.other();
         let mut reduced_string = String::new();
-        let mut last_end = 0;
         let mut signal = CharSignal::None;
         let raw_content = self.raw_content();
-        let can_reduce_escapes = self.can_reduce_escapes(string_information);
+        let can_reduce_escapes = self.can_reduce_escapes();
 
-        for (start, part) in raw_content.match_indices(CHARACTERS_THAT_COULD_KEEP_THE_ESCAPE) {
-            if start - last_end >= 1 {
-                // This is the case where we don't have consecutive characters and if so, we have to reset the signal.
-                // An example is the following: " \\u2028 ' "
-                // After the two backslash, we have a character that is not a quote. So we reset the signal and we
-                // iterate over the single quote, we don't deal with any edge case.
-                signal = CharSignal::None;
+        dbg!(can_reduce_escapes, &raw_content);
+        let mut chars = raw_content.chars().enumerate().peekable();
+
+        while let Some((index, current_char)) = chars.next() {
+            let next_character = chars.peek();
+
+            if let AlreadyPrinted(char) = signal {
+                if char == current_char {
+                    continue;
+                }
             }
-            reduced_string.push_str(&raw_content[last_end..start]);
-            last_end = start + part.len();
 
-            match part {
-                "\\" => {
+            match current_char {
+                '\\' => {
                     if !can_reduce_escapes {
-                        reduced_string.push_str(part);
+                        reduced_string.push(current_char);
                         continue;
                     }
                     let bytes = raw_content.as_bytes();
 
-                    match bytes[start] {
+                    match bytes[index] {
                         // TODO: #2444 add checks to additional characters to reduce the number of escapes
                         // "\a" VS "\n" => "a" VS "\n"
                         b'\\' => {
-                            if start + 1 < bytes.len() {
+                            if let Some((next_index, next_character)) = next_character {
                                 // If we encounter an alternate quote that is escaped, we have to
                                 // remove the escape from it.
                                 // This is done because of how the enclosed strings can change.
                                 // Check `computed_preferred_quote` for more details.
-                                if bytes[start + 1] == alternate_quote.as_bytes()
+                                if *next_character as u8 == alternate_quote.as_bytes()
                                     // This check is a safety net for cases where the backslash is at the end
                                     // of the raw content:
                                     // ("\\")
                                     // The second backslash is at the end.
-                                    && start + 2 <= bytes.len()
+                                    && next_index + 1 <= bytes.len()
                                 {
                                     match signal {
                                         CharSignal::Keep => {
-                                            reduced_string.push('\\');
+                                            reduced_string.push(current_char);
                                         }
                                         _ => {
                                             reduced_string.push(alternate_quote.as_char());
@@ -443,34 +438,56 @@ impl<'token> LiteralStringNormaliser<'token> {
                                         }
                                     }
                                 } else {
-                                    // The next character is another backslash, let's signal
-                                    // the next iteration that it should keep it in the final string
-                                    if bytes[start + 1] == b'\\' {
-                                        signal = CharSignal::Keep;
+                                    if signal == CharSignal::Keep {
+                                        reduced_string.push(current_char);
+                                    } else {
+                                        // The next character is another backslash, or
+                                        // a character that should be kept in the next iteration
+                                        if matches!(
+                                            next_character,
+                                            '\\' | 'v' | 'b' | 'f' | 'n' | 't' | 'r' | 'u' | 'x'
+                                        ) {
+                                            signal = CharSignal::Keep;
+                                            // fallback, keep the backslash
+                                            reduced_string.push(current_char);
+                                        } else {
+                                            // these are character that should stay, but
+                                            // the next iteration should decide if to keep them or not
+                                            if !next_character.is_alphabetic()
+                                                && *next_character != alternate_quote.as_char()
+                                                && *next_character != preferred_quote.as_char()
+                                            {
+                                                reduced_string.push(current_char);
+                                            } else {
+                                                // these, usually characters that can have their
+                                                // escape removed: "\a" => "a"
+                                                // So we ignore the current slash and we continue
+                                                // to the next iteration
+                                                continue;
+                                            }
+                                        }
                                     }
-                                    // fallback, keep the backslash
-                                    reduced_string.push('\\');
                                 }
                             } else {
                                 // fallback, keep the backslash
-                                reduced_string.push('\\');
+                                reduced_string.push(current_char);
                             }
                         }
                         _ => unreachable!("We checked already the presence of a backslash"),
                     }
                 }
-                "\n" => {
+                '\n' | '\t' => {
                     if let AlreadyPrinted(the_char) = signal {
-                        if the_char == '\n' {
+                        if matches!(the_char, '\n' | '\t') {
                             signal = CharSignal::None
                         }
                     } else {
-                        reduced_string.push('\n');
+                        reduced_string.push(current_char);
                     }
                 }
                 // If the current character is \r and the
                 // next is \n, skip over the entire sequence
-                "\r" if raw_content[last_end..].starts_with('\n') => {
+                '\r' if next_character.map_or(false, |(_, c)| *c == '\n') => {
                     reduced_string.push('\n');
                     signal = AlreadyPrinted('\n');
                 }
@@ -479,9 +496,9 @@ impl<'token> LiteralStringNormaliser<'token> {
                     // an escaped version.
                     // This is done because of how the enclosed strings can change.
                     // Check `computed_preferred_quote` for more details.
-                    if part == preferred_quote.as_string() {
+                    if current_char == preferred_quote.as_char() {
                         if !can_reduce_escapes {
-                            reduced_string.push_str(part);
+                            reduced_string.push(current_char);
                             continue;
                         }
                         let last_char = &reduced_string.chars().last();
@@ -490,9 +507,9 @@ impl<'token> LiteralStringNormaliser<'token> {
                         } else {
                             reduced_string.push_str(preferred_quote.as_escaped());
                         }
-                    } else if part == alternate_quote.as_string() {
+                    } else if current_char == alternate_quote.as_char() {
                         if !can_reduce_escapes {
-                            reduced_string.push_str(part);
+                            reduced_string.push(current_char);
                             continue;
                         }
                         match signal {
@@ -510,6 +527,8 @@ impl<'token> LiteralStringNormaliser<'token> {
                                 }
                             }
                         }
+                    } else {
+                        reduced_string.push(current_char);
                     }
                 }
             }
@@ -519,7 +538,6 @@ impl<'token> LiteralStringNormaliser<'token> {
         if reduced_string.is_empty() {
             Cow::Borrowed(raw_content)
         } else {
-            reduced_string.push_str(&raw_content[last_end..raw_content.len()]);
             // don't allocate a new string if the new string is still equals to the input string
             if reduced_string == raw_content {
                 Cow::Borrowed(raw_content)
