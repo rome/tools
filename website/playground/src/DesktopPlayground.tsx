@@ -85,7 +85,7 @@ export default function DesktopPlayground(
 							<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
 							<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
 							<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
-								Errors
+								Diagnostics
 							</Tab>
 						</TabList>
 						<TabPanel>
