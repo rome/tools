@@ -37,14 +37,14 @@ pub enum FormatElement {
     /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
     ConditionalGroupContent(ConditionalGroupContent),
 
-    /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
+    /// Concatenates multiple elements together. See [crate::Formatter::join_with] for examples.
     List(List),
 
     /// Concatenates multiple elements together with a given separator printed in either
-    /// flat or expanded mode to fill the print width. See [fill_elements].
+    /// flat or expanded mode to fill the print width. See [crate::Formatter::fill].
     Fill(Fill),
 
-    /// A token that should be printed as is, see [token] for documentation and examples.
+    /// A token that should be printed as is, see [crate::builders::token] for documentation and examples.
     Token(Token),
 
     /// Delay the printing of its content until the next line break
@@ -60,7 +60,7 @@ pub enum FormatElement {
     /// the parent group to break if this element is at the start of it).
     Comment(Box<[FormatElement]>),
 
-    /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
+    /// A token that tracks tokens/nodes that are printed as verbatim.
     Verbatim(Verbatim),
 
     /// A list of different variants representing the same content. The printer picks the best fitting content.
@@ -156,17 +156,17 @@ impl Debug for FormatElement {
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum LineMode {
-    /// See [soft_line_break_or_space] for documentation.
+    /// See [crate::soft_line_break_or_space] for documentation.
     SoftOrSpace,
-    /// See [soft_line_break] for documentation.
+    /// See [crate::soft_line_break] for documentation.
     Soft,
-    /// See [hard_line_break] for documentation.
+    /// See [crate::hard_line_break] for documentation.
     Hard,
-    /// See [empty_line] for documentation.
+    /// See [crate::empty_line] for documentation.
     Empty,
 }
 
-/// A token used to gather a list of elements; see [concat_elements] and [join_elements].
+/// A token used to gather a list of elements; see [crate::Formatter::join_with].
 #[derive(Clone, Default, Eq, PartialEq)]
 pub struct List {
     content: Vec<FormatElement>,
@@ -381,7 +381,7 @@ impl ConditionalGroupContent {
     }
 }
 
-/// See [token] for documentation
+/// See [crate::builders::token] for documentation
 #[derive(Eq, Clone)]
 pub enum Token {
     /// Token constructed by the formatter from a static string
@@ -499,7 +499,7 @@ impl FormatElement {
 
     /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
     /// This is the case if this format element recursively contains a:
-    /// * [empty_line] or [hard_line_break]
+    /// * [crate::empty_line] or [crate::hard_line_break]
     /// * A token containing '\n'
     ///
     /// Use this with caution, this is only a heuristic and the printer may print the element over multiple

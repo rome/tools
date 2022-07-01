@@ -3,8 +3,8 @@ use crate::FormatResult;
 use std::ffi::c_void;
 use std::marker::PhantomData;
 
-/// Mono-morphed type to format an object. Used by the [rome_formatter::format], [rome_formatter::format_args], and
-/// [rome_formatter::write] macros.
+/// Mono-morphed type to format an object. Used by the [crate::format!], [crate::format_args!], and
+/// [crate::write!] macros.
 ///
 /// This struct is similar to a dynamic dispatch (using `dyn Format`) because it stores a pointer to the value.
 /// However, it doesn't store the pointer to `dyn Format`'s vtable, instead it statically resolves the function

@@ -201,7 +201,7 @@ impl<L: Language> SyntaxTriviaPieceSkipped<L> {
 ///
 /// For example:
 ///
-/// ```ignore
+/// ```no_test
 /// builder.token_with_trivia(
 ///     RawSyntaxKind(1),
 ///     "\n\t /**/let \t\t",
@@ -209,10 +209,10 @@ impl<L: Language> SyntaxTriviaPieceSkipped<L> {
 ///     &[TriviaPiece::whitespace(3)],
 /// );
 /// });
-///
+/// ```
 /// This token has two pieces in the leading trivia, and one piece at the trailing trivia. Each
 /// piece is defined by the [TriviaPiece]; its content is irrelevant.
-/// ```
+///
 #[derive(Clone)]
 pub struct SyntaxTriviaPiece<L: Language> {
     raw: cursor::SyntaxTrivia,
@@ -265,7 +265,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
         &txt[start.into()..end.into()]
     }
 
-    /// Returns the associated text length just for this trivia piece. This is different from [SyntaxTrivia::text_len()],
+    /// Returns the associated text length just for this trivia piece. This is different from `SyntaxTrivia::len()`,
     /// which returns the text length of the whole trivia.
     ///
     /// ```

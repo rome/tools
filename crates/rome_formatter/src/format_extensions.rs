@@ -6,14 +6,11 @@ use std::ops::Deref;
 use crate::Buffer;
 
 /// Utility trait used to simplify the formatting of optional objects that are formattable.
-///
-/// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::with_or]
-/// function.
 pub trait FormatOptional<Context> {
     type Target: Format<Context>;
 
     /// This function tries to format an optional object. If the object is [None]
-    /// an [empty token](crate::FormatElement::Empty) is created. If exists, the utility
+    /// nothing is written in the buffer. If exists, the utility
     /// formats the object and passes it to the closure.
     ///
     /// ## Examples

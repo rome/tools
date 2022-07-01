@@ -10,10 +10,10 @@ pub trait Buffer {
     /// The context used during formatting
     type Context;
 
-    /// Writes a [`FormatElement`] into this buffer, returning whether the write succeeded.
+    /// Writes a [crate::FormatElement] into this buffer, returning whether the write succeeded.
     ///
     /// # Errors
-    /// This function will return an instance of [`FormatError`] on error.
+    /// This function will return an instance of [crate::FormatError] on error.
     ///
     /// # Examples
     ///

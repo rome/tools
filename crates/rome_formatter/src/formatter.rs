@@ -89,11 +89,11 @@ impl<'buf, Context> Formatter<'buf, Context> {
         JoinBuilder::with_separator(self, joiner)
     }
 
-    /// Specialized version of [join_with] for joining SyntaxNodes separated by a space, soft
+    /// Specialized version of [crate::Formatter::join_with] for joining SyntaxNodes separated by a space, soft
     /// line break or empty line depending on the input file.
     ///
     /// This functions inspects the input source and separates consecutive elements with either
-    /// a [soft_line_break_or_space] or [empty_line] depending on how many line breaks were
+    /// a [crate::soft_line_break_or_space] or [crate::empty_line] depending on how many line breaks were
     /// separating the elements in the original file.
     pub fn join_nodes_with_soft_line<'a>(
         &'a mut self,
@@ -101,17 +101,17 @@ impl<'buf, Context> Formatter<'buf, Context> {
         JoinNodesBuilder::new(soft_line_break_or_space(), self)
     }
 
-    /// Specialized version of [join_with] for joining SyntaxNodes separated by one or more
+    /// Specialized version of [crate::Formatter::join_with] for joining SyntaxNodes separated by one or more
     /// line breaks depending on the input file.
     ///
     /// This functions inspects the input source and separates consecutive elements with either
-    /// a [hard_line_break] or [empty_line] depending on how many line breaks were separating the
+    /// a [crate::hard_line_break] or [crate::empty_line] depending on how many line breaks were separating the
     /// elements in the original file.
     pub fn join_nodes_with_hardline<'a>(&'a mut self) -> JoinNodesBuilder<'a, 'buf, Line, Context> {
         JoinNodesBuilder::new(hard_line_break(), self)
     }
 
-    /// Concatenates a list of [Format] objects with spaces and line breaks to fit
+    /// Concatenates a list of [crate::Format] objects with spaces and line breaks to fit
     /// them on as few lines as possible. Each element introduces a conceptual group. The printer
     /// first tries to print the item in flat mode but then prints it in expanded mode if it doesn't fit.
     ///

@@ -1,5 +1,9 @@
 //! Infrastructure for code formatting
 //!
+//! <div style="display: flex">
+//!     <b>AHAHAHHA</b>
+//! </div>
+//!
 //! This module defines [FormatElement], an IR to format code documents and provides a mean to print
 //! such a document to a string. Objects that know how to format themselves implement the [Format] trait.
 //!
@@ -438,7 +442,7 @@ impl<Context> Format<Context> for () {
     }
 }
 
-/// Rule that knows how to format an object of type [T].
+/// Rule that knows how to format an object of type `T`.
 ///
 /// Implementing [Format] on the object itself is preferred over implementing [FormatRule] but
 /// this isn't possible inside of a dependent crate for external type.
@@ -454,7 +458,7 @@ pub trait FormatRule<T> {
     fn fmt(&self, item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
 }
 
-/// Rule that supports customizing how it formats an object of type [T].
+/// Rule that supports customizing how it formats an object of type `T`.
 pub trait FormatRuleWithOptions<T>: FormatRule<T> {
     type Options;
 
@@ -484,7 +488,7 @@ pub trait FormatRuleWithOptions<T>: FormatRule<T> {
 ///     let _syntax = node.item();
 ///
 ///     // Do something with syntax
-///     formatted
+///     formatted;
 /// }
 /// ```
 pub trait FormatWithRule<Context>: Format<Context> {
@@ -616,7 +620,7 @@ where
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write(&mut buffer, format_args!(token("Hello World"))).unwrap();
+/// write!(&mut buffer, format_args!(token("Hello World"))).unwrap();
 ///
 /// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
 ///
@@ -660,7 +664,7 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, format_args};
 ///
-/// let formatted = format(SimpleFormatContext::default(), format_args!(token("test"))).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), format_args!(token("test"))).unwrap();
 /// assert_eq!("test", formatted.print().as_code());
 /// ```
 ///
@@ -1089,9 +1093,9 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
 
 /// This structure stores the state that is relevant for the formatting of the whole document.
 ///
-/// This structure is different from [`Formatter`] in that the formatting infrastructure
-/// creates a new [`Formatter`] for every [`write`] call, whereas this structure stays alive
-/// for the whole process of formatting a root with [`format`].
+/// This structure is different from [crate::Formatter] in that the formatting infrastructure
+/// creates a new [crate::Formatter] for every [crate::write!] call, whereas this structure stays alive
+/// for the whole process of formatting a root with [crate::format!].
 #[derive(Default)]
 pub struct FormatState<Context> {
     context: Context,
