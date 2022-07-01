@@ -1,11 +1,11 @@
 /// Constructs the parameters for other formatting macros.
 ///
-/// This macro functions by taking a list of objects implementing [Format]. It canonicalize the
+/// This macro functions by taking a list of objects implementing [crate::Format]. It canonicalize the
 /// arguments into a single type.
 ///
-/// This macro produces a value of type [`Arguments`]. This value can be passed to
-/// the macros within [`rome_formatter`]. All other formatting macros ([`format!`],
-/// [`write!`]) are proxied through this one. This macro avoids heap allocations.
+/// This macro produces a value of type [crate::Arguments]. This value can be passed to
+/// the macros within [crate]. All other formatting macros ([`format!`](crate::format!),
+/// [`write!`](crate::write!)) are proxied through this one. This macro avoids heap allocations.
 ///
 /// You can use the [`Arguments`] value that `format_args!` returns in  `Format` contexts
 /// as seen below.
@@ -23,8 +23,6 @@
 ///
 /// [`Format`]: crate::Format
 /// [`Arguments`]: crate::Arguments
-/// [`format!`]: crate::format
-/// [`write!`]: crate::write
 #[macro_export]
 macro_rules! format_args {
     ($($value:expr),+ $(,)?) => {
@@ -40,7 +38,7 @@ macro_rules! format_args {
 ///
 /// This macro accepts a 'buffer' and a list of format arguments. Each argument will be formatted
 /// and the result will be passed to the buffer. The writer may be any value with a `write_fmt` method;
-/// generally this comes from an implementation of the [`Buffer`] trait.
+/// generally this comes from an implementation of the [crate::Buffer] trait.
 ///
 /// # Examples
 ///
@@ -111,8 +109,8 @@ macro_rules! dbg_write {
 
 /// Creates the Format IR for a value.
 ///
-/// The first argument `format!` receives is the [FormatContext] that specify how elements must be formatted.
-/// Additional parameters passed get formatted by using their [Format] implementation.
+/// The first argument `format!` receives is the [crate::FormatContext] that specify how elements must be formatted.
+/// Additional parameters passed get formatted by using their [crate::Format] implementation.
 ///
 ///
 /// ## Examples

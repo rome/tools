@@ -7,6 +7,7 @@
     // missing_docs,
 )]
 #![deny(unsafe_code)]
+#![deny(rustdoc::broken_intra_doc_links)]
 
 #[doc(hidden)]
 pub mod macros;

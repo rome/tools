@@ -1156,7 +1156,7 @@ impl<Context> Format<Context> for ExpandParent {
 ///
 /// The element has no special meaning if used outside of a `Group`. In that case, the content is always emitted.
 ///
-/// If you're looking for a way to only print something if the `Group` fits on a single line see [if_group_fits_on_single_line].
+/// If you're looking for a way to only print something if the `Group` fits on a single line see [crate::if_group_fits_on_line].
 ///
 /// # Examples
 ///

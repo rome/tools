@@ -1,6 +1,6 @@
 use crate::{IndentStyle, LineWidth};
 
-/// Options that affect how the [Printer] prints the format tokens
+/// Options that affect how the [crate::Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct PrinterOptions {
     /// Width of a single tab character (does it equal 2, 4, ... spaces?)

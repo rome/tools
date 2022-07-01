@@ -2,10 +2,10 @@ use crate::green::GreenElement;
 use crate::{GreenNode, GreenToken, NodeOrToken, SyntaxKind};
 use std::marker::PhantomData;
 
-/// New-type wrapper around a [GreenNode].
+/// New-type wrapper around a `GreenNode`.
 ///
-/// Allows third-party crates to access limited information about a [GreenNode] or construct
-/// a [GreenNode] in a limited places.
+/// Allows third-party crates to access limited information about a `GreenNode` or construct
+/// a `GreenNode` in a limited places.
 #[derive(Debug)]
 pub struct RawSyntaxNode<K: SyntaxKind> {
     raw: GreenNode,
@@ -53,7 +53,7 @@ impl<K: SyntaxKind> From<GreenNode> for RawSyntaxNode<K> {
     }
 }
 
-/// New-type wrapper around a [GreenToken]. Allows third-party crates to access limited information
+/// New-type wrapper around a `GreenToken`. Allows third-party crates to access limited information
 /// on not yet fully constructed nodes.
 #[derive(Debug)]
 pub struct RawSyntaxToken<K: SyntaxKind> {
@@ -107,7 +107,7 @@ impl<K: SyntaxKind> From<GreenElement> for RawSyntaxElement<K> {
     }
 }
 
-/// New-type wrapper to a reference of a [GreenNode].
+/// New-type wrapper to a reference of a `GreenNode`.
 #[derive(Debug)]
 pub struct RawSyntaxNodeRef<'a, K: SyntaxKind> {
     raw: &'a GreenNode,
@@ -131,7 +131,7 @@ impl<'a, K: SyntaxKind> From<&'a GreenNode> for RawSyntaxNodeRef<'a, K> {
     }
 }
 
-/// New-type wrapper to a reference of a [GreenToken]
+/// New-type wrapper to a reference of a `GreenToken`
 #[derive(Debug)]
 pub struct RawSyntaxTokenRef<'a, K: SyntaxKind> {
     raw: &'a GreenToken,
