@@ -185,6 +185,59 @@ function JsThrowStatement1() {
     afterThrow();
 }
 
+// TerminatorsPlurals
+function TerminatorsPlural1() {
+    return;
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
+
+function TerminatorsPlural2() {
+    if (a) {
+        return;
+    } else {
+        return;
+    }
+
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
+
+function TerminatorsPlural3() {
+    if (a) {
+        return;
+    } else if(b) {
+        return;
+    } else {
+        return;
+    }
+
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
+
+function TerminatorsPlural4() {
+    if (a) {
+        return;
+    } else if(b) {
+        return;
+    } else if(c) {
+        return;
+    } else {
+        return;
+    }
+
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
 ```
 
 # Diagnostics
@@ -192,8 +245,14 @@ function JsThrowStatement1() {
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:26:5
    │
+20 │         return;
+   │         ------- Either this statement ...
+   ·
+23 │         return;
+   │         ------- ... or this statement will abort control flow ...
+   ·
 26 │     afterTryCatchReturn();
-   │     ----------------------
+   │     ---------------------- ... before it can reach this code
 
 
 ```
@@ -202,8 +261,11 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:40:5
    │
+37 │         return;
+   │         ------- This statement will abort control flow ...
+   ·
 40 │     afterFinallyReturn();
-   │     ---------------------
+   │     --------------------- ... before it can reach this code
 
 
 ```
@@ -212,8 +274,14 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:51:5
    │
+46 │         return;
+   │         ------- Either this statement ...
+47 │     } else {
+48 │         return;
+   │         ------- ... or this statement will abort control flow ...
+   ·
 51 │     afterIfElseReturn();
-   │     --------------------
+   │     -------------------- ... before it can reach this code
 
 
 ```
@@ -222,8 +290,11 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:63:14
    │
+60 │         default:
+   │         ------- This statement will abort control flow ...
+   ·
 63 │         case 1: // afterDefault
-   │              -
+   │              - ... before it can reach this code
 
 
 ```
@@ -232,8 +303,16 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:64:13
    │
+59 │             break;
+   │             ------ Either this statement, ...
+60 │         default:
+   │         ------- ... this statement, ...
+61 │             caseDefault();
+62 │             break;
+   │             ------ ... or this statement will abort control flow ...
+63 │         case 1: // afterDefault
 64 │             afterDefault();
-   │             ---------------
+   │             --------------- ... before it can reach this code
 
 
 ```
@@ -242,8 +321,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:72:13
    │
+71 │             break;
+   │             ------ This statement will abort control flow ...
 72 │             afterBreak();
-   │             -------------
+   │             ------------- ... before it can reach this code
 
 
 ```
@@ -253,7 +334,9 @@ warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:78:28
    │
 78 │     for(let i = 0; i < 10; ++i) {
-   │                            ---
+   │                            --- This code will never be reached ...
+79 │         break;
+   │         ------ ... because this statement will abort control flow beforehand
 
 
 ```
@@ -262,8 +345,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:87:9
    │
+86 │         break;
+   │         ------ This statement will abort control flow ...
 87 │         afterBreak();
-   │         -------------
+   │         ------------- ... before it can reach this code
 
 
 ```
@@ -272,8 +357,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
    ┌─ noDeadCode.js:94:9
    │
+93 │         continue;
+   │         --------- This statement will abort control flow ...
 94 │         afterContinue();
-   │         ----------------
+   │         ---------------- ... before it can reach this code
 
 
 ```
@@ -282,8 +369,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:102:9
     │
+101 │         break;
+    │         ------ This statement will abort control flow ...
 102 │         afterBreak();
-    │         -------------
+    │         ------------- ... before it can reach this code
 
 
 ```
@@ -292,8 +381,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:109:9
     │
+108 │         continue;
+    │         --------- This statement will abort control flow ...
 109 │         afterContinue();
-    │         ----------------
+    │         ---------------- ... before it can reach this code
 
 
 ```
@@ -302,8 +393,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:117:9
     │
+116 │         break;
+    │         ------ This statement will abort control flow ...
 117 │         afterBreak();
-    │         -------------
+    │         ------------- ... before it can reach this code
 
 
 ```
@@ -312,8 +405,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:125:13
     │
+124 │         break;
+    │         ------ This statement will abort control flow ...
 125 │     } while(true); // afterBreak
-    │             ----
+    │             ---- ... before it can reach this code
 
 
 ```
@@ -322,8 +417,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:131:9
     │
+130 │         continue;
+    │         --------- This statement will abort control flow ...
 131 │         afterContinue();
-    │         ----------------
+    │         ---------------- ... before it can reach this code
 
 
 ```
@@ -332,8 +429,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:139:9
     │
+138 │         break;
+    │         ------ This statement will abort control flow ...
 139 │         break; // afterBreak
-    │         ------
+    │         ------ ... before it can reach this code
 
 
 ```
@@ -342,8 +441,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:146:9
     │
+145 │         break;
+    │         ------ This statement will abort control flow ...
 146 │         continue; // afterBreak
-    │         ---------
+    │         --------- ... before it can reach this code
 
 
 ```
@@ -352,8 +453,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:154:9
     │
+153 │         continue;
+    │         --------- This statement will abort control flow ...
 154 │         continue; // afterContinue
-    │         ---------
+    │         --------- ... before it can reach this code
 
 
 ```
@@ -362,8 +465,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:161:9
     │
+160 │         continue;
+    │         --------- This statement will abort control flow ...
 161 │         break; // afterContinue
-    │         ------
+    │         ------ ... before it can reach this code
 
 
 ```
@@ -372,8 +477,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:168:5
     │
+167 │     return;
+    │     ------- This statement will abort control flow ...
 168 │     afterReturn();
-    │     --------------
+    │     -------------- ... before it can reach this code
 
 
 ```
@@ -382,8 +489,10 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:173:5
     │
+172 │     return;
+    │     ------- This statement will abort control flow ...
 173 │     return; // afterReturn
-    │     -------
+    │     ------- ... before it can reach this code
 
 
 ```
@@ -392,8 +501,91 @@ warning[noDeadCode]: This code is unreachable
 warning[noDeadCode]: This code is unreachable
     ┌─ noDeadCode.js:179:5
     │
+178 │     throw new Error();
+    │     ------------------ This statement will abort control flow ...
 179 │     afterThrow();
-    │     -------------
+    │     ------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:185:5
+    │  
+184 │       return;
+    │       ------- This statement will abort control flow ...
+185 │ ┌     Statement1();
+186 │ │     Statement2();
+187 │ │     Statement3();
+188 │ │     Statement4();
+    │ └─────────────────' ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:198:5
+    │  
+193 │           return;
+    │           ------- Either this statement ...
+194 │       } else {
+195 │           return;
+    │           ------- ... or this statement will abort control flow ...
+    ·  
+198 │ ┌     Statement1();
+199 │ │     Statement2();
+200 │ │     Statement3();
+201 │ │     Statement4();
+    │ └─────────────────' ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:213:5
+    │  
+206 │           return;
+    │           ------- Either this statement, ...
+207 │       } else if(b) {
+208 │           return;
+    │           ------- ... this statement, ...
+209 │       } else {
+210 │           return;
+    │           ------- ... or this statement will abort control flow ...
+    ·  
+213 │ ┌     Statement1();
+214 │ │     Statement2();
+215 │ │     Statement3();
+216 │ │     Statement4();
+    │ └─────────────────' ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+    ┌─ noDeadCode.js:230:5
+    │  
+221 │           return;
+    │           ------- Either this statement, ...
+222 │       } else if(b) {
+223 │           return;
+    │           ------- ... this statement, ...
+224 │       } else if(c) {
+225 │           return;
+    │           ------- ... this statement, ...
+226 │       } else {
+227 │           return;
+    │           ------- ... or this statement will abort control flow ...
+    ·  
+230 │ ┌     Statement1();
+231 │ │     Statement2();
+232 │ │     Statement3();
+233 │ │     Statement4();
+    │ └─────────────────' ... before it can reach this code
 
 
 ```

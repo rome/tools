@@ -1,4 +1,4 @@
-use rome_rowan::{Language, SyntaxNode};
+use rome_rowan::{Language, SyntaxElement};
 
 use crate::{BasicBlock, ControlFlowGraph, Instruction, InstructionKind};
 
@@ -94,8 +94,8 @@ impl<L: Language> FunctionBuilder<L> {
 pub struct InstructionBuilder<'a, L: Language>(&'a mut Instruction<L>);
 
 impl<'a, L: Language> InstructionBuilder<'a, L> {
-    pub fn with_node(mut self, node: SyntaxNode<L>) -> Self {
-        self.0.node = Some(node);
+    pub fn with_node(mut self, node: impl Into<SyntaxElement<L>>) -> Self {
+        self.0.node = Some(node.into());
         self
     }
 }

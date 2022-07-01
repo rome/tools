@@ -3,7 +3,7 @@ use std::{
     fmt::{self, Display, Formatter},
 };
 
-use rome_rowan::{Language, SyntaxNode};
+use rome_rowan::{Language, SyntaxElement};
 
 pub mod builder;
 
@@ -65,7 +65,7 @@ impl<L: Language> BasicBlock<L> {
 #[derive(Debug, Clone)]
 pub struct Instruction<L: Language> {
     pub kind: InstructionKind,
-    pub node: Option<SyntaxNode<L>>,
+    pub node: Option<SyntaxElement<L>>,
 }
 
 /// The different types of supported [Instruction]

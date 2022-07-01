@@ -88,8 +88,10 @@ impl<B> NodeVisitor<B> for CaseVisitor {
                     .append_jump(true, case_block)
                     .with_node(node.test()?.into_syntax());
             }
-            JsAnySwitchClause::JsDefaultClause(_) => {
-                builder.append_jump(false, case_block);
+            JsAnySwitchClause::JsDefaultClause(node) => {
+                builder
+                    .append_jump(false, case_block)
+                    .with_node(node.default_token()?);
             }
         }
 
