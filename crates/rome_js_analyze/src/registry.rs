@@ -41,6 +41,9 @@ where
     if filter.match_rule::<NoSparseArray>() {
         rules.push::<NoSparseArray>();
     }
+    if filter.match_rule::<NoUnnecessaryContinue>() {
+        rules.push::<NoUnnecessaryContinue>();
+    }
     if filter.match_rule::<NoUnsafeNegation>() {
         rules.push::<NoUnsafeNegation>();
     }
