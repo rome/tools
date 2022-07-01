@@ -5,7 +5,7 @@ use rome_js_syntax::JsReferenceIdentifier;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Disallow the use of ```arguments```.
+    /// Disallow the use of ```arguments```
     ///
     /// ## Examples
     ///
