@@ -8,6 +8,8 @@ use crate::control_flow::{
 };
 
 pub(in crate::control_flow) struct DoWhileVisitor {
+    // `label`, `continue_block` and `break_block` are used by the
+    // `ContinueVisitor` and `BreakVisitor`
     pub(super) label: Option<JsSyntaxToken>,
     pub(super) continue_block: BlockId,
     pub(super) break_block: BlockId,

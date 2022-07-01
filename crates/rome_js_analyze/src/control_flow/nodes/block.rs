@@ -8,6 +8,8 @@ use crate::control_flow::{
 };
 
 pub(in crate::control_flow) struct BlockVisitor {
+    /// If this block has a label, this contains the label token and the ID of
+    /// the break block to use as a jump target in `BreakVisitor`
     pub(super) break_block: Option<(JsSyntaxToken, BlockId)>,
 }
 

@@ -9,9 +9,12 @@ use crate::control_flow::{
 
 pub(in crate::control_flow) struct SwitchVisitor {
     entry_block: BlockId,
+    // `label` and `break_block` are used by the `BreakVisitor`
     pub(super) label: Option<JsSyntaxToken>,
     pub(super) break_block: BlockId,
-    is_first: bool,
+    /// Flag used by the [CaseVisitor] to check if it's the first case clause
+    /// in a switch statement (used to implement fallthrough)
+    is_first_case_clause: bool,
 }
 
 impl<B> NodeVisitor<B> for SwitchVisitor {
@@ -33,7 +36,7 @@ impl<B> NodeVisitor<B> for SwitchVisitor {
             entry_block,
             label,
             break_block,
-            is_first: true,
+            is_first_case_clause: true,
         })
     }
 
@@ -46,11 +49,18 @@ impl<B> NodeVisitor<B> for SwitchVisitor {
         let Self {
             entry_block,
             break_block,
+            is_first_case_clause,
             ..
         } = self;
 
-        builder.append_jump(false, break_block);
+        // Append an implicit jump to the break block at the end of the last
+        // clause, if the statement had at least one
+        if !is_first_case_clause {
+            builder.append_jump(false, break_block);
+        }
 
+        // Also implicitly jump to the break block (over the switch statement)
+        // at the end of the entry block if no case was matched
         builder.set_cursor(entry_block);
         builder.append_jump(false, break_block);
 
@@ -74,10 +84,10 @@ impl<B> NodeVisitor<B> for CaseVisitor {
 
         let switch_stmt = stack.read_top::<SwitchVisitor>()?;
 
-        if !switch_stmt.is_first {
+        if !switch_stmt.is_first_case_clause {
             builder.append_jump(false, case_block);
         } else {
-            switch_stmt.is_first = false;
+            switch_stmt.is_first_case_clause = false;
         }
 
         builder.set_cursor(switch_stmt.entry_block);
