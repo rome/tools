@@ -104,16 +104,16 @@ impl WriteColor for ErrorOutput {
                 self.0.extend(style.as_bytes());
             }
             None => {
-                let style = format!(r#"</span><span style="color:black">"#);
-                self.0.extend(style.as_bytes());
+                self.0
+                    .extend(r#"</span><span style="color:black">"#.as_bytes());
             }
         }
         Ok(())
     }
 
     fn reset(&mut self) -> io::Result<()> {
-        let style = format!(r#"</span><span style="color:black">"#);
-        self.0.extend(style.as_bytes());
+        self.0
+            .extend(r#"</span><span style="color:black">"#.as_bytes());
         Ok(())
     }
 }
