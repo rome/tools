@@ -1,9 +1,5 @@
 //! Infrastructure for code formatting
 //!
-//! <div style="display: flex">
-//!     <b>AHAHAHHA</b>
-//! </div>
-//!
 //! This module defines [FormatElement], an IR to format code documents and provides a mean to print
 //! such a document to a string. Objects that know how to format themselves implement the [Format] trait.
 //!
@@ -22,6 +18,8 @@
 //! * [`format!`]: Formats a formatable object
 //! * [`format_args!`]: Concatenates a sequence of Format objects.
 //! * [`write!`]: Writes a sequence of formatable objects into an output buffer.
+
+#![deny(rustdoc::broken_intra_doc_links)]
 
 mod arguments;
 mod buffer;
@@ -479,14 +477,13 @@ pub trait FormatRuleWithOptions<T>: FormatRule<T> {
 /// itself but the language specific crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
 /// implement [FormatWithRule].
 ///
-/// ```
+/// ```ignore
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, Formatted, FormatWithRule};
 /// use rome_rowan::{Language, SyntaxNode};
 /// fn format_node<L: Language, F: FormatWithRule<SimpleFormatContext, Item=SyntaxNode<L>>>(node: F) -> FormatResult<Formatted> {
 ///     let formatted = format!(SimpleFormatContext::default(), [node]);
-///     let _syntax = node.item();
-///
+///     let syntax = node.item();
 ///     // Do something with syntax
 ///     formatted;
 /// }
@@ -620,7 +617,7 @@ where
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut buffer, format_args!(token("Hello World"))).unwrap();
+/// write!(&mut buffer, [format_args!(token("Hello World"))]).unwrap();
 ///
 /// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
 ///
@@ -664,7 +661,7 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, format_args};
 ///
-/// let formatted = format!(SimpleFormatContext::default(), format_args!(token("test"))).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), [&format_args!(token("test"))]).unwrap();
 /// assert_eq!("test", formatted.print().as_code());
 /// ```
 ///

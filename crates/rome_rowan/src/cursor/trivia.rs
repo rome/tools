@@ -52,7 +52,7 @@ impl SyntaxTrivia {
     }
 
     /// Get the number of TriviaPiece inside this trivia
-    pub(crate) fn len(&self) -> usize {
+    fn len(&self) -> usize {
         self.green_trivia().len()
     }
 
