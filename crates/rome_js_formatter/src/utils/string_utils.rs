@@ -255,8 +255,13 @@ impl<'token> LiteralStringNormaliser<'token> {
         self.token.token()
     }
 
-    fn can_reduce_escapes(&self) -> bool {
-        !matches!(self.token.parent_kind, StringLiteralParentKind::Directive)
+    /// A string should be manipulated only if its raw content contains backslash or quotes
+    fn should_manipulate_string(&self, string_information: &StringInformation) -> bool {
+        let preferred_quote = string_information.preferred_quote;
+        let alternate_quote = preferred_quote.other();
+        let raw_content = self.raw_content();
+        raw_content.contains(['\\', preferred_quote.as_char(), alternate_quote.as_char()])
+            || !matches!(self.token.parent_kind, StringLiteralParentKind::Directive)
     }
 
     fn normalise_directive(&mut self, string_information: &StringInformation) -> Cow<'token, str> {
@@ -384,15 +389,17 @@ impl<'token> LiteralStringNormaliser<'token> {
     /// By default the formatter uses `\n` as a newline. The function replaces
     /// `\r\n` with `\n`,
     fn normalize_string(&self, string_information: &StringInformation) -> Cow<'token, str> {
-        let preferred_quote = string_information.preferred_quote;
+        let raw_content = self.raw_content();
 
+        if !self.should_manipulate_string(string_information) {
+            return Cow::Borrowed(raw_content);
+        }
+        let preferred_quote = string_information.preferred_quote;
         let alternate_quote = preferred_quote.other();
         let mut reduced_string = String::new();
         let mut signal = CharSignal::None;
-        let raw_content = self.raw_content();
-        let can_reduce_escapes = self.can_reduce_escapes();
 
-        let mut chars = raw_content.chars().enumerate().peekable();
+        let mut chars = raw_content.char_indices().peekable();
 
         while let Some((_, current_char)) = chars.next() {
             let next_character = chars.peek();
@@ -405,10 +412,6 @@ impl<'token> LiteralStringNormaliser<'token> {
 
             match current_char {
                 '\\' => {
-                    if !can_reduce_escapes {
-                        reduced_string.push(current_char);
-                        continue;
-                    }
                     let bytes = raw_content.as_bytes();
 
                     if let Some((next_index, next_character)) = next_character {
@@ -485,10 +488,6 @@ impl<'token> LiteralStringNormaliser<'token> {
                     // This is done because of how the enclosed strings can change.
                     // Check `computed_preferred_quote` for more details.
                     if current_char == preferred_quote.as_char() {
-                        if !can_reduce_escapes {
-                            reduced_string.push(current_char);
-                            continue;
-                        }
                         let last_char = &reduced_string.chars().last();
                         if let Some('\\') = last_char {
                             reduced_string.push(preferred_quote.as_char());
@@ -496,10 +495,6 @@ impl<'token> LiteralStringNormaliser<'token> {
                             reduced_string.push_str(preferred_quote.as_escaped());
                         }
                     } else if current_char == alternate_quote.as_char() {
-                        if !can_reduce_escapes {
-                            reduced_string.push(current_char);
-                            continue;
-                        }
                         match signal {
                             CharSignal::None => {
                                 reduced_string.push(alternate_quote.as_char());
