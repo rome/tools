@@ -22,6 +22,8 @@ warning[noArguments]: Use the rest parameters instead of arguments.
 2 │     console.log(arguments);
   │                 ---------
 
+=  note: arguments does not have Array.prototype methods and can be inconvenient to use.
+
 
 ```
 
