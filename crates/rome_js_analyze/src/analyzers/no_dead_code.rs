@@ -4,7 +4,7 @@ use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_control_flow::InstructionKind;
-use rome_js_syntax::{JsSyntaxElement, TextRange};
+use rome_js_syntax::{JsSyntaxElement, JsSyntaxKind, TextRange};
 use rustc_hash::FxHashMap;
 
 use crate::control_flow::ControlFlowGraph;
@@ -56,42 +56,58 @@ impl Rule for NoDeadCode {
 
         // Perform a simple reachability analysis on the control flow graph by
         // traversing the function starting at the entry points
-        // Each entry in the queue holds the state for a single linearly
-        // independent path through the function as it gets built
-        // incrementally: this state consist of the index of the next block to
-        // visit, the set of all blocks already visited, and the current
-        //terminating instruction for the path if one was encountered
+
+        /// Individual entry in the traversal queue, holding the state for a
+        /// single "linearly independent path" through the function as it gets
+        /// created during the control flow traversal
+        struct PathState {
+            /// Index of the next block to visit
+            next_block: u32,
+            /// Set of all blocks already visited on this path
+            visited: RoaringBitmap,
+            /// Current terminating instruction for the path, if one was
+            /// encountered
+            terminator: Option<Option<PathTerminator>>,
+        }
+
         let mut queue = VecDeque::new();
 
         for index in &cfg.entry_blocks {
-            queue.push_back((*index, RoaringBitmap::new(), None));
+            queue.push_back(PathState {
+                next_block: *index,
+                visited: RoaringBitmap::new(),
+                terminator: None,
+            });
         }
 
         // This maps holds a list of "path state", the active terminator
         // intruction for each path that can reach the block
         let mut block_paths = FxHashMap::default();
 
-        while let Some((index, mut visited, mut terminator)) = queue.pop_front() {
+        while let Some(mut path) = queue.pop_front() {
             // Add the block to the visited set for the path, and the current
             // state of the path to the global reachable blocks map
-            visited.insert(index);
+            path.visited.insert(path.next_block);
 
             block_paths
-                .entry(index)
+                .entry(path.next_block)
                 .or_insert_with(Vec::new)
-                .push(terminator);
+                .push(path.terminator);
 
-            let index = index as usize;
+            let index = path.next_block as usize;
             let block = &cfg.blocks[index];
 
             // Set to true if the `terminator` is found inside of this block
             let mut has_direct_terminator = false;
 
             for inst in &block.instructions {
-                let node_range = inst.node.as_ref().map(|node| node.text_trimmed_range());
+                let node_range = inst.node.as_ref().map(|node| PathTerminator {
+                    kind: node.kind(),
+                    range: node.text_trimmed_range(),
+                });
 
                 // If this block has already ended, immediately mark this instruction as unreachable
-                if let Some(terminator) = terminator.filter(|_| has_direct_terminator) {
+                if let Some(terminator) = path.terminator.filter(|_| has_direct_terminator) {
                     if let Some(node) = &inst.node {
                         signals.push(node, terminator);
                     }
@@ -102,19 +118,23 @@ impl Rule for NoDeadCode {
                     InstructionKind::Jump { conditional, block } => {
                         // Push the jump target block to the queue if it hasn't
                         // been visited yet in this path
-                        if !visited.contains(block.index()) {
-                            queue.push_back((block.index(), visited.clone(), terminator));
+                        if !path.visited.contains(block.index()) {
+                            queue.push_back(PathState {
+                                next_block: block.index(),
+                                visited: path.visited.clone(),
+                                terminator: path.terminator,
+                            });
                         }
 
                         // Jump is a terminator instruction if it's unconditional
-                        if terminator.is_none() && !conditional {
-                            terminator = Some(node_range);
+                        if path.terminator.is_none() && !conditional {
+                            path.terminator = Some(node_range);
                             has_direct_terminator = true;
                         }
                     }
                     InstructionKind::Return => {
-                        if terminator.is_none() {
-                            terminator = Some(node_range);
+                        if path.terminator.is_none() {
+                            path.terminator = Some(node_range);
                             has_direct_terminator = true;
                         }
                     }
@@ -178,6 +198,11 @@ impl Rule for NoDeadCode {
         )
         .unnecessary();
 
+        /// Primary label of the diagnostic if it comes earlier in the source than its secondary labels
+        const PRIMARY_LABEL_BEFORE: &str = "This code will never be reached ...";
+        /// Primary label of the diagnostic if it comes later in the source than its secondary labels
+        const PRIMARY_LABEL_AFTER: &str = "... before it can reach this code";
+
         // Pluralize and adapt the error message accordingly based on the
         // number and position of secondary labels
         match state.terminators.as_slice() {
@@ -186,25 +211,45 @@ impl Rule for NoDeadCode {
             [] => {}
             // A single node is responsible for this range being unreachable
             [node] => {
-                if node.start() < state.text_trimmed_range.start() {
+                if node.range.start() < state.text_trimmed_range.start() {
                     diagnostic = diagnostic
-                        .secondary(*node, "This statement will abort control flow ...")
-                        .primary("... before it can reach this code");
-                } else {
-                    diagnostic = diagnostic
-                        .primary("This code will never be reached ...")
                         .secondary(
-                            *node,
-                            "... because this statement will abort control flow beforehand",
-                        );
+                            node.range,
+                            format_args!("This statement will {} ...", node.reason()),
+                        )
+                        .primary(PRIMARY_LABEL_AFTER);
+                } else {
+                    diagnostic = diagnostic.primary(PRIMARY_LABEL_BEFORE).secondary(
+                        node.range,
+                        format_args!(
+                            "... because this statement will {} beforehand",
+                            node.reason()
+                        ),
+                    );
                 }
             }
             // The range has two dominating terminator instructions
             [node_a, node_b] => {
-                diagnostic = diagnostic
-                    .secondary(*node_a, "Either this statement ...")
-                    .secondary(*node_b, "... or this statement will abort control flow ...")
-                    .primary("... before it can reach this code");
+                if node_a.kind == node_b.kind {
+                    diagnostic = diagnostic
+                        .secondary(node_a.range, "Either this statement ...")
+                        .secondary(
+                            node_b.range,
+                            format_args!("... or this statement will {} ...", node_b.reason()),
+                        )
+                        .primary(PRIMARY_LABEL_AFTER);
+                } else {
+                    diagnostic = diagnostic
+                        .secondary(
+                            node_a.range,
+                            format_args!("Either this statement will {} ...", node_a.reason()),
+                        )
+                        .secondary(
+                            node_b.range,
+                            format_args!("... or this statement will {} ...", node_b.reason()),
+                        )
+                        .primary(PRIMARY_LABEL_AFTER);
+                }
             }
             // The range has three or more dominating terminator instructions
             terminators => {
@@ -212,18 +257,53 @@ impl Rule for NoDeadCode {
                 // ensures the slice has at least 3 elements
                 let last = terminators.len() - 1;
 
-                for (index, node) in terminators.iter().enumerate() {
-                    if index == 0 {
-                        diagnostic = diagnostic.secondary(*node, "Either this statement, ...");
-                    } else if index == last {
-                        diagnostic = diagnostic
-                            .secondary(*node, "... or this statement will abort control flow ...");
-                    } else {
-                        diagnostic = diagnostic.secondary(*node, "... this statement, ...");
+                // Do not repeat the reason for each terminator if they all have the same kind
+                let (_, has_homogeneous_kind) = terminators
+                    .iter()
+                    .fold(None, |prev_kind, terminator| match prev_kind {
+                        Some((kind, state)) => Some((kind, state && terminator.kind == kind)),
+                        None => Some((terminator.kind, true)),
+                    })
+                    // SAFETY: terminators has at least 3 elements
+                    .unwrap();
+
+                if has_homogeneous_kind {
+                    for (index, node) in terminators.iter().enumerate() {
+                        if index == 0 {
+                            diagnostic =
+                                diagnostic.secondary(node.range, "Either this statement, ...");
+                        } else if index < last {
+                            diagnostic =
+                                diagnostic.secondary(node.range, "... this statement, ...");
+                        } else {
+                            diagnostic = diagnostic.secondary(
+                                node.range,
+                                format_args!("... or this statement will {} ...", node.reason()),
+                            );
+                        }
+                    }
+                } else {
+                    for (index, node) in terminators.iter().enumerate() {
+                        if index == 0 {
+                            diagnostic = diagnostic.secondary(
+                                node.range,
+                                format_args!("Either this statement will {}, ...", node.reason()),
+                            );
+                        } else if index < last {
+                            diagnostic = diagnostic.secondary(
+                                node.range,
+                                format_args!("... this statement will {}, ...", node.reason()),
+                            );
+                        } else {
+                            diagnostic = diagnostic.secondary(
+                                node.range,
+                                format_args!("... or this statement will {} ...", node.reason()),
+                            );
+                        }
                     }
                 }
 
-                diagnostic = diagnostic.primary("... before it can reach this code");
+                diagnostic = diagnostic.primary(PRIMARY_LABEL_AFTER);
             }
         }
 
@@ -242,7 +322,7 @@ impl UnreachableRanges {
         UnreachableRanges { ranges: Vec::new() }
     }
 
-    fn push(&mut self, node: &JsSyntaxElement, terminator: Option<TextRange>) {
+    fn push(&mut self, node: &JsSyntaxElement, terminator: Option<PathTerminator>) {
         let text_range = node.text_range();
         let text_trimmed_range = node.text_trimmed_range();
 
@@ -272,7 +352,7 @@ impl UnreachableRanges {
                     // gets emitted
                     let terminator_insertion = entry
                         .terminators
-                        .binary_search_by_key(&terminator.start(), |node| node.start());
+                        .binary_search_by_key(&terminator.range.start(), |node| node.range.start());
 
                     if let Err(index) = terminator_insertion {
                         entry.terminators.insert(index, terminator);
@@ -311,5 +391,24 @@ impl IntoIterator for UnreachableRanges {
 pub(crate) struct UnreachableRange {
     text_range: TextRange,
     text_trimmed_range: TextRange,
-    terminators: Vec<TextRange>,
+    terminators: Vec<PathTerminator>,
+}
+
+#[derive(Debug, Clone, Copy)]
+struct PathTerminator {
+    kind: JsSyntaxKind,
+    range: TextRange,
+}
+
+impl PathTerminator {
+    /// Returns a message explaining why this paths is unreachable
+    fn reason(&self) -> &'static str {
+        match self.kind {
+            JsSyntaxKind::JS_BREAK_STATEMENT => "break the flow of the code",
+            JsSyntaxKind::JS_CONTINUE_STATEMENT => "continue the loop",
+            JsSyntaxKind::JS_RETURN_STATEMENT => "return from the function",
+            JsSyntaxKind::JS_THROW_STATEMENT => "throw an exception",
+            _ => "stop the flow of the code",
+        }
+    }
 }
