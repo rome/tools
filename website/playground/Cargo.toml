@@ -19,3 +19,4 @@ rome_analyze = { path = "../../crates/rome_analyze" }
 rome_js_analyze = { path = "../../crates/rome_js_analyze" }
 rome_console = { path = "../../crates/rome_console" }
 serde_json = "1.0.79"
+ansi-to-html = "0.1.0"

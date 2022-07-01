@@ -2,7 +2,7 @@
 
 use rome_analyze::{AnalysisFilter, ControlFlow, Never};
 use rome_diagnostics::file::SimpleFiles;
-use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
+use rome_diagnostics::termcolor::{Color, ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
 use rome_formatter::IndentStyle;
 use rome_js_formatter::context::JsFormatContext;
@@ -69,6 +69,9 @@ struct ErrorOutput(Vec<u8>);
 
 impl io::Write for ErrorOutput {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        // let str = std::str::from_utf8(buf).unwrap();
+        // let html = ansi_to_html::convert_escaped(str).unwrap();
+        // self.0.write(html.as_str().as_bytes())
         self.0.write(buf)
     }
 
@@ -79,14 +82,38 @@ impl io::Write for ErrorOutput {
 
 impl WriteColor for ErrorOutput {
     fn supports_color(&self) -> bool {
-        false
+        true
     }
 
     fn set_color(&mut self, _spec: &ColorSpec) -> io::Result<()> {
+        match _spec.fg() {
+            Some(color) => {
+                let color = match color {
+                    Color::Blue => "Blue".to_string(),
+                    Color::Green => "Green".to_string(),
+                    Color::Red => "Red".to_string(),
+                    Color::Cyan => "Cyan".to_string(),
+                    Color::Magenta => "Magenta".to_string(),
+                    Color::Yellow => "darkkhaki".to_string(),
+                    Color::White => "White".to_string(),
+                    Color::Ansi256(_) => "Black".to_string(),
+                    Color::Rgb(r, g, b) => format!("rgb({r}, {g}, {b})"),
+                    _ => "Black".to_string(),
+                };
+                let style = format!(r#"</span><span style="color:{color}">"#);
+                self.0.extend(style.as_bytes());
+            }
+            None => {
+                let style = format!(r#"</span><span style="color:black">"#);
+                self.0.extend(style.as_bytes());
+            }
+        }
         Ok(())
     }
 
     fn reset(&mut self) -> io::Result<()> {
+        let style = format!(r#"</span><span style="color:black">"#);
+        self.0.extend(style.as_bytes());
         Ok(())
     }
 }
