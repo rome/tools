@@ -6,7 +6,7 @@ use rome_diagnostics::{file::SimpleFiles, Emitter};
 use rome_js_syntax::{JsAnyRoot, JsLanguage, JsSyntaxKind, SourceType};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, Direction, SyntaxKind, TextSize};
-use std::fmt::Debug;
+use std::fmt::{Debug, Write};
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -127,12 +127,14 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
         emitter
             .emit_with_writer(diag, &mut write)
             .expect("failed to emit diagnostic");
-        actual.push_str(&format!(
+        write!(
+            actual,
             "--\n{}",
             std::str::from_utf8(write.as_slice()).expect("non utf8 in error buffer")
-        ));
+        )
+        .unwrap();
     }
-    actual.push_str(&format!("--\n{}", text));
+    write!(actual, "--\n{}", text).unwrap();
 
     let path = path.with_extension("rast");
     expect_file![path].assert_eq(&actual)

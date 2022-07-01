@@ -206,7 +206,11 @@ pub(crate) fn parse_number_literal_expression(p: &mut Parser) -> ParsedSyntax {
     // Forbid legacy octal number in strict mode
     if p.state.strict().is_some()
         && cur_src.starts_with('0')
-        && cur_src.chars().nth(1).filter(|c| c.is_digit(10)).is_some()
+        && cur_src
+            .chars()
+            .nth(1)
+            .filter(|c| c.is_ascii_digit())
+            .is_some()
     {
         let err_msg = if cur_src.contains(['8', '9']) {
             "Decimals with leading zeros are not allowed in strict mode."

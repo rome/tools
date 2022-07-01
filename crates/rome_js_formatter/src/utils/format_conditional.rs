@@ -78,7 +78,7 @@ impl Conditional {
 
         let format_alternate = format_with(|f| self.format_with_alternate(f, alternate.as_ref()));
 
-        let _body = if left_or_right_is_conditional || parent_is_conditional {
+        if left_or_right_is_conditional || parent_is_conditional {
             write!(
                 f,
                 [indent(&format_args![

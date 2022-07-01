@@ -6,6 +6,7 @@ use regex::Regex;
 use rome_js_syntax::{ModuleKind, SourceType};
 use rome_rowan::{AstNode, SyntaxKind};
 use std::convert::TryFrom;
+use std::fmt::Write;
 use std::path::Path;
 
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/cases";
@@ -121,7 +122,7 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
             let option_value = option.name("value").unwrap().as_str().trim();
 
             if option_name == "alwaysstrict" {
-                current_file_content.push_str(&format!("\"use strict\";{}", line_ending))
+                write!(current_file_content, "\"use strict\";{}", line_ending).unwrap();
             } else if matches!(option_name.as_str(), "module" | "target") && files.is_empty() {
                 run_options.extend(
                     option_value
@@ -150,8 +151,7 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
                 // skip leading whitespace
                 continue;
             }
-
-            current_file_content.push_str(&format!("{}{}", line, line_ending));
+            write!(current_file_content, "{}{}", line, line_ending).unwrap();
         }
     }
 

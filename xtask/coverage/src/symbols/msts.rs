@@ -1,12 +1,12 @@
 use rome_js_semantic::SemanticEvent;
 use rome_js_syntax::SourceType;
 
+use super::utils::{parse_separated_list, parse_str, parse_until_chr, parse_whitespace0};
 use crate::check_file_encoding;
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use std::fmt::Write;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
-
-use super::utils::{parse_separated_list, parse_str, parse_until_chr, parse_whitespace0};
 
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/baselines/reference";
 const BASE_PATH: &str = "xtask/coverage/Typescript";
@@ -107,14 +107,14 @@ impl TestCase for SymbolsMicrosoftTestCase {
             debug_text.push_str("expected: ");
 
             if let Some(symbol) = expected {
-                debug_text.push_str(&format!("[{}]", &symbol.name));
+                write!(debug_text, "[{}]", &symbol.name).unwrap();
             }
 
             debug_text.push_str(" - actual: ");
 
             if let Some(actual) = actual {
                 let name = actual.str(&code).trim();
-                debug_text.push_str(&format!("[{}]", name));
+                write!(debug_text, "[{}]", name).unwrap();
             }
 
             match (expected, actual) {

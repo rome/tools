@@ -9,7 +9,7 @@ macro_rules! assert_semantics {
         $(
             #[test]
             pub fn $name() {
-                crate::tests::assertions::assert($code, stringify!($name));
+                $crate::tests::assertions::assert($code, stringify!($name));
             }
         )*
     };

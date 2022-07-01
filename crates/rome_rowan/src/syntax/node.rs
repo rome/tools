@@ -763,9 +763,9 @@ impl<L: Language> Iterator for SyntaxSlots<L> {
     }
 }
 
-impl<'a, L: Language> FusedIterator for SyntaxSlots<L> {}
+impl<L: Language> FusedIterator for SyntaxSlots<L> {}
 
-impl<'a, L: Language> ExactSizeIterator for SyntaxSlots<L> {
+impl<L: Language> ExactSizeIterator for SyntaxSlots<L> {
     fn len(&self) -> usize {
         self.raw.len()
     }

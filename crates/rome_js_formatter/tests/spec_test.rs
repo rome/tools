@@ -9,6 +9,7 @@ use rome_service::workspace::{FeatureName, SupportsFeatureParams};
 use rome_service::App;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
+use std::fmt::Write;
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -99,7 +100,7 @@ impl SnapshotContent {
             output.push_str("## Unimplemented nodes/tokens");
             output.push_str("\n\n");
             for (range, text) in formatted.verbatim() {
-                output.push_str(&format!("{:?} => {:?}\n", text, range));
+                writeln!(output, "{:?} => {:?}", text, range).unwrap();
             }
         }
 
@@ -111,13 +112,15 @@ impl SnapshotContent {
             .peekable();
 
         if exceeding_lines.peek().is_some() {
-            output.push_str(&format!(
+            write!(
+                output,
                 "\n\n## Lines exceeding width of {line_width_limit} characters\n\n"
-            ));
+            )
+            .unwrap();
 
             for (line_index, text) in exceeding_lines {
                 let line_number = line_index + 1;
-                output.push_str(&format!("{line_number:>5}: {text}\n"));
+                writeln!(output, "{line_number:>5}: {text}").unwrap();
             }
         }
 
@@ -139,9 +142,9 @@ impl SnapshotContent {
         let iter = self.output.iter();
         for (index, (content, options)) in iter.enumerate() {
             let formal_index = index + 1;
-            output.push_str(format!("## Output {formal_index}\n").as_str());
+            writeln!(output, "## Output {formal_index}").unwrap();
             output.push_str("-----\n");
-            output.push_str(format!("{}", options).as_str());
+            write!(output, "{}", options).unwrap();
             output.push_str("-----\n");
             output.push_str(content.as_str());
         }
