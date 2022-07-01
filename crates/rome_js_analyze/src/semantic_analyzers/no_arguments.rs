@@ -5,7 +5,7 @@ use rome_js_syntax::JsReferenceIdentifier;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Disallow the use of ```arguments```
+    /// Disallow the use of ```arguments```.
     ///
     /// ## Examples
     ///
@@ -14,6 +14,15 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// function f() {
     ///    console.log(arguments);
+    /// }
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// /// ```js
+    /// function f() {
+    ///     let arguments = 1;
+    ///     console.log(arguments);
     /// }
     /// ```
     pub(crate) NoArguments = "noArguments"
@@ -48,9 +57,9 @@ impl Rule for NoArguments {
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
             markup! {
-                "Use the rest parameters instead of arguments."
+                "Use the "<Emphasis>"rest parameters"</Emphasis>" instead of "<Emphasis>"arguments"</Emphasis>"."
             },
-        ))
+        ).footer_note(markup! {<Emphasis>"arguments"</Emphasis>" does not have "<Emphasis>"Array.prototype"</Emphasis>" methods and can be inconvenient to use."}))
     }
 
     fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
