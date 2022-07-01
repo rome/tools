@@ -392,10 +392,9 @@ impl<'token> LiteralStringNormaliser<'token> {
         let raw_content = self.raw_content();
         let can_reduce_escapes = self.can_reduce_escapes();
 
-        dbg!(can_reduce_escapes, &raw_content);
         let mut chars = raw_content.chars().enumerate().peekable();
 
-        while let Some((index, current_char)) = chars.next() {
+        while let Some((_, current_char)) = chars.next() {
             let next_character = chars.peek();
 
             if let AlreadyPrinted(char) = signal {
@@ -412,64 +411,57 @@ impl<'token> LiteralStringNormaliser<'token> {
                     }
                     let bytes = raw_content.as_bytes();
 
-                    match bytes[index] {
-                        // TODO: #2444 add checks to additional characters to reduce the number of escapes
-                        // "\a" VS "\n" => "a" VS "\n"
-                        b'\\' => {
-                            if let Some((next_index, next_character)) = next_character {
-                                // If we encounter an alternate quote that is escaped, we have to
-                                // remove the escape from it.
-                                // This is done because of how the enclosed strings can change.
-                                // Check `computed_preferred_quote` for more details.
-                                if *next_character as u8 == alternate_quote.as_bytes()
+                    if let Some((next_index, next_character)) = next_character {
+                        // If we encounter an alternate quote that is escaped, we have to
+                        // remove the escape from it.
+                        // This is done because of how the enclosed strings can change.
+                        // Check `computed_preferred_quote` for more details.
+                        if *next_character as u8 == alternate_quote.as_bytes()
                                     // This check is a safety net for cases where the backslash is at the end
                                     // of the raw content:
                                     // ("\\")
                                     // The second backslash is at the end.
                                     && *next_index < bytes.len()
-                                {
-                                    match signal {
-                                        CharSignal::Keep => {
-                                            reduced_string.push(current_char);
-                                        }
-                                        _ => {
-                                            reduced_string.push(alternate_quote.as_char());
-                                            signal = AlreadyPrinted(alternate_quote.as_char());
-                                        }
-                                    }
-                                } else if signal == CharSignal::Keep {
+                        {
+                            match signal {
+                                CharSignal::Keep => {
                                     reduced_string.push(current_char);
                                 }
-                                // The next character is another backslash, or
-                                // a character that should be kept in the next iteration
-                                else if matches!(
-                                    next_character,
-                                    '\\' | 'v' | 'b' | 'f' | 'n' | 't' | 'r' | 'u' | 'x'
-                                ) {
-                                    signal = CharSignal::Keep;
-                                    // fallback, keep the backslash
-                                    reduced_string.push(current_char);
+                                _ => {
+                                    reduced_string.push(alternate_quote.as_char());
+                                    signal = AlreadyPrinted(alternate_quote.as_char());
                                 }
-                                // these are character that should stay, but
-                                // the next iteration should decide if to keep them or not
-                                else if !next_character.is_alphabetic()
-                                    && *next_character != alternate_quote.as_char()
-                                    && *next_character != preferred_quote.as_char()
-                                {
-                                    reduced_string.push(current_char);
-                                } else {
-                                    // these, usually characters that can have their
-                                    // escape removed: "\a" => "a"
-                                    // So we ignore the current slash and we continue
-                                    // to the next iteration
-                                    continue;
-                                }
-                            } else {
-                                // fallback, keep the backslash
-                                reduced_string.push(current_char);
                             }
+                        } else if signal == CharSignal::Keep {
+                            reduced_string.push(current_char);
                         }
-                        _ => unreachable!("We checked already the presence of a backslash"),
+                        // The next character is another backslash, or
+                        // a character that should be kept in the next iteration
+                        else if matches!(
+                            next_character,
+                            '\\' | 'v' | 'b' | 'f' | 'n' | 't' | 'r' | 'u' | 'x'
+                        ) {
+                            signal = CharSignal::Keep;
+                            // fallback, keep the backslash
+                            reduced_string.push(current_char);
+                        }
+                        // these are character that should stay, but
+                        // the next iteration should decide if to keep them or not
+                        else if !next_character.is_alphabetic()
+                            && *next_character != alternate_quote.as_char()
+                            && *next_character != preferred_quote.as_char()
+                        {
+                            reduced_string.push(current_char);
+                        } else {
+                            // these, usually characters that can have their
+                            // escape removed: "\a" => "a"
+                            // So we ignore the current slash and we continue
+                            // to the next iteration
+                            continue;
+                        }
+                    } else {
+                        // fallback, keep the backslash
+                        reduced_string.push(current_char);
                     }
                 }
                 '\n' | '\t' => {
