@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsLabeledStatement.js
+---
+# Input
+```js
+function JsLabeledStatement1() {
+    label: while (true) {
+        while (true) {
+            if (true) {
+                continue label;
+            } else {
+                break label;
+            }
+        }
+
+        afterLabelJump();
+    }
+}
+
+```
+
+
