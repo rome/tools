@@ -17,6 +17,9 @@ where
     if filter.match_rule::<NoAsyncPromiseExecutor>() {
         rules.push::<NoAsyncPromiseExecutor>();
     }
+    if filter.match_rule::<NoCommentText>() {
+        rules.push::<NoCommentText>();
+    }
     if filter.match_rule::<NoCompareNegZero>() {
         rules.push::<NoCompareNegZero>();
     }
