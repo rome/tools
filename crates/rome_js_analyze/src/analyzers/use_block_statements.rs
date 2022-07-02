@@ -1,3 +1,5 @@
+use std::iter;
+
 use rome_analyze::context::RuleContext;
 use rome_analyze::{
     declare_rule, ActionCategory, Ast, Rule, RuleAction, RuleCategory, RuleDiagnostic,
@@ -5,7 +7,7 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatementFields, T};
+use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatementFields, TriviaPieceKind, T};
 
 use rome_rowan::{AstNode, AstNodeExt};
 
@@ -146,9 +148,11 @@ impl Rule for UseBlockStatements {
             UseBlockStatementsOperationType::Wrap(stmt) => root.replace_node(
                 stmt.clone(),
                 JsAnyStatement::JsBlockStatement(make::js_block_statement(
-                    make::token(T!['{']),
-                    make::js_statement_list(std::iter::once(stmt.clone())),
-                    make::token(T!['}']),
+                    make::token(T!['{'])
+                        .with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
+                    make::js_statement_list(iter::once(stmt.clone())),
+                    make::token(T!['}'])
+                        .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
                 )),
             )?,
             UseBlockStatementsOperationType::ReplaceBody => match node {
@@ -206,13 +210,16 @@ macro_rules! use_block_statements_replace_body {
     ($stmt_type:ident, $root:ident, $node:ident, $stmt:ident) => {{
         $root.replace_node(
             $node.clone(),
-            JsAnyStatement::$stmt_type($stmt.clone().with_body(JsAnyStatement::JsBlockStatement(
-                make::js_block_statement(
-                    make::token(T!['{']),
-                    make::js_statement_list([]),
-                    make::token(T!['}']),
-                ),
-            ))),
+            JsAnyStatement::$stmt_type(
+                $stmt.clone().with_body(JsAnyStatement::JsBlockStatement(
+                    make::js_block_statement(
+                        make::token(T!['{'])
+                            .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
+                        make::js_statement_list([]),
+                        make::token(T!['}']),
+                    ),
+                )),
+            ),
         )?
     }};
 }

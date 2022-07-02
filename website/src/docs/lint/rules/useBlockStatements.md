@@ -25,7 +25,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statement with a `JsBlockStatement`</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;"> if (x) x;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"> if (x) {x;}</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"> if (x) { x; }</span>
 
 </code></pre>{% endraw %}
 
@@ -48,7 +48,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
 0 0 |    if (x) {
 1 1 |      x;
 2   | <span style="color: Tomato;">- </span><span style="color: Tomato;"> } else y;</span>
-  2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"> } else {y;}</span>
+  2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"> } else { y; }</span>
 
 </code></pre>{% endraw %}
 
@@ -69,7 +69,7 @@ if (x) {
 0 0 |   if (x) {
 1 1 |     x;
 2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">} else if (y) y;</span>
-  2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">} else if (y) {y;}</span>
+  2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">} else if (y) { y; }</span>
 
 </code></pre>{% endraw %}
 
@@ -86,7 +86,7 @@ if (x) {
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statement with a `JsBlockStatement`</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">   for (;;);</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">   for (;;){}</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">   for (;;) {}</span>
 
 </code></pre>{% endraw %}
 
@@ -103,7 +103,7 @@ if (x) {
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statement with a `JsBlockStatement`</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">   for (p in obj);</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">   for (p in obj){}</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">   for (p in obj) {}</span>
 
 </code></pre>{% endraw %}
 
@@ -120,7 +120,7 @@ if (x) {
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statement with a `JsBlockStatement`</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">  for (x of xs);</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">  for (x of xs){}</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">  for (x of xs) {}</span>
 
 </code></pre>{% endraw %}
 
@@ -139,7 +139,7 @@ if (x) {
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statement with a `JsBlockStatement`</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1,2 +1,2 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">  do;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">  do{}</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">  do {}</span>
 1 1 |     while (x);
 
 </code></pre>{% endraw %}
@@ -157,7 +157,7 @@ if (x) {
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statement with a `JsBlockStatement`</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">   while (x);</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">   while (x){}</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">   while (x) {}</span>
 
 </code></pre>{% endraw %}
 
