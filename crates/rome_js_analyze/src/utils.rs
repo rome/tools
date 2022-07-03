@@ -1,14 +1,3 @@
-use rome_js_syntax::JsAnyExpression;
-
-pub fn is_boolean_literal(expr: JsAnyExpression) -> bool {
-    matches!(
-        expr,
-        JsAnyExpression::JsAnyLiteralExpression(
-            rome_js_syntax::JsAnyLiteralExpression::JsBooleanLiteralExpression(_)
-        )
-    )
-}
-
 #[derive(Debug, PartialEq)]
 pub enum MyError {
     EscapeAtEndOfString,
@@ -28,7 +17,6 @@ impl<'a> Iterator for InterpretEscapedString<'a> {
                 None => Err(MyError::EscapeAtEndOfString),
                 Some('n') => Ok('\n'),
                 Some('\\') => Ok('\\'),
-                // etc.
                 Some(c) => Err(MyError::InvalidEscapedChar(c)),
             },
             c => Ok(c),
@@ -36,6 +24,7 @@ impl<'a> Iterator for InterpretEscapedString<'a> {
     }
 }
 
+/// unescape string  
 pub fn interpret_escaped_string(s: &str) -> Result<String, MyError> {
     (InterpretEscapedString { s: s.chars() }).collect()
 }
