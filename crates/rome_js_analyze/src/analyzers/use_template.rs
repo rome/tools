@@ -106,7 +106,7 @@ impl Rule for UseTemplate {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use a while loop" }.to_owned(),
+            message: markup! { "Use a "<Emphasis>"TemplateLiteral"</Emphasis>"." }.to_owned(),
             root: next_root,
         })
     }
