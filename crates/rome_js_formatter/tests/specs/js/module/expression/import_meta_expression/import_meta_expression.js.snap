@@ -16,8 +16,9 @@ Line width: 80
 Quote style: Double Quotes
 -----
 console.log(import.meta);
-import.meta.field = obj.aReallyLongVariableName.andAnotherReallyLongVariableName
-	.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
+import.meta.field =
+	obj.aReallyLongVariableName.andAnotherReallyLongVariableName
+		.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName
 	.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 ## Output 2
@@ -27,8 +28,9 @@ Line width: 120
 Quote style: Double Quotes
 -----
 console.log(import.meta);
-import.meta.field = obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName
-    .andAnotherReallyLongVariable;
+import.meta.field =
+    obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName
+        .andAnotherReallyLongVariable;
 import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName
     .andAnotherReallyLongVariable;
 

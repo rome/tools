@@ -12,9 +12,8 @@ const {
 
 # Output
 ```js
-const { imStore, showChat, customerServiceAccount } = store[
-  config.reduxStoreName
-];
+const { imStore, showChat, customerServiceAccount } =
+  store[config.reduxStoreName];
 
 ```
 

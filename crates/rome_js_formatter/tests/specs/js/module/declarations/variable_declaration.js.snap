@@ -43,6 +43,122 @@ expression: variable_declaration.js
 		);
 }
 
+//break after operator layout
+const loooooooooooooooooooooooooong1 =
+	void "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong2 =
+	!"looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong3 =
+	+"looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong4 =
+	void void "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong5 =
+	!!"looooooooooooooooooooooooooooooooooooooooooog";
+// rome-ignore format: test
+const   loooooooooooooooooooooooooong6    =
+	void    "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong7    =
+	// rome-ignore format: test
+	!      "looooooooooooooooooooooooooooooooooooooooooog";
+
+//poorly breakable member or call chain (break after operator layout)
+//JsIdentifierExpression
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn();
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect().ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong4 = objdddddddddectobjdddddddddect[dsadsadsadsadsadsadsa + ewqoewqoeiowqieopwqie];
+let loooooooooooooooooooooooooong5 = objdddddddddectobjdddddddddect()[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsThisExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this();
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this().ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this[dsadsadsadsadsadsadsa + ewqoewqoeiowqieopwqie];
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong5 = this()[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//lone short argument for JsIdentifierExpression
+//JsThisExpression argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(this);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(this).ewqeqewqwdddddddddddddeqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(this)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(this)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsIdentifierExpression argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(aaaaaaaaaaaaaaaaaaaa);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaa).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsUnaryExpression argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(+12312312321321312);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(-12312312321321312).ewqeqewqweqweqweqweqweqweqw;
+
+//JsStringLiteralExpression argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn("111111111111111111");
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect("111111111111111111").ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect("111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect("111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooong1 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsTemplate argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(``);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(`111111111111111111`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(`111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddsadaddddddddect(`111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+// rest JsAnyLiteralExpression
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(true);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddsadsadasdddect(undefined).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(321321312321312321321)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(9007199254740991n)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+
+//lone short argument for JsThisExpression
+//JsThisExpression argument
+var looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(this);
+let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(this).ewqeqewqweqweqweqweqweqweqw;
+let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(this)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this(this)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsIdentifierExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(aaaaaaaaaaaaaaaaaaaa);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(aaaaaaaaaaaaaaaaaaaa).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsUnaryExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(+12312312321321312);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(-12312312321321312).ewqeqewqweqweqweqweqweqweqw;
+
+//JsStringLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this("111111111111111111");
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this("111111111111111111").ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this("111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this("111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(/\wwwwwwwwwwwwwwwwww+/gi);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(/\wwwwwwwwwwwwwwwwww+/gi).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(/\wwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this(/\wwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsTemplate argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(``);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(`111111111111111111`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(`111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this(`111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+// rest JsAnyLiteralExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(true);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(undefined).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(321321312321312321321)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this(9007199254740991n)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
 //fluid layout
 const otherBrandsWithThisAdjacencyCount123 = Object.values(edge.to.edges).length;
 let vgChannel = pointPositionDefaultRef({ model, defaultPos, channel })();
@@ -50,6 +166,101 @@ const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(
     `foo
 `,
 )("bar");
+
+//not poorly breakable member or call chain (fluid layout layout)
+//JsIdentifierExpression
+var looooooooooooooooooooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(1,2,3,4);
+let looooooooooooooooooooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(1,2).ewqeqewqweqweqweqweqweqweqw;
+let looooooooooooooooooooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(a,b,c)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//exceed the length of JsIdentifierExpression argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(aaaaaaaaaaaaaaaaaaaaa);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaaa).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//exceed the length of JsStringLiteralExpression argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn("1111111111111111111");
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect("1111111111111111111").ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect("1111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect("1111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//exceed the length of JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooong1 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwwwwww+/gi);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwwwwww+/gi).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//exceed the length of JsTemplate argument
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(`111111111111111111111111111111111111111111111111111111`);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(`111111111111111111111111111111111111`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(`111111111111111111111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+// has expression
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(`123123 ${adsada} dsa`);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(`123123 ${adsada} dsa`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(`123123 ${adsada} dsa`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+// has new line
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(`123123
+ dsa`);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(`123123
+dsa`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(`123123
+ dsa`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//JsThisExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(1,2,3);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(a, b).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this()[dsadsadsadsadsadsadsa](g,c,d).ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsIdentifierExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(aaaaaaaaaaaaaaaaaaaaa);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(aaaaaaaaaaaaaaaaaaaaa).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(aaaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this(aaaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//exceed the length of JsStringLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this("1111111111111111111");
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this("1111111111111111111").ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this("1111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this("1111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+
+//exceed the length of JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(/\wwwwwwwwwwwwwwwwwwwww+/gi);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(/\wwwwwwwwwwwwwwwwwwwww+/gi).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(/\wwwwwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 = this(/\wwwwwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//exceed the length of JsTemplate argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(`111111111111111111111111111111111111111111111111111111`);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(`111111111111111111111111111111111111`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(`111111111111111111111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+// has expression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(`123123 ${adsada} dsa`);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(`123123 ${adsada} dsa`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(`123123 ${adsada} dsa`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+// has new line
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(`123123
+ dsa`);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(`123123
+dsa`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this(`123123
+ dsa`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie
+
+//lone short argument JsUnaryExpression argument with comment
+var loooooooooooooooooooooooooong1 = fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(+12312312321321312 /*comment*/);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(
+	//comment
+	-12312312321321312).ewqeqewqweqweqweqweqweqweqw;
+
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 = this(+12312312321321312 /*comment*/);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(
+	//comment
+	-12312312321321312).ewqeqewqweqweqweqweqweqweqw;
 
 =============================
 # Outputs
@@ -99,6 +310,218 @@ Quote style: Double Quotes
 		);
 }
 
+//break after operator layout
+const loooooooooooooooooooooooooong1 =
+	void "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong2 =
+	!"looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong3 =
+	+"looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong4 =
+	void void "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong5 =
+	!!"looooooooooooooooooooooooooooooooooooooooooog";
+// rome-ignore format: test
+const   loooooooooooooooooooooooooong6    =
+	void    "looooooooooooooooooooooooooooooooooooooooooog";
+const loooooooooooooooooooooooooong7 =
+	// rome-ignore format: test
+	!      "looooooooooooooooooooooooooooooooooooooooooog";
+
+//poorly breakable member or call chain (break after operator layout)
+//JsIdentifierExpression
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn();
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddddect().ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong4 =
+	objdddddddddectobjdddddddddect[dsadsadsadsadsadsadsa + ewqoewqoeiowqieopwqie];
+let loooooooooooooooooooooooooong5 =
+	objdddddddddectobjdddddddddect()[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+//JsThisExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this();
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this().ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this[dsadsadsadsadsadsadsa + ewqoewqoeiowqieopwqie];
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong5 =
+	this()[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//lone short argument for JsIdentifierExpression
+//JsThisExpression argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		this,
+	);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddddect(this).ewqeqewqwdddddddddddddeqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(this)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(this)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+//JsIdentifierExpression argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		aaaaaaaaaaaaaaaaaaaa,
+	);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaa)
+		.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+//JsUnaryExpression argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		+12312312321321312,
+	);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddddect(-12312312321321312)
+		.ewqeqewqweqweqweqweqweqweqw;
+
+//JsStringLiteralExpression argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		"111111111111111111",
+	);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddddect("111111111111111111")
+		.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect("111111111111111111")[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect("111111111111111111")[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+//JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooong1 =
+	objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi)
+		.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(
+		/\wwwwwwwwwwwwwwwwww+/gi,
+	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(
+		/\wwwwwwwwwwwwwwwwww+/gi,
+	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//JsTemplate argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		``,
+	);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddsadsadddddddect(`111111111111111111`)
+		.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjddsadsaddddddddect(
+		`111111111111111111`,
+	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddsadaddddddddect(
+		`111111111111111111`,
+	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+// rest JsAnyLiteralExpression
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		true,
+	);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddsadsadasdddect(undefined)
+		.ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(321321312321312321321)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(9007199254740991n)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+//lone short argument for JsThisExpression
+//JsThisExpression argument
+var looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(this);
+let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(this).ewqeqewqweqweqweqweqweqweqw;
+let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(this)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this(this)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//JsIdentifierExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(aaaaaaaaaaaaaaaaaaaa);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(aaaaaaaaaaaaaaaaaaaa).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this(aaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//JsUnaryExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(+12312312321321312);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(-12312312321321312).ewqeqewqweqweqweqweqweqweqw;
+
+//JsStringLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this("111111111111111111");
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this("111111111111111111").ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this("111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this("111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(/\wwwwwwwwwwwwwwwwww+/gi);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(/\wwwwwwwwwwwwwwwwww+/gi).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(/\wwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this(/\wwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//JsTemplate argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(``);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(`111111111111111111`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(`111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this(`111111111111111111`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+// rest JsAnyLiteralExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(true);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(undefined).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(321321312321312321321)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this(9007199254740991n)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
 //fluid layout
 const otherBrandsWithThisAdjacencyCount123 = Object.values(edge.to.edges)
 	.length;
@@ -107,4 +530,255 @@ const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(
 	`foo
 `,
 )("bar");
+
+//not poorly breakable member or call chain (fluid layout layout)
+//JsIdentifierExpression
+var looooooooooooooooooooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		1,
+		2,
+		3,
+		4,
+	);
+let looooooooooooooooooooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddddddddect(1, 2).ewqeqewqweqweqweqweqweqweqw;
+let looooooooooooooooooooooooooooooooooooooooooong3 =
+	objdddddddddectobjdddddddddect(a, b, c)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsIdentifierExpression argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		aaaaaaaaaaaaaaaaaaaaa,
+	);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(
+	aaaaaaaaaaaaaaaaaaaaa,
+).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(
+	aaaaaaaaaaaaaaaaaaaaa,
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(
+	aaaaaaaaaaaaaaaaaaaaa,
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsStringLiteralExpression argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		"1111111111111111111",
+	);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(
+	"1111111111111111111",
+).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(
+	"1111111111111111111",
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(
+	"1111111111111111111",
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooong1 = objdddddddddectobjdddddddddect(
+	/\wwwwwwwwwwwwwwwwwwwww+/gi,
+);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(
+	/\wwwwwwwwwwwwwwwwwwwww+/gi,
+).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(
+	/\wwwwwwwwwwwwwwwwwwwww+/gi,
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjdddddddddect(
+	/\wwwwwwwwwwwwwwwwwwwww+/gi,
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsTemplate argument
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		`111111111111111111111111111111111111111111111111111111`,
+	);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(
+	`111111111111111111111111111111111111`,
+).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(
+	`111111111111111111111111111111111111`,
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+// has expression
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		`123123 ${adsada} dsa`,
+	);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(
+	`123123 ${adsada} dsa`,
+).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(
+	`123123 ${adsada} dsa`,
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+// has new line
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		`123123
+ dsa`,
+	);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(
+	`123123
+dsa`,
+).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(
+	`123123
+ dsa`,
+)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//JsThisExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(1, 2, 3);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(a, b).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this()[dsadsadsadsadsadsadsa](g, c, d).ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsIdentifierExpression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(aaaaaaaaaaaaaaaaaaaaa);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(aaaaaaaaaaaaaaaaaaaaa).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(aaaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this(aaaaaaaaaaaaaaaaaaaaa)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsStringLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this("1111111111111111111");
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this("1111111111111111111").ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this("1111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this("1111111111111111111")[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsRegexLiteralExpression argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(/\wwwwwwwwwwwwwwwwwwwww+/gi);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(/\wwwwwwwwwwwwwwwwwwwww+/gi).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(/\wwwwwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+	this(/\wwwwwwwwwwwwwwwwwwwww+/gi)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+//exceed the length of JsTemplate argument
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(`111111111111111111111111111111111111111111111111111111`);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(`111111111111111111111111111111111111`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(`111111111111111111111111111111111111`)[dsadsadsadsadsadsadsa]()
+		.ewqoewqoeiowqieopwqie;
+
+// has expression
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(`123123 ${adsada} dsa`);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(`123123 ${adsada} dsa`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(`123123 ${adsada} dsa`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+// has new line
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(
+		`123123
+ dsa`,
+	);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(
+		`123123
+dsa`,
+	).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+	this(
+		`123123
+ dsa`,
+	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+
+//lone short argument JsUnaryExpression argument with comment
+var loooooooooooooooooooooooooong1 =
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
+		+12312312321321312 /*comment*/,
+	);
+let loooooooooooooooooooooooooong2 = objdddddddddectobjdddddddddect(
+	//comment
+	-12312312321321312,
+).ewqeqewqweqweqweqweqweqweqw;
+
+var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+	this(+12312312321321312 /*comment*/);
+let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+	this(
+		//comment
+		-12312312321321312,
+	).ewqeqewqweqweqweqweqweqweqw;
+
+
+## Lines exceeding width of 80 characters
+
+   74: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+   76: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+   78: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+   80: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+   82: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong5 =
+  188: var looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  190: let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  192: let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  194: let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  198: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  200: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  202: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  204: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  208: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  210: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  214: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  216: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  218: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  220: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  224: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  226: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  228: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  230: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  234: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  236: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  238: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  240: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  244: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  246: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  248: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  250: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  361: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  363: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  365: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  369: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  371: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  373: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  375: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  379: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  381: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  383: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  385: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  389: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  391: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  393: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  396: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  401: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  403: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  405: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  410: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  412: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  414: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  418: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  423: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  428: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  444: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  446: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
 

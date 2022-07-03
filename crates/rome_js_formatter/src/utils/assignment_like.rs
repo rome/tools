@@ -1,19 +1,21 @@
 use crate::prelude::*;
+use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
 use rome_formatter::{format_args, write, VecBuffer};
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyClassMemberName, JsAnyExpression,
-    JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember, JsAnyObjectBindingPatternMember,
-    JsAnyObjectMemberName, JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName,
-    JsObjectAssignmentPattern, JsObjectAssignmentPatternProperty, JsObjectBindingPattern,
-    JsPropertyClassMember, JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind,
-    JsVariableDeclarator, TsAnyVariableAnnotation, TsIdentifierBinding,
-    TsPropertySignatureClassMember, TsPropertySignatureClassMemberFields, TsType,
-    TsTypeAliasDeclaration,
+    JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
+    JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
+    JsAnyObjectBindingPatternMember, JsAnyObjectMemberName, JsAnyTemplateElement,
+    JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName, JsObjectAssignmentPattern,
+    JsObjectAssignmentPatternProperty, JsObjectBindingPattern, JsPropertyClassMember,
+    JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind, JsVariableDeclarator,
+    TsAnyVariableAnnotation, TsIdentifierBinding, TsPropertySignatureClassMember,
+    TsPropertySignatureClassMemberFields, TsType, TsTypeAliasDeclaration, TsTypeArguments,
 };
 use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
+use std::iter;
 
 declare_node_union! {
     pub(crate) JsAnyAssignmentLike =
@@ -514,7 +516,11 @@ impl JsAnyAssignmentLike {
 
     /// Returns the layout variant for an assignment like depending on right expression and left part length
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
-    fn layout(&self, is_left_short: bool) -> FormatResult<AssignmentLikeLayout> {
+    fn layout(
+        &self,
+        is_left_short: bool,
+        f: &mut Formatter<JsFormatContext>,
+    ) -> FormatResult<AssignmentLikeLayout> {
         if self.has_only_left_hand_side() {
             return Ok(AssignmentLikeLayout::OnlyLeft);
         }
@@ -523,6 +529,12 @@ impl JsAnyAssignmentLike {
 
         if let Some(layout) = self.chain_formatting_layout()? {
             return Ok(layout);
+        }
+
+        if let Some(JsAnyExpression::JsCallExpression(call_expression)) = &right {
+            if call_expression.callee()?.syntax().text() == "require" {
+                return Ok(AssignmentLikeLayout::NeverBreakAfterOperator);
+            }
         }
 
         if self.should_break_left_hand_side()? {
@@ -537,8 +549,21 @@ impl JsAnyAssignmentLike {
             return Ok(AssignmentLikeLayout::NeverBreakAfterOperator);
         }
 
+        // Before checking `BreakAfterOperator` layout, we need to unwrap the right expression from `JsUnaryExpression` or `TsNonNullAssertionExpression`
+        // [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L199-L211
+        // Example:
+        //  !"123" -> "123"
+        //  void "123" -> "123"
+        //  !!"string"! -> "string"
+        let right_expression = iter::successors(right, |expression| match expression {
+            JsAnyExpression::JsUnaryExpression(unary) => unary.argument().ok(),
+            JsAnyExpression::TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
+            _ => None,
+        })
+        .last();
+
         if matches!(
-            right,
+            right_expression,
             Some(JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(_)
             )),
@@ -546,9 +571,31 @@ impl JsAnyAssignmentLike {
             return Ok(AssignmentLikeLayout::BreakAfterOperator);
         }
 
-        if self.should_never_break_after_operator()? {
+        let is_poorly_breakable = match right_expression {
+            Some(expression) => is_poorly_breakable_member_or_call_chain(expression, f)?,
+            None => false,
+        };
+
+        if is_poorly_breakable {
+            return Ok(AssignmentLikeLayout::BreakAfterOperator);
+        }
+
+        if matches!(
+            self.right()?.as_expression(),
+            Some(
+                JsAnyExpression::JsClassExpression(_)
+                    | JsAnyExpression::JsTemplate(_)
+                    | JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsBooleanLiteralExpression(_),
+                    )
+                    | JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+                    )
+            )
+        ) {
             return Ok(AssignmentLikeLayout::NeverBreakAfterOperator);
         }
+
         Ok(AssignmentLikeLayout::Fluid)
     }
 
@@ -635,34 +682,6 @@ impl JsAnyAssignmentLike {
         };
 
         Ok(result)
-    }
-
-    fn should_never_break_after_operator(&self) -> SyntaxResult<bool> {
-        let right = self.right()?.as_expression();
-
-        if let Some(JsAnyExpression::JsCallExpression(call_expression)) = &right {
-            if call_expression.callee()?.syntax().text() == "require" {
-                return Ok(true);
-            }
-        }
-
-        if matches!(
-            right,
-            Some(
-                JsAnyExpression::JsClassExpression(_)
-                    | JsAnyExpression::JsTemplate(_)
-                    | JsAnyExpression::JsAnyLiteralExpression(
-                        JsAnyLiteralExpression::JsBooleanLiteralExpression(_),
-                    )
-                    | JsAnyExpression::JsAnyLiteralExpression(
-                        JsAnyLiteralExpression::JsNumberLiteralExpression(_)
-                    )
-            )
-        ) {
-            return Ok(true);
-        }
-
-        Ok(false)
     }
 
     fn is_complex_type_alias(&self) -> SyntaxResult<bool> {
@@ -804,89 +823,94 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                 })]
             )?;
 
+            let formatted_element = buffer.into_element();
+
             // Compare name only if we are in a position of computing it.
             // If not (for example, left is not an identifier), then let's fallback to false,
             // so we can continue the chain of checks
-            let layout = self.layout(is_left_short)?;
+            let layout = self.layout(is_left_short, f)?;
 
-            let formatted_element = buffer.into_element();
-
-            if matches!(
-                layout,
-                AssignmentLikeLayout::BreakAfterOperator | AssignmentLikeLayout::OnlyLeft
-            ) {
-                write!(
-                    f,
-                    [&format_once(|f| { f.write_element(formatted_element) })]
-                )?;
-            } else {
-                write!(
-                    f,
-                    [group_elements(&format_once(|f| {
-                        f.write_element(formatted_element)
-                    }))]
-                )?;
-            }
-
-            self.write_operator(f)?;
-
-            let right = &format_with(|f| self.write_right(f)).memoized();
-
-            let inner_content = format_with(|f| match &layout {
-                AssignmentLikeLayout::OnlyLeft => Ok(()),
-                AssignmentLikeLayout::Fluid => {
-                    let group_id = f.group_id("assignment_like");
-
-                    write![
-                        f,
-                        [
-                            group_elements(&indent(&soft_line_break_or_space()),)
-                                .with_group_id(Some(group_id)),
-                            line_suffix_boundary(),
-                            if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
-                            if_group_fits_on_line(&right).with_group_id(Some(group_id)),
-                        ]
-                    ]
-                }
-                AssignmentLikeLayout::BreakAfterOperator => {
-                    write![
-                        f,
-                        [group_elements(&indent(&format_args![
-                            soft_line_break_or_space(),
-                            right,
-                        ])),]
-                    ]
-                }
-                AssignmentLikeLayout::NeverBreakAfterOperator => {
-                    write![f, [space_token(), right,]]
-                }
-
-                AssignmentLikeLayout::BreakLeftHandSide => {
-                    write![f, [space_token(), group_elements(right),]]
-                }
-
-                AssignmentLikeLayout::Chain => {
-                    write!(f, [soft_line_break_or_space(), right,])
-                }
-
-                AssignmentLikeLayout::ChainTail => {
+            let left = format_once(|f| {
+                if matches!(
+                    &layout,
+                    AssignmentLikeLayout::BreakLeftHandSide | AssignmentLikeLayout::OnlyLeft
+                ) {
                     write!(
                         f,
-                        [&indent(&format_args![soft_line_break_or_space(), right,])]
+                        [&format_once(|f| { f.write_element(formatted_element) })]
                     )
-                }
-
-                AssignmentLikeLayout::ChainTailArrowFunction => {
-                    let group_id = f.group_id("arrow_chain");
-
+                } else {
                     write!(
                         f,
-                        [
-                            space_token(),
-                            group_elements(&indent(&format_args![hard_line_break(), right]))
-                                .with_group_id(Some(group_id)),
-                        ]
+                        [group_elements(&format_once(|f| {
+                            f.write_element(formatted_element)
+                        }))]
                     )
+                }
+            });
+
+            let right = format_with(|f| self.write_right(f)).memoized();
+
+            let inner_content = format_with(|f| {
+                write!(f, [left])?;
+                self.write_operator(f)?;
+
+                match &layout {
+                    AssignmentLikeLayout::OnlyLeft => Ok(()),
+                    AssignmentLikeLayout::Fluid => {
+                        let group_id = f.group_id("assignment_like");
+
+                        write![
+                            f,
+                            [
+                                group_elements(&indent(&soft_line_break_or_space()),)
+                                    .with_group_id(Some(group_id)),
+                                line_suffix_boundary(),
+                                if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
+                                if_group_fits_on_line(&right).with_group_id(Some(group_id)),
+                            ]
+                        ]
+                    }
+                    AssignmentLikeLayout::BreakAfterOperator => {
+                        write![
+                            f,
+                            [group_elements(&indent(&format_args![
+                                soft_line_break_or_space(),
+                                right,
+                            ])),]
+                        ]
+                    }
+                    AssignmentLikeLayout::NeverBreakAfterOperator => {
+                        write![f, [space_token(), right,]]
+                    }
+
+                    AssignmentLikeLayout::BreakLeftHandSide => {
+                        write![f, [space_token(), group_elements(&right),]]
+                    }
+
+                    AssignmentLikeLayout::Chain => {
+                        write!(f, [soft_line_break_or_space(), right,])
+                    }
+
+                    AssignmentLikeLayout::ChainTail => {
+                        write!(
+                            f,
+                            [&indent(&format_args![soft_line_break_or_space(), right,])]
+                        )
+                    }
+
+                    AssignmentLikeLayout::ChainTailArrowFunction => {
+                        let group_id = f.group_id("arrow_chain");
+
+                        write!(
+                            f,
+                            [
+                                space_token(),
+                                group_elements(&indent(&format_args![hard_line_break(), right]))
+                                    .with_group_id(Some(group_id)),
+                            ]
+                        )
+                    }
                 }
             });
 
@@ -905,4 +929,175 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 
         write!(f, [format_content])
     }
+}
+
+/// A chain that has no calls at all or all of whose calls have no arguments
+/// or have only one which [is_short_argument], except for member call chains
+/// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L329
+fn is_poorly_breakable_member_or_call_chain(
+    expression: JsAnyExpression,
+    f: &mut Formatter<JsFormatContext>,
+) -> SyntaxResult<bool> {
+    let threshold = f.context().line_width().value() / 4;
+
+    // Only call and member chains are poorly breakable
+    // - `obj.member.prop`
+    // - `obj.member()()`
+    let mut is_chain = false;
+
+    // Only chains with simple head are poorly breakable
+    // Simple head is `JsIdentifierExpression` or `JsThisExpression`
+    let mut is_chain_head_simple = false;
+
+    // Keeping track of all call expressions in the chain to check them later
+    let mut call_expressions = vec![];
+
+    let mut expression = Some(expression);
+
+    while let Some(node) = expression.take() {
+        match node {
+            JsAnyExpression::JsCallExpression(call_expression) => {
+                is_chain = true;
+                expression = Some(call_expression.callee()?);
+                call_expressions.push(call_expression);
+            }
+            JsAnyExpression::JsStaticMemberExpression(node) => {
+                is_chain = true;
+                expression = Some(node.object()?);
+            }
+            JsAnyExpression::JsComputedMemberExpression(node) => {
+                is_chain = true;
+                expression = Some(node.object()?);
+            }
+            JsAnyExpression::JsIdentifierExpression(_) | JsAnyExpression::JsThisExpression(_) => {
+                is_chain_head_simple = true;
+            }
+            _ => {}
+        }
+    }
+
+    if !is_chain || !is_chain_head_simple {
+        return Ok(false);
+    }
+
+    for call_expression in call_expressions {
+        if is_member_call_chain(&call_expression, f)? {
+            return Ok(false);
+        }
+
+        let args = call_expression.arguments()?.args();
+
+        let is_breakable_call = match args.len() {
+            0 => false,
+            1 => match args.iter().next() {
+                Some(first_argument) => !is_short_argument(first_argument?, threshold)?,
+                None => false,
+            },
+            _ => true,
+        };
+
+        if is_breakable_call {
+            return Ok(false);
+        }
+
+        let is_breakable_type_arguments = match call_expression.type_arguments() {
+            Some(type_arguments) => is_complex_type_arguments(type_arguments)?,
+            None => false,
+        };
+
+        if is_breakable_type_arguments {
+            return Ok(false);
+        }
+    }
+
+    Ok(true)
+}
+
+/// This function checks if `JsAnyCallArgument` is short
+/// We need it to decide if `JsCallExpression` with the argument is breakable or not
+/// If the argument is short the function call isn't breakable
+/// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L374
+fn is_short_argument(argument: JsAnyCallArgument, threshold: u16) -> SyntaxResult<bool> {
+    if argument.syntax().has_comments_direct() {
+        return Ok(false);
+    }
+
+    if let JsAnyCallArgument::JsAnyExpression(expression) = argument {
+        let is_short_argument = match expression {
+            JsAnyExpression::JsThisExpression(_) => true,
+            JsAnyExpression::JsIdentifierExpression(identifier) => {
+                identifier.name()?.value_token()?.text_trimmed().len() <= threshold as usize
+            }
+            JsAnyExpression::JsUnaryExpression(unary_expression) => {
+                let has_comments = unary_expression.argument()?.syntax().has_comments_direct();
+
+                unary_expression.is_signed_numeric_literal()? && !has_comments
+            }
+            JsAnyExpression::JsAnyLiteralExpression(literal) => match literal {
+                JsAnyLiteralExpression::JsRegexLiteralExpression(regex) => {
+                    regex.pattern()?.chars().count() <= threshold as usize
+                }
+                JsAnyLiteralExpression::JsStringLiteralExpression(string) => {
+                    string.value_token()?.text_trimmed().len() <= threshold as usize
+                }
+                _ => true,
+            },
+            JsAnyExpression::JsTemplate(template) => {
+                let elements = template.elements();
+
+                // Besides checking length exceed we also need to check that the template doesn't have any expressions.
+                // It means that the elements of the template are empty or have only one `JsTemplateChunkElement` element
+                // Prettier: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L402-L405
+                match elements.len() {
+                    0 => true,
+                    1 => match elements.iter().next() {
+                        Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) => {
+                            let token = element.template_chunk_token()?;
+                            let text_trimmed = token.text_trimmed();
+                            !text_trimmed.contains('\n') && text_trimmed.len() <= threshold as usize
+                        }
+                        _ => false,
+                    },
+                    _ => false,
+                }
+            }
+            _ => false,
+        };
+        Ok(is_short_argument)
+    } else {
+        Ok(false)
+    }
+}
+
+/// This function checks if `TsTypeArguments` is complex
+/// We need it to decide if `JsCallExpression` with the type arguments is breakable or not
+/// If the type arguments is complex the function call is breakable
+/// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L432
+fn is_complex_type_arguments(type_arguments: TsTypeArguments) -> SyntaxResult<bool> {
+    let ts_type_argument_list = type_arguments.ts_type_argument_list();
+
+    if ts_type_argument_list.len() > 1 {
+        return Ok(true);
+    }
+
+    let is_first_argument_complex = ts_type_argument_list
+        .iter()
+        .next()
+        .transpose()?
+        .map(|first_argument| {
+            matches!(
+                first_argument,
+                TsType::TsUnionType(_) | TsType::TsIntersectionType(_) | TsType::TsObjectType(_)
+            )
+        })
+        .unwrap_or(false);
+
+    if is_first_argument_complex {
+        return Ok(true);
+    }
+
+    // TODO: add here will_break logic
+    // https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L454
+
+    Ok(false)
 }
