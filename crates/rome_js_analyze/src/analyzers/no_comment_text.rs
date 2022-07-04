@@ -9,18 +9,31 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce the use of `while` loops instead of `for` loops when the
-    /// initializer and update expressions are not needed
+ 	/// Prevent comments from being inserted as text nodes
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// for (; x.running;) {
-    ///     x.step();
-    /// }
+	/// const a3 = <div>// comment</div>;
     /// ```
+	///
+	/// ```js,expect_diagnostic
+	/// const a4 = <div>/* comment */</div>;
+	/// ```
+	///
+	/// ```js,expect_diagnostic
+	/// const a5 = <div>/** comment */</div>;
+	/// ```
+	///
+	/// ### Valid
+	///
+	/// ```js
+	/// const a = <div>{/* comment */}</div>;
+	/// const a1 = <div>{/** comment */}</div>;
+	/// const a2 = <div className={"cls" /* comment */}></div>;
+	/// ```
     pub(crate) NoCommentText = "noCommentText"
 }
 
@@ -75,7 +88,7 @@ impl Rule for NoCommentText {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use a while loop" }.to_owned(),
+            message: markup! { "Wrap the comments with braces" }.to_owned(),
             root,
         })
     }
