@@ -374,7 +374,8 @@ fn assert_lint(
         if test.expect_diagnostic {
             ensure!(
                 diagnostic_count == 0,
-                "analysis returned multiple diagnostics"
+                "analysis returned multiple diagnostics, code snippet: \n\n{}",
+                code
             );
         } else {
             bail!(format!(
