@@ -187,15 +187,13 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             });
             let any_breaks = arguments_break.any(|will_break| will_break);
             let an_argument_breaks = arguments_break.enumerate().any(|(index, will_break)| {
-                return if should_group_first_argument && index > 0
+                if should_group_first_argument && index > 0
                     || (should_group_last_argument && index < args.len() - 1)
                 {
                     will_break
-                } else if index > 0 && index < args.len() - 1 {
-                    will_break
                 } else {
                     false
-                };
+                }
             });
 
             if an_argument_breaks {
