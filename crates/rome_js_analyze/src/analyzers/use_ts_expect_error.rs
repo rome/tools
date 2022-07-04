@@ -16,10 +16,48 @@ declare_rule! {
     ///
     /// ### Invalid
     ///
-    /// ```js,expect_diagnostic
-    /// for (; x.running;) {
-    ///     x.step();
-    /// }
+    /// ```ts,expect_diagnostic
+    /// // @ts-ignore
+    /// let foo: boolean = 1;
+    /// ```
+    ///
+    /// ```ts,expect_diagnostic
+    /// // @ts-ignore: Blah blah blah
+    /// let foo: boolean = 1;
+    /// ```
+    ///
+    /// ```ts,expect_diagnostic
+    /// /* @ts-ignore */
+    /// let foo: boolean = 1;
+    /// ```
+    ///
+    /// ```ts,expect_diagnostic
+    /// /** @ts-ignore */
+    /// let foo: boolean = 1;
+    /// ```
+    ///
+    /// ```ts,expect_diagnostic
+    /// /**
+    ///  ** @ts-ignore */
+    /// let foo: boolean = 1;
+    /// ```
+    /// ### Valid
+    ///
+    /// ```ts
+    /// // @ts-expect-error
+    /// let foo: boolean = 1;
+    /// // @ts-expect-error: Blah blah blah
+    /// let foo: boolean = 1;
+    /// /* @ts-expect-error */
+    /// let foo: boolean = 1;
+    /// /** @ts-expect-error */
+    /// let foo: boolean = 1;
+    /// /**
+    /// * @ts-expect-error */
+    /// let foo: boolean = 1;
+    /// /**
+    /// ** @ts-expect-error */
+    /// let foo: boolean = 1;
     /// ```
     pub(crate) UseTsExpectError = "useTsExpectError"
 }
@@ -91,7 +129,7 @@ impl Rule for UseTsExpectError {
                             let len = multiline_ts_ignore_index_vec.len();
                             let mut replaced_string =
                                 String::from(&original[0..multiline_ts_ignore_index_vec[0]]);
-                            // handle if multiline comment has multiple `@ts-ignore`
+                            // Handle if multiline comment has multiple `@ts-ignore`
                             for window in multiline_ts_ignore_index_vec.windows(2) {
                                 let first_index = window[0];
                                 let second_index = window[1];

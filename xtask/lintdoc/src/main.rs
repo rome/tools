@@ -379,7 +379,7 @@ fn assert_lint(
             ensure!(
                 diagnostic_count == 0,
                 "analysis returned multiple diagnostics, code snippet: \n\n{}",
-                code
+                diag.code.unwrap_or_else(|| "".to_string())
             );
         } else {
             bail!(format!(
