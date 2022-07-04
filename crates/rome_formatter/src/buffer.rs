@@ -748,7 +748,8 @@ impl<'buffer, Context> NullBuffer<'buffer, Context> {
 impl<Context> Buffer for NullBuffer<'_, Context> {
     type Context = Context;
 
-    fn write_element(&mut self, _element: FormatElement) -> FormatResult<()> {
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        drop(element);
         Ok(())
     }
 
@@ -764,5 +765,7 @@ impl<Context> Buffer for NullBuffer<'_, Context> {
         BufferSnapshot::Position(0)
     }
 
-    fn restore_snapshot(&mut self, _snapshot: BufferSnapshot) {}
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        drop(snapshot);
+    }
 }
