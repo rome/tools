@@ -24,7 +24,7 @@ const a3 = <div>// comment</div>;
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the comments with braces</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const a3 = &lt;div&gt;// comment&lt;/div&gt;;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const a3 = &lt;div&gt;{/** comment*/}&lt;/div&gt;;</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const a3 = &lt;div&gt;{/* comment*/}&lt;/div&gt;;</span>
 
 </code></pre>{% endraw %}
 
@@ -41,7 +41,7 @@ const a4 = <div>/* comment */</div>;
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the comments with braces</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const a4 = &lt;div&gt;/* comment */&lt;/div&gt;;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const a4 = &lt;div&gt;{/** comment */}&lt;/div&gt;;</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const a4 = &lt;div&gt;{/* comment */}&lt;/div&gt;;</span>
 
 </code></pre>{% endraw %}
 
@@ -58,7 +58,7 @@ const a5 = <div>/** comment */</div>;
 <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the comments with braces</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const a5 = &lt;div&gt;/** comment */&lt;/div&gt;;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const a5 = &lt;div&gt;{/** comment */}&lt;/div&gt;;</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">const a5 = &lt;div&gt;{/* comment */}&lt;/div&gt;;</span>
 
 </code></pre>{% endraw %}
 

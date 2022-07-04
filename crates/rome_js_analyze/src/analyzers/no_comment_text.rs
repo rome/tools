@@ -37,7 +37,6 @@ declare_rule! {
     pub(crate) NoCommentText = "noCommentText"
 }
 
-// (\/\*\*|\/\*|\/\/)
 impl Rule for NoCommentText {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
@@ -77,7 +76,7 @@ impl Rule for NoCommentText {
             JsSyntaxToken::new_detached(
                 JsSyntaxKind::JSX_TEXT_LITERAL,
                 &format!(
-                    "{{/**{}*/}}",
+                    "{{/*{}*/}}",
                     normalized_jsx_text
                         .trim_start_matches("/**")
                         .trim_start_matches("//")

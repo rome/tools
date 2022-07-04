@@ -27,7 +27,7 @@ Suggested fix: Wrap the comments with braces
     | @@ -1,5 +1,5 @@
 0 0 |   // invalid
 1   | - const a3 = <div>// comment</div>;
-  1 | + const a3 = <div>{/** comment*/}</div>;
+  1 | + const a3 = <div>{/* comment*/}</div>;
 2 2 |   const a4 = <div>/* comment */</div>;
 3 3 |   const a5 = <div>/** comment */</div>;
 4 4 |   // valid
@@ -47,7 +47,7 @@ Suggested fix: Wrap the comments with braces
 0 0 |   // invalid
 1 1 |   const a3 = <div>// comment</div>;
 2   | - const a4 = <div>/* comment */</div>;
-  2 | + const a4 = <div>{/** comment */}</div>;
+  2 | + const a4 = <div>{/* comment */}</div>;
 3 3 |   const a5 = <div>/** comment */</div>;
 4 4 |   // valid
 5 5 |   const a = <div>{/* comment */}</div>;
@@ -68,7 +68,7 @@ Suggested fix: Wrap the comments with braces
 1 1 |   const a3 = <div>// comment</div>;
 2 2 |   const a4 = <div>/* comment */</div>;
 3   | - const a5 = <div>/** comment */</div>;
-  3 | + const a5 = <div>{/** comment */}</div>;
+  3 | + const a5 = <div>{/* comment */}</div>;
 4 4 |   // valid
 5 5 |   const a = <div>{/* comment */}</div>;
 6 6 |   const a1 = <div>{/** comment */}</div>;
