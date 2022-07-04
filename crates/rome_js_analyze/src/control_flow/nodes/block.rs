@@ -41,6 +41,7 @@ impl<B> NodeVisitor<B> for BlockVisitor {
     ) -> SyntaxResult<()> {
         if let Some((_, block)) = self.break_block {
             builder.append_jump(false, block);
+            builder.set_cursor(block);
         }
 
         Ok(())

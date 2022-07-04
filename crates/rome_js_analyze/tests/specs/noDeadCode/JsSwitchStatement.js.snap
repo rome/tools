@@ -30,37 +30,6 @@ function JsSwitchStatement2() {
 # Diagnostics
 ```
 warning[noDeadCode]: This code is unreachable
-  ┌─ JsSwitchStatement.js:9:14
-  │
-6 │         default:
-  │         ------- This statement will stop the flow of the code ...
-  ·
-9 │         case 1: // afterDefault
-  │              - ... before it can reach this code
-
-
-```
-
-```
-warning[noDeadCode]: This code is unreachable
-   ┌─ JsSwitchStatement.js:10:13
-   │
- 5 │             break;
-   │             ------ Either this statement will break the flow of the code, ...
- 6 │         default:
-   │         ------- ... this statement will stop the flow of the code, ...
- 7 │             caseDefault();
- 8 │             break;
-   │             ------ ... or this statement will break the flow of the code ...
- 9 │         case 1: // afterDefault
-10 │             afterDefault();
-   │             --------------- ... before it can reach this code
-
-
-```
-
-```
-warning[noDeadCode]: This code is unreachable
    ┌─ JsSwitchStatement.js:18:13
    │
 17 │             break;

@@ -15,6 +15,7 @@ pub(in crate::control_flow) struct SwitchVisitor {
     /// Flag used by the [CaseVisitor] to check if it's the first case clause
     /// in a switch statement (used to implement fallthrough)
     is_first_case_clause: bool,
+    default_block: Option<(BlockId, JsSyntaxToken)>,
 }
 
 impl<B> NodeVisitor<B> for SwitchVisitor {
@@ -37,6 +38,7 @@ impl<B> NodeVisitor<B> for SwitchVisitor {
             label,
             break_block,
             is_first_case_clause: true,
+            default_block: None,
         })
     }
 
@@ -59,10 +61,15 @@ impl<B> NodeVisitor<B> for SwitchVisitor {
             builder.append_jump(false, break_block);
         }
 
-        // Also implicitly jump to the break block (over the switch statement)
-        // at the end of the entry block if no case was matched
+        // Also implicitly jump to either the default block or the break block
+        // (over the switch statement) at the end of the entry block if no case
+        // was matched
         builder.set_cursor(entry_block);
-        builder.append_jump(false, break_block);
+        if let Some((block, token)) = self.default_block {
+            builder.append_jump(false, block).with_node(token);
+        } else {
+            builder.append_jump(false, break_block);
+        }
 
         builder.set_cursor(break_block);
 
@@ -90,18 +97,16 @@ impl<B> NodeVisitor<B> for CaseVisitor {
             switch_stmt.is_first_case_clause = false;
         }
 
-        builder.set_cursor(switch_stmt.entry_block);
-
         match node {
             JsAnySwitchClause::JsCaseClause(node) => {
+                builder.set_cursor(switch_stmt.entry_block);
                 builder
                     .append_jump(true, case_block)
                     .with_node(node.test()?.into_syntax());
             }
             JsAnySwitchClause::JsDefaultClause(node) => {
-                builder
-                    .append_jump(false, case_block)
-                    .with_node(node.default_token()?);
+                let token = node.default_token()?;
+                switch_stmt.default_block = Some((case_block, token));
             }
         }
 
