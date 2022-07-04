@@ -28,7 +28,7 @@ impl Rule for UseTsExpectError {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyStatement>;
-    /// The `@ts-ignore` index of trailing trivia, and replaced_string
+    /// The `@ts-ignore` index of trailing trivia, and the corresponding replaced_string using `@ts-expect-error`
     type State = Vec<(usize, String)>;
     type Signals = Option<Self::State>;
 
@@ -98,7 +98,7 @@ impl Rule for UseTsExpectError {
                                 replaced_string.push_str("@ts-expect-error");
                                 replaced_string.push_str(&original[first_index + 10..second_index]);
                             }
-                            // Here we know that `multiline_ts-ignore_index_vec` have length either 1 or greater equal to 2
+                            // Here we know that `multiline_ts-ignore_index_vec` have length greater equal to 1
                             // we need to concat the rest of length after the last `@ts-ignore`
                             replaced_string.push_str("@ts-expect-error");
                             replaced_string
