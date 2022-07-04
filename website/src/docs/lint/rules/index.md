@@ -163,6 +163,13 @@ the statements in a block
 Disallow multiple variable declarations in the same variable statement
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useTsExpectError">
+	<a href="/docs/lint/rules/useTsExpectError">useTsExpectError</a>
+	<a class="header-anchor" href="#useTsExpectError"></a>
+</h3>
+Enforce use <code>@ts-expect-error</code> instead of <code>@ts-ignore</code> to get notified when suppression is no longer necessary.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useValidTypeof">
 	<a href="/docs/lint/rules/useValidTypeof">useValidTypeof (since v0.7.0)</a>
 	<a class="header-anchor" href="#useValidTypeof"></a>

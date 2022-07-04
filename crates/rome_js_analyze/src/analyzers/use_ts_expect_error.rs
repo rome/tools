@@ -9,8 +9,7 @@ use rome_rowan::{AstNode, AstNodeExt, TriviaPiece};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce the use of `while` loops instead of `for` loops when the
-    /// initializer and update expressions are not needed
+    /// Enforce use `@ts-expect-error` instead of `@ts-ignore` to get notified when suppression is no longer necessary.
     ///
     /// ## Examples
     ///
