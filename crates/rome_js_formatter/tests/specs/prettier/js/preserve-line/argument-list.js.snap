@@ -311,11 +311,14 @@ stuff.doThing(someStuff, -1, {
   accept: (node) => doSomething(node),
 });
 
-doThing(someOtherStuff,
-// This is important
-true, {
-  decline: (creditCard) => takeMoney(creditCard),
-});
+doThing(
+  someOtherStuff,
+  // This is important
+  true,
+  {
+    decline: (creditCard) => takeMoney(creditCard),
+  },
+);
 
 func(() => {
   thing();

@@ -43,4 +43,6 @@ test.expect(t => {
 
 test.expect(t => {
     t.true(a)
-}, false, /* something */)
+}, false,
+    // comment
+    )
