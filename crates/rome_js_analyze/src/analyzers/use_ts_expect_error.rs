@@ -9,7 +9,7 @@ use rome_rowan::{AstNode, AstNodeExt, TriviaPiece};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce use `@ts-expect-error` instead of `@ts-ignore` to get notified when suppression is no longer necessary.
+    /// Enforces the use of `@ts-expect-error` instead of `@ts-ignore` to get notified when a suppression is no longer necessary.
     ///
     /// ## Examples
     ///
