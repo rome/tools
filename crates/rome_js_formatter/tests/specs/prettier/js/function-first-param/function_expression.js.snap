@@ -37,13 +37,18 @@ db.collection('indexOptionDefault').createIndex({ a: 1 }, {
 //https://github.com/prettier/prettier/issues/3002
 beep
   .boop()
-  .baz("foo", {
-    some: {
-      thing: {
-        nested: true,
+  .baz(
+    "foo",
+    {
+      some: {
+        thing: {
+          nested: true,
+        },
       },
     },
-  }, { another: { thing: true } }, () => {});
+    { another: { thing: true } },
+    () => {},
+  );
 
 //https://github.com/prettier/prettier/issues/2984
 db

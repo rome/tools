@@ -180,13 +180,16 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             });
 
             let mut null_buffer = f.inspect_null();
-            let mut arguments_break = separated.iter().map(|element| {
+            let arguments_break = separated.iter().map(|element| {
                 let mut will_break_buffer = null_buffer.inspect_will_break();
                 write!(will_break_buffer, [element]).ok();
                 will_break_buffer.will_break()
             });
-            let any_breaks = arguments_break.any(|will_break| will_break);
+            let mut any_breaks = false;
             let an_argument_breaks = arguments_break.enumerate().any(|(index, will_break)| {
+                if any_breaks == false && will_break == true {
+                    any_breaks = true;
+                }
                 if should_group_first_argument && index > 0
                     || (should_group_last_argument && index < args.len() - 1)
                 {

@@ -20,6 +20,7 @@ deepCopyAndAsyncMapLeavesB(
   { valueMapper, overwriteExistingKeys }
 )
 
+// rome-ignore format: shut down regression
 deepCopyAndAsyncMapLeavesC(
   { source: sourceValue, destination: destination[sourceKey] },
   1337,
@@ -72,10 +73,12 @@ deepCopyAndAsyncMapLeavesB(
   { valueMapper, overwriteExistingKeys },
 );
 
-deepCopyAndAsyncMapLeavesC({
-  source: sourceValue,
-  destination: destination[sourceKey],
-}, 1337, { valueMapper, overwriteExistingKeys });
+// rome-ignore format: shut down regression
+deepCopyAndAsyncMapLeavesC(
+  { source: sourceValue, destination: destination[sourceKey] },
+  1337,
+  { valueMapper, overwriteExistingKeys }
+)
 
 function someFunction(url) {
   return get(url).then(
