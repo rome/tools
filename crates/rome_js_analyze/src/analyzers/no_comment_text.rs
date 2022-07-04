@@ -3,11 +3,11 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, JsxText};
+use rome_js_factory::make;
+use rome_js_syntax::{JsxAnyChild, JsxText, TriviaPieceKind, T};
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
-
 declare_rule! {
      /// Prevent comments from being inserted as text nodes
     ///
@@ -71,20 +71,28 @@ impl Rule for NoCommentText {
         let Ast(node) = ctx.query();
 
         let normalized_jsx_text = node.text();
-        let root = ctx.root().replace_token(
-            node.value_token().ok()?,
-            JsSyntaxToken::new_detached(
-                JsSyntaxKind::JSX_TEXT_LITERAL,
-                &format!(
-                    "{{/*{}*/}}",
-                    normalized_jsx_text
-                        .trim_start_matches("/**")
-                        .trim_start_matches("//")
-                        .trim_start_matches("/*")
-                        .trim_end_matches("*/")
-                ),
-                [],
-                [],
+        let root = ctx.root().replace_node(
+            JsxAnyChild::JsxText(node.clone()),
+            JsxAnyChild::JsxExpressionChild(
+                make::jsx_expression_child(
+                    make::token(T!['{']).with_trailing_trivia(
+                        [(
+                            TriviaPieceKind::MultiLineComment,
+                            format!(
+                                "/*{}*/",
+                                normalized_jsx_text
+                                    .trim_start_matches("/**")
+                                    .trim_start_matches("//")
+                                    .trim_start_matches("/*")
+                                    .trim_end_matches("*/")
+                            )
+                            .as_str(),
+                        )]
+                        .into_iter(),
+                    ),
+                    make::token(T!['}']),
+                )
+                .build(),
             ),
         )?;
 
