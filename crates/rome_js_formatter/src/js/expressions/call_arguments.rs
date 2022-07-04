@@ -179,6 +179,32 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 )
             });
 
+            let mut null_buffer = f.inspect_null();
+            let arguments_break = separated.iter().map(|element| {
+                let mut will_break_buffer = null_buffer.inspect_will_break();
+                write!(will_break_buffer, [element]).ok();
+                will_break_buffer.will_break()
+            });
+            let mut any_breaks = false;
+            let an_argument_breaks = arguments_break.enumerate().any(|(index, will_break)| {
+                any_breaks |= will_break;
+                if should_group_first_argument && index > 0
+                    || (should_group_last_argument && index < args.len() - 1)
+                {
+                    will_break
+                } else {
+                    false
+                }
+            });
+
+            if an_argument_breaks {
+                return write!(f, [all_arguments_expanded]);
+            }
+
+            if any_breaks {
+                write!(f, [expand_parent()])?;
+            }
+
             write!(
                 f,
                 [best_fitting![
