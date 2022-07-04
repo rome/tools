@@ -4,6 +4,8 @@ mod no_async_promise_executor;
 pub(crate) use no_async_promise_executor::NoAsyncPromiseExecutor;
 mod no_compare_neg_zero;
 pub(crate) use no_compare_neg_zero::NoCompareNegZero;
+mod no_dead_code;
+pub(crate) use no_dead_code::NoDeadCode;
 mod no_debugger;
 pub(crate) use no_debugger::NoDebugger;
 mod no_delete;

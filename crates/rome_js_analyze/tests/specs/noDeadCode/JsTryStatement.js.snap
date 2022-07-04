@@ -1,0 +1,38 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsTryStatement.js
+---
+# Input
+```js
+function JsTryStatement1() {
+    try {
+        test();
+        return;
+    } catch (err) {
+        test();
+        return;
+    }
+
+    afterTryCatchReturn();
+}
+
+```
+
+# Diagnostics
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryStatement.js:10:5
+   │
+ 4 │         return;
+   │         ------- Either this statement ...
+   ·
+ 7 │         return;
+   │         ------- ... or this statement will return from the function ...
+   ·
+10 │     afterTryCatchReturn();
+   │     ---------------------- ... before it can reach this code
+
+
+```
+
+

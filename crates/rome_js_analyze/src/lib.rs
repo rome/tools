@@ -10,8 +10,10 @@ use rome_js_syntax::{
 
 mod analyzers;
 mod assists;
+mod control_flow;
 mod registry;
 
+use crate::control_flow::make_visitor;
 use crate::registry::build_registry;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
@@ -40,6 +42,8 @@ where
     B: 'static,
 {
     let mut analyzer = Analyzer::<JsLanguage, B>::empty();
+
+    analyzer.add_visitor(make_visitor());
 
     analyzer.add_visitor(SyntaxVisitor::new(|node| {
         has_suppressions_category(SuppressionCategory::Lint, node)

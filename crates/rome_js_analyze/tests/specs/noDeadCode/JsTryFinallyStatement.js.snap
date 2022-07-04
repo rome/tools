@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsTryFinallyStatement.js
+---
+# Input
+```js
+function JsTryFinallyStatement1() {
+    try {
+        test();
+    } catch (err) {
+        test();
+    } finally {
+        test();
+        return;
+    }
+
+    afterFinallyReturn();
+}
+
+```
+
+# Diagnostics
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:11:5
+   │
+ 8 │         return;
+   │         ------- This statement will return from the function ...
+   ·
+11 │     afterFinallyReturn();
+   │     --------------------- ... before it can reach this code
+
+
+```
+
+
