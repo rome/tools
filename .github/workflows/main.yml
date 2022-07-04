@@ -104,8 +104,7 @@ jobs:
       - name: Run doc command
         uses: actions-rs/cargo@v1
         with:
-          command: doc
-          args: -p rome_formatter -p rome_control_flow -p rome_analyze --no-deps
+          command: documentation
 
   coverage:
     name: Test262 Coverage
