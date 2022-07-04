@@ -9,31 +9,31 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
- 	/// Prevent comments from being inserted as text nodes
+     /// Prevent comments from being inserted as text nodes
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-	/// const a3 = <div>// comment</div>;
+    /// const a3 = <div>// comment</div>;
     /// ```
-	///
-	/// ```js,expect_diagnostic
-	/// const a4 = <div>/* comment */</div>;
-	/// ```
-	///
-	/// ```js,expect_diagnostic
-	/// const a5 = <div>/** comment */</div>;
-	/// ```
-	///
-	/// ### Valid
-	///
-	/// ```js
-	/// const a = <div>{/* comment */}</div>;
-	/// const a1 = <div>{/** comment */}</div>;
-	/// const a2 = <div className={"cls" /* comment */}></div>;
-	/// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const a4 = <div>/* comment */</div>;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const a5 = <div>/** comment */</div>;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const a = <div>{/* comment */}</div>;
+    /// const a1 = <div>{/** comment */}</div>;
+    /// const a2 = <div className={"cls" /* comment */}></div>;
+    /// ```
     pub(crate) NoCommentText = "noCommentText"
 }
 

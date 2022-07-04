@@ -23,7 +23,7 @@ warning[noCommentText]: Wrap <Emphasis>comments</Emphasis> inside children withi
 2 │ const a3 = <div>// comment</div>;
   │                 ----------
 
-Suggested fix: Use a while loop
+Suggested fix: Wrap the comments with braces
     | @@ -1,5 +1,5 @@
 0 0 |   // invalid
 1   | - const a3 = <div>// comment</div>;
@@ -42,7 +42,7 @@ warning[noCommentText]: Wrap <Emphasis>comments</Emphasis> inside children withi
 3 │ const a4 = <div>/* comment */</div>;
   │                 -------------
 
-Suggested fix: Use a while loop
+Suggested fix: Wrap the comments with braces
     | @@ -1,6 +1,6 @@
 0 0 |   // invalid
 1 1 |   const a3 = <div>// comment</div>;
@@ -62,7 +62,7 @@ warning[noCommentText]: Wrap <Emphasis>comments</Emphasis> inside children withi
 4 │ const a5 = <div>/** comment */</div>;
   │                 --------------
 
-Suggested fix: Use a while loop
+Suggested fix: Wrap the comments with braces
     | @@ -1,7 +1,7 @@
 0 0 |   // invalid
 1 1 |   const a3 = <div>// comment</div>;
