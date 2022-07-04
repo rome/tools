@@ -8,7 +8,7 @@
 
 ### Formatter
 
-- JSX and TSX are now formatted by default! Make sure to enable it as default formatter in the VSCode extension.
+- JSX and TSX are now formatted by default! Make sure to enable Rome as default formatter in the VSCode extension.
 - Improved the consistency of formatting of various statements:
   - call arguments;
   - object property members;
