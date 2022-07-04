@@ -71,8 +71,8 @@ pub struct Instruction<L: Language> {
 /// The different types of supported [Instruction]
 #[derive(Copy, Clone, Debug)]
 pub enum InstructionKind {
-    /// Indicates the [SyntaxNode] associated with this instruction is to be
-    /// evaluated at this point in the program
+    /// Indicates the [SyntaxNode](rome_rowan::SyntaxNode) associated with this
+    /// instruction is to be evaluated at this point in the program
     Statement,
     /// This instruction may cause the control flow to diverge towards `block`,
     /// either unconditionally if `conditional` is set to `false`, or after
