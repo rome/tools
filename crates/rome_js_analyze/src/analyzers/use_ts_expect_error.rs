@@ -104,7 +104,6 @@ impl Rule for UseTsExpectError {
                     }
                     rome_js_syntax::TriviaPieceKind::MultiLineComment => {
                         let original = item.text();
-                        //
                         let mut multiline_ts_ignore_index_vec = vec![];
                         let mut offset = 2;
                         original
