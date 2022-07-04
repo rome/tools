@@ -82,7 +82,7 @@ declare_visitor! {
     ControlFlowVisitor {
         statement: StatementVisitor,
         block: BlockVisitor,
-        try_finally: TryFinallyVisitor,
+        try_stmt: TryVisitor,
         catch: CatchVisitor,
         finally: FinallyVisitor,
         if_stmt: IfVisitor,

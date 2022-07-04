@@ -1,6 +1,9 @@
 use rome_rowan::{Language, SyntaxElement};
 
-use crate::{BasicBlock, ControlFlowGraph, Instruction, InstructionKind};
+use crate::{
+    BasicBlock, ControlFlowGraph, ExceptionHandler, ExceptionHandlerKind, Instruction,
+    InstructionKind,
+};
 
 /// Identifier for a block in a [ControlFlowGraph]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
@@ -20,6 +23,7 @@ impl BlockId {
 /// should be added
 pub struct FunctionBuilder<L: Language> {
     result: ControlFlowGraph<L>,
+    exception_target: Vec<ExceptionHandler>,
     block_cursor: BlockId,
 }
 
@@ -27,6 +31,7 @@ impl<L: Language> Default for FunctionBuilder<L> {
     fn default() -> Self {
         Self {
             result: ControlFlowGraph::new(),
+            exception_target: Vec::new(),
             block_cursor: BlockId { index: 0 },
         }
     }
@@ -47,7 +52,30 @@ impl<L: Language> FunctionBuilder<L> {
             .try_into()
             .expect("BlockId overflow");
 
-        self.result.blocks.push(BasicBlock::new());
+        let mut has_catch_handler = false;
+        self.result.blocks.push(BasicBlock::new(
+            // The exception handlers for a block are all the handlers in the
+            // current exception stack up to the first catch handler
+            self.exception_target
+                .iter()
+                .rev()
+                .copied()
+                .take_while(|handler| {
+                    let has_previous_catch = has_catch_handler;
+                    has_catch_handler |= matches!(handler.kind, ExceptionHandlerKind::Catch);
+                    !has_previous_catch
+                }),
+            // The cleanup handlers for a block are all the handlers in the
+            // current exception stack with the catch handlers filtered out
+            self.exception_target
+                .iter()
+                .rev()
+                .filter_map(|handler| match handler.kind {
+                    ExceptionHandlerKind::Finally => Some(*handler),
+                    ExceptionHandlerKind::Catch => None,
+                }),
+        ));
+
         BlockId { index }
     }
 
@@ -62,9 +90,19 @@ impl<L: Language> FunctionBuilder<L> {
         self.block_cursor = block;
     }
 
-    /// Add a block to the list of entry points for the function
-    pub fn add_entry_block(&mut self, block: BlockId) {
-        self.result.entry_blocks.push(block.index());
+    /// Push a block as a target on the "exception stack": all blocks created
+    /// with this builder will automatically declare an exception edge towards
+    /// the topmost entry in this stack
+    pub fn push_exception_target(&mut self, kind: ExceptionHandlerKind, target: BlockId) {
+        self.exception_target.push(ExceptionHandler {
+            kind,
+            target: target.index(),
+        });
+    }
+
+    /// Remove the topmost entry from the exception stack
+    pub fn pop_exception_target(&mut self) {
+        self.exception_target.pop();
     }
 
     /// Insert an instruction at the current position of the cursor
@@ -87,7 +125,19 @@ impl<L: Language> FunctionBuilder<L> {
     }
 
     pub fn append_jump(&mut self, conditional: bool, block: BlockId) -> InstructionBuilder<L> {
-        self.append_instruction(InstructionKind::Jump { conditional, block })
+        self.append_instruction(InstructionKind::Jump {
+            conditional,
+            block,
+            finally_fallthrough: false,
+        })
+    }
+
+    pub fn append_finally_fallthrough(&mut self, block: BlockId) -> InstructionBuilder<L> {
+        self.append_instruction(InstructionKind::Jump {
+            conditional: false,
+            block,
+            finally_fallthrough: true,
+        })
     }
 }
 

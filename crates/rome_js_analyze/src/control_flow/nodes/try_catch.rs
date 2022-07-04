@@ -1,31 +1,68 @@
-use rome_control_flow::builder::BlockId;
-use rome_js_syntax::{JsCatchClause, JsFinallyClause, JsTryFinallyStatement};
-use rome_rowan::SyntaxResult;
+use rome_control_flow::{builder::BlockId, ExceptionHandlerKind};
+use rome_js_syntax::{JsCatchClause, JsFinallyClause, JsTryFinallyStatement, JsTryStatement};
+use rome_rowan::{declare_node_union, SyntaxResult};
 
 use crate::control_flow::{
     visitor::{NodeVisitor, StatementStack},
     FunctionBuilder,
 };
 
-pub(in crate::control_flow) struct TryFinallyVisitor {
-    finally_block: Option<BlockId>,
+declare_node_union! {
+    pub(in crate::control_flow) JsAnyTryStatement = JsTryStatement | JsTryFinallyStatement
 }
 
-impl<B> NodeVisitor<B> for TryFinallyVisitor {
-    type Node = JsTryFinallyStatement;
+pub(in crate::control_flow) struct TryVisitor {
+    catch_block: Option<BlockId>,
+    finally_block: Option<BlockId>,
+    next_block: BlockId,
+}
 
-    fn enter(_: Self::Node, _: &mut FunctionBuilder, _: StatementStack) -> SyntaxResult<Self> {
+impl<B> NodeVisitor<B> for TryVisitor {
+    type Node = JsAnyTryStatement;
+
+    fn enter(
+        node: Self::Node,
+        builder: &mut FunctionBuilder,
+        _: StatementStack,
+    ) -> SyntaxResult<Self> {
+        let (has_catch, has_finally) = match node {
+            JsAnyTryStatement::JsTryStatement(_) => (true, false),
+            JsAnyTryStatement::JsTryFinallyStatement(node) => (node.catch_clause().is_some(), true),
+        };
+
+        let next_block = builder.append_block();
+
+        let finally_block = if has_finally {
+            let finally_block = builder.append_block();
+            builder.push_exception_target(ExceptionHandlerKind::Finally, finally_block);
+            Some(finally_block)
+        } else {
+            None
+        };
+
+        let catch_block = if has_catch {
+            let catch_block = builder.append_block();
+            builder.push_exception_target(ExceptionHandlerKind::Catch, catch_block);
+            Some(catch_block)
+        } else {
+            None
+        };
+
+        // Create the actual try block (with the exception target set), append
+        // an implicit jump to it and move the cursor there
+        let try_block = builder.append_block();
+        builder.append_jump(false, try_block);
+        builder.set_cursor(try_block);
+
         Ok(Self {
-            finally_block: None,
+            catch_block,
+            finally_block,
+            next_block,
         })
     }
 }
 
-pub(in crate::control_flow) struct CatchVisitor {
-    /// If this catch clause is part of a simple try-catch statement, this
-    /// contains the block to execute after this node
-    next_block: Option<BlockId>,
-}
+pub(in crate::control_flow) struct CatchVisitor;
 
 impl<B> NodeVisitor<B> for CatchVisitor {
     type Node = JsCatchClause;
@@ -35,41 +72,20 @@ impl<B> NodeVisitor<B> for CatchVisitor {
         builder: &mut FunctionBuilder,
         stack: StatementStack,
     ) -> SyntaxResult<Self> {
-        // If this case clause is part of a try-finally statement, register the
-        // catch block to the parent visitor
-        if let Ok(try_finally_stmt) = stack.read_top::<TryFinallyVisitor>() {
-            let finally_block = try_finally_stmt.finally_block.get_or_insert_with(|| {
-                let finally_block = builder.append_block();
-                builder.add_entry_block(finally_block);
-                finally_block
-            });
+        let try_stmt = stack.read_top::<TryVisitor>()?;
 
-            // Implicit jump from the end of the try block to the finally block
-            builder.append_jump(false, *finally_block);
+        // Insert an implicit jump from the end of the `try` block to the
+        // `finally` block if it exists, or to the `next` block otherwise
+        builder.append_jump(false, try_stmt.finally_block.unwrap_or(try_stmt.next_block));
 
-            let catch_block = builder.append_block();
-            builder.add_entry_block(catch_block);
-            builder.set_cursor(catch_block);
+        // Pop the catch block from the exception stack
+        builder.pop_exception_target();
 
-            Ok(Self { next_block: None })
-        } else {
-            // Otherwise this is a simple try-catch statement, it doesn't need
-            // to have its own visitor since the required logic can be
-            //implemented entirely within the catch visitor
+        // SAFETY: This block should have been created by the `TryVisitor`
+        let catch_block = try_stmt.catch_block.unwrap();
+        builder.set_cursor(catch_block);
 
-            // Cursor is at the end of the try block, jump to the next block
-            let next_block = builder.append_block();
-            builder.append_jump(false, next_block);
-
-            // Create the catch block, mark it as entry point and start writing
-            let catch_block = builder.append_block();
-            builder.add_entry_block(catch_block);
-            builder.set_cursor(catch_block);
-
-            Ok(Self {
-                next_block: Some(next_block),
-            })
-        }
+        Ok(Self)
     }
 
     fn exit(
@@ -78,29 +94,15 @@ impl<B> NodeVisitor<B> for CatchVisitor {
         builder: &mut FunctionBuilder,
         stack: StatementStack,
     ) -> SyntaxResult<()> {
-        let Self { next_block } = self;
+        let try_stmt = stack.read_top::<TryVisitor>()?;
 
-        let try_finally_stmt = stack.read_top::<TryFinallyVisitor>();
+        // Implicit jump from the end of the catch block to the finally block
+        // (if it exists), or to the next block otherwise
+        let next_block = try_stmt.finally_block.unwrap_or(try_stmt.next_block);
+        builder.append_jump(false, next_block);
+        builder.set_cursor(next_block);
 
-        if let Ok(try_finally_stmt) = try_finally_stmt {
-            // Implicitly jump from the end of the catch block to the finally block
-            // SAFETY: The `finally_block` has been created when this node was entered
-            builder.append_jump(false, try_finally_stmt.finally_block.unwrap());
-
-            Ok(())
-        } else {
-            // SAFETY: `next_block` is always set to `Some` in
-            // `CatchVisitor::enter` if the parent is not a try-finally statement
-            let next_block = next_block.unwrap();
-
-            // Insert a jump to the next block at the end of the catch block
-            builder.append_jump(false, next_block);
-
-            // Continue writing on the next block
-            builder.set_cursor(next_block);
-
-            Ok(())
-        }
+        Ok(())
     }
 }
 
@@ -114,25 +116,24 @@ impl<B> NodeVisitor<B> for FinallyVisitor {
         builder: &mut FunctionBuilder,
         stack: StatementStack,
     ) -> SyntaxResult<Self> {
-        let try_finally_stmt = stack.read_top::<TryFinallyVisitor>()?;
+        let try_stmt = stack.read_top::<TryVisitor>()?;
 
-        // `finally_block` is initialized to `None` in `TryFinallyVisitor::enter`,
-        // if it's set to `Some` by the time the traversal reached the finally
-        // clause this means an intermediate catch clause has allocated it
-        // in-between (in `CatchVisitor::enter`)
-        let has_catch = try_finally_stmt.finally_block.is_some();
-        let finally_block = try_finally_stmt.finally_block.get_or_insert_with(|| {
-            let finally_block = builder.append_block();
-            builder.add_entry_block(finally_block);
-            finally_block
-        });
+        // SAFETY: This block should have been created by the `TryVisitor`
+        let finally_block = try_stmt.finally_block.unwrap();
 
-        // Append an implicit jump from the catch block to the finally block if it exists
-        if !has_catch {
-            builder.append_jump(false, *finally_block);
+        // If the try statement has no catch clause
+        if try_stmt.catch_block.is_none() {
+            // Insert an implicit jump from the end of the try block to the
+            // `finally` block
+            builder.append_jump(false, finally_block);
+
+            // Move the cursor to the finally block (this has already been done
+            // by the `CatchVisitor` if the try statement has a catch clause)
+            builder.set_cursor(finally_block);
         }
 
-        builder.set_cursor(*finally_block);
+        // Pop the finally block from the exception stack
+        builder.pop_exception_target();
 
         Ok(Self)
     }
@@ -141,12 +142,15 @@ impl<B> NodeVisitor<B> for FinallyVisitor {
         self,
         _: Self::Node,
         builder: &mut FunctionBuilder,
-        _: StatementStack,
+        stack: StatementStack,
     ) -> SyntaxResult<()> {
-        let next_block = builder.append_block();
-        builder.append_jump(false, next_block);
+        let try_stmt = stack.read_top::<TryVisitor>()?;
 
-        builder.set_cursor(next_block);
+        // Implicit jump from the end of the finally block to the next block
+        builder.append_finally_fallthrough(try_stmt.next_block);
+
+        builder.set_cursor(try_stmt.next_block);
+
         Ok(())
     }
 }

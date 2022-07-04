@@ -3,8 +3,9 @@ use std::{cmp::Ordering, collections::VecDeque, vec::IntoIter};
 use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_control_flow::InstructionKind;
-use rome_js_syntax::{JsSyntaxElement, JsSyntaxKind, TextRange};
+use rome_control_flow::{builder::BlockId, ExceptionHandler, Instruction, InstructionKind};
+use rome_js_syntax::{JsLanguage, JsReturnStatement, JsSyntaxElement, JsSyntaxKind, TextRange};
+use rome_rowan::AstNode;
 use rustc_hash::FxHashMap;
 
 use crate::control_flow::ControlFlowGraph;
@@ -54,95 +55,10 @@ impl Rule for NoDeadCode {
 
         let cfg = ctx.query();
 
-        // Perform a simple reachability analysis on the control flow graph by
-        // traversing the function starting at the entry points
+        // Traverse the CFG and calculate block / instruction reachability
+        let block_paths = traverse_cfg(cfg, &mut signals);
 
-        /// Individual entry in the traversal queue, holding the state for a
-        /// single "linearly independent path" through the function as it gets
-        /// created during the control flow traversal
-        struct PathState {
-            /// Index of the next block to visit
-            next_block: u32,
-            /// Set of all blocks already visited on this path
-            visited: RoaringBitmap,
-            /// Current terminating instruction for the path, if one was
-            /// encountered
-            terminator: Option<Option<PathTerminator>>,
-        }
-
-        let mut queue = VecDeque::new();
-
-        for index in &cfg.entry_blocks {
-            queue.push_back(PathState {
-                next_block: *index,
-                visited: RoaringBitmap::new(),
-                terminator: None,
-            });
-        }
-
-        // This maps holds a list of "path state", the active terminator
-        // intruction for each path that can reach the block
-        let mut block_paths = FxHashMap::default();
-
-        while let Some(mut path) = queue.pop_front() {
-            // Add the block to the visited set for the path, and the current
-            // state of the path to the global reachable blocks map
-            path.visited.insert(path.next_block);
-
-            block_paths
-                .entry(path.next_block)
-                .or_insert_with(Vec::new)
-                .push(path.terminator);
-
-            let index = path.next_block as usize;
-            let block = &cfg.blocks[index];
-
-            // Set to true if the `terminator` is found inside of this block
-            let mut has_direct_terminator = false;
-
-            for inst in &block.instructions {
-                let node_range = inst.node.as_ref().map(|node| PathTerminator {
-                    kind: node.kind(),
-                    range: node.text_trimmed_range(),
-                });
-
-                // If this block has already ended, immediately mark this instruction as unreachable
-                if let Some(terminator) = path.terminator.filter(|_| has_direct_terminator) {
-                    if let Some(node) = &inst.node {
-                        signals.push(node, terminator);
-                    }
-                }
-
-                match inst.kind {
-                    InstructionKind::Statement => {}
-                    InstructionKind::Jump { conditional, block } => {
-                        // Push the jump target block to the queue if it hasn't
-                        // been visited yet in this path
-                        if !path.visited.contains(block.index()) {
-                            queue.push_back(PathState {
-                                next_block: block.index(),
-                                visited: path.visited.clone(),
-                                terminator: path.terminator,
-                            });
-                        }
-
-                        // Jump is a terminator instruction if it's unconditional
-                        if path.terminator.is_none() && !conditional {
-                            path.terminator = Some(node_range);
-                            has_direct_terminator = true;
-                        }
-                    }
-                    InstructionKind::Return => {
-                        if path.terminator.is_none() {
-                            path.terminator = Some(node_range);
-                            has_direct_terminator = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        // Detect unrechable blocks using the result of the above traversal
+        // Detect unreachable blocks using the result of the above traversal
         'blocks: for (index, block) in cfg.blocks.iter().enumerate() {
             let index = index as u32;
             match block_paths.get(&index) {
@@ -308,6 +224,194 @@ impl Rule for NoDeadCode {
         }
 
         Some(diagnostic)
+    }
+}
+
+/// Individual entry in the traversal queue, holding the state for a
+/// single "linearly independent path" through the function as it gets
+/// created during the control flow traversal
+struct PathState<'cfg> {
+    /// Index of the next block to visit
+    next_block: u32,
+    /// Set of all blocks already visited on this path
+    visited: RoaringBitmap,
+    /// Current terminating instruction for the path, if one was
+    /// encountered
+    terminator: Option<Option<PathTerminator>>,
+    exception_handlers: Option<&'cfg [ExceptionHandler]>,
+}
+
+/// Perform a simple reachability analysis on the control flow graph by
+/// traversing the function starting at the entry points
+fn traverse_cfg(
+    cfg: &ControlFlowGraph,
+    signals: &mut UnreachableRanges,
+) -> FxHashMap<u32, Vec<Option<Option<PathTerminator>>>> {
+    let mut queue = VecDeque::new();
+
+    queue.push_back(PathState {
+        next_block: 0,
+        visited: RoaringBitmap::new(),
+        terminator: None,
+        exception_handlers: None,
+    });
+
+    // This maps holds a list of "path state", the active terminator
+    // intruction for each path that can reach the block
+    let mut block_paths = FxHashMap::default();
+
+    while let Some(mut path) = queue.pop_front() {
+        // Add the block to the visited set for the path, and the current
+        // state of the path to the global reachable blocks map
+        path.visited.insert(path.next_block);
+
+        block_paths
+            .entry(path.next_block)
+            .or_insert_with(Vec::new)
+            .push(path.terminator);
+
+        let index = path.next_block as usize;
+        let block = &cfg.blocks[index];
+
+        // Lookup the existence of an exception edge for this block but
+        // defer its creation until an instruction that can throw is encountered
+        let mut exception_handlers = block.exception_handlers.split_first();
+
+        // Set to true if the `terminator` is found inside of this block
+        let mut has_direct_terminator = false;
+
+        for inst in &block.instructions {
+            // Do not create exception edges for instructions with no side effects
+            if has_side_effects(inst) {
+                // If this block has a pending exception edge, create an
+                // additional path diverging towards the corresponding
+                // catch or finally block
+                if let Some((handler, handlers)) = exception_handlers.take() {
+                    if !path.visited.contains(handler.target) {
+                        queue.push_back(PathState {
+                            next_block: handler.target,
+                            visited: path.visited.clone(),
+                            terminator: path.terminator,
+                            exception_handlers: Some(handlers),
+                        });
+                    }
+                }
+            }
+
+            let node_range = inst.node.as_ref().map(|node| PathTerminator {
+                kind: node.kind(),
+                range: node.text_trimmed_range(),
+            });
+
+            // If this block has already ended, immediately mark this instruction as unreachable
+            if let Some(terminator) = path.terminator.filter(|_| has_direct_terminator) {
+                if let Some(node) = &inst.node {
+                    signals.push(node, terminator);
+                }
+            }
+
+            match inst.kind {
+                InstructionKind::Statement => {}
+                InstructionKind::Jump {
+                    conditional,
+                    block,
+                    finally_fallthrough,
+                } => {
+                    handle_jump(&mut queue, &path, block, finally_fallthrough);
+
+                    // Jump is a terminator instruction if it's unconditional
+                    if path.terminator.is_none() && !conditional {
+                        path.terminator = Some(node_range);
+                        has_direct_terminator = true;
+                    }
+                }
+                InstructionKind::Return => {
+                    handle_return(&mut queue, &path, &block.cleanup_handlers);
+
+                    if path.terminator.is_none() {
+                        path.terminator = Some(node_range);
+                        has_direct_terminator = true;
+                    }
+                }
+            }
+        }
+    }
+
+    block_paths
+}
+
+/// Returns `true` if `inst` can potentially have side effects. Due to the
+/// dynamic nature of JavaScript this is a conservative check, biased towards
+/// returning false positives
+fn has_side_effects(inst: &Instruction<JsLanguage>) -> bool {
+    let element = match inst.node.as_ref() {
+        Some(element) => element,
+        None => return false,
+    };
+
+    match element.kind() {
+        JsSyntaxKind::JS_RETURN_STATEMENT => {
+            let node = JsReturnStatement::unwrap_cast(element.as_node().unwrap().clone());
+            node.argument().is_some()
+        }
+
+        JsSyntaxKind::JS_BREAK_STATEMENT | JsSyntaxKind::JS_CONTINUE_STATEMENT => false,
+        kind => element.as_node().is_some() && !kind.is_literal(),
+    }
+}
+
+/// Create an additional visitor path from a jump instruction and push it to the queue
+fn handle_jump<'cfg>(
+    queue: &mut VecDeque<PathState<'cfg>>,
+    path: &PathState<'cfg>,
+    block: BlockId,
+    finally_fallthrough: bool,
+) {
+    // If this jump is exiting a finally clause and and this path is visiting
+    // an exception handlers chain
+    if finally_fallthrough && path.exception_handlers.is_some() {
+        // Jump towards the corresponding block if there are pending exception
+        // handlers, otherwise return from the function
+        let handlers = path.exception_handlers.and_then(<[_]>::split_first);
+
+        if let Some((handler, handlers)) = handlers {
+            if !path.visited.contains(handler.target) {
+                queue.push_back(PathState {
+                    next_block: handler.target,
+                    visited: path.visited.clone(),
+                    terminator: path.terminator,
+                    exception_handlers: Some(handlers),
+                });
+            }
+        }
+    } else if !path.visited.contains(block.index()) {
+        // Push the jump target block to the queue if it hasn't
+        // been visited yet in this path
+        queue.push_back(PathState {
+            next_block: block.index(),
+            visited: path.visited.clone(),
+            terminator: path.terminator,
+            exception_handlers: path.exception_handlers,
+        });
+    }
+}
+
+/// Create an additional visitor path from a return instruction and push it to
+/// the queue if necessary
+fn handle_return<'cfg>(
+    queue: &mut VecDeque<PathState<'cfg>>,
+    path: &PathState<'cfg>,
+    cleanup_handlers: &'cfg [ExceptionHandler],
+) {
+    if let Some((handler, handlers)) = cleanup_handlers.split_first() {
+        if !path.visited.contains(handler.target) {
+            queue.push_back(PathState {
+                next_block: handler.target,
+                visited: path.visited.clone(),
+                terminator: path.terminator,
+                exception_handlers: Some(handlers),
+            });
+        }
     }
 }
 

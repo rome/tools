@@ -70,7 +70,7 @@ macro_rules! declare_node_union {
 
         impl std::fmt::Display for $name {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                std::fmt::Display::fmt(self.syntax(), f)
+                std::fmt::Display::fmt($crate::AstNode::syntax(self), f)
             }
         }
 
@@ -80,17 +80,17 @@ macro_rules! declare_node_union {
             }
         } )*
 
-        impl From<$name> for $crate::SyntaxNode<<$name as AstNode>::Language> {
-            fn from(n: $name) -> $crate::SyntaxNode<<$name as AstNode>::Language> {
+        impl From<$name> for $crate::SyntaxNode<<$name as $crate::AstNode>::Language> {
+            fn from(n: $name) -> $crate::SyntaxNode<<$name as $crate::AstNode>::Language> {
                 match n {
                     $( $name::$variant(it) => it.into(), )*
                 }
             }
         }
 
-        impl From<$name> for $crate::SyntaxElement<<$name as AstNode>::Language> {
-            fn from(n: $name) -> $crate::SyntaxElement<<$name as AstNode>::Language> {
-                $crate::SyntaxNode::<<$name as AstNode>::Language>::from(n).into()
+        impl From<$name> for $crate::SyntaxElement<<$name as $crate::AstNode>::Language> {
+            fn from(n: $name) -> $crate::SyntaxElement<<$name as $crate::AstNode>::Language> {
+                $crate::SyntaxNode::<<$name as $crate::AstNode>::Language>::from(n).into()
             }
         }
     };
