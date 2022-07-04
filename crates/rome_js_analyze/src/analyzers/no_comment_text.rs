@@ -42,22 +42,18 @@ impl Rule for NoCommentText {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsxText>;
-    type State = String;
+    type State = ();
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let Ast(n) = ctx.query();
         let jsx_value = n.text();
-        let finalized_jsx_value = jsx_value
-            .trim_start_matches("/**")
-            .trim_start_matches("//")
-            .trim_start_matches("/*")
-            .trim_end_matches("*/")
-            .to_string();
-        if jsx_value == finalized_jsx_value {
-            None
+        let is_single_line_comment = jsx_value.starts_with("//");
+        let is_multi_line_comment = jsx_value.starts_with("/*") && jsx_value.ends_with("*/");
+        if is_single_line_comment || is_multi_line_comment {
+            Some(())
         } else {
-            Some(finalized_jsx_value)
+            None
         }
     }
 
@@ -67,19 +63,26 @@ impl Rule for NoCommentText {
         Some(RuleDiagnostic::warning(
             node.range(),
             markup! {
-                "Wrap <Emphasis>comments</Emphasis> inside children within <Emphasis>braces</Emphasis>."
+                "Wrap "<Emphasis>"comments"</Emphasis>" inside children within "<Emphasis>"braces"</Emphasis>"."
             },
         ))
     }
 
-    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let Ast(node) = ctx.query();
 
+        let finalized_jsx_text = node
+            .text()
+            .trim_start_matches("/**")
+            .trim_start_matches("//")
+            .trim_start_matches("/*")
+            .trim_end_matches("*/")
+            .to_string();
         let root = ctx.root().replace_token(
             node.value_token().ok()?,
             JsSyntaxToken::new_detached(
                 JsSyntaxKind::JSX_TEXT_LITERAL,
-                &format!("{{/**{}*/}}", state),
+                &format!("{{/**{}*/}}", finalized_jsx_text),
                 [],
                 [],
             ),

@@ -17,7 +17,7 @@ const a2 = <div className={"cls" /* comment */}></div>;
 
 # Diagnostics
 ```
-warning[noCommentText]: Wrap <Emphasis>comments</Emphasis> inside children within <Emphasis>braces</Emphasis>.
+warning[noCommentText]: Wrap comments inside children within braces.
   ┌─ noCommentText.tsx:2:17
   │
 2 │ const a3 = <div>// comment</div>;
@@ -36,7 +36,7 @@ Suggested fix: Wrap the comments with braces
 ```
 
 ```
-warning[noCommentText]: Wrap <Emphasis>comments</Emphasis> inside children within <Emphasis>braces</Emphasis>.
+warning[noCommentText]: Wrap comments inside children within braces.
   ┌─ noCommentText.tsx:3:17
   │
 3 │ const a4 = <div>/* comment */</div>;
@@ -56,7 +56,7 @@ Suggested fix: Wrap the comments with braces
 ```
 
 ```
-warning[noCommentText]: Wrap <Emphasis>comments</Emphasis> inside children within <Emphasis>braces</Emphasis>.
+warning[noCommentText]: Wrap comments inside children within braces.
   ┌─ noCommentText.tsx:4:17
   │
 4 │ const a5 = <div>/** comment */</div>;
