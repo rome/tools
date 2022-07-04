@@ -70,7 +70,14 @@ impl Rule for NoCommentText {
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let Ast(node) = ctx.query();
 
-        let normalized_jsx_text = node.text();
+        let normalized_comment = format!(
+            "/*{}*/",
+            node.text()
+                .trim_start_matches("/**")
+                .trim_start_matches("//")
+                .trim_start_matches("/*")
+                .trim_end_matches("*/")
+        );
         let root = ctx.root().replace_node(
             JsxAnyChild::JsxText(node.clone()),
             JsxAnyChild::JsxExpressionChild(
@@ -78,15 +85,7 @@ impl Rule for NoCommentText {
                     make::token(T!['{']).with_trailing_trivia(
                         [(
                             TriviaPieceKind::MultiLineComment,
-                            format!(
-                                "/*{}*/",
-                                normalized_jsx_text
-                                    .trim_start_matches("/**")
-                                    .trim_start_matches("//")
-                                    .trim_start_matches("/*")
-                                    .trim_end_matches("*/")
-                            )
-                            .as_str(),
+                            normalized_comment.as_str(),
                         )]
                         .into_iter(),
                     ),
