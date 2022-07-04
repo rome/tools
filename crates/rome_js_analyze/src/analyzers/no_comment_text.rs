@@ -71,7 +71,7 @@ impl Rule for NoCommentText {
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let Ast(node) = ctx.query();
 
-        let finalized_jsx_text = node
+        let normalized_jsx_text = node
             .text()
             .trim_start_matches("/**")
             .trim_start_matches("//")
@@ -82,7 +82,7 @@ impl Rule for NoCommentText {
             node.value_token().ok()?,
             JsSyntaxToken::new_detached(
                 JsSyntaxKind::JSX_TEXT_LITERAL,
-                &format!("{{/**{}*/}}", finalized_jsx_text),
+                &format!("{{/**{}*/}}", normalized_jsx_text),
                 [],
                 [],
             ),
