@@ -169,6 +169,7 @@ impl Rule for UseTsExpectError {
         let root = ctx.root();
         let mut ignore_cursor = 0;
         let first_token = node.syntax().first_token()?;
+        // Clone trailing trivia and replace leading trivia
         let mut next_leading_trivia = vec![];
         let mut next_trailing_trivia = vec![];
         let mut next_leading_trivia_string = String::new();
