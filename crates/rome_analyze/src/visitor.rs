@@ -25,7 +25,7 @@ impl<'a, L: Language, B> VisitorContext<'a, L, B> {
 
 /// Visitors are the main building blocks of the analyzer: they receive syntax
 /// [WalkEvent]s, process these events to build secondary data structures from
-/// the syntax tree, and emit rule query matches through the [RuleRegistry]
+/// the syntax tree, and emit rule query matches through the [crate::RuleRegistry]
 pub trait Visitor<B> {
     type Language: Language;
 

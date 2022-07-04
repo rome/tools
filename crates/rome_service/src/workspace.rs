@@ -30,7 +30,7 @@
 //!
 //! # Implementations
 //!
-//! Currently the [Workspace] trait is implemented for a single [server::WorkspaceServer]
+//! Currently the [Workspace] trait is implemented for a single `WorkspaceServer`
 //! type. However it is eventually intended to also be implemented for a
 //! potential `WorkspaceClient` type and to operate on a remote workspace
 //! server through a transport layer. This would allow the CLI and Language
