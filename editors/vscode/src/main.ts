@@ -15,9 +15,8 @@ let client: LanguageClient;
 const IN_ROME_PROJECT = "inRomeProject";
 
 export async function activate(context: ExtensionContext) {
-	const command = process.env.DEBUG_SERVER_PATH || (
-		await getServerPath(context)
-	);
+	const command =
+		process.env.DEBUG_SERVER_PATH || (await getServerPath(context));
 	if (!command) {
 		await window.showErrorMessage(
 			"The Rome extensions doesn't ship with prebuilt binaries for your platform yet. " +
@@ -72,7 +71,10 @@ type PlatformTriplets = {
 const PLATFORM_TRIPLETS: PlatformTriplets = {
 	win32: { x64: "x86_64-pc-windows-msvc", arm64: "aarch64-pc-windows-msvc" },
 	darwin: { x64: "x86_64-apple-darwin", arm64: "aarch64-apple-darwin" },
-	linux: { x64: "x86_64-unknown-linux-gnu", arm64: "aarch64-unknown-linux-gnu" },
+	linux: {
+		x64: "x86_64-unknown-linux-gnu",
+		arm64: "aarch64-unknown-linux-gnu",
+	},
 };
 
 async function getServerPath(context: ExtensionContext): Promise<

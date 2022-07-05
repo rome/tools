@@ -23,10 +23,7 @@ import { isRomeEditor } from "../utils";
 type FilePath = string;
 
 class SyntaxTreeProvider
-	implements
-		TextDocumentContentProvider,
-		DocumentLinkProvider,
-		Disposable
+	implements TextDocumentContentProvider, DocumentLinkProvider, Disposable
 {
 	readonly session: Session;
 	static scheme = "rome";
@@ -103,7 +100,7 @@ class SyntaxTreeProvider
 			this.documents.set(documentUri, document);
 
 			return document.value;
-		},);
+		});
 	}
 
 	dispose(): any {
@@ -138,10 +135,9 @@ export function syntaxTree(session: Session): Command {
 	);
 
 	session.subscriptions.push(
-		languages.setLanguageConfiguration(
-			"rome_syntax_tree",
-			{ brackets: [["[", ")"]] },
-		),
+		languages.setLanguageConfiguration("rome_syntax_tree", {
+			brackets: [["[", ")"]],
+		}),
 	);
 
 	// we return a function that instructs the command what to do
@@ -149,9 +145,9 @@ export function syntaxTree(session: Session): Command {
 	return async () => {
 		const document = await workspace.openTextDocument(provider.uri);
 		provider.eventEmitter.fire(provider.uri);
-		void await window.showTextDocument(
-			document,
-			{ viewColumn: ViewColumn.Two, preserveFocus: true },
-		);
+		void await window.showTextDocument(document, {
+			viewColumn: ViewColumn.Two,
+			preserveFocus: true,
+		});
 	};
 }
