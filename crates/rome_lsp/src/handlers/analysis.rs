@@ -22,7 +22,7 @@ pub(crate) fn code_actions(
     session: &Session,
     params: CodeActionParams,
 ) -> Result<Option<CodeActionResponse>> {
-    let workspace_settings = session.config.read().get_workspace_settings();
+    let workspace_settings = session.config.read().unwrap().get_workspace_settings();
     if !workspace_settings.analysis.enable_code_actions {
         return Ok(Some(Vec::new()));
     }

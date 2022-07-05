@@ -1,4 +1,4 @@
-use parking_lot::{const_mutex, Mutex};
+use std::sync::Mutex;
 use rome_rowan::{TextRange, TextSize};
 use similar::{utils::diff_lines, Algorithm, ChangeTag};
 use std::{

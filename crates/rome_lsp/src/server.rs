@@ -44,6 +44,7 @@ impl LanguageServer for LSPServer {
         self.session
             .client_capabilities
             .write()
+			.unwrap()
             .replace(params.capabilities);
 
         let init = InitializeResult {
@@ -60,7 +61,7 @@ impl LanguageServer for LSPServer {
     async fn initialized(&self, _: InitializedParams) {
         self.session.fetch_client_configuration().await;
 
-        if self.session.config.read().get_workspace_settings().unstable {
+        if self.session.config.read().unwrap().get_workspace_settings().unstable {
             rome_flags::set_unstable_flags(rome_flags::FeatureFlags::ALL);
         }
 
