@@ -37,7 +37,7 @@ impl Phase for () {
 /// we have:
 /// - Syntax Phase: No services are offered, thus its rules can be run immediately;
 /// - Semantic Phase: Offers the semantic model, thus these rules can only run
-/// after the [SemanticModel] is ready, which demands a whole transverse of the parsed tree.
+/// after the "SemanticModel" is ready, which demands a whole transverse of the parsed tree.
 pub struct RuleRegistry<'a, L: Language, B> {
     /// Holds a collection of rules for each [SyntaxKind] node type that has
     /// lint rules associated with it for each phase.
