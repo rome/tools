@@ -30,6 +30,9 @@ USAGE:
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
+OPTIONS:
+    --apply                       Apply safe fixes
+
 ```
 
 ### Rules
