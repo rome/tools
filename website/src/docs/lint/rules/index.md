@@ -14,6 +14,7 @@ eleventyNavigation:
 <section>
 <h2>JavaScript</h2>
 <div class="rule">
+<<<<<<< HEAD
 <h3 data-toc-exclude id="noArguments">
 	<a href="/docs/lint/rules/noArguments">noArguments</a>
 	<a class="header-anchor" href="#noArguments"></a>
@@ -21,6 +22,8 @@ eleventyNavigation:
 Disallow the use of <code>arguments</code>
 </div>
 <div class="rule">
+=======
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="noAsyncPromiseExecutor">
 	<a href="/docs/lint/rules/noAsyncPromiseExecutor">noAsyncPromiseExecutor</a>
 	<a class="header-anchor" href="#noAsyncPromiseExecutor"></a>
@@ -28,6 +31,7 @@ Disallow the use of <code>arguments</code>
 Disallows using an async function as a Promise executor.
 </div>
 <div class="rule">
+<<<<<<< HEAD
 <h3 data-toc-exclude id="noCatchAssign">
 	<a href="/docs/lint/rules/noCatchAssign">noCatchAssign</a>
 	<a class="header-anchor" href="#noCatchAssign"></a>
@@ -35,6 +39,8 @@ Disallows using an async function as a Promise executor.
 Disallow reassigning exceptions in catch clauses
 </div>
 <div class="rule">
+=======
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="noCompareNegZero">
 	<a href="/docs/lint/rules/noCompareNegZero">noCompareNegZero</a>
 	<a class="header-anchor" href="#noCompareNegZero"></a>
@@ -42,6 +48,7 @@ Disallow reassigning exceptions in catch clauses
 Disallow comparing against <code>-0</code>
 </div>
 <div class="rule">
+<<<<<<< HEAD
 <h3 data-toc-exclude id="noDeadCode">
 	<a href="/docs/lint/rules/noDeadCode">noDeadCode</a>
 	<a class="header-anchor" href="#noDeadCode"></a>
@@ -49,6 +56,8 @@ Disallow comparing against <code>-0</code>
 Disallow unreachable code
 </div>
 <div class="rule">
+=======
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="noDebugger">
 	<a href="/docs/lint/rules/noDebugger">noDebugger</a>
 	<a class="header-anchor" href="#noDebugger"></a>
@@ -77,11 +86,26 @@ Require the use of <code>===</code> and <code>!==</code>
 Disallows empty destructuring patterns.
 </div>
 <div class="rule">
+<<<<<<< HEAD
 <h3 data-toc-exclude id="noLabelVar">
 	<a href="/docs/lint/rules/noLabelVar">noLabelVar</a>
 	<a class="header-anchor" href="#noLabelVar"></a>
 </h3>
 Disallow labels that share a name with a variable
+=======
+<h3 data-toc-exclude id="noImplicitBoolean">
+	<a href="/docs/lint/rules/noImplicitBoolean">noImplicitBoolean</a>
+	<a class="header-anchor" href="#noImplicitBoolean"></a>
+</h3>
+Disallow implicit <code>true</code> values on JSX boolean attributes
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
+	<a href="/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals</a>
+	<a class="header-anchor" href="#noMultipleSpacesInRegularExpressionLiterals"></a>
+</h3>
+Disallow unclear usage of multiple space characters in regular expression literals
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noNegationElse">
@@ -91,6 +115,7 @@ Disallow labels that share a name with a variable
 Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
 </div>
 <div class="rule">
+<<<<<<< HEAD
 <h3 data-toc-exclude id="noShoutyConstants">
 	<a href="/docs/lint/rules/noShoutyConstants">noShoutyConstants</a>
 	<a class="header-anchor" href="#noShoutyConstants"></a>
@@ -98,6 +123,8 @@ Disallow negation in the condition of an <code>if</code> statement if it has an 
 Disallow the use of constants which its value is the upper-case version of its name.
 </div>
 <div class="rule">
+=======
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="noSparseArray">
 	<a href="/docs/lint/rules/noSparseArray">noSparseArray</a>
 	<a class="header-anchor" href="#noSparseArray"></a>
@@ -105,6 +132,7 @@ Disallow the use of constants which its value is the upper-case version of its n
 Disallow sparse arrays
 </div>
 <div class="rule">
+<<<<<<< HEAD
 <h3 data-toc-exclude id="noUnnecessaryContinue">
 	<a href="/docs/lint/rules/noUnnecessaryContinue">noUnnecessaryContinue</a>
 	<a class="header-anchor" href="#noUnnecessaryContinue"></a>
@@ -112,6 +140,8 @@ Disallow sparse arrays
 Avoid using unnecessary <code>ContinueStatement</code>.
 </div>
 <div class="rule">
+=======
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="noUnsafeNegation">
 	<a href="/docs/lint/rules/noUnsafeNegation">noUnsafeNegation</a>
 	<a class="header-anchor" href="#noUnsafeNegation"></a>
@@ -134,6 +164,23 @@ Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
 </div>
 <div class="rule">
+<<<<<<< HEAD
+=======
+<h3 data-toc-exclude id="useSelfClosingElements">
+	<a href="/docs/lint/rules/useSelfClosingElements">useSelfClosingElements</a>
+	<a class="header-anchor" href="#useSelfClosingElements"></a>
+</h3>
+Prevent extra closing tags for components without children
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useShorthandArrayType">
+	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType</a>
+	<a class="header-anchor" href="#useShorthandArrayType"></a>
+</h3>
+When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
+</div>
+<div class="rule">
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
@@ -156,6 +203,16 @@ the statements in a block
 Disallow multiple variable declarations in the same variable statement
 </div>
 <div class="rule">
+<<<<<<< HEAD
+=======
+<h3 data-toc-exclude id="useTemplate">
+	<a href="/docs/lint/rules/useTemplate">useTemplate</a>
+	<a class="header-anchor" href="#useTemplate"></a>
+</h3>
+Template literals are preferred over string concatenation.
+</div>
+<div class="rule">
+>>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="useValidTypeof">
 	<a href="/docs/lint/rules/useValidTypeof">useValidTypeof</a>
 	<a class="header-anchor" href="#useValidTypeof"></a>
@@ -173,6 +230,7 @@ Enforce the use of <code>while</code> loops instead of <code>for</code> loops wh
 initializer and update expressions are not needed
 </div>
 </section>
+<<<<<<< HEAD
 <section>
 <h2>JSX</h2>
 <div class="rule">
@@ -217,3 +275,5 @@ Disallow unclear usage of multiple space characters in regular expression litera
 When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
 </div>
 </section>
+=======
+>>>>>>> 8f3e696171 (chore: 🤖 doc)

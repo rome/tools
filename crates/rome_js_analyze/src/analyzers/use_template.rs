@@ -26,24 +26,13 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// console.log(1 * 2 + "foo");
     /// ```
-    /// ```js,expect_diagnostic
-    /// console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
-    /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// console.log((1 + "foo") * 2);
     /// ```
-    /// ```js,expect_diagnostic
-    /// console.log(1 * (2 + "foo") + "bar");
-    /// ```
+    ///
     /// ```js,expect_diagnostic
     /// console.log("foo" + 1);
-    /// ```
-    /// ```js,expect_diagnostic
-    /// console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
-    /// ```
-    /// ```js,expect_diagnostic
-    /// console.log("foo" + 1 + 2);
     /// ```
     ///
     /// ### Valid
@@ -75,7 +64,6 @@ impl Rule for UseTemplate {
                         )
                     )
                 }) {
-                    // println!("{:#?}", collections);
                     return Some(collections);
                 }
             }
@@ -138,7 +126,7 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
             }
             _ => {
                 // drop the trivia of original expression make the generated `JsTemplate` a little nicer, if we don't do this
-                // the `1 * (2 + "foo") + "bar"` will be convert to
+                // the `1 * (2 + "foo") + "bar"` will become
                 // ```js
                 // `${1 * (2 + "foo") }bar`
                 // ```
@@ -175,9 +163,9 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
 
 /// Flatten a [JsTemplateElementList] of [JsTemplate] which could possibly be recursive, into a `Vec<JsAnyTemplateElement>`
 /// ## Example
-/// flatten 
+/// flatten
 /// ```js
-/// `${1 + 2 + `${a}"test"` }bar`
+/// `${1 + 2 + `${a}test` }bar`
 /// ```
 /// into
 /// `[1, 2, a, "test", "bar"]`
@@ -250,9 +238,10 @@ fn is_un_necessary_string_concat_expression(node: &JsBinaryExpression) -> Option
     None
 }
 
-/// Convert [JsBinaryExpression] to Vec<[JsAnyExpression]>
+/// Convert [JsBinaryExpression] recursively only if the `operator` is `+` into Vec<[JsAnyExpression]>
 /// ## Example
-/// 1 + 2 + 3 + (1 * 2) -> `[1, 2, 3, (1 * 2)]`
+/// - from: `1 + 2 + 3 + (1 * 2)`
+/// - to: `[1, 2, 3, (1 * 2)]`
 fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<JsAnyExpression>> {
     let mut result = vec![];
     match node.left().ok()? {
