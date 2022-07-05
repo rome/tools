@@ -29,14 +29,6 @@ var h;
 var i;
 ";
 
-const CONFIG: &str = r#"
-{
-    "formatter": {
-        "enabled": false 
-    }
-}
-"#;
-
 mod check {
     use super::*;
 
@@ -574,16 +566,5 @@ mod main {
             Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "<INPUT>"),
             _ => panic!("run_cli returned {result:?} for a missing argument, expected an error"),
         }
-    }
-}
-
-mod configuration {
-    use std::env::current_dir;
-
-    #[test]
-    fn test() {
-        let path = current_dir().unwrap();
-
-        println!("{}", path.display())
     }
 }
