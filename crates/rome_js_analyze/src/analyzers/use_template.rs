@@ -23,8 +23,13 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// console.log(foo + "baz");
     /// ```
+    ///
     /// ```js,expect_diagnostic
     /// console.log(1 * 2 + "foo");
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
     /// ```
     ///
     /// ```js,expect_diagnostic
@@ -53,22 +58,29 @@ impl Rule for UseTemplate {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let Ast(binary_expr) = ctx.query();
-        is_un_necessary_string_concat_expression(binary_expr).and_then(|result| {
-            if result {
-                let collections = collect_binary_add_expression(binary_expr)?;
-                if collections.iter().any(|expr| {
-                    !matches!(
-                        expr,
-                        JsAnyExpression::JsAnyLiteralExpression(
-                            rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(_)
-                        )
-                    )
-                }) {
-                    return Some(collections);
-                }
-            }
+        // Avoiding recursive diagnostics.
+        if binary_expr.parent::<JsBinaryExpression>().is_some() {
             None
-        })
+        } else {
+            is_un_necessary_string_concat_expression(binary_expr).and_then(|result| {
+                if result {
+                    let collections = collect_binary_add_expression(binary_expr)?;
+                    if collections.iter().any(|expr| {
+                        !matches!(
+                            expr,
+                            JsAnyExpression::JsAnyLiteralExpression(
+                                rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(
+                                    _
+                                )
+                            )
+                        )
+                    }) {
+                        return Some(collections);
+                    }
+                }
+                None
+            })
+        }
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -189,6 +201,7 @@ fn flatten_template_element_list(list: JsTemplateElementList) -> Option<Vec<JsAn
     }
     Some(ret)
 }
+
 fn is_un_necessary_string_concat_expression(node: &JsBinaryExpression) -> Option<bool> {
     if node.operator().ok()? != JsBinaryOperator::Plus {
         return None;

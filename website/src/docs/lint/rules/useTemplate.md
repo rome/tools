@@ -46,6 +46,23 @@ console.log(1 * 2 + "foo");
 </code></pre>{% endraw %}
 
 ```jsx
+console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+```
+
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useTemplate</span><span style="color: Orange;">]</span><em>: </em><em></em><em><em>Template</em></em><em> literals are preferred over </em><em><em>string concatenation.</em></em><em></em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useTemplate.js:1:13
+  <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> console.log(1 + &quot;foo&quot; + 2 + &quot;bar&quot; + &quot;baz&quot; + 3);
+  <span style="color: rgb(38, 148, 255);">│</span>             <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
+
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Use a </span><span style="color: rgb(38, 148, 255);"><em>TemplateLiteral</span></em><span style="color: rgb(38, 148, 255);">.</span>
+    | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
+0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">console.log(1 + &quot;foo&quot; + 2 + &quot;bar&quot; + &quot;baz&quot; + 3);</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">console.log(`${1}foo${2}barbaz${3}`);</span>
+
+</code></pre>{% endraw %}
+
+```jsx
 console.log((1 + "foo") * 2);
 ```
 
