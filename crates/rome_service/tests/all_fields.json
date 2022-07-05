@@ -1,4 +1,5 @@
 {
+  "root": true,
   "formatter": {
     "enabled": true,
     "formatWithErrors": true,

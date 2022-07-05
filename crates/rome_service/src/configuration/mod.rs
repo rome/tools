@@ -14,6 +14,11 @@ mod javascript;
 #[derive(Default, Debug, Eq, PartialEq, Deserialize)]
 #[serde(default)]
 pub struct Configuration {
+    /// One root file should exist. Useful when `extends` comes into play.
+    ///
+    /// If `true`, this file should be the master configuration.
+    pub root: bool,
+
     /// The configuration of the formatter
     pub formatter: FormatterConfiguration,
 
