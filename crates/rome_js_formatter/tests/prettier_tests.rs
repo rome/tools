@@ -316,7 +316,7 @@ struct DiffReport {
 impl DiffReport {
     fn get() -> &'static Self {
         static REPORTER: DiffReport = DiffReport {
-            state: const_mutex(Vec::new()),
+            state: Mutex::new(Vec::new()),
         };
 
         // Use an atomic Once to register an exit callback the first time any
@@ -349,7 +349,7 @@ impl DiffReport {
         rome_formatted_result: String,
         prettier_formatted_result: String,
     ) {
-        self.state.lock().push(DiffReportItem {
+        self.state.lock().unwrap().push(DiffReportItem {
             file_name,
             rome_formatted_result,
             prettier_formatted_result,
@@ -396,7 +396,7 @@ impl DiffReport {
     }
 
     fn report_prettier(&self, report_type: ReportType, report_filename: String) {
-        let mut state = self.state.lock();
+        let mut state = self.state.lock().unwrap();
         state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
         let mut report_metric_data = PrettierCompatibilityMetricData::default();
         let mut sum_of_single_compatibility_file = 0_f64;

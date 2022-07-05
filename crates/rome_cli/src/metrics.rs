@@ -397,7 +397,7 @@ mod tests {
         };
 
         let entry = {
-            let mut metrics = METRICS.write();
+            let mut metrics = METRICS.write().unwrap();
             metrics.remove(&CallsiteKey(key))
         };
 
