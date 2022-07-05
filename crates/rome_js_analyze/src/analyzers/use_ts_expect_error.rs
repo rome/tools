@@ -69,7 +69,7 @@ impl Rule for UseTsExpectError {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyStatement>;
-    /// The `@ts-ignore` index of trailing trivia, and the corresponding replaced_string using `@ts-expect-error`
+    /// 
     type State = Vec<(usize, Vec<Range<usize>>)>;
     type Signals = Option<Self::State>;
 
