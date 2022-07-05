@@ -1,4 +1,4 @@
-use rome_formatter::{IndentStyle, LineWidth};
+use rome_formatter::{IndentStyle, LineWidth, LineWidthFromIntError};
 use serde::Deserialize;
 #[derive(Deserialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default)]
@@ -29,9 +29,10 @@ impl From<&FormatterConfiguration> for IndentStyle {
     }
 }
 
-impl From<&FormatterConfiguration> for LineWidth {
-    fn from(c: &FormatterConfiguration) -> Self {
-        LineWidth(c.line_width)
+impl TryFrom<&FormatterConfiguration> for LineWidth {
+    type Error = LineWidthFromIntError;
+    fn try_from(value: &FormatterConfiguration) -> Result<Self, Self::Error> {
+        LineWidth::try_from(value.line_width)
     }
 }
 
@@ -42,7 +43,7 @@ impl Default for FormatterConfiguration {
             format_with_errors: false,
             indent_size: 2,
             indent_style: PlainIndentStyle::default(),
-            line_width: 80,
+            line_width: LineWidth::default().value(),
         }
     }
 }

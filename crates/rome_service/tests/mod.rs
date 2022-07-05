@@ -33,4 +33,16 @@ mod configuration {
             }
         }
     }
+
+    #[test]
+    fn default_value() {
+        let mut working_dir = current_dir().unwrap();
+        working_dir.push("tests");
+        working_dir.push("all_fields.json");
+        let content = read_to_string(working_dir).unwrap();
+
+        let configuration = serde_json::from_str::<Configuration>(&content);
+
+        assert!(configuration.is_ok())
+    }
 }
