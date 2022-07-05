@@ -167,7 +167,7 @@ Disallow multiple variable declarations in the same variable statement
 	<a href="/docs/lint/rules/useTsExpectError">useTsExpectError</a>
 	<a class="header-anchor" href="#useTsExpectError"></a>
 </h3>
-Enforce use <code>@ts-expect-error</code> instead of <code>@ts-ignore</code> to get notified when suppression is no longer necessary.
+Enforces the use of <code>@ts-expect-error</code> instead of <code>@ts-ignore</code> to get notified when a suppression is no longer necessary.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useValidTypeof">
