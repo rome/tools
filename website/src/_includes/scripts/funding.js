@@ -64,27 +64,24 @@ function loadStripe() {
 		return loadingStripePromise;
 	}
 
-	loadingStripePromise =
-		new Promise((resolve, reject) => {
-			const script = document.createElement("script");
-			script.src = "https://js.stripe.com/v3/";
+	loadingStripePromise = new Promise((resolve, reject) => {
+		const script = document.createElement("script");
+		script.src = "https://js.stripe.com/v3/";
 
-			script.onload =
-				() => {
-					loadingStripePromise = undefined;
-					loadedStripe = true;
-					resolve();
-				};
+		script.onload = () => {
+			loadingStripePromise = undefined;
+			loadedStripe = true;
+			resolve();
+		};
 
-			script.onerror =
-				(err) => {
-					loadingStripePromise = undefined;
-					addErrorToast("while loading the Stripe API", err);
-					reject(err);
-				};
+		script.onerror = (err) => {
+			loadingStripePromise = undefined;
+			addErrorToast("while loading the Stripe API", err);
+			reject(err);
+		};
 
-			document.head.appendChild(script);
-		},);
+		document.head.appendChild(script);
+	});
 
 	return loadingStripePromise;
 }
@@ -132,13 +129,10 @@ async function wrapFetch(opts, attempt = 0) {
 		// Only attempt this twice
 		if (res.status > 500 && res.status < 599 && attempt < 2) {
 			return new Promise((resolve) => {
-				setTimeout(
-					() => {
-						resolve(wrapFetch(opts, attempt + 1));
-					},
-					2_000,
-				);
-			},);
+				setTimeout(() => {
+					resolve(wrapFetch(opts, attempt + 1));
+				}, 2_000);
+			});
 		}
 
 		if (res.status !== 200) {
@@ -200,19 +194,16 @@ function collapseModal() {
 
 //# Modal closure
 
-modalContainer.addEventListener(
-	"click",
-	(e) => {
-		if (e.target === modalContainer || e.target === modalInner) {
-			if (modalContainer.classList.contains("collapsed")) {
-				modalContainer.classList.remove("collapsed");
-				document.body.style.overflow = "hidden";
-			} else {
-				closeModal();
-			}
+modalContainer.addEventListener("click", (e) => {
+	if (e.target === modalContainer || e.target === modalInner) {
+		if (modalContainer.classList.contains("collapsed")) {
+			modalContainer.classList.remove("collapsed");
+			document.body.style.overflow = "hidden";
+		} else {
+			closeModal();
 		}
-	},
-);
+	}
+});
 
 closeButton.addEventListener("click", closeModal);
 
@@ -257,14 +248,11 @@ function setModalSteps(finalize) {
 	active.setAttribute("aria-level", "1");
 }
 
-detailsStepIndicator.addEventListener(
-	"click",
-	() => {
-		if (detailsStepIndicator.classList.contains("link")) {
-			setModalSteps(false);
-		}
-	},
-);
+detailsStepIndicator.addEventListener("click", () => {
+	if (detailsStepIndicator.classList.contains("link")) {
+		setModalSteps(false);
+	}
+});
 
 function openModal(tier) {
 	modalContainer.classList.remove("collapsed");
@@ -312,113 +300,104 @@ function getFocusableElements(target) {
 
 // Trap focus in modal when open
 // Credit https://uxdesign.cc/how-to-trap-focus-inside-modal-to-make-it-ada-compliant-6a50f9a70700
-document.addEventListener(
-	"keydown",
-	function (e) {
-		let isTabPressed = e.key === "Tab" || e.keyCode === 9;
-		if (!isTabPressed) {
-			return;
+document.addEventListener("keydown", function (e) {
+	let isTabPressed = e.key === "Tab" || e.keyCode === 9;
+	if (!isTabPressed) {
+		return;
+	}
+
+	// Only trap focus if modal is visible
+	if (modalContainer.hidden) {
+		return;
+	}
+
+	// Select active step
+	const focusableElements =
+		detailsForm.hidden ? reviewFormFocusableElements : detailsFormFocusableElements;
+	const firstFocusableElement = focusableElements[0];
+	const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+	let focusElement;
+
+	if (e.shiftKey) {
+		if (document.activeElement === firstFocusableElement) {
+			focusElement = lastFocusableElement;
 		}
-
-		// Only trap focus if modal is visible
-		if (modalContainer.hidden) {
-			return;
+	} else {
+		if (document.activeElement === lastFocusableElement) {
+			focusElement = firstFocusableElement;
 		}
+	}
 
-		// Select active step
-		const focusableElements = detailsForm.hidden ? reviewFormFocusableElements : detailsFormFocusableElements;
-		const firstFocusableElement = focusableElements[0];
-		const lastFocusableElement = focusableElements[
-			focusableElements.length - 1
-		];
-
-		let focusElement;
-
-		if (e.shiftKey) {
-			if (document.activeElement === firstFocusableElement) {
-				focusElement = lastFocusableElement;
-			}
-		} else {
-			if (document.activeElement === lastFocusableElement) {
-				focusElement = firstFocusableElement;
-			}
-		}
-
-		if (focusElement !== undefined) {
-			e.preventDefault();
-			focusElement.focus();
-		}
-	},
-);
+	if (focusElement !== undefined) {
+		e.preventDefault();
+		focusElement.focus();
+	}
+});
 
 //# Details submit
 
-detailsForm.addEventListener(
-	"submit",
-	(e) => {
-		e.preventDefault();
+detailsForm.addEventListener("submit", (e) => {
+	e.preventDefault();
 
-		if (emailInput.matches(":invalid")) {
-			alert("Email is required");
-			return;
-		}
+	if (emailInput.matches(":invalid")) {
+		alert("Email is required");
+		return;
+	}
 
-		setModalSteps(true);
-	},
-);
+	setModalSteps(true);
+});
 
 //# Checkout submit
 
-reviewForm.addEventListener(
-	"submit",
-	(e) => {
-		e.preventDefault();
+reviewForm.addEventListener("submit", (e) => {
+	e.preventDefault();
 
-		if (checkoutButton.disabled) {
-			return;
-		}
+	if (checkoutButton.disabled) {
+		return;
+	}
 
-		// Do some backend magic...
-		const oldCheckoutButtonText = checkoutButton.textContent;
-		checkoutButton.disabled = true;
-		checkoutButton.textContent = "Submitting...";
+	// Do some backend magic...
+	const oldCheckoutButtonText = checkoutButton.textContent;
+	checkoutButton.disabled = true;
+	checkoutButton.textContent = "Submitting...";
 
-		const data = {
-			public: document.querySelector("input[name=public]").checked,
-			publicName: document.querySelector("input[name=public-name]").value,
-			publicComment: document.querySelector("textarea[name=public-comment]").value,
-			tip: getTip(),
-			tierPrice: selectedTier.price,
-			email: emailInput.value,
-			twitter: document.querySelector("input[name=twitter]").value,
-			github: document.querySelector("input[name=github]").value,
-			discord: document.querySelector("input[name=discord]").value,
-		};
+	const data = {
+		public: document.querySelector("input[name=public]").checked,
+		publicName: document.querySelector("input[name=public-name]").value,
+		publicComment: document.querySelector("textarea[name=public-comment]")
+			.value,
+		tip: getTip(),
+		tierPrice: selectedTier.price,
+		email: emailInput.value,
+		twitter: document.querySelector("input[name=twitter]").value,
+		github: document.querySelector("input[name=github]").value,
+		discord: document.querySelector("input[name=discord]").value,
+	};
 
-		const stripeLoad = loadStripe();
+	const stripeLoad = loadStripe();
 
-		wrapFetch({
-			errorSuffix: "while submitting checkout form",
-			url: "{{ env.API_DOMAIN }}/funding/checkout",
-			options: {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(data),
-			},
-			then: (res) => {
-				return stripeLoad.then(() => {
-					const stripe = Stripe("{{ env.STRIPE_PUBLIC }}");
-					localStorage.setItem("checkout-tier", selectedTier.name);
-					stripe.redirectToCheckout({ sessionId: res.id });
-					return new Promise(() => {});
-				},);
-			},
-		},).then(() => {
-			checkoutButton.textContent = oldCheckoutButtonText;
-			checkoutButton.disabled = false;
-		},);
-	},
-);
+	wrapFetch({
+		errorSuffix: "while submitting checkout form",
+		url: "{{ env.API_DOMAIN }}/funding/checkout",
+		options: {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		},
+		then: (res) => {
+			return stripeLoad.then(() => {
+				const stripe = Stripe("{{ env.STRIPE_PUBLIC }}");
+				localStorage.setItem("checkout-tier", selectedTier.name);
+				stripe.redirectToCheckout({ sessionId: res.id });
+				return new Promise(() => {});
+			});
+		},
+	}).then(() => {
+		checkoutButton.textContent = oldCheckoutButtonText;
+		checkoutButton.disabled = false;
+	});
+});
 
 //# Calculate checkout total
 
@@ -449,10 +428,9 @@ function updateCheckoutTotal() {
 	let total = formatCurrency(selectedTierPrice);
 
 	if (tip !== undefined) {
-		total =
-			`${formatCurrency(selectedTierPrice + tip)} = ${formatCurrency(
-				selectedTierPrice,
-			)} Tier + ${formatCurrency(tip)} Tip`;
+		total = `${formatCurrency(selectedTierPrice + tip)} = ${formatCurrency(
+			selectedTierPrice,
+		)} Tier + ${formatCurrency(tip)} Tip`;
 	}
 
 	checkoutTotal.textContent = total;
@@ -484,27 +462,24 @@ for (const price of tips) {
 	button.textContent = price === undefined ? "Custom" : formatCurrency(price);
 	item.appendChild(button);
 
-	button.addEventListener(
-		"click",
-		(e) => {
-			e.preventDefault();
+	button.addEventListener("click", (e) => {
+		e.preventDefault();
 
-			if (price === undefined && tipInputContainer.hidden) {
-				tipInputContainer.hidden = false;
+		if (price === undefined && tipInputContainer.hidden) {
+			tipInputContainer.hidden = false;
+			changeInputValue(tipInput, "0");
+			tipInput.focus();
+		} else {
+			tipInputContainer.hidden = true;
+			if (button.classList.contains("active")) {
 				changeInputValue(tipInput, "0");
-				tipInput.focus();
 			} else {
-				tipInputContainer.hidden = true;
-				if (button.classList.contains("active")) {
-					changeInputValue(tipInput, "0");
-				} else {
-					changeInputValue(tipInput, price);
-				}
+				changeInputValue(tipInput, price);
 			}
+		}
 
-			updateCheckoutTotal();
-		},
-	);
+		updateCheckoutTotal();
+	});
 
 	addDonationButtonContainer.appendChild(item);
 	addDonationButtons.push([price, button]);
@@ -521,25 +496,22 @@ function toggleCustomTierSelectButton() {
 customTierInput.addEventListener("change", toggleCustomTierSelectButton);
 customTierInput.addEventListener("keyup", toggleCustomTierSelectButton);
 
-customInputForm.addEventListener(
-	"submit",
-	(e) => {
-		e.preventDefault();
+customInputForm.addEventListener("submit", (e) => {
+	e.preventDefault();
 
-		if (!customTierSelectButton.hidden) {
-			const price = Number(customTierInput.value);
+	if (!customTierSelectButton.hidden) {
+		const price = Number(customTierInput.value);
 
-			const preview = document.createElement("div");
-			preview.classList.add("tier", "copper");
+		const preview = document.createElement("div");
+		preview.classList.add("tier", "copper");
 
-			const heading = document.createElement("h4");
-			heading.textContent = `Custom ${formatCurrency(price)}`;
-			preview.appendChild(heading);
+		const heading = document.createElement("h4");
+		heading.textContent = `Custom ${formatCurrency(price)}`;
+		preview.appendChild(heading);
 
-			openModal({ name: "Custom", preview, price });
-		}
-	},
-);
+		openModal({ name: "Custom", preview, price });
+	}
+});
 
 //# Error and success presentation
 
@@ -547,14 +519,11 @@ customInputForm.addEventListener(
 
 //# Hide public inputs if necessary
 
-publicCheckbox.addEventListener(
-	"change",
-	() => {
-		for (const elem of hideIfPublicContribution) {
-			elem.hidden = !publicCheckbox.checked;
-		}
-	},
-);
+publicCheckbox.addEventListener("change", () => {
+	for (const elem of hideIfPublicContribution) {
+		elem.hidden = !publicCheckbox.checked;
+	}
+});
 
 //# Form saving and restoration
 
@@ -565,12 +534,9 @@ const saveElements = modalContainer.querySelectorAll(
 for (const elem of saveElements) {
 	const storageKey = `form-${elem.name}`;
 
-	elem.addEventListener(
-		"change",
-		() => {
-			localStorage.setItem(storageKey, JSON.stringify(elem.value));
-		},
-	);
+	elem.addEventListener("change", () => {
+		localStorage.setItem(storageKey, JSON.stringify(elem.value));
+	});
 
 	let saved = localStorage.getItem(storageKey);
 	if (saved == null || saved === "") {
@@ -625,10 +591,9 @@ function buildTierButton(tier) {
 	const already = document.createElement("div");
 	already.classList.add("already");
 	if (tier.count > 0 && tier.type === "personal") {
-		already.textContent =
-			`${tier.count.toLocaleString()} ${
-				tier.count === 1 ? "person" : "people"
-			} selected this tier`;
+		already.textContent = `${tier.count.toLocaleString()} ${
+			tier.count === 1 ? "person" : "people"
+		} selected this tier`;
 	}
 	headerRight.appendChild(already);
 
@@ -679,12 +644,9 @@ function addTier(tier, interactive) {
 	}
 
 	if (interactive) {
-		button.addEventListener(
-			"click",
-			() => {
-				openModal({ ...tier, preview: buildTierButton(tier) });
-			},
-		);
+		button.addEventListener("click", () => {
+			openModal({ ...tier, preview: buildTierButton(tier) });
+		});
 	}
 }
 
@@ -703,13 +665,12 @@ function processStats(res, interactive) {
 	if (interactive) {
 		function show() {
 			const percent = Math.min(100, 100 / res.target * res.current);
-			progressFillContainer.style.minWidth =
-				`${progressFillContainer.clientWidth}px`;
+			progressFillContainer.style.minWidth = `${progressFillContainer.clientWidth}px`;
 			progressFillContainer.style.width = "0";
 
 			requestAnimationFrame(() => {
 				progressFillContainer.style.width = `${percent}%`;
-			},);
+			});
 		}
 
 		if (typeof IntersectionObserver === "undefined") {
@@ -761,11 +722,8 @@ wrapFetch({
 		localStorage.setItem("stats", JSON.stringify(res));
 		processStats(res, true);
 	},
-},);
+});
 
-window.addEventListener(
-	"error",
-	function (event) {
-		addErrorToast("that wasn't handled", event);
-	},
-);
+window.addEventListener("error", function (event) {
+	addErrorToast("that wasn't handled", event);
+});
