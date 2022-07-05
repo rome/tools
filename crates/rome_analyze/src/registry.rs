@@ -11,24 +11,36 @@ use crate::{
     ControlFlow, Rule,
 };
 
+/// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
 pub enum Phases {
     Syntax = 0,
     Semantic = 1,
 }
 
+/// Defines which phase a rule will run. This will be defined
+/// by the set of services a rule demands.
 pub trait Phase {
+    fn phase() -> Phases;
+}
+
+/// If a rule do not need any service it can run on the syntax phase.
+impl Phase for () {
     fn phase() -> Phases {
         Phases::Syntax
     }
 }
 
-impl Phase for () {}
-
 /// The rule registry holds type-erased instances of all active analysis rules
+/// for each phase.
+/// What defines a phase is the set of services that a phase offers. Currently
+/// we have:
+/// - Syntax Phase: No services are offered, thus its rules can be run immediately;
+/// - Semantic Phase: Offers the semantic model, thus these rules can only run
+/// after the [SemanticModel] is ready, which demands a whole transverse of the parsed tree.
 pub struct RuleRegistry<'a, L: Language, B> {
     /// Holds a collection of rules for each [SyntaxKind] node type that has
-    /// lint rules associated with it for each phase
+    /// lint rules associated with it for each phase.
     phases: [Vec<SyntaxKindRules<L, B>>; 2],
     control_flow: Vec<RegistryRule<L, B>>,
     emit_signal: Box<dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<B> + 'a>,

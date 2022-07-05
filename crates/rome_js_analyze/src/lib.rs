@@ -13,10 +13,9 @@ mod analyzers;
 mod assists;
 mod control_flow;
 mod registry;
-mod semantic;
 mod semantic_analyzers;
+mod semantic_services;
 
-use crate::control_flow::make_visitor;
 use crate::registry::build_registry;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
@@ -46,12 +45,14 @@ where
 {
     let mut registry = build_registry(&filter, callback);
 
-    let mut analyzer = Analyzer::<JsLanguage, B>::empty();
+    // Syntax Phase
+    let services = ServiceBag::default();
 
-    // Phase Syntax
-    let services = ServiceBagData::default();
-    let services = ServiceBag::new(services);
-    analyzer.add_visitor(make_visitor());
+    let mut analyzer = Analyzer::<JsLanguage, B>::empty();
+    analyzer.add_visitor(control_flow::make_visitor());
+    analyzer.add_visitor(SyntaxVisitor::new(|node| {
+        has_suppressions_category(SuppressionCategory::Lint, node)
+    }));
     let breaking_reason = analyzer.run(VisitorContext {
         file_id,
         root: root.clone(),
@@ -65,12 +66,16 @@ where
         return breaking_reason;
     }
 
-    // Phase Semantic
+    // Semantic Phase
     let model = semantic_model(root);
     let mut services = ServiceBagData::default();
-    services.insert(model);
+    services.insert_service(model);
     let services = ServiceBag::new(services);
 
+    let mut analyzer = Analyzer::<JsLanguage, B>::empty();
+    analyzer.add_visitor(SyntaxVisitor::new(|node| {
+        has_suppressions_category(SuppressionCategory::Lint, node)
+    }));
     analyzer.run(VisitorContext {
         file_id,
         root: root.clone(),

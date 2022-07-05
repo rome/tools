@@ -1,4 +1,4 @@
-use crate::{semantic::Semantic, JsRuleAction};
+use crate::{semantic_services::Semantic, JsRuleAction};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::JsReferenceIdentifier;
@@ -39,6 +39,7 @@ impl Rule for NoArguments {
         let reference = ctx.query();
 
         let name = reference.syntax().text_trimmed();
+        dbg!(&name);
         if name == "arguments" {
             let model = ctx.model();
             let declaration = model.declaration(reference);

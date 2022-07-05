@@ -7,6 +7,7 @@ use crate::{
 };
 
 pub enum CannotCreateServicesError {
+    /// List the missing services necessary to create the service bag
     MissingServices(&'static [&'static str]),
 }
 

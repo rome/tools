@@ -20,7 +20,7 @@ impl TryFrom<ServiceBag> for SemanticServices {
 
     fn try_from(services: ServiceBag) -> Result<Self, Self::Error> {
         let model = services
-            .get()
+            .get_service()
             .ok_or(CannotCreateServicesError::MissingServices(&[
                 "SemanticModel",
             ]))?;

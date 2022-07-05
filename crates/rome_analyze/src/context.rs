@@ -1,13 +1,18 @@
 use crate::{registry::RuleRoot, services::ServiceBag, Queryable, Rule};
 use std::ops::Deref;
 
+type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
+type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
+type RuleContextCreationError<R> =
+    <<<R as Rule>::Query as Queryable>::Services as TryFrom<ServiceBag>>::Error;
+
 pub struct RuleContext<'a, R>
 where
     R: ?Sized + Rule,
 {
-    query_result: &'a <<R as Rule>::Query as Queryable>::Output,
+    query_result: &'a RuleQueryResult<R>,
     root: &'a RuleRoot<R>,
-    services: <<R as Rule>::Query as Queryable>::Services,
+    services: RuleServiceBag<R>,
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -15,11 +20,10 @@ where
     R: Rule,
 {
     pub fn new(
-        query_result: &'a <<R as Rule>::Query as Queryable>::Output,
+        query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
         services: ServiceBag,
-    ) -> Result<Self, <<<R as Rule>::Query as Queryable>::Services as TryFrom<ServiceBag>>::Error>
-    {
+    ) -> Result<Self, RuleContextCreationError<R>> {
         Ok(Self {
             query_result,
             root,
@@ -27,7 +31,7 @@ where
         })
     }
 
-    pub fn query(&self) -> &<<R as Rule>::Query as Queryable>::Output {
+    pub fn query(&self) -> &RuleQueryResult<R> {
         self.query_result
     }
 
@@ -40,7 +44,7 @@ impl<'a, R> Deref for RuleContext<'a, R>
 where
     R: Rule,
 {
-    type Target = <<R as Rule>::Query as Queryable>::Services;
+    type Target = RuleServiceBag<R>;
 
     fn deref(&self) -> &Self::Target {
         &self.services

@@ -75,9 +75,6 @@ struct ErrorOutput(Vec<u8>);
 
 impl io::Write for ErrorOutput {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        // let str = std::str::from_utf8(buf).unwrap();
-        // let html = ansi_to_html::convert_escaped(str).unwrap();
-        // self.0.write(html.as_str().as_bytes())
         self.0.write(buf)
     }
 
