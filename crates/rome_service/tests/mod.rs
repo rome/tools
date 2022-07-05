@@ -29,8 +29,7 @@ mod configuration {
                 assert_eq!(configuration, Configuration::default());
             }
             Err(err) => {
-                println!("{err}");
-                assert!(false);
+                panic!("{err}");
             }
         }
     }
