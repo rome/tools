@@ -5,6 +5,7 @@ use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
 
+pub mod configuration;
 mod file_handlers;
 pub mod settings;
 pub mod workspace;

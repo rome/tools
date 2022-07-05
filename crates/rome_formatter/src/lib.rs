@@ -113,7 +113,7 @@ impl std::fmt::Display for IndentStyle {
 ///
 /// The allowed range of values is 1..=320
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub struct LineWidth(u16);
+pub struct LineWidth(pub u16);
 
 impl LineWidth {
     /// Maximum allowed value for a valid [LineWidth]
