@@ -95,9 +95,9 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
     pub fn metadata(&self) -> Vec<(&'static str, &'static str)> {
         let mut unique = HashSet::new();
 
-        let [phase0, phase1] = &self.phases;
+        let [syntax_phase, semantic_phase] = &self.phases;
 
-        let mut m: Vec<_> = phase0
+        let mut m: Vec<_> = syntax_phase
             .iter()
             .flat_map(|node| node.rules.iter())
             .map(|rule| (rule.name, rule.docs))
@@ -105,7 +105,7 @@ impl<'a, L: Language, B> RuleRegistry<'a, L, B> {
             .collect();
 
         m.extend(
-            phase1
+            semantic_phase
                 .iter()
                 .flat_map(|node| node.rules.iter())
                 .map(|rule| (rule.name, rule.docs))
