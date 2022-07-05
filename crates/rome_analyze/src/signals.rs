@@ -12,6 +12,8 @@ use crate::{
     context::RuleContext,
     registry::{LanguageRoot, RuleLanguage, RuleRoot},
     rule::Rule,
+    services::ServiceBag,
+    Queryable,
 };
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -78,8 +80,9 @@ where
 pub(crate) struct RuleSignal<'a, R: Rule> {
     file_id: FileId,
     root: &'a RuleRoot<R>,
-    query_result: &'a R::Query,
+    query_result: &'a <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
+    services: ServiceBag,
     _rule: PhantomData<R>,
 }
 
@@ -91,8 +94,9 @@ where
     pub(crate) fn new(
         file_id: FileId,
         root: &'a RuleRoot<R>,
-        query_result: &'a R::Query,
+        query_result: &'a <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
+        services: ServiceBag,
     ) -> Self {
         Self {
             file_id,
@@ -100,6 +104,7 @@ where
             query_result,
             state,
             _rule: PhantomData,
+            services,
         }
     }
 }
@@ -110,12 +115,12 @@ where
     R::Query: Clone,
 {
     fn diagnostic(&self) -> Option<Diagnostic> {
-        let ctx = RuleContext::new(self.query_result, self.root);
+        let ctx = RuleContext::new(self.query_result, self.root, self.services.clone()).ok()?;
         R::diagnostic(&ctx, &self.state).map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
-        let ctx = RuleContext::new(self.query_result, self.root);
+        let ctx = RuleContext::new(self.query_result, self.root, self.services.clone()).ok()?;
         R::action(&ctx, &self.state).and_then(|action| {
             let (original_range, new_range) =
                 find_diff_range(self.root.syntax(), action.root.syntax())?;

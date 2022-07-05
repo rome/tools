@@ -43,15 +43,16 @@ impl Rule for NoEmptyPattern {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+        use JsAnyBindPatternLike::*;
         match ctx.query() {
-            Ast(JsAnyBindPatternLike::JsArrayBindingPattern(array)) => {
+            JsArrayBindingPattern(array) => {
                 if array.elements().len() == 0 {
                     Some(())
                 } else {
                     None
                 }
             }
-            Ast(JsAnyBindPatternLike::JsObjectBindingPattern(object)) => {
+            JsObjectBindingPattern(object) => {
                 if object.properties().len() == 0 {
                     Some(())
                 } else {
@@ -62,7 +63,7 @@ impl Rule for NoEmptyPattern {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let node_type = match node {
             JsAnyBindPatternLike::JsArrayBindingPattern(_) => "array",
             JsAnyBindPatternLike::JsObjectBindingPattern(_) => "object",

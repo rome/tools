@@ -43,7 +43,7 @@ impl Rule for NoDebugger {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
@@ -55,7 +55,7 @@ impl Rule for NoDebugger {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let prev_parent = node.syntax().parent()?;
 

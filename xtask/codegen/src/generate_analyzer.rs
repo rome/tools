@@ -5,6 +5,7 @@ use xtask::{glue::fs2, project_root};
 pub fn generate_analyzer() -> Result<()> {
     let mut analyzers = Vec::new();
     generate_module("analyzers", &mut analyzers)?;
+    generate_module("semantic_analyzers", &mut analyzers)?;
 
     let mut assists = Vec::new();
     generate_module("assists", &mut assists)?;
@@ -89,7 +90,7 @@ fn update_registry_builder(analyzers: Vec<String>, assists: Vec<String>) -> Resu
         use rome_analyze::{AnalyzerSignal, AnalysisFilter, ControlFlow, RuleRegistry};
         use rome_js_syntax::JsLanguage;
 
-        use crate::{analyzers::*, assists::*};
+        use crate::{analyzers::*, semantic_analyzers::*, assists::*};
 
         pub(crate) fn build_registry<'a, F, B>(
             filter: &AnalysisFilter,

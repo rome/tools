@@ -8,7 +8,7 @@ use rome_rowan::{Language, TextRange};
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::RuleLanguage;
-use crate::{LanguageRoot, Queryable};
+use crate::{LanguageRoot, Phase, Phases, Queryable};
 
 pub trait RuleMeta {
     /// The name of this rule, displayed in the diagnostics it emits
@@ -105,6 +105,10 @@ pub trait Rule: RuleMeta {
     /// An iterator type returned by `run` to yield zero or more signals to the
     /// analyzer
     type Signals: IntoIterator<Item = Self::State>;
+
+    fn phase() -> Phases {
+        <<<Self as Rule>::Query as Queryable>::Services as Phase>::phase()
+    }
 
     /// This function is called once for each node matching `Query` in the tree
     /// being analyzed. If it returns `Some` the state object will be wrapped

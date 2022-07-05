@@ -33,7 +33,7 @@ impl Rule for UseWhile {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(n) = ctx.query();
+        let n = ctx.query();
 
         let JsForStatementFields {
             for_token: _,
@@ -61,7 +61,7 @@ impl Rule for UseWhile {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         // SAFETY: These tokens have been checked for errors in `run` already
         let for_range = node.for_token().unwrap().text_trimmed_range();
@@ -76,7 +76,7 @@ impl Rule for UseWhile {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let JsForStatementFields {
             for_token: _,

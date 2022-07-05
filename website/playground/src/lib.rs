@@ -2,7 +2,7 @@
 
 use rome_analyze::{AnalysisFilter, ControlFlow, Never};
 use rome_diagnostics::file::SimpleFiles;
-use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
+use rome_diagnostics::termcolor::{Color, ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
 use rome_formatter::IndentStyle;
 use rome_js_formatter::context::JsFormatContext;
@@ -19,6 +19,12 @@ extern "C" {
     // `log(..)`
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
+
+    #[wasm_bindgen(js_namespace = performance)]
+    fn mark(name: &str);
+
+    #[wasm_bindgen(js_namespace = performance)]
+    fn measure(name: &str, begin: &str, end: &str) -> JsValue;
 }
 
 #[allow(unused_macros)]
@@ -79,14 +85,38 @@ impl io::Write for ErrorOutput {
 
 impl WriteColor for ErrorOutput {
     fn supports_color(&self) -> bool {
-        false
+        true
     }
 
     fn set_color(&mut self, _spec: &ColorSpec) -> io::Result<()> {
+        match _spec.fg() {
+            Some(color) => {
+                let color = match color {
+                    Color::Blue => "Blue".to_string(),
+                    Color::Green => "Green".to_string(),
+                    Color::Red => "Red".to_string(),
+                    Color::Cyan => "Cyan".to_string(),
+                    Color::Magenta => "Magenta".to_string(),
+                    Color::Yellow => "darkkhaki".to_string(),
+                    Color::White => "White".to_string(),
+                    Color::Ansi256(_) => "Black".to_string(),
+                    Color::Rgb(r, g, b) => format!("rgb({r}, {g}, {b})"),
+                    _ => "Black".to_string(),
+                };
+                let style = format!(r#"</span><span style="color:{color}">"#);
+                self.0.extend(style.as_bytes());
+            }
+            None => {
+                self.0
+                    .extend(r#"</span><span style="color:black">"#.as_bytes());
+            }
+        }
         Ok(())
     }
 
     fn reset(&mut self) -> io::Result<()> {
+        self.0
+            .extend(r#"</span><span style="color:black">"#.as_bytes());
         Ok(())
     }
 }
@@ -136,6 +166,12 @@ impl PlaygroundFormatOptions {
     }
 }
 
+fn measure_and_print(name: &str, begin: &str, end: &str) {
+    let parse_measure = measure(name, begin, end);
+    let parse_measure = js_sys::JSON::stringify(&parse_measure).unwrap();
+    log(&parse_measure.as_string().unwrap());
+}
+
 #[wasm_bindgen]
 pub fn run(
     code: String,
@@ -164,7 +200,12 @@ pub fn run(
         }
     };
 
+    mark("rome::begin");
+    mark("rome::parse::begin");
     let parse = parse(&code, main_file_id, source_type);
+    mark("rome::parse::end");
+    measure_and_print("rome::parse", "rome::parse::begin", "rome::parse::end");
+
     let syntax = parse.syntax();
 
     let indent_style = if let Some(width) = options.indent_width {
@@ -194,8 +235,11 @@ pub fn run(
         (format!("{:#?}", syntax), format!("{:#?}", parse.tree()))
     };
 
+    mark("rome::format::begin");
     let formatted = format_node(context, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
+    mark("rome::format::end");
+    measure_and_print("rome::format", "rome::format::begin", "rome::format::end");
 
     let root_element = formatted.into_format_element();
     let formatter_ir = format!("{:#?}", root_element);
@@ -207,6 +251,7 @@ pub fn run(
             .unwrap();
     }
 
+    mark("rome::analyze::begin");
     rome_js_analyze::analyze(
         main_file_id,
         &parse.tree(),
@@ -225,6 +270,15 @@ pub fn run(
             ControlFlow::<Never>::Continue(())
         },
     );
+    mark("rome::analyze::end");
+    measure_and_print(
+        "rome::analyze",
+        "rome::analyze::begin",
+        "rome::analyze::end",
+    );
+
+    mark("rome::end");
+    measure_and_print("rome", "rome::begin", "rome::end");
 
     RomeOutput {
         cst,

@@ -46,7 +46,7 @@ impl Rule for NoNegationElse {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(n) = ctx.query();
+        let n = ctx.query();
 
         match n {
             JsAnyCondition::JsConditionalExpression(expr) => {
@@ -68,7 +68,7 @@ impl Rule for NoNegationElse {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -79,7 +79,7 @@ impl Rule for NoNegationElse {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let root = match node {
             JsAnyCondition::JsConditionalExpression(expr) => {

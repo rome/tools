@@ -110,7 +110,7 @@ mod tests {
         analyzer.add_visitor(SyntaxVisitor::new(|_| false));
 
         let mut nodes = Vec::new();
-        let mut ctx: VisitorContext<RawLanguage, Never> = VisitorContext {
+        let ctx: VisitorContext<RawLanguage, Never> = VisitorContext {
             file_id: 0,
             root,
             range: None,
@@ -123,10 +123,8 @@ mod tests {
             }),
         };
 
-        let result = analyzer.run(&mut ctx);
+        let result = analyzer.run(ctx);
         assert!(result.is_none());
-
-        drop(ctx);
 
         assert_eq!(
             nodes.as_slice(),

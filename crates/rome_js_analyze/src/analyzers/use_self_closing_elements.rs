@@ -64,7 +64,7 @@ impl Rule for UseSelfClosingElements {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        if ctx.query().0.children().is_empty() {
+        if ctx.query().children().is_empty() {
             Some(())
         } else {
             None
@@ -73,7 +73,7 @@ impl Rule for UseSelfClosingElements {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::warning(
-            ctx.query().0.range(),
+            ctx.query().range(),
             markup! {
                 "JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing."
             },
@@ -81,7 +81,7 @@ impl Rule for UseSelfClosingElements {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let open_element = ctx.query().0.opening_element().ok()?;
+        let open_element = ctx.query().opening_element().ok()?;
         let JsxOpeningElementFields {
             l_angle_token,
             name,
@@ -128,7 +128,7 @@ impl Rule for UseSelfClosingElements {
         }
         let self_closing_element = self_closing_element_builder.build();
         let root = ctx.root().replace_node(
-            JsxAnyTag::JsxElement(ctx.query().0.clone()),
+            JsxAnyTag::JsxElement(ctx.query().clone()),
             JsxAnyTag::JsxSelfClosingElement(self_closing_element),
         )?;
         Some(JsRuleAction {

@@ -12,7 +12,7 @@ use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
 use rome_js_parser::parse;
 use rome_rowan::{AstNode, Language};
 
-tests_macros::gen_tests! {"tests/specs/**/*.{js,jsx,tsx,ts}", crate::run_test, "module"}
+tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
 
 fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     register_leak_checker();

@@ -54,7 +54,7 @@ impl Rule for UseShorthandArrayType {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let type_arguments = node.type_arguments()?;
         is_array_reference(node).and_then(|ret| {
             if ret {
@@ -66,7 +66,7 @@ impl Rule for UseShorthandArrayType {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -79,7 +79,7 @@ impl Rule for UseShorthandArrayType {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let root = ctx.root();
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let root = root.replace_node(TsType::TsReferenceType(node.clone()), state.clone())?;
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

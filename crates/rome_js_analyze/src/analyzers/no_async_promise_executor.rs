@@ -45,7 +45,7 @@ impl Rule for NoAsyncPromiseExecutor {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let JsNewExpressionFields {
             new_token: _,
             callee,

@@ -47,7 +47,7 @@ impl Rule for NoDelete {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let op = node.operator().ok()?;
         if op != JsUnaryOperator::Delete {
@@ -59,7 +59,7 @@ impl Rule for NoDelete {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(
             RuleDiagnostic::warning(node.range(), markup! {
@@ -70,7 +70,7 @@ impl Rule for NoDelete {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let root = ctx.root().replace_node(
             JsAnyExpression::from(node.clone()),

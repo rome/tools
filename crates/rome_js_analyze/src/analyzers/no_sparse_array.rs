@@ -30,7 +30,7 @@ impl Rule for NoSparseArray {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         // We defer collect `JsHole` index until user want to apply code action.
         node.elements().iter().find_map(|element| {
@@ -43,7 +43,7 @@ impl Rule for NoSparseArray {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
@@ -55,7 +55,7 @@ markup! {
     }
 
     fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let mut final_array_element_list = node.elements();
 
