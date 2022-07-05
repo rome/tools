@@ -16,7 +16,7 @@ specifiers:
   react-dom: ^17.0.2
   react-json-view: ^1.21.3
   react-tabs: ^3.2.3
-  rome: 0.6.1-next
+  rome: ^0.7.0-next
   tailwindcss: ^3.0.19
   typescript: ^4.4.4
   vite: ^2.7.2
@@ -39,7 +39,7 @@ devDependencies:
   '@vitejs/plugin-react': 1.1.4
   autoprefixer: 10.4.2_postcss@8.4.6
   postcss: 8.4.6
-  rome: 0.6.1-next
+  rome: 0.7.0-next
   tailwindcss: 3.0.19_qm7bagfnbv4vjkuayu3hle4sne
   typescript: 4.5.5
   vite: 2.7.13
@@ -389,48 +389,48 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rometools/cli-darwin-arm64/0.6.1-next:
-    resolution: {integrity: sha512-ioi10s2or6U23rw43oS41xMzBzCd7uPTFQpIXHVfX+t18D5WXkdzxd0jnKmWGyvUyw+ovG+kK1sVmRxMp2gsOg==}
+  /@rometools/cli-darwin-arm64/0.7.0-next:
+    resolution: {integrity: sha512-GMHYG5zQTGerQYue30m/E+WgpoPCxjLT7unCF1BH0jgFSk/fgkduMY9QP9EetNuBYxP/03XFZgXIZLmyw+Shgw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-darwin-x64/0.6.1-next:
-    resolution: {integrity: sha512-iFvxrcw5EOiBJPSP8NwM1U92Ov9a5WCteZ3D4yvu/Yh+wRZ6tUQTu9w/6UH5kvRqtI/rRBYJnqXBGKRFDWm74w==}
+  /@rometools/cli-darwin-x64/0.7.0-next:
+    resolution: {integrity: sha512-MyM/ncZKs3mIJ0vsSNyGNKGR31VroK2W7mHqPRVyuVkrmaJnDko8ymzH/JSrBdD7hj8KU3Ubpjn8YNuaMZvSYQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-arm64/0.6.1-next:
-    resolution: {integrity: sha512-+dPAD9mPxVufN9SiZTmOC4qzWri+hjrs5aeVuzi6/SCkRCu7Tc1D+Tg81qakq2bw8obnS96pNuvbfr3QzGvXwA==}
+  /@rometools/cli-linux-arm64/0.7.0-next:
+    resolution: {integrity: sha512-X3gCoT3GDioVkHsOfthMEoa1BR8lx1eXi7Sn0SeoHpw04UF+4WIn9Rjb62Fx/lIvRIdtxVj74pz14dxVQ/8HkQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-x64/0.6.1-next:
-    resolution: {integrity: sha512-lK4wPWh/als3nDVOpQ7RrKfx1VM+2jwA6qdSvDPF4Chsn8ZuzEW4C6f+qayYPmSAnyS1KCSl6+T45IpMyPqTTQ==}
+  /@rometools/cli-linux-x64/0.7.0-next:
+    resolution: {integrity: sha512-3kpV+cs2MgqUk8gjM1nPXmAoXErDGLEaK/q60c5FkNZQfuKxp6lN5sGF8cxJLbxggOaWXGfiIRoS9BBp9YIbEw==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-arm64/0.6.1-next:
-    resolution: {integrity: sha512-f0kIFqnqrWF2FpEmuFfUnlIpp+Wfhqc4Vp8hnM04+XS+A54ZAvRQmPVctbNElZoC3dq+hvGonRO1miCkGQsIDw==}
+  /@rometools/cli-win32-arm64/0.7.0-next:
+    resolution: {integrity: sha512-mOSg9CAeYgjK6W8e13epaOFeHPITvhAIj7wib8N8KtW8Mi8LgSdNCg3Pr1zRcN2F4ndDNfGZYiDf9A0Xl2N/Zw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-x64/0.6.1-next:
-    resolution: {integrity: sha512-TlPEzsOdJ1tT/bwdJ5DHrpH45D3i2cV+ihKIRsNXiGf/haqfTCP9BClFRs6egwceQKMNb5pM2JwHQDohTASgCw==}
+  /@rometools/cli-win32-x64/0.7.0-next:
+    resolution: {integrity: sha512-JrsHY4IXd3SSF3TXwP15PloVXGR5A1or7yV9gFyrmmRVsyFpJYkAh4oU4IuAoqltPi9G4c3oEEQhN8yzYoUwKw==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -2962,18 +2962,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rome/0.6.1-next:
-    resolution: {integrity: sha512-26m2dWFuzvEnW2Z2A3rWu5eFS9mWsxVewjRRClbBWAExrcknVJXB0qIYuwjo5oww7I9a6I3W8XU4xyNczH7EyA==}
+  /rome/0.7.0-next:
+    resolution: {integrity: sha512-bbzyM95xMGzFCn+74tXyFJ39RGifEbGYFz0bB+SRtPSx0DZfpkHjcmqX9UiuMtWAkdQnWFG2rsrivQnDqqxTPA==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@rometools/cli-darwin-arm64': 0.6.1-next
-      '@rometools/cli-darwin-x64': 0.6.1-next
-      '@rometools/cli-linux-arm64': 0.6.1-next
-      '@rometools/cli-linux-x64': 0.6.1-next
-      '@rometools/cli-win32-arm64': 0.6.1-next
-      '@rometools/cli-win32-x64': 0.6.1-next
+      '@rometools/cli-darwin-arm64': 0.7.0-next
+      '@rometools/cli-darwin-x64': 0.7.0-next
+      '@rometools/cli-linux-arm64': 0.7.0-next
+      '@rometools/cli-linux-x64': 0.7.0-next
+      '@rometools/cli-win32-arm64': 0.7.0-next
+      '@rometools/cli-win32-x64': 0.7.0-next
     dev: true
 
   /run-async/2.4.1:

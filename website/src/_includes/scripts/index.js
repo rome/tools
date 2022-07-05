@@ -2,22 +2,19 @@
 "use strict";
 //# Responsive width
 let isMobile = false;
-window.addEventListener(
-	"DOMContentLoaded",
-	() => {
-		const mobileMatchMedia = matchMedia("(max-width: 768px)");
-		isMobile = mobileMatchMedia.matches;
+window.addEventListener("DOMContentLoaded", () => {
+	const mobileMatchMedia = matchMedia("(max-width: 768px)");
+	isMobile = mobileMatchMedia.matches;
 
-		mobileMatchMedia.addListener((e) => {
-			isMobile = e.matches;
+	mobileMatchMedia.addListener((e) => {
+		isMobile = e.matches;
 
-			// Close the mobile sidebar when switching from mobile to desktop
-			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
-				toggleMobileSidebar();
-			}
-		},);
-	},
-);
+		// Close the mobile sidebar when switching from mobile to desktop
+		if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
+			toggleMobileSidebar();
+		}
+	});
+});
 
 //# Table of Contents
 const originalTitle = document.title;
@@ -43,7 +40,7 @@ const headingElements = tocLinks.map((link) => {
 		),
 		link,
 	};
-},);
+});
 
 /**
  * @typedef {Object} CalculatedHeading
@@ -271,14 +268,14 @@ class Manager {
 				hasActive = true;
 
 				// Make sure TOC link is visible
-				let linkTop = this.headingsCalculated[
-					i
-				].link.offsetTop - sidebarScroller.offsetTop;
+				let linkTop =
+					this.headingsCalculated[i].link.offsetTop - sidebarScroller.offsetTop;
 				if (i === 0) {
 					linkTop = 0;
 				}
 				const visibleStart = sidebarScroller.scrollTop;
-				const visibleEnd = sidebarScroller.scrollTop + sidebarScroller.clientHeight;
+				const visibleEnd =
+					sidebarScroller.scrollTop + sidebarScroller.clientHeight;
 				const isVisible = linkTop > visibleStart && linkTop < visibleEnd;
 				if (!isVisible) {
 					sidebarScroller.scrollTop = linkTop;
@@ -380,14 +377,11 @@ class Manager {
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				copied.style.opacity = "0";
-			},);
-		},);
-		copied.addEventListener(
-			"transitionend",
-			() => {
-				copied.remove();
-			},
-		);
+			});
+		});
+		copied.addEventListener("transitionend", () => {
+			copied.remove();
+		});
 	}
 
 	/**
@@ -418,13 +412,10 @@ class Manager {
 			return;
 		}
 
-		this.scrollToHeading(
-			href,
-			function () {
-				event.preventDefault();
-				location.hash = href;
-			},
-		);
+		this.scrollToHeading(href, function () {
+			event.preventDefault();
+			location.hash = href;
+		});
 	}
 
 	/**
@@ -458,21 +449,15 @@ class Manager {
 			this.scrollToHeading(window.location.hash);
 		}
 
-		window.addEventListener(
-			"scroll",
-			this.refresh.bind(this),
-			{ passive: true },
-		);
-		window.addEventListener(
-			"resize",
-			this.refresh.bind(this),
-			{ passive: true },
-		);
-		window.addEventListener(
-			"resize",
-			this.calculateHeadingsPositions.bind(this),
-			{ passive: true },
-		);
+		window.addEventListener("scroll", this.refresh.bind(this), {
+			passive: true,
+		});
+		window.addEventListener("resize", this.refresh.bind(this), {
+			passive: true,
+		});
+		window.addEventListener("resize", this.calculateHeadingsPositions.bind(
+			this,
+		), { passive: true });
 
 		document.addEventListener(
 			"click",
@@ -485,12 +470,9 @@ class Manager {
 if (siteNavigation != null) {
 	const manager = new Manager();
 
-	window.addEventListener(
-		"DOMContentLoaded",
-		() => {
-			manager.attach();
-		},
-	);
+	window.addEventListener("DOMContentLoaded", () => {
+		manager.attach();
+	});
 }
 
 //# Team list shuffle
@@ -525,12 +507,9 @@ for (const teamList of teamLists) {
 
 const collapsed = document.querySelectorAll("pre.collapsed");
 for (const elem of collapsed) {
-	elem.addEventListener(
-		"click",
-		() => {
-			elem.classList.remove("collapsed");
-		},
-	);
+	elem.addEventListener("click", () => {
+		elem.classList.remove("collapsed");
+	});
 }
 
 //# Color scheme switcher
@@ -598,18 +577,15 @@ if (docsearchInput != null) {
 			script.src = "/docsearch.js";
 			script.async = true;
 			script.defer = true;
-			script.addEventListener(
-				"load",
-				() => {
-					// @ts-expect-error
-					return window.docsearch({
-						apiKey: "66db1ad366d458c6acded7cbc23dba7e",
-						indexName: "romefrontend",
-						inputSelector: "#docsearch",
-						debug: false, // Set debug to true if you want to inspect the dropdown
-					},);
-				},
-			);
+			script.addEventListener("load", () => {
+				// @ts-expect-error
+				return window.docsearch({
+					apiKey: "66db1ad366d458c6acded7cbc23dba7e",
+					indexName: "romefrontend",
+					inputSelector: "#docsearch",
+					debug: false, // Set debug to true if you want to inspect the dropdown
+				});
+			});
 			document.body.appendChild(script);
 		},
 		{ once: true },
@@ -622,27 +598,24 @@ if (location.pathname === "/") {
 	topAnchors = [...topAnchors, ...document.querySelectorAll(".logo")];
 }
 for (const elem of topAnchors) {
-	elem.addEventListener(
-		"click",
-		(e) => {
-			if (window.scrollY > 0) {
-				e.preventDefault();
+	elem.addEventListener("click", (e) => {
+		if (window.scrollY > 0) {
+			e.preventDefault();
 
-				if (sidebarScroller != null) {
-					sidebarScroller.scrollTop = 0;
-				}
-
-				window.scrollTo(0, 0);
-
-				// Remove the hash
-				history.pushState(
-					"",
-					document.title,
-					window.location.pathname + window.location.search,
-				);
+			if (sidebarScroller != null) {
+				sidebarScroller.scrollTop = 0;
 			}
-		},
-	);
+
+			window.scrollTo(0, 0);
+
+			// Remove the hash
+			history.pushState(
+				"",
+				document.title,
+				window.location.pathname + window.location.search,
+			);
+		}
+	});
 }
 
 // Hero scrollers
@@ -763,15 +736,12 @@ for (const scroller of heroScrollers) {
 
 	heroCallbacks.push(() => {
 		setActiveIndex(activeIndex + 1, true);
-	},);
+	});
 }
 if (heroCallbacks.length > 0) {
-	setInterval(
-		() => {
-			for (const callback of heroCallbacks) {
-				callback();
-			}
-		},
-		2_000,
-	);
+	setInterval(() => {
+		for (const callback of heroCallbacks) {
+			callback();
+		}
+	}, 2_000);
 }
