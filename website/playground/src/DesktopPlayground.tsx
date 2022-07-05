@@ -26,14 +26,11 @@ export default function DesktopPlayground(
 	>("normal");
 	const language = getLanguage(isJsx, isTypeScript);
 
-	useEffect(
-		() => {
-			if (clipboardStatus !== "normal") {
-				setClipboardStatus("normal");
-			}
-		},
-		[formatter_ir],
-	);
+	useEffect(() => {
+		if (clipboardStatus !== "normal") {
+			setClipboardStatus("normal");
+		}
+	}, [formatter_ir]);
 
 	const copyToClipboard = async () => {
 		if (!navigator.clipboard) {

@@ -9,18 +9,15 @@ import { MobilePlayground } from "./MobilePlayground";
 enum LoadingState { Loading, Success, Error }
 
 function App() {
-	useEffect(
-		() => {
-			init()
-				.then(() => {
-					setLoadingState(LoadingState.Success);
-				},)
-				.catch(() => {
-					setLoadingState(LoadingState.Error);
-				},);
-		},
-		[],
-	);
+	useEffect(() => {
+		init()
+			.then(() => {
+				setLoadingState(LoadingState.Success);
+			})
+			.catch(() => {
+				setLoadingState(LoadingState.Error);
+			});
+	}, []);
 
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const [playgroundState, setPlaygroundState] = usePlaygroundState();
@@ -60,16 +57,13 @@ function App() {
 				sourceType,
 				treeStyle === TreeStyle.Json,
 			);
-			const prettierOutput = formatWithPrettier(
-				code,
-				{
-					lineWidth,
-					indentStyle,
-					indentWidth,
-					language: isTypeScript ? "ts" : "js",
-					quoteStyle,
-				},
-			);
+			const prettierOutput = formatWithPrettier(code, {
+				lineWidth,
+				indentStyle,
+				indentWidth,
+				language: isTypeScript ? "ts" : "js",
+				quoteStyle,
+			});
 
 			if (width && width < 480) {
 				return (

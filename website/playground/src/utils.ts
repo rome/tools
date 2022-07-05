@@ -29,23 +29,20 @@ export function useWindowSize(): Size {
 	const [windowSize, setWindowSize] = useState<Size>({
 		width: undefined,
 		height: undefined,
-	},);
-	useEffect(
-		() => {
-			// Handler to call on window resize
-			function handleResize() {
-				// Set window width/height to state
-				setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-			}
-			// Add event listener
-			window.addEventListener("resize", handleResize);
-			// Call handler right away so state gets updated with initial window size
-			handleResize();
-			// Remove event listener on cleanup
-			return () => window.removeEventListener("resize", handleResize);
-		},
-		[],
-	); // Empty array ensures that effect is only run on mount
+	});
+	useEffect(() => {
+		// Handler to call on window resize
+		function handleResize() {
+			// Set window width/height to state
+			setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+		}
+		// Add event listener
+		window.addEventListener("resize", handleResize);
+		// Call handler right away so state gets updated with initial window size
+		handleResize();
+		// Remove event listener on cleanup
+		return () => window.removeEventListener("resize", handleResize);
+	}, []); // Empty array ensures that effect is only run on mount
 	return windowSize;
 }
 
@@ -74,23 +71,19 @@ export function usePlaygroundState(): [
 		}),
 	);
 
-	useEffect(
-		() => {
-			const { code, isTypeScript, isJsx, ...options } = playgroundState;
-			//@ts-ignore
-			const queryString = new URLSearchParams({
-				...options,
-				typescript: isTypeScript.toString(),
-				jsx: isJsx.toString(),
-			},).toString();
-			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}#${encodeCode(
-				code,
-			)}`;
+	useEffect(() => {
+		const { code, isTypeScript, isJsx, ...options } = playgroundState;
+		//@ts-ignore
+		const queryString = new URLSearchParams({
+			...options,
+			typescript: isTypeScript.toString(),
+			jsx: isJsx.toString(),
+		}).toString();
+		const url = `${window.location.protocol}//${window.location.host}${window
+			.location.pathname}?${queryString}#${encodeCode(code)}`;
 
-			window.history.replaceState({ path: url }, "", url);
-		},
-		[playgroundState],
-	);
+		window.history.replaceState({ path: url }, "", url);
+	}, [playgroundState]);
 
 	return [playgroundState, setPlaygroundState];
 }
@@ -127,17 +120,12 @@ export function formatWithPrettier(
 		// @ts-ignore
 		let debug = prettier.__debug;
 		const document = debug.printToDoc(code, prettierOptions);
-		const formattedCode = debug.printDocToString(
-			document,
-			prettierOptions,
-		).formatted;
-		const ir = debug.formatDoc(
-			document,
-			{
-				parser: "babel",
-				plugins: [parserBabel],
-			},
-		);
+		const formattedCode = debug.printDocToString(document, prettierOptions)
+			.formatted;
+		const ir = debug.formatDoc(document, {
+			parser: "babel",
+			plugins: [parserBabel],
+		});
 		return { code: formattedCode, ir };
 	} catch (err: any) {
 		console.error(err);
