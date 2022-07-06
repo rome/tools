@@ -1462,6 +1462,7 @@ dependencies = [
  "ctor",
  "iai",
  "insta",
+ "parking_lot",
  "quickcheck",
  "quickcheck_macros",
  "rome_diagnostics",
