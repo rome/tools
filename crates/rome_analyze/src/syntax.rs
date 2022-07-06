@@ -17,11 +17,7 @@ pub struct SyntaxVisitor<L: Language> {
 impl<L: Language> Visitor for SyntaxVisitor<L> {
     type Language = L;
 
-    fn visit(
-        &mut self,
-        event: &WalkEvent<SyntaxNode<Self::Language>>,
-        ctx: &mut VisitorContext<L>,
-    ) {
+    fn visit(&mut self, event: &WalkEvent<SyntaxNode<Self::Language>>, mut ctx: VisitorContext<L>) {
         let node = match event {
             WalkEvent::Enter(node) => node,
             WalkEvent::Leave(node) => {
@@ -52,17 +48,15 @@ impl<L: Language> Visitor for SyntaxVisitor<L> {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::VecDeque;
 
-    use rome_diagnostics::file::FileId;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode,
     };
 
     use crate::{
-        registry::Phases, Analyzer, AnalyzerSignal, ControlFlow, Never, QueryMatch, QueryMatcher,
-        RuleKey, ServiceBag, SyntaxVisitor, VisitorContext,
+        matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerSignal,
+        ControlFlow, Never, QueryMatch, QueryMatcher, RuleKey, ServiceBag, SyntaxVisitor,
     };
 
     #[derive(Default)]
@@ -71,30 +65,18 @@ mod tests {
     }
 
     impl<'a> QueryMatcher<RawLanguage> for &'a mut BufferMatcher {
-        fn match_query<'b>(
-            &mut self,
-            _phase: Phases,
-            _file_id: FileId,
-            _root: &'b RawLanguageRoot,
-            query: &'b QueryMatch<RawLanguage>,
-            _services: &ServiceBag,
-            _emit_signal: impl FnMut(&dyn AnalyzerSignal<RawLanguage>) -> ControlFlow<()>,
-        ) -> ControlFlow<()> {
-            match query {
-                QueryMatch::Syntax(node) => {
-                    self.nodes.push(node.kind());
-                }
-                QueryMatch::ControlFlowGraph(_) => unreachable!(),
-            }
-
-            ControlFlow::Continue(())
-        }
-
-        fn insert_suppression(&mut self, _name: &str) -> Option<RuleKey> {
+        fn find_rule(&self, _name: &str) -> Option<RuleKey> {
             None
         }
 
-        fn remove_suppressions(&mut self, _name: impl IntoIterator<Item = RuleKey>) {}
+        fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
+            match params.query {
+                QueryMatch::Syntax(node) => {
+                    self.nodes.push(node.kind());
+                }
+                QueryMatch::ControlFlowGraph(..) => unreachable!(),
+            }
+        }
     }
 
     /// Checks the syntax visitor emits a [QueryMatch] for each node in the syntax tree
@@ -128,16 +110,15 @@ mod tests {
 
         analyzer.add_visitor(SyntaxVisitor::default());
 
-        let mut ctx: VisitorContext<RawLanguage> = VisitorContext {
+        let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
             phase: Phases::Syntax,
             file_id: 0,
             root,
             range: None,
             services: ServiceBag::default(),
-            match_queue: VecDeque::new(),
         };
 
-        let result: Option<Never> = analyzer.run(&mut ctx);
+        let result: Option<Never> = analyzer.run(ctx);
         assert!(result.is_none());
 
         assert_eq!(

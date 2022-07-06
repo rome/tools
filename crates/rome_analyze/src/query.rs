@@ -1,5 +1,5 @@
 use rome_control_flow::ControlFlowGraph;
-use rome_rowan::{AstNode, Language, SyntaxKindSet, SyntaxNode};
+use rome_rowan::{AstNode, Language, SyntaxKindSet, SyntaxNode, TextRange};
 
 use crate::{
     registry::{NodeLanguage, Phase},
@@ -34,7 +34,16 @@ pub trait Queryable: Sized {
 #[derive(Clone, Debug)]
 pub enum QueryMatch<L: Language> {
     Syntax(SyntaxNode<L>),
-    ControlFlowGraph(ControlFlowGraph<L>),
+    ControlFlowGraph(ControlFlowGraph<L>, TextRange),
+}
+
+impl<L: Language> QueryMatch<L> {
+    pub fn text_range(&self) -> TextRange {
+        match self {
+            QueryMatch::Syntax(node) => node.text_trimmed_range(),
+            QueryMatch::ControlFlowGraph(_, range) => *range,
+        }
+    }
 }
 
 /// Mirrors the variants of [QueryMatch] to statically compute which queries a
@@ -77,7 +86,7 @@ impl<L: Language> Queryable for ControlFlowGraph<L> {
 
     fn unwrap_match(query: &QueryMatch<Self::Language>) -> Self::Output {
         match query {
-            QueryMatch::ControlFlowGraph(cfg) => cfg.clone(),
+            QueryMatch::ControlFlowGraph(cfg, _) => cfg.clone(),
             _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
         }
     }

@@ -77,24 +77,23 @@ where
 }
 
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
-pub(crate) struct RuleSignal<'a, R: Rule> {
+pub(crate) struct RuleSignal<R: Rule> {
     file_id: FileId,
-    root: &'a RuleRoot<R>,
-    query_result: &'a <<R as Rule>::Query as Queryable>::Output,
+    root: RuleRoot<R>,
+    query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
     services: ServiceBag,
     _rule: PhantomData<R>,
 }
 
-impl<'a, R> RuleSignal<'a, R>
+impl<R> RuleSignal<R>
 where
     R: Rule + 'static,
-    R::Query: Clone,
 {
     pub(crate) fn new(
         file_id: FileId,
-        root: &'a RuleRoot<R>,
-        query_result: &'a <<R as Rule>::Query as Queryable>::Output,
+        root: RuleRoot<R>,
+        query_result: <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
         services: ServiceBag,
     ) -> Self {
@@ -109,18 +108,19 @@ where
     }
 }
 
-impl<'a, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'a, R>
+impl<R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<R>
 where
     R: Rule,
-    R::Query: Clone,
 {
     fn diagnostic(&self) -> Option<Diagnostic> {
-        let ctx = RuleContext::new(self.query_result, self.root, self.services.clone()).ok()?;
+        let ctx = RuleContext::new(&self.query_result, &self.root, self.services.clone()).ok()?;
+
         R::diagnostic(&ctx, &self.state).map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
-        let ctx = RuleContext::new(self.query_result, self.root, self.services.clone()).ok()?;
+        let ctx = RuleContext::new(&self.query_result, &self.root, self.services.clone()).ok()?;
+
         R::action(&ctx, &self.state).and_then(|action| {
             let (original_range, new_range) =
                 find_diff_range(self.root.syntax(), action.root.syntax())?;

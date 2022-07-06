@@ -1,26 +1,35 @@
-use std::collections::VecDeque;
+use std::collections::BinaryHeap;
 
 use rome_diagnostics::file::FileId;
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
 use crate::{
+    matcher::MatchQueryParams,
     registry::{NodeLanguage, Phases},
-    LanguageRoot, QueryMatch, ServiceBag,
+    LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
 };
 
 /// Mutable context objects shared by all visitors
-pub struct VisitorContext<L: Language> {
+pub struct VisitorContext<'a, L: Language> {
     pub phase: Phases,
     pub file_id: FileId,
-    pub root: LanguageRoot<L>,
-    pub services: ServiceBag,
+    pub root: &'a LanguageRoot<L>,
+    pub services: &'a ServiceBag,
     pub range: Option<TextRange>,
-    pub match_queue: VecDeque<QueryMatch<L>>,
+    pub(crate) query_matcher: &'a mut dyn QueryMatcher<L>,
+    pub(crate) signal_queue: &'a mut BinaryHeap<SignalEntry<L>>,
 }
 
-impl<L: Language> VisitorContext<L> {
-    pub fn match_query(&mut self, query_match: QueryMatch<L>) {
-        self.match_queue.push_back(query_match)
+impl<'a, L: Language> VisitorContext<'a, L> {
+    pub fn match_query(&mut self, query: QueryMatch<L>) {
+        self.query_matcher.match_query(MatchQueryParams {
+            phase: self.phase,
+            file_id: self.file_id,
+            root: self.root,
+            query,
+            services: self.services,
+            signal_queue: self.signal_queue,
+        })
     }
 }
 
@@ -33,7 +42,7 @@ pub trait Visitor {
     fn visit(
         &mut self,
         event: &WalkEvent<SyntaxNode<Self::Language>>,
-        ctx: &mut VisitorContext<Self::Language>,
+        ctx: VisitorContext<Self::Language>,
     );
 }
 
@@ -118,7 +127,7 @@ macro_rules! merge_node_visitors {
             fn visit(
                 &mut self,
                 event: &::rome_rowan::WalkEvent<::rome_rowan::SyntaxNode<Self::Language>>,
-                ctx: &mut $crate::VisitorContext<Self::Language>,
+                mut ctx: $crate::VisitorContext<Self::Language>,
             ) {
                 match event {
                     ::rome_rowan::WalkEvent::Enter(node) => {
@@ -127,7 +136,7 @@ macro_rules! merge_node_visitors {
                         $(
                             if <<$visitor as $crate::NodeVisitor<$name>>::Node as ::rome_rowan::AstNode>::can_cast(kind) {
                                 let node = <<$visitor as $crate::NodeVisitor<$name>>::Node as ::rome_rowan::AstNode>::unwrap_cast(node.clone());
-                                let state = <$visitor as $crate::NodeVisitor<$name>>::enter(node, ctx, self);
+                                let state = <$visitor as $crate::NodeVisitor<$name>>::enter(node, &mut ctx, self);
 
                                 let stack_index = self.stack.len();
                                 let ty_index = self.$id.len();
@@ -147,7 +156,7 @@ macro_rules! merge_node_visitors {
                                 let (_, state) = self.$id.pop().unwrap();
 
                                 let node = <<$visitor as $crate::NodeVisitor<$name>>::Node as ::rome_rowan::AstNode>::unwrap_cast(node.clone());
-                                <$visitor as $crate::NodeVisitor<$name>>::exit(state, node, ctx, self);
+                                <$visitor as $crate::NodeVisitor<$name>>::exit(state, node, &mut ctx, self);
                                 return;
                             }
                         )*

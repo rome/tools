@@ -298,11 +298,6 @@ fn traverse_cfg(
                 }
             }
 
-            let node_range = inst.node.as_ref().map(|node| PathTerminator {
-                kind: node.kind(),
-                range: node.text_trimmed_range(),
-            });
-
             // If this block has already ended, immediately mark this instruction as unreachable
             if let Some(terminator) = path.terminator.filter(|_| has_direct_terminator) {
                 if let Some(node) = &inst.node {
@@ -321,7 +316,10 @@ fn traverse_cfg(
 
                     // Jump is a terminator instruction if it's unconditional
                     if path.terminator.is_none() && !conditional {
-                        path.terminator = Some(node_range);
+                        path.terminator = Some(inst.node.as_ref().map(|node| PathTerminator {
+                            kind: node.kind(),
+                            range: node.text_trimmed_range(),
+                        }));
                         has_direct_terminator = true;
                     }
                 }
@@ -329,7 +327,10 @@ fn traverse_cfg(
                     handle_return(&mut queue, &path, &block.cleanup_handlers);
 
                     if path.terminator.is_none() {
-                        path.terminator = Some(node_range);
+                        path.terminator = Some(inst.node.as_ref().map(|node| PathTerminator {
+                            kind: node.kind(),
+                            range: node.text_trimmed_range(),
+                        }));
                         has_direct_terminator = true;
                     }
                 }

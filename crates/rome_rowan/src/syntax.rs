@@ -28,9 +28,6 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
     /// Returns `true` if this is an unknown node kind.
     fn is_unknown(&self) -> bool;
 
-    /// Returns `true` if this is a list node kind.
-    fn is_list(&self) -> bool;
-
     /// Converts this into to the best matching unknown node kind.
     fn to_unknown(&self) -> Self;
 

@@ -116,6 +116,19 @@ pub trait Rule: RuleMeta {
     /// `diagnostic` or `action` on it
     fn run(ctx: &RuleContext<Self>) -> Self::Signals;
 
+    /// Used by the analyzer to associate a range of source text to a signal in
+    /// order to support suppression comments.
+    ///
+    /// If this function returns [None], the range of the query node will be used instead
+    ///
+    /// The default implementation returns the range of `Self::diagnostic`, and
+    /// should return the correct value for most rules however you may want to
+    /// override this if generating a diagnostic for this rule requires heavy
+    /// processing and the range could be determined through a faster path
+    fn text_range(ctx: &RuleContext<Self>, state: &Self::State) -> Option<TextRange> {
+        Self::diagnostic(ctx, state).map(|diag| diag.span())
+    }
+
     /// Called by the consumer of the analyzer to try to generate a diagnostic
     /// from a signal raised by `run`
     ///
@@ -263,6 +276,10 @@ impl RuleDiagnostic {
     /// Adds a footer to this [`RuleDiagnostic`], with the `Note` severity.
     pub fn footer_note(self, msg: impl Display) -> Self {
         self.footer(Severity::Note, msg)
+    }
+
+    pub(crate) fn span(&self) -> TextRange {
+        self.span
     }
 
     /// Convert this [`RuleDiagnostic`] into an instance of [`Diagnostic`] by

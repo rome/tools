@@ -160,9 +160,17 @@ impl rome_analyze::NodeVisitor<ControlFlowVisitor> for FunctionVisitor {
         }
     }
 
-    fn exit(self, _: Self::Node, ctx: &mut VisitorContext<JsLanguage>, _: &mut ControlFlowVisitor) {
+    fn exit(
+        self,
+        node: Self::Node,
+        ctx: &mut VisitorContext<JsLanguage>,
+        _: &mut ControlFlowVisitor,
+    ) {
         if let Some(builder) = self.builder {
-            ctx.match_query(QueryMatch::ControlFlowGraph(builder.finish()));
+            ctx.match_query(QueryMatch::ControlFlowGraph(
+                builder.finish(),
+                node.syntax().text_trimmed_range(),
+            ));
         }
     }
 }

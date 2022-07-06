@@ -37,10 +37,6 @@ impl rome_rowan::SyntaxKind for JsonSyntaxKind {
         matches!(self, JsonSyntaxKind::JSON_UNKNOWN)
     }
 
-    fn is_list(&self) -> bool {
-        JsonSyntaxKind::is_list(*self)
-    }
-
     fn to_unknown(&self) -> Self {
         JsonSyntaxKind::JSON_UNKNOWN
     }

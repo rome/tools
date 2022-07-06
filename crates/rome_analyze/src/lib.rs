@@ -1,9 +1,12 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 
+use std::cmp::Ordering;
+use std::collections::BinaryHeap;
 use std::ops;
 
 mod categories;
 pub mod context;
+mod matcher;
 mod query;
 mod registry;
 mod rule;
@@ -13,8 +16,9 @@ mod syntax;
 mod visitor;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
+pub use crate::matcher::{QueryMatcher, RuleKey, SignalEntry};
 pub use crate::query::{Ast, CannotCreateServicesError, QueryKey, QueryMatch, Queryable};
-pub use crate::registry::{LanguageRoot, RuleKey, RuleRegistry};
+pub use crate::registry::{LanguageRoot, RuleRegistry};
 pub use crate::registry::{Phase, Phases};
 pub use crate::rule::{Rule, RuleAction, RuleDiagnostic, RuleMeta};
 pub use crate::services::{ServiceBag, ServiceBagData};
@@ -22,8 +26,10 @@ pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext};
 use rome_diagnostics::file::FileId;
-use rome_rowan::{AstNode, Language, SyntaxKind, SyntaxNode, TextRange, WalkEvent};
-use rustc_hash::FxHashMap;
+use rome_rowan::{
+    AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,
+    WalkEvent,
+};
 
 /// The analyzer is the main entry point into the `rome_analyze` infrastructure.
 /// Its role is to run a collection of [Visitor]s over a syntax tree, with each
@@ -36,14 +42,39 @@ pub struct Analyzer<'a, L: Language, Matcher, Break> {
     visitors: Vec<Box<dyn Visitor<Language = L> + 'a>>,
     /// Executor for the query matches emitted by the visitors
     query_matcher: Matcher,
+    /// Queue for pending analyzer signals
+    signal_queue: BinaryHeap<SignalEntry<L>>,
     /// Language-specific suppression comment parsing function
     parse_suppression_comment: SuppressionParser,
-    /// Tracks whether lint rules are currently being fully suppressed
-    suppress_all: bool,
-    /// Track active suppression comments for nodes in the tree being visited
-    node_suppressions: FxHashMap<SyntaxNode<L>, (bool, Vec<RuleKey>)>,
+    /// Line index at the current position of the traversal
+    line_index: usize,
+    /// Track active suppression comments per-line, ordered by line index
+    line_suppressions: Vec<LineSuppression>,
     /// Handles analyzer signals emitted by invidual rules
     emit_signal: SignalHandler<'a, L, Break>,
+}
+
+/// Single entry for a suppression comment in the `line_suppressions` buffer
+#[derive(Debug)]
+struct LineSuppression {
+    /// Line index this comment is suppressing lint rules for
+    line_index: usize,
+    /// Range of source text this comment is suppressing lint rules for
+    text_range: TextRange,
+    /// Set to true if this comment has set the `suppress_all` flag to true
+    /// (must be restored to false on expiration)
+    suppress_all: bool,
+    /// List of all the rules this comment has started suppressing (must be
+    /// removed from the suppressed set on expiration)
+    suppressed_rules: Vec<RuleKey>,
+}
+
+pub struct AnalyzerContext<L: Language> {
+    pub phase: Phases,
+    pub file_id: FileId,
+    pub root: LanguageRoot<L>,
+    pub services: ServiceBag,
+    pub range: Option<TextRange>,
 }
 
 impl<'a, L, Matcher, Break> Analyzer<'a, L, Matcher, Break>
@@ -61,9 +92,10 @@ where
         Self {
             visitors: Vec::new(),
             query_matcher,
+            signal_queue: BinaryHeap::new(),
             parse_suppression_comment,
-            suppress_all: false,
-            node_suppressions: FxHashMap::default(),
+            line_index: 0,
+            line_suppressions: Vec::new(),
             emit_signal,
         }
     }
@@ -75,173 +107,198 @@ where
         self.visitors.push(Box::new(visitor));
     }
 
-    pub fn run(mut self, ctx: &mut VisitorContext<L>) -> Option<Break> {
-        for event in ctx.root.syntax().preorder() {
-            for visitor in &mut self.visitors {
-                visitor.visit(&event, ctx);
-            }
+    pub fn run(mut self, ctx: AnalyzerContext<L>) -> Option<Break> {
+        let iter = ctx.root.syntax().preorder_with_tokens(Direction::Next);
+        for event in iter {
+            let node_event = match event {
+                WalkEvent::Enter(SyntaxElement::Node(node)) => WalkEvent::Enter(node),
+                WalkEvent::Leave(SyntaxElement::Node(node)) => WalkEvent::Leave(node),
 
-            let result = self.flush_queries(ctx, event);
-            if let ControlFlow::Break(br) = result {
-                return Some(br);
+                // If this is a token enter event, process its text content
+                WalkEvent::Enter(SyntaxElement::Token(token)) => {
+                    let result = self.flush_matches(token);
+                    if let ControlFlow::Break(br) = result {
+                        return Some(br);
+                    }
+
+                    continue;
+                }
+                WalkEvent::Leave(SyntaxElement::Token(_)) => {
+                    continue;
+                }
+            };
+
+            // If this is a node event pass it to the visitors
+            for visitor in &mut self.visitors {
+                let ctx = VisitorContext {
+                    phase: ctx.phase,
+                    file_id: ctx.file_id,
+                    root: &ctx.root,
+                    services: &ctx.services,
+                    range: ctx.range,
+                    query_matcher: &mut self.query_matcher,
+                    signal_queue: &mut self.signal_queue,
+                };
+
+                visitor.visit(&node_event, ctx);
             }
         }
 
         None
     }
 
-    fn flush_queries(
-        &mut self,
-        ctx: &mut VisitorContext<L>,
-        event: WalkEvent<SyntaxNode<L>>,
-    ) -> ControlFlow<Break> {
-        // Find a safe position corresponding to this event in the source, all
-        // query matches emitted before this position can safely be flushed
-        let (cutoff, allow_equal) = match &event {
-            // Entering a node: flush all matches before the start of that node
-            WalkEvent::Enter(event) => (event.text_range().start(), false),
-            // Leaving a node: flush all matches before the end of that node
-            WalkEvent::Leave(event) => (event.text_range().end(), true),
-        };
+    /// Process the text for a single token, parsing suppression comments and
+    /// flushing pending query matches
+    fn flush_matches(&mut self, token: SyntaxToken<L>) -> ControlFlow<Break> {
+        // Process the content of the token for comments and newline
+        for piece in token.leading_trivia().pieces() {
+            if matches!(
+                piece.kind(),
+                TriviaPieceKind::Newline
+                    | TriviaPieceKind::MultiLineComment
+                    | TriviaPieceKind::Skipped
+            ) {
+                self.bump_line_index(piece.text(), piece.text_range());
+            }
 
-        // Flush matches from the queue until the cutoff point is reached
-        while let Some(query) = ctx.match_queue.front() {
-            // Compare the position of the query match to the cutoff point
-            match query {
-                QueryMatch::ControlFlowGraph(_) => {
-                    // TODO
+            if let Some(comment) = piece.as_comments() {
+                self.handle_comment(comment.text(), piece.text_range());
+            }
+        }
+
+        self.bump_line_index(token.text_trimmed(), token.text_trimmed_range());
+
+        for piece in token.trailing_trivia().pieces() {
+            if matches!(
+                piece.kind(),
+                TriviaPieceKind::Newline
+                    | TriviaPieceKind::MultiLineComment
+                    | TriviaPieceKind::Skipped
+            ) {
+                self.bump_line_index(piece.text(), piece.text_range());
+            }
+
+            if let Some(comment) = piece.as_comments() {
+                self.handle_comment(comment.text(), piece.text_range());
+            }
+        }
+
+        // Flush signals from the queue until the end of the current token is reached
+        let cutoff = token.text_range().end();
+        while let Some(entry) = self.signal_queue.peek() {
+            let start = entry.text_range.start();
+            if start >= cutoff {
+                break;
+            }
+
+            // Search for an active suppression comment covering the range of this signal
+            let index = self.line_suppressions.binary_search_by(|suppression| {
+                if suppression.text_range.end() < entry.text_range.start() {
+                    Ordering::Less
+                } else if entry.text_range.end() < suppression.text_range.start() {
+                    Ordering::Greater
+                } else {
+                    Ordering::Equal
                 }
-                QueryMatch::Syntax(node) => {
-                    let start = node.text_range().start();
-                    if (allow_equal && start > cutoff) || (!allow_equal && start >= cutoff) {
-                        break;
-                    }
+            });
+
+            let suppression = index.ok().map(|index| &self.line_suppressions[index]);
+
+            // If the line index for the matched suppression is the current one,
+            // its text range is still pending: stop signals processing now and
+            // try again later
+            if let Some(suppression) = suppression {
+                if suppression.line_index == self.line_index {
+                    break;
                 }
             }
 
-            // Run the query match if lints are not currently being suppressed
-            if !self.suppress_all {
-                let mut break_value = None;
+            let is_suppressed = suppression.map_or(false, |suppression| {
+                suppression.suppress_all || suppression.suppressed_rules.contains(&entry.rule)
+            });
 
-                let result = self.query_matcher.match_query(
-                    ctx.phase,
-                    ctx.file_id,
-                    &ctx.root,
-                    query,
-                    &ctx.services,
-                    |signal| match (self.emit_signal)(signal) {
-                        ControlFlow::Continue(()) => ControlFlow::Continue(()),
-                        ControlFlow::Break(value) => {
-                            break_value = Some(value);
-                            ControlFlow::Break(())
-                        }
-                    },
-                );
-
-                if result.is_break() {
-                    // SAFETY: `match_query` should only return `Break` values
-                    // emitted by the signal handler and stored in `break_value`
-                    return ControlFlow::Break(break_value.unwrap());
-                }
+            // Emit the signal if the rule that created it is not currently being suppressed
+            if !is_suppressed {
+                (self.emit_signal)(&*entry.signal)?;
             }
 
             // SAFETY: This removes `query` from the queue, it is known to
             // exist since the `while let Some` block was entered
-            ctx.match_queue.pop_front().unwrap();
-        }
-
-        // Process the incoming event
-        let node = match event {
-            // Entering a node: move on to processing suppression comments
-            WalkEvent::Enter(node) => node,
-            // Leaving a node: if it has associated suppression comments,
-            // remove them from the suppression state
-            WalkEvent::Leave(node) => {
-                if let Some((suppress_all, suppressions)) = self.node_suppressions.remove(&node) {
-                    if suppress_all {
-                        self.suppress_all = false;
-                    }
-
-                    self.query_matcher.remove_suppressions(suppressions);
-                }
-
-                return ControlFlow::Continue(());
-            }
-        };
-
-        // Syntax lists and root nodes cannot have suppression comments
-        if !is_suppression_node(&node) {
-            return ControlFlow::Continue(());
-        }
-
-        // Lookup the first direct child token of this node, ensuring the start
-        // of its range coincides with the start of the node (this ensures this
-        // was actually the first token in the node and it was not preceeded by
-        // any non-empty node child)
-        let node_range = node.text_range();
-        let first_token = node
-            .tokens()
-            .next()
-            .filter(|token| token.text_range().start() == node_range.start());
-
-        let first_token = match first_token {
-            Some(token) => token,
-            None => return ControlFlow::Continue(()),
-        };
-
-        // Read the leading trivia of the token for comment pieces, and try to
-        // parse those as suppression comments
-        let comments = first_token
-            .leading_trivia()
-            .pieces()
-            .filter_map(|trivia| trivia.as_comments());
-
-        let mut suppress_all = false;
-        let mut suppressions = Vec::new();
-
-        'comments: for comment in comments {
-            for (category, rule) in (self.parse_suppression_comment)(comment.text()) {
-                if category != "lint" {
-                    continue;
-                }
-
-                if let Some(rule) = rule {
-                    if let Some(rule) = self.query_matcher.insert_suppression(rule) {
-                        suppressions.push(rule);
-                    }
-                } else {
-                    if !self.suppress_all {
-                        self.suppress_all = true;
-                        suppress_all = true;
-                    }
-
-                    // If this if a "suppress all lints" comment, no need to
-                    // parse anything else
-                    break 'comments;
-                }
-            }
-        }
-
-        // If the node didn't have any new suppression we don't need to do any
-        // further processing
-        if !suppress_all && suppressions.is_empty() {
-            return ControlFlow::Continue(());
-        }
-
-        // Walk up the syntax tree to find the highest ancestor node these
-        // suppressions can be attached to
-        let ancestor = node
-            .ancestors()
-            .take_while(is_suppression_node)
-            .filter(|node| node.text_range().start() == node_range.start())
-            .last();
-
-        if let Some(ancestor) = ancestor {
-            self.node_suppressions
-                .insert(ancestor, (suppress_all, suppressions));
+            self.signal_queue.pop().unwrap();
         }
 
         ControlFlow::Continue(())
+    }
+
+    fn handle_comment(&mut self, text: &str, range: TextRange) {
+        let mut suppress_all = false;
+        let mut suppressions = Vec::new();
+
+        for (category, rule) in (self.parse_suppression_comment)(text) {
+            if category != "lint" {
+                continue;
+            }
+
+            if let Some(rule) = rule {
+                if let Some(rule) = self.query_matcher.find_rule(rule) {
+                    suppressions.push(rule);
+                }
+            } else {
+                suppressions.clear();
+                suppress_all = true;
+                // If this if a "suppress all lints" comment, no need to
+                // parse anything else
+                break;
+            }
+        }
+
+        if !suppress_all && suppressions.is_empty() {
+            return;
+        }
+
+        // Suppression comments apply to the next line
+        let line_index = self.line_index + 1;
+
+        // Ensure proper ordering of the `line_suppressions` buffer
+        if let Some(suppression) = self.line_suppressions.last() {
+            assert!(suppression.line_index < line_index);
+        }
+
+        let entry = LineSuppression {
+            line_index,
+            text_range: range,
+            suppress_all,
+            suppressed_rules: suppressions,
+        };
+
+        self.line_suppressions.push(entry);
+    }
+
+    /// Check a piece of source text (token or trivia) for line breaks and
+    /// increment the line index accordingly, extending the range of the
+    /// current suppression as required
+    fn bump_line_index(&mut self, text: &str, range: TextRange) {
+        let mut did_match = false;
+        for (index, _) in text.match_indices('\n') {
+            if let Some(suppression) = self.line_suppressions.last_mut() {
+                if suppression.line_index == self.line_index {
+                    let index = TextSize::try_from(index).expect("integer overflow");
+                    let range = TextRange::at(range.start(), index);
+                    suppression.text_range = suppression.text_range.cover(range);
+                    did_match = true;
+                }
+            }
+
+            self.line_index += 1;
+        }
+
+        if !did_match {
+            if let Some(suppression) = self.line_suppressions.last_mut() {
+                if suppression.line_index == self.line_index {
+                    suppression.text_range = suppression.text_range.cover(range);
+                }
+            }
+        }
     }
 }
 
@@ -249,33 +306,6 @@ where
 type SuppressionParser = fn(&str) -> Vec<(&str, Option<&str>)>;
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
-
-/// Returns `true` if this node can have suppression comments attached (is not
-/// a list or a root node)
-fn is_suppression_node<L: Language>(node: &SyntaxNode<L>) -> bool {
-    let kind = node.kind();
-    !kind.is_list() && !<L::Root>::can_cast(kind)
-}
-
-pub trait QueryMatcher<L: Language> {
-    /// Execute a single query match
-    fn match_query<'a>(
-        &mut self,
-        phase: Phases,
-        file_id: FileId,
-        root: &'a L::Root,
-        query: &'a QueryMatch<L>,
-        services: &ServiceBag,
-        emit_signal: impl FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<()>,
-    ) -> ControlFlow<()>;
-
-    /// Try to add a rule to the suppressed rule set. Return [Some] with a
-    /// unique identifier for the rule if the name is known to the matcher and
-    /// was added successfully
-    fn insert_suppression(&mut self, name: &str) -> Option<RuleKey>;
-    /// Remove a number of lint rules from the suppressed rule set
-    fn remove_suppressions(&mut self, suppressions: impl IntoIterator<Item = RuleKey>);
-}
 
 /// Allows filtering the list of rules that will be executed in a run of the analyzer,
 /// and at what source code range signals (diagnostics or actions) may be raised

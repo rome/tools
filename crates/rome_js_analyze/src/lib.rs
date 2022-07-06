@@ -1,9 +1,7 @@
-use std::collections::VecDeque;
-
 use control_flow::make_visitor;
 use rome_analyze::{
-    AnalysisFilter, Analyzer, AnalyzerSignal, ControlFlow, LanguageRoot, Phases, RuleAction,
-    ServiceBag, ServiceBagData, SyntaxVisitor, VisitorContext,
+    AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, LanguageRoot, Phases,
+    RuleAction, ServiceBag, ServiceBagData, SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_semantic::semantic_model;
@@ -53,16 +51,13 @@ where
 
     analyzer.add_visitor(SyntaxVisitor::default());
 
-    let mut ctx = VisitorContext {
+    let breaking_reason = analyzer.run(AnalyzerContext {
         phase: Phases::Syntax,
         file_id,
         root: root.clone(),
         range: filter.range,
         services: ServiceBag::default(),
-        match_queue: VecDeque::new(),
-    };
-
-    let breaking_reason = analyzer.run(&mut ctx);
+    });
 
     if breaking_reason.is_some() {
         return breaking_reason;
@@ -72,9 +67,6 @@ where
     let model = semantic_model(root);
     let mut services = ServiceBagData::default();
     services.insert_service(model);
-
-    ctx.phase = Phases::Semantic;
-    ctx.services = ServiceBag::new(services);
 
     let mut analyzer = Analyzer::new(
         build_registry(&filter),
@@ -88,7 +80,13 @@ where
 
     analyzer.add_visitor(SyntaxVisitor::default());
 
-    analyzer.run(&mut ctx)
+    analyzer.run(AnalyzerContext {
+        phase: Phases::Semantic,
+        file_id,
+        root: root.clone(),
+        range: filter.range,
+        services: ServiceBag::new(services),
+    })
 }
 
 #[cfg(test)]
@@ -103,10 +101,15 @@ mod tests {
     #[test]
     fn suppression() {
         const SOURCE: &str = "
-            function isEqual(a, b) {
+            function checkSuppressions1(a, b) {
                 a == b;
-                // rome-ignore lint(noDoubleEquals): test
+                // rome-ignore lint(noDoubleEquals): single expression
                 a == b;
+                a == b;
+            }
+
+            // rome-ignore lint(noDoubleEquals): do not suppress warning for the whole function
+            function checkSuppressions2(a, b) {
                 a == b;
             }
         ";
@@ -130,8 +133,9 @@ mod tests {
         assert_eq!(
             error_ranges.as_slice(),
             &[
-                TextRange::new(TextSize::from(56), TextSize::from(58)),
-                TextRange::new(TextSize::from(162), TextSize::from(164)),
+                TextRange::new(TextSize::from(67), TextSize::from(69)),
+                TextRange::new(TextSize::from(186), TextSize::from(188)),
+                TextRange::new(TextSize::from(369), TextSize::from(371)),
             ]
         );
     }
