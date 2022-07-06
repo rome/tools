@@ -56,7 +56,7 @@ impl Rule for UseSimplifiedLogicExpression {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsLogicalExpression>;
-    /// First element of tuple is if the expression is simplified by `de_morgan` rule, second is expression after replaced.
+    /// First element of tuple is if the expression is simplified by [De Morgan's Law](https://en.wikipedia.org/wiki/De_Morgan%27s_laws) rule, the second element is the expression to replace.
     type State = (bool, JsAnyExpression);
     type Signals = Option<Self::State>;
 
