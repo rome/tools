@@ -45,7 +45,7 @@ impl Rule for NoCommentText {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(n) = ctx.query();
+        let n = ctx.query();
         let jsx_value = n.text();
         let is_single_line_comment = jsx_value.starts_with("//");
         let is_multi_line_comment = jsx_value.starts_with("/*") && jsx_value.ends_with("*/");
@@ -57,7 +57,7 @@ impl Rule for NoCommentText {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -68,7 +68,7 @@ impl Rule for NoCommentText {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         let normalized_comment = format!(
             "/*{}*/",
