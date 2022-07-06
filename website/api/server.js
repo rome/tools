@@ -39,7 +39,10 @@ const tiers = [
 		metal: "bronze",
 		price: 25,
 		rewards: ["Sticker"],
-		previousRewards: ["Cosmetic Discord role", "Cosmetic label on GitHub issues"],
+		previousRewards: [
+			"Cosmetic Discord role",
+			"Cosmetic label on GitHub issues",
+		],
 	},
 	{
 		id: "advocate",
@@ -48,7 +51,10 @@ const tiers = [
 		metal: "silver",
 		price: 50,
 		rewards: ["Sticker pack"],
-		previousRewards: ["Cosmetic Discord role", "Cosmetic label on GitHub issues"],
+		previousRewards: [
+			"Cosmetic Discord role",
+			"Cosmetic label on GitHub issues",
+		],
 	},
 	{
 		id: "champion",
@@ -220,13 +226,11 @@ function wrapAsyncCallback(callback) {
 
 app.use(morgan("tiny"));
 
-app.use(
-	(req, res, next) => {
-		res.setHeader("Access-Control-Allow-Origin", "*");
-		res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-		next();
-	},
-);
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+	next();
+});
 
 async function getContributions(limit) {
 	const query = await db.query(
@@ -236,12 +240,13 @@ async function getContributions(limit) {
 	return query.rows.map((row) => {
 		return {
 			name: row.publicName,
-			github: row.github === "" || row.publicName === "" ? undefined : row.github,
+			github:
+				row.github === "" || row.publicName === "" ? undefined : row.github,
 			comment: row.publicComment,
 			amount: Number(row.tierPrice) + Number(row.tip),
 			time: new Date(row.createdAt).valueOf(),
 		};
-	},);
+	});
 }
 
 async function getTierStats() {
@@ -259,7 +264,7 @@ async function getTierStats() {
 				...tier,
 				count: query.rows.length === 0 ? 0 : Number(query.rows[0].count),
 			};
-		},),
+		}),
 	);
 }
 
@@ -269,14 +274,14 @@ async function getProgressStats() {
 		db.query(
 			`SELECT SUM("tierPrice") as "tierPrice", SUM("tip") as tip FROM contributions WHERE paid = true`,
 		),
-	],);
+	]);
 
-	const count = countQuery.rows.length === 0 ? 0 : Number(
-		countQuery.rows[0].count,
-	);
-	let current = totalQuery.rows.length === 0 ? 0 : Number(
-		totalQuery.rows[0].tierPrice,
-	) + Number(totalQuery.rows[0].tip);
+	const count =
+		countQuery.rows.length === 0 ? 0 : Number(countQuery.rows[0].count);
+	let current =
+		totalQuery.rows.length === 0 ? 0 : Number(
+			totalQuery.rows[0].tierPrice,
+		) + Number(totalQuery.rows[0].tip);
 
 	// Hard code current balance of external donations
 	current += 1_733;
@@ -310,15 +315,12 @@ function getAllContributions() {
 }
 
 async function getFreshStats() {
-	const [
-		{ count, current, target },
-		recentContributions,
-		tiers,
-	] = await Promise.all([
-		getProgressStats(),
-		getContributions(3),
-		getTierStats(),
-	],);
+	const [{ count, current, target }, recentContributions, tiers] =
+		await Promise.all([
+			getProgressStats(),
+			getContributions(3),
+			getTierStats(),
+		]);
 
 	return { count, current, target, recentContributions, tiers };
 }
@@ -327,14 +329,14 @@ app.get(
 	"/funding/stats",
 	wrapAsyncCallback(async (req, res) => {
 		res.json(await getStats());
-	},),
+	}),
 );
 
 app.get(
 	"/funding/all",
 	wrapAsyncCallback(async (req, res) => {
 		res.json(await getAllContributions());
-	},),
+	}),
 );
 
 function generateRewardsDescription(tier) {
@@ -376,7 +378,7 @@ app.post(
 				unit_amount: tierPrice * 100,
 			},
 			quantity: 1,
-		},);
+		});
 
 		if (tip > 0) {
 			lineItems.push({
@@ -386,7 +388,7 @@ app.post(
 					unit_amount: tip * 100,
 				},
 				quantity: 1,
-			},);
+			});
 		}
 
 		const session = await stripe.checkout.sessions.create({
@@ -402,7 +404,7 @@ app.post(
 			// Don't request shipping address for custom donators
 			shipping_address_collection:
 				tier.id !== "custom" && tierPrice > 10 ? constants.stripeShippingCollection : undefined,
-		},);
+		});
 
 		const isPublic = ensureBoolean(body.public);
 		const publicName = ensureString(body.publicName, 100);
@@ -429,7 +431,7 @@ app.post(
 		);
 
 		res.json({ id: session.id });
-	},),
+	}),
 );
 
 app.post(
@@ -457,53 +459,46 @@ app.post(
 			cachedAllContributions = undefined;
 
 			// Purge cache from Cloudflare
-			await fetch(
-				`https://api.cloudflare.com/client/v4/zones/${process.env.CF_ZONE_ID}/purge_cache`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${process.env.CF_SECRET}`,
-					},
-					body: JSON.stringify({
-						files: [
-							`${process.env.API_URL}/funding/stats`,
-							`${process.env.API_URL}/funding/all`,
-						],
-					},),
+			await fetch(`https://api.cloudflare.com/client/v4/zones/${process.env
+				.CF_ZONE_ID}/purge_cache`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${process.env.CF_SECRET}`,
 				},
-			);
+				body: JSON.stringify({
+					files: [
+						`${process.env.API_URL}/funding/stats`,
+						`${process.env.API_URL}/funding/all`,
+					],
+				}),
+			});
 		}
 
 		res.status(200);
 		res.end();
-	},),
+	}),
 );
 
-app.use(
-	function (err, req, res, next) {
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-		if (Sentry !== undefined) {
-			Sentry.captureException(err);
-		}
-		console.error(err.stack);
-		res.status(500);
-		res.end("Internal server error");
-		next;
-	},
-);
+app.use(function (err, req, res, next) {
+	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+	if (Sentry !== undefined) {
+		Sentry.captureException(err);
+	}
+	console.error(err.stack);
+	res.status(500);
+	res.end("Internal server error");
+	next;
+});
 
 async function main() {
 	await db.connect();
 
 	const port = Number(process.env.API_PORT || 8_081);
 
-	app.listen(
-		port,
-		() => {
-			console.log(`API server listening on port ${port}!`);
-		},
-	);
+	app.listen(port, () => {
+		console.log(`API server listening on port ${port}!`);
+	});
 }
 
 main().catch((err) => {
@@ -513,4 +508,4 @@ main().catch((err) => {
 	}
 	console.error(err.stack);
 	process.exit(1);
-},);
+});
