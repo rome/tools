@@ -1,5 +1,6 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
+use js_sys::Array;
 use rome_analyze::{AnalysisFilter, ControlFlow, Never};
 use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{Color, ColorSpec, WriteColor};
@@ -25,6 +26,9 @@ extern "C" {
 
     #[wasm_bindgen(js_namespace = performance)]
     fn measure(name: &str, begin: &str, end: &str) -> JsValue;
+
+    #[wasm_bindgen(js_namespace = performance)]
+    fn getEntriesByName(name: &str, ty: &str) -> Array;
 }
 
 #[allow(unused_macros)]
@@ -168,8 +172,21 @@ impl PlaygroundFormatOptions {
 
 fn measure_and_print(name: &str, begin: &str, end: &str) {
     let parse_measure = measure(name, begin, end);
-    let parse_measure = js_sys::JSON::stringify(&parse_measure).unwrap();
-    log(&parse_measure.as_string().unwrap());
+    // Firefox returns undefined
+    if parse_measure.is_truthy() {
+        if let Ok(parse_measure) = js_sys::JSON::stringify(&parse_measure) {
+            log(&parse_measure.as_string().unwrap());
+        }
+    } else {
+        let entries = getEntriesByName(name, "measure");
+        if entries.is_truthy() {
+            let entry = entries.get(0);
+            if entry.is_truthy() {
+                let json = js_sys::JSON::stringify(&entry).unwrap();
+                log(&json.as_string().unwrap());
+            }
+        }
+    }
 }
 
 #[wasm_bindgen]
@@ -279,6 +296,9 @@ pub fn run(
 
     mark("rome::end");
     measure_and_print("rome", "rome::begin", "rome::end");
+
+    // Make easier to read each set of mearures
+    log("");
 
     RomeOutput {
         cst,
