@@ -139,7 +139,7 @@ impl Rule for UseSimplifiedLogicExpression {
             expr.clone(),
         )?;
         let message = if *is_simplified_by_de_morgan {
-            "Reduce the complexity of LogicExpression."
+            "Reduce the complexity of the logical expression."
         } else {
             "Discard redundant terms from logical expressions"
         };
