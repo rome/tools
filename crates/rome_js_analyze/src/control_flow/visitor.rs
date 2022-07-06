@@ -1,7 +1,11 @@
 use std::{any::TypeId, ops::ControlFlow};
 
 use rome_analyze::{merge_node_visitors, QueryMatch, Visitor, VisitorContext};
-use rome_js_syntax::{JsAnyFunction, JsLanguage, JsModule, JsScript};
+use rome_js_syntax::{
+    JsAnyFunction, JsConstructorClassMember, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
+    JsMethodClassMember, JsMethodObjectMember, JsModule, JsScript, JsSetterClassMember,
+    JsSetterObjectMember,
+};
 use rome_rowan::{declare_node_union, AstNode, SyntaxError, SyntaxResult};
 
 use super::{nodes::*, FunctionBuilder};
@@ -131,7 +135,16 @@ pub(super) struct FunctionVisitor {
 }
 
 declare_node_union! {
-    JsAnyControlFlowRoot = JsModule | JsScript | JsAnyFunction
+    JsAnyControlFlowRoot = JsModule
+        | JsScript
+        | JsAnyFunction
+        | JsGetterObjectMember
+        | JsSetterObjectMember
+        | JsMethodObjectMember
+        | JsConstructorClassMember
+        | JsMethodClassMember
+        | JsGetterClassMember
+        | JsSetterClassMember
 }
 
 impl<B> rome_analyze::NodeVisitor<ControlFlowVisitor<B>, B> for FunctionVisitor {
