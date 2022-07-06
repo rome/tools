@@ -141,7 +141,7 @@ impl Rule for UseSimplifiedLogicExpression {
         let message = if *is_simplified_by_de_morgan {
             "Reduce the complexity of the logical expression."
         } else {
-            "Discard redundant terms from logical expressions"
+            "Discard redundant terms from the logical expression."
         };
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
