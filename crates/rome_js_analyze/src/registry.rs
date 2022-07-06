@@ -38,6 +38,9 @@ where
     if filter.match_rule::<NoImplicitBoolean>() {
         rules.push::<NoImplicitBoolean>();
     }
+    if filter.match_rule::<NoLabelVar>() {
+        rules.push::<NoLabelVar>();
+    }
     if filter.match_rule::<NoMultipleSpacesInRegularExpressionLiterals>() {
         rules.push::<NoMultipleSpacesInRegularExpressionLiterals>();
     }

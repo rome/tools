@@ -39,7 +39,6 @@ impl Rule for NoArguments {
         let reference = ctx.query();
 
         let name = reference.syntax().text_trimmed();
-        dbg!(&name);
         if name == "arguments" {
             let model = ctx.model();
             let declaration = model.declaration(reference);

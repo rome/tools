@@ -48,7 +48,7 @@ fn generate_module(name: &'static str, entries: &mut Vec<String>) -> Result<()> 
         let rule_name = format_ident!("{}", rule_name);
 
         rules.insert(
-            index,
+            index.min(rules.len()),
             quote! {
                 mod #module_name;
                 pub(crate) use #module_name::#rule_name;
