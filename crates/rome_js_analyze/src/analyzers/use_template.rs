@@ -57,7 +57,7 @@ impl Rule for UseTemplate {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(binary_expr) = ctx.query();
+        let binary_expr = ctx.query();
         // Avoiding recursive diagnostics.
         if binary_expr.parent::<JsBinaryExpression>().is_some() {
             None
@@ -84,7 +84,7 @@ impl Rule for UseTemplate {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -95,8 +95,7 @@ impl Rule for UseTemplate {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        // return None;
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let root = ctx.root();
 
         let template = convert_expressions_to_js_template(state)?;
