@@ -1,4 +1,4 @@
-use rome_formatter::{IndentStyle, LineWidth, LineWidthFromIntError};
+use rome_formatter::{IndentStyle, LineWidth};
 use serde::Deserialize;
 #[derive(Deserialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default)]
@@ -17,7 +17,8 @@ pub struct FormatterConfiguration {
     indent_size: u8,
 
     /// What's the max width of a line. Defaults to 80.
-    pub line_width: u16,
+    #[serde(deserialize_with = "deserialize_line_width")]
+    pub line_width: LineWidth,
 }
 
 impl From<&FormatterConfiguration> for IndentStyle {
@@ -29,11 +30,12 @@ impl From<&FormatterConfiguration> for IndentStyle {
     }
 }
 
-impl TryFrom<&FormatterConfiguration> for LineWidth {
-    type Error = LineWidthFromIntError;
-    fn try_from(value: &FormatterConfiguration) -> Result<Self, Self::Error> {
-        LineWidth::try_from(value.line_width)
-    }
+fn deserialize_line_width<'de, D>(deserializer: D) -> Result<LineWidth, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    let value: u16 = Deserialize::deserialize(deserializer)?;
+    LineWidth::try_from(value).map_err(serde::de::Error::custom)
 }
 
 impl Default for FormatterConfiguration {
@@ -43,7 +45,7 @@ impl Default for FormatterConfiguration {
             format_with_errors: false,
             indent_size: 2,
             indent_style: PlainIndentStyle::default(),
-            line_width: LineWidth::default().value(),
+            line_width: LineWidth::default(),
         }
     }
 }

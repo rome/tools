@@ -35,14 +35,21 @@ mod configuration {
     }
 
     #[test]
-    fn default_value() {
+    fn line_width_error() {
         let mut working_dir = current_dir().unwrap();
         working_dir.push("tests");
-        working_dir.push("all_fields.json");
+        working_dir.push("line_width.json");
         let content = read_to_string(working_dir).unwrap();
 
         let configuration = serde_json::from_str::<Configuration>(&content);
 
-        assert!(configuration.is_ok())
+        assert!(configuration.is_err());
+
+        if let Err(err) = configuration {
+            assert!(err
+                .to_string()
+                .as_str()
+                .contains("The line width exceeds the maximum value (320)"),)
+        }
     }
 }
