@@ -7,7 +7,7 @@
 		"start": "pnpm run --parallel watch:eleventy watch:sass build:styles",
 		"watch:eleventy": "eleventy --serve",
 		"watch:sass": "pnpm build:styles -- --watch",
-		"format": "rome format --write src"
+		"format": "rome format --write ."
 	},
 	"devDependencies": {
 		"@11ty/eleventy": "^0.12.1",

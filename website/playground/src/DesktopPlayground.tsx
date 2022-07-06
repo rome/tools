@@ -153,7 +153,8 @@ export default function DesktopPlayground(
 							<pre className="h-screen overflow-scroll">{prettierOutput.ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<div className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs error-panel"
+							<div
+								className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs error-panel"
 								dangerouslySetInnerHTML={{ __html: errors }}
 							/>
 						</TabPanel>
