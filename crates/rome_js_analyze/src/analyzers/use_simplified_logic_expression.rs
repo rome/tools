@@ -56,7 +56,8 @@ impl Rule for UseSimplifiedLogicExpression {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsLogicalExpression>;
-    type State = JsAnyExpression;
+    /// First element of tuple is if the expression is simplified by [De Morgan's Law](https://en.wikipedia.org/wiki/De_Morgan%27s_laws) rule, the second element is the expression to replace.
+    type State = (bool, JsAnyExpression);
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
@@ -72,25 +73,26 @@ impl Rule for UseSimplifiedLogicExpression {
                     )
                 ) =>
             {
-                return Some(right);
+                return Some((false, right));
             }
             rome_js_syntax::JsLogicalOperator::LogicalOr => {
                 if let JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
                 ) = left
                 {
-                    return simplify_or_expression(literal, right);
+                    return simplify_or_expression(literal, right).map(|expr| (false, expr));
                 }
 
                 if let JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
                 ) = right
                 {
-                    return simplify_or_expression(literal, left);
+                    return simplify_or_expression(literal, left).map(|expr| (false, expr));
                 }
 
                 if could_apply_de_morgan(node).unwrap_or(false) {
-                    return simplify_de_morgan(node).map(JsAnyExpression::JsUnaryExpression);
+                    return simplify_de_morgan(node)
+                        .map(|expr| (true, JsAnyExpression::JsUnaryExpression(expr)));
                 }
             }
             rome_js_syntax::JsLogicalOperator::LogicalAnd => {
@@ -98,18 +100,19 @@ impl Rule for UseSimplifiedLogicExpression {
                     JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
                 ) = left
                 {
-                    return simplify_and_expression(literal, right);
+                    return simplify_and_expression(literal, right).map(|expr| (false, expr));
                 }
 
                 if let JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
                 ) = right
                 {
-                    return simplify_and_expression(literal, left);
+                    return simplify_and_expression(literal, left).map(|expr| (false, expr));
                 }
 
                 if could_apply_de_morgan(node).unwrap_or(false) {
-                    return simplify_de_morgan(node).map(JsAnyExpression::JsUnaryExpression);
+                    return simplify_de_morgan(node)
+                        .map(|expr| (true, JsAnyExpression::JsUnaryExpression(expr)));
                 }
             }
             _ => return None,
@@ -130,14 +133,20 @@ impl Rule for UseSimplifiedLogicExpression {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let (is_simplified_by_de_morgan, expr) = state;
         let root = ctx.root().replace_node(
             JsAnyExpression::JsLogicalExpression(node.clone()),
-            state.clone(),
+            expr.clone(),
         )?;
+        let message = if *is_simplified_by_de_morgan {
+            "Reduce the complexity of the logical expression."
+        } else {
+            "Discard redundant terms from the logical expression."
+        };
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Discard redundant terms from logical expressions" }.to_owned(),
+            message: markup! { ""{message}"" }.to_owned(),
             root,
         })
     }
