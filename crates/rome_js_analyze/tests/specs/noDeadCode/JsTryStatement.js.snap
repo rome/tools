@@ -6,14 +6,42 @@ expression: JsTryStatement.js
 ```js
 function JsTryStatement1() {
     try {
-        test();
+        tryBlock();
         return;
     } catch (err) {
-        test();
+        catchClause();
         return;
     }
 
     afterTryCatchReturn();
+}
+
+function JsTryStatement2() {
+    try {
+        tryBlock();
+        return;
+    } catch (err) {
+        catchClause();
+    }
+
+    afterTryCatchReturn();
+}
+
+function JsTryStatement3() {
+    return;
+
+    try {
+        tryBlock();
+    } catch (err) {
+        catchClause();
+    }
+}
+
+function JsTryStatement4() {
+    try {
+    } catch (err) {
+        catchClause();
+    }
 }
 
 ```
@@ -31,6 +59,42 @@ warning[noDeadCode]: This code is unreachable
    ·
 10 │     afterTryCatchReturn();
    │     ---------------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryStatement.js:28:9
+   │
+25 │     return;
+   │     ------- This statement will return from the function ...
+   ·
+28 │         tryBlock();
+   │         ----------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryStatement.js:30:9
+   │
+25 │     return;
+   │     ------- This statement will return from the function ...
+   ·
+30 │         catchClause();
+   │         -------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryStatement.js:37:9
+   │
+37 │         catchClause();
+   │         --------------
 
 
 ```
