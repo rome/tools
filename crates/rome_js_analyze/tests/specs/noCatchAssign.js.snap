@@ -1,0 +1,13 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: noCatchAssign.js
+---
+# Input
+```js
+// invalid
+try { } catch (e) { e; e = 10; }
+
+```
+
+

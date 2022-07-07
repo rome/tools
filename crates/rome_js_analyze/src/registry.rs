@@ -17,6 +17,9 @@ where
     if filter.match_rule::<NoAsyncPromiseExecutor>() {
         rules.push::<NoAsyncPromiseExecutor>();
     }
+    if filter.match_rule::<NoCatchAssign>() {
+        rules.push::<NoCatchAssign>();
+    }
     if filter.match_rule::<NoCommentText>() {
         rules.push::<NoCommentText>();
     }

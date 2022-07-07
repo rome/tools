@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: noCatchAssign.js
+---
+# Input
+```js
+// invalid
+try { } catch (e) { e; e = 10; }
+
+```
+
+# Diagnostics
+```
+warning[noCatchAssign]: Use the rest parameters instead of arguments.
+  ┌─ noCatchAssign.js:2:9
+  │
+2 │ try { } catch (e) { e; e = 10; }
+  │         ------------------------
+
+=  note: arguments does not have Array.prototype methods and can be inconvenient to use.
+
+
+```
+
+
