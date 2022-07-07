@@ -1,11 +1,14 @@
-use std::marker::PhantomData;
+use std::{collections::VecDeque, marker::PhantomData};
 
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
     file::{FileId, FileSpan},
     Applicability, CodeSuggestion, Diagnostic, SuggestionChange, SuggestionStyle,
 };
-use rome_rowan::{AstNode, Direction, Language, SyntaxNode, TextRange};
+use rome_rowan::{
+    AstNode, Direction, Language, SyntaxElement, SyntaxNode, SyntaxSlot, TextRange, TextSize,
+    WalkEvent,
+};
 
 use crate::{
     categories::ActionCategory,
@@ -50,18 +53,33 @@ where
         // Only print the relevant subset of tokens
         let mut code = String::new();
 
-        for token in action.root.syntax().descendants_tokens(Direction::Next) {
-            let range = token.text_range();
-            if range
+        let mut iter = action.root.syntax().preorder_with_tokens(Direction::Next);
+        while let Some(event) = iter.next() {
+            let elem = match event {
+                WalkEvent::Enter(elem) => elem,
+                WalkEvent::Leave(_) => continue,
+            };
+
+            let range = elem.text_range();
+            let has_intersection = range
                 .intersect(action.new_range)
                 .filter(|range| !range.is_empty())
-                .is_none()
-            {
-                continue;
-            }
+                .is_some();
 
-            code.push_str(token.text());
+            match elem {
+                SyntaxElement::Node(_) => {
+                    if !has_intersection {
+                        iter.skip_subtree();
+                    }
+                }
+                SyntaxElement::Token(token) => {
+                    if has_intersection {
+                        code.push_str(token.text());
+                    }
+                }
+            }
         }
+
         CodeSuggestion {
             substitution: SuggestionChange::String(code),
             span: FileSpan {
@@ -144,68 +162,95 @@ fn find_diff_range<L>(prev: &SyntaxNode<L>, next: &SyntaxNode<L>) -> Option<(Tex
 where
     L: Language,
 {
-    let prev_tokens = prev.descendants_tokens(Direction::Next);
-    let next_tokens = next.descendants_tokens(Direction::Next);
-    let mut tokens = prev_tokens.zip(next_tokens);
+    let mut result: Option<(TextRange, TextRange)> = None;
+    let mut queue = VecDeque::new();
 
-    let range_start = tokens.find_map(|(prev_token, next_token)| {
-        debug_assert_eq!(
-            prev_token.text_range().start(),
-            next_token.text_range().start(),
-        );
-
-        if prev_token != next_token {
-            Some(prev_token.text_range().start())
-        } else {
-            None
-        }
-    });
-
-    let prev_tokens = prev.descendants_tokens(Direction::Prev);
-    let next_tokens = next.descendants_tokens(Direction::Prev);
-    let tokens = prev_tokens.zip(next_tokens);
-
-    let range_end = tokens
-        .take_while(|(prev_token, next_token)| {
-            let prev_range = prev_token.text_range();
-            let next_range = next_token.text_range();
-
-            if let Some(range_start) = range_start {
-                if prev_range.start() < range_start || next_range.start() < range_start {
-                    return false;
-                }
-            }
-
-            // This compares the texts instead of the tokens themselves, since the
-            // implementation of PartialEq for SyntaxToken compares the text offset
-            // of the tokens (which may be different since we're starting from the
-            // end of the file, after the edited section)
-            // It should still be rather efficient though as identical tokens will
-            // reuse the same underlying green node after an edit, so the equality
-            // check can stop at doing a pointer + length equality without having
-            // to actually check the content of the string
-            prev_token.text() == next_token.text()
-        })
-        .last()
-        .map(|(prev_token, next_token)| {
-            (
-                prev_token.text_range().start(),
-                next_token.text_range().start(),
-            )
-        });
-
-    match (range_start, range_end) {
-        (Some(start), Some((prev_end, next_end))) => Some((
-            TextRange::new(start, prev_end),
-            TextRange::new(start, next_end),
-        )),
-        (Some(start), None) => Some((
-            TextRange::new(start, prev.text_range().end()),
-            TextRange::new(start, next.text_range().end()),
-        )),
-
-        (None, _) => None,
+    if prev.key().0 != next.key().0 {
+        queue.push_back((prev.clone(), next.clone()));
     }
+
+    // These buffers are kept between loops to amortize their allocation over the whole algorithm
+    let mut prev_children = Vec::new();
+    let mut next_children = Vec::new();
+
+    while let Some((prev, next)) = queue.pop_front() {
+        // Collect all `SyntaxElement` slots into two vectors
+        // (makes it easier to implement backwards iteration + peeking)
+        prev_children.clear();
+        prev_children.extend(prev.slots().filter_map(SyntaxSlot::into_syntax_element));
+
+        next_children.clear();
+        next_children.extend(next.slots().filter_map(SyntaxSlot::into_syntax_element));
+
+        // Remove identical children from the end of the vectors, keeping track
+        // of the truncated range end for the sub-slice of children that differ
+        let mut prev_end = prev.text_range().end();
+        let mut next_end = next.text_range().end();
+
+        while let (Some(prev), Some(next)) = (prev_children.last(), next_children.last()) {
+            if prev.key().0 == next.key().0 {
+                prev_end = prev_end.min(prev.text_range().start());
+                next_end = next_end.min(next.text_range().start());
+                prev_children.pop().unwrap();
+                next_children.pop().unwrap();
+            } else {
+                break;
+            }
+        }
+
+        // Zip the two vectors from the start and compare the previous and next version of each child
+        let mut prev_children = prev_children.drain(..);
+        let mut next_children = next_children.drain(..);
+
+        loop {
+            let (prev_range, next_range) = match (prev_children.next(), next_children.next()) {
+                // The previous and next child are both nodes, push them to the
+                // comparison queue if they differ
+                (Some(SyntaxElement::Node(prev)), Some(SyntaxElement::Node(next))) => {
+                    if prev.key().0 != next.key().0 {
+                        queue.push_back((prev, next));
+                    }
+
+                    continue;
+                }
+
+                // The previous and next child are both tokens, extend the diff
+                // range to their position if they differ
+                (Some(SyntaxElement::Token(prev)), Some(SyntaxElement::Token(next))) => {
+                    if prev.key().0 == next.key().0 {
+                        continue;
+                    }
+
+                    (prev.text_range(), next.text_range())
+                }
+
+                // `(Some(Token), Some(Node))` or `(Some(Node), Some(Token))`
+                (Some(prev), Some(next)) => (prev.text_range(), next.text_range()),
+
+                // One children list is longer than the other
+                (Some(prev), None) => (
+                    prev.text_range(),
+                    TextRange::at(next_end, TextSize::from(0)),
+                ),
+                (None, Some(next)) => (
+                    TextRange::at(prev_end, TextSize::from(0)),
+                    next.text_range(),
+                ),
+
+                (None, None) => break,
+            };
+
+            // Either extend the existing range or initialize it with the new values
+            let new_result = match result {
+                Some((prev, next)) => (prev.cover(prev_range), next.cover(next_range)),
+                None => (prev_range, next_range),
+            };
+
+            result = Some(new_result);
+        }
+    }
+
+    result
 }
 
 #[cfg(test)]
@@ -264,7 +309,7 @@ mod tests {
             .expect("failed to calculate diff range");
 
         let start = TextSize::of("if(test)");
-        let end = TextSize::of("if(test)consequent;elsealternate");
+        let end = TextSize::of("if(test)consequent;elsealternate;");
 
         assert_eq!(
             diff,

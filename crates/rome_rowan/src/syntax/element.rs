@@ -1,11 +1,19 @@
 use crate::syntax::SyntaxTrivia;
 use crate::{cursor, Language, NodeOrToken, SyntaxNode, SyntaxToken};
 use std::iter;
-use text_size::TextRange;
+use std::ptr::NonNull;
+use text_size::{TextRange, TextSize};
 
 pub type SyntaxElement<L> = NodeOrToken<SyntaxNode<L>, SyntaxToken<L>>;
 
 impl<L: Language> SyntaxElement<L> {
+    pub fn key(&self) -> (NonNull<()>, TextSize) {
+        match self {
+            NodeOrToken::Node(it) => it.key(),
+            NodeOrToken::Token(it) => it.key(),
+        }
+    }
+
     pub fn text_range(&self) -> TextRange {
         match self {
             NodeOrToken::Node(it) => it.text_range(),
