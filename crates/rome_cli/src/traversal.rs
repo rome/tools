@@ -18,7 +18,7 @@ use rome_console::{
 };
 use rome_diagnostics::{
     file::{FileId, SimpleFile},
-    Diagnostic, DiagnosticHeader, Severity,
+    Diagnostic, DiagnosticHeader, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
 use rome_formatter::IndentStyle;
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
@@ -90,7 +90,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
     let skipped = skipped.load(Ordering::Relaxed);
 
     match mode {
-        TraversalMode::Check | TraversalMode::CI { .. } => {
+        TraversalMode::Check { .. } | TraversalMode::CI { .. } => {
             console.log(rome_console::markup! {
                 <Info>"Checked "{count}" files in "{duration}</Info>
             });
@@ -190,12 +190,30 @@ fn print_messages_to_console(
                 diagnostics,
             } => {
                 let file = SimpleFile::new(name, content);
-
-                for diag in diagnostics {
+                let max_diagnostics = mode.get_max_diagnostics();
+                let iter = diagnostics.iter().enumerate();
+                for (index, diag) in iter {
                     has_errors |= diag.is_error();
-                    console.error(markup! {
-                        {diag.display(&file)}
-                    });
+                    if index < MAXIMUM_DISPLAYABLE_DIAGNOSTICS as usize {
+                        if let Some(max_diagnostics) = max_diagnostics {
+                            if index < max_diagnostics as usize {
+                                console.error(markup! {
+                                    {diag.display(&file)}
+                                });
+                            }
+                        } else {
+                            console.error(markup! {
+                                {diag.display(&file)}
+                            });
+                        }
+                    }
+                }
+
+                if diagnostics.len() > MAXIMUM_DISPLAYABLE_DIAGNOSTICS as usize {
+                    console.log(markup! {
+                        <Warn>"The number of diagnostics exceeds the number allowed by Rome."</Warn>
+                        <Info>"Fix the previous diagnostics."</Info>
+                    })
                 }
             }
 
@@ -251,10 +269,19 @@ fn print_messages_to_console(
 
 #[derive(Clone, Copy)]
 pub(crate) enum TraversalMode {
-    Check,
+    Check { max_diagnostics: u8 },
     CI,
     Fix,
     Format { ignore_errors: bool, write: bool },
+}
+
+impl TraversalMode {
+    fn get_max_diagnostics(&self) -> Option<u8> {
+        match self {
+            TraversalMode::Check { max_diagnostics } => Some(*max_diagnostics),
+            _ => None,
+        }
+    }
 }
 
 /// Context object shared between directory traversal tasks
@@ -312,7 +339,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
         match self.mode {
-            TraversalMode::Check | TraversalMode::Fix => self.can_lint(rome_path),
+            TraversalMode::Check { .. } | TraversalMode::Fix => self.can_lint(rome_path),
             TraversalMode::CI { .. } => self.can_lint(rome_path) || self.can_format(rome_path),
             TraversalMode::Format { .. } => self.can_format(rome_path),
         }
@@ -386,7 +413,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let rome_path = RomePath::new(path, file_id);
         let can_format = ctx.can_format(&rome_path);
         let can_handle = match ctx.mode {
-            TraversalMode::Check | TraversalMode::Fix => ctx.can_lint(&rome_path),
+            TraversalMode::Check { .. } | TraversalMode::Fix => ctx.can_lint(&rome_path),
             TraversalMode::CI { .. } => ctx.can_lint(&rome_path) || can_format,
             TraversalMode::Format { .. } => can_format,
         };
@@ -494,7 +521,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         if can_format {
             let write = match ctx.mode {
                 // In check mode do not run the formatter and return the result immediately
-                TraversalMode::Check | TraversalMode::Fix => return Ok(result),
+                TraversalMode::Check { .. } | TraversalMode::Fix => return Ok(result),
                 TraversalMode::CI => false,
                 TraversalMode::Format { write, .. } => write,
             };

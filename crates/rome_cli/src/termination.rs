@@ -51,6 +51,9 @@ pub enum Termination {
     #[error("errors where emitted while running checks")]
     CheckError,
 
+    #[error("the value of the argument {0} is too high, maximum accepted {1}")]
+    OverflowNumberArgument(&'static str, &'static str),
+
     /// Wrapper for an underlying `rome_service` error
     #[error(transparent)]
     WorkspaceError(#[from] RomeError),
