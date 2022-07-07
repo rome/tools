@@ -1,0 +1,73 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noDelete.js
+---
+# Input
+```js
+delete a;
+delete a.b;
+delete a?.b;
+delete a["b"];
+delete a?.["b"];
+
+```
+
+# Diagnostics
+```
+warning[js/noDelete]: This is an unexpected use of the delete operator.
+  ┌─ noDelete.js:2:1
+  │
+2 │ delete a.b;
+  │ ----------
+
+Suggested fix: Replace with undefined assignment
+    | @@ -1,5 +1,5 @@
+0 0 |   delete a;
+1   | - delete a.b;
+  1 | + a.b = undefined;
+2 2 |   delete a?.b;
+3 3 |   delete a["b"];
+4 4 |   delete a?.["b"];
+
+
+```
+
+```
+warning[js/noDelete]: This is an unexpected use of the delete operator.
+  ┌─ noDelete.js:3:1
+  │
+3 │ delete a?.b;
+  │ -----------
+
+Suggested fix: Replace with undefined assignment
+    | @@ -1,5 +1,5 @@
+0 0 |   delete a;
+1 1 |   delete a.b;
+2   | - delete a?.b;
+  2 | + a?.b = undefined;
+3 3 |   delete a["b"];
+4 4 |   delete a?.["b"];
+
+
+```
+
+```
+warning[js/noDelete]: This is an unexpected use of the delete operator.
+  ┌─ noDelete.js:4:1
+  │
+4 │ delete a["b"];
+  │ -------------
+
+Suggested fix: Replace with undefined assignment
+    | @@ -1,5 +1,5 @@
+0 0 |   delete a;
+1 1 |   delete a.b;
+2 2 |   delete a?.b;
+3   | - delete a["b"];
+  3 | + a["b"] = undefined;
+4 4 |   delete a?.["b"];
+
+
+```
+
+

@@ -17,8 +17,8 @@ names or other `typeof` expressions
 typeof foo === "strnig"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:16
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo === &quot;strnig&quot;
   <span style="color: rgb(38, 148, 255);">│</span>                <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a valid type name</span>
@@ -29,8 +29,8 @@ typeof foo === "strnig"
 typeof foo == "undefimed"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:15
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo == &quot;undefimed&quot;
   <span style="color: rgb(38, 148, 255);">│</span>               <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a valid type name</span>
@@ -41,8 +41,8 @@ typeof foo == "undefimed"
 typeof bar != "nunber"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:15
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof bar != &quot;nunber&quot;
   <span style="color: rgb(38, 148, 255);">│</span>               <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a valid type name</span>
@@ -53,8 +53,8 @@ typeof bar != "nunber"
 typeof bar !== "fucntion"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:16
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof bar !== &quot;fucntion&quot;
   <span style="color: rgb(38, 148, 255);">│</span>                <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a valid type name</span>
@@ -65,8 +65,8 @@ typeof bar !== "fucntion"
 typeof foo === undefined
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:16
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo === undefined
   <span style="color: rgb(38, 148, 255);">│</span>                <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a string literal</span>
@@ -82,8 +82,8 @@ typeof foo === undefined
 typeof bar == Object
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:15
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof bar == Object
   <span style="color: rgb(38, 148, 255);">│</span>               <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a string literal</span>
@@ -99,8 +99,8 @@ typeof bar == Object
 typeof foo === baz
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:16
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo === baz
   <span style="color: rgb(38, 148, 255);">│</span>                <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a string literal</span>
@@ -111,8 +111,8 @@ typeof foo === baz
 typeof foo == 5
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:15
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo == 5
   <span style="color: rgb(38, 148, 255);">│</span>               <span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a string literal</span>
@@ -123,8 +123,8 @@ typeof foo == 5
 typeof foo == -5
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> useValidTypeof.js:1:15
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo == -5
   <span style="color: rgb(38, 148, 255);">│</span>               <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">not a string literal</span>

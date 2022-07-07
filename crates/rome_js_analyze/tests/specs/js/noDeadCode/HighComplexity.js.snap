@@ -1,0 +1,52 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 88
+expression: HighComplexity.js
+---
+# Input
+```js
+function HighComplexity1() {
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+    if (a) { func() } else { func() };
+
+    return;
+    afterReturn();
+}
+
+```
+
+# Diagnostics
+```
+warning[js/noDeadCode]: This code is unreachable
+   ┌─ HighComplexity.js:29:5
+   │
+29 │     afterReturn();
+   │     --------------
+
+
+```
+
+

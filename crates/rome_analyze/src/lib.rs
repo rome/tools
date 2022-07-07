@@ -18,14 +18,16 @@ mod visitor;
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 pub use crate::matcher::{QueryMatcher, RuleKey, SignalEntry};
 pub use crate::query::{Ast, CannotCreateServicesError, QueryKey, QueryMatch, Queryable};
-pub use crate::registry::{LanguageRoot, RuleRegistry};
-pub use crate::registry::{Phase, Phases};
-pub use crate::rule::{Rule, RuleAction, RuleDiagnostic, RuleMeta};
+pub use crate::registry::{LanguageRoot, Phase, Phases, RuleMetadata, RuleRegistry};
+pub use crate::rule::{GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup, RuleMeta};
 pub use crate::services::{ServiceBag, ServiceBagData};
+use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext};
+use rome_console::markup;
 use rome_diagnostics::file::FileId;
+use rome_diagnostics::Diagnostic;
 use rome_rowan::{
     AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,
     WalkEvent,
@@ -66,7 +68,7 @@ struct LineSuppression {
     suppress_all: bool,
     /// List of all the rules this comment has started suppressing (must be
     /// removed from the suppressed set on expiration)
-    suppressed_rules: Vec<RuleKey>,
+    suppressed_rules: Vec<RuleFilter<'static>>,
 }
 
 pub struct AnalyzerContext<L: Language> {
@@ -116,7 +118,7 @@ where
 
                 // If this is a token enter event, process its text content
                 WalkEvent::Enter(SyntaxElement::Token(token)) => {
-                    let result = self.flush_matches(token);
+                    let result = self.flush_matches(ctx.file_id, token);
                     if let ControlFlow::Break(br) = result {
                         return Some(br);
                     }
@@ -150,7 +152,7 @@ where
     /// Process the text for a single token, parsing suppression comments and
     /// handling line breaks, then flush all pending query signals in the queue
     /// whose position is less then the end of the token within the file
-    fn flush_matches(&mut self, token: SyntaxToken<L>) -> ControlFlow<Break> {
+    fn flush_matches(&mut self, file_id: FileId, token: SyntaxToken<L>) -> ControlFlow<Break> {
         // Process the content of the token for comments and newline
         for piece in token.leading_trivia().pieces() {
             if matches!(
@@ -163,7 +165,7 @@ where
             }
 
             if let Some(comment) = piece.as_comments() {
-                self.handle_comment(comment.text(), piece.text_range());
+                self.handle_comment(file_id, comment.text(), piece.text_range())?;
             }
         }
 
@@ -180,7 +182,7 @@ where
             }
 
             if let Some(comment) = piece.as_comments() {
-                self.handle_comment(comment.text(), piece.text_range());
+                self.handle_comment(file_id, comment.text(), piece.text_range())?;
             }
         }
 
@@ -219,7 +221,13 @@ where
                 });
 
             let is_suppressed = suppression.map_or(false, |suppression| {
-                suppression.suppress_all || suppression.suppressed_rules.contains(&entry.rule)
+                if suppression.suppress_all {
+                    return true;
+                }
+                suppression
+                    .suppressed_rules
+                    .iter()
+                    .any(|filter| *filter == entry.rule)
             });
 
             // Emit the signal if the rule that created it is not currently being suppressed
@@ -237,14 +245,56 @@ where
 
     /// Parse the text content of a comment trivia piece for suppression
     /// comments, and create line suppression entries accordingly
-    fn handle_comment(&mut self, text: &str, range: TextRange) {
+    fn handle_comment(
+        &mut self,
+        file_id: FileId,
+        text: &str,
+        range: TextRange,
+    ) -> ControlFlow<Break> {
         let mut suppress_all = false;
         let mut suppressions = Vec::new();
 
         for rule in (self.parse_suppression_comment)(text) {
             if let Some(rule) = rule {
-                if let Some(rule) = self.query_matcher.find_rule(rule) {
-                    suppressions.push(rule);
+                let group_rule = rule.find('/').map(|index| {
+                    let (start, end) = rule.split_at(index);
+                    (start, &end[1..])
+                });
+
+                let key = match group_rule {
+                    None => self.query_matcher.find_group(rule).map(RuleFilter::from),
+                    Some((group, rule)) => self
+                        .query_matcher
+                        .find_rule(group, rule)
+                        .map(RuleFilter::from),
+                };
+
+                if let Some(key) = key {
+                    suppressions.push(key);
+                } else {
+                    // Emit a warning for the unknown rule
+                    let signal = DiagnosticSignal::new(move || {
+                        let diag = match group_rule {
+                            Some((group, rule)) => Diagnostic::warning(
+                                file_id,
+                                "Linter",
+                                markup! {
+                                    "Unknown lint rule "{group}"/"{rule}" in suppression comment"
+                                },
+                            ),
+                            None => Diagnostic::warning(
+                                file_id,
+                                "Linter",
+                                markup! {
+                                    "Unknown lint rule group "{rule}" in suppression comment"
+                                },
+                            ),
+                        };
+
+                        diag.primary(range, "")
+                    });
+
+                    (self.emit_signal)(&signal)?;
                 }
             } else {
                 suppressions.clear();
@@ -256,7 +306,7 @@ where
         }
 
         if !suppress_all && suppressions.is_empty() {
-            return;
+            return ControlFlow::Continue(());
         }
 
         // Suppression comments apply to the next line
@@ -276,7 +326,7 @@ where
                 } else {
                     last_suppression.suppressed_rules.clear();
                 }
-                return;
+                return ControlFlow::Continue(());
             }
         }
 
@@ -288,6 +338,8 @@ where
         };
 
         self.line_suppressions.push(entry);
+
+        ControlFlow::Continue(())
     }
 
     /// Check a piece of source text (token or trivia) for line breaks and
@@ -336,23 +388,59 @@ type SuppressionParser = fn(&str) -> Vec<Option<&str>>;
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 
+/// Allow filtering a single rule or group of rules by their names
+#[derive(Debug, Clone, Copy)]
+pub enum RuleFilter<'a> {
+    Group(&'a str),
+    Rule(&'a str, &'a str),
+}
+
+impl RuleFilter<'_> {
+    /// Return `true` if the rule `R` matches this filter
+    pub fn match_rule<G, R>(self) -> bool
+    where
+        G: RuleGroup,
+        R: Rule,
+    {
+        match self {
+            RuleFilter::Group(group) => group == G::NAME,
+            RuleFilter::Rule(group, rule) => group == G::NAME && rule == R::NAME,
+        }
+    }
+}
+
 /// Allows filtering the list of rules that will be executed in a run of the analyzer,
 /// and at what source code range signals (diagnostics or actions) may be raised
-#[derive(Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy)]
 pub struct AnalysisFilter<'a> {
     /// Only allow rules with these categories to emit signals
     pub categories: RuleCategories,
-    /// Only allow rules with these names to emit signals
-    pub rules: Option<&'a [&'a str]>,
+    /// Only allow rules matching these names to emit signals
+    pub enabled_rules: Option<&'a [RuleFilter<'a>]>,
+    /// Do not allow rules matching these names to emit signals
+    pub disabled_rules: Option<&'a [RuleFilter<'a>]>,
     /// Only emit signals matching this text range
     pub range: Option<TextRange>,
 }
 
 impl AnalysisFilter<'_> {
     /// Return `true` if the rule `R` matches this filter
-    pub fn match_rule<R: Rule>(&self) -> bool {
+    pub fn match_rule<G, R>(&self) -> bool
+    where
+        G: RuleGroup,
+        R: Rule,
+    {
         self.categories.contains(R::CATEGORY.into())
-            && self.rules.map_or(true, |rules| rules.contains(&R::NAME))
+            && self.enabled_rules.map_or(true, |enabled_rules| {
+                enabled_rules
+                    .iter()
+                    .any(|filter| filter.match_rule::<G, R>())
+            })
+            && self.disabled_rules.map_or(true, |disabled_rules| {
+                !disabled_rules
+                    .iter()
+                    .any(|filter| filter.match_rule::<G, R>())
+            })
     }
 }
 

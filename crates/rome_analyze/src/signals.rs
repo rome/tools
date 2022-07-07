@@ -16,7 +16,7 @@ use crate::{
     registry::{LanguageRoot, RuleLanguage, RuleRoot},
     rule::Rule,
     services::ServiceBag,
-    Queryable,
+    Queryable, RuleGroup,
 };
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -26,6 +26,34 @@ pub trait AnalyzerSignal<L: Language> {
     fn action(&self) -> Option<AnalyzerAction<L>>;
 }
 
+/// Simple implementation of [AnalyzerSignal] generating a diagnostic from a
+/// provided factory function
+pub(crate) struct DiagnosticSignal<F> {
+    factory: F,
+}
+
+impl<F> DiagnosticSignal<F>
+where
+    F: Fn() -> Diagnostic,
+{
+    pub(crate) fn new(factory: F) -> Self {
+        Self { factory }
+    }
+}
+
+impl<L: Language, F> AnalyzerSignal<L> for DiagnosticSignal<F>
+where
+    F: Fn() -> Diagnostic,
+{
+    fn diagnostic(&self) -> Option<Diagnostic> {
+        Some((self.factory)())
+    }
+
+    fn action(&self) -> Option<AnalyzerAction<L>> {
+        None
+    }
+}
+
 /// Code Action object returned by the analyzer, generated from a [crate::RuleAction]
 /// with additional information about the rule injected by the analyzer
 ///
@@ -33,6 +61,7 @@ pub trait AnalyzerSignal<L: Language> {
 /// a diagnostic emitted by the same signal
 #[derive(Debug, PartialEq, Eq)]
 pub struct AnalyzerAction<L: Language> {
+    pub group_name: &'static str,
     pub rule_name: &'static str,
     pub file_id: FileId,
     pub category: ActionCategory,
@@ -95,16 +124,16 @@ where
 }
 
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
-pub(crate) struct RuleSignal<R: Rule> {
+pub(crate) struct RuleSignal<G, R: Rule> {
     file_id: FileId,
     root: RuleRoot<R>,
     query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
     services: ServiceBag,
-    _rule: PhantomData<R>,
+    _rule: PhantomData<(G, R)>,
 }
 
-impl<R> RuleSignal<R>
+impl<G, R> RuleSignal<G, R>
 where
     R: Rule + 'static,
 {
@@ -126,14 +155,16 @@ where
     }
 }
 
-impl<R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<R>
+impl<G, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<G, R>
 where
+    G: RuleGroup,
     R: Rule,
 {
     fn diagnostic(&self) -> Option<Diagnostic> {
         let ctx = RuleContext::new(&self.query_result, &self.root, self.services.clone()).ok()?;
 
-        R::diagnostic(&ctx, &self.state).map(|diag| diag.into_diagnostic(self.file_id, R::NAME))
+        R::diagnostic(&ctx, &self.state)
+            .map(|diag| diag.into_diagnostic(self.file_id, format!("{}/{}", G::NAME, R::NAME)))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
@@ -143,6 +174,7 @@ where
             let (original_range, new_range) =
                 find_diff_range(self.root.syntax(), action.root.syntax())?;
             Some(AnalyzerAction {
+                group_name: G::NAME,
                 rule_name: R::NAME,
                 file_id: self.file_id,
                 category: action.category,

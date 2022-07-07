@@ -8,7 +8,7 @@ use crate::control_flow::{
 
 pub(in crate::control_flow) struct VariableVisitor;
 
-impl<B> NodeVisitor<B> for VariableVisitor {
+impl NodeVisitor for VariableVisitor {
     type Node = JsVariableStatement;
 
     fn enter(

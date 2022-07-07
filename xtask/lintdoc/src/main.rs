@@ -1,4 +1,5 @@
 use std::{
+    collections::BTreeMap,
     fmt::Write as _,
     io::{self, Write as _},
     path::Path,
@@ -14,7 +15,7 @@ use rome_console::{
 use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use xtask::{glue::fs2, *};
 
-use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories};
+use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
 use rome_js_analyze::{analyze, metadata};
 use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
 
@@ -52,10 +53,6 @@ fn main() -> Result<()> {
     writeln!(index, "# Rules")?;
     writeln!(index)?;
 
-    writeln!(index, "<section>")?;
-    // TODO: Update this when rule groups are implemented
-    writeln!(index, "<h2>JavaScript</h2>")?;
-
     // Accumulate errors for all lint rules to print all outstanding issues on
     // failure instead of just the first one
     let mut errors = Vec::new();
@@ -66,26 +63,46 @@ fn main() -> Result<()> {
     };
 
     // Ensure the list of rules is stored alphabetically
-    let mut rules: Vec<_> = metadata(filter).collect();
-    rules.sort_unstable_by_key(|(name, _)| *name);
+    let mut groups = BTreeMap::new();
+    for meta in metadata(filter) {
+        groups
+            .entry(meta.group)
+            .or_insert_with(BTreeMap::new)
+            .insert(meta.name, meta.docs);
+    }
 
-    for (name, docs) in rules {
-        match generate_rule(&root, name, docs) {
-            Ok(summary) => {
-                writeln!(index, "<div class=\"rule\">")?;
-                writeln!(index, "<h3 data-toc-exclude id=\"{name}\">")?;
-                writeln!(index, "	<a href=\"/docs/lint/rules/{name}\">{name}</a>")?;
-                writeln!(index, "	<a class=\"header-anchor\" href=\"#{name}\"></a>")?;
-                writeln!(index, "</h3>")?;
+    for (group, rules) in groups {
+        let group_name = match group {
+            "js" => "JavaScript",
+            "jsx" => "JSX",
+            "ts" => "TypeScript",
+            "regex" => "RegExp",
+            _ => panic!("Unknown group ID {group:?}"),
+        };
 
-                write_html(&mut index, summary.into_iter())?;
+        writeln!(index, "<section>")?;
+        writeln!(index, "<h2>{group_name}</h2>")?;
 
-                writeln!(index, "\n</div>")?;
-            }
-            Err(err) => {
-                errors.push((name, err));
+        for (rule, docs) in rules {
+            match generate_rule(&root, group, rule, docs) {
+                Ok(summary) => {
+                    writeln!(index, "<div class=\"rule\">")?;
+                    writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
+                    writeln!(index, "	<a href=\"/docs/lint/rules/{rule}\">{rule}</a>")?;
+                    writeln!(index, "	<a class=\"header-anchor\" href=\"#{rule}\"></a>")?;
+                    writeln!(index, "</h3>")?;
+
+                    write_html(&mut index, summary.into_iter())?;
+
+                    writeln!(index, "\n</div>")?;
+                }
+                Err(err) => {
+                    errors.push((rule, err));
+                }
             }
         }
+
+        writeln!(index, "</section>")?;
     }
 
     if !errors.is_empty() {
@@ -98,8 +115,6 @@ fn main() -> Result<()> {
         );
     }
 
-    writeln!(index, "</section>")?;
-
     fs2::write(root.join("index.md"), index)?;
 
     Ok(())
@@ -108,24 +123,25 @@ fn main() -> Result<()> {
 /// Generates the documentation page for a single lint rule
 fn generate_rule(
     root: &Path,
-    name: &'static str,
+    group: &'static str,
+    rule: &'static str,
     docs: &'static str,
 ) -> Result<Vec<Event<'static>>> {
     let mut content = Vec::new();
 
     // Write the header for this lint rule
     writeln!(content, "---")?;
-    writeln!(content, "title: Lint Rule {name}")?;
+    writeln!(content, "title: Lint Rule {rule}")?;
     writeln!(content, "layout: layouts/rule.liquid")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 
-    writeln!(content, "# {name}")?;
+    writeln!(content, "# {rule}")?;
     writeln!(content)?;
 
-    let summary = parse_documentation(name, docs, &mut content)?;
+    let summary = parse_documentation(group, rule, docs, &mut content)?;
 
-    fs2::write(root.join(format!("{name}.md")), content)?;
+    fs2::write(root.join(format!("{rule}.md")), content)?;
 
     Ok(summary)
 }
@@ -133,7 +149,8 @@ fn generate_rule(
 /// Parse the documentation fragment for a lint rule (in markdown) and generates
 /// the content for the corresponding documentation page
 fn parse_documentation(
-    name: &'static str,
+    group: &'static str,
+    rule: &'static str,
     docs: &'static str,
     content: &mut Vec<u8>,
 ) -> Result<Vec<Event<'static>>> {
@@ -193,7 +210,8 @@ fn parse_documentation(
                         )?;
                     }
 
-                    assert_lint(name, &test, &block, content).context("snapshot test failed")?;
+                    assert_lint(group, rule, &test, &block, content)
+                        .context("snapshot test failed")?;
 
                     if test.expect_diagnostic {
                         writeln!(content, "</code></pre>{{% endraw %}}")?;
@@ -340,12 +358,13 @@ impl FromStr for CodeBlockTest {
 /// exactly zero or one diagnostic depending on the value of `expect_diagnostic`.
 /// That diagnostic is then emitted as text into the `content` buffer
 fn assert_lint(
-    name: &'static str,
+    group: &'static str,
+    rule: &'static str,
     test: &CodeBlockTest,
     code: &str,
     content: &mut Vec<u8>,
 ) -> Result<()> {
-    let file = SimpleFile::new(format!("{name}.js"), code.into());
+    let file = SimpleFile::new(format!("{group}/{rule}.js"), code.into());
 
     let mut write = HTML(content);
     let mut diagnostic_count = 0;
@@ -380,8 +399,10 @@ fn assert_lint(
         }
     } else {
         let root = parse.tree();
+
+        let rule_filter = RuleFilter::Rule(group, rule);
         let filter = AnalysisFilter {
-            rules: Some(slice::from_ref(&name)),
+            enabled_rules: Some(slice::from_ref(&rule_filter)),
             ..AnalysisFilter::default()
         };
 

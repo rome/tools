@@ -1,11 +1,13 @@
+use std::{borrow::Borrow, collections::BTreeMap};
+
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind};
 
 use crate::{
     context::RuleContext,
-    matcher::MatchQueryParams,
+    matcher::{GroupKey, MatchQueryParams},
     query::{QueryKey, QueryMatch, Queryable},
     signals::RuleSignal,
-    QueryMatcher, Rule, RuleKey, SignalEntry,
+    AnalysisFilter, QueryMatcher, Rule, RuleGroup, RuleKey, SignalEntry,
 };
 
 /// Defines all the phases that the [RuleRegistry] supports.
@@ -40,7 +42,7 @@ impl Phase for () {
 pub struct RuleRegistry<L: Language> {
     /// Stores metadata information for all the rules in the registry, sorted
     /// alphabetically
-    metadata: Vec<RuleMeta>,
+    metadata: BTreeMap<MetadataKey, &'static str>,
     /// Holds a collection of rules for each phase.
     phase_rules: [PhaseRules<L>; 2],
 }
@@ -55,9 +57,14 @@ struct PhaseRules<L: Language> {
 }
 
 impl<L: Language> RuleRegistry<L> {
+    pub fn push_group<G: RuleGroup<Language = L>>(&mut self, filter: &AnalysisFilter) {
+        G::push_rules(self, filter);
+    }
+
     /// Add the rule `R` to the list of rules stores in this registry instance
-    pub fn push<R>(&mut self)
+    pub fn push<G, R>(&mut self)
     where
+        G: RuleGroup<Language = L> + 'static,
         R: Rule + 'static,
         R::Query: Queryable<Language = L>,
         <R::Query as Queryable>::Output: Clone,
@@ -65,7 +72,7 @@ impl<L: Language> RuleRegistry<L> {
         let phase = R::phase() as usize;
         let phase = &mut self.phase_rules[phase];
 
-        let (meta, rule) = RegistryRule::of::<R>();
+        let rule = RegistryRule::of::<G, R>();
 
         match <R::Query as Queryable>::KEY {
             QueryKey::Syntax(key) => {
@@ -93,32 +100,39 @@ impl<L: Language> RuleRegistry<L> {
             }
         }
 
-        // Find a suitable index to insert the rule in the `metadata` list to
-        // keep it sorted alphabetically
-        let index = self
-            .metadata
-            .binary_search_by(|rule| rule.name.cmp(meta.name));
-
-        if let Err(index) = index {
-            self.metadata.insert(index, meta);
-        }
+        self.metadata.insert(
+            MetadataKey {
+                inner: (G::NAME, R::NAME),
+            },
+            R::DOCS,
+        );
     }
 
     /// Returns an iterator over the name and documentation of all active rules
     /// in this instance of the registry
-    pub fn metadata(self) -> impl Iterator<Item = (&'static str, &'static str)> {
-        self.metadata.into_iter().map(|rule| (rule.name, rule.docs))
+    pub fn metadata(self) -> impl Iterator<Item = RuleMetadata> {
+        self.metadata.into_iter().map(|(key, docs)| {
+            let (group, name) = key.inner;
+            RuleMetadata { group, name, docs }
+        })
     }
 }
 
 impl<L: Language> QueryMatcher<L> for RuleRegistry<L> {
-    fn find_rule(&self, name: &str) -> Option<RuleKey> {
-        let index = self
-            .metadata
-            .binary_search_by(|rule| rule.name.cmp(name))
-            .ok()?;
+    fn find_group(&self, group: &str) -> Option<GroupKey> {
+        self.metadata.keys().find_map(|key| {
+            let (key, _) = key.inner;
+            if key == group {
+                Some(GroupKey::new(key))
+            } else {
+                None
+            }
+        })
+    }
 
-        Some(RuleKey(self.metadata[index].name))
+    fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
+        let (key, _) = self.metadata.get_key_value(&(group, rule))?;
+        Some(key.into_rule_key())
     }
 
     fn match_query(&mut self, mut params: MatchQueryParams<L>) {
@@ -165,10 +179,30 @@ pub(crate) type NodeLanguage<N> = <N as AstNode>::Language;
 pub(crate) type RuleRoot<R> = LanguageRoot<RuleLanguage<R>>;
 pub type LanguageRoot<L> = <L as Language>::Root;
 
+/// Key struct for a rule in the metadata map, sorted alphabetically
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+struct MetadataKey {
+    inner: (&'static str, &'static str),
+}
+
+impl MetadataKey {
+    fn into_rule_key(self) -> RuleKey {
+        let (group, rule) = self.inner;
+        RuleKey::new(group, rule)
+    }
+}
+
+impl<'a> Borrow<(&'a str, &'a str)> for MetadataKey {
+    fn borrow(&self) -> &(&'a str, &'a str) {
+        &self.inner
+    }
+}
+
 /// Metadata entry for a rule in the registry
-struct RuleMeta {
-    name: &'static str,
-    docs: &'static str,
+pub struct RuleMetadata {
+    pub group: &'static str,
+    pub name: &'static str,
+    pub docs: &'static str,
 }
 
 /// Internal representation of a single rule in the registry
@@ -180,7 +214,7 @@ pub struct RegistryRule<L: Language> {
 type RuleExecutor<L> = fn(&mut MatchQueryParams<L>);
 
 // These need to be implemented manually because the implementations generated
-// by `derive(Copy, Clone)` would require `where: L: Copy + Clone, B: Copy + Clone`
+// by `derive(Copy, Clone)` would require `where: L: Copy + Clone: Copy + Clone`
 impl<L: Language> Copy for RegistryRule<L> {}
 impl<L: Language> Clone for RegistryRule<L> {
     fn clone(&self) -> Self {
@@ -189,15 +223,17 @@ impl<L: Language> Clone for RegistryRule<L> {
 }
 
 impl<L: Language> RegistryRule<L> {
-    fn of<R>() -> (RuleMeta, Self)
+    fn of<G, R>() -> Self
     where
+        G: RuleGroup<Language = L> + 'static,
         R: Rule + 'static,
         R::Query: Queryable<Language = L> + 'static,
         <R::Query as Queryable>::Output: Clone,
     {
         /// Generic implementation of RuleExecutor for any rule type R
-        fn run<R>(params: &mut MatchQueryParams<RuleLanguage<R>>)
+        fn run<G, R>(params: &mut MatchQueryParams<RuleLanguage<R>>)
         where
+            G: RuleGroup + 'static,
             R: Rule + 'static,
             R::Query: 'static,
             <R::Query as Queryable>::Output: Clone,
@@ -214,7 +250,7 @@ impl<L: Language> RegistryRule<L> {
                 let text_range =
                     R::text_range(&ctx, &result).unwrap_or_else(|| params.query.text_range());
 
-                let signal = Box::new(RuleSignal::<R>::new(
+                let signal = Box::new(RuleSignal::<G, R>::new(
                     params.file_id,
                     params.root.clone(),
                     query_result.clone(),
@@ -224,18 +260,12 @@ impl<L: Language> RegistryRule<L> {
 
                 params.signal_queue.push(SignalEntry {
                     signal,
-                    rule: RuleKey(R::NAME),
+                    rule: RuleKey::rule::<G, R>(),
                     text_range,
                 });
             }
         }
 
-        (
-            RuleMeta {
-                name: R::NAME,
-                docs: R::DOCS,
-            },
-            Self { run: run::<R> },
-        )
+        Self { run: run::<G, R> }
     }
 }
