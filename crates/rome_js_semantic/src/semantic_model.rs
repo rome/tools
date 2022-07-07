@@ -11,7 +11,7 @@ use crate::{SemanticEvent, SemanticEventExtractor};
 pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
     #[inline(always)]
     fn node(&self) -> &Self {
-        &self
+        self
     }
 }
 
@@ -322,7 +322,7 @@ pub struct SemanticModelBuilder {
 impl SemanticModelBuilder {
     pub fn new(root: JsAnyRoot) -> Self {
         Self {
-            root: root,
+            root,
             scope_stack: vec![],
             scopes: vec![],
             scope_by_range: vec![],
