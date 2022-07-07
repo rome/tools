@@ -162,8 +162,6 @@ mod check {
             ]),
         });
 
-        println!("{console:#?}");
-
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
         let mut buffer = String::new();
