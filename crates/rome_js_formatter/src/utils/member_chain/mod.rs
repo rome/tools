@@ -10,7 +10,7 @@ use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsStaticMemberExpression,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode};
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, SyntaxResult};
 
 /// Utility function that applies some heuristic to format chain member expressions and call expressions
 ///
@@ -119,12 +119,20 @@ use rome_rowan::AstNode;
 ///
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js
 pub fn format_call_expression(syntax_node: &JsSyntaxNode, f: &mut JsFormatter) -> FormatResult<()> {
+    let (calls_count, head_group, rest_of_groups) = get_call_expression_groups(syntax_node, f)?;
+    write_groups(calls_count, head_group, rest_of_groups, f)
+}
+
+fn get_call_expression_groups(
+    syntax_node: &JsSyntaxNode,
+    f: &mut JsFormatter,
+) -> SyntaxResult<(usize, HeadGroup, Groups)> {
     let mut flattened_items = vec![];
     let parent_is_expression_statement = syntax_node.parent().map_or(false, |parent| {
         JsExpressionStatement::can_cast(parent.kind())
     });
 
-    flatten_call_expression(&mut flattened_items, syntax_node, f)?;
+    flatten_call_expression(&mut flattened_items, syntax_node)?;
 
     // Count the number of CallExpression in the chain,
     // will be used later to decide on how to format it
@@ -148,7 +156,7 @@ pub fn format_call_expression(syntax_node: &JsSyntaxNode, f: &mut JsFormatter) -
         remaining_groups.into_iter(),
         parent_is_expression_statement,
         f,
-    )?;
+    );
 
     // Here we check if the first element of Groups::groups can be moved inside the head.
     // If so, then we extract it and concatenate it together with the head.
@@ -157,7 +165,7 @@ pub fn format_call_expression(syntax_node: &JsSyntaxNode, f: &mut JsFormatter) -
         head_group.expand_group(group_to_merge);
     }
 
-    write_groups(calls_count, head_group, rest_of_groups, f)
+    Ok((calls_count, head_group, rest_of_groups))
 }
 
 /// Retrieves the index where we want to calculate the first group.
@@ -236,7 +244,7 @@ fn compute_groups(
     flatten_items: impl Iterator<Item = FlattenItem>,
     in_expression_statement: bool,
     f: &JsFormatter,
-) -> FormatResult<Groups> {
+) -> Groups {
     let mut has_seen_call_expression = false;
     let mut groups = Groups::new(in_expression_statement, f.context().tab_width());
     for item in flatten_items {
@@ -281,7 +289,7 @@ fn compute_groups(
     // closing possible loose groups
     groups.close_group();
 
-    Ok(groups)
+    groups
 }
 
 /// Formats together the first group and the rest of groups
@@ -313,23 +321,19 @@ fn write_groups(
 
 /// This function tries to flatten the AST. It stores nodes and its formatted version
 /// inside an vector of [FlattenItem]. The first element of the vector is the last one.
-fn flatten_call_expression(
-    queue: &mut Vec<FlattenItem>,
-    node: &JsSyntaxNode,
-    f: &mut JsFormatter,
-) -> FormatResult<()> {
+fn flatten_call_expression(queue: &mut Vec<FlattenItem>, node: &JsSyntaxNode) -> SyntaxResult<()> {
     match node.kind() {
         JsSyntaxKind::JS_CALL_EXPRESSION => {
             let call_expression = JsCallExpression::cast(node.clone()).unwrap();
             let callee = call_expression.callee()?;
-            flatten_call_expression(queue, callee.syntax(), f)?;
+            flatten_call_expression(queue, callee.syntax())?;
 
             queue.push(FlattenItem::CallExpression(call_expression));
         }
         JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
             let static_member = JsStaticMemberExpression::cast(node.clone()).unwrap();
             let object = static_member.object()?;
-            flatten_call_expression(queue, object.syntax(), f)?;
+            flatten_call_expression(queue, object.syntax())?;
 
             queue.push(FlattenItem::StaticMember(static_member));
         }
@@ -337,7 +341,7 @@ fn flatten_call_expression(
         JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
             let computed_expression = JsComputedMemberExpression::cast(node.clone()).unwrap();
             let object = computed_expression.object()?;
-            flatten_call_expression(queue, object.syntax(), f)?;
+            flatten_call_expression(queue, object.syntax())?;
 
             queue.push(FlattenItem::ComputedMember(computed_expression));
         }
@@ -348,4 +352,15 @@ fn flatten_call_expression(
     }
 
     Ok(())
+}
+
+/// Here we check if the length of the groups exceeds the cutoff or there are comments
+/// This function is the inverse of the prettier function
+/// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/member-chain.js#L342
+pub fn is_member_call_chain(
+    expression: &JsCallExpression,
+    f: &mut JsFormatter,
+) -> SyntaxResult<bool> {
+    let (_, _, groups) = get_call_expression_groups(expression.syntax(), f)?;
+    groups.is_member_call_chain()
 }

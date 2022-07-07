@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
 expression: expand.js
 ---
 # Input
@@ -45,9 +44,8 @@ window.FooClient.something.setVars({
 
 # Output
 ```js
-const veryVeryVeryVeryVeryVeryVeryLong = doc.expandedStates[
-  doc.expandedStates.length - 1
-];
+const veryVeryVeryVeryVeryVeryVeryLong =
+  doc.expandedStates[doc.expandedStates.length - 1];
 const small = doc.expandedStates[doc.expandedStates.length - 1];
 
 const promises = [

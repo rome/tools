@@ -1,8 +1,9 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
 use crate::{
-    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression,
-    JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression, JsObjectExpression,
+    JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
+    JsAssignmentExpression, JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression,
+    JsNumberLiteralExpression, JsObjectExpression, JsRegexLiteralExpression,
     JsStringLiteralExpression, JsSyntaxToken, JsTemplate, JsUnaryExpression, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
@@ -291,6 +292,29 @@ impl JsUnaryExpression {
             _ => unreachable!(),
         })
     }
+
+    /// This function checks that `JsUnaryExpression` is a signed numeric literal:
+    /// ```js
+    ///     +123
+    ///     -321
+    /// ```
+    pub fn is_signed_numeric_literal(&self) -> SyntaxResult<bool> {
+        let argument = self.argument()?;
+
+        let is_signed = matches!(
+            self.operator()?,
+            JsUnaryOperator::Plus | JsUnaryOperator::Minus
+        );
+
+        let is_numeric_literal = matches!(
+            argument,
+            JsAnyExpression::JsAnyLiteralExpression(
+                JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+            )
+        );
+
+        Ok(is_signed && is_numeric_literal)
+    }
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
@@ -419,5 +443,17 @@ impl JsTemplate {
             start.text_range().start(),
             self.syntax().text_range().end(),
         ))
+    }
+}
+
+impl JsRegexLiteralExpression {
+    pub fn pattern(&self) -> SyntaxResult<String> {
+        let token = self.value_token()?;
+        let text_trimmed = token.text_trimmed();
+
+        // SAFETY: a valid regex literal must have a end slash
+        let end_slash_pos = text_trimmed.rfind('/').unwrap();
+
+        Ok(String::from(&text_trimmed[1..end_slash_pos]))
     }
 }

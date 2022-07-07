@@ -16,7 +16,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
 
         let mut declarators = node.elements().enumerate().map(|(index, element)| {
             format_with(move |f| {
-                write!(f, [group_elements(&element.node().format())])?;
+                write!(f, [&element.node().format()])?;
 
                 match element.trailing_separator()? {
                     None => {
