@@ -24,6 +24,9 @@ pub trait FileSystem: Sync + RefUnwindSafe {
     /// This method creates a new "traversal scope" that can be used to
     /// efficiently batch many filesystem read operations
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>);
+
+    /// The file system returns the path to the main configuration file
+    fn config_path(&self) -> Option<PathBuf>;
 }
 
 pub trait File {
@@ -79,5 +82,8 @@ where
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         T::traversal(self, func)
+    }
+    fn config_path(&self) -> Option<PathBuf> {
+        T::config_path(self)
     }
 }

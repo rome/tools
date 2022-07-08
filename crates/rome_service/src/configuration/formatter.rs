@@ -1,5 +1,7 @@
+use crate::settings::FormatSettings;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::Deserialize;
+
 #[derive(Deserialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default)]
 pub struct FormatterConfiguration {
@@ -21,15 +23,6 @@ pub struct FormatterConfiguration {
     pub line_width: LineWidth,
 }
 
-impl From<&FormatterConfiguration> for IndentStyle {
-    fn from(c: &FormatterConfiguration) -> Self {
-        match c.indent_style {
-            PlainIndentStyle::Tab => IndentStyle::Tab,
-            PlainIndentStyle::Space => IndentStyle::Space(c.indent_size),
-        }
-    }
-}
-
 fn deserialize_line_width<'de, D>(deserializer: D) -> Result<LineWidth, D::Error>
 where
     D: serde::de::Deserializer<'de>,
@@ -46,6 +39,20 @@ impl Default for FormatterConfiguration {
             indent_size: 2,
             indent_style: PlainIndentStyle::default(),
             line_width: LineWidth::default(),
+        }
+    }
+}
+
+impl From<&FormatterConfiguration> for FormatSettings {
+    fn from(conf: &FormatterConfiguration) -> Self {
+        let indent_style = match conf.indent_style {
+            PlainIndentStyle::Tab => IndentStyle::Tab,
+            PlainIndentStyle::Space => IndentStyle::Space(conf.indent_size),
+        };
+        Self {
+            indent_style: Some(indent_style),
+            line_width: Some(conf.line_width),
+            format_with_errors: false,
         }
     }
 }

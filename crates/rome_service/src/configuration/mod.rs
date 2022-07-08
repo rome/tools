@@ -6,6 +6,7 @@
 use crate::configuration::formatter::FormatterConfiguration;
 use crate::configuration::javascript::JavascriptConfiguration;
 use serde::Deserialize;
+use std::fmt::{Debug, Display, Formatter};
 
 mod formatter;
 mod javascript;
@@ -24,4 +25,31 @@ pub struct Configuration {
 
     /// Specific configuration for the JavaScript language
     pub javascript: JavascriptConfiguration,
+}
+
+/// Series of errors that can be thrown while computing the configuration
+pub enum ConfigurationError {
+    /// Thrown when the main configuration file doesn't have
+    NotRoot,
+}
+
+impl Debug for ConfigurationError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ConfigurationError::NotRoot => std::fmt::Display::fmt(self, f),
+        }
+    }
+}
+
+impl Display for ConfigurationError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ConfigurationError::NotRoot => {
+                write!(
+                f,
+                "the main configuration file, rome.json, must have the field 'root' set to `true`"
+            )
+            }
+        }
+    }
 }
