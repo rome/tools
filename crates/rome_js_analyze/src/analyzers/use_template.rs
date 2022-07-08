@@ -98,7 +98,8 @@ impl Rule for UseTemplate {
         })
     }
 }
-
+/// Extract main logic of `UseTemplate::run`
+/// Aiming to avoid recursive diagnostics.
 fn emits_signal(expr: &JsBinaryExpression) -> Option<Vec<JsAnyExpression>> {
     is_un_necessary_string_concat_expression(expr).and_then(|result| {
         if result {
