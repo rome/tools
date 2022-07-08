@@ -34,19 +34,17 @@ impl Rule for NoLabelVar {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let reference = ctx.query();
+        let label_statement = ctx.query();
 
-        let label_token = reference.label_token().ok()?;
+        let label_token = label_statement.label_token().ok()?;
         let name = label_token.text_trimmed();
         let model = ctx.model();
-        let mut current_scope = Some(model.scope(reference.syntax()));
         // We search each scope from current scope until the global scope
         // if we found any binding that equal to label name, then we found a  `LabelVar` issue.
-        while let Some(scope) = current_scope {
+        for scope in model.scope(label_statement.syntax()).ancestors() {
             if let Some(binding) = scope.get_binding(name) {
                 return Some((binding.syntax().clone(), label_token));
             }
-            current_scope = scope.parent();
         }
         None
     }
