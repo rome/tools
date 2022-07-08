@@ -48,10 +48,8 @@ fn compute_configuration(
     configuration: Configuration,
     configuration_type: ConfigurationType,
 ) -> Result<Configuration, RomeError> {
-    if configuration_type.is_root() {
-        if configuration.root == false {
-            return Err(RomeError::InvalidConfiguration(ConfigurationError::NotRoot));
-        }
+    if configuration_type.is_root() && configuration.root {
+        return Err(RomeError::InvalidConfiguration(ConfigurationError::NotRoot));
     }
 
     Ok(configuration)

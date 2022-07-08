@@ -68,11 +68,7 @@ impl FileSystem for MemoryFileSystem {
 
     fn config_path(&self) -> Option<PathBuf> {
         let path = self.path_to_config.as_ref();
-        if let Some(path) = path {
-            Some(PathBuf::from(path))
-        } else {
-            None
-        }
+        path.map(PathBuf::from)
     }
 }
 

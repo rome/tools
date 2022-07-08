@@ -29,7 +29,7 @@ pub struct Configuration {
 
 impl Configuration {
     pub fn is_formatter_disabled(&self) -> bool {
-        self.formatter.enabled == false
+        !self.formatter.enabled
     }
 }
 

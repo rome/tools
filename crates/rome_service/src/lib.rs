@@ -134,7 +134,7 @@ impl<'app> App<'app> {
     /// It reads the configuration path from the file system and it saves it internally
     pub fn read_configuration_path(&mut self) -> io::Result<()> {
         let path = self.fs.config_path();
-        self.config_path = path.and_then(|path| Some(RomePath::new(&path, 0)));
+        self.config_path = path.map(|path| RomePath::new(&path, 0));
         Ok(())
     }
 }

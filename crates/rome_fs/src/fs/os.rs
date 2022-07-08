@@ -44,11 +44,7 @@ impl FileSystem for OsFileSystem {
 
     fn config_path(&self) -> Option<PathBuf> {
         let path = current_dir().ok();
-        if let Some(path) = path {
-            Some(path.join(Self::MAIN_CONFIGURATION_FILENAME))
-        } else {
-            None
-        }
+        path.map(|path| path.join(Self::MAIN_CONFIGURATION_FILENAME))
     }
 }
 
