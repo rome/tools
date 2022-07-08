@@ -14,7 +14,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     // reading the configuration should not cause an error, rome should working even without it
     let configuration_path = session.app.fs.config_path();
     let configuration = if let Some(configuration_path) = configuration_path {
-        Some(load_config(&configuration_path, ConfigurationType::Root)?)
+        load_config(&configuration_path, ConfigurationType::Root)?
     } else {
         None
     };

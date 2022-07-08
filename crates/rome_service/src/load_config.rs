@@ -11,18 +11,20 @@ pub const CONFIG_FILENAME: &str = "rome.json";
 pub fn load_config(
     config_path: &PathBuf,
     configuration_type: ConfigurationType,
-) -> Result<Configuration, RomeError> {
+) -> Result<Option<Configuration>, RomeError> {
     // path of the configuration file
     let config_path = RomePath::new(config_path, 0);
 
-    let buffer = config_path
-        .read_to_string()
-        .map_err(|_| RomeError::CantReadFile(config_path))?;
+    let buffer = config_path.read_to_string().ok();
 
-    let configuration: Configuration = serde_json::from_str(&buffer)
-        .map_err(|err| RomeError::MalformedConfigurationFile(err.to_string()))?;
+    if let Some(buffer) = buffer {
+        let configuration: Configuration = serde_json::from_str(&buffer)
+            .map_err(|err| RomeError::MalformedConfigurationFile(err.to_string()))?;
 
-    compute_configuration(configuration, configuration_type)
+        compute_configuration(configuration, configuration_type)
+    } else {
+        Ok(None)
+    }
 }
 
 /// The type of configuration we want to load
@@ -47,10 +49,10 @@ impl ConfigurationType {
 fn compute_configuration(
     configuration: Configuration,
     configuration_type: ConfigurationType,
-) -> Result<Configuration, RomeError> {
-    if configuration_type.is_root() && configuration.root {
+) -> Result<Option<Configuration>, RomeError> {
+    if configuration_type.is_root() && !configuration.root {
         return Err(RomeError::InvalidConfiguration(ConfigurationError::NotRoot));
     }
 
-    Ok(configuration)
+    Ok(Some(configuration))
 }
