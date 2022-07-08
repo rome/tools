@@ -17,6 +17,7 @@ use super::{BoxedTraversal, File};
 #[derive(Default)]
 pub struct MemoryFileSystem {
     files: HashMap<PathBuf, FileEntry>,
+    path_to_config: Option<PathBuf>,
 }
 
 /// This is what's actually being stored for each file in the filesystem
@@ -40,6 +41,10 @@ impl MemoryFileSystem {
         self.files
             .insert(path, AssertUnwindSafe(Arc::new(Mutex::new(content.into()))));
     }
+
+    pub fn set_path_to_config(&mut self, path: PathBuf) {
+        self.path_to_config = Some(path);
+    }
 }
 
 impl FileSystem for MemoryFileSystem {
@@ -59,6 +64,15 @@ impl FileSystem for MemoryFileSystem {
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         func(&MemoryTraversalScope { fs: self })
+    }
+
+    fn config_path(&self) -> Option<PathBuf> {
+        let path = self.path_to_config.as_ref();
+        if let Some(path) = path {
+            Some(PathBuf::from(path))
+        } else {
+            None
+        }
     }
 }
 
