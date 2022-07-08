@@ -7,10 +7,10 @@
 /crates/rome_rowan				@rome/staff
 
 # parsers
-/crates/rome_js_parser			@MichaReiser
+/crates/rome_js_parser			@MichaReiser @xunilrj
 
 # analyzers
-/crates/rome_*analyze			@leops
+/crates/rome_*analyze			@leops @xunilrj
 
 /crates/rome_control_flow		@leops
 /crates/rome_js_semantic		@xunilrj
