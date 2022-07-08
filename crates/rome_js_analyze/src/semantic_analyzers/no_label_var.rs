@@ -43,10 +43,8 @@ impl Rule for NoLabelVar {
         // We search each scope from current scope until the global scope
         // if we found any binding that equal to label name, then we found a  `LabelVar` issue.
         while let Some(scope) = current_scope {
-            for binding in scope.bindings() {
-                if binding.syntax().text_trimmed() == name {
-                    return Some((binding.syntax().clone(), label_token));
-                }
+            if let Some(binding) = scope.get_binding(name) {
+                return Some((binding.syntax().clone(), label_token));
             }
             current_scope = scope.parent();
         }
