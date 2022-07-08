@@ -36,38 +36,50 @@ declare_rule! {
 impl Rule for NoCatchAssign {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
+    /// Why use [JsCatchClause] instead of [JsIdentifierAssignment] ? Because this could reduce search range.
+    /// We only compare the declaration of [JsCatchClause] with all descent [JsIdentifierAssignment] of its body.
     type Query = Semantic<JsCatchClause>;
-    type State = ();
+    type State = Vec<JsIdentifierAssignment>;
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let catch_clause = ctx.query();
         let model = ctx.model();
+
         let decl = catch_clause.declaration()?;
-        let decl_scope = model.scope(decl.syntax());
-        let catch_binding_name = decl.syntax().text_trimmed();
+
+        // catch_binding
+        // ## Example
+        // try {
+
+        // } catch (catch_binding) {
+        //          ^^^^^^^^^^^^^
+        // }
+        let catch_binding = decl.binding().ok()?;
+        let catch_binding_syntax = catch_binding.syntax();
         let body = catch_clause.body().ok()?;
+        let mut invalid_assign = vec![];
+
+        // println!("body: \n{}", body);
+        println!("catch_binding: \n{}", catch_binding_syntax);
         for assignment in body
             .syntax()
             .descendants()
             .find_map(JsIdentifierAssignment::cast)
         {
-            let name = assignment.name_token().ok()?;
-            if name.text_trimmed() != catch_binding_name {
-                continue;
+            println!("decl_binding_syntax: {}", assignment.syntax());
+            let decl_binding = model.declaration(&assignment).unwrap();
+            if decl_binding.syntax() == catch_binding_syntax {
+                invalid_assign.push(assignment);
             }
-            let mut cur_scope = Some(ctx.model().scope(assignment.syntax()));
-            while let Some(scope) = cur_scope {
-                let binding = scope.get_binding(name.text_trimmed());
-                if binding.is_some() && scope.get_id() == decl_scope.get_id() {
-                    // print!("found you: {:?}, {}", scope, binding_name);
-                    return Some(());
-                }
-                cur_scope = scope.parent();
-            }
+           
         }
 
-        None
+        if !invalid_assign.is_empty() {
+            Some(invalid_assign)
+        } else {
+            None
+        }
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {

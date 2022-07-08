@@ -269,7 +269,9 @@ impl SemanticModel {
     pub fn declaration(&self, reference: &impl HasDeclarationAstNode) -> Option<Binding> {
         let reference = reference.node();
         let range = reference.syntax().text_range();
+        println!("{:?}", self.data.declarations_by_range);
         let declaration_range = self.data.declarations_by_range.get(&range)?;
+        println!("range: {:?}, content: {}", range, reference.syntax());
         let node = self.data.node_by_range.get(declaration_range)?.clone();
         Some(Binding { node })
     }

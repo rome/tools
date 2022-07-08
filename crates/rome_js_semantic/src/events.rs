@@ -362,19 +362,7 @@ impl SemanticEventExtractor {
                             (true, Reference::Read { range }) => SemanticEvent::Read {
                                 range,
                                 declared_at: *declaration_at,
-                            },
-                            (false, Reference::Read { range }) => SemanticEvent::HoistedRead {
-                                range,
-                                declared_at: *declaration_at,
-                            },
-                            (true, Reference::Write { range }) => SemanticEvent::Write {
-                                range,
-                                declared_at: *declaration_at,
-                            },
-                            (false, Reference::Write { range }) => SemanticEvent::HoistedWrite {
-                                range,
-                                declared_at: *declaration_at,
-                            },
+                            }
                         };
                         self.stash.push_back(e);
                     }
