@@ -49,3 +49,5 @@ pub enum Applicability {
     /// The applicability of the suggestion is unknown.
     Unspecified,
 }
+
+pub const MAXIMUM_DISPLAYABLE_DIAGNOSTICS: u8 = 50;

@@ -12,6 +12,17 @@ const FORMATTED: &str = "statement();\n";
 const PARSE_ERROR: &str = "if\n";
 const LINT_ERROR: &str = "for(;true;);\n";
 
+const ERRORS: &str = r#"
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+"#;
+
 const FIX_BEFORE: &str = "
 var a, b, c;
 var d, e, f;
@@ -31,6 +42,7 @@ var i;
 
 mod check {
     use super::*;
+    use rome_console::LogLevel;
 
     #[test]
     fn ok() {
@@ -94,6 +106,45 @@ mod check {
     }
 
     #[test]
+    fn maximum_diagnostics() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+        let file_path = Path::new("check.js");
+        fs.insert(file_path.into(), ERRORS.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        });
+
+        // TODO lint errors are disabled until the linter is stable
+        assert!(result.is_ok());
+
+        let messages = console.buffer;
+
+        assert_eq!(
+            messages
+                .iter()
+                .filter(|m| m.level == LogLevel::Error)
+                .count(),
+            20_usize
+        );
+
+        assert!(messages
+            .iter()
+            .filter(|m| m.level == LogLevel::Log)
+            .any(|m| {
+                let content = format!("{:?}", m.content);
+                content.contains("The number of diagnostics exceeds the number allowed by Rome")
+                    && content.contains("Diagnostics not shown")
+                    && content.contains("76")
+            }));
+    }
+
+    #[test]
     fn apply_ok() {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
@@ -112,8 +163,6 @@ mod check {
                 file_path.as_os_str().into(),
             ]),
         });
-
-        println!("{console:#?}");
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -565,6 +614,49 @@ mod main {
         match result {
             Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "<INPUT>"),
             _ => panic!("run_cli returned {result:?} for a missing argument, expected an error"),
+        }
+    }
+
+    #[test]
+    fn incorrect_value() {
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Owned(Box::new(MemoryFileSystem::default())),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--max-diagnostics=foo"),
+            ]),
+        });
+
+        match result {
+            Err(Termination::ParseError { argument, .. }) => {
+                assert_eq!(argument, "--max-diagnostics");
+            }
+            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
+        }
+    }
+
+    #[test]
+    fn overflow_value() {
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Owned(Box::new(MemoryFileSystem::default())),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--max-diagnostics=100"),
+            ]),
+        });
+
+        match result {
+            Err(Termination::OverflowNumberArgument(argument, limit)) => {
+                assert_eq!(argument, "--max-diagnostics");
+                assert_eq!(limit, "50");
+            }
+            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
         }
     }
 }
