@@ -66,6 +66,7 @@ use rome_rowan::{
 };
 use std::error::Error;
 use std::fmt;
+use std::fmt::Display;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -169,6 +170,16 @@ impl TryFrom<u16> for LineWidth {
         } else {
             Err(LineWidthFromIntError(value))
         }
+    }
+}
+
+impl Display for LineWidthFromIntError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        writeln!(
+            f,
+            "The line width exceeds the maximum value ({})",
+            LineWidth::MAX
+        )
     }
 }
 

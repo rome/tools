@@ -13,8 +13,8 @@ const pendingIndicatorz =
 
 # Output
 ```js
-const pendingIndicators = shield.alarmGeneratorConfiguration
-  .getPendingVersionColumnValues;
+const pendingIndicators =
+  shield.alarmGeneratorConfiguration.getPendingVersionColumnValues;
 
 const pendingIndicatorz =
   shield.alarmGeneratorConfiguration.getPendingVersionColumnValues();

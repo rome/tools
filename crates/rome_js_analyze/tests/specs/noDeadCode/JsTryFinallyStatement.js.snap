@@ -6,15 +6,63 @@ expression: JsTryFinallyStatement.js
 ```js
 function JsTryFinallyStatement1() {
     try {
-        test();
+        tryBlock();
     } catch (err) {
-        test();
+        catchClause();
     } finally {
-        test();
+        finallyClause();
         return;
     }
 
     afterFinallyReturn();
+}
+
+function JsTryFinallyStatement2() {
+    return;
+
+    try {
+        tryBlock();
+    } catch (err) {
+        catchClause();
+    } finally {
+        finallyClause();
+    }
+}
+
+function JsTryFinallyStatement3() {
+    try {
+        try {
+            tryBlock1();
+        } catch {
+        } finally {
+            return;
+        }
+
+        afterTryStatement1();
+    } catch (err) {
+        catchClause2();
+    }
+
+    afterTryStatement2();
+}
+
+function JsTryFinallyStatement4() {
+    try {
+        tryBlock1();
+        return;
+    } catch {
+        return;
+    } finally {
+        if (value) {
+            statement1();
+        } else {
+            statement2();
+        }
+
+        finallyClause();
+    }
+
+    afterTryStatement();
 }
 
 ```
@@ -29,6 +77,97 @@ warning[noDeadCode]: This code is unreachable
    ·
 11 │     afterFinallyReturn();
    │     --------------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:18:9
+   │
+15 │     return;
+   │     ------- This statement will return from the function ...
+   ·
+18 │         tryBlock();
+   │         ----------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:20:9
+   │
+15 │     return;
+   │     ------- This statement will return from the function ...
+   ·
+20 │         catchClause();
+   │         -------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:22:9
+   │
+15 │     return;
+   │     ------- This statement will return from the function ...
+   ·
+22 │         finallyClause();
+   │         ---------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:35:9
+   │
+32 │             return;
+   │             ------- This statement will return from the function ...
+   ·
+35 │         afterTryStatement1();
+   │         --------------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:37:9
+   │
+32 │             return;
+   │             ------- This statement will return from the function ...
+   ·
+37 │         catchClause2();
+   │         --------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:40:5
+   │
+32 │             return;
+   │             ------- This statement will return from the function ...
+   ·
+40 │     afterTryStatement2();
+   │     --------------------- ... before it can reach this code
+
+
+```
+
+```
+warning[noDeadCode]: This code is unreachable
+   ┌─ JsTryFinallyStatement.js:59:5
+   │
+46 │         return;
+   │         ------- This statement will return from the function ...
+   ·
+59 │     afterTryStatement();
+   │     -------------------- ... before it can reach this code
 
 
 ```

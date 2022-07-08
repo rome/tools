@@ -70,6 +70,22 @@ fn =
 // something
     fn()
 
+loooooooooooooooooooooooooong1 =
+	void "looooooooooooooooooooooooooooooooooooooooooog";
+loooooooooooooooooooooooooong2 =
+	!"looooooooooooooooooooooooooooooooooooooooooog";
+loooooooooooooooooooooooooong3 =
+	+"looooooooooooooooooooooooooooooooooooooooooog";
+loooooooooooooooooooooooooong4 =
+	void void "looooooooooooooooooooooooooooooooooooooooooog";
+loooooooooooooooooooooooooong5 =
+	!!"looooooooooooooooooooooooooooooooooooooooooog";
+// rome-ignore format: test
+loooooooooooooooooooooooooong6       =
+	void    "looooooooooooooooooooooooooooooooooooooooooog";
+loooooooooooooooooooooooooong7    =
+	// rome-ignore format: test
+	!     "looooooooooooooooooooooooooooooooooooooooooog";
 
 // fluid layout
 bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumbers = [1, 2, 3, 4, 5];

@@ -18,20 +18,12 @@ use crate::builder::BlockId;
 pub struct ControlFlowGraph<L: Language> {
     /// List of blocks that make up this function
     pub blocks: Vec<BasicBlock<L>>,
-    /// Indices of the block that act as "entry point" for the function,
-    /// defined as points that the control flow may arbitrarily jump into
-    ///
-    /// Currently this is used for the first block in the function, as well as
-    /// `catch` and `finally` clauses to model the exception control flow
-    /// possibly diverging into these
-    pub entry_blocks: Vec<u32>,
 }
 
 impl<L: Language> ControlFlowGraph<L> {
     fn new() -> Self {
         ControlFlowGraph {
-            blocks: vec![BasicBlock::new()],
-            entry_blocks: vec![0],
+            blocks: vec![BasicBlock::new(None, None)],
         }
     }
 }
@@ -46,12 +38,21 @@ impl<L: Language> ControlFlowGraph<L> {
 #[derive(Debug, Clone)]
 pub struct BasicBlock<L: Language> {
     pub instructions: Vec<Instruction<L>>,
+    /// List of handlers to execute when an exception is thrown from this block
+    pub exception_handlers: Vec<ExceptionHandler>,
+    /// List of handlers to execute when the function returns from this block
+    pub cleanup_handlers: Vec<ExceptionHandler>,
 }
 
 impl<L: Language> BasicBlock<L> {
-    fn new() -> Self {
+    fn new(
+        exception_handlers: impl IntoIterator<Item = ExceptionHandler>,
+        cleanup_handlers: impl IntoIterator<Item = ExceptionHandler>,
+    ) -> Self {
         Self {
             instructions: Vec::new(),
+            exception_handlers: exception_handlers.into_iter().collect(),
+            cleanup_handlers: cleanup_handlers.into_iter().collect(),
         }
     }
 }
@@ -79,10 +80,30 @@ pub enum InstructionKind {
     /// This instruction may cause the control flow to diverge towards `block`,
     /// either unconditionally if `conditional` is set to `false`, or after
     /// evaluating the associated syntax node otherwise
-    Jump { conditional: bool, block: BlockId },
+    Jump {
+        conditional: bool,
+        block: BlockId,
+        /// Set to `true` for the terminating jump instruction out of a
+        /// `finally` clause, the target block can be reinterpreted to the next
+        /// exception handler instead if the control flow is currently unwinding
+        finally_fallthrough: bool,
+    },
     /// This instruction causes the control flow to unconditionally abort the
-    /// execution of the function, for example is JavaScript this can be triggered by a `return` or `throw` statement
+    /// execution of the function, for example is JavaScript this can be
+    /// triggered by a `return` or `throw` statement
     Return,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct ExceptionHandler {
+    pub kind: ExceptionHandlerKind,
+    pub target: u32,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum ExceptionHandlerKind {
+    Catch,
+    Finally,
 }
 
 /// The Display implementation for [ControlFlowGraph] prints a flowchart in
@@ -162,14 +183,16 @@ impl<L: Language> Display for ControlFlowGraph<L> {
                     write!(fmt, "{inst}")?;
                 }
 
-                if let InstructionKind::Jump { conditional, block } = inst.kind {
-                    links.insert(
-                        (id, index, block.index()),
-                        inst.node
-                            .as_ref()
-                            .filter(|_| conditional)
-                            .map(|node| (node.kind(), node.text_trimmed_range())),
-                    );
+                if let InstructionKind::Jump {
+                    conditional, block, ..
+                } = inst.kind
+                {
+                    let condition = inst
+                        .node
+                        .as_ref()
+                        .filter(|_| conditional)
+                        .map(|node| (node.kind(), node.text_trimmed_range()));
+                    links.insert((id, index, block.index()), condition);
                 }
             }
 
@@ -219,6 +242,7 @@ impl<L: Language> Display for Instruction<L> {
             InstructionKind::Jump {
                 conditional: true,
                 block,
+                ..
             } if self.node.is_some() => {
                 // SAFETY: Checked by the above call to `is_some`
                 let node = self.node.as_ref().unwrap();

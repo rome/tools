@@ -20,7 +20,7 @@ pub(crate) struct Groups {
 
     /// This is a threshold of when we should start breaking the groups
     ///
-    /// By default, it's 2, meaning that we start breaking after the second group.
+    /// By default, it's 1, meaning that we start breaking after the first group.
     cutoff: u8,
 
     tab_width: TabWidth,
@@ -32,7 +32,7 @@ impl Groups {
             in_expression_statement,
             groups: Vec::new(),
             current_group: Vec::new(),
-            cutoff: 2,
+            cutoff: 1,
             tab_width,
         }
     }
@@ -237,9 +237,6 @@ impl Groups {
         head_group: &HeadGroup,
     ) -> Option<Vec<Vec<FlattenItem>>> {
         if self.should_merge(head_group).unwrap_or(false) {
-            // While we are at it, we also update the the cutoff.
-            // If we should merge the groups, it means that also the cutoff has to be increased by one
-            self.cutoff = 3;
             let mut new_groups = self.groups.split_off(1);
             // self.groups is now the head (one element), while `new_groups` is a new vector without the
             // first element.
@@ -249,6 +246,13 @@ impl Groups {
         } else {
             None
         }
+    }
+
+    /// Here we check if the length of the groups exceeds the cutoff or there are comments
+    /// This function is the inverse of the prettier function
+    /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/member-chain.js#L342
+    pub(crate) fn is_member_call_chain(&self) -> SyntaxResult<bool> {
+        Ok(self.groups.len() > self.cutoff as usize || self.has_comments()?)
     }
 }
 
