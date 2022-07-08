@@ -56,7 +56,7 @@ impl Rule for NoLabelVar {
         Some(RuleDiagnostic::warning(
             label_token.text_trimmed_range(),
             markup! {
-                "Do not use the "{name}" variable name as a label"
+                "Do not use the "<Emphasis>{name}</Emphasis>" variable name as a label"
             },
         )
         .secondary(binding_syntax_node.text_trimmed_range(), markup! {
