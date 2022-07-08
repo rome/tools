@@ -18,6 +18,11 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     } else {
         None
     };
+    if let Some(configuration) = &configuration {
+        if configuration.is_formatter_disabled() {
+            return Ok(());
+        }
+    }
     parse_format_options(&mut session, configuration)?;
 
     let is_write = session.args.contains("--write");

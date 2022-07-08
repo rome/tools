@@ -27,6 +27,12 @@ pub struct Configuration {
     pub javascript: JavascriptConfiguration,
 }
 
+impl Configuration {
+    pub fn is_formatter_disabled(&self) -> bool {
+        self.formatter.enabled == false
+    }
+}
+
 /// Series of errors that can be thrown while computing the configuration
 pub enum ConfigurationError {
     /// Thrown when the main configuration file doesn't have

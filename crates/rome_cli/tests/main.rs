@@ -29,6 +29,18 @@ var h;
 var i;
 ";
 
+const CUSTOM_FORMAT_BEFORE: &str = r#"
+function f() {
+return { something }
+}
+"#;
+
+// six spaces
+const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
+      return { something };
+}
+"#;
+
 mod check {
     use super::*;
 
@@ -256,6 +268,7 @@ mod ci {
 
 mod format {
     use super::*;
+    use std::env::current_dir;
 
     #[test]
     fn print() {
@@ -470,6 +483,76 @@ mod format {
                 "run_cli returned {result:?} for an invalid argument value, expected an error"
             ),
         }
+    }
+
+    #[test]
+    fn format_with_configuration() {
+        let mut fs = MemoryFileSystem::default();
+        let config_path = current_dir().unwrap().join("tests/configs/format.json");
+        fs.set_path_to_config(config_path);
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("file.js"),
+                OsString::from("--write"),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, CUSTOM_FORMAT_AFTER);
+    }
+
+    #[test]
+    fn format_is_disabled() {
+        let mut fs = MemoryFileSystem::default();
+        let config_path = current_dir()
+            .unwrap()
+            .join("tests/configs/disabled_format.json");
+        fs.set_path_to_config(config_path);
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("file.js"),
+                OsString::from("--write"),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, CUSTOM_FORMAT_BEFORE);
     }
 }
 

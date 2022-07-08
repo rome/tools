@@ -23,14 +23,6 @@ pub struct FormatterConfiguration {
     pub line_width: LineWidth,
 }
 
-fn deserialize_line_width<'de, D>(deserializer: D) -> Result<LineWidth, D::Error>
-where
-    D: serde::de::Deserializer<'de>,
-{
-    let value: u16 = Deserialize::deserialize(deserializer)?;
-    LineWidth::try_from(value).map_err(serde::de::Error::custom)
-}
-
 impl Default for FormatterConfiguration {
     fn default() -> Self {
         Self {
@@ -55,6 +47,14 @@ impl From<&FormatterConfiguration> for FormatSettings {
             format_with_errors: false,
         }
     }
+}
+
+fn deserialize_line_width<'de, D>(deserializer: D) -> Result<LineWidth, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    let value: u16 = Deserialize::deserialize(deserializer)?;
+    LineWidth::try_from(value).map_err(serde::de::Error::custom)
 }
 
 #[derive(Deserialize, Debug, Eq, PartialEq)]

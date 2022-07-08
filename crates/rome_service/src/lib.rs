@@ -90,14 +90,14 @@ impl Display for RomeError {
             RomeError::CantReadDirectory(path) => {
                 write!(
                     f,
-                    "Rome couldn't read the following directory, maybe for permissions reasons: {}",
+                    "Rome couldn't read the following directory, maybe for permissions reasons or it doesn't exists: {}",
                     path.display()
                 )
             }
             RomeError::CantReadFile(path) => {
                 write!(
                     f,
-                    "Rome couldn't read the following file, maybe for permissions reasons: {}",
+                    "Rome couldn't read the following file, maybe for permissions reasons or it doesn't exists: {}",
                     path.display()
                 )
             }
