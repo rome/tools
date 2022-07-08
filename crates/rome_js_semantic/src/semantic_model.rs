@@ -1,9 +1,22 @@
-use rome_js_syntax::{JsAnyRoot, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, TextRange};
+use rome_js_syntax::{
+    JsAnyRoot, JsIdentifierAssignment, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, TextRange,
+};
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use std::{collections::HashMap, iter::FusedIterator, sync::Arc};
 
 use crate::{SemanticEvent, SemanticEventExtractor};
+
+/// Marker trait that groups all "AstNode" that have declarations
+pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
+    #[inline(always)]
+    fn node(&self) -> &Self {
+        self
+    }
+}
+
+impl HasDeclarationAstNode for JsReferenceIdentifier {}
+impl HasDeclarationAstNode for JsIdentifierAssignment {}
 
 struct SemanticModelScopeData {
     parent: Option<usize>,
@@ -17,18 +30,57 @@ struct SemanticModelScopeData {
 /// That allows any returned struct (like [Scope], [Binding])
 /// to outlive the [SemanticModel], and to not include lifetimes.
 struct SemanticModelData {
+    root: JsAnyRoot,
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     declarations_by_range: HashMap<TextRange, TextRange>,
 }
 
+impl PartialEq for SemanticModelData {
+    fn eq(&self, other: &Self) -> bool {
+        self.root == other.root
+    }
+}
+
+impl Eq for SemanticModelData {}
+
+/// Iterator to navigate upwards in the scope tree
+pub struct ScopeAncestorsIter {
+    current: Option<Scope>,
+}
+
+impl Iterator for ScopeAncestorsIter {
+    type Item = Scope;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.current.take() {
+            Some(current) => {
+                self.current = current.parent();
+                Some(current)
+            }
+            None => None,
+        }
+    }
+}
+
+impl FusedIterator for ScopeAncestorsIter {}
+
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
+#[derive(Clone)]
 pub struct Scope {
     data: Arc<SemanticModelData>,
     id: usize,
 }
+
+impl PartialEq for Scope {
+    fn eq(&self, other: &Self) -> bool {
+        self.id == other.id && self.data == other.data
+    }
+}
+
+impl Eq for Scope {}
 
 impl std::fmt::Debug for Scope {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -41,6 +93,14 @@ impl std::fmt::Debug for Scope {
 }
 
 impl Scope {
+    /// Returns all parents of this scope. Starting with the current
+    /// [Scope].
+    pub fn ancestors(&self) -> ScopeAncestorsIter {
+        ScopeAncestorsIter {
+            current: Some(self.clone()),
+        }
+    }
+
     /// Return this scope parent.
     pub fn parent(&self) -> Option<Scope> {
         // id will always be a valid scope because
@@ -65,7 +125,8 @@ impl Scope {
     }
 
     /// Return a binding by its name, like it appears on code.
-    pub fn get_binding(&self, name: &str) -> Option<Binding> {
+    pub fn get_binding(&self, name: impl AsRef<str>) -> Option<Binding> {
+        let name = name.as_ref();
         let data = &self.data.scopes[self.id];
 
         let i = data.bindings_by_name.get(name)?;
@@ -189,7 +250,7 @@ impl SemanticModel {
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
-    /// use rome_js_semantic::{semantic_model, JsReferenceIdentifierExtensions};
+    /// use rome_js_semantic::{semantic_model, DeclarationExtensions};
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
     /// let model = semantic_model(&r.tree());
@@ -205,11 +266,10 @@ impl SemanticModel {
     /// // or
     /// let arguments_declaration = arguments_reference.declaration(&model);
     /// ```
-    pub fn declaration(&self, reference: &JsReferenceIdentifier) -> Option<Binding> {
-        let declaration_range = self
-            .data
-            .declarations_by_range
-            .get(&reference.syntax().text_range())?;
+    pub fn declaration(&self, reference: &impl HasDeclarationAstNode) -> Option<Binding> {
+        let reference = reference.node();
+        let range = reference.syntax().text_range();
+        let declaration_range = self.data.declarations_by_range.get(&range)?;
         let node = self.data.node_by_range.get(declaration_range)?.clone();
         Some(Binding { node })
     }
@@ -231,14 +291,14 @@ impl<T: AstNode<Language = JsLanguage>> SemanticScopeExtensions for T {
     }
 }
 
-/// Extension method to allow [JsReferenceIdentifier] to easily
+/// Extension method to allow any node that have a declaration to easily
 /// get its declaration.
-pub trait JsReferenceIdentifierExtensions {
+pub trait DeclarationExtensions {
     /// Return the [Binding] that declared the symbol this reference references.
     fn declaration(&self, model: &SemanticModel) -> Option<Binding>;
 }
 
-impl JsReferenceIdentifierExtensions for JsReferenceIdentifier {
+impl<T: HasDeclarationAstNode> DeclarationExtensions for T {
     fn declaration(&self, model: &SemanticModel) -> Option<Binding> {
         model.declaration(self)
     }
@@ -250,8 +310,8 @@ impl JsReferenceIdentifierExtensions for JsReferenceIdentifier {
 /// [SemanticModelBuilder] consumes all the [SemanticEvents] and build all the
 /// data necessary to build a [SemanticModelData], that is allocated with an [Arc]
 /// and stored inside the [SemanticModel].
-#[derive(Default)]
 pub struct SemanticModelBuilder {
+    root: JsAnyRoot,
     scope_stack: Vec<usize>,
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: Vec<Interval<usize, usize>>,
@@ -260,6 +320,17 @@ pub struct SemanticModelBuilder {
 }
 
 impl SemanticModelBuilder {
+    pub fn new(root: JsAnyRoot) -> Self {
+        Self {
+            root,
+            scope_stack: vec![],
+            scopes: vec![],
+            scope_by_range: vec![],
+            node_by_range: HashMap::new(),
+            declarations_by_range: HashMap::new(),
+        }
+    }
+
     pub fn push_node(&mut self, node: &JsSyntaxNode) {
         self.node_by_range.insert(node.text_range(), node.clone());
     }
@@ -323,6 +394,7 @@ impl SemanticModelBuilder {
 
     pub fn build(self) -> SemanticModel {
         let data = SemanticModelData {
+            root: self.root,
             scopes: self.scopes,
             scope_by_range: Lapper::new(self.scope_by_range),
             node_by_range: self.node_by_range,
@@ -336,7 +408,7 @@ impl SemanticModelBuilder {
 /// For a push based model to build the [SemanticModel], see [SemanticModelBuilder].
 pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
     let mut extractor = SemanticEventExtractor::default();
-    let mut builder = SemanticModelBuilder::default();
+    let mut builder = SemanticModelBuilder::new(root.clone());
 
     let root = root.syntax();
     for node in root.preorder() {
@@ -378,13 +450,23 @@ mod test {
             .find(|x| x.text() == "arguments")
             .unwrap();
 
-        // Scope Hierarchy
+        // Scope hierarchy  navigation
 
         let block_scope = arguments_reference.scope(&model);
         let func_scope = block_scope.parent().unwrap();
         let global_scope = func_scope.parent().unwrap();
 
         assert!(global_scope.parent().is_none());
+        assert_eq!(block_scope.ancestors().count(), 3);
+
+        // Scope equality
+
+        assert_eq!(block_scope, block_scope);
+        assert_eq!(func_scope, func_scope);
+        assert_eq!(global_scope, global_scope);
+
+        assert_ne!(block_scope, func_scope);
+        assert_ne!(block_scope, global_scope);
 
         // Bindings
 
