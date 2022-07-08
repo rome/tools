@@ -139,6 +139,8 @@ mod check {
             .any(|m| {
                 let content = format!("{:?}", m.content);
                 content.contains("The number of diagnostics exceeds the number allowed by Rome")
+                    && content.contains("Diagnostics not shown")
+                    && content.contains("76")
             }));
     }
 

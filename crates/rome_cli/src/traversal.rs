@@ -150,6 +150,8 @@ fn print_messages_to_console(
 ) -> bool {
     let mut has_errors = false;
     let mut paths = HashMap::new();
+    let mut printed_diagnostics: u8 = 0;
+    let mut not_printed_diagnostics = 0;
 
     while let Ok(msg) = recv_msgs.recv() {
         match msg {
@@ -190,29 +192,38 @@ fn print_messages_to_console(
                 diagnostics,
             } => {
                 let file = SimpleFile::new(name, content);
-                let max_diagnostics = mode.get_max_diagnostics();
-                let iter = diagnostics.iter().enumerate();
-                for (index, diag) in iter {
-                    has_errors |= diag.is_error();
-                    if index < MAXIMUM_DISPLAYABLE_DIAGNOSTICS as usize {
-                        if let Some(max_diagnostics) = max_diagnostics {
-                            if index < max_diagnostics as usize {
-                                console.error(markup! {
-                                    {diag.display(&file)}
-                                });
-                            }
-                        } else {
+                // The command `rome check` gives a default value of 20.
+                // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
+                // Once `--max-diagnostics` will be a global argument, `unwrap_of_default` should be enough.
+                let max_diagnostics = mode
+                    .get_max_diagnostics()
+                    .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
+                // is CI mode we want to print all the diagnostics
+                if mode.is_ci() {
+                    for diag in diagnostics {
+                        has_errors |= diag.is_error();
+                        console.error(markup! {
+                            {diag.display(&file)}
+                        });
+                    }
+                } else {
+                    for diag in diagnostics {
+                        has_errors |= diag.is_error();
+                        if printed_diagnostics < max_diagnostics {
                             console.error(markup! {
                                 {diag.display(&file)}
                             });
+                            printed_diagnostics += 1;
+                        } else {
+                            not_printed_diagnostics += 1;
                         }
                     }
                 }
 
-                if !mode.is_ci() && diagnostics.len() > MAXIMUM_DISPLAYABLE_DIAGNOSTICS as usize {
+                if !mode.is_ci() {
                     console.log(markup! {
                         <Warn>"The number of diagnostics exceeds the number allowed by Rome."</Warn>
-                        <Info>"Fix the previous diagnostics."</Info>
+                        <Info>"Diagnostics not shown: "</Info><Emphasis>{not_printed_diagnostics}</Emphasis><Info>"."</Info>
                     })
                 }
             }
