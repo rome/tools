@@ -132,16 +132,6 @@ Disallow the use of constants which its value is the upper-case version of its n
 Disallow sparse arrays
 </div>
 <div class="rule">
-<<<<<<< HEAD
-<h3 data-toc-exclude id="noUnnecessaryContinue">
-	<a href="/docs/lint/rules/noUnnecessaryContinue">noUnnecessaryContinue</a>
-	<a class="header-anchor" href="#noUnnecessaryContinue"></a>
-</h3>
-Avoid using unnecessary <code>ContinueStatement</code>.
-</div>
-<div class="rule">
-=======
->>>>>>> 8f3e696171 (chore: 🤖 doc)
 <h3 data-toc-exclude id="noUnsafeNegation">
 	<a href="/docs/lint/rules/noUnsafeNegation">noUnsafeNegation</a>
 	<a class="header-anchor" href="#noUnsafeNegation"></a>
