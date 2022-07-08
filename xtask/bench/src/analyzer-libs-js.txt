@@ -1,0 +1,3 @@
+https://github.com/prettier/prettier/blob/main/src/language-js/utils/index.js
+https://raw.githubusercontent.com/jquery/jquery/main/src/css.js
+https://raw.githubusercontent.com/fastify/fastify/main/lib/configValidator.js
