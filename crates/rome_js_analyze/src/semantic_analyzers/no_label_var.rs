@@ -29,7 +29,7 @@ impl Rule for NoLabelVar {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Semantic<JsLabeledStatement>;
-    /// first element of tuple is `JsSyntaxNode` of binding, second element of tuple is `label_token`
+    /// The first element of the tuple is the name of the binding, the second element of the tuple is the label name
     type State = (JsSyntaxNode, JsSyntaxToken);
     type Signals = Option<Self::State>;
 
