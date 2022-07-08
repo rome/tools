@@ -12,10 +12,12 @@ use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use text_size::TextRange;
 
+mod batch;
 mod mutation;
 
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
 use crate::{Language, RawSyntaxKind, SyntaxKind, SyntaxList, SyntaxNode, SyntaxToken};
+pub use batch::*;
 pub use mutation::{AstNodeExt, AstNodeListExt, AstSeparatedListExt};
 
 /// Represents a set of [SyntaxKind] as a bitfield, with each bit representing
