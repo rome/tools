@@ -88,7 +88,6 @@ impl std::fmt::Debug for Scope {
         f.debug_struct("Scope")
             .field("parent", &data.parent)
             .field("children", &data.children)
-            .field("id", &self.id)
             .finish()
     }
 }
@@ -136,15 +135,9 @@ impl Scope {
 
         Some(Binding { node: node.clone() })
     }
-
-    /// Get id of scope
-    pub fn get_id(&self) -> usize {
-        self.id
-    }
 }
 
 /// Provides all information regarding to a specific binding.
-#[derive(Clone)]
 pub struct Binding {
     node: JsSyntaxNode,
 }
