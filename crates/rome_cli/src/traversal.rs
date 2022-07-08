@@ -209,7 +209,7 @@ fn print_messages_to_console(
                     }
                 }
 
-                if diagnostics.len() > MAXIMUM_DISPLAYABLE_DIAGNOSTICS as usize {
+                if !mode.is_ci() && diagnostics.len() > MAXIMUM_DISPLAYABLE_DIAGNOSTICS as usize {
                     console.log(markup! {
                         <Warn>"The number of diagnostics exceeds the number allowed by Rome."</Warn>
                         <Info>"Fix the previous diagnostics."</Info>
@@ -281,6 +281,10 @@ impl TraversalMode {
             TraversalMode::Check { max_diagnostics } => Some(*max_diagnostics),
             _ => None,
         }
+    }
+
+    fn is_ci(&self) -> bool {
+        matches!(self, TraversalMode::CI)
     }
 }
 
