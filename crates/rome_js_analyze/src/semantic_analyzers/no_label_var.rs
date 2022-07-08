@@ -40,7 +40,7 @@ impl Rule for NoLabelVar {
         let name = label_token.text_trimmed();
         let model = ctx.model();
         // We search each scope from current scope until the global scope
-        // if we found any binding that equal to label name, then we found a  `LabelVar` issue.
+        // if we find a binding that has its name equal to label name, then we found a  `LabelVar` issue.
         for scope in model.scope(label_statement.syntax()).ancestors() {
             if let Some(binding) = scope.get_binding(name) {
                 return Some((binding.syntax().clone(), label_token));
