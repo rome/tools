@@ -251,10 +251,11 @@ mod tests {
 
         let options = AnalyzerOptions::default();
         analyze(FileId::zero(), &parsed.tree(), filter, &options, |signal| {
-            if let Some(mut diag) = signal.diagnostic() {
-                diag.set_severity(Severity::Warning);
+            if let Some(diag) = signal.diagnostic() {
                 let code = diag.category().unwrap();
-                panic!("unexpected diagnostic {code:?}");
+                if code != category!("suppressions/unused") {
+                    panic!("unexpected diagnostic {code:?}");
+                }
             }
 
             ControlFlow::<Never>::Continue(())

@@ -211,7 +211,7 @@ mod tests {
             let mut builder = RawSyntaxTreeBuilder::new();
 
             builder.start_node(RawLanguageKind::ROOT);
-            builder.start_node(RawLanguageKind::EXPRESSION_LIST);
+            builder.start_node(RawLanguageKind::SEPARATED_EXPRESSION_LIST);
 
             builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
             builder.token_with_trivia(
@@ -289,6 +289,16 @@ mod tests {
                 &[TriviaPiece::new(TriviaPieceKind::Newline, 1)],
             );
 
+            builder.token_with_trivia(
+                RawLanguageKind::SEMICOLON_TOKEN,
+                "//group/rule\n;\n",
+                &[
+                    TriviaPiece::new(TriviaPieceKind::SingleLineComment, 12),
+                    TriviaPiece::new(TriviaPieceKind::Newline, 1),
+                ],
+                &[TriviaPiece::new(TriviaPieceKind::Newline, 1)],
+            );
+
             builder.finish_node();
             builder.finish_node();
 
@@ -355,6 +365,10 @@ mod tests {
                 (
                     category!("args/fileNotFound"),
                     TextRange::new(TextSize::from(97), TextSize::from(108))
+                ),
+                (
+                    category!("suppressions/unused"),
+                    TextRange::new(TextSize::from(110), TextSize::from(122))
                 ),
             ]
         );
