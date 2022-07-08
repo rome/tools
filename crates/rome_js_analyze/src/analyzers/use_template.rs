@@ -59,27 +59,14 @@ impl Rule for UseTemplate {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let binary_expr = ctx.query();
         // Avoiding recursive diagnostics.
-        if binary_expr.parent::<JsBinaryExpression>().is_some() {
+        if binary_expr
+            .parent::<JsBinaryExpression>()
+            .and_then(|expr| emits_signal(&expr))
+            .is_some()
+        {
             None
         } else {
-            is_un_necessary_string_concat_expression(binary_expr).and_then(|result| {
-                if result {
-                    let collections = collect_binary_add_expression(binary_expr)?;
-                    if collections.iter().any(|expr| {
-                        !matches!(
-                            expr,
-                            JsAnyExpression::JsAnyLiteralExpression(
-                                rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(
-                                    _
-                                )
-                            )
-                        )
-                    }) {
-                        return Some(collections);
-                    }
-                }
-                None
-            })
+            emits_signal(binary_expr)
         }
     }
 
@@ -112,6 +99,24 @@ impl Rule for UseTemplate {
     }
 }
 
+fn emits_signal(expr: &JsBinaryExpression) -> Option<Vec<JsAnyExpression>> {
+    is_un_necessary_string_concat_expression(expr).and_then(|result| {
+        if result {
+            let collections = collect_binary_add_expression(expr)?;
+            if collections.iter().any(|expr| {
+                !matches!(
+                    expr,
+                    JsAnyExpression::JsAnyLiteralExpression(
+                        rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(_)
+                    )
+                )
+            }) {
+                return Some(collections);
+            }
+        }
+        None
+    })
+}
 /// Merge `Vec<JsAnyExpression>` into a `JsTemplate`
 fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<JsTemplate> {
     let mut reduced_exprs = Vec::with_capacity(exprs.len());

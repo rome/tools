@@ -11,3 +11,4 @@ console.log(1 * (2 + "foo") + "bar");
 console.log("foo" + 1);
 console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
 console.log("foo" + 1 + 2);
+1 + "2" - 3;
