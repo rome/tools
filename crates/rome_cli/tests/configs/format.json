@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "formatter": {
+    "enabled": true,
+    "lineWidth": 160,
+    "indentStyle": "space",
+    "indentSize": 6
+  }
+}
