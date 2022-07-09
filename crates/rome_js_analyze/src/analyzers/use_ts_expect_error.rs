@@ -72,7 +72,7 @@ impl Rule for UseTsExpectError {
     /// Because `ts-ignore` could be used in multiple places, we need to track the state of each `@ts-ignore`.
     /// The first element of tuple is the index of the original leading trivia pieces that need to replace,
     /// the second element of tuple is a [Vector] of the range of `@ts-ignore` in the original trivia piece text,
-    /// we use a [Vector] to store the range because the `@ts-ignore` could be occurred multiple time in single trivia piece.
+    /// we use a [Vector] to store the range because the `@ts-ignore` could exist multiple time in single trivia piece.
     /// ## Example
     /// ```js
     /// /**
