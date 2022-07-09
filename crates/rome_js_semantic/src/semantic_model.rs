@@ -447,7 +447,7 @@ mod test {
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
-    pub fn ok_semantic_model_events_sink() {
+    pub fn ok_semantic_model() {
         let r = rome_js_parser::parse(
             "function f(){let a = arguments[0]; let b = a + 1; b = 2;}",
             0,
