@@ -70,8 +70,8 @@ impl Rule for UseTsExpectError {
 
     type Query = Ast<JsAnyStatement>;
     /// Because `ts-ignore` could be used in multiple places, we need to track the state of each `@ts-ignore`.
-    /// The first element of tuple is the index of the original leading trivia pieces that need to replace, 
-    /// the second element of tuple is a [Vector] of the range of `@ts-ignore` in the original trivia piece text, 
+    /// The first element of tuple is the index of the original leading trivia pieces that need to replace,
+    /// the second element of tuple is a [Vector] of the range of `@ts-ignore` in the original trivia piece text,
     /// we use a [Vector] to store the range because the `@ts-ignore` could be occurred multiple time in single trivia piece.
     /// ## Example
     /// ```js
@@ -99,7 +99,9 @@ impl Rule for UseTsExpectError {
                         let finalized: &str =
                             if let Some(stripped) = original_piece_text.strip_prefix("/**") {
                                 stripped
-                            } else if original_piece_text.starts_with("//") || original_piece_text.starts_with("/*") {
+                            } else if original_piece_text.starts_with("//")
+                                || original_piece_text.starts_with("/*")
+                            {
                                 &original_piece_text[2..]
                             } else {
                                 original_piece_text
