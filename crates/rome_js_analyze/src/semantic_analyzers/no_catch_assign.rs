@@ -97,3 +97,4 @@ impl Rule for NoCatchAssign {
         None
     }
 }
+
