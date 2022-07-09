@@ -17,7 +17,7 @@ export function classNames(
 ): string {
 	return classes.filter(Boolean).join(" ");
 }
-
+export const persistKeys: Array<keyof PlaygroundState> = ["treeStyle"];
 // Define general type for useWindowSize hook, which includes width and height
 interface Size {
 	width: number | undefined;
@@ -87,14 +87,12 @@ export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 
 	useEffect(() => {
 		setPlaygroundState(initState());
-		// console.log('romeConfig change', )
 	}, [defaultRomeConfig]);
 
 	useEffect(() => {
-		const { code, isTypeScript, isJsx, ...options } = playgroundState;
-		//@ts-ignore
+		const { code, isTypeScript, isJsx } = playgroundState;
 		const queryString = new URLSearchParams({
-			...excludeKeys(playgroundState, ["isTypeScript", "isJsx", "treeStyle"]),
+			...crateObjectExcludeKeys(playgroundState, ["isTypeScript", "isJsx", "treeStyle"]),
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();
@@ -222,7 +220,7 @@ function fromBinary(binary: string) {
 
 function changeLocalStorageConfig(playgroundState: PlaygroundState) {
 	// Excluding `playgroundState.code` reduce the content to save, make `localStorage.setItem` which is file IO a bit faster
-	let romeConfig = includeKeys(playgroundState, ["treeStyle"]);
+	let romeConfig = CreateObjectIncludeKeys(playgroundState, persistKeys);
 	window.localStorage.setItem("rome_config", JSON.stringify(romeConfig));
 }
 
@@ -243,7 +241,7 @@ function mergeRomeConfig(
 	config: Partial<RomeConfiguration>,
 	defaultConfig: RomeConfiguration,
 ): RomeConfiguration {
-	let interested_keys: Array<keyof RomeConfiguration> = ["treeStyle"];
+	let interested_keys: Array<keyof RomeConfiguration> = ['treeStyle'];
 	return interested_keys.reduce((acc, key) => {
 		if (config[key]) {
 			acc[key] = config[key as keyof RomeConfiguration];
@@ -255,12 +253,12 @@ function mergeRomeConfig(
 }
 
 /**
- * normalized a object without some keys of original object
+ * Crate an object with some keys omitted of original object
  * @param obj
  * @param keys
  * @returns
  */
-function excludeKeys<T extends object>(obj: T, keys: Array<keyof T>): Record<
+function crateObjectExcludeKeys<T extends object>(obj: T, keys: Array<keyof T>): Record<
 	string,
 	any
 > {
@@ -273,12 +271,12 @@ function excludeKeys<T extends object>(obj: T, keys: Array<keyof T>): Record<
 }
 
 /**
- * normalized a object with only expected keys of original object
+ * Crate an object with only interested keys of original object
  * @param obj
  * @param keys
  * @returns
  */
-function includeKeys<T extends object>(obj: T, keys: Array<keyof T>): Record<
+function CreateObjectIncludeKeys<T extends object>(obj: T, keys: Array<keyof T>): Record<
 	string,
 	any
 > {

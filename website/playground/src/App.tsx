@@ -17,8 +17,8 @@ function App() {
 	useEffect(() => {
 		init()
 			.then(() => {
+				// We only load the config from local storage once when app is loaded.
 				const localStorageRomeConfig = loadRomeConfigFromLocalStorage();
-				// console.log('romeConfig', localStorageRomeConfig);
 				setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
 				setLoadingState(LoadingState.Success);
 			})
