@@ -69,7 +69,18 @@ impl Rule for UseTsExpectError {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyStatement>;
-    /// 
+    /// Because `ts-ignore` could be used in multiple places, we need to track the state of each `@ts-ignore`.
+    /// The first element of tuple is the index of the original leading trivia pieces that need to replace, 
+    /// the second element of tuple is a [Vector] of the range of `@ts-ignore` in the original trivia piece text, 
+    /// we use a [Vector] to store the range because the `@ts-ignore` could be occurred multiple time in single trivia piece.
+    /// ## Example
+    /// ```js
+    /// /**
+    ///  * @ts-ignore
+    ///  * @ts-ignore
+    ///  */
+    /// let a = 3;
+    /// ```
     type State = Vec<(usize, Vec<Range<usize>>)>;
     type Signals = Option<Self::State>;
 
@@ -81,22 +92,23 @@ impl Rule for UseTsExpectError {
                 .leading_trivia()
                 .pieces()
                 .enumerate()
-                .for_each(|(i, item)| match item.kind() {
+                .for_each(|(i, piece)| match piece.kind() {
                     rome_js_syntax::TriviaPieceKind::SingleLineComment => {
-                        let original = item.text();
+                        let original_piece_text = piece.text();
                         // I use this `strip_prefix` just because of clippy not happy
                         let finalized: &str =
-                            if let Some(stripped) = original.strip_prefix("/**") {
+                            if let Some(stripped) = original_piece_text.strip_prefix("/**") {
                                 stripped
-                            } else if original.starts_with("//") || original.starts_with("/*") {
-                                &original[2..]
+                            } else if original_piece_text.starts_with("//") || original_piece_text.starts_with("/*") {
+                                &original_piece_text[2..]
                             } else {
-                                original
+                                original_piece_text
                             }
                             .trim_start();
-                        let offset = original.len() - finalized.len();
 
                         if finalized.starts_with("@ts-ignore") {
+                            // `@ts-ignore` is found, record the offset to the original trivia piece
+                            let offset = original_piece_text.len() - finalized.len();
                             ts_ignore_index_vec.push((
                                 i,
                                 // 10 is the length of `@ts-ignore`
@@ -105,7 +117,7 @@ impl Rule for UseTsExpectError {
                         }
                     }
                     rome_js_syntax::TriviaPieceKind::MultiLineComment => {
-                        let original = item.text();
+                        let original = piece.text();
                         let mut multiline_ts_ignore_index_vec = vec![];
                         let mut offset = 2;
                         original
@@ -113,7 +125,8 @@ impl Rule for UseTsExpectError {
                             .split('\n')
                             .enumerate()
                             .for_each(|(i, line)| {
-                                //Add the new line offset
+                                // We use `\n` as our splitter,
+                                // so we need to add a leading newline offset (1) when i greater than 0.
                                 offset += if i == 0 { 0 } else { 1 };
                                 let finalized =
                                     line.trim_start().trim_start_matches('*').trim_start();
