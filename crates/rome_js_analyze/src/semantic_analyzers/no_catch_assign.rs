@@ -1,33 +1,33 @@
-use std::ops::BitAndAssign;
-
 use crate::{semantic_services::Semantic, JsRuleAction};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsAnyAssignment, JsAnyExpression, JsAnyStatement, JsCatchClause, JsExpressionStatement,
-    JsIdentifierAssignment, JsReferenceIdentifier, JsSyntaxKind,
-};
+use rome_js_syntax::{JsCatchClause, JsIdentifierAssignment};
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Disallow the use of ```arguments```
+    /// Disallow reassigning exceptions in catch clauses
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// function f() {
-    ///    console.log(arguments);
+    /// try {
+    ///
+    /// } catch (e) {
+    ///   e;
+    ///   e = 10;
     /// }
     /// ```
     ///
     /// ### Valid
     ///
-    /// /// ```js
-    /// function f() {
-    ///     let arguments = 1;
-    ///     console.log(arguments);
+    /// ```js
+    /// try {
+    ///
+    /// } catch (e) {
+    ///   let e = 10;
+    ///   e = 100;
     /// }
     /// ```
     pub(crate) NoCatchAssign = "noCatchAssign"
@@ -60,41 +60,43 @@ impl Rule for NoCatchAssign {
         let body = catch_clause.body().ok()?;
         let mut invalid_assign = vec![];
 
-        // println!("body: \n{}", body);
-        println!("catch_binding: \n{}", catch_binding_syntax);
         for assignment in body
             .syntax()
             .descendants()
-            .find_map(JsIdentifierAssignment::cast)
+            .filter_map(JsIdentifierAssignment::cast)
         {
-            println!("decl_binding_syntax: {}", assignment.syntax());
             let decl_binding = model.declaration(&assignment).unwrap();
             if decl_binding.syntax() == catch_binding_syntax {
                 invalid_assign.push(assignment);
             }
-           
         }
 
-        if !invalid_assign.is_empty() {
-            Some(invalid_assign)
-        } else {
-            None
-        }
+        (!invalid_assign.is_empty()).then(|| invalid_assign)
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::warning(
+        let mut diagnostic = RuleDiagnostic::warning(
             node.syntax().text_trimmed_range(),
             markup! {
-                "Use the "<Emphasis>"rest parameters"</Emphasis>" instead of "<Emphasis>"arguments"</Emphasis>"."
+                " Do not "<Emphasis>"reassign catch parameters."</Emphasis>""
             },
-        ).footer_note(markup! {<Emphasis>"arguments"</Emphasis>" does not have "<Emphasis>"Array.prototype"</Emphasis>" methods and can be inconvenient to use."}))
+        );
+
+        for assign in state.iter() {
+            diagnostic = diagnostic.secondary(
+                assign.syntax().text_trimmed_range(),
+                markup! {
+                    "Don't re assign "<Emphasis>{assign.syntax().text_trimmed().to_string()}</Emphasis>"."
+                },
+            );
+        }
+
+        Some(diagnostic.footer_note("Use a local variable instead."))
     }
 
     fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         None
     }
 }
-

@@ -9,11 +9,7 @@ fn main() {
 function foo() {}; 
 foo = bar;
     "#;
-    let r = rome_js_parser::parse(
-        source,
-        0,
-        SourceType::js_module(),
-    );
+    let r = rome_js_parser::parse(source, 0, SourceType::js_module());
     let model = semantic_model(&r.tree());
 
     let arguments_reference = r
