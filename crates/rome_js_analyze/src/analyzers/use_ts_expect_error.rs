@@ -85,8 +85,8 @@ impl Rule for UseTsExpectError {
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let Ast(n) = ctx.query();
-        n.syntax().first_token().and_then(|token| {
+        let any_stmt = ctx.query();
+        any_stmt.syntax().first_token().and_then(|token| {
             let mut ts_ignore_index_vec = vec![];
             token
                 .leading_trivia()
@@ -155,7 +155,7 @@ impl Rule for UseTsExpectError {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
 
         Some(RuleDiagnostic::warning(
             node.range(),
@@ -166,7 +166,7 @@ impl Rule for UseTsExpectError {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let Ast(node) = ctx.query();
+        let node = ctx.query();
         let root = ctx.root();
         let mut ignore_cursor = 0;
         let first_token = node.syntax().first_token()?;
