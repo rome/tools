@@ -248,7 +248,6 @@ mod tests {
             .descendants()
             .find(|x| x.kind() == RawLanguageKind::LITERAL_EXPRESSION && x.text_trimmed() == name)
             .unwrap()
-            .clone()
             .detach()
             .cast::<LiteralExpression>()
             .unwrap()
