@@ -3,9 +3,11 @@ import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
 import {
+	defaultRomeConfig,
 	IndentStyle,
 	PlaygroundState,
 	QuoteStyle,
+	RomeConfiguration,
 	SourceType,
 	TreeStyle,
 } from "./types";
@@ -46,30 +48,35 @@ export function useWindowSize(): Size {
 	return windowSize;
 }
 
-export function usePlaygroundState(): [
-	PlaygroundState,
-	Dispatch<SetStateAction<PlaygroundState>>,
-] {
+export function usePlaygroundState(
+	defaultRomeConfig: RomeConfiguration
+): [PlaygroundState, Dispatch<SetStateAction<PlaygroundState>>] {
 	const searchParams = new URLSearchParams(window.location.search);
-	const [playgroundState, setPlaygroundState] = useState(
-		() => ({
-			code:
-				window.location.hash !== "#" ? decodeCode(
-					window.location.hash.substring(1),
-				) : "",
-			lineWidth: parseInt(searchParams.get("lineWidth") ?? "80"),
-			indentStyle:
-				(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
-			quoteStyle:
-				(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
-			indentWidth: parseInt(searchParams.get("indentWidth") ?? "2"),
-			isTypeScript: searchParams.get("typescript") === "true",
-			isJsx: searchParams.get("jsx") === "true",
-			sourceType:
-				(searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
-			treeStyle: TreeStyle.Json,
-		}),
-	);
+	const [playgroundState, setPlaygroundState] = useState(() => ({
+		code:
+			window.location.hash !== "#"
+				? decodeCode(window.location.hash.substring(1))
+				: "",
+		lineWidth: parseInt(
+			searchParams.get("lineWidth") ?? defaultRomeConfig.lineWidth
+		),
+		indentStyle:
+			(searchParams.get("indentStyle") as IndentStyle) ??
+			defaultRomeConfig.indentStyle,
+		quoteStyle:
+			(searchParams.get("quoteStyle") as QuoteStyle) ??
+			defaultRomeConfig.quoteStyle,
+		indentWidth: parseInt(
+			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth
+		),
+		isTypeScript:
+			searchParams.get("typescript") === "true" ||
+			defaultRomeConfig.isTypeScript,
+		isJsx: searchParams.get("jsx") === "true" || defaultRomeConfig.isJsx,
+		sourceType:
+			(searchParams.get("sourceType") as SourceType) ?? defaultRomeConfig,
+		treeStyle: TreeStyle.Json,
+	}));
 
 	useEffect(() => {
 		const { code, isTypeScript, isJsx, ...options } = playgroundState;
@@ -79,18 +86,33 @@ export function usePlaygroundState(): [
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();
-		const url = `${window.location.protocol}//${window.location.host}${window
-			.location.pathname}?${queryString}#${encodeCode(code)}`;
+		const url = `${window.location.protocol}//${window.location.host}${
+			window.location.pathname
+		}?${queryString}#${encodeCode(code)}`;
 
 		window.history.replaceState({ path: url }, "", url);
 	}, [playgroundState]);
+
+	// Only configuration change we would persist, so this will not introduce too much overhead when user changes code
+	useEffect(() => {
+		changeLocalStorageConfig(playgroundState);
+	}, [
+		playgroundState.indentStyle,
+		playgroundState.indentWidth,
+		playgroundState.lineWidth,
+		playgroundState.quoteStyle,
+		playgroundState.sourceType,
+		playgroundState.treeStyle,
+		playgroundState.isJsx,
+		playgroundState.isTypeScript,
+	]);
 
 	return [playgroundState, setPlaygroundState];
 }
 
 export function createSetter(
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>,
-	field: keyof PlaygroundState,
+	field: keyof PlaygroundState
 ) {
 	return function (param: PlaygroundState[typeof field]) {
 		setPlaygroundState((state) => ({ ...state, [field]: param }));
@@ -105,7 +127,7 @@ export function formatWithPrettier(
 		indentWidth: number;
 		language: "js" | "ts";
 		quoteStyle: QuoteStyle;
-	},
+	}
 ): { code: string; ir: string } {
 	try {
 		const prettierOptions = {
@@ -120,8 +142,10 @@ export function formatWithPrettier(
 		// @ts-ignore
 		let debug = prettier.__debug;
 		const document = debug.printToDoc(code, prettierOptions);
-		const formattedCode = debug.printDocToString(document, prettierOptions)
-			.formatted;
+		const formattedCode = debug.printDocToString(
+			document,
+			prettierOptions
+		).formatted;
 		const ir = debug.formatDoc(document, {
 			parser: "babel",
 			plugins: [parserBabel],
@@ -144,10 +168,10 @@ function getPrettierParser(language: "js" | "ts"): string {
 	}
 }
 
-export function getLanguage(isJsx: boolean, isTypeScript: boolean):
-	| "jsx"
-	| "typescript"
-	| "js" {
+export function getLanguage(
+	isJsx: boolean,
+	isTypeScript: boolean
+): "jsx" | "typescript" | "js" {
 	if (isTypeScript) {
 		return "typescript";
 	} else if (isJsx) {
@@ -193,4 +217,44 @@ function fromBinary(binary: string) {
 		result += String.fromCharCode(charCodes[i]);
 	}
 	return result;
+}
+
+function changeLocalStorageConfig(playgroundState: PlaygroundState) {
+	// Excluding `playgroundState.code` reduce the content to save, make `localStorage.setItem` which is file IO a bit faster
+	let romeConfig = Object.keys(playgroundState).reduce((acc, key) => {
+		if (key !== "code") {
+			acc[key] = playgroundState[key as keyof PlaygroundState];
+		}
+		return acc;
+	}, Object.create(null));
+	window.localStorage.setItem("rome_config", JSON.stringify(romeConfig));
+}
+
+export function loadRomeConfigFromLocalStorage(): RomeConfiguration {
+	let configString = window.localStorage.getItem("rome_config");
+	console.log(configString)
+	let config: Partial<RomeConfiguration> = {};
+	try {
+		config = JSON.parse(configString || "");
+	} catch {
+		config = {};
+	}
+	return mergeRomeConfig(config, defaultRomeConfig);
+}
+
+// Change the romeConfig in local storage seems to be meaningless, so we simplify the validation phase.
+// only use default value if some key is empty
+function mergeRomeConfig(
+	config: Partial<RomeConfiguration>,
+	defaultConfig: RomeConfiguration
+): RomeConfiguration {
+	return Object.keys(defaultConfig).reduce((acc, key) => {
+		if (config[key as keyof RomeConfiguration]) {
+			acc[key] = config[key as keyof RomeConfiguration];
+		} else {
+			acc[key] = defaultConfig[key as keyof RomeConfiguration];
+		}
+		return acc;
+	},
+	Object.create(null)) as RomeConfiguration;
 }
