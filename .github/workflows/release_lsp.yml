@@ -1,8 +1,8 @@
 name: Release LSP
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 0 * * 2-6'
+  schedule:
+    - cron: '0 0 * * 2-6'
   push:
     branches:
       - main
