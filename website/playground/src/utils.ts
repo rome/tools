@@ -17,7 +17,9 @@ export function classNames(
 ): string {
 	return classes.filter(Boolean).join(" ");
 }
-export const persistKeys: Array<keyof PlaygroundState> = ["treeStyle"];
+// Excluding `playgroundState.code` reduce the content to save,
+// Only save prop of `PlaygroundState` that we interested, making `localStorage.setItem` which is file IO a bit faster
+export const OPTIONS_TO_PERSIST: Array<keyof PlaygroundState> = ["treeStyle"];
 // Define general type for useWindowSize hook, which includes width and height
 interface Size {
 	width: number | undefined;
@@ -92,7 +94,11 @@ export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 	useEffect(() => {
 		const { code, isTypeScript, isJsx } = playgroundState;
 		const queryString = new URLSearchParams({
-			...crateObjectExcludeKeys(playgroundState, ["isTypeScript", "isJsx", "treeStyle"]),
+			...crateObjectExcludeKeys(playgroundState, [
+				"isTypeScript",
+				"isJsx",
+				"treeStyle",
+			]),
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();
@@ -219,9 +225,8 @@ function fromBinary(binary: string) {
 }
 
 function changeLocalStorageConfig(playgroundState: PlaygroundState) {
-	// Excluding `playgroundState.code` reduce the content to save, make `localStorage.setItem` which is file IO a bit faster
-	let romeConfig = CreateObjectIncludeKeys(playgroundState, persistKeys);
-	window.localStorage.setItem("rome_config", JSON.stringify(romeConfig));
+	let romeConfig = createObjectIncludeKeys(playgroundState, OPTIONS_TO_PERSIST);
+	localStorage.setItem("rome_config", JSON.stringify(romeConfig));
 }
 
 export function loadRomeConfigFromLocalStorage(): RomeConfiguration {
@@ -229,8 +234,9 @@ export function loadRomeConfigFromLocalStorage(): RomeConfiguration {
 	let config: Partial<RomeConfiguration> = {};
 	try {
 		config = JSON.parse(configString || "");
-	} catch {
+	} catch (err) {
 		config = {};
+		console.error(err);
 	}
 	return mergeRomeConfig(config, defaultRomeConfig);
 }
@@ -241,7 +247,7 @@ function mergeRomeConfig(
 	config: Partial<RomeConfiguration>,
 	defaultConfig: RomeConfiguration,
 ): RomeConfiguration {
-	let interested_keys: Array<keyof RomeConfiguration> = ['treeStyle'];
+	const interested_keys: Array<keyof RomeConfiguration> = OPTIONS_TO_PERSIST;
 	return interested_keys.reduce((acc, key) => {
 		if (config[key]) {
 			acc[key] = config[key as keyof RomeConfiguration];
@@ -258,10 +264,10 @@ function mergeRomeConfig(
  * @param keys
  * @returns
  */
-function crateObjectExcludeKeys<T extends object>(obj: T, keys: Array<keyof T>): Record<
-	string,
-	any
-> {
+function crateObjectExcludeKeys<T extends object>(
+	obj: T,
+	keys: Array<keyof T>,
+): Record<string, any> {
 	return Object.keys(obj).reduce((acc, key) => {
 		if (!keys.includes(key as keyof T)) {
 			acc[key] = obj[key as keyof T];
@@ -276,10 +282,10 @@ function crateObjectExcludeKeys<T extends object>(obj: T, keys: Array<keyof T>):
  * @param keys
  * @returns
  */
-function CreateObjectIncludeKeys<T extends object>(obj: T, keys: Array<keyof T>): Record<
-	string,
-	any
-> {
+function createObjectIncludeKeys<T extends object>(
+	obj: T,
+	keys: Array<keyof T>,
+): Record<string, any> {
 	return Object.keys(obj).reduce((acc, key) => {
 		if (keys.includes(key as keyof T)) {
 			acc[key] = obj[key as keyof T];
