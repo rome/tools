@@ -19,7 +19,7 @@ declare_rule! {
     ///
     /// ### Valid
     ///
-    /// /// ```js
+    /// ```cjs
     /// function f() {
     ///     let arguments = 1;
     ///     console.log(arguments);
