@@ -5,7 +5,10 @@ use rome_analyze::{
 };
 use rome_diagnostics::file::FileId;
 use rome_js_semantic::semantic_model;
-use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
+use rome_js_syntax::{
+    suppression::{parse_suppression_comment, SuppressionCategory},
+    JsLanguage,
+};
 
 mod analyzers;
 mod assists;
@@ -37,13 +40,22 @@ where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
+    fn parse_linter_suppression_comment(text: &str) -> Vec<Option<&str>> {
+        parse_suppression_comment(text)
+            .flat_map(|comment| comment.categories)
+            .filter_map(|(key, value)| {
+                if key == SuppressionCategory::Lint {
+                    Some(value)
+                } else {
+                    None
+                }
+            })
+            .collect()
+    }
+
     let mut analyzer = Analyzer::new(
         build_registry(&filter),
-        |text| {
-            parse_suppression_comment(text)
-                .flat_map(|comment| comment.categories)
-                .collect()
-        },
+        parse_linter_suppression_comment,
         &mut emit_signal,
     );
 
@@ -70,11 +82,7 @@ where
 
     let mut analyzer = Analyzer::new(
         build_registry(&filter),
-        |text| {
-            parse_suppression_comment(text)
-                .flat_map(|comment| comment.categories)
-                .collect()
-        },
+        parse_linter_suppression_comment,
         &mut emit_signal,
     );
 

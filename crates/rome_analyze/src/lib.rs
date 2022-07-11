@@ -148,7 +148,8 @@ where
     }
 
     /// Process the text for a single token, parsing suppression comments and
-    /// flushing pending query matches
+    /// handling line breaks, then flush all pending query signals in the queue
+    /// whose position is less then the end of the token within the file
     fn flush_matches(&mut self, token: SyntaxToken<L>) -> ControlFlow<Break> {
         // Process the content of the token for comments and newline
         for piece in token.leading_trivia().pieces() {
@@ -191,27 +192,31 @@ where
                 break;
             }
 
-            // Search for an active suppression comment covering the range of this signal
-            let index = self.line_suppressions.binary_search_by(|suppression| {
-                if suppression.text_range.end() < entry.text_range.start() {
-                    Ordering::Less
-                } else if entry.text_range.end() < suppression.text_range.start() {
-                    Ordering::Greater
-                } else {
-                    Ordering::Equal
-                }
-            });
+            // Search for an active suppression comment covering the range of
+            // this signal: first try to load the last line suppression and see
+            // if it matchs the current line index, otherwise perform a binary
+            // search over all the previously seen suppressions to find one
+            // with a matching range
+            let suppression = self
+                .line_suppressions
+                .last()
+                .filter(|suppression| {
+                    suppression.line_index == self.line_index
+                        && suppression.text_range.start() <= start
+                })
+                .or_else(|| {
+                    let index = self.line_suppressions.binary_search_by(|suppression| {
+                        if suppression.text_range.end() < entry.text_range.start() {
+                            Ordering::Less
+                        } else if entry.text_range.end() < suppression.text_range.start() {
+                            Ordering::Greater
+                        } else {
+                            Ordering::Equal
+                        }
+                    });
 
-            let suppression = index.ok().map(|index| &self.line_suppressions[index]);
-
-            // If the line index for the matched suppression is the current one,
-            // its text range is still pending: stop signals processing now and
-            // try again later
-            if let Some(suppression) = suppression {
-                if suppression.line_index == self.line_index {
-                    break;
-                }
-            }
+                    Some(&self.line_suppressions[index.ok()?])
+                });
 
             let is_suppressed = suppression.map_or(false, |suppression| {
                 suppression.suppress_all || suppression.suppressed_rules.contains(&entry.rule)
@@ -230,15 +235,13 @@ where
         ControlFlow::Continue(())
     }
 
+    /// Parse the text content of a comment trivia piece for suppression
+    /// comments, and create line suppression entries accordingly
     fn handle_comment(&mut self, text: &str, range: TextRange) {
         let mut suppress_all = false;
         let mut suppressions = Vec::new();
 
-        for (category, rule) in (self.parse_suppression_comment)(text) {
-            if category != "lint" {
-                continue;
-            }
-
+        for rule in (self.parse_suppression_comment)(text) {
             if let Some(rule) = rule {
                 if let Some(rule) = self.query_matcher.find_rule(rule) {
                     suppressions.push(rule);
@@ -303,7 +306,18 @@ where
 }
 
 /// Signature for a suppression comment parser function
-type SuppressionParser = fn(&str) -> Vec<(&str, Option<&str>)>;
+///
+/// This function receives the text content of a comment and returns a list of
+/// lint suppressions as an optional lint rule (if the lint rule is `None` the
+/// comment is interpreted as suppressing all lints)
+///
+/// # Examples
+///
+/// - `// rome_ignore format` -> `vec![]`
+/// - `// rome_ignore line` -> `vec![None]`
+/// - `// rome_ignore lint(js/useWhile)` -> `vec![Some("js/useWhile")]`
+/// - `// rome_ignore lint(js/useWhile) lint(js/noDeadCode)` -> `vec![Some("js/useWhile"), Some("js/noDeadCode")]`
+type SuppressionParser = fn(&str) -> Vec<Option<&str>>;
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 
