@@ -55,10 +55,10 @@ impl Rule for NoDeadCode {
 
         let cfg = ctx.query();
 
-        if estimate_complexity(cfg) <= COMPLEXITY_THRESHOLD {
-            analyze_fine(cfg, &mut signals)
-        } else {
+        if exceeds_complexity_threshold(cfg) {
             analyze_simple(cfg, &mut signals)
+        } else {
+            analyze_fine(cfg, &mut signals)
         }
 
         signals
@@ -186,20 +186,23 @@ impl Rule for NoDeadCode {
     }
 }
 
-/// Calculate a "complexity score" for the [ControlFlowGraph]. This score is an
-/// arbritrary value (the formula is similar to the cyclomatic complexity of
-/// the function but this is only approximative) used to determine whether the
-/// NoDeadCode rule should perform a fine reachability analysis or fall back to
-/// a simpler algorithm to avoid spending too much time analyzing exceedingly
-/// complex functions
-fn estimate_complexity(cfg: &ControlFlowGraph) -> u32 {
-    let mut nodes: u32 = 0;
+/// Any function with a complexity score higher than this value will use the
+/// simple reachability analysis instead of the fine analysis
+const COMPLEXITY_THRESHOLD: u32 = 20;
+
+/// Returns true if the "complexity score" for the [ControlFlowGraph] is higher
+/// than [COMPLEXITY_THRESHOLD]. This score is an arbritrary value (the formula
+/// is similar to the cyclomatic complexity of the function but this is only
+/// approximative) used to determine whether the NoDeadCode rule should perform
+/// a fine reachability analysis or fall back to a simpler algorithm to avoid
+/// spending too much time analyzing exceedingly complex functions
+fn exceeds_complexity_threshold(cfg: &ControlFlowGraph) -> bool {
+    let nodes = cfg.blocks.len() as u32;
+
     let mut edges: u32 = 0;
     let mut conditionals: u32 = 0;
 
     for block in &cfg.blocks {
-        nodes += 1;
-
         for inst in &block.instructions {
             if let InstructionKind::Jump { conditional, .. } = inst.kind {
                 edges += 1;
@@ -207,16 +210,17 @@ fn estimate_complexity(cfg: &ControlFlowGraph) -> u32 {
                 if conditional {
                     conditionals += 1;
                 }
+
+                let complexity = edges.saturating_sub(nodes) + conditionals / 2;
+                if complexity > COMPLEXITY_THRESHOLD {
+                    return true;
+                }
             }
         }
     }
 
-    edges.saturating_sub(nodes) + conditionals / 2
+    false
 }
-
-/// Any function withy a complexity score higher than this value will use the
-/// simple reachability analysis instead of the fine analysis
-const COMPLEXITY_THRESHOLD: u32 = 20;
 
 /// Perform a simple reachability analysis, does not attempt to determine a
 /// terminator instruction for unreachable ranges allowing blocks to be visited
