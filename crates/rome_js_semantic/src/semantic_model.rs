@@ -378,7 +378,7 @@ impl SemanticModelBuilder {
             }
             Read {
                 range,
-                declated_at: declaration_at,
+                declared_at: declaration_at,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
             }
@@ -388,7 +388,19 @@ impl SemanticModelBuilder {
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
             }
-            _ => {}
+            Write {
+                range,
+                declared_at: declaration_at,
+            } => {
+                self.declarations_by_range.insert(range, declaration_at);
+            }
+            HoistedWrite {
+                range,
+                declared_at: declaration_at,
+            } => {
+                self.declarations_by_range.insert(range, declaration_at);
+            }
+            UnresolvedReference { .. } => {}
         }
     }
 
@@ -435,9 +447,9 @@ mod test {
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
-    pub fn ok_semantic_model_events_sink() {
+    pub fn ok_semantic_model() {
         let r = rome_js_parser::parse(
-            "function f(){let a = arguments[0]; let b = a + 1;}",
+            "function f(){let a = arguments[0]; let b = a + 1; b = 2;}",
             0,
             SourceType::js_module(),
         );
@@ -448,6 +460,13 @@ mod test {
             .descendants()
             .filter_map(|x| x.cast::<JsReferenceIdentifier>())
             .find(|x| x.text() == "arguments")
+            .unwrap();
+
+        let b_from_b_equals_2 = r
+            .syntax()
+            .descendants()
+            .filter_map(|x| x.cast::<JsIdentifierAssignment>())
+            .find(|x| x.text() == "b")
             .unwrap();
 
         // Scope hierarchy  navigation
@@ -501,19 +520,24 @@ mod test {
         let binding = block_scope.get_binding("a").unwrap();
         assert_eq!("a", binding.syntax().text_trimmed());
 
-        // Declarations
+        // Declaration (from Read reference)
 
         let arguments_declaration = arguments_reference.declaration(&model);
         assert!(arguments_declaration.is_none());
 
-        let a_reference = r
+        let a_from_a_plus_1 = r
             .syntax()
             .descendants()
             .filter_map(|x| x.cast::<JsReferenceIdentifier>())
             .find(|x| x.text() == "a")
             .unwrap();
 
-        let a_declaration = a_reference.declaration(&model).unwrap();
+        let a_declaration = a_from_a_plus_1.declaration(&model).unwrap();
         assert_eq!("a", a_declaration.syntax().text_trimmed());
+
+        // Declarations (from Write reference)
+
+        let b_declaration = b_from_b_equals_2.declaration(&model).unwrap();
+        assert_eq!("b", b_declaration.syntax().text_trimmed());
     }
 }

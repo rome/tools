@@ -26,13 +26,23 @@ use std::collections::{BTreeMap, HashMap};
 ///
 /// #### Read Assertion
 ///
-/// Test if the attached token is reference "reading" the value of a symbol.
+/// Test if the attached token is "reading" the value of a symbol.
 /// Pattern: ```/*READ <LABEL> */
 ///
 /// /// Example:
 /// ```js
 /// let a/*#A*/ = 1;
 /// let b = a/*READ A*/ + 1;
+/// ```
+/// #### Write Assertion
+///
+/// Test if the attached token is "writing" a value to a symbol.
+/// Pattern: ```/*WRITE <LABEL> */
+///
+/// /// Example:
+/// ```js
+/// let a/*#A*/;
+/// a/*WRITE A */ = 1;
 /// ```
 ///
 /// #### At Scope Assertion
@@ -114,6 +124,8 @@ pub fn assert(code: &str, test_name: &str) {
             SemanticEvent::ScopeEnded { range, .. } => range.end(),
             SemanticEvent::Read { range, .. } => range.start(),
             SemanticEvent::HoistedRead { range, .. } => range.start(),
+            SemanticEvent::Write { range, .. } => range.start(),
+            SemanticEvent::HoistedWrite { range, .. } => range.start(),
             SemanticEvent::UnresolvedReference { range } => range.start(),
         };
 
@@ -136,6 +148,12 @@ struct DeclarationAssertion {
 
 #[derive(Clone, Debug)]
 struct ReadAssertion {
+    range: TextRange,
+    declaration_asertion_name: String,
+}
+
+#[derive(Clone, Debug)]
+struct WriteAssertion {
     range: TextRange,
     declaration_asertion_name: String,
 }
@@ -177,6 +195,7 @@ struct UnmatchedAssertion {
 enum SemanticAssertion {
     Declaration(DeclarationAssertion),
     Read(ReadAssertion),
+    Write(WriteAssertion),
     ScopeStart(ScopeStartAssertion),
     ScopeEnd(ScopeEndAssertion),
     AtScope(AtScopeAssertion),
@@ -208,6 +227,18 @@ impl SemanticAssertion {
                 .to_string();
 
             Some(SemanticAssertion::Read(ReadAssertion {
+                range: token.text_range(),
+                declaration_asertion_name: symbol_name,
+            }))
+        } else if assertion_text.starts_with("/*WRITE ") {
+            let symbol_name = assertion_text
+                .trim()
+                .trim_start_matches("/*WRITE ")
+                .trim_end_matches("*/")
+                .trim()
+                .to_string();
+
+            Some(SemanticAssertion::Write(WriteAssertion {
                 range: token.text_range(),
                 declaration_asertion_name: symbol_name,
             }))
@@ -266,6 +297,7 @@ impl SemanticAssertion {
 struct SemanticAssertions {
     declarations_assertions: BTreeMap<String, DeclarationAssertion>,
     read_assertions: Vec<ReadAssertion>,
+    write_assertions: Vec<WriteAssertion>,
     at_scope_assertions: Vec<AtScopeAssertion>,
     scope_start_assertions: BTreeMap<String, ScopeStartAssertion>,
     scope_end_assertions: Vec<ScopeEndAssertion>,
@@ -278,6 +310,7 @@ impl SemanticAssertions {
     fn from_root(root: JsAnyRoot, code: &str, test_name: &str) -> Self {
         let mut declarations_assertions: BTreeMap<String, DeclarationAssertion> = BTreeMap::new();
         let mut read_assertions = vec![];
+        let mut write_assertions = vec![];
         let mut at_scope_assertions = vec![];
         let mut scope_start_assertions: BTreeMap<String, ScopeStartAssertion> = BTreeMap::new();
         let mut scope_end_assertions = vec![];
@@ -310,6 +343,9 @@ impl SemanticAssertions {
                         }
                         Some(SemanticAssertion::Read(assertion)) => {
                             read_assertions.push(assertion);
+                        }
+                        Some(SemanticAssertion::Write(assertion)) => {
+                            write_assertions.push(assertion);
                         }
                         Some(SemanticAssertion::ScopeStart(assertion)) => {
                             // Scope start assertions names cannot clash
@@ -344,6 +380,7 @@ impl SemanticAssertions {
         Self {
             declarations_assertions,
             read_assertions,
+            write_assertions,
             at_scope_assertions,
             scope_start_assertions,
             scope_end_assertions,
@@ -412,7 +449,7 @@ impl SemanticAssertions {
             let at_least_one_match = events.iter().any(|e| {
                 let declaration_at_range = match &e {
                     SemanticEvent::Read {
-                        declated_at: declaration_at,
+                        declared_at: declaration_at,
                         ..
                     } => Some(*declaration_at),
                     SemanticEvent::HoistedRead {
@@ -433,6 +470,58 @@ impl SemanticAssertions {
                 println!("Assertion: {:?}", assertion);
                 println!("Events: {:#?}", events_by_pos);
                 panic!("No matching read event found at this range");
+            }
+        }
+
+        // Check every write assertion is ok
+
+        for assertion in self.write_assertions.iter() {
+            let decl = match self
+                .declarations_assertions
+                .get(&assertion.declaration_asertion_name)
+            {
+                Some(decl) => decl,
+                None => {
+                    panic!(
+                        "No declaration found with name: {}",
+                        assertion.declaration_asertion_name
+                    );
+                }
+            };
+
+            let events = match events_by_pos.get(&assertion.range.start()) {
+                Some(events) => events,
+                None => {
+                    println!("Assertion: {:?}", assertion);
+                    println!("Events: {:#?}", events_by_pos);
+                    panic!("No write event found at this range");
+                }
+            };
+
+            let at_least_one_match = events.iter().any(|e| {
+                let declaration_at_range = match &e {
+                    SemanticEvent::Write {
+                        declared_at: declaration_at,
+                        ..
+                    } => Some(*declaration_at),
+                    SemanticEvent::HoistedWrite {
+                        declared_at: declaration_at,
+                        ..
+                    } => Some(*declaration_at),
+                    _ => None,
+                };
+
+                if let Some(declaration_at_range) = declaration_at_range {
+                    code[declaration_at_range] == code[decl.range]
+                } else {
+                    false
+                }
+            });
+
+            if !at_least_one_match {
+                println!("Assertion: {:?}", assertion);
+                println!("Events: {:#?}", events_by_pos);
+                panic!("No matching write event found at this range");
             }
         }
 
