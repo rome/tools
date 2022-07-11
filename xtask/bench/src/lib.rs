@@ -19,6 +19,7 @@ use crate::features::parser::{run_parse, ParseMeasurement};
 pub use utils::get_code;
 
 /// What feature to benchmark
+#[derive(Eq, PartialEq)]
 pub enum FeatureToBenchmark {
     /// benchmark of the parser
     Parser,
@@ -95,8 +96,13 @@ pub fn run(args: RunArgs) {
     let regex = regex::Regex::new(args.filter.as_str()).unwrap();
 
     let mut all_suites = HashMap::new();
-    all_suites.insert("js", include_str!("libs-js.txt"));
-    all_suites.insert("ts", include_str!("libs-ts.txt"));
+    if args.feature == FeatureToBenchmark::Analyzer {
+        all_suites.insert("js", include_str!("analyzer-libs-js.txt"));
+        all_suites.insert("ts", include_str!("analyzer-libs-ts.txt"));
+    } else {
+        all_suites.insert("js", include_str!("libs-js.txt"));
+        all_suites.insert("ts", include_str!("libs-ts.txt"));
+    }
 
     let mut libs = vec![];
     let suites_to_run = args.suites.split(',');

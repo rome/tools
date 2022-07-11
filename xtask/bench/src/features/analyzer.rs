@@ -1,6 +1,6 @@
 use crate::BenchmarkSummary;
 use criterion::black_box;
-use rome_analyze::{AnalysisFilter, ControlFlow, Never};
+use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories};
 use rome_js_analyze::analyze;
 use rome_js_syntax::JsAnyRoot;
 use std::fmt::{Display, Formatter};
@@ -23,7 +23,12 @@ pub fn benchmark_analyze_lib(id: &str, root: &JsAnyRoot) -> BenchmarkSummary {
 }
 
 pub fn run_analyzer(root: &JsAnyRoot) {
-    analyze(0, root, AnalysisFilter::default(), |event| {
+    let filter = AnalysisFilter {
+        categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+        ..AnalysisFilter::default()
+    };
+
+    analyze(0, root, filter, |event| {
         black_box(event.diagnostic());
         black_box(event.action());
         ControlFlow::<Never>::Continue(())
