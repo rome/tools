@@ -5,6 +5,7 @@ pub trait BatchMutationExt<L>: AstNode<Language = L>
 where
     L: Language,
 {
+    #[must_use = "This method consumes the node and return the BatchMutation api that returns the new SynytaxNode on commit"]
     fn begin(self) -> BatchMutation<L, Self>;
 }
 
@@ -13,6 +14,7 @@ where
     L: Language,
     T: AstNode<Language = L>,
 {
+    #[must_use = "This method consumes the node and return the BatchMutation api that returns the new SynytaxNode on commit"]
     fn begin(self) -> BatchMutation<L, Self> {
         BatchMutation {
             root: self,
@@ -41,6 +43,13 @@ impl<L: Language> PartialEq for CommitChange<L> {
 }
 impl<L: Language> Eq for CommitChange<L> {}
 
+/// We order first by depth. Then by the range of the node.
+///
+/// The first is important to guarantee that all nodes that will be changed
+/// in the future are still valid with using SyntaxNode that we have.
+///
+/// The second is important to guarante that the ".peek()" we do below is sufficient
+/// to see the same node in case of two or more nodes having the same depth.
 impl<L: Language> PartialOrd for CommitChange<L> {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         let self_range = self.parent_range.unwrap_or((0u32, 0u32));

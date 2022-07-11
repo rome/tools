@@ -1,4 +1,3 @@
-use iai::{black_box, main};
 use rome_rowan::{
     raw_language::{LiteralExpression, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
     AstNode, AstNodeExt, BatchMutationExt, SyntaxNodeCast,
