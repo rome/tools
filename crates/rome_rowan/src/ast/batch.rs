@@ -16,19 +16,9 @@ where
     fn begin(self) -> BatchMutation<L, Self> {
         BatchMutation {
             root: self,
-            changes: vec![],
+            changes: BinaryHeap::new(),
         }
     }
-}
-
-/// Stores the changed requested using [BatchMutation].
-pub struct Change<L>
-where
-    L: Language,
-{
-    parent: SyntaxNode<L>,
-    index: usize,
-    next_node: Option<SyntaxNode<L>>,
 }
 
 /// Stores the changes internally used by the [BatchMutation::commit] algorithm.
@@ -37,11 +27,11 @@ where
 /// This is necesasry so we can aggregate all changes to the same node using "peek".
 #[derive(Debug)]
 struct CommitChange<L: Language> {
+    parent_depth: usize,
     parent: Option<SyntaxNode<L>>,
     parent_range: Option<(u32, u32)>,
-    index: usize,
+    new_node_slot: usize,
     new_node: Option<SyntaxNode<L>>,
-    depth: usize,
 }
 
 impl<L: Language> PartialEq for CommitChange<L> {
@@ -56,8 +46,8 @@ impl<L: Language> PartialOrd for CommitChange<L> {
         let self_range = self.parent_range.unwrap_or((0u32, 0u32));
         let other_range = other.parent_range.unwrap_or((0u32, 0u32));
 
-        (self.depth, self_range.0, self_range.1).partial_cmp(&(
-            other.depth,
+        (self.parent_depth, self_range.0, self_range.1).partial_cmp(&(
+            other.parent_depth,
             other_range.0,
             other_range.1,
         ))
@@ -65,7 +55,7 @@ impl<L: Language> PartialOrd for CommitChange<L> {
 }
 impl<L: Language> Ord for CommitChange<L> {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.depth.cmp(&other.depth)
+        self.parent_depth.cmp(&other.parent_depth)
     }
 }
 
@@ -75,7 +65,7 @@ where
     N: AstNode<Language = L>,
 {
     root: N,
-    changes: Vec<Change<L>>,
+    changes: BinaryHeap<CommitChange<L>>,
 }
 
 impl<L, N> BatchMutation<L, N>
@@ -88,13 +78,20 @@ where
         T: AstNode<Language = L>,
     {
         let prev_node = prev_node.into_syntax();
-        let index = prev_node.index();
-        let parent = prev_node.parent().unwrap();
+        let new_node_slot = prev_node.index();
+        let parent = prev_node.parent();
+        let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
+            let range = p.text_range();
+            (range.start().into(), range.end().into())
+        });
+        let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
 
-        self.changes.push(Change {
+        self.changes.push(CommitChange {
+            parent_depth,
             parent,
-            index,
-            next_node: Some(next_node.into_syntax()),
+            parent_range,
+            new_node_slot,
+            new_node: Some(next_node.into_syntax()),
         });
     }
 
@@ -115,45 +112,33 @@ where
     /// parent together. This is done by the heap because we also sort by node and it's range.
     ///
     pub fn commit(self) -> N {
+        let BatchMutation { root, mut changes } = self;
         // Fill the heap with the requested changes
-
-        let mut changes: BinaryHeap<CommitChange<L>> = BinaryHeap::new();
-
-        for change in self.changes {
-            let depth = change.parent.ancestors().count();
-            let range = change.parent.text_range();
-            changes.push(CommitChange {
-                parent: Some(change.parent),
-                parent_range: Some((range.start().into(), range.end().into())),
-                index: change.index,
-                new_node: change.next_node,
-                depth,
-            });
-        }
 
         while let Some(item) = changes.pop() {
             // If parent is None, we reached the root
             if let Some(current_parent) = item.parent {
                 // This must be done before the detachment below
-                // because we need nodes valid in the old tree
+                // because we need nodes that are still valid in the old tree
 
                 let grandparent = current_parent.parent();
                 let grandparent_range = grandparent.as_ref().map(|g| {
                     let range = g.text_range();
                     (range.start().into(), range.end().into())
                 });
-                let grandparent_index = current_parent.index();
+                let currentparent_slot = current_parent.index();
 
                 // Aggregate all modifications to the current parent
                 // This works because of the Ord we defined in the [CommitChange] struct
 
-                let mut modifications = vec![(item.index, item.new_node)];
+                let mut modifications = vec![(item.new_node_slot, item.new_node)];
                 loop {
                     if let Some(next_change_parent) = changes.peek().and_then(|i| i.parent.as_ref())
                     {
                         if *next_change_parent == current_parent {
+                            // SAFETY: We can .pop().unwrap() because we .peek() above
                             let next_change = changes.pop().unwrap();
-                            modifications.push((next_change.index, next_change.new_node));
+                            modifications.push((next_change.new_node_slot, next_change.new_node));
                             continue;
                         }
                     }
@@ -171,23 +156,23 @@ where
                 }
 
                 changes.push(CommitChange {
+                    parent_depth: item.parent_depth - 1,
                     parent: grandparent,
                     parent_range: grandparent_range,
-                    index: grandparent_index,
+                    new_node_slot: currentparent_slot,
                     new_node: Some(current_parent),
-                    depth: item.depth - 1,
                 });
             } else {
                 return item.new_node.and_then(|x| x.cast()).unwrap();
             }
         }
 
-        self.root
+        root
     }
 }
 
 #[cfg(test)]
-mod tests {
+pub mod tests {
     use crate::{
         raw_language::{LiteralExpression, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, BatchMutationExt, SyntaxNodeCast,
