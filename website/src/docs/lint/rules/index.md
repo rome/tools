@@ -77,6 +77,13 @@ Disallows empty destructuring patterns.
 Disallow implicit <code>true</code> values on JSX boolean attributes
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noLabelVar">
+	<a href="/docs/lint/rules/noLabelVar">noLabelVar</a>
+	<a class="header-anchor" href="#noLabelVar"></a>
+</h3>
+Disallow labels that share a name with a variable
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
 	<a href="/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals</a>
 	<a class="header-anchor" href="#noMultipleSpacesInRegularExpressionLiterals"></a>
