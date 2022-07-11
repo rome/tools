@@ -15,7 +15,7 @@ pub fn load_config(
     let configuration_path = PathBuf::from(config_name);
     let file = file_system.open(&configuration_path);
 
-    return match file {
+    match file {
         Ok(mut file) => {
             let mut buffer = String::new();
             file.read_to_string(&mut buffer).ok();
@@ -30,9 +30,9 @@ pub fn load_config(
             if err.kind() != ErrorKind::NotFound {
                 return Err(RomeError::CantReadFile(configuration_path));
             }
-            return Ok(None);
+            Ok(None)
         }
-    };
+    }
 }
 
 /// The type of configuration we want to load
