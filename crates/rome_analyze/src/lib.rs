@@ -262,9 +262,22 @@ where
         // Suppression comments apply to the next line
         let line_index = self.line_index + 1;
 
-        // Ensure proper ordering of the `line_suppressions` buffer
-        if let Some(suppression) = self.line_suppressions.last() {
-            assert!(suppression.line_index < line_index);
+        // If the last suppression was on the same or previous line, extend its
+        // range and set of supressed rules with the content for the new suppression
+        if let Some(last_suppression) = self.line_suppressions.last_mut() {
+            if last_suppression.line_index == line_index
+                || last_suppression.line_index + 1 == line_index
+            {
+                last_suppression.line_index = line_index;
+                last_suppression.text_range = last_suppression.text_range.cover(range);
+                last_suppression.suppress_all |= suppress_all;
+                if !last_suppression.suppress_all {
+                    last_suppression.suppressed_rules.extend(suppressions);
+                } else {
+                    last_suppression.suppressed_rules.clear();
+                }
+                return;
+            }
         }
 
         let entry = LineSuppression {
@@ -283,11 +296,13 @@ where
     fn bump_line_index(&mut self, text: &str, range: TextRange) {
         let mut did_match = false;
         for (index, _) in text.match_indices('\n') {
-            if let Some(suppression) = self.line_suppressions.last_mut() {
-                if suppression.line_index == self.line_index {
-                    let index = TextSize::try_from(index).expect("integer overflow");
+            if let Some(last_suppression) = self.line_suppressions.last_mut() {
+                if last_suppression.line_index == self.line_index {
+                    let index = TextSize::try_from(index).expect(
+                        "integer overflow while converting a suppression line to `TextSize`",
+                    );
                     let range = TextRange::at(range.start(), index);
-                    suppression.text_range = suppression.text_range.cover(range);
+                    last_suppression.text_range = last_suppression.text_range.cover(range);
                     did_match = true;
                 }
             }
@@ -296,9 +311,9 @@ where
         }
 
         if !did_match {
-            if let Some(suppression) = self.line_suppressions.last_mut() {
-                if suppression.line_index == self.line_index {
-                    suppression.text_range = suppression.text_range.cover(range);
+            if let Some(last_suppression) = self.line_suppressions.last_mut() {
+                if last_suppression.line_index == self.line_index {
+                    last_suppression.text_range = last_suppression.text_range.cover(range);
                 }
             }
         }
@@ -313,10 +328,10 @@ where
 ///
 /// # Examples
 ///
-/// - `// rome_ignore format` -> `vec![]`
-/// - `// rome_ignore line` -> `vec![None]`
-/// - `// rome_ignore lint(js/useWhile)` -> `vec![Some("js/useWhile")]`
-/// - `// rome_ignore lint(js/useWhile) lint(js/noDeadCode)` -> `vec![Some("js/useWhile"), Some("js/noDeadCode")]`
+/// - `// rome-ignore format` -> `vec![]`
+/// - `// rome-ignore lint` -> `vec![None]`
+/// - `// rome-ignore lint(js/useWhile)` -> `vec![Some("js/useWhile")]`
+/// - `// rome-ignore lint(js/useWhile) lint(js/noDeadCode)` -> `vec![Some("js/useWhile"), Some("js/noDeadCode")]`
 type SuppressionParser = fn(&str) -> Vec<Option<&str>>;
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;

@@ -113,6 +113,11 @@ mod tests {
                 a == b;
                 // rome-ignore lint(noDoubleEquals): single expression
                 a == b;
+                /* rome-ignore lint(useWhile): multiple block comments */ /* rome-ignore lint(noDoubleEquals): multiple block comments */
+                a == b;
+                // rome-ignore lint(useWhile): multiple line comments
+                // rome-ignore lint(noDoubleEquals): multiple line comments
+                a == b;
                 a == b;
             }
 
@@ -142,8 +147,8 @@ mod tests {
             error_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
-                TextRange::new(TextSize::from(186), TextSize::from(188)),
-                TextRange::new(TextSize::from(369), TextSize::from(371)),
+                TextRange::new(TextSize::from(518), TextSize::from(520)),
+                TextRange::new(TextSize::from(701), TextSize::from(703)),
             ]
         );
     }
