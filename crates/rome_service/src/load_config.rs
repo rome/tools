@@ -1,7 +1,8 @@
 use crate::configuration::{Configuration, ConfigurationError};
 use crate::{DynRef, RomeError};
 use rome_fs::FileSystem;
-use std::env::current_dir;
+use std::io::ErrorKind;
+use std::path::PathBuf;
 
 /// This function is responsible to load the rome configuration.
 ///
@@ -10,30 +11,28 @@ pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
     configuration_type: ConfigurationType,
 ) -> Result<Option<Configuration>, RomeError> {
-    let working_directory = current_dir().ok();
     let config_name = file_system.config_name();
-    if let Some(working_directory) = working_directory {
-        let configuration_path = working_directory.join(config_name);
-        let file = file_system.open(&configuration_path);
+    let configuration_path = PathBuf::from(config_name);
+    let file = file_system.open(&configuration_path);
 
-        return match file {
-            Ok(mut file) => {
-                let mut buffer = String::new();
-                file.read_to_string(&mut buffer).ok();
+    return match file {
+        Ok(mut file) => {
+            let mut buffer = String::new();
+            file.read_to_string(&mut buffer).ok();
 
-                let configuration: Configuration = serde_json::from_str(&buffer)
-                    .map_err(|err| RomeError::MalformedConfigurationFile(err.to_string()))?;
+            let configuration: Configuration = serde_json::from_str(&buffer)
+                .map_err(|err| RomeError::MalformedConfigurationFile(err.to_string()))?;
 
-                compute_configuration(configuration, configuration_type)
+            compute_configuration(configuration, configuration_type)
+        }
+        Err(err) => {
+            // we throw an error only when we can't find a file
+            if err.kind() != ErrorKind::NotFound {
+                return Err(RomeError::CantReadFile(configuration_path));
             }
-            Err(_) => {
-                // TODO: log possible error
-                Ok(None)
-            }
-        };
-    }
-
-    Ok(None)
+            return Ok(None);
+        }
+    };
 }
 
 /// The type of configuration we want to load

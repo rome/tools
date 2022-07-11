@@ -11,9 +11,7 @@ use crate::{
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    // reading the configuration should not cause an error, rome should working even without it
-    let configuration = load_config(&session.app.fs, ConfigurationType::Root);
-    let configuration = configuration.unwrap_or(None);
+    let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
 
     if let Some(configuration) = &configuration {
         if configuration.is_formatter_disabled() {

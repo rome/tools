@@ -5,6 +5,7 @@ use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
+use std::path::PathBuf;
 
 pub mod configuration;
 mod file_handlers;
@@ -35,9 +36,9 @@ pub enum RomeError {
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
     FormatWithErrorsDisabled,
     /// Thrown when a rome can't read a generic directory
-    CantReadDirectory(RomePath),
+    CantReadDirectory(PathBuf),
     /// Thrown when a rome can't read a generic file
-    CantReadFile(RomePath),
+    CantReadFile(PathBuf),
     /// Error thrown when de-serialising the configuration from file, the issues can be many:
     /// - syntax error
     /// - incorrect fields
