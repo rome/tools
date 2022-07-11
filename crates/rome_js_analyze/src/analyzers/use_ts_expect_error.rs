@@ -69,10 +69,12 @@ impl Rule for UseTsExpectError {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyStatement>;
-    /// Because `ts-ignore` could be used in multiple places, we need to track the state of each `@ts-ignore`.
-    /// The first element of tuple is the index of the original leading trivia pieces that need to replace,
-    /// the second element of tuple is a [Vector] of the range of `@ts-ignore` in the original trivia piece text,
-    /// we use a [Vector] to store the range because the `@ts-ignore` could exist multiple time in single trivia piece.
+    /// `ts-ignore` could be used in multiple places inside a comment, we need to track the state of each `@ts-ignore`.
+    /// In order to track these comments, we shape the state with a [Vec] of tuples, where a tuple contains:
+    /// - the first element is the position  of the original leading trivia that needs to be replaced;
+    /// - the second element of the tuple is a [vector](Vec) of the [ranges](Range) of the string `"@ts-ignore"` found in the original trivia piece text;
+    /// 
+    /// We use a [Vector] because the string `"@ts-ignore"` can be present multiple times inside a comment.
     /// ## Example
     /// ```js
     /// /**
