@@ -5,10 +5,21 @@
     "scripts": {
         "postinstall": "node scripts/postinstall.js"
     },
+    "homepage": "https://rome.tools",
+    "author": "Sebastian McKenzie",
+    "bugs": "https://github.com/rome/tools/issues",
+    "description": "Rome is a toolchain for the web: formatter, linter and more",
     "files": [
         "bin/rome",
         "scripts/postinstall.js",
         "README.md"
+    ],
+    "keywords": [
+        "JavaScript",
+        "TypeScript",
+        "format",
+        "lint",
+        "toolchain"
     ],
     "engines": {
         "node": ">=14.18.0"
