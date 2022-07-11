@@ -29,12 +29,10 @@ function f() {
 
 ### Valid
 
-/// ```js
+```js
 function f() {
-let arguments = 1;
-console.log(arguments);
+    let arguments = 1;
+    console.log(arguments);
 }
-
-```
 ```
 
