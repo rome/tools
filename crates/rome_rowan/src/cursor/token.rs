@@ -4,6 +4,7 @@ use crate::{
     green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText, WalkEvent,
 };
 use std::hash::{Hash, Hasher};
+use std::ptr::NonNull;
 use std::rc::Rc;
 use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
@@ -57,6 +58,10 @@ impl SyntaxToken {
                 );
             }
         }
+    }
+
+    pub(crate) fn key(&self) -> (NonNull<()>, TextSize) {
+        self.data().key()
     }
 
     #[inline]

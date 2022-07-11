@@ -7,6 +7,7 @@ use crate::{
 use std::hash::{Hash, Hasher};
 use std::iter::FusedIterator;
 use std::ops;
+use std::ptr::NonNull;
 use std::rc::Rc;
 use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
@@ -149,6 +150,11 @@ impl SyntaxNode {
     #[inline]
     pub fn text_trimmed(&self) -> SyntaxNodeText {
         SyntaxNodeText::with_range(self.clone(), self.text_trimmed_range())
+    }
+
+    #[inline]
+    pub(crate) fn key(&self) -> (NonNull<()>, TextSize) {
+        self.data().key()
     }
 
     #[inline]

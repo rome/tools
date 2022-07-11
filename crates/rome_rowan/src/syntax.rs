@@ -12,10 +12,11 @@ pub use trivia::{
 };
 
 pub use element::SyntaxElement;
+pub(crate) use node::SyntaxSlots;
 pub use node::{
     Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
+    SyntaxSlot,
 };
-pub(crate) use node::{SyntaxSlot, SyntaxSlots};
 
 pub use token::SyntaxToken;
 

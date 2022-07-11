@@ -11,6 +11,7 @@ use std::any::TypeId;
 use std::fmt::{Debug, Formatter};
 use std::iter::{self, FusedIterator};
 use std::marker::PhantomData;
+use std::ptr::NonNull;
 use std::{fmt, ops};
 use text_size::{TextRange, TextSize};
 
@@ -48,6 +49,10 @@ impl<L: Language> SyntaxNode<L> {
 
     fn green_node(&self) -> GreenNode {
         self.raw.green().to_owned()
+    }
+
+    pub fn key(&self) -> (NonNull<()>, TextSize) {
+        self.raw.key()
     }
 
     /// Returns the element stored in the slot with the given index. Returns [None] if the slot is empty.
@@ -710,6 +715,14 @@ impl<L: Language> SyntaxSlot<L> {
     pub fn into_token(self) -> Option<SyntaxToken<L>> {
         match self {
             SyntaxSlot::Token(token) => Some(token),
+            _ => None,
+        }
+    }
+
+    pub fn into_syntax_element(self) -> Option<SyntaxElement<L>> {
+        match self {
+            SyntaxSlot::Node(node) => Some(SyntaxElement::Node(node)),
+            SyntaxSlot::Token(token) => Some(SyntaxElement::Token(token)),
             _ => None,
         }
     }
