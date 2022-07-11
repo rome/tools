@@ -33,11 +33,6 @@ impl CliSession<'static> {
 
 /// Main function to run Rome CLI
 pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
-    session
-        .app
-        .read_configuration_path()
-        // reading the configuration should not cause an error, rome should working even without it
-        .ok();
     let has_metrics = session.args.contains("--show-metrics");
     if has_metrics {
         crate::metrics::init_metrics();
