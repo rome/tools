@@ -12,6 +12,7 @@ mod os;
 
 pub use memory::MemoryFileSystem;
 pub use os::OsFileSystem;
+pub const CONFIG_NAME: &str = "rome.json";
 
 pub trait FileSystem: Sync + RefUnwindSafe {
     /// Open a handle to the file at `path`
@@ -25,8 +26,10 @@ pub trait FileSystem: Sync + RefUnwindSafe {
     /// efficiently batch many filesystem read operations
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>);
 
-    /// The file system returns the path to the main configuration file
-    fn config_path(&self) -> Option<PathBuf>;
+    /// Returns the name of the main configuration file
+    fn config_name(&self) -> &str {
+        CONFIG_NAME
+    }
 }
 
 pub trait File {
@@ -82,8 +85,5 @@ where
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         T::traversal(self, func)
-    }
-    fn config_path(&self) -> Option<PathBuf> {
-        T::config_path(self)
     }
 }

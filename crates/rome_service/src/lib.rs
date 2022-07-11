@@ -4,7 +4,6 @@ use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
-use std::io;
 use std::ops::{Deref, DerefMut};
 
 pub mod configuration;
@@ -129,13 +128,6 @@ impl<'app> App<'app> {
             DynRef::Owned(Box::new(OsFileSystem)),
             DynRef::Owned(Box::new(EnvConsole::new(no_colors))),
         )
-    }
-
-    /// It reads the configuration path from the file system and it saves it internally
-    pub fn read_configuration_path(&mut self) -> io::Result<()> {
-        let path = self.fs.config_path();
-        self.config_path = path.map(|path| RomePath::new(&path, 0));
-        Ok(())
     }
 }
 

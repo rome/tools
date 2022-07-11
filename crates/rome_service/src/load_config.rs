@@ -1,30 +1,39 @@
 use crate::configuration::{Configuration, ConfigurationError};
-use crate::RomeError;
-use rome_fs::RomePath;
-use std::path::PathBuf;
-
-pub const CONFIG_FILENAME: &str = "rome.json";
+use crate::{DynRef, RomeError};
+use rome_fs::FileSystem;
+use std::env::current_dir;
 
 /// This function is responsible to load the rome configuration.
 ///
-/// The `config_path` is the path to the configuration file.
+/// The `file_system` will read the configuration file
 pub fn load_config(
-    config_path: &PathBuf,
+    file_system: &DynRef<dyn FileSystem>,
     configuration_type: ConfigurationType,
 ) -> Result<Option<Configuration>, RomeError> {
-    // path of the configuration file
-    let config_path = RomePath::new(config_path, 0);
+    let working_directory = current_dir().ok();
+    let config_name = file_system.config_name();
+    if let Some(working_directory) = working_directory {
+        let configuration_path = working_directory.join(config_name);
+        let file = file_system.open(&configuration_path);
 
-    let buffer = config_path.read_to_string().ok();
+        return match file {
+            Ok(mut file) => {
+                let mut buffer = String::new();
+                file.read_to_string(&mut buffer).ok();
 
-    if let Some(buffer) = buffer {
-        let configuration: Configuration = serde_json::from_str(&buffer)
-            .map_err(|err| RomeError::MalformedConfigurationFile(err.to_string()))?;
+                let configuration: Configuration = serde_json::from_str(&buffer)
+                    .map_err(|err| RomeError::MalformedConfigurationFile(err.to_string()))?;
 
-        compute_configuration(configuration, configuration_type)
-    } else {
-        Ok(None)
+                compute_configuration(configuration, configuration_type)
+            }
+            Err(_) => {
+                // TODO: log possible error
+                Ok(None)
+            }
+        };
     }
+
+    Ok(None)
 }
 
 /// The type of configuration we want to load

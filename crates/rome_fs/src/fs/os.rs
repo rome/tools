@@ -1,5 +1,11 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
-use std::env::current_dir;
+use super::{BoxedTraversal, File};
+use crate::{
+    fs::{TraversalContext, TraversalScope},
+    interner::FileId,
+    FileSystem, RomePath,
+};
+use rayon::{scope, Scope};
 use std::{
     ffi::OsStr,
     fs,
@@ -8,22 +14,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use rayon::{scope, Scope};
-
-use crate::{
-    fs::{TraversalContext, TraversalScope},
-    interner::FileId,
-    FileSystem, RomePath,
-};
-
-use super::{BoxedTraversal, File};
-
 /// Implementation of [FileSystem] that directly calls through to the underlying OS
 pub struct OsFileSystem;
-
-impl OsFileSystem {
-    pub const MAIN_CONFIGURATION_FILENAME: &'static str = "rome.json";
-}
 
 impl FileSystem for OsFileSystem {
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
@@ -40,11 +32,6 @@ impl FileSystem for OsFileSystem {
         OsTraversalScope::with(move |scope| {
             func(scope);
         })
-    }
-
-    fn config_path(&self) -> Option<PathBuf> {
-        let path = current_dir().ok();
-        path.map(|path| path.join(Self::MAIN_CONFIGURATION_FILENAME))
     }
 }
 
