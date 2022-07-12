@@ -39,7 +39,7 @@ impl Rule for NoCatchAssign {
     /// Why use [JsCatchClause] instead of [JsIdentifierAssignment] ? Because this could reduce search range.
     /// We only compare the declaration of [JsCatchClause] with all descent [JsIdentifierAssignment] of its body.
     type Query = Semantic<JsCatchClause>;
-    /// The first element of `State` is the re assign catch parameter, the second element of `State` is the declaration of catch clause.
+    /// The first element of `State` is the reassignment of catch parameter, the second element of `State` is the declaration of catch clause.
     type State = (JsIdentifierAssignment, JsSyntaxNode);
     type Signals = Vec<Self::State>;
 
