@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
@@ -18,7 +18,7 @@ export function classNames(
 	return classes.filter(Boolean).join(" ");
 }
 // Only save prop of `PlaygroundState` that we interested
-export const OPTIONS_TO_PERSIST: Array<keyof PlaygroundState> = ["treeStyle"];
+export const OPTIONS_TO_PERSIST: Array<keyof RomeConfiguration> = ["treeStyle"];
 // Define general type for useWindowSize hook, which includes width and height
 interface Size {
 	width: number | undefined;
@@ -246,8 +246,7 @@ function mergeRomeConfig(
 	config: Partial<RomeConfiguration>,
 	defaultConfig: RomeConfiguration,
 ): RomeConfiguration {
-	const interested_keys: Array<keyof RomeConfiguration> = OPTIONS_TO_PERSIST;
-	return interested_keys.reduce((acc, key) => {
+	return OPTIONS_TO_PERSIST.reduce((acc, key) => {
 		if (config[key]) {
 			acc[key] = config[key as keyof RomeConfiguration];
 		} else {
