@@ -1,11 +1,22 @@
 use rome_js_syntax::{
-    JsAnyRoot, JsIdentifierAssignment, JsLanguage, JsReferenceIdentifier, JsSyntaxNode, TextRange,
+    JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
+    JsSyntaxNode, TextRange,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
-use std::{collections::HashMap, iter::FusedIterator, sync::Arc};
+use std::{collections::HashMap, iter::FusedIterator, marker::PhantomData, sync::Arc};
 
 use crate::{SemanticEvent, SemanticEventExtractor};
+
+/// Marker trait that groups all "AstNode" that are declarations
+pub trait IsDeclarationAstNode: AstNode<Language = JsLanguage> {
+    #[inline(always)]
+    fn node(&self) -> &Self {
+        self
+    }
+}
+
+impl IsDeclarationAstNode for JsIdentifierBinding {}
 
 /// Marker trait that groups all "AstNode" that have declarations
 pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
@@ -34,7 +45,8 @@ struct SemanticModelData {
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
-    declarations_by_range: HashMap<TextRange, TextRange>,
+    declared_at_by_range: HashMap<TextRange, TextRange>,
+    declaration_all_references: HashMap<TextRange, Vec<TextRange>>,
 }
 
 impl PartialEq for SemanticModelData {
@@ -133,13 +145,17 @@ impl Scope {
         let range = &data.bindings[*i];
         let node = self.data.node_by_range.get(range)?;
 
-        Some(Binding { node: node.clone() })
+        Some(Binding {
+            node: node.clone(),
+            data: self.data.clone(),
+        })
     }
 }
 
 /// Provides all information regarding to a specific binding.
 pub struct Binding {
     node: JsSyntaxNode,
+    data: Arc<SemanticModelData>,
 }
 
 impl Binding {
@@ -147,7 +163,55 @@ impl Binding {
     pub fn syntax(&self) -> &JsSyntaxNode {
         &self.node
     }
+
+    pub fn all_references(&self) -> ReferenceIter {
+        let range = self.node.text_range();
+
+        ReferenceIter {
+            data: self.data.clone(),
+            declaration_at: range,
+            i: 0,
+            phantom: PhantomData,
+        }
+    }
 }
+
+pub struct Reference {
+    node: JsSyntaxNode,
+}
+
+impl Reference {
+    pub fn node(&self) -> &JsSyntaxNode {
+        &self.node
+    }
+}
+
+/// Iterate all references of a particular declaration.
+pub struct ReferenceIter<'a> {
+    data: Arc<SemanticModelData>,
+    declaration_at: TextRange,
+    i: usize,
+    phantom: PhantomData<&'a ()>,
+}
+
+impl<'a> Iterator for ReferenceIter<'a> {
+    type Item = Reference;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let references = self
+            .data
+            .declaration_all_references
+            .get(&self.declaration_at)?;
+        let range = references.get(self.i)?;
+        let node = self.data.node_by_range.get(range)?;
+
+        self.i += 1;
+
+        Some(Reference { node: node.clone() })
+    }
+}
+
+impl<'a> FusedIterator for ReferenceIter<'a> {}
 
 /// Iterate all bindings that were bound in a given scope. It **does
 /// not** return bindings of parent scopes.
@@ -172,7 +236,10 @@ impl Iterator for ScopeBindingsIter {
 
         self.binding_index += 1;
 
-        Some(Binding { node: node.clone() })
+        Some(Binding {
+            node: node.clone(),
+            data: self.data.clone(),
+        })
     }
 }
 
@@ -245,7 +312,7 @@ impl SemanticModel {
     }
 
     /// Return the [Declaration] of a reference.
-    /// Can also be called from [JsReferenceIdentifier]::declaration extension method.
+    /// Can also be called from "declaration" extension method.
     ///
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
@@ -269,9 +336,49 @@ impl SemanticModel {
     pub fn declaration(&self, reference: &impl HasDeclarationAstNode) -> Option<Binding> {
         let reference = reference.node();
         let range = reference.syntax().text_range();
-        let declaration_range = self.data.declarations_by_range.get(&range)?;
+        let declaration_range = self.data.declared_at_by_range.get(&range)?;
         let node = self.data.node_by_range.get(declaration_range)?.clone();
-        Some(Binding { node })
+        Some(Binding {
+            node,
+            data: self.data.clone(),
+        })
+    }
+
+    /// Return all [Reference] of a declaration.
+    /// Can also be called from "all_references" extension method.
+    ///
+    /// ```rust
+    /// use rome_rowan::{AstNode, SyntaxNodeCast};
+    /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
+    /// use rome_js_semantic::{semantic_model, DeclarationExtensions};
+    ///
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
+    /// let model = semantic_model(&r.tree());
+    ///
+    /// let a_binding = r
+    ///     .syntax()
+    ///     .descendants()
+    ///     .filter_map(|x| x.cast::<JsIdentifierBinding>())
+    ///     .find(|x| x.text() == "a")
+    ///     .unwrap();
+    ///
+    /// let all_references = model.all_references(&a_binding);
+    /// // or
+    /// let all_references = a_binding.all_references(&model);
+    /// ```
+    pub fn all_references<'a>(
+        &'a self,
+        declaration: &impl IsDeclarationAstNode,
+    ) -> ReferenceIter<'a> {
+        let node = declaration.node();
+        let range = node.syntax().text_range();
+
+        ReferenceIter {
+            data: self.data.clone(),
+            declaration_at: range,
+            i: 0,
+            phantom: PhantomData,
+        }
     }
 }
 
@@ -295,14 +402,28 @@ impl<T: AstNode<Language = JsLanguage>> SemanticScopeExtensions for T {
 /// get its declaration.
 pub trait DeclarationExtensions {
     /// Return the [Binding] that declared the symbol this reference references.
-    fn declaration(&self, model: &SemanticModel) -> Option<Binding>;
-}
-
-impl<T: HasDeclarationAstNode> DeclarationExtensions for T {
-    fn declaration(&self, model: &SemanticModel) -> Option<Binding> {
+    fn declaration(&self, model: &SemanticModel) -> Option<Binding>
+    where
+        Self: HasDeclarationAstNode,
+    {
         model.declaration(self)
     }
 }
+
+impl<T: HasDeclarationAstNode> DeclarationExtensions for T {}
+
+/// Extension method to allow any node that is a declaration to easily
+/// get all of its references.
+pub trait AllReferencesExtensions {
+    fn all_references<'a>(&self, model: &'a SemanticModel) -> ReferenceIter<'a>
+    where
+        Self: IsDeclarationAstNode,
+    {
+        model.all_references(self)
+    }
+}
+
+impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
 
 /// Builds the [SemanticModel] consuming [SemanticEvent] and [SyntaxNode].
 /// For a good example on how to use it see [semantic_model].
@@ -317,6 +438,7 @@ pub struct SemanticModelBuilder {
     scope_by_range: Vec<Interval<usize, usize>>,
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     declarations_by_range: HashMap<TextRange, TextRange>,
+    declaration_all_references: HashMap<TextRange, Vec<TextRange>>,
 }
 
 impl SemanticModelBuilder {
@@ -328,6 +450,7 @@ impl SemanticModelBuilder {
             scope_by_range: vec![],
             node_by_range: HashMap::new(),
             declarations_by_range: HashMap::new(),
+            declaration_all_references: HashMap::new(),
         }
     }
 
@@ -381,24 +504,40 @@ impl SemanticModelBuilder {
                 declared_at: declaration_at,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
+                self.declaration_all_references
+                    .entry(declaration_at)
+                    .or_default()
+                    .push(range);
             }
             HoistedRead {
                 range,
                 declared_at: declaration_at,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
+                self.declaration_all_references
+                    .entry(declaration_at)
+                    .or_default()
+                    .push(range);
             }
             Write {
                 range,
                 declared_at: declaration_at,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
+                self.declaration_all_references
+                    .entry(declaration_at)
+                    .or_default()
+                    .push(range);
             }
             HoistedWrite {
                 range,
                 declared_at: declaration_at,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
+                self.declaration_all_references
+                    .entry(declaration_at)
+                    .or_default()
+                    .push(range);
             }
             UnresolvedReference { .. } => {}
         }
@@ -410,7 +549,8 @@ impl SemanticModelBuilder {
             scopes: self.scopes,
             scope_by_range: Lapper::new(self.scope_by_range),
             node_by_range: self.node_by_range,
-            declarations_by_range: self.declarations_by_range,
+            declared_at_by_range: self.declarations_by_range,
+            declaration_all_references: self.declaration_all_references,
         };
         SemanticModel::new(data)
     }
@@ -449,7 +589,7 @@ mod test {
     #[test]
     pub fn ok_semantic_model() {
         let r = rome_js_parser::parse(
-            "function f(){let a = arguments[0]; let b = a + 1; b = 2;}",
+            "function f(){let a = arguments[0]; let b = a + 1; b = 2; console.log(b)}",
             0,
             SourceType::js_module(),
         );
@@ -539,5 +679,13 @@ mod test {
 
         let b_declaration = b_from_b_equals_2.declaration(&model).unwrap();
         assert_eq!("b", b_declaration.syntax().text_trimmed());
+
+        // All references
+
+        let a_references = a_declaration.all_references();
+        assert_eq!(1, a_references.count());
+
+        let b_references = b_declaration.all_references();
+        assert_eq!(2, b_references.count());
     }
 }
