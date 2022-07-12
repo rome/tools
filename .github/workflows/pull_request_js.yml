@@ -44,5 +44,6 @@ jobs:
         with:
           version: 7
       - name: Type check
-        working-directory: website/playground
-        run: pnpm tsc
+        run: |
+          cd website/playground
+          pnpm tsc
