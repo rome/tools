@@ -16,37 +16,40 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         .as_ref()
         .map_or(false, |c| c.is_linter_disabled());
 
+    let max_diagnostics: Option<u8> = session
+        .args
+        .opt_value_from_str("--max-diagnostics")
+        .map_err(|source| Termination::ParseError {
+            argument: "--max-diagnostics",
+            source,
+        })?;
+    let max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
+        if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
+            return Err(Termination::OverflowNumberArgument(
+                "--max-diagnostics",
+                "50",
+            ));
+        }
+
+        max_diagnostics
+    } else {
+        // default value
+        20
+    };
+
     let mode = if session.args.contains("--apply") {
-        TraversalMode::Fix {
+        TraversalMode::Check {
             linter_disabled,
             formatter_disabled,
+            should_fix: true,
+            max_diagnostics,
         }
     } else {
-        let max_diagnostics: Option<u8> = session
-            .args
-            .opt_value_from_str("--max-diagnostics")
-            .map_err(|source| Termination::ParseError {
-                argument: "--max-diagnostics",
-                source,
-            })?;
-        let max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
-            if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
-                return Err(Termination::OverflowNumberArgument(
-                    "--max-diagnostics",
-                    "50",
-                ));
-            }
-
-            max_diagnostics
-        } else {
-            // default value
-            20
-        };
-
         TraversalMode::Check {
             max_diagnostics,
             linter_disabled,
             formatter_disabled,
+            should_fix: false,
         }
     };
 
