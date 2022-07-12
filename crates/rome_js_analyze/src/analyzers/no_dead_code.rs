@@ -55,51 +55,10 @@ impl Rule for NoDeadCode {
 
         let cfg = ctx.query();
 
-        // Traverse the CFG and calculate block / instruction reachability
-        let block_paths = traverse_cfg(cfg, &mut signals);
-
-        // Detect unreachable blocks using the result of the above traversal
-        'blocks: for (index, block) in cfg.blocks.iter().enumerate() {
-            let index = index as u32;
-            match block_paths.get(&index) {
-                // Block has incoming paths, but may be unreachable if they all
-                // have a dominating terminator intruction
-                Some(paths) => {
-                    let mut terminators = Vec::new();
-                    for path in paths {
-                        if let Some(terminator) = *path {
-                            terminators.push(terminator);
-                        } else {
-                            // This path has no terminator, the block is reachable
-                            continue 'blocks;
-                        }
-                    }
-
-                    // Mark each instruction in the block as unreachable with
-                    // the appropriate terminator labels
-                    for inst in &block.instructions {
-                        if let Some(node) = &inst.node {
-                            for terminator in &terminators {
-                                signals.push(node, *terminator);
-                            }
-                        }
-                    }
-                }
-                // Block has no incoming paths, is completely cut off from the CFG
-                // In theory this shouldn't happen as our CFG also stores
-                // unreachable edges, if we get here there might be a bug in
-                // the control flow analysis
-                None => {
-                    for inst in &block.instructions {
-                        if let Some(node) = &inst.node {
-                            // There is no incoming control flow so we can't
-                            // determine a terminator instruction for this
-                            // unreachable range
-                            signals.push(node, None);
-                        }
-                    }
-                }
-            }
+        if exceeds_complexity_threshold(cfg) {
+            analyze_simple(cfg, &mut signals)
+        } else {
+            analyze_fine(cfg, &mut signals)
         }
 
         signals
@@ -224,6 +183,199 @@ impl Rule for NoDeadCode {
         }
 
         Some(diagnostic)
+    }
+}
+
+/// Any function with a complexity score higher than this value will use the
+/// simple reachability analysis instead of the fine analysis
+const COMPLEXITY_THRESHOLD: u32 = 20;
+
+/// Returns true if the "complexity score" for the [ControlFlowGraph] is higher
+/// than [COMPLEXITY_THRESHOLD]. This score is an arbritrary value (the formula
+/// is similar to the cyclomatic complexity of the function but this is only
+/// approximative) used to determine whether the NoDeadCode rule should perform
+/// a fine reachability analysis or fall back to a simpler algorithm to avoid
+/// spending too much time analyzing exceedingly complex functions
+fn exceeds_complexity_threshold(cfg: &ControlFlowGraph) -> bool {
+    let nodes = cfg.blocks.len() as u32;
+
+    let mut edges: u32 = 0;
+    let mut conditionals: u32 = 0;
+
+    for block in &cfg.blocks {
+        for inst in &block.instructions {
+            if let InstructionKind::Jump { conditional, .. } = inst.kind {
+                edges += 1;
+
+                if conditional {
+                    conditionals += 1;
+                }
+
+                let complexity = edges.saturating_sub(nodes) + conditionals / 2;
+                if complexity > COMPLEXITY_THRESHOLD {
+                    return true;
+                }
+            }
+        }
+    }
+
+    false
+}
+
+/// Perform a simple reachability analysis, does not attempt to determine a
+/// terminator instruction for unreachable ranges allowing blocks to be visited
+/// at most once and ensuring the algorithm finishes in a bounded time
+fn analyze_simple(cfg: &ControlFlowGraph, signals: &mut UnreachableRanges) {
+    // Perform a simple reachability analysis on the control flow graph by
+    // traversing the function starting at the entry point
+    let mut reachable_blocks = RoaringBitmap::new();
+    let mut queue = VecDeque::new();
+
+    if !cfg.blocks.is_empty() {
+        reachable_blocks.insert(0);
+        queue.push_back((0, None));
+    }
+
+    while let Some((index, handlers)) = queue.pop_front() {
+        let index = index as usize;
+        let block = &cfg.blocks[index];
+
+        // Lookup the existence of an exception edge for this block but
+        // defer its creation until an instruction that can throw is encountered
+        let mut exception_handlers = block.exception_handlers.split_first();
+
+        // Tracks whether this block is "terminated", if an instruction
+        // that unconditionally aborts the control flow of this block has
+        // been encountered
+        let mut has_terminator = false;
+
+        for inst in &block.instructions {
+            // If this block is terminated, mark this instruction as unreachable and continue
+            if has_terminator {
+                if let Some(node) = &inst.node {
+                    signals.push(node, None);
+                }
+                continue;
+            }
+
+            // Do not create exception edges for instructions with no side effects
+            if has_side_effects(inst) {
+                // If this block has a pending exception edge, create an
+                // additional path diverging towards the corresponding
+                // catch or finally block
+                if let Some((handler, handlers)) = exception_handlers.take() {
+                    if reachable_blocks.insert(handler.target) {
+                        queue.push_back((handler.target, Some(handlers)));
+                    }
+                }
+            }
+
+            match inst.kind {
+                InstructionKind::Statement => {}
+                InstructionKind::Jump {
+                    conditional,
+                    block,
+                    finally_fallthrough,
+                } => {
+                    if finally_fallthrough && handlers.is_some() {
+                        // Jump towards the corresponding block if there are pending exception
+                        // handlers, otherwise return from the function
+                        let handlers = handlers.and_then(<[_]>::split_first);
+
+                        if let Some((handler, handlers)) = handlers {
+                            if reachable_blocks.insert(handler.target) {
+                                queue.push_back((handler.target, Some(handlers)));
+                            }
+                        }
+                    } else if reachable_blocks.insert(block.index()) {
+                        // Insert an edge if this jump is reachable
+                        queue.push_back((block.index(), handlers));
+                    }
+
+                    // Jump is a terminator instruction if it's unconditional
+                    if !conditional {
+                        has_terminator = true;
+                    }
+                }
+                InstructionKind::Return => {
+                    if let Some((handler, handlers)) = block.cleanup_handlers.split_first() {
+                        if reachable_blocks.insert(handler.target) {
+                            queue.push_back((handler.target, Some(handlers)));
+                        }
+                    }
+
+                    has_terminator = true;
+                }
+            }
+        }
+    }
+
+    // Detect blocks that were never reached by the above traversal
+    for (index, block) in cfg.blocks.iter().enumerate() {
+        let index = index as u32;
+        if reachable_blocks.contains(index) {
+            continue;
+        }
+
+        for inst in &block.instructions {
+            if let Some(node) = &inst.node {
+                signals.push(node, None);
+            }
+        }
+    }
+}
+
+/// Performs a fine reachability analysis of the control flow graph: this
+/// algorithm traverse all the possible paths through the function to determine
+/// the reachability of each block and instruction but also find one or more
+/// "terminator instructions" for each unreachable range of code that cause it
+/// to be impossible to reach
+fn analyze_fine(cfg: &ControlFlowGraph, signals: &mut UnreachableRanges) {
+    // Traverse the CFG and calculate block / instruction reachability
+    let block_paths = traverse_cfg(cfg, signals);
+
+    // Detect unreachable blocks using the result of the above traversal
+    'blocks: for (index, block) in cfg.blocks.iter().enumerate() {
+        let index = index as u32;
+        match block_paths.get(&index) {
+            // Block has incoming paths, but may be unreachable if they all
+            // have a dominating terminator intruction
+            Some(paths) => {
+                let mut terminators = Vec::new();
+                for path in paths {
+                    if let Some(terminator) = *path {
+                        terminators.push(terminator);
+                    } else {
+                        // This path has no terminator, the block is reachable
+                        continue 'blocks;
+                    }
+                }
+
+                // Mark each instruction in the block as unreachable with
+                // the appropriate terminator labels
+                for inst in &block.instructions {
+                    if let Some(node) = &inst.node {
+                        for terminator in &terminators {
+                            signals.push(node, *terminator);
+                        }
+                    }
+                }
+            }
+            // Block has no incoming paths, is completely cut off from the CFG
+            // In theory this shouldn't happen as our CFG also stores
+            // unreachable edges, if we get here there might be a bug in
+            // the control flow analysis
+            None => {
+                for inst in &block.instructions {
+                    if let Some(node) = &inst.node {
+                        // There is no incoming control flow so we can't
+                        // determine a terminator instruction for this
+                        // unreachable range
+                        signals.push(node, None);
+                    }
+                }
+            }
+        }
     }
 }
 
