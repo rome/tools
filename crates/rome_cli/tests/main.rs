@@ -1,3 +1,5 @@
+mod configs;
+
 use std::{ffi::OsString, path::Path};
 
 use pico_args::Arguments;
@@ -39,6 +41,18 @@ var g;
 var h;
 var i;
 ";
+
+const CUSTOM_FORMAT_BEFORE: &str = r#"
+function f() {
+return { something }
+}
+"#;
+
+// six spaces
+const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
+      return { something };
+}
+"#;
 
 mod check {
     use super::*;
@@ -305,6 +319,7 @@ mod ci {
 
 mod format {
     use super::*;
+    use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT};
 
     #[test]
     fn print() {
@@ -520,6 +535,74 @@ mod format {
             ),
         }
     }
+
+    #[test]
+    fn format_with_configuration() {
+        let mut fs = MemoryFileSystem::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_FORMAT.as_bytes());
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("file.js"),
+                OsString::from("--write"),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, CUSTOM_FORMAT_AFTER);
+    }
+
+    #[test]
+    fn format_is_disabled() {
+        let mut fs = MemoryFileSystem::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_DISABLED_FORMATTER.as_bytes());
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("file.js"),
+                OsString::from("--write"),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, CUSTOM_FORMAT_BEFORE);
+    }
 }
 
 mod help {
@@ -657,6 +740,87 @@ mod main {
                 assert_eq!(limit, "50");
             }
             _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
+        }
+    }
+}
+
+mod configuration {
+    use crate::configs::{CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_ROOT_FALSE};
+    use pico_args::Arguments;
+    use rome_cli::{run_cli, CliSession};
+    use rome_console::BufferConsole;
+    use rome_fs::MemoryFileSystem;
+    use rome_service::{App, DynRef};
+    use std::ffi::OsString;
+    use std::path::Path;
+
+    #[test]
+    fn incorrect_root() {
+        let mut fs = MemoryFileSystem::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_ROOT_FALSE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
+        });
+
+        assert!(result.is_err());
+
+        match result {
+            Err(error) => {
+                assert_eq!(
+                    error.to_string(),
+                    "the main configuration file, rome.json, must have the field 'root' set to `true`"
+                )
+            }
+            _ => panic!("expected an error, but found none"),
+        }
+    }
+
+    #[test]
+    fn correct_root() {
+        let mut fs = MemoryFileSystem::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_ALL_FIELDS.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
+        });
+
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn line_width_error() {
+        let mut fs = MemoryFileSystem::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_BAD_LINE_WIDTH.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
+        });
+        assert!(result.is_err());
+
+        match result {
+            Err(error) => {
+                assert!(error
+                    .to_string()
+                    .contains("The line width exceeds the maximum value (320)"),)
+            }
+            _ => panic!("expected an error, but found none"),
         }
     }
 }
