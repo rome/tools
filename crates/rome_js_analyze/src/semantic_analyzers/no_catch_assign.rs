@@ -1,7 +1,7 @@
 use crate::{semantic_services::Semantic, JsRuleAction};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsCatchClause, JsIdentifierAssignment};
+use rome_js_syntax::{JsCatchClause, JsIdentifierAssignment, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -39,59 +39,58 @@ impl Rule for NoCatchAssign {
     /// Why use [JsCatchClause] instead of [JsIdentifierAssignment] ? Because this could reduce search range.
     /// We only compare the declaration of [JsCatchClause] with all descent [JsIdentifierAssignment] of its body.
     type Query = Semantic<JsCatchClause>;
-    type State = Vec<JsIdentifierAssignment>;
-    type Signals = Option<Self::State>;
+    /// The first element of `State` is the re assign catch parameter, the second element of `State` is the declaration of catch clause.
+    type State = (JsIdentifierAssignment, JsSyntaxNode);
+    type Signals = Vec<Self::State>;
 
-    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
         let catch_clause = ctx.query();
         let model = ctx.model();
 
-        let decl = catch_clause.declaration()?;
+        catch_clause
+            .declaration()
+            .and_then(|decl| {
+                // catch_binding
+                // ## Example
+                // try {
 
-        // catch_binding
-        // ## Example
-        // try {
+                // } catch (catch_binding) {
+                //          ^^^^^^^^^^^^^
+                // }
+                let catch_binding = decl.binding().ok()?;
+                let catch_binding_syntax = catch_binding.syntax();
+                let body = catch_clause.body().ok()?;
+                let mut invalid_assign = vec![];
 
-        // } catch (catch_binding) {
-        //          ^^^^^^^^^^^^^
-        // }
-        let catch_binding = decl.binding().ok()?;
-        let catch_binding_syntax = catch_binding.syntax();
-        let body = catch_clause.body().ok()?;
-        let mut invalid_assign = vec![];
-
-        for assignment in body
-            .syntax()
-            .descendants()
-            .filter_map(JsIdentifierAssignment::cast)
-        {
-            let decl_binding = model.declaration(&assignment).unwrap();
-            if decl_binding.syntax() == catch_binding_syntax {
-                invalid_assign.push(assignment);
-            }
-        }
-
-        (!invalid_assign.is_empty()).then(|| invalid_assign)
+                for assignment in body
+                    .syntax()
+                    .descendants()
+                    .filter_map(JsIdentifierAssignment::cast)
+                {
+                    let decl_binding = model.declaration(&assignment).unwrap();
+                    if decl_binding.syntax() == catch_binding_syntax {
+                        invalid_assign.push((assignment, catch_binding_syntax.clone()));
+                    }
+                }
+                Some(invalid_assign)
+            })
+            .unwrap_or_default()
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
-
-        let mut diagnostic = RuleDiagnostic::warning(
-            node.syntax().text_trimmed_range(),
+    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let (assignment, catch_binding_syntax) = state;
+        let diagnostic = RuleDiagnostic::warning(
+            assignment.syntax().text_trimmed_range(),
             markup! {
                 " Do not "<Emphasis>"reassign catch parameters."</Emphasis>""
             },
+        )
+        .secondary(
+            catch_binding_syntax.text_trimmed_range(),
+            markup! {
+                "The catch parameter is declared here"
+            },
         );
-
-        for assign in state.iter() {
-            diagnostic = diagnostic.secondary(
-                assign.syntax().text_trimmed_range(),
-                markup! {
-                    "Don't re assign "<Emphasis>{assign.syntax().text_trimmed().to_string()}</Emphasis>"."
-                },
-            );
-        }
 
         Some(diagnostic.footer_note("Use a local variable instead."))
     }

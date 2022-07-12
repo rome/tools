@@ -20,12 +20,12 @@ try {
 # Diagnostics
 ```
 warning[noCatchAssign]:  Do not reassign catch parameters.
-  ┌─ noCatchAssign.js:2:9
+  ┌─ noCatchAssign.js:2:24
   │
 2 │ try { } catch (e) { e; e = 10; }
-  │         ------------------------
-  │                        │
-  │                        Don't re assign e.
+  │                -       -
+  │                │        
+  │                The catch parameter is declared here
 
 =  note: Use a local variable instead.
 
@@ -34,18 +34,27 @@ warning[noCatchAssign]:  Do not reassign catch parameters.
 
 ```
 warning[noCatchAssign]:  Do not reassign catch parameters.
-   ┌─ noCatchAssign.js:5:3
-   │  
- 5 │   } catch (error) {
-   │ ┌───'
- 6 │ │   error = 100;
-   │ │   ----- Don't re assign error.
- 7 │ │   {
- 8 │ │     error = 10;
-   │ │     ----- Don't re assign error.
- 9 │ │   }
-10 │ │ }
-   │ └─'
+  ┌─ noCatchAssign.js:6:3
+  │
+5 │ } catch (error) {
+  │          ----- The catch parameter is declared here
+6 │   error = 100;
+  │   -----
+
+=  note: Use a local variable instead.
+
+
+```
+
+```
+warning[noCatchAssign]:  Do not reassign catch parameters.
+  ┌─ noCatchAssign.js:8:5
+  │
+5 │ } catch (error) {
+  │          ----- The catch parameter is declared here
+  ·
+8 │     error = 10;
+  │     -----
 
 =  note: Use a local variable instead.
 
