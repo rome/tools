@@ -9,18 +9,44 @@ use rome_js_syntax::JsLanguage;
 pub struct WorkspaceSettings {
     /// Formatter settings applied to all files in the workspaces
     pub format: FormatSettings,
+    /// Linter settings applied to all files in the workspace
+    pub linter: LinterSettings,
     /// Language specific settings
     pub languages: LanguagesSettings,
 }
 
 /// Formatter settings for the entire workspace
-#[derive(Default)]
 pub struct FormatSettings {
+    /// Enabled by default
+    pub enabled: bool,
     /// Stores whether formatting should be allowed to proceed if a given file
     /// has syntax errors
     pub format_with_errors: bool,
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,
+}
+
+impl Default for FormatSettings {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            format_with_errors: false,
+            indent_style: Some(IndentStyle::default()),
+            line_width: Some(LineWidth::default()),
+        }
+    }
+}
+
+/// Formatter settings for the entire workspace
+pub struct LinterSettings {
+    /// Enabled by default
+    pub enabled: bool,
+}
+
+impl Default for LinterSettings {
+    fn default() -> Self {
+        Self { enabled: true }
+    }
 }
 
 /// Static map of language names to language-specific settings

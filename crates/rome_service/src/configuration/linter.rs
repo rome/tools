@@ -1,3 +1,4 @@
+use crate::settings::LinterSettings;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug, Eq, PartialEq)]
@@ -10,5 +11,13 @@ pub struct LinterConfiguration {
 impl Default for LinterConfiguration {
     fn default() -> Self {
         Self { enabled: true }
+    }
+}
+
+impl From<&LinterConfiguration> for LinterSettings {
+    fn from(conf: &LinterConfiguration) -> Self {
+        Self {
+            enabled: conf.enabled,
+        }
     }
 }

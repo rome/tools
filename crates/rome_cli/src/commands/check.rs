@@ -1,20 +1,19 @@
+use crate::commands::format::parse_format_options;
 use crate::{
     traversal::{traverse, TraversalMode},
     CliSession, Termination,
 };
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+use rome_service::configuration::Configuration;
 use rome_service::load_config;
 use rome_service::load_config::ConfigurationType;
+use rome_service::settings::{LinterSettings, WorkspaceSettings};
+use rome_service::workspace::UpdateSettingsParams;
 
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
-    let formatter_disabled = configuration
-        .as_ref()
-        .map_or(false, |c| c.is_formatter_disabled());
-    let linter_disabled = configuration
-        .as_ref()
-        .map_or(false, |c| c.is_linter_disabled());
+    let mut workspace_settings = WorkspaceSettings::default();
 
     let max_diagnostics: Option<u8> = session
         .args
@@ -37,21 +36,33 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         20
     };
 
-    let mode = if session.args.contains("--apply") {
-        TraversalMode::Check {
-            linter_disabled,
-            formatter_disabled,
-            should_fix: true,
-            max_diagnostics,
-        }
-    } else {
-        TraversalMode::Check {
-            max_diagnostics,
-            linter_disabled,
-            formatter_disabled,
-            should_fix: false,
-        }
-    };
+    parse_format_options(&mut session, &mut workspace_settings, &configuration)?;
+    parse_linter_options(&mut session, &mut workspace_settings, &configuration)?;
 
-    traverse(mode, session)
+    session
+        .app
+        .workspace
+        .update_settings(UpdateSettingsParams {
+            settings: workspace_settings,
+        })?;
+
+    traverse(
+        TraversalMode::Check {
+            max_diagnostics,
+            should_fix: session.args.contains("--apply"),
+        },
+        session,
+    )
+}
+
+pub(crate) fn parse_linter_options(
+    _session: &mut CliSession,
+    workspace_settings: &mut WorkspaceSettings,
+    configuration: &Option<Configuration>,
+) -> Result<(), Termination> {
+    if let Some(configuration) = configuration {
+        workspace_settings.linter = LinterSettings::from(&configuration.linter);
+    }
+
+    Ok(())
 }

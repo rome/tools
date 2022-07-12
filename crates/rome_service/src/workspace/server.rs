@@ -137,9 +137,10 @@ impl WorkspaceServer {
 impl Workspace for WorkspaceServer {
     fn supports_feature(&self, params: SupportsFeatureParams) -> bool {
         let capabilities = self.features.get_capabilities(&params.path);
+        let settings = self.settings.read().unwrap();
         match params.feature {
-            FeatureName::Format => capabilities.format.is_some(),
-            FeatureName::Lint => capabilities.lint.is_some(),
+            FeatureName::Format => capabilities.format.is_some() && settings.format.enabled,
+            FeatureName::Lint => capabilities.lint.is_some() && settings.linter.enabled,
         }
     }
 

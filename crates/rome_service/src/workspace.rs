@@ -138,7 +138,9 @@ pub struct FixFileResult {
 }
 
 pub trait Workspace: Send + Sync + RefUnwindSafe {
-    /// Checks whether a certain feature is supported for a file at a given path
+    /// Checks whether a certain feature is supported. There are different conditions:
+    /// - Rome doesn't recognize a file, so it can provide the feature;
+    /// - the feature is disabled inside the configuration;
     fn supports_feature(&self, params: SupportsFeatureParams) -> bool;
 
     /// Update the global settings for this workspace

@@ -289,16 +289,11 @@ pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
         max_diagnostics: u8,
-        formatter_disabled: bool,
-        linter_disabled: bool,
         /// `true` when running the command `check` with the `--apply` argument
         should_fix: bool,
     },
     /// This mode is enabled when running the command `rome ci`
-    CI {
-        formatter_disabled: bool,
-        linter_disabled: bool,
-    },
+    CI,
     /// This mode is enabled when running the command `rome format`
     Format { ignore_errors: bool, write: bool },
 }
@@ -324,30 +319,6 @@ impl TraversalMode {
 
     fn is_ci(&self) -> bool {
         matches!(self, TraversalMode::CI { .. })
-    }
-
-    fn is_formatter_disabled(&self) -> bool {
-        match self {
-            TraversalMode::Check {
-                formatter_disabled, ..
-            } => *formatter_disabled,
-            TraversalMode::CI {
-                formatter_disabled, ..
-            } => *formatter_disabled,
-            _ => false,
-        }
-    }
-
-    fn is_linter_disabled(&self) -> bool {
-        match self {
-            TraversalMode::Check {
-                linter_disabled, ..
-            } => *linter_disabled,
-            TraversalMode::CI {
-                linter_disabled, ..
-            } => *linter_disabled,
-            _ => false,
-        }
     }
 }
 
@@ -379,14 +350,14 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Format,
-        }) && !self.mode.is_formatter_disabled()
+        })
     }
 
     fn can_lint(&self, rome_path: &RomePath) -> bool {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Lint,
-        }) && !self.mode.is_linter_disabled()
+        })
     }
 }
 
