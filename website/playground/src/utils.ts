@@ -3,9 +3,11 @@ import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
 import {
+	defaultRomeConfig,
 	IndentStyle,
 	PlaygroundState,
 	QuoteStyle,
+	RomeConfiguration,
 	SourceType,
 	TreeStyle,
 } from "./types";
@@ -15,7 +17,8 @@ export function classNames(
 ): string {
 	return classes.filter(Boolean).join(" ");
 }
-
+// Only save prop of `PlaygroundState` that we interested
+export const OPTIONS_TO_PERSIST: Array<keyof PlaygroundState> = ["treeStyle"];
 // Define general type for useWindowSize hook, which includes width and height
 interface Size {
 	width: number | undefined;
@@ -46,36 +49,55 @@ export function useWindowSize(): Size {
 	return windowSize;
 }
 
-export function usePlaygroundState(): [
+export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 	PlaygroundState,
 	Dispatch<SetStateAction<PlaygroundState>>,
 ] {
 	const searchParams = new URLSearchParams(window.location.search);
-	const [playgroundState, setPlaygroundState] = useState(
-		() => ({
-			code:
-				window.location.hash !== "#" ? decodeCode(
-					window.location.hash.substring(1),
-				) : "",
-			lineWidth: parseInt(searchParams.get("lineWidth") ?? "80"),
-			indentStyle:
-				(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
-			quoteStyle:
-				(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
-			indentWidth: parseInt(searchParams.get("indentWidth") ?? "2"),
-			isTypeScript: searchParams.get("typescript") === "true",
-			isJsx: searchParams.get("jsx") === "true",
-			sourceType:
-				(searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
-			treeStyle: TreeStyle.Json,
-		}),
-	);
+	const initState = () => ({
+		code:
+			window.location.hash !== "#" ? decodeCode(
+				window.location.hash.substring(1),
+			) : "",
+		lineWidth: parseInt(
+			searchParams.get("lineWidth") ?? defaultRomeConfig.lineWidth,
+		),
+		indentStyle:
+			(
+				searchParams.get("indentStyle") as IndentStyle
+			) ?? defaultRomeConfig.indentStyle,
+		quoteStyle:
+			(
+				searchParams.get("quoteStyle") as QuoteStyle
+			) ?? defaultRomeConfig.quoteStyle,
+		indentWidth: parseInt(
+			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth,
+		),
+		isTypeScript:
+			searchParams.get(
+				"typescript",
+			) === "true" || defaultRomeConfig.isTypeScript,
+		isJsx: searchParams.get("jsx") === "true" || defaultRomeConfig.isJsx,
+		sourceType:
+			(
+				searchParams.get("sourceType") as SourceType
+			) ?? defaultRomeConfig.sourceType,
+		treeStyle: defaultRomeConfig.treeStyle ?? TreeStyle.Json,
+	});
+	const [playgroundState, setPlaygroundState] = useState(initState());
 
 	useEffect(() => {
-		const { code, isTypeScript, isJsx, ...options } = playgroundState;
-		//@ts-ignore
+		setPlaygroundState(initState());
+	}, [defaultRomeConfig]);
+
+	useEffect(() => {
+		const { code, isTypeScript, isJsx } = playgroundState;
 		const queryString = new URLSearchParams({
-			...options,
+			...crateObjectExcludeKeys(playgroundState, [
+				"isTypeScript",
+				"isJsx",
+				"treeStyle",
+			]),
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();
@@ -93,7 +115,13 @@ export function createSetter(
 	field: keyof PlaygroundState,
 ) {
 	return function (param: PlaygroundState[typeof field]) {
-		setPlaygroundState((state) => ({ ...state, [field]: param }));
+		setPlaygroundState((state) => {
+			let nextState = { ...state, [field]: param };
+			if (field === "treeStyle") {
+				changeLocalStorageConfig(nextState);
+			}
+			return nextState;
+		});
 	};
 }
 
@@ -193,4 +221,74 @@ function fromBinary(binary: string) {
 		result += String.fromCharCode(charCodes[i]);
 	}
 	return result;
+}
+
+function changeLocalStorageConfig(playgroundState: PlaygroundState) {
+	let romeConfig = createObjectIncludeKeys(playgroundState, OPTIONS_TO_PERSIST);
+	localStorage.setItem("rome_config", JSON.stringify(romeConfig));
+}
+
+export function loadRomeConfigFromLocalStorage(): RomeConfiguration {
+	let configString = window.localStorage.getItem("rome_config");
+	let config: Partial<RomeConfiguration> = {};
+	try {
+		config = JSON.parse(configString || "");
+	} catch (err) {
+		config = {};
+		console.error(err);
+	}
+	return mergeRomeConfig(config, defaultRomeConfig);
+}
+
+// Change the romeConfig in local storage seems to be meaningless, so we simplify the validation phase.
+// only use default value if some key is empty
+function mergeRomeConfig(
+	config: Partial<RomeConfiguration>,
+	defaultConfig: RomeConfiguration,
+): RomeConfiguration {
+	const interested_keys: Array<keyof RomeConfiguration> = OPTIONS_TO_PERSIST;
+	return interested_keys.reduce((acc, key) => {
+		if (config[key]) {
+			acc[key] = config[key as keyof RomeConfiguration];
+		} else {
+			acc[key] = defaultConfig[key as keyof RomeConfiguration];
+		}
+		return acc;
+	}, Object.create(null)) as RomeConfiguration;
+}
+
+/**
+ * Crate an object with some keys omitted of original object
+ * @param obj
+ * @param keys
+ * @returns
+ */
+function crateObjectExcludeKeys<T extends object>(
+	obj: T,
+	keys: Array<keyof T>,
+): Record<string, any> {
+	return Object.keys(obj).reduce((acc, key) => {
+		if (!keys.includes(key as keyof T)) {
+			acc[key] = obj[key as keyof T];
+		}
+		return acc;
+	}, Object.create(null));
+}
+
+/**
+ * Crate an object with only interested keys of original object
+ * @param obj
+ * @param keys
+ * @returns
+ */
+function createObjectIncludeKeys<T extends object>(
+	obj: T,
+	keys: Array<keyof T>,
+): Record<string, any> {
+	return Object.keys(obj).reduce((acc, key) => {
+		if (keys.includes(key as keyof T)) {
+			acc[key] = obj[key as keyof T];
+		}
+		return acc;
+	}, Object.create(null));
 }
