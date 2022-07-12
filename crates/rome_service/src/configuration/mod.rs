@@ -36,6 +36,10 @@ impl Configuration {
     pub fn is_formatter_disabled(&self) -> bool {
         !self.formatter.enabled
     }
+
+    pub fn is_linter_disabled(&self) -> bool {
+        !self.linter.enabled
+    }
 }
 
 /// Series of errors that can be thrown while computing the configuration

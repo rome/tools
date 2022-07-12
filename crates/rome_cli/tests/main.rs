@@ -56,6 +56,7 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 
 mod check {
     use super::*;
+    use crate::configs::CONFIG_LINTER_DISABLED;
     use rome_console::LogLevel;
 
     #[test]
@@ -212,6 +213,70 @@ mod check {
         println!("{console:#?}");
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
+
+    #[test]
+    fn no_lint_if_linter_is_disabled_when_run_apply() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+        let config_path = Path::new("rome.json");
+        fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, FIX_BEFORE);
+    }
+
+    #[test]
+    fn no_lint_if_linter_is_disabled() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+        let config_path = Path::new("rome.json");
+        fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, FIX_BEFORE);
     }
 }
 
@@ -740,87 +805,6 @@ mod main {
                 assert_eq!(limit, "50");
             }
             _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
-        }
-    }
-}
-
-mod configuration {
-    use crate::configs::{CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_ROOT_FALSE};
-    use pico_args::Arguments;
-    use rome_cli::{run_cli, CliSession};
-    use rome_console::BufferConsole;
-    use rome_fs::MemoryFileSystem;
-    use rome_service::{App, DynRef};
-    use std::ffi::OsString;
-    use std::path::Path;
-
-    #[test]
-    fn incorrect_root() {
-        let mut fs = MemoryFileSystem::default();
-        let file_path = Path::new("rome.json");
-        fs.insert(file_path.into(), CONFIG_ROOT_FALSE.as_bytes());
-
-        let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
-        });
-
-        assert!(result.is_err());
-
-        match result {
-            Err(error) => {
-                assert_eq!(
-                    error.to_string(),
-                    "the main configuration file, rome.json, must have the field 'root' set to `true`"
-                )
-            }
-            _ => panic!("expected an error, but found none"),
-        }
-    }
-
-    #[test]
-    fn correct_root() {
-        let mut fs = MemoryFileSystem::default();
-        let file_path = Path::new("rome.json");
-        fs.insert(file_path.into(), CONFIG_ALL_FIELDS.as_bytes());
-
-        let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
-        });
-
-        assert!(result.is_ok());
-    }
-
-    #[test]
-    fn line_width_error() {
-        let mut fs = MemoryFileSystem::default();
-
-        let file_path = Path::new("rome.json");
-        fs.insert(file_path.into(), CONFIG_BAD_LINE_WIDTH.as_bytes());
-
-        let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
-        });
-        assert!(result.is_err());
-
-        match result {
-            Err(error) => {
-                assert!(error
-                    .to_string()
-                    .contains("The line width exceeds the maximum value (320)"),)
-            }
-            _ => panic!("expected an error, but found none"),
         }
     }
 }

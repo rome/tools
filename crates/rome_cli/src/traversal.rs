@@ -95,7 +95,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
                 <Info>"Checked "{count}" files in "{duration}</Info>
             });
         }
-        TraversalMode::Fix => {
+        TraversalMode::Fix { .. } => {
             console.log(rome_console::markup! {
                 <Info>"Fixed "{count}" files in "{duration}</Info>
             });
@@ -280,22 +280,67 @@ fn print_messages_to_console(
 
 #[derive(Clone, Copy)]
 pub(crate) enum TraversalMode {
-    Check { max_diagnostics: u8 },
-    CI,
-    Fix,
-    Format { ignore_errors: bool, write: bool },
+    Check {
+        max_diagnostics: u8,
+        formatter_disabled: bool,
+        linter_disabled: bool,
+    },
+    CI {
+        formatter_disabled: bool,
+        linter_disabled: bool,
+    },
+    Fix {
+        formatter_disabled: bool,
+        linter_disabled: bool,
+    },
+    Format {
+        ignore_errors: bool,
+        write: bool,
+    },
 }
 
 impl TraversalMode {
     fn get_max_diagnostics(&self) -> Option<u8> {
         match self {
-            TraversalMode::Check { max_diagnostics } => Some(*max_diagnostics),
+            TraversalMode::Check {
+                max_diagnostics, ..
+            } => Some(*max_diagnostics),
             _ => None,
         }
     }
 
     fn is_ci(&self) -> bool {
-        matches!(self, TraversalMode::CI)
+        matches!(self, TraversalMode::CI { .. })
+    }
+
+    fn is_formatter_disabled(&self) -> bool {
+        match self {
+            TraversalMode::Check {
+                formatter_disabled, ..
+            } => *formatter_disabled,
+            TraversalMode::Fix {
+                formatter_disabled, ..
+            } => *formatter_disabled,
+            TraversalMode::CI {
+                formatter_disabled, ..
+            } => *formatter_disabled,
+            _ => false,
+        }
+    }
+
+    fn is_linter_disabled(&self) -> bool {
+        match self {
+            TraversalMode::Check {
+                linter_disabled, ..
+            } => *linter_disabled,
+            TraversalMode::Fix {
+                linter_disabled, ..
+            } => *linter_disabled,
+            TraversalMode::CI {
+                linter_disabled, ..
+            } => *linter_disabled,
+            _ => false,
+        }
     }
 }
 
@@ -327,14 +372,14 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Format,
-        })
+        }) && !self.mode.is_formatter_disabled()
     }
 
     fn can_lint(&self, rome_path: &RomePath) -> bool {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Lint,
-        })
+        }) && !self.mode.is_linter_disabled()
     }
 }
 
@@ -354,7 +399,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
         match self.mode {
-            TraversalMode::Check { .. } | TraversalMode::Fix => self.can_lint(rome_path),
+            TraversalMode::Check { .. } | TraversalMode::Fix { .. } => self.can_lint(rome_path),
             TraversalMode::CI { .. } => self.can_lint(rome_path) || self.can_format(rome_path),
             TraversalMode::Format { .. } => self.can_format(rome_path),
         }
@@ -428,7 +473,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let rome_path = RomePath::new(path, file_id);
         let can_format = ctx.can_format(&rome_path);
         let can_handle = match ctx.mode {
-            TraversalMode::Check { .. } | TraversalMode::Fix => ctx.can_lint(&rome_path),
+            TraversalMode::Check { .. } | TraversalMode::Fix { .. } => ctx.can_lint(&rome_path),
             TraversalMode::CI { .. } => ctx.can_lint(&rome_path) || can_format,
             TraversalMode::Format { .. } => can_format,
         };
@@ -457,7 +502,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         )
         .with_file_id_and_code(file_id, "IO")?;
 
-        if let TraversalMode::Fix = ctx.mode {
+        if let TraversalMode::Fix { .. } = ctx.mode {
             let fixed = file_guard
                 .fix_file()
                 .with_file_id_and_code(file_id, "Lint")?;
@@ -536,8 +581,8 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         if can_format {
             let write = match ctx.mode {
                 // In check mode do not run the formatter and return the result immediately
-                TraversalMode::Check { .. } | TraversalMode::Fix => return Ok(result),
-                TraversalMode::CI => false,
+                TraversalMode::Check { .. } | TraversalMode::Fix { .. } => return Ok(result),
+                TraversalMode::CI { .. } => false,
                 TraversalMode::Format { write, .. } => write,
             };
 
