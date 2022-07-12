@@ -1,27 +1,58 @@
 import "react-tabs/style/react-tabs.css";
-import init, { PlaygroundFormatOptions, run } from "../pkg/rome_playground";
-import { useEffect, useState } from "react";
-import { IndentStyle, TreeStyle } from "./types";
-import { formatWithPrettier, usePlaygroundState, useWindowSize } from "./utils";
+import { useEffect, useState, useRef } from "react";
+import { usePlaygroundState, useWindowSize } from "./utils";
+import { LoadingState, RomeOutput } from "./types";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
 
-enum LoadingState { Loading, Success, Error }
-
 function App() {
-	useEffect(() => {
-		init()
-			.then(() => {
-				setLoadingState(LoadingState.Success);
-			})
-			.catch(() => {
-				setLoadingState(LoadingState.Error);
-			});
-	}, []);
-
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const [playgroundState, setPlaygroundState] = usePlaygroundState();
 	const { width } = useWindowSize();
+	const workerRef = useRef<Worker | null>(null);
+
+	const [romeOutput, setRomeOutput] = useState<RomeOutput>({
+		ast: "",
+		cst: "",
+		errors: "",
+		formatted_code: "",
+		formatter_ir: "",
+	});
+	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
+
+	useEffect(() => {
+		workerRef.current = new Worker(new URL("./worker.ts", import.meta.url), {
+			type: "module",
+		});
+
+		workerRef.current.addEventListener("message", (event) => {
+			if (event.data.type === "init") {
+				setLoadingState(event.data.loadingState as LoadingState);
+			}
+			if (event.data.type === "formatted") {
+				setRomeOutput(event.data.romeOutput);
+				setPrettierOutput(event.data.prettierOutput);
+			}
+		});
+
+		return () => {
+			workerRef.current?.terminate();
+		};
+	}, []);
+
+	useEffect(() => {
+		if (loadingState !== LoadingState.Success) {
+			return;
+		}
+		let timeout = setTimeout(() => {
+			if (workerRef.current) {
+				workerRef.current.postMessage({ type: "format", playgroundState });
+			}
+		}, 500);
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, [loadingState, playgroundState]);
 
 	switch (loadingState) {
 		case LoadingState.Error:
@@ -33,38 +64,6 @@ function App() {
 				</div>
 			);
 		default:
-			const {
-				code,
-				lineWidth,
-				indentStyle,
-				indentWidth,
-				quoteStyle,
-				isTypeScript,
-				isJsx,
-				sourceType,
-				treeStyle,
-			} = playgroundState;
-
-			const romeOutput = run(
-				code,
-				new PlaygroundFormatOptions(
-					lineWidth,
-					indentStyle === IndentStyle.Space ? indentWidth : undefined,
-					quoteStyle,
-				),
-				isTypeScript,
-				isJsx,
-				sourceType,
-				treeStyle === TreeStyle.Json,
-			);
-			const prettierOutput = formatWithPrettier(code, {
-				lineWidth,
-				indentStyle,
-				indentWidth,
-				language: isTypeScript ? "ts" : "js",
-				quoteStyle,
-			});
-
 			if (width && width < 480) {
 				return (
 					<MobilePlayground
