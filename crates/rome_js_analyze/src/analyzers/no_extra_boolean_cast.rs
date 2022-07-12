@@ -7,9 +7,9 @@ use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyStatement, JsCallExpression, JsConditionalExpression, JsDoWhileStatement,
     JsForStatement, JsForStatementFields, JsIfStatement, JsNewExpression, JsSyntaxKind,
-    JsSyntaxNode, JsUnaryExpression, JsWhileStatement, T,
+    JsSyntaxNode, JsUnaryExpression, JsUnaryOperator, JsWhileStatement, T,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeExt, SyntaxNodeCast};
+use rome_rowan::{declare_node_union, AstNode, AstNodeExt, AstSeparatedList, SyntaxNodeCast};
 
 use crate::JsRuleAction;
 
@@ -91,44 +91,60 @@ impl Rule for NoExtraBooleanCast {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyExpression>;
-    type State = ();
+    type State = JsAnyExpression;
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();
-        let syntax = n.syntax();
+        let syntax = n.syntax().clone();
         let parent_syntax = syntax.parent()?;
 
-        let in_boolean_cast_context =
-            if let Some(true) = is_in_boolean_context(syntax, &parent_syntax) {
-                true
-            } else if let Some(true) = is_boolean_constructor_call(&parent_syntax) {
-                true
-            } else if let Some(true) = is_negation(&parent_syntax) {
-                true
-            } else if let Some(true) = is_boolean_call(&parent_syntax) {
-                true
-            } else {
-                false
-            };
+        let in_boolean_cast_context = is_in_boolean_context(&syntax, &parent_syntax)
+            .unwrap_or_default()
+            || is_boolean_constructor_call(&parent_syntax).unwrap_or_default()
+            || is_negation(&parent_syntax).unwrap_or_default()
+            || is_boolean_call(&parent_syntax).unwrap_or_default();
 
         if in_boolean_cast_context {
-            if is_negation(syntax).unwrap_or_default()
-                && is_negation(
-                    JsUnaryExpression::cast(syntax.clone())?
-                        .argument()
-                        .ok()?
-                        .syntax(),
-                )
-                .unwrap_or_default()
-            {
-                Some(())
-            } else {
-                None
+            if is_negation(&syntax).unwrap_or_default() {
+                let argument = JsUnaryExpression::cast(syntax.clone())?.argument().ok()?;
+                match argument {
+                    JsAnyExpression::JsUnaryExpression(expr)
+                        if expr.operator().ok()? == JsUnaryOperator::LogicalNot =>
+                    {
+                        return expr.argument().ok();
+                    }
+                    _ => return None,
+                }
             }
-        } else {
-            None
+            return JsCallExpression::cast(syntax.clone()).and_then(|expr| {
+                let callee = expr.callee().ok()?;
+                if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
+                    if ident.name().ok()?.syntax().text_trimmed() == "Boolean" {
+                        let arguments = expr.arguments().ok()?;
+                        let len = arguments.args().len();
+                        if len == 1 {
+                            return arguments
+                                .args()
+                                .into_iter()
+                                .next()?
+                                .ok()
+                                .and_then(|item| JsAnyExpression::cast(item.into_syntax()));
+                        } else {
+                            return None;
+                        }
+                    }
+                } else {
+                    return None;
+                }
+                None
+            });
+            // {
+            //     return Some(());
+            // }
+            // if is_boolean_call(syntax).unwrap_or_default() {}
         }
+        None
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -142,9 +158,10 @@ impl Rule for NoExtraBooleanCast {
         ))
     }
 
-    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root = ctx.root();
+        let root = ctx.root().replace_node(node.clone(), state.clone())?;
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
