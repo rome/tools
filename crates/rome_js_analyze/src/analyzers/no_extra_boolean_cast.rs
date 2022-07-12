@@ -3,13 +3,12 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsCallExpression, JsConditionalExpression, JsDoWhileStatement,
-    JsForStatement, JsForStatementFields, JsIfStatement, JsNewExpression, JsSyntaxKind,
-    JsSyntaxNode, JsUnaryExpression, JsUnaryOperator, JsWhileStatement, T,
+    JsAnyExpression, JsCallExpression, JsDoWhileStatement, JsForStatement, JsIfStatement,
+    JsNewExpression, JsSyntaxKind, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator,
+    JsWhileStatement,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeExt, AstSeparatedList, SyntaxNodeCast};
+use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxNodeCast};
 
 use crate::JsRuleAction;
 
@@ -107,7 +106,7 @@ impl Rule for NoExtraBooleanCast {
 
         if in_boolean_cast_context {
             if is_negation(&syntax).unwrap_or_default() {
-                let argument = JsUnaryExpression::cast(syntax.clone())?.argument().ok()?;
+                let argument = JsUnaryExpression::cast(syntax)?.argument().ok()?;
                 match argument {
                     JsAnyExpression::JsUnaryExpression(expr)
                         if expr.operator().ok()? == JsUnaryOperator::LogicalNot =>
@@ -117,7 +116,7 @@ impl Rule for NoExtraBooleanCast {
                     _ => return None,
                 }
             }
-            return JsCallExpression::cast(syntax.clone()).and_then(|expr| {
+            return JsCallExpression::cast(syntax).and_then(|expr| {
                 let callee = expr.callee().ok()?;
                 if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
                     if ident.name().ok()?.syntax().text_trimmed() == "Boolean" {
@@ -129,7 +128,8 @@ impl Rule for NoExtraBooleanCast {
                                 .into_iter()
                                 .next()?
                                 .ok()
-                                .and_then(|item| JsAnyExpression::cast(item.into_syntax()));
+                                .map(|item| item.into_syntax())
+                                .and_then(JsAnyExpression::cast);
                         } else {
                             return None;
                         }
