@@ -45,7 +45,9 @@ struct SemanticModelData {
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
+    // Maps any range in the code to its declaration
     declared_at_by_range: HashMap<TextRange, TextRange>,
+    // Maps a declaration range to the range of its references
     declaration_all_references: HashMap<TextRange, Vec<TextRange>>,
 }
 
@@ -164,13 +166,14 @@ impl Binding {
         &self.node
     }
 
-    pub fn all_references(&self) -> ReferenceIter {
+    /// Returns an iterator to all references of this binding.
+    pub fn all_references(&self) -> ReferencesIter {
         let range = self.node.text_range();
 
-        ReferenceIter {
+        ReferencesIter {
             data: self.data.clone(),
             declaration_at: range,
-            i: 0,
+            index: 0,
             phantom: PhantomData,
         }
     }
@@ -187,14 +190,14 @@ impl Reference {
 }
 
 /// Iterate all references of a particular declaration.
-pub struct ReferenceIter<'a> {
+pub struct ReferencesIter<'a> {
     data: Arc<SemanticModelData>,
     declaration_at: TextRange,
-    i: usize,
+    index: usize,
     phantom: PhantomData<&'a ()>,
 }
 
-impl<'a> Iterator for ReferenceIter<'a> {
+impl<'a> Iterator for ReferencesIter<'a> {
     type Item = Reference;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -202,16 +205,26 @@ impl<'a> Iterator for ReferenceIter<'a> {
             .data
             .declaration_all_references
             .get(&self.declaration_at)?;
-        let range = references.get(self.i)?;
+        let range = references.get(self.index)?;
         let node = self.data.node_by_range.get(range)?;
 
-        self.i += 1;
+        self.index += 1;
 
         Some(Reference { node: node.clone() })
     }
 }
 
-impl<'a> FusedIterator for ReferenceIter<'a> {}
+impl<'a> ExactSizeIterator for ReferencesIter<'a> {
+    fn len(&self) -> usize {
+        let references = self
+            .data
+            .declaration_all_references
+            .get(&self.declaration_at);
+        references.map(|v| v.len()).unwrap_or(0)
+    }
+}
+
+impl<'a> FusedIterator for ReferencesIter<'a> {}
 
 /// Iterate all bindings that were bound in a given scope. It **does
 /// not** return bindings of parent scopes.
@@ -344,13 +357,13 @@ impl SemanticModel {
         })
     }
 
-    /// Return all [Reference] of a declaration.
+    /// Return a list with all [Reference] of a declaration.
     /// Can also be called from "all_references" extension method.
     ///
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
-    /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
-    /// use rome_js_semantic::{semantic_model, DeclarationExtensions};
+    /// use rome_js_syntax::{SourceType, JsIdentifierBinding};
+    /// use rome_js_semantic::{semantic_model, AllReferencesExtensions};
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
     /// let model = semantic_model(&r.tree());
@@ -358,7 +371,7 @@ impl SemanticModel {
     /// let a_binding = r
     ///     .syntax()
     ///     .descendants()
-    ///     .filter_map(|x| x.cast::<JsIdentifierBinding>())
+    ///     .filter_map(JsIdentifierBinding::cast)
     ///     .find(|x| x.text() == "a")
     ///     .unwrap();
     ///
@@ -369,14 +382,14 @@ impl SemanticModel {
     pub fn all_references<'a>(
         &'a self,
         declaration: &impl IsDeclarationAstNode,
-    ) -> ReferenceIter<'a> {
+    ) -> ReferencesIter<'a> {
         let node = declaration.node();
         let range = node.syntax().text_range();
 
-        ReferenceIter {
+        ReferencesIter {
             data: self.data.clone(),
             declaration_at: range,
-            i: 0,
+            index: 0,
             phantom: PhantomData,
         }
     }
@@ -415,7 +428,7 @@ impl<T: HasDeclarationAstNode> DeclarationExtensions for T {}
 /// Extension method to allow any node that is a declaration to easily
 /// get all of its references.
 pub trait AllReferencesExtensions {
-    fn all_references<'a>(&self, model: &'a SemanticModel) -> ReferenceIter<'a>
+    fn all_references<'a>(&self, model: &'a SemanticModel) -> ReferencesIter<'a>
     where
         Self: IsDeclarationAstNode,
     {
