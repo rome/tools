@@ -10,6 +10,8 @@
 [![Discord chat][discord-badge]][discord-url]
 [![CI on main][ci-badge]][ci-url]
 [![npm version][npm-badge]][npm-url]
+[![VSCode version][vscode-badge]][vscode-url]
+
 
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg?color=brightgreen
 [mit-url]: LICENSE
@@ -19,6 +21,8 @@
 [ci-url]: https://github.com/rome/tools/actions/workflows/main.yml
 [npm-badge]: https://img.shields.io/npm/v/rome/next?color=brightgreen
 [npm-url]: https://www.npmjs.com/package/rome/v/0.7.0-next
+[vscode-badge]: https://img.shields.io/visual-studio-marketplace/v/rome.rome?color=brightgreen&label=vscode
+[vscode-url]: (https://marketplace.visualstudio.com/items?itemName=rome.rome
 
 </div>
 
