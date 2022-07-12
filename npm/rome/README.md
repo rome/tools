@@ -3,6 +3,25 @@
 	<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="https://raw.githubusercontent.com/rome/tools/main/assets/PNG/logo_white_yellow_transparent.png#gh-dark-mode-only" width="700">
 </p>
 
+
+<div align="center">
+
+[![MIT licensed][mit-badge]][mit-url]
+[![Discord chat][discord-badge]][discord-url]
+[![CI on main][ci-badge]][ci-url]
+[![npm version][npm-badge]][npm-url]
+
+[mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg?color=brightgreen
+[mit-url]: LICENSE
+[discord-badge]: https://img.shields.io/discord/678763474494423051?logo=discord&label=discord&color=brightgreen
+[discord-url]: https://discord.gg/rome
+[ci-badge]: https://github.com/rome/tools/actions/workflows/main.yml/badge.svg
+[ci-url]: https://github.com/rome/tools/actions/workflows/main.yml
+[npm-badge]: https://img.shields.io/npm/v/rome/next?color=brightgreen
+[npm-url]: https://www.npmjs.com/package/rome/v/0.7.0-next
+
+</div>
+
 **Rome** is a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
