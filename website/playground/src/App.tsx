@@ -9,7 +9,8 @@ function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const [playgroundState, setPlaygroundState] = usePlaygroundState();
 	const { width } = useWindowSize();
-	const workerRef = useRef<Worker | null>(null);
+	const romeWorkerRef = useRef<Worker | null>(null);
+	const prettierWorkerRef = useRef<Worker | null>(null);
 
 	const [romeOutput, setRomeOutput] = useState<RomeOutput>({
 		ast: "",
@@ -21,22 +22,35 @@ function App() {
 	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
 
 	useEffect(() => {
-		workerRef.current = new Worker(new URL("./worker.ts", import.meta.url), {
-			type: "module",
-		});
+		romeWorkerRef.current = new Worker(new URL(
+			"./romeWorker.ts",
+			import.meta.url,
+		), { type: "module" });
+		prettierWorkerRef.current = new Worker(new URL(
+			"./prettierWorker.ts",
+			import.meta.url,
+		), { type: "module" });
 
-		workerRef.current.addEventListener("message", (event) => {
+		romeWorkerRef.current.addEventListener("message", (event) => {
 			if (event.data.type === "init") {
 				setLoadingState(event.data.loadingState as LoadingState);
 			}
 			if (event.data.type === "formatted") {
 				setRomeOutput(event.data.romeOutput);
+			}
+		});
+		prettierWorkerRef.current.addEventListener("message", (event) => {
+			if (event.data.type === "init") {
+				setLoadingState(event.data.loadingState as LoadingState);
+			}
+			if (event.data.type === "formatted") {
 				setPrettierOutput(event.data.prettierOutput);
 			}
 		});
 
 		return () => {
-			workerRef.current?.terminate();
+			romeWorkerRef.current?.terminate();
+			prettierWorkerRef.current?.terminate();
 		};
 	}, []);
 
@@ -44,14 +58,8 @@ function App() {
 		if (loadingState !== LoadingState.Success) {
 			return;
 		}
-		let timeout = setTimeout(() => {
-			if (workerRef.current) {
-				workerRef.current.postMessage({ type: "format", playgroundState });
-			}
-		}, 500);
-		return () => {
-			clearTimeout(timeout);
-		};
+		romeWorkerRef.current?.postMessage({ type: "format", playgroundState });
+		prettierWorkerRef.current?.postMessage({ type: "format", playgroundState });
 	}, [loadingState, playgroundState]);
 
 	switch (loadingState) {

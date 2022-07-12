@@ -1,7 +1,6 @@
 import { PlaygroundProps } from "./types";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
-import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
@@ -25,7 +24,6 @@ export default function DesktopPlayground(
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"
 	>("normal");
-	const language = getLanguage(isJsx, isTypeScript);
 
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
@@ -50,27 +48,27 @@ export default function DesktopPlayground(
 	};
 
 	const onChange = useCallback((value) => {
-		setPlaygroundState(
-			(state) => ({
-				...state,
-				code: value,
-			}),
-		);
+		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
 
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
+			<SettingsMenu
+				settings={settings}
+				setPlaygroundState={setPlaygroundState}
+			/>
 			<div className="box-border flex h-screen divide-x divide-slate-300">
-				<SettingsMenu
-					settings={settings}
-					setPlaygroundState={setPlaygroundState}
-				/>
 				<div className="w-1/2 p-5">
 					<CodeMirror
 						value={code}
-						height="600px"
-						extensions={[javascript({ jsx: isJsx, typescript: isTypeScript })]}
+						height="70vh"
+						extensions={[
+							javascript({
+								jsx: isJsx,
+								typescript: isTypeScript,
+							}),
+						]}
 						placeholder="Enter your code here"
 						onChange={onChange}
 					/>
@@ -92,20 +90,26 @@ export default function DesktopPlayground(
 							<CodeMirror
 								value={formatted_code}
 								extensions={[
-									javascript({ jsx: isJsx, typescript: isTypeScript }),
+									javascript({
+										jsx: isJsx,
+										typescript: isTypeScript,
+									}),
 								]}
 								placeholder="Rome Output"
-								height="600px"
+								height="30vh"
 								readOnly
 							/>
 							<h1>Prettier</h1>
 							<CodeMirror
 								value={prettierOutput.code}
 								extensions={[
-									javascript({ jsx: isJsx, typescript: isTypeScript }),
+									javascript({
+										jsx: isJsx,
+										typescript: isTypeScript,
+									}),
 								]}
 								placeholder="Rome Output"
-								height="600px"
+								height="30vh"
 								readOnly
 							/>
 						</TabPanel>
@@ -130,12 +134,20 @@ export default function DesktopPlayground(
 							>
 								{clipboardStatus === "success" && (
 									<SuccessIcon
-										style={{ width: 16, height: 16, marginRight: 5 }}
+										style={{
+											width: 16,
+											height: 16,
+											marginRight: 5,
+										}}
 									/>
 								)}
 								{clipboardStatus === "failed" && (
 									<FailedIcon
-										style={{ width: 16, height: 16, marginRight: 5 }}
+										style={{
+											width: 16,
+											height: 16,
+											marginRight: 5,
+										}}
 									/>
 								)}
 								<CopyIcon style={{ width: 16, height: 16 }} />
