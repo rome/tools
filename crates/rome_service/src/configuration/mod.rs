@@ -5,11 +5,13 @@
 
 use crate::configuration::formatter::FormatterConfiguration;
 use crate::configuration::javascript::JavascriptConfiguration;
+use crate::configuration::linter::LinterConfiguration;
 use serde::Deserialize;
 use std::fmt::{Debug, Display, Formatter};
 
 mod formatter;
 mod javascript;
+mod linter;
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Default, Debug, Eq, PartialEq, Deserialize)]
@@ -22,6 +24,9 @@ pub struct Configuration {
 
     /// The configuration of the formatter
     pub formatter: FormatterConfiguration,
+
+    /// The configuration for the linter
+    pub linter: LinterConfiguration,
 
     /// Specific configuration for the JavaScript language
     pub javascript: JavascriptConfiguration,
