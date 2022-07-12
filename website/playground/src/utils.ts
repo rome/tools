@@ -17,8 +17,7 @@ export function classNames(
 ): string {
 	return classes.filter(Boolean).join(" ");
 }
-// Excluding `playgroundState.code` reduce the content to save,
-// Only save prop of `PlaygroundState` that we interested, making `localStorage.setItem` which is file IO a bit faster
+// Only save prop of `PlaygroundState` that we interested
 export const OPTIONS_TO_PERSIST: Array<keyof PlaygroundState> = ["treeStyle"];
 // Define general type for useWindowSize hook, which includes width and height
 interface Size {
