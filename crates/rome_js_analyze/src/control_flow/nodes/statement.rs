@@ -1,6 +1,4 @@
-use rome_js_syntax::{
-    JsDebuggerStatement, JsEmptyStatement, JsExpressionStatement, JsVariableStatement,
-};
+use rome_js_syntax::{JsDebuggerStatement, JsEmptyStatement, JsExpressionStatement};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
 use crate::control_flow::{
@@ -9,7 +7,7 @@ use crate::control_flow::{
 };
 
 declare_node_union! {
-    pub(in crate::control_flow) JsSimpleStatement = JsDebuggerStatement | JsEmptyStatement | JsExpressionStatement | JsVariableStatement
+    pub(in crate::control_flow) JsSimpleStatement = JsDebuggerStatement | JsEmptyStatement | JsExpressionStatement
 }
 
 pub(in crate::control_flow) struct StatementVisitor;
