@@ -9,12 +9,13 @@ use futures::StreamExt;
 use parking_lot::RwLock;
 use rome_analyze::RuleCategories;
 use rome_diagnostics::file::FileId;
-use rome_fs::RomePath;
+use rome_fs::{FileSystem, OsFileSystem, RomePath};
+use rome_service::configuration::Configuration;
 use rome_service::workspace;
 use rome_service::workspace::PullDiagnosticsParams;
 use rome_service::workspace::UpdateSettingsParams;
-use rome_service::RomeError;
 use rome_service::Workspace;
+use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
 use tower_lsp::lsp_types;
 use tracing::{error, trace};
@@ -30,6 +31,13 @@ pub(crate) struct Session {
     pub(crate) config: RwLock<Config>,
 
     pub(crate) workspace: Box<dyn Workspace>,
+
+    /// File system to read files inside the workspace
+    pub(crate) fs: DynRef<'static, dyn FileSystem>,
+
+    /// The configuration coming from `rome.json` file
+    pub(crate) configuration: RwLock<Option<Configuration>>,
+
     documents: RwLock<HashMap<lsp_types::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
 }
@@ -40,6 +48,7 @@ impl Session {
         let documents = Default::default();
         let url_interner = Default::default();
         let config = RwLock::new(Config::new());
+        let configuration = RwLock::new(None);
         Self {
             client,
             client_capabilities,
@@ -47,6 +56,8 @@ impl Session {
             documents,
             url_interner,
             config,
+            fs: DynRef::Owned(Box::new(OsFileSystem)),
+            configuration,
         }
     }
 
@@ -158,27 +169,36 @@ impl Session {
             section: Some(String::from(CONFIGURATION_SECTION)),
         };
         let items = vec![item];
-        let configurations = self.client.configuration(items).await;
+        let configuration = self.configuration.read();
+        let client_configurations = self.client.configuration(items).await;
 
-        if let Ok(configurations) = configurations {
-            configurations.into_iter().next().and_then(|configuration| {
-                let mut config = self.config.write();
+        if let Ok(client_configurations) = client_configurations {
+            client_configurations
+                .into_iter()
+                .next()
+                .and_then(|client_configuration| {
+                    let mut config = self.config.write();
 
-                config
-                    .set_workspace_settings(configuration)
-                    .map_err(|err| {
-                        error!("Cannot set workspace settings: {}", err);
-                    })
-                    .ok()?;
+                    config
+                        .set_workspace_settings(client_configuration)
+                        .map_err(|err| {
+                            error!("Cannot set workspace settings: {}", err);
+                        })
+                        .ok()?;
 
-                self.workspace
-                    .update_settings(UpdateSettingsParams {
-                        settings: config.as_workspace_settings(),
-                    })
-                    .ok()?;
+                    let settings = config.as_workspace_settings(configuration.as_ref());
 
-                Some(())
-            });
+                    trace!(
+                        "The LSP will now use the following configuration: \n {:?}",
+                        &settings
+                    );
+
+                    self.workspace
+                        .update_settings(UpdateSettingsParams { settings })
+                        .ok()?;
+
+                    Some(())
+                });
         } else {
             trace!("Cannot read configuration from the client");
         }
