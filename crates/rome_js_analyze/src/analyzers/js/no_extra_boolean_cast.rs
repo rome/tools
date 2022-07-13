@@ -79,9 +79,14 @@ fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<b
         JsSyntaxKind::JS_FOR_STATEMENT => {
             Some(parent.cast::<JsForStatement>()?.test()?.syntax() == node)
         }
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-            Some(parent.cast::<JsConditionalExpression>()?.test().ok()?.syntax() == node)
-        }
+        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => Some(
+            parent
+                .cast::<JsConditionalExpression>()?
+                .test()
+                .ok()?
+                .syntax()
+                == node,
+        ),
         _ => None,
     }
 }
