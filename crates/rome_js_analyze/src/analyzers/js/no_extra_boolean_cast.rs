@@ -108,17 +108,13 @@ fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<b
 /// arguments: JsCallArguments
 /// ```
 fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
-    if JsCallArgumentList::can_cast(node.kind()) {
-        let parent = node.parent()?;
-        JsCallArguments::cast(parent).and_then(|expr| {
-            let new_expr = expr.parent::<JsNewExpression>()?;
-            let callee = new_expr.callee().ok()?;
-            if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
-                Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
-            } else {
-                None
-            }
-        })
+    let callee = JsCallArgumentList::cast(node.clone())?
+        .parent::<JsCallArguments>()?
+        .parent::<JsNewExpression>()?
+        .callee()
+        .ok()?;
+    if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
+        Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
     } else {
         None
     }
@@ -130,14 +126,12 @@ fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
 /// Boolean(x)
 /// ```
 fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
-    JsCallExpression::cast(node.clone()).and_then(|expr| {
-        let callee = expr.callee().ok()?;
-        if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
-            Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
-        } else {
-            None
-        }
-    })
+    let callee = JsCallExpression::cast(node.clone())?.callee().ok()?;
+    if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
+        Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
+    } else {
+        None
+    }
 }
 
 /// Check if the SyntaxNode is a Negate Unary Expression
@@ -146,12 +140,7 @@ fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
 /// !!x
 /// ```
 fn is_negation(node: &JsSyntaxNode) -> Option<bool> {
-    JsUnaryExpression::cast(node.clone()).and_then(|expr| {
-        Some(matches!(
-            expr.operator().ok()?,
-            rome_js_syntax::JsUnaryOperator::LogicalNot
-        ))
-    })
+	Some(JsUnaryExpression::cast(node.clone())?.operator().ok()? == JsUnaryOperator::LogicalNot)
 }
 
 impl Rule for NoExtraBooleanCast {
