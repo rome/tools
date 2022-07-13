@@ -32,17 +32,19 @@ Boolean(!x);
 
 !!x;
 
+Boolean(!!x, b);;
+
 ```
 
 # Diagnostics
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant `Boolean` call
   ┌─ noExtraBooleanCast.js:2:5
   │
 2 │ if (Boolean(foo)) {
   │     ------------
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant `Boolean` call
     | @@ -1,5 +1,5 @@
 0 0 |   // invalid
 1   | - if (Boolean(foo)) {
@@ -51,17 +53,19 @@ Suggested fix: Use a while loop
 3 3 |   if (!!Boolean(foo)) {
 4 4 |   }
 
+=  note: It is not necessary to use `Boolean` call when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant double-negation.
   ┌─ noExtraBooleanCast.js:4:5
   │
 4 │ if (!!Boolean(foo)) {
   │     --------------
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant double-negation
     | @@ -1,7 +1,7 @@
 0 0 |   // invalid
 1 1 |   if (Boolean(foo)) {
@@ -72,17 +76,19 @@ Suggested fix: Use a while loop
 5 5 |   if (!Boolean(foo)) {
 6 6 |   }
 
+=  note: It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant `Boolean` call
   ┌─ noExtraBooleanCast.js:4:7
   │
 4 │ if (!!Boolean(foo)) {
   │       ------------
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant `Boolean` call
     | @@ -1,7 +1,7 @@
 0 0 |   // invalid
 1 1 |   if (Boolean(foo)) {
@@ -93,17 +99,19 @@ Suggested fix: Use a while loop
 5 5 |   if (!Boolean(foo)) {
 6 6 |   }
 
+=  note: It is not necessary to use `Boolean` call when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant `Boolean` call
   ┌─ noExtraBooleanCast.js:6:6
   │
 6 │ if (!Boolean(foo)) {
   │      ------------
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant `Boolean` call
     | @@ -3,7 +3,7 @@
 2 2 |   }
 3 3 |   if (!!Boolean(foo)) {
@@ -114,17 +122,19 @@ Suggested fix: Use a while loop
 7 7 |   while (!!foo) {}
 8 8 |   let x = 1;
 
+=  note: It is not necessary to use `Boolean` call when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant double-negation.
   ┌─ noExtraBooleanCast.js:8:8
   │
 8 │ while (!!foo) {}
   │        -----
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant double-negation
     | @@ -5,7 +5,7 @@
 4 4 |   }
 5 5 |   if (!Boolean(foo)) {
@@ -135,17 +145,19 @@ Suggested fix: Use a while loop
 9 9 |   do {
 10 10 |   	1 + 1;
 
+=  note: It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant `Boolean` call
    ┌─ noExtraBooleanCast.js:12:10
    │
 12 │ } while (Boolean(x));
    │          ----------
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant `Boolean` call
       | @@ -9,7 +9,7 @@
  8  8 |   let x = 1;
  9  9 |   do {
@@ -156,17 +168,19 @@ Suggested fix: Use a while loop
 13 13 |   for (; !!foo; ) {}
 14 14 |   
 
+=  note: It is not necessary to use `Boolean` call when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant double-negation.
    ┌─ noExtraBooleanCast.js:14:8
    │
 14 │ for (; !!foo; ) {}
    │        -----
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant double-negation
       | @@ -11,7 +11,7 @@
 10 10 |   	1 + 1;
 11 11 |   } while (Boolean(x));
@@ -177,17 +191,19 @@ Suggested fix: Use a while loop
 15 15 |   new Boolean(!!x);
 16 16 |   
 
+=  note: It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant double-negation.
    ┌─ noExtraBooleanCast.js:18:2
    │
 18 │ !!!x;
    │  ---
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant double-negation
       | @@ -15,7 +15,7 @@
 14 14 |   
 15 15 |   new Boolean(!!x);
@@ -198,17 +214,19 @@ Suggested fix: Use a while loop
 19 19 |   !Boolean(x);
 20 20 |   // valid
 
+=  note: It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
 
 ```
 
 ```
-warning[noExtraBooleanCast]: Use while loops instead of for loops.
+warning[noExtraBooleanCast]: Avoid redundant `Boolean` call
    ┌─ noExtraBooleanCast.js:20:2
    │
 20 │ !Boolean(x);
    │  ----------
 
-Suggested fix: Use a while loop
+Suggested fix: Remove redundant `Boolean` call
       | @@ -17,7 +17,7 @@
 16 16 |   
 17 17 |   !!!x;
@@ -218,6 +236,8 @@ Suggested fix: Use a while loop
 20 20 |   // valid
 21 21 |   Boolean(!x);
 22 22 |   
+
+=  note: It is not necessary to use `Boolean` call when a value will already be coerced to a boolean.
 
 
 ```

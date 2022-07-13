@@ -12,6 +12,12 @@ use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxNodeCast};
 
 use crate::JsRuleAction;
 
+pub enum ExtraBooleanCastType {
+    /// !!x
+    DoubleNegation,
+    /// Boolean(x)
+    BooleanCall,
+}
 declare_rule! {
     /// Enforce the use of `while` loops instead of `for` loops when the
     /// initializer and update expressions are not needed
@@ -31,30 +37,30 @@ declare_rule! {
 fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<bool> {
     let parent = parent.clone();
     match parent.kind() {
-        JsSyntaxKind::JS_IF_STATEMENT => {
-            let stmt = parent.cast::<JsIfStatement>()?;
-            Some(stmt.test().ok()?.syntax() == node)
-        }
-        JsSyntaxKind::JS_DO_WHILE_STATEMENT => {
-            let stmt = parent.cast::<JsDoWhileStatement>()?;
-            Some(stmt.test().ok()?.syntax() == node)
-        }
-        JsSyntaxKind::JS_WHILE_STATEMENT => {
-            let stmt = parent.cast::<JsWhileStatement>()?;
-            Some(stmt.test().ok()?.syntax() == node)
-        }
-        JsSyntaxKind::JS_FOR_STATEMENT => {
-            let stmt = parent.cast::<JsForStatement>()?;
-            Some(stmt.test()?.syntax() == node)
-        }
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-            let expr = parent.cast::<JsForStatement>()?;
-            Some(expr.test()?.syntax() == node)
-        }
+        JsSyntaxKind::JS_IF_STATEMENT => parent
+            .cast::<JsIfStatement>()
+            .and_then(|stmt| Some(stmt.test().ok()?.syntax() == node)),
+        JsSyntaxKind::JS_DO_WHILE_STATEMENT => parent
+            .cast::<JsDoWhileStatement>()
+            .and_then(|stmt| Some(stmt.test().ok()?.syntax() == node)),
+        JsSyntaxKind::JS_WHILE_STATEMENT => parent
+            .cast::<JsWhileStatement>()
+            .and_then(|stmt| Some(stmt.test().ok()?.syntax() == node)),
+        JsSyntaxKind::JS_FOR_STATEMENT => parent
+            .cast::<JsForStatement>()
+            .and_then(|stmt| Some(stmt.test()?.syntax() == node)),
+        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => parent
+            .cast::<JsForStatement>()
+            .and_then(|expr| Some(expr.test()?.syntax() == node)),
         _ => None,
     }
 }
 
+/// Checks if the node is a `Boolean` Constructor Call
+/// ## Example
+/// ```js
+/// new Boolean(x);
+/// ```
 fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
     JsNewExpression::cast(node.clone()).and_then(|expr| {
         let callee = expr.callee().ok()?;
@@ -66,6 +72,11 @@ fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
     })
 }
 
+/// Check if the SyntaxNode is a `Boolean` Call Expression
+/// ## Example
+/// ```js
+/// Boolean(x)
+/// ```
 fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
     JsCallExpression::cast(node.clone()).and_then(|expr| {
         let callee = expr.callee().ok()?;
@@ -77,6 +88,11 @@ fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
     })
 }
 
+/// Check if the SyntaxNode is a Negate Unary Expression
+/// ## Example
+/// ```js
+/// !!x
+/// ```
 fn is_negation(node: &JsSyntaxNode) -> Option<bool> {
     JsUnaryExpression::cast(node.clone()).and_then(|expr| {
         Some(matches!(
@@ -90,7 +106,7 @@ impl Rule for NoExtraBooleanCast {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyExpression>;
-    type State = JsAnyExpression;
+    type State = (JsAnyExpression, ExtraBooleanCastType);
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
@@ -98,24 +114,33 @@ impl Rule for NoExtraBooleanCast {
         let syntax = n.syntax().clone();
         let parent_syntax = syntax.parent()?;
 
-        let in_boolean_cast_context = is_in_boolean_context(&syntax, &parent_syntax)
+        // Check if parent `SyntaxNode` in any boolean `Type Coercion` context,
+        // reference https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+        let parent_node_in_boolean_cast_context = is_in_boolean_context(&syntax, &parent_syntax)
             .unwrap_or_default()
             || is_boolean_constructor_call(&parent_syntax).unwrap_or_default()
             || is_negation(&parent_syntax).unwrap_or_default()
             || is_boolean_call(&parent_syntax).unwrap_or_default();
 
-        if in_boolean_cast_context {
+        // Convert `!!x` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
+        if parent_node_in_boolean_cast_context {
             if is_negation(&syntax).unwrap_or_default() {
                 let argument = JsUnaryExpression::cast(syntax)?.argument().ok()?;
                 match argument {
                     JsAnyExpression::JsUnaryExpression(expr)
                         if expr.operator().ok()? == JsUnaryOperator::LogicalNot =>
                     {
-                        return expr.argument().ok();
+                        return expr
+                            .argument()
+                            .ok()
+                            .map(|argument| (argument, ExtraBooleanCastType::DoubleNegation));
                     }
                     _ => return None,
                 }
             }
+
+            // Convert `Boolean(x)` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
+            // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
             return JsCallExpression::cast(syntax).and_then(|expr| {
                 let callee = expr.callee().ok()?;
                 if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
@@ -129,7 +154,8 @@ impl Rule for NoExtraBooleanCast {
                                 .next()?
                                 .ok()
                                 .map(|item| item.into_syntax())
-                                .and_then(JsAnyExpression::cast);
+                                .and_then(JsAnyExpression::cast)
+                                .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
                         } else {
                             return None;
                         }
@@ -139,33 +165,43 @@ impl Rule for NoExtraBooleanCast {
                 }
                 None
             });
-            // {
-            //     return Some(());
-            // }
-            // if is_boolean_call(syntax).unwrap_or_default() {}
         }
         None
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
-
-        Some(RuleDiagnostic::warning(
-            node.range(),
-            markup! {
-                "Use "<Emphasis>"while"</Emphasis>" loops instead of "<Emphasis>"for"</Emphasis>" loops."
-            },
-        ))
+        let (_, extra_boolean_cast_type) = state;
+        let (title, note) = match extra_boolean_cast_type {
+			ExtraBooleanCastType::DoubleNegation => ("Avoid redundant double-negation.", "It is not necessary to use double-negation when a value will already be coerced to a boolean."),
+			ExtraBooleanCastType::BooleanCall => ("Avoid redundant `Boolean` call", "It is not necessary to use `Boolean` call when a value will already be coerced to a boolean."),
+		};
+        Some(
+            RuleDiagnostic::warning(
+                node.range(),
+                markup! {
+                    ""{title}""
+                },
+            )
+            .footer_note(note),
+        )
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root = ctx.root().replace_node(node.clone(), state.clone())?;
+        let (node_to_replace, extra_boolean_cast_type) = state;
+        let message = match extra_boolean_cast_type {
+            ExtraBooleanCastType::DoubleNegation => "Remove redundant double-negation",
+            ExtraBooleanCastType::BooleanCall => "Remove redundant `Boolean` call",
+        };
+        let root = ctx
+            .root()
+            .replace_node(node.clone(), node_to_replace.clone())?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use a while loop" }.to_owned(),
+            message: markup! { ""{message}"" }.to_owned(),
             root,
         })
     }
