@@ -102,6 +102,7 @@ declare_visitor! {
         continue_stmt: ContinueVisitor,
         return_stmt: ReturnVisitor,
         throw: ThrowVisitor,
+        variable: VariableVisitor,
     }
 }
 
