@@ -4,9 +4,9 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    JsAnyExpression, JsCallExpression, JsDoWhileStatement, JsForStatement, JsIfStatement,
-    JsNewExpression, JsSyntaxKind, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator,
-    JsWhileStatement,
+    JsAnyExpression, JsCallArgumentList, JsCallArguments, JsCallExpression,
+    JsConditionalExpression, JsDoWhileStatement, JsForStatement, JsIfStatement, JsNewExpression,
+    JsSyntaxKind, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxNodeCast};
 
@@ -27,9 +27,40 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// for (; x.running;) {
-    ///     x.step();
+    /// if (!Boolean(foo)) {
     /// }
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// while (!!foo) {}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// let x = 1;
+    /// do {
+    /// 1 + 1;
+    /// } while (Boolean(x));
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// for (; !!foo; ) {}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// new Boolean(!!x);
+    /// ```
+    ///
+    /// ### Valid
+    /// ```js
+    /// Boolean(!x);
+    /// ```
+    ///
+    /// ```js
+    /// !x;
+    /// ```
+    ///
+    /// ```js
+    /// !!x;
     /// ```
     pub(crate) NoExtraBooleanCast = "noExtraBooleanCast"
 }
@@ -50,8 +81,8 @@ fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<b
             .cast::<JsForStatement>()
             .and_then(|stmt| Some(stmt.test()?.syntax() == node)),
         JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => parent
-            .cast::<JsForStatement>()
-            .and_then(|expr| Some(expr.test()?.syntax() == node)),
+            .cast::<JsConditionalExpression>()
+            .and_then(|expr| Some(expr.test().ok()?.syntax() == node)),
         _ => None,
     }
 }
@@ -61,15 +92,38 @@ fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<b
 /// ```js
 /// new Boolean(x);
 /// ```
+/// The checking algorithm of [JsNewExpression] is a little different from [JsCallExpression] due to
+/// the ungram definition of [JsNewExpression] is different from [JsCallExpression], the arguments of [JsNewExpression] is optional
+/// ```
+/// // new expression
+/// JsNewExpression =
+/// 'new'
+/// callee: JsAnyExpression
+/// type_arguments: TsTypeArguments?
+/// arguments: JsCallArguments?
+
+/// // call expression
+/// JsCallExpression =
+/// callee: JsAnyExpression
+/// optional_chain: '?.'?
+/// type_arguments: TsTypeArguments?
+/// arguments: JsCallArguments
+/// ```
 fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
-    JsNewExpression::cast(node.clone()).and_then(|expr| {
-        let callee = expr.callee().ok()?;
-        if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
-            Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
-        } else {
-            None
-        }
-    })
+    if JsCallArgumentList::can_cast(node.kind()) {
+        let parent = node.parent()?;
+        JsCallArguments::cast(parent).and_then(|expr| {
+            let new_expr = expr.parent::<JsNewExpression>()?;
+            let callee = new_expr.callee().ok()?;
+            if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
+                Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
+            } else {
+                None
+            }
+        })
+    } else {
+        None
+    }
 }
 
 /// Check if the SyntaxNode is a `Boolean` Call Expression
@@ -121,7 +175,6 @@ impl Rule for NoExtraBooleanCast {
             || is_boolean_constructor_call(&parent_syntax).unwrap_or_default()
             || is_negation(&parent_syntax).unwrap_or_default()
             || is_boolean_call(&parent_syntax).unwrap_or_default();
-
         // Convert `!!x` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
         if parent_node_in_boolean_cast_context {
             if is_negation(&syntax).unwrap_or_default() {
@@ -135,7 +188,9 @@ impl Rule for NoExtraBooleanCast {
                             .ok()
                             .map(|argument| (argument, ExtraBooleanCastType::DoubleNegation));
                     }
-                    _ => return None,
+                    _ => {
+                        return None;
+                    }
                 }
             }
 

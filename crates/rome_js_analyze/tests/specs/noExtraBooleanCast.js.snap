@@ -198,6 +198,29 @@ Suggested fix: Remove redundant double-negation
 
 ```
 warning[noExtraBooleanCast]: Avoid redundant double-negation.
+   ┌─ noExtraBooleanCast.js:16:13
+   │
+16 │ new Boolean(!!x);
+   │             ---
+
+Suggested fix: Remove redundant double-negation
+      | @@ -13,7 +13,7 @@
+12 12 |   
+13 13 |   for (; !!foo; ) {}
+14 14 |   
+15    | - new Boolean(!!x);
+   15 | + new Boolean(x);
+16 16 |   
+17 17 |   !!!x;
+18 18 |   
+
+=  note: It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+
+```
+
+```
+warning[noExtraBooleanCast]: Avoid redundant double-negation.
    ┌─ noExtraBooleanCast.js:18:2
    │
 18 │ !!!x;
