@@ -67,21 +67,21 @@ declare_rule! {
 fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<bool> {
     let parent = parent.clone();
     match parent.kind() {
-        JsSyntaxKind::JS_IF_STATEMENT => parent
-            .cast::<JsIfStatement>()
-            .and_then(|stmt| Some(stmt.test().ok()?.syntax() == node)),
-        JsSyntaxKind::JS_DO_WHILE_STATEMENT => parent
-            .cast::<JsDoWhileStatement>()
-            .and_then(|stmt| Some(stmt.test().ok()?.syntax() == node)),
-        JsSyntaxKind::JS_WHILE_STATEMENT => parent
-            .cast::<JsWhileStatement>()
-            .and_then(|stmt| Some(stmt.test().ok()?.syntax() == node)),
-        JsSyntaxKind::JS_FOR_STATEMENT => parent
-            .cast::<JsForStatement>()
-            .and_then(|stmt| Some(stmt.test()?.syntax() == node)),
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => parent
-            .cast::<JsConditionalExpression>()
-            .and_then(|expr| Some(expr.test().ok()?.syntax() == node)),
+        JsSyntaxKind::JS_IF_STATEMENT => {
+            Some(parent.cast::<JsIfStatement>()?.test().ok()?.syntax() == node)
+        }
+        JsSyntaxKind::JS_DO_WHILE_STATEMENT => {
+            Some(parent.cast::<JsDoWhileStatement>()?.test().ok()?.syntax() == node)
+        }
+        JsSyntaxKind::JS_WHILE_STATEMENT => {
+            Some(parent.cast::<JsWhileStatement>()?.test().ok()?.syntax() == node)
+        }
+        JsSyntaxKind::JS_FOR_STATEMENT => {
+            Some(parent.cast::<JsForStatement>()?.test()?.syntax() == node)
+        }
+        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
+            Some(parent.cast::<JsConditionalExpression>()?.test().ok()?.syntax() == node)
+        }
         _ => None,
     }
 }
@@ -140,7 +140,7 @@ fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
 /// !!x
 /// ```
 fn is_negation(node: &JsSyntaxNode) -> Option<bool> {
-	Some(JsUnaryExpression::cast(node.clone())?.operator().ok()? == JsUnaryOperator::LogicalNot)
+    Some(JsUnaryExpression::cast(node.clone())?.operator().ok()? == JsUnaryOperator::LogicalNot)
 }
 
 impl Rule for NoExtraBooleanCast {
