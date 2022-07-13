@@ -5,8 +5,7 @@ layout: layouts/rule.liquid
 
 # noExtraBooleanCast
 
-Enforce the use of `while` loops instead of `for` loops when the
-initializer and update expressions are not needed
+Disallow unnecessary boolean casts
 
 ## Examples
 

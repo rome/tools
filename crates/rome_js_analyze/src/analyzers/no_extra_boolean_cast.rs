@@ -19,8 +19,7 @@ pub enum ExtraBooleanCastType {
     BooleanCall,
 }
 declare_rule! {
-    /// Enforce the use of `while` loops instead of `for` loops when the
-    /// initializer and update expressions are not needed
+    /// Disallow unnecessary boolean casts
     ///
     /// ## Examples
     ///
