@@ -169,7 +169,6 @@ impl Session {
             section: Some(String::from(CONFIGURATION_SECTION)),
         };
         let items = vec![item];
-        let configuration = self.configuration.read();
         let client_configurations = self.client.configuration(items).await;
 
         if let Ok(client_configurations) = client_configurations {
@@ -185,7 +184,7 @@ impl Session {
                             error!("Cannot set workspace settings: {}", err);
                         })
                         .ok()?;
-
+                    let configuration = self.configuration.read();
                     let settings = config.as_workspace_settings(configuration.as_ref());
 
                     trace!(
