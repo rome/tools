@@ -94,14 +94,13 @@ fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<b
 /// ```
 /// The checking algorithm of [JsNewExpression] is a little different from [JsCallExpression] due to
 /// the ungram definition of [JsNewExpression] is different from [JsCallExpression], the arguments of [JsNewExpression] is optional
-/// ```
+/// ```text,no_run
 /// // new expression
 /// JsNewExpression =
 /// 'new'
 /// callee: JsAnyExpression
 /// type_arguments: TsTypeArguments?
 /// arguments: JsCallArguments?
-
 /// // call expression
 /// JsCallExpression =
 /// callee: JsAnyExpression
