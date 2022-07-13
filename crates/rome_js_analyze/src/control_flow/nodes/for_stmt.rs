@@ -17,7 +17,7 @@ pub(in crate::control_flow) struct ForVisitor {
     loop_block: BlockId,
 }
 
-impl<B> NodeVisitor<B> for ForVisitor {
+impl NodeVisitor for ForVisitor {
     type Node = JsForStatement;
 
     fn enter(

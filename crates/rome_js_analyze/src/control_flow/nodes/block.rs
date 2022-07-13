@@ -13,7 +13,7 @@ pub(in crate::control_flow) struct BlockVisitor {
     pub(super) break_block: Option<(JsSyntaxToken, BlockId)>,
 }
 
-impl<B> NodeVisitor<B> for BlockVisitor {
+impl NodeVisitor for BlockVisitor {
     type Node = JsBlockStatement;
 
     fn enter(

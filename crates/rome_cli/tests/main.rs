@@ -371,6 +371,8 @@ mod format {
             ]),
         });
 
+        eprintln!("{:?}", console.buffer);
+
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
         let mut file = fs

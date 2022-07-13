@@ -42,6 +42,13 @@ Prevent comments from being inserted as text nodes
 Disallow comparing against <code>-0</code>
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noDeadCode">
+	<a href="/docs/lint/rules/noDeadCode">noDeadCode</a>
+	<a class="header-anchor" href="#noDeadCode"></a>
+</h3>
+Disallow unreachable code
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDebugger">
 	<a href="/docs/lint/rules/noDebugger">noDebugger</a>
 	<a class="header-anchor" href="#noDebugger"></a>

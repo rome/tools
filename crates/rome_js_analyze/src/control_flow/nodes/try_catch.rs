@@ -17,7 +17,7 @@ pub(in crate::control_flow) struct TryVisitor {
     next_block: BlockId,
 }
 
-impl<B> NodeVisitor<B> for TryVisitor {
+impl NodeVisitor for TryVisitor {
     type Node = JsAnyTryStatement;
 
     fn enter(
@@ -64,7 +64,7 @@ impl<B> NodeVisitor<B> for TryVisitor {
 
 pub(in crate::control_flow) struct CatchVisitor;
 
-impl<B> NodeVisitor<B> for CatchVisitor {
+impl NodeVisitor for CatchVisitor {
     type Node = JsCatchClause;
 
     fn enter(
@@ -108,7 +108,7 @@ impl<B> NodeVisitor<B> for CatchVisitor {
 
 pub(in crate::control_flow) struct FinallyVisitor;
 
-impl<B> NodeVisitor<B> for FinallyVisitor {
+impl NodeVisitor for FinallyVisitor {
     type Node = JsFinallyClause;
 
     fn enter(

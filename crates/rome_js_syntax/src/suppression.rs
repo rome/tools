@@ -114,6 +114,12 @@ impl PartialEq<&str> for SuppressionCategory {
     }
 }
 
+impl PartialEq<SuppressionCategory> for &'_ str {
+    fn eq(&self, other: &SuppressionCategory) -> bool {
+        other.eq(self)
+    }
+}
+
 /// Returns true if this node has a suppression comment of the provided category
 pub fn has_suppressions_category(category: SuppressionCategory, node: &JsSyntaxNode) -> bool {
     // Lists cannot have a suppression comment attached, it must
