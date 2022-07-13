@@ -2,7 +2,7 @@ use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
 };
 
-use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never};
+use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleFilter};
 use rome_console::{
     diff::{Diff, DiffMode},
     fmt::{Formatter, Termcolor},
@@ -26,20 +26,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let parsed = parse(&input_code, 0, source_type);
     let root = parsed.tree();
 
-    // The test runner for the analyzer is currently designed to have a
-    // one-to-one mapping between test case and analyzer rules, so each testing
-    // file will be run through the analyzer with only the rule corresponding
-    // to the file name (or the name of the parent directory if it's not "specs")
-    // enabled, eg. `useWhile.js` and `useWhile/test.js` will be analyzed with
-    // just the `useWhile` rule
-    let rule_name = input_file
-        .parent()
-        .and_then(|parent| parent.file_name()?.to_str())
-        .filter(|parent| *parent != "specs")
-        .or_else(|| input_file.file_stem()?.to_str())
-        .unwrap();
+    let (group, rule) = parse_test_path(input_file);
+    let rule_filter = RuleFilter::Rule(group, rule);
     let filter = AnalysisFilter {
-        rules: Some(slice::from_ref(&rule_name)),
+        enabled_rules: Some(slice::from_ref(&rule_filter)),
         ..AnalysisFilter::default()
     };
 
@@ -97,6 +87,28 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     }, {
         insta::assert_snapshot!(file_name, snapshot, file_name);
     });
+}
+
+/// The test runner for the analyzer is currently designed to have a
+/// one-to-one mapping between test case and analyzer rules, so each testing
+/// file will be run through the analyzer with only the rule corresponding
+/// to the file name (or the name of the parent directory if it's not "specs")
+/// enabled, eg. `js/useWhile.js` and `js/useWhile/test.js` will be analyzed with
+/// just the `js/useWhile` rule
+fn parse_test_path(file: &Path) -> (&str, &str) {
+    let file_stem = file.file_stem().unwrap();
+
+    let ancestor_0 = file.parent().unwrap();
+    let name_0 = ancestor_0.file_name().unwrap();
+
+    let ancestor_1 = ancestor_0.parent().unwrap();
+    let name_1 = ancestor_1.file_name().unwrap();
+
+    if name_1.to_str().unwrap() == "specs" {
+        (name_0.to_str().unwrap(), file_stem.to_str().unwrap())
+    } else {
+        (name_1.to_str().unwrap(), name_0.to_str().unwrap())
+    }
 }
 
 fn markup_to_string(markup: Markup) -> String {

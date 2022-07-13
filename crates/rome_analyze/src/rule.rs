@@ -8,7 +8,7 @@ use rome_rowan::{Language, TextRange};
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::RuleLanguage;
-use crate::{LanguageRoot, Phase, Phases, Queryable};
+use crate::{AnalysisFilter, LanguageRoot, Phase, Phases, Queryable, RuleRegistry};
 
 pub trait RuleMeta {
     /// The name of this rule, displayed in the diagnostics it emits
@@ -86,6 +86,66 @@ macro_rules! declare_rule {
         }
     };
 }
+
+/// A rule group is a collection of rules under a given name, serving as a
+/// "namespace" for lint rules and allowing the entire set of rules to be
+/// disabled at once
+pub trait RuleGroup {
+    type Language: Language;
+    /// The name of this group, displayed in the diagnostics emitted by its rules
+    const NAME: &'static str;
+    /// Register all the rules belonging to this group into `registry` if they match `filter`
+    fn push_rules(registry: &mut RuleRegistry<Self::Language>, filter: &AnalysisFilter);
+}
+
+/// This macro is used by the codegen script to declare an analyzer rule group,
+/// and implement the [RuleGroup] trait for it
+#[macro_export]
+macro_rules! declare_group {
+    ( $vis:vis $id:ident { name: $name:literal, rules: [ $( $rule:ty, )* ] } ) => {
+        $vis enum $id {}
+
+        impl $crate::RuleGroup for $id {
+            type Language = <( $( $rule, )* ) as $crate::GroupLanguage>::Language;
+
+            const NAME: &'static str = $name;
+
+            fn push_rules(registry: &mut $crate::RuleRegistry<Self::Language>, filter: &$crate::AnalysisFilter) {
+                $( if filter.match_rule::<Self, $rule>() { registry.push::<Self, $rule>(); } )*
+            }
+        }
+    };
+}
+
+/// This trait is implemented for tuples of [Rule] types of size 1 to 20 if the
+/// query type of all the rules in the tuple share the same associated
+/// [Language] (which is then aliased as the `Language` associated type on
+/// [GroupLanguage] itself). It is used to ensure all the rules in a given
+/// group are all querying the same underlying language
+pub trait GroupLanguage {
+    type Language: Language;
+}
+
+/// Helper macro for implementing [GroupLanguage] on a large number of tuple types at once
+macro_rules! impl_group_language {
+    ( $head:ident $( , $rest:ident )* ) => {
+        impl<$head $( , $rest )*> GroupLanguage for ($head, $( $rest ),*)
+        where
+            $head: Rule $( , $rest: Rule, <$rest as Rule>::Query: Queryable<Language = RuleLanguage<$head>> )*
+        {
+            type Language = RuleLanguage<$head>;
+        }
+
+        impl_group_language!( $( $rest ),* );
+    };
+
+    () => {};
+}
+
+impl_group_language!(
+    T00, T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18,
+    T19
+);
 
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
@@ -285,11 +345,11 @@ impl RuleDiagnostic {
     /// Convert this [`RuleDiagnostic`] into an instance of [`Diagnostic`] by
     /// injecting the name of the rule that emitted it and the ID of the file
     /// the rule was being run on
-    pub(crate) fn into_diagnostic(self, file_id: FileId, code: &'static str) -> Diagnostic {
+    pub(crate) fn into_diagnostic(self, file_id: FileId, code: String) -> Diagnostic {
         Diagnostic {
             file_id,
             severity: self.severity,
-            code: Some(code.into()),
+            code: Some(code),
             title: self.title,
             summary: self.summary,
             tag: self.tag,

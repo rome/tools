@@ -1,7 +1,7 @@
 use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, LanguageRoot, Phases,
-    RuleAction, ServiceBag, ServiceBagData, SyntaxVisitor,
+    RuleAction, RuleMetadata, ServiceBag, ServiceBagData, SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_semantic::semantic_model;
@@ -23,7 +23,7 @@ pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
 /// Return an iterator over the name and documentation of all the rules
 /// implemented by the JS analyzer
-pub fn metadata(filter: AnalysisFilter) -> impl Iterator<Item = (&'static str, &'static str)> {
+pub fn metadata(filter: AnalysisFilter) -> impl Iterator<Item = RuleMetadata> {
     build_registry(&filter).metadata()
 }
 
@@ -111,17 +111,19 @@ mod tests {
         const SOURCE: &str = "
             function checkSuppressions1(a, b) {
                 a == b;
-                // rome-ignore lint(noDoubleEquals): single expression
+                // rome-ignore lint(js): whole group
                 a == b;
-                /* rome-ignore lint(useWhile): multiple block comments */ /* rome-ignore lint(noDoubleEquals): multiple block comments */
+                // rome-ignore lint(js/noDoubleEquals): single rule
                 a == b;
-                // rome-ignore lint(useWhile): multiple line comments
-                // rome-ignore lint(noDoubleEquals): multiple line comments
+                /* rome-ignore lint(js/useWhile): multiple block comments */ /* rome-ignore lint(js/noDoubleEquals): multiple block comments */
+                a == b;
+                // rome-ignore lint(js/useWhile): multiple line comments
+                // rome-ignore lint(js/noDoubleEquals): multiple line comments
                 a == b;
                 a == b;
             }
 
-            // rome-ignore lint(noDoubleEquals): do not suppress warning for the whole function
+            // rome-ignore lint(js/noDoubleEquals): do not suppress warning for the whole function
             function checkSuppressions2(a, b) {
                 a == b;
             }
@@ -135,7 +137,7 @@ mod tests {
                 let code = diag.code.as_deref().unwrap();
                 let primary = diag.primary.as_ref().unwrap();
 
-                if code == "noDoubleEquals" {
+                if code == "js/noDoubleEquals" {
                     error_ranges.push(primary.span.range);
                 }
             }
@@ -147,8 +149,8 @@ mod tests {
             error_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
-                TextRange::new(TextSize::from(518), TextSize::from(520)),
-                TextRange::new(TextSize::from(701), TextSize::from(703)),
+                TextRange::new(TextSize::from(604), TextSize::from(606)),
+                TextRange::new(TextSize::from(790), TextSize::from(792)),
             ]
         );
     }

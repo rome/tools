@@ -55,8 +55,10 @@ mod tests {
     };
 
     use crate::{
-        matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerSignal,
-        ControlFlow, Never, QueryMatch, QueryMatcher, RuleKey, ServiceBag, SyntaxVisitor,
+        matcher::{GroupKey, MatchQueryParams},
+        registry::Phases,
+        Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, Never, QueryMatch, QueryMatcher,
+        RuleKey, ServiceBag, SyntaxVisitor,
     };
 
     #[derive(Default)]
@@ -65,7 +67,11 @@ mod tests {
     }
 
     impl<'a> QueryMatcher<RawLanguage> for &'a mut BufferMatcher {
-        fn find_rule(&self, _name: &str) -> Option<RuleKey> {
+        fn find_group(&self, _group: &str) -> Option<GroupKey> {
+            None
+        }
+
+        fn find_rule(&self, _group: &str, _rule: &str) -> Option<RuleKey> {
             None
         }
 
