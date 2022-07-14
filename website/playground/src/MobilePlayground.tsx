@@ -67,7 +67,7 @@ export function MobilePlayground(
 						value={formatted_code}
 						extensions={extensions}
 						placeholder="Rome Output"
-						readOnly={true}						
+						readOnly={true}
 						style={{
 							fontSize: 12,
 							height: "40vh",
@@ -80,7 +80,7 @@ export function MobilePlayground(
 					<CodeMirror
 						value={prettierOutput.code}
 						extensions={extensions}
-            readOnly={true}
+						readOnly={true}
 						placeholder="Prettier Output"
 						style={{
 							fontSize: 12,
