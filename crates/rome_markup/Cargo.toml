@@ -4,6 +4,7 @@ version = "0.0.0"
 description = ""
 license = "MIT"
 edition = "2021"
+authors = ["Rome Tools Developers and Contributros"]
 
 [lib]
 proc-macro = true

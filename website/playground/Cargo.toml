@@ -2,7 +2,8 @@
 name = "rome_playground"
 version = "0.0.0"
 edition = "2021"
-
+authors = ["Rome Tools Developers and Contributros"]
+license = "MIT"
 
 [lib]
 crate-type = ["cdylib"]

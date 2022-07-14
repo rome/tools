@@ -1,7 +1,9 @@
 [package]
 name = "rome_js_factory"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
+authors = ["Rome Tools Developers and Contributros"]
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
