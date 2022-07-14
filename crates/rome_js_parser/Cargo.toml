@@ -1,8 +1,8 @@
 [package]
 edition = "2021"
 name = "rome_js_parser"
-version = "0.3.0"
-authors = ["Rome Tools"]
+version = "0.0.0"
+authors = ["Rome Tools Developers and Contributros"]
 license = "MIT"
 description = "An extremely fast ECMAScript parser made for the rslint project"
 repository = "https://github.com/rome/tools"

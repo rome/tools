@@ -1318,7 +1318,7 @@ dependencies = [
 
 [[package]]
 name = "rome_analyze"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "bitflags",
  "rome_console",
@@ -1366,14 +1366,14 @@ dependencies = [
 
 [[package]]
 name = "rome_control_flow"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "rome_rowan",
 ]
 
 [[package]]
 name = "rome_css_factory"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "rome_css_syntax",
  "rome_rowan",
@@ -1388,7 +1388,7 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics"
-version = "0.2.0"
+version = "0.0.0"
 dependencies = [
  "colored",
  "rome_console",
@@ -1408,7 +1408,7 @@ dependencies = [
 
 [[package]]
 name = "rome_formatter"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "cfg-if",
  "indexmap",
@@ -1429,7 +1429,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_analyze"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "countme",
  "insta",
@@ -1449,7 +1449,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_factory"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "rome_js_syntax",
  "rome_rowan",
@@ -1485,7 +1485,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_parser"
-version = "0.3.0"
+version = "0.0.0"
 dependencies = [
  "bitflags",
  "cfg-if",
@@ -1505,7 +1505,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_semantic"
-version = "0.3.0"
+version = "0.0.0"
 dependencies = [
  "rome_console",
  "rome_diagnostics",
@@ -1518,7 +1518,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_syntax"
-version = "0.1.4"
+version = "0.0.0"
 dependencies = [
  "rome_js_factory",
  "rome_rowan",
@@ -1527,7 +1527,7 @@ dependencies = [
 
 [[package]]
 name = "rome_json_factory"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "rome_json_syntax",
  "rome_rowan",
@@ -1542,7 +1542,7 @@ dependencies = [
 
 [[package]]
 name = "rome_lsp"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "anyhow",
  "futures",
@@ -1630,7 +1630,7 @@ dependencies = [
 
 [[package]]
 name = "rome_text_edit"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "rome_rowan",
 ]
