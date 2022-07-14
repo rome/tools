@@ -94,7 +94,7 @@ export default function DesktopPlayground(
 								extensions={extensions}
 								placeholder="Rome Output"
 								height="30vh"
-								readOnly
+								readOnly={true}
 							/>
 							<h1>Prettier</h1>
 							<CodeMirror
@@ -102,7 +102,7 @@ export default function DesktopPlayground(
 								extensions={extensions}
 								placeholder="Rome Output"
 								height="30vh"
-								readOnly
+								readOnly={true}
 							/>
 						</TabPanel>
 						<TabPanel>
