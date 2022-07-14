@@ -28,11 +28,11 @@ Disallow the use of <code>arguments</code>
 Disallows using an async function as a Promise executor.
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noCommentText">
-	<a href="/docs/lint/rules/noCommentText">noCommentText</a>
-	<a class="header-anchor" href="#noCommentText"></a>
+<h3 data-toc-exclude id="noCatchAssign">
+	<a href="/docs/lint/rules/noCatchAssign">noCatchAssign</a>
+	<a class="header-anchor" href="#noCatchAssign"></a>
 </h3>
-Prevent comments from being inserted as text nodes
+Disallow reassigning exceptions in catch clauses
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noCompareNegZero">

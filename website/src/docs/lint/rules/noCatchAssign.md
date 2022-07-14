@@ -20,8 +20,8 @@ try {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noCatchAssign</span><span style="color: Orange;">]</span><em>: </em><em> Do not </em><em><em>reassign catch parameters.</em></em><em></em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> noCatchAssign.js:5:3
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noCatchAssign</span><span style="color: Orange;">]</span><em>: </em><em> Do not </em><em><em>reassign catch parameters.</em></em><em></em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noCatchAssign.js:5:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> } catch (e) {
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">The catch parameter is declared here</span>
