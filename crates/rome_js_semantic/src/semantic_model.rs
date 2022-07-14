@@ -4,7 +4,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
-use std::{collections::HashMap, iter::FusedIterator, marker::PhantomData, sync::Arc};
+use std::{collections::HashMap, iter::FusedIterator, sync::Arc};
 
 use crate::{SemanticEvent, SemanticEventExtractor};
 
@@ -48,7 +48,46 @@ struct SemanticModelData {
     // Maps any range in the code to its declaration
     declared_at_by_range: HashMap<TextRange, TextRange>,
     // Maps a declaration range to the range of its references
-    declaration_all_references: HashMap<TextRange, Vec<TextRange>>,
+    declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    // Maps a declaration range to the range of its "reads"
+    declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    // Maps a declaration range to the range of its "writes"
+    declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+}
+
+impl SemanticModelData {
+    pub fn all_references_iter(
+        &self,
+        range: &TextRange,
+    ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
+        if let Some(v) = self.declaration_all_references.get(&range) {
+            v.iter()
+        } else {
+            [].iter()
+        }
+    }
+
+    pub fn all_reads_iter(
+        &self,
+        range: &TextRange,
+    ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
+        if let Some(v) = self.declaration_all_reads.get(&range) {
+            v.iter()
+        } else {
+            [].iter()
+        }
+    }
+
+    pub fn all_writes_iter(
+        &self,
+        range: &TextRange,
+    ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
+        if let Some(v) = self.declaration_all_writes.get(&range) {
+            v.iter()
+        } else {
+            [].iter()
+        }
+    }
 }
 
 impl PartialEq for SemanticModelData {
@@ -169,58 +208,98 @@ impl Binding {
     /// Returns an iterator to all references of this binding.
     pub fn all_references(&self) -> ReferencesIter {
         let range = self.node.text_range();
-
         ReferencesIter {
             data: self.data.clone(),
-            declaration_at: range,
-            index: 0,
-            phantom: PhantomData,
+            iter: self.data.all_references_iter(&range),
+        }
+    }
+
+    /// Returns an iterator to all reads references of this binding.
+    pub fn all_reads(&self) -> ReferencesIter {
+        let range = self.node.text_range();
+        ReferencesIter {
+            data: self.data.clone(),
+            iter: self.data.all_reads_iter(&range),
+        }
+    }
+
+    /// Returns an iterator to all write references of this binding.
+    pub fn all_writes(&self) -> ReferencesIter {
+        let range = self.node.text_range();
+        ReferencesIter {
+            data: self.data.clone(),
+            iter: self.data.all_writes_iter(&range),
         }
     }
 }
 
+#[derive(Clone, Copy)]
+enum ReferenceType {
+    Read,
+    Write,
+}
+
+/// Provides all information regarding to a specific reference.
 pub struct Reference {
+    data: Arc<SemanticModelData>,
     node: JsSyntaxNode,
+    range: TextRange,
+    ty: ReferenceType,
 }
 
 impl Reference {
     pub fn node(&self) -> &JsSyntaxNode {
         &self.node
     }
+
+    pub fn declaration(&self) -> Option<Binding> {
+        let range = self.data.declared_at_by_range.get(&self.range)?;
+        let node = self.data.node_by_range.get(range)?.clone();
+        Some(Binding {
+            data: self.data.clone(),
+            node,
+        })
+    }
+
+    pub fn is_read(&self) -> bool {
+        match self.ty {
+            ReferenceType::Read => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_write(&self) -> bool {
+        match self.ty {
+            ReferenceType::Write => true,
+            _ => false,
+        }
+    }
 }
 
 /// Iterate all references of a particular declaration.
 pub struct ReferencesIter<'a> {
     data: Arc<SemanticModelData>,
-    declaration_at: TextRange,
-    index: usize,
-    phantom: PhantomData<&'a ()>,
+    iter: std::slice::Iter<'a, (ReferenceType, TextRange)>,
 }
 
 impl<'a> Iterator for ReferencesIter<'a> {
     type Item = Reference;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let references = self
-            .data
-            .declaration_all_references
-            .get(&self.declaration_at)?;
-        let range = references.get(self.index)?;
+        let (ty, range) = self.iter.next()?;
         let node = self.data.node_by_range.get(range)?;
-
-        self.index += 1;
-
-        Some(Reference { node: node.clone() })
+        Some(Reference {
+            data: self.data.clone(),
+            node: node.clone(),
+            range: range.clone(),
+            ty: *ty,
+        })
     }
 }
 
 impl<'a> ExactSizeIterator for ReferencesIter<'a> {
     fn len(&self) -> usize {
-        let references = self
-            .data
-            .declaration_all_references
-            .get(&self.declaration_at);
-        references.map(|v| v.len()).unwrap_or(0)
+        self.iter.len()
     }
 }
 
@@ -385,12 +464,27 @@ impl SemanticModel {
     ) -> ReferencesIter<'a> {
         let node = declaration.node();
         let range = node.syntax().text_range();
-
         ReferencesIter {
             data: self.data.clone(),
-            declaration_at: range,
-            index: 0,
-            phantom: PhantomData,
+            iter: self.data.all_references_iter(&range),
+        }
+    }
+
+    pub fn all_reads<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
+        let node = declaration.node();
+        let range = node.syntax().text_range();
+        ReferencesIter {
+            data: self.data.clone(),
+            iter: self.data.all_reads_iter(&range),
+        }
+    }
+
+    pub fn all_writes<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
+        let node = declaration.node();
+        let range = node.syntax().text_range();
+        ReferencesIter {
+            data: self.data.clone(),
+            iter: self.data.all_writes_iter(&range),
         }
     }
 }
@@ -434,6 +528,20 @@ pub trait AllReferencesExtensions {
     {
         model.all_references(self)
     }
+
+    fn all_reads<'a>(&self, model: &'a SemanticModel) -> ReferencesIter<'a>
+    where
+        Self: IsDeclarationAstNode,
+    {
+        model.all_reads(self)
+    }
+
+    fn all_writes<'a>(&self, model: &'a SemanticModel) -> ReferencesIter<'a>
+    where
+        Self: IsDeclarationAstNode,
+    {
+        model.all_writes(self)
+    }
 }
 
 impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
@@ -451,7 +559,9 @@ pub struct SemanticModelBuilder {
     scope_by_range: Vec<Interval<usize, usize>>,
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     declarations_by_range: HashMap<TextRange, TextRange>,
-    declaration_all_references: HashMap<TextRange, Vec<TextRange>>,
+    declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
 }
 
 impl SemanticModelBuilder {
@@ -464,6 +574,8 @@ impl SemanticModelBuilder {
             node_by_range: HashMap::new(),
             declarations_by_range: HashMap::new(),
             declaration_all_references: HashMap::new(),
+            declaration_all_reads: HashMap::new(),
+            declaration_all_writes: HashMap::new(),
         }
     }
 
@@ -520,7 +632,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push(range);
+                    .push((ReferenceType::Read, range));
+                self.declaration_all_reads
+                    .entry(declaration_at)
+                    .or_default()
+                    .push((ReferenceType::Read, range));
             }
             HoistedRead {
                 range,
@@ -530,7 +646,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push(range);
+                    .push((ReferenceType::Read, range));
+                self.declaration_all_reads
+                    .entry(declaration_at)
+                    .or_default()
+                    .push((ReferenceType::Read, range));
             }
             Write {
                 range,
@@ -540,7 +660,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push(range);
+                    .push((ReferenceType::Write, range));
+                self.declaration_all_writes
+                    .entry(declaration_at)
+                    .or_default()
+                    .push((ReferenceType::Write, range));
             }
             HoistedWrite {
                 range,
@@ -550,7 +674,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push(range);
+                    .push((ReferenceType::Write, range));
+                self.declaration_all_writes
+                    .entry(declaration_at)
+                    .or_default()
+                    .push((ReferenceType::Write, range));
             }
             UnresolvedReference { .. } => {}
         }
@@ -564,6 +692,8 @@ impl SemanticModelBuilder {
             node_by_range: self.node_by_range,
             declared_at_by_range: self.declarations_by_range,
             declaration_all_references: self.declaration_all_references,
+            declaration_all_reads: self.declaration_all_reads,
+            declaration_all_writes: self.declaration_all_writes,
         };
         SemanticModel::new(data)
     }
@@ -695,10 +825,15 @@ mod test {
 
         // All references
 
-        let a_references = a_declaration.all_references();
-        assert_eq!(1, a_references.count());
+        assert_eq!(1, a_declaration.all_references().count());
+        assert_eq!(1, a_declaration.all_reads().count());
+        assert!(a_declaration.all_reads().all(|r| r.is_read()));
+        assert!(a_declaration.all_writes().all(|r| r.is_write()));
 
-        let b_references = b_declaration.all_references();
-        assert_eq!(2, b_references.count());
+        assert_eq!(2, b_declaration.all_references().count());
+        assert_eq!(1, b_declaration.all_reads().count());
+        assert_eq!(1, b_declaration.all_writes().count());
+        assert!(b_declaration.all_reads().all(|r| r.is_read()));
+        assert!(b_declaration.all_writes().all(|r| r.is_write()));
     }
 }
