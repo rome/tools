@@ -28,6 +28,13 @@ Disallow the use of <code>arguments</code>
 Disallows using an async function as a Promise executor.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noCatchAssign">
+	<a href="/docs/lint/rules/noCatchAssign">noCatchAssign</a>
+	<a class="header-anchor" href="#noCatchAssign"></a>
+</h3>
+Disallow reassigning exceptions in catch clauses
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noCompareNegZero">
 	<a href="/docs/lint/rules/noCompareNegZero">noCompareNegZero</a>
 	<a class="header-anchor" href="#noCompareNegZero"></a>
