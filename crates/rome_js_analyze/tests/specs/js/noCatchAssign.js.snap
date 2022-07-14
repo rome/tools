@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 98
+assertion_line: 88
 expression: noCatchAssign.js
 ---
 # Input
@@ -19,7 +19,7 @@ try {
 
 # Diagnostics
 ```
-warning[noCatchAssign]:  Do not reassign catch parameters.
+warning[js/noCatchAssign]:  Do not reassign catch parameters.
   ┌─ noCatchAssign.js:2:24
   │
 2 │ try { } catch (e) { e; e = 10; }
@@ -33,7 +33,7 @@ warning[noCatchAssign]:  Do not reassign catch parameters.
 ```
 
 ```
-warning[noCatchAssign]:  Do not reassign catch parameters.
+warning[js/noCatchAssign]:  Do not reassign catch parameters.
   ┌─ noCatchAssign.js:6:3
   │
 5 │ } catch (error) {
@@ -47,7 +47,7 @@ warning[noCatchAssign]:  Do not reassign catch parameters.
 ```
 
 ```
-warning[noCatchAssign]:  Do not reassign catch parameters.
+warning[js/noCatchAssign]:  Do not reassign catch parameters.
   ┌─ noCatchAssign.js:8:5
   │
 5 │ } catch (error) {
