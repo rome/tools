@@ -9,6 +9,9 @@ import {
 } from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
+import RomeWorker from './romeWorker?worker';
+import PrettierWorker from './prettierWorker?worker';
+
 
 function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
@@ -28,14 +31,8 @@ function App() {
 	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
 
 	useEffect(() => {
-		romeWorkerRef.current = new Worker(new URL(
-			"./romeWorker.ts",
-			import.meta.url,
-		), { type: "module" });
-		prettierWorkerRef.current = new Worker(new URL(
-			"./prettierWorker.ts",
-			import.meta.url,
-		), { type: "module" });
+		romeWorkerRef.current = new RomeWorker();;
+		prettierWorkerRef.current = new PrettierWorker();
 
 		romeWorkerRef.current.addEventListener("message", (event) => {
 			if (event.data.type === "init") {
