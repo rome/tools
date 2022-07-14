@@ -64,6 +64,13 @@ declare_rule! {
     pub(crate) NoExtraBooleanCast = "noExtraBooleanCast"
 }
 
+/// Check if this node is in the position of `test` slot of parent syntax node.
+/// ## Example
+/// ```js
+/// if (!!x) {
+///     ^^^ this is a boolean context
+/// }
+/// ```
 fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<bool> {
     let parent = parent.clone();
     match parent.kind() {
