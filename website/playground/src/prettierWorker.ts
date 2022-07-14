@@ -1,7 +1,6 @@
 import { formatWithPrettier } from "./utils";
 
 let timeout: number;
-
 self.addEventListener("message", (e) => {
 	clearTimeout(timeout);
 
@@ -14,10 +13,7 @@ self.addEventListener("message", (e) => {
 			quoteStyle,
 			isTypeScript,
 		} = e.data.playgroundState;
-		console.log("Prettier Format Request");
-
 		timeout = setTimeout(() => {
-			console.time("prettier");
 			const prettierOutput = formatWithPrettier(code, {
 				lineWidth,
 				indentStyle,
@@ -25,7 +21,6 @@ self.addEventListener("message", (e) => {
 				language: isTypeScript ? "ts" : "js",
 				quoteStyle,
 			});
-			console.timeEnd("prettier");
 			self.postMessage({
 				type: "formatted",
 				prettierOutput,

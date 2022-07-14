@@ -1,10 +1,10 @@
+import { useCallback } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import CodeEditor from "@uiw/react-textarea-code-editor";
-import { createSetter, getLanguage } from "./utils";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import ReactJson from "react-json-view";
 
 export function MobilePlayground(
 	{
@@ -15,7 +15,18 @@ export function MobilePlayground(
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;
-	const language = getLanguage(isJsx, isTypeScript);
+
+	const onChange = useCallback((value) => {
+		setPlaygroundState((state) => ({ ...state, code: value }));
+	}, []);
+
+	const extensions = [
+		javascript({
+			jsx: isJsx,
+			typescript: isTypeScript,
+		}),
+	];
+
 	return (
 		<div className="p-1">
 			<h1 className="p-3 text-xl pb-5">Rome Playground</h1>
@@ -31,18 +42,11 @@ export function MobilePlayground(
 					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">Errors</Tab>
 				</TabList>
 				<TabPanel>
-					<CodeEditor
+					<CodeMirror
 						value={code}
-						language={language}
-						placeholder="Enter some code here"
-						onChange={(evn) => {
-							setPlaygroundState(
-								(state) => ({
-									...state,
-									code: evn.target.value,
-								}),
-							);
-						}}
+						extensions={extensions}
+						placeholder="Enter your code here"
+						onChange={onChange}
 						style={{
 							fontSize: 12,
 							height: "100vh",
@@ -59,9 +63,9 @@ export function MobilePlayground(
 				</TabPanel>
 				<TabPanel>
 					<h1>Rome</h1>
-					<CodeEditor
+					<CodeMirror
 						value={formatted_code}
-						language={language}
+						extensions={extensions}
 						placeholder="Rome Output"
 						style={{
 							fontSize: 12,
@@ -72,9 +76,9 @@ export function MobilePlayground(
 						}}
 					/>
 					<h1>Prettier</h1>
-					<CodeEditor
+					<CodeMirror
 						value={prettierOutput.code}
-						language={language}
+						extensions={extensions}
 						placeholder="Prettier Output"
 						style={{
 							fontSize: 12,

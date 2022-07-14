@@ -25,6 +25,13 @@ export default function DesktopPlayground(
 		"success" | "failed" | "normal"
 	>("normal");
 
+	const extensions = [
+		javascript({
+			jsx: isJsx,
+			typescript: isTypeScript,
+		}),
+	];
+
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
@@ -63,12 +70,7 @@ export default function DesktopPlayground(
 					<CodeMirror
 						value={code}
 						height="70vh"
-						extensions={[
-							javascript({
-								jsx: isJsx,
-								typescript: isTypeScript,
-							}),
-						]}
+						extensions={extensions}
 						placeholder="Enter your code here"
 						onChange={onChange}
 					/>
@@ -89,12 +91,7 @@ export default function DesktopPlayground(
 							<h1>Rome</h1>
 							<CodeMirror
 								value={formatted_code}
-								extensions={[
-									javascript({
-										jsx: isJsx,
-										typescript: isTypeScript,
-									}),
-								]}
+								extensions={extensions}
 								placeholder="Rome Output"
 								height="30vh"
 								readOnly
@@ -102,12 +99,7 @@ export default function DesktopPlayground(
 							<h1>Prettier</h1>
 							<CodeMirror
 								value={prettierOutput.code}
-								extensions={[
-									javascript({
-										jsx: isJsx,
-										typescript: isTypeScript,
-									}),
-								]}
+								extensions={extensions}
 								placeholder="Rome Output"
 								height="30vh"
 								readOnly

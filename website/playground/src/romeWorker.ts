@@ -26,9 +26,7 @@ self.addEventListener("message", (e) => {
 			sourceType,
 			treeStyle,
 		} = e.data.playgroundState;
-		console.log("Rome Format Request");
 		timeout = setTimeout(() => {
-			console.time("rome");
 			const romeOutput = run(
 				code,
 				new PlaygroundFormatOptions(
@@ -41,7 +39,6 @@ self.addEventListener("message", (e) => {
 				sourceType,
 				treeStyle === TreeStyle.Json,
 			);
-			console.timeEnd("rome");
 			self.postMessage({
 				type: "formatted",
 				romeOutput: {

@@ -144,19 +144,6 @@ function getPrettierParser(language: "js" | "ts"): string {
 	}
 }
 
-export function getLanguage(isJsx: boolean, isTypeScript: boolean):
-	| "jsx"
-	| "typescript"
-	| "js" {
-	if (isTypeScript) {
-		return "typescript";
-	} else if (isJsx) {
-		return "jsx";
-	} else {
-		return "js";
-	}
-}
-
 // See https://developer.mozilla.org/en-US/docs/Web/API/btoa#unicode_strings
 export function encodeCode(code: string): string {
 	return btoa(toBinary(code));

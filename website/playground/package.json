@@ -15,7 +15,6 @@
 	"dependencies": {
 		"@codemirror/lang-javascript": "^6.0.1",
 		"@uiw/react-codemirror": "^4.11.0",
-		"@uiw/react-textarea-code-editor": "^1.4.16",
 		"prettier": "^2.7.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
