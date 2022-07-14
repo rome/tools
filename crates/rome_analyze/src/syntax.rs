@@ -1,12 +1,12 @@
 use rome_rowan::{Language, SyntaxNode, WalkEvent};
 
-use crate::{ControlFlow, QueryMatch, Visitor, VisitorContext};
+use crate::{QueryMatch, Visitor, VisitorContext};
 
+#[derive(Default)]
 /// The [SyntaxVisitor] is the simplest form of visitor implemented for the
 /// analyzer, it simply broadcast each [WalkEvent::Enter] as a query match
 /// event for the [SyntaxNode] being entered
-pub struct SyntaxVisitor<L: Language, F> {
-    has_suppressions: F,
+pub struct SyntaxVisitor<L: Language> {
     /// If a subtree is currently being skipped by the visitor, for instance
     /// because it has a suppression comment, this stores the root [SyntaxNode]
     /// of that subtree. The visitor will then ignore all events until it
@@ -14,29 +14,10 @@ pub struct SyntaxVisitor<L: Language, F> {
     skip_subtree: Option<SyntaxNode<L>>,
 }
 
-impl<L: Language, F> SyntaxVisitor<L, F>
-where
-    F: Fn(&SyntaxNode<L>) -> bool,
-{
-    pub fn new(has_suppressions: F) -> Self {
-        Self {
-            has_suppressions,
-            skip_subtree: None,
-        }
-    }
-}
-
-impl<L: Language, F, B> Visitor<B> for SyntaxVisitor<L, F>
-where
-    F: Fn(&SyntaxNode<L>) -> bool,
-{
+impl<L: Language> Visitor for SyntaxVisitor<L> {
     type Language = L;
 
-    fn visit(
-        &mut self,
-        event: &WalkEvent<SyntaxNode<Self::Language>>,
-        ctx: &mut VisitorContext<L, B>,
-    ) -> ControlFlow<B> {
+    fn visit(&mut self, event: &WalkEvent<SyntaxNode<Self::Language>>, mut ctx: VisitorContext<L>) {
         let node = match event {
             WalkEvent::Enter(node) => node,
             WalkEvent::Leave(node) => {
@@ -46,42 +27,63 @@ where
                     }
                 }
 
-                return ControlFlow::Continue(());
+                return;
             }
         };
 
         if self.skip_subtree.is_some() {
-            return ControlFlow::Continue(());
+            return;
         }
 
         if let Some(range) = ctx.range {
             if node.text_range().ordering(range).is_ne() {
                 self.skip_subtree = Some(node.clone());
-                return ControlFlow::Continue(());
+                return;
             }
         }
 
-        // TODO: Checking for suppression comments is currently incomplete,
-        // it can only completely suppress linting and has a high performance
-        // cost due to eagerly looking up the first token of each node
-        if (self.has_suppressions)(node) {
-            self.skip_subtree = Some(node.clone());
-            return ControlFlow::Continue(());
-        }
-
-        let query = QueryMatch::Syntax(node.clone());
-        ctx.match_query(&query)
+        ctx.match_query(QueryMatch::Syntax(node.clone()));
     }
 }
 
 #[cfg(test)]
 mod tests {
+
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode,
     };
 
-    use crate::{Analyzer, ControlFlow, Never, QueryMatch, SyntaxVisitor, VisitorContext};
+    use crate::{
+        matcher::{GroupKey, MatchQueryParams},
+        registry::Phases,
+        Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, Never, QueryMatch, QueryMatcher,
+        RuleKey, ServiceBag, SyntaxVisitor,
+    };
+
+    #[derive(Default)]
+    struct BufferMatcher {
+        nodes: Vec<RawLanguageKind>,
+    }
+
+    impl<'a> QueryMatcher<RawLanguage> for &'a mut BufferMatcher {
+        fn find_group(&self, _group: &str) -> Option<GroupKey> {
+            None
+        }
+
+        fn find_rule(&self, _group: &str, _rule: &str) -> Option<RuleKey> {
+            None
+        }
+
+        fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
+            match params.query {
+                QueryMatch::Syntax(node) => {
+                    self.nodes.push(node.kind());
+                }
+                QueryMatch::ControlFlowGraph(..) => unreachable!(),
+            }
+        }
+    }
 
     /// Checks the syntax visitor emits a [QueryMatch] for each node in the syntax tree
     #[test]
@@ -106,28 +108,27 @@ mod tests {
             RawLanguageRoot::unwrap_cast(builder.finish())
         };
 
-        let mut analyzer = Analyzer::empty();
-        analyzer.add_visitor(SyntaxVisitor::new(|_| false));
+        let mut matcher = BufferMatcher::default();
+        let mut emit_signal =
+            |_: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> { unreachable!() };
 
-        let mut nodes = Vec::new();
-        let ctx: VisitorContext<RawLanguage, Never> = VisitorContext {
+        let mut analyzer = Analyzer::new(&mut matcher, |_| unreachable!(), &mut emit_signal);
+
+        analyzer.add_visitor(SyntaxVisitor::default());
+
+        let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
+            phase: Phases::Syntax,
             file_id: 0,
             root,
             range: None,
-            match_query: Box::new(|_, _, query_match| match query_match {
-                QueryMatch::Syntax(node) => {
-                    nodes.push(node.kind());
-                    ControlFlow::Continue(())
-                }
-                _ => panic!("unexpected QueryMatch variant"),
-            }),
+            services: ServiceBag::default(),
         };
 
-        let result = analyzer.run(ctx);
+        let result: Option<Never> = analyzer.run(ctx);
         assert!(result.is_none());
 
         assert_eq!(
-            nodes.as_slice(),
+            matcher.nodes.as_slice(),
             &[
                 RawLanguageKind::ROOT,
                 RawLanguageKind::EXPRESSION_LIST,

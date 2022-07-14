@@ -34,12 +34,6 @@ layout: layouts/page.liquid
 		</a>
 	</li>
 	<li>
-		<a href="https://github.com/NicholasLYang">
-			<img src="https://github.com/NicholasLYang.png?s=176">
-			<span>Nicholas Yang</span>
-		</a>
-	</li>
-	<li>
 		<a href="https://github.com/sebmck">
 			<img src="https://github.com/sebmck.png?s=176">
 			<span>Sebastian McKenzie</span>

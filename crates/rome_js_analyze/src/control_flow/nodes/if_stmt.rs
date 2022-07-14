@@ -22,7 +22,7 @@ pub(in crate::control_flow) struct IfVisitor {
     alt_block: Option<(BlockId, BlockId)>,
 }
 
-impl<B> NodeVisitor<B> for IfVisitor {
+impl NodeVisitor for IfVisitor {
     type Node = JsIfStatement;
 
     fn enter(
@@ -88,7 +88,7 @@ pub(in crate::control_flow) struct ElseVisitor {
     alt_block: BlockId,
 }
 
-impl<B> NodeVisitor<B> for ElseVisitor {
+impl NodeVisitor for ElseVisitor {
     type Node = JsElseClause;
 
     fn enter(

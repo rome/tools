@@ -1,0 +1,34 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useSingleVarDeclarator.js
+---
+# Input
+```js
+function test() {
+	// Comment
+	let foo, bar;
+}
+
+```
+
+# Diagnostics
+```
+warning[js/useSingleVarDeclarator]: Declare variables separately
+  ┌─ useSingleVarDeclarator.js:3:2
+  │
+3 │     let foo, bar;
+  │     -------------
+
+Safe fix: Break out into multiple declarations
+    | @@ -1,4 +1,5 @@
+0 0 |   function test() {
+1 1 |   	// Comment
+2   | - 	let foo, bar;
+  2 | + 	let foo;
+  3 | + 	let bar;
+3 4 |   }
+
+
+```
+
+

@@ -16,7 +16,7 @@ pub(in crate::control_flow) struct DoWhileVisitor {
     body_block: BlockId,
 }
 
-impl<B> NodeVisitor<B> for DoWhileVisitor {
+impl NodeVisitor for DoWhileVisitor {
     type Node = JsDoWhileStatement;
 
     fn enter(

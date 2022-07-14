@@ -23,8 +23,8 @@ comparing to both `null` and `undefined`.
 foo == bar
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">noDoubleEquals</span><span style="color: Orange;">]</span><em>: </em><em>Use </em><em><em>===</em></em><em> instead of </em><em><em>==</em></em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> noDoubleEquals.js:1:5
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noDoubleEquals</span><span style="color: Orange;">]</span><em>: </em><em>Use </em><em><em>===</em></em><em> instead of </em><em><em>==</em></em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDoubleEquals.js:1:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> foo == bar
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);"><em>==</span></em><span style="color: rgb(38, 148, 255);"> is only allowed when comparing against </span><span style="color: rgb(38, 148, 255);"><em>null</span></em>

@@ -8,7 +8,7 @@ use crate::control_flow::{
 
 pub(in crate::control_flow) struct ThrowVisitor;
 
-impl<B> NodeVisitor<B> for ThrowVisitor {
+impl NodeVisitor for ThrowVisitor {
     type Node = JsThrowStatement;
 
     fn enter(

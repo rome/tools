@@ -17,7 +17,7 @@ where
 
 impl<'a, R> RuleContext<'a, R>
 where
-    R: Rule,
+    R: ?Sized + Rule,
 {
     pub fn new(
         query_result: &'a RuleQueryResult<R>,

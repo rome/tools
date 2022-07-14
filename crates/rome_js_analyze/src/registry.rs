@@ -1,7 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{analyzers::*, assists::*, semantic_analyzers::*};
-use rome_analyze::{AnalysisFilter, AnalyzerSignal, ControlFlow, RuleRegistry};
+use rome_analyze::{AnalysisFilter, RuleRegistry};
 use rome_js_syntax::JsLanguage;
 pub(crate) fn build_registry<'a, F, B>(
     filter: &AnalysisFilter,
@@ -16,9 +15,6 @@ where
     }
     if filter.match_rule::<NoAsyncPromiseExecutor>() {
         rules.push::<NoAsyncPromiseExecutor>();
-    }
-    if filter.match_rule::<NoCatchAssign>() {
-        rules.push::<NoCatchAssign>();
     }
     if filter.match_rule::<NoCommentText>() {
         rules.push::<NoCommentText>();

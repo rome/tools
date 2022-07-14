@@ -8,7 +8,7 @@ use crate::control_flow::{
 
 pub(in crate::control_flow) struct ReturnVisitor;
 
-impl<B> NodeVisitor<B> for ReturnVisitor {
+impl NodeVisitor for ReturnVisitor {
     type Node = JsReturnStatement;
 
     fn enter(

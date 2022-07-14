@@ -1,8 +1,13 @@
 import "react-tabs/style/react-tabs.css";
 import init, { PlaygroundFormatOptions, run } from "../pkg/rome_playground";
 import { useEffect, useState } from "react";
-import { IndentStyle, TreeStyle } from "./types";
-import { formatWithPrettier, usePlaygroundState, useWindowSize } from "./utils";
+import { defaultRomeConfig, IndentStyle, TreeStyle } from "./types";
+import {
+	formatWithPrettier,
+	loadRomeConfigFromLocalStorage,
+	usePlaygroundState,
+	useWindowSize,
+} from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
 
@@ -12,6 +17,9 @@ function App() {
 	useEffect(() => {
 		init()
 			.then(() => {
+				// We only load the config from local storage once when app is loaded.
+				const localStorageRomeConfig = loadRomeConfigFromLocalStorage();
+				setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
 				setLoadingState(LoadingState.Success);
 			})
 			.catch(() => {
@@ -20,7 +28,8 @@ function App() {
 	}, []);
 
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
-	const [playgroundState, setPlaygroundState] = usePlaygroundState();
+	const [romeConfig, setRomeConfig] = useState(defaultRomeConfig);
+	const [playgroundState, setPlaygroundState] = usePlaygroundState(romeConfig);
 	const { width } = useWindowSize();
 
 	switch (loadingState) {
