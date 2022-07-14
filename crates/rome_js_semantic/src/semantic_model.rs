@@ -60,7 +60,7 @@ impl SemanticModelData {
         &self,
         range: &TextRange,
     ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
-        if let Some(v) = self.declaration_all_references.get(&range) {
+        if let Some(v) = self.declaration_all_references.get(range) {
             v.iter()
         } else {
             [].iter()
@@ -71,7 +71,7 @@ impl SemanticModelData {
         &self,
         range: &TextRange,
     ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
-        if let Some(v) = self.declaration_all_reads.get(&range) {
+        if let Some(v) = self.declaration_all_reads.get(range) {
             v.iter()
         } else {
             [].iter()
@@ -82,7 +82,7 @@ impl SemanticModelData {
         &self,
         range: &TextRange,
     ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
-        if let Some(v) = self.declaration_all_writes.get(&range) {
+        if let Some(v) = self.declaration_all_writes.get(range) {
             v.iter()
         } else {
             [].iter()
@@ -262,17 +262,11 @@ impl Reference {
     }
 
     pub fn is_read(&self) -> bool {
-        match self.ty {
-            ReferenceType::Read => true,
-            _ => false,
-        }
+        matches!(self.ty, ReferenceType::Read)
     }
 
     pub fn is_write(&self) -> bool {
-        match self.ty {
-            ReferenceType::Write => true,
-            _ => false,
-        }
+        matches!(self.ty, ReferenceType::Write)
     }
 }
 
@@ -291,7 +285,7 @@ impl<'a> Iterator for ReferencesIter<'a> {
         Some(Reference {
             data: self.data.clone(),
             node: node.clone(),
-            range: range.clone(),
+            range: *range,
             ty: *ty,
         })
     }
