@@ -1,16 +1,16 @@
 import { PlaygroundProps } from "./types";
-import CodeEditor from "@uiw/react-textarea-code-editor";
-import { getLanguage } from "./utils";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-//@ts-ignore
-import SuccessIcon from "../assets/success.svg?component";
-//@ts-ignore
-import FailedIcon from "../assets/failed.svg?component";
-//@ts-ignore
-import CopyIcon from "../assets/copy.svg?component";
-import { useEffect, useState } from "react";
+//@ts-expect-error
+import { ReactComponent as SuccessIcon } from "../assets/success.svg";
+//@ts-expect-error
+import { ReactComponent as FailedIcon } from "../assets/failed.svg";
+//@ts-expect-error
+import { ReactComponent as CopyIcon } from "../assets/copy.svg";
+import { useCallback, useEffect, useState } from "react";
 
 export default function DesktopPlayground(
 	{
@@ -24,7 +24,13 @@ export default function DesktopPlayground(
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"
 	>("normal");
-	const language = getLanguage(isJsx, isTypeScript);
+
+	const extensions = [
+		javascript({
+			jsx: isJsx,
+			typescript: isTypeScript,
+		}),
+	];
 
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
@@ -47,6 +53,11 @@ export default function DesktopPlayground(
 			console.error(err.toString());
 		}
 	};
+
+	const onChange = useCallback((value) => {
+		setPlaygroundState((state) => ({ ...state, code: value }));
+	}, []);
+
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
@@ -56,24 +67,12 @@ export default function DesktopPlayground(
 			/>
 			<div className="box-border flex h-screen divide-x divide-slate-300">
 				<div className="w-1/2 p-5">
-					<CodeEditor
+					<CodeMirror
 						value={code}
-						language={language}
-						placeholder="Enter some code here"
-						onChange={(evn) => {
-							setPlaygroundState(
-								(state) => ({
-									...state,
-									code: evn.target.value,
-								}),
-							);
-						}}
-						style={{
-							fontSize: 12,
-							height: "100vh",
-							fontFamily:
-								"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-						}}
+						height="70vh"
+						extensions={extensions}
+						placeholder="Enter your code here"
+						onChange={onChange}
 					/>
 				</div>
 				<div className="w-1/2 p-5 flex flex-col">
@@ -90,30 +89,20 @@ export default function DesktopPlayground(
 						</TabList>
 						<TabPanel>
 							<h1>Rome</h1>
-							<CodeEditor
+							<CodeMirror
 								value={formatted_code}
-								language={language}
+								extensions={extensions}
 								placeholder="Rome Output"
-								style={{
-									fontSize: 12,
-									height: "40vh",
-									overflowY: "scroll",
-									fontFamily:
-										"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-								}}
+								height="30vh"
+								readOnly={true}
 							/>
 							<h1>Prettier</h1>
-							<CodeEditor
+							<CodeMirror
 								value={prettierOutput.code}
-								language={language}
-								placeholder="Prettier Output"
-								style={{
-									fontSize: 12,
-									height: "50vh",
-									overflowY: "scroll",
-									fontFamily:
-										"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-								}}
+								extensions={extensions}
+								placeholder="Rome Output"
+								height="30vh"
+								readOnly={true}
 							/>
 						</TabPanel>
 						<TabPanel>
@@ -137,12 +126,20 @@ export default function DesktopPlayground(
 							>
 								{clipboardStatus === "success" && (
 									<SuccessIcon
-										style={{ width: 16, height: 16, marginRight: 5 }}
+										style={{
+											width: 16,
+											height: 16,
+											marginRight: 5,
+										}}
 									/>
 								)}
 								{clipboardStatus === "failed" && (
 									<FailedIcon
-										style={{ width: 16, height: 16, marginRight: 5 }}
+										style={{
+											width: 16,
+											height: 16,
+											marginRight: 5,
+										}}
 									/>
 								)}
 								<CopyIcon style={{ width: 16, height: 16 }} />

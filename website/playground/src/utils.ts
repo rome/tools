@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useEffect, useState} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
@@ -169,19 +169,6 @@ function getPrettierParser(language: "js" | "ts"): string {
 			return "babel";
 		case "ts":
 			return "babel-ts";
-	}
-}
-
-export function getLanguage(isJsx: boolean, isTypeScript: boolean):
-	| "jsx"
-	| "typescript"
-	| "js" {
-	if (isTypeScript) {
-		return "typescript";
-	} else if (isJsx) {
-		return "jsx";
-	} else {
-		return "js";
 	}
 }
 

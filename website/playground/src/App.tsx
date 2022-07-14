@@ -1,36 +1,74 @@
 import "react-tabs/style/react-tabs.css";
-import init, { PlaygroundFormatOptions, run } from "../pkg/rome_playground";
-import { useEffect, useState } from "react";
-import { defaultRomeConfig, IndentStyle, TreeStyle } from "./types";
+import { useEffect, useState, useRef } from "react";
+import { LoadingState, RomeOutput } from "./types";
+import { defaultRomeConfig } from "./types";
 import {
-	formatWithPrettier,
 	loadRomeConfigFromLocalStorage,
 	usePlaygroundState,
 	useWindowSize,
 } from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
-
-enum LoadingState { Loading, Success, Error }
+import RomeWorker from "./romeWorker?worker";
+import PrettierWorker from "./prettierWorker?worker";
 
 function App() {
-	useEffect(() => {
-		init()
-			.then(() => {
-				// We only load the config from local storage once when app is loaded.
-				const localStorageRomeConfig = loadRomeConfigFromLocalStorage();
-				setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
-				setLoadingState(LoadingState.Success);
-			})
-			.catch(() => {
-				setLoadingState(LoadingState.Error);
-			});
-	}, []);
-
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const [romeConfig, setRomeConfig] = useState(defaultRomeConfig);
 	const [playgroundState, setPlaygroundState] = usePlaygroundState(romeConfig);
 	const { width } = useWindowSize();
+	const romeWorkerRef = useRef<Worker | null>(null);
+	const prettierWorkerRef = useRef<Worker | null>(null);
+
+	const [romeOutput, setRomeOutput] = useState<RomeOutput>({
+		ast: "",
+		cst: "",
+		errors: "",
+		formatted_code: "",
+		formatter_ir: "",
+	});
+	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
+
+	useEffect(() => {
+		romeWorkerRef.current = new RomeWorker();
+		prettierWorkerRef.current = new PrettierWorker();
+
+		romeWorkerRef.current.addEventListener("message", (event) => {
+			if (event.data.type === "init") {
+				const loadingState = event.data.loadingState as LoadingState;
+				setLoadingState(loadingState);
+				if (loadingState === LoadingState.Success) {
+					// We only load the config from local storage once when app is loaded.
+					const localStorageRomeConfig = loadRomeConfigFromLocalStorage();
+					setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
+				}
+			}
+			if (event.data.type === "formatted") {
+				setRomeOutput(event.data.romeOutput);
+			}
+		});
+		prettierWorkerRef.current.addEventListener("message", (event) => {
+			if (event.data.type === "init") {
+				setLoadingState(event.data.loadingState as LoadingState);
+			}
+			if (event.data.type === "formatted") {
+				setPrettierOutput(event.data.prettierOutput);
+			}
+		});
+
+		return () => {
+			romeWorkerRef.current?.terminate();
+			prettierWorkerRef.current?.terminate();
+		};
+	}, []);
+
+	useEffect(() => {
+		if (loadingState !== LoadingState.Success) {
+			return;
+		}
+		romeWorkerRef.current?.postMessage({ type: "format", playgroundState });
+		prettierWorkerRef.current?.postMessage({ type: "format", playgroundState });
+	}, [loadingState, playgroundState]);
 
 	switch (loadingState) {
 		case LoadingState.Error:
@@ -42,38 +80,6 @@ function App() {
 				</div>
 			);
 		default:
-			const {
-				code,
-				lineWidth,
-				indentStyle,
-				indentWidth,
-				quoteStyle,
-				isTypeScript,
-				isJsx,
-				sourceType,
-				treeStyle,
-			} = playgroundState;
-
-			const romeOutput = run(
-				code,
-				new PlaygroundFormatOptions(
-					lineWidth,
-					indentStyle === IndentStyle.Space ? indentWidth : undefined,
-					quoteStyle,
-				),
-				isTypeScript,
-				isJsx,
-				sourceType,
-				treeStyle === TreeStyle.Json,
-			);
-			const prettierOutput = formatWithPrettier(code, {
-				lineWidth,
-				indentStyle,
-				indentWidth,
-				language: isTypeScript ? "ts" : "js",
-				quoteStyle,
-			});
-
 			if (width && width < 480) {
 				return (
 					<MobilePlayground
