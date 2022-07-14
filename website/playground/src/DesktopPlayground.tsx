@@ -4,12 +4,12 @@ import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-//@ts-ignore
-import SuccessIcon from "../assets/success.svg?component";
-//@ts-ignore
-import FailedIcon from "../assets/failed.svg?component";
-//@ts-ignore
-import CopyIcon from "../assets/copy.svg?component";
+//@ts-expect-error
+import { ReactComponent as SuccessIcon } from "../assets/success.svg";
+//@ts-expect-error
+import { ReactComponent as FailedIcon } from "../assets/failed.svg";
+//@ts-expect-error
+import { ReactComponent as CopyIcon }  from "../assets/copy.svg";
 import { useCallback, useEffect, useState } from "react";
 
 export default function DesktopPlayground(

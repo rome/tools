@@ -22,7 +22,6 @@
 		"react-tabs": "^3.2.3"
 	},
 	"devDependencies": {
-		"vite-plugin-svgr": "^2.2.0",
 		"@tailwindcss/forms": "^0.4.0",
 		"@types/prettier": "^2.6.3",
 		"@types/react": "^17.0.33",
@@ -34,7 +33,8 @@
 		"rome": "^0.7.0-next",
 		"tailwindcss": "^3.0.19",
 		"typescript": "^4.4.4",
-		"vite": "^2.9.14"
+		"vite": "3",
+		"vite-plugin-svgr": "^2.2.0"
 	},
 	"engines": {
 		"pnpm": "^7.0.0"
