@@ -60,6 +60,14 @@ impl FileSystem for MemoryFileSystem {
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         func(&MemoryTraversalScope { fs: self })
     }
+
+    fn create(&self, _path: &Path) -> io::Result<Box<dyn File>> {
+        let content = vec![];
+        let file: FileEntry = AssertUnwindSafe(Arc::new(Mutex::new(content)));
+        let entry = file.0;
+        let lock = entry.lock_arc();
+        Ok(Box::new(MemoryFile { inner: lock }))
+    }
 }
 
 struct MemoryFile {

@@ -33,10 +33,29 @@ impl FileSystem for OsFileSystem {
             func(scope);
         })
     }
+
+    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        tracing::debug_span!("OsFileSystem::create", path = ?path).in_scope(
+            move || -> io::Result<Box<dyn File>> {
+                Ok(Box::new(OsFile {
+                    inner: fs::File::options()
+                        .write(true)
+                        .create_new(true)
+                        .open(path)?,
+                }))
+            },
+        )
+    }
 }
 
-struct OsFile {
+pub struct OsFile {
     inner: fs::File,
+}
+
+impl OsFile {
+    pub fn new(file: fs::File) -> Self {
+        Self { inner: file }
+    }
 }
 
 impl File for OsFile {

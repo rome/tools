@@ -14,6 +14,7 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"check"</Emphasis>"
     - "<Emphasis>"ci"</Emphasis>"
     - "<Emphasis>"format"</Emphasis>"
+    - "<Emphasis>"init"</Emphasis>"
     - "<Emphasis>"help"</Emphasis>"
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
@@ -70,6 +71,11 @@ const FORMAT: Markup = markup! {
     {FORMAT_OPTIONS}
 };
 
+const INIT: Markup = markup! {
+"Rome init: bootstraps a new rome project"
+
+};
+
 pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(), Termination> {
     match command {
         Some("help") | None => {
@@ -86,6 +92,10 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         }
         Some("format") => {
             session.app.console.log(FORMAT);
+            Ok(())
+        }
+        Some("init") => {
+            session.app.console.log(INIT);
             Ok(())
         }
 

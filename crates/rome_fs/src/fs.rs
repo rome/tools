@@ -11,7 +11,7 @@ mod memory;
 mod os;
 
 pub use memory::MemoryFileSystem;
-pub use os::OsFileSystem;
+pub use os::{OsFile, OsFileSystem};
 pub const CONFIG_NAME: &str = "rome.json";
 
 pub trait FileSystem: Send + Sync + RefUnwindSafe {
@@ -19,6 +19,11 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
     ///
     /// Currently this locks down the file for both reading and writing
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>>;
+
+    /// Create a handle to the file at `path`
+    ///
+    /// Currently this locks down the file for both reading and writing
+    fn create(&self, path: &Path) -> io::Result<Box<dyn File>>;
 
     /// Initiate a traversal of the filesystem
     ///
@@ -85,5 +90,8 @@ where
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         T::traversal(self, func)
+    }
+    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        T::create(self, path)
     }
 }

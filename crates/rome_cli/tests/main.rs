@@ -811,6 +811,43 @@ mod main {
     }
 }
 
+mod init {
+    use crate::configs::CONFIG_INIT_DEFAULT;
+    use pico_args::Arguments;
+    use rome_cli::{run_cli, CliSession};
+    use rome_console::BufferConsole;
+    use rome_fs::{FileSystem, MemoryFileSystem};
+    use rome_service::{App, DynRef};
+    use std::ffi::OsString;
+    use std::path::Path;
+
+    #[test]
+    #[ignore = "At the moment we can't write files in the memory file system because it's behind an `Arc`"]
+    fn creates_config_file() {
+        let mut fs = MemoryFileSystem::default();
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("init")]),
+        });
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let file_path = Path::new("rome.json");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("configuration file was not written on disk");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+        assert_eq!(content, CONFIG_INIT_DEFAULT);
+    }
+}
+
 mod configuration {
     use crate::configs::{CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_ROOT_FALSE};
     use pico_args::Arguments;

@@ -1,12 +1,13 @@
 use rome_js_formatter::context::QuoteStyle;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Default, Debug, Deserialize, Eq, PartialEq)]
+#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
 pub struct JavascriptConfiguration {
-    pub formatter: JavascriptFormatter,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub formatter: Option<JavascriptFormatter>,
 }
 
-#[derive(Default, Debug, Deserialize, Eq, PartialEq)]
+#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
@@ -14,7 +15,7 @@ pub struct JavascriptFormatter {
     pub quote_style: QuoteStyle,
 }
 
-#[derive(Deserialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", remote = "QuoteStyle")]
 pub enum PlainQuoteStyle {
     Double,

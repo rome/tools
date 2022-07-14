@@ -68,6 +68,8 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
             Err(Termination::EmptyArguments)
         }
 
+        Some("init") => crate::commands::init::init(session),
+
         // Print the general help if no subcommand was specified / the subcommand is `help`
         None | Some("help") => crate::commands::help::help(session, None),
 
