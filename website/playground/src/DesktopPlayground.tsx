@@ -9,7 +9,7 @@ import { ReactComponent as SuccessIcon } from "../assets/success.svg";
 //@ts-expect-error
 import { ReactComponent as FailedIcon } from "../assets/failed.svg";
 //@ts-expect-error
-import { ReactComponent as CopyIcon }  from "../assets/copy.svg";
+import { ReactComponent as CopyIcon } from "../assets/copy.svg";
 import { useCallback, useEffect, useState } from "react";
 
 export default function DesktopPlayground(

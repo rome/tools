@@ -3,9 +3,9 @@
 use std::collections::{HashMap, VecDeque};
 
 use rome_js_syntax::{
-    JsForVariableDeclaration, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
-    JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList, TextRange, TextSize,
+    JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
+    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration,
+    JsVariableDeclarator, JsVariableDeclaratorList, TextRange, TextSize,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxTokenText};
 
@@ -30,12 +30,31 @@ pub enum SemanticEvent {
     /// - All reference identifiers
     Read {
         range: TextRange,
-        declated_at: TextRange,
+        declared_at: TextRange,
     },
 
     /// Tracks where a symbol is read, but only if its declaration
     /// was hoisted. This means that its declaration is after this reference.
+    /// - All reference identifiers
     HoistedRead {
+        range: TextRange,
+        declared_at: TextRange,
+    },
+
+    /// Tracks where a symbol is written, but only if its declaration
+    /// is before this refence.
+    /// Generated for:
+    /// - All identifier assignments
+    Write {
+        range: TextRange,
+        declared_at: TextRange,
+    },
+
+    /// Tracks where a symbol is written, but only if its declaration
+    /// was hoisted. This means that its declaration is after this reference.
+    /// Generated for:
+    /// - All identifier assignments
+    HoistedWrite {
         range: TextRange,
         declared_at: TextRange,
     },
@@ -68,8 +87,10 @@ impl SemanticEvent {
             SemanticEvent::ScopeStarted { range } => range,
             SemanticEvent::ScopeEnded { range, .. } => range,
             SemanticEvent::Read { range, .. } => range,
-            SemanticEvent::UnresolvedReference { range } => range,
             SemanticEvent::HoistedRead { range, .. } => range,
+            SemanticEvent::Write { range, .. } => range,
+            SemanticEvent::HoistedWrite { range, .. } => range,
+            SemanticEvent::UnresolvedReference { range } => range,
         }
     }
 
@@ -124,8 +145,18 @@ struct Binding {
 }
 
 #[derive(Debug)]
-struct Reference {
-    range: TextRange,
+enum Reference {
+    Read { range: TextRange },
+    Write { range: TextRange },
+}
+
+impl Reference {
+    pub fn range(&self) -> &TextRange {
+        match self {
+            Reference::Read { range } => range,
+            Reference::Write { range } => range,
+        }
+    }
 }
 
 pub enum ScopeHoisting {
@@ -167,6 +198,9 @@ impl SemanticEventExtractor {
             }
             JS_REFERENCE_IDENTIFIER => {
                 self.enter_js_reference_identifier(node);
+            }
+            JS_IDENTIFIER_ASSIGNMENT => {
+                self.enter_js_identifier_assignment(node);
             }
 
             JS_MODULE | JS_SCRIPT => self.push_scope(
@@ -247,7 +281,21 @@ impl SemanticEventExtractor {
 
         let current_scope = self.current_scope_mut();
         let references = current_scope.references.entry(name).or_default();
-        references.push(Reference {
+        references.push(Reference::Read {
+            range: node.text_range(),
+        });
+
+        Some(())
+    }
+
+    fn enter_js_identifier_assignment(&mut self, node: &JsSyntaxNode) -> Option<()> {
+        let reference = node.clone().cast::<JsIdentifierAssignment>()?;
+        let name_token = reference.name_token().ok()?;
+        let name = name_token.token_text_trimmed();
+
+        let current_scope = self.current_scope_mut();
+        let references = current_scope.references.entry(name).or_default();
+        references.push(Reference::Write {
             range: node.text_range(),
         });
 
@@ -305,19 +353,28 @@ impl SemanticEventExtractor {
         if let Some(scope) = self.scopes.pop() {
             // Match references and declarations
             for (name, references) in scope.references {
-                // If we know the declaration of these reference push Read/HoistedRead events...
+                // If we know the declaration of these reference push the correct events...
                 if let Some(declaration_at) = self.bindings.get(&name) {
                     for reference in references {
-                        let e = if declaration_at.start() < reference.range.start() {
-                            SemanticEvent::Read {
-                                range: reference.range,
-                                declated_at: *declaration_at,
-                            }
-                        } else {
-                            SemanticEvent::HoistedRead {
-                                range: reference.range,
+                        let declaration_before_reference =
+                            declaration_at.start() < reference.range().start();
+                        let e = match (declaration_before_reference, reference) {
+                            (true, Reference::Read { range }) => SemanticEvent::Read {
+                                range,
                                 declared_at: *declaration_at,
-                            }
+                            },
+                            (false, Reference::Read { range }) => SemanticEvent::HoistedRead {
+                                range,
+                                declared_at: *declaration_at,
+                            },
+                            (true, Reference::Write { range }) => SemanticEvent::Write {
+                                range,
+                                declared_at: *declaration_at,
+                            },
+                            (false, Reference::Write { range }) => SemanticEvent::HoistedWrite {
+                                range,
+                                declared_at: *declaration_at,
+                            },
                         };
                         self.stash.push_back(e);
                     }
@@ -328,7 +385,7 @@ impl SemanticEventExtractor {
                     // ... or raise UnresolvedReference if this is the global scope.
                     for reference in references {
                         self.stash.push_back(SemanticEvent::UnresolvedReference {
-                            range: reference.range,
+                            range: *reference.range(),
                         });
                     }
                 }

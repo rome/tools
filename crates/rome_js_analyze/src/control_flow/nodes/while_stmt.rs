@@ -16,7 +16,7 @@ pub(in crate::control_flow) struct WhileVisitor {
     loop_block: BlockId,
 }
 
-impl<B> NodeVisitor<B> for WhileVisitor {
+impl NodeVisitor for WhileVisitor {
     type Node = JsWhileStatement;
 
     fn enter(

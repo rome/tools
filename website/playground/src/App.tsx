@@ -1,13 +1,19 @@
 import "react-tabs/style/react-tabs.css";
 import { useEffect, useState, useRef } from "react";
-import { usePlaygroundState, useWindowSize } from "./utils";
 import { LoadingState, RomeOutput } from "./types";
+import { defaultRomeConfig } from "./types";
+import {
+	loadRomeConfigFromLocalStorage,
+	usePlaygroundState,
+	useWindowSize,
+} from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
 
 function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
-	const [playgroundState, setPlaygroundState] = usePlaygroundState();
+	const [romeConfig, setRomeConfig] = useState(defaultRomeConfig);
+	const [playgroundState, setPlaygroundState] = usePlaygroundState(romeConfig);
 	const { width } = useWindowSize();
 	const romeWorkerRef = useRef<Worker | null>(null);
 	const prettierWorkerRef = useRef<Worker | null>(null);
@@ -33,7 +39,13 @@ function App() {
 
 		romeWorkerRef.current.addEventListener("message", (event) => {
 			if (event.data.type === "init") {
-				setLoadingState(event.data.loadingState as LoadingState);
+				const loadingState = event.data.loadingState as LoadingState;
+				setLoadingState(loadingState);
+				if (loadingState === LoadingState.Success) {
+					// We only load the config from local storage once when app is loaded.
+					const localStorageRomeConfig = loadRomeConfigFromLocalStorage();
+					setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
+				}
 			}
 			if (event.data.type === "formatted") {
 				setRomeOutput(event.data.romeOutput);

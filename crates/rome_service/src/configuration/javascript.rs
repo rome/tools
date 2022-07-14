@@ -10,11 +10,12 @@ pub struct JavascriptConfiguration {
 #[serde(rename_all = "camelCase", default)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
-    pub quote_style: PlainQuoteStyle,
+    #[serde(with = "PlainQuoteStyle")]
+    pub quote_style: QuoteStyle,
 }
 
 #[derive(Deserialize, Debug, Eq, PartialEq)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", remote = "QuoteStyle")]
 pub enum PlainQuoteStyle {
     Double,
     Single,
@@ -23,14 +24,5 @@ pub enum PlainQuoteStyle {
 impl Default for PlainQuoteStyle {
     fn default() -> Self {
         Self::Double
-    }
-}
-
-impl From<JavascriptConfiguration> for QuoteStyle {
-    fn from(j: JavascriptConfiguration) -> Self {
-        match j.formatter.quote_style {
-            PlainQuoteStyle::Double => QuoteStyle::Double,
-            PlainQuoteStyle::Single => QuoteStyle::Single,
-        }
     }
 }

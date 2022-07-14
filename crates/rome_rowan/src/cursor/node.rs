@@ -7,6 +7,7 @@ use crate::{
 use std::hash::{Hash, Hasher};
 use std::iter::FusedIterator;
 use std::ops;
+use std::ptr::NonNull;
 use std::rc::Rc;
 use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
@@ -152,6 +153,11 @@ impl SyntaxNode {
     }
 
     #[inline]
+    pub(crate) fn key(&self) -> (NonNull<()>, TextSize) {
+        self.data().key()
+    }
+
+    #[inline]
     pub(crate) fn green(&self) -> &GreenNodeData {
         self.data().green().into_node().unwrap()
     }
@@ -174,6 +180,20 @@ impl SyntaxNode {
     #[inline]
     pub fn children_with_tokens(&self) -> SyntaxElementChildren {
         SyntaxElementChildren::new(self.clone())
+    }
+
+    #[inline]
+    pub fn tokens(&self) -> impl Iterator<Item = SyntaxToken> + DoubleEndedIterator + '_ {
+        self.green().children().filter_map(|child| {
+            child.element().into_token().map(|token| {
+                SyntaxToken::new(
+                    token,
+                    self.clone(),
+                    child.slot() as u32,
+                    self.offset() + child.rel_offset(),
+                )
+            })
+        })
     }
 
     pub fn first_child(&self) -> Option<SyntaxNode> {

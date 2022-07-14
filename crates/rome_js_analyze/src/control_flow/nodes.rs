@@ -11,6 +11,7 @@ mod statement;
 mod switch_stmt;
 mod throw_stmt;
 mod try_catch;
+mod variable;
 mod while_stmt;
 
 pub(super) use block::*;
@@ -26,4 +27,5 @@ pub(super) use statement::*;
 pub(super) use switch_stmt::*;
 pub(super) use throw_stmt::*;
 pub(super) use try_catch::*;
+pub(super) use variable::*;
 pub(super) use while_stmt::*;

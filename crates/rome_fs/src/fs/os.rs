@@ -1,4 +1,11 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
+use super::{BoxedTraversal, File};
+use crate::{
+    fs::{TraversalContext, TraversalScope},
+    interner::FileId,
+    FileSystem, RomePath,
+};
+use rayon::{scope, Scope};
 use std::{
     ffi::OsStr,
     fs,
@@ -6,16 +13,6 @@ use std::{
     mem,
     path::{Path, PathBuf},
 };
-
-use rayon::{scope, Scope};
-
-use crate::{
-    fs::{TraversalContext, TraversalScope},
-    interner::FileId,
-    FileSystem, RomePath,
-};
-
-use super::{BoxedTraversal, File};
 
 /// Implementation of [FileSystem] that directly calls through to the underlying OS
 pub struct OsFileSystem;

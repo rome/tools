@@ -1,8 +1,8 @@
 name: Release LSP
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 0 * * 2-6'
+  schedule:
+    - cron: '0 0 * * 2-6'
   push:
     branches:
       - main
@@ -43,7 +43,7 @@ jobs:
         working-directory: editors/vscode
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
-          echo "version=$(node ./scripts/updateVersionForPrerelease.js)" >> $GITHUB_ENV
+          echo "version=$(node ./scripts/updateVersionForPrerelease.mjs)" >> $GITHUB_ENV
 
       - name: Check version status
         if: steps.version.outputs.changed == 'true'

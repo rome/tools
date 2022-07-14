@@ -7,6 +7,7 @@ use crate::{
 };
 use std::fmt;
 use std::marker::PhantomData;
+use std::ptr::NonNull;
 use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -47,6 +48,10 @@ impl<L: Language> SyntaxToken<L> {
 
     pub(super) fn green_token(&self) -> GreenToken {
         self.raw.green().to_owned()
+    }
+
+    pub fn key(&self) -> (NonNull<()>, TextSize) {
+        self.raw.key()
     }
 
     pub fn kind(&self) -> L::Kind {

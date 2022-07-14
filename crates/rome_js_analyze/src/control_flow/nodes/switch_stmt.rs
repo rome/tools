@@ -18,7 +18,7 @@ pub(in crate::control_flow) struct SwitchVisitor {
     default_block: Option<(BlockId, JsSyntaxToken)>,
 }
 
-impl<B> NodeVisitor<B> for SwitchVisitor {
+impl NodeVisitor for SwitchVisitor {
     type Node = JsSwitchStatement;
 
     fn enter(
@@ -79,7 +79,7 @@ impl<B> NodeVisitor<B> for SwitchVisitor {
 
 pub(in crate::control_flow) struct CaseVisitor;
 
-impl<B> NodeVisitor<B> for CaseVisitor {
+impl NodeVisitor for CaseVisitor {
     type Node = JsAnySwitchClause;
 
     fn enter(

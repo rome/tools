@@ -1,5 +1,8 @@
 use rome_formatter::IndentStyle;
-use rome_service::{settings::WorkspaceSettings, workspace::UpdateSettingsParams};
+use rome_service::configuration::Configuration;
+use rome_service::load_config::ConfigurationType;
+use rome_service::settings::FormatSettings;
+use rome_service::{load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams};
 
 use crate::{
     traversal::{traverse, TraversalMode},
@@ -8,7 +11,14 @@ use crate::{
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    parse_format_options(&mut session)?;
+    let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
+
+    if let Some(configuration) = &configuration {
+        if configuration.is_formatter_disabled() {
+            return Ok(());
+        }
+    }
+    parse_format_options(&mut session, configuration)?;
 
     let is_write = session.args.contains("--write");
     let ignore_errors = session.args.contains("--skip-errors");
@@ -24,8 +34,17 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
 /// Read the formatting options for the command line arguments and inject them
 /// into the workspace settings
-pub(crate) fn parse_format_options(session: &mut CliSession) -> Result<(), Termination> {
+pub(crate) fn parse_format_options(
+    session: &mut CliSession,
+    configuration: Option<Configuration>,
+) -> Result<(), Termination> {
     let mut settings = WorkspaceSettings::default();
+
+    if let Some(configuration) = configuration {
+        settings.format = FormatSettings::from(&configuration.formatter);
+        settings.languages.javascript.format.quote_style =
+            Some(configuration.javascript.formatter.quote_style);
+    }
 
     let size = session
         .args

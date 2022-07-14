@@ -1,22 +1,27 @@
+use crate::configuration::ConfigurationError;
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
+use std::path::PathBuf;
 
 pub mod configuration;
 mod file_handlers;
+pub mod load_config;
 pub mod settings;
 pub mod workspace;
 
 pub use crate::file_handlers::JsFormatSettings;
+pub use crate::load_config::load_config;
 pub use crate::workspace::Workspace;
 
 pub struct App<'app> {
     pub fs: DynRef<'app, dyn FileSystem>,
     pub workspace: DynRef<'app, dyn Workspace>,
     pub console: DynRef<'app, dyn Console>,
+    pub config_path: Option<RomePath>,
 }
 
 /// Generic errors thrown during rome operations
@@ -30,6 +35,17 @@ pub enum RomeError {
     FormatError(FormatError),
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
     FormatWithErrorsDisabled,
+    /// Thrown when a rome can't read a generic directory
+    CantReadDirectory(PathBuf),
+    /// Thrown when a rome can't read a generic file
+    CantReadFile(PathBuf),
+    /// Error thrown when de-serialising the configuration from file, the issues can be many:
+    /// - syntax error
+    /// - incorrect fields
+    /// - incorrect values
+    MalformedConfigurationFile(String),
+    /// Error thrown when validating the configuration. Once deserialized, further checks have to be done.
+    InvalidConfiguration(ConfigurationError),
 }
 
 impl Debug for RomeError {
@@ -39,6 +55,10 @@ impl Debug for RomeError {
             RomeError::SourceFileNotSupported(_) => std::fmt::Display::fmt(self, f),
             RomeError::FormatError(_) => std::fmt::Display::fmt(self, f),
             RomeError::FormatWithErrorsDisabled => std::fmt::Display::fmt(self, f),
+            RomeError::CantReadDirectory(_) => std::fmt::Display::fmt(self, f),
+            RomeError::CantReadFile(_) => std::fmt::Display::fmt(self, f),
+            RomeError::MalformedConfigurationFile(_) => std::fmt::Display::fmt(self, f),
+            RomeError::InvalidConfiguration(_) => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -67,6 +87,29 @@ impl Display for RomeError {
             RomeError::FormatWithErrorsDisabled => {
                 write!(f, "the file could not be formatted since it has syntax errors and `format_with_errors` is disabled")
             }
+            RomeError::CantReadDirectory(path) => {
+                write!(
+                    f,
+                    "Rome couldn't read the following directory, maybe for permissions reasons or it doesn't exists: {}",
+                    path.display()
+                )
+            }
+            RomeError::CantReadFile(path) => {
+                write!(
+                    f,
+                    "Rome couldn't read the following file, maybe for permissions reasons or it doesn't exists: {}",
+                    path.display()
+                )
+            }
+            RomeError::MalformedConfigurationFile(reason) => {
+                write!(
+                    f,
+                    "Rome couldn't load the configuration file, here's why: \n{}",
+                    reason
+                )
+            }
+
+            RomeError::InvalidConfiguration(error) => std::fmt::Display::fmt(error, f),
         }
     }
 }
@@ -79,7 +122,7 @@ impl From<FormatError> for RomeError {
     }
 }
 
-impl App<'static> {
+impl<'app> App<'app> {
     /// Create a new instance of the app using the [OsFileSystem] and [EnvConsole]
     pub fn from_env(no_colors: bool) -> Self {
         Self::with_filesystem_and_console(
@@ -99,6 +142,7 @@ impl<'app> App<'app> {
             fs,
             console,
             workspace: DynRef::Owned(workspace::server()),
+            config_path: None,
         }
     }
 }

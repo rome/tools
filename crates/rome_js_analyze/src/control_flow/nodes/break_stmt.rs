@@ -14,7 +14,7 @@ use crate::control_flow::{
 
 pub(in crate::control_flow) struct BreakVisitor;
 
-impl<B> NodeVisitor<B> for BreakVisitor {
+impl NodeVisitor for BreakVisitor {
     type Node = JsBreakStatement;
 
     fn enter(

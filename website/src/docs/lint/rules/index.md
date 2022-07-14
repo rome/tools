@@ -28,18 +28,18 @@ Disallow the use of <code>arguments</code>
 Disallows using an async function as a Promise executor.
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noCommentText">
-	<a href="/docs/lint/rules/noCommentText">noCommentText</a>
-	<a class="header-anchor" href="#noCommentText"></a>
-</h3>
-Prevent comments from being inserted as text nodes
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noCompareNegZero">
 	<a href="/docs/lint/rules/noCompareNegZero">noCompareNegZero</a>
 	<a class="header-anchor" href="#noCompareNegZero"></a>
 </h3>
 Disallow comparing against <code>-0</code>
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noDeadCode">
+	<a href="/docs/lint/rules/noDeadCode">noDeadCode</a>
+	<a class="header-anchor" href="#noDeadCode"></a>
+</h3>
+Disallow unreachable code
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDebugger">
@@ -70,18 +70,11 @@ Require the use of <code>===</code> and <code>!==</code>
 Disallows empty destructuring patterns.
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noImplicitBoolean">
-	<a href="/docs/lint/rules/noImplicitBoolean">noImplicitBoolean</a>
-	<a class="header-anchor" href="#noImplicitBoolean"></a>
+<h3 data-toc-exclude id="noLabelVar">
+	<a href="/docs/lint/rules/noLabelVar">noLabelVar</a>
+	<a class="header-anchor" href="#noLabelVar"></a>
 </h3>
-Disallow implicit <code>true</code> values on JSX boolean attributes
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
-	<a href="/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals</a>
-	<a class="header-anchor" href="#noMultipleSpacesInRegularExpressionLiterals"></a>
-</h3>
-Disallow unclear usage of multiple space characters in regular expression literals
+Disallow labels that share a name with a variable
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noNegationElse">
@@ -127,20 +120,6 @@ Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="useSelfClosingElements">
-	<a href="/docs/lint/rules/useSelfClosingElements">useSelfClosingElements</a>
-	<a class="header-anchor" href="#useSelfClosingElements"></a>
-</h3>
-Prevent extra closing tags for components without children
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useShorthandArrayType">
-	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType</a>
-	<a class="header-anchor" href="#useShorthandArrayType"></a>
-</h3>
-When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
@@ -178,5 +157,49 @@ names or other <code>typeof</code> expressions
 </h3>
 Enforce the use of <code>while</code> loops instead of <code>for</code> loops when the
 initializer and update expressions are not needed
+</div>
+</section>
+<section>
+<h2>JSX</h2>
+<div class="rule">
+<h3 data-toc-exclude id="noCommentText">
+	<a href="/docs/lint/rules/noCommentText">noCommentText</a>
+	<a class="header-anchor" href="#noCommentText"></a>
+</h3>
+Prevent comments from being inserted as text nodes
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noImplicitBoolean">
+	<a href="/docs/lint/rules/noImplicitBoolean">noImplicitBoolean</a>
+	<a class="header-anchor" href="#noImplicitBoolean"></a>
+</h3>
+Disallow implicit <code>true</code> values on JSX boolean attributes
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useSelfClosingElements">
+	<a href="/docs/lint/rules/useSelfClosingElements">useSelfClosingElements</a>
+	<a class="header-anchor" href="#useSelfClosingElements"></a>
+</h3>
+Prevent extra closing tags for components without children
+</div>
+</section>
+<section>
+<h2>RegExp</h2>
+<div class="rule">
+<h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
+	<a href="/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals</a>
+	<a class="header-anchor" href="#noMultipleSpacesInRegularExpressionLiterals"></a>
+</h3>
+Disallow unclear usage of multiple space characters in regular expression literals
+</div>
+</section>
+<section>
+<h2>TypeScript</h2>
+<div class="rule">
+<h3 data-toc-exclude id="useShorthandArrayType">
+	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType</a>
+	<a class="header-anchor" href="#useShorthandArrayType"></a>
+</h3>
+When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
 </div>
 </section>

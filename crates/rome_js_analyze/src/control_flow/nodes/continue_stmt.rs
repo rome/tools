@@ -11,7 +11,7 @@ use crate::control_flow::{
 
 pub(in crate::control_flow) struct ContinueVisitor;
 
-impl<B> NodeVisitor<B> for ContinueVisitor {
+impl NodeVisitor for ContinueVisitor {
     type Node = JsContinueStatement;
 
     fn enter(
