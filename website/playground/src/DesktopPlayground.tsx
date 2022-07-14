@@ -100,7 +100,7 @@ export default function DesktopPlayground(
 							<CodeMirror
 								value={prettierOutput.code}
 								extensions={extensions}
-								placeholder="Rome Output"
+								placeholder="Prettier Output"
 								height="30vh"
 								readOnly={true}
 							/>
