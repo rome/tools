@@ -21,7 +21,7 @@ use rome_diagnostics::{
     Diagnostic, DiagnosticHeader, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
 use rome_formatter::IndentStyle;
-use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
+use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_service::{
     workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
@@ -464,8 +464,11 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                 message: String::from("unhandled file type"),
             }));
         }
-
-        let mut file = ctx.fs.open(path).with_file_id(file_id)?;
+        let open_options = OpenOptions::default().read(true).write(true);
+        let mut file = ctx
+            .fs
+            .open_with_options(path, open_options)
+            .with_file_id(file_id)?;
 
         let mut input = String::new();
         file.read_to_string(&mut input).with_file_id(file_id)?;

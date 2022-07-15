@@ -10,9 +10,8 @@ pub const CONFIG_FORMAT: &str = r#"{
 "#;
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
-  "root": true,
-}
-"#;
+  "root": true
+}"#;
 
 pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
   "root": true,

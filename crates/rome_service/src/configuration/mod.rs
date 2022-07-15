@@ -7,7 +7,7 @@ use crate::configuration::formatter::FormatterConfiguration;
 use crate::configuration::javascript::JavascriptConfiguration;
 use crate::configuration::linter::LinterConfiguration;
 use crate::{DynRef, RomeError};
-use rome_fs::FileSystem;
+use rome_fs::{FileSystem, OpenOptions};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
@@ -63,8 +63,8 @@ impl Configuration {
 pub enum ConfigurationError {
     /// Thrown when the main configuration file doesn't have
     NotRoot,
-    /// Thrown when the program can't save the configuration on disk
-    UnableToSaveConfiguration,
+    /// Thrown when the program can't serialize the configuration, while saving it
+    SerializationError,
 
     /// Thrown when trying to **create** a new configuration file, but it exists already
     ConfigAlreadyExists,
@@ -73,15 +73,15 @@ pub enum ConfigurationError {
     /// - syntax error
     /// - incorrect fields
     /// - incorrect values
-    MalformedConfigurationFile(String),
+    DeserializationError(String),
 }
 
 impl Debug for ConfigurationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             ConfigurationError::NotRoot => std::fmt::Display::fmt(self, f),
-            ConfigurationError::UnableToSaveConfiguration => std::fmt::Display::fmt(self, f),
-            ConfigurationError::MalformedConfigurationFile(_) => std::fmt::Display::fmt(self, f),
+            ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
+            ConfigurationError::DeserializationError(_) => std::fmt::Display::fmt(self, f),
 
             ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
         }
@@ -97,13 +97,13 @@ impl Display for ConfigurationError {
                 "the main configuration file, rome.json, must have the field 'root' set to `true`"
             )
             }
-            ConfigurationError::UnableToSaveConfiguration => {
+            ConfigurationError::SerializationError => {
                 write!(
                     f,
                     "couldn't save the configuration on disk, probably because of some error inside the content of the file"
                 )
             }
-            ConfigurationError::MalformedConfigurationFile(reason) => {
+            ConfigurationError::DeserializationError(reason) => {
                 write!(
                     f,
                     "Rome couldn't load the configuration file, here's why: \n{}",
@@ -126,23 +126,25 @@ pub fn load_config(
 ) -> Result<Option<Configuration>, RomeError> {
     let config_name = file_system.config_name();
     let configuration_path = PathBuf::from(config_name);
-    let file = file_system.open(&configuration_path);
+    let options = OpenOptions::default().read(true).write(true);
+    let file = file_system.open_with_options(&configuration_path, options);
 
     match file {
         Ok(mut file) => {
             let mut buffer = String::new();
-            file.read_to_string(&mut buffer).ok();
+            file.read_to_string(&mut buffer)
+                .map_err(|_| RomeError::CantReadFile(configuration_path))?;
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
-                RomeError::Configuration(ConfigurationError::MalformedConfigurationFile(
-                    err.to_string(),
-                ))
+                RomeError::Configuration(ConfigurationError::DeserializationError(err.to_string()))
             })?;
 
             compute_configuration(configuration, configuration_type)
         }
         Err(err) => {
-            // we throw an error only when we can't find a file
+            // We throw an error only when the error is found.
+            // In case we don't fine the file, we swallow the error and we continue; not having
+            // a file should not be a cause of error (for now)
             if err.kind() != ErrorKind::NotFound {
                 return Err(RomeError::CantReadFile(configuration_path));
             }
@@ -164,21 +166,22 @@ pub fn create_config(
 ) -> Result<(), RomeError> {
     let path = PathBuf::from(fs.config_name());
 
-    let mut config_file = fs.create(&path).map_err(|err| {
+    let options = OpenOptions::default().write(true).create_new(true);
+
+    let mut config_file = fs.open_with_options(&path, options).map_err(|err| {
         if err.kind() == ErrorKind::AlreadyExists {
             RomeError::Configuration(ConfigurationError::ConfigAlreadyExists)
         } else {
-            RomeError::CantReadFile(path)
+            RomeError::CantReadFile(path.clone())
         }
     })?;
 
     let contents = serde_json::to_string_pretty(&configuration)
-        .map_err(|_| RomeError::Configuration(ConfigurationError::UnableToSaveConfiguration))?;
+        .map_err(|_| RomeError::Configuration(ConfigurationError::SerializationError))?;
 
     config_file
         .set_content(contents.as_bytes())
-        // SAFETY: previous errors should have been caught by the file system
-        .expect("file should have permissions");
+        .map_err(|_| RomeError::CantReadFile(path))?;
 
     Ok(())
 }

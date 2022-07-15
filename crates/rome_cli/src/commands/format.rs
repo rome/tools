@@ -15,7 +15,6 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
     let mut settings = WorkspaceSettings::default();
 
-    dbg!(&configuration);
     if let Some(configuration) = &configuration {
         if configuration.is_formatter_disabled() {
             return Ok(());

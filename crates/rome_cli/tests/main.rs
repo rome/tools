@@ -5,7 +5,7 @@ use std::{ffi::OsString, path::Path};
 use pico_args::Arguments;
 use rome_cli::{run_cli, CliSession, Termination};
 use rome_console::BufferConsole;
-use rome_fs::{FileSystem, MemoryFileSystem};
+use rome_fs::MemoryFileSystem;
 use rome_service::{App, DynRef};
 
 const UNFORMATTED: &str = "  statement(  )  ";
@@ -58,6 +58,7 @@ mod check {
     use super::*;
     use crate::configs::CONFIG_LINTER_DISABLED;
     use rome_console::LogLevel;
+    use rome_fs::FileSystemExt;
 
     #[test]
     fn ok() {
@@ -282,6 +283,7 @@ mod check {
 
 mod ci {
     use super::*;
+    use rome_fs::FileSystemExt;
 
     #[test]
     fn ok() {
@@ -385,6 +387,7 @@ mod ci {
 mod format {
     use super::*;
     use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT};
+    use rome_fs::FileSystemExt;
 
     #[test]
     fn print() {
@@ -816,13 +819,12 @@ mod init {
     use pico_args::Arguments;
     use rome_cli::{run_cli, CliSession};
     use rome_console::BufferConsole;
-    use rome_fs::{FileSystem, MemoryFileSystem};
+    use rome_fs::{FileSystemExt, MemoryFileSystem};
     use rome_service::{App, DynRef};
     use std::ffi::OsString;
     use std::path::Path;
 
     #[test]
-    #[ignore = "At the moment we can't write files in the memory file system because it's behind an `Arc`"]
     fn creates_config_file() {
         let mut fs = MemoryFileSystem::default();
 

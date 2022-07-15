@@ -1,5 +1,6 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
 use super::{BoxedTraversal, File};
+use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{
     fs::{TraversalContext, TraversalScope},
     interner::FileId,
@@ -18,14 +19,11 @@ use std::{
 pub struct OsFileSystem;
 
 impl FileSystem for OsFileSystem {
-    fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        tracing::debug_span!("OsFileSystem::open", path = ?path).in_scope(
-            move || -> io::Result<Box<dyn File>> {
-                Ok(Box::new(OsFile {
-                    inner: fs::File::options().read(true).write(true).open(path)?,
-                }))
-            },
-        )
+    fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
+        let mut fs_options = fs::File::options();
+        Ok(Box::new(OsFile {
+            inner: options.into_fs_options(&mut fs_options).open(path)?,
+        }))
     }
 
     fn traversal(&self, func: BoxedTraversal) {
@@ -33,29 +31,28 @@ impl FileSystem for OsFileSystem {
             func(scope);
         })
     }
+}
 
+impl FileSystemExt for OsFileSystem {
     fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
         tracing::debug_span!("OsFileSystem::create", path = ?path).in_scope(
             move || -> io::Result<Box<dyn File>> {
-                Ok(Box::new(OsFile {
-                    inner: fs::File::options()
-                        .write(true)
-                        .create_new(true)
-                        .open(path)?,
-                }))
+                self.open_with_options(path, OpenOptions::default().write(true).create_new(true))
+            },
+        )
+    }
+
+    fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        tracing::debug_span!("OsFileSystem::open", path = ?path).in_scope(
+            move || -> io::Result<Box<dyn File>> {
+                self.open_with_options(path, OpenOptions::default().read(true).write(true))
             },
         )
     }
 }
 
-pub struct OsFile {
+struct OsFile {
     inner: fs::File,
-}
-
-impl OsFile {
-    pub fn new(file: fs::File) -> Self {
-        Self { inner: file }
-    }
 }
 
 impl File for OsFile {

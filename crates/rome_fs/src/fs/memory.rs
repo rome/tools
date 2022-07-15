@@ -7,8 +7,9 @@ use std::{
     sync::Arc,
 };
 
-use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex};
+use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
 
+use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{FileSystem, TraversalContext, TraversalScope};
 
 use super::{BoxedTraversal, File};
@@ -16,7 +17,7 @@ use super::{BoxedTraversal, File};
 /// Fully in-memory file system, stores the content of all known files in a hashmap
 #[derive(Default)]
 pub struct MemoryFileSystem {
-    files: HashMap<PathBuf, FileEntry>,
+    files: AssertUnwindSafe<RwLock<HashMap<PathBuf, FileEntry>>>,
 }
 
 /// This is what's actually being stored for each file in the filesystem
@@ -32,40 +33,54 @@ pub struct MemoryFileSystem {
 ///   which means the filesystem guarantees a file will never get into an
 ///   inconsistent state if a thread panics while having a handle open (a read
 ///   or write either happens or not, but will never panic halfway through)
-type FileEntry = AssertUnwindSafe<Arc<Mutex<Vec<u8>>>>;
+type FileEntry = Arc<Mutex<Vec<u8>>>;
 
 impl MemoryFileSystem {
     /// Create or update a file in the filesystem
     pub fn insert(&mut self, path: PathBuf, content: impl Into<Vec<u8>>) {
-        self.files
-            .insert(path, AssertUnwindSafe(Arc::new(Mutex::new(content.into()))));
+        let files = &mut self.files.0.write();
+        files.insert(path, Arc::new(Mutex::new(content.into())));
     }
 }
 
 impl FileSystem for MemoryFileSystem {
+    fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
+        if options.read && options.write {
+            self.open(path)
+        } else if options.create_new || options.write {
+            self.create(path)
+        } else {
+            unimplemented!("the set of open options provided don't match any case")
+        }
+    }
+
+    fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
+        func(&MemoryTraversalScope { fs: self })
+    }
+}
+
+impl FileSystemExt for MemoryFileSystem {
+    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        let files = &mut self.files.0.write();
+        // we create an empty file
+        let file: FileEntry = Arc::new(Mutex::new(vec![]));
+        let path = PathBuf::from(path);
+        files.insert(path, file.clone());
+        let inner = file.lock_arc();
+        Ok(Box::new(MemoryFile { inner }))
+    }
+
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        let entry = self.files.get(path).ok_or_else(|| {
+        let files = &self.files.0.read();
+        let entry = files.get(path).ok_or_else(|| {
             io::Error::new(
                 io::ErrorKind::NotFound,
                 format!("path {path:?} does not exists in memory filesystem"),
             )
         })?;
 
-        let entry = entry.0.clone();
         let lock = entry.lock_arc();
 
-        Ok(Box::new(MemoryFile { inner: lock }))
-    }
-
-    fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
-        func(&MemoryTraversalScope { fs: self })
-    }
-
-    fn create(&self, _path: &Path) -> io::Result<Box<dyn File>> {
-        let content = vec![];
-        let file: FileEntry = AssertUnwindSafe(Arc::new(Mutex::new(content)));
-        let entry = file.0;
-        let lock = entry.lock_arc();
         Ok(Box::new(MemoryFile { inner: lock }))
     }
 }
@@ -101,7 +116,8 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
     fn spawn(&self, ctx: &'scope dyn TraversalContext, base: PathBuf) {
         // Traversal is implemented by iterating on all keys, and matching on
         // those that are prefixed with the provided `base` path
-        for path in self.fs.files.keys() {
+        let files = &self.fs.files.0.read();
+        for path in files.keys() {
             if path.strip_prefix(&base).is_ok() {
                 let file_id = ctx.interner().intern_path(path.into());
                 ctx.handle_file(path, file_id);
@@ -120,6 +136,7 @@ mod tests {
 
     use parking_lot::Mutex;
 
+    use crate::fs::FileSystemExt;
     use crate::{
         interner::FileId, AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath,
         TraversalContext,

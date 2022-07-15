@@ -11,19 +11,12 @@ mod memory;
 mod os;
 
 pub use memory::MemoryFileSystem;
-pub use os::{OsFile, OsFileSystem};
+pub use os::OsFileSystem;
 pub const CONFIG_NAME: &str = "rome.json";
 
 pub trait FileSystem: Send + Sync + RefUnwindSafe {
-    /// Open a handle to the file at `path`
-    ///
-    /// Currently this locks down the file for both reading and writing
-    fn open(&self, path: &Path) -> io::Result<Box<dyn File>>;
-
-    /// Create a handle to the file at `path`
-    ///
-    /// Currently this locks down the file for both reading and writing
-    fn create(&self, path: &Path) -> io::Result<Box<dyn File>>;
+    /// It opens a file with the given set of options
+    fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>>;
 
     /// Initiate a traversal of the filesystem
     ///
@@ -46,6 +39,67 @@ pub trait File {
     /// This will write to the associated memory buffer, as well as flush the
     /// new content to the disk if this is a physical file
     fn set_content(&mut self, content: &[u8]) -> io::Result<()>;
+}
+
+/// This struct is a "mirror" of [std::fs::FileOptions].
+/// Refer to their documentation for more details
+#[derive(Default)]
+pub struct OpenOptions {
+    read: bool,
+    write: bool,
+    append: bool,
+    truncate: bool,
+    create: bool,
+    create_new: bool,
+}
+
+impl OpenOptions {
+    pub fn read(mut self, read: bool) -> Self {
+        self.read = read;
+        self
+    }
+    pub fn write(mut self, write: bool) -> Self {
+        self.write = write;
+        self
+    }
+    pub fn append(mut self, append: bool) -> Self {
+        self.append = append;
+        self
+    }
+    pub fn truncate(mut self, truncate: bool) -> Self {
+        self.truncate = truncate;
+        self
+    }
+    pub fn create(mut self, create: bool) -> Self {
+        self.create = create;
+        self
+    }
+    pub fn create_new(mut self, create_new: bool) -> Self {
+        self.create_new = create_new;
+        self
+    }
+
+    pub fn into_fs_options(self, options: &mut std::fs::OpenOptions) -> &mut std::fs::OpenOptions {
+        options
+            .read(self.read)
+            .write(self.write)
+            .append(self.append)
+            .truncate(self.truncate)
+            .create(self.create)
+            .create_new(self.create_new)
+    }
+}
+
+/// Trait that contains additional methods to work with [FileSystem]
+pub trait FileSystemExt: FileSystem {
+    /// Open a file with `read` and `write` options
+    fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        self.open_with_options(path, OpenOptions::default().read(true).write(true))
+    }
+    /// Open a file with `write` and `create_new` options
+    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        self.open_with_options(path, OpenOptions::default().write(true).create_new(true))
+    }
 }
 
 type BoxedTraversal<'fs, 'scope> = Box<dyn FnOnce(&dyn TraversalScope<'scope>) + Send + 'fs>;
@@ -84,14 +138,11 @@ impl<T> FileSystem for Arc<T>
 where
     T: FileSystem + Send,
 {
-    fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        T::open(self, path)
+    fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
+        T::open_with_options(self, path, options)
     }
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         T::traversal(self, func)
-    }
-    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        T::create(self, path)
     }
 }
