@@ -249,7 +249,7 @@ impl<L: Language> SyntaxNode<L> {
 
     /// Returns the index of this node inside of its parent
     #[inline]
-    fn index(&self) -> usize {
+    pub(crate) fn index(&self) -> usize {
         self.raw.index()
     }
 

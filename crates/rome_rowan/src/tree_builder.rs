@@ -66,9 +66,10 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 
     /// Adds new token to the current branch.
     #[inline]
-    pub fn token(&mut self, kind: L::Kind, text: &str) {
+    pub fn token(&mut self, kind: L::Kind, text: &str) -> &mut Self {
         let (hash, token) = self.cache.token(kind.to_raw(), text);
         self.children.push((hash, token.into()));
+        self
     }
 
     /// Adds new token to the current branch.
@@ -88,15 +89,16 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 
     /// Start new node and make it current.
     #[inline]
-    pub fn start_node(&mut self, kind: L::Kind) {
+    pub fn start_node(&mut self, kind: L::Kind) -> &mut Self {
         let len = self.children.len();
         self.parents.push((kind, len));
+        self
     }
 
     /// Finish current branch and restore previous
     /// branch as current.
     #[inline]
-    pub fn finish_node(&mut self) {
+    pub fn finish_node(&mut self) -> &mut Self {
         let (kind, first_child) = self.parents.pop().unwrap();
         let raw_kind = kind.to_raw();
 
@@ -124,6 +126,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
         };
 
         self.children.push((hash, node.into()));
+        self
     }
 
     /// Prepare for maybe wrapping the next node.

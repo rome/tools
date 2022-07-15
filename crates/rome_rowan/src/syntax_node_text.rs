@@ -286,7 +286,7 @@ mod tests {
         let mut builder = RawSyntaxTreeBuilder::new();
         builder.start_node(RawLanguageKind::ROOT);
         for &chunk in chunks.iter() {
-            builder.token(RawLanguageKind::STRING_TOKEN, chunk)
+            builder.token(RawLanguageKind::STRING_TOKEN, chunk);
         }
         builder.finish_node();
         builder.finish()
