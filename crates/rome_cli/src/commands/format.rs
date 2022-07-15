@@ -1,8 +1,8 @@
 use rome_formatter::IndentStyle;
 use rome_service::configuration::Configuration;
-use rome_service::load_config::ConfigurationType;
-use rome_service::settings::FormatSettings;
-use rome_service::{load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams};
+use rome_service::{
+    load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams, ConfigurationType,
+};
 
 use crate::{
     traversal::{traverse, TraversalMode},
@@ -47,9 +47,7 @@ pub(crate) fn parse_format_options(
     configuration: &Option<Configuration>,
 ) -> Result<(), Termination> {
     if let Some(configuration) = configuration {
-        workspace_settings.format = FormatSettings::from(&configuration.formatter);
-        workspace_settings.languages.javascript.format.quote_style =
-            Some(configuration.javascript.formatter.quote_style);
+        workspace_settings.merge_with_configuration(configuration);
     }
 
     let size = session

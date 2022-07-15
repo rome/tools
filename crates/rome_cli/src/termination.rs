@@ -69,7 +69,7 @@ fn command_name() -> String {
 // Termination implements Debug by redirecting to Display instead of deriving
 // a "canonical" debug implementation as it it is returned as a Result in the
 // main function and gets printed by the standard library, which uses Debug but
-// we want to show the actuall error message to the user in case of an error
+// we want to show the actual error message to the user in case of an error
 impl Debug for Termination {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
         write!(fmt, "{}", self)

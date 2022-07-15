@@ -5,10 +5,9 @@ use crate::{
 };
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_service::configuration::Configuration;
-use rome_service::load_config;
-use rome_service::load_config::ConfigurationType;
 use rome_service::settings::{LinterSettings, WorkspaceSettings};
 use rome_service::workspace::UpdateSettingsParams;
+use rome_service::{load_config, ConfigurationType};
 
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
@@ -61,7 +60,9 @@ pub(crate) fn parse_linter_options(
     configuration: &Option<Configuration>,
 ) -> Result<(), Termination> {
     if let Some(configuration) = configuration {
-        workspace_settings.linter = LinterSettings::from(&configuration.linter);
+        if let Some(linter) = &configuration.linter {
+            workspace_settings.linter = LinterSettings::from(linter);
+        }
     }
 
     Ok(())

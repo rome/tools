@@ -1,4 +1,3 @@
-use crate::configuration::ConfigurationError;
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
@@ -9,12 +8,13 @@ use std::path::PathBuf;
 
 pub mod configuration;
 mod file_handlers;
-pub mod load_config;
 pub mod settings;
 pub mod workspace;
 
+pub use crate::configuration::{
+    create_config, load_config, Configuration, ConfigurationError, ConfigurationType,
+};
 pub use crate::file_handlers::JsFormatSettings;
-pub use crate::load_config::load_config;
 pub use crate::workspace::Workspace;
 
 pub struct App<'app> {
@@ -26,6 +26,8 @@ pub struct App<'app> {
 
 /// Generic errors thrown during rome operations
 pub enum RomeError {
+    /// The project contains uncommitted changes
+    DirtyWorkspace,
     /// The file does not exist in the [Workspace]
     NotFound,
     /// A file is not supported. It contains the extension of the file
@@ -39,13 +41,9 @@ pub enum RomeError {
     CantReadDirectory(PathBuf),
     /// Thrown when a rome can't read a generic file
     CantReadFile(PathBuf),
-    /// Error thrown when de-serialising the configuration from file, the issues can be many:
-    /// - syntax error
-    /// - incorrect fields
-    /// - incorrect values
-    MalformedConfigurationFile(String),
+
     /// Error thrown when validating the configuration. Once deserialized, further checks have to be done.
-    InvalidConfiguration(ConfigurationError),
+    Configuration(ConfigurationError),
 }
 
 impl Debug for RomeError {
@@ -57,8 +55,8 @@ impl Debug for RomeError {
             RomeError::FormatWithErrorsDisabled => std::fmt::Display::fmt(self, f),
             RomeError::CantReadDirectory(_) => std::fmt::Display::fmt(self, f),
             RomeError::CantReadFile(_) => std::fmt::Display::fmt(self, f),
-            RomeError::MalformedConfigurationFile(_) => std::fmt::Display::fmt(self, f),
-            RomeError::InvalidConfiguration(_) => std::fmt::Display::fmt(self, f),
+            RomeError::Configuration(_) => std::fmt::Display::fmt(self, f),
+            RomeError::DirtyWorkspace => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -101,15 +99,11 @@ impl Display for RomeError {
                     path.display()
                 )
             }
-            RomeError::MalformedConfigurationFile(reason) => {
-                write!(
-                    f,
-                    "Rome couldn't load the configuration file, here's why: \n{}",
-                    reason
-                )
-            }
 
-            RomeError::InvalidConfiguration(error) => std::fmt::Display::fmt(error, f),
+            RomeError::Configuration(error) => std::fmt::Display::fmt(error, f),
+            RomeError::DirtyWorkspace => {
+                write!(f, "Uncommitted changes in repository")
+            }
         }
     }
 }

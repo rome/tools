@@ -3,10 +3,9 @@ use crate::{
     traversal::{traverse, TraversalMode},
     CliSession, Termination,
 };
-use rome_service::load_config;
-use rome_service::load_config::ConfigurationType;
 use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::UpdateSettingsParams;
+use rome_service::{load_config, ConfigurationType};
 
 use super::format::parse_format_options;
 

@@ -1,8 +1,8 @@
 use crate::settings::FormatSettings;
 use rome_formatter::{IndentStyle, LineWidth};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
@@ -10,6 +10,7 @@ pub struct FormatterConfiguration {
 
     /// Stores whether formatting should be allowed to proceed if a given file
     /// has syntax errors
+    #[serde(skip_serializing)]
     pub format_with_errors: bool,
 
     /// The indent style.
@@ -19,7 +20,10 @@ pub struct FormatterConfiguration {
     indent_size: u8,
 
     /// What's the max width of a line. Defaults to 80.
-    #[serde(deserialize_with = "deserialize_line_width")]
+    #[serde(
+        deserialize_with = "deserialize_line_width",
+        serialize_with = "serialize_line_width"
+    )]
     pub line_width: LineWidth,
 }
 
@@ -58,7 +62,14 @@ where
     LineWidth::try_from(value).map_err(serde::de::Error::custom)
 }
 
-#[derive(Deserialize, Debug, Eq, PartialEq)]
+pub fn serialize_line_width<S>(line_width: &LineWidth, s: S) -> Result<S::Ok, S::Error>
+where
+    S: serde::ser::Serializer,
+{
+    s.serialize_u16(line_width.value())
+}
+
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum PlainIndentStyle {
     /// Tab
