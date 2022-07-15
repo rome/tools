@@ -1,7 +1,7 @@
 use crate::{semantic_services::Semantic, JsRuleAction};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsCatchClause, JsIdentifierAssignment, JsSyntaxNode};
+use rome_js_syntax::{JsCatchClause, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -40,7 +40,7 @@ impl Rule for NoCatchAssign {
     /// We only compare the declaration of [JsCatchClause] with all descent [JsIdentifierAssignment] of its body.
     type Query = Semantic<JsCatchClause>;
     /// The first element of `State` is the reassignment of catch parameter, the second element of `State` is the declaration of catch clause.
-    type State = (JsIdentifierAssignment, JsSyntaxNode);
+    type State = (JsSyntaxNode, JsSyntaxNode);
     type Signals = Vec<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
@@ -58,21 +58,22 @@ impl Rule for NoCatchAssign {
                 //          ^^^^^^^^^^^^^
                 // }
                 let catch_binding = decl.binding().ok()?;
+                // Only [JsIdentifierBinding] is allowed to use `model.all_references` now, so I need to make sure this is
+                // a [JsIdentifierBinding].
+                let identifier_binding = catch_binding
+                    .as_js_any_binding()?
+                    .as_js_identifier_binding()?;
                 let catch_binding_syntax = catch_binding.syntax();
-                let body = catch_clause.body().ok()?;
-                let mut invalid_assign = vec![];
-
-                for assignment in body
-                    .syntax()
-                    .descendants()
-                    .filter_map(JsIdentifierAssignment::cast)
+                let mut invalid_assignment = vec![];
+                for reference in model
+                    .all_references(identifier_binding)
+                    .filter(|r| r.is_write())
                 {
-                    let decl_binding = model.declaration(&assignment).unwrap();
-                    if decl_binding.syntax() == catch_binding_syntax {
-                        invalid_assign.push((assignment, catch_binding_syntax.clone()));
-                    }
+                    invalid_assignment
+                        .push((reference.node().clone(), catch_binding_syntax.clone()));
                 }
-                Some(invalid_assign)
+
+                Some(invalid_assignment)
             })
             .unwrap_or_default()
     }
@@ -80,7 +81,7 @@ impl Rule for NoCatchAssign {
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let (assignment, catch_binding_syntax) = state;
         let diagnostic = RuleDiagnostic::warning(
-            assignment.syntax().text_trimmed_range(),
+            assignment.text_trimmed_range(),
             markup! {
                 " Do not "<Emphasis>"reassign catch parameters."</Emphasis>""
             },
