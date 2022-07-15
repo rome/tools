@@ -12,16 +12,23 @@ use crate::{
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
+    let mut settings = WorkspaceSettings::default();
 
     if let Some(configuration) = &configuration {
         if configuration.is_formatter_disabled() {
             return Ok(());
         }
     }
-    parse_format_options(&mut session, configuration)?;
+
+    parse_format_options(&mut session, &mut settings, &configuration)?;
 
     let is_write = session.args.contains("--write");
     let ignore_errors = session.args.contains("--skip-errors");
+
+    session
+        .app
+        .workspace
+        .update_settings(UpdateSettingsParams { settings })?;
 
     traverse(
         TraversalMode::Format {
@@ -36,13 +43,12 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 /// into the workspace settings
 pub(crate) fn parse_format_options(
     session: &mut CliSession,
-    configuration: Option<Configuration>,
+    workspace_settings: &mut WorkspaceSettings,
+    configuration: &Option<Configuration>,
 ) -> Result<(), Termination> {
-    let mut settings = WorkspaceSettings::default();
-
     if let Some(configuration) = configuration {
-        settings.format = FormatSettings::from(&configuration.formatter);
-        settings.languages.javascript.format.quote_style =
+        workspace_settings.format = FormatSettings::from(&configuration.formatter);
+        workspace_settings.languages.javascript.format.quote_style =
             Some(configuration.javascript.formatter.quote_style);
     }
 
@@ -64,10 +70,11 @@ pub(crate) fn parse_format_options(
 
     match indent_style {
         Some(IndentStyle::Tab) => {
-            settings.format.indent_style = Some(IndentStyle::Tab);
+            workspace_settings.format.indent_style = Some(IndentStyle::Tab);
         }
         Some(IndentStyle::Space(default_size)) => {
-            settings.format.indent_style = Some(IndentStyle::Space(size.unwrap_or(default_size)));
+            workspace_settings.format.indent_style =
+                Some(IndentStyle::Space(size.unwrap_or(default_size)));
         }
         None => {}
     }
@@ -81,7 +88,7 @@ pub(crate) fn parse_format_options(
         })?;
 
     if let Some(quote_style) = quote_style {
-        settings.languages.javascript.format.quote_style = Some(quote_style);
+        workspace_settings.languages.javascript.format.quote_style = Some(quote_style);
     }
 
     let line_width = session
@@ -93,13 +100,8 @@ pub(crate) fn parse_format_options(
         })?;
 
     if let Some(line_width) = line_width {
-        settings.format.line_width = Some(line_width);
+        workspace_settings.format.line_width = Some(line_width);
     }
-
-    session
-        .app
-        .workspace
-        .update_settings(UpdateSettingsParams { settings })?;
 
     Ok(())
 }

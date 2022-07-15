@@ -56,6 +56,7 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 
 mod check {
     use super::*;
+    use crate::configs::CONFIG_LINTER_DISABLED;
     use rome_console::LogLevel;
 
     #[test]
@@ -212,6 +213,70 @@ mod check {
         println!("{console:#?}");
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
+
+    #[test]
+    fn no_lint_if_linter_is_disabled_when_run_apply() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+        let config_path = Path::new("rome.json");
+        fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, FIX_BEFORE);
+    }
+
+    #[test]
+    fn no_lint_if_linter_is_disabled() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+        let config_path = Path::new("rome.json");
+        fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, FIX_BEFORE);
     }
 }
 

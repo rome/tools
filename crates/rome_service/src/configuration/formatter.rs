@@ -42,6 +42,7 @@ impl From<&FormatterConfiguration> for FormatSettings {
             PlainIndentStyle::Space => IndentStyle::Space(conf.indent_size),
         };
         Self {
+            enabled: conf.enabled,
             indent_style: Some(indent_style),
             line_width: Some(conf.line_width),
             format_with_errors: false,

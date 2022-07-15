@@ -31,6 +31,9 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     "indentSize": 2,
     "lineWidth": 80
   },
+  "linter": {
+    "enabled": true
+  },
   "javascript": {
     "formatter": {
       "quoteStyle": "double"
@@ -42,5 +45,12 @@ pub const CONFIG_BAD_LINE_WIDTH: &str = r#"{
   "root": true,
   "formatter": {
     "lineWidth": 500
-  },
+  }
+}"#;
+
+pub const CONFIG_LINTER_DISABLED: &str = r#"{
+  "root": true,
+  "linter": {
+    "enabled": false
+  }
 }"#;
