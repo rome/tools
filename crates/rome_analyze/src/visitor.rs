@@ -6,7 +6,7 @@ use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 use crate::{
     matcher::MatchQueryParams,
     registry::{NodeLanguage, Phases},
-    LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
+    AnalyzerContext, LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
 };
 
 /// Mutable context objects shared by all visitors
@@ -44,6 +44,10 @@ pub trait Visitor {
         event: &WalkEvent<SyntaxNode<Self::Language>>,
         ctx: VisitorContext<Self::Language>,
     );
+
+    fn finish(&mut self, ctx: &mut AnalyzerContext<Self::Language>) {
+        let _ = ctx;
+    }
 }
 
 /// A node visitor is a special kind of visitor that does not have a persistent

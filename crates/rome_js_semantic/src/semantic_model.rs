@@ -573,10 +573,12 @@ impl SemanticModelBuilder {
         }
     }
 
+    #[inline]
     pub fn push_node(&mut self, node: &JsSyntaxNode) {
         self.node_by_range.insert(node.text_range(), node.clone());
     }
 
+    #[inline]
     pub fn push_event(&mut self, e: SemanticEvent) {
         use SemanticEvent::*;
         match e {
@@ -678,6 +680,7 @@ impl SemanticModelBuilder {
         }
     }
 
+    #[inline]
     pub fn build(self) -> SemanticModel {
         let data = SemanticModelData {
             root: self.root,

@@ -1,7 +1,8 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 
 use std::cmp::Ordering;
-use std::collections::BinaryHeap;
+use std::collections::{BTreeMap, BinaryHeap};
+use std::mem::swap;
 use std::ops;
 
 mod categories;
@@ -40,8 +41,8 @@ use rome_rowan::{
 /// processed by lint rules and in turn emit "analyzer signals" in the form of
 /// diagnostics, code actions or both
 pub struct Analyzer<'a, L: Language, Matcher, Break> {
-    /// List of visitors being run by this instance of the analyzer
-    visitors: Vec<Box<dyn Visitor<Language = L> + 'a>>,
+    /// List of visitors being run by this instance of the analyzer for each phase
+    phases: BTreeMap<Phases, Vec<Box<dyn Visitor<Language = L> + 'a>>>,
     /// Executor for the query matches emitted by the visitors
     query_matcher: Matcher,
     /// Queue for pending analyzer signals
@@ -72,7 +73,6 @@ struct LineSuppression {
 }
 
 pub struct AnalyzerContext<L: Language> {
-    pub phase: Phases,
     pub file_id: FileId,
     pub root: LanguageRoot<L>,
     pub services: ServiceBag,
@@ -92,7 +92,7 @@ where
         emit_signal: SignalHandler<'a, L, Break>,
     ) -> Self {
         Self {
-            visitors: Vec::new(),
+            phases: BTreeMap::new(),
             query_matcher,
             signal_queue: BinaryHeap::new(),
             parse_suppression_comment,
@@ -102,47 +102,102 @@ where
         }
     }
 
-    pub fn add_visitor<V>(&mut self, visitor: V)
+    pub fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
     where
         V: Visitor<Language = L> + 'a,
     {
-        self.visitors.push(Box::new(visitor));
+        self.phases
+            .entry(phase)
+            .or_default()
+            .push(Box::new(visitor));
     }
 
-    pub fn run(mut self, ctx: AnalyzerContext<L>) -> Option<Break> {
-        let iter = ctx.root.syntax().preorder_with_tokens(Direction::Next);
-        for event in iter {
-            let node_event = match event {
-                WalkEvent::Enter(SyntaxElement::Node(node)) => WalkEvent::Enter(node),
-                WalkEvent::Leave(SyntaxElement::Node(node)) => WalkEvent::Leave(node),
+    pub fn run(mut self, mut ctx: AnalyzerContext<L>) -> Option<Break> {
+        // Extract the list of phases to run from self
+        let mut phases = BTreeMap::new();
+        swap(&mut self.phases, &mut phases);
 
-                // If this is a token enter event, process its text content
-                WalkEvent::Enter(SyntaxElement::Token(token)) => {
-                    let result = self.flush_matches(ctx.file_id, token);
-                    if let ControlFlow::Break(br) = result {
-                        return Some(br);
+        let mut phases = phases.into_iter();
+
+        // Run the first phase over nodes and tokens to process line breaks and suppression comments
+        if let Some((phase, mut visitors)) = phases.next() {
+            let iter = ctx.root.syntax().preorder_with_tokens(Direction::Next);
+            for event in iter {
+                let node_event = match event {
+                    WalkEvent::Enter(SyntaxElement::Node(node)) => WalkEvent::Enter(node),
+                    WalkEvent::Leave(SyntaxElement::Node(node)) => WalkEvent::Leave(node),
+
+                    // If this is a token enter event, process its text content
+                    WalkEvent::Enter(SyntaxElement::Token(token)) => {
+                        let result = self.handle_token(ctx.file_id, token);
+                        if let ControlFlow::Break(br) = result {
+                            return Some(br);
+                        }
+
+                        continue;
                     }
-
-                    continue;
-                }
-                WalkEvent::Leave(SyntaxElement::Token(_)) => {
-                    continue;
-                }
-            };
-
-            // If this is a node event pass it to the visitors
-            for visitor in &mut self.visitors {
-                let ctx = VisitorContext {
-                    phase: ctx.phase,
-                    file_id: ctx.file_id,
-                    root: &ctx.root,
-                    services: &ctx.services,
-                    range: ctx.range,
-                    query_matcher: &mut self.query_matcher,
-                    signal_queue: &mut self.signal_queue,
+                    WalkEvent::Leave(SyntaxElement::Token(_)) => {
+                        continue;
+                    }
                 };
 
-                visitor.visit(&node_event, ctx);
+                // If this is a node event pass it to the visitors for this phase
+                for visitor in &mut visitors {
+                    let ctx = VisitorContext {
+                        phase,
+                        file_id: ctx.file_id,
+                        root: &ctx.root,
+                        services: &ctx.services,
+                        range: ctx.range,
+                        query_matcher: &mut self.query_matcher,
+                        signal_queue: &mut self.signal_queue,
+                    };
+
+                    visitor.visit(&node_event, ctx);
+                }
+            }
+
+            // Flush all remaining pending events
+            let result = self.flush_matches(None);
+            if let ControlFlow::Break(br) = result {
+                return Some(br);
+            }
+
+            // Finish all the active visitors for the phase
+            for mut visitor in visitors {
+                visitor.finish(&mut ctx);
+            }
+        }
+
+        // The following phases can simply be run over nodes since suppression
+        // comments are already processed
+        for (phase, mut visitors) in phases {
+            for event in ctx.root.syntax().preorder() {
+                // Run all the active visitors for the phace on the event
+                for visitor in &mut visitors {
+                    let ctx = VisitorContext {
+                        phase,
+                        file_id: ctx.file_id,
+                        root: &ctx.root,
+                        services: &ctx.services,
+                        range: ctx.range,
+                        query_matcher: &mut self.query_matcher,
+                        signal_queue: &mut self.signal_queue,
+                    };
+
+                    visitor.visit(&event, ctx);
+                }
+
+                // Flush all pending query signals
+                let result = self.flush_matches(None);
+                if let ControlFlow::Break(br) = result {
+                    return Some(br);
+                }
+            }
+
+            // Finish all the active visitors
+            for mut visitor in visitors {
+                visitor.finish(&mut ctx);
             }
         }
 
@@ -152,7 +207,7 @@ where
     /// Process the text for a single token, parsing suppression comments and
     /// handling line breaks, then flush all pending query signals in the queue
     /// whose position is less then the end of the token within the file
-    fn flush_matches(&mut self, file_id: FileId, token: SyntaxToken<L>) -> ControlFlow<Break> {
+    fn handle_token(&mut self, file_id: FileId, token: SyntaxToken<L>) -> ControlFlow<Break> {
         // Process the content of the token for comments and newline
         for piece in token.leading_trivia().pieces() {
             if matches!(
@@ -188,10 +243,18 @@ where
 
         // Flush signals from the queue until the end of the current token is reached
         let cutoff = token.text_range().end();
+        self.flush_matches(Some(cutoff))
+    }
+
+    /// Flush all pending query signals in the queue.  If `cutoff` is specified,
+    /// signals that start after this position in the file will be skipped
+    fn flush_matches(&mut self, cutoff: Option<TextSize>) -> ControlFlow<Break> {
         while let Some(entry) = self.signal_queue.peek() {
             let start = entry.text_range.start();
-            if start >= cutoff {
-                break;
+            if let Some(cutoff) = cutoff {
+                if start >= cutoff {
+                    break;
+                }
             }
 
             // Search for an active suppression comment covering the range of

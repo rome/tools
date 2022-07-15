@@ -287,10 +287,9 @@ mod tests {
             &mut emit_signal,
         );
 
-        analyzer.add_visitor(SyntaxVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
-            phase: Phases::Syntax,
             file_id: 0,
             root,
             range: None,

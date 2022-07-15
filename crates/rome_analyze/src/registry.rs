@@ -12,7 +12,7 @@ use crate::{
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Phases {
     Syntax = 0,
     Semantic = 1,

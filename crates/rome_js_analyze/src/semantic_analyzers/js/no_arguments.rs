@@ -37,8 +37,9 @@ impl Rule for NoArguments {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let reference = ctx.query();
+        let value_token = reference.value_token().ok()?;
 
-        let name = reference.syntax().text_trimmed();
+        let name = value_token.text_trimmed();
         if name == "arguments" {
             let model = ctx.model();
             let declaration = model.declaration(reference);

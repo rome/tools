@@ -39,6 +39,11 @@ impl ServiceBag {
     pub fn new(services: ServiceBagData) -> Self {
         Self(Arc::new(services))
     }
+
+    pub fn get_mut(&mut self) -> Option<&mut ServiceBagData> {
+        let ServiceBag(data) = self;
+        Arc::get_mut(data)
+    }
 }
 
 impl Deref for ServiceBag {
