@@ -2,7 +2,6 @@ use rome_formatter::{IndentStyle, LineWidth};
 use rome_js_formatter::context::QuoteStyle;
 use rome_service::configuration::Configuration;
 use rome_service::settings;
-use rome_service::settings::FormatSettings;
 use serde::{Deserialize, Serialize};
 use serde_json::{Error, Value};
 use tracing::{info, trace};
@@ -93,9 +92,7 @@ impl Config {
 
         if let Some(configuration) = configuration {
             trace!("Applying configuration coming from the configuration file");
-            settings.format = FormatSettings::from(&configuration.formatter);
-            settings.languages.javascript.format.quote_style =
-                Some(configuration.javascript.formatter.quote_style)
+            settings.merge_with_configuration(configuration);
         } else {
             trace!("Applying configuration coming from the client");
             let custom_ident_style: IndentStyle = self

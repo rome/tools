@@ -1,6 +1,5 @@
 use rome_formatter::IndentStyle;
 use rome_service::configuration::Configuration;
-use rome_service::settings::FormatSettings;
 use rome_service::{
     load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams, ConfigurationType,
 };
@@ -48,17 +47,7 @@ pub(crate) fn parse_format_options(
     configuration: &Option<Configuration>,
 ) -> Result<(), Termination> {
     if let Some(configuration) = configuration {
-        if let Some(formatter) = &configuration.formatter {
-            workspace_settings.format = FormatSettings::from(formatter);
-        }
-        let formatter = configuration
-            .javascript
-            .as_ref()
-            .and_then(|j| j.formatter.as_ref());
-        if let Some(formatter) = formatter {
-            workspace_settings.languages.javascript.format.quote_style =
-                Some(formatter.quote_style);
-        }
+        workspace_settings.merge_with_configuration(configuration);
     }
 
     let size = session

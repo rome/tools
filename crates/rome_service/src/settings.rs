@@ -1,5 +1,6 @@
 use std::sync::{RwLock, RwLockReadGuard};
 
+use crate::Configuration;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
@@ -13,6 +14,22 @@ pub struct WorkspaceSettings {
     pub linter: LinterSettings,
     /// Language specific settings
     pub languages: LanguagesSettings,
+}
+
+impl WorkspaceSettings {
+    /// The (configuration)[Configuration] is merged into the workspace
+    pub fn merge_with_configuration(&mut self, configuration: &Configuration) {
+        if let Some(formatter) = &configuration.formatter {
+            self.format = FormatSettings::from(formatter);
+        }
+        let formatter = configuration
+            .javascript
+            .as_ref()
+            .and_then(|j| j.formatter.as_ref());
+        if let Some(formatter) = formatter {
+            self.languages.javascript.format.quote_style = Some(formatter.quote_style);
+        }
+    }
 }
 
 /// Formatter settings for the entire workspace
