@@ -14,7 +14,7 @@ pub use memory::MemoryFileSystem;
 pub use os::OsFileSystem;
 pub const CONFIG_NAME: &str = "rome.json";
 
-pub trait FileSystem: Sync + RefUnwindSafe {
+pub trait FileSystem: Send + Sync + RefUnwindSafe {
     /// Open a handle to the file at `path`
     ///
     /// Currently this locks down the file for both reading and writing

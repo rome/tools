@@ -3,6 +3,8 @@ use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::Session;
 use crate::utils::into_lsp_error;
 use crate::{handlers, requests};
+use rome_service::load_config;
+use rome_service::load_config::ConfigurationType;
 use serde_json::Value;
 use tokio::io::{Stdin, Stdout};
 use tower_lsp::jsonrpc::Result as LspResult;
@@ -58,6 +60,19 @@ impl LanguageServer for LSPServer {
     }
 
     async fn initialized(&self, _: InitializedParams) {
+        info!("Attempting to load the configuration from 'rome.json' file");
+
+        match load_config(&self.session.fs, ConfigurationType::Root) {
+            Ok(Some(configuration)) => {
+                info!("Configuration found, and it is valid!");
+                self.session.configuration.write().replace(configuration);
+            }
+            Err(err) => {
+                error!("Couldn't load the configuration file, reason:\n {}", err);
+            }
+            _ => {}
+        };
+
         self.session.fetch_client_configuration().await;
 
         if self.session.config.read().get_workspace_settings().unstable {

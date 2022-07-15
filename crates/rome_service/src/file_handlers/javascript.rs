@@ -19,7 +19,7 @@ use crate::{
 use super::{ExtensionHandler, Mime};
 use std::fmt::Debug;
 
-#[derive(Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct JsFormatSettings {
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,

@@ -5,7 +5,7 @@ use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
 
 /// Global settings for the entire workspace
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct WorkspaceSettings {
     /// Formatter settings applied to all files in the workspaces
     pub format: FormatSettings,
@@ -16,6 +16,7 @@ pub struct WorkspaceSettings {
 }
 
 /// Formatter settings for the entire workspace
+#[derive(Debug)]
 pub struct FormatSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -38,6 +39,7 @@ impl Default for FormatSettings {
 }
 
 /// Formatter settings for the entire workspace
+#[derive(Debug)]
 pub struct LinterSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -50,7 +52,7 @@ impl Default for LinterSettings {
 }
 
 /// Static map of language names to language-specific settings
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct LanguagesSettings {
     pub javascript: LanguageSettings<JsLanguage>,
 }
@@ -74,7 +76,7 @@ pub trait Language: rome_rowan::Language {
     ) -> Self::FormatContext;
 }
 
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
     pub format: L::FormatSettings,

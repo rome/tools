@@ -1,6 +1,8 @@
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_js_formatter::context::QuoteStyle;
+use rome_service::configuration::Configuration;
 use rome_service::settings;
+use rome_service::settings::FormatSettings;
 use serde::{Deserialize, Serialize};
 use serde_json::{Error, Value};
 use tracing::{info, trace};
@@ -77,62 +79,77 @@ impl Config {
     }
 
     /// Convert the current configuration to an instance of [settings::WorkspaceSettings]
-    pub fn as_workspace_settings(&self) -> settings::WorkspaceSettings {
+    ///
+    /// If the configuration file is found we use it with its defaults, otherwise
+    /// we use the settings coming from the client
+    pub fn as_workspace_settings(
+        &self,
+        configuration: Option<&Configuration>,
+    ) -> settings::WorkspaceSettings {
         let mut settings = settings::WorkspaceSettings::default();
 
+        // second, we apply the settings coming from the client
         settings.format.format_with_errors = self.settings.formatter.format_with_syntax_errors;
 
-        let custom_ident_style: IndentStyle = self
-            .settings
-            .formatter
-            .indent_style
-            .parse()
-            .unwrap_or_default();
+        if let Some(configuration) = configuration {
+            trace!("Applying configuration coming from the configuration file");
+            settings.format = FormatSettings::from(&configuration.formatter);
+            settings.languages.javascript.format.quote_style =
+                Some(configuration.javascript.formatter.quote_style)
+        } else {
+            trace!("Applying configuration coming from the client");
+            let custom_ident_style: IndentStyle = self
+                .settings
+                .formatter
+                .indent_style
+                .parse()
+                .unwrap_or_default();
 
-        if custom_ident_style != IndentStyle::default() {
-            // merge settings with the ones provided by the editor
-            match custom_ident_style {
-                IndentStyle::Space(_) => {
-                    settings.format.indent_style =
-                        Some(IndentStyle::Space(self.settings.formatter.space_quantity));
+            if custom_ident_style != IndentStyle::default() {
+                // merge settings with the ones provided by the editor
+                match custom_ident_style {
+                    IndentStyle::Space(_) => {
+                        settings.format.indent_style =
+                            Some(IndentStyle::Space(self.settings.formatter.space_quantity));
+                    }
+                    IndentStyle::Tab => {
+                        settings.format.indent_style = Some(custom_ident_style);
+                    }
                 }
-                IndentStyle::Tab => {
-                    settings.format.indent_style = Some(custom_ident_style);
-                }
+
+                info!(
+                    "Using user setting indent style: {:?}",
+                    settings.format.indent_style
+                );
             }
 
-            info!(
-                "Using user setting indent style: {:?}",
-                settings.format.indent_style
-            );
-        }
+            let custom_quote_style: QuoteStyle = self
+                .settings
+                .formatter
+                .quote_style
+                .parse()
+                .unwrap_or_default();
 
-        let custom_quote_style: QuoteStyle = self
-            .settings
-            .formatter
-            .quote_style
-            .parse()
-            .unwrap_or_default();
+            if custom_quote_style != QuoteStyle::default() {
+                settings.languages.javascript.format.quote_style = Some(custom_quote_style);
+                info!("Using user setting quote style: {}", custom_quote_style);
+            }
 
-        if custom_quote_style != QuoteStyle::default() {
-            settings.languages.javascript.format.quote_style = Some(custom_quote_style);
-            info!("Using user setting quote style: {}", custom_quote_style);
-        }
+            // apply the new line width only if they are different
+            let custom_line_width: LineWidth = self
+                .settings
+                .formatter
+                .line_width
+                .try_into()
+                .unwrap_or_default();
 
-        // apply the new line width only if they are different
-        let custom_line_width: LineWidth = self
-            .settings
-            .formatter
-            .line_width
-            .try_into()
-            .unwrap_or_default();
-
-        if custom_line_width != LineWidth::default() {
-            settings.format.line_width = Some(custom_line_width);
-            info!(
-                "Using user setting line width: {}",
-                custom_line_width.value()
-            );
+            if custom_line_width != LineWidth::default() {
+                settings.format.line_width = Some(custom_line_width);
+                info!(
+                    "Using user settings line width: {}",
+                    custom_line_width.value()
+                );
+            }
         }
 
         settings
