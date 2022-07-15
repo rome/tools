@@ -65,10 +65,7 @@ impl Rule for NoCatchAssign {
                     .as_js_identifier_binding()?;
                 let catch_binding_syntax = catch_binding.syntax();
                 let mut invalid_assignment = vec![];
-                for reference in model
-                    .all_references(identifier_binding)
-                    .filter(|r| r.is_write())
-                {
+                for reference in model.all_writes(identifier_binding) {
                     invalid_assignment
                         .push((reference.node().clone(), catch_binding_syntax.clone()));
                 }
