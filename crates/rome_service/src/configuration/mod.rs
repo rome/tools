@@ -30,7 +30,8 @@ pub struct Configuration {
     pub formatter: Option<FormatterConfiguration>,
 
     /// The configuration for the linter
-    pub linter: LinterConfiguration,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub linter: Option<LinterConfiguration>,
 
     /// Specific configuration for the JavaScript language
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -42,6 +43,7 @@ impl Default for Configuration {
         Self {
             root: true,
             formatter: None,
+            linter: None,
             javascript: None,
         }
     }
@@ -53,7 +55,7 @@ impl Configuration {
     }
 
     pub fn is_linter_disabled(&self) -> bool {
-        !self.linter.enabled
+        self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
     }
 }
 

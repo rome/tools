@@ -1,7 +1,7 @@
 use crate::settings::LinterSettings;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default)]
 pub struct LinterConfiguration {
     // if `false`, it disables the feature. `true` by default

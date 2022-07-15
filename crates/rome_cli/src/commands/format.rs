@@ -49,12 +49,16 @@ pub(crate) fn parse_format_options(
     configuration: &Option<Configuration>,
 ) -> Result<(), Termination> {
     if let Some(configuration) = configuration {
-        if let Some(formatter) = configuration.formatter {
-            settings.format = FormatSettings::from(&formatter);
+        if let Some(formatter) = &configuration.formatter {
+            workspace_settings.format = FormatSettings::from(formatter);
         }
-        let formatter = configuration.javascript.and_then(|j| j.formatter);
+        let formatter = configuration
+            .javascript
+            .as_ref()
+            .and_then(|j| j.formatter.as_ref());
         if let Some(formatter) = formatter {
-            settings.languages.javascript.format.quote_style = Some(formatter.quote_style);
+            workspace_settings.languages.javascript.format.quote_style =
+                Some(formatter.quote_style);
         }
     }
 
