@@ -41,7 +41,6 @@ export async function activate(context: ExtensionContext) {
 		serverOptions.options = { env: { ...process.env } };
 	}
 
-	//reference  https://github.com/Microsoft/vscode-languageserver-node/issues/384
 	const clientOptions: LanguageClientOptions = {
 		documentSelector: [
 			{ scheme: "file", language: "javascript" },
@@ -123,3 +122,5 @@ export function deactivate(): Thenable<void> | undefined {
 	}
 	return client.stop();
 }
+
+let a = true || 1;
