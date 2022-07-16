@@ -59,6 +59,22 @@
 			"title": "Rome",
 			"type": "object",
 			"properties": {
+				"rome_lsp.trace.server": {
+          "type": "string",
+          "scope": "window",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "enumDescriptions": [
+            "No traces",
+            "Error only",
+            "Full log"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the language server."
+        },
 				"rome.lspBin": {
 					"type": [
 						"string",

@@ -23,7 +23,7 @@ pub enum DiagnosticTag {
 }
 
 impl DiagnosticTag {
-    pub fn is_unecessary(&self) -> bool {
+    pub fn is_unnecessary(&self) -> bool {
         matches!(self, DiagnosticTag::Unnecessary | DiagnosticTag::Both)
     }
 

@@ -31,6 +31,8 @@ export async function activate(context: ExtensionContext) {
 		transport: TransportKind.stdio,
 	};
 
+	const traceOutputChannel = window.createOutputChannel("rome_lsp trace");
+
 	// only override serverOptions.options when developing extension,
 	// this is convenient for debugging
 	// Before, every time we modify the client package, we need to rebuild vscode extension and install, for now, we could use Launching Client or press F5 to open a separate debug window and doing some check, finally we could bundle the vscode and do some final check.
@@ -39,6 +41,7 @@ export async function activate(context: ExtensionContext) {
 		serverOptions.options = { env: { ...process.env } };
 	}
 
+	//reference  https://github.com/Microsoft/vscode-languageserver-node/issues/384
 	const clientOptions: LanguageClientOptions = {
 		documentSelector: [
 			{ scheme: "file", language: "javascript" },
@@ -46,6 +49,7 @@ export async function activate(context: ExtensionContext) {
 			{ scheme: "file", language: "javascriptreact" },
 			{ scheme: "file", language: "typescriptreact" },
 		],
+		traceOutputChannel,
 	};
 
 	client = new LanguageClient("rome_lsp", "Rome", serverOptions, clientOptions);

@@ -160,7 +160,7 @@ pub(crate) fn diagnostic_to_lsp(
         diagnostic.tag.map(|tag| {
             let mut result = Vec::new();
 
-            if tag.is_unecessary() {
+            if tag.is_unnecessary() {
                 result.push(lsp::DiagnosticTag::UNNECESSARY);
             }
 
