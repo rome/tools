@@ -91,6 +91,13 @@ Disallow labels that share a name with a variable
 Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noShoutyConstants">
+	<a href="/docs/lint/rules/noShoutyConstants">noShoutyConstants</a>
+	<a class="header-anchor" href="#noShoutyConstants"></a>
+</h3>
+Disallow the use of constants which its value is the upper-case version of its name.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSparseArray">
 	<a href="/docs/lint/rules/noSparseArray">noSparseArray</a>
 	<a class="header-anchor" href="#noSparseArray"></a>
