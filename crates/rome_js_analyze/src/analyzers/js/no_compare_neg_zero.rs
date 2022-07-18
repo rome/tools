@@ -18,6 +18,7 @@ pub struct NoCompareNegZeroState {
 }
 
 declare_rule! {
+    "0.7.0",
     /// Disallow comparing against `-0`
     ///
     /// ## Examples

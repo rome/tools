@@ -11,6 +11,8 @@ use crate::registry::RuleLanguage;
 use crate::{AnalysisFilter, LanguageRoot, Phase, Phases, Queryable, RuleRegistry};
 
 pub trait RuleMeta {
+    /// The version when the rule was implemented
+    const SINCE_VERSION: &'static str;
     /// The name of this rule, displayed in the diagnostics it emits
     const NAME: &'static str;
     /// The content of the documentation comments for this rule
@@ -76,11 +78,12 @@ pub trait RuleMeta {
 /// diagnostic in the resulting documentation page
 #[macro_export]
 macro_rules! declare_rule {
-    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident = $name:literal ) => {
+    ( $version:literal, $( #[doc = $doc:literal] )+ $vis:vis $id:ident = $name:literal ) => {
         $( #[doc = $doc] )*
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
+            const SINCE_VERSION: &'static str = $version;
             const NAME: &'static str = $name;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
         }

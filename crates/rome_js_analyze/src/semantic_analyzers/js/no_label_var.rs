@@ -5,6 +5,7 @@ use rome_js_syntax::{JsLabeledStatement, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::AstNode;
 
 declare_rule! {
+    "0.7.0",
     ///  Disallow labels that share a name with a variable
     ///
     /// ## Examples

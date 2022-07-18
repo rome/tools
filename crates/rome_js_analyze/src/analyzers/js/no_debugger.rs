@@ -12,6 +12,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// Disallow the use of `debugger`
     ///
     /// ## Examples

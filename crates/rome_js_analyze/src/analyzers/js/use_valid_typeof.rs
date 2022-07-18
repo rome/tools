@@ -13,6 +13,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// This rule verifies the result of `typeof $expr` unary expressions is being
     /// compared to valid values, either string literals containing valid type
     /// names or other `typeof` expressions

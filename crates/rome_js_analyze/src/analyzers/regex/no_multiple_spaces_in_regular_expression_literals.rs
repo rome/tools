@@ -10,6 +10,7 @@ use std::fmt::Write;
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// Disallow unclear usage of multiple space characters in regular expression literals
     ///
     /// ## Examples

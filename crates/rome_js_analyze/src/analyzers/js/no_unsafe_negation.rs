@@ -9,6 +9,7 @@ use rome_js_syntax::{JsAnyExpression, JsInExpression, JsInstanceofExpression, T}
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
 
 declare_rule! {
+    "0.7.0",
     /// Disallow using unsafe negation.
     ///
     /// ## Examples

@@ -10,7 +10,7 @@ use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 use crate::JsRuleAction;
 
 declare_rule! {
-
+    "0.7.0",
     /// When expressing array types, this rule promotes the usage of `T[]` shorthand instead of `Array<T>`.
     ///
     /// ## Examples

@@ -11,6 +11,7 @@ use rome_rowan::{AstNode, SyntaxElement};
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// Avoid using unnecessary `ContinueStatement`.
     ///
     /// ## Examples

@@ -9,7 +9,8 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 declare_rule! {
-     /// Prevent comments from being inserted as text nodes
+    "0.7.0",
+    /// Prevent comments from being inserted as text nodes
     ///
     /// ## Examples
     ///

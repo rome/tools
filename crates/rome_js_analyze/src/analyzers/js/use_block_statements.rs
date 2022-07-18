@@ -15,6 +15,7 @@ use crate::JsRuleAction;
 use crate::{use_block_statements_diagnostic, use_block_statements_replace_body};
 
 declare_rule! {
+    "0.7.0",
     /// Requires following curly brace conventions.
     /// JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
     ///

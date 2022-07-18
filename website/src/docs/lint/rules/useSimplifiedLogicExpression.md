@@ -3,7 +3,7 @@ title: Lint Rule useSimplifiedLogicExpression
 layout: layouts/rule.liquid
 ---
 
-# useSimplifiedLogicExpression
+# useSimplifiedLogicExpression (since v0.7.0)
 
 Discard redundant terms from logical expressions.
 

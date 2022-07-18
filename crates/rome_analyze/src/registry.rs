@@ -42,7 +42,7 @@ impl Phase for () {
 pub struct RuleRegistry<L: Language> {
     /// Stores metadata information for all the rules in the registry, sorted
     /// alphabetically
-    metadata: BTreeMap<MetadataKey, &'static str>,
+    metadata: BTreeMap<MetadataKey, (&'static str, &'static str)>,
     /// Holds a collection of rules for each phase.
     phase_rules: [PhaseRules<L>; 2],
 }
@@ -104,17 +104,24 @@ impl<L: Language> RuleRegistry<L> {
             MetadataKey {
                 inner: (G::NAME, R::NAME),
             },
-            R::DOCS,
+            (R::DOCS, R::SINCE_VERSION),
         );
     }
 
     /// Returns an iterator over the name and documentation of all active rules
     /// in this instance of the registry
     pub fn metadata(self) -> impl Iterator<Item = RuleMetadata> {
-        self.metadata.into_iter().map(|(key, docs)| {
-            let (group, name) = key.inner;
-            RuleMetadata { group, name, docs }
-        })
+        self.metadata
+            .into_iter()
+            .map(|(key, (docs, since_version))| {
+                let (group, name) = key.inner;
+                RuleMetadata {
+                    group,
+                    name,
+                    docs,
+                    since_version,
+                }
+            })
     }
 }
 
@@ -203,6 +210,7 @@ pub struct RuleMetadata {
     pub group: &'static str,
     pub name: &'static str,
     pub docs: &'static str,
+    pub since_version: &'static str,
 }
 
 /// Internal representation of a single rule in the registry

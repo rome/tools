@@ -10,6 +10,7 @@ use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// Prevent extra closing tags for components without children
     ///
     /// ## Examples

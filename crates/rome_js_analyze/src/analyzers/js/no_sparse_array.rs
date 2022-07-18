@@ -10,6 +10,7 @@ use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// Disallow sparse arrays
     ///
     /// ## Examples

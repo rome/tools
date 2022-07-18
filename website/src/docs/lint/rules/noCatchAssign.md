@@ -3,7 +3,7 @@ title: Lint Rule noCatchAssign
 layout: layouts/rule.liquid
 ---
 
-# noCatchAssign
+# noCatchAssign (since v0.7.0)
 
 Disallow reassigning exceptions in catch clauses
 

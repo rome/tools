@@ -5,6 +5,7 @@ use rome_js_syntax::JsReferenceIdentifier;
 use rome_rowan::AstNode;
 
 declare_rule! {
+    "0.7.0",
     /// Disallow the use of ```arguments```
     ///
     /// ## Examples

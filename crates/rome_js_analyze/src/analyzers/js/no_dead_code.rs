@@ -11,6 +11,7 @@ use rustc_hash::FxHashMap;
 use crate::control_flow::ControlFlowGraph;
 
 declare_rule! {
+    "0.7.0",
     /// Disallow unreachable code
     ///
     /// ## Examples

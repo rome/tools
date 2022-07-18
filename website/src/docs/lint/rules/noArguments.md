@@ -3,7 +3,7 @@ title: Lint Rule noArguments
 layout: layouts/rule.liquid
 ---
 
-# noArguments
+# noArguments (since v0.7.0)
 
 Disallow the use of `arguments`
 

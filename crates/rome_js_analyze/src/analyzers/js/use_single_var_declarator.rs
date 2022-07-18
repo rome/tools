@@ -15,6 +15,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// Disallow multiple variable declarations in the same variable statement
     ///
     /// ## Examples

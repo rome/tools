@@ -4,6 +4,7 @@ use rome_js_syntax::{JsAnyExpression, JsAnyFunction, JsNewExpression, JsNewExpre
 use rome_rowan::{AstNode, AstSeparatedList};
 
 declare_rule! {
+    "0.7.0",
     /// Disallows using an async function as a Promise executor.
     ///
     /// The executor function can also be an async function. However, this is usually a mistake, for a few reasons:

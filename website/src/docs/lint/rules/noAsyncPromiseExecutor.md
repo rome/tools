@@ -3,7 +3,7 @@ title: Lint Rule noAsyncPromiseExecutor
 layout: layouts/rule.liquid
 ---
 
-# noAsyncPromiseExecutor
+# noAsyncPromiseExecutor (since v0.7.0)
 
 Disallows using an async function as a Promise executor.
 

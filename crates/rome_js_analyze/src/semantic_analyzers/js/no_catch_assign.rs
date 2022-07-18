@@ -5,6 +5,7 @@ use rome_js_syntax::{JsCatchClause, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 declare_rule! {
+    "0.7.0",
     /// Disallow reassigning exceptions in catch clauses
     ///
     /// ## Examples

@@ -4,6 +4,7 @@ use rome_js_syntax::{JsArrayBindingPattern, JsObjectBindingPattern};
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
 declare_rule! {
+    "0.7.0",
     /// Disallows empty destructuring patterns.
     /// ## Examples
     ///

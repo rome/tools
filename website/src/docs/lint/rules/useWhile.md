@@ -3,7 +3,7 @@ title: Lint Rule useWhile
 layout: layouts/rule.liquid
 ---
 
-# useWhile
+# useWhile (since v0.7.0)
 
 Enforce the use of `while` loops instead of `for` loops when the
 initializer and update expressions are not needed

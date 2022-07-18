@@ -3,7 +3,7 @@ title: Lint Rule noUnusedTemplateLiteral
 layout: layouts/rule.liquid
 ---
 
-# noUnusedTemplateLiteral
+# noUnusedTemplateLiteral (since v0.7.0)
 
 Disallow template literals if interpolation and special-character handling are not needed
 

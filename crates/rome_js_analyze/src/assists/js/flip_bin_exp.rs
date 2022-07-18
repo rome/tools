@@ -10,6 +10,7 @@ use rome_rowan::AstNodeExt;
 use crate::JsRuleAction;
 
 declare_rule! {
+    "0.7.0",
     /// Provides a refactor to invert the left and right hand side of a binary expression
     ///
     /// ## Examples
