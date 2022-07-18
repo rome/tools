@@ -12,7 +12,7 @@ pub mod settings;
 pub mod workspace;
 
 pub use crate::configuration::{
-    create_config, load_config, Configuration, ConfigurationError, ConfigurationType,
+    create_config, load_config, Configuration, ConfigurationError, ConfigurationType, Rules,
 };
 pub use crate::file_handlers::JsFormatSettings;
 pub use crate::workspace::Workspace;

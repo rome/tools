@@ -36,7 +36,14 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     "lineWidth": 80
   },
   "linter": {
-    "enabled": true
+    "enabled": true,
+    "globals": ["$"],
+    "rules": {
+        "js": {
+            "noDeadCode": "off",
+            "useSimplifiedLogicExpression": "warn"
+        }
+    }
   },
   "javascript": {
     "formatter": {
@@ -56,5 +63,20 @@ pub const CONFIG_LINTER_DISABLED: &str = r#"{
   "root": true,
   "linter": {
     "enabled": false
+  }
+}"#;
+
+pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
+  "root": true,
+  "linter": {
+    "enabled": true,
+    "rules": {
+        "js": {
+            "foo_rule": "off"
+        },
+        "jsx": {
+            "what_the_hell": "off"
+        }
+    }
   }
 }"#;

@@ -1,6 +1,6 @@
 use std::sync::{RwLock, RwLockReadGuard};
 
-use crate::Configuration;
+use crate::{Configuration, Rules};
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
@@ -19,6 +19,7 @@ pub struct WorkspaceSettings {
 impl WorkspaceSettings {
     /// The (configuration)[Configuration] is merged into the workspace
     pub fn merge_with_configuration(&mut self, configuration: &Configuration) {
+        // formatter part
         if let Some(formatter) = &configuration.formatter {
             self.format = FormatSettings::from(formatter);
         }
@@ -28,6 +29,11 @@ impl WorkspaceSettings {
             .and_then(|j| j.formatter.as_ref());
         if let Some(formatter) = formatter {
             self.languages.javascript.format.quote_style = Some(formatter.quote_style);
+        }
+
+        // linter part
+        if let Some(linter) = &configuration.linter {
+            self.linter = LinterSettings::from(linter)
         }
     }
 }
@@ -55,16 +61,27 @@ impl Default for FormatSettings {
     }
 }
 
-/// Formatter settings for the entire workspace
+/// Linter settings for the entire workspace
 #[derive(Debug)]
 pub struct LinterSettings {
     /// Enabled by default
     pub enabled: bool,
+
+    /// A list of global bindings that should be ignored by the analyzers
+    ///
+    /// If defined here, they should not emit diagnostics.
+    pub globals: Option<Vec<String>>,
+
+    pub rules: Option<Rules>,
 }
 
 impl Default for LinterSettings {
     fn default() -> Self {
-        Self { enabled: true }
+        Self {
+            enabled: true,
+            globals: None,
+            rules: Some(Rules::default()),
+        }
     }
 }
 
