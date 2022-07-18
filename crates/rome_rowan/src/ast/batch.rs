@@ -1,6 +1,4 @@
-use crate::{
-    AstNode, Language, NodeOrToken, SyntaxElement, SyntaxNode, SyntaxNodeCast, SyntaxToken,
-};
+use crate::{AstNode, Language, SyntaxElement, SyntaxNode, SyntaxNodeCast, SyntaxToken};
 use std::{collections::BinaryHeap, iter::once};
 
 pub trait BatchMutationExt<L>: AstNode<Language = L>

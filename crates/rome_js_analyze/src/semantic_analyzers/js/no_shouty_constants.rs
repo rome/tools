@@ -7,9 +7,8 @@ use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsIdentifierBinding,
-    JsIdentifierExpression, JsLanguage, JsReferenceIdentifier, JsStringLiteralExpression,
-    JsSyntaxKind, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
-    JsVariableStatement,
+    JsIdentifierExpression, JsLanguage, JsStringLiteralExpression, JsVariableDeclaration,
+    JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, BatchMutationExt, SyntaxNodeCast};
 
@@ -44,7 +43,7 @@ fn is_id_and_string_literal_inner_text_equal(
     let literal_text = literal.inner_string_text();
 
     if id_text == literal_text {
-        return Some((id.clone(), literal.clone()));
+        Some((id.clone(), literal.clone()))
     } else {
         None
     }
@@ -69,21 +68,17 @@ fn remove_declarator(
         // Find the declarator we want to remove
         // remove its trailing comma, if there is one
         let mut previous_element = None;
-        loop {
-            if let Some(element) = elements.next() {
-                if let Some(node) = element.node().ok() {
-                    if node == declarator {
-                        batch.remove_node(node.clone());
-                        if let Some(comma) = element.trailing_separator().ok().flatten() {
-                            batch.remove_token(comma.clone());
-                        }
-                        break;
+        for element in elements.by_ref() {
+            if let Ok(node) = element.node() {
+                if node == declarator {
+                    batch.remove_node(node.clone());
+                    if let Some(comma) = element.trailing_separator().ok().flatten() {
+                        batch.remove_token(comma.clone());
                     }
+                    break;
                 }
-                previous_element = Some(element);
-            } else {
-                break;
             }
+            previous_element = Some(element);
         }
 
         // if it is the last declarator of the list
