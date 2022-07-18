@@ -71,8 +71,27 @@ impl JsFormatContext {
 
     /// Returns `true` if the passed node has a suppression comment and
     /// tracks in debug builds that the suppression comments of this node have been checked.
+    ///
+    /// # Examples
+    /// ```
+    /// use rome_js_formatter::context::JsFormatContext;
+    /// use rome_js_formatter::prelude::*;
+    /// use rome_js_parser::parse_expression;
+    /// use rome_js_syntax::SourceType;
+    ///
+    /// let root = parse_expression(r#"
+    /// // rome-ignore format: Suppressed for testing purposes
+    /// console.log('abcd');
+    /// "#, 0).tree();
+    ///
+    /// let call_expression = root.expression().unwrap();
+    /// let mut context = JsFormatContext::new(SourceType::js_module());
+    ///
+    /// assert!(context.is_suppressed(call_expression.syntax()));
+    /// ```
+    ///
     #[inline]
-    pub(crate) fn is_suppressed(&mut self, node: &JsSyntaxNode) -> bool {
+    pub fn is_suppressed(&mut self, node: &JsSyntaxNode) -> bool {
         self.checked_suppressed(node);
         has_suppressions_category(SuppressionCategory::Format, node)
     }

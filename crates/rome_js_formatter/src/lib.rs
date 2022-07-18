@@ -3,7 +3,7 @@
 mod cst;
 mod js;
 mod jsx;
-pub(crate) mod prelude;
+pub mod prelude;
 mod ts;
 pub mod utils;
 
