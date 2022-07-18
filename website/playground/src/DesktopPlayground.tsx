@@ -15,7 +15,7 @@ import { useCallback, useEffect, useState } from "react";
 export default function DesktopPlayground(
 	{
 		setPlaygroundState,
-		playgroundState: { code, treeStyle, ...settings },
+		playgroundState: { code, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
@@ -105,20 +105,8 @@ export default function DesktopPlayground(
 								readOnly={true}
 							/>
 						</TabPanel>
-						<TabPanel>
-							<TreeView
-								treeStyle={treeStyle}
-								setPlaygroundState={setPlaygroundState}
-								tree={cst}
-							/>
-						</TabPanel>
-						<TabPanel>
-							<TreeView
-								treeStyle={treeStyle}
-								setPlaygroundState={setPlaygroundState}
-								tree={ast}
-							/>
-						</TabPanel>
+						<TabPanel><TreeView tree={cst} /></TabPanel>
+						<TabPanel><TreeView tree={ast} /></TabPanel>
 						<TabPanel>
 							<button
 								className="bg-gray-300 px-2 py-2 text-white absolute right-0 top--1 mr-5 flex items-center rounded-md"

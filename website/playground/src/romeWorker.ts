@@ -1,5 +1,5 @@
 import init, { PlaygroundFormatOptions, run } from "../pkg/rome_playground";
-import { IndentStyle, TreeStyle, LoadingState } from "./types";
+import { IndentStyle, LoadingState } from "./types";
 
 self.addEventListener("message", async (e) => {
 	switch (e.data.type) {
@@ -24,7 +24,6 @@ self.addEventListener("message", async (e) => {
 				isTypeScript,
 				isJsx,
 				sourceType,
-				treeStyle,
 			} = e.data.playgroundState;
 			const romeOutput = run(
 				code,
@@ -36,7 +35,6 @@ self.addEventListener("message", async (e) => {
 				isTypeScript,
 				isJsx,
 				sourceType,
-				treeStyle === TreeStyle.Json,
 			);
 			self.postMessage({
 				type: "formatted",
