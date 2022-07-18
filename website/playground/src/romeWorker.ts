@@ -48,9 +48,9 @@ self.addEventListener("message", async (e) => {
 					formatter_ir: romeOutput.formatter_ir,
 				},
 			});
-		}
 
-		break;
+			break;
+		}
 
 		default:
 			console.error(`Unknown message '${e.data.type}'.`);

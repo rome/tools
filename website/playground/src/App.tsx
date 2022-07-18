@@ -39,7 +39,7 @@ function App() {
 
 		romeWorkerRef.current.addEventListener("message", (event) => {
 			switch (event.data.type) {
-				case "init":
+				case "init": {
 					const loadingState = event.data.loadingState as LoadingState;
 					setLoadingState(loadingState);
 					if (loadingState === LoadingState.Success) {
@@ -48,10 +48,12 @@ function App() {
 						setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
 					}
 					break;
+				}
 
-				case "formatted":
+				case "formatted": {
 					setRomeOutput(event.data.romeOutput);
 					break;
+				}
 
 				default:
 					console.error(`Unknown message ${event.data.type}`);
@@ -60,9 +62,10 @@ function App() {
 
 		prettierWorkerRef.current.addEventListener("message", (event) => {
 			switch (event.data.type) {
-				case "formatted":
+				case "formatted": {
 					setPrettierOutput(event.data.prettierOutput);
 					break;
+				}
 
 				default:
 					console.error(`Unknown message ${event.data.type}`);
