@@ -98,11 +98,29 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             // We now need to allocate a new vector with cached nodes, this is needed because
             // we can't attempt to print the same node twice without incur in "printed token twice" errors.
             // We also disallow the trailing separator, we are interested in doing it manually.
-            let separated: Vec<_> = args
+            let mut separated: Vec<_> = args
                 .format_separated(JsSyntaxKind::COMMA)
                 .with_trailing_separator(TrailingSeparator::Omit)
                 .map(|e| e.memoized())
                 .collect();
+
+            let mut any_breaks = false;
+            let an_argument_breaks =
+                separated
+                    .iter_mut()
+                    .enumerate()
+                    .any(|(index, element)| match element.inspect(f) {
+                        Ok(element) => {
+                            if element.will_break() {
+                                any_breaks = true;
+                                should_group_first_argument && index > 0
+                                    || (should_group_last_argument && index < args.len() - 1)
+                            } else {
+                                false
+                            }
+                        }
+                        Err(_) => false,
+                    });
 
             // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
             // print each version first
@@ -115,6 +133,44 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             let r_leading_trivia = r_leading_trivia.memoized();
             let r_paren = r_paren.memoized();
             let r_trailing_trivia = r_trailing_trivia.memoized();
+
+            // This is the version of where all the arguments are broken out
+            let all_arguments_expanded = format_with(|f| {
+                // this formatting structure replicates what we have inside the `format_delimited`
+                // function, but here we use a different way to print the trailing separator
+                write!(
+                    f,
+                    [
+                        &l_leading_trivia,
+                        &l_paren,
+                        &group_elements(&format_with(|f| {
+                            write!(
+                                f,
+                                [
+                                    &soft_block_indent(&format_args![
+                                        &l_trailing_trivia,
+                                        format_with(|f| {
+                                            write_arguments_multi_line(separated.iter(), f)
+                                        }),
+                                        &r_leading_trivia,
+                                        soft_line_break()
+                                    ]),
+                                    &r_paren
+                                ]
+                            )
+                        })),
+                        &r_trailing_trivia
+                    ]
+                )
+            });
+
+            if an_argument_breaks {
+                return write!(f, [all_arguments_expanded]);
+            }
+
+            if any_breaks {
+                write!(f, [expand_parent()])?;
+            }
 
             let edge_arguments_do_not_break = format_with(|f| {
                 // `should_group_first_argument` and `should_group_last_argument` are mutually exclusive
@@ -148,62 +204,6 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 }
                 write!(f, [r_leading_trivia, r_paren, r_trailing_trivia])
             });
-
-            // This is the version of where all the arguments are broken out
-            let all_arguments_expanded = format_with(|f| {
-                // this formatting structure replicates what we have inside the `format_delimited`
-                // function, but here we use a different way to print the trailing separator
-                write!(
-                    f,
-                    [
-                        &l_leading_trivia,
-                        &l_paren,
-                        &group_elements(&format_with(|f| {
-                            write!(
-                                f,
-                                [
-                                    &soft_block_indent(&format_args![
-                                        &l_trailing_trivia,
-                                        format_with(|f| {
-                                            write_arguments_multi_line(separated.iter(), f)
-                                        }),
-                                        &r_leading_trivia,
-                                        soft_line_break()
-                                    ]),
-                                    &r_paren
-                                ]
-                            )
-                        })),
-                        &r_trailing_trivia
-                    ]
-                )
-            });
-
-            let mut null_buffer = f.inspect_null();
-            let arguments_break = separated.iter().map(|element| {
-                let mut will_break_buffer = null_buffer.inspect_will_break();
-                write!(will_break_buffer, [element]).ok();
-                will_break_buffer.will_break()
-            });
-            let mut any_breaks = false;
-            let an_argument_breaks = arguments_break.enumerate().any(|(index, will_break)| {
-                any_breaks |= will_break;
-                if should_group_first_argument && index > 0
-                    || (should_group_last_argument && index < args.len() - 1)
-                {
-                    will_break
-                } else {
-                    false
-                }
-            });
-
-            if an_argument_breaks {
-                return write!(f, [all_arguments_expanded]);
-            }
-
-            if any_breaks {
-                write!(f, [expand_parent()])?;
-            }
 
             write!(
                 f,
@@ -626,7 +626,7 @@ fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
 /// ```js
 /// describe("My component", () => {
 ///     it("should render", () => {
-///         
+///
 ///     });
 /// })
 ///

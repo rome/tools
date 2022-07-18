@@ -373,7 +373,7 @@ pub struct LabelId {
 }
 
 impl LabelId {
-    pub(crate) fn of<T: ?Sized + 'static>() -> Self {
+    pub fn of<T: ?Sized + 'static>() -> Self {
         Self {
             id: TypeId::of::<T>(),
             #[cfg(debug_assertions)]
@@ -580,6 +580,15 @@ impl FormatElement {
             FormatElement::LineSuffixBoundary => false,
             FormatElement::ExpandParent => true,
             FormatElement::Interned(inner) => inner.0.will_break(),
+        }
+    }
+
+    /// Returns true if the element has the given label.
+    pub fn has_label(&self, label_id: LabelId) -> bool {
+        match self {
+            FormatElement::Label(label) => label.label_id == label_id,
+            FormatElement::Interned(interned) => interned.deref().has_label(label_id),
+            _ => false,
         }
     }
 

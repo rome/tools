@@ -222,7 +222,7 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
 /// Formats a range within a file, supported by Rome
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatContext], which
+/// level of the node based on the provided [JsFormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,
@@ -269,7 +269,7 @@ pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResul
 /// Formats a single node within a file, supported by Rome.
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatContext], which
+/// level of the node based on the provided [JsFormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,

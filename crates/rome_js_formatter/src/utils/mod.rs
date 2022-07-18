@@ -154,10 +154,7 @@ pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
 }
 
 /// Format an element with a single line head and a body that might
-/// be either a block or a single statement
-///
-/// This will place the head element inside a [hard_group_elements], but
-/// the body will broken out of flat printing if its a single statement
+/// be either a block or a single statement.
 pub struct FormatBodyStatement<'a> {
     body: &'a JsAnyStatement,
 }

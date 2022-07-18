@@ -47,8 +47,8 @@ use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{
-    Buffer, BufferExtensions, BufferSnapshot, Inspect, IsLabelledBuffer, NullBuffer,
-    PreambleBuffer, VecBuffer, WillBreakBuffer,
+    Buffer, BufferExtensions, BufferSnapshot, HasLabelBuffer, Inspect, PreambleBuffer, VecBuffer,
+    WillBreakBuffer,
 };
 pub use builders::{
     block_indent, comment, empty_line, get_lines_before, group_elements, hard_line_break,
@@ -65,8 +65,6 @@ use rome_rowan::{
     SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
 use std::error::Error;
-use std::fmt;
-use std::fmt::Display;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -173,8 +171,8 @@ impl TryFrom<u16> for LineWidth {
     }
 }
 
-impl Display for LineWidthFromIntError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl std::fmt::Display for LineWidthFromIntError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(
             f,
             "The line width exceeds the maximum value ({})",
@@ -344,7 +342,7 @@ pub enum FormatError {
     SyntaxError,
 }
 
-impl fmt::Display for FormatError {
+impl std::fmt::Display for FormatError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             FormatError::SyntaxError => fmt.write_str("syntax error"),
@@ -1130,11 +1128,11 @@ pub struct FormatState<Context> {
     pub printed_tokens: PrintedTokens,
 }
 
-impl<Context> fmt::Debug for FormatState<Context>
+impl<Context> std::fmt::Debug for FormatState<Context>
 where
-    Context: fmt::Debug,
+    Context: std::fmt::Debug,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         f.debug_struct("FormatState")
             .field("context", &self.context)
             .field(
