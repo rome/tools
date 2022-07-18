@@ -1,5 +1,5 @@
 //! This module provides important and useful traits to help to format tokens and nodes
-//! when implementing the [crate::FormatNode] trait.
+//! when implementing the [crate::FormatNodeRule] trait.
 
 pub(crate) use crate::{
     AsFormat as _, FormatNodeRule, FormattedIterExt, JsFormatContext, JsFormatter,
