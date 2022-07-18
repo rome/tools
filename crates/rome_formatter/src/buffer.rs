@@ -492,10 +492,10 @@ pub trait BufferExtensions: Buffer + Sized {
         WillBreakBuffer::new(self)
     }
 
-    /// It emits a custom buffer called [IsLabelledBuffer], which tracks
+    /// Wraps the current buffer in a [HasLabelBuffer], which tracks
     /// labelled elements written in the main buffer, it does so by
-    /// checking if [element](FormatElement) is [label](FormatElement::Label)
-    /// with expected [label_id](LabelId).
+    /// checking if [element](FormatElement) is a [label](FormatElement::Label)
+    /// with the expected [label_id](LabelId).
     ///
     /// This functionality can be used only on one element and only after the element
     /// is written in the buffer.
