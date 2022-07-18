@@ -1,4 +1,4 @@
-use crate::{AstNode, Language, NodeOrToken, SyntaxNode, SyntaxNodeCast};
+use crate::{AstNode, Language, SyntaxElement, SyntaxNode, SyntaxNodeCast, SyntaxToken};
 use std::{collections::BinaryHeap, iter::once};
 
 pub trait BatchMutationExt<L>: AstNode<Language = L>
@@ -33,7 +33,7 @@ struct CommitChange<L: Language> {
     parent: Option<SyntaxNode<L>>,
     parent_range: Option<(u32, u32)>,
     new_node_slot: usize,
-    new_node: Option<SyntaxNode<L>>,
+    new_node: Option<SyntaxElement<L>>,
 }
 
 impl<L: Language> PartialEq for CommitChange<L> {
@@ -82,6 +82,46 @@ where
     L: Language,
     N: AstNode<Language = L>,
 {
+    pub fn remove_token(&mut self, prev_token: SyntaxToken<L>) {
+        let new_node_slot = prev_token.index();
+        let parent = prev_token.parent();
+        let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
+            let range = p.text_range();
+            (range.start().into(), range.end().into())
+        });
+        let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
+
+        self.changes.push(CommitChange {
+            parent_depth,
+            parent,
+            parent_range,
+            new_node_slot,
+            new_node: None,
+        });
+    }
+
+    pub fn remove_node<T>(&mut self, prev_node: T)
+    where
+        T: AstNode<Language = L>,
+    {
+        let prev_node = prev_node.into_syntax();
+        let new_node_slot = prev_node.index();
+        let parent = prev_node.parent();
+        let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
+            let range = p.text_range();
+            (range.start().into(), range.end().into())
+        });
+        let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
+
+        self.changes.push(CommitChange {
+            parent_depth,
+            parent,
+            parent_range,
+            new_node_slot,
+            new_node: None,
+        });
+    }
+
     pub fn replace_node<T>(&mut self, prev_node: T, next_node: T)
     where
         T: AstNode<Language = L>,
@@ -100,7 +140,7 @@ where
             parent,
             parent_range,
             new_node_slot,
-            new_node: Some(next_node.into_syntax()),
+            new_node: Some(SyntaxElement::Node(next_node.into_syntax())),
         });
     }
 
@@ -159,8 +199,7 @@ where
 
                 let mut current_parent = current_parent.detach();
 
-                for (index, node) in modifications {
-                    let replace_with = node.map(NodeOrToken::Node);
+                for (index, replace_with) in modifications {
                     current_parent = current_parent.splice_slots(index..=index, once(replace_with));
                 }
 
@@ -169,10 +208,13 @@ where
                     parent: grandparent,
                     parent_range: grandparent_range,
                     new_node_slot: currentparent_slot,
-                    new_node: Some(current_parent),
+                    new_node: Some(SyntaxElement::Node(current_parent)),
                 });
             } else {
-                return item.new_node.and_then(|x| x.cast()).unwrap();
+                return item
+                    .new_node
+                    .and_then(|x| x.into_node().unwrap().cast())
+                    .unwrap();
             }
         }
 
