@@ -4,11 +4,10 @@ use quote::quote;
 use rome_analyze::{AnalysisFilter, RuleCategories};
 use rome_js_analyze::metadata;
 use std::collections::BTreeMap;
-use xtask::glue::fs2;
 use xtask::*;
-use xtask_codegen::to_lower_snake_case;
+use xtask_codegen::{to_lower_snake_case, update};
 
-pub(crate) fn generate_rules_configuration() -> Result<()> {
+pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let config_root = project_root().join("crates/rome_service/src/configuration/linter");
 
     let filter = AnalysisFilter {
@@ -97,7 +96,7 @@ pub(crate) fn generate_rules_configuration() -> Result<()> {
 
     let pretty = xtask::reformat(ast)?;
 
-    fs2::write(config_root.join("rules.rs"), pretty)?;
+    update(&config_root.join("rules.rs"), &pretty, &mode)?;
 
     Ok(())
 }

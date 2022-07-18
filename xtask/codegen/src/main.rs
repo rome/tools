@@ -37,7 +37,7 @@ fn main() -> Result<()> {
         }
         "analyzer" => {
             generate_analyzer()?;
-            generate_rules_configuration()?;
+            generate_rules_configuration(Mode::Overwrite)?;
             Ok(())
         }
         _ => {
