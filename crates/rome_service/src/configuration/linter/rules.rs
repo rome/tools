@@ -1,19 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::RuleConfiguration;
 use serde::{Deserialize, Serialize};
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
-#[serde(rename_all = "camelCase", deny_unknown_fields)]
-pub enum RuleConfiguration {
-    Warn,
-    Error,
-    Off,
-}
-impl RuleConfiguration {
-    pub fn is_err(&self) -> bool { matches!(self, Self::Error) }
-}
-impl Default for RuleConfiguration {
-    fn default() -> Self { Self::Error }
-}
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Rules {

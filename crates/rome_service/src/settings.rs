@@ -70,7 +70,7 @@ pub struct LinterSettings {
     /// A list of global bindings that should be ignored by the analyzers
     ///
     /// If defined here, they should not emit diagnostics.
-    pub globals: Option<Vec<String>>,
+    pub globals: Vec<String>,
 
     pub rules: Option<Rules>,
 }
@@ -79,7 +79,7 @@ impl Default for LinterSettings {
     fn default() -> Self {
         Self {
             enabled: true,
-            globals: None,
+            globals: vec![],
             rules: Some(Rules::default()),
         }
     }

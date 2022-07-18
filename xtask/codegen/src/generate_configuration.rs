@@ -73,26 +73,8 @@ pub(crate) fn generate_rules_configuration() -> Result<()> {
 
     let groups = quote! {
         use serde::{Deserialize, Serialize};
+        use crate::RuleConfiguration;
 
-        #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
-        #[serde(rename_all = "camelCase", deny_unknown_fields)]
-        pub enum RuleConfiguration {
-            Warn,
-            Error,
-            Off,
-        }
-
-        impl RuleConfiguration {
-            pub fn is_err(&self) -> bool {
-                matches!(self, Self::Error)
-            }
-        }
-
-        impl Default for RuleConfiguration {
-            fn default() -> Self {
-                Self::Error
-            }
-        }
 
         #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]

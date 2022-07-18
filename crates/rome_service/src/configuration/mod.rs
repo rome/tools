@@ -17,7 +17,7 @@ mod formatter;
 mod javascript;
 pub mod linter;
 
-pub use linter::Rules;
+pub use linter::{RuleConfiguration, Rules};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Eq, PartialEq, Deserialize, Serialize)]
