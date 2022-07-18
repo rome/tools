@@ -34,7 +34,7 @@
 		"rome": "^0.7.0-next",
 		"tailwindcss": "^3.0.19",
 		"typescript": "^4.4.4",
-		"vite": "^3.0.0",
+		"vite": "2.9.5",
 		"vite-plugin-svgr": "^2.2.0"
 	},
 	"engines": {
