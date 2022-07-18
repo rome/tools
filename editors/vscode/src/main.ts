@@ -31,7 +31,7 @@ export async function activate(context: ExtensionContext) {
 		transport: TransportKind.stdio,
 	};
 
-	const traceOutputChannel = window.createOutputChannel("rome_lsp trace");
+	const traceOutputChannel = window.createOutputChannel("Rome Trace");
 
 	// only override serverOptions.options when developing extension,
 	// this is convenient for debugging
@@ -122,5 +122,3 @@ export function deactivate(): Thenable<void> | undefined {
 	}
 	return client.stop();
 }
-
-let a = true || 1;
