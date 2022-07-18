@@ -1,19 +1,16 @@
 import { formatWithPrettier } from "./utils";
 
-let timeout: number;
 self.addEventListener("message", (e) => {
-	clearTimeout(timeout);
-
-	if (e.data.type === "format") {
-		const {
-			code,
-			lineWidth,
-			indentStyle,
-			indentWidth,
-			quoteStyle,
-			isTypeScript,
-		} = e.data.playgroundState;
-		timeout = setTimeout(() => {
+	switch (e.data.type) {
+		case "format": {
+			const {
+				code,
+				lineWidth,
+				indentStyle,
+				indentWidth,
+				quoteStyle,
+				isTypeScript,
+			} = e.data.playgroundState;
 			const prettierOutput = formatWithPrettier(code, {
 				lineWidth,
 				indentStyle,
@@ -21,10 +18,16 @@ self.addEventListener("message", (e) => {
 				language: isTypeScript ? "ts" : "js",
 				quoteStyle,
 			});
+
 			self.postMessage({
 				type: "formatted",
 				prettierOutput,
 			});
-		}, 500);
+
+			break;
+		}
+
+		default:
+			console.error(`Unknown message ${e.data.type}.`);
 	}
 });
