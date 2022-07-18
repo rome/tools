@@ -19,13 +19,13 @@ pub trait QueryMatcher<L: Language> {
 }
 
 /// Parameters provided to [QueryMatcher::match_query] and require to run lint rules
-pub struct MatchQueryParams<'a, L: Language> {
+pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub phase: Phases,
     pub file_id: FileId,
-    pub root: &'a L::Root,
+    pub root: &'phase L::Root,
     pub query: QueryMatch<L>,
-    pub services: &'a ServiceBag,
-    pub signal_queue: &'a mut BinaryHeap<SignalEntry<L>>,
+    pub services: &'phase ServiceBag,
+    pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
 }
 
 /// Opaque identifier for a group of rule
@@ -83,9 +83,9 @@ impl PartialEq<RuleKey> for RuleFilter<'static> {
 }
 
 /// Entry for a pending signal in the `signal_queue`
-pub struct SignalEntry<L: Language> {
+pub struct SignalEntry<'phase, L: Language> {
     /// Boxed analyzer signal to be emitted
-    pub signal: Box<dyn AnalyzerSignal<L>>,
+    pub signal: Box<dyn AnalyzerSignal<L> + 'phase>,
     /// Unique identifier for the rule that emitted this signal
     pub rule: RuleKey,
     /// Text range in the document this signal covers
@@ -93,21 +93,21 @@ pub struct SignalEntry<L: Language> {
 }
 
 // SignalEntry is ordered based on the starting point of its `text_range`
-impl<L: Language> Ord for SignalEntry<L> {
+impl<'phase, L: Language> Ord for SignalEntry<'phase, L> {
     fn cmp(&self, other: &Self) -> Ordering {
         other.text_range.start().cmp(&self.text_range.start())
     }
 }
 
-impl<L: Language> PartialOrd for SignalEntry<L> {
+impl<'phase, L: Language> PartialOrd for SignalEntry<'phase, L> {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl<L: Language> Eq for SignalEntry<L> {}
+impl<'phase, L: Language> Eq for SignalEntry<'phase, L> {}
 
-impl<L: Language> PartialEq for SignalEntry<L> {
+impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
     fn eq(&self, other: &Self) -> bool {
         self.text_range.start() == other.text_range.start()
     }

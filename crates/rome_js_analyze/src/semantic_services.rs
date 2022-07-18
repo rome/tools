@@ -1,8 +1,8 @@
 use std::mem::swap;
 
 use rome_analyze::{
-    AnalyzerContext, CannotCreateServicesError, Phase, Phases, QueryKey, QueryMatch, Queryable,
-    ServiceBag, Visitor, VisitorContext,
+    CannotCreateServicesError, FromServices, Phase, Phases, QueryKey, QueryMatch, Queryable,
+    ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
 };
 use rome_js_semantic::{SemanticEventExtractor, SemanticModel, SemanticModelBuilder};
 use rome_js_syntax::{JsAnyRoot, JsLanguage, WalkEvent};
@@ -18,10 +18,8 @@ impl SemanticServices {
     }
 }
 
-impl TryFrom<ServiceBag> for SemanticServices {
-    type Error = CannotCreateServicesError;
-
-    fn try_from(services: ServiceBag) -> Result<Self, Self::Error> {
+impl FromServices for SemanticServices {
+    fn from_services(services: &ServiceBag) -> Result<Self, CannotCreateServicesError> {
         let model = services
             .get_service()
             .ok_or(CannotCreateServicesError::MissingServices(&[
@@ -98,16 +96,11 @@ impl Visitor for SemanticVisitor {
         }
     }
 
-    fn finish(&mut self, ctx: &mut AnalyzerContext<JsLanguage>) {
+    fn finish(&mut self, ctx: VisitorFinishContext<JsLanguage>) {
         let mut builder = SemanticModelBuilder::new(ctx.root.clone());
         swap(&mut builder, &mut self.builder);
 
-        let services = ctx
-            .services
-            .get_mut()
-            .expect("service bag has outstanding references");
-
         let model = builder.build();
-        services.insert_service(model);
+        ctx.services.insert_service(model);
     }
 }

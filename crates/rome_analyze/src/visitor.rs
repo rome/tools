@@ -6,21 +6,21 @@ use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 use crate::{
     matcher::MatchQueryParams,
     registry::{NodeLanguage, Phases},
-    AnalyzerContext, LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
+    LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
 };
 
 /// Mutable context objects shared by all visitors
-pub struct VisitorContext<'a, L: Language> {
+pub struct VisitorContext<'phase, 'query, L: Language> {
     pub phase: Phases,
     pub file_id: FileId,
-    pub root: &'a LanguageRoot<L>,
-    pub services: &'a ServiceBag,
+    pub root: &'phase LanguageRoot<L>,
+    pub services: &'phase ServiceBag,
     pub range: Option<TextRange>,
-    pub(crate) query_matcher: &'a mut dyn QueryMatcher<L>,
-    pub(crate) signal_queue: &'a mut BinaryHeap<SignalEntry<L>>,
+    pub(crate) query_matcher: &'query mut dyn QueryMatcher<L>,
+    pub(crate) signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
 }
 
-impl<'a, L: Language> VisitorContext<'a, L> {
+impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
     pub fn match_query(&mut self, query: QueryMatch<L>) {
         self.query_matcher.match_query(MatchQueryParams {
             phase: self.phase,
@@ -31,6 +31,12 @@ impl<'a, L: Language> VisitorContext<'a, L> {
             signal_queue: self.signal_queue,
         })
     }
+}
+
+/// Mutable context objects provided to the finish hook of visitors
+pub struct VisitorFinishContext<'a, L: Language> {
+    pub root: &'a LanguageRoot<L>,
+    pub services: &'a mut ServiceBag,
 }
 
 /// Visitors are the main building blocks of the analyzer: they receive syntax
@@ -45,7 +51,7 @@ pub trait Visitor {
         ctx: VisitorContext<Self::Language>,
     );
 
-    fn finish(&mut self, ctx: &mut AnalyzerContext<Self::Language>) {
+    fn finish(&mut self, ctx: VisitorFinishContext<Self::Language>) {
         let _ = ctx;
     }
 }
