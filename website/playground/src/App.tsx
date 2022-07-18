@@ -28,8 +28,14 @@ function App() {
 	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
 
 	useEffect(() => {
-		romeWorkerRef.current = new Worker(new URL("./romeWorker", import.meta.url), { type: "classic"});
-		prettierWorkerRef.current = new Worker(new URL("./prettierWorker", import.meta.url), { type: "classic"});
+		romeWorkerRef.current = new Worker(new URL(
+			"./romeWorker",
+			import.meta.url,
+		), { type: "module" });
+		prettierWorkerRef.current = new Worker(new URL(
+			"./prettierWorker",
+			import.meta.url,
+		), { type: "module" });
 
 		romeWorkerRef.current.addEventListener("message", (event) => {
 			switch (event.data.type) {
@@ -64,7 +70,7 @@ function App() {
 		});
 
 		romeWorkerRef.current?.postMessage({
-			type: "init"
+			type: "init",
 		});
 
 		return () => {
@@ -78,10 +84,15 @@ function App() {
 			return;
 		}
 
+		// Throttle the formatting so that it doesn't run on every keystroke to prevent that the
+		// workers are busy formatting outdated code.
 		let timeout = setTimeout(() => {
 			romeWorkerRef.current?.postMessage({ type: "format", playgroundState });
-			prettierWorkerRef.current?.postMessage({ type: "format", playgroundState });
-		}, 300);
+			prettierWorkerRef.current?.postMessage({
+				type: "format",
+				playgroundState,
+			});
+		}, 100);
 
 		return () => clearTimeout(timeout);
 	}, [loadingState, playgroundState]);
