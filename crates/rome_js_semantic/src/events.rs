@@ -264,6 +264,10 @@ impl SemanticEventExtractor {
                     self.push_binding_into_scope(scope_idx, &name_token);
                 };
             }
+            Some(JS_FUNCTION_DECLARATION) => {
+                let scope_idx = self.scope_index_to_hoist_declarations();
+                self.push_binding_into_scope(scope_idx, &name_token);
+            }
             Some(_) => {
                 let scope_idx = self.scopes.len() - 1;
                 self.push_binding_into_scope(scope_idx, &name_token);

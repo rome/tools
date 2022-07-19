@@ -77,6 +77,13 @@ Require the use of <code>===</code> and <code>!==</code>
 Disallows empty destructuring patterns.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noFunctionAssign">
+	<a href="/docs/lint/rules/noFunctionAssign">noFunctionAssign (since v0.7.0)</a>
+	<a class="header-anchor" href="#noFunctionAssign"></a>
+</h3>
+Disallow reassigning function declarations.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noLabelVar">
 	<a href="/docs/lint/rules/noLabelVar">noLabelVar (since v0.7.0)</a>
 	<a class="header-anchor" href="#noLabelVar"></a>
