@@ -70,7 +70,10 @@ declare_rule! {
     /// ```js
     /// typeof bar === typeof qux
     /// ```
-    pub(crate) UseValidTypeof = "useValidTypeof"
+    pub(crate) UseValidTypeof {
+        version: "0.7.0",
+        name: "useValidTypeof"
+    }
 }
 
 impl Rule for UseValidTypeof {

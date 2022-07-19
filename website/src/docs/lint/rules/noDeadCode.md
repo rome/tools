@@ -3,7 +3,7 @@ title: Lint Rule noDeadCode
 layout: layouts/rule.liquid
 ---
 
-# noDeadCode
+# noDeadCode (since v0.7.0)
 
 Disallow unreachable code
 

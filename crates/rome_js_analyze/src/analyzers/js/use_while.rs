@@ -22,7 +22,10 @@ declare_rule! {
     ///     x.step();
     /// }
     /// ```
-    pub(crate) UseWhile = "useWhile"
+    pub(crate) UseWhile {
+        version: "0.7.0",
+        name: "useWhile"
+    }
 }
 
 impl Rule for UseWhile {

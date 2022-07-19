@@ -3,7 +3,7 @@ title: Lint Rule noCommentText
 layout: layouts/rule.liquid
 ---
 
-# noCommentText
+# noCommentText (since v0.7.0)
 
 Prevent comments from being inserted as text nodes
 

@@ -35,7 +35,10 @@ declare_rule! {
     /// ```js
     /// true ? consequent : alternate
     ///```
-    pub(crate) NoNegationElse = "noNegationElse"
+    pub(crate) NoNegationElse {
+        version: "0.7.0",
+        name: "noNegationElse"
+    }
 }
 
 impl Rule for NoNegationElse {

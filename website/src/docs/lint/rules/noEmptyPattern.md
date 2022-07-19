@@ -3,7 +3,7 @@ title: Lint Rule noEmptyPattern
 layout: layouts/rule.liquid
 ---
 
-# noEmptyPattern
+# noEmptyPattern (since v0.7.0)
 
 Disallows empty destructuring patterns.
 

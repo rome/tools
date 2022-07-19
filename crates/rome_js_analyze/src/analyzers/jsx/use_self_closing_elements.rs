@@ -53,7 +53,10 @@ declare_rule! {
     /// ```js
     /// <Foo.bar>child</Foo.bar>
     ///```
-    pub(crate) UseSelfClosingElements = "useSelfClosingElements"
+    pub(crate) UseSelfClosingElements {
+        version: "0.7.0",
+        name: "useSelfClosingElements"
+    }
 }
 
 impl Rule for UseSelfClosingElements {

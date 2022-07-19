@@ -37,6 +37,9 @@ fn main() -> Result<()> {
         }
         "analyzer" => {
             generate_analyzer()?;
+            Ok(())
+        }
+        "configuration" => {
             generate_rules_configuration(Mode::Overwrite)?;
             Ok(())
         }
@@ -48,11 +51,12 @@ Run codegen command.
 USAGE:
 	cargo codegen <SUBCOMMAND> [option]
 SUBCOMMANDS:
-	analyzer     Generate factory functions for the analyzer and the configuration of the analyzers
-	grammar      Transforms ungram files into AST
-	formatter    Generates formatters for each language
-	test         Extracts parser inline comments into test files
-	unicode      Generates unicode table inside lexer
+	analyzer        Generate factory functions for the analyzer and the configuration of the analyzers
+	configuration    Generate the part of the configuration that depends on some metadata
+	grammar         Transforms ungram files into AST
+	formatter       Generates formatters for each language
+	test            Extracts parser inline comments into test files
+	unicode         Generates unicode table inside lexer
 			"
             );
             Ok(())

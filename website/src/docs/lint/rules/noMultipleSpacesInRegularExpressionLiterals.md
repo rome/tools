@@ -3,7 +3,7 @@ title: Lint Rule noMultipleSpacesInRegularExpressionLiterals
 layout: layouts/rule.liquid
 ---
 
-# noMultipleSpacesInRegularExpressionLiterals
+# noMultipleSpacesInRegularExpressionLiterals (since v0.7.0)
 
 Disallow unclear usage of multiple space characters in regular expression literals
 

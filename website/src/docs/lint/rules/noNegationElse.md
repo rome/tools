@@ -3,7 +3,7 @@ title: Lint Rule noNegationElse
 layout: layouts/rule.liquid
 ---
 
-# noNegationElse
+# noNegationElse (since v0.7.0)
 
 Disallow negation in the condition of an `if` statement if it has an `else` clause
 

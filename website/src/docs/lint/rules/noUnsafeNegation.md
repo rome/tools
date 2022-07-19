@@ -3,7 +3,7 @@ title: Lint Rule noUnsafeNegation
 layout: layouts/rule.liquid
 ---
 
-# noUnsafeNegation
+# noUnsafeNegation (since v0.7.0)
 
 Disallow using unsafe negation.
 

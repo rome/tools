@@ -43,7 +43,10 @@ declare_rule! {
     /// ```jsx
     /// <input disabled='false' />
     ///```
-    pub(crate) NoImplicitBoolean = "noImplicitBoolean"
+    pub(crate) NoImplicitBoolean {
+        version: "0.7.0",
+        name: "noImplicitBoolean"
+    }
 }
 
 impl Rule for NoImplicitBoolean {

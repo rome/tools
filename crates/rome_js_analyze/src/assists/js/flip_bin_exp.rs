@@ -17,7 +17,10 @@ declare_rule! {
     /// ```js
     /// (a < b)
     /// ```
-    pub(crate) FlipBinExp = "flipBinExp"
+    pub(crate) FlipBinExp {
+        version: "0.7.0",
+        name: "flipBinExp"
+    }
 }
 
 impl Rule for FlipBinExp {

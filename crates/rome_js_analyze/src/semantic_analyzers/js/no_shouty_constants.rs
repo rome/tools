@@ -23,7 +23,10 @@ declare_rule! {
     /// const FOO = "FOO";
     /// console.log(FOO);
     /// ```
-    pub(crate) NoShoutyConstants = "noShoutyConstants"
+    pub(crate) NoShoutyConstants {
+        version: "0.7.0",
+        name: "noShoutyConstants"
+    }
 }
 
 /// Check for

@@ -3,7 +3,7 @@ title: Lint Rule noDelete
 layout: layouts/rule.liquid
 ---
 
-# noDelete
+# noDelete (since v0.7.0)
 
 Disallow the use of the `delete` operator
 

@@ -3,7 +3,7 @@ title: Lint Rule noDebugger
 layout: layouts/rule.liquid
 ---
 
-# noDebugger
+# noDebugger (since v0.7.0)
 
 Disallow the use of `debugger`
 

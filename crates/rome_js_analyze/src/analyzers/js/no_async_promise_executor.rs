@@ -34,7 +34,10 @@ declare_rule! {
     ///   new Foo(async (resolve, reject) => {})
     ///   new Foo((( (resolve, reject) => {} )))
     /// ```
-    pub(crate) NoAsyncPromiseExecutor = "noAsyncPromiseExecutor"
+    pub(crate) NoAsyncPromiseExecutor {
+        version: "0.7.0",
+        name: "noAsyncPromiseExecutor"
+    }
 }
 
 impl Rule for NoAsyncPromiseExecutor {

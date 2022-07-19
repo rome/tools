@@ -41,7 +41,10 @@ declare_rule! {
     ///     }
     /// }
     /// ```
-    pub(crate) UseSingleCaseStatement = "useSingleCaseStatement"
+    pub(crate) UseSingleCaseStatement {
+        version: "0.7.0",
+        name: "useSingleCaseStatement"
+    }
 }
 
 impl Rule for UseSingleCaseStatement {

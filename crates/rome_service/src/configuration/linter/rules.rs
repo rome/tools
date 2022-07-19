@@ -50,6 +50,8 @@ pub struct JsRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub no_negation_else: RuleConfiguration,
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
+    pub no_shouty_constants: RuleConfiguration,
+    #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub no_sparse_array: RuleConfiguration,
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub no_unnecessary_continue: RuleConfiguration,
@@ -65,6 +67,8 @@ pub struct JsRules {
     pub use_single_case_statement: RuleConfiguration,
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub use_single_var_declarator: RuleConfiguration,
+    #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
+    pub use_template: RuleConfiguration,
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub use_valid_typeof: RuleConfiguration,
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]

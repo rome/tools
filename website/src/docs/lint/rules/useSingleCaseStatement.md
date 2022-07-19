@@ -3,7 +3,7 @@ title: Lint Rule useSingleCaseStatement
 layout: layouts/rule.liquid
 ---
 
-# useSingleCaseStatement
+# useSingleCaseStatement (since v0.7.0)
 
 Enforces case clauses have a single statement, emits a quick fix wrapping
 the statements in a block

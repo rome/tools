@@ -19,7 +19,10 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// [1,,2]
     /// ```
-    pub(crate) NoSparseArray = "noSparseArray"
+    pub(crate) NoSparseArray {
+        version: "0.7.0",
+        name: "noSparseArray"
+    }
 }
 
 impl Rule for NoSparseArray {

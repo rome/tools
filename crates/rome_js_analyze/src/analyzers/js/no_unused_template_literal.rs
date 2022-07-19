@@ -36,7 +36,10 @@ declare_rule! {
     /// ```js
     /// const foo = `'bar'`
     /// ```
-    pub(crate) NoUnusedTemplateLiteral = "noUnusedTemplateLiteral"
+    pub(crate) NoUnusedTemplateLiteral {
+        version: "0.7.0",
+        name: "noUnusedTemplateLiteral"
+    }
 }
 
 impl Rule for NoUnusedTemplateLiteral {

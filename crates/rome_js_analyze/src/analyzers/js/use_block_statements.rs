@@ -62,7 +62,10 @@ declare_rule! {
     /// ```js,expect_diagnostic
     ///   with (x);
     /// ```
-    pub(crate) UseBlockStatements = "useBlockStatements"
+    pub(crate) UseBlockStatements {
+        version: "0.7.0",
+        name: "useBlockStatements"
+    }
 }
 
 impl Rule for UseBlockStatements {

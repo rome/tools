@@ -3,7 +3,7 @@ title: Lint Rule noShoutyConstants
 layout: layouts/rule.liquid
 ---
 
-# noShoutyConstants
+# noShoutyConstants (since v0.7.0)
 
 Disallow the use of constants which its value is the upper-case version of its name.
 
