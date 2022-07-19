@@ -365,8 +365,7 @@ reviewForm.addEventListener("submit", (e) => {
 	const data = {
 		public: document.querySelector("input[name=public]").checked,
 		publicName: document.querySelector("input[name=public-name]").value,
-		publicComment: document.querySelector("textarea[name=public-comment]")
-			.value,
+		publicComment: document.querySelector("textarea[name=public-comment]").value,
 		tip: getTip(),
 		tierPrice: selectedTier.price,
 		email: emailInput.value,

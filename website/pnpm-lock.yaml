@@ -15,7 +15,7 @@ specifiers:
   markdown-it-header-sections: ^1.0.0
   markdown-it-imsize: ^2.0.1
   npm-run-all: ^4.1.5
-  rome: ^0.7.0-next
+  rome: next
   sass: ^1.49.9
   terser: ^4.8.0
   ts-node: ^10.7.0
@@ -38,7 +38,7 @@ devDependencies:
   markdown-it-header-sections: 1.0.0
   markdown-it-imsize: 2.0.1
   npm-run-all: 4.1.5
-  rome: 0.7.0-next
+  rome: 0.7.0-next.f6510d6
   sass: 1.49.9
   terser: 4.8.0
   ts-node: 10.7.0_typescript@4.6.2
@@ -160,48 +160,48 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@rometools/cli-darwin-arm64/0.7.0-next:
-    resolution: {integrity: sha512-GMHYG5zQTGerQYue30m/E+WgpoPCxjLT7unCF1BH0jgFSk/fgkduMY9QP9EetNuBYxP/03XFZgXIZLmyw+Shgw==}
+  /@rometools/cli-darwin-arm64/0.7.0-next.f6510d6:
+    resolution: {integrity: sha512-pGXWFPwsZrjcExZu3CGh3pLaM3dJAgC4az2t9MfBEhyjHK6KHCh1EMGAjre2sbFEOmxtaz+UoBDqritG0HJR1w==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-darwin-x64/0.7.0-next:
-    resolution: {integrity: sha512-MyM/ncZKs3mIJ0vsSNyGNKGR31VroK2W7mHqPRVyuVkrmaJnDko8ymzH/JSrBdD7hj8KU3Ubpjn8YNuaMZvSYQ==}
+  /@rometools/cli-darwin-x64/0.7.0-next.f6510d6:
+    resolution: {integrity: sha512-MpJn9mRGZYbupr4QUaVexdhcFKyMIzS0whXpa6xLTt9Oikm0ZYQBUyhULWnLd1i1tkjlMDfIm07H00nYbfMwpA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-arm64/0.7.0-next:
-    resolution: {integrity: sha512-X3gCoT3GDioVkHsOfthMEoa1BR8lx1eXi7Sn0SeoHpw04UF+4WIn9Rjb62Fx/lIvRIdtxVj74pz14dxVQ/8HkQ==}
+  /@rometools/cli-linux-arm64/0.7.0-next.f6510d6:
+    resolution: {integrity: sha512-aaKOaTAYOQRbalTwKmhzOH5e08BWtuk4lNpD7TdH4kklK/+IfY3zbw6C6FTHIYGfvC5jZRMLSLO8oFW+9b0PXA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-x64/0.7.0-next:
-    resolution: {integrity: sha512-3kpV+cs2MgqUk8gjM1nPXmAoXErDGLEaK/q60c5FkNZQfuKxp6lN5sGF8cxJLbxggOaWXGfiIRoS9BBp9YIbEw==}
+  /@rometools/cli-linux-x64/0.7.0-next.f6510d6:
+    resolution: {integrity: sha512-1hFyT5s/9jL0uXeHZCEg18aPj//bB29z5vgNVBJS+SIvFyfNIGbRZOts5vu8ioF+h8n57KhLb4j3NumcAL/mzg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-arm64/0.7.0-next:
-    resolution: {integrity: sha512-mOSg9CAeYgjK6W8e13epaOFeHPITvhAIj7wib8N8KtW8Mi8LgSdNCg3Pr1zRcN2F4ndDNfGZYiDf9A0Xl2N/Zw==}
+  /@rometools/cli-win32-arm64/0.7.0-next.f6510d6:
+    resolution: {integrity: sha512-knoxoYEpxVHlySOnDHW7RWnqW9o0APpMCr8ZGKyXHwGEQiOIjCoIVIxQ6jyj5U5sGwtMetNJgZ8lWSdMZkeHxA==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-x64/0.7.0-next:
-    resolution: {integrity: sha512-JrsHY4IXd3SSF3TXwP15PloVXGR5A1or7yV9gFyrmmRVsyFpJYkAh4oU4IuAoqltPi9G4c3oEEQhN8yzYoUwKw==}
+  /@rometools/cli-win32-x64/0.7.0-next.f6510d6:
+    resolution: {integrity: sha512-ntx0aSAZzLf82ezsCHLAoCEKJ91AiMpyVeD3ZtXExba3qiX1nW047LavAL0WTxbZ/E66uLdZEmXSfciEh7DFHQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -319,6 +319,8 @@ packages:
       reduce: 1.0.2
       semver: 5.7.1
       tunnel-agent: 0.6.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /ansi-regex/2.1.1:
@@ -789,6 +791,8 @@ packages:
       finalhandler: 1.1.0
       parseurl: 1.3.3
       utils-merge: 1.0.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /constantinople/4.0.1:
@@ -880,6 +884,11 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.0.0
     dev: true
@@ -966,6 +975,8 @@ packages:
       stack-utils: 1.0.2
       to-factory: 1.0.0
       zepto: 1.2.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /doctypes/1.1.0:
@@ -1274,6 +1285,8 @@ packages:
       parseurl: 1.3.3
       statuses: 1.3.1
       unpipe: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /follow-redirects/1.14.9_debug@4.3.2:
@@ -2701,6 +2714,8 @@ packages:
     dependencies:
       debug: 2.6.9
       minimatch: 3.0.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /reusify/1.0.4:
@@ -2715,18 +2730,18 @@ packages:
       glob: 7.2.0
     dev: true
 
-  /rome/0.7.0-next:
-    resolution: {integrity: sha512-bbzyM95xMGzFCn+74tXyFJ39RGifEbGYFz0bB+SRtPSx0DZfpkHjcmqX9UiuMtWAkdQnWFG2rsrivQnDqqxTPA==}
-    engines: {node: '>=14.18.0'}
+  /rome/0.7.0-next.f6510d6:
+    resolution: {integrity: sha512-vg8juqZlOr5Xlj+aNcNdiKH6r5heyLCSqaMbh5BgV312vyYrM6Nm4KMFH1G/F+WFiAPweKc+GKG0G+/Z37NsfQ==}
+    engines: {node: '>=14.*'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@rometools/cli-darwin-arm64': 0.7.0-next
-      '@rometools/cli-darwin-x64': 0.7.0-next
-      '@rometools/cli-linux-arm64': 0.7.0-next
-      '@rometools/cli-linux-x64': 0.7.0-next
-      '@rometools/cli-win32-arm64': 0.7.0-next
-      '@rometools/cli-win32-x64': 0.7.0-next
+      '@rometools/cli-darwin-arm64': 0.7.0-next.f6510d6
+      '@rometools/cli-darwin-x64': 0.7.0-next.f6510d6
+      '@rometools/cli-linux-arm64': 0.7.0-next.f6510d6
+      '@rometools/cli-linux-x64': 0.7.0-next.f6510d6
+      '@rometools/cli-win32-arm64': 0.7.0-next.f6510d6
+      '@rometools/cli-win32-x64': 0.7.0-next.f6510d6
     dev: true
 
   /run-parallel/1.2.0:
@@ -2806,6 +2821,8 @@ packages:
       on-finished: 2.3.0
       range-parser: 1.2.1
       statuses: 1.4.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /serve-index/1.9.1:
@@ -2819,6 +2836,8 @@ packages:
       http-errors: 1.6.3
       mime-types: 2.1.35
       parseurl: 1.3.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /serve-static/1.13.2:
@@ -2829,6 +2848,8 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.16.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /server-destroy/1.0.1:

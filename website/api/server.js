@@ -39,10 +39,7 @@ const tiers = [
 		metal: "bronze",
 		price: 25,
 		rewards: ["Sticker"],
-		previousRewards: [
-			"Cosmetic Discord role",
-			"Cosmetic label on GitHub issues",
-		],
+		previousRewards: ["Cosmetic Discord role", "Cosmetic label on GitHub issues"],
 	},
 	{
 		id: "advocate",
@@ -51,10 +48,7 @@ const tiers = [
 		metal: "silver",
 		price: 50,
 		rewards: ["Sticker pack"],
-		previousRewards: [
-			"Cosmetic Discord role",
-			"Cosmetic label on GitHub issues",
-		],
+		previousRewards: ["Cosmetic Discord role", "Cosmetic label on GitHub issues"],
 	},
 	{
 		id: "champion",
@@ -240,8 +234,7 @@ async function getContributions(limit) {
 	return query.rows.map((row) => {
 		return {
 			name: row.publicName,
-			github:
-				row.github === "" || row.publicName === "" ? undefined : row.github,
+			github: row.github === "" || row.publicName === "" ? undefined : row.github,
 			comment: row.publicComment,
 			amount: Number(row.tierPrice) + Number(row.tip),
 			time: new Date(row.createdAt).valueOf(),
