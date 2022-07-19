@@ -51,7 +51,7 @@ pub trait Visitor {
         ctx: VisitorContext<Self::Language>,
     );
 
-    fn finish(&mut self, ctx: VisitorFinishContext<Self::Language>) {
+    fn finish(self: Box<Self>, ctx: VisitorFinishContext<Self::Language>) {
         let _ = ctx;
     }
 }

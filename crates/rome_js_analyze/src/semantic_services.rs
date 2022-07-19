@@ -1,5 +1,3 @@
-use std::mem::swap;
-
 use rome_analyze::{
     CannotCreateServicesError, FromServices, Phase, Phases, QueryKey, QueryMatch, Queryable,
     ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
@@ -59,12 +57,12 @@ where
     }
 }
 
-pub(crate) struct SemanticVisitor {
+pub(crate) struct SemanticModelBuilderVisitor {
     extractor: SemanticEventExtractor,
     builder: SemanticModelBuilder,
 }
 
-impl SemanticVisitor {
+impl SemanticModelBuilderVisitor {
     pub(crate) fn new(root: &JsAnyRoot) -> Self {
         Self {
             extractor: SemanticEventExtractor::default(),
@@ -73,7 +71,7 @@ impl SemanticVisitor {
     }
 }
 
-impl Visitor for SemanticVisitor {
+impl Visitor for SemanticModelBuilderVisitor {
     type Language = JsLanguage;
 
     fn visit(
@@ -96,11 +94,8 @@ impl Visitor for SemanticVisitor {
         }
     }
 
-    fn finish(&mut self, ctx: VisitorFinishContext<JsLanguage>) {
-        let mut builder = SemanticModelBuilder::new(ctx.root.clone());
-        swap(&mut builder, &mut self.builder);
-
-        let model = builder.build();
+    fn finish(self: Box<Self>, ctx: VisitorFinishContext<JsLanguage>) {
+        let model = self.builder.build();
         ctx.services.insert_service(model);
     }
 }

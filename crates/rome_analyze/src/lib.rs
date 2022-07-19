@@ -114,10 +114,13 @@ where
                 range: ctx.range,
             };
 
+            // The first phase being run will inspect the tokens and parse the
+            // suppression comments, then subsequent phases only needs to read
+            // this data again since it's already cached in `line_suppressions`
             let result = if index == 0 {
-                runner.run_initial_phase()
+                runner.run_first_phase()
             } else {
-                runner.run_cached_phase()
+                runner.run_remaining_phases()
             };
 
             if let ControlFlow::Break(br) = result {
@@ -127,7 +130,7 @@ where
             // Finish all the active visitors, this is executed outside of the
             // phase runner as it needs mutable access to the service bag (the
             // runner borrows the services for the entire phase)
-            for mut visitor in visitors {
+            for visitor in visitors {
                 visitor.finish(VisitorFinishContext {
                     root: &ctx.root,
                     services: &mut ctx.services,
@@ -189,7 +192,7 @@ where
 {
     /// Runs phase 0 over nodes and tokens to process line breaks and
     /// suppression comments
-    fn run_initial_phase(mut self) -> ControlFlow<Break> {
+    fn run_first_phase(mut self) -> ControlFlow<Break> {
         let iter = self.root.syntax().preorder_with_tokens(Direction::Next);
         for event in iter {
             let node_event = match event {
@@ -229,7 +232,7 @@ where
 
     /// Runs phases 1..N over nodes, since suppression comments were already
     /// processed and cached in `run_initial_phase`
-    fn run_cached_phase(mut self) -> ControlFlow<Break> {
+    fn run_remaining_phases(mut self) -> ControlFlow<Break> {
         for event in self.root.syntax().preorder() {
             // Run all the active visitors for the phace on the event
             for visitor in self.visitors.iter_mut() {
