@@ -8,7 +8,6 @@ use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateEleme
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
 
 declare_rule! {
-    "0.7.0",
     /// Disallow template literals if interpolation and special-character handling are not needed
     ///
     /// ## Examples
@@ -37,7 +36,10 @@ declare_rule! {
     /// ```js
     /// const foo = `'bar'`
     /// ```
-    pub(crate) NoUnusedTemplateLiteral = "noUnusedTemplateLiteral"
+    pub(crate) NoUnusedTemplateLiteral {
+        version: "0.7.0",
+        name: "noUnusedTemplateLiteral"
+    }
 }
 
 impl Rule for NoUnusedTemplateLiteral {

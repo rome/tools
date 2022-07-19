@@ -11,7 +11,6 @@ use rustc_hash::FxHashMap;
 use crate::control_flow::ControlFlowGraph;
 
 declare_rule! {
-    "0.7.0",
     /// Disallow unreachable code
     ///
     /// ## Examples
@@ -41,7 +40,10 @@ declare_rule! {
     ///     }
     /// }
     /// ```
-    pub(crate) NoDeadCode = "noDeadCode"
+    pub(crate) NoDeadCode {
+        version: "0.7.0",
+        name: "noDeadCode"
+    }
 }
 
 impl Rule for NoDeadCode {

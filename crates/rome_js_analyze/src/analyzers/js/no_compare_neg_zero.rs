@@ -18,7 +18,6 @@ pub struct NoCompareNegZeroState {
 }
 
 declare_rule! {
-    "0.7.0",
     /// Disallow comparing against `-0`
     ///
     /// ## Examples
@@ -34,7 +33,10 @@ declare_rule! {
     /// ```js
     /// (1 >= 0)
     ///```
-    pub(crate) NoCompareNegZero = "noCompareNegZero"
+    pub(crate) NoCompareNegZero {
+        version: "0.7.0",
+        name: "noCompareNegZero"
+    }
 }
 
 impl Rule for NoCompareNegZero {

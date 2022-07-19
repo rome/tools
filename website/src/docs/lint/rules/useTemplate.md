@@ -3,7 +3,7 @@ title: Lint Rule useTemplate
 layout: layouts/rule.liquid
 ---
 
-# useTemplate
+# useTemplate (since v0.7.0)
 
 Template literals are preferred over string concatenation.
 

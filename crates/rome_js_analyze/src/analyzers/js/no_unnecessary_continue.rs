@@ -11,7 +11,6 @@ use rome_rowan::{AstNode, SyntaxElement};
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// Avoid using unnecessary `ContinueStatement`.
     ///
     /// ## Examples
@@ -74,7 +73,11 @@ declare_rule! {
     ///   }
     /// }
     /// ```
-    pub(crate) NoUnnecessaryContinue = "noUnnecessaryContinue"
+    pub(crate) NoUnnecessaryContinue {
+        version: "0.7.0",
+        name: "noUnnecessaryContinue"
+    }
+
 }
 
 impl Rule for NoUnnecessaryContinue {

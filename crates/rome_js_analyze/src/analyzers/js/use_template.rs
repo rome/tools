@@ -46,7 +46,10 @@ declare_rule! {
     /// console.log("foo" + "bar");
     /// console.log(foo() + "\n");
     /// ```
-    pub(crate) UseTemplate = "useTemplate"
+    pub(crate) UseTemplate {
+        version: "0.7.0",
+        name: "useTemplate"
+    }
 }
 
 impl Rule for UseTemplate {

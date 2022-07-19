@@ -10,7 +10,6 @@ use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// Prevent extra closing tags for components without children
     ///
     /// ## Examples
@@ -54,7 +53,10 @@ declare_rule! {
     /// ```js
     /// <Foo.bar>child</Foo.bar>
     ///```
-    pub(crate) UseSelfClosingElements = "useSelfClosingElements"
+    pub(crate) UseSelfClosingElements {
+        version: "0.7.0",
+        name: "useSelfClosingElements"
+    }
 }
 
 impl Rule for UseSelfClosingElements {

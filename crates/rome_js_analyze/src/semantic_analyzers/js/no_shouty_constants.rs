@@ -13,7 +13,6 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, BatchMutationExt, SyntaxNodeCast};
 
 declare_rule! {
-    "0.7.0",
     /// Disallow the use of constants which its value is the upper-case version of its name.
     ///
     /// ## Examples
@@ -24,7 +23,10 @@ declare_rule! {
     /// const FOO = "FOO";
     /// console.log(FOO);
     /// ```
-    pub(crate) NoShoutyConstants = "noShoutyConstants"
+    pub(crate) NoShoutyConstants {
+        version: "0.7.0",
+        name: "noShoutyConstants"
+    }
 }
 
 /// Check for

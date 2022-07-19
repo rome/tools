@@ -5,7 +5,6 @@ use rome_js_syntax::{JsLabeledStatement, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::AstNode;
 
 declare_rule! {
-    "0.7.0",
     ///  Disallow labels that share a name with a variable
     ///
     /// ## Examples
@@ -23,7 +22,10 @@ declare_rule! {
     /// const x = "test";
     /// z: expr;
     /// ```
-    pub(crate) NoLabelVar = "noLabelVar"
+    pub(crate) NoLabelVar {
+        version: "0.7.0",
+        name: "noLabelVar"
+    }
 }
 
 impl Rule for NoLabelVar {

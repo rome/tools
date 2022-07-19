@@ -4,7 +4,6 @@ use rome_js_syntax::{JsArrayBindingPattern, JsObjectBindingPattern};
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
 declare_rule! {
-    "0.7.0",
     /// Disallows empty destructuring patterns.
     /// ## Examples
     ///
@@ -33,7 +32,10 @@ declare_rule! {
     /// function foo({a = []}) {}
     /// var [a] = foo;
     /// ```
-    pub(crate) NoEmptyPattern = "noEmptyPattern"
+    pub(crate) NoEmptyPattern {
+        version: "0.7.0",
+        name: "noEmptyPattern"
+    }
 }
 
 impl Rule for NoEmptyPattern {

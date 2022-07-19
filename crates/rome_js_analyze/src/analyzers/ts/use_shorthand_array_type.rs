@@ -10,7 +10,6 @@ use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// When expressing array types, this rule promotes the usage of `T[]` shorthand instead of `Array<T>`.
     ///
     /// ## Examples
@@ -43,7 +42,10 @@ declare_rule! {
     /// let valid: Array<keyof Bar>;
     /// let valid: Array<foo | bar>;
     /// ```
-    pub(crate) UseShorthandArrayType = "useShorthandArrayType"
+    pub(crate) UseShorthandArrayType  {
+        version: "0.7.0",
+        name: "useShorthandArrayType"
+    }
 }
 
 impl Rule for UseShorthandArrayType {

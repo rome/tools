@@ -12,7 +12,6 @@ use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// Disallow negation in the condition of an `if` statement if it has an `else` clause
     ///
     /// ## Examples
@@ -36,7 +35,10 @@ declare_rule! {
     /// ```js
     /// true ? consequent : alternate
     ///```
-    pub(crate) NoNegationElse = "noNegationElse"
+    pub(crate) NoNegationElse {
+        version: "0.7.0",
+        name: "noNegationElse"
+    }
 }
 
 impl Rule for NoNegationElse {

@@ -14,9 +14,9 @@ pub trait RuleMeta {
     /// When a rule is deprecated, a reason should be provided
     const REASON: &'static str;
     /// It marks if a rule is deprecated or not
-    const DEPRECATED: &'static bool;
+    const DEPRECATED: bool;
     /// The version when the rule was implemented
-    const SINCE_VERSION: &'static str;
+    const VERSION: &'static str;
     /// The name of this rule, displayed in the diagnostics it emits
     const NAME: &'static str;
     /// The content of the documentation comments for this rule
@@ -32,7 +32,10 @@ pub trait RuleMeta {
 /// ```ignore
 /// declare_rule! {
 ///     /// Documentation
-///     pub(crate) ExampleRule = "ruleName"
+///     pub(crate) ExampleRule {
+///         version: "0.7.0",
+///         name: "ruleName"
+///     }
 /// }
 /// ```
 ///
@@ -57,7 +60,10 @@ pub trait RuleMeta {
 ///     /// ```js
 ///     /// let a, b;
 ///     /// ```
-///     pub(crate) NoVar = "noVar"
+///     pub(crate) NoVar {
+///         version: "0.7.0",
+///         name: "noVar"
+///     }
 /// }
 /// ```
 ///
@@ -73,13 +79,40 @@ pub trait RuleMeta {
 ///     /// ```js,expect_diagnostic
 ///     /// var a, b;
 ///     /// ```
-///     pub(crate) NoVar = "noVar"
+///     pub(crate) NoVar {
+///         version: "0.7.0",
+///         name: "noVar"
+///     }
 /// }
 /// ```
 ///
 /// This will cause the documentation generator to ensure the rule does emit
 /// exactly one diagnostic for this code, and to include a snapshot for the
 /// diagnostic in the resulting documentation page
+///
+/// ## Deprecation
+///
+/// There are occasions when a rule must be deprecated, to avoid breaking changes. The reason
+/// of deprecations can be multiples.
+///
+/// In order to to do, the macro allows to add additional field to add the reason for deprecation
+///
+/// ```ignore
+/// declare_rule! {
+///     /// Disallow the use of `var`
+///     ///
+///     /// ### Invalid
+///     ///
+///     /// ```js,expect_diagnostic
+///     /// var a, b;
+///     /// ```
+///     pub(crate) NoVar {
+///         version: "0.7.0",
+///         name: "noVar",
+///         deprecated: "Use the rule `noAnotherVar`"
+///     }
+/// }
+///
 #[macro_export]
 macro_rules! declare_rule {
     ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident { version: $version:literal, name: $name:literal } ) => {
@@ -87,21 +120,21 @@ macro_rules! declare_rule {
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
-            const DEPRECATED: &'static str  = "";
+            const DEPRECATED: bool = false;
             const REASON: &'static str = "";
-            const SINCE_VERSION: &'static str = $version;
+            const VERSION: &'static str = $version;
             const NAME: &'static str = $name;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
         }
     };
-    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident { version: $version:literal, deprecated: $deprecated:literal, name: $name:literal } ) => {
+    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident { version: $version:literal, name: $name:literal, deprecated: $deprecated:literal, } ) => {
         $( #[doc = $doc] )*
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
             const DEPRECATED: bool = true;
             const REASON: &'static str = $deprecated;
-            const SINCE_VERSION: &'static str = $version;
+            const VERSION: &'static str = $version;
             const NAME: &'static str = $name;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
         }

@@ -5,7 +5,6 @@ use rome_js_syntax::JsReferenceIdentifier;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    "0.7.0",
     /// Disallow the use of ```arguments```
     ///
     /// ## Examples
@@ -26,7 +25,10 @@ declare_rule! {
     ///     console.log(arguments);
     /// }
     /// ```
-    pub(crate) NoArguments = "noArguments"
+    pub(crate) NoArguments {
+        version: "0.7.0",
+        name: "noArguments"
+    }
 }
 
 impl Rule for NoArguments {

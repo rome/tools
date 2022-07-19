@@ -68,7 +68,7 @@ fn main() -> Result<()> {
         groups
             .entry(meta.group)
             .or_insert_with(BTreeMap::new)
-            .insert(meta.name, (meta.docs, meta.since_version));
+            .insert(meta.name, (meta.docs, meta.version));
     }
 
     for (group, rules) in groups {
@@ -83,14 +83,14 @@ fn main() -> Result<()> {
         writeln!(index, "<section>")?;
         writeln!(index, "<h2>{group_name}</h2>")?;
 
-        for (rule, (docs, since_version)) in rules {
-            match generate_rule(&root, group, rule, docs, since_version) {
+        for (rule, (docs, version)) in rules {
+            match generate_rule(&root, group, rule, docs, version) {
                 Ok(summary) => {
                     writeln!(index, "<div class=\"rule\">")?;
                     writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
                     writeln!(
                         index,
-                        "	<a href=\"/docs/lint/rules/{rule}\">{rule} (since v{since_version})</a>"
+                        "	<a href=\"/docs/lint/rules/{rule}\">{rule} (since v{version})</a>"
                     )?;
                     writeln!(index, "	<a class=\"header-anchor\" href=\"#{rule}\"></a>")?;
                     writeln!(index, "</h3>")?;
@@ -129,7 +129,7 @@ fn generate_rule(
     group: &'static str,
     rule: &'static str,
     docs: &'static str,
-    since_version: &'static str,
+    version: &'static str,
 ) -> Result<Vec<Event<'static>>> {
     let mut content = Vec::new();
 
@@ -140,7 +140,7 @@ fn generate_rule(
     writeln!(content, "---")?;
     writeln!(content)?;
 
-    writeln!(content, "# {rule} (since v{since_version})")?;
+    writeln!(content, "# {rule} (since v{version})")?;
     writeln!(content)?;
 
     let summary = parse_documentation(group, rule, docs, &mut content)?;

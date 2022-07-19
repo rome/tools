@@ -12,7 +12,6 @@ use rome_rowan::{AstNode, AstNodeExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// Disallow implicit `true` values on JSX boolean attributes
     ///
     /// ## Examples
@@ -44,7 +43,10 @@ declare_rule! {
     /// ```jsx
     /// <input disabled='false' />
     ///```
-    pub(crate) NoImplicitBoolean = "noImplicitBoolean"
+    pub(crate) NoImplicitBoolean {
+        version: "0.7.0",
+        name: "noImplicitBoolean"
+    }
 }
 
 impl Rule for NoImplicitBoolean {

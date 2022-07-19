@@ -10,7 +10,6 @@ use rome_rowan::AstNodeExt;
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// Provides a refactor to invert the left and right hand side of a binary expression
     ///
     /// ## Examples
@@ -18,7 +17,10 @@ declare_rule! {
     /// ```js
     /// (a < b)
     /// ```
-    pub(crate) FlipBinExp = "flipBinExp"
+    pub(crate) FlipBinExp {
+        version: "0.7.0",
+        name: "flipBinExp"
+    }
 }
 
 impl Rule for FlipBinExp {

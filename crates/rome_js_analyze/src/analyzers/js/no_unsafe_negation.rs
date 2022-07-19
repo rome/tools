@@ -9,7 +9,6 @@ use rome_js_syntax::{JsAnyExpression, JsInExpression, JsInstanceofExpression, T}
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
 
 declare_rule! {
-    "0.7.0",
     /// Disallow using unsafe negation.
     ///
     /// ## Examples
@@ -33,7 +32,10 @@ declare_rule! {
     /// delete 1 in [1,2];
     /// +1 instanceof [1,2];
     /// ```
-    pub(crate) NoUnsafeNegation = "noUnsafeNegation"
+    pub(crate) NoUnsafeNegation {
+        version: "0.7.0",
+        name: "noUnsafeNegation"
+    }
 }
 
 impl Rule for NoUnsafeNegation {

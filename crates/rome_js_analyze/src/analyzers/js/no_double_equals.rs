@@ -11,7 +11,6 @@ use rome_rowan::{AstNodeExt, SyntaxResult};
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// Require the use of `===` and `!==`
     ///
     /// It is generally bad practice to use `==` for comparison instead of
@@ -47,7 +46,10 @@ declare_rule! {
     /// ```js
     /// null != foo
     ///```
-    pub(crate) NoDoubleEquals = "noDoubleEquals"
+    pub(crate) NoDoubleEquals {
+        version: "0.7.0",
+        name: "noDoubleEquals"
+    }
 }
 
 impl Rule for NoDoubleEquals {

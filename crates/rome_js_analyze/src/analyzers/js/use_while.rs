@@ -10,7 +10,6 @@ use rome_rowan::AstNodeExt;
 use crate::JsRuleAction;
 
 declare_rule! {
-    "0.7.0",
     /// Enforce the use of `while` loops instead of `for` loops when the
     /// initializer and update expressions are not needed
     ///
@@ -23,7 +22,10 @@ declare_rule! {
     ///     x.step();
     /// }
     /// ```
-    pub(crate) UseWhile = "useWhile"
+    pub(crate) UseWhile {
+        version: "0.7.0",
+        name: "useWhile"
+    }
 }
 
 impl Rule for UseWhile {
