@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction } from "react";
 export enum IndentStyle { Tab = "tab", Space = "space" }
 export enum SourceType { Module = "module", Script = "script" }
 export enum QuoteStyle { Double = "double", Single = "single" }
-export enum TreeStyle { Json, Text }
 
 export enum LoadingState { Loading, Success, Error }
 
@@ -24,7 +23,6 @@ export interface PlaygroundState {
 	sourceType: SourceType;
 	isTypeScript: boolean;
 	isJsx: boolean;
-	treeStyle: TreeStyle;
 }
 
 // change `lineWidth` and `indentWidth` to string type, just to fits our `usePlaygroundState` fallback usage
@@ -40,7 +38,6 @@ export const defaultRomeConfig: RomeConfiguration = {
 	sourceType: SourceType.Module,
 	isTypeScript: false,
 	isJsx: false,
-	treeStyle: TreeStyle.Json,
 };
 
 export interface PlaygroundProps {

@@ -10,7 +10,6 @@ use rome_js_formatter::context::JsFormatContext;
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
 use rome_js_syntax::{LanguageVariant, SourceType};
-use serde_json::json;
 use std::io;
 use wasm_bindgen::prelude::*;
 
@@ -125,28 +124,6 @@ impl WriteColor for ErrorOutput {
     }
 }
 
-/// Serde's default serialization results in a lot of nesting because of how it serializes
-/// Results and Vectors. We flatten this nesting to make the JSON easier to read
-fn clean_up_json(json: serde_json::Value) -> serde_json::Value {
-    match json {
-        serde_json::Value::Array(entries) => {
-            serde_json::Value::Array(entries.into_iter().map(clean_up_json).collect())
-        }
-        serde_json::Value::Object(mut fields) => {
-            if fields.len() == 1 && fields.contains_key("Ok") {
-                clean_up_json(fields.remove("Ok").unwrap())
-            } else {
-                serde_json::Value::Object(
-                    fields
-                        .into_iter()
-                        .map(|(key, value)| (key, clean_up_json(value)))
-                        .collect(),
-                )
-            }
-        }
-        s => s,
-    }
-}
 #[wasm_bindgen]
 pub struct PlaygroundFormatOptions {
     line_width: u16,
@@ -196,7 +173,6 @@ pub fn run(
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
-    output_json: bool,
 ) -> RomeOutput {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
@@ -236,21 +212,7 @@ pub fn run(
         .with_line_width(options.line_width.try_into().unwrap_or_default())
         .with_quote_style(options.quote_style.parse().unwrap_or_default());
 
-    let (cst, ast) = if output_json {
-        let cst_json = clean_up_json(
-            serde_json::to_value(&syntax)
-                .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" })),
-        );
-
-        let ast_json = clean_up_json(
-            serde_json::to_value(&parse.tree())
-                .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" })),
-        );
-
-        (cst_json.to_string(), ast_json.to_string())
-    } else {
-        (format!("{:#?}", syntax), format!("{:#?}", parse.tree()))
-    };
+    let (cst, ast) = (format!("{:#?}", syntax), format!("{:#?}", parse.tree()));
 
     mark("rome::format::begin");
     let formatted = format_node(context, &syntax).unwrap();

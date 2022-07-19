@@ -1591,7 +1591,6 @@ dependencies = [
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
- "serde_json",
  "wasm-bindgen",
  "web-sys",
 ]

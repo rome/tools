@@ -2,11 +2,7 @@ import "react-tabs/style/react-tabs.css";
 import { useEffect, useState, useRef } from "react";
 import { LoadingState, RomeOutput } from "./types";
 import { defaultRomeConfig } from "./types";
-import {
-	loadRomeConfigFromLocalStorage,
-	usePlaygroundState,
-	useWindowSize,
-} from "./utils";
+import { usePlaygroundState, useWindowSize } from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
 
@@ -43,9 +39,7 @@ function App() {
 					const loadingState = event.data.loadingState as LoadingState;
 					setLoadingState(loadingState);
 					if (loadingState === LoadingState.Success) {
-						// We only load the config from local storage once when app is loaded.
-						const localStorageRomeConfig = loadRomeConfigFromLocalStorage();
-						setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
+						setRomeConfig({ ...romeConfig });
 					}
 					break;
 				}
