@@ -166,15 +166,15 @@ from the main repository (not a fork), use these comments to run specific workfl
 
  	When a rule's sole intention is to **mandate a single concept** - such as forcing the use of camel-casing - the rule should be named using the `use` prefix. For example, the rule to mandating the use of camel-cased variable names is named `useCamelCase`.
 
-### Parser
+### JavaScript Parser
 
-- To have a better understanding of our parsing infrastructure, please [read the in-depth section](/crates/rome_js_parser/docs/authoring_parse_rules.md)
-- [write tests for the parser](/crates/rome_js_parser/docs/write_tests.md)
+To know the technical details of how our JavaScript works and how to write test, please check our [internal
+documentation page](https://rome.github.io/tools/rome_js_parser/index.html)
 
 ### Formatter
 
-- [write tests for the formatter](/crates/rome_js_formatter/docs/write_tests.md)
-- [implement the formatter](/crates/rome_js_formatter/docs/implement_the_formatter.md)
+To know the technical details of how our formatter works and how to write test, please check our [internal
+documentation page](https://rome.github.io/tools/rome_js_formatter/index.html)
 
 ### Versioning
 

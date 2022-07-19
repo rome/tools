@@ -1,3 +1,7 @@
+//! This is where the main CLI session starts. The module is responsible
+//! to parse commands and arguments, redirect the execution of the commands and
+//! execute the traversal of directory and files, based on the command that were passed.
+
 use pico_args::Arguments;
 use rome_flags::FeatureFlags;
 use rome_service::App;
