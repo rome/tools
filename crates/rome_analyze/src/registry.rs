@@ -107,7 +107,7 @@ impl<L: Language> RuleRegistry<L> {
             MetadataValue {
                 version: R::VERSION,
                 docs: R::DOCS,
-                deprecated: if R::DEPRECATED { Some(R::REASON) } else { None },
+                deprecated: R::DEPRECATED,
             },
         );
     }

@@ -11,10 +11,8 @@ use crate::registry::RuleLanguage;
 use crate::{AnalysisFilter, LanguageRoot, Phase, Phases, Queryable, RuleRegistry};
 
 pub trait RuleMeta {
-    /// When a rule is deprecated, a reason should be provided
-    const REASON: &'static str;
-    /// It marks if a rule is deprecated or not
-    const DEPRECATED: bool;
+    /// It marks if a rule is deprecated, and if so a reason has to be provided.
+    const DEPRECATED: Option<&'static str>;
     /// The version when the rule was implemented
     const VERSION: &'static str;
     /// The name of this rule, displayed in the diagnostics it emits
@@ -120,8 +118,7 @@ macro_rules! declare_rule {
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
-            const DEPRECATED: bool = false;
-            const REASON: &'static str = "";
+            const DEPRECATED: Option<&'static str> = None;
             const VERSION: &'static str = $version;
             const NAME: &'static str = $name;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
@@ -132,8 +129,7 @@ macro_rules! declare_rule {
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
-            const DEPRECATED: bool = true;
-            const REASON: &'static str = $deprecated;
+            const DEPRECATED: Option<&'static str> = Some($deprecated);
             const VERSION: &'static str = $version;
             const NAME: &'static str = $name;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
