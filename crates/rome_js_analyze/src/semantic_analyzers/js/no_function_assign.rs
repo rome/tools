@@ -18,7 +18,9 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// function foo() { foo = bar; }
+    /// function foo() {
+    ///     foo = bar;
+    ///  }
     /// ```
     ///
     /// ```js,expect_diagnostic
@@ -37,41 +39,59 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// function foo() { [foo] = bar; }
+    /// function foo() {
+    ///     [foo] = bar;
+    ///  }
     /// ```
     /// ```js,expect_diagnostic
-    /// (function () { ({ x: foo = 0 } = bar); function foo() { }; })();
+    /// (function () {
+    ///     ({ x: foo = 0 } = bar);
+    ///     function foo() { };
+    ///  })();
     /// ```
     ///
     /// ## Valid
     ///
     /// ```js
-    /// function foo() { var foo = bar; }
+    /// function foo() {
+    ///     var foo = bar;
+    ///  }
     /// ```
     ///
     /// ```js
-    /// function foo(foo) { foo = bar; }
+    /// function foo(foo) {
+    ///     foo = bar;
+    ///  }
     /// ```
     ///
     /// ```js
-    /// function foo() { var foo; foo = bar; }
+    /// function foo() {
+    ///     var foo;
+    ///     foo = bar;
+    ///  }
     /// ```
     ///
     /// ```js
-    /// var foo = () => {}; foo = bar;
+    /// var foo = () => {};
+    /// foo = bar;
     /// ```
     ///
     /// ```js
-    /// var foo = function() {}; foo = bar;
+    /// var foo = function() {};
+    /// foo = bar;
     /// ```
     ///
     /// ```js
-    /// var foo = function() { foo = bar; };
+    /// var foo = function() {
+    ///     foo = bar;
+    ///  };
     /// ```
     ///
     /// ```js
     /// import bar from 'bar';
-    /// function foo() { var foo = bar; }
+    /// function foo() {
+    ///     var foo = bar;
+    /// }
     /// ```
     pub(crate) NoFunctionAssign = "noFunctionAssign"
 }
