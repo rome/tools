@@ -59,6 +59,7 @@ function foo() { };
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> function foo() { };
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 </code></pre>{% endraw %}
@@ -76,6 +77,7 @@ function foo() { };
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> function foo() { };
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 </code></pre>{% endraw %}
@@ -93,6 +95,7 @@ function foo() { };
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> function foo() { };
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 </code></pre>{% endraw %}
@@ -130,6 +133,7 @@ function foo() {
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span>     function foo() { };
   <span style="color: rgb(38, 148, 255);">│</span>              <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 </code></pre>{% endraw %}
