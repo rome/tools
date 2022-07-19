@@ -20,23 +20,23 @@
 //! ### Rules to follow when implementing a formatter
 //!
 //! 1. Use the `*Fields` struct to extract all the tokens/nodes
-//! 	```rust,no_test
-//! 	#[derive(Debug, Clone, Default)]
-//! 	pub struct FormatJsExportDefaultExpressionClause;
+//!     ```rust,ignore
+//!     #[derive(Debug, Clone, Default)]
+//!     pub struct FormatJsExportDefaultExpressionClause;
 //!
-//! 	impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses {
-//!        fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
+//!     impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClauses {
+//!         fn fmt_fields(&self, node: &JsExportDefaultExpressionClause, f: &mut JsFormatter) -> FormatResult<()> {
 //!             let JsExportDefaultExpressionClauseFields {
 //!                 default_token,
 //!                 expression,
 //!                 semicolon_token,
 //!             }  = node.as_fields();
 //!        }
-//!    }
-//! 	```
+//!     }
+//!     ```
 //! 2. When using `.as_fields()` with the destructuring, don't use the `..` feature. Prefer extracting all fields and ignore them
 //!    using the `_`
-//!    ```rust,no_test
+//!    ```rust,ignore
 //!    #[derive(Debug, Clone, Default)]
 //!    pub struct FormatJsExportDefaultExpressionClause;
 //!
@@ -58,7 +58,7 @@
 //!    documentation to understand how to use them and when;
 //!    3. `format_extensions.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
 //!    that are exposed based on its type. If you have a good IDE support, this feature will help you. For example:
-//!    ```rust,no_test
+//!    ```rust,ignore
 //!    #[derive(Debug, Clone, Default)]
 //!    pub struct FormatJsExportDefaultExpressionClause;
 //!
@@ -108,7 +108,7 @@
 //!
 //! ```javascript
 //! const foo     = ()    => {
-//! 	return bar
+//!     return bar
 //! }
 //! ```
 //!
@@ -175,7 +175,7 @@
 //! Let's say that you created a new parsing feature and you need new tests from scratch,
 //! just go to the source code where you parse this new feature if JavaScript, and add the following comment:
 //!
-//! ```rust,no_test
+//! ```rust,ignore
 //! // test feature_name
 //! // let a = { new_feature : "" }
 //! // let b = { new_feature : "" }

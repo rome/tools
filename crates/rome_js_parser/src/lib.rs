@@ -69,7 +69,7 @@
 //! ## Signature
 //! Most parse rules take a `&mut` reference to the parser as their only parameter and return a `ParsedSyntax`.
 //!
-//! ```rust
+//! ```rust,ignore
 //! fn parse_rule_name(&mut: Parser) -> ParsedSyntax {}
 //! ```
 //!
@@ -94,7 +94,7 @@
 //!
 //! Now, the parsing function must first test if the parser is positioned at an `if` statement and return `Absent` if that's not the case.
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! if !p.at(T![if]) {
 //!  return ParsedSyntax::Absent;
 //! }
@@ -105,7 +105,7 @@
 //! Your rule implementation may want to consider more than just the first child to determine if it can parse at least some of the expected children.
 //! For example, the if statement rule could test if the parser is located at an `else` clause and then create an `if` statement where all children are missing except the `else` clause:
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! if !p.at(T![if]) && !p.at(T![else]){
 //!   return Absent
 //! }
@@ -113,7 +113,7 @@
 //!
 //! Your implementation can also call into another parsing rule if the first child is a node and not a token.
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! let assignment_target = parse_assignment_target(p);
 //!
 //! if assignment_target.is_absent() {
@@ -139,7 +139,7 @@
 //!
 //! Using the above-described rules result in the following implementation for the `if` statement rule.
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 //!  if !p.at(T![if]) {
 //!   return Absent;
@@ -184,7 +184,7 @@
 //!
 //! We will use  `ParseSeparatedList` in order to achieve that
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! struct ArrayElementsList;
 //!
 //! impl ParseSeparatedList for ArrayElementsList {
@@ -214,7 +214,7 @@
 //!
 //! Let's run through this step by step:
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! parsed_element.or_recover(
 //!     p,
 //!     &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
@@ -256,7 +256,7 @@
 //!
 //! Let's have a look at the `with` statement that is only allowed in loose mode/sloppy mode:
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
 //!  if !p.at(T![with]) {
 //!   return Absent;
@@ -279,7 +279,7 @@
 //!
 //! The start of the rule is the same as for any other rule. The exciting bits start with
 //!
-//! ```rust, no_test
+//! ```rust, ignore
 //! let conditional = StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
 //!  p.err_builder("`with` statements are not allowed in strict mode")
 //!   .primary(marker.range(p), "")
