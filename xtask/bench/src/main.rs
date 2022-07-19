@@ -9,6 +9,10 @@ use dhat::DhatAlloc;
 #[global_allocator]
 static ALLOCATOR: DhatAlloc = DhatAlloc;
 
+#[cfg(all(target_os = "windows", not(feature = "dhat-on")))]
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+
 fn main() -> Result<(), pico_args::Error> {
     #[cfg(feature = "dhat-on")]
     let _dhat = dhat::Dhat::start_heap_profiling();

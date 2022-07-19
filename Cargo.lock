@@ -846,6 +846,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "libmimalloc-sys"
+version = "0.1.25"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "11ca136052550448f55df7898c6dbe651c6b574fe38a0d9ea687a9f8088a2e2c"
+dependencies = [
+ "cc",
+]
+
+[[package]]
 name = "libz-sys"
 version = "1.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -922,6 +931,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5aa361d4faea93603064a027415f07bd8e1d5c88c9fbf68bf56a285428fd79ce"
 dependencies = [
  "autocfg",
+]
+
+[[package]]
+name = "mimalloc"
+version = "0.1.29"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2f64ad83c969af2e732e907564deb0d0ed393cec4af80776f77dd77a1a427698"
+dependencies = [
+ "libmimalloc-sys",
 ]
 
 [[package]]
@@ -1336,6 +1354,7 @@ dependencies = [
  "crossbeam",
  "hdrhistogram",
  "lazy_static",
+ "mimalloc",
  "parking_lot",
  "pico-args",
  "rayon",
@@ -1549,6 +1568,7 @@ dependencies = [
  "anyhow",
  "futures",
  "indexmap",
+ "mimalloc",
  "parking_lot",
  "rome_analyze",
  "rome_console",
@@ -2485,6 +2505,7 @@ dependencies = [
  "dhat",
  "humansize",
  "itertools",
+ "mimalloc",
  "pico-args",
  "regex",
  "rome_analyze",

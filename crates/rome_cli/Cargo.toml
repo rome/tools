@@ -23,3 +23,6 @@ hdrhistogram = { version = "7.5.0", default-features = false }
 crossbeam = "0.8.1"
 thiserror = "1.0.30"
 rayon = "1.5.1"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+mimalloc = "0.1.29"

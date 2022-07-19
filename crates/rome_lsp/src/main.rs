@@ -4,6 +4,10 @@ use tracing_tree::HierarchicalLayer;
 
 use rome_lsp::server::run_server;
 
+#[cfg(target_os = "windows")]
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+
 #[tokio::main]
 async fn main() {
     let stdin = tokio::io::stdin();
