@@ -155,7 +155,7 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
                 // drop the leading whitespace of leading trivia of first token
                 // ## Example
                 // `1 *    (2 + "foo") /**trailing */             + "bar"`
-                //     ^^^ drop                          ^^^^^^^^^^^^^ drop             
+                //     ^^^ drop                          ^^^^^^^^^^^^^ drop
                 let next_first_token = JsSyntaxToken::new_detached(
                     first_token.kind(),
                     first_token.text().trim_start(),
