@@ -1,4 +1,4 @@
-use crate::{semantic_services::Semantic, JsRuleAction};
+use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
@@ -93,7 +93,10 @@ declare_rule! {
     ///     var foo = bar;
     /// }
     /// ```
-    pub(crate) NoFunctionAssign = "noFunctionAssign"
+    pub(crate) NoFunctionAssign {
+        version: "0.7.0",
+        name: "noFunctionAssign"
+    }
 }
 
 pub struct State {
