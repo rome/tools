@@ -235,8 +235,8 @@ impl Binding {
 
 #[derive(Clone, Copy)]
 enum ReferenceType {
-    Read,
-    Write,
+    Read { hoisted: bool },
+    Write { hoisted: bool },
 }
 
 /// Provides all information regarding to a specific reference.
@@ -261,12 +261,19 @@ impl Reference {
         })
     }
 
+    pub fn is_using_hoisted_declaration(&self) -> bool {
+        match self.ty {
+            ReferenceType::Read { hoisted } => hoisted,
+            ReferenceType::Write { hoisted } => hoisted,
+        }
+    }
+
     pub fn is_read(&self) -> bool {
-        matches!(self.ty, ReferenceType::Read)
+        matches!(self.ty, ReferenceType::Read { .. })
     }
 
     pub fn is_write(&self) -> bool {
-        matches!(self.ty, ReferenceType::Write)
+        matches!(self.ty, ReferenceType::Write { .. })
     }
 }
 
@@ -626,11 +633,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Read, range));
+                    .push((ReferenceType::Read { hoisted: false }, range));
                 self.declaration_all_reads
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Read, range));
+                    .push((ReferenceType::Read { hoisted: false }, range));
             }
             HoistedRead {
                 range,
@@ -640,11 +647,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Read, range));
+                    .push((ReferenceType::Read { hoisted: true }, range));
                 self.declaration_all_reads
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Read, range));
+                    .push((ReferenceType::Read { hoisted: true }, range));
             }
             Write {
                 range,
@@ -654,11 +661,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Write, range));
+                    .push((ReferenceType::Write { hoisted: false }, range));
                 self.declaration_all_writes
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Write, range));
+                    .push((ReferenceType::Write { hoisted: false }, range));
             }
             HoistedWrite {
                 range,
@@ -668,11 +675,11 @@ impl SemanticModelBuilder {
                 self.declaration_all_references
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Write, range));
+                    .push((ReferenceType::Write { hoisted: true }, range));
                 self.declaration_all_writes
                     .entry(declaration_at)
                     .or_default()
-                    .push((ReferenceType::Write, range));
+                    .push((ReferenceType::Write { hoisted: true }, range));
             }
             UnresolvedReference { .. } => {}
         }

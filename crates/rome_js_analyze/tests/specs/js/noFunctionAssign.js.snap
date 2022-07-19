@@ -67,6 +67,7 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 7 │ function foo3() { };
   │          ----
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 
@@ -81,6 +82,7 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 10 │ function foo4() { };
    │          ----
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 
@@ -95,6 +97,7 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 13 │ function foo5() { };
    │          ----
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 
@@ -121,6 +124,7 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
    │                      │                            
    │                      Reassigned here.
 
+=  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
 
 

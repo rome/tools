@@ -137,10 +137,25 @@ impl Rule for NoFunctionAssign {
             },
         );
 
+        let mut hoisted_quantity = 0;
         for reference in state.all_writes.iter() {
             let node = reference.node();
-            diag = diag.secondary(node.text_trimmed_range(), "Reassigned here.")
+            diag = diag.secondary(node.text_trimmed_range(), "Reassigned here.");
+
+            hoisted_quantity += if reference.is_using_hoisted_declaration() {
+                1
+            } else {
+                0
+            };
         }
+
+        let diag = if hoisted_quantity > 0 {
+            diag.footer_note(
+                markup! {"Reassignment happens here because the function declaration is hoisted."},
+            )
+        } else {
+            diag
+        };
 
         let diag = diag.footer_note(markup! {"Use a local variable instead."});
 
