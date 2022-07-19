@@ -9,10 +9,12 @@ pub struct FormatJsPropertyClassMember;
 impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
     fn fmt_fields(&self, node: &JsPropertyClassMember, f: &mut JsFormatter) -> FormatResult<()> {
         let semicolon_token = node.semicolon_token();
-        let body = format_with(|f| write!(f, [JsAnyAssignmentLike::from(node.clone())]));
         write!(
             f,
-            [FormatWithSemicolon::new(&body, semicolon_token.as_ref())]
+            [FormatWithSemicolon::new(
+                &JsAnyAssignmentLike::from(node.clone()),
+                semicolon_token.as_ref()
+            )]
         )
     }
 }

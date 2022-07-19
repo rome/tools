@@ -1,7 +1,9 @@
 use crate::buffer::BufferSnapshot;
 use crate::builders::{FillBuilder, JoinBuilder, JoinNodesBuilder, Line};
 use crate::prelude::*;
-use crate::{Arguments, Buffer, FormatState, FormatStateSnapshot, GroupId, VecBuffer};
+use crate::{
+    Arguments, Buffer, FormatContext, FormatState, FormatStateSnapshot, GroupId, VecBuffer,
+};
 
 /// Handles the formatting of a CST and stores the context how the CST should be formatted (user preferences).
 /// The formatter is passed to the [Format] implementation of every node in the CST so that they
@@ -19,6 +21,11 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// Returns the Context specifying how to format the current CST
     pub fn context(&self) -> &Context {
         self.state().context()
+    }
+
+    /// Returns a mutable reference to the context.
+    pub fn context_mut(&mut self) -> &mut Context {
+        self.state_mut().context_mut()
     }
 
     /// Creates a new group id that is unique to this document. The passed debug name is used in the
@@ -173,10 +180,13 @@ impl<'buf, Context> Formatter<'buf, Context> {
     }
 }
 
-impl<Context> Formatter<'_, Context> {
+impl<Context> Formatter<'_, Context>
+where
+    Context: FormatContext,
+{
     /// Take a snapshot of the state of the formatter
     #[inline]
-    pub fn state_snapshot(&self) -> FormatterSnapshot {
+    pub fn state_snapshot(&self) -> FormatterSnapshot<Context::Snapshot> {
         FormatterSnapshot {
             buffer: self.buffer.snapshot(),
             state: self.state().snapshot(),
@@ -185,7 +195,7 @@ impl<Context> Formatter<'_, Context> {
 
     #[inline]
     /// Restore the state of the formatter to a previous snapshot
-    pub fn restore_state_snapshot(&mut self, snapshot: FormatterSnapshot) {
+    pub fn restore_state_snapshot(&mut self, snapshot: FormatterSnapshot<Context::Snapshot>) {
         self.state_mut().restore_snapshot(snapshot.state);
         self.buffer.restore_snapshot(snapshot.buffer);
     }
@@ -228,7 +238,7 @@ impl<Context> Buffer for Formatter<'_, Context> {
 ///
 /// In practice this only saves the set of printed tokens in debug
 /// mode and compiled to nothing in release mode
-pub struct FormatterSnapshot {
+pub struct FormatterSnapshot<Context> {
     buffer: BufferSnapshot,
-    state: FormatStateSnapshot,
+    state: FormatStateSnapshot<Context>,
 }

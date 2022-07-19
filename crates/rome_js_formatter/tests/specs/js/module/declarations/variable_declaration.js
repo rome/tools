@@ -256,3 +256,10 @@ var looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this(
 	//comment
 	-12312312321321312).ewqeqewqweqweqweqweqweqweqw;
+
+
+const a
+	// rome-ignore format: Ignore the initializer
+				=
+
+			[A,    B,   C].push( aaa )

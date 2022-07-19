@@ -262,6 +262,13 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 	//comment
 	-12312312321321312).ewqeqewqweqweqweqweqweqweqw;
 
+
+const a
+	// rome-ignore format: Ignore the initializer
+				=
+
+			[A,    B,   C].push( aaa )
+
 =============================
 # Outputs
 ## Output 1
@@ -720,6 +727,12 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 		//comment
 		-12312312321321312,
 	).ewqeqewqweqweqweqweqweqweqw;
+
+const a
+	// rome-ignore format: Ignore the initializer
+				=
+
+			[A,    B,   C].push( aaa );
 
 
 ## Lines exceeding width of 80 characters

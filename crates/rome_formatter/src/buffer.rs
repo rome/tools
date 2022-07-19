@@ -276,7 +276,7 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 ///
 /// drop(with_preamble);
 ///
-/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
 /// assert_eq!("# heading\nthis text will be on a new line", formatted.print().as_code());
 /// ```
 ///
@@ -300,7 +300,7 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 /// let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
 /// drop(with_preamble);
 ///
-/// let formatted = Formatted::new(buffer.into_element(), PrinterOptions::default());
+/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
 /// assert_eq!("", formatted.print().as_code());
 /// ```
 pub struct PreambleBuffer<'buf, Preamble, Context> {

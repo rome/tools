@@ -296,7 +296,13 @@ pub(crate) enum AssignmentLikeLayout {
     ///         () => (fff) => () => (fefef) => () => fff;
     /// ```
     ChainTailArrowFunction,
+
+    /// Layout used when the operator and right hand side are part of a `JsInitializerClause<
+    /// that has a suppression comment.
+    SuppressedInitializer,
 }
+
+const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 impl JsAnyAssignmentLike {
     fn right(&self) -> SyntaxResult<RightAssignmentLike> {
@@ -357,15 +363,12 @@ impl JsAnyAssignmentLike {
             _ => None,
         }
     }
-}
 
-const MIN_OVERLAP_FOR_BREAK: u8 = 3;
-
-impl JsAnyAssignmentLike {
     fn write_left(&self, f: &mut JsFormatter) -> FormatResult<bool> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
-                let width = write_member_name(&property.name()?.into(), f)?;
+                let name = property.name()?;
+                let width = write_member_name(&name.into(), f)?;
                 let text_width_for_break =
                     (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
@@ -407,11 +410,22 @@ impl JsAnyAssignmentLike {
                     semicolon_token: _,
                 } = property_class_member.as_fields();
                 write!(f, [modifiers.format(), space_token()])?;
-                let width = write_member_name(&name?.into(), f)?;
+
+                let name = name?;
+
+                let is_short = if f.context_mut().is_suppressed(name.syntax()) {
+                    write!(f, [format_verbatim_node(name.syntax())])?;
+                    false
+                } else {
+                    let width = write_member_name(&name.into(), f)?;
+                    let text_width_for_break =
+                        (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    width < text_width_for_break
+                };
+
                 write!(f, [property_annotation.format()])?;
-                let text_width_for_break =
-                    (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
-                Ok(width < text_width_for_break)
+
+                Ok(is_short)
             }
             JsAnyAssignmentLike::TsPropertySignatureClassMember(
                 property_signature_class_member,
@@ -514,6 +528,28 @@ impl JsAnyAssignmentLike {
         }
     }
 
+    fn write_suppressed_initializer(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        let initializer = match self {
+            JsAnyAssignmentLike::JsPropertyClassMember(class_member) => class_member.value(),
+            JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
+                variable_declarator.initializer()
+            }
+
+            JsAnyAssignmentLike::JsPropertyObjectMember(_)
+            | JsAnyAssignmentLike::JsAssignmentExpression(_)
+            | JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(_)
+            | JsAnyAssignmentLike::TsTypeAliasDeclaration(_)
+            | JsAnyAssignmentLike::TsPropertySignatureClassMember(_) => {
+                unreachable!("These variants have no initializer")
+            }
+        };
+
+        let initializer =
+            initializer.expect("Expected an initializer because it has a suppression comment");
+
+        write!(f, [soft_line_indent_or_space(&initializer.format())])
+    }
+
     /// Returns the layout variant for an assignment like depending on right expression and left part length
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/assignment.js
     fn layout(
@@ -525,13 +561,21 @@ impl JsAnyAssignmentLike {
             return Ok(AssignmentLikeLayout::OnlyLeft);
         }
 
-        let right = self.right()?.as_expression();
+        let right = self.right()?;
 
-        if let Some(layout) = self.chain_formatting_layout()? {
+        if let RightAssignmentLike::JsInitializerClause(initializer) = &right {
+            if f.context_mut().is_suppressed(initializer.syntax()) {
+                return Ok(AssignmentLikeLayout::SuppressedInitializer);
+            }
+        }
+
+        if let Some(layout) = self.chain_formatting_layout(&right)? {
             return Ok(layout);
         }
 
-        if let Some(JsAnyExpression::JsCallExpression(call_expression)) = &right {
+        let right_expression = right.as_expression();
+
+        if let Some(JsAnyExpression::JsCallExpression(call_expression)) = &right_expression {
             if call_expression.callee()?.syntax().text() == "require" {
                 return Ok(AssignmentLikeLayout::NeverBreakAfterOperator);
             }
@@ -555,7 +599,7 @@ impl JsAnyAssignmentLike {
         //  !"123" -> "123"
         //  void "123" -> "123"
         //  !!"string"! -> "string"
-        let right_expression = iter::successors(right, |expression| match expression {
+        let right_expression = iter::successors(right_expression, |expression| match expression {
             JsAnyExpression::JsUnaryExpression(unary) => unary.argument().ok(),
             JsAnyExpression::TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
             _ => None,
@@ -613,13 +657,15 @@ impl JsAnyAssignmentLike {
 
     /// Checks if the right node is entitled of the chain formatting,
     /// and if so, it return the layout type
-    fn chain_formatting_layout(&self) -> SyntaxResult<Option<AssignmentLikeLayout>> {
-        let right = self.right()?;
-
+    fn chain_formatting_layout(
+        &self,
+        right: &RightAssignmentLike,
+    ) -> SyntaxResult<Option<AssignmentLikeLayout>> {
         let right_is_tail = !matches!(
             right,
             RightAssignmentLike::JsAnyExpression(JsAnyExpression::JsAssignmentExpression(_))
         );
+
         // The chain goes up two levels, by checking up to the great parent if all the conditions
         // are correctly met.
         let upper_chain_is_eligible =
@@ -814,15 +860,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             // 3. we compute the layout
             // 4. we write the left node inside the main buffer based on the layout
             let mut buffer = VecBuffer::new(f.state_mut());
-            let mut is_left_short = false;
-            write!(
-                buffer,
-                [&format_once(|f| {
-                    is_left_short = self.write_left(f)?;
-                    Ok(())
-                })]
-            )?;
-
+            let is_left_short = self.write_left(&mut Formatter::new(&mut buffer))?;
             let formatted_element = buffer.into_element();
 
             // Compare name only if we are in a position of computing it.
@@ -853,7 +891,10 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 
             let inner_content = format_with(|f| {
                 write!(f, [left])?;
-                self.write_operator(f)?;
+
+                if layout != AssignmentLikeLayout::SuppressedInitializer {
+                    self.write_operator(f)?;
+                }
 
                 match &layout {
                     AssignmentLikeLayout::OnlyLeft => Ok(()),
@@ -877,25 +918,25 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                             [group_elements(&indent(&format_args![
                                 soft_line_break_or_space(),
                                 right,
-                            ])),]
+                            ]))]
                         ]
                     }
                     AssignmentLikeLayout::NeverBreakAfterOperator => {
-                        write![f, [space_token(), right,]]
+                        write![f, [space_token(), right]]
                     }
 
                     AssignmentLikeLayout::BreakLeftHandSide => {
-                        write![f, [space_token(), group_elements(&right),]]
+                        write![f, [space_token(), group_elements(&right)]]
                     }
 
                     AssignmentLikeLayout::Chain => {
-                        write!(f, [soft_line_break_or_space(), right,])
+                        write!(f, [soft_line_break_or_space(), right])
                     }
 
                     AssignmentLikeLayout::ChainTail => {
                         write!(
                             f,
-                            [&indent(&format_args![soft_line_break_or_space(), right,])]
+                            [&indent(&format_args![soft_line_break_or_space(), right])]
                         )
                     }
 
@@ -911,6 +952,9 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                             ]
                         )
                     }
+                    AssignmentLikeLayout::SuppressedInitializer => {
+                        self.write_suppressed_initializer(f)
+                    }
                 }
             });
 
@@ -918,6 +962,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                 // Layouts that don't need enclosing group
                 AssignmentLikeLayout::Chain
                 | AssignmentLikeLayout::ChainTail
+                | AssignmentLikeLayout::SuppressedInitializer
                 | AssignmentLikeLayout::OnlyLeft => {
                     write!(f, [&inner_content])
                 }

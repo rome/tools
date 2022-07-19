@@ -25,22 +25,25 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
             JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         )) = &expression
         {
-            if !string_literal.syntax().has_comments_direct()
+            let str_token = string_literal.value_token()?;
+            let trimmed_text = str_token.text_trimmed();
+
+            let has_space_text = trimmed_text == "' '" || trimmed_text == "\" \"";
+            let no_trivia = !str_token.has_leading_non_whitespace_trivia()
+                && !str_token.has_trailing_comments()
                 && !l_curly_token.has_trailing_comments()
-                && !r_curly_token.has_leading_comments()
-            {
-                if let Ok(str_token) = string_literal.value_token() {
-                    if str_token.text().contains("' '") || str_token.text().contains("\" \"") {
-                        return write![
-                            f,
-                            [
-                                format_removed(&l_curly_token),
-                                format_replaced(&str_token, &JsxSpace::default()),
-                                format_removed(&r_curly_token)
-                            ]
-                        ];
-                    }
-                }
+                && !r_curly_token.has_leading_non_whitespace_trivia();
+            let is_suppressed = f.context_mut().is_suppressed(string_literal.syntax());
+
+            if has_space_text && no_trivia && !is_suppressed {
+                return write![
+                    f,
+                    [
+                        format_removed(&l_curly_token),
+                        format_replaced(&str_token, &JsxSpace::default()),
+                        format_removed(&r_curly_token)
+                    ]
+                ];
             }
         }
 

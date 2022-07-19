@@ -23,7 +23,6 @@ pub(crate) use member_chain::format_call_expression;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
-use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
     JsTemplateElement, Modifiers, TsTemplateElement, TsType,
@@ -176,10 +175,6 @@ impl Format<JsFormatContext> for FormatBodyStatement<'_> {
             }
         }
     }
-}
-
-pub(crate) fn has_formatter_suppressions(node: &JsSyntaxNode) -> bool {
-    has_suppressions_category(SuppressionCategory::Format, node)
 }
 
 /// This function consumes a list of modifiers and applies a predictable sorting.
