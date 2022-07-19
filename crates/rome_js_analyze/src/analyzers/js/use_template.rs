@@ -11,7 +11,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
 
-use crate::{utils::interpret_escaped_string, JsRuleAction};
+use crate::{utils::escape_string, JsRuleAction};
 
 declare_rule! {
     /// Template literals are preferred over string concatenation.
@@ -101,22 +101,22 @@ impl Rule for UseTemplate {
 /// Extract main logic of `UseTemplate::run`
 /// Aiming to avoid recursive diagnostics.
 fn emits_signal(expr: &JsBinaryExpression) -> Option<Vec<JsAnyExpression>> {
-    is_un_necessary_string_concat_expression(expr).and_then(|result| {
-        if result {
-            let collections = collect_binary_add_expression(expr)?;
-            if collections.iter().any(|expr| {
-                !matches!(
-                    expr,
-                    JsAnyExpression::JsAnyLiteralExpression(
-                        rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(_)
-                    )
+    let need_process = is_unnecessary_string_concat_expression(expr)?;
+    if !need_process {
+        return None;
+    }
+    let collections = collect_binary_add_expression(expr)?;
+    collections
+        .iter()
+        .any(|expr| {
+            !matches!(
+                expr,
+                JsAnyExpression::JsAnyLiteralExpression(
+                    rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(_)
                 )
-            }) {
-                return Some(collections);
-            }
-        }
-        None
-    })
+            )
+        })
+        .then(|| collections)
 }
 /// Merge `Vec<JsAnyExpression>` into a `JsTemplate`
 fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<JsTemplate> {
@@ -207,13 +207,13 @@ fn flatten_template_element_list(list: JsTemplateElementList) -> Option<Vec<JsAn
     Some(ret)
 }
 
-fn is_un_necessary_string_concat_expression(node: &JsBinaryExpression) -> Option<bool> {
+fn is_unnecessary_string_concat_expression(node: &JsBinaryExpression) -> Option<bool> {
     if node.operator().ok()? != JsBinaryOperator::Plus {
         return None;
     }
     match node.left().ok()? {
         rome_js_syntax::JsAnyExpression::JsBinaryExpression(binary) => {
-            if is_un_necessary_string_concat_expression(&binary) == Some(true) {
+            if is_unnecessary_string_concat_expression(&binary) == Some(true) {
                 return Some(true);
             }
         }
@@ -221,9 +221,7 @@ fn is_un_necessary_string_concat_expression(node: &JsBinaryExpression) -> Option
         rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
             rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {
-            // I don't know which one would have more overhead, loop string twice or allocation a new string.
-            // concat string usually would be short, so I think it's would have lower overhead than allocate a string.
-            if interpret_escaped_string(&string_literal.text())
+            if escape_string(string_literal.value_token().ok()?.text_trimmed())
                 .ok()?
                 .find(|ch| matches!(ch, '\n' | '`'))
                 .is_none()
@@ -231,11 +229,11 @@ fn is_un_necessary_string_concat_expression(node: &JsBinaryExpression) -> Option
                 return Some(true);
             }
         }
-        _ => {}
+        _ => (),
     }
     match node.right().ok()? {
         rome_js_syntax::JsAnyExpression::JsBinaryExpression(binary) => {
-            if is_un_necessary_string_concat_expression(&binary) == Some(true) {
+            if is_unnecessary_string_concat_expression(&binary) == Some(true) {
                 return Some(true);
             }
         }
@@ -243,7 +241,7 @@ fn is_un_necessary_string_concat_expression(node: &JsBinaryExpression) -> Option
         rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
             rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {
-            if interpret_escaped_string(&string_literal.text())
+            if escape_string(string_literal.value_token().ok()?.text_trimmed())
                 .ok()?
                 .find(|ch| matches!(ch, '\n' | '`'))
                 .is_none()
@@ -251,7 +249,7 @@ fn is_un_necessary_string_concat_expression(node: &JsBinaryExpression) -> Option
                 return Some(true);
             }
         }
-        _ => {}
+        _ => (),
     }
     None
 }
@@ -266,7 +264,7 @@ fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<JsAnyE
         JsAnyExpression::JsBinaryExpression(left)
             if matches!(left.operator().ok()?, JsBinaryOperator::Plus) =>
         {
-            result.extend(collect_binary_add_expression(&left)?);
+            result.append(&mut collect_binary_add_expression(&left)?);
         }
         left => {
             result.push(left);
@@ -276,7 +274,7 @@ fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<JsAnyE
         JsAnyExpression::JsBinaryExpression(right)
             if matches!(right.operator().ok()?, JsBinaryOperator::Plus) =>
         {
-            result.extend(collect_binary_add_expression(&right)?);
+            result.append(&mut collect_binary_add_expression(&right)?);
         }
         right => {
             result.push(right);
