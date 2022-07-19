@@ -162,7 +162,6 @@
 //! Hold on, what are these *missing* markers? Rome's AST facade uses fixed offsets to retrieve a particular child from a node.
 //! For example, the 3rd child of the if statement is the condition. However, the condition would become the second element
 //! if the opening parentheses `(` isn't present in the source text. That's where missing elements come into play.
-//! Missing elements (added by calling `p.missing()`) represent placeholders for syntax that isn't present in the source text to guarantee that the children always appear in the same order.
 //!
 //! ## Parsing Lists & Error Recovery
 //!
