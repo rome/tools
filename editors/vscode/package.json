@@ -147,7 +147,7 @@
 		"build": "npm run compile -- --minify && npm run package",
 		"install-extension": "code --install-extension rome_lsp.vsix",
 		"format": "cargo run --bin rome format ./src/ ./scripts",
-		"format:rome": "rome format src --write",
+		"format:rome": "rome format src scripts --write",
 		"tsc": "tsc"
 	},
 	"dependencies": {

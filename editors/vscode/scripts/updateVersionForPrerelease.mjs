@@ -37,8 +37,8 @@ readFile(manifestPath, "utf8")
 			console.log("Could not write the package.json file at " + manifestPath);
 			process.exit(1);
 		}
-	},)
+	})
 	.catch(() => {
 		console.log("Could not read the package.json file at " + manifestPath);
 		process.exit(1);
-	},);
+	});
