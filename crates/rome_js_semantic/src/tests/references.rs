@@ -115,6 +115,12 @@ assert_semantics! {
 f();",
 }
 
+// Functions
+assert_semantics! {
+    ok_read_function, r#"function f/*#F*/() {} console.log(f/*READ F*/);"#,
+    ok_write_function, r#"function f/*#F*/() {} f/*WRITE F*/ = null;"#,
+}
+
 assert_semantics! {
     ok_unmatched_reference, r#"a/*?*/"#,
 }
