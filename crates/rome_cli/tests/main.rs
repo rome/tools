@@ -851,7 +851,9 @@ mod init {
 }
 
 mod configuration {
-    use crate::configs::{CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_ROOT_FALSE};
+    use crate::configs::{
+        CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_LINTER_WRONG_RULE, CONFIG_ROOT_FALSE,
+    };
     use pico_args::Arguments;
     use rome_cli::{run_cli, CliSession};
     use rome_console::BufferConsole;
@@ -925,6 +927,29 @@ mod configuration {
                 assert!(error
                     .to_string()
                     .contains("The line width exceeds the maximum value (320)"),)
+            }
+            _ => panic!("expected an error, but found none"),
+        }
+    }
+
+    #[test]
+    fn incorrect_rule_name() {
+        let mut fs = MemoryFileSystem::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_LINTER_WRONG_RULE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+        });
+
+        match result {
+            Err(error) => {
+                assert!(error.to_string().contains("unknown field `foo_rule`"),)
             }
             _ => panic!("expected an error, but found none"),
         }

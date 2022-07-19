@@ -49,7 +49,7 @@ const JSON_SYNTAX_FACTORY: &str = "crates/rome_json_factory/src/generated/syntax
 const JSON_NODE_FACTORY: &str = "crates/rome_json_factory/src/generated/node_factory.rs";
 const JSON_AST_MACROS: &str = "crates/rome_json_syntax/src/generated/macros.rs";
 
-enum UpdateResult {
+pub enum UpdateResult {
     NotUpdated,
     Updated,
 }
@@ -158,7 +158,7 @@ impl LanguageKind {
 
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
-fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> {
+pub fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> {
     match fs2::read_to_string(path) {
         Ok(old_contents) if old_contents == contents => {
             return Ok(UpdateResult::NotUpdated);
