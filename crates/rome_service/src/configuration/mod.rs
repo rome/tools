@@ -15,10 +15,13 @@ use std::path::PathBuf;
 
 mod formatter;
 mod javascript;
-mod linter;
+pub mod linter;
+
+pub use linter::{RuleConfiguration, Rules};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Eq, PartialEq, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
 pub struct Configuration {
     /// One root file should exist. Useful when `extends` comes into play.
     ///

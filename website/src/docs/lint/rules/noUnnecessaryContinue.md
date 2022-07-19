@@ -3,7 +3,7 @@ title: Lint Rule noUnnecessaryContinue
 layout: layouts/rule.liquid
 ---
 
-# noUnnecessaryContinue
+# noUnnecessaryContinue (since v0.7.0)
 
 Avoid using unnecessary `ContinueStatement`.
 

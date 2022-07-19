@@ -3,7 +3,7 @@ title: Lint Rule useSingleVarDeclarator
 layout: layouts/rule.liquid
 ---
 
-# useSingleVarDeclarator
+# useSingleVarDeclarator (since v0.7.0)
 
 Disallow multiple variable declarations in the same variable statement
 

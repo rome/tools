@@ -3,7 +3,7 @@ use crate::AsFormat;
 use rome_formatter::token::{FormatInserted, FormatInsertedCloseParen, FormatInsertedOpenParen};
 use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, Direction, Language, SyntaxTriviaPiece};
+use rome_rowan::{AstNode, Direction, Language, SyntaxElement, SyntaxTriviaPiece};
 
 /// Formats a node using its [`AsFormat`] implementation but falls back to printing the node as
 /// it is in the source document if the formatting returns an [`FormatError`].
@@ -180,8 +180,13 @@ pub struct FormatVerbatimNode<'node> {
 }
 impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        for token in self.node.descendants_tokens(Direction::Next) {
-            f.state_mut().track_token(&token);
+        for element in self.node.descendants_with_tokens(Direction::Next) {
+            match element {
+                SyntaxElement::Token(token) => f.state_mut().track_token(&token),
+                SyntaxElement::Node(node) => {
+                    f.context_mut().checked_suppressed(&node);
+                }
+            }
         }
 
         fn skip_whitespace<L: Language>(piece: &SyntaxTriviaPiece<L>) -> bool {

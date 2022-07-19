@@ -3,7 +3,7 @@ title: Lint Rule useShorthandArrayType
 layout: layouts/rule.liquid
 ---
 
-# useShorthandArrayType
+# useShorthandArrayType (since v0.7.0)
 
 When expressing array types, this rule promotes the usage of `T[]` shorthand instead of `Array<T>`.
 

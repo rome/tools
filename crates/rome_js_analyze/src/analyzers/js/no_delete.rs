@@ -36,7 +36,10 @@ declare_rule! {
     /// const foo = new Set([1,2,3]);
     /// foo.delete(1);
     ///```
-    pub(crate) NoDelete = "noDelete"
+    pub(crate) NoDelete {
+        version: "0.7.0",
+        name: "noDelete"
+    }
 }
 
 impl Rule for NoDelete {

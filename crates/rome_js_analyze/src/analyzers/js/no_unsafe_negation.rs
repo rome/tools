@@ -32,7 +32,10 @@ declare_rule! {
     /// delete 1 in [1,2];
     /// +1 instanceof [1,2];
     /// ```
-    pub(crate) NoUnsafeNegation = "noUnsafeNegation"
+    pub(crate) NoUnsafeNegation {
+        version: "0.7.0",
+        name: "noUnsafeNegation"
+    }
 }
 
 impl Rule for NoUnsafeNegation {

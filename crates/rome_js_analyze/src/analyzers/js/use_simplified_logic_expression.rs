@@ -49,7 +49,10 @@ declare_rule! {
     /// const r6 = !!boolExpr1 || !!boolExpr2;
     /// ```
     ///
-    pub(crate) UseSimplifiedLogicExpression = "useSimplifiedLogicExpression"
+    pub(crate) UseSimplifiedLogicExpression {
+        version: "0.7.0",
+        name: "useSimplifiedLogicExpression"
+    }
 }
 
 impl Rule for UseSimplifiedLogicExpression {

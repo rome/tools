@@ -57,7 +57,10 @@ declare_rule! {
     /// ```js
     /// /foo /
     ///```
-    pub(crate) NoMultipleSpacesInRegularExpressionLiterals = "noMultipleSpacesInRegularExpressionLiterals"
+    pub(crate) NoMultipleSpacesInRegularExpressionLiterals {
+        version: "0.7.0",
+        name: "noMultipleSpacesInRegularExpressionLiterals"
+    }
 }
 
 impl Rule for NoMultipleSpacesInRegularExpressionLiterals {

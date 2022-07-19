@@ -1,5 +1,9 @@
 use rome_cli::{run_cli, setup_panic_handler, CliSession, Termination};
 
+#[cfg(target_os = "windows")]
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+
 ///
 /// To run this example, run:
 ///

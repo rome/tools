@@ -73,7 +73,11 @@ declare_rule! {
     ///   }
     /// }
     /// ```
-    pub(crate) NoUnnecessaryContinue = "noUnnecessaryContinue"
+    pub(crate) NoUnnecessaryContinue {
+        version: "0.7.0",
+        name: "noUnnecessaryContinue"
+    }
+
 }
 
 impl Rule for NoUnnecessaryContinue {

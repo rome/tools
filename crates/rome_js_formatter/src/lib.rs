@@ -3,11 +3,10 @@
 mod cst;
 mod js;
 mod jsx;
-pub(crate) mod prelude;
+pub mod prelude;
 mod ts;
 pub mod utils;
 
-use crate::utils::has_formatter_suppressions;
 use rome_formatter::prelude::*;
 use rome_formatter::write;
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
@@ -170,7 +169,8 @@ where
 {
     fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
-        if has_formatter_suppressions(syntax) {
+
+        if f.context_mut().is_suppressed(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
         } else {
             self.fmt_fields(node, f)?;
@@ -222,7 +222,7 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
 /// Formats a range within a file, supported by Rome
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatContext], which
+/// level of the node based on the provided [JsFormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,
@@ -262,14 +262,21 @@ fn is_range_formatting_root(node: &JsSyntaxNode) -> bool {
 /// Formats a JavaScript (and its super languages) file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Formatted> {
-    rome_formatter::format_node(context, &root.format())
+pub fn format_node(
+    context: JsFormatContext,
+    root: &JsSyntaxNode,
+) -> FormatResult<Formatted<JsFormatContext>> {
+    let result = rome_formatter::format_node(context, &root.format())?;
+
+    result.context().assert_checked_all_suppressions(root);
+
+    Ok(result)
 }
 
 /// Formats a single node within a file, supported by Rome.
 ///
 /// This runs a simple heuristic to determine the initial indentation
-/// level of the node based on the provided [FormatContext], which
+/// level of the node based on the provided [JsFormatContext], which
 /// must match currently the current initial of the file. Additionally,
 /// because the reformatting happens only locally the resulting code
 /// will be indented with the same level as the original selection,

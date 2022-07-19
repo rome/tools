@@ -11,6 +11,10 @@ use crate::registry::RuleLanguage;
 use crate::{AnalysisFilter, LanguageRoot, Phase, Phases, Queryable, RuleRegistry};
 
 pub trait RuleMeta {
+    /// It marks if a rule is deprecated, and if so a reason has to be provided.
+    const DEPRECATED: Option<&'static str>;
+    /// The version when the rule was implemented
+    const VERSION: &'static str;
     /// The name of this rule, displayed in the diagnostics it emits
     const NAME: &'static str;
     /// The content of the documentation comments for this rule
@@ -26,7 +30,10 @@ pub trait RuleMeta {
 /// ```ignore
 /// declare_rule! {
 ///     /// Documentation
-///     pub(crate) ExampleRule = "ruleName"
+///     pub(crate) ExampleRule {
+///         version: "0.7.0",
+///         name: "ruleName"
+///     }
 /// }
 /// ```
 ///
@@ -51,7 +58,10 @@ pub trait RuleMeta {
 ///     /// ```js
 ///     /// let a, b;
 ///     /// ```
-///     pub(crate) NoVar = "noVar"
+///     pub(crate) NoVar {
+///         version: "0.7.0",
+///         name: "noVar"
+///     }
 /// }
 /// ```
 ///
@@ -67,20 +77,60 @@ pub trait RuleMeta {
 ///     /// ```js,expect_diagnostic
 ///     /// var a, b;
 ///     /// ```
-///     pub(crate) NoVar = "noVar"
+///     pub(crate) NoVar {
+///         version: "0.7.0",
+///         name: "noVar"
+///     }
 /// }
 /// ```
 ///
 /// This will cause the documentation generator to ensure the rule does emit
 /// exactly one diagnostic for this code, and to include a snapshot for the
 /// diagnostic in the resulting documentation page
+///
+/// ## Deprecation
+///
+/// There are occasions when a rule must be deprecated, to avoid breaking changes. The reason
+/// of deprecations can be multiples.
+///
+/// In order to to do, the macro allows to add additional field to add the reason for deprecation
+///
+/// ```ignore
+/// declare_rule! {
+///     /// Disallow the use of `var`
+///     ///
+///     /// ### Invalid
+///     ///
+///     /// ```js,expect_diagnostic
+///     /// var a, b;
+///     /// ```
+///     pub(crate) NoVar {
+///         version: "0.7.0",
+///         name: "noVar",
+///         deprecated: "Use the rule `noAnotherVar`"
+///     }
+/// }
+///
 #[macro_export]
 macro_rules! declare_rule {
-    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident = $name:literal ) => {
+    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident { version: $version:literal, name: $name:literal } ) => {
         $( #[doc = $doc] )*
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
+            const DEPRECATED: Option<&'static str> = None;
+            const VERSION: &'static str = $version;
+            const NAME: &'static str = $name;
+            const DOCS: &'static str = concat!( $( $doc, "\n", )* );
+        }
+    };
+    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident { version: $version:literal, name: $name:literal, deprecated: $deprecated:literal, } ) => {
+        $( #[doc = $doc] )*
+        $vis enum $id {}
+
+        impl $crate::RuleMeta for $id {
+            const DEPRECATED: Option<&'static str> = Some($deprecated);
+            const VERSION: &'static str = $version;
             const NAME: &'static str = $name;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
         }

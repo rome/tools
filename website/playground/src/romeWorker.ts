@@ -1,32 +1,30 @@
 import init, { PlaygroundFormatOptions, run } from "../pkg/rome_playground";
-import { IndentStyle, TreeStyle, LoadingState } from "./types";
+import { IndentStyle, LoadingState } from "./types";
 
-init()
-	.then(() => {
-		self.postMessage({ type: "init", loadingState: LoadingState.Success });
-	})
-	.catch(() => {
-		self.postMessage({ type: "init", loadingState: LoadingState.Error });
-	});
+self.addEventListener("message", async (e) => {
+	switch (e.data.type) {
+		case "init": {
+			try {
+				await init();
+				self.postMessage({ type: "init", loadingState: LoadingState.Success });
+			} catch {
+				self.postMessage({ type: "init", loadingState: LoadingState.Error });
+			}
 
-let timeout: number;
+			break;
+		}
 
-self.addEventListener("message", (e) => {
-	clearTimeout(timeout);
-
-	if (e.data.type === "format") {
-		const {
-			code,
-			lineWidth,
-			indentStyle,
-			indentWidth,
-			quoteStyle,
-			isTypeScript,
-			isJsx,
-			sourceType,
-			treeStyle,
-		} = e.data.playgroundState;
-		timeout = setTimeout(() => {
+		case "format": {
+			const {
+				code,
+				lineWidth,
+				indentStyle,
+				indentWidth,
+				quoteStyle,
+				isTypeScript,
+				isJsx,
+				sourceType,
+			} = e.data.playgroundState;
 			const romeOutput = run(
 				code,
 				new PlaygroundFormatOptions(
@@ -37,7 +35,6 @@ self.addEventListener("message", (e) => {
 				isTypeScript,
 				isJsx,
 				sourceType,
-				treeStyle === TreeStyle.Json,
 			);
 			self.postMessage({
 				type: "formatted",
@@ -49,6 +46,11 @@ self.addEventListener("message", (e) => {
 					formatter_ir: romeOutput.formatter_ir,
 				},
 			});
-		}, 500);
+
+			break;
+		}
+
+		default:
+			console.error(`Unknown message '${e.data.type}'.`);
 	}
 });

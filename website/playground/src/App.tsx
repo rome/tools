@@ -2,15 +2,9 @@ import "react-tabs/style/react-tabs.css";
 import { useEffect, useState, useRef } from "react";
 import { LoadingState, RomeOutput } from "./types";
 import { defaultRomeConfig } from "./types";
-import {
-	loadRomeConfigFromLocalStorage,
-	usePlaygroundState,
-	useWindowSize,
-} from "./utils";
+import { usePlaygroundState, useWindowSize } from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
-import RomeWorker from "./romeWorker?worker";
-import PrettierWorker from "./prettierWorker?worker";
 
 function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
@@ -30,30 +24,50 @@ function App() {
 	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
 
 	useEffect(() => {
-		romeWorkerRef.current = new RomeWorker();
-		prettierWorkerRef.current = new PrettierWorker();
+		romeWorkerRef.current = new Worker(new URL(
+			"./romeWorker",
+			import.meta.url,
+		), { type: "module" });
+		prettierWorkerRef.current = new Worker(new URL(
+			"./prettierWorker",
+			import.meta.url,
+		), { type: "module" });
 
 		romeWorkerRef.current.addEventListener("message", (event) => {
-			if (event.data.type === "init") {
-				const loadingState = event.data.loadingState as LoadingState;
-				setLoadingState(loadingState);
-				if (loadingState === LoadingState.Success) {
-					// We only load the config from local storage once when app is loaded.
-					const localStorageRomeConfig = loadRomeConfigFromLocalStorage();
-					setRomeConfig({ ...romeConfig, ...localStorageRomeConfig });
+			switch (event.data.type) {
+				case "init": {
+					const loadingState = event.data.loadingState as LoadingState;
+					setLoadingState(loadingState);
+					if (loadingState === LoadingState.Success) {
+						setRomeConfig({ ...romeConfig });
+					}
+					break;
 				}
-			}
-			if (event.data.type === "formatted") {
-				setRomeOutput(event.data.romeOutput);
+
+				case "formatted": {
+					setRomeOutput(event.data.romeOutput);
+					break;
+				}
+
+				default:
+					console.error(`Unknown message ${event.data.type}`);
 			}
 		});
+
 		prettierWorkerRef.current.addEventListener("message", (event) => {
-			if (event.data.type === "init") {
-				setLoadingState(event.data.loadingState as LoadingState);
+			switch (event.data.type) {
+				case "formatted": {
+					setPrettierOutput(event.data.prettierOutput);
+					break;
+				}
+
+				default:
+					console.error(`Unknown message ${event.data.type}`);
 			}
-			if (event.data.type === "formatted") {
-				setPrettierOutput(event.data.prettierOutput);
-			}
+		});
+
+		romeWorkerRef.current?.postMessage({
+			type: "init",
 		});
 
 		return () => {
@@ -66,8 +80,18 @@ function App() {
 		if (loadingState !== LoadingState.Success) {
 			return;
 		}
-		romeWorkerRef.current?.postMessage({ type: "format", playgroundState });
-		prettierWorkerRef.current?.postMessage({ type: "format", playgroundState });
+
+		// Throttle the formatting so that it doesn't run on every keystroke to prevent that the
+		// workers are busy formatting outdated code.
+		let timeout = setTimeout(() => {
+			romeWorkerRef.current?.postMessage({ type: "format", playgroundState });
+			prettierWorkerRef.current?.postMessage({
+				type: "format",
+				playgroundState,
+			});
+		}, 100);
+
+		return () => clearTimeout(timeout);
 	}, [loadingState, playgroundState]);
 
 	switch (loadingState) {

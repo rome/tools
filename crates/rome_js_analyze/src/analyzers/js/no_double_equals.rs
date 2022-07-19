@@ -46,7 +46,10 @@ declare_rule! {
     /// ```js
     /// null != foo
     ///```
-    pub(crate) NoDoubleEquals = "noDoubleEquals"
+    pub(crate) NoDoubleEquals {
+        version: "0.7.0",
+        name: "noDoubleEquals"
+    }
 }
 
 impl Rule for NoDoubleEquals {

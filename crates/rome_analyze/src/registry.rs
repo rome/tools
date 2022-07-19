@@ -42,7 +42,7 @@ impl Phase for () {
 pub struct RuleRegistry<L: Language> {
     /// Stores metadata information for all the rules in the registry, sorted
     /// alphabetically
-    metadata: BTreeMap<MetadataKey, &'static str>,
+    metadata: BTreeMap<MetadataKey, MetadataValue>,
     /// Holds a collection of rules for each phase.
     phase_rules: [PhaseRules<L>; 2],
 }
@@ -104,16 +104,26 @@ impl<L: Language> RuleRegistry<L> {
             MetadataKey {
                 inner: (G::NAME, R::NAME),
             },
-            R::DOCS,
+            MetadataValue {
+                version: R::VERSION,
+                docs: R::DOCS,
+                deprecated: R::DEPRECATED,
+            },
         );
     }
 
     /// Returns an iterator over the name and documentation of all active rules
     /// in this instance of the registry
     pub fn metadata(self) -> impl Iterator<Item = RuleMetadata> {
-        self.metadata.into_iter().map(|(key, docs)| {
+        self.metadata.into_iter().map(|(key, value)| {
             let (group, name) = key.inner;
-            RuleMetadata { group, name, docs }
+            RuleMetadata {
+                group,
+                name,
+                docs: value.docs,
+                version: value.version,
+                deprecated: value.deprecated,
+            }
         })
     }
 }
@@ -198,11 +208,19 @@ impl<'a> Borrow<(&'a str, &'a str)> for MetadataKey {
     }
 }
 
+struct MetadataValue {
+    version: &'static str,
+    docs: &'static str,
+    deprecated: Option<&'static str>,
+}
+
 /// Metadata entry for a rule in the registry
 pub struct RuleMetadata {
     pub group: &'static str,
     pub name: &'static str,
     pub docs: &'static str,
+    pub version: &'static str,
+    pub deprecated: Option<&'static str>,
 }
 
 /// Internal representation of a single rule in the registry

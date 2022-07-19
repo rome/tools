@@ -9,7 +9,7 @@ import TreeView from "./TreeView";
 export function MobilePlayground(
 	{
 		setPlaygroundState,
-		playgroundState: { code, treeStyle, ...settings },
+		playgroundState: { code, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
@@ -91,20 +91,8 @@ export function MobilePlayground(
 						}}
 					/>
 				</TabPanel>
-				<TabPanel>
-					<TreeView
-						tree={cst}
-						treeStyle={treeStyle}
-						setPlaygroundState={setPlaygroundState}
-					/>
-				</TabPanel>
-				<TabPanel>
-					<TreeView
-						tree={ast}
-						treeStyle={treeStyle}
-						setPlaygroundState={setPlaygroundState}
-					/>
-				</TabPanel>
+				<TabPanel><TreeView tree={cst} /></TabPanel>
+				<TabPanel><TreeView tree={ast} /></TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
 				</TabPanel>

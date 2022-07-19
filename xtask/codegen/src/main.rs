@@ -1,6 +1,9 @@
+mod generate_configuration;
+
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
+use crate::generate_configuration::generate_rules_configuration;
 use xtask_codegen::{
     generate_analyzer, generate_ast, generate_formatter, generate_parser_tests, generate_tables,
 };
@@ -36,6 +39,10 @@ fn main() -> Result<()> {
             generate_analyzer()?;
             Ok(())
         }
+        "configuration" => {
+            generate_rules_configuration(Mode::Overwrite)?;
+            Ok(())
+        }
         _ => {
             eprintln!(
                 "\
@@ -44,10 +51,12 @@ Run codegen command.
 USAGE:
 	cargo codegen <SUBCOMMAND> [option]
 SUBCOMMANDS:
-	analyzer     Generate factory functions for the analyzer
-	grammar      Transforms js.ungram into AST
-	test         Extracts parser inline comments into test files
-	unicode      Generates unicode table inside lexer
+	analyzer        Generate factory functions for the analyzer and the configuration of the analyzers
+	configuration    Generate the part of the configuration that depends on some metadata
+	grammar         Transforms ungram files into AST
+	formatter       Generates formatters for each language
+	test            Extracts parser inline comments into test files
+	unicode         Generates unicode table inside lexer
 			"
             );
             Ok(())

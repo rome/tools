@@ -3,7 +3,7 @@ title: Lint Rule noLabelVar
 layout: layouts/rule.liquid
 ---
 
-# noLabelVar
+# noLabelVar (since v0.7.0)
 
 Disallow labels that share a name with a variable
 

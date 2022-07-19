@@ -40,7 +40,10 @@ declare_rule! {
     ///     }
     /// }
     /// ```
-    pub(crate) NoDeadCode = "noDeadCode"
+    pub(crate) NoDeadCode {
+        version: "0.7.0",
+        name: "noDeadCode"
+    }
 }
 
 impl Rule for NoDeadCode {

@@ -3,7 +3,7 @@ title: Lint Rule noDoubleEquals
 layout: layouts/rule.liquid
 ---
 
-# noDoubleEquals
+# noDoubleEquals (since v0.7.0)
 
 Require the use of `===` and `!==`
 

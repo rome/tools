@@ -22,7 +22,10 @@ declare_rule! {
     /// const x = "test";
     /// z: expr;
     /// ```
-    pub(crate) NoLabelVar = "noLabelVar"
+    pub(crate) NoLabelVar {
+        version: "0.7.0",
+        name: "noLabelVar"
+    }
 }
 
 impl Rule for NoLabelVar {

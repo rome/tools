@@ -21,7 +21,7 @@ jobs:
       - name: Install Rome
         uses: rome/setup-rome@v0.4
         with:
-          version: latest
+          version: preview
 
       - name: Checkout repository
         uses: actions/checkout@v3

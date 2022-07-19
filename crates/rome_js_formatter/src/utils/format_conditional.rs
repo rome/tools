@@ -31,19 +31,29 @@ impl Conditional {
     fn format_head(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             Conditional::Expression(expr) => {
-                write![f, [expr.test()?.format(), space_token(),]]
+                if f.context_mut().is_suppressed(expr.syntax()) {
+                    write!(f, [format_verbatim_node(expr.syntax())])
+                } else {
+                    write![f, [expr.test()?.format(), space_token(),]]
+                }
             }
-            Conditional::Type(t) => write![
-                f,
-                [
-                    t.check_type()?.format(),
-                    space_token(),
-                    t.extends_token()?.format(),
-                    space_token(),
-                    t.extends_type()?.format(),
-                    space_token(),
-                ]
-            ],
+            Conditional::Type(t) => {
+                if f.context_mut().is_suppressed(t.syntax()) {
+                    write!(f, [format_verbatim_node(t.syntax())])
+                } else {
+                    write![
+                        f,
+                        [
+                            t.check_type()?.format(),
+                            space_token(),
+                            t.extends_token()?.format(),
+                            space_token(),
+                            t.extends_type()?.format(),
+                            space_token(),
+                        ]
+                    ]
+                }
+            }
         }
     }
     fn consequent_to_conditional(&self) -> FormatResult<Option<Self>> {

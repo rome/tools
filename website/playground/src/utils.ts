@@ -9,7 +9,6 @@ import {
 	QuoteStyle,
 	RomeConfiguration,
 	SourceType,
-	TreeStyle,
 } from "./types";
 
 export function classNames(
@@ -17,8 +16,6 @@ export function classNames(
 ): string {
 	return classes.filter(Boolean).join(" ");
 }
-// Only save prop of `PlaygroundState` that we interested
-export const OPTIONS_TO_PERSIST: Array<keyof RomeConfiguration> = ["treeStyle"];
 // Define general type for useWindowSize hook, which includes width and height
 interface Size {
 	width: number | undefined;
@@ -82,7 +79,6 @@ export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 			(
 				searchParams.get("sourceType") as SourceType
 			) ?? defaultRomeConfig.sourceType,
-		treeStyle: defaultRomeConfig.treeStyle ?? TreeStyle.Json,
 	});
 	const [playgroundState, setPlaygroundState] = useState(initState());
 
@@ -93,11 +89,7 @@ export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 	useEffect(() => {
 		const { code, isTypeScript, isJsx } = playgroundState;
 		const queryString = new URLSearchParams({
-			...crateObjectExcludeKeys(playgroundState, [
-				"isTypeScript",
-				"isJsx",
-				"treeStyle",
-			]),
+			...crateObjectExcludeKeys(playgroundState, ["isTypeScript", "isJsx"]),
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();
@@ -117,9 +109,6 @@ export function createSetter(
 	return function (param: PlaygroundState[typeof field]) {
 		setPlaygroundState((state) => {
 			let nextState = { ...state, [field]: param };
-			if (field === "treeStyle") {
-				changeLocalStorageConfig(nextState);
-			}
 			return nextState;
 		});
 	};
@@ -157,7 +146,6 @@ export function formatWithPrettier(
 		return { code: formattedCode, ir };
 	} catch (err: any) {
 		console.error(err);
-		//@ts-ignore
 		const code = err.toString();
 		return { code, ir: `Error: Invalid code\n${err.message}` };
 	}
@@ -210,39 +198,6 @@ function fromBinary(binary: string) {
 	return result;
 }
 
-function changeLocalStorageConfig(playgroundState: PlaygroundState) {
-	let romeConfig = createObjectIncludeKeys(playgroundState, OPTIONS_TO_PERSIST);
-	localStorage.setItem("rome_config", JSON.stringify(romeConfig));
-}
-
-export function loadRomeConfigFromLocalStorage(): RomeConfiguration {
-	let configString = window.localStorage.getItem("rome_config");
-	let config: Partial<RomeConfiguration> = {};
-	try {
-		config = JSON.parse(configString || "");
-	} catch (err) {
-		config = {};
-		console.error(err);
-	}
-	return mergeRomeConfig(config, defaultRomeConfig);
-}
-
-// Change the romeConfig in local storage seems to be meaningless, so we simplify the validation phase.
-// only use default value if some key is empty
-function mergeRomeConfig(
-	config: Partial<RomeConfiguration>,
-	defaultConfig: RomeConfiguration,
-): RomeConfiguration {
-	return OPTIONS_TO_PERSIST.reduce((acc, key) => {
-		if (config[key]) {
-			acc[key] = config[key as keyof RomeConfiguration];
-		} else {
-			acc[key] = defaultConfig[key as keyof RomeConfiguration];
-		}
-		return acc;
-	}, Object.create(null)) as RomeConfiguration;
-}
-
 /**
  * Crate an object with some keys omitted of original object
  * @param obj
@@ -255,24 +210,6 @@ function crateObjectExcludeKeys<T extends object>(
 ): Record<string, any> {
 	return Object.keys(obj).reduce((acc, key) => {
 		if (!keys.includes(key as keyof T)) {
-			acc[key] = obj[key as keyof T];
-		}
-		return acc;
-	}, Object.create(null));
-}
-
-/**
- * Crate an object with only interested keys of original object
- * @param obj
- * @param keys
- * @returns
- */
-function createObjectIncludeKeys<T extends object>(
-	obj: T,
-	keys: Array<keyof T>,
-): Record<string, any> {
-	return Object.keys(obj).reduce((acc, key) => {
-		if (keys.includes(key as keyof T)) {
 			acc[key] = obj[key as keyof T];
 		}
 		return acc;

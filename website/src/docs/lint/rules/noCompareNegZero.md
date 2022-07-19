@@ -3,7 +3,7 @@ title: Lint Rule noCompareNegZero
 layout: layouts/rule.liquid
 ---
 
-# noCompareNegZero
+# noCompareNegZero (since v0.7.0)
 
 Disallow comparing against `-0`
 

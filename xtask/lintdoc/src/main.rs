@@ -68,7 +68,7 @@ fn main() -> Result<()> {
         groups
             .entry(meta.group)
             .or_insert_with(BTreeMap::new)
-            .insert(meta.name, meta.docs);
+            .insert(meta.name, (meta.docs, meta.version));
     }
 
     for (group, rules) in groups {
@@ -83,12 +83,15 @@ fn main() -> Result<()> {
         writeln!(index, "<section>")?;
         writeln!(index, "<h2>{group_name}</h2>")?;
 
-        for (rule, docs) in rules {
-            match generate_rule(&root, group, rule, docs) {
+        for (rule, (docs, version)) in rules {
+            match generate_rule(&root, group, rule, docs, version) {
                 Ok(summary) => {
                     writeln!(index, "<div class=\"rule\">")?;
                     writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
-                    writeln!(index, "	<a href=\"/docs/lint/rules/{rule}\">{rule}</a>")?;
+                    writeln!(
+                        index,
+                        "	<a href=\"/docs/lint/rules/{rule}\">{rule} (since v{version})</a>"
+                    )?;
                     writeln!(index, "	<a class=\"header-anchor\" href=\"#{rule}\"></a>")?;
                     writeln!(index, "</h3>")?;
 
@@ -126,6 +129,7 @@ fn generate_rule(
     group: &'static str,
     rule: &'static str,
     docs: &'static str,
+    version: &'static str,
 ) -> Result<Vec<Event<'static>>> {
     let mut content = Vec::new();
 
@@ -136,7 +140,7 @@ fn generate_rule(
     writeln!(content, "---")?;
     writeln!(content)?;
 
-    writeln!(content, "# {rule}")?;
+    writeln!(content, "# {rule} (since v{version})")?;
     writeln!(content)?;
 
     let summary = parse_documentation(group, rule, docs, &mut content)?;
@@ -374,7 +378,8 @@ fn assert_lint(
         if test.expect_diagnostic {
             ensure!(
                 diagnostic_count == 0,
-                "analysis returned multiple diagnostics"
+                "analysis returned multiple diagnostics, code snippet: \n\n{}",
+                code
             );
         } else {
             bail!(format!(

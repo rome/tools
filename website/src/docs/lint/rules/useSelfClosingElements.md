@@ -3,7 +3,7 @@ title: Lint Rule useSelfClosingElements
 layout: layouts/rule.liquid
 ---
 
-# useSelfClosingElements
+# useSelfClosingElements (since v0.7.0)
 
 Prevent extra closing tags for components without children
 

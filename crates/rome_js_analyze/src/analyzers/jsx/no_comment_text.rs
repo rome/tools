@@ -9,7 +9,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::JsRuleAction;
 declare_rule! {
-     /// Prevent comments from being inserted as text nodes
+    /// Prevent comments from being inserted as text nodes
     ///
     /// ## Examples
     ///
@@ -34,7 +34,10 @@ declare_rule! {
     /// const a1 = <div>{/** comment */}</div>;
     /// const a2 = <div className={"cls" /* comment */}></div>;
     /// ```
-    pub(crate) NoCommentText = "noCommentText"
+    pub(crate) NoCommentText {
+        version: "0.7.0",
+        name: "noCommentText"
+    }
 }
 
 impl Rule for NoCommentText {
