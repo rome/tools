@@ -1463,7 +1463,6 @@ dependencies = [
  "countme",
  "ctor",
  "iai",
- "indexmap",
  "insta",
  "parking_lot",
  "quickcheck",

@@ -186,7 +186,7 @@ where
 {
     /// Take a snapshot of the state of the formatter
     #[inline]
-    pub fn state_snapshot(&self) -> FormatterSnapshot<Context::Snapshot> {
+    pub fn state_snapshot(&self) -> FormatterSnapshot {
         FormatterSnapshot {
             buffer: self.buffer.snapshot(),
             state: self.state().snapshot(),
@@ -195,7 +195,7 @@ where
 
     #[inline]
     /// Restore the state of the formatter to a previous snapshot
-    pub fn restore_state_snapshot(&mut self, snapshot: FormatterSnapshot<Context::Snapshot>) {
+    pub fn restore_state_snapshot(&mut self, snapshot: FormatterSnapshot) {
         self.state_mut().restore_snapshot(snapshot.state);
         self.buffer.restore_snapshot(snapshot.buffer);
     }
@@ -238,7 +238,7 @@ impl<Context> Buffer for Formatter<'_, Context> {
 ///
 /// In practice this only saves the set of printed tokens in debug
 /// mode and compiled to nothing in release mode
-pub struct FormatterSnapshot<Context> {
+pub struct FormatterSnapshot {
     buffer: BufferSnapshot,
-    state: FormatStateSnapshot<Context>,
+    state: FormatStateSnapshot,
 }

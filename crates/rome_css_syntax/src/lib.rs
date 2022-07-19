@@ -69,6 +69,15 @@ impl rome_rowan::SyntaxKind for CssSyntaxKind {
     fn from_raw(raw: RawSyntaxKind) -> Self {
         Self::from(raw.0)
     }
+
+    fn is_root(&self) -> bool {
+        matches!(self, CSS_ROOT)
+    }
+
+    #[inline]
+    fn is_list(&self) -> bool {
+        CssSyntaxKind::is_list(*self)
+    }
 }
 
 impl TryFrom<CssSyntaxKind> for TriviaPieceKind {

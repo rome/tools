@@ -37,6 +37,12 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
 
     /// Creates a syntax kind from a raw kind.
     fn from_raw(raw: RawSyntaxKind) -> Self;
+
+    /// Returns `true` if this kind is for a root node.
+    fn is_root(&self) -> bool;
+
+    /// Returns `true` if this kind is a list node.
+    fn is_list(&self) -> bool;
 }
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {

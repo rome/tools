@@ -24,7 +24,7 @@ pub use stmt_ext::*;
 pub use syntax_node::*;
 
 use crate::JsSyntaxKind::*;
-use rome_rowan::RawSyntaxKind;
+use rome_rowan::{AstNode, RawSyntaxKind};
 
 impl From<u16> for JsSyntaxKind {
     fn from(d: u16) -> JsSyntaxKind {
@@ -240,6 +240,14 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
     #[inline]
     fn from_raw(raw: RawSyntaxKind) -> Self {
         Self::from(raw.0)
+    }
+
+    fn is_root(&self) -> bool {
+        JsAnyRoot::can_cast(*self)
+    }
+
+    fn is_list(&self) -> bool {
+        JsSyntaxKind::is_list(*self)
     }
 }
 

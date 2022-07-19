@@ -56,7 +56,7 @@ pub use builders::{
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
-pub use comments::{CommentContext, CommentKind, SourceComment};
+pub use comments::{CommentContext, CommentKind, CommentStyle, Comments, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
@@ -192,9 +192,6 @@ impl From<LineWidth> for u16 {
 /// Defines the common formatting options. Implementations can define additional options that
 /// are specific to formatting a specific object.
 pub trait FormatContext {
-    /// The type storing a snapshot of the context's (mutable) state.
-    type Snapshot;
-
     /// The indent style.
     fn indent_style(&self) -> IndentStyle;
 
@@ -203,12 +200,6 @@ pub trait FormatContext {
 
     /// Derives the print options from the these format options
     fn as_print_options(&self) -> PrinterOptions;
-
-    /// Snapshots the state of the context that can be restored with `restore_snapshot`.
-    fn snapshot(&self) -> Self::Snapshot;
-
-    /// Restores the contexts state to the state when the snapshot was taken.
-    fn restore_snapshot(&mut self, snapshot: Self::Snapshot);
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
@@ -218,8 +209,6 @@ pub struct SimpleFormatContext {
 }
 
 impl FormatContext for SimpleFormatContext {
-    type Snapshot = ();
-
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -233,10 +222,6 @@ impl FormatContext for SimpleFormatContext {
             .with_indent(self.indent_style)
             .with_print_width(self.line_width)
     }
-
-    fn snapshot(&self) -> Self::Snapshot {}
-
-    fn restore_snapshot(&mut self, _: Self::Snapshot) {}
 }
 
 /// Lightweight sourcemap marker between source and output tokens
@@ -729,7 +714,7 @@ where
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format_node<
-    Context: FormatContext,
+    Context: CommentContext<L>,
     L: Language,
     N: FormatWithRule<Context, Item = SyntaxNode<L>>,
 >(
@@ -737,6 +722,9 @@ pub fn format_node<
     root: &N,
 ) -> FormatResult<Formatted<Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
+        let suppressions = Comments::from_node(root.item(), &context);
+        let context = context.with_comments(suppressions);
+
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 
@@ -745,6 +733,10 @@ pub fn format_node<
         let document = buffer.into_element();
 
         state.assert_formatted_all_tokens(root.item());
+        state
+            .context()
+            .comments()
+            .assert_checked_all_suppressions(root.item());
 
         Ok(Formatted::new(document, state.into_context()))
     })
@@ -812,7 +804,7 @@ pub fn format_range<Context, L, R, P>(
     mut predicate: P,
 ) -> FormatResult<Printed>
 where
-    Context: FormatContext,
+    Context: CommentContext<L>,
     L: Language,
     R: FormatRule<SyntaxNode<L>, Context = Context> + Default,
     P: FnMut(&SyntaxNode<L>) -> bool,
@@ -1039,7 +1031,7 @@ where
 ///
 /// It returns a [Formatted] result
 pub fn format_sub_tree<
-    C: FormatContext,
+    C: FormatContext + CommentContext<L>,
     L: Language,
     N: FormatWithRule<C, Item = SyntaxNode<L>>,
 >(
@@ -1300,9 +1292,8 @@ impl<Context> FormatState<Context>
 where
     Context: FormatContext,
 {
-    pub fn snapshot(&self) -> FormatStateSnapshot<Context::Snapshot> {
+    pub fn snapshot(&self) -> FormatStateSnapshot {
         FormatStateSnapshot {
-            context: self.context.snapshot(),
             last_content_inline_comment: self.last_content_inline_comment,
             last_token_kind: self.last_token_kind,
             manual_handled_comments_len: self.manually_formatted_comments.len(),
@@ -1311,15 +1302,22 @@ where
         }
     }
 
-    pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot<Context::Snapshot>) {
-        self.context.restore_snapshot(snapshot.context);
-        self.last_content_inline_comment = snapshot.last_content_inline_comment;
-        self.last_token_kind = snapshot.last_token_kind;
+    pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
+        let FormatStateSnapshot {
+            last_content_inline_comment,
+            last_token_kind,
+            manual_handled_comments_len,
+            #[cfg(debug_assertions)]
+            printed_tokens,
+        } = snapshot;
+
+        self.last_content_inline_comment = last_content_inline_comment;
+        self.last_token_kind = last_token_kind;
         self.manually_formatted_comments
-            .truncate(snapshot.manual_handled_comments_len);
+            .truncate(manual_handled_comments_len);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                self.printed_tokens = snapshot.printed_tokens;
+                self.printed_tokens = printed_tokens;
             }
         }
     }
@@ -1341,28 +1339,10 @@ impl LastTokenKind {
     }
 }
 
-pub struct FormatStateSnapshot<Context> {
-    context: Context,
+pub struct FormatStateSnapshot {
     last_content_inline_comment: bool,
     last_token_kind: Option<LastTokenKind>,
     manual_handled_comments_len: usize,
     #[cfg(debug_assertions)]
     printed_tokens: PrintedTokens,
-}
-
-/// Defines how to format comments for a specific [Language].
-pub trait CommentStyle<L: Language>: Copy {
-    /// Returns the kind of the comment
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<L>) -> CommentKind;
-
-    /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are:
-    /// * left parentheses: `(`, `[`, `{`
-    fn is_group_start_token(&self, kind: L::Kind) -> bool;
-
-    /// Returns `true` if a token with the passed `kind` marks the end of a group. Common group end tokens are:
-    /// * right parentheses: `)`, `]`, `}`
-    /// * end of statement token: `;`
-    /// * element separator: `,` or `.`.
-    /// * end of file token: `EOF`
-    fn is_group_end_token(&self, kind: L::Kind) -> bool;
 }

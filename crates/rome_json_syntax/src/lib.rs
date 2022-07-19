@@ -50,6 +50,14 @@ impl rome_rowan::SyntaxKind for JsonSyntaxKind {
     fn from_raw(raw: RawSyntaxKind) -> Self {
         Self::from(raw.0)
     }
+
+    fn is_root(&self) -> bool {
+        matches!(self, JsonSyntaxKind::JSON_ROOT)
+    }
+
+    fn is_list(&self) -> bool {
+        JsonSyntaxKind::is_list(*self)
+    }
 }
 
 impl TryFrom<JsonSyntaxKind> for TriviaPieceKind {
