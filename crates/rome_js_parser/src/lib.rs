@@ -130,8 +130,8 @@
 //! ### Parse children
 //! The parse rules will guide you in how to write your implementation and the parser infrastructure provides the following convenience APIs:
 //!
-//! * Optional token `'ident'?`: Use `p.eat_optional(token)`. It eats the next token if it matches the passed-in token. Adds a missing marker if the token isn't present in the source code.
-//! * Required token `'ident'`: Use`p.expect_required(token)`. It eats the next token if it matches the passed-in token.
+//! * Optional token `'ident'?`: Use `p.eat(token)`. It eats the next token if it matches the passed-in token. 
+//! * Required token `'ident'`: Use`p.expect(token)`. It eats the next token if it matches the passed-in token.
 //! It adds an `Expected 'x' but found 'y' instead` error and a missing marker if the token isn't present in the source code.
 //! * Optional node `body: JsBlockStatement?`: Use`parse_block_statement(p).or_missing(p)`. It parses the block if it is present in the source code and adds a missing marker if it isn't.
 //! * Required node `body: JsBlockStatement`: Use `parse_block_statement(p).or_missing_with_error(p, error_builder)`:
@@ -147,13 +147,13 @@
 //!
 //!  let m = p.start();
 //!
-//!  p.expect_required(T![if]);
-//!  p.expect_required(T!['(']);
-//!  parse_any_expression(p).or_missing_with_error(p, js_parse_errors::expeced_if_statement);
-//!  p.expect_required(T![')']);
-//!  parse_block_statement(p).or_missing_with_error(p, js_parse_errors::expected_block_statement);
-//! // the else block is optional, so we mark it as "missing" in case it's absent
-//!  parse_else_clause(p).or_missing();
+//!  p.expect(T![if]);
+//!  p.expect(T!['(']);
+//!  parse_any_expression(p).or_add_diagnostic(p, js_parse_errors::expeced_if_statement);
+//!  p.expect(T![')']);
+//!  parse_block_statement(p).or_add_diagnostic(p, js_parse_errors::expected_block_statement);
+//! // the else block is optional, handle the marker by using `ok`
+//!  parse_else_clause(p).ok();
 //!
 //!  Present(m.complete(p, JS_IF_STATEMENT));
 //! }
@@ -263,8 +263,8 @@
 //!
 //!  let m = p.start();
 //!  p.bump(T![with]); // with
-//!  parenthesized_expression(p).or_missing_with_error(p, js_errors::expected_parenthesized_expression);
-//!  parse_statement(p).or_missing_with_error(p, js_error::expected_statement);
+//!  parenthesized_expression(p).or_add_diagnostic(p, js_errors::expected_parenthesized_expression);
+//!  parse_statement(p).or_add_diagnostic(p, js_error::expected_statement);
 //!  let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 //!
 //!  let conditional = StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
@@ -272,7 +272,7 @@
 //!    .primary(marker.range(p), "")
 //!  });
 //!
-//!  conditional.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
+//!  
 //! }
 //! ```
 //!
@@ -285,7 +285,7 @@
 //! });
 //! ```
 //!
-//! The `StrictMode.excluding_syntax` creates a conditional syntax that is invalid in strict mode and adds an error if the parser is currently in strict mode.
+//! The `StrictMode.excluding_syntax` converts the parsed syntax to an unknown node and uses the diagnostic builder to create a diagnostic if the feature is not supported.
 //!
 //! You can convert the `ConditionalParsedSyntax` to a regular `ParsedSyntax` by calling `or_invalid_to_unknown`, which wraps the whole parsed `with` statement in an `UNKNOWN` node if the parser is in strict mode and otherwise returns the unchanged `with` statement.
 //!
@@ -295,7 +295,7 @@
 //! ## Summary
 //!
 //! * Parse rules are named `parse_rule_name`
-//! * The parse rules should return a `ParsedSyntax` or `ConditinalParsedSyntax`
+//! * The parse rules should return a `ParsedSyntax` 
 //! * The rule must return `Present` if it consumes any token and, therefore, can parse the node with at least some of its children.
 //! * It returns `Absent` otherwise and must not progress parsing nor add any errors.
 //! * Lists must perform error recovery to avoid infinite loops.
