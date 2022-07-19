@@ -143,8 +143,4 @@ impl Rule for NoFunctionAssign {
 
         Some(diag)
     }
-
-    fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        None
-    }
 }
