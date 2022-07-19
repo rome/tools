@@ -156,6 +156,13 @@ the statements in a block
 Disallow multiple variable declarations in the same variable statement
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useTemplate">
+	<a href="/docs/lint/rules/useTemplate">useTemplate</a>
+	<a class="header-anchor" href="#useTemplate"></a>
+</h3>
+Template literals are preferred over string concatenation.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useValidTypeof">
 	<a href="/docs/lint/rules/useValidTypeof">useValidTypeof</a>
 	<a class="header-anchor" href="#useValidTypeof"></a>
