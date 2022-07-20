@@ -220,8 +220,8 @@ pub trait CstFormatContext: FormatContext {
     /// Having independent lifetimes is necessary to support the use case where a (formattable object)[Format]
     /// iterates over all comments and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn this context).
     ///
-    /// ```ignore
-    /// for leading in f.context().comments().leading_comments() {
+    /// ```block
+    /// for leading in f.context().comments().leading_comments(node) {
     ///     ^
     ///     |- Borrows comments
     ///   write!(f, [comment(leading.piece.text())])?;
