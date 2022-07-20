@@ -122,6 +122,24 @@ where
         });
     }
 
+    pub fn replace_token(&mut self, prev_token: SyntaxToken<L>, next_token: SyntaxToken<L>) {
+        let new_token_slot = prev_token.index();
+        let parent = prev_token.parent();
+        let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
+            let range = p.text_range();
+            (range.start().into(), range.end().into())
+        });
+        let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
+
+        self.changes.push(CommitChange {
+            parent_depth,
+            parent,
+            parent_range,
+            new_node_slot: new_token_slot,
+            new_node: Some(SyntaxElement::Token(next_token)),
+        });
+    }
+
     pub fn replace_node<T>(&mut self, prev_node: T, next_node: T)
     where
         T: AstNode<Language = L>,
