@@ -1,10 +1,10 @@
-use crate::{registry::RuleRoot, services::ServiceBag, Queryable, Rule};
+use crate::{
+    registry::RuleRoot, CannotCreateServicesError, FromServices, Queryable, Rule, ServiceBag,
+};
 use std::ops::Deref;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
-type RuleContextCreationError<R> =
-    <<<R as Rule>::Query as Queryable>::Services as TryFrom<ServiceBag>>::Error;
 
 pub struct RuleContext<'a, R>
 where
@@ -22,12 +22,12 @@ where
     pub fn new(
         query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
-        services: ServiceBag,
-    ) -> Result<Self, RuleContextCreationError<R>> {
+        services: &ServiceBag,
+    ) -> Result<Self, CannotCreateServicesError> {
         Ok(Self {
             query_result,
             root,
-            services: services.try_into()?,
+            services: FromServices::from_services(services)?,
         })
     }
 

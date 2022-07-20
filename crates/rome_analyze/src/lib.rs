@@ -1,7 +1,7 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 
 use std::cmp::Ordering;
-use std::collections::BinaryHeap;
+use std::collections::{BTreeMap, BinaryHeap};
 use std::ops;
 
 mod categories;
@@ -17,14 +17,14 @@ mod visitor;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 pub use crate::matcher::{QueryMatcher, RuleKey, SignalEntry};
-pub use crate::query::{Ast, CannotCreateServicesError, QueryKey, QueryMatch, Queryable};
+pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{LanguageRoot, Phase, Phases, RuleMetadata, RuleRegistry};
 pub use crate::rule::{GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup, RuleMeta};
-pub use crate::services::{ServiceBag, ServiceBagData};
+pub use crate::services::{CannotCreateServicesError, FromServices, ServiceBag};
 use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
-pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext};
+pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 use rome_console::markup;
 use rome_diagnostics::file::FileId;
 use rome_diagnostics::Diagnostic;
@@ -39,21 +39,135 @@ use rome_rowan::{
 /// auxiliary data structures as well as emit "query match" events to be
 /// processed by lint rules and in turn emit "analyzer signals" in the form of
 /// diagnostics, code actions or both
-pub struct Analyzer<'a, L: Language, Matcher, Break> {
-    /// List of visitors being run by this instance of the analyzer
-    visitors: Vec<Box<dyn Visitor<Language = L> + 'a>>,
+pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
+    /// List of visitors being run by this instance of the analyzer for each phase
+    phases: BTreeMap<Phases, Vec<Box<dyn Visitor<Language = L> + 'analyzer>>>,
     /// Executor for the query matches emitted by the visitors
     query_matcher: Matcher,
+    /// Language-specific suppression comment parsing function
+    parse_suppression_comment: SuppressionParser,
+    /// Handles analyzer signals emitted by invidual rules
+    emit_signal: SignalHandler<'analyzer, L, Break>,
+}
+
+pub struct AnalyzerContext<L: Language> {
+    pub file_id: FileId,
+    pub root: LanguageRoot<L>,
+    pub services: ServiceBag,
+    pub range: Option<TextRange>,
+}
+
+impl<'analyzer, L, Matcher, Break> Analyzer<'analyzer, L, Matcher, Break>
+where
+    L: Language,
+    Matcher: QueryMatcher<L>,
+{
+    /// Construct a new instance of the analyzer with the given rule registry
+    /// and suppression comment parser
+    pub fn new(
+        query_matcher: Matcher,
+        parse_suppression_comment: SuppressionParser,
+        emit_signal: SignalHandler<'analyzer, L, Break>,
+    ) -> Self {
+        Self {
+            phases: BTreeMap::new(),
+            query_matcher,
+            parse_suppression_comment,
+            emit_signal,
+        }
+    }
+
+    pub fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
+    where
+        V: Visitor<Language = L> + 'analyzer,
+    {
+        self.phases
+            .entry(phase)
+            .or_default()
+            .push(Box::new(visitor));
+    }
+
+    pub fn run(self, mut ctx: AnalyzerContext<L>) -> Option<Break> {
+        let Self {
+            phases,
+            mut query_matcher,
+            parse_suppression_comment,
+            mut emit_signal,
+        } = self;
+
+        let mut line_index = 0;
+        let mut line_suppressions = Vec::new();
+
+        for (index, (phase, mut visitors)) in phases.into_iter().enumerate() {
+            let runner = PhaseRunner {
+                phase,
+                visitors: &mut visitors,
+                query_matcher: &mut query_matcher,
+                signal_queue: BinaryHeap::new(),
+                parse_suppression_comment,
+                line_index: &mut line_index,
+                line_suppressions: &mut line_suppressions,
+                emit_signal: &mut emit_signal,
+                file_id: ctx.file_id,
+                root: &ctx.root,
+                services: &ctx.services,
+                range: ctx.range,
+            };
+
+            // The first phase being run will inspect the tokens and parse the
+            // suppression comments, then subsequent phases only needs to read
+            // this data again since it's already cached in `line_suppressions`
+            let result = if index == 0 {
+                runner.run_first_phase()
+            } else {
+                runner.run_remaining_phases()
+            };
+
+            if let ControlFlow::Break(br) = result {
+                return Some(br);
+            }
+
+            // Finish all the active visitors, this is executed outside of the
+            // phase runner as it needs mutable access to the service bag (the
+            // runner borrows the services for the entire phase)
+            for visitor in visitors {
+                visitor.finish(VisitorFinishContext {
+                    root: &ctx.root,
+                    services: &mut ctx.services,
+                });
+            }
+        }
+
+        None
+    }
+}
+
+/// Holds all the state required to run a single analysis phase to completion
+struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
+    /// Identifier of the phase this runner is executing
+    phase: Phases,
+    /// List of visitors being run by this instance of the analyzer for each phase
+    visitors: &'phase mut [Box<dyn Visitor<Language = L> + 'analyzer>],
+    /// Executor for the query matches emitted by the visitors
+    query_matcher: &'phase mut Matcher,
     /// Queue for pending analyzer signals
-    signal_queue: BinaryHeap<SignalEntry<L>>,
+    signal_queue: BinaryHeap<SignalEntry<'phase, L>>,
     /// Language-specific suppression comment parsing function
     parse_suppression_comment: SuppressionParser,
     /// Line index at the current position of the traversal
-    line_index: usize,
+    line_index: &'phase mut usize,
     /// Track active suppression comments per-line, ordered by line index
-    line_suppressions: Vec<LineSuppression>,
+    line_suppressions: &'phase mut Vec<LineSuppression>,
     /// Handles analyzer signals emitted by invidual rules
-    emit_signal: SignalHandler<'a, L, Break>,
+    emit_signal: &'phase mut SignalHandler<'analyzer, L, Break>,
+    /// ID if the file being analyzed
+    file_id: FileId,
+    /// Root node of the file being analyzed
+    root: &'phase L::Root,
+    /// Service bag handle for this phase
+    services: &'phase ServiceBag,
+    /// Optional text range to restrict the analysis to
+    range: Option<TextRange>,
 }
 
 /// Single entry for a suppression comment in the `line_suppressions` buffer
@@ -71,46 +185,15 @@ struct LineSuppression {
     suppressed_rules: Vec<RuleFilter<'static>>,
 }
 
-pub struct AnalyzerContext<L: Language> {
-    pub phase: Phases,
-    pub file_id: FileId,
-    pub root: LanguageRoot<L>,
-    pub services: ServiceBag,
-    pub range: Option<TextRange>,
-}
-
-impl<'a, L, Matcher, Break> Analyzer<'a, L, Matcher, Break>
+impl<'a, 'phase, L, Matcher, Break> PhaseRunner<'a, 'phase, L, Matcher, Break>
 where
     L: Language,
     Matcher: QueryMatcher<L>,
 {
-    /// Construct a new instance of the analyzer with the given rule registry
-    /// and suppression comment parser
-    pub fn new(
-        query_matcher: Matcher,
-        parse_suppression_comment: SuppressionParser,
-        emit_signal: SignalHandler<'a, L, Break>,
-    ) -> Self {
-        Self {
-            visitors: Vec::new(),
-            query_matcher,
-            signal_queue: BinaryHeap::new(),
-            parse_suppression_comment,
-            line_index: 0,
-            line_suppressions: Vec::new(),
-            emit_signal,
-        }
-    }
-
-    pub fn add_visitor<V>(&mut self, visitor: V)
-    where
-        V: Visitor<Language = L> + 'a,
-    {
-        self.visitors.push(Box::new(visitor));
-    }
-
-    pub fn run(mut self, ctx: AnalyzerContext<L>) -> Option<Break> {
-        let iter = ctx.root.syntax().preorder_with_tokens(Direction::Next);
+    /// Runs phase 0 over nodes and tokens to process line breaks and
+    /// suppression comments
+    fn run_first_phase(mut self) -> ControlFlow<Break> {
+        let iter = self.root.syntax().preorder_with_tokens(Direction::Next);
         for event in iter {
             let node_event = match event {
                 WalkEvent::Enter(SyntaxElement::Node(node)) => WalkEvent::Enter(node),
@@ -118,10 +201,7 @@ where
 
                 // If this is a token enter event, process its text content
                 WalkEvent::Enter(SyntaxElement::Token(token)) => {
-                    let result = self.flush_matches(ctx.file_id, token);
-                    if let ControlFlow::Break(br) = result {
-                        return Some(br);
-                    }
+                    self.handle_token(self.file_id, token)?;
 
                     continue;
                 }
@@ -130,15 +210,15 @@ where
                 }
             };
 
-            // If this is a node event pass it to the visitors
-            for visitor in &mut self.visitors {
+            // If this is a node event pass it to the visitors for this phase
+            for visitor in self.visitors.iter_mut() {
                 let ctx = VisitorContext {
-                    phase: ctx.phase,
-                    file_id: ctx.file_id,
-                    root: &ctx.root,
-                    services: &ctx.services,
-                    range: ctx.range,
-                    query_matcher: &mut self.query_matcher,
+                    phase: self.phase,
+                    file_id: self.file_id,
+                    root: self.root,
+                    services: self.services,
+                    range: self.range,
+                    query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
                 };
 
@@ -146,13 +226,40 @@ where
             }
         }
 
-        None
+        // Flush all remaining pending events
+        self.flush_matches(None)
+    }
+
+    /// Runs phases 1..N over nodes, since suppression comments were already
+    /// processed and cached in `run_initial_phase`
+    fn run_remaining_phases(mut self) -> ControlFlow<Break> {
+        for event in self.root.syntax().preorder() {
+            // Run all the active visitors for the phace on the event
+            for visitor in self.visitors.iter_mut() {
+                let ctx = VisitorContext {
+                    phase: self.phase,
+                    file_id: self.file_id,
+                    root: self.root,
+                    services: self.services,
+                    range: self.range,
+                    query_matcher: self.query_matcher,
+                    signal_queue: &mut self.signal_queue,
+                };
+
+                visitor.visit(&event, ctx);
+            }
+
+            // Flush all pending query signals
+            self.flush_matches(None)?;
+        }
+
+        ControlFlow::Continue(())
     }
 
     /// Process the text for a single token, parsing suppression comments and
     /// handling line breaks, then flush all pending query signals in the queue
     /// whose position is less then the end of the token within the file
-    fn flush_matches(&mut self, file_id: FileId, token: SyntaxToken<L>) -> ControlFlow<Break> {
+    fn handle_token(&mut self, file_id: FileId, token: SyntaxToken<L>) -> ControlFlow<Break> {
         // Process the content of the token for comments and newline
         for piece in token.leading_trivia().pieces() {
             if matches!(
@@ -188,10 +295,18 @@ where
 
         // Flush signals from the queue until the end of the current token is reached
         let cutoff = token.text_range().end();
+        self.flush_matches(Some(cutoff))
+    }
+
+    /// Flush all pending query signals in the queue.  If `cutoff` is specified,
+    /// signals that start after this position in the file will be skipped
+    fn flush_matches(&mut self, cutoff: Option<TextSize>) -> ControlFlow<Break> {
         while let Some(entry) = self.signal_queue.peek() {
             let start = entry.text_range.start();
-            if start >= cutoff {
-                break;
+            if let Some(cutoff) = cutoff {
+                if start >= cutoff {
+                    break;
+                }
             }
 
             // Search for an active suppression comment covering the range of
@@ -203,7 +318,7 @@ where
                 .line_suppressions
                 .last()
                 .filter(|suppression| {
-                    suppression.line_index == self.line_index
+                    suppression.line_index == *self.line_index
                         && suppression.text_range.start() <= start
                 })
                 .or_else(|| {
@@ -310,7 +425,7 @@ where
         }
 
         // Suppression comments apply to the next line
-        let line_index = self.line_index + 1;
+        let line_index = *self.line_index + 1;
 
         // If the last suppression was on the same or previous line, extend its
         // range and set of supressed rules with the content for the new suppression
@@ -349,7 +464,7 @@ where
         let mut did_match = false;
         for (index, _) in text.match_indices('\n') {
             if let Some(last_suppression) = self.line_suppressions.last_mut() {
-                if last_suppression.line_index == self.line_index {
+                if last_suppression.line_index == *self.line_index {
                     let index = TextSize::try_from(index).expect(
                         "integer overflow while converting a suppression line to `TextSize`",
                     );
@@ -359,12 +474,12 @@ where
                 }
             }
 
-            self.line_index += 1;
+            *self.line_index += 1;
         }
 
         if !did_match {
             if let Some(last_suppression) = self.line_suppressions.last_mut() {
-                if last_suppression.line_index == self.line_index {
+                if last_suppression.line_index == *self.line_index {
                     last_suppression.text_range = last_suppression.text_range.cover(range);
                 }
             }

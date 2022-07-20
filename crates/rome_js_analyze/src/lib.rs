@@ -1,10 +1,9 @@
 use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, LanguageRoot, Phases,
-    RuleAction, RuleMetadata, ServiceBag, ServiceBagData, SyntaxVisitor,
+    RuleAction, RuleMetadata, ServiceBag, SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
-use rome_js_semantic::semantic_model;
 use rome_js_syntax::{
     suppression::{parse_suppression_comment, SuppressionCategory},
     JsLanguage,
@@ -18,7 +17,7 @@ mod semantic_analyzers;
 mod semantic_services;
 pub(crate) mod utils;
 
-use crate::registry::build_registry;
+use crate::{registry::build_registry, semantic_services::SemanticModelBuilderVisitor};
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
@@ -60,41 +59,17 @@ where
         &mut emit_signal,
     );
 
-    analyzer.add_visitor(make_visitor());
+    analyzer.add_visitor(Phases::Syntax, make_visitor());
+    analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+    analyzer.add_visitor(Phases::Syntax, SemanticModelBuilderVisitor::new(root));
 
-    analyzer.add_visitor(SyntaxVisitor::default());
+    analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
-    let breaking_reason = analyzer.run(AnalyzerContext {
-        phase: Phases::Syntax,
+    analyzer.run(AnalyzerContext {
         file_id,
         root: root.clone(),
         range: filter.range,
         services: ServiceBag::default(),
-    });
-
-    if breaking_reason.is_some() {
-        return breaking_reason;
-    }
-
-    // Semantic Phase
-    let model = semantic_model(root);
-    let mut services = ServiceBagData::default();
-    services.insert_service(model);
-
-    let mut analyzer = Analyzer::new(
-        build_registry(&filter),
-        parse_linter_suppression_comment,
-        &mut emit_signal,
-    );
-
-    analyzer.add_visitor(SyntaxVisitor::default());
-
-    analyzer.run(AnalyzerContext {
-        phase: Phases::Semantic,
-        file_id,
-        root: root.clone(),
-        range: filter.range,
-        services: ServiceBag::new(services),
     })
 }
 

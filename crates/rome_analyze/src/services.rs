@@ -1,18 +1,23 @@
 use std::{
     any::{Any, TypeId},
     collections::HashMap,
-    ops::Deref,
-    sync::Arc,
 };
 
-use crate::CannotCreateServicesError;
+pub enum CannotCreateServicesError {
+    /// List the missing services necessary to create the service bag
+    MissingServices(&'static [&'static str]),
+}
+
+pub trait FromServices: Sized {
+    fn from_services(services: &ServiceBag) -> Result<Self, CannotCreateServicesError>;
+}
 
 #[derive(Default)]
-pub struct ServiceBagData {
+pub struct ServiceBag {
     services: HashMap<TypeId, Box<dyn Any>>,
 }
 
-impl ServiceBagData {
+impl ServiceBag {
     pub fn insert_service<T: 'static + Clone>(&mut self, service: T) {
         let id = TypeId::of::<T>();
         self.services.insert(id, Box::new(service));
@@ -25,33 +30,8 @@ impl ServiceBagData {
     }
 }
 
-#[derive(Clone)]
-pub struct ServiceBag(Arc<ServiceBagData>);
-
-impl Default for ServiceBag {
-    fn default() -> Self {
-        let services = ServiceBagData::default();
-        ServiceBag::new(services)
-    }
-}
-
-impl ServiceBag {
-    pub fn new(services: ServiceBagData) -> Self {
-        Self(Arc::new(services))
-    }
-}
-
-impl Deref for ServiceBag {
-    type Target = ServiceBagData;
-
-    fn deref(&self) -> &Self::Target {
-        self.0.as_ref()
-    }
-}
-
-impl TryFrom<ServiceBag> for () {
-    type Error = CannotCreateServicesError;
-    fn try_from(_: ServiceBag) -> Result<Self, Self::Error> {
+impl FromServices for () {
+    fn from_services(_: &ServiceBag) -> Result<Self, CannotCreateServicesError> {
         Ok(())
     }
 }

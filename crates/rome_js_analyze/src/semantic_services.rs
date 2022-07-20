@@ -1,9 +1,10 @@
 use rome_analyze::{
-    CannotCreateServicesError, Phase, Phases, QueryKey, QueryMatch, Queryable, ServiceBag,
+    CannotCreateServicesError, FromServices, Phase, Phases, QueryKey, QueryMatch, Queryable,
+    ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
 };
-use rome_js_semantic::SemanticModel;
-use rome_js_syntax::JsLanguage;
-use rome_rowan::AstNode;
+use rome_js_semantic::{SemanticEventExtractor, SemanticModel, SemanticModelBuilder};
+use rome_js_syntax::{JsAnyRoot, JsLanguage, WalkEvent};
+use rome_rowan::{AstNode, SyntaxNode};
 
 pub struct SemanticServices {
     model: SemanticModel,
@@ -15,10 +16,8 @@ impl SemanticServices {
     }
 }
 
-impl TryFrom<ServiceBag> for SemanticServices {
-    type Error = CannotCreateServicesError;
-
-    fn try_from(services: ServiceBag) -> Result<Self, Self::Error> {
+impl FromServices for SemanticServices {
+    fn from_services(services: &ServiceBag) -> Result<Self, CannotCreateServicesError> {
         let model = services
             .get_service()
             .ok_or(CannotCreateServicesError::MissingServices(&[
@@ -55,5 +54,48 @@ where
             QueryMatch::Syntax(node) => N::unwrap_cast(node.clone()),
             _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
         }
+    }
+}
+
+pub(crate) struct SemanticModelBuilderVisitor {
+    extractor: SemanticEventExtractor,
+    builder: SemanticModelBuilder,
+}
+
+impl SemanticModelBuilderVisitor {
+    pub(crate) fn new(root: &JsAnyRoot) -> Self {
+        Self {
+            extractor: SemanticEventExtractor::default(),
+            builder: SemanticModelBuilder::new(root.clone()),
+        }
+    }
+}
+
+impl Visitor for SemanticModelBuilderVisitor {
+    type Language = JsLanguage;
+
+    fn visit(
+        &mut self,
+        event: &WalkEvent<SyntaxNode<JsLanguage>>,
+        _ctx: VisitorContext<JsLanguage>,
+    ) {
+        match event {
+            WalkEvent::Enter(node) => {
+                self.builder.push_node(node);
+                self.extractor.enter(node);
+            }
+            WalkEvent::Leave(node) => {
+                self.extractor.leave(node);
+            }
+        }
+
+        while let Some(e) = self.extractor.pop() {
+            self.builder.push_event(e);
+        }
+    }
+
+    fn finish(self: Box<Self>, ctx: VisitorFinishContext<JsLanguage>) {
+        let model = self.builder.build();
+        ctx.services.insert_service(model);
     }
 }

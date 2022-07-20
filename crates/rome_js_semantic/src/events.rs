@@ -189,6 +189,7 @@ impl SemanticEventExtractor {
 
     /// See [SemanticEvent] for a more detailed description
     /// of which ```SyntaxNode``` generates which events.
+    #[inline]
     pub fn enter(&mut self, node: &JsSyntaxNode) {
         use rome_js_syntax::JsSyntaxKind::*;
 
@@ -308,6 +309,7 @@ impl SemanticEventExtractor {
 
     /// See [SemanticEvent] for a more detailed description
     /// of which ```SyntaxNode``` generates which events.
+    #[inline]
     pub fn leave(&mut self, node: &JsSyntaxNode) {
         use rome_js_syntax::JsSyntaxKind::*;
 
@@ -331,6 +333,7 @@ impl SemanticEventExtractor {
     }
 
     /// Return any previous extracted [SemanticEvent].
+    #[inline]
     pub fn pop(&mut self) -> Option<SemanticEvent> {
         self.stash.pop_front()
     }

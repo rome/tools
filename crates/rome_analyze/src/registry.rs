@@ -12,7 +12,7 @@ use crate::{
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Phases {
     Syntax = 0,
     Semantic = 1,
@@ -259,7 +259,7 @@ impl<L: Language> RegistryRule<L> {
             // SAFETY: The rule should never get executed in the first place
             // if the query doesn't match
             let query_result = <R::Query as Queryable>::unwrap_match(&params.query);
-            let ctx = match RuleContext::new(&query_result, params.root, params.services.clone()) {
+            let ctx = match RuleContext::new(&query_result, params.root, params.services) {
                 Ok(ctx) => ctx,
                 Err(_) => return,
             };
@@ -270,10 +270,10 @@ impl<L: Language> RegistryRule<L> {
 
                 let signal = Box::new(RuleSignal::<G, R>::new(
                     params.file_id,
-                    params.root.clone(),
+                    params.root,
                     query_result.clone(),
                     result,
-                    params.services.clone(),
+                    params.services,
                 ));
 
                 params.signal_queue.push(SignalEntry {

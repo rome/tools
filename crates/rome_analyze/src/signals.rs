@@ -15,8 +15,7 @@ use crate::{
     context::RuleContext,
     registry::{LanguageRoot, RuleLanguage, RuleRoot},
     rule::Rule,
-    services::ServiceBag,
-    Queryable, RuleGroup,
+    Queryable, RuleGroup, ServiceBag,
 };
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -124,25 +123,25 @@ where
 }
 
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
-pub(crate) struct RuleSignal<G, R: Rule> {
+pub(crate) struct RuleSignal<'phase, G, R: Rule> {
     file_id: FileId,
-    root: RuleRoot<R>,
+    root: &'phase RuleRoot<R>,
     query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
-    services: ServiceBag,
+    services: &'phase ServiceBag,
     _rule: PhantomData<(G, R)>,
 }
 
-impl<G, R> RuleSignal<G, R>
+impl<'phase, G, R> RuleSignal<'phase, G, R>
 where
     R: Rule + 'static,
 {
     pub(crate) fn new(
         file_id: FileId,
-        root: RuleRoot<R>,
+        root: &'phase RuleRoot<R>,
         query_result: <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
-        services: ServiceBag,
+        services: &'phase ServiceBag,
     ) -> Self {
         Self {
             file_id,
@@ -155,20 +154,20 @@ where
     }
 }
 
-impl<G, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<G, R>
+impl<'bag, G, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'bag, G, R>
 where
     G: RuleGroup,
     R: Rule,
 {
     fn diagnostic(&self) -> Option<Diagnostic> {
-        let ctx = RuleContext::new(&self.query_result, &self.root, self.services.clone()).ok()?;
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
 
         R::diagnostic(&ctx, &self.state)
             .map(|diag| diag.into_diagnostic(self.file_id, format!("{}/{}", G::NAME, R::NAME)))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
-        let ctx = RuleContext::new(&self.query_result, &self.root, self.services.clone()).ok()?;
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
 
         R::action(&ctx, &self.state).and_then(|action| {
             let (original_range, new_range) =

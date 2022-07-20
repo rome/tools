@@ -3,19 +3,14 @@ use rome_rowan::{AstNode, Language, SyntaxKindSet, SyntaxNode, TextRange};
 
 use crate::{
     registry::{NodeLanguage, Phase},
-    services::ServiceBag,
+    services::FromServices,
 };
-
-pub enum CannotCreateServicesError {
-    /// List the missing services necessary to create the service bag
-    MissingServices(&'static [&'static str]),
-}
 
 /// Trait implemented for all types, for example lint rules can query them to emit diagnostics or code actions.
 pub trait Queryable: Sized {
     type Output;
     type Language: Language;
-    type Services: TryFrom<ServiceBag> + Phase;
+    type Services: FromServices + Phase;
 
     /// Statically declares which [QueryMatch] variant is matched by this
     /// [Queryable] type. For instance the [Ast] queryable matches on
