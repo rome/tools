@@ -156,41 +156,52 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
                 // ## Example
                 // `1 *    (2 + "foo") /**trailing */             + "bar"`
                 //     ^^^^ drop                     ^^^^^^^^^^^^^ drop
-                let next_first_token = JsSyntaxToken::new_detached(
-                    first_token.kind(),
-                    first_token.text().trim_start(),
-                    first_token
+                let next_first_token = {
+                    let token_kind = first_token.kind();
+                    let token_text = first_token.text().trim_start();
+                    let leading_trivia = first_token
                         .leading_trivia()
                         .pieces()
                         .skip_while(|item| item.is_newline() || item.is_whitespace())
                         .map(|item| TriviaPiece::new(item.kind(), item.text_len()))
-                        .collect::<Vec<_>>(),
-                    first_token
+                        .collect::<Vec<_>>();
+                    let trailing_trivia = first_token
                         .trailing_trivia()
                         .pieces()
-                        .map(|item| TriviaPiece::new(item.kind(), item.text_len())),
-                );
+                        .map(|item| TriviaPiece::new(item.kind(), item.text_len()));
+                    JsSyntaxToken::new_detached(
+                        token_kind,
+                        token_text,
+                        leading_trivia,
+                        trailing_trivia,
+                    )
+                };
                 let expr_next = expr_next
                     .replace_token_discard_trivia(first_token.clone(), next_first_token)?;
                 // Drop the trailing whitespace of trailing trivia of last token
                 let last_token = expr_next.syntax().last_token()?;
-                let mut next_last_token_trailing = last_token
-                    .trailing_trivia()
-                    .pieces()
-                    .rev()
-                    .skip_while(|item| item.is_newline() || item.is_whitespace())
-                    .map(|item| TriviaPiece::new(item.kind(), item.text_len()))
-                    .collect::<Vec<_>>();
-                next_last_token_trailing.reverse();
-                let next_last_token = JsSyntaxToken::new_detached(
-                    last_token.kind(),
-                    last_token.text().trim_end(),
-                    last_token
+                let next_last_token = {
+                    let token_kind = last_token.kind();
+                    let mut trailing_trivia = last_token
+                        .trailing_trivia()
+                        .pieces()
+                        .rev()
+                        .skip_while(|item| item.is_newline() || item.is_whitespace())
+                        .map(|item| TriviaPiece::new(item.kind(), item.text_len()))
+                        .collect::<Vec<_>>();
+                    trailing_trivia.reverse();
+                    let leading_trivia = last_token
                         .leading_trivia()
                         .pieces()
-                        .map(|item| TriviaPiece::new(item.kind(), item.text_len())),
-                    next_last_token_trailing,
-                );
+                        .map(|item| TriviaPiece::new(item.kind(), item.text_len()));
+                    let token_text = last_token.text().trim_end();
+                    JsSyntaxToken::new_detached(
+                        token_kind,
+                        token_text,
+                        leading_trivia,
+                        trailing_trivia,
+                    )
+                };
                 let expr_next =
                     expr_next.replace_token_discard_trivia(last_token.clone(), next_last_token)?;
                 let template_element =
