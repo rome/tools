@@ -53,6 +53,18 @@ impl Default for Configuration {
 }
 
 impl Configuration {
+    /// This function is used to generate configuration for the `rome init` command
+    pub fn new_init() -> Self {
+        Self {
+            root: true,
+            linter: Some(LinterConfiguration {
+                enabled: false,
+                ..LinterConfiguration::default()
+            }),
+            ..Configuration::default()
+        }
+    }
+
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter.as_ref().map(|f| !f.enabled).unwrap_or(false)
     }

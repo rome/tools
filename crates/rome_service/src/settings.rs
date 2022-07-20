@@ -35,6 +35,14 @@ impl WorkspaceSettings {
         if let Some(linter) = &configuration.linter {
             self.linter = LinterSettings::from(linter)
         }
+
+        let linter = configuration
+            .javascript
+            .as_ref()
+            .and_then(|j| j.linter.as_ref());
+        if let Some(linter) = linter {
+            self.languages.javascript.linter.globals = Some(linter.globals.clone());
+        }
     }
 }
 
@@ -67,11 +75,7 @@ pub struct LinterSettings {
     /// Enabled by default
     pub enabled: bool,
 
-    /// A list of global bindings that should be ignored by the analyzers
-    ///
-    /// If defined here, they should not emit diagnostics.
-    pub globals: Vec<String>,
-
+    /// List of rules
     pub rules: Option<Rules>,
 }
 
@@ -79,7 +83,6 @@ impl Default for LinterSettings {
     fn default() -> Self {
         Self {
             enabled: true,
-            globals: vec![],
             rules: Some(Rules::default()),
         }
     }
@@ -94,6 +97,10 @@ pub struct LanguagesSettings {
 pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
     type FormatSettings: Default;
+
+    /// Linter settings type for this language
+    type LinterSettings: Default;
+
     /// Fully resolved formatter options type for this language
     type FormatContext: rome_formatter::FormatContext;
 
@@ -114,6 +121,9 @@ pub trait Language: rome_rowan::Language {
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
     pub format: L::FormatSettings,
+
+    /// Linter settings for this language
+    pub linter: L::LinterSettings,
 }
 
 /// Handle object holding a temporary lock on the workspace settings until
