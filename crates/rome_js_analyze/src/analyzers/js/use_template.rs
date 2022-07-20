@@ -1,3 +1,4 @@
+use rome_analyze::RuleSuppressions;
 use rome_analyze::{
     context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
@@ -6,8 +7,8 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::JsAnyTemplateElement::{self, JsTemplateElement};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryOperator, JsSyntaxKind,
-    JsSyntaxToken, JsTemplate, JsTemplateElementList, T,
+    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryOperator, JsLanguage,
+    JsSyntaxKind, JsSyntaxToken, JsTemplate, JsTemplateElementList, WalkEvent, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
 
@@ -61,15 +62,40 @@ impl Rule for UseTemplate {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let binary_expr = ctx.query();
-        // Avoiding recursive diagnostics.
-        if binary_expr
-            .parent::<JsBinaryExpression>()
-            .and_then(|expr| emits_signal(&expr))
-            .is_some()
-        {
-            None
-        } else {
-            emits_signal(binary_expr)
+
+        let need_process = is_unnecessary_string_concat_expression(binary_expr)?;
+        if !need_process {
+            return None;
+        }
+
+        let collections = collect_binary_add_expression(binary_expr)?;
+        collections
+            .iter()
+            .any(|expr| {
+                !matches!(
+                    expr,
+                    JsAnyExpression::JsAnyLiteralExpression(
+                        rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(_)
+                    )
+                )
+            })
+            .then(|| collections)
+    }
+
+    fn suppressed_nodes(
+        ctx: &RuleContext<Self>,
+        _state: &Self::State,
+        suppressions: &mut RuleSuppressions<JsLanguage>,
+    ) {
+        let mut iter = ctx.query().syntax().preorder();
+        while let Some(node) = iter.next() {
+            if let WalkEvent::Enter(node) = node {
+                if node.kind() == JsSyntaxKind::JS_BINARY_EXPRESSION {
+                    suppressions.suppress_node(node);
+                } else {
+                    iter.skip_subtree();
+                }
+            }
         }
     }
 
@@ -101,26 +127,7 @@ impl Rule for UseTemplate {
         })
     }
 }
-/// Extract main logic of `UseTemplate::run`
-/// Aiming to avoid recursive diagnostics.
-fn emits_signal(expr: &JsBinaryExpression) -> Option<Vec<JsAnyExpression>> {
-    let need_process = is_unnecessary_string_concat_expression(expr)?;
-    if !need_process {
-        return None;
-    }
-    let collections = collect_binary_add_expression(expr)?;
-    collections
-        .iter()
-        .any(|expr| {
-            !matches!(
-                expr,
-                JsAnyExpression::JsAnyLiteralExpression(
-                    rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(_)
-                )
-            )
-        })
-        .then(|| collections)
-}
+
 /// Merge `Vec<JsAnyExpression>` into a `JsTemplate`
 fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<JsTemplate> {
     let mut reduced_exprs = Vec::with_capacity(exprs.len());

@@ -7,7 +7,7 @@ use rome_rowan::{Language, TextRange};
 
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
-use crate::registry::RuleLanguage;
+use crate::registry::{RuleLanguage, RuleSuppressions};
 use crate::{AnalysisFilter, LanguageRoot, Phase, Phases, Queryable, RuleRegistry};
 
 pub trait RuleMeta {
@@ -239,6 +239,18 @@ pub trait Rule: RuleMeta {
         Self::diagnostic(ctx, state).map(|diag| diag.span())
     }
 
+    /// Allows the rule to suppress a set of syntax nodes to prevent them from
+    /// matching the `Query`. This is useful for rules that implement a code
+    /// action that recursively modifies multiple nodes at once, this hook
+    /// allows these rules to avoid matching on those nodes again.
+    fn suppressed_nodes(
+        ctx: &RuleContext<Self>,
+        state: &Self::State,
+        suppressions: &mut RuleSuppressions<RuleLanguage<Self>>,
+    ) {
+        let (..) = (ctx, state, suppressions);
+    }
+
     /// Called by the consumer of the analyzer to try to generate a diagnostic
     /// from a signal raised by `run`
     ///
@@ -252,9 +264,10 @@ pub trait Rule: RuleMeta {
     ///
     /// The default implementation returns None
     fn action(
-        _ctx: &RuleContext<Self>,
-        _state: &Self::State,
+        ctx: &RuleContext<Self>,
+        state: &Self::State,
     ) -> Option<RuleAction<RuleLanguage<Self>>> {
+        let (..) = (ctx, state);
         None
     }
 }
