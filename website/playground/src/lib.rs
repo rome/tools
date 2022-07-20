@@ -173,13 +173,9 @@ pub fn run(
     let root_element = formatted.into_format_element();
     let formatter_ir = format!("{:#?}", root_element);
 
-    let mut diagnostic = String::new();
+    let mut html = HTML(Vec::new());
     for diag in parse.diagnostics() {
-        diagnostic.push_str(&diagnostic_to_string(
-            simple_files.name(main_file_id).unwrap(),
-            &code,
-            &diag,
-        ));
+        diagnostic_to_string(&simple_files, main_file_id, &diag, &mut html);
     }
 
     mark("rome::analyze::begin");
@@ -192,11 +188,7 @@ pub fn run(
                 if let Some(action) = signal.action() {
                     diag.suggestions.push(action.into());
                 }
-                diagnostic.push_str(&diagnostic_to_string(
-                    simple_files.name(main_file_id).unwrap(),
-                    &code,
-                    &diag,
-                ));
+                diagnostic_to_string(&simple_files, main_file_id, &diag, &mut html);
             }
 
             ControlFlow::<Never>::Continue(())
@@ -220,23 +212,26 @@ pub fn run(
         ast,
         formatted_code,
         formatter_ir,
-        errors: diagnostic,
+        errors: String::from_utf8(html.0).unwrap(),
     }
 }
 
-fn markup_to_string(markup: Markup) -> String {
-    let mut write = HTML(Vec::new());
-    let mut fmt = Formatter::new(&mut write);
+fn markup_to_string(markup: Markup, html: &mut HTML<Vec<u8>>) {
+    let mut fmt = Formatter::new(html);
     fmt.write_markup(markup).unwrap();
-
-    String::from_utf8(write.0).unwrap()
 }
 
-fn diagnostic_to_string(name: &str, source: &str, diag: &Diagnostic) -> String {
-    let file = SimpleFile::new(name.into(), source.into());
-    let text = markup_to_string(markup! {
-        {diag.display(&file)}
-    });
-
-    text
+fn diagnostic_to_string(
+    simple_files: &SimpleFiles,
+    id: usize,
+    diag: &Diagnostic,
+    html: &mut HTML<Vec<u8>>,
+) {
+    let file = simple_files.get(id).unwrap();
+    markup_to_string(
+        markup! {
+            {diag.display(file)}
+        },
+        html,
+    );
 }
