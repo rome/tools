@@ -181,22 +181,6 @@ pub fn run(
             &diag,
         ));
     }
-    fn markup_to_string(markup: Markup) -> String {
-        let mut write = HTML(Vec::new());
-        let mut fmt = Formatter::new(&mut write);
-        fmt.write_markup(markup).unwrap();
-
-        String::from_utf8(write.0).unwrap()
-    }
-
-    fn diagnostic_to_string(name: &str, source: &str, diag: &Diagnostic) -> String {
-        let file = SimpleFile::new(name.into(), source.into());
-        let text = markup_to_string(markup! {
-            {diag.display(&file)}
-        });
-
-        text
-    }
 
     mark("rome::analyze::begin");
     rome_js_analyze::analyze(
@@ -238,4 +222,21 @@ pub fn run(
         formatter_ir,
         errors: diagnostic,
     }
+}
+
+fn markup_to_string(markup: Markup) -> String {
+    let mut write = HTML(Vec::new());
+    let mut fmt = Formatter::new(&mut write);
+    fmt.write_markup(markup).unwrap();
+
+    String::from_utf8(write.0).unwrap()
+}
+
+fn diagnostic_to_string(name: &str, source: &str, diag: &Diagnostic) -> String {
+    let file = SimpleFile::new(name.into(), source.into());
+    let text = markup_to_string(markup! {
+        {diag.display(&file)}
+    });
+
+    text
 }
