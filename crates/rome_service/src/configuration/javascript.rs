@@ -2,6 +2,7 @@ use rome_js_formatter::context::QuoteStyle;
 use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct JavascriptConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatter: Option<JavascriptFormatter>,
@@ -11,7 +12,7 @@ pub struct JavascriptConfiguration {
 }
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
-#[serde(rename_all = "camelCase", default)]
+#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
     #[serde(with = "PlainQuoteStyle")]

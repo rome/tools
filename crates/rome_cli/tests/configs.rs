@@ -40,7 +40,6 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
   },
   "linter": {
     "enabled": true,
-    "globals": ["$"],
     "rules": {
         "js": {
             "noDeadCode": "off",
@@ -51,7 +50,7 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
                 "options": "test_option"
             },
             "useTemplate": {
-                "level": "warn",
+                "level": "error",
                 "options": [5]
             }
         }
@@ -60,6 +59,9 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
   "javascript": {
     "formatter": {
       "quoteStyle": "double"
+    },
+    "linter": {
+        "globals": ["$"]
     }
   }
 }"#;

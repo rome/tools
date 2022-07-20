@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
-#[serde(rename_all = "camelCase", default)]
+#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct LinterConfiguration {
     /// if `false`, it disables the feature. `true` by default
     pub enabled: bool,
@@ -64,7 +64,7 @@ pub enum RulePlainConfiguration {
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct RuleWithOptions {
     level: RulePlainConfiguration,
     options: Value,
