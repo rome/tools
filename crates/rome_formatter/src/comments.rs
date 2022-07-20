@@ -197,7 +197,9 @@ impl<L: Language> Comments<L> {
                         }
                     }
                 }
-                WalkEvent::Leave(SyntaxElement::Token(_)) => {}
+                WalkEvent::Leave(SyntaxElement::Token(_)) => {
+                    // Token already handled as part of the enter event.
+                }
             }
         }
 
