@@ -369,7 +369,7 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
                 let name = property.name()?;
 
-                // It's safe to mark the name as checked here because it is at the beginning property
+                // It's safe to mark the name as checked here because it is at the beginning of the property
                 // and any suppression comment that would apply to the name applies to the property too and is,
                 // thus, handled on the property level.
                 f.context()
