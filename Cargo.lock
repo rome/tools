@@ -1330,6 +1330,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_bindings"
+version = "0.0.0"
+dependencies = [
+ "js-sys",
+ "rome_analyze",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_formatter",
+ "rome_js_analyze",
+ "rome_js_formatter",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
 name = "rome_cli"
 version = "0.0.0"
 dependencies = [

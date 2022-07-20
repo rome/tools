@@ -1,0 +1,15 @@
+{
+  "name": "@rometools/wasm-bindings",
+  "version": "0.0.0",
+  "description": "WASM bindings for Rome",
+  "main": "index.js",
+  "scripts": {
+    "build:wasm": "wasm-pack build --target web --release"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "wasm-pack": "^0.10.3"
+  }
+}
