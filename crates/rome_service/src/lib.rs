@@ -45,6 +45,8 @@ pub enum RomeError {
 
     /// Error thrown when validating the configuration. Once deserialized, further checks have to be done.
     Configuration(ConfigurationError),
+
+    RenameError,
 }
 
 impl Debug for RomeError {
@@ -58,6 +60,7 @@ impl Debug for RomeError {
             RomeError::CantReadFile(_) => std::fmt::Display::fmt(self, f),
             RomeError::Configuration(_) => std::fmt::Display::fmt(self, f),
             RomeError::DirtyWorkspace => std::fmt::Display::fmt(self, f),
+            RomeError::RenameError => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -104,6 +107,9 @@ impl Display for RomeError {
             RomeError::Configuration(error) => std::fmt::Display::fmt(error, f),
             RomeError::DirtyWorkspace => {
                 write!(f, "Uncommitted changes in repository")
+            }
+            RomeError::RenameError => {
+                write!(f, "encountered an error while renaming symbol",)
             }
         }
     }

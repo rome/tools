@@ -27,7 +27,7 @@ macro_rules! assert_rename_nok {
 }
 
 #[derive(Debug, PartialEq)]
-pub enum EscapeError {
+pub(crate) enum EscapeError {
     EscapeAtEndOfString,
     InvalidEscapedChar(char),
 }
@@ -54,6 +54,6 @@ impl<'a> Iterator for InterpretEscapedString<'a> {
 
 /// unescape   
 ///
-pub fn escape_string(s: &str) -> Result<String, EscapeError> {
+pub(crate) fn escape_string(s: &str) -> Result<String, EscapeError> {
     (InterpretEscapedString { s: s.chars() }).collect()
 }

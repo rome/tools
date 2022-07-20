@@ -1,4 +1,4 @@
-use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
+use std::{any::type_name, fs::rename, panic::RefUnwindSafe, sync::RwLock};
 
 use dashmap::{mapref::entry::Entry, DashMap};
 use rome_analyze::AnalyzerAction;
@@ -17,7 +17,7 @@ use crate::{
 use super::{
     ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
     FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
-    PullDiagnosticsParams, SupportsFeatureParams, UpdateSettingsParams,
+    PullDiagnosticsParams, RenameParams, RenameResult, SupportsFeatureParams, UpdateSettingsParams,
 };
 
 pub(super) struct WorkspaceServer {
@@ -295,5 +295,17 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
 
         Ok(fix_all(&params.path, parse))
+    }
+
+    fn rename(&self, params: super::RenameParams) -> Result<RenameResult, RomeError> {
+        let capabilities = self.features.get_capabilities(&params.path);
+        let rename = capabilities
+            .rename
+            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+
+        let parse = self.get_parse(params.path.clone())?;
+        let code = rename(&params.path, parse, params.symbol_at, params.new_name)?;
+
+        Ok(RenameResult { code })
     }
 }

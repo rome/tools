@@ -6,8 +6,12 @@ use rome_js_analyze::analyze;
 use rome_js_formatter::context::QuoteStyle;
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
-use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
-use rome_rowan::AstNode;
+use rome_js_semantic::{semantic_model, DeclarationExtensions};
+use rome_js_syntax::{
+    JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
+    JsSyntaxKind, SourceType, TextRange, TextSize, TokenAtOffset,
+};
+use rome_rowan::{AstNode, BatchMutationExt, Direction, SyntaxNodeCast};
 
 use crate::workspace::FixFileResult;
 use crate::{
@@ -71,6 +75,7 @@ impl ExtensionHandler for JsFileHandler {
             fix_all: Some(fix_all),
             format_range: Some(format_range),
             format_on_type: Some(format_on_type),
+            rename: Some(rename),
         }
     }
 
@@ -259,4 +264,53 @@ fn format_on_type(
 
     let printed = rome_js_formatter::format_sub_tree(context, &root_node)?;
     Ok(printed)
+}
+
+fn rename(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    symbol_at: TextSize,
+    new_name: String,
+) -> Result<String, RomeError> {
+    use rome_js_analyze::utils::rename::RenameSymbolExtensions;
+
+    let root = parse.tree();
+    let model = semantic_model(&root);
+
+    if let Some(node) = parse
+        .syntax()
+        .descendants_tokens(Direction::Next)
+        .find(|token| token.text_range().contains(symbol_at))
+        .and_then(|token| token.parent())
+    {
+        let binding = match node.kind() {
+            JsSyntaxKind::JS_IDENTIFIER_BINDING => node.cast::<JsIdentifierBinding>(),
+            JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
+                .cast::<JsReferenceIdentifier>()
+                .ok_or_else(|| RomeError::RenameError)?
+                .declaration(&model)
+                .ok_or_else(|| RomeError::RenameError)?
+                .syntax()
+                .clone()
+                .cast::<JsIdentifierBinding>(),
+            JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
+                .cast::<JsIdentifierAssignment>()
+                .ok_or_else(|| RomeError::RenameError)?
+                .declaration(&model)
+                .ok_or_else(|| RomeError::RenameError)?
+                .syntax()
+                .clone()
+                .cast::<JsIdentifierBinding>(),
+            _ => None,
+        };
+
+        if let Some(binding) = binding {
+            let mut batch = root.begin();
+            batch.rename(&model, binding, &new_name);
+            let root = batch.commit();
+            return Ok(root.to_string());
+        }
+    }
+
+    todo!()
 }

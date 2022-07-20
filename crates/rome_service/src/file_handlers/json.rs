@@ -13,6 +13,7 @@ impl ExtensionHandler for JsonFileHandler {
             fix_all: None,
             format_range: None,
             format_on_type: None,
+            rename: None,
         }
     }
 
