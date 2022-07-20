@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use rome_formatter::{write, CommentContext};
+use rome_formatter::{write, CstFormatContext};
 use rome_js_syntax::JsAnyNamedImport;
 use rome_js_syntax::JsAnyNamedImportSpecifier;
 use rome_js_syntax::JsImportNamedClause;

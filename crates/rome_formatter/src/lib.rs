@@ -56,7 +56,7 @@ pub use builders::{
     soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
     BestFitting,
 };
-pub use comments::{CommentContext, CommentKind, CommentStyle, Comments, SourceComment};
+pub use comments::{CommentKind, CommentStyle, Comments, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
@@ -66,6 +66,7 @@ use rome_rowan::{
 };
 use std::error::Error;
 use std::num::ParseIntError;
+use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
@@ -200,6 +201,26 @@ pub trait FormatContext {
 
     /// Derives the print options from the these format options
     fn as_print_options(&self) -> PrinterOptions;
+}
+
+/// The [CstFormatContext] is an extension of the CST unaware [FormatContext] and must be implemented
+/// by every language.
+///
+/// The context customizes the comments formatting and stores the comments of the CST.
+pub trait CstFormatContext: FormatContext {
+    type Language: Language;
+    type Style: CommentStyle<Self::Language>;
+
+    /// Customizes how comments are formatted
+    fn comment_style(&self) -> Self::Style;
+
+    /// Returns a ref counted comments. The use of a [Rc] is necessary so that [Comments] has a different
+    /// lifetime than the [crate::Formatter] to support the case where some formatter
+    /// iterates over all comments of a node and writes them to the formatter in the loop body.
+    fn comments(&self) -> Rc<Comments<Self::Language>>;
+
+    /// Consumes `self` and returns a new context with the provided extracted (`comments`)[Comments].
+    fn with_comments(self, comments: Rc<Comments<Self::Language>>) -> Self;
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
@@ -714,16 +735,15 @@ where
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format_node<
-    Context: CommentContext<L>,
-    L: Language,
-    N: FormatWithRule<Context, Item = SyntaxNode<L>>,
+    Context: CstFormatContext,
+    N: FormatWithRule<Context, Item = SyntaxNode<Context::Language>>,
 >(
     context: Context,
     root: &N,
 ) -> FormatResult<Formatted<Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
         let suppressions = Comments::from_node(root.item(), &context);
-        let context = context.with_comments(suppressions);
+        let context = context.with_comments(Rc::new(suppressions));
 
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
@@ -797,17 +817,16 @@ where
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
-pub fn format_range<Context, L, R, P>(
+pub fn format_range<Context, R, P>(
     context: Context,
-    root: &SyntaxNode<L>,
+    root: &SyntaxNode<Context::Language>,
     mut range: TextRange,
     mut predicate: P,
 ) -> FormatResult<Printed>
 where
-    Context: CommentContext<L>,
-    L: Language,
-    R: FormatRule<SyntaxNode<L>, Context = Context> + Default,
-    P: FnMut(&SyntaxNode<L>) -> bool,
+    Context: CstFormatContext,
+    R: FormatRule<SyntaxNode<Context::Language>, Context = Context> + Default,
+    P: FnMut(&SyntaxNode<Context::Language>) -> bool,
 {
     if range.is_empty() {
         return Ok(Printed::new(
@@ -1031,9 +1050,8 @@ where
 ///
 /// It returns a [Formatted] result
 pub fn format_sub_tree<
-    C: FormatContext + CommentContext<L>,
-    L: Language,
-    N: FormatWithRule<C, Item = SyntaxNode<L>>,
+    C: CstFormatContext,
+    N: FormatWithRule<C, Item = SyntaxNode<C::Language>>,
 >(
     context: C,
     root: &N,

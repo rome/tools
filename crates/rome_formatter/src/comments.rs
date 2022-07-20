@@ -1,4 +1,4 @@
-use crate::FormatContext;
+use crate::CstFormatContext;
 use rome_rowan::{
     Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxTriviaPieceComments,
     WalkEvent,
@@ -6,7 +6,6 @@ use rome_rowan::{
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
 use std::collections::HashSet;
-use std::rc::Rc;
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 pub enum CommentKind {
@@ -115,27 +114,12 @@ impl CommentKind {
     }
 }
 
-/// Stores comments specific context information.
-pub trait CommentContext<L: Language>: FormatContext {
-    type Style: CommentStyle<L>;
-
-    fn comment_style(&self) -> Self::Style;
-
-    /// Returns a ref counted comments. The use of a [Rc] is necessary so that [Comments] has a different
-    /// lifetime than the [crate::Formatter] to support the case where some formatter
-    /// iterates over all comments of a node and writes them to the formatter in the loop body.
-    fn comments(&self) -> Rc<Comments<L>>;
-
-    /// Consumes this context and returns a new context that uses the provided `comments` information.
-    fn with_comments(self, comments: Comments<L>) -> Self;
-}
-
 /// Defines how to format comments for a specific [Language].
 pub trait CommentStyle<L: Language> {
-    /// Returns `true` if a comment with the given `text` is formatter suppression comment.
+    /// Returns `true` if a comment with the given `text` is a `rome-ignore format:` suppression comment.
     fn is_suppression(&self, text: &str) -> bool;
 
-    /// Returns the kind of the comment
+    /// Returns the (kind)[CommentKind] of the comment
     fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<L>) -> CommentKind;
 
     /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are:
@@ -176,7 +160,7 @@ impl<L: Language> Comments<L> {
     /// Extracts all the suppressions from `root` and its child nodes.
     pub fn from_node<Context>(root: &SyntaxNode<L>, context: &Context) -> Self
     where
-        Context: CommentContext<L>,
+        Context: CstFormatContext<Language = L>,
     {
         let mut suppressed_nodes = HashSet::new();
         let mut current_node = None;
@@ -226,19 +210,18 @@ impl<L: Language> Comments<L> {
 
     /// Returns `true` if the passed `node` has a leading suppression comment.
     ///
-    /// Suppression comments only apply if they at the start of a node and they suppress the most
+    /// Suppression comments only apply if they are at the start of a node and they suppress the most
     /// outer node.
     ///
     /// # Examples
-    ///
-    /// Returns `true` for the expression statement but `false` for the call expression because the
-    /// call expression is nested inside of the expression statement.
     ///
     /// ```javascript
     /// // rome-ignore format: Reason
     /// console.log("Test");
     /// ```
     ///
+    /// Returns `true` for the expression statement but `false` for the call expression because the
+    /// call expression is nested inside of the expression statement.
     pub fn is_suppressed(&self, node: &SyntaxNode<L>) -> bool {
         self.mark_suppression_checked(node);
         self.suppressed_nodes.contains(node)

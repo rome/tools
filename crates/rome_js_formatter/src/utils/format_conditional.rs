@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, CommentContext};
+use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
 use rome_rowan::AstNode;
 

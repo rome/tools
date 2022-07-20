@@ -5,7 +5,7 @@ mod simple_argument;
 use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::groups::{Groups, HeadGroup};
-use rome_formatter::{format_args, write, Buffer, CommentContext, Comments, PreambleBuffer};
+use rome_formatter::{format_args, write, Buffer, Comments, CstFormatContext, PreambleBuffer};
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsLanguage,
     JsStaticMemberExpression,

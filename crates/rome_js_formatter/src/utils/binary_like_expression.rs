@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer, CommentContext};
+use rome_formatter::{write, Buffer, CstFormatContext};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
     JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator, JsPrivateName, JsSyntaxKind,

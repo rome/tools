@@ -8,7 +8,7 @@ mod ts;
 pub mod utils;
 
 use rome_formatter::prelude::*;
-use rome_formatter::{write, CommentContext};
+use rome_formatter::{write, CstFormatContext};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
@@ -235,7 +235,7 @@ pub fn format_range(
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    rome_formatter::format_range::<_, _, FormatJsSyntaxNode, _>(
+    rome_formatter::format_range::<_, FormatJsSyntaxNode, _>(
         context,
         root,
         range,

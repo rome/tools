@@ -1,6 +1,6 @@
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    CommentContext, CommentKind, CommentStyle, Comments, FormatContext, IndentStyle, LineWidth,
+    CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, IndentStyle, LineWidth,
 };
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
@@ -117,7 +117,8 @@ impl fmt::Display for JsFormatContext {
     }
 }
 
-impl CommentContext<JsLanguage> for JsFormatContext {
+impl CstFormatContext for JsFormatContext {
+    type Language = JsLanguage;
     type Style = JsCommentStyle;
 
     fn comment_style(&self) -> Self::Style {
@@ -128,8 +129,8 @@ impl CommentContext<JsLanguage> for JsFormatContext {
         self.comments.clone()
     }
 
-    fn with_comments(mut self, comments: Comments<JsLanguage>) -> Self {
-        self.comments = Rc::new(comments);
+    fn with_comments(mut self, comments: Rc<Comments<JsLanguage>>) -> Self {
+        self.comments = comments;
         self
     }
 }

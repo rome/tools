@@ -1,7 +1,7 @@
 use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
 use crate::prelude::{format_args, write};
-use rome_formatter::{group_elements, CommentContext, FormatResult};
+use rome_formatter::{group_elements, CstFormatContext, FormatResult};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsxExpressionChild, JsxExpressionChildFields,
 };
