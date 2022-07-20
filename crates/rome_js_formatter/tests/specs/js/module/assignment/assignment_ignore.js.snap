@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: assignment_ignore.js
+---
+# Input
+let {
+	/* rome-ignore format: Test that the property doesn't get formatted */
+	someProperty:    alias
+} = { someProperty: 20 };
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+let {
+	/* rome-ignore format: Test that the property doesn't get formatted */
+	someProperty:    alias,
+} = { someProperty: 20 };
+

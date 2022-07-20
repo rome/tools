@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer, CommentContext, Comments};
+use rome_formatter::{write, Buffer, CommentContext};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
-    JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,
-    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator, JsPrivateName, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken,
 };
 
 use crate::utils::should_break_after_operator;
@@ -110,11 +110,12 @@ pub(crate) fn format_binary_like_expression(
         let parent_operator = parent.operator_token()?;
 
         if let Some(left) = left {
-            flatten_items.flatten_binary_expression_right_hand_side(
-                left,
-                Some(parent_operator),
-                &f.context().comments(),
-            )?;
+            // It's only possible to suppress the formatting of the whole binary expression formatting OR
+            // the formatting of the right hand side value but not of a nested binary expression.
+            f.context()
+                .comments()
+                .mark_suppression_checked(left.syntax());
+            flatten_items.flatten_binary_expression_right_hand_side(left, Some(parent_operator))?;
         } else {
             // Leaf binary like expression. Format the left hand side.
             // The right hand side gets formatted when traversing upwards in the tree.
@@ -134,11 +135,7 @@ pub(crate) fn format_binary_like_expression(
 
     // Format the top most binary like expression
     if let Some(root) = left {
-        flatten_items.flatten_binary_expression_right_hand_side(
-            root,
-            None,
-            &f.context().comments(),
-        )?;
+        flatten_items.flatten_binary_expression_right_hand_side(root, None)?;
     }
 
     let group = FlattenedBinaryExpressionPart::Group {
@@ -331,10 +328,8 @@ impl FlattenItems {
         &mut self,
         expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<JsSyntaxToken>,
-        comments: &Comments<JsLanguage>,
     ) -> FormatResult<()> {
-        let should_flatten =
-            !comments.is_suppressed(expression.syntax()) && expression.can_flatten()?;
+        let should_flatten = expression.can_flatten()?;
 
         if should_flatten {
             self.flatten_right_hand_side(expression, parent_operator)
