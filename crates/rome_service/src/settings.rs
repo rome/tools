@@ -41,7 +41,7 @@ impl WorkspaceSettings {
             .as_ref()
             .and_then(|j| j.linter.as_ref());
         if let Some(linter) = linter {
-            self.languages.javascript.linter.globals = Some(linter.globals.clone());
+            self.languages.javascript.linter.globals = linter.globals.clone();
         }
     }
 }

@@ -4,6 +4,7 @@ mod rules;
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default)]
@@ -34,19 +35,37 @@ impl From<&LinterConfiguration> for LinterSettings {
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
-#[serde(rename_all = "camelCase", deny_unknown_fields)]
+#[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum RuleConfiguration {
-    Warn,
-    Error,
-    Off,
+    Plain(RulePlainConfiguration),
+    WithOptions(RuleWithOptions),
 }
 impl RuleConfiguration {
     pub fn is_err(&self) -> bool {
-        matches!(self, Self::Error)
+        if let Self::WithOptions(rule) = self {
+            rule.level == RulePlainConfiguration::Error
+        } else {
+            matches!(self, Self::Plain(RulePlainConfiguration::Error))
+        }
     }
 }
 impl Default for RuleConfiguration {
     fn default() -> Self {
-        Self::Error
+        Self::Plain(RulePlainConfiguration::Error)
     }
+}
+
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[serde(rename_all = "camelCase")]
+pub enum RulePlainConfiguration {
+    Warn,
+    Error,
+    Off,
+}
+
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct RuleWithOptions {
+    level: RulePlainConfiguration,
+    options: Value,
 }

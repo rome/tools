@@ -28,7 +28,7 @@ pub struct JsFormatSettings {
 
 #[derive(Debug, Clone, Default)]
 pub struct JsLinterSettings {
-    pub globals: Option<Vec<String>>,
+    pub globals: Vec<String>,
 }
 
 impl Language for JsLanguage {

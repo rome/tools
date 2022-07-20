@@ -10,7 +10,10 @@ pub const CONFIG_FORMAT: &str = r#"{
 "#;
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
-  "root": true
+  "root": true,
+  "linter": {
+    "enabled": false
+  }
 }"#;
 
 pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
@@ -41,7 +44,16 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     "rules": {
         "js": {
             "noDeadCode": "off",
-            "useSimplifiedLogicExpression": "warn"
+            "useSimplifiedLogicExpression": "warn",
+            "noCatchAssign": "error",
+            "noLabelVar": {
+                "level": "warn",
+                "options": "test_option"
+            },
+            "useTemplate": {
+                "level": "warn",
+                "options": [5]
+            }
         }
     }
   },
