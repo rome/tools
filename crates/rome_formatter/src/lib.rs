@@ -214,9 +214,21 @@ pub trait CstFormatContext: FormatContext {
     /// Customizes how comments are formatted
     fn comment_style(&self) -> Self::Style;
 
-    /// Returns a ref counted comments. The use of a [Rc] is necessary so that [Comments] has a different
-    /// lifetime than the [crate::Formatter] to support the case where some formatter
-    /// iterates over all comments of a node and writes them to the formatter in the loop body.
+    /// Returns a ref counted [Comments].
+    ///
+    /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent of the [crate::Formatter].
+    /// Having independent lifetimes is necessary to support the use case where a (formattable object)[Format]
+    /// iterates over all comments and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn this context).
+    ///
+    /// ```ignore
+    /// for leading in f.context().comments().leading_comments() {
+    ///     ^
+    ///     |- Borrows comments
+    ///   write!(f, [comment(leading.piece.text())])?;
+    ///          ^
+    ///          |- Mutably borrows the formatter, state, context (and comments, if they aren't wrapped by a Rc)
+    /// }
+    /// ```
     fn comments(&self) -> Rc<Comments<Self::Language>>;
 
     /// Consumes `self` and returns a new context with the provided extracted (`comments`)[Comments].
