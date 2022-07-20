@@ -4,9 +4,8 @@ mod rules;
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct LinterConfiguration {
     /// if `false`, it disables the feature. `true` by default
@@ -34,7 +33,7 @@ impl From<&LinterConfiguration> for LinterSettings {
     }
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum RuleConfiguration {
     Plain(RulePlainConfiguration),
@@ -63,9 +62,10 @@ pub enum RulePlainConfiguration {
     Off,
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct RuleWithOptions {
     level: RulePlainConfiguration,
-    options: Value,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    options: Option<Box<serde_json::value::RawValue>>,
 }

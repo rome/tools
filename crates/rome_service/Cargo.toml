@@ -10,7 +10,7 @@ license = "MIT"
 [dependencies]
 dashmap = "5.2.0"
 serde = { version = "1.0.133", features = ["derive"] }
-serde_json = "1.0.74"
+serde_json = { version = "1.0.74", features = ["raw_value"] }
 rome_analyze = { path = "../rome_analyze" }
 rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }

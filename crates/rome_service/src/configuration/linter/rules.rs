@@ -2,7 +2,7 @@
 
 use crate::RuleConfiguration;
 use serde::{Deserialize, Serialize};
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Rules {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -24,7 +24,7 @@ impl Default for Rules {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JsRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
@@ -74,7 +74,7 @@ pub struct JsRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub use_while: RuleConfiguration,
 }
-#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JsxRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
@@ -84,13 +84,13 @@ pub struct JsxRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub use_self_closing_elements: RuleConfiguration,
 }
-#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct RegexRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub no_multiple_spaces_in_regular_expression_literals: RuleConfiguration,
 }
-#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct TsRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]

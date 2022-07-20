@@ -46,12 +46,10 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
             "useSimplifiedLogicExpression": "warn",
             "noCatchAssign": "error",
             "noLabelVar": {
-                "level": "warn",
-                "options": "test_option"
+                "level": "warn"
             },
             "useTemplate": {
-                "level": "error",
-                "options": [5]
+                "level": "error"
             }
         }
     }
