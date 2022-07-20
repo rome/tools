@@ -46,6 +46,8 @@ pub struct JsRules {
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub no_empty_pattern: RuleConfiguration,
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
+    pub no_function_assign: RuleConfiguration,
+    #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub no_label_var: RuleConfiguration,
     #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
     pub no_negation_else: RuleConfiguration,
