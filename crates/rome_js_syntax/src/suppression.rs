@@ -1,7 +1,3 @@
-use rome_rowan::AstNode;
-
-use crate::{JsAnyRoot, JsSyntaxNode};
-
 /// Single instance of a suppression comment, with the following syntax:
 ///
 /// `// rome-ignore { <category> { (<value>) }? }+: <reason>`
@@ -118,31 +114,6 @@ impl PartialEq<SuppressionCategory> for &'_ str {
     fn eq(&self, other: &SuppressionCategory) -> bool {
         other.eq(self)
     }
-}
-
-/// Returns true if this node has a suppression comment of the provided category
-pub fn has_suppressions_category(category: SuppressionCategory, node: &JsSyntaxNode) -> bool {
-    // Lists cannot have a suppression comment attached, it must
-    // belong to either the entire parent node or one of the children
-    let kind = node.kind();
-    if JsAnyRoot::can_cast(kind) || kind.is_list() {
-        return false;
-    }
-
-    let first_token = match node.first_token() {
-        Some(token) => token,
-        None => return false,
-    };
-
-    first_token
-        .leading_trivia()
-        .pieces()
-        .filter_map(|trivia| trivia.as_comments())
-        .any(|comment| {
-            parse_suppression_comment(comment.text())
-                .flat_map(|suppression| suppression.categories)
-                .any(|entry| category == entry.0)
-        })
 }
 
 #[cfg(test)]

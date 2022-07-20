@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
-use rome_formatter::{format_args, write, VecBuffer};
+use rome_formatter::{format_args, write, CstFormatContext, VecBuffer};
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
     JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
@@ -368,6 +368,14 @@ impl JsAnyAssignmentLike {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
                 let name = property.name()?;
+
+                // It's safe to mark the name as checked here because it is at the beginning of the property
+                // and any suppression comment that would apply to the name applies to the property too and is,
+                // thus, handled on the property level.
+                f.context()
+                    .comments()
+                    .mark_suppression_checked(name.syntax());
+
                 let width = write_member_name(&name.into(), f)?;
                 let text_width_for_break =
                     (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
@@ -379,7 +387,16 @@ impl JsAnyAssignmentLike {
                 Ok(false)
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
-                let width = write_member_name(&property.member()?.into(), f)?;
+                let member_name = property.member()?;
+
+                // It's safe to mark the name as checked here because it is at the beginning of the property
+                // and any suppression comment that would apply to the name applies to the property too and is,
+                // thus, handled on the property level.
+                f.context()
+                    .comments()
+                    .mark_suppression_checked(member_name.syntax());
+
+                let width = write_member_name(&member_name.into(), f)?;
                 let text_width_for_break =
                     (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
@@ -413,8 +430,8 @@ impl JsAnyAssignmentLike {
 
                 let name = name?;
 
-                let is_short = if f.context_mut().is_suppressed(name.syntax()) {
-                    write!(f, [format_verbatim_node(name.syntax())])?;
+                let is_short = if f.context().comments().is_suppressed(name.syntax()) {
+                    write!(f, [format_suppressed_node(name.syntax())])?;
                     false
                 } else {
                     let width = write_member_name(&name.into(), f)?;
@@ -564,7 +581,7 @@ impl JsAnyAssignmentLike {
         let right = self.right()?;
 
         if let RightAssignmentLike::JsInitializerClause(initializer) = &right {
-            if f.context_mut().is_suppressed(initializer.syntax()) {
+            if f.context().comments().is_suppressed(initializer.syntax()) {
                 return Ok(AssignmentLikeLayout::SuppressedInitializer);
             }
         }

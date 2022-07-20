@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use rome_formatter::{write, CstFormatContext};
 use rome_js_syntax::JsAnyNamedImport;
 use rome_js_syntax::JsAnyNamedImportSpecifier;
 use rome_js_syntax::JsImportNamedClause;
@@ -53,7 +53,7 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
             match named_import {
                 JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
                     if specifiers.specifiers().len() == 1
-                        && !f.context_mut().is_suppressed(specifiers.syntax()) =>
+                        && !f.context().comments().is_suppressed(specifiers.syntax()) =>
                 {
                     // SAFETY: we know that the `specifiers.specifiers().len() == 1`, so unwrap `iter().next()` is safe.
                     let first_specifier = specifiers.specifiers().elements().next().unwrap();

@@ -1,14 +1,13 @@
-#[cfg(debug_assertions)]
-use indexmap::IndexSet;
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    CommentContext, CommentKind, CommentStyle, FormatContext, IndentStyle, LineWidth,
+    CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, IndentStyle, LineWidth,
 };
-use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
-use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, SourceType};
+use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
+use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
 use rome_rowan::SyntaxTriviaPieceComments;
 use std::fmt;
 use std::fmt::Debug;
+use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Default)]
@@ -25,8 +24,8 @@ pub struct JsFormatContext {
     /// Information relative to the current file
     source_type: SourceType,
 
-    #[cfg(debug_assertions)]
-    checked_node_suppressions: IndexSet<JsSyntaxNode>,
+    /// The comments of the nodes and tokens in the program.
+    comments: Rc<Comments<JsLanguage>>,
 }
 
 impl JsFormatContext {
@@ -68,72 +67,6 @@ impl JsFormatContext {
     pub fn source_type(&self) -> SourceType {
         self.source_type
     }
-
-    /// Returns `true` if the passed node has a suppression comment and
-    /// tracks in debug builds that the suppression comments of this node have been checked.
-    ///
-    /// # Examples
-    /// ```
-    /// use rome_js_formatter::context::JsFormatContext;
-    /// use rome_js_formatter::prelude::*;
-    /// use rome_js_parser::parse_expression;
-    /// use rome_js_syntax::SourceType;
-    ///
-    /// let root = parse_expression(r#"
-    /// // rome-ignore format: Suppressed for testing purposes
-    /// console.log('abcd');
-    /// "#, 0).tree();
-    ///
-    /// let call_expression = root.expression().unwrap();
-    /// let mut context = JsFormatContext::new(SourceType::js_module());
-    ///
-    /// assert!(context.is_suppressed(call_expression.syntax()));
-    /// ```
-    ///
-    #[inline]
-    pub fn is_suppressed(&mut self, node: &JsSyntaxNode) -> bool {
-        self.checked_suppressed(node);
-        has_suppressions_category(SuppressionCategory::Format, node)
-    }
-
-    /// Tracks that the formatting manually checked if the passed in node has a suppression comment
-    /// in debug builds.
-    pub(crate) fn checked_suppressed(&mut self, #[allow(unused_variables)] node: &JsSyntaxNode) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.checked_node_suppressions.insert(node.clone());
-            }
-        }
-    }
-
-    /// Asserts that the suppression comments of all nodes have been handled in debug builds.
-    ///
-    /// # Panics
-    /// If the suppression comments of a node have not been checked.
-    #[inline]
-    pub(crate) fn assert_checked_all_suppressions(
-        &self,
-        #[allow(unused_variables)] root: &JsSyntaxNode,
-    ) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                for node in root.descendants() {
-                    if !self.checked_node_suppressions.contains(&node) {
-                        // No need to explicitly check nodes where the node is the first element of its parent
-                        // (in which case the suppression would suppress the parent node), or when
-                        // the node is a list for which Rome doesn't support suppression comments
-                        if node.prev_sibling_or_token().is_none() || node.kind().is_list() {
-                            continue;
-                        }
-
-                        panic!(r#"The node {node:#?} has been formatted without checking if it has suppression comments.
-Ensure that the formatter calls into the node's formatting rule by using `node.format()` or
-manually test if the node has a suppression comment using `f.context_mut().is_suppressed(node.syntax())` if using the node's format rule isn't an option"#)
-                    }
-                }
-            }
-        }
-    }
 }
 
 #[derive(Eq, PartialEq, Debug, Copy, Clone, Hash)]
@@ -161,8 +94,6 @@ impl JsFormatContext {
 }
 
 impl FormatContext for JsFormatContext {
-    type Snapshot = JsFormatContextSnapshot;
-
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -176,26 +107,6 @@ impl FormatContext for JsFormatContext {
             .with_indent(self.indent_style)
             .with_print_width(self.line_width)
     }
-
-    fn snapshot(&self) -> Self::Snapshot {
-        JsFormatContextSnapshot {
-            #[cfg(debug_assertions)]
-            node_suppressions_len: self.checked_node_suppressions.len(),
-        }
-    }
-
-    fn restore_snapshot(&mut self, #[allow(unused)] snapshot: Self::Snapshot) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                self.checked_node_suppressions.truncate(snapshot.node_suppressions_len);
-            }
-        }
-    }
-}
-
-pub struct JsFormatContextSnapshot {
-    #[cfg(debug_assertions)]
-    node_suppressions_len: usize,
 }
 
 impl fmt::Display for JsFormatContext {
@@ -206,11 +117,21 @@ impl fmt::Display for JsFormatContext {
     }
 }
 
-impl CommentContext<JsLanguage> for JsFormatContext {
+impl CstFormatContext for JsFormatContext {
+    type Language = JsLanguage;
     type Style = JsCommentStyle;
 
     fn comment_style(&self) -> Self::Style {
         JsCommentStyle
+    }
+
+    fn comments(&self) -> Rc<Comments<JsLanguage>> {
+        self.comments.clone()
+    }
+
+    fn with_comments(mut self, comments: Rc<Comments<JsLanguage>>) -> Self {
+        self.comments = comments;
+        self
     }
 }
 
@@ -218,6 +139,12 @@ impl CommentContext<JsLanguage> for JsFormatContext {
 pub struct JsCommentStyle;
 
 impl CommentStyle<JsLanguage> for JsCommentStyle {
+    fn is_suppression(&self, text: &str) -> bool {
+        parse_suppression_comment(text)
+            .flat_map(|suppression| suppression.categories)
+            .any(|(category, _)| category == SuppressionCategory::Format)
+    }
+
     fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
         if comment.text().starts_with("/*") {
             if comment.has_newline() {

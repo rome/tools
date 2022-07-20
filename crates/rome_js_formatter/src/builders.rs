@@ -1,7 +1,9 @@
 use crate::prelude::*;
 use crate::AsFormat;
 use rome_formatter::token::{FormatInserted, FormatInsertedCloseParen, FormatInsertedOpenParen};
-use rome_formatter::{format_args, write, Argument, Arguments, GroupId, PreambleBuffer, VecBuffer};
+use rome_formatter::{
+    format_args, write, Argument, Arguments, CstFormatContext, GroupId, PreambleBuffer, VecBuffer,
+};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, Direction, Language, SyntaxElement, SyntaxTriviaPiece};
 
@@ -184,7 +186,7 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
             match element {
                 SyntaxElement::Token(token) => f.state_mut().track_token(&token),
                 SyntaxElement::Node(node) => {
-                    f.context_mut().checked_suppressed(&node);
+                    f.context().comments().mark_suppression_checked(&node);
                 }
             }
         }

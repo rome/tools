@@ -1,7 +1,8 @@
+use crate::comments::CommentStyle;
 use crate::prelude::*;
 use crate::{
-    format_args, write, Argument, Arguments, CommentContext, CommentKind, CommentStyle, GroupId,
-    LastTokenKind, SourceComment,
+    format_args, write, Argument, Arguments, CommentKind, CstFormatContext, GroupId, LastTokenKind,
+    SourceComment,
 };
 use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPiece};
 
@@ -22,7 +23,7 @@ pub struct FormatTrimmedToken<'a, L: Language> {
 
 impl<L: Language + 'static, C> Format<C> for FormatTrimmedToken<'_, L>
 where
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         write_space_between_comment_and_token(self.token.kind(), f)?;
@@ -56,7 +57,7 @@ where
 impl<L, C> Format<C> for FormatInserted<L>
 where
     L: Language + 'static,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         write_space_between_comment_and_token(self.kind, f)?;
@@ -71,7 +72,7 @@ fn write_space_between_comment_and_token<L: Language, Context>(
     f: &mut Formatter<Context>,
 ) -> FormatResult<()>
 where
-    Context: CommentContext<L>,
+    Context: CstFormatContext<Language = L>,
 {
     let is_last_content_inline_content = f.state().is_last_content_inline_comment();
 
@@ -134,7 +135,7 @@ where
 impl<Context, L> Format<Context> for FormatInsertedOpenParen<L>
 where
     L: Language + 'static,
-    Context: CommentContext<L>,
+    Context: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut comments = Vec::new();
@@ -250,7 +251,7 @@ where
 impl<Context, L> Format<Context> for FormatInsertedCloseParen<L>
 where
     L: Language + 'static,
-    Context: CommentContext<L>,
+    Context: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         write!(
@@ -290,7 +291,7 @@ where
 impl<C, L> Format<C> for FormatRemoved<'_, L>
 where
     L: Language + 'static,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
@@ -309,7 +310,7 @@ fn write_removed_token_trivia<C, L>(
 ) -> FormatResult<()>
 where
     L: Language + 'static,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     let mut pieces = token
         .leading_trivia()
@@ -376,7 +377,7 @@ where
 impl<L, C> Format<C> for FormatReplaced<'_, '_, L, C>
 where
     L: Language + 'static,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
@@ -432,7 +433,7 @@ where
 impl<L, C> Format<C> for FormatOnlyIfBreaks<'_, '_, L, C>
 where
     L: Language + 'static,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         // Store the last token and last trailing comment before formatting the content which will override the state.
@@ -504,7 +505,7 @@ where
 impl<L, C> Format<C> for FormatLeadingTrivia<'_, L>
 where
     L: Language,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         write_leading_trivia(
@@ -527,7 +528,7 @@ fn write_leading_trivia<I, L, C>(
 where
     I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
     L: Language,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     let mut lines_before = 0;
     let mut comments = Vec::new();
@@ -656,7 +657,7 @@ where
 impl<L, C> Format<C> for FormatLeadingComments<'_, L>
 where
     L: Language,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         let mut first = true;
@@ -778,7 +779,7 @@ where
 impl<I, L: Language, C> Format<C> for FormatTrailingTrivia<I, L>
 where
     I: Iterator<Item = SourceComment<L>> + Clone,
-    C: CommentContext<L>,
+    C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         let comments = self.comments.clone();

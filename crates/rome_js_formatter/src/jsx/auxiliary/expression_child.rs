@@ -1,7 +1,7 @@
 use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
 use crate::prelude::{format_args, write};
-use rome_formatter::{group_elements, FormatResult};
+use rome_formatter::{group_elements, CstFormatContext, FormatResult};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsxExpressionChild, JsxExpressionChildFields,
 };
@@ -33,7 +33,10 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
                 && !str_token.has_trailing_comments()
                 && !l_curly_token.has_trailing_comments()
                 && !r_curly_token.has_leading_non_whitespace_trivia();
-            let is_suppressed = f.context_mut().is_suppressed(string_literal.syntax());
+            let is_suppressed = f
+                .context()
+                .comments()
+                .is_suppressed(string_literal.syntax());
 
             if has_space_text && no_trivia && !is_suppressed {
                 return write![

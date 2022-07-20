@@ -8,7 +8,7 @@ mod ts;
 pub mod utils;
 
 use rome_formatter::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{write, CstFormatContext};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
@@ -170,7 +170,7 @@ where
     fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         let syntax = node.syntax();
 
-        if f.context_mut().is_suppressed(syntax) {
+        if f.context().comments().is_suppressed(syntax) {
             write!(f, [format_suppressed_node(syntax)])?;
         } else {
             self.fmt_fields(node, f)?;
@@ -235,7 +235,7 @@ pub fn format_range(
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    rome_formatter::format_range::<_, _, FormatJsSyntaxNode, _>(
+    rome_formatter::format_range::<_, FormatJsSyntaxNode, _>(
         context,
         root,
         range,
@@ -266,11 +266,7 @@ pub fn format_node(
     context: JsFormatContext,
     root: &JsSyntaxNode,
 ) -> FormatResult<Formatted<JsFormatContext>> {
-    let result = rome_formatter::format_node(context, &root.format())?;
-
-    result.context().assert_checked_all_suppressions(root);
-
-    Ok(result)
+    rome_formatter::format_node(context, &root.format())
 }
 
 /// Formats a single node within a file, supported by Rome.

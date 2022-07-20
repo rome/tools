@@ -58,6 +58,17 @@ impl SyntaxKind for RawLanguageKind {
 
         unsafe { std::mem::transmute::<u16, RawLanguageKind>(raw.0) }
     }
+
+    fn is_root(&self) -> bool {
+        self == &RawLanguageKind::ROOT
+    }
+
+    fn is_list(&self) -> bool {
+        matches!(
+            self,
+            RawLanguageKind::EXPRESSION_LIST | RawLanguageKind::SEPARATED_EXPRESSION_LIST
+        )
+    }
 }
 
 #[doc(hidden)]

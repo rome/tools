@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
 use rome_rowan::AstNode;
 
@@ -31,15 +31,15 @@ impl Conditional {
     fn format_head(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             Conditional::Expression(expr) => {
-                if f.context_mut().is_suppressed(expr.syntax()) {
-                    write!(f, [format_verbatim_node(expr.syntax())])
+                if f.context().comments().is_suppressed(expr.syntax()) {
+                    write!(f, [format_suppressed_node(expr.syntax())])
                 } else {
                     write![f, [expr.test()?.format(), space_token(),]]
                 }
             }
             Conditional::Type(t) => {
-                if f.context_mut().is_suppressed(t.syntax()) {
-                    write!(f, [format_verbatim_node(t.syntax())])
+                if f.context().comments().is_suppressed(t.syntax()) {
+                    write!(f, [format_suppressed_node(t.syntax())])
                 } else {
                     write![
                         f,

@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer};
+use rome_formatter::{write, Buffer, CstFormatContext};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
     JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator, JsPrivateName, JsSyntaxKind,
@@ -110,6 +110,11 @@ pub(crate) fn format_binary_like_expression(
         let parent_operator = parent.operator_token()?;
 
         if let Some(left) = left {
+            // It's only possible to suppress the formatting of the whole binary expression formatting OR
+            // the formatting of the right hand side value but not of a nested binary expression.
+            f.context()
+                .comments()
+                .mark_suppression_checked(left.syntax());
             flatten_items.flatten_binary_expression_right_hand_side(left, Some(parent_operator))?;
         } else {
             // Leaf binary like expression. Format the left hand side.
@@ -405,7 +410,7 @@ impl FlattenItems {
                 parent: binary_like_expression,
             },
             parent_operator,
-            Comments::NoComments,
+            Commented::No,
         );
 
         // Format the parent operator
@@ -430,25 +435,25 @@ impl FlattenItems {
     }
 }
 
-#[derive(Debug)]
-enum Comments {
-    WithComments,
-    NoComments,
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+enum Commented {
+    Yes,
+    No,
 }
 
-impl From<&Comments> for bool {
-    fn from(comments: &Comments) -> Self {
+impl From<Commented> for bool {
+    fn from(comments: Commented) -> Self {
         match comments {
-            Comments::WithComments => true,
-            Comments::NoComments => false,
+            Commented::Yes => true,
+            Commented::No => false,
         }
     }
 }
-impl From<bool> for Comments {
+impl From<bool> for Commented {
     fn from(b: bool) -> Self {
         match b {
-            true => Comments::WithComments,
-            false => Comments::NoComments,
+            true => Commented::Yes,
+            false => Commented::No,
         }
     }
 }
@@ -592,7 +597,7 @@ struct FlattenItem {
     expression: FlattenedBinaryExpressionPart,
     operator: Option<JsSyntaxToken>,
     terminator: TrailingTerminator,
-    comments: Comments,
+    comments: Commented,
 }
 
 #[derive(Debug)]
@@ -605,7 +610,7 @@ impl FlattenItem {
     fn new(
         expression: FlattenedBinaryExpressionPart,
         operator: Option<JsSyntaxToken>,
-        comments: Comments,
+        comments: Commented,
     ) -> Self {
         Self {
             expression,
@@ -616,7 +621,7 @@ impl FlattenItem {
     }
 
     fn has_comments(&self) -> bool {
-        matches!(self.comments, Comments::WithComments)
+        matches!(self.comments, Commented::Yes)
     }
 
     fn with_terminator(mut self, terminator: TrailingTerminator) -> Self {
@@ -624,7 +629,7 @@ impl FlattenItem {
         self
     }
 
-    fn with_comments<I: Into<Comments>>(mut self, comments: I) -> Self {
+    fn with_comments<I: Into<Commented>>(mut self, comments: I) -> Self {
         self.comments = comments.into();
         self
     }
