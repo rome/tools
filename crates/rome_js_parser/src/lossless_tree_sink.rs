@@ -63,7 +63,7 @@ impl<'a> LosslessTreeSink<'a> {
 
     /// Finishes the tree and return the root node with possible parser errors.
     ///
-    /// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
+    /// If tree is finished without a [rome_js_syntax::JsSyntaxKind::EOF], one will be generated and all pending trivia
     /// will be appended to its leading trivia.
     pub fn finish(self) -> (JsSyntaxNode, Vec<ParseDiagnostic>) {
         (self.inner.finish(), self.errors)
