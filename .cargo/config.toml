@@ -3,7 +3,21 @@ lint = "clippy --workspace --all-targets --verbose -- --deny warnings"
 format = "fmt --all --verbose"
 codegen = "run -p xtask_codegen --"
 lintdoc = "run -p xtask_lintdoc --"
-documentation = "doc -p rome_*formatter -p rome_control_flow -p rome_analyze -p rome_*_syntax -p rome_*_factory -p rome_diagnostics -p rome_service -p rome_cli -p rome_console --no-deps"
+documentation = """
+    doc \
+    -p rome_*formatter \
+    -p rome_control_flow \
+    -p rome_*analyze \
+    -p rome_*_syntax \
+    -p rome_*_factory \
+    -p rome_diagnostics \
+    -p rome_service \
+    -p rome_cli \
+    -p rome_console \
+    -p rome_*parser \
+    -p rome_rowan
+    --no-deps
+"""
 bench_parser = "run -p xtask_bench --release -- --feature parser"
 bench_formatter = "run -p xtask_bench --release -- --feature formatter"
 bench_analyzer = "run -p xtask_bench --release -- --feature analyzer"

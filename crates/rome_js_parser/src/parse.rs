@@ -127,8 +127,8 @@ pub fn parse_common(
     (events, errors, trivia)
 }
 
-/// Parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
-/// Or turned into a typed [`Script`](Script) with [`tree`](Parse::tree).
+/// Parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`JsSyntaxNode`](JsSyntaxNode).
+/// Or turned into a typed [`JsScript`](JsScript) with [`tree`](Parse::tree).
 ///
 /// ```
 /// use rome_js_parser::parse_script;
@@ -168,7 +168,7 @@ pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
     .unwrap()
 }
 
-/// Same as [`parse_text`] but configures the parser to parse an ECMAScript module instead of a script
+/// Same as `parse_text` but configures the parser to parse an ECMAScript module instead of a script
 pub fn parse_module(text: &str, file_id: usize) -> Parse<JsModule> {
     parse(text, file_id, SourceType::js_module())
         .cast::<JsModule>()
@@ -186,8 +186,8 @@ pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAny
     })
 }
 
-/// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
-/// Or turned into a typed [`Expr`](Expr) with [`tree`](Parse::tree).
+/// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`JsSyntaxNode`](JsSyntaxNode).
+/// Or turned into a typed [`JsExpressionSnipped`](JsExpressionSnipped) with [`tree`](Parse::tree).
 pub fn parse_expression(text: &str, file_id: usize) -> Parse<JsExpressionSnipped> {
     let mut parser = crate::Parser::new(text, file_id, SourceType::js_module());
     crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
