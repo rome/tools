@@ -13,3 +13,5 @@ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
 console.log("foo" + 1 + 2);
 1 + "2" - 3;
 foo() + " bar";
+
+1 * /**leading*/"foo"    /**trailing */                   + "bar"

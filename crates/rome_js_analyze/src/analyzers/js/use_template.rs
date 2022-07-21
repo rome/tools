@@ -9,7 +9,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryOperator, JsSyntaxKind,
     JsSyntaxToken, JsTemplate, JsTemplateElementList, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken};
+use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken, TriviaPiece};
 
 use crate::{utils::escape_string, JsRuleAction};
 
@@ -145,22 +145,65 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
                 reduced_exprs.extend(flatten_template_element_list(template.elements())?);
             }
             _ => {
-                // drop the trivia of original expression make the generated `JsTemplate` a little nicer, if we don't do this
+                // drop the leading and trailing whitespace of original expression make the generated `JsTemplate` a little nicer, if we don't do this
                 // the `1 * (2 + "foo") + "bar"` will become
                 // ```js
                 // `${1 * (2 + "foo") }bar`
                 // ```
                 let expr_next = expr.clone();
                 let first_token = expr_next.syntax().first_token()?;
-                let expr_next = expr_next.replace_token_discard_trivia(
-                    first_token.clone(),
-                    first_token.with_leading_trivia(std::iter::empty()),
-                )?;
+                // drop the leading whitespace of leading trivia of first token
+                // ## Example
+                // `1 *    (2 + "foo") /**trailing */             + "bar"`
+                //     ^^^^ drop                     ^^^^^^^^^^^^^ drop
+                let next_first_token = {
+                    let token_kind = first_token.kind();
+                    let token_text = first_token.text().trim_start();
+                    let leading_trivia = first_token
+                        .leading_trivia()
+                        .pieces()
+                        .skip_while(|item| item.is_newline() || item.is_whitespace())
+                        .map(|item| TriviaPiece::new(item.kind(), item.text_len()))
+                        .collect::<Vec<_>>();
+                    let trailing_trivia = first_token
+                        .trailing_trivia()
+                        .pieces()
+                        .map(|item| TriviaPiece::new(item.kind(), item.text_len()));
+                    JsSyntaxToken::new_detached(
+                        token_kind,
+                        token_text,
+                        leading_trivia,
+                        trailing_trivia,
+                    )
+                };
+                let expr_next = expr_next
+                    .replace_token_discard_trivia(first_token.clone(), next_first_token)?;
+                // Drop the trailing whitespace of trailing trivia of last token
                 let last_token = expr_next.syntax().last_token()?;
-                let expr_next = expr_next.replace_token_discard_trivia(
-                    last_token.clone(),
-                    last_token.with_trailing_trivia(std::iter::empty()),
-                )?;
+                let next_last_token = {
+                    let token_kind = last_token.kind();
+                    let mut trailing_trivia = last_token
+                        .trailing_trivia()
+                        .pieces()
+                        .rev()
+                        .skip_while(|item| item.is_newline() || item.is_whitespace())
+                        .map(|item| TriviaPiece::new(item.kind(), item.text_len()))
+                        .collect::<Vec<_>>();
+                    trailing_trivia.reverse();
+                    let leading_trivia = last_token
+                        .leading_trivia()
+                        .pieces()
+                        .map(|item| TriviaPiece::new(item.kind(), item.text_len()));
+                    let token_text = last_token.text().trim_end();
+                    JsSyntaxToken::new_detached(
+                        token_kind,
+                        token_text,
+                        leading_trivia,
+                        trailing_trivia,
+                    )
+                };
+                let expr_next =
+                    expr_next.replace_token_discard_trivia(last_token.clone(), next_last_token)?;
                 let template_element =
                     JsAnyTemplateElement::JsTemplateElement(make::js_template_element(
                         SyntaxToken::new_detached(JsSyntaxKind::DOLLAR_CURLY, "${", [], []),
@@ -224,11 +267,7 @@ fn is_unnecessary_string_concat_expression(node: &JsBinaryExpression) -> Option<
         rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
             rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {
-            if escape_string(string_literal.value_token().ok()?.text_trimmed())
-                .ok()?
-                .find(|ch| matches!(ch, '\n' | '`'))
-                .is_none()
-            {
+            if has_new_line_or_tick(string_literal).is_none() {
                 return Some(true);
             }
         }
@@ -244,17 +283,22 @@ fn is_unnecessary_string_concat_expression(node: &JsBinaryExpression) -> Option<
         rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
             rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {
-            if escape_string(string_literal.value_token().ok()?.text_trimmed())
-                .ok()?
-                .find(|ch| matches!(ch, '\n' | '`'))
-                .is_none()
-            {
+            if has_new_line_or_tick(string_literal).is_none() {
                 return Some(true);
             }
         }
         _ => (),
     }
     None
+}
+
+/// Check if the string literal has new line or tick
+fn has_new_line_or_tick(
+    string_literal: rome_js_syntax::JsStringLiteralExpression,
+) -> Option<usize> {
+    escape_string(string_literal.value_token().ok()?.text_trimmed())
+        .ok()?
+        .find(|ch| matches!(ch, '\n' | '`'))
 }
 
 /// Convert [JsBinaryExpression] recursively only if the `operator` is `+` into Vec<[JsAnyExpression]>
