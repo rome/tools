@@ -243,6 +243,32 @@ pub trait Rule: RuleMeta {
     /// matching the `Query`. This is useful for rules that implement a code
     /// action that recursively modifies multiple nodes at once, this hook
     /// allows these rules to avoid matching on those nodes again.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// impl Rule for SimplifyExpression {
+    ///     type Query = BinaryExpression;
+    ///
+    ///     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+    ///         // Recursively check this expression and its children for simplification
+    ///         // opportunities
+    ///         check_can_simplify(ctx.query())
+    ///     }
+    ///
+    ///     fn suppressed_nodes(
+    ///         _ctx: &RuleContext<Self>,
+    ///         state: &Self::State,
+    ///         suppressions: &mut RuleSuppressions<RuleLanguage<Self>>
+    ///     ) {
+    ///         // Prevent this rule from matching again on nodes that were already checked by
+    ///         // `check_can_simplify`
+    ///         for node in &state.nodes {
+    ///             suppressions.suppress_node(node.clone());
+    ///         }
+    ///     }
+    /// }
+    /// ```
     fn suppressed_nodes(
         ctx: &RuleContext<Self>,
         state: &Self::State,

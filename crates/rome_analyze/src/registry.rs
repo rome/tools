@@ -1,4 +1,4 @@
-use std::{borrow, cell::RefCell, collections::BTreeMap, rc::Rc};
+use std::{borrow, collections::BTreeMap};
 
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rustc_hash::FxHashSet;
@@ -55,6 +55,8 @@ struct PhaseRules<L: Language> {
     /// lint rules associated with it
     ast_rules: Vec<SyntaxKindRules<L>>,
     control_flow: Vec<RegistryRule<L>>,
+    /// Holds a list of states for all the rules in this phase
+    rule_states: Vec<RuleState<L>>,
 }
 
 impl<L: Language + Default> RuleRegistry<L> {
@@ -73,7 +75,7 @@ impl<L: Language + Default> RuleRegistry<L> {
         let phase = R::phase() as usize;
         let phase = &mut self.phase_rules[phase];
 
-        let rule = RegistryRule::of::<G, R>();
+        let rule = RegistryRule::new::<G, R>(phase.rule_states.len());
 
         match <R::Query as Queryable>::KEY {
             QueryKey::Syntax(key) => {
@@ -93,13 +95,15 @@ impl<L: Language + Default> RuleRegistry<L> {
                     // Insert a handle to the rule `R` into the `SyntaxKindRules` entry
                     // corresponding to the SyntaxKind index
                     let node = &mut phase.ast_rules[index];
-                    node.rules.push(rule.clone());
+                    node.rules.push(rule);
                 }
             }
             QueryKey::ControlFlowGraph => {
                 phase.control_flow.push(rule);
             }
         }
+
+        phase.rule_states.push(RuleState::default());
 
         self.metadata.insert(
             MetadataKey {
@@ -167,7 +171,8 @@ impl<L: Language> QueryMatcher<L> for RuleRegistry<L> {
 
         // Run all the rules registered to this QueryMatch
         for rule in rules {
-            (rule.run)(&mut params, &mut rule.state);
+            let state = &mut phase.rule_states[rule.state_index];
+            (rule.run)(&mut params, state);
         }
     }
 }
@@ -225,16 +230,16 @@ pub struct RuleMetadata {
 }
 
 /// Internal representation of a single rule in the registry
-#[derive(Clone)]
+#[derive(Copy, Clone)]
 pub struct RegistryRule<L: Language> {
     run: RuleExecutor<L>,
-    state: RuleState<L>,
+    state_index: usize,
 }
 
 /// Internal state for a given rule
-#[derive(Clone, Default)]
+#[derive(Default)]
 struct RuleState<L: Language> {
-    suppressions: Rc<RefCell<RuleSuppressions<L>>>,
+    suppressions: RuleSuppressions<L>,
 }
 
 /// Set of nodes this rule has suppressed from matching its query
@@ -254,7 +259,7 @@ impl<L: Language> RuleSuppressions<L> {
 type RuleExecutor<L> = fn(&mut MatchQueryParams<L>, &mut RuleState<L>);
 
 impl<L: Language + Default> RegistryRule<L> {
-    fn of<G, R>() -> Self
+    fn new<G, R>(state_index: usize) -> Self
     where
         G: RuleGroup<Language = L> + 'static,
         R: Rule + 'static,
@@ -272,7 +277,7 @@ impl<L: Language + Default> RegistryRule<L> {
             <R::Query as Queryable>::Output: Clone,
         {
             if let QueryMatch::Syntax(node) = &params.query {
-                if state.suppressions.borrow().inner.contains(node) {
+                if state.suppressions.inner.contains(node) {
                     return;
                 }
             }
@@ -289,7 +294,7 @@ impl<L: Language + Default> RegistryRule<L> {
                 let text_range =
                     R::text_range(&ctx, &result).unwrap_or_else(|| params.query.text_range());
 
-                R::suppressed_nodes(&ctx, &result, &mut *state.suppressions.borrow_mut());
+                R::suppressed_nodes(&ctx, &result, &mut state.suppressions);
 
                 let signal = Box::new(RuleSignal::<G, R>::new(
                     params.file_id,
@@ -309,7 +314,7 @@ impl<L: Language + Default> RegistryRule<L> {
 
         Self {
             run: run::<G, R>,
-            state: RuleState::default(),
+            state_index,
         }
     }
 }
