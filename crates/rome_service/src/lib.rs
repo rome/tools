@@ -1,6 +1,7 @@
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
+use rome_js_analyze::utils::rename::RenameError;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
@@ -46,7 +47,7 @@ pub enum RomeError {
     /// Error thrown when validating the configuration. Once deserialized, further checks have to be done.
     Configuration(ConfigurationError),
 
-    RenameError,
+    RenameError(RenameError),
 }
 
 impl Debug for RomeError {
@@ -60,7 +61,7 @@ impl Debug for RomeError {
             RomeError::CantReadFile(_) => std::fmt::Display::fmt(self, f),
             RomeError::Configuration(_) => std::fmt::Display::fmt(self, f),
             RomeError::DirtyWorkspace => std::fmt::Display::fmt(self, f),
-            RomeError::RenameError => std::fmt::Display::fmt(self, f),
+            RomeError::RenameError(_) => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -108,9 +109,11 @@ impl Display for RomeError {
             RomeError::DirtyWorkspace => {
                 write!(f, "Uncommitted changes in repository")
             }
-            RomeError::RenameError => {
-                write!(f, "encountered an error while renaming symbol",)
-            }
+            RomeError::RenameError(error) => match error {
+                RenameError::CannotBeRenamed => {
+                    write!(f, "encountered an error while renaming a symbol",)
+                }
+            },
         }
     }
 }

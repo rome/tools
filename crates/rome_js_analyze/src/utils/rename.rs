@@ -2,17 +2,89 @@ use crate::{assert_rename_nok, assert_rename_ok};
 use rome_js_semantic::{AllReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
     JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
-    JsSyntaxToken,
+    JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{AstNode, BatchMutation, SyntaxNodeCast, TriviaPiece};
 
+pub trait CanBeRenamed {
+    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode>;
+}
+
+impl CanBeRenamed for JsIdentifierBinding {
+    fn declaration(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(self.syntax().clone())
+    }
+}
+
+impl CanBeRenamed for JsReferenceIdentifier {
+    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(model.declaration(self)?.syntax().clone())
+    }
+}
+
+impl CanBeRenamed for JsIdentifierAssignment {
+    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(model.declaration(self)?.syntax().clone())
+    }
+}
+
+pub enum JsAnyCanBeRenamed {
+    JsIdentifierBinding(JsIdentifierBinding),
+    JsReferenceIdentifier(JsReferenceIdentifier),
+    JsIdentifierAssignment(JsIdentifierAssignment),
+}
+
+impl CanBeRenamed for JsAnyCanBeRenamed {
+    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+        match self {
+            JsAnyCanBeRenamed::JsIdentifierBinding(node) => CanBeRenamed::declaration(node, model),
+            JsAnyCanBeRenamed::JsReferenceIdentifier(node) => {
+                CanBeRenamed::declaration(node, model)
+            }
+            JsAnyCanBeRenamed::JsIdentifierAssignment(node) => {
+                CanBeRenamed::declaration(node, model)
+            }
+        }
+    }
+}
+
+pub enum RenameError {
+    CannotBeRenamed,
+}
+
+impl TryFrom<JsSyntaxNode> for JsAnyCanBeRenamed {
+    type Error = RenameError;
+
+    fn try_from(node: JsSyntaxNode) -> Result<Self, Self::Error> {
+        match node.kind() {
+            JsSyntaxKind::JS_IDENTIFIER_BINDING => node
+                .cast::<JsIdentifierBinding>()
+                .map(JsAnyCanBeRenamed::JsIdentifierBinding)
+                .ok_or(Self::Error::CannotBeRenamed),
+            JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
+                .cast::<JsReferenceIdentifier>()
+                .map(JsAnyCanBeRenamed::JsReferenceIdentifier)
+                .ok_or(Self::Error::CannotBeRenamed),
+            JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
+                .cast::<JsIdentifierAssignment>()
+                .map(JsAnyCanBeRenamed::JsIdentifierAssignment)
+                .ok_or(Self::Error::CannotBeRenamed),
+            _ => Err(Self::Error::CannotBeRenamed),
+        }
+    }
+}
+
 pub trait RenameSymbolExtensions {
-    fn rename(
+    fn rename(&mut self, model: &SemanticModel, node: impl CanBeRenamed, new_name: &str) -> bool;
+
+    fn rename_with_any_can_be_renamed(
         &mut self,
         model: &SemanticModel,
-        binding: JsIdentifierBinding,
+        node: JsAnyCanBeRenamed,
         new_name: &str,
-    ) -> bool;
+    ) -> bool {
+        self.rename(model, node, new_name)
+    }
 }
 
 fn token_with_new_text(token: &JsSyntaxToken, new_text: &str) -> JsSyntaxToken {
@@ -41,12 +113,15 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
     /// Rename the binding and all its references to the new_name.
     /// If we can´t rename the binding, the [BatchMutation] is never changes and it is left
     /// intact.
-    fn rename(
-        &mut self,
-        model: &SemanticModel,
-        prev_binding: JsIdentifierBinding,
-        new_name: &str,
-    ) -> bool {
+    fn rename(&mut self, model: &SemanticModel, node: impl CanBeRenamed, new_name: &str) -> bool {
+        let prev_binding = match node
+            .declaration(model)
+            .and_then(|node| node.cast::<JsIdentifierBinding>())
+        {
+            Some(prev_binding) => prev_binding,
+            None => return false,
+        };
+
         // We can rename a binding if there is no conflicts in the current scope.
         // We can shadow parent scopes, so we don´t check them.
 

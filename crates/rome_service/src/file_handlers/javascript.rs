@@ -3,15 +3,13 @@ use rome_diagnostics::{Applicability, Diagnostic};
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::analyze;
+use rome_js_analyze::utils::rename::RenameError;
 use rome_js_formatter::context::QuoteStyle;
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
-use rome_js_semantic::{semantic_model, DeclarationExtensions};
-use rome_js_syntax::{
-    JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxKind, SourceType, TextRange, TextSize, TokenAtOffset,
-};
-use rome_rowan::{AstNode, BatchMutationExt, Direction, SyntaxNodeCast};
+use rome_js_semantic::semantic_model;
+use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
+use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
 use crate::workspace::FixFileResult;
 use crate::{
@@ -283,34 +281,16 @@ fn rename(
         .find(|token| token.text_range().contains(symbol_at))
         .and_then(|token| token.parent())
     {
-        let binding = match node.kind() {
-            JsSyntaxKind::JS_IDENTIFIER_BINDING => node.cast::<JsIdentifierBinding>(),
-            JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
-                .cast::<JsReferenceIdentifier>()
-                .ok_or(RomeError::RenameError)?
-                .declaration(&model)
-                .ok_or(RomeError::RenameError)?
-                .syntax()
-                .clone()
-                .cast::<JsIdentifierBinding>(),
-            JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
-                .cast::<JsIdentifierAssignment>()
-                .ok_or(RomeError::RenameError)?
-                .declaration(&model)
-                .ok_or(RomeError::RenameError)?
-                .syntax()
-                .clone()
-                .cast::<JsIdentifierBinding>(),
-            _ => None,
-        };
-
-        if let Some(binding) = binding {
-            let mut batch = root.begin();
-            batch.rename(&model, binding, &new_name);
-            let root = batch.commit();
-            return Ok(root.to_string());
+        match node.try_into() {
+            Ok(node) => {
+                let mut batch = root.begin();
+                batch.rename_with_any_can_be_renamed(&model, node, &new_name);
+                let root = batch.commit();
+                Ok(root.to_string())
+            }
+            Err(err) => Err(RomeError::RenameError(err)),
         }
+    } else {
+        Err(RomeError::RenameError(RenameError::CannotBeRenamed))
     }
-
-    todo!()
 }
