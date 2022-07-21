@@ -69,7 +69,10 @@ Contribution and development instructions can be found in [CONTRIBUTING](./CONTR
 
 Additional project coordination and real-time discussion happens on our [Discord server](https://discord.gg/rome). Remember that all activity on the Discord server is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
 
+## Technical documentation
 
+If you're curious to know our internals, you can browse our [technical documentation].
 
 [official website]: https://rome.tools/
+[technical documentation]: https://rome.github.io/tools/rome
 
