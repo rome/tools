@@ -2,15 +2,15 @@
 
 use js_sys::Array;
 use rome_analyze::{AnalysisFilter, ControlFlow, Never};
-use rome_diagnostics::file::SimpleFiles;
-use rome_diagnostics::termcolor::{Color, ColorSpec, WriteColor};
-use rome_diagnostics::Emitter;
+use rome_console::fmt::{Formatter, HTML};
+use rome_console::{markup, Markup};
+use rome_diagnostics::file::{Files, SimpleFile, SimpleFiles};
+use rome_diagnostics::Diagnostic;
 use rome_formatter::IndentStyle;
 use rome_js_formatter::context::JsFormatContext;
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
 use rome_js_syntax::{LanguageVariant, SourceType};
-use std::io;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -71,56 +71,6 @@ impl RomeOutput {
     #[wasm_bindgen(getter)]
     pub fn errors(&self) -> String {
         self.errors.clone()
-    }
-}
-
-struct ErrorOutput(Vec<u8>);
-
-impl io::Write for ErrorOutput {
-    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        self.0.write(buf)
-    }
-
-    fn flush(&mut self) -> io::Result<()> {
-        self.0.flush()
-    }
-}
-
-impl WriteColor for ErrorOutput {
-    fn supports_color(&self) -> bool {
-        true
-    }
-
-    fn set_color(&mut self, _spec: &ColorSpec) -> io::Result<()> {
-        match _spec.fg() {
-            Some(color) => {
-                let color = match color {
-                    Color::Blue => "Blue".to_string(),
-                    Color::Green => "Green".to_string(),
-                    Color::Red => "Red".to_string(),
-                    Color::Cyan => "Cyan".to_string(),
-                    Color::Magenta => "Magenta".to_string(),
-                    Color::Yellow => "darkkhaki".to_string(),
-                    Color::White => "White".to_string(),
-                    Color::Ansi256(_) => "Black".to_string(),
-                    Color::Rgb(r, g, b) => format!("rgb({r}, {g}, {b})"),
-                    _ => "Black".to_string(),
-                };
-                let style = format!(r#"</span><span style="color:{color}">"#);
-                self.0.extend(style.as_bytes());
-            }
-            None => {
-                self.0
-                    .extend(r#"</span><span style="color:black">"#.as_bytes());
-            }
-        }
-        Ok(())
-    }
-
-    fn reset(&mut self) -> io::Result<()> {
-        self.0
-            .extend(r#"</span><span style="color:black">"#.as_bytes());
-        Ok(())
     }
 }
 
@@ -223,11 +173,9 @@ pub fn run(
     let root_element = formatted.into_format_element();
     let formatter_ir = format!("{:#?}", root_element);
 
-    let mut errors = ErrorOutput(Vec::new());
+    let mut html = HTML(Vec::new());
     for diag in parse.diagnostics() {
-        Emitter::new(&simple_files)
-            .emit_with_writer(diag, &mut errors)
-            .unwrap();
+        diagnostic_to_string(&simple_files, main_file_id, &diag, &mut html);
     }
 
     mark("rome::analyze::begin");
@@ -240,10 +188,7 @@ pub fn run(
                 if let Some(action) = signal.action() {
                     diag.suggestions.push(action.into());
                 }
-
-                Emitter::new(&simple_files)
-                    .emit_with_writer(&diag, &mut errors)
-                    .unwrap();
+                diagnostic_to_string(&simple_files, main_file_id, &diag, &mut html);
             }
 
             ControlFlow::<Never>::Continue(())
@@ -267,6 +212,26 @@ pub fn run(
         ast,
         formatted_code,
         formatter_ir,
-        errors: String::from_utf8(errors.0).unwrap(),
+        errors: String::from_utf8(html.0).unwrap(),
     }
+}
+
+fn markup_to_string(markup: Markup, html: &mut HTML<Vec<u8>>) {
+    let mut fmt = Formatter::new(html);
+    fmt.write_markup(markup).unwrap();
+}
+
+fn diagnostic_to_string(
+    simple_files: &SimpleFiles,
+    id: usize,
+    diag: &Diagnostic,
+    html: &mut HTML<Vec<u8>>,
+) {
+    let file = simple_files.get(id).unwrap();
+    markup_to_string(
+        markup! {
+            {diag.display(file)}
+        },
+        html,
+    );
 }
