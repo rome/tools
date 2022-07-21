@@ -21,3 +21,4 @@ rome_js_syntax = { path = "../rome_js_syntax" }
 rome_js_parser = { path = "../rome_js_parser" }
 rome_js_formatter = { path = "../rome_js_formatter" }
 rome_rowan = { path = "../rome_rowan" }
+indexmap = "1.9.1"

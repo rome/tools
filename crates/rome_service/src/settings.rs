@@ -1,3 +1,4 @@
+use indexmap::IndexSet;
 use std::sync::{RwLock, RwLockReadGuard};
 
 use crate::{Configuration, Rules};
@@ -18,7 +19,7 @@ pub struct WorkspaceSettings {
 
 impl WorkspaceSettings {
     /// The (configuration)[Configuration] is merged into the workspace
-    pub fn merge_with_configuration(&mut self, configuration: &Configuration) {
+    pub fn merge_with_configuration(&mut self, configuration: Configuration) {
         // formatter part
         if let Some(formatter) = &configuration.formatter {
             self.format = FormatSettings::from(formatter);
@@ -36,12 +37,9 @@ impl WorkspaceSettings {
             self.linter = LinterSettings::from(linter)
         }
 
-        let linter = configuration
-            .javascript
-            .as_ref()
-            .and_then(|j| j.linter.as_ref());
-        if let Some(linter) = linter {
-            self.languages.javascript.linter.globals = linter.globals.clone();
+        let globals = configuration.javascript.map(|j| j.globals);
+        if let Some(globals) = globals {
+            self.languages.javascript.globals = globals;
         }
     }
 }
@@ -124,6 +122,9 @@ pub struct LanguageSettings<L: Language> {
 
     /// Linter settings for this language
     pub linter: L::LinterSettings,
+
+    /// Globals variables/bindings that can be found in a file
+    pub globals: IndexSet<String>,
 }
 
 /// Handle object holding a temporary lock on the workspace settings until

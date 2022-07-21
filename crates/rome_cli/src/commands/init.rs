@@ -5,7 +5,7 @@ use rome_service::create_config;
 
 pub(crate) fn init(mut session: CliSession) -> Result<(), Termination> {
     let fs = &mut session.app.fs;
-    create_config(fs, Configuration::new_init())?;
+    create_config(fs, Configuration::default())?;
     let message = markup! {
                 <Info><Emphasis>"Files created:
         

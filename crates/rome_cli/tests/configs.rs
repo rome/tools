@@ -12,7 +12,7 @@ pub const CONFIG_FORMAT: &str = r#"{
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
   "root": true,
   "linter": {
-    "enabled": false
+    "enabled": true
   }
 }"#;
 
@@ -55,11 +55,9 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     }
   },
   "javascript": {
+    "globals": ["$"],
     "formatter": {
       "quoteStyle": "double"
-    },
-    "linter": {
-        "globals": ["$"]
     }
   }
 }"#;

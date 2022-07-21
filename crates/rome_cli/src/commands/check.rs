@@ -1,11 +1,10 @@
-use crate::commands::format::parse_format_options;
+use crate::commands::format::apply_format_settings_from_cli;
 use crate::{
     traversal::{traverse, TraversalMode},
     CliSession, Termination,
 };
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
-use rome_service::configuration::Configuration;
-use rome_service::settings::{LinterSettings, WorkspaceSettings};
+use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::UpdateSettingsParams;
 use rome_service::{load_config, ConfigurationType};
 
@@ -35,8 +34,11 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         20
     };
 
-    parse_format_options(&mut session, &mut workspace_settings, &configuration)?;
-    parse_linter_options(&mut session, &mut workspace_settings, &configuration)?;
+    if let Some(configuration) = configuration {
+        workspace_settings.merge_with_configuration(configuration)
+    }
+
+    apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
 
     session
         .app
@@ -52,18 +54,4 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         },
         session,
     )
-}
-
-pub(crate) fn parse_linter_options(
-    _session: &mut CliSession,
-    workspace_settings: &mut WorkspaceSettings,
-    configuration: &Option<Configuration>,
-) -> Result<(), Termination> {
-    if let Some(configuration) = configuration {
-        if let Some(linter) = &configuration.linter {
-            workspace_settings.linter = LinterSettings::from(linter);
-        }
-    }
-
-    Ok(())
 }
