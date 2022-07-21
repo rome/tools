@@ -56,7 +56,7 @@ struct SemanticModelData {
 }
 
 impl SemanticModelData {
-    pub fn scope(&self, range: &TextRange) -> usize {
+    fn scope(&self, range: &TextRange) -> usize {
         let scopes = self
             .scope_by_range
             .find(range.start().into(), range.end().into());

@@ -40,3 +40,27 @@ pub fn assert_rename_nok(before: &str) {
     let mut batch = r.tree().begin();
     assert!(!batch.rename(&model, binding_a, "b"));
 }
+
+#[macro_export]
+macro_rules! assert_rename_ok {
+    ($(#[$attr:meta])* $($name:ident, $before:expr, $expected:expr,)*) => {
+        $(
+            #[test]
+            pub fn $name() {
+                $crate::utils::tests::assert_rename_ok($before, $expected);
+            }
+        )*
+    };
+}
+
+#[macro_export]
+macro_rules! assert_rename_nok {
+    ($(#[$attr:meta])* $($name:ident, $before:expr,)*) => {
+        $(
+            #[test]
+            pub fn $name() {
+                $crate::utils::tests::assert_rename_nok($before);
+            }
+        )*
+    };
+}

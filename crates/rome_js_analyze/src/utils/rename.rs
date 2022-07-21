@@ -1,4 +1,3 @@
-use crate::{assert_rename_nok, assert_rename_ok};
 use rome_js_semantic::{AllReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
     JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
@@ -141,7 +140,7 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
         let all_references: Vec<_> = prev_binding.all_references(model).collect();
         let mut changes = Vec::with_capacity(all_references.len());
 
-        for reference in all_references.iter() {
+        for reference in all_references {
             let scope = reference.scope();
             if scope
                 .ancestors()
@@ -172,7 +171,7 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
             }
         }
 
-        // Now it is safe to pish changes to the batch mutation
+        // Now it is safe to push changes to the batch mutation
         // Rename binding
 
         let next_name_token = token_with_new_text(&name_token, new_name);
@@ -189,22 +188,27 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
     }
 }
 
-assert_rename_ok! {
-    ok_rename_declaration, "let a;", "let b;",
-    ok_rename_declaration_inner_scope, "let b; if (true) { let a; }", "let b; if (true) { let b; }",
-    ok_rename_read_reference, "let a; a + 1;", "let b; b + 1;",
-    ok_rename_read_before_initit, "function f() { console.log(a); let a; }", "function f() { console.log(b); let b; }",
-    ok_rename_write_reference, "let a; a = 1;", "let b; b = 1;",
-    ok_rename_write_before_init, "function f() { a = 1; let a; }", "function f() { b = 1; let b; }",
-    ok_rename_trivia_is_kept, "let /*1*/a/*2*/; /*3*/a/*4*/ = 1; /*5*/a/*6*/ + 1", "let /*1*/b/*2*/; /*3*/b/*4*/ = 1; /*5*/b/*6*/ + 1",
-}
+#[cfg(test)]
+mod tests {
+    use crate::{assert_rename_nok, assert_rename_ok};
 
-assert_rename_nok! {
-    nok_rename_declaration_conflict_before, "let b; let a;",
-    nok_rename_declaration_conflict_after, "let a; let b;",
-    nok_rename_read_reference, "let a; if (true) { let b; a + 1 }",
-    nok_rename_read_reference_conflict_hoisting_same_scope, "let a; if (true) { a + 1; var b; }",
-    nok_rename_read_reference_conflict_hoisting_outer_scope, "let a; if (true) { a + 1; } var b;",
-    nok_rename_write_reference, "let a; if (true) { let b; a = 1 }",
-    nok_rename_read_reference_parent_scope_conflict, "function f() { let b; if(true) { console.log(a); } } var a;",
+    assert_rename_ok! {
+        ok_rename_declaration, "let a;", "let b;",
+        ok_rename_declaration_inner_scope, "let b; if (true) { let a; }", "let b; if (true) { let b; }",
+        ok_rename_read_reference, "let a; a + 1;", "let b; b + 1;",
+        ok_rename_read_before_initit, "function f() { console.log(a); let a; }", "function f() { console.log(b); let b; }",
+        ok_rename_write_reference, "let a; a = 1;", "let b; b = 1;",
+        ok_rename_write_before_init, "function f() { a = 1; let a; }", "function f() { b = 1; let b; }",
+        ok_rename_trivia_is_kept, "let /*1*/a/*2*/; /*3*/a/*4*/ = 1; /*5*/a/*6*/ + 1", "let /*1*/b/*2*/; /*3*/b/*4*/ = 1; /*5*/b/*6*/ + 1",
+    }
+
+    assert_rename_nok! {
+        nok_rename_declaration_conflict_before, "let b; let a;",
+        nok_rename_declaration_conflict_after, "let a; let b;",
+        nok_rename_read_reference, "let a; if (true) { let b; a + 1 }",
+        nok_rename_read_reference_conflict_hoisting_same_scope, "let a; if (true) { a + 1; var b; }",
+        nok_rename_read_reference_conflict_hoisting_outer_scope, "let a; if (true) { a + 1; } var b;",
+        nok_rename_write_reference, "let a; if (true) { let b; a = 1 }",
+        nok_rename_read_reference_parent_scope_conflict, "function f() { let b; if(true) { console.log(a); } } var a;",
+    }
 }

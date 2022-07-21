@@ -284,9 +284,13 @@ fn rename(
         match node.try_into() {
             Ok(node) => {
                 let mut batch = root.begin();
-                batch.rename_with_any_can_be_renamed(&model, node, &new_name);
-                let root = batch.commit();
-                Ok(root.to_string())
+                let result = batch.rename_with_any_can_be_renamed(&model, node, &new_name);
+                if !result {
+                    Err(RomeError::RenameError(RenameError::CannotBeRenamed))
+                } else {
+                    let root = batch.commit();
+                    Ok(root.to_string())
+                }
             }
             Err(err) => Err(RomeError::RenameError(err)),
         }

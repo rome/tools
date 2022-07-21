@@ -2,30 +2,6 @@ pub mod rename;
 #[cfg(test)]
 pub mod tests;
 
-#[macro_export]
-macro_rules! assert_rename_ok {
-    ($(#[$attr:meta])* $($name:ident, $before:expr, $expected:expr,)*) => {
-        $(
-            #[test]
-            pub fn $name() {
-                $crate::utils::tests::assert_rename_ok($before, $expected);
-            }
-        )*
-    };
-}
-
-#[macro_export]
-macro_rules! assert_rename_nok {
-    ($(#[$attr:meta])* $($name:ident, $before:expr,)*) => {
-        $(
-            #[test]
-            pub fn $name() {
-                $crate::utils::tests::assert_rename_nok($before);
-            }
-        )*
-    };
-}
-
 #[derive(Debug, PartialEq)]
 pub(crate) enum EscapeError {
     EscapeAtEndOfString,
