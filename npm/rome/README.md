@@ -71,8 +71,7 @@ Additional project coordination and real-time discussion happens on our [Discord
 
 ## Technical documentation
 
-If you're curious to know our internals, you can browse our [technical documentation], built
-straight from our source code.
+If you're curious to know our internals, you can browse our [technical documentation].
 
 [official website]: https://rome.tools/
 [technical documentation]: https://rome.github.io/tools/rome
