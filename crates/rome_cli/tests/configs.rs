@@ -90,3 +90,13 @@ pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
     }
   }
 }"#;
+
+pub const CONFIG_INCORRECT_GLOBALS: &str = r#"{
+  "root": true,
+  "linter": {
+    "enabled": false
+  },
+  "javascript": {
+    "globals": [false]
+  }
+}"#;
