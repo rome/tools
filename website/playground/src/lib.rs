@@ -4,7 +4,7 @@ use js_sys::Array;
 use rome_analyze::{AnalysisFilter, ControlFlow, Never};
 use rome_console::fmt::{Formatter, HTML};
 use rome_console::{markup, Markup};
-use rome_diagnostics::file::{Files, SimpleFile, SimpleFiles};
+use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::Diagnostic;
 use rome_formatter::IndentStyle;
 use rome_js_formatter::context::JsFormatContext;
@@ -175,7 +175,7 @@ pub fn run(
 
     let mut html = HTML(Vec::new());
     for diag in parse.diagnostics() {
-        diagnostic_to_string(&simple_files, main_file_id, &diag, &mut html);
+        diagnostic_to_string(&simple_files, main_file_id, diag, &mut html);
     }
 
     mark("rome::analyze::begin");
