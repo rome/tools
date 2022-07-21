@@ -498,10 +498,6 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     pub fn token(&self) -> SyntaxToken<L> {
         SyntaxToken::from(self.raw.token().clone())
     }
-
-    pub fn piece(&self) -> TriviaPiece {
-        self.trivia
-    }
 }
 
 impl<L: Language> fmt::Debug for SyntaxTriviaPiece<L> {

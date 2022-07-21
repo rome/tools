@@ -39,14 +39,13 @@ pub enum RomeError {
     FormatError(FormatError),
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
     FormatWithErrorsDisabled,
-    /// Thrown when a rome can't read a generic directory
+    /// Thrown when Rome can't read a generic directory
     CantReadDirectory(PathBuf),
-    /// Thrown when a rome can't read a generic file
+    /// Thrown when Rome can't read a generic file
     CantReadFile(PathBuf),
-
     /// Error thrown when validating the configuration. Once deserialized, further checks have to be done.
     Configuration(ConfigurationError),
-
+    /// Error thrown when Rome cannot rename a symbol.
     RenameError(RenameError),
 }
 
@@ -110,8 +109,21 @@ impl Display for RomeError {
                 write!(f, "Uncommitted changes in repository")
             }
             RomeError::RenameError(error) => match error {
-                RenameError::CannotBeRenamed => {
-                    write!(f, "encountered an error while renaming a symbol",)
+                RenameError::CannotBeRenamed {
+                    original_name,
+                    new_name,
+                } => {
+                    write!(
+                        f,
+                        "encountered an error while renaming the symbol \"{}\" to \"{}\"",
+                        original_name, new_name
+                    )
+                }
+                RenameError::CannotFindDeclaration => {
+                    write!(
+                        f,
+                        "encountered an error finding a declaration at the specified position"
+                    )
                 }
             },
         }

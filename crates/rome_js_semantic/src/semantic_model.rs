@@ -64,7 +64,7 @@ impl SemanticModelData {
         match scopes.last() {
             Some(interval) => interval.val,
             // We always have at least one scope, the global one.
-            None => unreachable!(),
+            None => unreachable!("Expected global scope not present"),
         }
     }
 

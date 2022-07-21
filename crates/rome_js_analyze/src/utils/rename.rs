@@ -5,81 +5,89 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, BatchMutation, SyntaxNodeCast, TriviaPiece};
 
-pub trait CanBeRenamed {
+pub trait RenamableNode {
     fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode>;
 }
 
-impl CanBeRenamed for JsIdentifierBinding {
+impl RenamableNode for JsIdentifierBinding {
     fn declaration(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
         Some(self.syntax().clone())
     }
 }
 
-impl CanBeRenamed for JsReferenceIdentifier {
+impl RenamableNode for JsReferenceIdentifier {
     fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         Some(model.declaration(self)?.syntax().clone())
     }
 }
 
-impl CanBeRenamed for JsIdentifierAssignment {
+impl RenamableNode for JsIdentifierAssignment {
     fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         Some(model.declaration(self)?.syntax().clone())
     }
 }
 
-pub enum JsAnyCanBeRenamed {
+pub enum JsAnyRenamebleDeclaration {
     JsIdentifierBinding(JsIdentifierBinding),
     JsReferenceIdentifier(JsReferenceIdentifier),
     JsIdentifierAssignment(JsIdentifierAssignment),
 }
 
-impl CanBeRenamed for JsAnyCanBeRenamed {
+impl RenamableNode for JsAnyRenamebleDeclaration {
     fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         match self {
-            JsAnyCanBeRenamed::JsIdentifierBinding(node) => CanBeRenamed::declaration(node, model),
-            JsAnyCanBeRenamed::JsReferenceIdentifier(node) => {
-                CanBeRenamed::declaration(node, model)
+            JsAnyRenamebleDeclaration::JsIdentifierBinding(node) => {
+                RenamableNode::declaration(node, model)
             }
-            JsAnyCanBeRenamed::JsIdentifierAssignment(node) => {
-                CanBeRenamed::declaration(node, model)
+            JsAnyRenamebleDeclaration::JsReferenceIdentifier(node) => {
+                RenamableNode::declaration(node, model)
+            }
+            JsAnyRenamebleDeclaration::JsIdentifierAssignment(node) => {
+                RenamableNode::declaration(node, model)
             }
         }
     }
 }
 
 pub enum RenameError {
-    CannotBeRenamed,
+    CannotFindDeclaration,
+    CannotBeRenamed {
+        original_name: String,
+        new_name: String,
+    },
 }
 
-impl TryFrom<JsSyntaxNode> for JsAnyCanBeRenamed {
+impl TryFrom<JsSyntaxNode> for JsAnyRenamebleDeclaration {
     type Error = RenameError;
 
     fn try_from(node: JsSyntaxNode) -> Result<Self, Self::Error> {
         match node.kind() {
             JsSyntaxKind::JS_IDENTIFIER_BINDING => node
                 .cast::<JsIdentifierBinding>()
-                .map(JsAnyCanBeRenamed::JsIdentifierBinding)
-                .ok_or(Self::Error::CannotBeRenamed),
+                .map(JsAnyRenamebleDeclaration::JsIdentifierBinding)
+                .ok_or(Self::Error::CannotFindDeclaration),
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
                 .cast::<JsReferenceIdentifier>()
-                .map(JsAnyCanBeRenamed::JsReferenceIdentifier)
-                .ok_or(Self::Error::CannotBeRenamed),
+                .map(JsAnyRenamebleDeclaration::JsReferenceIdentifier)
+                .ok_or(Self::Error::CannotFindDeclaration),
             JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
                 .cast::<JsIdentifierAssignment>()
-                .map(JsAnyCanBeRenamed::JsIdentifierAssignment)
-                .ok_or(Self::Error::CannotBeRenamed),
-            _ => Err(Self::Error::CannotBeRenamed),
+                .map(JsAnyRenamebleDeclaration::JsIdentifierAssignment)
+                .ok_or(Self::Error::CannotFindDeclaration),
+            _ => Err(Self::Error::CannotFindDeclaration),
         }
     }
 }
 
 pub trait RenameSymbolExtensions {
-    fn rename(&mut self, model: &SemanticModel, node: impl CanBeRenamed, new_name: &str) -> bool;
+    /// Rename the binding and all its references to "new_name".
+    fn rename(&mut self, model: &SemanticModel, node: impl RenamableNode, new_name: &str) -> bool;
 
+    /// Rename the binding and all its references to "new_name".
     fn rename_with_any_can_be_renamed(
         &mut self,
         model: &SemanticModel,
-        node: JsAnyCanBeRenamed,
+        node: JsAnyRenamebleDeclaration,
         new_name: &str,
     ) -> bool {
         self.rename(model, node, new_name)
@@ -109,10 +117,10 @@ fn token_with_new_text(token: &JsSyntaxToken, new_text: &str) -> JsSyntaxToken {
 }
 
 impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation<JsLanguage, N> {
-    /// Rename the binding and all its references to the new_name.
+    /// Rename the binding and all its references to "new_name".
     /// If we can´t rename the binding, the [BatchMutation] is never changes and it is left
     /// intact.
-    fn rename(&mut self, model: &SemanticModel, node: impl CanBeRenamed, new_name: &str) -> bool {
+    fn rename(&mut self, model: &SemanticModel, node: impl RenamableNode, new_name: &str) -> bool {
         let prev_binding = match node
             .declaration(model)
             .and_then(|node| node.cast::<JsIdentifierBinding>())

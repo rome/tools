@@ -281,12 +281,16 @@ fn rename(
         .find(|token| token.text_range().contains(symbol_at))
         .and_then(|token| token.parent())
     {
+        let original_name = node.text_trimmed();
         match node.try_into() {
             Ok(node) => {
                 let mut batch = root.begin();
                 let result = batch.rename_with_any_can_be_renamed(&model, node, &new_name);
                 if !result {
-                    Err(RomeError::RenameError(RenameError::CannotBeRenamed))
+                    Err(RomeError::RenameError(RenameError::CannotBeRenamed {
+                        original_name: original_name.to_string(),
+                        new_name,
+                    }))
                 } else {
                     let root = batch.commit();
                     Ok(root.to_string())
@@ -295,6 +299,6 @@ fn rename(
             Err(err) => Err(RomeError::RenameError(err)),
         }
     } else {
-        Err(RomeError::RenameError(RenameError::CannotBeRenamed))
+        Err(RomeError::RenameError(RenameError::CannotFindDeclaration))
     }
 }
