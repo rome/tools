@@ -9,7 +9,7 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatementFields, TriviaPieceKind, T};
 
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 use crate::{use_block_statements_diagnostic, use_block_statements_replace_body};
@@ -146,9 +146,10 @@ impl Rule for UseBlockStatements {
         nodes_need_to_replaced: &Self::State,
     ) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root = ctx.root();
-        let root = match nodes_need_to_replaced {
-            UseBlockStatementsOperationType::Wrap(stmt) => root.replace_node(
+        let mut mutation = ctx.root().begin();
+
+        match nodes_need_to_replaced {
+            UseBlockStatementsOperationType::Wrap(stmt) => mutation.replace_node(
                 stmt.clone(),
                 JsAnyStatement::JsBlockStatement(make::js_block_statement(
                     make::token(T!['{'])
@@ -157,25 +158,25 @@ impl Rule for UseBlockStatements {
                     make::token(T!['}'])
                         .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
                 )),
-            )?,
+            ),
             UseBlockStatementsOperationType::ReplaceBody => match node {
                 JsAnyStatement::JsDoWhileStatement(stmt) => {
-                    use_block_statements_replace_body!(JsDoWhileStatement, root, node, stmt)
+                    use_block_statements_replace_body!(JsDoWhileStatement, mutation, node, stmt)
                 }
                 JsAnyStatement::JsForInStatement(stmt) => {
-                    use_block_statements_replace_body!(JsForInStatement, root, node, stmt)
+                    use_block_statements_replace_body!(JsForInStatement, mutation, node, stmt)
                 }
                 JsAnyStatement::JsForOfStatement(stmt) => {
-                    use_block_statements_replace_body!(JsForOfStatement, root, node, stmt)
+                    use_block_statements_replace_body!(JsForOfStatement, mutation, node, stmt)
                 }
                 JsAnyStatement::JsForStatement(stmt) => {
-                    use_block_statements_replace_body!(JsForStatement, root, node, stmt)
+                    use_block_statements_replace_body!(JsForStatement, mutation, node, stmt)
                 }
                 JsAnyStatement::JsWhileStatement(stmt) => {
-                    use_block_statements_replace_body!(JsWhileStatement, root, node, stmt)
+                    use_block_statements_replace_body!(JsWhileStatement, mutation, node, stmt)
                 }
                 JsAnyStatement::JsWithStatement(stmt) => {
-                    use_block_statements_replace_body!(JsWithStatement, root, node, stmt)
+                    use_block_statements_replace_body!(JsWithStatement, mutation, node, stmt)
                 }
                 _ => return None,
             },
@@ -184,7 +185,7 @@ impl Rule for UseBlockStatements {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Wrap the statement with a `JsBlockStatement`" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }
@@ -210,8 +211,8 @@ macro_rules! use_block_statements_diagnostic {
 
 #[macro_export]
 macro_rules! use_block_statements_replace_body {
-    ($stmt_type:ident, $root:ident, $node:ident, $stmt:ident) => {{
-        $root.replace_node(
+    ($stmt_type:ident, $mutation:ident, $node:ident, $stmt:ident) => {{
+        $mutation.replace_node(
             $node.clone(),
             JsAnyStatement::$stmt_type(
                 $stmt.clone().with_body(JsAnyStatement::JsBlockStatement(
@@ -223,6 +224,6 @@ macro_rules! use_block_statements_replace_body {
                     ),
                 )),
             ),
-        )?
+        )
     }};
 }

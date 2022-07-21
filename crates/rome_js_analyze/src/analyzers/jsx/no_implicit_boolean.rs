@@ -7,7 +7,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyLiteralExpression, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute, JsxAttributeFields, T,
 };
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -79,6 +79,7 @@ impl Rule for NoImplicitBoolean {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let n = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         let JsxAttributeFields {
             name,
@@ -120,12 +121,13 @@ impl Rule for NoImplicitBoolean {
         );
         let next_attr = next_attr.build();
 
-        let root = ctx.root().replace_node(n.clone(), next_attr)?;
+        mutation.replace_node(n.clone(), next_attr);
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
             message: markup! { "Add explicit `true` literal for this attribute" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

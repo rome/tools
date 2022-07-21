@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsxAnyChild, JsxText, TriviaPieceKind, T};
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 declare_rule! {
@@ -72,6 +72,7 @@ impl Rule for NoCommentText {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         let normalized_comment = format!(
             "/*{}*/",
@@ -81,7 +82,8 @@ impl Rule for NoCommentText {
                 .trim_start_matches("/*")
                 .trim_end_matches("*/")
         );
-        let root = ctx.root().replace_node(
+
+        mutation.replace_node(
             JsxAnyChild::JsxText(node.clone()),
             JsxAnyChild::JsxExpressionChild(
                 make::jsx_expression_child(
@@ -96,13 +98,13 @@ impl Rule for NoCommentText {
                 )
                 .build(),
             ),
-        )?;
+        );
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Wrap the comments with braces" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

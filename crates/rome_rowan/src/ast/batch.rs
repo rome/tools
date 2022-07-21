@@ -1,5 +1,9 @@
-use crate::{AstNode, Language, SyntaxElement, SyntaxNode, SyntaxNodeCast, SyntaxToken};
-use std::{collections::BinaryHeap, iter::once};
+use text_size::TextRange;
+
+use crate::{
+    AstNode, Language, SyntaxElement, SyntaxNode, SyntaxNodeCast, SyntaxSlot, SyntaxToken,
+};
+use std::{any::type_name, collections::BinaryHeap, iter::once};
 
 pub trait BatchMutationExt<L>: AstNode<Language = L>
 where
@@ -68,6 +72,7 @@ impl<L: Language> Ord for CommitChange<L> {
     }
 }
 
+#[derive(Debug)]
 pub struct BatchMutation<L, N>
 where
     L: Language,
@@ -82,25 +87,110 @@ where
     L: Language,
     N: AstNode<Language = L>,
 {
+    /// Push a change to replace the "prev_node" with "next_node".
+    /// Trivia from "prev_node" is automatically copied to "next_node".
+    ///
+    /// Changes to take effect must be commited.
+    pub fn replace_node<T>(&mut self, prev_node: T, next_node: T)
+    where
+        T: AstNode<Language = L>,
+    {
+        self.replace_element(
+            prev_node.into_syntax().into(),
+            next_node.into_syntax().into(),
+        )
+    }
+
+    /// Push a change to replace the "prev_token" with "next_token".
+    /// Trivia from "prev_token" is automatically copied to "next_token".
+    ///
+    /// Changes to take effect must be commited.
+    pub fn replace_token(&mut self, prev_token: SyntaxToken<L>, next_token: SyntaxToken<L>) {
+        self.replace_element(prev_token.into(), next_token.into())
+    }
+
+    /// Push a change to replace the "prev_element" with "next_element".
+    /// Trivia from "prev_element" is automatically copied to "next_element".
+    ///
+    /// Changes to take effect must be commited.
+    pub fn replace_element(
+        &mut self,
+        prev_element: SyntaxElement<L>,
+        next_element: SyntaxElement<L>,
+    ) {
+        let (prev_leading, prev_trailing): (Vec<_>, Vec<_>) = match &prev_element {
+            SyntaxElement::Node(node) => (
+                node.first_token()
+                    .map(|token| token.leading_trivia().pieces().collect())
+                    .unwrap_or_default(),
+                node.last_token()
+                    .map(|token| token.trailing_trivia().pieces().collect())
+                    .unwrap_or_default(),
+            ),
+            SyntaxElement::Token(token) => (
+                token.leading_trivia().pieces().collect(),
+                token.trailing_trivia().pieces().collect(),
+            ),
+        };
+
+        let next_element = match next_element {
+            SyntaxElement::Node(mut node) => {
+                if let Some(token) = node.first_token() {
+                    let new_token = token.clone().with_leading_trivia(
+                        prev_leading
+                            .iter()
+                            .map(|piece| (piece.kind(), piece.text())),
+                    );
+
+                    node = node.replace_child(token.into(), new_token.into()).unwrap();
+                }
+
+                if let Some(token) = node.last_token() {
+                    let new_token = token.clone().with_trailing_trivia(
+                        prev_trailing
+                            .iter()
+                            .map(|piece| (piece.kind(), piece.text())),
+                    );
+
+                    node = node.replace_child(token.into(), new_token.into()).unwrap();
+                }
+
+                SyntaxElement::Node(node)
+            }
+            SyntaxElement::Token(token) => SyntaxElement::Token(
+                token
+                    .with_leading_trivia(
+                        prev_leading
+                            .iter()
+                            .map(|piece| (piece.kind(), piece.text())),
+                    )
+                    .with_trailing_trivia(
+                        prev_trailing
+                            .iter()
+                            .map(|piece| (piece.kind(), piece.text())),
+                    ),
+            ),
+        };
+
+        self.push_change(prev_element, Some(next_element))
+    }
+
+    /// Push a change to replace the "prev_element" with "next_element".
+    ///
+    /// Changes to take effect must be commited.
+    pub fn replace_element_discard_trivia(
+        &mut self,
+        prev_element: SyntaxElement<L>,
+        next_element: SyntaxElement<L>,
+    ) {
+        self.push_change(prev_element, Some(next_element))
+    }
+
     /// Push a change to remove the specified token.
     ///
     /// Changes to take effect must be commited.
     pub fn remove_token(&mut self, prev_token: SyntaxToken<L>) {
-        let new_node_slot = prev_token.index();
-        let parent = prev_token.parent();
-        let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
-            let range = p.text_range();
-            (range.start().into(), range.end().into())
-        });
-        let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
-
-        self.changes.push(CommitChange {
-            parent_depth,
-            parent,
-            parent_range,
-            new_node_slot,
-            new_node: None,
-        });
+        self.remove_element(prev_token.into())
     }
 
     /// Push a change to remove the specified node.
@@ -110,9 +200,23 @@ where
     where
         T: AstNode<Language = L>,
     {
-        let prev_node = prev_node.into_syntax();
-        let new_node_slot = prev_node.index();
-        let parent = prev_node.parent();
+        self.remove_element(prev_node.into_syntax().into())
+    }
+
+    /// Push a change to remove the specified element.
+    ///
+    /// Changes to take effect must be commited.
+    pub fn remove_element(&mut self, prev_element: SyntaxElement<L>) {
+        self.push_change(prev_element, None)
+    }
+
+    fn push_change(
+        &mut self,
+        prev_element: SyntaxElement<L>,
+        next_element: Option<SyntaxElement<L>>,
+    ) {
+        let new_node_slot = prev_element.index();
+        let parent = prev_element.parent();
         let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
             let range = p.text_range();
             (range.start().into(), range.end().into())
@@ -124,55 +228,29 @@ where
             parent,
             parent_range,
             new_node_slot,
-            new_node: None,
+            new_node: next_element,
         });
     }
 
-    /// Push a change to replace the "prev_token" with "next_token".
-    /// Trivia to be kept must be manually copied to "next_token".
-    ///
-    /// Changes to take effect must be commited.
-    pub fn replace_token(&mut self, prev_token: SyntaxToken<L>, next_token: SyntaxToken<L>) {
-        let new_token_slot = prev_token.index();
-        let parent = prev_token.parent();
-        let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
-            let range = p.text_range();
-            (range.start().into(), range.end().into())
-        });
-        let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
+    /// Returns an iterator of all the changes in this mutation as tuples of
+    /// the range in the original document modified by this change and the text
+    /// to be inserted in this place
+    pub fn as_text_edits(&self) -> impl Iterator<Item = (TextRange, String)> + '_ {
+        self.changes.iter().filter_map(|change| {
+            let parent = change.parent.as_ref().unwrap_or_else(|| self.root.syntax());
+            let prev_range = match parent.slots().nth(change.new_node_slot) {
+                Some(SyntaxSlot::Node(node)) => node.text_range(),
+                Some(SyntaxSlot::Token(token)) => token.text_range(),
+                _ => return None,
+            };
 
-        self.changes.push(CommitChange {
-            parent_depth,
-            parent,
-            parent_range,
-            new_node_slot: new_token_slot,
-            new_node: Some(SyntaxElement::Token(next_token)),
-        });
-    }
+            let new_text = match &change.new_node {
+                Some(elem) => elem.to_string(),
+                None => String::new(),
+            };
 
-    /// Push a change to replace the "prev_node" with "next_node".
-    ///
-    /// Changes to take effect must be commited.
-    pub fn replace_node<T>(&mut self, prev_node: T, next_node: T)
-    where
-        T: AstNode<Language = L>,
-    {
-        let prev_node = prev_node.into_syntax();
-        let new_node_slot = prev_node.index();
-        let parent = prev_node.parent();
-        let parent_range: Option<(u32, u32)> = parent.as_ref().map(|p| {
-            let range = p.text_range();
-            (range.start().into(), range.end().into())
-        });
-        let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
-
-        self.changes.push(CommitChange {
-            parent_depth,
-            parent,
-            parent_range,
-            new_node_slot,
-            new_node: Some(SyntaxElement::Node(next_node.into_syntax())),
-        });
+            Some((prev_range, new_text))
+        })
     }
 
     /// The core of the batch mutation algorithm can be summarized as:
@@ -217,7 +295,7 @@ where
                     {
                         if *next_change_parent == current_parent {
                             // SAFETY: We can .pop().unwrap() because we .peek() above
-                            let next_change = changes.pop().unwrap();
+                            let next_change = changes.pop().expect("changes.pop");
                             modifications.push((next_change.new_node_slot, next_change.new_node));
                             continue;
                         }
@@ -242,10 +320,20 @@ where
                     new_node: Some(SyntaxElement::Node(current_parent)),
                 });
             } else {
-                return item
+                let root = item
                     .new_node
-                    .and_then(|x| x.into_node().unwrap().cast())
-                    .unwrap();
+                    .expect("new_node")
+                    .into_node()
+                    .expect("into_node");
+                let kind = root.kind();
+                match root.cast() {
+                    Some(root) => return root,
+                    None => panic!(
+                        "failed to cast root node with kind {:?} into {}",
+                        kind,
+                        type_name::<N>()
+                    ),
+                };
             }
         }
 

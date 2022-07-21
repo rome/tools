@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate};
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList};
+use rome_rowan::{AstNode, AstNodeList, BatchMutationExt};
 
 declare_rule! {
     /// Disallow template literals if interpolation and special-character handling are not needed
@@ -70,6 +70,7 @@ impl Rule for NoUnusedTemplateLiteral {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         // join all template content
         let inner_content = node
@@ -89,19 +90,21 @@ impl Rule for NoUnusedTemplateLiteral {
                     }
                 }
             });
-        let root = ctx.root().replace_node(
+
+        mutation.replace_node(
             JsAnyExpression::JsTemplate(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(
                     make::js_string_literal_expression(make::js_string_literal(&inner_content)),
                 ),
             ),
-        )?;
+        );
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with string literal" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

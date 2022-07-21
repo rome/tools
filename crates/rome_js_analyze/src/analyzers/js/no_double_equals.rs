@@ -6,7 +6,7 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, T};
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
-use rome_rowan::{AstNodeExt, SyntaxResult};
+use rome_rowan::{BatchMutationExt, SyntaxResult};
 
 use crate::JsRuleAction;
 
@@ -95,10 +95,10 @@ impl Rule for NoDoubleEquals {
     }
 
     fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
+        let mut mutation = ctx.root().begin();
+
         let suggestion = if op.kind() == EQ2 { T![===] } else { T![!==] };
-        let root = ctx
-            .root()
-            .replace_token(op.clone(), make::token(suggestion))?;
+        mutation.replace_token(op.clone(), make::token(suggestion));
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
@@ -107,7 +107,7 @@ impl Rule for NoDoubleEquals {
             // the implementation of `to_string` for these two variants always returns Some
             message: markup! { "Use "<Emphasis>{suggestion.to_string().unwrap()}</Emphasis> }
                 .to_owned(),
-            root,
+            mutation,
         })
     }
 }

@@ -6,7 +6,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsInExpression, JsInstanceofExpression, T};
-use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
+use rome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt};
 
 declare_rule! {
     /// Disallow using unsafe negation.
@@ -87,7 +87,8 @@ impl Rule for NoUnsafeNegation {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let mut root = ctx.root();
+        let mut mutation = ctx.root().begin();
+
         // The action could be splitted to three steps
         // 1. Remove `!` operator of unary expression
         // 2. Wrap the expression with `()`, convert the expression to a `JsParenthesizedExpression`
@@ -109,10 +110,10 @@ impl Rule for NoUnsafeNegation {
                     unary_expression.operator_token().ok()?,
                     JsAnyExpression::JsParenthesizedExpression(next_parenthesis_expression),
                 );
-                root = root.replace_node(
+                mutation.replace_node(
                     JsAnyExpression::JsInstanceofExpression(expr.clone()),
                     JsAnyExpression::JsUnaryExpression(next_unary_expression),
-                )?;
+                );
             }
             JsInOrInstanceOfExpression::JsInExpression(expr) => {
                 let left = expr.property().ok()?;
@@ -131,17 +132,18 @@ impl Rule for NoUnsafeNegation {
                     unary_expression.operator_token().ok()?,
                     JsAnyExpression::JsParenthesizedExpression(next_parenthesis_expression),
                 );
-                root = root.replace_node(
+                mutation.replace_node(
                     JsAnyExpression::JsInExpression(expr.clone()),
                     JsAnyExpression::JsUnaryExpression(next_unary_expression),
-                )?;
+                );
             }
         }
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Wrap the expression with a parenthesis" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

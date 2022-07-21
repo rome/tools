@@ -10,7 +10,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryOperator, JsLanguage,
     JsSyntaxKind, JsSyntaxToken, JsTemplate, JsTemplateElementList, WalkEvent, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, SyntaxToken, TriviaPiece};
+use rome_rowan::{AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxToken, TriviaPiece};
 
 use crate::{utils::escape_string, JsRuleAction};
 
@@ -112,18 +112,19 @@ impl Rule for UseTemplate {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root = ctx.root();
+        let mut mutation = ctx.root().begin();
 
         let template = convert_expressions_to_js_template(state)?;
-        let next_root = root.replace_node(
+        mutation.replace_node(
             JsAnyExpression::JsBinaryExpression(node.clone()),
             JsAnyExpression::JsTemplate(template),
-        )?;
+        );
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use a "<Emphasis>"TemplateLiteral"</Emphasis>"." }.to_owned(),
-            root: next_root,
+            mutation,
         })
     }
 }

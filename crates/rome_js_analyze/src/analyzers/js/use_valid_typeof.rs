@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryExpressionFields,
     JsBinaryOperator, JsUnaryOperator, TextRange,
 };
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -217,22 +217,22 @@ impl Rule for UseValidTypeof {
     }
 
     fn action(ctx: &RuleContext<Self>, (_, suggestion): &Self::State) -> Option<JsRuleAction> {
-        let root = ctx.root();
+        let mut mutation = ctx.root().begin();
 
         let (expr, type_name) = suggestion.as_ref()?;
 
-        let root = root.replace_node(
+        mutation.replace_node(
             expr.clone(),
             JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(
                 make::js_string_literal_expression(make::js_string_literal(type_name.as_str())),
             )),
-        )?;
+        );
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Compare the result of `typeof` with a valid type name" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

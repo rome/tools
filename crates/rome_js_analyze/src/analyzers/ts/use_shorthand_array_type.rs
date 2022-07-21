@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{TriviaPieceKind, TsReferenceType, TsType, TsTypeArguments, T};
-use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -80,15 +80,17 @@ impl Rule for UseShorthandArrayType {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let root = ctx.root();
         let node = ctx.query();
-        let root = root.replace_node(TsType::TsReferenceType(node.clone()), state.clone())?;
+        let mut mutation = ctx.root().begin();
+
+        mutation.replace_node(TsType::TsReferenceType(node.clone()), state.clone());
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" to replace" }
                 .to_owned(),
-            root,
+            mutation,
         })
     }
 }

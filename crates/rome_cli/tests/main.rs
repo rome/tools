@@ -136,6 +136,8 @@ mod check {
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         });
 
+        eprintln!("{:?}", console.buffer);
+
         // TODO lint errors are disabled until the linter is stable
         assert!(result.is_ok());
 
@@ -369,13 +371,16 @@ mod ci {
         let file_path = Path::new("ci.js");
         fs.insert(file_path.into(), LINT_ERROR.as_bytes());
 
+        let mut console = BufferConsole::default();
         let result = run_cli(CliSession {
             app: App::with_filesystem_and_console(
                 DynRef::Owned(Box::new(fs)),
-                DynRef::Owned(Box::new(BufferConsole::default())),
+                DynRef::Borrowed(&mut console),
             ),
             args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
         });
+
+        eprintln!("{:?}", console.buffer);
 
         match result {
             Err(Termination::CheckError) => {}

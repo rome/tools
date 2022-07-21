@@ -10,7 +10,8 @@ use rome_console::{
 };
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
 use rome_js_parser::parse;
-use rome_rowan::{AstNode, Language};
+use rome_rowan::Language;
+use rome_text_edit::apply_indels;
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
 
@@ -133,7 +134,11 @@ fn code_fix_to_string<L>(source: &str, action: AnalyzerAction<L>) -> String
 where
     L: Language,
 {
-    let output = action.root.syntax().to_string();
+    let mut output = source.to_string();
+    let indels = action.as_indels();
+
+    apply_indels(&indels, &mut output);
+
     markup_to_string(markup! {
         {Diff { mode: DiffMode::Unified, left: source, right: &output }}
     })

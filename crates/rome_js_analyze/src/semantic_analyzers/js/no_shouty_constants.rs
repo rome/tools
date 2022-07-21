@@ -178,7 +178,7 @@ impl Rule for NoShoutyConstants {
             category: ActionCategory::Refactor,
             applicability: Applicability::Unspecified,
             message: markup! { "Use the constant value directly" }.to_owned(),
-            root: batch.commit(),
+            mutation: batch,
         })
     }
 }

@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBooleanLiteralExpression, JsLogicalExpression,
     JsUnaryExpression, JsUnaryOperator, T,
 };
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -136,21 +136,24 @@ impl Rule for UseSimplifiedLogicExpression {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
+
         let (is_simplified_by_de_morgan, expr) = state;
-        let root = ctx.root().replace_node(
+        mutation.replace_node(
             JsAnyExpression::JsLogicalExpression(node.clone()),
             expr.clone(),
-        )?;
+        );
         let message = if *is_simplified_by_de_morgan {
             "Reduce the complexity of the logical expression."
         } else {
             "Discard redundant terms from the logical expression."
         };
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { ""{message}"" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

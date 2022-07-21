@@ -203,8 +203,19 @@ fn fix_all(rome_path: &RomePath, parse: AnyParse) -> FixFileResult {
 
         match action {
             Some(action) => {
-                tree = action.root;
-                rules.push((action.rule_name, action.original_range));
+                let original_range =
+                    action
+                        .mutation
+                        .as_text_edits()
+                        .fold(None, |state, (range, _)| match state {
+                            None => Some(range),
+                            Some(state) => Some(state.cover(range)),
+                        });
+
+                if let Some(original_range) = original_range {
+                    tree = action.mutation.commit();
+                    rules.push((action.rule_name, original_range));
+                }
             }
             None => {
                 return FixFileResult {

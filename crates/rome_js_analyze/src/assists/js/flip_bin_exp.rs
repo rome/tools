@@ -5,7 +5,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{
     JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
 };
-use rome_rowan::AstNodeExt;
+use rome_rowan::BatchMutationExt;
 
 use crate::JsRuleAction;
 
@@ -48,24 +48,25 @@ impl Rule for FlipBinExp {
 
     fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;
-        let new_node = node.clone().replace_node(prev_left, new_left)?;
+        mutation.replace_node(prev_left, new_left);
 
-        let prev_op = new_node.operator_token().ok()?;
+        let prev_op = node.operator_token().ok()?;
         let new_op = make::token(*op);
-        let new_node = new_node.replace_token(prev_op, new_op)?;
+        mutation.replace_token(prev_op, new_op);
 
-        let prev_right = new_node.right().ok()?;
+        let prev_right = node.right().ok()?;
         let new_right = node.left().ok()?;
-        let new_node = new_node.replace_node(prev_right, new_right)?;
+        mutation.replace_node(prev_right, new_right);
 
         Some(JsRuleAction {
             category: ActionCategory::Refactor,
             applicability: Applicability::Always,
             message: markup! { "Flip Binary Expression" }.to_owned(),
-            root: ctx.root().replace_node(node.clone(), new_node)?,
+            mutation,
         })
     }
 }

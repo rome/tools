@@ -77,16 +77,23 @@ where
     let suggestion = CodeSuggestion::from(action);
 
     let mut changes = HashMap::new();
-    changes.insert(
-        url.clone(),
-        vec![lsp::TextEdit {
-            range: range(line_index, suggestion.span.range),
-            new_text: match suggestion.substitution {
-                SuggestionChange::String(text) => text,
-                SuggestionChange::Indels(_) => unimplemented!(),
-            },
-        }],
-    );
+    let edits = match suggestion.substitution {
+        SuggestionChange::String(new_text) => {
+            vec![lsp::TextEdit {
+                range: range(line_index, suggestion.span.range),
+                new_text,
+            }]
+        }
+        SuggestionChange::Indels(indels) => indels
+            .into_iter()
+            .map(|indel| lsp::TextEdit {
+                range: range(line_index, indel.delete),
+                new_text: indel.insert,
+            })
+            .collect(),
+    };
+
+    changes.insert(url.clone(), edits);
 
     let edit = lsp::WorkspaceEdit {
         changes: Some(changes),

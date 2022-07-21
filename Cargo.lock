@@ -1351,6 +1351,7 @@ dependencies = [
  "rome_js_factory",
  "rome_js_syntax",
  "rome_rowan",
+ "rome_text_edit",
  "rustc-hash",
 ]
 
@@ -1469,6 +1470,7 @@ dependencies = [
  "rome_js_semantic",
  "rome_js_syntax",
  "rome_rowan",
+ "rome_text_edit",
  "rustc-hash",
  "tests_macros",
 ]

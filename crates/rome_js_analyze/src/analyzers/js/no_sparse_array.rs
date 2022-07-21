@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyArrayElement, JsAnyExpression, JsArrayExpression, TriviaPieceKind};
-use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList};
+use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -59,6 +59,7 @@ markup! {
 
     fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         let mut final_array_element_list = node.elements();
 
@@ -84,20 +85,20 @@ markup! {
             }
         }
 
-        let root = ctx.root().replace_node(
+        mutation.replace_node(
             node.clone(),
             make::js_array_expression(
                 node.l_brack_token().ok()?,
                 final_array_element_list,
                 node.r_brack_token().ok()?,
             ),
-        )?;
+        );
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace hole with undefined" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

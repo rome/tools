@@ -9,7 +9,7 @@ use rome_js_syntax::{
     JsComputedMemberExpressionFields, JsStaticMemberExpression, JsStaticMemberExpressionFields,
     JsUnaryExpression, JsUnaryOperator, T,
 };
-use rome_rowan::{AstNode, AstNodeExt};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -75,7 +75,8 @@ impl Rule for NoDelete {
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
 
-        let root = ctx.root().replace_node(
+        let mut mutation = ctx.root().begin();
+        mutation.replace_node(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
                 state.clone().try_into().ok()?,
@@ -84,13 +85,13 @@ impl Rule for NoDelete {
                     make::js_reference_identifier(make::ident("undefined")),
                 )),
             )),
-        )?;
+        );
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with undefined assignment" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }
