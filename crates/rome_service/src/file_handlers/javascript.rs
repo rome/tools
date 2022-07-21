@@ -267,7 +267,7 @@ fn format_on_type(
 }
 
 fn rename(
-    rome_path: &RomePath,
+    _rome_path: &RomePath,
     parse: AnyParse,
     symbol_at: TextSize,
     new_name: String,
@@ -287,17 +287,17 @@ fn rename(
             JsSyntaxKind::JS_IDENTIFIER_BINDING => node.cast::<JsIdentifierBinding>(),
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
                 .cast::<JsReferenceIdentifier>()
-                .ok_or_else(|| RomeError::RenameError)?
+                .ok_or(RomeError::RenameError)?
                 .declaration(&model)
-                .ok_or_else(|| RomeError::RenameError)?
+                .ok_or(RomeError::RenameError)?
                 .syntax()
                 .clone()
                 .cast::<JsIdentifierBinding>(),
             JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
                 .cast::<JsIdentifierAssignment>()
-                .ok_or_else(|| RomeError::RenameError)?
+                .ok_or(RomeError::RenameError)?
                 .declaration(&model)
-                .ok_or_else(|| RomeError::RenameError)?
+                .ok_or(RomeError::RenameError)?
                 .syntax()
                 .clone()
                 .cast::<JsIdentifierBinding>(),

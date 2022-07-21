@@ -8,7 +8,7 @@ macro_rules! assert_rename_ok {
         $(
             #[test]
             pub fn $name() {
-                crate::utils::tests::assert_rename_ok($before, $expected);
+                $crate::utils::tests::assert_rename_ok($before, $expected);
             }
         )*
     };
@@ -20,7 +20,7 @@ macro_rules! assert_rename_nok {
         $(
             #[test]
             pub fn $name() {
-                crate::utils::tests::assert_rename_nok($before);
+                $crate::utils::tests::assert_rename_nok($before);
             }
         )*
     };

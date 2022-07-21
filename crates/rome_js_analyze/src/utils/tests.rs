@@ -13,8 +13,7 @@ pub fn assert_rename_ok(before: &str, expected: &str) {
         .syntax()
         .descendants()
         .filter_map(|x| x.cast::<JsIdentifierBinding>())
-        .filter(|x| x.text() == "a")
-        .next()
+        .find(|x| x.text() == "a")
         .unwrap();
 
     let mut batch = r.tree().begin();
@@ -35,8 +34,7 @@ pub fn assert_rename_nok(before: &str) {
         .syntax()
         .descendants()
         .filter_map(|x| x.cast::<JsIdentifierBinding>())
-        .filter(|x| x.text() == "a")
-        .next()
+        .find(|x| x.text() == "a")
         .unwrap();
 
     let mut batch = r.tree().begin();

@@ -1,4 +1,4 @@
-use std::{any::type_name, fs::rename, panic::RefUnwindSafe, sync::RwLock};
+use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
 use dashmap::{mapref::entry::Entry, DashMap};
 use rome_analyze::AnalyzerAction;
@@ -17,7 +17,7 @@ use crate::{
 use super::{
     ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
     FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
-    PullDiagnosticsParams, RenameParams, RenameResult, SupportsFeatureParams, UpdateSettingsParams,
+    PullDiagnosticsParams, RenameResult, SupportsFeatureParams, UpdateSettingsParams,
 };
 
 pub(super) struct WorkspaceServer {
