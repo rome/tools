@@ -20,7 +20,6 @@ use std::num::NonZeroU32;
 pub(crate) use parse_error::*;
 pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
 pub(crate) use parsed_syntax::ParsedSyntax;
-use rome_console::markup;
 use rome_rowan::{SyntaxKind, TextSize};
 
 use crate::lexer::{LexContext, ReLexContext};
@@ -227,7 +226,7 @@ impl<'s> Parser<'s> {
 
         // Don't report another error if it would just be at the same position as the last error.
         if let Some(previous) = self.diagnostics.last() {
-            if err.code == Some(markup!("SyntaxError").to_owned())
+            if err.code.as_deref() == Some("SyntaxError")
                 && previous.code == err.code
                 && previous.file_id == err.file_id
             {

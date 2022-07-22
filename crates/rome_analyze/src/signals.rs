@@ -1,6 +1,6 @@
 use std::{collections::VecDeque, marker::PhantomData};
 
-use rome_console::{markup, MarkupBuf};
+use rome_console::MarkupBuf;
 use rome_diagnostics::{
     file::{FileId, FileSpan},
     Applicability, CodeSuggestion, Diagnostic, SuggestionChange, SuggestionStyle,
@@ -165,11 +165,8 @@ where
         R::diagnostic(&ctx, &self.state).map(|diag| {
             diag.into_diagnostic(
                 self.file_id,
-                markup! {
-                    <Hyperlink href={format!("https://rome.tools/docs/lint/rules/{}/", R::NAME)}>
-                        {G::NAME}"/"{R::NAME}
-                    </Hyperlink>
-                },
+                format!("{}/{}", G::NAME, R::NAME),
+                format!("https://rome.tools/docs/lint/rules/{}/", R::NAME),
             )
         })
     }

@@ -115,7 +115,6 @@ impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
 
 #[cfg(test)]
 mod tests {
-    use rome_console::markup;
     use rome_diagnostics::Diagnostic;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
@@ -304,19 +303,19 @@ mod tests {
             diagnostics.as_slice(),
             &[
                 (
-                    markup! {"Linter"}.to_owned(),
+                    String::from("Linter"),
                     TextRange::new(TextSize::from(47), TextSize::from(62))
                 ),
                 (
-                    markup! {"test_suppression"}.to_owned(),
+                    String::from("test_suppression"),
                     TextRange::new(TextSize::from(63), TextSize::from(74))
                 ),
                 (
-                    markup! {"Linter"}.to_owned(),
+                    String::from("Linter"),
                     TextRange::new(TextSize::from(76), TextSize::from(96))
                 ),
                 (
-                    markup! {"test_suppression"}.to_owned(),
+                    String::from("test_suppression"),
                     TextRange::new(TextSize::from(97), TextSize::from(108))
                 ),
             ]

@@ -91,18 +91,32 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         let has_codespan = self.d.primary.is_some() || !self.d.children.is_empty();
 
         let header_locus = if !has_codespan { Some(locus) } else { None };
-        if let Some(code) = self.d.code.as_ref().filter(|code| !code.is_empty()) {
-            fmt.write_markup(markup! {
+
+        let code = self.d.code.as_ref().filter(|code| !code.is_empty());
+        match (code, &self.d.code_link) {
+            (Some(code), Some(href)) => fmt.write_markup(markup! {
                 {DiagnosticHeader {
                     locus: header_locus,
                     severity: self.d.severity,
-                    code: Some(markup! { {code} }),
+                    code: Some(markup! {
+                        <Hyperlink href={href}>
+                            {code}
+                        </Hyperlink>
+                    }),
                     title: markup! { {self.d.title} },
                 }}
                 "\n"
-            })?;
-        } else {
-            fmt.write_markup(markup! {
+            })?,
+            (Some(code), None) => fmt.write_markup(markup! {
+                {DiagnosticHeader {
+                    locus: header_locus,
+                    severity: self.d.severity,
+                    code: Some(markup!( {code} )),
+                    title: markup! { {self.d.title} },
+                }}
+                "\n"
+            })?,
+            (None, _) => fmt.write_markup(markup! {
                 {DiagnosticHeader {
                     locus: header_locus,
                     severity: self.d.severity,
@@ -110,7 +124,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                     title: markup! { {self.d.title} },
                 }}
                 "\n"
-            })?;
+            })?,
         }
 
         if has_codespan {

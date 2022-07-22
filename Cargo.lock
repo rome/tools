@@ -1514,7 +1514,6 @@ dependencies = [
  "indexmap",
  "quickcheck",
  "quickcheck_macros",
- "rome_console",
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_syntax",

@@ -63,8 +63,6 @@ where
     }
 }
 
-const ESC: char = '\x1b';
-
 /// Applies the current format in `state` to `writer`, calls `func` to
 /// print a piece of text, then reset the printing format
 fn with_format<W>(
@@ -103,7 +101,7 @@ where
         // in the legacy `cmd.exe` terminal emulator, since int modern
         // clients like the Windows Terminal ANSI is used instead
         if writer.supports_color() && !writer.is_synchronous() {
-            write!(writer, "{ESC}]8;;{href}{ESC}\\")?;
+            write!(writer, "\x1b]8;;{href}\x1b\\")?;
             reset_link = true;
         }
     }
@@ -111,7 +109,7 @@ where
     let result = func(writer);
 
     if reset_link {
-        write!(writer, "{ESC}]8;;{ESC}\\")?;
+        write!(writer, "\x1b]8;;\x1b\\")?;
     }
 
     writer.reset()?;

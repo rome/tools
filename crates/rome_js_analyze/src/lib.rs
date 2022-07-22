@@ -77,7 +77,6 @@ where
 mod tests {
 
     use rome_analyze::Never;
-    use rome_console::markup;
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
@@ -111,17 +110,10 @@ mod tests {
         let mut error_ranges = Vec::new();
         analyze(0, &parsed.tree(), AnalysisFilter::default(), |signal| {
             if let Some(diag) = signal.diagnostic() {
-                let code = diag.code.as_ref().unwrap();
+                let code = diag.code.as_deref().unwrap();
                 let primary = diag.primary.as_ref().unwrap();
 
-                let expect_code = markup! {
-                    <Hyperlink href="https://rome.tools/docs/lint/rules/noDoubleEquals/">
-                        "js/noDoubleEquals"
-                    </Hyperlink>
-                }
-                .to_owned();
-
-                if *code == expect_code {
+                if code == "js/noDoubleEquals" {
                     error_ranges.push(primary.span.range);
                 }
             }

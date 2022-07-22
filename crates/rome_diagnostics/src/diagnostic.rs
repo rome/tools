@@ -14,7 +14,8 @@ pub struct Diagnostic {
     pub file_id: FileId,
 
     pub severity: Severity,
-    pub code: Option<MarkupBuf>,
+    pub code: Option<String>,
+    pub code_link: Option<String>,
     pub title: MarkupBuf,
     pub summary: Option<String>,
     pub tag: Option<DiagnosticTag>,
@@ -27,43 +28,23 @@ pub struct Diagnostic {
 
 impl Diagnostic {
     /// Creates a new [`Diagnostic`] with the `Error` severity.
-    pub fn error(file_id: FileId, code: impl Display, title: impl Display) -> Self {
-        Self::new_with_code(
-            file_id,
-            Severity::Error,
-            title,
-            Some(markup!({ code }).to_owned()),
-        )
+    pub fn error(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Error, title, Some(code.into()))
     }
 
     /// Creates a new [`Diagnostic`] with the `Warning` severity.
-    pub fn warning(file_id: FileId, code: impl Display, title: impl Display) -> Self {
-        Self::new_with_code(
-            file_id,
-            Severity::Warning,
-            title,
-            Some(markup!({ code }).to_owned()),
-        )
+    pub fn warning(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Warning, title, Some(code.into()))
     }
 
     /// Creates a new [`Diagnostic`] with the `Help` severity.
-    pub fn help(file_id: FileId, code: impl Display, title: impl Display) -> Self {
-        Self::new_with_code(
-            file_id,
-            Severity::Help,
-            title,
-            Some(markup!({ code }).to_owned()),
-        )
+    pub fn help(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Help, title, Some(code.into()))
     }
 
     /// Creates a new [`Diagnostic`] with the `Note` severity.
-    pub fn note(file_id: FileId, code: impl Display, title: impl Display) -> Self {
-        Self::new_with_code(
-            file_id,
-            Severity::Note,
-            title,
-            Some(markup!({ code }).to_owned()),
-        )
+    pub fn note(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Note, title, Some(code.into()))
     }
 
     /// Creates a new [`Diagnostic`] that will be used in a builder-like way
@@ -78,11 +59,12 @@ impl Diagnostic {
         file_id: FileId,
         severity: Severity,
         title: impl Display,
-        code: Option<MarkupBuf>,
+        code: Option<String>,
     ) -> Self {
         Self {
             file_id,
             code,
+            code_link: None,
             severity,
             title: markup!({ title }).to_owned(),
             summary: None,
@@ -103,6 +85,12 @@ impl Diagnostic {
     /// Set an explicit plain-text summary for this diagnostic.
     pub fn summary(mut self, summary: impl Into<String>) -> Self {
         self.summary = Some(summary.into());
+        self
+    }
+
+    /// Set a hyperlink for the code of this diagnostic.
+    pub fn code_link(mut self, code_link: impl Into<String>) -> Self {
+        self.code_link = Some(code_link.into());
         self
     }
 
