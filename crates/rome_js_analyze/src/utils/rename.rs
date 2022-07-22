@@ -27,22 +27,22 @@ impl RenamableNode for JsIdentifierAssignment {
     }
 }
 
-pub enum JsAnyRenamebleDeclaration {
+pub enum JsAnyRenamableDeclaration {
     JsIdentifierBinding(JsIdentifierBinding),
     JsReferenceIdentifier(JsReferenceIdentifier),
     JsIdentifierAssignment(JsIdentifierAssignment),
 }
 
-impl RenamableNode for JsAnyRenamebleDeclaration {
+impl RenamableNode for JsAnyRenamableDeclaration {
     fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         match self {
-            JsAnyRenamebleDeclaration::JsIdentifierBinding(node) => {
+            JsAnyRenamableDeclaration::JsIdentifierBinding(node) => {
                 RenamableNode::declaration(node, model)
             }
-            JsAnyRenamebleDeclaration::JsReferenceIdentifier(node) => {
+            JsAnyRenamableDeclaration::JsReferenceIdentifier(node) => {
                 RenamableNode::declaration(node, model)
             }
-            JsAnyRenamebleDeclaration::JsIdentifierAssignment(node) => {
+            JsAnyRenamableDeclaration::JsIdentifierAssignment(node) => {
                 RenamableNode::declaration(node, model)
             }
         }
@@ -57,22 +57,22 @@ pub enum RenameError {
     },
 }
 
-impl TryFrom<JsSyntaxNode> for JsAnyRenamebleDeclaration {
+impl TryFrom<JsSyntaxNode> for JsAnyRenamableDeclaration {
     type Error = RenameError;
 
     fn try_from(node: JsSyntaxNode) -> Result<Self, Self::Error> {
         match node.kind() {
             JsSyntaxKind::JS_IDENTIFIER_BINDING => node
                 .cast::<JsIdentifierBinding>()
-                .map(JsAnyRenamebleDeclaration::JsIdentifierBinding)
+                .map(JsAnyRenamableDeclaration::JsIdentifierBinding)
                 .ok_or(Self::Error::CannotFindDeclaration),
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
                 .cast::<JsReferenceIdentifier>()
-                .map(JsAnyRenamebleDeclaration::JsReferenceIdentifier)
+                .map(JsAnyRenamableDeclaration::JsReferenceIdentifier)
                 .ok_or(Self::Error::CannotFindDeclaration),
             JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
                 .cast::<JsIdentifierAssignment>()
-                .map(JsAnyRenamebleDeclaration::JsIdentifierAssignment)
+                .map(JsAnyRenamableDeclaration::JsIdentifierAssignment)
                 .ok_or(Self::Error::CannotFindDeclaration),
             _ => Err(Self::Error::CannotFindDeclaration),
         }
@@ -81,16 +81,21 @@ impl TryFrom<JsSyntaxNode> for JsAnyRenamebleDeclaration {
 
 pub trait RenameSymbolExtensions {
     /// Rename the binding and all its references to "new_name".
-    fn rename(&mut self, model: &SemanticModel, node: impl RenamableNode, new_name: &str) -> bool;
-
-    /// Rename the binding and all its references to "new_name".
-    fn rename_with_any_can_be_renamed(
+    fn rename_node_declaration(
         &mut self,
         model: &SemanticModel,
-        node: JsAnyRenamebleDeclaration,
+        node: impl RenamableNode,
+        new_name: &str,
+    ) -> bool;
+
+    /// Rename the binding and all its references to "new_name".
+    fn rename_any_renamable_node(
+        &mut self,
+        model: &SemanticModel,
+        node: JsAnyRenamableDeclaration,
         new_name: &str,
     ) -> bool {
-        self.rename(model, node, new_name)
+        self.rename_node_declaration(model, node, new_name)
     }
 }
 
@@ -120,7 +125,12 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
     /// Rename the binding and all its references to "new_name".
     /// If we can´t rename the binding, the [BatchMutation] is never changes and it is left
     /// intact.
-    fn rename(&mut self, model: &SemanticModel, node: impl RenamableNode, new_name: &str) -> bool {
+    fn rename_node_declaration(
+        &mut self,
+        model: &SemanticModel,
+        node: impl RenamableNode,
+        new_name: &str,
+    ) -> bool {
         let prev_binding = match node
             .declaration(model)
             .and_then(|node| node.cast::<JsIdentifierBinding>())

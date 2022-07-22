@@ -17,7 +17,7 @@ pub fn assert_rename_ok(before: &str, expected: &str) {
         .unwrap();
 
     let mut batch = r.tree().begin();
-    assert!(batch.rename(&model, binding_a, "b"));
+    assert!(batch.rename_node_declaration(&model, binding_a, "b"));
     let root = batch.commit();
 
     let after = root.to_string();
@@ -38,7 +38,7 @@ pub fn assert_rename_nok(before: &str) {
         .unwrap();
 
     let mut batch = r.tree().begin();
-    assert!(!batch.rename(&model, binding_a, "b"));
+    assert!(!batch.rename_node_declaration(&model, binding_a, "b"));
 }
 
 #[macro_export]
