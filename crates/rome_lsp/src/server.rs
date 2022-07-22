@@ -160,6 +160,10 @@ impl LanguageServer for LSPServer {
             .await
             .ok();
     }
+
+    async fn rename(&self, params: RenameParams) -> LspResult<Option<WorkspaceEdit>> {
+        handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
+    }
 }
 
 pub fn build_server() -> (LspService<LSPServer>, ClientSocket) {

@@ -10,7 +10,10 @@ pub const CONFIG_FORMAT: &str = r#"{
 "#;
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
-  "root": true
+  "root": true,
+  "linter": {
+    "enabled": true
+  }
 }"#;
 
 pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
@@ -37,15 +40,22 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
   },
   "linter": {
     "enabled": true,
-    "globals": ["$"],
     "rules": {
         "js": {
             "noDeadCode": "off",
-            "useSimplifiedLogicExpression": "warn"
+            "useSimplifiedLogicExpression": "warn",
+            "noCatchAssign": "error",
+            "noLabelVar": {
+                "level": "warn"
+            },
+            "useTemplate": {
+                "level": "error"
+            }
         }
     }
   },
   "javascript": {
+    "globals": ["$"],
     "formatter": {
       "quoteStyle": "double"
     }
@@ -78,5 +88,15 @@ pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
             "what_the_hell": "off"
         }
     }
+  }
+}"#;
+
+pub const CONFIG_INCORRECT_GLOBALS: &str = r#"{
+  "root": true,
+  "linter": {
+    "enabled": false
+  },
+  "javascript": {
+    "globals": [false]
   }
 }"#;

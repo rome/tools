@@ -13,6 +13,7 @@ rome_control_flow = { path = "../rome_control_flow" }
 rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 bitflags = "1.3.2"
+rustc-hash = "1.1.0"
 
 [dev-dependencies]
 rome_js_syntax = { path = "../rome_js_syntax" }

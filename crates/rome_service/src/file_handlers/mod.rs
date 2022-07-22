@@ -81,6 +81,7 @@ type FormatRange =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;
 type FormatOnType =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextSize) -> Result<Printed, RomeError>;
+type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<String, RomeError>;
 
 pub(crate) struct Capabilities {
     pub(crate) parse: Option<Parse>,
@@ -91,6 +92,7 @@ pub(crate) struct Capabilities {
     pub(crate) format: Option<Format>,
     pub(crate) format_range: Option<FormatRange>,
     pub(crate) format_on_type: Option<FormatOnType>,
+    pub(crate) rename: Option<Rename>,
 }
 
 /// Main trait to use to add a new language to Rome
@@ -118,6 +120,7 @@ pub(crate) trait ExtensionHandler {
             fix_all: None,
             format_range: None,
             format_on_type: None,
+            rename: None,
         }
     }
 

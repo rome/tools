@@ -3,7 +3,7 @@ use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
-#[serde(rename_all = "camelCase", default)]
+#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
     pub enabled: bool,
