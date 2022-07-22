@@ -83,7 +83,7 @@ impl Config {
     /// we use the settings coming from the client
     pub fn as_workspace_settings(
         &self,
-        configuration: Option<&Configuration>,
+        configuration: Option<Configuration>,
     ) -> settings::WorkspaceSettings {
         let mut settings = settings::WorkspaceSettings::default();
 

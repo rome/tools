@@ -184,8 +184,10 @@ impl Session {
                             error!("Cannot set workspace settings: {}", err);
                         })
                         .ok()?;
-                    let configuration = self.configuration.read();
-                    let settings = config.as_workspace_settings(configuration.as_ref());
+                    let mut configuration = self.configuration.write();
+                    // This operation is intended, we want to consume the configuration because once it's read
+                    // from the LSP, it's not needed anymore
+                    let settings = config.as_workspace_settings(configuration.take());
 
                     trace!(
                         "The LSP will now use the following configuration: \n {:?}",

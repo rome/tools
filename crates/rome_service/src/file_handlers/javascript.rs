@@ -21,16 +21,22 @@ use crate::{
 use super::{ExtensionHandler, Mime};
 use std::fmt::Debug;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Default)]
 pub struct JsFormatSettings {
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,
     pub quote_style: Option<QuoteStyle>,
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct JsLinterSettings {
+    pub globals: Vec<String>,
+}
+
 impl Language for JsLanguage {
     type FormatSettings = JsFormatSettings;
     type FormatContext = JsFormatContext;
+    type LinterSettings = JsLinterSettings;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript

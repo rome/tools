@@ -20,7 +20,7 @@ pub mod linter;
 pub use linter::{RuleConfiguration, Rules};
 
 /// The configuration that is contained inside the file `rome.json`
-#[derive(Debug, Eq, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Configuration {
     /// One root file should exist. Useful when `extends` comes into play.
@@ -43,10 +43,14 @@ pub struct Configuration {
 
 impl Default for Configuration {
     fn default() -> Self {
+        // TODO: enable recommendation settings https://github.com/rome/tools/issues/2912
         Self {
             root: true,
+            linter: Some(LinterConfiguration {
+                enabled: true,
+                ..LinterConfiguration::default()
+            }),
             formatter: None,
-            linter: None,
             javascript: None,
         }
     }

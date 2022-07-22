@@ -48,7 +48,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
         let the_struct = quote! {
 
-            #[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq, Clone)]
+            #[derive(Deserialize, Default, Serialize, Debug, Clone)]
             #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
             pub struct #struct_group_name {
                 #( #declarations ),*
@@ -75,7 +75,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use crate::RuleConfiguration;
 
 
-        #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+        #[derive(Deserialize, Serialize, Debug, Clone)]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]
         pub struct Rules {
             #( #line_groups ),*
