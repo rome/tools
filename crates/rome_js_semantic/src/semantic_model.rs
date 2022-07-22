@@ -56,6 +56,18 @@ struct SemanticModelData {
 }
 
 impl SemanticModelData {
+    fn scope(&self, range: &TextRange) -> usize {
+        let scopes = self
+            .scope_by_range
+            .find(range.start().into(), range.end().into());
+
+        match scopes.last() {
+            Some(interval) => interval.val,
+            // We always have at least one scope, the global one.
+            None => unreachable!("Expected global scope not present"),
+        }
+    }
+
     pub fn all_references_iter(
         &self,
         range: &TextRange,
@@ -200,6 +212,16 @@ pub struct Binding {
 }
 
 impl Binding {
+    /// Returns the scope of this binding
+    pub fn scope(&self) -> Scope {
+        let range = self.node.text_range();
+        let id = self.data.scope(&range);
+        Scope {
+            data: self.data.clone(),
+            id,
+        }
+    }
+
     /// Returns the syntax node associated with the binding.
     pub fn syntax(&self) -> &JsSyntaxNode {
         &self.node
@@ -248,6 +270,15 @@ pub struct Reference {
 }
 
 impl Reference {
+    /// Returns the scope of this reference
+    pub fn scope(&self) -> Scope {
+        let id = self.data.scope(&self.range);
+        Scope {
+            data: self.data.clone(),
+            id,
+        }
+    }
+
     pub fn node(&self) -> &JsSyntaxNode {
         &self.node
     }

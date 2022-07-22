@@ -137,6 +137,17 @@ pub struct FixFileResult {
     pub rules: Vec<(&'static str, TextRange)>,
 }
 
+pub struct RenameParams {
+    pub path: RomePath,
+    pub symbol_at: TextSize,
+    pub new_name: String,
+}
+
+pub struct RenameResult {
+    /// New source code for the file with all fixes applied
+    pub code: String,
+}
+
 pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Checks whether a certain feature is supported. There are different conditions:
     /// - Rome doesn't recognize a file, so it can provide the feature;
@@ -182,6 +193,9 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
     /// Return the content of the file with all safe code actions applied
     fn fix_file(&self, params: FixFileParams) -> Result<FixFileResult, RomeError>;
+
+    /// Return the content of the file after renaming a symbol
+    fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError>;
 }
 
 /// Convenience function for constructing a server instance of [Workspace]

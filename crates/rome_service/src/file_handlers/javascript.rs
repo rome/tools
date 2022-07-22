@@ -3,11 +3,13 @@ use rome_diagnostics::{Applicability, Diagnostic};
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::analyze;
+use rome_js_analyze::utils::rename::RenameError;
 use rome_js_formatter::context::QuoteStyle;
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
+use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
 use crate::workspace::FixFileResult;
 use crate::{
@@ -71,6 +73,7 @@ impl ExtensionHandler for JsFileHandler {
             fix_all: Some(fix_all),
             format_range: Some(format_range),
             format_on_type: Some(format_on_type),
+            rename: Some(rename),
         }
     }
 
@@ -259,4 +262,43 @@ fn format_on_type(
 
     let printed = rome_js_formatter::format_sub_tree(context, &root_node)?;
     Ok(printed)
+}
+
+fn rename(
+    _rome_path: &RomePath,
+    parse: AnyParse,
+    symbol_at: TextSize,
+    new_name: String,
+) -> Result<String, RomeError> {
+    use rome_js_analyze::utils::rename::RenameSymbolExtensions;
+
+    let root = parse.tree();
+    let model = semantic_model(&root);
+
+    if let Some(node) = parse
+        .syntax()
+        .descendants_tokens(Direction::Next)
+        .find(|token| token.text_range().contains(symbol_at))
+        .and_then(|token| token.parent())
+    {
+        let original_name = node.text_trimmed();
+        match node.try_into() {
+            Ok(node) => {
+                let mut batch = root.begin();
+                let result = batch.rename_any_renamable_node(&model, node, &new_name);
+                if !result {
+                    Err(RomeError::RenameError(RenameError::CannotBeRenamed {
+                        original_name: original_name.to_string(),
+                        new_name,
+                    }))
+                } else {
+                    let root = batch.commit();
+                    Ok(root.to_string())
+                }
+            }
+            Err(err) => Err(RomeError::RenameError(err)),
+        }
+    } else {
+        Err(RomeError::RenameError(RenameError::CannotFindDeclaration))
+    }
 }

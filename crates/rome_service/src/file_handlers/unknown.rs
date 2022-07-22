@@ -14,6 +14,7 @@ impl ExtensionHandler for UnknownFileHandler {
             fix_all: None,
             format_range: None,
             format_on_type: None,
+            rename: None,
         }
     }
 
