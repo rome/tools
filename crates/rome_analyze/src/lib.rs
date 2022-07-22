@@ -18,7 +18,9 @@ mod visitor;
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 pub use crate::matcher::{QueryMatcher, RuleKey, SignalEntry};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
-pub use crate::registry::{LanguageRoot, Phase, Phases, RuleMetadata, RuleRegistry};
+pub use crate::registry::{
+    LanguageRoot, Phase, Phases, RuleMetadata, RuleRegistry, RuleSuppressions,
+};
 pub use crate::rule::{GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup, RuleMeta};
 pub use crate::services::{CannotCreateServicesError, FromServices, ServiceBag};
 use crate::signals::DiagnosticSignal;

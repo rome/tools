@@ -1,5 +1,4 @@
 use rome_formatter::IndentStyle;
-use rome_service::configuration::Configuration;
 use rome_service::{
     load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams, ConfigurationType,
 };
@@ -12,15 +11,18 @@ use crate::{
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
-    let mut settings = WorkspaceSettings::default();
+    let mut workspace_settings = WorkspaceSettings::default();
 
     if let Some(configuration) = &configuration {
         if configuration.is_formatter_disabled() {
             return Ok(());
         }
     }
+    if let Some(configuration) = configuration {
+        workspace_settings.merge_with_configuration(configuration);
+    }
 
-    parse_format_options(&mut session, &mut settings, &configuration)?;
+    apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
 
     let is_write = session.args.contains("--write");
     let ignore_errors = session.args.contains("--skip-errors");
@@ -28,7 +30,9 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     session
         .app
         .workspace
-        .update_settings(UpdateSettingsParams { settings })?;
+        .update_settings(UpdateSettingsParams {
+            settings: workspace_settings,
+        })?;
 
     traverse(
         TraversalMode::Format {
@@ -41,15 +45,10 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
 /// Read the formatting options for the command line arguments and inject them
 /// into the workspace settings
-pub(crate) fn parse_format_options(
+pub(crate) fn apply_format_settings_from_cli(
     session: &mut CliSession,
     workspace_settings: &mut WorkspaceSettings,
-    configuration: &Option<Configuration>,
 ) -> Result<(), Termination> {
-    if let Some(configuration) = configuration {
-        workspace_settings.merge_with_configuration(configuration);
-    }
-
     let size = session
         .args
         .opt_value_from_str("--indent-size")

@@ -13,7 +13,7 @@
 //! Instead use functions such as [parse_script], [parse_module], and [] which offer abstracted versions for parsing.
 //!
 //! Notable features of the parser are:
-//! - Extremely fast parsing and lexing through the extremely fast [`rome_js_lexer`].
+//! - Extremely fast parsing and lexing through the extremely fast lexer.
 //! - Ability to do Lossy or Lossless parsing on demand without explicit whitespace handling.
 //! - Customizable, able to parse any fragments of JS code at your discretion.
 //! - Completely error tolerant, able to produce an AST from any source code.
@@ -25,17 +25,17 @@
 //! - Cheap incremental reparsing of changed text.
 //!
 //! The crate further includes utilities such as:
-//! - ANSI syntax highlighting of nodes (through [`util`]) or text through [`rome_js_lexer`].
+//! - ANSI syntax highlighting of nodes or text through `lexer`.
 //!
 //! It is inspired by the rust analyzer parser but adapted for JavaScript.
 //!
 //! # Syntax Nodes vs AST Nodes
-//! The crate relies on a concept of untyped [`SyntaxNode`]s vs typed [`AstNode`]s.
+//! The crate relies on a concept of untyped [rome_js_syntax::JsSyntaxNode]s vs typed [rome_rowan::AstNode]s.
 //! Syntax nodes represent the syntax tree in an untyped way. They represent a location in an immutable
-//! tree with two pointers. The syntax tree is composed of [`SyntaxNode`]s and [`SyntaxToken`]s in a nested
+//! tree with two pointers. The syntax tree is composed of [rome_js_syntax::JsSyntaxNode]s and [rome_js_syntax::JsSyntaxToken]s in a nested
 //! tree structure. Each node can have parents, siblings, children, descendants, etc.
 //!
-//! [`AstNode`]s represent a typed version of a syntax node. They have the same exact representation as syntax nodes
+//! [rome_rowan::AstNode]s represent a typed version of a syntax node. They have the same exact representation as syntax nodes
 //! therefore a conversion between either has zero runtime cost. Every piece of data of an ast node is optional,
 //! this is due to the fact that the parser is completely error tolerant.
 //!

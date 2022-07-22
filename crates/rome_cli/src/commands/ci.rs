@@ -1,4 +1,3 @@
-use crate::commands::check::parse_linter_options;
 use crate::{
     traversal::{traverse, TraversalMode},
     CliSession, Termination,
@@ -7,15 +6,18 @@ use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::UpdateSettingsParams;
 use rome_service::{load_config, ConfigurationType};
 
-use super::format::parse_format_options;
+use super::format::apply_format_settings_from_cli;
 
 /// Handler for the "ci" command of the Rome CLI
 pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
-    parse_format_options(&mut session, &mut workspace_settings, &configuration)?;
-    parse_linter_options(&mut session, &mut workspace_settings, &configuration)?;
+    if let Some(configuration) = configuration {
+        workspace_settings.merge_with_configuration(configuration);
+    }
+
+    apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
 
     session
         .app

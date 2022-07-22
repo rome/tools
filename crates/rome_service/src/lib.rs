@@ -1,6 +1,7 @@
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
+use rome_js_analyze::utils::rename::RenameError;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
@@ -38,13 +39,14 @@ pub enum RomeError {
     FormatError(FormatError),
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
     FormatWithErrorsDisabled,
-    /// Thrown when a rome can't read a generic directory
+    /// Thrown when Rome can't read a generic directory
     CantReadDirectory(PathBuf),
-    /// Thrown when a rome can't read a generic file
+    /// Thrown when Rome can't read a generic file
     CantReadFile(PathBuf),
-
     /// Error thrown when validating the configuration. Once deserialized, further checks have to be done.
     Configuration(ConfigurationError),
+    /// Error thrown when Rome cannot rename a symbol.
+    RenameError(RenameError),
 }
 
 impl Debug for RomeError {
@@ -58,6 +60,7 @@ impl Debug for RomeError {
             RomeError::CantReadFile(_) => std::fmt::Display::fmt(self, f),
             RomeError::Configuration(_) => std::fmt::Display::fmt(self, f),
             RomeError::DirtyWorkspace => std::fmt::Display::fmt(self, f),
+            RomeError::RenameError(_) => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -105,6 +108,24 @@ impl Display for RomeError {
             RomeError::DirtyWorkspace => {
                 write!(f, "Uncommitted changes in repository")
             }
+            RomeError::RenameError(error) => match error {
+                RenameError::CannotBeRenamed {
+                    original_name,
+                    new_name,
+                } => {
+                    write!(
+                        f,
+                        "encountered an error while renaming the symbol \"{}\" to \"{}\"",
+                        original_name, new_name
+                    )
+                }
+                RenameError::CannotFindDeclaration => {
+                    write!(
+                        f,
+                        "encountered an error finding a declaration at the specified position"
+                    )
+                }
+            },
         }
     }
 }

@@ -1,3 +1,4 @@
+use indexmap::IndexSet;
 use std::sync::{RwLock, RwLockReadGuard};
 
 use crate::{Configuration, Rules};
@@ -18,7 +19,7 @@ pub struct WorkspaceSettings {
 
 impl WorkspaceSettings {
     /// The (configuration)[Configuration] is merged into the workspace
-    pub fn merge_with_configuration(&mut self, configuration: &Configuration) {
+    pub fn merge_with_configuration(&mut self, configuration: Configuration) {
         // formatter part
         if let Some(formatter) = &configuration.formatter {
             self.format = FormatSettings::from(formatter);
@@ -34,6 +35,11 @@ impl WorkspaceSettings {
         // linter part
         if let Some(linter) = &configuration.linter {
             self.linter = LinterSettings::from(linter)
+        }
+
+        let globals = configuration.javascript.map(|j| j.globals);
+        if let Some(globals) = globals {
+            self.languages.javascript.globals = globals;
         }
     }
 }
@@ -67,11 +73,7 @@ pub struct LinterSettings {
     /// Enabled by default
     pub enabled: bool,
 
-    /// A list of global bindings that should be ignored by the analyzers
-    ///
-    /// If defined here, they should not emit diagnostics.
-    pub globals: Vec<String>,
-
+    /// List of rules
     pub rules: Option<Rules>,
 }
 
@@ -79,7 +81,6 @@ impl Default for LinterSettings {
     fn default() -> Self {
         Self {
             enabled: true,
-            globals: vec![],
             rules: Some(Rules::default()),
         }
     }
@@ -94,6 +95,10 @@ pub struct LanguagesSettings {
 pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
     type FormatSettings: Default;
+
+    /// Linter settings type for this language
+    type LinterSettings: Default;
+
     /// Fully resolved formatter options type for this language
     type FormatContext: rome_formatter::FormatContext;
 
@@ -114,6 +119,12 @@ pub trait Language: rome_rowan::Language {
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
     pub format: L::FormatSettings,
+
+    /// Linter settings for this language
+    pub linter: L::LinterSettings,
+
+    /// Globals variables/bindings that can be found in a file
+    pub globals: IndexSet<String>,
 }
 
 /// Handle object holding a temporary lock on the workspace settings until

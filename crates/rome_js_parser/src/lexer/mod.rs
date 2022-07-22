@@ -106,7 +106,7 @@ impl LexContext {
     }
 }
 
-/// Context in which the [Lexer]'s current should be re-lexed.
+/// Context in which the [LexContext]'s current should be re-lexed.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum ReLexContext {
     /// Re-lexes a `/` or `/=` token as a regular expression.
