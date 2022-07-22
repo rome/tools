@@ -9,4 +9,7 @@ export default defineConfig({
 	worker: {
 		format: "es",
 	},
+	resolve: {
+		dedupe: ["@codemirror/state"],
+	},
 });

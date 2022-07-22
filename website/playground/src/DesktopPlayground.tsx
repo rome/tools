@@ -1,5 +1,8 @@
 import { PlaygroundProps } from "./types";
-import CodeMirror from "@uiw/react-codemirror";
+import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
+// import { EditorView } from "@codemirror/view";
+// import { romeAst } from "../lang-rome-ast/dist/";
+import { romeAst } from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
@@ -31,6 +34,8 @@ export default function DesktopPlayground(
 			typescript: isTypeScript,
 		}),
 	];
+
+	const romeAstCodeMirrorExtension = [romeAst()];
 
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
@@ -106,7 +111,14 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel><TreeView tree={cst} /></TabPanel>
-						<TabPanel><TreeView tree={ast} /></TabPanel>
+						<TabPanel>
+							<CodeMirror
+								value={ast}
+								extensions={romeAstCodeMirrorExtension}
+								height="70vh"
+								readOnly={true}
+							/>
+						</TabPanel>
 						<TabPanel>
 							<button
 								className="bg-gray-300 px-2 py-2 text-white absolute right-0 top--1 mr-5 flex items-center rounded-md"
