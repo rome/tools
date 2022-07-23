@@ -163,11 +163,11 @@ the statements in a block
 Disallow multiple variable declarations in the same variable statement
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="useTsExpectError">
-	<a href="/docs/lint/rules/useTsExpectError">useTsExpectError</a>
-	<a class="header-anchor" href="#useTsExpectError"></a>
+<h3 data-toc-exclude id="useTemplate">
+	<a href="/docs/lint/rules/useTemplate">useTemplate (since v0.7.0)</a>
+	<a class="header-anchor" href="#useTemplate"></a>
 </h3>
-Enforces the use of <code>@ts-expect-error</code> instead of <code>@ts-ignore</code> to get notified when a suppression is no longer necessary.
+Template literals are preferred over string concatenation.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useValidTypeof">
