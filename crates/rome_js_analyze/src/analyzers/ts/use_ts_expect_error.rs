@@ -60,7 +60,12 @@ declare_rule! {
     /// ** @ts-expect-error */
     /// let foo: boolean = 1;
     /// ```
-    pub(crate) UseTsExpectError = "useTsExpectError"
+    /// 
+    /// 
+    pub(crate) UseTsExpectError  {
+        version: "0.8.0",
+        name: "useTsExpectError"
+    }
 }
 
 const TS_EXPECT_ERROR_SUPPRESSION: &str = "@ts-expect-error";

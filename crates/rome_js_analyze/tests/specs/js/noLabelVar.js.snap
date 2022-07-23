@@ -1,0 +1,55 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 88
+expression: noLabelVar.js
+---
+# Input
+```js
+// invalid
+const x1 = "test";
+x1: expr;
+// nested scope 
+function test() {
+  {
+    x1: for (let i = 0; i < 10; i++) {
+    }
+  }
+}
+
+// valid
+const x = "test";
+z: expr;
+
+```
+
+# Diagnostics
+```
+warning[js/noLabelVar]: Do not use the x1 variable name as a label
+  ┌─ noLabelVar.js:3:1
+  │
+2 │ const x1 = "test";
+  │       -- The variable is declared here
+3 │ x1: expr;
+  │ --
+
+=  note: Creating a label with the same name as an in-scope variable leads to confusion.
+
+
+```
+
+```
+warning[js/noLabelVar]: Do not use the x1 variable name as a label
+  ┌─ noLabelVar.js:7:5
+  │
+2 │ const x1 = "test";
+  │       -- The variable is declared here
+  ·
+7 │     x1: for (let i = 0; i < 10; i++) {
+  │     --
+
+=  note: Creating a label with the same name as an in-scope variable leads to confusion.
+
+
+```
+
+

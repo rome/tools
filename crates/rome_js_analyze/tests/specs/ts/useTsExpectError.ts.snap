@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 98
+assertion_line: 88
 expression: useTsExpectError.ts
 ---
 # Input
@@ -45,7 +45,7 @@ let foo: boolean = 1;
 
 # Diagnostics
 ```
-warning[useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
+warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
   ┌─ useTsExpectError.ts:3:1
   │
 3 │ let foo: boolean = 1;
@@ -64,7 +64,7 @@ Suggested fix: Use `@ts-expect-error` instead of `@ts-ignore`.
 ```
 
 ```
-warning[useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
+warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
   ┌─ useTsExpectError.ts:5:1
   │
 5 │ let foo: boolean = 1;
@@ -85,7 +85,7 @@ Suggested fix: Use `@ts-expect-error` instead of `@ts-ignore`.
 ```
 
 ```
-warning[useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
+warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
   ┌─ useTsExpectError.ts:7:1
   │
 7 │ let foo: boolean = 1;
@@ -106,7 +106,7 @@ Suggested fix: Use `@ts-expect-error` instead of `@ts-ignore`.
 ```
 
 ```
-warning[useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
+warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
   ┌─ useTsExpectError.ts:9:1
   │
 9 │ let foo: boolean = 1;
@@ -127,7 +127,7 @@ Suggested fix: Use `@ts-expect-error` instead of `@ts-ignore`.
 ```
 
 ```
-warning[useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
+warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
    ┌─ useTsExpectError.ts:12:1
    │
 12 │ let foo: boolean = 1;
@@ -148,7 +148,7 @@ Suggested fix: Use `@ts-expect-error` instead of `@ts-ignore`.
 ```
 
 ```
-warning[useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
+warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
    ┌─ useTsExpectError.ts:15:1
    │
 15 │ let foo: boolean = 1;
@@ -169,7 +169,7 @@ Suggested fix: Use `@ts-expect-error` instead of `@ts-ignore`.
 ```
 
 ```
-warning[useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
+warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppression is no longer necessary.
    ┌─ useTsExpectError.ts:19:1
    │
 19 │ let foo2: boolean = 1;
