@@ -70,6 +70,8 @@ impl Rule for UseTsExpectError {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyStatement>;
+    /// The first element of tuple is the index of leading pieces of first token  we want to replace.
+    /// The second element of tuple is the start offset of the comment text we want to replace
     type State = (usize, usize);
     type Signals = Option<Self::State>;
 
