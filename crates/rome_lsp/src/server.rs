@@ -83,6 +83,13 @@ impl LanguageServer for LSPServer {
             .client
             .log_message(MessageType::INFO, msg)
             .await;
+        self.session
+            .client
+            .log_message(
+                MessageType::INFO,
+                format!("rome_lsp: {}", env!("CARGO_PKG_VERSION")),
+            )
+            .await;
 
         let mut registrations = Vec::new();
 

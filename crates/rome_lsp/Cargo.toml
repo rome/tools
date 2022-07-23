@@ -1,6 +1,6 @@
 [package]
 name = "rome_lsp"
-version = "0.0.0"
+version = "0.0.8"
 edition = "2021"
 authors = ["Rome Tools Developers and Contributros"]
 license = "MIT"

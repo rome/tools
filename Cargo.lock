@@ -1569,7 +1569,7 @@ dependencies = [
 
 [[package]]
 name = "rome_lsp"
-version = "0.0.0"
+version = "0.0.8"
 dependencies = [
  "anyhow",
  "futures",
