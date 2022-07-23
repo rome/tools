@@ -176,13 +176,11 @@ warning[ts/useTsExpectError]: Prefer @ts-expect-error to get notified when suppr
    │ ----------------------
 
 Suggested fix: Use `@ts-expect-error` instead of `@ts-ignore`.
-      | @@ -14,8 +14,8 @@
-13 13 |    ** @ts-ignore */
+      | @@ -15,7 +15,7 @@
 14 14 |   let foo: boolean = 1;
 15 15 |   /**
-16    | -  ** @ts-ignore
+16 16 |    ** @ts-ignore
 17    | -  ** @ts-ignore */
-   16 | +  ** @ts-expect-error
    17 | +  ** @ts-expect-error */
 18 18 |   let foo2: boolean = 1;
 19 19 |   

@@ -1,11 +1,9 @@
-use std::ops::Range;
-
 use rome_analyze::{
     context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsAnyStatement, JsSyntaxToken};
+use rome_js_syntax::{JsAnyStatement, JsSyntaxToken, TriviaPieceKind};
 use rome_rowan::{AstNode, AstNodeExt, TriviaPiece};
 
 use crate::JsRuleAction;
@@ -60,8 +58,6 @@ declare_rule! {
     /// ** @ts-expect-error */
     /// let foo: boolean = 1;
     /// ```
-    /// 
-    /// 
     pub(crate) UseTsExpectError  {
         version: "0.8.0",
         name: "useTsExpectError"
@@ -74,90 +70,98 @@ impl Rule for UseTsExpectError {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Ast<JsAnyStatement>;
-    /// `ts-ignore` could be used in multiple places inside a comment, we need to track the state of each `@ts-ignore`.
-    /// In order to track these comments, we shape the state with a [Vec] of tuples, where a tuple contains:
-    /// - the first element is the position  of the original leading trivia that needs to be replaced;
-    /// - the second element of the tuple is a [vector](Vec) of the [ranges](Range) of the string `"@ts-ignore"` found in the original trivia piece text;
-    /// 
-    /// We use a [Vector] because the string `"@ts-ignore"` can be present multiple times inside a comment.
-    /// ## Example
-    /// ```js
-    /// /**
-    ///  * @ts-ignore
-    ///  * @ts-ignore
-    ///  */
-    /// let a = 3;
-    /// ```
-    type State = Vec<(usize, Vec<Range<usize>>)>;
+    type State = (usize, usize);
     type Signals = Option<Self::State>;
 
+    /// Only two kinds of suppressions are supported:
+    /// 1. For single line comment, the comment must start with `@ts-ignore` after trim_start.
+    /// ```ts
+    /// //                           @ts-ignore
+    /// let a: string  = 3;
+    /// ```
+    /// 2. For multiline comment, the last line of the multiline comment must start with `@ts-ignore` after trim_start.
+    /// ```ts
+    /// /*
+    ///
+    ///  @ts-ignore                     */
+    /// let a: string = 3;
+    /// ```
+    /// Even the suppression below is valid
+    /// ```ts
+    /// /*
+    ///
+    ///  @ts-ignoresomething                    */
+    /// let a: string = 3;
+    /// ```
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let any_stmt = ctx.query();
         any_stmt.syntax().first_token().and_then(|token| {
-            let mut ts_ignore_index_vec = vec![];
-            token
+            let mut ts_ignore_state = None;
+            // Finding the last comment trivia of first token's leading trivia.
+            match token
                 .leading_trivia()
                 .pieces()
                 .enumerate()
-                .for_each(|(i, piece)| match piece.kind() {
-                    rome_js_syntax::TriviaPieceKind::SingleLineComment => {
+                .rfind(|(_, piece)| {
+                    matches!(
+                        piece.kind(),
+                        TriviaPieceKind::SingleLineComment | TriviaPieceKind::MultiLineComment
+                    )
+                }) {
+                Some((i, piece)) => match piece.kind() {
+                    TriviaPieceKind::SingleLineComment => {
                         let original_piece_text = piece.text();
-                        // I use this `strip_prefix` just because of clippy not happy
-                        let finalized: &str =
-                            if let Some(stripped) = original_piece_text.strip_prefix("/**") {
-                                stripped
-                            } else if original_piece_text.starts_with("//")
-                                || original_piece_text.starts_with("/*")
-                            {
-                                &original_piece_text[2..]
+                        let trimmed_text: &str =
+                            if let Some(stripped) = original_piece_text.strip_prefix("//") {
+                                stripped.trim_start()
+                            } else if let Some(stripped) = original_piece_text.strip_prefix("/*") {
+                                stripped.trim_start_matches('*').trim_start()
                             } else {
                                 original_piece_text
-                            }
-                            .trim_start();
-
-                        if finalized.starts_with("@ts-ignore") {
-                            // `@ts-ignore` is found, record the offset to the original trivia piece
-                            let offset = original_piece_text.len() - finalized.len();
-                            ts_ignore_index_vec.push((
-                                i,
-                                // 10 is the length of `@ts-ignore`
-                                vec![offset..offset + 10],
-                            ));
+                            };
+                        if trimmed_text.starts_with("@ts-ignore") {
+                            ts_ignore_state =
+                                Some((i, original_piece_text.len() - trimmed_text.len()));
                         }
                     }
-                    rome_js_syntax::TriviaPieceKind::MultiLineComment => {
+                    TriviaPieceKind::MultiLineComment => {
                         let original = piece.text();
-                        let mut multiline_ts_ignore_index_vec = vec![];
-                        let mut offset = 2;
-                        original
-                            .trim_start_matches("/*")
-                            .split('\n')
-                            .enumerate()
-                            .for_each(|(i, line)| {
-                                // We use `\n` as our splitter,
-                                // so we need to add a leading newline offset (1) when i greater than 0.
-                                offset += if i == 0 { 0 } else { 1 };
-                                let finalized =
-                                    line.trim_start().trim_start_matches('*').trim_start();
-                                offset += line.len() - finalized.len();
-                                if finalized.starts_with("@ts-ignore") {
-                                    multiline_ts_ignore_index_vec.push(offset..offset + 10);
-                                }
-                                offset += finalized.len();
-                            });
-                        assert_eq!(offset, original.len());
 
-                        if !multiline_ts_ignore_index_vec.is_empty() {
-                            ts_ignore_index_vec.push((i, multiline_ts_ignore_index_vec));
-                        }
+                        let mut offset = 0;
+                        let split_iterator = original.split('\n');
+                        let line_count = split_iterator.clone().count();
+                        split_iterator.enumerate().for_each(|(index, line)| {
+                            // We use `\n` as our splitter,
+                            // so we need to add a leading newline offset (1) when i greater than 0.
+                            offset += if index == 0 { 0 } else { 1 };
+                            if index == line_count - 1 {
+                                // 1. multi line multiline comment with leading star
+                                // *           @ts-ignore                */
+                                //^^^^^^^^^^^^^
+                                // 2. single line multiline comment
+                                // /** @ts-ignore*/
+                                // ^^^^
+                                // Merge all these cases into one.
+                                let normalized_text = line
+                                    .trim_start_matches("/*")
+                                    .trim_start_matches('*')
+                                    .trim_start()
+                                    .trim_start_matches('*')
+                                    .trim_start();
+                                offset += line.len() - normalized_text.len();
+                                if normalized_text.starts_with("@ts-ignore") {
+                                    ts_ignore_state = Some((i, offset));
+                                }
+                            } else {
+                                offset += line.len();
+                            }
+                        });
                     }
                     _ => {}
-                });
-            if !ts_ignore_index_vec.is_empty() {
-                Some(ts_ignore_index_vec)
-            } else {
-                None
+                },
+                None => {}
             }
+            ts_ignore_state
         })
     }
 
@@ -175,7 +179,6 @@ impl Rule for UseTsExpectError {
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
         let root = ctx.root();
-        let mut ignore_cursor = 0;
         let first_token = node.syntax().first_token()?;
         // Clone trailing trivia and replace leading trivia
         let mut next_leading_trivia = vec![];
@@ -186,30 +189,21 @@ impl Rule for UseTsExpectError {
             .leading_trivia()
             .pieces()
             .enumerate()
-            .for_each(|(i, item)| {
-                let text = item.text();
-                if ignore_cursor < state.len() && state[ignore_cursor].0 == i {
-                    let ts_ignore_range_list = &state[ignore_cursor].1;
+            .for_each(|(i, piece)| {
+                let text = piece.text();
+                if state.0 == i {
                     let mut normalized_string = String::with_capacity(text.len());
-                    // Slicing string from start of the comment to the first start of `@ts-ignore`
-                    normalized_string.push_str(&text[0..ts_ignore_range_list[0].start]);
-                    let mut previous_end = ts_ignore_range_list[0].start;
-                    // Copy string between two `@ts-ignore` and replace it with `@ts-expect-error`
-                    for &Range { start, end } in ts_ignore_range_list.iter() {
-                        normalized_string.push_str(&text[previous_end..start]);
-                        normalized_string.push_str(TS_EXPECT_ERROR_SUPPRESSION);
-                        previous_end = end;
-                    }
-                    // Copy the rest of the string after the last `@ts-ignore`
-                    normalized_string.push_str(&text[previous_end..]);
+                    // Replace `@ts-ignore` to `@ts-expect-error`
+                    normalized_string.push_str(&text[0..state.1]);
+                    normalized_string.push_str(TS_EXPECT_ERROR_SUPPRESSION);
+                    normalized_string.push_str(&text[(state.1 + 10)..]);
                     next_leading_trivia.push(TriviaPiece::new(
-                        item.kind(),
+                        piece.kind(),
                         normalized_string.len() as u32,
                     ));
                     next_leading_trivia_string.push_str(&normalized_string);
-                    ignore_cursor += 1;
                 } else {
-                    next_leading_trivia.push(TriviaPiece::new(item.kind(), text.len() as u32));
+                    next_leading_trivia.push(TriviaPiece::new(piece.kind(), text.len() as u32));
                     next_leading_trivia_string.push_str(text);
                 }
             });

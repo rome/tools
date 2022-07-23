@@ -230,4 +230,11 @@ Disallow unclear usage of multiple space characters in regular expression litera
 </h3>
 When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
 </div>
+<div class="rule">
+<h3 data-toc-exclude id="useTsExpectError">
+	<a href="/docs/lint/rules/useTsExpectError">useTsExpectError (since v0.8.0)</a>
+	<a class="header-anchor" href="#useTsExpectError"></a>
+</h3>
+Enforces the use of <code>@ts-expect-error</code> instead of <code>@ts-ignore</code> to get notified when a suppression is no longer necessary.
+</div>
 </section>
