@@ -1,3 +1,9 @@
+//! This is the main binary of Rome.
+//!
+//! If you're curios about how to use it, check Rome's [website]
+//!
+//! [website]: https://rome.tools
+
 use rome_cli::{run_cli, setup_panic_handler, CliSession, Termination};
 
 #[cfg(target_os = "windows")]

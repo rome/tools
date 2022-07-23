@@ -19,11 +19,15 @@ pub use crate::configuration::{
 pub use crate::file_handlers::JsFormatSettings;
 pub use crate::workspace::Workspace;
 
+/// This is the main entrypoint of the application.
 pub struct App<'app> {
+    /// A reference to the internal virtual file system
     pub fs: DynRef<'app, dyn FileSystem>,
+    /// A reference to the internal workspace
     pub workspace: DynRef<'app, dyn Workspace>,
+    /// A reference to the internal console, where its buffer will be used to write messages and
+    /// errors
     pub console: DynRef<'app, dyn Console>,
-    pub config_path: Option<RomePath>,
 }
 
 /// Generic errors thrown during rome operations
@@ -158,7 +162,6 @@ impl<'app> App<'app> {
             fs,
             console,
             workspace: DynRef::Owned(workspace::server()),
-            config_path: None,
         }
     }
 }
