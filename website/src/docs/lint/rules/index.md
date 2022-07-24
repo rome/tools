@@ -93,6 +93,13 @@ Disallows empty destructuring patterns.
 Disallow reassigning function declarations.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noImportAssign">
+	<a href="/docs/lint/rules/noImportAssign">noImportAssign (since v0.7.0)</a>
+	<a class="header-anchor" href="#noImportAssign"></a>
+</h3>
+Disallow assigning to imported bindings
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noLabelVar">
 	<a href="/docs/lint/rules/noLabelVar">noLabelVar (since v0.7.0)</a>
 	<a class="header-anchor" href="#noLabelVar"></a>

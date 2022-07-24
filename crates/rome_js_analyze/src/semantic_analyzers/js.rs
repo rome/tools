@@ -4,6 +4,7 @@ use rome_analyze::declare_group;
 mod no_arguments;
 mod no_catch_assign;
 mod no_function_assign;
+mod no_import_assign;
 mod no_label_var;
 mod no_shouty_constants;
 mod use_camel_case;
