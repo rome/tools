@@ -1,4 +1,4 @@
-use crate::{semantic_services::Semantic};
+use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
