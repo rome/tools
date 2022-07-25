@@ -40,13 +40,6 @@
 		"vite": "2.9.5",
 		"vite-plugin-svgr": "^2.2.0"
 	},
-	"resolutions": {
-		"@codemirror/state": "^6.0.1",
-		"@codemirror/view": "^6.1.0"
-	},
-	"overrides": {
-    "@codemirror/state": "6.0.1"
-  },
 	"engines": {
 		"pnpm": "^7.0.0"
 	}
