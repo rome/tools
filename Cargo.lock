@@ -1462,7 +1462,9 @@ dependencies = [
 name = "rome_js_analyze"
 version = "0.0.0"
 dependencies = [
+ "case",
  "countme",
+ "iai",
  "insta",
  "roaring",
  "rome_analyze",
