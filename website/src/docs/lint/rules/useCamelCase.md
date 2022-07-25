@@ -15,7 +15,7 @@ Enforce camel case naming convention.
 let snake_case;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useCamelCase</span><span style="color: Orange;">]</span><em>: </em><em>Prefer symbols names in camel case.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useCamelCase/">js/useCamelCase</a></span><span style="color: Orange;">]</span><em>: </em><em>Prefer symbols names in camel case.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useCamelCase.js:1:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> let snake_case;
@@ -32,7 +32,7 @@ let snake_case;
 let PascalCase;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useCamelCase</span><span style="color: Orange;">]</span><em>: </em><em>Prefer symbols names in camel case.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useCamelCase/">js/useCamelCase</a></span><span style="color: Orange;">]</span><em>: </em><em>Prefer symbols names in camel case.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useCamelCase.js:1:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> let PascalCase;
