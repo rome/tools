@@ -83,7 +83,7 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
         //SAFETY: bytes were already inside a valid &str
         let mut output = unsafe { String::from_utf8_unchecked(output) };
 
-        while let Some((_, chr)) = chars.next() {
+        for (_, chr) in chars {
             if !chr.is_alphanumeric() {
                 force_next = Some(ForceNext::Uppercase);
                 continue;

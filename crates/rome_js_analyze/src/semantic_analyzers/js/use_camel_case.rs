@@ -1,8 +1,6 @@
-use std::borrow::Cow;
-
 use crate::{
     semantic_services::Semantic,
-    utils::{rename::RenameSymbolExtensions, to_camel_case, ToCamelCase},
+    utils::{rename::RenameSymbolExtensions, ToCamelCase},
     JsRuleAction,
 };
 use rome_analyze::{
@@ -11,12 +9,9 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsFormalParameter, JsIdentifierBinding,
-    JsIdentifierExpression, JsLanguage, JsParameterList, JsStringLiteralExpression,
-    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement,
-};
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, BatchMutationExt, SyntaxNodeCast};
+use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator};
+use rome_rowan::{AstNode, BatchMutationExt};
+use std::borrow::Cow;
 
 declare_rule! {
     /// Enforce camel case naming convention.
@@ -90,6 +85,7 @@ impl Rule for UseCamelCase {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let model = ctx.model();
         let mut batch = ctx.root().begin();
 
         // Avoid renaming conflicts
@@ -100,7 +96,7 @@ impl Rule for UseCamelCase {
             } else {
                 format!("{}{}", state.0, suffix)
             };
-            if batch.rename_node_declaration(&ctx.model(), ctx.query().clone(), &new_name) {
+            if batch.rename_node_declaration(model, ctx.query().clone(), &new_name) {
                 return Some(JsRuleAction {
                     category: ActionCategory::Refactor,
                     applicability: Applicability::Always,
