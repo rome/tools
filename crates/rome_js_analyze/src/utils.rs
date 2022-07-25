@@ -37,6 +37,10 @@ pub(crate) fn escape_string(s: &str) -> Result<String, EscapeError> {
 }
 
 pub trait ToCamelCase {
+    /// Return the camel case form of the input parameter.
+    /// If it is already in camel case, nothing is done.
+    ///
+    /// This method do not address abbreviations and acronyms.
     fn to_camel_case(&self) -> Cow<str>;
 }
 
@@ -46,6 +50,10 @@ impl ToCamelCase for str {
     }
 }
 
+/// Return the camel case form of the input parameter.
+/// If it is already in camel case, nothing is done.
+///
+/// This method do not address abbreviations and acronyms.
 pub fn to_camel_case(input: &str) -> Cow<str> {
     pub enum ForceNext {
         Uppercase,

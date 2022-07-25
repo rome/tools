@@ -11,7 +11,7 @@ use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator};
 use rome_rowan::{AstNode, BatchMutationExt};
-use std::borrow::Cow;
+use std::{borrow::Cow, iter::once};
 
 declare_rule! {
     /// Enforce camel case naming convention.
@@ -84,28 +84,21 @@ impl Rule for UseCamelCase {
         Some(diag)
     }
 
-    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, (new_name, _): &Self::State) -> Option<JsRuleAction> {
         let model = ctx.model();
         let mut batch = ctx.root().begin();
 
-        // Avoid renaming conflicts
-        // First time use the name without suffix
-        for suffix in 1..999 {
-            let new_name = if suffix < 2 {
-                state.0.clone()
-            } else {
-                format!("{}{}", state.0, suffix)
-            };
-            if batch.rename_node_declaration(model, ctx.query().clone(), &new_name) {
-                return Some(JsRuleAction {
-                    category: ActionCategory::Refactor,
-                    applicability: Applicability::Always,
-                    message: markup! { "Rename this symbol to camel case" }.to_owned(),
-                    root: batch.commit(),
-                });
-            }
+        let candidates = (2..).map(|i| format!("{}{}", new_name, i).into());
+        let candidates = once(Cow::from(new_name)).chain(candidates);
+        if batch.try_rename_node_declaration_until_success(model, ctx.query().clone(), candidates) {
+            Some(JsRuleAction {
+                category: ActionCategory::Refactor,
+                applicability: Applicability::Always,
+                message: markup! { "Rename this symbol to camel case" }.to_owned(),
+                root: batch.commit(),
+            })
+        } else {
+            None
         }
-
-        None
     }
 }
