@@ -1,13 +1,9 @@
 lockfileVersion: 5.4
 
-overrides:
-  '@codemirror/state': ^6.0.1
-  '@codemirror/view': ^6.1.0
-
 specifiers:
   '@codemirror/lang-javascript': ^6.0.1
-  '@codemirror/state': ^6.0.1
-  '@codemirror/view': ^6.1.0
+  '@codemirror/state': 6.1.0
+  '@codemirror/view': 6.1.0
   '@tailwindcss/forms': ^0.4.0
   '@types/node': ^18.0.6
   '@types/prettier': ^2.6.3
