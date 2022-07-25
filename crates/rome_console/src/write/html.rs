@@ -29,85 +29,43 @@ where
 }
 
 fn push_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Result<()> {
-    let mut result = Ok(());
     elements.for_each(&mut |styles| {
-        if result.is_err() {
-            return;
-        }
-
         for style in styles {
-            let res = match style {
-                MarkupElement::Emphasis => {
-                    write!(fmt, "<em>")
-                }
-                MarkupElement::Dim => {
-                    write!(fmt, "<span style=\"opacity: 0.8;\">")
-                }
-                MarkupElement::Italic => {
-                    write!(fmt, "<i>")
-                }
-                MarkupElement::Underline => {
-                    write!(fmt, "<u>")
-                }
-                MarkupElement::Error => {
-                    write!(fmt, "<span style=\"color: Tomato;\">")
-                }
-                MarkupElement::Success => {
-                    write!(fmt, "<span style=\"color: MediumSeaGreen;\">")
-                }
-                MarkupElement::Warn => {
-                    write!(fmt, "<span style=\"color: Orange;\">")
-                }
-                MarkupElement::Info => {
-                    write!(fmt, "<span style=\"color: rgb(38, 148, 255);\">")
-                }
-            };
-
-            if res.is_err() {
-                result = res;
-                return;
+            match style {
+                MarkupElement::Emphasis => write!(fmt, "<em>")?,
+                MarkupElement::Dim => write!(fmt, "<span style=\"opacity: 0.8;\">")?,
+                MarkupElement::Italic => write!(fmt, "<i>")?,
+                MarkupElement::Underline => write!(fmt, "<u>")?,
+                MarkupElement::Error => write!(fmt, "<span style=\"color: Tomato;\">")?,
+                MarkupElement::Success => write!(fmt, "<span style=\"color: MediumSeaGreen;\">")?,
+                MarkupElement::Warn => write!(fmt, "<span style=\"color: Orange;\">")?,
+                MarkupElement::Info => write!(fmt, "<span style=\"color: rgb(38, 148, 255);\">")?,
+                MarkupElement::Hyperlink { href } => write!(fmt, "<a href=\"{href}\">")?,
             }
         }
-    });
 
-    result
+        Ok(())
+    })
 }
 
 fn pop_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Result<()> {
-    let mut result = Ok(());
-    elements.for_each(&mut |styles| {
-        if result.is_err() {
-            return;
-        }
-
-        for style in styles {
-            let res = match style {
-                MarkupElement::Emphasis => {
-                    write!(fmt, "</em>")
-                }
-                MarkupElement::Italic => {
-                    write!(fmt, "</i>")
-                }
-                MarkupElement::Underline => {
-                    write!(fmt, "</u>")
-                }
+    elements.for_each_rev(&mut |styles| {
+        for style in styles.iter().rev() {
+            match style {
+                MarkupElement::Emphasis => write!(fmt, "</em>")?,
+                MarkupElement::Italic => write!(fmt, "</i>")?,
+                MarkupElement::Underline => write!(fmt, "</u>")?,
                 MarkupElement::Dim
                 | MarkupElement::Error
                 | MarkupElement::Success
                 | MarkupElement::Warn
-                | MarkupElement::Info => {
-                    write!(fmt, "</span>")
-                }
-            };
-
-            if res.is_err() {
-                result = res;
-                return;
+                | MarkupElement::Info => write!(fmt, "</span>")?,
+                MarkupElement::Hyperlink { .. } => write!(fmt, "</a>")?,
             }
         }
-    });
 
-    result
+        Ok(())
+    })
 }
 
 /// Adapter wrapping a type implementing [io::Write] and adding HTML special

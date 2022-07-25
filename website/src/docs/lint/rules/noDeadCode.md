@@ -18,7 +18,7 @@ function example() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noDeadCode</span><span style="color: Orange;">]</span><em>: </em><em>This code is unreachable</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDeadCode/">js/noDeadCode</a></span><span style="color: Orange;">]</span><em>: </em><em>This code is unreachable</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDeadCode.js:3:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     return;
@@ -36,7 +36,7 @@ function example() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noDeadCode</span><span style="color: Orange;">]</span><em>: </em><em>This code is unreachable</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDeadCode/">js/noDeadCode</a></span><span style="color: Orange;">]</span><em>: </em><em>This code is unreachable</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDeadCode.js:2:28
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     for(let i = 0; i &lt; 10; ++i) {
@@ -55,7 +55,7 @@ function example() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noDeadCode</span><span style="color: Orange;">]</span><em>: </em><em>This code is unreachable</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDeadCode/">js/noDeadCode</a></span><span style="color: Orange;">]</span><em>: </em><em>This code is unreachable</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDeadCode.js:4:9
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span>         continue;

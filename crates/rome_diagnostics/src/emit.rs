@@ -90,19 +90,42 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         // If the diagnostic doesn't have a codespan, show the locus in the header instead
         let has_codespan = self.d.primary.is_some() || !self.d.children.is_empty();
 
-        fmt.write_markup(markup! {
-            {DiagnosticHeader {
-                locus: if !has_codespan {
-                    Some(locus)
-                } else {
-                    None
-                },
-                severity: self.d.severity,
-                code: self.d.code.as_deref().filter(|code| !code.is_empty()),
-                title: markup! { {self.d.title} },
-            }}
-            "\n"
-        })?;
+        let header_locus = if !has_codespan { Some(locus) } else { None };
+
+        let code = self.d.code.as_ref().filter(|code| !code.is_empty());
+        match (code, &self.d.code_link) {
+            (Some(code), Some(href)) => fmt.write_markup(markup! {
+                {DiagnosticHeader {
+                    locus: header_locus,
+                    severity: self.d.severity,
+                    code: Some(markup! {
+                        <Hyperlink href={href}>
+                            {code}
+                        </Hyperlink>
+                    }),
+                    title: markup! { {self.d.title} },
+                }}
+                "\n"
+            })?,
+            (Some(code), None) => fmt.write_markup(markup! {
+                {DiagnosticHeader {
+                    locus: header_locus,
+                    severity: self.d.severity,
+                    code: Some(markup!( {code} )),
+                    title: markup! { {self.d.title} },
+                }}
+                "\n"
+            })?,
+            (None, _) => fmt.write_markup(markup! {
+                {DiagnosticHeader {
+                    locus: header_locus,
+                    severity: self.d.severity,
+                    code: None,
+                    title: markup! { {self.d.title} },
+                }}
+                "\n"
+            })?,
+        }
 
         if has_codespan {
             let labels: Vec<_> = self
@@ -240,7 +263,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
 pub struct DiagnosticHeader<'a> {
     pub locus: Option<Locus<'a>>,
     pub severity: Severity,
-    pub code: Option<&'a str>,
+    pub code: Option<Markup<'a>>,
     pub title: Markup<'a>,
 }
 

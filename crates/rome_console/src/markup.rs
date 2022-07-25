@@ -1,4 +1,5 @@
 use std::{
+    borrow::Cow,
     fmt::{self, Debug},
     io,
 };
@@ -9,8 +10,8 @@ use text_size::TextSize;
 use crate::fmt::{Display, Formatter, MarkupElements, Write};
 
 /// Enumeration of all the supported markup elements
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
-pub enum MarkupElement {
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+pub enum MarkupElement<'fmt> {
     Emphasis,
     Dim,
     Italic,
@@ -19,9 +20,10 @@ pub enum MarkupElement {
     Success,
     Warn,
     Info,
+    Hyperlink { href: Cow<'fmt, str> },
 }
 
-impl MarkupElement {
+impl<'fmt> MarkupElement<'fmt> {
     /// Mutate a [ColorSpec] object in place to apply this element's associated
     /// style to it
     pub(crate) fn update_color(&self, color: &mut ColorSpec) {
@@ -59,6 +61,27 @@ impl MarkupElement {
 
                 color.set_fg(Some(BLUE));
             }
+
+            MarkupElement::Hyperlink { .. } => {}
+        }
+    }
+
+    fn to_owned(&self) -> MarkupElement<'static> {
+        match self {
+            MarkupElement::Emphasis => MarkupElement::Emphasis,
+            MarkupElement::Dim => MarkupElement::Dim,
+            MarkupElement::Italic => MarkupElement::Italic,
+            MarkupElement::Underline => MarkupElement::Underline,
+            MarkupElement::Error => MarkupElement::Error,
+            MarkupElement::Success => MarkupElement::Success,
+            MarkupElement::Warn => MarkupElement::Warn,
+            MarkupElement::Info => MarkupElement::Info,
+            MarkupElement::Hyperlink { href } => MarkupElement::Hyperlink {
+                href: Cow::Owned(match href {
+                    Cow::Borrowed(href) => href.to_string(),
+                    Cow::Owned(href) => href.clone(),
+                }),
+            },
         }
     }
 }
@@ -67,13 +90,13 @@ impl MarkupElement {
 /// associated styles applied to it
 #[derive(Copy, Clone)]
 pub struct MarkupNode<'fmt> {
-    pub elements: &'fmt [MarkupElement],
+    pub elements: &'fmt [MarkupElement<'fmt>],
     pub content: &'fmt dyn Display,
 }
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct MarkupNodeBuf {
-    pub elements: Vec<MarkupElement>,
+    pub elements: Vec<MarkupElement<'static>>,
     pub content: String,
 }
 
@@ -128,8 +151,9 @@ impl Write for MarkupBuf {
     fn write_str(&mut self, elements: &MarkupElements, content: &str) -> io::Result<()> {
         let mut styles = Vec::new();
         elements.for_each(&mut |elements| {
-            styles.extend_from_slice(elements);
-        });
+            styles.extend(elements.iter().map(MarkupElement::to_owned));
+            Ok(())
+        })?;
 
         if let Some(last) = self.0.last_mut() {
             if last.elements == styles {
@@ -149,8 +173,9 @@ impl Write for MarkupBuf {
     fn write_fmt(&mut self, elements: &MarkupElements, content: fmt::Arguments) -> io::Result<()> {
         let mut styles = Vec::new();
         elements.for_each(&mut |elements| {
-            styles.extend_from_slice(elements);
-        });
+            styles.extend(elements.iter().map(MarkupElement::to_owned));
+            Ok(())
+        })?;
 
         if let Some(last) = self.0.last_mut() {
             if last.elements == styles {

@@ -15,6 +15,7 @@ pub struct Diagnostic {
 
     pub severity: Severity,
     pub code: Option<String>,
+    pub code_link: Option<String>,
     pub title: MarkupBuf,
     pub summary: Option<String>,
     pub tag: Option<DiagnosticTag>,
@@ -63,6 +64,7 @@ impl Diagnostic {
         Self {
             file_id,
             code,
+            code_link: None,
             severity,
             title: markup!({ title }).to_owned(),
             summary: None,
@@ -83,6 +85,12 @@ impl Diagnostic {
     /// Set an explicit plain-text summary for this diagnostic.
     pub fn summary(mut self, summary: impl Into<String>) -> Self {
         self.summary = Some(summary.into());
+        self
+    }
+
+    /// Set a hyperlink for the code of this diagnostic.
+    pub fn code_link(mut self, code_link: impl Into<String>) -> Self {
+        self.code_link = Some(code_link.into());
         self
     }
 

@@ -16,7 +16,7 @@ const boolExp = true;
 const r = true && boolExp;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useSimplifiedLogicExpression</span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression/">js/useSimplifiedLogicExpression</a></span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useSimplifiedLogicExpression.js:2:11
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> const r = true &amp;&amp; boolExp;
@@ -35,7 +35,7 @@ const boolExp2 = true;
 const r2 = boolExp || true;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useSimplifiedLogicExpression</span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression/">js/useSimplifiedLogicExpression</a></span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useSimplifiedLogicExpression.js:2:12
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> const r2 = boolExp || true;
@@ -54,7 +54,7 @@ const nonNullExp = 123;
 const r3 = null ?? nonNullExp;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useSimplifiedLogicExpression</span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression/">js/useSimplifiedLogicExpression</a></span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useSimplifiedLogicExpression.js:2:12
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> const r3 = null ?? nonNullExp;
@@ -74,7 +74,7 @@ const boolExpr2 = false;
 const r4 = !boolExpr1 || !boolExpr2;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useSimplifiedLogicExpression</span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression/">js/useSimplifiedLogicExpression</a></span><span style="color: Orange;">]</span><em>: </em><em>Logical expression contains unnecessary complexity.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useSimplifiedLogicExpression.js:3:12
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> const r4 = !boolExpr1 || !boolExpr2;

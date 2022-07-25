@@ -226,7 +226,7 @@ impl<'s> Parser<'s> {
 
         // Don't report another error if it would just be at the same position as the last error.
         if let Some(previous) = self.diagnostics.last() {
-            if err.code == Some(String::from("SyntaxError"))
+            if err.code.as_deref() == Some("SyntaxError")
                 && previous.code == err.code
                 && previous.file_id == err.file_id
             {

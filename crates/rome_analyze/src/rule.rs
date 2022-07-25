@@ -434,11 +434,17 @@ impl RuleDiagnostic {
     /// Convert this [`RuleDiagnostic`] into an instance of [`Diagnostic`] by
     /// injecting the name of the rule that emitted it and the ID of the file
     /// the rule was being run on
-    pub(crate) fn into_diagnostic(self, file_id: FileId, code: String) -> Diagnostic {
+    pub(crate) fn into_diagnostic(
+        self,
+        file_id: FileId,
+        code: String,
+        code_link: String,
+    ) -> Diagnostic {
         Diagnostic {
             file_id,
             severity: self.severity,
             code: Some(code),
+            code_link: Some(code_link),
             title: self.title,
             summary: self.summary,
             tag: self.tag,
