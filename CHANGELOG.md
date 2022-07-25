@@ -1,5 +1,38 @@
 # Rome changelog
 
+## 0.8.0
+
+### CLI
+
+- Added `--max-diagnostics` argument to the command `rome check`.
+- The maximum number of diagnostics printed is now 20, use `--max-diagnostics` to change the default. 
+- Added a new command `rome init`
+
+### Configuration
+
+- Rome is now able to read `rome.json` and pick the custom configuration from there.
+
+### Linter
+
+The linter is now marked as "beta" and it can be used to lint code from the CLI and
+from the LSP.
+
+
+### Formatter
+
+- You can now use the configuration file `rome.json` to change Rome's defaults:
+
+  Example:
+  ```json
+  {
+    "root": true,
+    "formatter": {
+      "indentStyle": "space"
+    }
+  }
+  ```
+- Fixed some edge cases where the comment suppressions were not working as expected; 
+
 ## 0.7.0
 
 ### CLI
