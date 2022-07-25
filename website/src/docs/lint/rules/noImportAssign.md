@@ -3,7 +3,7 @@ title: Lint Rule noImportAssign
 layout: layouts/rule.liquid
 ---
 
-# noImportAssign (since v0.7.0)
+# noImportAssign (since v0.8.0)
 
 Disallow assigning to imported bindings
 
