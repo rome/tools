@@ -23,11 +23,6 @@ pub use linter::{RuleConfiguration, Rules};
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Configuration {
-    /// One root file should exist. Useful when `extends` comes into play.
-    ///
-    /// If `true`, this file should be the master configuration.
-    pub root: bool,
-
     /// The configuration of the formatter
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatter: Option<FormatterConfiguration>,
@@ -45,7 +40,6 @@ impl Default for Configuration {
     fn default() -> Self {
         // TODO: enable recommendation settings https://github.com/rome/tools/issues/2912
         Self {
-            root: true,
             linter: Some(LinterConfiguration {
                 enabled: true,
                 ..LinterConfiguration::default()
@@ -68,8 +62,6 @@ impl Configuration {
 
 /// Series of errors that can be thrown while computing the configuration
 pub enum ConfigurationError {
-    /// Thrown when the main configuration file doesn't have
-    NotRoot,
     /// Thrown when the program can't serialize the configuration, while saving it
     SerializationError,
 
@@ -86,7 +78,6 @@ pub enum ConfigurationError {
 impl Debug for ConfigurationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ConfigurationError::NotRoot => std::fmt::Display::fmt(self, f),
             ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
             ConfigurationError::DeserializationError(_) => std::fmt::Display::fmt(self, f),
 
@@ -98,12 +89,6 @@ impl Debug for ConfigurationError {
 impl Display for ConfigurationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ConfigurationError::NotRoot => {
-                write!(
-                f,
-                "the main configuration file, rome.json, must have the field 'root' set to `true`"
-            )
-            }
             ConfigurationError::SerializationError => {
                 write!(
                     f,
@@ -129,7 +114,6 @@ impl Display for ConfigurationError {
 /// The `file_system` will read the configuration file
 pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
-    configuration_type: ConfigurationType,
 ) -> Result<Option<Configuration>, RomeError> {
     let config_name = file_system.config_name();
     let configuration_path = PathBuf::from(config_name);
@@ -146,7 +130,7 @@ pub fn load_config(
                 RomeError::Configuration(ConfigurationError::DeserializationError(err.to_string()))
             })?;
 
-            compute_configuration(configuration, configuration_type)
+            Ok(Some(configuration))
         }
         Err(err) => {
             // We throw an error only when the error is found.
@@ -191,34 +175,4 @@ pub fn create_config(
         .map_err(|_| RomeError::CantReadFile(path))?;
 
     Ok(())
-}
-
-/// The type of configuration we want to load
-pub enum ConfigurationType {
-    /// The main configuration, usually `rome.json`
-    Root,
-    /// The extended configuration, usually to be loaded via `extends` field
-    #[allow(unused_imports)]
-    Extended,
-}
-
-impl ConfigurationType {
-    fn is_root(&self) -> bool {
-        matches!(self, ConfigurationType::Root)
-    }
-}
-
-/// This function computes the configuration that is being loaded and makes sure that is correct.
-///
-/// Operations are:
-/// - making sure that the master configuration is set to `root: true`
-fn compute_configuration(
-    configuration: Configuration,
-    configuration_type: ConfigurationType,
-) -> Result<Option<Configuration>, RomeError> {
-    if configuration_type.is_root() && !configuration.root {
-        return Err(RomeError::Configuration(ConfigurationError::NotRoot));
-    }
-
-    Ok(Some(configuration))
 }

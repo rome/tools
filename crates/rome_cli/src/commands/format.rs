@@ -1,7 +1,5 @@
 use rome_formatter::IndentStyle;
-use rome_service::{
-    load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams, ConfigurationType,
-};
+use rome_service::{load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams};
 
 use crate::{
     traversal::{traverse, TraversalMode},
@@ -10,7 +8,7 @@ use crate::{
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
+    let configuration = load_config(&session.app.fs)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
     if let Some(configuration) = &configuration {
