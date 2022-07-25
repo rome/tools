@@ -12,7 +12,6 @@ We are deliberately lean with the supported configuration. We do not include opt
 
 ```json
 {
-  "root": true,
   "formatter": {
     "identStyle": "tab",
     "lineWidth": 120
@@ -31,22 +30,22 @@ Enables Rome's linter
 
 > Default: `true`
 
-#### `lint.rules.recommended`
+#### `linter.rules.recommended`
 
 Enables the recommended rule sets for all the groups. 
 
 > Default: `true`
 
 
-#### `lint.rules.js` 
+#### `linter.rules.js` 
 
 A list of rules for `JavaScript` category.  
 
-#### `lint.rules.js.recommended` 
+#### `linter.rules.js.recommended` 
 
 Enables the recommended rules for the category `JavaScript`.
 
-#### `lint.rules.js.rules`
+#### `linter.rules.js.rules`
 
 A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
 for more details.
@@ -55,7 +54,6 @@ Example:
 
 ```json
 {
-  "root": true,
   "linter": {
     "enabled": true,
     "rules": {
@@ -71,15 +69,15 @@ Example:
 ```
 
 
-#### `lint.rules.ts`
+#### `linter.rules.ts`
 
 A list of rules for `TypeScript` category.
 
-#### `lint.rules.ts.recommended`
+#### `linter.rules.ts.recommended`
 
 Enables the recommended rules for the category `TypeScript`.
 
-#### `lint.rules.ts.rules`
+#### `linter.rules.ts.rules`
 
 A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
 for more details.
@@ -88,7 +86,6 @@ Example:
 
 ```json
 {
-  "root": true,
   "linter": {
     "enabled": true,
     "rules": {
@@ -104,15 +101,15 @@ Example:
 ```
 
 
-#### `lint.rules.jsx`
+#### `linter.rules.jsx`
 
 A list of rules for `JSX` category.
 
-#### `lint.rules.jsx.recommended`
+#### `linter.rules.jsx.recommended`
 
 Enables the recommended rules for the category `JSX`.
 
-#### `lint.rules.jsx.rules`
+#### `linter.rules.jsx.rules`
 
 A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
 for more details.
@@ -121,7 +118,6 @@ Example:
 
 ```json
 {
-  "root": true,
   "linter": {
     "enabled": true,
     "rules": {
@@ -137,15 +133,15 @@ Example:
 ```
 
 
-#### `lint.rules.regex`
+#### `linter.rules.regex`
 
 A list of rules for `Regex` category.
 
-#### `lint.rules.regex.recommended`
+#### `linter.rules.regex.recommended`
 
 Enables the recommended rules for the category `Regex`.
 
-#### `lint.rules.regex.rules`
+#### `linter.rules.regex.rules`
 
 A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
 for more details.
@@ -154,7 +150,6 @@ Example:
 
 ```json
 {
-  "root": true,
   "linter": {
     "enabled": true,
     "rules": {
@@ -169,14 +164,14 @@ Example:
 
 ```
 
-### `formatter.enabled`
+#### `formatter.enabled`
 
 Enables Rome's formatter
 
 > Default: `true`
 
 
-### `format.indentStyle`
+#### `format.indentStyle`
 
 The style of the indentation. It can be `"tab"` or `"space"`.
 
@@ -184,20 +179,103 @@ The style of the indentation. It can be `"tab"` or `"space"`.
 
 Rome's default is `"tab"`.
 
-### `format.indentSize`
+#### `format.indentSize`
 
 How big the indentation should be.
 
-### `format.lineWidth`
+#### `format.lineWidth`
 
 How many characters can be written on a single line.
 
 > Default: `80`
 
-### `javascript.formatter.quoteStyle`
+#### `javascript.formatter.quoteStyle`
 
 The type of quote used when representing string literals. It can be `single` or `double`.
 
 > Default: `double`
 
-## Rule configuration
+### Rule configuration
+
+A rule can be configured for multiple purposes:
+- change the severity of their diagnostics;
+- turn the rule off;
+- pass possible options to customize the rule;
+
+#### Turn a rule off
+
+Just add `"off"` as value inside its configuration. For example:
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "jsx": {
+        "rules": {
+          "noCommentText": "off"
+        }
+      },
+      "regex": {
+        "rules": {
+          "noMultipleSpacesInRegularExpressionLiterals": "off"
+        }
+      }
+    }
+  }
+}
+```
+
+#### Change severity of diagnostics
+
+Most of Rome's rules will emit an **error**, but you are free to change their severity.
+Just add `"warn"` as value of the rule. Example:
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "jsx": {
+        "rules": {
+          "noCommentText": "warn"
+        }
+      },
+      "regex": {
+        "rules": {
+          "noMultipleSpacesInRegularExpressionLiterals": "warn"
+        }
+      }
+    }
+  }
+}
+```
+
+This is useful in cases there's being a refactor going on and there's need to make the 
+CI passing.
+
+#### Pass options to a rule
+
+Not all the rules require options, but when they do *accept* some, you can pass them
+by shaping the value of the rule in a different way.
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "jsx": {
+        "rules": {
+          "noCommentText": {
+            "level": "warn",
+            "options": {}
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+- `level` will indicate the severity of the diagnostic, valid values are: `"off"`, `"warn"` and `"error"`;
+- `options` is wildcard value, with information that will be passed to a rule;
