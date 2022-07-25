@@ -27,6 +27,13 @@ e = 1;
 import { f } from "y";
 f = 1;
 f = 2;
+
+import {xx} from 'y';
+xx=1;
+
+import xxx, * as yyy from "d"
+xxx = 4;
+yyy = 4;
 // valid
 import { g } from "y";
 k = 3;

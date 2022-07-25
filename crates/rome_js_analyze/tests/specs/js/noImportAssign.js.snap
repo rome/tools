@@ -34,6 +34,13 @@ e = 1;
 import { f } from "y";
 f = 1;
 f = 2;
+
+import {xx} from 'y';
+xx=1;
+
+import xxx, * as yyy from "d"
+xxx = 4;
+yyy = 4;
 // valid
 import { g } from "y";
 k = 3;
@@ -175,6 +182,49 @@ warning[js/noImportAssign]: The imported variable f is read-only
 28 │ f = 1;
 29 │ f = 2;
    │ -
+
+=  note: Use a local variable instead of reassigning an import.
+
+
+```
+
+```
+warning[js/noImportAssign]: The imported variable xx is read-only
+   ┌─ noImportAssign.js:32:1
+   │
+31 │ import {xx} from 'y';
+   │         -- The variable is imported here
+32 │ xx=1;
+   │ --
+
+=  note: Use a local variable instead of reassigning an import.
+
+
+```
+
+```
+warning[js/noImportAssign]: The imported variable xxx is read-only
+   ┌─ noImportAssign.js:35:1
+   │
+34 │ import xxx, * as yyy from "d"
+   │        --- The variable is imported here
+35 │ xxx = 4;
+   │ ---
+
+=  note: Use a local variable instead of reassigning an import.
+
+
+```
+
+```
+warning[js/noImportAssign]: The imported variable yyy is read-only
+   ┌─ noImportAssign.js:36:1
+   │
+34 │ import xxx, * as yyy from "d"
+   │                  --- The variable is imported here
+35 │ xxx = 4;
+36 │ yyy = 4;
+   │ ---
 
 =  note: Use a local variable instead of reassigning an import.
 
