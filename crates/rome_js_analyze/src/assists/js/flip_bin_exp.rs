@@ -19,7 +19,8 @@ declare_rule! {
     /// ```
     pub(crate) FlipBinExp {
         version: "0.7.0",
-        name: "flipBinExp"
+        name: "flipBinExp",
+        recommended: false
     }
 }
 

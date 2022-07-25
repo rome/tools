@@ -28,7 +28,8 @@ declare_rule! {
     ///```
     pub(crate) NoDebugger {
         version: "0.7.0",
-        name: "noDebugger"
+        name: "noDebugger",
+        recommended: true
     }
 }
 

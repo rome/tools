@@ -55,7 +55,8 @@ declare_rule! {
     ///```
     pub(crate) UseSelfClosingElements {
         version: "0.7.0",
-        name: "useSelfClosingElements"
+        name: "useSelfClosingElements",
+        recommended: true
     }
 }
 

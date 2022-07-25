@@ -34,7 +34,8 @@ declare_rule! {
     /// ```
     pub(crate) NoUnsafeNegation {
         version: "0.7.0",
-        name: "noUnsafeNegation"
+        name: "noUnsafeNegation",
+        recommended: true
     }
 }
 

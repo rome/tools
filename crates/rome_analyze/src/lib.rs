@@ -506,7 +506,7 @@ type SuppressionParser = fn(&str) -> Vec<Option<&str>>;
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 
 /// Allow filtering a single rule or group of rules by their names
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub enum RuleFilter<'a> {
     Group(&'a str),
     Rule(&'a str, &'a str),
@@ -540,7 +540,7 @@ pub struct AnalysisFilter<'a> {
     pub range: Option<TextRange>,
 }
 
-impl AnalysisFilter<'_> {
+impl<'analysis> AnalysisFilter<'analysis> {
     /// Return `true` if the rule `R` matches this filter
     pub fn match_rule<G, R>(&self) -> bool
     where
@@ -558,6 +558,17 @@ impl AnalysisFilter<'_> {
                     .iter()
                     .any(|filter| filter.match_rule::<G, R>())
             })
+    }
+
+    pub fn new_from_filters(
+        enabled_rules: Option<&'analysis [RuleFilter<'analysis>]>,
+        disabled_rules: Option<&'analysis [RuleFilter<'analysis>]>,
+    ) -> Self {
+        Self {
+            enabled_rules,
+            disabled_rules,
+            ..AnalysisFilter::default()
+        }
     }
 }
 

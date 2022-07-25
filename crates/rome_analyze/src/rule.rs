@@ -19,6 +19,8 @@ pub trait RuleMeta {
     const NAME: &'static str;
     /// The content of the documentation comments for this rule
     const DOCS: &'static str;
+    /// Whether a rule is recommended or not
+    const RECOMMENDED: bool;
 }
 
 /// This macro is used to declare an analyzer rule type, and implement the
@@ -113,7 +115,11 @@ pub trait RuleMeta {
 ///
 #[macro_export]
 macro_rules! declare_rule {
-    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident { version: $version:literal, name: $name:literal } ) => {
+    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {
+        version: $version:literal,
+        name: $name:literal,
+        recommended: $recommended:literal
+    } ) => {
         $( #[doc = $doc] )*
         $vis enum $id {}
 
@@ -121,10 +127,16 @@ macro_rules! declare_rule {
             const DEPRECATED: Option<&'static str> = None;
             const VERSION: &'static str = $version;
             const NAME: &'static str = $name;
+            const RECOMMENDED: bool = $recommended;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
         }
     };
-    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident { version: $version:literal, name: $name:literal, deprecated: $deprecated:literal, } ) => {
+    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {
+        version: $version:literal,
+        name: $name:literal,
+        recommended: $recommended:literal,
+        deprecated: $deprecated:literal
+    } ) => {
         $( #[doc = $doc] )*
         $vis enum $id {}
 
@@ -132,6 +144,7 @@ macro_rules! declare_rule {
             const DEPRECATED: Option<&'static str> = Some($deprecated);
             const VERSION: &'static str = $version;
             const NAME: &'static str = $name;
+            const RECOMMENDED: bool = $recommended;
             const DOCS: &'static str = concat!( $( $doc, "\n", )* );
         }
     };

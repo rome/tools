@@ -44,7 +44,8 @@ declare_rule! {
     /// ```
     pub(crate) UseShorthandArrayType  {
         version: "0.7.0",
-        name: "useShorthandArrayType"
+        name: "useShorthandArrayType",
+        recommended: true
     }
 }
 

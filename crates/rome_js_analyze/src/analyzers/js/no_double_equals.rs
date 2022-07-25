@@ -48,7 +48,8 @@ declare_rule! {
     ///```
     pub(crate) NoDoubleEquals {
         version: "0.7.0",
-        name: "noDoubleEquals"
+        name: "noDoubleEquals",
+        recommended: true
     }
 }
 

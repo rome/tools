@@ -10,7 +10,10 @@ pub const CONFIG_FORMAT: &str = r#"{
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
   "linter": {
-    "enabled": true
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
   }
 }"#;
 
@@ -33,14 +36,16 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     "enabled": true,
     "rules": {
         "js": {
-            "noDeadCode": "off",
-            "useSimplifiedLogicExpression": "warn",
-            "noCatchAssign": "error",
-            "noLabelVar": {
-                "level": "warn"
-            },
-            "useTemplate": {
-                "level": "error"
+            "rules": {
+                "noDeadCode": "off",
+                "useSimplifiedLogicExpression": "warn",
+                "noCatchAssign": "error",
+                "noLabelVar": {
+                    "level": "warn"
+                },
+                "useTemplate": {
+                    "level": "error"
+                }
             }
         }
     }
@@ -70,10 +75,14 @@ pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
     "enabled": true,
     "rules": {
         "js": {
-            "foo_rule": "off"
+            "rules": {
+                "foo_rule": "off"
+            }
         },
         "jsx": {
-            "what_the_hell": "off"
+            "rules": {
+                "what_the_hell": "off"
+            }
         }
     }
   }
@@ -85,5 +94,19 @@ pub const CONFIG_INCORRECT_GLOBALS: &str = r#"{
   },
   "javascript": {
     "globals": [false]
+  }
+}"#;
+
+pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
+  "root": true,
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "js": {
+            "rules": {
+                "noDebugger": "off"
+            }
+        }
+    }
   }
 }"#;

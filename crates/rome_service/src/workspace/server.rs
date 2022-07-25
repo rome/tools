@@ -215,7 +215,9 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let diagnostics = linter(&params.path, parse, params.categories);
+        let settings = self.settings.read().unwrap();
+        let rules = &settings.linter.rules;
+        let diagnostics = linter(&params.path, parse, params.categories, rules);
 
         Ok(PullDiagnosticsResult { diagnostics })
     }
@@ -230,7 +232,10 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
 
-        Ok(code_actions(&params.path, parse, params.range))
+        let settings = self.settings.read().unwrap();
+        let rules = &settings.linter.rules;
+
+        Ok(code_actions(&params.path, parse, params.range, rules))
     }
 
     /// Runs the given file through the formatter using the provided options
@@ -290,8 +295,9 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-
-        Ok(fix_all(&params.path, parse))
+        let settings = self.settings.read().unwrap();
+        let rules = &settings.linter.rules;
+        Ok(fix_all(&params.path, parse, rules))
     }
 
     fn rename(&self, params: super::RenameParams) -> Result<RenameResult, RomeError> {

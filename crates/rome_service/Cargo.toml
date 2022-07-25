@@ -23,7 +23,7 @@ rome_js_formatter = { path = "../rome_js_formatter" }
 rome_js_semantic = { path = "../rome_js_semantic" }
 rome_rowan = { path = "../rome_rowan" }
 rome_text_edit = { path = "../rome_text_edit" }
-indexmap = "1.9.1"
+indexmap = { version = "1.9.1", features = ["serde"] }
 
 [features]
 serde_workspace = [
