@@ -2,15 +2,15 @@ use crate::{
     traversal::{traverse, TraversalMode},
     CliSession, Termination,
 };
+use rome_service::load_config;
 use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::UpdateSettingsParams;
-use rome_service::{load_config, ConfigurationType};
 
 use super::format::apply_format_settings_from_cli;
 
 /// Handler for the "ci" command of the Rome CLI
 pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
+    let configuration = load_config(&session.app.fs)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
     if let Some(configuration) = configuration {

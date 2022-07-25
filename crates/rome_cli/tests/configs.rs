@@ -1,5 +1,4 @@
 pub const CONFIG_FORMAT: &str = r#"{
-  "root": true,
   "formatter": {
     "enabled": true,
     "lineWidth": 160,
@@ -10,27 +9,19 @@ pub const CONFIG_FORMAT: &str = r#"{
 "#;
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
-  "root": true,
   "linter": {
     "enabled": true
   }
 }"#;
 
 pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
-  "root": true,
   "formatter": {
     "enabled": false
   }
 }
 "#;
 
-pub const CONFIG_ROOT_FALSE: &str = r#"{
-    "root": false
-}
-"#;
-
 pub const CONFIG_ALL_FIELDS: &str = r#"{
-  "root": true,
   "formatter": {
     "enabled": true,
     "formatWithErrors": true,
@@ -63,21 +54,18 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
 }"#;
 
 pub const CONFIG_BAD_LINE_WIDTH: &str = r#"{
-  "root": true,
   "formatter": {
     "lineWidth": 500
   }
 }"#;
 
 pub const CONFIG_LINTER_DISABLED: &str = r#"{
-  "root": true,
   "linter": {
     "enabled": false
   }
 }"#;
 
 pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
-  "root": true,
   "linter": {
     "enabled": true,
     "rules": {
@@ -92,7 +80,6 @@ pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
 }"#;
 
 pub const CONFIG_INCORRECT_GLOBALS: &str = r#"{
-  "root": true,
   "linter": {
     "enabled": false
   },

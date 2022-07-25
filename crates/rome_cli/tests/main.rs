@@ -858,7 +858,7 @@ mod init {
 mod configuration {
     use crate::configs::{
         CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_INCORRECT_GLOBALS,
-        CONFIG_LINTER_WRONG_RULE, CONFIG_ROOT_FALSE,
+        CONFIG_LINTER_WRONG_RULE,
     };
     use pico_args::Arguments;
     use rome_cli::{run_cli, CliSession};
@@ -867,33 +867,6 @@ mod configuration {
     use rome_service::{App, DynRef};
     use std::ffi::OsString;
     use std::path::Path;
-
-    #[test]
-    fn incorrect_root() {
-        let mut fs = MemoryFileSystem::default();
-        let file_path = Path::new("rome.json");
-        fs.insert(file_path.into(), CONFIG_ROOT_FALSE.as_bytes());
-
-        let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
-        });
-
-        assert!(result.is_err());
-
-        match result {
-            Err(error) => {
-                assert_eq!(
-                    error.to_string(),
-                    "the main configuration file, rome.json, must have the field 'root' set to `true`"
-                )
-            }
-            _ => panic!("expected an error, but found none"),
-        }
-    }
 
     #[test]
     fn correct_root() {

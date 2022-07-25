@@ -4,13 +4,13 @@ use crate::{
     CliSession, Termination,
 };
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+use rome_service::load_config;
 use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::UpdateSettingsParams;
-use rome_service::{load_config, ConfigurationType};
 
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs, ConfigurationType::Root)?;
+    let configuration = load_config(&session.app.fs)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
     let max_diagnostics: Option<u8> = session
