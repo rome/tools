@@ -32,11 +32,15 @@ impl Default for Rules {
 }
 impl Rules {
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
-    #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled filters,"]
-    #[doc = r" while the second element are the disabled filters."]
+    #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled rules,"]
+    #[doc = r" while the second element are the disabled rules."]
     #[doc = r""]
-    #[doc = r" The enabled filters are calculated from the difference with the disabled filters."]
-    pub fn as_enabled_rules(&self) -> IndexSet<RuleFilter> {
+    #[doc = r" Only one element of the tuple is [Some] at the time."]
+    #[doc = r""]
+    #[doc = r" The enabled rules are calculated from the difference with the disabled rules."]
+    pub fn as_analysis_filters(
+        &self,
+    ) -> (Option<IndexSet<RuleFilter>>, Option<IndexSet<RuleFilter>>) {
         let mut enabled_rules = IndexSet::new();
         let mut disabled_rules = IndexSet::new();
         if self.is_recommended() {
@@ -101,7 +105,14 @@ impl Rules {
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
         }
-        enabled_rules.difference(&disabled_rules).cloned().collect()
+        if enabled_rules.len() > disabled_rules.len() {
+            (None, Some(disabled_rules))
+        } else {
+            (
+                Some(enabled_rules.difference(&disabled_rules).cloned().collect()),
+                None,
+            )
+        }
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]

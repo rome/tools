@@ -1,4 +1,4 @@
-use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories};
+use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories, RuleFilter};
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
@@ -19,6 +19,7 @@ use crate::{
 };
 
 use super::{ExtensionHandler, Mime};
+use indexmap::IndexSet;
 use std::borrow::Cow;
 use std::fmt::Debug;
 
@@ -134,16 +135,23 @@ fn lint(
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
 
-    let mut enabled_rules = Vec::new();
+    let (enabled_rules, disabled_rules): (Option<Vec<RuleFilter>>, Option<Vec<RuleFilter>>) =
+        if let Some(rules) = rules {
+            let (enabled, disabled): (Option<IndexSet<RuleFilter>>, Option<IndexSet<RuleFilter>>) =
+                rules.as_analysis_filters();
+            (
+                enabled.map(|rules| rules.into_iter().collect()),
+                disabled.map(|rules| rules.into_iter().collect::<Vec<RuleFilter>>()),
+            )
+        } else {
+            (None, None)
+        };
 
-    if let Some(rules) = rules {
-        let enabled = rules.as_enabled_rules();
-        for enabled_rule in enabled {
-            enabled_rules.push(enabled_rule)
-        }
-    }
-    let mut filter = AnalysisFilter::from_enabled_rules(Some(enabled_rules.as_slice()));
-
+    let mut filter = match (&enabled_rules, &disabled_rules) {
+        (None, Some(rules)) => AnalysisFilter::from_disabled_rules(Some(rules.as_slice())),
+        (Some(rules), None) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+        _ => AnalysisFilter::default(),
+    };
     filter.categories = categories;
 
     let file_id = rome_path.file_id();
@@ -170,16 +178,25 @@ fn code_actions(
 ) -> PullActionsResult {
     let tree = parse.tree();
 
-    let mut enabled_rules = Vec::new();
     let mut actions = Vec::new();
 
-    if let Some(rules) = rules {
-        let enabled = rules.as_enabled_rules();
-        for enabled_rule in enabled {
-            enabled_rules.push(enabled_rule)
-        }
-    }
-    let mut filter = AnalysisFilter::from_enabled_rules(Some(enabled_rules.as_slice()));
+    let (enabled_rules, disabled_rules): (Option<Vec<RuleFilter>>, Option<Vec<RuleFilter>>) =
+        if let Some(rules) = rules {
+            let (enabled, disabled): (Option<IndexSet<RuleFilter>>, Option<IndexSet<RuleFilter>>) =
+                rules.as_analysis_filters();
+            (
+                enabled.map(|rules| rules.into_iter().collect()),
+                disabled.map(|rules| rules.into_iter().collect::<Vec<RuleFilter>>()),
+            )
+        } else {
+            (None, None)
+        };
+
+    let mut filter = match (&enabled_rules, &disabled_rules) {
+        (None, Some(rules)) => AnalysisFilter::from_disabled_rules(Some(rules.as_slice())),
+        (Some(rules), None) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+        _ => AnalysisFilter::default(),
+    };
 
     filter.categories = RuleCategories::default();
     filter.range = Some(range);
@@ -207,16 +224,24 @@ fn fix_all(
 ) -> FixFileResult {
     let mut tree: JsAnyRoot = parse.tree();
     let mut actions = Vec::new();
-    let mut enabled_rules = Vec::new();
 
-    if let Some(rules) = configuration_rules {
-        let enabled = rules.as_enabled_rules();
-        for enabled_rule in enabled {
-            enabled_rules.push(enabled_rule)
-        }
-    }
-    let mut filter = AnalysisFilter::from_enabled_rules(Some(enabled_rules.as_slice()));
+    let (enabled_rules, disabled_rules): (Option<Vec<RuleFilter>>, Option<Vec<RuleFilter>>) =
+        if let Some(rules) = configuration_rules {
+            let (enabled, disabled): (Option<IndexSet<RuleFilter>>, Option<IndexSet<RuleFilter>>) =
+                rules.as_analysis_filters();
+            (
+                enabled.map(|rules| rules.into_iter().collect()),
+                disabled.map(|rules| rules.into_iter().collect::<Vec<RuleFilter>>()),
+            )
+        } else {
+            (None, None)
+        };
 
+    let mut filter = match (&enabled_rules, &disabled_rules) {
+        (Some(rules), None) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+        (None, Some(rules)) => AnalysisFilter::from_disabled_rules(Some(rules.as_slice())),
+        _ => AnalysisFilter::default(),
+    };
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
 
     let file_id = rome_path.file_id();

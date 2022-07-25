@@ -183,11 +183,13 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 matches!(self.recommended, Some(true))
             }
 
-            /// It returns a tuple of filters. The first element of the tuple are the enabled filters,
-            /// while the second element are the disabled filters.
+            /// It returns a tuple of filters. The first element of the tuple are the enabled rules,
+            /// while the second element are the disabled rules.
             ///
-            /// The enabled filters are calculated from the difference with the disabled filters.
-            pub fn as_enabled_rules(&self) -> IndexSet<RuleFilter> {
+            /// Only one element of the tuple is [Some] at the time.
+            ///
+            /// The enabled rules are calculated from the difference with the disabled rules.
+            pub fn as_analysis_filters(&self) -> (Option<IndexSet<RuleFilter>>, Option<IndexSet<RuleFilter>>) {
                 let mut enabled_rules = IndexSet::new();
                 let mut disabled_rules = IndexSet::new();
                 if self.is_recommended() {
@@ -199,8 +201,14 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 // computing the enabled rules
                 #( #group_rules_union )*
 
-                enabled_rules.difference(&disabled_rules).cloned().collect()
-
+                if enabled_rules.len() > disabled_rules.len() {
+                    (None, Some(disabled_rules))
+                } else {
+                    (
+                        Some(enabled_rules.difference(&disabled_rules).cloned().collect()),
+                        None,
+                    )
+                }
             }
         }
 

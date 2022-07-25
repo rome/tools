@@ -566,6 +566,13 @@ impl<'analysis> AnalysisFilter<'analysis> {
             ..AnalysisFilter::default()
         }
     }
+
+    pub fn from_disabled_rules(disabled_rules: Option<&'analysis [RuleFilter<'analysis>]>) -> Self {
+        Self {
+            disabled_rules,
+            ..AnalysisFilter::default()
+        }
+    }
 }
 
 /// Utility type to be used as a default value for the `B` generic type on
