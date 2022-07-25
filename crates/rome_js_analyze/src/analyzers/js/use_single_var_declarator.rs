@@ -7,10 +7,10 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyRoot, JsModuleItemList, JsStatementList, JsSyntaxToken, JsVariableDeclarationFields,
+    JsModuleItemList, JsStatementList, JsSyntaxToken, JsVariableDeclarationFields,
     JsVariableDeclaratorList, JsVariableStatement, JsVariableStatementFields,
 };
-use rome_rowan::{AstNode, AstSeparatedList};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -77,6 +77,7 @@ impl Rule for UseSingleVarDeclarator {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         let (kind, declarators, semicolon_token) = state;
 
@@ -119,15 +120,13 @@ impl Rule for UseSingleVarDeclarator {
             }),
         );
 
+        mutation.replace_element(prev_parent.into(), next_parent.into());
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
             message: markup! { "Break out into multiple declarations" }.to_owned(),
-            root: JsAnyRoot::unwrap_cast(
-                ctx.root()
-                    .into_syntax()
-                    .replace_child(prev_parent.into(), next_parent.into())?,
-            ),
+            mutation,
         })
     }
 }

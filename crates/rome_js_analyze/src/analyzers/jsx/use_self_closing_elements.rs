@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, T};
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
+use rome_rowan::{AstNode, AstNodeList, BatchMutationExt, TriviaPiece};
 
 use crate::JsRuleAction;
 
@@ -84,6 +84,8 @@ impl Rule for UseSelfClosingElements {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let mut mutation = ctx.root().begin();
+
         let open_element = ctx.query().opening_element().ok()?;
         let JsxOpeningElementFields {
             l_angle_token,
@@ -130,15 +132,15 @@ impl Rule for UseSelfClosingElements {
                 self_closing_element_builder.with_type_arguments(type_arguments);
         }
         let self_closing_element = self_closing_element_builder.build();
-        let root = ctx.root().replace_node(
+        mutation.replace_node(
             JsxAnyTag::JsxElement(ctx.query().clone()),
             JsxAnyTag::JsxSelfClosingElement(self_closing_element),
-        )?;
+        );
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use a SelfClosingElement instead" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

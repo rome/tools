@@ -9,7 +9,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, TriviaPiece};
+use rome_rowan::{AstNode, AstNodeList, BatchMutationExt, TriviaPiece};
 
 use crate::JsRuleAction;
 
@@ -76,6 +76,7 @@ impl Rule for UseSingleCaseStatement {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let n = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         let JsCaseClauseFields {
             case_token,
@@ -139,16 +140,13 @@ impl Rule for UseSingleCaseStatement {
             node
         };
 
-        let root = ctx
-            .root()
-            .replace_node(n.clone(), node)
-            .expect("failed to replace node");
+        mutation.replace_node(n.clone(), node);
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Wrap the statements in a block" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

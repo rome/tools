@@ -56,6 +56,13 @@ impl<L: Language> SyntaxElement<L> {
         }
     }
 
+    pub(crate) fn index(&self) -> usize {
+        match self {
+            NodeOrToken::Node(it) => it.index(),
+            NodeOrToken::Token(it) => it.index(),
+        }
+    }
+
     pub fn ancestors(&self) -> impl Iterator<Item = SyntaxNode<L>> {
         let first = match self {
             NodeOrToken::Node(it) => Some(it.clone()),

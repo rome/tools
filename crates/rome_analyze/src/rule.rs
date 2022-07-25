@@ -3,7 +3,7 @@ use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::file::FileSpan;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{Diagnostic, DiagnosticTag, Footer, Span, SubDiagnostic};
-use rome_rowan::{Language, TextRange};
+use rome_rowan::{BatchMutation, Language, TextRange};
 
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
@@ -479,5 +479,5 @@ pub struct RuleAction<L: Language> {
     pub category: ActionCategory,
     pub applicability: Applicability,
     pub message: MarkupBuf,
-    pub root: LanguageRoot<L>,
+    pub mutation: BatchMutation<L, LanguageRoot<L>>,
 }

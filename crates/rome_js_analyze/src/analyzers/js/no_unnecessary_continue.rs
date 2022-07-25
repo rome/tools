@@ -3,10 +3,8 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{
-    JsAnyRoot, JsContinueStatement, JsLabeledStatement, JsSyntaxKind, JsSyntaxNode,
-};
-use rome_rowan::{AstNode, SyntaxElement};
+use rome_js_syntax::{JsContinueStatement, JsLabeledStatement, JsSyntaxKind, JsSyntaxNode};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxElement};
 
 use crate::JsRuleAction;
 
@@ -104,7 +102,8 @@ impl Rule for NoUnnecessaryContinue {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root_syntax = ctx.root().into_syntax();
+        let mut mutation = ctx.root().begin();
+
         let syntax = node.clone().into_syntax();
         // Get parent of `ContinueStatement` SyntaxNode .
         let parent = syntax.parent()?;
@@ -115,16 +114,14 @@ impl Rule for NoUnnecessaryContinue {
             .position(|n| n == wrapper_syntax_node)?;
         // Remove `ContinueStatement` SyntaxNode from parent.
         let next_parent = parent.clone().splice_slots(index..=index, []);
-        let next_root_syntax = root_syntax.replace_child(
-            SyntaxElement::Node(parent),
-            SyntaxElement::Node(next_parent),
-        )?;
-        let root = JsAnyRoot::cast(next_root_syntax)?;
+
+        mutation.replace_element(parent.into(), next_parent.into());
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Delete the unnecessary continue statement" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

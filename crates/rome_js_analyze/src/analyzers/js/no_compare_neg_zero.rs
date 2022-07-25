@@ -7,7 +7,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind, JsUnaryOperator,
 };
-use rome_rowan::{AstNode, AstNodeExt, SyntaxToken};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxToken};
 
 use crate::JsRuleAction;
 
@@ -85,9 +85,10 @@ impl Rule for NoCompareNegZero {
     }
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root = ctx.root();
-        let root = if state.left_need_replaced && state.right_need_replaced {
-            let binary = node.clone().replace_node(
+        let mut mutation = ctx.root().begin();
+
+        if state.left_need_replaced {
+            mutation.replace_node(
                 node.left().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -99,39 +100,11 @@ impl Rule for NoCompareNegZero {
                         )),
                     ),
                 ),
-            )?;
-            // extract binary.right() as an extra variable because `binary.replace_node` will move ownership.
-            let binary_right = binary.right().ok()?;
-            let binary = binary.replace_node(
-                binary_right,
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNumberLiteralExpression(
-                        make::js_number_literal_expression(SyntaxToken::new_detached(
-                            JsSyntaxKind::JS_NUMBER_LITERAL,
-                            "0",
-                            [],
-                            [],
-                        )),
-                    ),
-                ),
-            )?;
-            root.replace_node(node.clone(), binary)?
-        } else if state.left_need_replaced {
-            root.replace_node(
-                node.left().ok()?,
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNumberLiteralExpression(
-                        make::js_number_literal_expression(SyntaxToken::new_detached(
-                            JsSyntaxKind::JS_NUMBER_LITERAL,
-                            "0",
-                            [],
-                            [],
-                        )),
-                    ),
-                ),
-            )?
-        } else if state.right_need_replaced {
-            root.replace_node(
+            );
+        }
+
+        if state.right_need_replaced {
+            mutation.replace_node(
                 node.right().ok()?,
                 JsAnyExpression::JsAnyLiteralExpression(
                     JsAnyLiteralExpression::JsNumberLiteralExpression(
@@ -143,16 +116,14 @@ impl Rule for NoCompareNegZero {
                         )),
                     ),
                 ),
-            )?
-        } else {
-            root
-        };
+            );
+        }
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
             message: markup! { "Replace -0 with 0" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

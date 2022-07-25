@@ -4,7 +4,7 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize};
-use rome_rowan::AstNodeExt;
+use rome_rowan::BatchMutationExt;
 use std::fmt::Write;
 
 use crate::JsRuleAction;
@@ -117,6 +117,8 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let mut mutation = ctx.root().begin();
+
         let trimmed_token = ctx.query().value_token().ok()?;
         let trimmed_token_string = trimmed_token.text_trimmed();
         let mut normalized_string_token = String::new();
@@ -137,15 +139,12 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
             [],
             [],
         );
-        let root = ctx
-            .root()
-            .replace_token(trimmed_token, next_trimmed_token)
-            .unwrap();
+        mutation.replace_token(trimmed_token, next_trimmed_token);
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {"{eg_length}"}/" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

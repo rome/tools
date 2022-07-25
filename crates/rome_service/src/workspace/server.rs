@@ -304,8 +304,8 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let code = rename(&params.path, parse, params.symbol_at, params.new_name)?;
+        let result = rename(&params.path, parse, params.symbol_at, params.new_name)?;
 
-        Ok(RenameResult { code })
+        Ok(result)
     }
 }

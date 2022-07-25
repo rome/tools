@@ -11,7 +11,6 @@ use rome_console::{
     markup, MarkupBuf,
 };
 use rome_text_edit::apply_indels;
-use std::borrow::Cow;
 use std::io;
 use std::ops::Range;
 use termcolor::{ColorChoice, StandardStream, WriteColor};
@@ -181,36 +180,36 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                         .expect("Non existant file id")
                         .source;
 
-                    let range = suggestion.span.range;
                     let new = match &suggestion.substitution {
                         SuggestionChange::Indels(indels) => {
-                            let mut new = String::from(&old[range]);
+                            let mut new = old.to_string();
                             apply_indels(indels, &mut new);
-                            Cow::Owned(new)
+                            new
                         }
-                        SuggestionChange::String(string) => Cow::Borrowed(string),
+                        SuggestionChange::String(replace_with) => {
+                            let mut new = old.to_string();
+                            let range = Range::<usize>::from(suggestion.span.range);
+                            new.replace_range(range, replace_with);
+                            new
+                        }
                     };
-
-                    let mut buffer = old.to_string();
-                    buffer.replace_range(Range::<usize>::from(range), &new);
 
                     fmt.write_markup(markup! {
                         <Info>{applicability}": "{suggestion.msg}</Info>"\n"
-                        {Diff { mode: DiffMode::Unified, left: old, right: &buffer }}
+                        {Diff { mode: DiffMode::Unified, left: old, right: &new }}
                     })?;
                 }
                 SuggestionStyle::Inline => {
                     let replacement = match &suggestion.substitution {
                         SuggestionChange::Indels(indels) => {
-                            let mut old = String::from(
-                                &self
-                                    .files
-                                    .source(suggestion.span.file)
-                                    .expect("Non existant file id")
-                                    .source[suggestion.span.range],
-                            );
-                            apply_indels(indels, &mut old);
-                            old
+                            let mut new = self
+                                .files
+                                .source(suggestion.span.file)
+                                .expect("Non existant file id")
+                                .source
+                                .to_string();
+                            apply_indels(indels, &mut new);
+                            new
                         }
                         SuggestionChange::String(string) => string.clone(),
                     };

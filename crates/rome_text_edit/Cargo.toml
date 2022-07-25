@@ -7,4 +7,4 @@ license = "MIT"
 description = "Simple text editing crate ported from rust-analyzer for the RSLint project"
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan"}
+text-size = "1.1.0"

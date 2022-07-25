@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyStatement, JsForStatement, JsForStatementFields, T};
-use rome_rowan::AstNodeExt;
+use rome_rowan::BatchMutationExt;
 
 use crate::JsRuleAction;
 
@@ -80,6 +80,7 @@ impl Rule for UseWhile {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
 
         let JsForStatementFields {
             for_token: _,
@@ -93,7 +94,7 @@ impl Rule for UseWhile {
             body,
         } = node.as_fields();
 
-        let root = ctx.root().replace_node(
+        mutation.replace_node(
             JsAnyStatement::from(node.clone()),
             JsAnyStatement::from(make::js_while_statement(
                 make::token_decorated_with_space(T![while]),
@@ -102,13 +103,13 @@ impl Rule for UseWhile {
                 r_paren_token.ok()?,
                 body.ok()?,
             )),
-        )?;
+        );
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use a while loop" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }

@@ -7,7 +7,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsConditionalExpression, JsIfStatement, JsUnaryExpression, JsUnaryOperator,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeExt};
+use rome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -83,8 +83,9 @@ impl Rule for NoNegationElse {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
 
-        let root = match node {
+        match node {
             JsAnyCondition::JsConditionalExpression(expr) => {
                 let mut next_expr = expr
                     .clone()
@@ -95,10 +96,10 @@ impl Rule for NoNegationElse {
                 next_expr = next_expr
                     .clone()
                     .replace_node(next_expr.consequent().ok()?, expr.alternate().ok()?)?;
-                ctx.root().replace_node(
+                mutation.replace_node(
                     node.clone(),
                     JsAnyCondition::JsConditionalExpression(next_expr),
-                )
+                );
             }
             JsAnyCondition::JsIfStatement(stmt) => {
                 let next_stmt = stmt
@@ -115,15 +116,15 @@ impl Rule for NoNegationElse {
                     next_stmt.consequent().ok()?,
                     stmt.else_clause()?.alternate().ok()?,
                 )?;
-                ctx.root()
-                    .replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt))
+                mutation.replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt));
             }
-        }?;
+        }
+
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Exchange alternate and consequent of the node" }.to_owned(),
-            root,
+            mutation,
         })
     }
 }
