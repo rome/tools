@@ -32,6 +32,7 @@ USAGE:
 
 OPTIONS:
     --apply                       Apply safe fixes
+    --max-diagnostics             Cap the amount of diagnostics displayed - default 20
 
 ```
 
