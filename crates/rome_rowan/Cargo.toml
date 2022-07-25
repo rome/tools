@@ -15,7 +15,7 @@ hashbrown = { version = "0.11.2", features = [
 text-size = "1.1.0"
 memoffset = "0.6.5"
 countme = "3.0.0"
-serde_crate = { package = "serde", version = "1.0.133", optional = true, default-features = false }
+serde = { version = "1.0.133", optional = true, default-features = false }
 rome_text_edit = { path = "../rome_text_edit" }
 
 [dev-dependencies]
@@ -25,7 +25,7 @@ serde_json = "1.0.79"
 iai = "*"
 
 [features]
-serde = ["serde_crate", "text-size/serde"]
+serde = ["dep:serde", "text-size/serde"]
 
 [[bench]]
 name = "mutation"

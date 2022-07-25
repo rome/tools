@@ -115,8 +115,8 @@ impl Span for TextRange {
 pub type FileId = usize;
 
 /// A range that is indexed in a specific file.
-#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct FileSpan {
     pub file: FileId,
     pub range: TextRange,

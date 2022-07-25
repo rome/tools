@@ -11,6 +11,7 @@ use crate::fmt::{Display, Formatter, MarkupElements, Write};
 
 /// Enumeration of all the supported markup elements
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum MarkupElement<'fmt> {
     Emphasis,
     Dim,
@@ -95,6 +96,7 @@ pub struct MarkupNode<'fmt> {
 }
 
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct MarkupNodeBuf {
     pub elements: Vec<MarkupElement<'static>>,
     pub content: String,
@@ -135,6 +137,7 @@ impl<'fmt> Markup<'fmt> {
 }
 
 #[derive(Clone, Default, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct MarkupBuf(pub Vec<MarkupNodeBuf>);
 
 impl MarkupBuf {

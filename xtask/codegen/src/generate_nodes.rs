@@ -188,7 +188,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                             }
                     }
 
-                    #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+                    #[cfg_attr(feature = "serde", derive(Serialize))]
                     pub struct #slots_name {
                         #( pub #slot_fields, )*
                     }
@@ -446,7 +446,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     // #[doc = #doc]
                     #[derive(Clone, PartialEq, Eq, Hash)]
                     #[cfg_attr(feature = "serde", derive(Serialize))]
-                    #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
                     pub enum #name {
                         #(#variants_for_union),*
                     }
@@ -552,7 +551,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         quote! {
             #[derive(Clone, PartialEq, Eq, Hash)]
             #[cfg_attr(feature = "serde", derive(Serialize))]
-            #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
             pub struct #name {
                 syntax: SyntaxNode
             }
@@ -795,9 +793,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
     let serde_import = quote! {
         #[cfg(feature = "serde")]
-        use serde_crate::{Serialize, Serializer};
+        use serde::{Serialize, Serializer};
         #[cfg(feature = "serde")]
-        use serde_crate::ser::SerializeSeq;
+        use serde::ser::SerializeSeq;
     };
 
     let ast = quote! {

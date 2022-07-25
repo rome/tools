@@ -8,6 +8,7 @@ use std::io::Read;
 use std::{fs::File, io, io::Write, ops::Deref, path::PathBuf};
 
 #[derive(Debug, Clone, Eq, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RomePath {
     path: PathBuf,
     id: usize,

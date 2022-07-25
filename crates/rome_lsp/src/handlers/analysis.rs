@@ -51,7 +51,7 @@ pub(crate) fn code_actions(
     let diagnostics = params.context.diagnostics;
     let cursor_range = crate::utils::text_range(&doc.line_index, params.range);
 
-    let actions = session.workspace.pull_actions(PullActionsParams {
+    let result = session.workspace.pull_actions(PullActionsParams {
         path: rome_path.clone(),
         range: cursor_range,
     })?;
@@ -66,7 +66,8 @@ pub(crate) fn code_actions(
     };
 
     let mut has_fixes = false;
-    let mut actions: Vec<_> = actions
+    let mut actions: Vec<_> = result
+        .actions
         .into_iter()
         .filter_map(|action| {
             // Remove actions that do not match the categories requested by the
@@ -110,7 +111,7 @@ fn fix_all(
         .workspace
         .fix_file(FixFileParams { path: rome_path })?;
 
-    if fixed.rules.is_empty() {
+    if fixed.actions.is_empty() {
         return Ok(None);
     }
 
@@ -123,10 +124,9 @@ fn fix_all(
             })?;
 
             let diag_range = utils::text_range(line_index, d.range);
-            let has_matching_rule = fixed
-                .rules
-                .iter()
-                .any(|(name, range)| code == *name && range.intersect(diag_range).is_some());
+            let has_matching_rule = fixed.actions.iter().any(|action| {
+                code == action.rule_name && action.range.intersect(diag_range).is_some()
+            });
 
             if has_matching_rule {
                 Some(d.clone())

@@ -5,7 +5,7 @@
 //! optionals for everything, you can use ...
 
 #[cfg(feature = "serde")]
-use serde_crate::Serialize;
+use serde::Serialize;
 use std::error::Error;
 use std::fmt::{self, Debug, Display, Formatter};
 use std::iter::FusedIterator;
@@ -282,7 +282,6 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator for AstNodeListI
 
 #[derive(Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct AstSeparatedElement<L: Language, N> {
     node: SyntaxResult<N>,
     trailing_separator: SyntaxResult<Option<SyntaxToken<L>>>,
@@ -537,7 +536,7 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum SyntaxError {
     /// Error thrown when a mandatory node is not found
     MissingRequiredChild,

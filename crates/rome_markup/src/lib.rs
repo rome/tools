@@ -151,7 +151,7 @@ pub fn markup(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     output.push(quote! {
                         rome_console::MarkupNode {
                             elements: &[ #( #elements ),* ],
-                            content: &(#body),
+                            content: &(#body) as &dyn rome_console::fmt::Display,
                         }
                     });
                 }
