@@ -36,7 +36,7 @@ impl Rules {
     #[doc = r" while the second element are the disabled filters."]
     #[doc = r""]
     #[doc = r" The enabled filters are calculated from the difference with the disabled filters."]
-    pub fn as_analysis_filters(&self) -> (IndexSet<RuleFilter>, IndexSet<RuleFilter>) {
+    pub fn as_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut enabled_rules = IndexSet::new();
         let mut disabled_rules = IndexSet::new();
         if self.is_recommended() {
@@ -101,8 +101,7 @@ impl Rules {
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
         }
-        let enabled_rules = enabled_rules.difference(&disabled_rules).cloned().collect();
-        (enabled_rules, disabled_rules)
+        enabled_rules.difference(&disabled_rules).cloned().collect()
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]

@@ -73,9 +73,9 @@ impl std::fmt::Display for Mime {
 
 type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
-type Lint = fn(&RomePath, AnyParse, RuleCategories, &Option<Rules>) -> Vec<Diagnostic>;
-type CodeActions = fn(&RomePath, AnyParse, TextRange, &Option<Rules>) -> PullActionsResult;
-type FixAll = fn(&RomePath, AnyParse, &Option<Rules>) -> FixFileResult;
+type Lint = fn(&RomePath, AnyParse, RuleCategories, Option<&Rules>) -> Vec<Diagnostic>;
+type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
+type FixAll = fn(&RomePath, AnyParse, Option<&Rules>) -> FixFileResult;
 type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;
 type FormatRange =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;

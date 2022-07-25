@@ -187,7 +187,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             /// while the second element are the disabled filters.
             ///
             /// The enabled filters are calculated from the difference with the disabled filters.
-            pub fn as_analysis_filters(&self) -> (IndexSet<RuleFilter>, IndexSet<RuleFilter>) {
+            pub fn as_enabled_rules(&self) -> IndexSet<RuleFilter> {
                 let mut enabled_rules = IndexSet::new();
                 let mut disabled_rules = IndexSet::new();
                 if self.is_recommended() {
@@ -199,8 +199,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 // computing the enabled rules
                 #( #group_rules_union )*
 
-                let enabled_rules = enabled_rules.difference(&disabled_rules).cloned().collect();
-                (enabled_rules, disabled_rules)
+                enabled_rules.difference(&disabled_rules).cloned().collect()
 
             }
         }

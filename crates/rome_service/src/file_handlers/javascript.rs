@@ -129,27 +129,20 @@ fn lint(
     rome_path: &RomePath,
     parse: AnyParse,
     categories: RuleCategories,
-    rules: &Option<Rules>,
+    rules: Option<&Rules>,
 ) -> Vec<Diagnostic> {
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
 
     let mut enabled_rules = Vec::new();
-    let mut disabled_rules = Vec::new();
 
     if let Some(rules) = rules {
-        let (enabled, disabled) = rules.as_analysis_filters();
+        let enabled = rules.as_enabled_rules();
         for enabled_rule in enabled {
             enabled_rules.push(enabled_rule)
         }
-        for disabled_rule in disabled {
-            disabled_rules.push(disabled_rule)
-        }
     }
-    let mut filter = AnalysisFilter::new_from_filters(
-        Some(enabled_rules.as_slice()),
-        Some(disabled_rules.as_slice()),
-    );
+    let mut filter = AnalysisFilter::from_enabled_rules(Some(enabled_rules.as_slice()));
 
     filter.categories = categories;
 
@@ -173,27 +166,20 @@ fn code_actions(
     rome_path: &RomePath,
     parse: AnyParse,
     range: TextRange,
-    rules: &Option<Rules>,
+    rules: Option<&Rules>,
 ) -> PullActionsResult {
     let tree = parse.tree();
 
     let mut enabled_rules = Vec::new();
-    let mut disabled_rules = Vec::new();
     let mut actions = Vec::new();
 
     if let Some(rules) = rules {
-        let (enabled, disabled) = rules.as_analysis_filters();
+        let enabled = rules.as_enabled_rules();
         for enabled_rule in enabled {
             enabled_rules.push(enabled_rule)
         }
-        for disabled_rule in disabled {
-            disabled_rules.push(disabled_rule)
-        }
     }
-    let mut filter = AnalysisFilter::new_from_filters(
-        Some(enabled_rules.as_slice()),
-        Some(disabled_rules.as_slice()),
-    );
+    let mut filter = AnalysisFilter::from_enabled_rules(Some(enabled_rules.as_slice()));
 
     filter.categories = RuleCategories::default();
     filter.range = Some(range);
@@ -217,26 +203,19 @@ fn code_actions(
 fn fix_all(
     rome_path: &RomePath,
     parse: AnyParse,
-    configuration_rules: &Option<Rules>,
+    configuration_rules: Option<&Rules>,
 ) -> FixFileResult {
     let mut tree: JsAnyRoot = parse.tree();
     let mut actions = Vec::new();
     let mut enabled_rules = Vec::new();
-    let mut disabled_rules = Vec::new();
 
     if let Some(rules) = configuration_rules {
-        let (enabled, disabled) = rules.as_analysis_filters();
+        let enabled = rules.as_enabled_rules();
         for enabled_rule in enabled {
             enabled_rules.push(enabled_rule)
         }
-        for disabled_rule in disabled {
-            disabled_rules.push(disabled_rule)
-        }
     }
-    let mut filter = AnalysisFilter::new_from_filters(
-        Some(enabled_rules.as_slice()),
-        Some(disabled_rules.as_slice()),
-    );
+    let mut filter = AnalysisFilter::from_enabled_rules(Some(enabled_rules.as_slice()));
 
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
 

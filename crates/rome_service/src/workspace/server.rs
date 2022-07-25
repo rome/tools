@@ -216,7 +216,7 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
-        let rules = &settings.linter.rules;
+        let rules = settings.linter.rules.as_ref();
         let diagnostics = linter(&params.path, parse, params.categories, rules);
 
         Ok(PullDiagnosticsResult { diagnostics })
@@ -233,7 +233,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
 
         let settings = self.settings.read().unwrap();
-        let rules = &settings.linter.rules;
+        let rules = settings.linter.rules.as_ref();
 
         Ok(code_actions(&params.path, parse, params.range, rules))
     }
@@ -296,7 +296,7 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
-        let rules = &settings.linter.rules;
+        let rules = settings.linter.rules.as_ref();
         Ok(fix_all(&params.path, parse, rules))
     }
 
