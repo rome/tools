@@ -27,6 +27,9 @@ declare_rule! {
     ///
     /// ```js,expect_diagnostic
     /// let snake_case;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
     /// let PascalCase;
     /// ```
     ///
