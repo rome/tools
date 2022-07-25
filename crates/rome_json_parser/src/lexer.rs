@@ -53,27 +53,6 @@ pub enum TokenKind {
     // Object,
 }
 
-impl From<TokenKind> for JsonSyntaxKind {
-    fn from(kind: TokenKind) -> Self {
-        match kind {
-            TokenKind::LeftBrace => T!['{'],
-            TokenKind::RightBrace => T!['}'],
-            TokenKind::Colon => T![:],
-            TokenKind::Comma => T![,],
-            TokenKind::LeftBracket => T!['['],
-            TokenKind::RightBracket => T![']'],
-            TokenKind::True => T![true],
-            TokenKind::False => T![false],
-            TokenKind::Null => T![null],
-            TokenKind::String => JsonSyntaxKind::JSON_STRING_LITERAL,
-            TokenKind::Number => JsonSyntaxKind::JSON_NUMBER_LITERAL,
-            TokenKind::Whitespace => JsonSyntaxKind::WHITESPACE,
-            TokenKind::NewLine => JsonSyntaxKind::NEWLINE,
-            TokenKind::Error => JsonSyntaxKind::ERROR_TOKEN,
-        }
-    }
-}
-
 impl From<&TokenKind> for JsonSyntaxKind {
     fn from(kind: &TokenKind) -> Self {
         match kind {
@@ -134,7 +113,7 @@ impl<'a> Lexer<'a> {
         let mut non_trivia_index_list = vec![];
         for (i, (kind, range)) in lexer.into_iter().enumerate() {
             tokens_with_span.push((
-                kind.into(),
+                (&kind).into(),
                 TextRange::new(
                     TextSize::from(range.start as u32),
                     TextSize::from(range.end as u32),
@@ -463,7 +442,7 @@ mod test_lexer {
                 r#"\t\t\n\t{"a":  \t  "b"}"#,
                 r#"{"a" : "b"}"#,
                 r#"\t{"a" : "b"\n}\t"#,
-                r#"{"a":{"b":1}}"#
+                r#"{"a":{"b":1}}"#,
             ],
             vec![
                 vec![(L_BRACK, "["), (R_BRACK, "]")],
