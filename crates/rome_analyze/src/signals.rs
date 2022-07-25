@@ -6,7 +6,6 @@ use rome_diagnostics::{
     Applicability, CodeSuggestion, Diagnostic, SuggestionChange, SuggestionStyle,
 };
 use rome_rowan::{BatchMutation, Language};
-use rome_text_edit::Indel;
 
 use crate::{
     categories::ActionCategory,
@@ -67,41 +66,18 @@ pub struct AnalyzerAction<L: Language> {
     pub mutation: BatchMutation<L, LanguageRoot<L>>,
 }
 
-impl<L> AnalyzerAction<L>
-where
-    L: Language,
-{
-    /// Generates a list of [Indel] from the mutation applied by this action
-    pub fn as_indels(&self) -> Vec<Indel> {
-        let mut result: Vec<_> = self
-            .mutation
-            .as_text_edits()
-            .map(|(delete, insert)| Indel { insert, delete })
-            .collect();
-
-        result.sort_unstable_by(|a, b| a.delete.ordering(b.delete));
-
-        result
-    }
-}
-
 impl<L> From<AnalyzerAction<L>> for CodeSuggestion
 where
     L: Language,
 {
     fn from(action: AnalyzerAction<L>) -> Self {
-        let indels = action.as_indels();
-
-        let range = indels.iter().fold(None, |state, indel| match state {
-            None => Some(indel.delete),
-            Some(state) => Some(state.cover(indel.delete)),
-        });
+        let (range, indels) = action.mutation.as_text_edits().unwrap_or_default();
 
         CodeSuggestion {
             substitution: SuggestionChange::Indels(indels),
             span: FileSpan {
                 file: action.file_id,
-                range: range.unwrap_or_default(),
+                range,
             },
             applicability: action.applicability,
             msg: action.message,

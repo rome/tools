@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
-use crate::session::Session;
+use crate::{session::Session, utils};
 use anyhow::Result;
-use tower_lsp::lsp_types::{Position, Range, RenameParams, TextEdit, WorkspaceEdit};
+use tower_lsp::lsp_types::{RenameParams, TextEdit, WorkspaceEdit};
 use tracing::trace;
 
 pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<WorkspaceEdit>> {
@@ -23,22 +23,17 @@ pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<W
             new_name: params.new_name,
         })?;
 
-    let num_lines: u32 = doc.line_index.newlines.len().try_into()?;
-    let range = Range {
-        start: Position::default(),
-        end: Position {
-            line: num_lines,
-            character: 0,
-        },
-    };
-
     let mut changes = HashMap::new();
     changes.insert(
         url,
-        vec![TextEdit {
-            range,
-            new_text: result.code,
-        }],
+        result
+            .indels
+            .into_iter()
+            .map(|indel| TextEdit {
+                range: utils::range(&doc.line_index, indel.delete),
+                new_text: indel.insert,
+            })
+            .collect(),
     );
 
     let workspace_edit = WorkspaceEdit {

@@ -130,7 +130,7 @@
 //! ### Parse children
 //! The parse rules will guide you in how to write your implementation and the parser infrastructure provides the following convenience APIs:
 //!
-//! * Optional token `'ident'?`: Use `p.eat(token)`. It eats the next token if it matches the passed-in token. 
+//! * Optional token `'ident'?`: Use `p.eat(token)`. It eats the next token if it matches the passed-in token.
 //! * Required token `'ident'`: Use`p.expect(token)`. It eats the next token if it matches the passed-in token.
 //! It adds an `Expected 'x' but found 'y' instead` error and a missing marker if the token isn't present in the source code.
 //! * Optional node `body: JsBlockStatement?`: Use`parse_block_statement(p).or_missing(p)`. It parses the block if it is present in the source code and adds a missing marker if it isn't.
@@ -295,7 +295,7 @@
 //! ## Summary
 //!
 //! * Parse rules are named `parse_rule_name`
-//! * The parse rules should return a `ParsedSyntax` 
+//! * The parse rules should return a `ParsedSyntax`
 //! * The rule must return `Present` if it consumes any token and, therefore, can parse the node with at least some of its children.
 //! * It returns `Absent` otherwise and must not progress parsing nor add any errors.
 //! * Lists must perform error recovery to avoid infinite loops.

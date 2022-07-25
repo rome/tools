@@ -11,7 +11,7 @@ use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
-use crate::workspace::FixFileResult;
+use crate::workspace::{FixFileResult, RenameResult};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::server::AnyParse,
@@ -203,16 +203,7 @@ fn fix_all(rome_path: &RomePath, parse: AnyParse) -> FixFileResult {
 
         match action {
             Some(action) => {
-                let original_range =
-                    action
-                        .mutation
-                        .as_text_edits()
-                        .fold(None, |state, (range, _)| match state {
-                            None => Some(range),
-                            Some(state) => Some(state.cover(range)),
-                        });
-
-                if let Some(original_range) = original_range {
+                if let Some((original_range, _)) = action.mutation.as_text_edits() {
                     tree = action.mutation.commit();
                     rules.push((action.rule_name, original_range));
                 }
@@ -286,7 +277,7 @@ fn rename(
     parse: AnyParse,
     symbol_at: TextSize,
     new_name: String,
-) -> Result<String, RomeError> {
+) -> Result<RenameResult, RomeError> {
     use rome_js_analyze::utils::rename::RenameSymbolExtensions;
 
     let root = parse.tree();
@@ -309,8 +300,8 @@ fn rename(
                         new_name,
                     }))
                 } else {
-                    let root = batch.commit();
-                    Ok(root.to_string())
+                    let (range, indels) = batch.as_text_edits().unwrap_or_default();
+                    Ok(RenameResult { range, indels })
                 }
             }
             Err(err) => Err(RomeError::RenameError(err)),

@@ -135,7 +135,7 @@ where
     L: Language,
 {
     let mut output = source.to_string();
-    let indels = action.as_indels();
+    let (_, indels) = action.mutation.as_text_edits().unwrap_or_default();
 
     apply_indels(&indels, &mut output);
 

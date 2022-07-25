@@ -58,6 +58,7 @@ use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_syntax::{JsLanguage, TextRange, TextSize};
+use rome_text_edit::Indel;
 
 use crate::{settings::WorkspaceSettings, RomeError};
 
@@ -144,8 +145,10 @@ pub struct RenameParams {
 }
 
 pub struct RenameResult {
-    /// New source code for the file with all fixes applied
-    pub code: String,
+    /// Range of source code modified by this rename operation
+    pub range: TextRange,
+    /// List of text edit operations to apply on the source code
+    pub indels: Vec<Indel>,
 }
 
 pub trait Workspace: Send + Sync + RefUnwindSafe {

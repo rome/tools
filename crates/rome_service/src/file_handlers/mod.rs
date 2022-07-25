@@ -8,7 +8,7 @@ use rome_js_syntax::{JsLanguage, TextRange, TextSize};
 
 use crate::{
     settings::SettingsHandle,
-    workspace::{server::AnyParse, FixFileResult},
+    workspace::{server::AnyParse, FixFileResult, RenameResult},
     RomeError,
 };
 
@@ -81,7 +81,7 @@ type FormatRange =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;
 type FormatOnType =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextSize) -> Result<Printed, RomeError>;
-type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<String, RomeError>;
+type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, RomeError>;
 
 pub(crate) struct Capabilities {
     pub(crate) parse: Option<Parse>,

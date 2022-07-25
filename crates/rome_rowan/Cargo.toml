@@ -16,6 +16,7 @@ text-size = "1.1.0"
 memoffset = "0.6.5"
 countme = "3.0.0"
 serde_crate = { package = "serde", version = "1.0.133", optional = true, default-features = false }
+rome_text_edit = { path = "../rome_text_edit" }
 
 [dev-dependencies]
 quickcheck = "1.0.3"

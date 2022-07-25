@@ -1,3 +1,4 @@
+use rome_text_edit::Indel;
 use text_size::TextRange;
 
 use crate::{
@@ -232,25 +233,39 @@ where
         });
     }
 
-    /// Returns an iterator of all the changes in this mutation as tuples of
-    /// the range in the original document modified by this change and the text
-    /// to be inserted in this place
-    pub fn as_text_edits(&self) -> impl Iterator<Item = (TextRange, String)> + '_ {
-        self.changes.iter().filter_map(|change| {
+    /// Returns the range of the document modified by this mutation along with
+    /// a list of individual text edits to be performed on the source code, or
+    /// [None] if the mutation is empty
+    pub fn as_text_edits(&self) -> Option<(TextRange, Vec<Indel>)> {
+        let iter = self.changes.iter().filter_map(|change| {
             let parent = change.parent.as_ref().unwrap_or_else(|| self.root.syntax());
-            let prev_range = match parent.slots().nth(change.new_node_slot) {
+            let delete = match parent.slots().nth(change.new_node_slot) {
                 Some(SyntaxSlot::Node(node)) => node.text_range(),
                 Some(SyntaxSlot::Token(token)) => token.text_range(),
                 _ => return None,
             };
 
-            let new_text = match &change.new_node {
+            let insert = match &change.new_node {
                 Some(elem) => elem.to_string(),
                 None => String::new(),
             };
 
-            Some((prev_range, new_text))
-        })
+            Some(Indel { delete, insert })
+        });
+
+        let mut range = None;
+        let mut indels: Vec<_> = iter
+            .inspect(|indel| {
+                range = match range {
+                    None => Some(indel.delete),
+                    Some(range) => Some(range.cover(indel.delete)),
+                };
+            })
+            .collect();
+
+        indels.sort_unstable_by(|a, b| a.delete.ordering(b.delete));
+
+        Some((range?, indels))
     }
 
     /// The core of the batch mutation algorithm can be summarized as:
