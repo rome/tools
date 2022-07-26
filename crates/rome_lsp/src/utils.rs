@@ -138,7 +138,7 @@ pub(crate) fn diagnostic_to_lsp(
                 .map(|label| lsp::DiagnosticRelatedInformation {
                     location: lsp::Location {
                         uri: url.clone(),
-                        range: range(line_index, primary.span.range),
+                        range: range(line_index, label.span.range),
                     },
 
                     message: print_markup(&label.msg),
