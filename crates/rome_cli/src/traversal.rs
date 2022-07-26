@@ -225,13 +225,6 @@ fn print_messages_to_console(
                         }
                     }
                 }
-
-                if !mode.is_ci() && not_printed_diagnostics > 0 {
-                    console.log(markup! {
-                        <Warn>"The number of diagnostics exceeds the number allowed by Rome.\n"</Warn>
-                        <Info>"Diagnostics not shown: "</Info><Emphasis>{not_printed_diagnostics}</Emphasis><Info>"."</Info>
-                    })
-                }
             }
 
             Message::Diff {
@@ -279,6 +272,13 @@ fn print_messages_to_console(
                 });
             }
         }
+    }
+
+    if !mode.is_ci() && not_printed_diagnostics > 0 {
+        console.log(markup! {
+            <Warn>"The number of diagnostics exceeds the number allowed by Rome.\n"</Warn>
+            <Info>"Diagnostics not shown: "</Info><Emphasis>{not_printed_diagnostics}</Emphasis><Info>"."</Info>
+        })
     }
 
     has_errors
