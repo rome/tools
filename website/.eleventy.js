@@ -27,7 +27,12 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({ static: "." });
 	eleventyConfig.setUseGitIgnore(false);
 
-	eleventyConfig.setLiquidOptions({ cache: true });
+	eleventyConfig.setLiquidOptions({
+		cache: true,
+		root: ["_includes", "./src/_includes", "./src/_includes/layouts"],
+		dynamicPartials: false,
+		strictFilters: false,
+	});
 
 	eleventyConfig.addPlugin(syntaxHighlight);
 
@@ -133,7 +138,7 @@ module.exports = function (eleventyConfig) {
 	});
 
 	// Minify CSS in production
-	eleventyConfig.addFilter("cssmin", function (code) {
+	eleventyConfig.addFilter("mincss", function (code) {
 		if (!isProduction) {
 			return code;
 		}

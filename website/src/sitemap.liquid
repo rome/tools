@@ -1,6 +1,8 @@
 ---
 permalink: /sitemap.xml
-eleventyExcludeFromCollections: true
+layout: null
+sitemap:
+	ignore: true
 ---
 
 <?xml version="1.0" encoding="utf-8"?>
@@ -8,7 +10,7 @@ eleventyExcludeFromCollections: true
 	{% for page in collections.all %}
 		<url>
 			<loc>{{ site.url }}{{ page.url }}</loc>
-			<lastmod>{{ page.date.toISOString() }}</lastmod>
+			<lastmod>{{ page.date.toISOString }}</lastmod>
 		</url>
 	{% endfor %}
 </urlset>
