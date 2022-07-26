@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, collections::VecDeque, vec::IntoIter};
+use std::{cmp::Ordering, collections::VecDeque, num::NonZeroU32, vec::IntoIter};
 
 use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
@@ -207,18 +207,37 @@ fn exceeds_complexity_threshold(cfg: &ControlFlowGraph) -> bool {
     let mut conditionals: u32 = 0;
 
     for block in &cfg.blocks {
-        for inst in &block.instructions {
-            if let InstructionKind::Jump { conditional, .. } = inst.kind {
-                edges += 1;
+        let mut exception_handlers = NonZeroU32::new(block.exception_handlers.len() as u32);
+        let mut cleanup_handlers = NonZeroU32::new(block.cleanup_handlers.len() as u32);
 
-                if conditional {
+        for inst in &block.instructions {
+            if has_side_effects(inst) {
+                if let Some(handlers) = exception_handlers.take() {
+                    edges += handlers.get();
                     conditionals += 1;
                 }
+            }
 
-                let complexity = edges.saturating_sub(nodes) + conditionals / 2;
-                if complexity > COMPLEXITY_THRESHOLD {
-                    return true;
+            match inst.kind {
+                InstructionKind::Statement => {}
+                InstructionKind::Jump { conditional, .. } => {
+                    edges += 1;
+
+                    if conditional {
+                        conditionals += 1;
+                    }
                 }
+                InstructionKind::Return => {
+                    if let Some(handlers) = cleanup_handlers.take() {
+                        edges += handlers.get();
+                        conditionals += 1;
+                    }
+                }
+            }
+
+            let complexity = edges.saturating_sub(nodes) + conditionals / 2;
+            if complexity > COMPLEXITY_THRESHOLD {
+                return true;
             }
         }
     }

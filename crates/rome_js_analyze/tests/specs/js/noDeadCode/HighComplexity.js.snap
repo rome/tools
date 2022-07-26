@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 88
+assertion_line: 89
 expression: HighComplexity.js
 ---
 # Input
@@ -36,6 +36,217 @@ function HighComplexity1() {
     afterReturn();
 }
 
+function HighComplexity2() {
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+
+    return;
+    afterReturn();
+}
+
 ```
 
 # Diagnostics
@@ -45,6 +256,16 @@ warning[js/noDeadCode]: This code is unreachable
    │
 29 │     afterReturn();
    │     --------------
+
+
+```
+
+```
+warning[js/noDeadCode]: This code is unreachable
+    ┌─ HighComplexity.js:240:5
+    │
+240 │     afterReturn();
+    │     --------------
 
 
 ```
