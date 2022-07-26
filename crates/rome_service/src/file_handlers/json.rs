@@ -1,5 +1,5 @@
 use super::{ExtensionHandler, Mime};
-#[derive(Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub(crate) struct JsonFileHandler;
 
 impl ExtensionHandler for JsonFileHandler {

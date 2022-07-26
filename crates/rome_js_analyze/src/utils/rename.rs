@@ -49,6 +49,7 @@ impl RenamableNode for JsAnyRenamableDeclaration {
     }
 }
 
+#[derive(Clone, PartialEq, Eq)]
 pub enum RenameError {
     CannotFindDeclaration,
     CannotBeRenamed {

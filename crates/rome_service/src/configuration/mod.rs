@@ -61,6 +61,7 @@ impl Configuration {
     }
 }
 
+#[derive(Clone, PartialEq, Eq)]
 /// Series of errors that can be thrown while computing the configuration
 pub enum ConfigurationError {
     /// Thrown when the program can't serialize the configuration, while saving it

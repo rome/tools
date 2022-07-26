@@ -6,8 +6,10 @@ use rome_js_syntax::{TextRange, TextSize};
 use std::ffi::OsStr;
 
 use crate::{
+    database::AnyParse,
     settings::SettingsHandle,
-    workspace::{server::AnyParse, FixFileResult, PullActionsResult, RenameResult},
+    workspace::FixFileResult,
+    workspace::{PullActionsResult, RenameResult},
     RomeError, Rules,
 };
 
@@ -70,7 +72,7 @@ impl std::fmt::Display for Mime {
     }
 }
 
-type Parse = fn(&RomePath, &str) -> AnyParse;
+type Parse = fn(&RomePath, &str) -> (AnyParse, Vec<Diagnostic>);
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
 type Lint = fn(&RomePath, AnyParse, AnalysisFilter) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
@@ -132,6 +134,7 @@ pub(crate) trait ExtensionHandler {
 }
 
 /// Features available for each language
+#[derive(Copy, Clone, Debug)]
 pub(crate) struct Features {
     js: JsFileHandler,
     json: JsonFileHandler,

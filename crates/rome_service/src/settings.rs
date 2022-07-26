@@ -1,12 +1,11 @@
-use crate::{Configuration, Rules};
+use crate::{database::Formatter, Configuration, Rules};
 use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
-use std::sync::{RwLock, RwLockReadGuard};
 
 /// Global settings for the entire workspace
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -48,7 +47,7 @@ impl WorkspaceSettings {
 }
 
 /// Formatter settings for the entire workspace
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -75,7 +74,7 @@ impl Default for FormatSettings {
 }
 
 /// Linter settings for the entire workspace
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -98,7 +97,7 @@ impl Default for LinterSettings {
 }
 
 /// Static map of language names to language-specific settings
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -130,7 +129,7 @@ pub trait Language: rome_rowan::Language {
     ) -> Self::FormatContext;
 }
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -156,23 +155,18 @@ pub struct LanguageSettings<L: Language> {
 /// Handle object holding a temporary lock on the workspace settings until
 /// the deferred language-specific options resolution is called
 pub(crate) struct SettingsHandle<'a, E> {
-    inner: RwLockReadGuard<'a, WorkspaceSettings>,
+    db: &'a dyn Formatter,
     /// Additional per-request state injected by the editor
     editor: E,
 }
 
 impl<'a, E> SettingsHandle<'a, E> {
-    pub(crate) fn new(settings: &'a RwLock<WorkspaceSettings>, editor: E) -> Self {
-        Self {
-            inner: settings.read().unwrap(),
-            editor,
-        }
+    pub(crate) fn new(db: &'a dyn Formatter, editor: E) -> Self {
+        Self { db, editor }
     }
-}
 
-impl<'a, E> AsRef<WorkspaceSettings> for SettingsHandle<'a, E> {
-    fn as_ref(&self) -> &WorkspaceSettings {
-        &*self.inner
+    pub(crate) fn settings(&self) -> WorkspaceSettings {
+        self.db.settings(())
     }
 }
 
@@ -182,9 +176,10 @@ impl<'a> SettingsHandle<'a, IndentStyle> {
     where
         L: Language,
     {
+        let settings = self.settings();
         L::resolve_format_context(
-            &self.inner.format,
-            &L::lookup_settings(&self.inner.languages).format,
+            &settings.format,
+            &L::lookup_settings(&settings.languages).format,
             self.editor,
             path,
         )

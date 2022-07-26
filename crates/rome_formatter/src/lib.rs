@@ -68,7 +68,7 @@ use std::num::ParseIntError;
 use std::rc::Rc;
 use std::str::FromStr;
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum IndentStyle {
     /// Tab
@@ -379,7 +379,7 @@ impl Printed {
 /// Public return type of the formatter
 pub type FormatResult<F> = Result<F, FormatError>;
 
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
 /// Series of errors encountered during formatting
 pub enum FormatError {
     /// In case a node can't be formatted because it either misses a require child element or

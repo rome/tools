@@ -8,6 +8,7 @@ use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
 
 pub mod configuration;
+mod database;
 mod file_handlers;
 pub mod settings;
 pub mod workspace;
@@ -29,6 +30,7 @@ pub struct App<'app> {
     pub console: DynRef<'app, dyn Console>,
 }
 
+#[derive(Clone, PartialEq, Eq)]
 /// Generic errors thrown during rome operations
 pub enum RomeError {
     /// The project contains uncommitted changes

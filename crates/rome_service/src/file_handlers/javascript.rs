@@ -6,15 +6,14 @@ use rome_js_analyze::analyze;
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_formatter::context::QuoteStyle;
 use rome_js_formatter::{context::JsFormatContext, format_node};
-use rome_js_parser::Parse;
 use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
-use crate::workspace::{CodeAction, FixAction, FixFileResult, PullActionsResult, RenameResult};
 use crate::{
+    database::AnyParse,
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
-    workspace::server::AnyParse,
+    workspace::{CodeAction, FixAction, FixFileResult, PullActionsResult, RenameResult},
     RomeError, Rules,
 };
 
@@ -63,7 +62,7 @@ impl Language for JsLanguage {
     }
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) struct JsFileHandler;
 
 impl ExtensionHandler for JsFileHandler {
@@ -94,31 +93,18 @@ impl ExtensionHandler for JsFileHandler {
     }
 }
 
-fn parse(rome_path: &RomePath, text: &str) -> AnyParse {
+fn parse(rome_path: &RomePath, text: &str) -> (AnyParse, Vec<Diagnostic>) {
     let file_id = rome_path.file_id();
 
     let source_type =
         SourceType::try_from(rome_path.as_path()).unwrap_or_else(|_| SourceType::js_module());
 
     let parse = rome_js_parser::parse(text, file_id, source_type);
-    AnyParse::from(parse)
-}
+    let root = parse.syntax();
+    let root = root.as_send().unwrap();
 
-impl<T> From<Parse<T>> for AnyParse
-where
-    T: AstNode,
-    T::Language: 'static,
-{
-    fn from(parse: Parse<T>) -> Self {
-        let root = parse.syntax();
-        let diagnostics = parse.into_diagnostics();
-
-        Self {
-            // SAFETY: the parser should always return a root node
-            root: root.as_send().unwrap(),
-            diagnostics,
-        }
-    }
+    let diagnostics = parse.into_diagnostics();
+    (AnyParse::new(root), diagnostics)
 }
 
 fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
@@ -128,7 +114,7 @@ fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
 
 fn lint(rome_path: &RomePath, parse: AnyParse, filter: AnalysisFilter) -> Vec<Diagnostic> {
     let tree = parse.tree();
-    let mut diagnostics = parse.into_diagnostics();
+    let mut diagnostics = Vec::new();
 
     let file_id = rome_path.file_id();
     analyze(file_id, &tree, filter, |signal| {

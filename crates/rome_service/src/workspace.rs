@@ -135,6 +135,7 @@ pub struct PullDiagnosticsParams {
     pub categories: RuleCategories,
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -152,6 +153,7 @@ pub struct PullActionsParams {
     pub range: TextRange,
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -160,6 +162,7 @@ pub struct PullActionsResult {
     pub actions: Vec<CodeAction>,
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -207,6 +210,7 @@ pub struct FixFileParams {
     pub path: RomePath,
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -218,6 +222,7 @@ pub struct FixFileResult {
     pub actions: Vec<FixAction>,
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -239,6 +244,7 @@ pub struct RenameParams {
     pub new_name: String,
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -301,7 +307,7 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
 /// Convenience function for constructing a server instance of [Workspace]
 pub fn server() -> Box<dyn Workspace> {
-    Box::new(server::WorkspaceServer::new())
+    Box::new(server::WorkspaceServer::default())
 }
 
 /// [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization)

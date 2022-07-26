@@ -24,6 +24,7 @@ rome_js_semantic = { path = "../rome_js_semantic" }
 rome_rowan = { path = "../rome_rowan" }
 rome_text_edit = { path = "../rome_text_edit" }
 indexmap = { version = "1.9.1", features = ["serde"] }
+salsa = { git = "https://github.com/salsa-rs/salsa", rev = "754eea8" }
 
 [features]
 serde_workspace = [
