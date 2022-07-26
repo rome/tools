@@ -560,16 +560,10 @@ impl<'analysis> AnalysisFilter<'analysis> {
             })
     }
 
+    /// It creates a new filter with the set of [enabled rules](RuleFilter) passed as argument
     pub fn from_enabled_rules(enabled_rules: Option<&'analysis [RuleFilter<'analysis>]>) -> Self {
         Self {
             enabled_rules,
-            ..AnalysisFilter::default()
-        }
-    }
-
-    pub fn from_disabled_rules(disabled_rules: Option<&'analysis [RuleFilter<'analysis>]>) -> Self {
-        Self {
-            disabled_rules,
             ..AnalysisFilter::default()
         }
     }
