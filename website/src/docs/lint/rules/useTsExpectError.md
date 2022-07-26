@@ -16,7 +16,7 @@ Enforces the use of `@ts-expect-error` instead of `@ts-ignore` to get notified w
 let foo: boolean = 1;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">ts/useTsExpectError</span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useTsExpectError/">ts/useTsExpectError</a></span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> ts/useTsExpectError.js:2:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> let foo: boolean = 1;
@@ -35,7 +35,7 @@ let foo: boolean = 1;
 let foo: boolean = 1;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">ts/useTsExpectError</span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useTsExpectError/">ts/useTsExpectError</a></span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> ts/useTsExpectError.js:2:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> let foo: boolean = 1;
@@ -54,7 +54,7 @@ let foo: boolean = 1;
 let foo: boolean = 1;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">ts/useTsExpectError</span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useTsExpectError/">ts/useTsExpectError</a></span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> ts/useTsExpectError.js:2:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> let foo: boolean = 1;
@@ -73,7 +73,7 @@ let foo: boolean = 1;
 let foo: boolean = 1;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">ts/useTsExpectError</span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useTsExpectError/">ts/useTsExpectError</a></span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> ts/useTsExpectError.js:2:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> let foo: boolean = 1;
@@ -93,7 +93,7 @@ let foo: boolean = 1;
 let foo: boolean = 1;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">ts/useTsExpectError</span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useTsExpectError/">ts/useTsExpectError</a></span><span style="color: Orange;">]</span><em>: </em><em>Prefer @ts-expect-error to get notified when suppression is no longer necessary.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> ts/useTsExpectError.js:3:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> let foo: boolean = 1;
