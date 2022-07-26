@@ -28,3 +28,214 @@ function HighComplexity1() {
     return;
     afterReturn();
 }
+
+function HighComplexity2() {
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+    try {
+        !a && !a;
+    } catch (err) {
+        err = 2;
+    }
+
+    return;
+    afterReturn();
+}
