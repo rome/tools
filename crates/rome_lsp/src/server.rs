@@ -39,6 +39,7 @@ impl LSPServer {
 
 #[tower_lsp::async_trait]
 impl LanguageServer for LSPServer {
+    #[tracing::instrument(level = "trace", skip(self))]
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
 
@@ -58,7 +59,10 @@ impl LanguageServer for LSPServer {
         Ok(init)
     }
 
-    async fn initialized(&self, _: InitializedParams) {
+    #[tracing::instrument(level = "trace", skip(self))]
+    async fn initialized(&self, params: InitializedParams) {
+        let _ = params;
+
         info!("Attempting to load the configuration from 'rome.json' file");
 
         match load_config(&self.session.fs) {
@@ -133,7 +137,10 @@ impl LanguageServer for LSPServer {
         handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
     }
 
-    async fn did_change_configuration(&self, _params: DidChangeConfigurationParams) {
+    #[tracing::instrument(level = "trace", skip(self))]
+    async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
+        let _ = params;
+
         let diags_enabled_prev = self.session.diagnostics_enabled();
 
         self.session.fetch_client_configuration().await;

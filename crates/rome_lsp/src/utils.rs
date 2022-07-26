@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 
 use crate::line_index::{LineCol, LineIndex};
+use anyhow::{Context, Result};
 use rome_analyze::ActionCategory;
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
@@ -26,18 +27,21 @@ pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp::Range {
     lsp::Range::new(start, end)
 }
 
-pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> TextSize {
+pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> Result<TextSize> {
     let line_col = LineCol {
         line: position.line as u32,
         col: position.character as u32,
     };
-    line_index.offset(line_col)
+
+    line_index
+        .offset(line_col)
+        .with_context(|| format!("position {position:?} is out of range"))
 }
 
-pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> TextRange {
-    let start = offset(line_index, range.start);
-    let end = offset(line_index, range.end);
-    TextRange::new(start, end)
+pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> Result<TextRange> {
+    let start = offset(line_index, range.start)?;
+    let end = offset(line_index, range.end)?;
+    Ok(TextRange::new(start, end))
 }
 
 pub(crate) fn code_fix_to_lsp(

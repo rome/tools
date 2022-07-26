@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use anyhow::Result;
+use anyhow::{Context, Result};
 use rome_analyze::ActionCategory;
 use rome_fs::RomePath;
 use rome_service::workspace::{FixFileParams, PullActionsParams};
@@ -18,6 +18,7 @@ const FIX_ALL: CodeActionKind = CodeActionKind::new("source.fixAll");
 /// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
 ///
 /// If the AnalysisServer has no matching file, results in error.
+#[tracing::instrument(level = "trace", skip(session), err)]
 pub(crate) fn code_actions(
     session: &Session,
     params: CodeActionParams,
@@ -49,7 +50,12 @@ pub(crate) fn code_actions(
     let doc = session.document(&url)?;
 
     let diagnostics = params.context.diagnostics;
-    let cursor_range = crate::utils::text_range(&doc.line_index, params.range);
+    let cursor_range = utils::text_range(&doc.line_index, params.range).with_context(|| {
+        format!(
+            "failed to access range {:?} in document {url}",
+            params.range
+        )
+    })?;
 
     let result = session.workspace.pull_actions(PullActionsParams {
         path: rome_path.clone(),
@@ -100,6 +106,7 @@ pub(crate) fn code_actions(
 }
 
 /// Generate a "fix all" code action for the given document
+#[tracing::instrument(level = "trace", skip(session), err)]
 fn fix_all(
     session: &Session,
     url: &lsp::Url,
@@ -123,7 +130,7 @@ fn fix_all(
                 lsp::NumberOrString::Number(_) => None,
             })?;
 
-            let diag_range = utils::text_range(line_index, d.range);
+            let diag_range = utils::text_range(line_index, d.range).ok()?;
             let has_matching_rule = fixed.actions.iter().any(|action| {
                 code == action.rule_name && action.range.intersect(diag_range).is_some()
             });

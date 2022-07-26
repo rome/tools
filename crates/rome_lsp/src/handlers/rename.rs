@@ -1,10 +1,11 @@
 use std::collections::HashMap;
 
 use crate::{session::Session, utils};
-use anyhow::Result;
+use anyhow::{Context, Result};
 use tower_lsp::lsp_types::{RenameParams, TextEdit, WorkspaceEdit};
 use tracing::trace;
 
+#[tracing::instrument(level = "trace", skip(session), err)]
 pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<WorkspaceEdit>> {
     let url = params.text_document_position.text_document.uri;
     let rome_path = session.file_path(&url);
@@ -12,8 +13,13 @@ pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<W
     trace!("Renaming...");
 
     let doc = session.document(&url)?;
-    let cursor_range =
-        crate::utils::offset(&doc.line_index, params.text_document_position.position);
+    let cursor_range = utils::offset(&doc.line_index, params.text_document_position.position)
+        .with_context(|| {
+            format!(
+                "failed to access position {:?} in document {url}",
+                params.text_document_position.position
+            )
+        })?;
 
     let result = session
         .workspace

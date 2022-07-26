@@ -692,9 +692,9 @@ pub(crate) mod separated;
 #[cfg(test)]
 mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::{format_node, JsFormatContext};
+    use crate::{format_node, format_range, JsFormatContext};
     use rome_js_parser::parse;
-    use rome_js_syntax::SourceType;
+    use rome_js_syntax::{SourceType, TextRange, TextSize};
 
     #[ignore]
     #[test]
@@ -721,5 +721,21 @@ test.expect(t => {
             result.as_code(),
             "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
         );
+    }
+
+    #[test]
+    fn format_range_out_of_bounds() {
+        let src = "statement();";
+
+        let syntax = SourceType::js_module();
+        let tree = parse(src, 0, syntax);
+
+        let result = format_range(
+            JsFormatContext::default(),
+            &tree.syntax(),
+            TextRange::new(TextSize::from(0), TextSize::of(src) + TextSize::from(5)),
+        );
+
+        assert!(result.is_err());
     }
 }
