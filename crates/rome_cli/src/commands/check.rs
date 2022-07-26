@@ -24,7 +24,7 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
             return Err(Termination::OverflowNumberArgument(
                 "--max-diagnostics",
-                "50",
+                MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
             ));
         }
 

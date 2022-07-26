@@ -52,7 +52,7 @@ pub enum Termination {
     CheckError,
 
     #[error("the value of the argument {0} is too high, maximum accepted {1}")]
-    OverflowNumberArgument(&'static str, &'static str),
+    OverflowNumberArgument(&'static str, u16),
 
     /// Wrapper for an underlying `rome_service` error
     #[error(transparent)]
