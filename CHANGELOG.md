@@ -10,7 +10,7 @@
 
 ### Configuration
 
-- Rome is now able to read `rome.json` and pick the custom configuration from there.
+- You can create a configuration file called `rome.json` to customize Rome's default options.
 
 ### Linter
 
