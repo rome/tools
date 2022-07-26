@@ -21,6 +21,8 @@ pub enum SemanticEvent {
     DeclarationFound {
         range: TextRange,
         scope_started_at: TextSize,
+        scope_id: usize,
+        hoisted_scope_id: Option<usize>,
         name: SyntaxTokenText,
     },
 
@@ -68,7 +70,11 @@ pub enum SemanticEvent {
     /// Generated for:
     /// - Blocks
     /// - Function body
-    ScopeStarted { range: TextRange },
+    ScopeStarted {
+        range: TextRange,
+        scope_id: usize,
+        parent_scope_id: Option<usize>,
+    },
 
     /// Tracks where a scope ends
     /// Generated for:
@@ -77,6 +83,7 @@ pub enum SemanticEvent {
     ScopeEnded {
         range: TextRange,
         started_at: TextSize,
+        scope_id: usize,
     },
 }
 
@@ -84,7 +91,7 @@ impl SemanticEvent {
     pub fn range(&self) -> &TextRange {
         match self {
             SemanticEvent::DeclarationFound { range, .. } => range,
-            SemanticEvent::ScopeStarted { range } => range,
+            SemanticEvent::ScopeStarted { range, .. } => range,
             SemanticEvent::ScopeEnded { range, .. } => range,
             SemanticEvent::Read { range, .. } => range,
             SemanticEvent::HoistedRead { range, .. } => range,
@@ -137,6 +144,7 @@ impl SemanticEvent {
 pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
+    next_scope_id: usize,
     bindings: HashMap<SyntaxTokenText, TextRange>,
 }
 
@@ -165,6 +173,7 @@ pub enum ScopeHoisting {
 }
 
 struct Scope {
+    scope_id: usize,
     started_at: TextSize,
     /// All bindings declared inside this scope
     bindings: Vec<Binding>,
@@ -183,6 +192,7 @@ impl SemanticEventExtractor {
         Self {
             stash: VecDeque::new(),
             scopes: vec![],
+            next_scope_id: 0,
             bindings: HashMap::new(),
         }
     }
@@ -261,8 +271,7 @@ impl SemanticEventExtractor {
                     let scope_idx = self.scope_index_to_hoist_declarations();
                     self.push_binding_into_scope(scope_idx, &name_token);
                 } else {
-                    let scope_idx = self.scopes.len() - 1;
-                    self.push_binding_into_scope(scope_idx, &name_token);
+                    self.push_binding_into_scope(None, &name_token);
                 };
             }
             Some(JS_FUNCTION_DECLARATION) => {
@@ -270,8 +279,7 @@ impl SemanticEventExtractor {
                 self.push_binding_into_scope(scope_idx, &name_token);
             }
             Some(_) => {
-                let scope_idx = self.scopes.len() - 1;
-                self.push_binding_into_scope(scope_idx, &name_token);
+                self.push_binding_into_scope(None, &name_token);
             }
             _ => {}
         }
@@ -339,8 +347,19 @@ impl SemanticEventExtractor {
     }
 
     fn push_scope(&mut self, range: TextRange, hoisting: ScopeHoisting) {
-        self.stash.push_back(SemanticEvent::ScopeStarted { range });
+        let scope_id = self.next_scope_id;
+        self.next_scope_id += 1;
+
+        let parent_scope_id = self.scopes.iter().last().map(|x| x.scope_id);
+
+        self.stash.push_back(SemanticEvent::ScopeStarted {
+            range,
+            scope_id,
+            parent_scope_id,
+        });
+
         self.scopes.push(Scope {
+            scope_id,
             started_at: range.start(),
             bindings: vec![],
             references: HashMap::new(),
@@ -409,6 +428,7 @@ impl SemanticEventExtractor {
             self.stash.push_back(SemanticEvent::ScopeEnded {
                 range,
                 started_at: scope.started_at,
+                scope_id: scope.scope_id,
             });
         }
     }
@@ -439,7 +459,7 @@ impl SemanticEventExtractor {
     ///
     /// This method when called inside the `f` scope will return
     /// the `f` scope index.
-    fn scope_index_to_hoist_declarations(&mut self) -> usize {
+    fn scope_index_to_hoist_declarations(&mut self) -> Option<usize> {
         // We should at least have the global scope
         // that do not hoist
         debug_assert!(matches!(
@@ -452,15 +472,26 @@ impl SemanticEventExtractor {
             matches!(scope.hoisting, ScopeHoisting::DontHoistDeclarationsToParent)
         });
 
+        let current_scope_id = self.current_scope_mut().scope_id;
         match idx {
-            Some(idx) => idx,
+            Some(idx) => {
+                if idx == current_scope_id {
+                    None
+                } else {
+                    Some(idx)
+                }
+            }
             // Worst case this will fallback to the global scope
             // which will be idx = 0
             None => unreachable!("We must have a least of scope."),
         }
     }
 
-    fn push_binding_into_scope(&mut self, scope_idx: usize, name_token: &JsSyntaxToken) {
+    fn push_binding_into_scope(
+        &mut self,
+        hoisted_scope_id: Option<usize>,
+        name_token: &JsSyntaxToken,
+    ) {
         let name = name_token.token_text_trimmed();
 
         let declaration_range = name_token.text_range();
@@ -472,8 +503,11 @@ impl SemanticEventExtractor {
             .insert(name.clone(), declaration_range)
             .map(|shadowed_range| (name.clone(), shadowed_range));
 
-        debug_assert!(scope_idx < self.scopes.len());
-        let scope = &mut self.scopes[scope_idx];
+        let scope_id = self.scopes.len() - 1;
+        let binding_scope_id = hoisted_scope_id.unwrap_or(scope_id);
+
+        debug_assert!(binding_scope_id < self.scopes.len());
+        let scope = &mut self.scopes[binding_scope_id];
         scope.bindings.push(Binding { name: name.clone() });
         scope.shadowed.extend(shadowed);
         let scope_started_at = scope.started_at;
@@ -481,6 +515,8 @@ impl SemanticEventExtractor {
         self.stash.push_back(SemanticEvent::DeclarationFound {
             range: declaration_range,
             scope_started_at,
+            scope_id,
+            hoisted_scope_id,
             name,
         });
     }

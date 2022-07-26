@@ -120,7 +120,7 @@ pub fn assert(code: &str, test_name: &str) {
     for event in semantic_events(r.syntax()) {
         let pos = match &event {
             SemanticEvent::DeclarationFound { range, .. } => range.start(),
-            SemanticEvent::ScopeStarted { range } => range.start(),
+            SemanticEvent::ScopeStarted { range, .. } => range.start(),
             SemanticEvent::ScopeEnded { range, .. } => range.end(),
             SemanticEvent::Read { range, .. } => range.start(),
             SemanticEvent::HoistedRead { range, .. } => range.start(),
