@@ -29,7 +29,8 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
         "/*" => {
             comment = comment
                 .strip_suffix("*/")
-                .expect("block comment with no closing token");
+                .or_else(|| comment.strip_suffix(&['*', '/']))
+                .unwrap_or(comment);
             true
         }
         token => panic!("comment with unknown opening token {token:?}"),
