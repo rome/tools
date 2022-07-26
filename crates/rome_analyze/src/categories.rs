@@ -15,6 +15,7 @@ pub enum RuleCategory {
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ActionCategory {
     /// This action provides a fix to the diagnostic emitted by the same signal
     QuickFix,
@@ -23,6 +24,7 @@ pub enum ActionCategory {
 }
 
 bitflags! {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct RuleCategories: u8 {
         const SYNTAX = 1 << RuleCategory::Syntax as u8;
         const LINT = 1 << RuleCategory::Lint as u8;

@@ -7,6 +7,7 @@ pub use text_size::{TextRange, TextSize};
 ///
 /// Must not overlap with other `InDel`s
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Indel {
     pub insert: String,
     /// Refers to offsets in the original text

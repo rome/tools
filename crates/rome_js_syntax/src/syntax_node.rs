@@ -8,11 +8,10 @@
 use crate::{JsAnyRoot, JsSyntaxKind};
 use rome_rowan::Language;
 #[cfg(feature = "serde")]
-use serde_crate::Serialize;
+use serde::Serialize;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsLanguage;
 
 impl Language for JsLanguage {

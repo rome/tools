@@ -15,9 +15,9 @@ use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
 #[cfg(feature = "serde")]
-use serde_crate::ser::SerializeSeq;
+use serde::ser::SerializeSeq;
 #[cfg(feature = "serde")]
-use serde_crate::{Serialize, Serializer};
+use serde::{Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct ImportMeta {
@@ -57,7 +57,7 @@ impl Serialize for ImportMeta {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct ImportMetaFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -101,7 +101,7 @@ impl Serialize for JsArrayAssignmentPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayAssignmentPatternFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsArrayAssignmentPatternElementList,
@@ -141,7 +141,7 @@ impl Serialize for JsArrayAssignmentPatternRestElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayAssignmentPatternRestElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
@@ -184,7 +184,7 @@ impl Serialize for JsArrayBindingPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayBindingPatternFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsArrayBindingPatternElementList,
@@ -224,7 +224,7 @@ impl Serialize for JsArrayBindingPatternRestElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayBindingPatternRestElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub pattern: SyntaxResult<JsAnyBindingPattern>,
@@ -265,7 +265,7 @@ impl Serialize for JsArrayExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayExpressionFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsArrayElementList,
@@ -294,7 +294,7 @@ impl Serialize for JsArrayHole {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayHoleFields {}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrowFunctionExpression {
@@ -344,7 +344,7 @@ impl Serialize for JsArrowFunctionExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrowFunctionExpressionFields {
     pub async_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
@@ -391,7 +391,7 @@ impl Serialize for JsAssignmentExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsAssignmentExpressionFields {
     pub left: SyntaxResult<JsAnyAssignmentPattern>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -435,7 +435,7 @@ impl Serialize for JsAssignmentWithDefault {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsAssignmentWithDefaultFields {
     pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
     pub eq_token: SyntaxResult<SyntaxToken>,
@@ -475,7 +475,7 @@ impl Serialize for JsAwaitExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsAwaitExpressionFields {
     pub await_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -510,7 +510,7 @@ impl Serialize for JsBigIntLiteralExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBigIntLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -552,7 +552,7 @@ impl Serialize for JsBinaryExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBinaryExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -596,7 +596,7 @@ impl Serialize for JsBindingPatternWithDefault {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBindingPatternWithDefaultFields {
     pub pattern: SyntaxResult<JsAnyBindingPattern>,
     pub eq_token: SyntaxResult<SyntaxToken>,
@@ -638,7 +638,7 @@ impl Serialize for JsBlockStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBlockStatementFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub statements: JsStatementList,
@@ -674,7 +674,7 @@ impl Serialize for JsBooleanLiteralExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBooleanLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -712,7 +712,7 @@ impl Serialize for JsBreakStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBreakStatementFields {
     pub break_token: SyntaxResult<SyntaxToken>,
     pub label_token: Option<SyntaxToken>,
@@ -754,7 +754,7 @@ impl Serialize for JsCallArguments {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCallArgumentsFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub args: JsCallArgumentList,
@@ -800,7 +800,7 @@ impl Serialize for JsCallExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCallExpressionFields {
     pub callee: SyntaxResult<JsAnyExpression>,
     pub optional_chain_token: Option<SyntaxToken>,
@@ -847,7 +847,7 @@ impl Serialize for JsCaseClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCaseClauseFields {
     pub case_token: SyntaxResult<SyntaxToken>,
     pub test: SyntaxResult<JsAnyExpression>,
@@ -890,7 +890,7 @@ impl Serialize for JsCatchClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCatchClauseFields {
     pub catch_token: SyntaxResult<SyntaxToken>,
     pub declaration: Option<JsCatchDeclaration>,
@@ -938,7 +938,7 @@ impl Serialize for JsCatchDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCatchDeclarationFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<JsAnyBindingPattern>,
@@ -999,7 +999,7 @@ impl Serialize for JsClassDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsClassDeclarationFields {
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
@@ -1065,7 +1065,7 @@ impl Serialize for JsClassExportDefaultDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsClassExportDefaultDeclarationFields {
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
@@ -1129,7 +1129,7 @@ impl Serialize for JsClassExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsClassExpressionFields {
     pub class_token: SyntaxResult<SyntaxToken>,
     pub id: Option<JsAnyBinding>,
@@ -1182,7 +1182,7 @@ impl Serialize for JsComputedMemberAssignment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsComputedMemberAssignmentFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -1235,7 +1235,7 @@ impl Serialize for JsComputedMemberExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsComputedMemberExpressionFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub optional_chain_token: Option<SyntaxToken>,
@@ -1281,7 +1281,7 @@ impl Serialize for JsComputedMemberName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsComputedMemberNameFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -1333,7 +1333,7 @@ impl Serialize for JsConditionalExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsConditionalExpressionFields {
     pub test: SyntaxResult<JsAnyExpression>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
@@ -1381,7 +1381,7 @@ impl Serialize for JsConstructorClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsConstructorClassMemberFields {
     pub modifiers: JsConstructorModifierList,
     pub name: SyntaxResult<JsLiteralMemberName>,
@@ -1424,7 +1424,7 @@ impl Serialize for JsConstructorParameters {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsConstructorParametersFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub parameters: JsConstructorParameterList,
@@ -1464,7 +1464,7 @@ impl Serialize for JsContinueStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsContinueStatementFields {
     pub continue_token: SyntaxResult<SyntaxToken>,
     pub label_token: Option<SyntaxToken>,
@@ -1502,7 +1502,7 @@ impl Serialize for JsDebuggerStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsDebuggerStatementFields {
     pub debugger_token: SyntaxResult<SyntaxToken>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -1543,7 +1543,7 @@ impl Serialize for JsDefaultClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsDefaultClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -1583,7 +1583,7 @@ impl Serialize for JsDefaultImportSpecifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsDefaultImportSpecifierFields {
     pub local_name: SyntaxResult<JsAnyBinding>,
     pub trailing_comma_token: SyntaxResult<SyntaxToken>,
@@ -1620,7 +1620,7 @@ impl Serialize for JsDirective {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsDirectiveFields {
     pub value_token: SyntaxResult<SyntaxToken>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -1677,7 +1677,7 @@ impl Serialize for JsDoWhileStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsDoWhileStatementFields {
     pub do_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsAnyStatement>,
@@ -1721,7 +1721,7 @@ impl Serialize for JsElseClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsElseClauseFields {
     pub else_token: SyntaxResult<SyntaxToken>,
     pub alternate: SyntaxResult<JsAnyStatement>,
@@ -1756,7 +1756,7 @@ impl Serialize for JsEmptyClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsEmptyClassMemberFields {
     pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
@@ -1790,7 +1790,7 @@ impl Serialize for JsEmptyStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsEmptyStatementFields {
     pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
@@ -1828,7 +1828,7 @@ impl Serialize for JsExport {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportFields {
     pub export_token: SyntaxResult<SyntaxToken>,
     pub export_clause: SyntaxResult<JsAnyExportClause>,
@@ -1867,7 +1867,7 @@ impl Serialize for JsExportAsClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportAsClauseFields {
     pub as_token: SyntaxResult<SyntaxToken>,
     pub exported_name: SyntaxResult<JsLiteralExportName>,
@@ -1908,7 +1908,7 @@ impl Serialize for JsExportDefaultDeclarationClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportDefaultDeclarationClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
     pub declaration: SyntaxResult<JsAnyExportDefaultDeclaration>,
@@ -1950,7 +1950,7 @@ impl Serialize for JsExportDefaultExpressionClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportDefaultExpressionClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -2000,7 +2000,7 @@ impl Serialize for JsExportFromClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportFromClauseFields {
     pub star_token: SyntaxResult<SyntaxToken>,
     pub export_as: Option<JsExportAsClause>,
@@ -2049,7 +2049,7 @@ impl Serialize for JsExportNamedClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportNamedClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -2109,7 +2109,7 @@ impl Serialize for JsExportNamedFromClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportNamedFromClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -2154,7 +2154,7 @@ impl Serialize for JsExportNamedFromSpecifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportNamedFromSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub source_name: SyntaxResult<JsLiteralExportName>,
@@ -2192,7 +2192,7 @@ impl Serialize for JsExportNamedShorthandSpecifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportNamedShorthandSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsReferenceIdentifier>,
@@ -2237,7 +2237,7 @@ impl Serialize for JsExportNamedSpecifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportNamedSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub local_name: SyntaxResult<JsReferenceIdentifier>,
@@ -2278,7 +2278,7 @@ impl Serialize for JsExpressionSnipped {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExpressionSnippedFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub eof_token: SyntaxResult<SyntaxToken>,
@@ -2315,7 +2315,7 @@ impl Serialize for JsExpressionStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExpressionStatementFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -2356,7 +2356,7 @@ impl Serialize for JsExtendsClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExtendsClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
     pub super_class: SyntaxResult<JsAnyExpression>,
@@ -2396,7 +2396,7 @@ impl Serialize for JsFinallyClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFinallyClauseFields {
     pub finally_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsBlockStatement>,
@@ -2455,7 +2455,7 @@ impl Serialize for JsForInStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsForInStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -2521,7 +2521,7 @@ impl Serialize for JsForOfStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsForOfStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub await_token: Option<SyntaxToken>,
@@ -2588,7 +2588,7 @@ impl Serialize for JsForStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsForStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -2634,7 +2634,7 @@ impl Serialize for JsForVariableDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsForVariableDeclarationFields {
     pub kind_token: SyntaxResult<SyntaxToken>,
     pub declarator: SyntaxResult<JsVariableDeclarator>,
@@ -2679,7 +2679,7 @@ impl Serialize for JsFormalParameter {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFormalParameterFields {
     pub binding: SyntaxResult<JsAnyBindingPattern>,
     pub question_mark_token: Option<SyntaxToken>,
@@ -2724,7 +2724,7 @@ impl Serialize for JsFunctionBody {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFunctionBodyFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub directives: JsDirectiveList,
@@ -2783,7 +2783,7 @@ impl Serialize for JsFunctionDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFunctionDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -2846,7 +2846,7 @@ impl Serialize for JsFunctionExportDefaultDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFunctionExportDefaultDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -2909,7 +2909,7 @@ impl Serialize for JsFunctionExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFunctionExpressionFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -2970,7 +2970,7 @@ impl Serialize for JsGetterClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsGetterClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
@@ -3028,7 +3028,7 @@ impl Serialize for JsGetterObjectMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsGetterObjectMemberFields {
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -3067,7 +3067,7 @@ impl Serialize for JsIdentifierAssignment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsIdentifierAssignmentFields {
     pub name_token: SyntaxResult<SyntaxToken>,
 }
@@ -3101,7 +3101,7 @@ impl Serialize for JsIdentifierBinding {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsIdentifierBindingFields {
     pub name_token: SyntaxResult<SyntaxToken>,
 }
@@ -3133,7 +3133,7 @@ impl Serialize for JsIdentifierExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsIdentifierExpressionFields {
     pub name: SyntaxResult<JsReferenceIdentifier>,
 }
@@ -3185,7 +3185,7 @@ impl Serialize for JsIfStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsIfStatementFields {
     pub if_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -3230,7 +3230,7 @@ impl Serialize for JsImport {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub import_clause: SyntaxResult<JsAnyImportClause>,
@@ -3276,7 +3276,7 @@ impl Serialize for JsImportAssertion {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportAssertionFields {
     pub assert_token: SyntaxResult<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -3319,7 +3319,7 @@ impl Serialize for JsImportAssertionEntry {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportAssertionEntryFields {
     pub key: SyntaxResult<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -3357,7 +3357,7 @@ impl Serialize for JsImportBareClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportBareClauseFields {
     pub source: SyntaxResult<JsModuleSource>,
     pub assertion: Option<JsImportAssertion>,
@@ -3396,7 +3396,7 @@ impl Serialize for JsImportCallExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportCallExpressionFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub arguments: SyntaxResult<JsCallArguments>,
@@ -3443,7 +3443,7 @@ impl Serialize for JsImportDefaultClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportDefaultClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub local_name: SyntaxResult<JsAnyBinding>,
@@ -3497,7 +3497,7 @@ impl Serialize for JsImportNamedClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportNamedClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub default_specifier: Option<JsDefaultImportSpecifier>,
@@ -3556,7 +3556,7 @@ impl Serialize for JsImportNamespaceClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportNamespaceClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub star_token: SyntaxResult<SyntaxToken>,
@@ -3604,7 +3604,7 @@ impl Serialize for JsInExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsInExpressionFields {
     pub property: SyntaxResult<JsAnyInProperty>,
     pub in_token: SyntaxResult<SyntaxToken>,
@@ -3644,7 +3644,7 @@ impl Serialize for JsInitializerClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsInitializerClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -3687,7 +3687,7 @@ impl Serialize for JsInstanceofExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsInstanceofExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub instanceof_token: SyntaxResult<SyntaxToken>,
@@ -3731,7 +3731,7 @@ impl Serialize for JsLabeledStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsLabeledStatementFields {
     pub label_token: SyntaxResult<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -3767,7 +3767,7 @@ impl Serialize for JsLiteralExportName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsLiteralExportNameFields {
     pub value: SyntaxResult<SyntaxToken>,
 }
@@ -3801,7 +3801,7 @@ impl Serialize for JsLiteralMemberName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsLiteralMemberNameFields {
     pub value: SyntaxResult<SyntaxToken>,
 }
@@ -3843,7 +3843,7 @@ impl Serialize for JsLogicalExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsLogicalExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -3905,7 +3905,7 @@ impl Serialize for JsMethodClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsMethodClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub async_token: Option<SyntaxToken>,
@@ -3967,7 +3967,7 @@ impl Serialize for JsMethodObjectMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsMethodObjectMemberFields {
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
@@ -4013,7 +4013,7 @@ impl Serialize for JsModule {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsModuleFields {
     pub interpreter_token: Option<SyntaxToken>,
     pub directives: JsDirectiveList,
@@ -4050,7 +4050,7 @@ impl Serialize for JsModuleSource {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsModuleSourceFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -4084,7 +4084,7 @@ impl Serialize for JsName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNameFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -4128,7 +4128,7 @@ impl Serialize for JsNamedImportSpecifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNamedImportSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsLiteralExportName>,
@@ -4171,7 +4171,7 @@ impl Serialize for JsNamedImportSpecifiers {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNamedImportSpecifiersFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub specifiers: JsNamedImportSpecifierList,
@@ -4215,7 +4215,7 @@ impl Serialize for JsNamespaceImportSpecifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNamespaceImportSpecifierFields {
     pub star_token: SyntaxResult<SyntaxToken>,
     pub as_token: SyntaxResult<SyntaxToken>,
@@ -4259,7 +4259,7 @@ impl Serialize for JsNewExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNewExpressionFields {
     pub new_token: SyntaxResult<SyntaxToken>,
     pub callee: SyntaxResult<JsAnyExpression>,
@@ -4296,7 +4296,7 @@ impl Serialize for JsNullLiteralExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNullLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -4330,7 +4330,7 @@ impl Serialize for JsNumberLiteralExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNumberLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -4372,7 +4372,7 @@ impl Serialize for JsObjectAssignmentPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectAssignmentPatternFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub properties: JsObjectAssignmentPatternPropertyList,
@@ -4418,7 +4418,7 @@ impl Serialize for JsObjectAssignmentPatternProperty {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectAssignmentPatternPropertyFields {
     pub member: SyntaxResult<JsAnyObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -4459,7 +4459,7 @@ impl Serialize for JsObjectAssignmentPatternRest {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectAssignmentPatternRestFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub target: SyntaxResult<JsAnyAssignment>,
@@ -4496,7 +4496,7 @@ impl Serialize for JsObjectAssignmentPatternShorthandProperty {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectAssignmentPatternShorthandPropertyFields {
     pub identifier: SyntaxResult<JsIdentifierAssignment>,
     pub init: Option<JsInitializerClause>,
@@ -4539,7 +4539,7 @@ impl Serialize for JsObjectBindingPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectBindingPatternFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub properties: JsObjectBindingPatternPropertyList,
@@ -4585,7 +4585,7 @@ impl Serialize for JsObjectBindingPatternProperty {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectBindingPatternPropertyFields {
     pub member: SyntaxResult<JsAnyObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -4626,7 +4626,7 @@ impl Serialize for JsObjectBindingPatternRest {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectBindingPatternRestFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<JsAnyBinding>,
@@ -4663,7 +4663,7 @@ impl Serialize for JsObjectBindingPatternShorthandProperty {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectBindingPatternShorthandPropertyFields {
     pub identifier: SyntaxResult<JsAnyBinding>,
     pub init: Option<JsInitializerClause>,
@@ -4704,7 +4704,7 @@ impl Serialize for JsObjectExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectExpressionFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub members: JsObjectMemberList,
@@ -4746,7 +4746,7 @@ impl Serialize for JsParameters {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsParametersFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub items: JsParameterList,
@@ -4790,7 +4790,7 @@ impl Serialize for JsParenthesizedAssignment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsParenthesizedAssignmentFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub assignment: SyntaxResult<JsAnyAssignment>,
@@ -4834,7 +4834,7 @@ impl Serialize for JsParenthesizedExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsParenthesizedExpressionFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -4874,7 +4874,7 @@ impl Serialize for JsPostUpdateExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPostUpdateExpressionFields {
     pub operand: SyntaxResult<JsAnyAssignment>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -4913,7 +4913,7 @@ impl Serialize for JsPreUpdateExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPreUpdateExpressionFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub operand: SyntaxResult<JsAnyAssignment>,
@@ -4952,7 +4952,7 @@ impl Serialize for JsPrivateClassMemberName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPrivateClassMemberNameFields {
     pub hash_token: SyntaxResult<SyntaxToken>,
     pub id_token: SyntaxResult<SyntaxToken>,
@@ -4991,7 +4991,7 @@ impl Serialize for JsPrivateName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPrivateNameFields {
     pub hash_token: SyntaxResult<SyntaxToken>,
     pub value_token: SyntaxResult<SyntaxToken>,
@@ -5036,7 +5036,7 @@ impl Serialize for JsPropertyClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPropertyClassMemberFields {
     pub modifiers: JsPropertyModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -5082,7 +5082,7 @@ impl Serialize for JsPropertyObjectMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPropertyObjectMemberFields {
     pub name: SyntaxResult<JsAnyObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -5118,7 +5118,7 @@ impl Serialize for JsReferenceIdentifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsReferenceIdentifierFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -5152,7 +5152,7 @@ impl Serialize for JsRegexLiteralExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsRegexLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -5194,7 +5194,7 @@ impl Serialize for JsRestParameter {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsRestParameterFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<JsAnyBindingPattern>,
@@ -5234,7 +5234,7 @@ impl Serialize for JsReturnStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsReturnStatementFields {
     pub return_token: SyntaxResult<SyntaxToken>,
     pub argument: Option<JsAnyExpression>,
@@ -5276,7 +5276,7 @@ impl Serialize for JsScript {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsScriptFields {
     pub interpreter_token: Option<SyntaxToken>,
     pub directives: JsDirectiveList,
@@ -5321,7 +5321,7 @@ impl Serialize for JsSequenceExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSequenceExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
     pub comma_token: SyntaxResult<SyntaxToken>,
@@ -5379,7 +5379,7 @@ impl Serialize for JsSetterClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSetterClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
@@ -5439,7 +5439,7 @@ impl Serialize for JsSetterObjectMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSetterObjectMemberFields {
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -5480,7 +5480,7 @@ impl Serialize for JsShorthandNamedImportSpecifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsShorthandNamedImportSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub local_name: SyntaxResult<JsAnyBinding>,
@@ -5513,7 +5513,7 @@ impl Serialize for JsShorthandPropertyObjectMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsShorthandPropertyObjectMemberFields {
     pub name: SyntaxResult<JsReferenceIdentifier>,
 }
@@ -5551,7 +5551,7 @@ impl Serialize for JsSpread {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSpreadFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -5596,7 +5596,7 @@ impl Serialize for JsStaticInitializationBlockClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsStaticInitializationBlockClassMemberFields {
     pub static_token: SyntaxResult<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -5639,7 +5639,7 @@ impl Serialize for JsStaticMemberAssignment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsStaticMemberAssignmentFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -5681,7 +5681,7 @@ impl Serialize for JsStaticMemberExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsStaticMemberExpressionFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
@@ -5717,7 +5717,7 @@ impl Serialize for JsStaticModifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsStaticModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -5751,7 +5751,7 @@ impl Serialize for JsStringLiteralExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsStringLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -5785,7 +5785,7 @@ impl Serialize for JsSuperExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSuperExpressionFields {
     pub super_token: SyntaxResult<SyntaxToken>,
 }
@@ -5841,7 +5841,7 @@ impl Serialize for JsSwitchStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSwitchStatementFields {
     pub switch_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -5891,7 +5891,7 @@ impl Serialize for JsTemplate {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsTemplateFields {
     pub tag: Option<JsAnyExpression>,
     pub type_arguments: Option<TsTypeArguments>,
@@ -5929,7 +5929,7 @@ impl Serialize for JsTemplateChunkElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsTemplateChunkElementFields {
     pub template_chunk_token: SyntaxResult<SyntaxToken>,
 }
@@ -5971,7 +5971,7 @@ impl Serialize for JsTemplateElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsTemplateElementFields {
     pub dollar_curly_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -6007,7 +6007,7 @@ impl Serialize for JsThisExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsThisExpressionFields {
     pub this_token: SyntaxResult<SyntaxToken>,
 }
@@ -6047,7 +6047,7 @@ impl Serialize for JsThrowStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsThrowStatementFields {
     pub throw_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -6093,7 +6093,7 @@ impl Serialize for JsTryFinallyStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsTryFinallyStatementFields {
     pub try_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsBlockStatement>,
@@ -6138,7 +6138,7 @@ impl Serialize for JsTryStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsTryStatementFields {
     pub try_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsBlockStatement>,
@@ -6178,7 +6178,7 @@ impl Serialize for JsUnaryExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsUnaryExpressionFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
@@ -6215,7 +6215,7 @@ impl Serialize for JsVariableDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsVariableDeclarationFields {
     pub kind: SyntaxResult<SyntaxToken>,
     pub declarators: JsVariableDeclaratorList,
@@ -6252,7 +6252,7 @@ impl Serialize for JsVariableDeclarationClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsVariableDeclarationClauseFields {
     pub declaration: SyntaxResult<JsVariableDeclaration>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -6293,7 +6293,7 @@ impl Serialize for JsVariableDeclarator {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsVariableDeclaratorFields {
     pub id: SyntaxResult<JsAnyBindingPattern>,
     pub variable_annotation: Option<TsAnyVariableAnnotation>,
@@ -6331,7 +6331,7 @@ impl Serialize for JsVariableStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsVariableStatementFields {
     pub declaration: SyntaxResult<JsVariableDeclaration>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -6382,7 +6382,7 @@ impl Serialize for JsWhileStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsWhileStatementFields {
     pub while_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -6436,7 +6436,7 @@ impl Serialize for JsWithStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsWithStatementFields {
     pub with_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -6476,7 +6476,7 @@ impl Serialize for JsYieldArgument {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsYieldArgumentFields {
     pub star_token: Option<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -6513,7 +6513,7 @@ impl Serialize for JsYieldExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsYieldExpressionFields {
     pub yield_token: SyntaxResult<SyntaxToken>,
     pub argument: Option<JsYieldArgument>,
@@ -6552,7 +6552,7 @@ impl Serialize for JsxAttribute {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxAttributeFields {
     pub name: SyntaxResult<JsxAnyAttributeName>,
     pub initializer: Option<JsxAttributeInitializerClause>,
@@ -6591,7 +6591,7 @@ impl Serialize for JsxAttributeInitializerClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxAttributeInitializerClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub value: SyntaxResult<JsxAnyAttributeValue>,
@@ -6638,7 +6638,7 @@ impl Serialize for JsxClosingElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub slash_token: SyntaxResult<SyntaxToken>,
@@ -6683,7 +6683,7 @@ impl Serialize for JsxClosingFragment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxClosingFragmentFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub slash_token: SyntaxResult<SyntaxToken>,
@@ -6725,7 +6725,7 @@ impl Serialize for JsxElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxElementFields {
     pub opening_element: SyntaxResult<JsxOpeningElement>,
     pub children: JsxChildList,
@@ -6769,7 +6769,7 @@ impl Serialize for JsxExpressionAttributeValue {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxExpressionAttributeValueFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -6811,7 +6811,7 @@ impl Serialize for JsxExpressionChild {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxExpressionChildFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub expression: Option<JsAnyExpression>,
@@ -6853,7 +6853,7 @@ impl Serialize for JsxFragment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxFragmentFields {
     pub opening_fragment: SyntaxResult<JsxOpeningFragment>,
     pub children: JsxChildList,
@@ -6895,7 +6895,7 @@ impl Serialize for JsxMemberName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxMemberNameFields {
     pub object: SyntaxResult<JsxAnyObjectName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -6931,7 +6931,7 @@ impl Serialize for JsxName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxNameFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -6971,7 +6971,7 @@ impl Serialize for JsxNamespaceName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxNamespaceNameFields {
     pub namespace: SyntaxResult<JsxName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -7019,7 +7019,7 @@ impl Serialize for JsxOpeningElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxOpeningElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
@@ -7061,7 +7061,7 @@ impl Serialize for JsxOpeningFragment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxOpeningFragmentFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
@@ -7096,7 +7096,7 @@ impl Serialize for JsxReferenceIdentifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxReferenceIdentifierFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -7146,7 +7146,7 @@ impl Serialize for JsxSelfClosingElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxSelfClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
@@ -7197,7 +7197,7 @@ impl Serialize for JsxSpreadAttribute {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxSpreadAttributeFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
@@ -7246,7 +7246,7 @@ impl Serialize for JsxSpreadChild {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxSpreadChildFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
@@ -7283,7 +7283,7 @@ impl Serialize for JsxString {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxStringFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -7311,7 +7311,7 @@ impl Serialize for JsxTagExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxTagExpressionFields {
     pub tag: SyntaxResult<JsxAnyTag>,
 }
@@ -7345,7 +7345,7 @@ impl Serialize for JsxText {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxTextFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -7387,7 +7387,7 @@ impl Serialize for NewTarget {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct NewTargetFields {
     pub new_token: SyntaxResult<SyntaxToken>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -7423,7 +7423,7 @@ impl Serialize for TsAbstractModifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAbstractModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -7457,7 +7457,7 @@ impl Serialize for TsAccessibilityModifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAccessibilityModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -7491,7 +7491,7 @@ impl Serialize for TsAnyType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAnyTypeFields {
     pub any_token: SyntaxResult<SyntaxToken>,
 }
@@ -7533,7 +7533,7 @@ impl Serialize for TsArrayType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsArrayTypeFields {
     pub element_type: SyntaxResult<TsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -7575,7 +7575,7 @@ impl Serialize for TsAsAssignment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAsAssignmentFields {
     pub assignment: SyntaxResult<JsAnyAssignment>,
     pub as_token: SyntaxResult<SyntaxToken>,
@@ -7617,7 +7617,7 @@ impl Serialize for TsAsExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAsExpressionFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub as_token: SyntaxResult<SyntaxToken>,
@@ -7655,7 +7655,7 @@ impl Serialize for TsAssertsCondition {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAssertsConditionFields {
     pub is_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -7696,7 +7696,7 @@ impl Serialize for TsAssertsReturnType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAssertsReturnTypeFields {
     pub asserts_token: SyntaxResult<SyntaxToken>,
     pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
@@ -7734,7 +7734,7 @@ impl Serialize for TsBigIntLiteralType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsBigIntLiteralTypeFields {
     pub minus_token: Option<SyntaxToken>,
     pub literal_token: SyntaxResult<SyntaxToken>,
@@ -7769,7 +7769,7 @@ impl Serialize for TsBigintType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsBigintTypeFields {
     pub bigint_token: SyntaxResult<SyntaxToken>,
 }
@@ -7803,7 +7803,7 @@ impl Serialize for TsBooleanLiteralType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsBooleanLiteralTypeFields {
     pub literal: SyntaxResult<SyntaxToken>,
 }
@@ -7837,7 +7837,7 @@ impl Serialize for TsBooleanType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsBooleanTypeFields {
     pub boolean_token: SyntaxResult<SyntaxToken>,
 }
@@ -7881,7 +7881,7 @@ impl Serialize for TsCallSignatureTypeMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsCallSignatureTypeMemberFields {
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -7940,7 +7940,7 @@ impl Serialize for TsConditionalType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsConditionalTypeFields {
     pub check_type: SyntaxResult<TsType>,
     pub extends_token: SyntaxResult<SyntaxToken>,
@@ -7994,7 +7994,7 @@ impl Serialize for TsConstructSignatureTypeMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsConstructSignatureTypeMemberFields {
     pub new_token: SyntaxResult<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
@@ -8040,7 +8040,7 @@ impl Serialize for TsConstructorSignatureClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsConstructorSignatureClassMemberFields {
     pub modifiers: JsConstructorModifierList,
     pub name: SyntaxResult<JsLiteralMemberName>,
@@ -8095,7 +8095,7 @@ impl Serialize for TsConstructorType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsConstructorTypeFields {
     pub abstract_token: Option<SyntaxToken>,
     pub new_token: SyntaxResult<SyntaxToken>,
@@ -8152,7 +8152,7 @@ impl Serialize for TsDeclareFunctionDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDeclareFunctionDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
@@ -8192,7 +8192,7 @@ impl Serialize for TsDeclareModifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDeclareModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -8230,7 +8230,7 @@ impl Serialize for TsDeclareStatement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDeclareStatementFields {
     pub declare_token: SyntaxResult<SyntaxToken>,
     pub declaration: SyntaxResult<JsAnyDeclarationClause>,
@@ -8267,7 +8267,7 @@ impl Serialize for TsDefaultTypeClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDefaultTypeClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -8306,7 +8306,7 @@ impl Serialize for TsDefinitePropertyAnnotation {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDefinitePropertyAnnotationFields {
     pub excl_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
@@ -8345,7 +8345,7 @@ impl Serialize for TsDefiniteVariableAnnotation {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDefiniteVariableAnnotationFields {
     pub excl_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
@@ -8380,7 +8380,7 @@ impl Serialize for TsEmptyExternalModuleDeclarationBody {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsEmptyExternalModuleDeclarationBodyFields {
     pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
@@ -8428,7 +8428,7 @@ impl Serialize for TsEnumDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsEnumDeclarationFields {
     pub const_token: Option<SyntaxToken>,
     pub enum_token: SyntaxResult<SyntaxToken>,
@@ -8469,7 +8469,7 @@ impl Serialize for TsEnumMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsEnumMemberFields {
     pub name: SyntaxResult<JsAnyObjectMemberName>,
     pub initializer: Option<JsInitializerClause>,
@@ -8512,7 +8512,7 @@ impl Serialize for TsExportAsNamespaceClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExportAsNamespaceClauseFields {
     pub as_token: SyntaxResult<SyntaxToken>,
     pub namespace_token: SyntaxResult<SyntaxToken>,
@@ -8555,7 +8555,7 @@ impl Serialize for TsExportAssignmentClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExportAssignmentClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
@@ -8595,7 +8595,7 @@ impl Serialize for TsExportDeclareClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExportDeclareClauseFields {
     pub declare_token: SyntaxResult<SyntaxToken>,
     pub declaration: SyntaxResult<JsAnyDeclarationClause>,
@@ -8632,7 +8632,7 @@ impl Serialize for TsExtendsClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExtendsClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
     pub types: TsTypeList,
@@ -8675,7 +8675,7 @@ impl Serialize for TsExternalModuleDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExternalModuleDeclarationFields {
     pub module_token: SyntaxResult<SyntaxToken>,
     pub source: SyntaxResult<JsModuleSource>,
@@ -8723,7 +8723,7 @@ impl Serialize for TsExternalModuleReference {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExternalModuleReferenceFields {
     pub require_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -8772,7 +8772,7 @@ impl Serialize for TsFunctionType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsFunctionTypeFields {
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -8827,7 +8827,7 @@ impl Serialize for TsGetterSignatureClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsGetterSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
@@ -8885,7 +8885,7 @@ impl Serialize for TsGetterSignatureTypeMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsGetterSignatureTypeMemberFields {
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -8928,7 +8928,7 @@ impl Serialize for TsGlobalDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsGlobalDeclarationFields {
     pub global_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<TsModuleBlock>,
@@ -8963,7 +8963,7 @@ impl Serialize for TsIdentifierBinding {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIdentifierBindingFields {
     pub name_token: SyntaxResult<SyntaxToken>,
 }
@@ -8999,7 +8999,7 @@ impl Serialize for TsImplementsClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsImplementsClauseFields {
     pub implements_token: SyntaxResult<SyntaxToken>,
     pub types: TsTypeList,
@@ -9048,7 +9048,7 @@ impl Serialize for TsImportEqualsDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsImportEqualsDeclarationFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub type_token: Option<SyntaxToken>,
@@ -9107,7 +9107,7 @@ impl Serialize for TsImportType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsImportTypeFields {
     pub typeof_token: Option<SyntaxToken>,
     pub import_token: SyntaxResult<SyntaxToken>,
@@ -9149,7 +9149,7 @@ impl Serialize for TsImportTypeQualifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsImportTypeQualifierFields {
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub right: SyntaxResult<TsAnyName>,
@@ -9200,7 +9200,7 @@ impl Serialize for TsIndexSignatureClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIndexSignatureClassMemberFields {
     pub modifiers: TsIndexSignatureModifierList,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -9243,7 +9243,7 @@ impl Serialize for TsIndexSignatureParameter {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIndexSignatureParameterFields {
     pub binding: SyntaxResult<JsIdentifierBinding>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
@@ -9294,7 +9294,7 @@ impl Serialize for TsIndexSignatureTypeMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIndexSignatureTypeMemberFields {
     pub readonly_token: Option<SyntaxToken>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -9345,7 +9345,7 @@ impl Serialize for TsIndexedAccessType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIndexedAccessTypeFields {
     pub object_type: SyntaxResult<TsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
@@ -9386,7 +9386,7 @@ impl Serialize for TsInferType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsInferTypeFields {
     pub infer_token: SyntaxResult<SyntaxToken>,
     pub type_parameter: SyntaxResult<TsTypeParameterName>,
@@ -9441,7 +9441,7 @@ impl Serialize for TsInterfaceDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsInterfaceDeclarationFields {
     pub interface_token: SyntaxResult<SyntaxToken>,
     pub id: SyntaxResult<TsIdentifierBinding>,
@@ -9483,7 +9483,7 @@ impl Serialize for TsIntersectionType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIntersectionTypeFields {
     pub leading_separator_token: Option<SyntaxToken>,
     pub types: TsIntersectionTypeElementList,
@@ -9554,7 +9554,7 @@ impl Serialize for TsMappedType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMappedTypeFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub readonly_modifier: Option<TsMappedTypeReadonlyModifierClause>,
@@ -9601,7 +9601,7 @@ impl Serialize for TsMappedTypeAsClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMappedTypeAsClauseFields {
     pub as_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -9638,7 +9638,7 @@ impl Serialize for TsMappedTypeOptionalModifierClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMappedTypeOptionalModifierClauseFields {
     pub operator_token: Option<SyntaxToken>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
@@ -9675,7 +9675,7 @@ impl Serialize for TsMappedTypeReadonlyModifierClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMappedTypeReadonlyModifierClauseFields {
     pub operator_token: Option<SyntaxToken>,
     pub readonly_token: SyntaxResult<SyntaxToken>,
@@ -9732,7 +9732,7 @@ impl Serialize for TsMethodSignatureClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMethodSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub async_token: Option<SyntaxToken>,
@@ -9789,7 +9789,7 @@ impl Serialize for TsMethodSignatureTypeMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMethodSignatureTypeMemberFields {
     pub name: SyntaxResult<JsAnyObjectMemberName>,
     pub optional_token: Option<SyntaxToken>,
@@ -9834,7 +9834,7 @@ impl Serialize for TsModuleBlock {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsModuleBlockFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub items: JsModuleItemList,
@@ -9878,7 +9878,7 @@ impl Serialize for TsModuleDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsModuleDeclarationFields {
     pub module_or_namespace: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<TsAnyModuleName>,
@@ -9914,7 +9914,7 @@ impl Serialize for TsNameWithTypeArguments {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNameWithTypeArgumentsFields {
     pub name: SyntaxResult<TsAnyName>,
     pub type_arguments: Option<TsTypeArguments>,
@@ -9959,7 +9959,7 @@ impl Serialize for TsNamedTupleTypeElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNamedTupleTypeElementFields {
     pub dotdotdot_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsName>,
@@ -9997,7 +9997,7 @@ impl Serialize for TsNeverType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNeverTypeFields {
     pub never_token: SyntaxResult<SyntaxToken>,
 }
@@ -10035,7 +10035,7 @@ impl Serialize for TsNonNullAssertionAssignment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNonNullAssertionAssignmentFields {
     pub assignment: SyntaxResult<JsAnyAssignment>,
     pub excl_token: SyntaxResult<SyntaxToken>,
@@ -10074,7 +10074,7 @@ impl Serialize for TsNonNullAssertionExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNonNullAssertionExpressionFields {
     pub expression: SyntaxResult<JsAnyExpression>,
     pub excl_token: SyntaxResult<SyntaxToken>,
@@ -10109,7 +10109,7 @@ impl Serialize for TsNonPrimitiveType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNonPrimitiveTypeFields {
     pub object_token: SyntaxResult<SyntaxToken>,
 }
@@ -10143,7 +10143,7 @@ impl Serialize for TsNullLiteralType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNullLiteralTypeFields {
     pub literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -10179,7 +10179,7 @@ impl Serialize for TsNumberLiteralType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNumberLiteralTypeFields {
     pub minus_token: Option<SyntaxToken>,
     pub literal_token: SyntaxResult<SyntaxToken>,
@@ -10214,7 +10214,7 @@ impl Serialize for TsNumberType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNumberTypeFields {
     pub number_token: SyntaxResult<SyntaxToken>,
 }
@@ -10254,7 +10254,7 @@ impl Serialize for TsObjectType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsObjectTypeFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub members: TsTypeMemberList,
@@ -10294,7 +10294,7 @@ impl Serialize for TsOptionalPropertyAnnotation {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsOptionalPropertyAnnotationFields {
     pub question_mark_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
@@ -10331,7 +10331,7 @@ impl Serialize for TsOptionalTupleTypeElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsOptionalTupleTypeElementFields {
     pub ty: SyntaxResult<TsType>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
@@ -10366,7 +10366,7 @@ impl Serialize for TsOverrideModifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsOverrideModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -10406,7 +10406,7 @@ impl Serialize for TsParenthesizedType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsParenthesizedTypeFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -10448,7 +10448,7 @@ impl Serialize for TsPredicateReturnType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPredicateReturnTypeFields {
     pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
     pub is_token: SyntaxResult<SyntaxToken>,
@@ -10488,7 +10488,7 @@ impl Serialize for TsPropertyParameter {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPropertyParameterFields {
     pub modifiers: TsPropertyParameterModifierList,
     pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
@@ -10533,7 +10533,7 @@ impl Serialize for TsPropertySignatureClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPropertySignatureClassMemberFields {
     pub modifiers: TsPropertySignatureModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -10580,7 +10580,7 @@ impl Serialize for TsPropertySignatureTypeMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPropertySignatureTypeMemberFields {
     pub readonly_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -10624,7 +10624,7 @@ impl Serialize for TsQualifiedModuleName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsQualifiedModuleNameFields {
     pub left: SyntaxResult<TsAnyModuleName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -10664,7 +10664,7 @@ impl Serialize for TsQualifiedName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsQualifiedNameFields {
     pub left: SyntaxResult<TsAnyName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
@@ -10700,7 +10700,7 @@ impl Serialize for TsReadonlyModifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsReadonlyModifierFields {
     pub modifier_token: SyntaxResult<SyntaxToken>,
 }
@@ -10734,7 +10734,7 @@ impl Serialize for TsReferenceType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsReferenceTypeFields {
     pub name: SyntaxResult<TsAnyName>,
     pub type_arguments: Option<TsTypeArguments>,
@@ -10771,7 +10771,7 @@ impl Serialize for TsRestTupleTypeElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsRestTupleTypeElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -10810,7 +10810,7 @@ impl Serialize for TsReturnTypeAnnotation {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsReturnTypeAnnotationFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsAnyReturnType>,
@@ -10865,7 +10865,7 @@ impl Serialize for TsSetterSignatureClassMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsSetterSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
@@ -10923,7 +10923,7 @@ impl Serialize for TsSetterSignatureTypeMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsSetterSignatureTypeMemberFields {
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyObjectMemberName>,
@@ -10962,7 +10962,7 @@ impl Serialize for TsStringLiteralType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsStringLiteralTypeFields {
     pub literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -10996,7 +10996,7 @@ impl Serialize for TsStringType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsStringTypeFields {
     pub string_token: SyntaxResult<SyntaxToken>,
 }
@@ -11030,7 +11030,7 @@ impl Serialize for TsSymbolType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsSymbolTypeFields {
     pub symbol_token: SyntaxResult<SyntaxToken>,
 }
@@ -11064,7 +11064,7 @@ impl Serialize for TsTemplateChunkElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTemplateChunkElementFields {
     pub template_chunk_token: SyntaxResult<SyntaxToken>,
 }
@@ -11104,7 +11104,7 @@ impl Serialize for TsTemplateElement {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTemplateElementFields {
     pub dollar_curly_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -11146,7 +11146,7 @@ impl Serialize for TsTemplateLiteralType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTemplateLiteralTypeFields {
     pub l_tick_token: SyntaxResult<SyntaxToken>,
     pub elements: TsTemplateElementList,
@@ -11186,7 +11186,7 @@ impl Serialize for TsThisParameter {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsThisParameterFields {
     pub this_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
@@ -11221,7 +11221,7 @@ impl Serialize for TsThisType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsThisTypeFields {
     pub this_token: SyntaxResult<SyntaxToken>,
 }
@@ -11261,7 +11261,7 @@ impl Serialize for TsTupleType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTupleTypeFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: TsTupleTypeElementList,
@@ -11313,7 +11313,7 @@ impl Serialize for TsTypeAliasDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeAliasDeclarationFields {
     pub type_token: SyntaxResult<SyntaxToken>,
     pub binding_identifier: SyntaxResult<TsIdentifierBinding>,
@@ -11354,7 +11354,7 @@ impl Serialize for TsTypeAnnotation {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeAnnotationFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -11397,7 +11397,7 @@ impl Serialize for TsTypeArguments {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeArgumentsFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub ts_type_argument_list: TsTypeArgumentList,
@@ -11443,7 +11443,7 @@ impl Serialize for TsTypeAssertionAssignment {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeAssertionAssignmentFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -11490,7 +11490,7 @@ impl Serialize for TsTypeAssertionExpression {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeAssertionExpressionFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -11529,7 +11529,7 @@ impl Serialize for TsTypeConstraintClause {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeConstraintClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -11566,7 +11566,7 @@ impl Serialize for TsTypeOperatorType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeOperatorTypeFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsType>,
@@ -11607,7 +11607,7 @@ impl Serialize for TsTypeParameter {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeParameterFields {
     pub name: SyntaxResult<TsTypeParameterName>,
     pub constraint: Option<TsTypeConstraintClause>,
@@ -11643,7 +11643,7 @@ impl Serialize for TsTypeParameterName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeParameterNameFields {
     pub ident_token: SyntaxResult<SyntaxToken>,
 }
@@ -11683,7 +11683,7 @@ impl Serialize for TsTypeParameters {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeParametersFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub items: TsTypeParameterList,
@@ -11723,7 +11723,7 @@ impl Serialize for TsTypeofType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeofTypeFields {
     pub typeof_token: SyntaxResult<SyntaxToken>,
     pub expression_name: SyntaxResult<TsAnyName>,
@@ -11758,7 +11758,7 @@ impl Serialize for TsUndefinedType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsUndefinedTypeFields {
     pub undefined_token: SyntaxResult<SyntaxToken>,
 }
@@ -11794,7 +11794,7 @@ impl Serialize for TsUnionType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsUnionTypeFields {
     pub leading_separator_token: Option<SyntaxToken>,
     pub types: TsUnionTypeVariantList,
@@ -11829,7 +11829,7 @@ impl Serialize for TsUnknownType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsUnknownTypeFields {
     pub unknown_token: SyntaxResult<SyntaxToken>,
 }
@@ -11863,13 +11863,12 @@ impl Serialize for TsVoidType {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsVoidTypeFields {
     pub void_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrayAssignmentPatternElement {
     JsAnyAssignmentPattern(JsAnyAssignmentPattern),
     JsArrayAssignmentPatternRestElement(JsArrayAssignmentPatternRestElement),
@@ -11908,7 +11907,6 @@ impl JsAnyArrayAssignmentPatternElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrayBindingPatternElement {
     JsAnyBindingPattern(JsAnyBindingPattern),
     JsArrayBindingPatternRestElement(JsArrayBindingPatternRestElement),
@@ -11945,7 +11943,6 @@ impl JsAnyArrayBindingPatternElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrayElement {
     JsAnyExpression(JsAnyExpression),
     JsArrayHole(JsArrayHole),
@@ -11973,7 +11970,6 @@ impl JsAnyArrayElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyArrowFunctionParameters {
     JsAnyBinding(JsAnyBinding),
     JsParameters(JsParameters),
@@ -11994,7 +11990,6 @@ impl JsAnyArrowFunctionParameters {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyAssignment {
     JsComputedMemberAssignment(JsComputedMemberAssignment),
     JsIdentifierAssignment(JsIdentifierAssignment),
@@ -12057,7 +12052,6 @@ impl JsAnyAssignment {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyAssignmentPattern {
     JsAnyAssignment(JsAnyAssignment),
     JsArrayAssignmentPattern(JsArrayAssignmentPattern),
@@ -12085,7 +12079,6 @@ impl JsAnyAssignmentPattern {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyBinding {
     JsIdentifierBinding(JsIdentifierBinding),
     JsUnknownBinding(JsUnknownBinding),
@@ -12106,7 +12099,6 @@ impl JsAnyBinding {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyBindingPattern {
     JsAnyBinding(JsAnyBinding),
     JsArrayBindingPattern(JsArrayBindingPattern),
@@ -12134,7 +12126,6 @@ impl JsAnyBindingPattern {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyCallArgument {
     JsAnyExpression(JsAnyExpression),
     JsSpread(JsSpread),
@@ -12155,7 +12146,6 @@ impl JsAnyCallArgument {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyClass {
     JsClassDeclaration(JsClassDeclaration),
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
@@ -12185,7 +12175,6 @@ impl JsAnyClass {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyClassMember {
     JsConstructorClassMember(JsConstructorClassMember),
     JsEmptyClassMember(JsEmptyClassMember),
@@ -12294,7 +12283,6 @@ impl JsAnyClassMember {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyClassMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
@@ -12322,7 +12310,6 @@ impl JsAnyClassMemberName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyConstructorParameter {
     JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
@@ -12350,7 +12337,6 @@ impl JsAnyConstructorParameter {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyDeclaration {
     JsClassDeclaration(JsClassDeclaration),
     JsFunctionDeclaration(JsFunctionDeclaration),
@@ -12434,7 +12420,6 @@ impl JsAnyDeclaration {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyDeclarationClause {
     JsClassDeclaration(JsClassDeclaration),
     JsFunctionDeclaration(JsFunctionDeclaration),
@@ -12518,7 +12503,6 @@ impl JsAnyDeclarationClause {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExportClause {
     JsAnyDeclarationClause(JsAnyDeclarationClause),
     JsExportDefaultDeclarationClause(JsExportDefaultDeclarationClause),
@@ -12592,7 +12576,6 @@ impl JsAnyExportClause {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExportDefaultDeclaration {
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
     JsFunctionExportDefaultDeclaration(JsFunctionExportDefaultDeclaration),
@@ -12631,7 +12614,6 @@ impl JsAnyExportDefaultDeclaration {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExportNamedSpecifier {
     JsExportNamedShorthandSpecifier(JsExportNamedShorthandSpecifier),
     JsExportNamedSpecifier(JsExportNamedSpecifier),
@@ -12654,7 +12636,6 @@ impl JsAnyExportNamedSpecifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyExpression {
     ImportMeta(ImportMeta),
     JsAnyLiteralExpression(JsAnyLiteralExpression),
@@ -12906,7 +12887,6 @@ impl JsAnyExpression {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyForInOrOfInitializer {
     JsAnyAssignmentPattern(JsAnyAssignmentPattern),
     JsForVariableDeclaration(JsForVariableDeclaration),
@@ -12927,7 +12907,6 @@ impl JsAnyForInOrOfInitializer {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyForInitializer {
     JsAnyExpression(JsAnyExpression),
     JsVariableDeclaration(JsVariableDeclaration),
@@ -12948,7 +12927,6 @@ impl JsAnyForInitializer {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyFormalParameter {
     JsFormalParameter(JsFormalParameter),
     JsUnknownParameter(JsUnknownParameter),
@@ -12969,7 +12947,6 @@ impl JsAnyFormalParameter {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyFunction {
     JsArrowFunctionExpression(JsArrowFunctionExpression),
     JsFunctionDeclaration(JsFunctionDeclaration),
@@ -13006,7 +12983,6 @@ impl JsAnyFunction {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyFunctionBody {
     JsAnyExpression(JsAnyExpression),
     JsFunctionBody(JsFunctionBody),
@@ -13027,7 +13003,6 @@ impl JsAnyFunctionBody {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyImportAssertionEntry {
     JsImportAssertionEntry(JsImportAssertionEntry),
     JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry),
@@ -13048,7 +13023,6 @@ impl JsAnyImportAssertionEntry {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyImportClause {
     JsImportBareClause(JsImportBareClause),
     JsImportDefaultClause(JsImportDefaultClause),
@@ -13083,7 +13057,6 @@ impl JsAnyImportClause {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyInProperty {
     JsAnyExpression(JsAnyExpression),
     JsPrivateName(JsPrivateName),
@@ -13104,7 +13077,6 @@ impl JsAnyInProperty {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyLiteralExpression {
     JsBigIntLiteralExpression(JsBigIntLiteralExpression),
     JsBooleanLiteralExpression(JsBooleanLiteralExpression),
@@ -13153,7 +13125,6 @@ impl JsAnyLiteralExpression {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyMethodModifier {
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
@@ -13181,7 +13152,6 @@ impl JsAnyMethodModifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyModuleItem {
     JsAnyStatement(JsAnyStatement),
     JsExport(JsExport),
@@ -13209,7 +13179,6 @@ impl JsAnyModuleItem {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyName {
     JsName(JsName),
     JsPrivateName(JsPrivateName),
@@ -13230,7 +13199,6 @@ impl JsAnyName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyNamedImport {
     JsNamedImportSpecifiers(JsNamedImportSpecifiers),
     JsNamespaceImportSpecifier(JsNamespaceImportSpecifier),
@@ -13251,7 +13219,6 @@ impl JsAnyNamedImport {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyNamedImportSpecifier {
     JsNamedImportSpecifier(JsNamedImportSpecifier),
     JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier),
@@ -13281,7 +13248,6 @@ impl JsAnyNamedImportSpecifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectAssignmentPatternMember {
     JsObjectAssignmentPatternProperty(JsObjectAssignmentPatternProperty),
     JsObjectAssignmentPatternRest(JsObjectAssignmentPatternRest),
@@ -13324,7 +13290,6 @@ impl JsAnyObjectAssignmentPatternMember {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectBindingPatternMember {
     JsIdentifierBinding(JsIdentifierBinding),
     JsObjectBindingPatternProperty(JsObjectBindingPatternProperty),
@@ -13370,7 +13335,6 @@ impl JsAnyObjectBindingPatternMember {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectMember {
     JsGetterObjectMember(JsGetterObjectMember),
     JsMethodObjectMember(JsMethodObjectMember),
@@ -13428,7 +13392,6 @@ impl JsAnyObjectMember {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyObjectMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
@@ -13449,7 +13412,6 @@ impl JsAnyObjectMemberName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyParameter {
     JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
@@ -13477,7 +13439,6 @@ impl JsAnyParameter {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyPropertyModifier {
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
@@ -13512,7 +13473,6 @@ impl JsAnyPropertyModifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyRoot {
     JsExpressionSnipped(JsExpressionSnipped),
     JsModule(JsModule),
@@ -13540,7 +13500,6 @@ impl JsAnyRoot {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyStatement {
     JsBlockStatement(JsBlockStatement),
     JsBreakStatement(JsBreakStatement),
@@ -13771,7 +13730,6 @@ impl JsAnyStatement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnySwitchClause {
     JsCaseClause(JsCaseClause),
     JsDefaultClause(JsDefaultClause),
@@ -13792,7 +13750,6 @@ impl JsAnySwitchClause {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsAnyTemplateElement {
     JsTemplateChunkElement(JsTemplateChunkElement),
     JsTemplateElement(JsTemplateElement),
@@ -13813,7 +13770,6 @@ impl JsAnyTemplateElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyAttribute {
     JsxAttribute(JsxAttribute),
     JsxSpreadAttribute(JsxSpreadAttribute),
@@ -13834,7 +13790,6 @@ impl JsxAnyAttribute {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyAttributeName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
@@ -13855,7 +13810,6 @@ impl JsxAnyAttributeName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyAttributeValue {
     JsxAnyTag(JsxAnyTag),
     JsxExpressionAttributeValue(JsxExpressionAttributeValue),
@@ -13883,7 +13837,6 @@ impl JsxAnyAttributeValue {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyChild {
     JsxElement(JsxElement),
     JsxExpressionChild(JsxExpressionChild),
@@ -13932,7 +13885,6 @@ impl JsxAnyChild {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyElementName {
     JsxMemberName(JsxMemberName),
     JsxName(JsxName),
@@ -13967,7 +13919,6 @@ impl JsxAnyElementName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
@@ -13988,7 +13939,6 @@ impl JsxAnyName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyObjectName {
     JsxMemberName(JsxMemberName),
     JsxNamespaceName(JsxNamespaceName),
@@ -14016,7 +13966,6 @@ impl JsxAnyObjectName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsxAnyTag {
     JsxElement(JsxElement),
     JsxFragment(JsxFragment),
@@ -14044,7 +13993,6 @@ impl JsxAnyTag {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyExternalModuleDeclarationBody {
     TsEmptyExternalModuleDeclarationBody(TsEmptyExternalModuleDeclarationBody),
     TsModuleBlock(TsModuleBlock),
@@ -14069,7 +14017,6 @@ impl TsAnyExternalModuleDeclarationBody {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyIndexSignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsReadonlyModifier(TsReadonlyModifier),
@@ -14090,7 +14037,6 @@ impl TsAnyIndexSignatureModifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyMethodSignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
@@ -14125,7 +14071,6 @@ impl TsAnyMethodSignatureModifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyModuleName {
     TsIdentifierBinding(TsIdentifierBinding),
     TsQualifiedModuleName(TsQualifiedModuleName),
@@ -14146,7 +14091,6 @@ impl TsAnyModuleName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyModuleReference {
     TsAnyName(TsAnyName),
     TsExternalModuleReference(TsExternalModuleReference),
@@ -14167,7 +14111,6 @@ impl TsAnyModuleReference {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsQualifiedName(TsQualifiedName),
@@ -14188,7 +14131,6 @@ impl TsAnyName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertyAnnotation {
     TsDefinitePropertyAnnotation(TsDefinitePropertyAnnotation),
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
@@ -14216,7 +14158,6 @@ impl TsAnyPropertyAnnotation {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertyParameterModifier {
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
@@ -14244,7 +14185,6 @@ impl TsAnyPropertyParameterModifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertySignatureAnnotation {
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
@@ -14265,7 +14205,6 @@ impl TsAnyPropertySignatureAnnotation {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyPropertySignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
@@ -14314,7 +14253,6 @@ impl TsAnyPropertySignatureModifier {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyReturnType {
     TsAssertsReturnType(TsAssertsReturnType),
     TsPredicateReturnType(TsPredicateReturnType),
@@ -14342,7 +14280,6 @@ impl TsAnyReturnType {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTemplateElement {
     TsTemplateChunkElement(TsTemplateChunkElement),
     TsTemplateElement(TsTemplateElement),
@@ -14363,7 +14300,6 @@ impl TsAnyTemplateElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTupleTypeElement {
     TsNamedTupleTypeElement(TsNamedTupleTypeElement),
     TsOptionalTupleTypeElement(TsOptionalTupleTypeElement),
@@ -14398,7 +14334,6 @@ impl TsAnyTupleTypeElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTypeMember {
     JsUnknownMember(JsUnknownMember),
     TsCallSignatureTypeMember(TsCallSignatureTypeMember),
@@ -14461,7 +14396,6 @@ impl TsAnyTypeMember {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyTypePredicateParameterName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsThisType(TsThisType),
@@ -14482,7 +14416,6 @@ impl TsAnyTypePredicateParameterName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsAnyVariableAnnotation {
     TsDefiniteVariableAnnotation(TsDefiniteVariableAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
@@ -14503,7 +14436,6 @@ impl TsAnyVariableAnnotation {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum TsType {
     TsAnyType(TsAnyType),
     TsArrayType(TsArrayType),
@@ -33265,7 +33197,6 @@ impl std::fmt::Display for TsVoidType {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknown {
     syntax: SyntaxNode,
 }
@@ -33309,7 +33240,6 @@ impl From<JsUnknown> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownAssignment {
     syntax: SyntaxNode,
 }
@@ -33353,7 +33283,6 @@ impl From<JsUnknownAssignment> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownBinding {
     syntax: SyntaxNode,
 }
@@ -33397,7 +33326,6 @@ impl From<JsUnknownBinding> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownExpression {
     syntax: SyntaxNode,
 }
@@ -33441,7 +33369,6 @@ impl From<JsUnknownExpression> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownImportAssertionEntry {
     syntax: SyntaxNode,
 }
@@ -33485,7 +33412,6 @@ impl From<JsUnknownImportAssertionEntry> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownMember {
     syntax: SyntaxNode,
 }
@@ -33529,7 +33455,6 @@ impl From<JsUnknownMember> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownNamedImportSpecifier {
     syntax: SyntaxNode,
 }
@@ -33573,7 +33498,6 @@ impl From<JsUnknownNamedImportSpecifier> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownParameter {
     syntax: SyntaxNode,
 }
@@ -33617,7 +33541,6 @@ impl From<JsUnknownParameter> for SyntaxElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsUnknownStatement {
     syntax: SyntaxNode,
 }

@@ -506,11 +506,12 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             RuleCategories::SYNTAX | RuleCategories::LINT
         };
 
-        let diagnostics = file_guard
+        let result = file_guard
             .pull_diagnostics(filter)
             .with_file_id_and_code(file_id, "Lint")?;
 
-        let has_errors = diagnostics
+        let has_errors = result
+            .diagnostics
             .iter()
             .any(|diag| diag.severity >= Severity::Error);
 
@@ -528,7 +529,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     Message::Diagnostics {
                         name: path.display().to_string(),
                         content: input,
-                        diagnostics,
+                        diagnostics: result.diagnostics,
                     }
                 });
             }
@@ -539,13 +540,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         // In format mode the diagnostics have already been checked for errors
         // at this point, so they can just be dropped now since we don't want
         // to print syntax warnings for the format command
-        let result = if diagnostics.is_empty() || is_format {
+        let result = if result.diagnostics.is_empty() || is_format {
             FileStatus::Success
         } else {
             FileStatus::Message(Message::Diagnostics {
                 name: path.display().to_string(),
                 content: input.clone(),
-                diagnostics,
+                diagnostics: result.diagnostics,
             })
         };
 

@@ -22,7 +22,7 @@ pub struct JavascriptConfiguration {
     pub globals: IndexSet<String>,
 }
 
-fn deserialize_globals<'de, D>(deserializer: D) -> Result<IndexSet<String>, D::Error>
+pub(crate) fn deserialize_globals<'de, D>(deserializer: D) -> Result<IndexSet<String>, D::Error>
 where
     D: serde::de::Deserializer<'de>,
 {
@@ -63,7 +63,7 @@ impl<'de> Visitor<'de> for IndexVisitor {
     }
 }
 
-pub fn serialize_globals<S>(globals: &IndexSet<String>, s: S) -> Result<S::Ok, S::Error>
+pub(crate) fn serialize_globals<S>(globals: &IndexSet<String>, s: S) -> Result<S::Ok, S::Error>
 where
     S: serde::ser::Serializer,
 {

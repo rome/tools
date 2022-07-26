@@ -70,6 +70,7 @@ use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum IndentStyle {
     /// Tab
     Tab,
@@ -113,6 +114,7 @@ impl std::fmt::Display for IndentStyle {
 ///
 /// The allowed range of values is 1..=320
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct LineWidth(u16);
 
 impl LineWidth {
@@ -259,6 +261,7 @@ impl FormatContext for SimpleFormatContext {
 
 /// Lightweight sourcemap marker between source and output tokens
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SourceMarker {
     /// Position of the marker in the original source
     pub source: TextSize,
@@ -300,6 +303,7 @@ where
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Printed {
     code: String,
     range: Option<TextRange>,

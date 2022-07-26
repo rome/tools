@@ -105,12 +105,13 @@ impl Session {
         let workspace_settings = self.config.read().get_workspace_settings();
 
         let diagnostics = if workspace_settings.analysis.enable_diagnostics {
-            let diagnostics = self.workspace.pull_diagnostics(PullDiagnosticsParams {
+            let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
                 path: rome_path,
                 categories: RuleCategories::SYNTAX | RuleCategories::LINT,
             })?;
 
-            diagnostics
+            result
+                .diagnostics
                 .into_iter()
                 .filter_map(|d| utils::diagnostic_to_lsp(d, &url, &doc.line_index))
                 .collect()

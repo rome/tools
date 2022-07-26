@@ -51,13 +51,13 @@
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
-use std::panic::RefUnwindSafe;
+use std::{borrow::Cow, panic::RefUnwindSafe};
 
-use rome_analyze::AnalyzerAction;
-use rome_diagnostics::Diagnostic;
+use rome_analyze::ActionCategory;
+use rome_diagnostics::{CodeSuggestion, Diagnostic};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
-use rome_js_syntax::{JsLanguage, TextRange, TextSize};
+use rome_js_syntax::{TextRange, TextSize};
 use rome_text_edit::Indel;
 
 use crate::{settings::WorkspaceSettings, RomeError};
@@ -66,84 +66,185 @@ pub use rome_analyze::RuleCategories;
 
 pub(crate) mod server;
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct SupportsFeatureParams {
     pub path: RomePath,
     pub feature: FeatureName,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub enum FeatureName {
     Format,
     Lint,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct UpdateSettingsParams {
     pub settings: WorkspaceSettings,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct OpenFileParams {
     pub path: RomePath,
     pub content: String,
     pub version: i32,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct GetSyntaxTreeParams {
     pub path: RomePath,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct ChangeFileParams {
     pub path: RomePath,
     pub content: String,
     pub version: i32,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct CloseFileParams {
     pub path: RomePath,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct PullDiagnosticsParams {
     pub path: RomePath,
     pub categories: RuleCategories,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+pub struct PullDiagnosticsResult {
+    pub diagnostics: Vec<Diagnostic>,
+}
+
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct PullActionsParams {
     pub path: RomePath,
     pub range: TextRange,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+pub struct PullActionsResult {
+    pub actions: Vec<CodeAction>,
+}
+
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+pub struct CodeAction {
+    pub category: ActionCategory,
+    pub rule_name: Cow<'static, str>,
+    pub suggestion: CodeSuggestion,
+}
+
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct FormatFileParams {
     pub path: RomePath,
     pub indent_style: IndentStyle,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct FormatRangeParams {
     pub path: RomePath,
     pub range: TextRange,
     pub indent_style: IndentStyle,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct FormatOnTypeParams {
     pub path: RomePath,
     pub offset: TextSize,
     pub indent_style: IndentStyle,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct FixFileParams {
     pub path: RomePath,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct FixFileResult {
     /// New source code for the file with all fixes applied
     pub code: String,
-    /// List of all the rules applied to the file with their associated text range
-    pub rules: Vec<(&'static str, TextRange)>,
+    /// List of all the code actions applied to the file
+    pub actions: Vec<FixAction>,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+pub struct FixAction {
+    /// Name of the rule that emitted this code action
+    pub rule_name: Cow<'static, str>,
+    /// Source range at which this action was applied
+    pub range: TextRange,
+}
+
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct RenameParams {
     pub path: RomePath,
     pub symbol_at: TextSize,
     pub new_name: String,
 }
 
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct RenameResult {
     /// Range of source code modified by this rename operation
     pub range: TextRange,
@@ -173,15 +274,14 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     fn close_file(&self, params: CloseFileParams) -> Result<(), RomeError>;
 
     /// Retrieves the list of diagnostics associated to a file
-    fn pull_diagnostics(&self, params: PullDiagnosticsParams)
-        -> Result<Vec<Diagnostic>, RomeError>;
+    fn pull_diagnostics(
+        &self,
+        params: PullDiagnosticsParams,
+    ) -> Result<PullDiagnosticsResult, RomeError>;
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(
-        &self,
-        params: PullActionsParams,
-    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError>;
+    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, RomeError>;
 
     /// Runs the given file through the formatter using the provided options
     /// and returns the resulting source code
@@ -238,17 +338,14 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
     pub fn pull_diagnostics(
         &self,
         categories: RuleCategories,
-    ) -> Result<Vec<Diagnostic>, RomeError> {
+    ) -> Result<PullDiagnosticsResult, RomeError> {
         self.workspace.pull_diagnostics(PullDiagnosticsParams {
             path: self.path.clone(),
             categories,
         })
     }
 
-    pub fn pull_actions(
-        &self,
-        range: TextRange,
-    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError> {
+    pub fn pull_actions(&self, range: TextRange) -> Result<PullActionsResult, RomeError> {
         self.workspace.pull_actions(PullActionsParams {
             path: self.path.clone(),
             range,

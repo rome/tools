@@ -15,9 +15,9 @@ use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
 #[cfg(feature = "serde")]
-use serde_crate::ser::SerializeSeq;
+use serde::ser::SerializeSeq;
 #[cfg(feature = "serde")]
-use serde_crate::{Serialize, Serializer};
+use serde::{Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonArray {
@@ -55,7 +55,7 @@ impl Serialize for JsonArray {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonArrayFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsonArrayElementList,
@@ -95,7 +95,7 @@ impl Serialize for JsonBoolean {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonBooleanFields {
     pub true_token: SyntaxResult<SyntaxToken>,
     pub false_token: SyntaxResult<SyntaxToken>,
@@ -134,7 +134,7 @@ impl Serialize for JsonMember {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonMemberFields {
     pub key: SyntaxResult<JsonString>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -170,7 +170,7 @@ impl Serialize for JsonNull {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonNullFields {
     pub null_token: SyntaxResult<SyntaxToken>,
 }
@@ -204,7 +204,7 @@ impl Serialize for JsonNumber {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonNumberFields {
     pub json_number_literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -244,7 +244,7 @@ impl Serialize for JsonObject {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonObjectFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub json_member_list: JsonMemberList,
@@ -280,7 +280,7 @@ impl Serialize for JsonRoot {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonRootFields {
     pub json_value: SyntaxResult<JsonValue>,
 }
@@ -314,13 +314,12 @@ impl Serialize for JsonString {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonStringFields {
     pub json_string_literal_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsonValue {
     JsonArray(JsonArray),
     JsonBoolean(JsonBoolean),
@@ -786,7 +785,6 @@ impl std::fmt::Display for JsonString {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsonUnknown {
     syntax: SyntaxNode,
 }

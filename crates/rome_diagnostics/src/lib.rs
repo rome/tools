@@ -15,7 +15,7 @@ pub use rome_console::codespan::Severity;
 pub use termcolor;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum DiagnosticTag {
     Unnecessary,
     Deprecated,
@@ -34,7 +34,7 @@ impl DiagnosticTag {
 
 /// Indicicates how a tool should manage this suggestion.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Applicability {
     /// The suggestion is definitely what the user intended.
     /// This suggestion should be automatically applied.

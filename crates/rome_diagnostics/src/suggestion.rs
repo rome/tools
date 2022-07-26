@@ -7,6 +7,7 @@ use rome_text_edit::Indel;
 /// can be reported to the user, and can be automatically
 /// applied if it has the right [`Applicability`].
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CodeSuggestion {
     /// If the `FileId` is `None`, it's in the same file as
     /// his parent.
@@ -19,12 +20,14 @@ pub struct CodeSuggestion {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SuggestionChange {
     Indels(Vec<Indel>),
     String(String),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SuggestionStyle {
     /// Do not show the suggestion at all
     DontShow,

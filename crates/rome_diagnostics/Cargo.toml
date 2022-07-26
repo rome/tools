@@ -14,3 +14,6 @@ serde = { version = "1.0.133", optional = true, features = ["derive"] }
 rome_text_edit = { path = "../rome_text_edit" }
 termcolor = "1.1.2"
 colored = "2.0.0"
+
+[features]
+serde = ["dep:serde", "rome_text_edit/serde", "rome_console/serde"]

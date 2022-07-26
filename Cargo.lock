@@ -1352,6 +1352,7 @@ dependencies = [
  "rome_js_syntax",
  "rome_rowan",
  "rustc-hash",
+ "serde",
 ]
 
 [[package]]
@@ -1383,6 +1384,7 @@ dependencies = [
  "atty",
  "lazy_static",
  "rome_markup",
+ "serde",
  "similar",
  "termcolor",
  "text-size",
@@ -1439,6 +1441,7 @@ dependencies = [
  "cfg-if",
  "indexmap",
  "rome_rowan",
+ "serde",
  "tracing",
 ]
 
@@ -1450,6 +1453,7 @@ dependencies = [
  "indexmap",
  "parking_lot",
  "rayon",
+ "serde",
  "tracing",
 ]
 
@@ -1665,6 +1669,7 @@ dependencies = [
 name = "rome_text_edit"
 version = "0.0.0"
 dependencies = [
+ "serde",
  "text-size",
 ]
 

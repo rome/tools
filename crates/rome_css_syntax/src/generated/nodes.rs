@@ -15,9 +15,9 @@ use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
 #[cfg(feature = "serde")]
-use serde_crate::ser::SerializeSeq;
+use serde::ser::SerializeSeq;
 #[cfg(feature = "serde")]
-use serde_crate::{Serialize, Serializer};
+use serde::{Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct CssAnyFunction {
@@ -49,7 +49,7 @@ impl Serialize for CssAnyFunction {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAnyFunctionFields {
     pub css_simple_function: SyntaxResult<CssSimpleFunction>,
 }
@@ -99,7 +99,7 @@ impl Serialize for CssAtKeyframes {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtKeyframesFields {
     pub at_token: SyntaxResult<SyntaxToken>,
     pub keyframes_token: SyntaxResult<SyntaxToken>,
@@ -143,7 +143,7 @@ impl Serialize for CssAtKeyframesBody {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtKeyframesBodyFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub items: CssAtKeyframesItemList,
@@ -195,7 +195,7 @@ impl Serialize for CssAtMedia {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaFields {
     pub at_token: SyntaxResult<SyntaxToken>,
     pub media_token: SyntaxResult<SyntaxToken>,
@@ -248,7 +248,7 @@ impl Serialize for CssAtMediaQuery {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryFields {
     pub condition_token: SyntaxResult<SyntaxToken>,
     pub or_token: SyntaxResult<SyntaxToken>,
@@ -292,7 +292,7 @@ impl Serialize for CssAtMediaQueryConsequent {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryConsequentFields {
     pub and_token: SyntaxResult<SyntaxToken>,
     pub condition_token: Option<SyntaxToken>,
@@ -336,7 +336,7 @@ impl Serialize for CssAtMediaQueryFeature {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryFeatureFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub feature: SyntaxResult<CssAnyAtMediaQueryFeatureType>,
@@ -372,7 +372,7 @@ impl Serialize for CssAtMediaQueryFeatureBoolean {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryFeatureBooleanFields {
     pub css_identifier: SyntaxResult<CssIdentifier>,
 }
@@ -414,7 +414,7 @@ impl Serialize for CssAtMediaQueryFeatureCompare {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryFeatureCompareFields {
     pub name: SyntaxResult<CssIdentifier>,
     pub range: SyntaxResult<CssAtMediaQueryRange>,
@@ -458,7 +458,7 @@ impl Serialize for CssAtMediaQueryFeaturePlain {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryFeaturePlainFields {
     pub name: SyntaxResult<CssIdentifier>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -510,7 +510,7 @@ impl Serialize for CssAtMediaQueryFeatureRange {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryFeatureRangeFields {
     pub first_value: SyntaxResult<CssAnyValue>,
     pub first_range: SyntaxResult<CssAtMediaQueryRange>,
@@ -560,7 +560,7 @@ impl Serialize for CssAtMediaQueryRange {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAtMediaQueryRangeFields {
     pub r_angle_token: SyntaxResult<SyntaxToken>,
     pub l_angle_token: SyntaxResult<SyntaxToken>,
@@ -607,7 +607,7 @@ impl Serialize for CssAttribute {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAttributeFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub attribute_name: SyntaxResult<CssAttributeName>,
@@ -672,7 +672,7 @@ impl Serialize for CssAttributeMatcher {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAttributeMatcherFields {
     pub matcher_type_token: SyntaxResult<SyntaxToken>,
     pub exactly_or_hyphen_token: SyntaxResult<SyntaxToken>,
@@ -717,7 +717,7 @@ impl Serialize for CssAttributeMeta {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAttributeMetaFields {
     pub attribute_matcher: Option<CssAttributeMatcher>,
     pub attribute_modifier: Option<CssAttributeModifier>,
@@ -752,7 +752,7 @@ impl Serialize for CssAttributeModifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAttributeModifierFields {
     pub i_token: SyntaxResult<SyntaxToken>,
 }
@@ -786,7 +786,7 @@ impl Serialize for CssAttributeName {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAttributeNameFields {
     pub css_string: SyntaxResult<CssString>,
 }
@@ -822,7 +822,7 @@ impl Serialize for CssAttributeSelectorPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssAttributeSelectorPatternFields {
     pub name: SyntaxResult<CssIdentifier>,
     pub attribute_list: CssAttributeList,
@@ -863,7 +863,7 @@ impl Serialize for CssBlock {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssBlockFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub declaration_list: CssDeclarationList,
@@ -903,7 +903,7 @@ impl Serialize for CssClassSelectorPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssClassSelectorPatternFields {
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<CssIdentifier>,
@@ -958,7 +958,7 @@ impl Serialize for CssCombinatorSelectorPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssCombinatorSelectorPatternFields {
     pub left: SyntaxResult<CssAnySelectorPattern>,
     pub combinator_token: SyntaxResult<SyntaxToken>,
@@ -997,7 +997,7 @@ impl Serialize for CssCustomProperty {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssCustomPropertyFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -1047,7 +1047,7 @@ impl Serialize for CssDeclaration {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssDeclarationFields {
     pub name: SyntaxResult<CssIdentifier>,
     pub css_custom_property: SyntaxResult<CssCustomProperty>,
@@ -1089,7 +1089,7 @@ impl Serialize for CssDeclarationImportant {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssDeclarationImportantFields {
     pub excl_token: SyntaxResult<SyntaxToken>,
     pub important_token: SyntaxResult<SyntaxToken>,
@@ -1126,7 +1126,7 @@ impl Serialize for CssDimension {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssDimensionFields {
     pub value: SyntaxResult<CssNumber>,
     pub unit: SyntaxResult<CssIdentifier>,
@@ -1165,7 +1165,7 @@ impl Serialize for CssIdSelectorPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssIdSelectorPatternFields {
     pub hash_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<CssIdentifier>,
@@ -1200,7 +1200,7 @@ impl Serialize for CssIdentifier {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssIdentifierFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -1242,7 +1242,7 @@ impl Serialize for CssKeyframesBlock {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssKeyframesBlockFields {
     pub selectors: CssKeyframesSelectorList,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
@@ -1287,7 +1287,7 @@ impl Serialize for CssKeyframesSelector {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssKeyframesSelectorFields {
     pub from_token: SyntaxResult<SyntaxToken>,
     pub to_token: SyntaxResult<SyntaxToken>,
@@ -1323,7 +1323,7 @@ impl Serialize for CssNumber {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssNumberFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -1357,7 +1357,7 @@ impl Serialize for CssParameter {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssParameterFields {
     pub css_any_value: SyntaxResult<CssAnyValue>,
 }
@@ -1393,7 +1393,7 @@ impl Serialize for CssPercentage {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssPercentageFields {
     pub value: SyntaxResult<CssNumber>,
     pub reminder_token: SyntaxResult<SyntaxToken>,
@@ -1436,7 +1436,7 @@ impl Serialize for CssPseudoClassSelectorPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssPseudoClassSelectorPatternFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<CssIdentifier>,
@@ -1480,7 +1480,7 @@ impl Serialize for CssPseudoClassSelectorPatternParameters {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssPseudoClassSelectorPatternParametersFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub parameter: SyntaxResult<CssAnyValue>,
@@ -1520,7 +1520,7 @@ impl Serialize for CssRatio {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssRatioFields {
     pub numerator: SyntaxResult<CssNumber>,
     pub denominator: SyntaxResult<CssNumber>,
@@ -1555,7 +1555,7 @@ impl Serialize for CssRule {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssRuleFields {
     pub prelude: CssSelectorList,
     pub block: SyntaxResult<CssBlock>,
@@ -1588,7 +1588,7 @@ impl Serialize for CssSelector {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssSelectorFields {
     pub pattern_list: CssAnySelectorPatternList,
 }
@@ -1632,7 +1632,7 @@ impl Serialize for CssSimpleFunction {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssSimpleFunctionFields {
     pub name: SyntaxResult<CssIdentifier>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -1669,7 +1669,7 @@ impl Serialize for CssString {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssStringFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
@@ -1703,7 +1703,7 @@ impl Serialize for CssTypeSelectorPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssTypeSelectorPatternFields {
     pub ident: SyntaxResult<CssIdentifier>,
 }
@@ -1737,7 +1737,7 @@ impl Serialize for CssUniversalSelectorPattern {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssUniversalSelectorPatternFields {
     pub star_token: SyntaxResult<SyntaxToken>,
 }
@@ -1785,7 +1785,7 @@ impl Serialize for CssVarFunction {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssVarFunctionFields {
     pub var_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -1827,14 +1827,13 @@ impl Serialize for CssVarFunctionValue {
         self.as_fields().serialize(serializer)
     }
 }
-#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct CssVarFunctionValueFields {
     pub comma_token: SyntaxResult<SyntaxToken>,
     pub value: SyntaxResult<CssIdentifier>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum CssAnyAtMediaQueryFeatureType {
     CssAtMediaQueryFeatureBoolean(CssAtMediaQueryFeatureBoolean),
     CssAtMediaQueryFeatureCompare(CssAtMediaQueryFeatureCompare),
@@ -1869,7 +1868,6 @@ impl CssAnyAtMediaQueryFeatureType {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum CssAnyAtMediaQueryType {
     CssAtMediaQueryFeature(CssAtMediaQueryFeature),
     CssIdentifier(CssIdentifier),
@@ -1890,7 +1888,6 @@ impl CssAnyAtMediaQueryType {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum CssAnyAtRule {
     CssAtKeyframes(CssAtKeyframes),
     CssAtMedia(CssAtMedia),
@@ -1911,7 +1908,6 @@ impl CssAnyAtRule {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum CssAnyRule {
     CssAnyAtRule(CssAnyAtRule),
     CssRule(CssRule),
@@ -1932,7 +1928,6 @@ impl CssAnyRule {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum CssAnySelectorPattern {
     CssAttributeSelectorPattern(CssAttributeSelectorPattern),
     CssClassSelectorPattern(CssClassSelectorPattern),
@@ -1988,7 +1983,6 @@ impl CssAnySelectorPattern {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum CssAnyValue {
     CssAnyFunction(CssAnyFunction),
     CssCustomProperty(CssCustomProperty),
@@ -4306,7 +4300,6 @@ impl std::fmt::Display for CssVarFunctionValue {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct CssUnknown {
     syntax: SyntaxNode,
 }

@@ -24,3 +24,13 @@ rome_js_semantic = { path = "../rome_js_semantic" }
 rome_rowan = { path = "../rome_rowan" }
 rome_text_edit = { path = "../rome_text_edit" }
 indexmap = "1.9.1"
+
+[features]
+serde_workspace = [
+    "rome_analyze/serde",
+    "rome_diagnostics/serde",
+    "rome_formatter/serde",
+    "rome_fs/serde",
+    "rome_js_formatter/serde",
+    "rome_text_edit/serde"
+]

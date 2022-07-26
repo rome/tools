@@ -1,11 +1,9 @@
 use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
 use dashmap::{mapref::entry::Entry, DashMap};
-use rome_analyze::AnalyzerAction;
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
-use rome_js_syntax::JsLanguage;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
 
 use crate::{
@@ -17,7 +15,8 @@ use crate::{
 use super::{
     ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
     FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
-    PullDiagnosticsParams, RenameResult, SupportsFeatureParams, UpdateSettingsParams,
+    PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameResult,
+    SupportsFeatureParams, UpdateSettingsParams,
 };
 
 pub(super) struct WorkspaceServer {
@@ -209,23 +208,21 @@ impl Workspace for WorkspaceServer {
     fn pull_diagnostics(
         &self,
         params: PullDiagnosticsParams,
-    ) -> Result<Vec<Diagnostic>, RomeError> {
+    ) -> Result<PullDiagnosticsResult, RomeError> {
         let capabilities = self.features.get_capabilities(&params.path);
         let linter = capabilities
             .lint
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
+        let diagnostics = linter(&params.path, parse, params.categories);
 
-        Ok(linter(&params.path, parse, params.categories))
+        Ok(PullDiagnosticsResult { diagnostics })
     }
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(
-        &self,
-        params: PullActionsParams,
-    ) -> Result<Vec<AnalyzerAction<JsLanguage>>, RomeError> {
+    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, RomeError> {
         let capabilities = self.features.get_capabilities(&params.path);
         let code_actions = capabilities
             .code_actions

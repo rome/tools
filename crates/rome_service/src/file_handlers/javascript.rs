@@ -1,5 +1,5 @@
-use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleCategories};
-use rome_diagnostics::{Applicability, Diagnostic};
+use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories};
+use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{IndentStyle, LineWidth, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::analyze;
@@ -11,7 +11,7 @@ use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
-use crate::workspace::{FixFileResult, RenameResult};
+use crate::workspace::{CodeAction, FixAction, FixFileResult, PullActionsResult, RenameResult};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::server::AnyParse,
@@ -19,9 +19,14 @@ use crate::{
 };
 
 use super::{ExtensionHandler, Mime};
+use std::borrow::Cow;
 use std::fmt::Debug;
 
 #[derive(Debug, Clone, Default)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct JsFormatSettings {
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,
@@ -29,6 +34,10 @@ pub struct JsFormatSettings {
 }
 
 #[derive(Debug, Clone, Default)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct JsLinterSettings {
     pub globals: Vec<String>,
 }
@@ -153,11 +162,7 @@ fn lint(rome_path: &RomePath, parse: AnyParse, categories: RuleCategories) -> Ve
     diagnostics
 }
 
-fn code_actions(
-    rome_path: &RomePath,
-    parse: AnyParse,
-    range: TextRange,
-) -> Vec<AnalyzerAction<JsLanguage>> {
+fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> PullActionsResult {
     let tree = parse.tree();
 
     let mut actions = Vec::new();
@@ -170,18 +175,22 @@ fn code_actions(
     let file_id = rome_path.file_id();
     analyze(file_id, &tree, filter, |signal| {
         if let Some(action) = signal.action() {
-            actions.push(action);
+            actions.push(CodeAction {
+                category: action.category,
+                rule_name: Cow::Borrowed(action.rule_name),
+                suggestion: CodeSuggestion::from(action),
+            });
         }
 
         ControlFlow::<Never>::Continue(())
     });
 
-    actions
+    PullActionsResult { actions }
 }
 
 fn fix_all(rome_path: &RomePath, parse: AnyParse) -> FixFileResult {
     let mut tree: JsAnyRoot = parse.tree();
-    let mut rules = Vec::new();
+    let mut actions = Vec::new();
 
     let filter = AnalysisFilter {
         categories: RuleCategories::SYNTAX | RuleCategories::LINT,
@@ -203,15 +212,18 @@ fn fix_all(rome_path: &RomePath, parse: AnyParse) -> FixFileResult {
 
         match action {
             Some(action) => {
-                if let Some((original_range, _)) = action.mutation.as_text_edits() {
+                if let Some((range, _)) = action.mutation.as_text_edits() {
                     tree = action.mutation.commit();
-                    rules.push((action.rule_name, original_range));
+                    actions.push(FixAction {
+                        rule_name: Cow::Borrowed(action.rule_name),
+                        range,
+                    });
                 }
             }
             None => {
                 return FixFileResult {
                     code: tree.syntax().to_string(),
-                    rules,
+                    actions,
                 }
             }
         }

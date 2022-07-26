@@ -8,6 +8,10 @@ use rome_js_syntax::JsLanguage;
 
 /// Global settings for the entire workspace
 #[derive(Debug, Default)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct WorkspaceSettings {
     /// Formatter settings applied to all files in the workspaces
     pub format: FormatSettings,
@@ -46,6 +50,10 @@ impl WorkspaceSettings {
 
 /// Formatter settings for the entire workspace
 #[derive(Debug)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct FormatSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -69,6 +77,10 @@ impl Default for FormatSettings {
 
 /// Linter settings for the entire workspace
 #[derive(Debug)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct LinterSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -88,6 +100,10 @@ impl Default for LinterSettings {
 
 /// Static map of language names to language-specific settings
 #[derive(Debug, Default)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct LanguagesSettings {
     pub javascript: LanguageSettings<JsLanguage>,
 }
@@ -116,6 +132,10 @@ pub trait Language: rome_rowan::Language {
 }
 
 #[derive(Debug, Default)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
     pub format: L::FormatSettings,
@@ -124,6 +144,13 @@ pub struct LanguageSettings<L: Language> {
     pub linter: L::LinterSettings,
 
     /// Globals variables/bindings that can be found in a file
+    #[cfg_attr(
+        feature = "serde_workspace",
+        serde(
+            deserialize_with = "crate::configuration::deserialize_globals",
+            serialize_with = "crate::configuration::serialize_globals"
+        )
+    )]
     pub globals: IndexSet<String>,
 }
 

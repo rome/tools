@@ -2,14 +2,15 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 
 use crate::line_index::{LineCol, LineIndex};
-use rome_analyze::{ActionCategory, AnalyzerAction};
+use rome_analyze::ActionCategory;
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::Severity;
 use rome_diagnostics::{Applicability, Diagnostic, SuggestionChange};
-use rome_diagnostics::{CodeSuggestion, Severity};
-use rome_rowan::{Language, TextRange, TextSize};
+use rome_rowan::{TextRange, TextSize};
+use rome_service::workspace::CodeAction;
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types::{self as lsp};
 use tracing::error;
@@ -39,15 +40,12 @@ pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> TextRange
     TextRange::new(start, end)
 }
 
-pub(crate) fn code_fix_to_lsp<L>(
+pub(crate) fn code_fix_to_lsp(
     url: &lsp::Url,
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
-    action: AnalyzerAction<L>,
-) -> lsp::CodeAction
-where
-    L: Language,
-{
+    action: CodeAction,
+) -> lsp::CodeAction {
     // Mark diagnostics emitted by the same rule as resolved by this action
     let diagnostics: Vec<_> = if matches!(action.category, ActionCategory::QuickFix) {
         diagnostics
@@ -74,7 +72,7 @@ where
         ActionCategory::Refactor => Some(lsp::CodeActionKind::REFACTOR),
     };
 
-    let suggestion = CodeSuggestion::from(action);
+    let suggestion = action.suggestion;
 
     let mut changes = HashMap::new();
     let edits = match suggestion.substitution {
