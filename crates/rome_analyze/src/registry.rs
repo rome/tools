@@ -113,6 +113,7 @@ impl<L: Language + Default> RuleRegistry<L> {
                 version: R::VERSION,
                 docs: R::DOCS,
                 deprecated: R::DEPRECATED,
+                recommended: R::RECOMMENDED,
             },
         );
     }
@@ -128,6 +129,7 @@ impl<L: Language + Default> RuleRegistry<L> {
                 docs: value.docs,
                 version: value.version,
                 deprecated: value.deprecated,
+                recommended: value.recommended,
             }
         })
     }
@@ -218,6 +220,7 @@ struct MetadataValue {
     version: &'static str,
     docs: &'static str,
     deprecated: Option<&'static str>,
+    recommended: bool,
 }
 
 /// Metadata entry for a rule in the registry
@@ -227,6 +230,7 @@ pub struct RuleMetadata {
     pub docs: &'static str,
     pub version: &'static str,
     pub deprecated: Option<&'static str>,
+    pub recommended: bool,
 }
 
 /// Internal representation of a single rule in the registry

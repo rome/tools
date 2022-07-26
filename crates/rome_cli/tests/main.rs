@@ -54,9 +54,20 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 }
 "#;
 
+const NO_DEBUGGER: &str = "debugger;";
+
+const JS_ERRORS: &str = r#"try {
+    !a && !b
+} catch (err) {
+    err = 24;
+}
+"#;
+
 mod check {
     use super::*;
-    use crate::configs::CONFIG_LINTER_DISABLED;
+    use crate::configs::{
+        CONFIG_LINTER_DISABLED, CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
+    };
     use rome_console::LogLevel;
     use rome_fs::FileSystemExt;
 
@@ -280,6 +291,77 @@ mod check {
             .unwrap();
 
         assert_eq!(buffer, FIX_BEFORE);
+    }
+
+    #[test]
+    fn should_disable_a_rule() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+
+        let config_path = Path::new("rome.json");
+        fs.insert(config_path.into(), CONFIG_LINTER_SUPPRESSED_RULE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, NO_DEBUGGER);
+    }
+
+    #[test]
+    fn should_disable_a_rule_group() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), JS_ERRORS.as_bytes());
+
+        let config_path = Path::new("rome.json");
+        fs.insert(
+            config_path.into(),
+            CONFIG_LINTER_SUPPRESSED_GROUP.as_bytes(),
+        );
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, JS_ERRORS);
     }
 }
 
@@ -929,7 +1011,7 @@ mod configuration {
 
         match result {
             Err(error) => {
-                assert!(error.to_string().contains("unknown field `foo_rule`"),)
+                assert!(error.to_string().contains("Invalid rule name `foo_rule`"),)
             }
             _ => panic!("expected an error, but found none"),
         }

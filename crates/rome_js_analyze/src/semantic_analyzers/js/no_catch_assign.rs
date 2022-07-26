@@ -32,7 +32,8 @@ declare_rule! {
     /// ```
     pub(crate) NoCatchAssign {
         version: "0.7.0",
-        name: "noCatchAssign"
+        name: "noCatchAssign",
+        recommended: true
     }
 }
 

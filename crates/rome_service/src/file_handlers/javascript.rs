@@ -1,6 +1,6 @@
-use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories};
+use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories, RuleFilter};
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
-use rome_formatter::{IndentStyle, LineWidth, Printed};
+use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::analyze;
 use rome_js_analyze::utils::rename::RenameError;
@@ -15,10 +15,11 @@ use crate::workspace::{CodeAction, FixAction, FixFileResult, PullActionsResult, 
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::server::AnyParse,
-    RomeError,
+    RomeError, Rules,
 };
 
 use super::{ExtensionHandler, Mime};
+use indexmap::IndexSet;
 use std::borrow::Cow;
 use std::fmt::Debug;
 
@@ -28,8 +29,6 @@ use std::fmt::Debug;
     derive(serde::Serialize, serde::Deserialize)
 )]
 pub struct JsFormatSettings {
-    pub indent_style: Option<IndentStyle>,
-    pub line_width: Option<LineWidth>,
     pub quote_style: Option<QuoteStyle>,
 }
 
@@ -58,18 +57,8 @@ impl Language for JsLanguage {
         path: &RomePath,
     ) -> JsFormatContext {
         JsFormatContext::new(path.as_path().try_into().unwrap_or_default())
-            .with_indent_style(
-                language
-                    .indent_style
-                    .or(global.indent_style)
-                    .unwrap_or(editor),
-            )
-            .with_line_width(
-                language
-                    .line_width
-                    .or(global.line_width)
-                    .unwrap_or_default(),
-            )
+            .with_indent_style(global.indent_style.unwrap_or(editor))
+            .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
     }
 }
@@ -137,14 +126,9 @@ fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
     format!("{tree:#?}")
 }
 
-fn lint(rome_path: &RomePath, parse: AnyParse, categories: RuleCategories) -> Vec<Diagnostic> {
+fn lint(rome_path: &RomePath, parse: AnyParse, filter: AnalysisFilter) -> Vec<Diagnostic> {
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
-
-    let filter = AnalysisFilter {
-        categories,
-        ..AnalysisFilter::default()
-    };
 
     let file_id = rome_path.file_id();
     analyze(file_id, &tree, filter, |signal| {
@@ -162,15 +146,30 @@ fn lint(rome_path: &RomePath, parse: AnyParse, categories: RuleCategories) -> Ve
     diagnostics
 }
 
-fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> PullActionsResult {
+fn code_actions(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    range: TextRange,
+    rules: Option<&Rules>,
+) -> PullActionsResult {
     let tree = parse.tree();
 
     let mut actions = Vec::new();
 
-    let filter = AnalysisFilter {
-        range: Some(range),
-        ..AnalysisFilter::default()
+    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
+        let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
+        Some(enabled.into_iter().collect())
+    } else {
+        None
     };
+
+    let mut filter = match &enabled_rules {
+        Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+        _ => AnalysisFilter::default(),
+    };
+
+    filter.categories = RuleCategories::default();
+    filter.range = Some(range);
 
     let file_id = rome_path.file_id();
     analyze(file_id, &tree, filter, |signal| {
@@ -188,14 +187,27 @@ fn code_actions(rome_path: &RomePath, parse: AnyParse, range: TextRange) -> Pull
     PullActionsResult { actions }
 }
 
-fn fix_all(rome_path: &RomePath, parse: AnyParse) -> FixFileResult {
+fn fix_all(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    configuration_rules: Option<&Rules>,
+) -> FixFileResult {
     let mut tree: JsAnyRoot = parse.tree();
     let mut actions = Vec::new();
 
-    let filter = AnalysisFilter {
-        categories: RuleCategories::SYNTAX | RuleCategories::LINT,
-        ..AnalysisFilter::default()
+    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = configuration_rules {
+        let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
+        Some(enabled.into_iter().collect())
+    } else {
+        None
     };
+
+    let mut filter = match &enabled_rules {
+        Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+        _ => AnalysisFilter::default(),
+    };
+
+    filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
 
     let file_id = rome_path.file_id();
 

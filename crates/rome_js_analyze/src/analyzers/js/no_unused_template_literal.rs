@@ -38,7 +38,8 @@ declare_rule! {
     /// ```
     pub(crate) NoUnusedTemplateLiteral {
         version: "0.7.0",
-        name: "noUnusedTemplateLiteral"
+        name: "noUnusedTemplateLiteral",
+        recommended: true
     }
 }
 

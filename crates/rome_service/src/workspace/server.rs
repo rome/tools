@@ -1,6 +1,8 @@
 use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
 use dashmap::{mapref::entry::Entry, DashMap};
+use indexmap::IndexSet;
+use rome_analyze::{AnalysisFilter, RuleFilter};
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -215,7 +217,22 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let diagnostics = linter(&params.path, parse, params.categories);
+        let settings = self.settings.read().unwrap();
+        let rules = settings.linter.rules.as_ref();
+        let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
+            let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
+            Some(enabled.into_iter().collect())
+        } else {
+            None
+        };
+
+        let mut filter = match &enabled_rules {
+            Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+            _ => AnalysisFilter::default(),
+        };
+
+        filter.categories = params.categories;
+        let diagnostics = linter(&params.path, parse, filter);
 
         Ok(PullDiagnosticsResult { diagnostics })
     }
@@ -230,7 +247,10 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
 
-        Ok(code_actions(&params.path, parse, params.range))
+        let settings = self.settings.read().unwrap();
+        let rules = settings.linter.rules.as_ref();
+
+        Ok(code_actions(&params.path, parse, params.range, rules))
     }
 
     /// Runs the given file through the formatter using the provided options
@@ -290,8 +310,9 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-
-        Ok(fix_all(&params.path, parse))
+        let settings = self.settings.read().unwrap();
+        let rules = settings.linter.rules.as_ref();
+        Ok(fix_all(&params.path, parse, rules))
     }
 
     fn rename(&self, params: super::RenameParams) -> Result<RenameResult, RomeError> {

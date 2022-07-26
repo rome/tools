@@ -39,8 +39,8 @@ impl Default for FormatterConfiguration {
     }
 }
 
-impl From<&FormatterConfiguration> for FormatSettings {
-    fn from(conf: &FormatterConfiguration) -> Self {
+impl From<FormatterConfiguration> for FormatSettings {
+    fn from(conf: FormatterConfiguration) -> Self {
         let indent_style = match conf.indent_style {
             PlainIndentStyle::Tab => IndentStyle::Tab,
             PlainIndentStyle::Space => IndentStyle::Space(conf.indent_size),

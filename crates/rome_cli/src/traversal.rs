@@ -500,14 +500,14 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         }
 
         let is_format = matches!(ctx.mode, TraversalMode::Format { .. });
-        let filter = if is_format {
+        let categories = if is_format {
             RuleCategories::SYNTAX
         } else {
             RuleCategories::SYNTAX | RuleCategories::LINT
         };
 
         let result = file_guard
-            .pull_diagnostics(filter)
+            .pull_diagnostics(categories)
             .with_file_id_and_code(file_id, "Lint")?;
 
         let has_errors = result

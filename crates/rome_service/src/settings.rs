@@ -1,10 +1,9 @@
-use indexmap::IndexSet;
-use std::sync::{RwLock, RwLockReadGuard};
-
 use crate::{Configuration, Rules};
+use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
+use std::sync::{RwLock, RwLockReadGuard};
 
 /// Global settings for the entire workspace
 #[derive(Debug, Default)]
@@ -25,7 +24,7 @@ impl WorkspaceSettings {
     /// The (configuration)[Configuration] is merged into the workspace
     pub fn merge_with_configuration(&mut self, configuration: Configuration) {
         // formatter part
-        if let Some(formatter) = &configuration.formatter {
+        if let Some(formatter) = configuration.formatter {
             self.format = FormatSettings::from(formatter);
         }
         let formatter = configuration
@@ -37,7 +36,7 @@ impl WorkspaceSettings {
         }
 
         // linter part
-        if let Some(linter) = &configuration.linter {
+        if let Some(linter) = configuration.linter {
             self.linter = LinterSettings::from(linter)
         }
 

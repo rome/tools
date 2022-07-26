@@ -59,7 +59,8 @@ declare_rule! {
     ///```
     pub(crate) NoMultipleSpacesInRegularExpressionLiterals {
         version: "0.7.0",
-        name: "noMultipleSpacesInRegularExpressionLiterals"
+        name: "noMultipleSpacesInRegularExpressionLiterals",
+        recommended: true
     }
 }
 
