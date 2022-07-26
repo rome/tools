@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Rules {
-    #[doc = r" It enables a preset of rules of any group recommended by Rome. `true` by default."]
+    #[doc = r" It enables the lint rules recommended by Rome. `true` by default."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub recommended: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -38,81 +38,82 @@ impl Rules {
     #[doc = r" Only one element of the tuple is [Some] at the time."]
     #[doc = r""]
     #[doc = r" The enabled rules are calculated from the difference with the disabled rules."]
-    pub fn as_analysis_filters(
-        &self,
-    ) -> (Option<IndexSet<RuleFilter>>, Option<IndexSet<RuleFilter>>) {
+    pub fn as_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut enabled_rules = IndexSet::new();
         let mut disabled_rules = IndexSet::new();
-        if self.is_recommended() {
+        if let Some(group) = self.js.as_ref() {
+            if self.is_recommended() && group.is_recommended() {
+                enabled_rules.extend(&Js::RECOMMENDED_RULES);
+            }
+            enabled_rules.extend(&group.get_enabled_rules());
+            disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
             enabled_rules.extend(Js::RECOMMENDED_RULES);
+        }
+        if let Some(group) = self.jsx.as_ref() {
+            if self.is_recommended() && group.is_recommended() {
+                enabled_rules.extend(&Js::RECOMMENDED_RULES);
+            }
+            enabled_rules.extend(&group.get_enabled_rules());
+            disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
             enabled_rules.extend(Jsx::RECOMMENDED_RULES);
+        }
+        if let Some(group) = self.regex.as_ref() {
+            if self.is_recommended() && group.is_recommended() {
+                enabled_rules.extend(&Js::RECOMMENDED_RULES);
+            }
+            enabled_rules.extend(&group.get_enabled_rules());
+            disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
             enabled_rules.extend(Regex::RECOMMENDED_RULES);
+        }
+        if let Some(group) = self.ts.as_ref() {
+            if self.is_recommended() && group.is_recommended() {
+                enabled_rules.extend(&Js::RECOMMENDED_RULES);
+            }
+            enabled_rules.extend(&group.get_enabled_rules());
+            disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
             enabled_rules.extend(Ts::RECOMMENDED_RULES);
         }
         if let Some(group) = self.js.as_ref() {
-            if group.is_recommended() {
+            if self.is_recommended() && group.is_recommended() {
                 enabled_rules.extend(&Js::RECOMMENDED_RULES);
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
+            enabled_rules.extend(Js::RECOMMENDED_RULES);
         }
         if let Some(group) = self.jsx.as_ref() {
-            if group.is_recommended() {
+            if self.is_recommended() && group.is_recommended() {
                 enabled_rules.extend(&Js::RECOMMENDED_RULES);
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
+            enabled_rules.extend(Jsx::RECOMMENDED_RULES);
         }
         if let Some(group) = self.regex.as_ref() {
-            if group.is_recommended() {
+            if self.is_recommended() && group.is_recommended() {
                 enabled_rules.extend(&Js::RECOMMENDED_RULES);
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
+            enabled_rules.extend(Regex::RECOMMENDED_RULES);
         }
         if let Some(group) = self.ts.as_ref() {
-            if group.is_recommended() {
+            if self.is_recommended() && group.is_recommended() {
                 enabled_rules.extend(&Js::RECOMMENDED_RULES);
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
+        } else if self.is_recommended() {
+            enabled_rules.extend(Ts::RECOMMENDED_RULES);
         }
-        if let Some(group) = self.js.as_ref() {
-            if group.is_recommended() {
-                enabled_rules.extend(&Js::RECOMMENDED_RULES);
-            }
-            enabled_rules.extend(&group.get_enabled_rules());
-            disabled_rules.extend(&group.get_disabled_rules());
-        }
-        if let Some(group) = self.jsx.as_ref() {
-            if group.is_recommended() {
-                enabled_rules.extend(&Js::RECOMMENDED_RULES);
-            }
-            enabled_rules.extend(&group.get_enabled_rules());
-            disabled_rules.extend(&group.get_disabled_rules());
-        }
-        if let Some(group) = self.regex.as_ref() {
-            if group.is_recommended() {
-                enabled_rules.extend(&Js::RECOMMENDED_RULES);
-            }
-            enabled_rules.extend(&group.get_enabled_rules());
-            disabled_rules.extend(&group.get_disabled_rules());
-        }
-        if let Some(group) = self.ts.as_ref() {
-            if group.is_recommended() {
-                enabled_rules.extend(&Js::RECOMMENDED_RULES);
-            }
-            enabled_rules.extend(&group.get_enabled_rules());
-            disabled_rules.extend(&group.get_disabled_rules());
-        }
-        if enabled_rules.len() > disabled_rules.len() {
-            (None, Some(disabled_rules))
-        } else {
-            (
-                Some(enabled_rules.difference(&disabled_rules).cloned().collect()),
-                None,
-            )
-        }
+        enabled_rules.difference(&disabled_rules).cloned().collect()
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]

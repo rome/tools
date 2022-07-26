@@ -27,7 +27,6 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let mut struct_groups = Vec::new();
     let mut line_groups = Vec::new();
     let mut default_for_groups = Vec::new();
-    let mut group_line_recommended_rules = Vec::new();
     let mut group_rules_union = Vec::new();
     for (group, rules) in groups {
         let mut lines_recommended_rule = Vec::new();
@@ -140,16 +139,15 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         default_for_groups.push(quote! {
             #property_group_name: None
         });
-        group_line_recommended_rules.push(quote! {
-            enabled_rules.extend(#group_struct_name::RECOMMENDED_RULES);
-        });
         group_rules_union.push(quote! {
             if let Some(group) = self.#property_group_name.as_ref() {
-                if group.is_recommended() {
+                if self.is_recommended() && group.is_recommended() {
                     enabled_rules.extend(&Js::RECOMMENDED_RULES);
                 }
                 enabled_rules.extend(&group.get_enabled_rules());
                 disabled_rules.extend(&group.get_disabled_rules());
+            } else if self.is_recommended() {
+                enabled_rules.extend(#group_struct_name::RECOMMENDED_RULES);
             }
         });
     }
@@ -163,7 +161,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         #[derive(Deserialize, Serialize, Debug, Clone)]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]
         pub struct Rules {
-            /// It enables a preset of rules of any group recommended by Rome. `true` by default.
+            /// It enables the lint rules recommended by Rome. `true` by default.
             #[serde(skip_serializing_if = "Option::is_none")]
             pub recommended: Option<bool>,
 
@@ -189,26 +187,16 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             /// Only one element of the tuple is [Some] at the time.
             ///
             /// The enabled rules are calculated from the difference with the disabled rules.
-            pub fn as_analysis_filters(&self) -> (Option<IndexSet<RuleFilter>>, Option<IndexSet<RuleFilter>>) {
+            pub fn as_enabled_rules(&self) -> IndexSet<RuleFilter> {
                 let mut enabled_rules = IndexSet::new();
                 let mut disabled_rules = IndexSet::new();
-                if self.is_recommended() {
-                    #( #group_line_recommended_rules );*
-                }
                 // computing the disabled rules
                 #( #group_rules_union )*
 
                 // computing the enabled rules
                 #( #group_rules_union )*
 
-                if enabled_rules.len() > disabled_rules.len() {
-                    (None, Some(disabled_rules))
-                } else {
-                    (
-                        Some(enabled_rules.difference(&disabled_rules).cloned().collect()),
-                        None,
-                    )
-                }
+                enabled_rules.difference(&disabled_rules).cloned().collect()
             }
         }
 

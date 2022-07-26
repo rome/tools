@@ -98,7 +98,6 @@ pub const CONFIG_INCORRECT_GLOBALS: &str = r#"{
 }"#;
 
 pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
-  "root": true,
   "linter": {
     "rules": {
         "recommended": true,
@@ -106,6 +105,17 @@ pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
             "rules": {
                 "noDebugger": "off"
             }
+        }
+    }
+  }
+}"#;
+
+pub const CONFIG_LINTER_SUPPRESSED_GROUP: &str = r#"{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "js": {
+            "recommended": false
         }
     }
   }
