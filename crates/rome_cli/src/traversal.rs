@@ -156,7 +156,7 @@ fn print_messages_to_console(
 ) -> bool {
     let mut has_errors = false;
     let mut paths = HashMap::new();
-    let mut printed_diagnostics: u8 = 0;
+    let mut printed_diagnostics: u16 = 0;
     let mut not_printed_diagnostics = 0;
 
     while let Ok(msg) = recv_msgs.recv() {
@@ -228,7 +228,7 @@ fn print_messages_to_console(
 
                 if !mode.is_ci() && not_printed_diagnostics > 0 {
                     console.log(markup! {
-                        <Warn>"The number of diagnostics exceeds the number allowed by Rome."</Warn>
+                        <Warn>"The number of diagnostics exceeds the number allowed by Rome.\n"</Warn>
                         <Info>"Diagnostics not shown: "</Info><Emphasis>{not_printed_diagnostics}</Emphasis><Info>"."</Info>
                     })
                 }
@@ -288,7 +288,7 @@ fn print_messages_to_console(
 pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
-        max_diagnostics: u8,
+        max_diagnostics: u16,
         /// `true` when running the command `check` with the `--apply` argument
         should_fix: bool,
     },
@@ -299,7 +299,7 @@ pub(crate) enum TraversalMode {
 }
 
 impl TraversalMode {
-    fn get_max_diagnostics(&self) -> Option<u8> {
+    fn get_max_diagnostics(&self) -> Option<u16> {
         match self {
             TraversalMode::Check {
                 max_diagnostics, ..

@@ -805,7 +805,7 @@ mod main {
             ),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
-                OsString::from("--max-diagnostics=100"),
+                OsString::from("--max-diagnostics=500"),
             ]),
         });
 

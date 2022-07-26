@@ -13,7 +13,7 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
-    let max_diagnostics: Option<u8> = session
+    let max_diagnostics: Option<u16> = session
         .args
         .opt_value_from_str("--max-diagnostics")
         .map_err(|source| Termination::ParseError {
