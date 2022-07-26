@@ -166,6 +166,32 @@ mod tests {
             }],
         );
     }
+    #[test]
+    fn parse_unclosed_block_comment_suppressions() {
+        assert_eq!(
+            parse_suppression_comment("/* rome-ignore format: explanation").collect::<Vec<_>>(),
+            vec![Suppression {
+                categories: vec![("format", None)],
+                reason: "explanation"
+            }],
+        );
+
+        assert_eq!(
+            parse_suppression_comment("/* rome-ignore format: explanation *").collect::<Vec<_>>(),
+            vec![Suppression {
+                categories: vec![("format", None)],
+                reason: "explanation"
+            }],
+        );
+
+        assert_eq!(
+            parse_suppression_comment("/* rome-ignore format: explanation /").collect::<Vec<_>>(),
+            vec![Suppression {
+                categories: vec![("format", None)],
+                reason: "explanation"
+            }],
+        );
+    }
 
     #[test]
     fn parse_multiple_suppression() {
