@@ -82,7 +82,7 @@ impl Rule for UseTsExpectError {
     /// //                           @ts-ignore
     /// let a: string  = 3;
     /// ```
-    /// 2. For multiline comment, the last line of the multiline comment must start with `@ts-ignore` after trim_start.
+    /// 2. For block comment, the last line of the block comment must start with `@ts-ignore` after trim_start.
     /// ```ts
     /// /*
     ///
@@ -138,10 +138,10 @@ impl Rule for UseTsExpectError {
                             // so we need to add a leading newline offset (1) when i greater than 0.
                             offset += if index == 0 { 0 } else { 1 };
                             if index == line_count - 1 {
-                                // 1. multi line multiline comment with leading star
+                                // 1. multi line block comment with leading star
                                 // *           @ts-ignore                */
                                 //^^^^^^^^^^^^^
-                                // 2. single line multiline comment
+                                // 2. single line block comment
                                 // /** @ts-ignore*/
                                 // ^^^^
                                 // Merge all these cases into one.
