@@ -51,7 +51,10 @@
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
+use crate::settings::WorkspaceSettings;
+use crate::RomeError;
 use rome_analyze::ActionCategory;
+pub use rome_analyze::RuleCategories;
 use rome_diagnostics::{CodeSuggestion, Diagnostic};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
