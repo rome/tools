@@ -4,7 +4,7 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{JsAnyStatement, JsSyntaxToken, TriviaPieceKind};
-use rome_rowan::{AstNode, AstNodeExt, TriviaPiece};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxElement, TriviaPiece};
 
 use crate::JsRuleAction;
 
@@ -63,7 +63,8 @@ declare_rule! {
         name: "useTsExpectError"
     }
 }
-
+// Length of `@ts-ignore`
+const TS_IGNORE_SUPPRESSION_LENGTH: usize = 10;
 const TS_EXPECT_ERROR_SUPPRESSION: &str = "@ts-expect-error";
 
 impl Rule for UseTsExpectError {
@@ -180,13 +181,16 @@ impl Rule for UseTsExpectError {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let root = ctx.root();
+        let mut mutation = ctx.root().begin();
         let first_token = node.syntax().first_token()?;
         // Clone trailing trivia and replace leading trivia
         let mut next_leading_trivia = vec![];
         let mut next_trailing_trivia = vec![];
         let mut next_leading_trivia_string = String::new();
         let mut next_trailing_trivia_string = String::new();
+        // The difference from the length of `@ts-ignore` and the length of `@ts-expect-error`;
+        let diff_length_between_suppression =
+            (TS_EXPECT_ERROR_SUPPRESSION.len() - TS_IGNORE_SUPPRESSION_LENGTH) as u32;
         first_token
             .leading_trivia()
             .pieces()
@@ -194,26 +198,25 @@ impl Rule for UseTsExpectError {
             .for_each(|(i, piece)| {
                 let text = piece.text();
                 if state.0 == i {
-                    let mut normalized_string = String::with_capacity(text.len());
                     // Replace `@ts-ignore` to `@ts-expect-error`
-                    normalized_string.push_str(&text[0..state.1]);
-                    normalized_string.push_str(TS_EXPECT_ERROR_SUPPRESSION);
-                    normalized_string.push_str(&text[(state.1 + 10)..]);
+                    next_leading_trivia_string.push_str(&text[0..state.1]);
+                    next_leading_trivia_string.push_str(TS_EXPECT_ERROR_SUPPRESSION);
+                    next_leading_trivia_string
+                        .push_str(&text[(state.1 + TS_IGNORE_SUPPRESSION_LENGTH)..]);
                     next_leading_trivia.push(TriviaPiece::new(
                         piece.kind(),
-                        normalized_string.len() as u32,
+                        text.len() as u32 + diff_length_between_suppression,
                     ));
-                    next_leading_trivia_string.push_str(&normalized_string);
                 } else {
                     next_leading_trivia.push(TriviaPiece::new(piece.kind(), text.len() as u32));
                     next_leading_trivia_string.push_str(text);
                 }
             });
         // Copy trailing trivia
-        first_token.trailing_trivia().pieces().for_each(|item| {
-            next_trailing_trivia.push(TriviaPiece::new(item.kind(), item.text().len() as u32));
-            next_trailing_trivia_string.push_str(item.text());
-        });
+        for piece in first_token.trailing_trivia().pieces() {
+            next_trailing_trivia.push(TriviaPiece::new(piece.kind(), piece.text().len() as u32));
+            next_trailing_trivia_string.push_str(piece.text());
+        }
         let next_first_token = JsSyntaxToken::new_detached(
             first_token.kind(),
             &format!(
@@ -225,12 +228,15 @@ impl Rule for UseTsExpectError {
             next_leading_trivia,
             next_trailing_trivia,
         );
-        let root = root.replace_token_discard_trivia(first_token, next_first_token)?;
+        mutation.replace_element_discard_trivia(
+            SyntaxElement::Token(first_token),
+            SyntaxElement::Token(next_first_token),
+        );
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use `@ts-expect-error` instead of `@ts-ignore`." }.to_owned(),
-            root,
+            mutation,
         })
     }
 }
