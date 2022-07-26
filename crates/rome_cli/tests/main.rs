@@ -704,6 +704,7 @@ mod help {
 
 mod main {
     use super::*;
+    use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 
     #[test]
     fn unknown_command() {
@@ -805,14 +806,14 @@ mod main {
             ),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
-                OsString::from("--max-diagnostics=100"),
+                OsString::from("--max-diagnostics=500"),
             ]),
         });
 
         match result {
             Err(Termination::OverflowNumberArgument(argument, limit)) => {
                 assert_eq!(argument, "--max-diagnostics");
-                assert_eq!(limit, "50");
+                assert_eq!(limit, MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
             }
             _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
         }

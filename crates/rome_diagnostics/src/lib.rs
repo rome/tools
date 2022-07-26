@@ -32,7 +32,7 @@ impl DiagnosticTag {
     }
 }
 
-/// Indicicates how a tool should manage this suggestion.
+/// Indicates how a tool should manage this suggestion.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Applicability {
@@ -50,4 +50,4 @@ pub enum Applicability {
     Unspecified,
 }
 
-pub const MAXIMUM_DISPLAYABLE_DIAGNOSTICS: u8 = 50;
+pub const MAXIMUM_DISPLAYABLE_DIAGNOSTICS: u16 = 200;
