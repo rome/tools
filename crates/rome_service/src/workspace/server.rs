@@ -1,6 +1,8 @@
 use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
 use dashmap::{mapref::entry::Entry, DashMap};
+use indexmap::IndexSet;
+use rome_analyze::{AnalysisFilter, RuleFilter};
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -217,7 +219,20 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
         let rules = settings.linter.rules.as_ref();
-        let diagnostics = linter(&params.path, parse, params.categories, rules);
+        let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
+            let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
+            Some(enabled.into_iter().collect())
+        } else {
+            None
+        };
+
+        let mut filter = match &enabled_rules {
+            Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+            _ => AnalysisFilter::default(),
+        };
+
+        filter.categories = params.categories;
+        let diagnostics = linter(&params.path, parse, filter);
 
         Ok(PullDiagnosticsResult { diagnostics })
     }

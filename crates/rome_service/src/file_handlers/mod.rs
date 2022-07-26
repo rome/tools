@@ -1,10 +1,9 @@
-use std::ffi::OsStr;
-
-use rome_analyze::RuleCategories;
+use rome_analyze::AnalysisFilter;
 use rome_diagnostics::Diagnostic;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
+use std::ffi::OsStr;
 
 use crate::{
     settings::SettingsHandle,
@@ -73,7 +72,7 @@ impl std::fmt::Display for Mime {
 
 type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
-type Lint = fn(&RomePath, AnyParse, RuleCategories, Option<&Rules>) -> Vec<Diagnostic>;
+type Lint = fn(&RomePath, AnyParse, AnalysisFilter) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
 type FixAll = fn(&RomePath, AnyParse, Option<&Rules>) -> FixFileResult;
 type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;

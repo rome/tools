@@ -126,28 +126,9 @@ fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
     format!("{tree:#?}")
 }
 
-fn lint(
-    rome_path: &RomePath,
-    parse: AnyParse,
-    categories: RuleCategories,
-    rules: Option<&Rules>,
-) -> Vec<Diagnostic> {
+fn lint(rome_path: &RomePath, parse: AnyParse, filter: AnalysisFilter) -> Vec<Diagnostic> {
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
-
-    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
-        let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
-        Some(enabled.into_iter().collect())
-    } else {
-        None
-    };
-
-    let mut filter = match &enabled_rules {
-        Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
-        _ => AnalysisFilter::default(),
-    };
-
-    filter.categories = categories;
 
     let file_id = rome_path.file_id();
     analyze(file_id, &tree, filter, |signal| {
