@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noDoubleEquals (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Require the use of `===` and `!==`
 
 It is generally bad practice to use `==` for comparison instead of

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useShorthandArrayType (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 When expressing array types, this rule promotes the usage of `T[]` shorthand instead of `Array<T>`.
 
 ## Examples

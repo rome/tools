@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noMultipleSpacesInRegularExpressionLiterals (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow unclear usage of multiple space characters in regular expression literals
 
 ## Examples

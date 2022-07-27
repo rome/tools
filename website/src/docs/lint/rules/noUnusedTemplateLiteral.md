@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noUnusedTemplateLiteral (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow template literals if interpolation and special-character handling are not needed
 
 ## Examples

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noEmptyPattern (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallows empty destructuring patterns.
 
 ## Examples

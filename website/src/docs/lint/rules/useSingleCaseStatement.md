@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useSingleCaseStatement (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Enforces case clauses have a single statement, emits a quick fix wrapping
 the statements in a block
 

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useTemplate (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Template literals are preferred over string concatenation.
 
 ## Examples

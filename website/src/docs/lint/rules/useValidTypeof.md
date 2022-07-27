@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useValidTypeof (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 This rule verifies the result of `typeof $expr` unary expressions is being
 compared to valid values, either string literals containing valid type
 names or other `typeof` expressions

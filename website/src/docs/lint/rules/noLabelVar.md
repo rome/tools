@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noLabelVar (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow labels that share a name with a variable
 
 ## Examples

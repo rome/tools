@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noDelete (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow the use of the `delete` operator
 
 ## Examples

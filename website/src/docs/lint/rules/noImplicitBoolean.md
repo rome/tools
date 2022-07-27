@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noImplicitBoolean (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow implicit `true` values on JSX boolean attributes
 
 ## Examples

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noUnsafeNegation (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow using unsafe negation.
 
 ## Examples
