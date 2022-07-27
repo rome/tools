@@ -78,10 +78,6 @@ impl LanguageServer for LSPServer {
 
         self.session.fetch_client_configuration().await;
 
-        if self.session.config.read().get_workspace_settings().unstable {
-            rome_flags::set_unstable_flags(rome_flags::FeatureFlags::ALL);
-        }
-
         let msg = format!("Server initialized with PID: {}", std::process::id());
         self.session
             .client
@@ -140,14 +136,7 @@ impl LanguageServer for LSPServer {
     #[tracing::instrument(level = "trace", skip(self))]
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         let _ = params;
-
-        let diags_enabled_prev = self.session.diagnostics_enabled();
-
         self.session.fetch_client_configuration().await;
-
-        if diags_enabled_prev != self.session.diagnostics_enabled() {
-            self.session.update_all_diagnostics().await;
-        }
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {

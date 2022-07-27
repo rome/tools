@@ -1,6 +1,5 @@
 use crate::config::Config;
 use crate::config::CONFIGURATION_SECTION;
-
 use crate::documents::Document;
 use crate::url_interner::UrlInterner;
 use crate::utils;
@@ -12,8 +11,8 @@ use rome_diagnostics::file::FileId;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::configuration::Configuration;
 use rome_service::workspace;
-use rome_service::workspace::PullDiagnosticsParams;
 use rome_service::workspace::UpdateSettingsParams;
+use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
 use rome_service::Workspace;
 use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
@@ -102,10 +101,12 @@ impl Session {
     pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> anyhow::Result<()> {
         let rome_path = self.file_path(&url);
         let doc = self.document(&url)?;
+        let lint_enabled = self.workspace.supports_feature(SupportsFeatureParams {
+            feature: FeatureName::Lint,
+            path: rome_path.clone(),
+        });
 
-        let workspace_settings = self.config.read().get_workspace_settings();
-
-        let diagnostics = if workspace_settings.analysis.enable_diagnostics {
+        let diagnostics = if lint_enabled {
             let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
                 path: rome_path,
                 categories: RuleCategories::SYNTAX | RuleCategories::LINT,
@@ -153,15 +154,6 @@ impl Session {
             .and_then(|c| c.did_change_configuration)
             .and_then(|c| c.dynamic_registration)
             == Some(true)
-    }
-
-    /// Checks `analysis.enable_diagnostics` in this session's workspace settings`
-    pub(crate) fn diagnostics_enabled(&self) -> bool {
-        self.config
-            .read()
-            .get_workspace_settings()
-            .analysis
-            .enable_diagnostics
     }
 
     /// Requests "workspace/configuration" from client and updates Session config

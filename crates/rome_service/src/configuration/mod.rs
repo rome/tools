@@ -40,7 +40,6 @@ pub struct Configuration {
 
 impl Default for Configuration {
     fn default() -> Self {
-        // TODO: enable recommendation settings https://github.com/rome/tools/issues/2912
         Self {
             linter: Some(LinterConfiguration {
                 enabled: true,

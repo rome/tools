@@ -10,7 +10,6 @@ pub struct FormatterConfiguration {
 
     /// Stores whether formatting should be allowed to proceed if a given file
     /// has syntax errors
-    #[serde(skip_serializing)]
     pub format_with_errors: bool,
 
     /// The indent style.
@@ -49,7 +48,7 @@ impl From<FormatterConfiguration> for FormatSettings {
             enabled: conf.enabled,
             indent_style: Some(indent_style),
             line_width: Some(conf.line_width),
-            format_with_errors: false,
+            format_with_errors: conf.format_with_errors,
         }
     }
 }
