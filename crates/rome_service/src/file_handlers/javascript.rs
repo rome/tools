@@ -1,6 +1,6 @@
 use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories, RuleFilter};
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
-use rome_formatter::{IndentStyle, Printed};
+use rome_formatter::{FormatError, IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::analyze;
 use rome_js_analyze::utils::rename::RenameError;
@@ -277,6 +277,14 @@ fn format_on_type(
     let context = settings.format_context::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
+
+    let range = tree.text_range();
+    if offset < range.start() || offset > range.end() {
+        return Err(RomeError::FormatError(FormatError::RangeError {
+            input: TextRange::at(offset, TextSize::from(0)),
+            tree: range,
+        }));
+    }
 
     let token = match tree.token_at_offset(offset) {
         // File is empty, do nothing

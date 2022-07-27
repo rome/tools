@@ -98,6 +98,7 @@ impl Session {
     /// Computes diagnostics for the file matching the provided url and publishes
     /// them to the client. Called from [`handlers::text_document`] when a file's
     /// contents changes.
+    #[tracing::instrument(level = "trace", skip(self), err)]
     pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> anyhow::Result<()> {
         let rome_path = self.file_path(&url);
         let doc = self.document(&url)?;

@@ -1,12 +1,13 @@
-use crate::line_index::LineCol;
 use crate::session::Session;
-use anyhow::Result;
+use crate::utils;
+use anyhow::{Context, Result};
 use rome_formatter::IndentStyle;
 use rome_rowan::TextRange;
 use rome_service::workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams};
 use tower_lsp::lsp_types::*;
 use tracing::trace;
 
+#[tracing::instrument(level = "trace", skip(session), err)]
 pub(crate) fn format(
     session: &Session,
     params: DocumentFormattingParams,
@@ -46,6 +47,7 @@ pub(crate) fn format(
     Ok(Some(edits))
 }
 
+#[tracing::instrument(level = "trace", skip(session), err)]
 pub(crate) fn format_range(
     session: &Session,
     params: DocumentRangeFormattingParams,
@@ -60,14 +62,18 @@ pub(crate) fn format_range(
         IndentStyle::Tab
     };
 
-    let start_index = doc.line_index.offset(LineCol {
-        line: params.range.start.line,
-        col: params.range.start.character,
-    });
-    let end_index = doc.line_index.offset(LineCol {
-        line: params.range.end.line,
-        col: params.range.end.character,
-    });
+    let start_index = utils::offset(&doc.line_index, params.range.start).with_context(|| {
+        format!(
+            "failed to access position {:?} in document {url}",
+            params.range.start
+        )
+    })?;
+    let end_index = utils::offset(&doc.line_index, params.range.end).with_context(|| {
+        format!(
+            "failed to access position {:?} in document {url}",
+            params.range.end
+        )
+    })?;
 
     let format_range = TextRange::new(start_index, end_index);
     let formatted = session.workspace.format_range(FormatRangeParams {
@@ -107,6 +113,7 @@ pub(crate) fn format_range(
     }]))
 }
 
+#[tracing::instrument(level = "trace", skip(session), err)]
 pub(crate) fn format_on_type(
     session: &Session,
     params: DocumentOnTypeFormattingParams,
@@ -123,10 +130,8 @@ pub(crate) fn format_on_type(
         IndentStyle::Tab
     };
 
-    let offset = doc.line_index.offset(LineCol {
-        line: position.line,
-        col: position.character,
-    });
+    let offset = utils::offset(&doc.line_index, position)
+        .with_context(|| format!("failed to access position {position:?} in document {url}"))?;
 
     let formatted = session.workspace.format_on_type(FormatOnTypeParams {
         path: rome_path,

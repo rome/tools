@@ -386,12 +386,19 @@ pub enum FormatError {
     /// In case a node can't be formatted because it either misses a require child element or
     /// a child is present that should not (e.g. a trailing comma after a rest element).
     SyntaxError,
+    /// In case range formatting failed because the provided range was larger
+    /// than the formatted syntax tree
+    RangeError { input: TextRange, tree: TextRange },
 }
 
 impl std::fmt::Display for FormatError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             FormatError::SyntaxError => fmt.write_str("syntax error"),
+            FormatError::RangeError { input, tree } => std::write!(
+                fmt,
+                "formatting range {input:?} is larger than syntax tree {tree:?}"
+            ),
         }
     }
 }
@@ -851,6 +858,14 @@ where
             Vec::new(),
             Vec::new(),
         ));
+    }
+
+    let root_range = root.text_range();
+    if range.start() < root_range.start() || range.end() > root_range.end() {
+        return Err(FormatError::RangeError {
+            input: range,
+            tree: root_range,
+        });
     }
 
     // Find the tokens corresponding to the start and end of the range
