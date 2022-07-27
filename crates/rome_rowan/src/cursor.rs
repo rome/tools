@@ -317,69 +317,66 @@ impl NodeData {
         R: ops::RangeBounds<usize>,
         I: Iterator<Item = Option<green::GreenElement>>,
     {
-        let new_green = match self.green() {
-            NodeOrToken::Node(green) => green.splice_slots(range, replace_with),
+        let green = match self.green() {
+            NodeOrToken::Node(green) => green.splice_slots(range, replace_with).into(),
             NodeOrToken::Token(_) => panic!("called splice_slots on a token node"),
         };
-
-        // SAFETY: This conversion can only fail on 16-bits systems for nodes with more than 65 535 children
-        let index = usize::try_from(self.slot).expect("integer overflow");
 
         // Try to reuse the underlying memory allocation if self is the only
         // outstanding reference to this NodeData
         match Rc::get_mut(&mut self) {
             Some(node) => {
-                // We can't just do `*parent = parent.splice_slots()` because `splice_slots` may panic and `parent`
-                // would remain in an inconsistent state (the old value is moved out but the new value isn't yet
-                // moved in), instead this has to be done in multiple steps:
-
-                // 1. Clone the reference to the previous parent if it exists
-                let parent = match &node.kind {
-                    NodeKind::Child { parent, .. } => Some(parent.clone()),
-                    NodeKind::Root { .. } => None,
-                };
-
-                // 2. Unconditionally set the kind to `Root` (to ensure parent is the only outstanding
-                // reference to the parent node)
-                // This also bumps the reference count of new_green temporarily to be able to construct
-                // the (optional) parent tree, in both case the reference will be decremented again (either
-                // the node is a root and the second reference gets dropped, or the node is a child and
-                // node.kind.green gets downgraded to weak)
-                node.kind = NodeKind::Root {
-                    green: GreenElement::Node(new_green.clone()),
-                };
-
-                // 3. Actually call `splice_slots` on the previous parent if it exists and overwrite the
-                // kind to `Child`
-                if let Some(parent) = parent {
-                    node.kind = NodeKind::Child {
-                        green: WeakGreenElement::new(GreenElementRef::Node(&new_green)),
-                        parent: parent.splice_slots(
-                            index..=index,
-                            iter::once(Some(GreenElement::Node(new_green))),
-                        ),
-                    };
-                }
-
+                node.kind = NodeKind::Root { green };
+                node.slot = 0;
+                node.offset = TextSize::from(0);
                 self
             }
-            None => Rc::new(NodeData {
-                _c: Count::new(),
-                kind: match &self.kind {
-                    NodeKind::Root { .. } => NodeKind::Root {
-                        green: GreenElement::Node(new_green),
-                    },
-                    NodeKind::Child { parent, .. } => NodeKind::Child {
-                        green: WeakGreenElement::new(GreenElementRef::Node(&new_green)),
-                        parent: parent.clone().splice_slots(
-                            index..=index,
-                            iter::once(Some(GreenElement::Node(new_green))),
-                        ),
-                    },
-                },
-                offset: self.offset,
-                slot: self.slot,
-            }),
+            None => Self::new(NodeKind::Root { green }, 0, 0.into()),
         }
+    }
+
+    /// Return a new version of this node with the element `prev_elem` replaced with `next_elem`
+    ///
+    /// `prev_elem` can be a direct child of this node, or an indirect child through any descendant node
+    ///
+    /// Returns `None` if `prev_elem` is not a descendant of this node
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    fn replace_child(
+        mut self: Rc<Self>,
+        prev_elem: SyntaxElement,
+        next_elem: SyntaxElement,
+    ) -> Option<Rc<Self>> {
+        let mut green = next_elem.into_green();
+        let mut elem = prev_elem;
+
+        loop {
+            let node = elem.parent()?;
+            let is_self = node.key() == self.key();
+
+            let index = elem.index();
+            let range = index..=index;
+
+            let replace_with = iter::once(Some(green));
+            green = node.green().splice_slots(range, replace_with).into();
+            elem = node.into();
+
+            if is_self {
+                break;
+            }
+        }
+
+        // Try to reuse the underlying memory allocation if self is the only
+        // outstanding reference to this NodeData
+        let result = match Rc::get_mut(&mut self) {
+            Some(node) => {
+                node.kind = NodeKind::Root { green };
+                node.slot = 0;
+                node.offset = TextSize::from(0);
+                self
+            }
+            None => Self::new(NodeKind::Root { green }, 0, 0.into()),
+        };
+
+        Some(result)
     }
 }

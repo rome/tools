@@ -50,6 +50,8 @@ pub trait AstNodeExt: AstNode {
     ) -> Option<Self>
     where
         Self: Sized;
+
+    fn detach(self) -> Self;
 }
 
 impl<T> AstNodeExt for T
@@ -145,6 +147,10 @@ where
                         .map(|piece| (piece.kind(), piece.text())),
                 ),
         )
+    }
+
+    fn detach(self) -> Self {
+        Self::unwrap_cast(self.into_syntax().detach())
     }
 }
 

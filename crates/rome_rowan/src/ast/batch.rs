@@ -176,6 +176,18 @@ where
         self.push_change(prev_element, Some(next_element))
     }
 
+    /// Push a change to replace the "prev_node" with "next_node".
+    ///
+    /// Changes to take effect must be commited.
+    pub fn replace_node_discard_trivia<T>(&mut self, prev_node: T, next_node: T)
+    where
+        T: AstNode<Language = L>,
+    {
+        self.replace_element_discard_trivia(
+            prev_node.into_syntax().into(),
+            next_node.into_syntax().into(),
+        )
+    }
     /// Push a change to replace the "prev_element" with "next_element".
     ///
     /// Changes to take effect must be commited.
