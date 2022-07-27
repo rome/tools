@@ -167,13 +167,13 @@
 		"tsc": "tsc"
 	},
 	"dependencies": {
-		"vscode-languageclient": "^8.0.1"
+		"vscode-languageclient": "^8.0.2"
 	},
 	"devDependencies": {
 		"@types/node": "^18.0.0",
 		"@types/vscode": "^1.68.1",
 		"typescript": "^4.5.2",
-		"vsce": "^2.9.2",
+		"vsce": "^2.10.0",
 		"esbuild": "^0.14.47",
 		"rome": "next"
 	}
