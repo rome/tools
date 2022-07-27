@@ -105,8 +105,6 @@ jobs:
         run: cargo build -p rome_lsp --release --target ${{ matrix.target }}
         env:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
-          # Perform full Link-Time Optimizations
-          CARGO_PROFILE_RELEASE_LTO: "true"
           # Strip all debug symbols from the resulting binaries
           RUSTFLAGS: "-C strip=symbols"
 
