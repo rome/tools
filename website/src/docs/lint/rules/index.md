@@ -17,6 +17,7 @@ eleventyNavigation:
 <h3 data-toc-exclude id="noArguments">
 	<a href="/docs/lint/rules/noArguments">noArguments (since v0.7.0)</a>
 	<a class="header-anchor" href="#noArguments"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow the use of <code>arguments</code>
 </div>
@@ -24,6 +25,7 @@ Disallow the use of <code>arguments</code>
 <h3 data-toc-exclude id="noAsyncPromiseExecutor">
 	<a href="/docs/lint/rules/noAsyncPromiseExecutor">noAsyncPromiseExecutor (since v0.7.0)</a>
 	<a class="header-anchor" href="#noAsyncPromiseExecutor"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallows using an async function as a Promise executor.
 </div>
@@ -31,6 +33,7 @@ Disallows using an async function as a Promise executor.
 <h3 data-toc-exclude id="noCatchAssign">
 	<a href="/docs/lint/rules/noCatchAssign">noCatchAssign (since v0.7.0)</a>
 	<a class="header-anchor" href="#noCatchAssign"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow reassigning exceptions in catch clauses
 </div>
@@ -38,6 +41,7 @@ Disallow reassigning exceptions in catch clauses
 <h3 data-toc-exclude id="noCompareNegZero">
 	<a href="/docs/lint/rules/noCompareNegZero">noCompareNegZero (since v0.7.0)</a>
 	<a class="header-anchor" href="#noCompareNegZero"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow comparing against <code>-0</code>
 </div>
@@ -52,6 +56,7 @@ Disallow unreachable code
 <h3 data-toc-exclude id="noDebugger">
 	<a href="/docs/lint/rules/noDebugger">noDebugger (since v0.7.0)</a>
 	<a class="header-anchor" href="#noDebugger"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow the use of <code>debugger</code>
 </div>
@@ -59,6 +64,7 @@ Disallow the use of <code>debugger</code>
 <h3 data-toc-exclude id="noDelete">
 	<a href="/docs/lint/rules/noDelete">noDelete (since v0.7.0)</a>
 	<a class="header-anchor" href="#noDelete"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow the use of the <code>delete</code> operator
 </div>
@@ -66,6 +72,7 @@ Disallow the use of the <code>delete</code> operator
 <h3 data-toc-exclude id="noDoubleEquals">
 	<a href="/docs/lint/rules/noDoubleEquals">noDoubleEquals (since v0.7.0)</a>
 	<a class="header-anchor" href="#noDoubleEquals"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Require the use of <code>===</code> and <code>!==</code>
 </div>
@@ -73,6 +80,7 @@ Require the use of <code>===</code> and <code>!==</code>
 <h3 data-toc-exclude id="noEmptyPattern">
 	<a href="/docs/lint/rules/noEmptyPattern">noEmptyPattern (since v0.7.0)</a>
 	<a class="header-anchor" href="#noEmptyPattern"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallows empty destructuring patterns.
 </div>
@@ -80,6 +88,7 @@ Disallows empty destructuring patterns.
 <h3 data-toc-exclude id="noFunctionAssign">
 	<a href="/docs/lint/rules/noFunctionAssign">noFunctionAssign (since v0.7.0)</a>
 	<a class="header-anchor" href="#noFunctionAssign"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow reassigning function declarations.
 </div>
@@ -87,6 +96,7 @@ Disallow reassigning function declarations.
 <h3 data-toc-exclude id="noLabelVar">
 	<a href="/docs/lint/rules/noLabelVar">noLabelVar (since v0.7.0)</a>
 	<a class="header-anchor" href="#noLabelVar"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow labels that share a name with a variable
 </div>
@@ -94,6 +104,7 @@ Disallow labels that share a name with a variable
 <h3 data-toc-exclude id="noNegationElse">
 	<a href="/docs/lint/rules/noNegationElse">noNegationElse (since v0.7.0)</a>
 	<a class="header-anchor" href="#noNegationElse"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
 </div>
@@ -101,6 +112,7 @@ Disallow negation in the condition of an <code>if</code> statement if it has an 
 <h3 data-toc-exclude id="noShoutyConstants">
 	<a href="/docs/lint/rules/noShoutyConstants">noShoutyConstants (since v0.7.0)</a>
 	<a class="header-anchor" href="#noShoutyConstants"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow the use of constants which its value is the upper-case version of its name.
 </div>
@@ -108,6 +120,7 @@ Disallow the use of constants which its value is the upper-case version of its n
 <h3 data-toc-exclude id="noSparseArray">
 	<a href="/docs/lint/rules/noSparseArray">noSparseArray (since v0.7.0)</a>
 	<a class="header-anchor" href="#noSparseArray"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow sparse arrays
 </div>
@@ -115,6 +128,7 @@ Disallow sparse arrays
 <h3 data-toc-exclude id="noUnnecessaryContinue">
 	<a href="/docs/lint/rules/noUnnecessaryContinue">noUnnecessaryContinue (since v0.7.0)</a>
 	<a class="header-anchor" href="#noUnnecessaryContinue"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Avoid using unnecessary <code>ContinueStatement</code>.
 </div>
@@ -122,6 +136,7 @@ Avoid using unnecessary <code>ContinueStatement</code>.
 <h3 data-toc-exclude id="noUnsafeNegation">
 	<a href="/docs/lint/rules/noUnsafeNegation">noUnsafeNegation (since v0.7.0)</a>
 	<a class="header-anchor" href="#noUnsafeNegation"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow using unsafe negation.
 </div>
@@ -129,6 +144,7 @@ Disallow using unsafe negation.
 <h3 data-toc-exclude id="noUnusedTemplateLiteral">
 	<a href="/docs/lint/rules/noUnusedTemplateLiteral">noUnusedTemplateLiteral (since v0.7.0)</a>
 	<a class="header-anchor" href="#noUnusedTemplateLiteral"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow template literals if interpolation and special-character handling are not needed
 </div>
@@ -136,6 +152,7 @@ Disallow template literals if interpolation and special-character handling are n
 <h3 data-toc-exclude id="useBlockStatements">
 	<a href="/docs/lint/rules/useBlockStatements">useBlockStatements (since v0.7.0)</a>
 	<a class="header-anchor" href="#useBlockStatements"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
@@ -144,6 +161,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Discard redundant terms from logical expressions.
 </div>
@@ -151,6 +169,7 @@ Discard redundant terms from logical expressions.
 <h3 data-toc-exclude id="useSingleCaseStatement">
 	<a href="/docs/lint/rules/useSingleCaseStatement">useSingleCaseStatement (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSingleCaseStatement"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Enforces case clauses have a single statement, emits a quick fix wrapping
 the statements in a block
@@ -159,6 +178,7 @@ the statements in a block
 <h3 data-toc-exclude id="useSingleVarDeclarator">
 	<a href="/docs/lint/rules/useSingleVarDeclarator">useSingleVarDeclarator (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSingleVarDeclarator"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow multiple variable declarations in the same variable statement
 </div>
@@ -166,6 +186,7 @@ Disallow multiple variable declarations in the same variable statement
 <h3 data-toc-exclude id="useTemplate">
 	<a href="/docs/lint/rules/useTemplate">useTemplate (since v0.7.0)</a>
 	<a class="header-anchor" href="#useTemplate"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Template literals are preferred over string concatenation.
 </div>
@@ -173,6 +194,7 @@ Template literals are preferred over string concatenation.
 <h3 data-toc-exclude id="useValidTypeof">
 	<a href="/docs/lint/rules/useValidTypeof">useValidTypeof (since v0.7.0)</a>
 	<a class="header-anchor" href="#useValidTypeof"></a>
+	<span class="recommended">recommended</span>
 </h3>
 This rule verifies the result of <code>typeof $expr</code> unary expressions is being
 compared to valid values, either string literals containing valid type
@@ -182,6 +204,7 @@ names or other <code>typeof</code> expressions
 <h3 data-toc-exclude id="useWhile">
 	<a href="/docs/lint/rules/useWhile">useWhile (since v0.7.0)</a>
 	<a class="header-anchor" href="#useWhile"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Enforce the use of <code>while</code> loops instead of <code>for</code> loops when the
 initializer and update expressions are not needed
@@ -193,6 +216,7 @@ initializer and update expressions are not needed
 <h3 data-toc-exclude id="noCommentText">
 	<a href="/docs/lint/rules/noCommentText">noCommentText (since v0.7.0)</a>
 	<a class="header-anchor" href="#noCommentText"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Prevent comments from being inserted as text nodes
 </div>
@@ -200,6 +224,7 @@ Prevent comments from being inserted as text nodes
 <h3 data-toc-exclude id="noImplicitBoolean">
 	<a href="/docs/lint/rules/noImplicitBoolean">noImplicitBoolean (since v0.7.0)</a>
 	<a class="header-anchor" href="#noImplicitBoolean"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow implicit <code>true</code> values on JSX boolean attributes
 </div>
@@ -207,6 +232,7 @@ Disallow implicit <code>true</code> values on JSX boolean attributes
 <h3 data-toc-exclude id="useSelfClosingElements">
 	<a href="/docs/lint/rules/useSelfClosingElements">useSelfClosingElements (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSelfClosingElements"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Prevent extra closing tags for components without children
 </div>
@@ -217,6 +243,7 @@ Prevent extra closing tags for components without children
 <h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
 	<a href="/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals (since v0.7.0)</a>
 	<a class="header-anchor" href="#noMultipleSpacesInRegularExpressionLiterals"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow unclear usage of multiple space characters in regular expression literals
 </div>
@@ -227,6 +254,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 <h3 data-toc-exclude id="useShorthandArrayType">
 	<a href="/docs/lint/rules/useShorthandArrayType">useShorthandArrayType (since v0.7.0)</a>
 	<a class="header-anchor" href="#useShorthandArrayType"></a>
+	<span class="recommended">recommended</span>
 </h3>
 When expressing array types, this rule promotes the usage of <code>T[]</code> shorthand instead of <code>Array&lt;T&gt;</code>.
 </div>

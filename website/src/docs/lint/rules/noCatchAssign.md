@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noCatchAssign (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow reassigning exceptions in catch clauses
 
 ## Examples

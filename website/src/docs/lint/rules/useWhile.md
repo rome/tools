@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useWhile (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Enforce the use of `while` loops instead of `for` loops when the
 initializer and update expressions are not needed
 

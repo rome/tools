@@ -2,11 +2,11 @@
 	"name": "rome-website",
 	"private": true,
 	"scripts": {
-		"build": "sass --style=compressed src/styles:src/_includes/styles && cross-env ELEVENTY_ENV=production eleventy",
+		"build": "pnpm build:styles && cross-env ELEVENTY_ENV=production eleventy",
 		"build:styles": "sass --style=compressed src/styles:src/_includes/styles",
-		"start": "npm-run-all watch:* build:styles",
+		"start": "npm-run-all --parallel watch:** ",
 		"watch:eleventy": "eleventy --serve",
-		"watch:sass": "pnpm build:styles -- --watch",
+		"watch:sass": "sass --style=compressed src/styles:src/_includes/styles --watch",
 		"format": "rome format --write ."
 	},
 	"devDependencies": {
@@ -25,7 +25,7 @@
 		"markdown-it-anchor": "^8.6.4",
 		"markdown-it-header-sections": "^1.0.0",
 		"markdown-it-imsize": "^2.0.1",
-		"sass": "^1.49.9",
+		"sass": "^1.54.0",
 		"rome": "next",
 		"terser": "^4.8.0",
 		"ts-node": "^10.7.0",

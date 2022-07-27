@@ -44,6 +44,7 @@
 	--search-input-background-color: rgba(0, 0, 0, 0.07);
 	--table-even-row-color: rgba(0, 0, 0, 0.05);
 	--inline-code-background-color: rgba(0, 0, 0, 0.08);
+	--label-font-color: #{$gray-4};
 }
 
 @include dark-mode {

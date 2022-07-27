@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useSimplifiedLogicExpression (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Discard redundant terms from logical expressions.
 
 ## Examples

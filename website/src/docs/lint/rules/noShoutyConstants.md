@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noShoutyConstants (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow the use of constants which its value is the upper-case version of its name.
 
 ## Examples

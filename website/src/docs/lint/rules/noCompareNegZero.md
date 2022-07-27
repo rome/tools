@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noCompareNegZero (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow comparing against `-0`
 
 ## Examples

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useBlockStatements (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
 
