@@ -29,7 +29,8 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
         "/*" => {
             comment = comment
                 .strip_suffix("*/")
-                .expect("block comment with no closing token");
+                .or_else(|| comment.strip_suffix(&['*', '/']))
+                .unwrap_or(comment);
             true
         }
         token => panic!("comment with unknown opening token {token:?}"),
@@ -162,6 +163,32 @@ mod tests {
             vec![Suppression {
                 categories: vec![("parse", None)],
                 reason: "explanation4"
+            }],
+        );
+    }
+    #[test]
+    fn parse_unclosed_block_comment_suppressions() {
+        assert_eq!(
+            parse_suppression_comment("/* rome-ignore format: explanation").collect::<Vec<_>>(),
+            vec![Suppression {
+                categories: vec![("format", None)],
+                reason: "explanation"
+            }],
+        );
+
+        assert_eq!(
+            parse_suppression_comment("/* rome-ignore format: explanation *").collect::<Vec<_>>(),
+            vec![Suppression {
+                categories: vec![("format", None)],
+                reason: "explanation"
+            }],
+        );
+
+        assert_eq!(
+            parse_suppression_comment("/* rome-ignore format: explanation /").collect::<Vec<_>>(),
+            vec![Suppression {
+                categories: vec![("format", None)],
+                reason: "explanation"
             }],
         );
     }
