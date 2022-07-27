@@ -60,21 +60,21 @@
 			"type": "object",
 			"properties": {
 				"rome_lsp.trace.server": {
-          "type": "string",
-          "scope": "window",
-          "enum": [
-            "off",
-            "messages",
-            "verbose"
-          ],
-          "enumDescriptions": [
-            "No traces",
-            "Error only",
-            "Full log"
-          ],
-          "default": "off",
-          "description": "Traces the communication between VS Code and the language server."
-        },
+					"type": "string",
+					"scope": "window",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"enumDescriptions": [
+						"No traces",
+						"Error only",
+						"Full log"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				},
 				"rome.lspBin": {
 					"type": [
 						"string",
@@ -82,68 +82,6 @@
 					],
 					"default": null,
 					"markdownDescription": "The rome lsp server executable."
-				},
-				"rome.formatter.formatWithSyntaxErrors": {
-					"type": "boolean",
-					"default": false,
-					"markdownDescription": "**BETA**: allows the formatter to format code that contains syntax errors",
-					"examples": [
-						true,
-						false
-					]
-				},
-				"rome.formatter.lineWidth": {
-					"type": "number",
-					"default": 80,
-					"markdownDescription": "**BETA**: the max width of a single line, the code will have to fit in it",
-					"minimum": 40,
-					"maximum": 320
-				},
-				"rome.formatter.indentStyle": {
-					"type": "string",
-					"enum": [
-						"Tabs",
-						"Spaces"
-					],
-					"default": "Tabs",
-					"markdownEnumDescriptions": [
-						"**BETA**: applies **tabs** while formatting",
-						"**BETA**: applies **spaces** while formatting"
-					]
-				},
-				"rome.formatter.spaceQuantity": {
-					"type": "number",
-					"default": 2,
-					"markdownDescription": "**BETA**: applied **only** when choosing **Spaces**, it's the number of spaces applied when printing.",
-					"minimum": 1,
-					"maximum": 12
-				},
-				"rome.formatter.quoteStyle": {
-					"type": "string",
-					"enum": [
-						"Double",
-						"Single"
-					],
-					"default": "Double",
-					"markdownEnumDescriptions": [
-						"**BETA**: applies **double** quotes while formatting",
-						"**BETA**: applies **single** quotes while formatting"
-					]
-				},
-				"rome.analysis.enableDiagnostics": {
-					"type": "boolean",
-					"default": false,
-					"markdownDescription": "Allows rome to compute and publish diagnostics"
-				},
-				"rome.analysis.enableCodeActions": {
-					"type": "boolean",
-					"default": false,
-					"markdownDescription": "Allows rome to compute and provide code actions"
-				},
-				"rome.unstable": {
-					"type": "boolean",
-					"default": false,
-					"markdownDescription": "**BETA**: enables unstable features"
 				}
 			}
 		}

@@ -3,7 +3,9 @@ use std::collections::HashMap;
 use anyhow::{Context, Result};
 use rome_analyze::ActionCategory;
 use rome_fs::RomePath;
-use rome_service::workspace::{FixFileParams, PullActionsParams};
+use rome_service::workspace::{
+    FeatureName, FixFileParams, PullActionsParams, SupportsFeatureParams,
+};
 use rome_service::RomeError;
 use tower_lsp::lsp_types::{
     self as lsp, CodeActionKind, CodeActionOrCommand, CodeActionParams, CodeActionResponse,
@@ -23,8 +25,14 @@ pub(crate) fn code_actions(
     session: &Session,
     params: CodeActionParams,
 ) -> Result<Option<CodeActionResponse>> {
-    let workspace_settings = session.config.read().get_workspace_settings();
-    if !workspace_settings.analysis.enable_code_actions {
+    let url = params.text_document.uri.clone();
+    let rome_path = session.file_path(&url);
+
+    let linter_enabled = &session.workspace.supports_feature(SupportsFeatureParams {
+        path: rome_path,
+        feature: FeatureName::Lint,
+    });
+    if !linter_enabled {
         return Ok(Some(Vec::new()));
     }
 

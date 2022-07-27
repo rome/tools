@@ -6,7 +6,6 @@ use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
 use futures::StreamExt;
-use rome_lsp::config::AnalysisWorkspaceSettings;
 use rome_lsp::config::WorkspaceSettings;
 use rome_lsp::server::build_server;
 use rome_lsp::server::LSPServer;
@@ -211,10 +210,6 @@ where
         let res = match req.method() {
             "workspace/configuration" => {
                 let settings = WorkspaceSettings {
-                    analysis: AnalysisWorkspaceSettings {
-                        enable_diagnostics: true,
-                        enable_code_actions: true,
-                    },
                     ..WorkspaceSettings::default()
                 };
 
