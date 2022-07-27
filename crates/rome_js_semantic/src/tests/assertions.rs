@@ -446,6 +446,7 @@ impl SemanticAssertions {
                 }
             };
 
+            let mut unused_match = None;
             let at_least_one_match = events.iter().any(|e| {
                 let declaration_at_range = match &e {
                     SemanticEvent::Read {
@@ -460,6 +461,10 @@ impl SemanticAssertions {
                 };
 
                 if let Some(declaration_at_range) = declaration_at_range {
+                    unused_match = Some(format!(
+                        "{} == {}",
+                        &code[declaration_at_range], &code[decl.range]
+                    ));
                     code[declaration_at_range] == code[decl.range]
                 } else {
                     false
@@ -469,7 +474,17 @@ impl SemanticAssertions {
             if !at_least_one_match {
                 println!("Assertion: {:?}", assertion);
                 println!("Events: {:#?}", events_by_pos);
-                panic!("No matching read event found at this range");
+                if let Some(unused_match) = unused_match {
+                    panic!(
+                        "A read event was found, but was discarded because [{}] when checking {:?}",
+                        unused_match, assertion
+                    );
+                } else {
+                    panic!(
+                        "No matching read event found at this range when checking {:?}",
+                        assertion
+                    );
+                }
             }
         }
 
