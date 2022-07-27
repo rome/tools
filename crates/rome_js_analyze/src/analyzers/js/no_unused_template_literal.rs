@@ -63,7 +63,7 @@ impl Rule for NoUnusedTemplateLiteral {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::warning(node.range(),markup! {
+        Some(RuleDiagnostic::error(node.range(),markup! {
             "Do not use template literals if interpolation and special-character handling are not needed."
         }
         .to_owned() ) )

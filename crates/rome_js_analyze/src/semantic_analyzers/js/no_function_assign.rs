@@ -131,7 +131,7 @@ impl Rule for NoFunctionAssign {
     }
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let mut diag = RuleDiagnostic::warning(
+        let mut diag = RuleDiagnostic::error(
             state.id.syntax().text_trimmed_range(),
             markup! {
                 "Do not reassign a function declaration."

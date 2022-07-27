@@ -121,6 +121,32 @@ pub const CONFIG_LINTER_SUPPRESSED_GROUP: &str = r#"{
   }
 }"#;
 
+pub const CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC: &str = r#"{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "js": {
+            "rules": {
+                "noDebugger": "warn"
+            }
+        }
+    }
+  }
+}"#;
+
+pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "js": {
+            "rules": {
+                "noDeadCode": "error"
+            }
+        }
+    }
+  }
+}"#;
+
 pub const CONFIG_INCORRECT_GLOBALS_V2: &str = r#"{
     "javascript": {
       "formatter": {

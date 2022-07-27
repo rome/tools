@@ -73,7 +73,7 @@ impl Rule for NoEmptyPattern {
             JsAnyBindPatternLike::JsObjectBindingPattern(_) => "object",
         };
 
-        Some(RuleDiagnostic::warning(
+        Some(RuleDiagnostic::error(
             node.range(),
             markup! {
                 "Unexpected empty "{node_type}" pattern."

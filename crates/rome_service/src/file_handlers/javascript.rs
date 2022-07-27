@@ -216,7 +216,6 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     };
 
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
-
     let file_id = rome_path.file_id();
     let mut skipped_suggested_fixes = 0;
     loop {

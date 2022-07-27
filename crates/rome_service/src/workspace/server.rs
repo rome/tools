@@ -233,7 +233,24 @@ impl Workspace for WorkspaceServer {
         };
 
         filter.categories = params.categories;
-        let diagnostics = linter(&params.path, parse, filter);
+        let mut diagnostics = linter(&params.path, parse, filter);
+
+        // We do now check if the severity of the diagnostics should be changed.
+        // The configuration allows to change the severity of the diagnostics emitted by rules.
+        if let Some(rules) = rules {
+            for mut diagnostic in &mut diagnostics {
+                if let Some(code) = &diagnostic.code {
+                    let severity = rules.get_severity_from_code(code.as_str());
+                    if let Some(rule_severity) = severity {
+                        // if the severity of the current diagnostic is different from the severity
+                        // specified in the configuration, we change it
+                        if diagnostic.severity != rule_severity {
+                            diagnostic.severity = rule_severity;
+                        }
+                    }
+                }
+            }
+        }
 
         Ok(PullDiagnosticsResult { diagnostics })
     }

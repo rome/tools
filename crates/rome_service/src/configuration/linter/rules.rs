@@ -3,6 +3,7 @@
 use crate::{ConfigurationError, RomeError, RuleConfiguration};
 use indexmap::{IndexMap, IndexSet};
 use rome_analyze::RuleFilter;
+use rome_console::codespan::Severity;
 use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -31,6 +32,72 @@ impl Default for Rules {
     }
 }
 impl Rules {
+    #[doc = r" Checks if the code coming from [rome_diagnostic::Diagnostic] corresponds to a rule."]
+    #[doc = r" Usually the code is built like {category}/{rule_name}"]
+    pub fn matches_diagnostic_code<'a>(
+        &self,
+        category: Option<&'a str>,
+        rule_name: Option<&'a str>,
+    ) -> Option<(&'a str, &'a str)> {
+        match (category, rule_name) {
+            (Some(category), Some(rule_name)) => match category {
+                "js" => self
+                    .js
+                    .as_ref()
+                    .and_then(|js| js.has_rule(rule_name).then(|| (category, rule_name))),
+                "jsx" => self
+                    .jsx
+                    .as_ref()
+                    .and_then(|jsx| jsx.has_rule(rule_name).then(|| (category, rule_name))),
+                "regex" => self
+                    .regex
+                    .as_ref()
+                    .and_then(|regex| regex.has_rule(rule_name).then(|| (category, rule_name))),
+                "ts" => self
+                    .ts
+                    .as_ref()
+                    .and_then(|ts| ts.has_rule(rule_name).then(|| (category, rule_name))),
+                _ => None,
+            },
+            _ => None,
+        }
+    }
+    #[doc = r" Given a code coming from [Diagnostic](rome_diagnostic::Diagnostic), this function returns"]
+    #[doc = r" the [Severity](rome_diagnostic::Severity) associated to the rule, if the configuration changed it."]
+    #[doc = r""]
+    #[doc = r" If not, the function returns [None]."]
+    pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
+        let mut split_code = code.split('/');
+        let group = split_code.next();
+        let rule_name = split_code.next();
+        if let Some((group, rule_name)) = self.matches_diagnostic_code(group, rule_name) {
+            match group {
+                "js" => self
+                    .js
+                    .as_ref()
+                    .and_then(|js| js.rules.get(rule_name))
+                    .map(|rule_setting| rule_setting.into()),
+                "jsx" => self
+                    .jsx
+                    .as_ref()
+                    .and_then(|jsx| jsx.rules.get(rule_name))
+                    .map(|rule_setting| rule_setting.into()),
+                "regex" => self
+                    .regex
+                    .as_ref()
+                    .and_then(|regex| regex.rules.get(rule_name))
+                    .map(|rule_setting| rule_setting.into()),
+                "ts" => self
+                    .ts
+                    .as_ref()
+                    .and_then(|ts| ts.rules.get(rule_name))
+                    .map(|rule_setting| rule_setting.into()),
+                _ => unreachable!("this group should not exist, found {}", group),
+            }
+        } else {
+            None
+        }
+    }
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled rules,"]
     #[doc = r" while the second element are the disabled rules."]
@@ -210,6 +277,10 @@ impl Js {
             }
         }))
     }
+    #[doc = r" Checks if, given a string, matches one of the rules contained in this category"]
+    pub(crate) fn has_rule(&self, rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
 }
 fn deserialize_js_rules<'de, D>(
     deserializer: D,
@@ -273,6 +344,10 @@ impl Jsx {
             }
         }))
     }
+    #[doc = r" Checks if, given a string, matches one of the rules contained in this category"]
+    pub(crate) fn has_rule(&self, rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
 }
 fn deserialize_jsx_rules<'de, D>(
     deserializer: D,
@@ -330,6 +405,10 @@ impl Regex {
             }
         }))
     }
+    #[doc = r" Checks if, given a string, matches one of the rules contained in this category"]
+    pub(crate) fn has_rule(&self, rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
 }
 fn deserialize_regex_rules<'de, D>(
     deserializer: D,
@@ -385,6 +464,10 @@ impl Ts {
                 None
             }
         }))
+    }
+    #[doc = r" Checks if, given a string, matches one of the rules contained in this category"]
+    pub(crate) fn has_rule(&self, rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
     }
 }
 fn deserialize_ts_rules<'de, D>(

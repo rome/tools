@@ -59,7 +59,7 @@ impl Rule for NoArguments {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::warning(
+        Some(RuleDiagnostic::error(
             node.syntax().text_trimmed_range(),
             markup! {
                 "Use the "<Emphasis>"rest parameters"</Emphasis>" instead of "<Emphasis>"arguments"</Emphasis>"."

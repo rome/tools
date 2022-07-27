@@ -28,6 +28,8 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let mut line_groups = Vec::new();
     let mut default_for_groups = Vec::new();
     let mut group_rules_union = Vec::new();
+    let mut group_match_code = Vec::new();
+    let mut group_get_severity = Vec::new();
     for (group, rules) in groups {
         let mut lines_recommended_rule = Vec::new();
         let mut declarations = Vec::new();
@@ -111,6 +113,11 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                         }
                     }))
                 }
+
+                /// Checks if, given a string, matches one of the rules contained in this category
+                pub(crate) fn has_rule(&self, rule_name: &str) -> bool {
+                    Self::GROUP_RULES.contains(&rule_name)
+                }
             }
 
             fn #deserialize_function_ident<'de, D>(
@@ -150,6 +157,20 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 enabled_rules.extend(#group_struct_name::RECOMMENDED_RULES);
             }
         });
+
+        group_get_severity.push(quote! {
+            #group => self
+                .#property_group_name
+                .as_ref()
+                .and_then(|#property_group_name| #property_group_name.rules.get(rule_name))
+                .map(|rule_setting| rule_setting.into())
+        });
+        group_match_code.push(quote! {
+           #group => self
+                .#property_group_name
+                .as_ref()
+                .and_then(|#property_group_name| #property_group_name.has_rule(rule_name).then(|| (category, rule_name)))
+        });
     }
 
     let groups = quote! {
@@ -157,6 +178,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use crate::{ConfigurationError, RomeError, RuleConfiguration};
         use rome_analyze::RuleFilter;
         use indexmap::{IndexMap, IndexSet};
+        use rome_console::codespan::Severity;
 
         #[derive(Deserialize, Serialize, Debug, Clone)]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -177,6 +199,45 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             }
         }
         impl Rules {
+
+            /// Checks if the code coming from [rome_diagnostic::Diagnostic] corresponds to a rule.
+            /// Usually the code is built like {category}/{rule_name}
+            pub fn matches_diagnostic_code<'a>(
+                &self,
+                category: Option<&'a str>,
+                rule_name: Option<&'a str>,
+            ) -> Option<(&'a str, &'a str)> {
+                match (category, rule_name) {
+                    (Some(category), Some(rule_name)) => match category {
+                        #( #group_match_code ),*,
+
+                        _ => None
+                    },
+                    _ => None
+                }
+            }
+
+            /// Given a code coming from [Diagnostic](rome_diagnostic::Diagnostic), this function returns
+            /// the [Severity](rome_diagnostic::Severity) associated to the rule, if the configuration changed it.
+            ///
+            /// If not, the function returns [None].
+            pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
+                let mut split_code = code.split('/');
+
+                let group = split_code.next();
+                let rule_name = split_code.next();
+
+                if let Some((group, rule_name)) = self.matches_diagnostic_code(group, rule_name) {
+                    match group {
+                        #( #group_get_severity ),*,
+
+                        _ => unreachable!("this group should not exist, found {}", group),
+                    }
+                } else {
+                    None
+                }
+            }
+
             pub(crate) fn is_recommended(&self) -> bool {
                 matches!(self.recommended, Some(true))
             }

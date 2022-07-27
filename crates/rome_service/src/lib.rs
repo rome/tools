@@ -1,3 +1,5 @@
+extern crate core;
+
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};

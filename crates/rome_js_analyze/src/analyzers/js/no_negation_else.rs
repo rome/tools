@@ -74,7 +74,7 @@ impl Rule for NoNegationElse {
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::warning(
+        Some(RuleDiagnostic::error(
             node.range(),
             markup! {
                 "Invert blocks when performing a negation test."

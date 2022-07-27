@@ -103,7 +103,7 @@ impl Rule for UseTemplate {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::warning(
+        Some(RuleDiagnostic::error(
             node.range(),
             markup! {
                 ""<Emphasis>"Template"</Emphasis>" literals are preferred over "<Emphasis>"string concatenation."</Emphasis>""

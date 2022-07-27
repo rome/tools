@@ -57,7 +57,7 @@ impl Rule for NoLabelVar {
         let (binding_syntax_node, label_token) = state;
         let name = label_token.text_trimmed();
 
-        Some(RuleDiagnostic::warning(
+        Some(RuleDiagnostic::error(
             label_token.text_trimmed_range(),
             markup! {
                 "Do not use the "<Emphasis>{name}</Emphasis>" variable name as a label"
