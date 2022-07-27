@@ -278,4 +278,4 @@ by shaping the value of the rule in a different way.
 ```
 
 - `level` will indicate the severity of the diagnostic, valid values are: `"off"`, `"warn"` and `"error"`;
-- `options` is wildcard value, with information that will be passed to a rule;
+- `options` is a wildcard value, meaning that will change based on the rule;
