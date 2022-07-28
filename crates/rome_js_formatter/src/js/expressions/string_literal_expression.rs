@@ -2,9 +2,9 @@ use crate::prelude::*;
 
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 
-use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsStringLiteralExpression;
 use rome_js_syntax::JsStringLiteralExpressionFields;
+use rome_js_syntax::{JsExpressionStatement, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -23,19 +23,24 @@ impl FormatNodeRule<JsStringLiteralExpression> for FormatJsStringLiteralExpressi
         let formatted =
             FormatLiteralStringToken::new(&value_token, StringLiteralParentKind::Expression);
 
-        let needs_parenthesis = node
-            .syntax()
-            .parent()
-            .and_then(JsExpressionStatement::cast)
-            .is_some();
+        // Prevents that a string literal expression becomes a directive
+        let needs_parens =
+            if let Some(expression_statement) = node.parent::<JsExpressionStatement>() {
+                expression_statement
+                    .syntax()
+                    .parent()
+                    .map_or(false, |grand_parent| {
+                        matches!(
+                            grand_parent.kind(),
+                            JsSyntaxKind::JS_STATEMENT_LIST | JsSyntaxKind::JS_MODULE_ITEM_LIST
+                        )
+                    })
+            } else {
+                false
+            };
 
-        if needs_parenthesis {
-            format_parenthesize(
-                Some(value_token.clone()),
-                &formatted,
-                Some(value_token.clone()),
-            )
-            .fmt(f)
+        if needs_parens {
+            format_parenthesize(Some(&value_token), &formatted, Some(&value_token)).fmt(f)
         } else {
             formatted.fmt(f)
         }

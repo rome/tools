@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: call.js
 ---
 # Input
@@ -16,19 +17,14 @@ if (true)
 
 # Output
 ```js
-if (true) {
-  if (true) {
-    if (true) {
-      if (true) {
-        if (true) {
+if (true)
+  if (true)
+    if (true)
+      if (true)
+        if (true)
           longVariableName1 =
             // @ts-ignore
             (variable01 + veryLongVariableNameNumber2).method();
-        }
-      }
-    }
-  }
-}
 
 ```
 

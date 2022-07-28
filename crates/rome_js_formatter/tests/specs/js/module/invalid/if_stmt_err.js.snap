@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 259
 expression: if_stmt_err.js
 ---
 # Input
@@ -36,9 +37,7 @@ function test() {
 	let y = 100;
 }
 if (true) {
-} else {
-	var z = 191;
-}
+} else var z = 191;
 if (false) {
 	let x = 99;
 } else {

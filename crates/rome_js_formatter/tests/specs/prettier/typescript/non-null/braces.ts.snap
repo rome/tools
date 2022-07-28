@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: braces.ts
 ---
 # Input
@@ -37,9 +38,7 @@ const f = ((a) => {
   log(a);
 })!;
 
-if (a) {
-  ({ a, ...b }.a())!.c();
-}
+if (a) ({ a, ...b }.a())!.c();
 
 (function () {})!();
 

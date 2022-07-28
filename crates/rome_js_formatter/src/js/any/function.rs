@@ -38,9 +38,9 @@ impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                 f,
                 [format_parenthesize(
-                    binding.syntax().first_token(),
+                    binding.syntax().first_token().as_ref(),
                     &format_args![binding.format(), if_group_breaks(&token(",")),],
-                    binding.syntax().last_token(),
+                    binding.syntax().last_token().as_ref(),
                 )
                 .grouped_with_soft_block_indent()]
             )?,

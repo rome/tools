@@ -62,7 +62,8 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
             let last_token = argument.syntax().last_token();
             let format_argument = argument.format();
 
-            let parenthesize = format_parenthesize(first_token, &format_argument, last_token);
+            let parenthesize =
+                format_parenthesize(first_token.as_ref(), &format_argument, last_token.as_ref());
 
             if is_simple_expression(&argument)? {
                 parenthesize.fmt(f)

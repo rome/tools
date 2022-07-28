@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: function-declaration-in-if.js
 ---
 # Input
@@ -10,9 +11,7 @@ if (false) function foo(){}
 
 # Output
 ```js
-if (false) {
-  function foo(){}
-}
+if (false) function foo(){}
 
 ```
 

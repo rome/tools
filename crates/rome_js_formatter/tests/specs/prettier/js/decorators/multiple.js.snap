@@ -38,7 +38,7 @@ eyes: 2;
 }
 
 const foo = {
-@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: ("A very long string as value");
+@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 }
 
 ```
@@ -80,6 +80,6 @@ error[SyntaxError]: expected a statement but instead found '}'
 
 # Lines exceeding max width of 80 characters
 ```
-   15: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: ("A very long string as value");
+   15: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 ```
 
