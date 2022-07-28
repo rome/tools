@@ -510,11 +510,19 @@ impl SemanticEventExtractor {
             .insert(name.clone(), declaration_range)
             .map(|shadowed_range| (name.clone(), shadowed_range));
 
-        let scope_id = self.scopes.len() - 1;
-        let binding_scope_id = hoisted_scope_id.unwrap_or(scope_id);
+        let current_scope_id = self.current_scope_mut().scope_id;
+        let binding_scope_id = hoisted_scope_id.unwrap_or(current_scope_id);
 
-        debug_assert!(binding_scope_id < self.scopes.len());
-        let scope = &mut self.scopes[binding_scope_id];
+        let scope = self
+            .scopes
+            .iter_mut()
+            .rev()
+            .find(|s| s.scope_id == binding_scope_id);
+
+        // A scope will always be found
+        debug_assert!(scope.is_some());
+        let scope = scope.unwrap();
+
         scope.bindings.push(Binding { name: name.clone() });
         scope.shadowed.extend(shadowed);
         let scope_started_at = scope.started_at;
@@ -522,7 +530,7 @@ impl SemanticEventExtractor {
         self.stash.push_back(SemanticEvent::DeclarationFound {
             range: declaration_range,
             scope_started_at,
-            scope_id,
+            scope_id: current_scope_id,
             hoisted_scope_id,
             name,
         });
