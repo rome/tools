@@ -69,6 +69,7 @@ impl SemanticModelData {
             .scope_by_range
             .find(range.start().into(), range.end().into());
 
+        // We always want the most tight scope
         match scopes.map(|x| x.val).max() {
             Some(val) => val,
             // We always have at least one scope, the global one.
@@ -158,16 +159,6 @@ impl PartialEq for Scope {
 }
 
 impl Eq for Scope {}
-
-// impl std::fmt::Debug for Scope {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         let data = &self.data.scopes[self.id];
-//         f.debug_struct("Scope")
-//             .field("parent", &data.parent)
-//             .field("children", &data.children)
-//             .finish()
-//     }
-// }
 
 impl Scope {
     /// Returns all parents of this scope. Starting with the current
