@@ -9,7 +9,7 @@ use crate::{
 use serde::Serialize;
 use std::any::TypeId;
 use std::fmt::{Debug, Formatter};
-use std::iter::{self, FusedIterator};
+use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use std::ptr::NonNull;
 use std::{fmt, ops};
@@ -442,28 +442,10 @@ impl<L: Language> SyntaxNode<L> {
         prev_elem: SyntaxElement<L>,
         next_elem: SyntaxElement<L>,
     ) -> Option<Self> {
-        let (depth, prev_parent, index) = match prev_elem {
-            NodeOrToken::Node(prev_node) => (
-                prev_node
-                    .ancestors()
-                    .position(move |node| node == self)?
-                    .checked_sub(1)?,
-                prev_node.parent()?,
-                prev_node.index(),
-            ),
-            NodeOrToken::Token(prev_token) => (
-                prev_token.ancestors().position(move |node| node == self)?,
-                prev_token.parent()?,
-                prev_token.index(),
-            ),
-        };
-
-        let next_parent = prev_parent.splice_slots(index..=index, iter::once(Some(next_elem)));
-
-        match depth {
-            0 => Some(next_parent),
-            index => next_parent.ancestors().nth(index),
-        }
+        Some(Self {
+            raw: self.raw.replace_child(prev_elem.into(), next_elem.into())?,
+            _p: PhantomData,
+        })
     }
 
     pub fn into_list(self) -> SyntaxList<L> {

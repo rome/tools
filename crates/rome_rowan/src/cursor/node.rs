@@ -415,6 +415,13 @@ impl SyntaxNode {
             ),
         }
     }
+
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn replace_child(self, prev_elem: SyntaxElement, next_elem: SyntaxElement) -> Option<Self> {
+        Some(Self {
+            ptr: self.ptr.replace_child(prev_elem, next_elem)?,
+        })
+    }
 }
 
 // Identity semantics for hash & eq

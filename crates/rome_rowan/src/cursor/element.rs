@@ -1,5 +1,5 @@
 use crate::cursor::{SyntaxNode, SyntaxToken};
-use crate::green::GreenElementRef;
+use crate::green::{GreenElement, GreenElementRef};
 use crate::{NodeOrToken, RawSyntaxKind, TokenAtOffset};
 use std::iter;
 use text_size::{TextRange, TextSize};
@@ -103,6 +103,13 @@ impl SyntaxElement {
         match self {
             NodeOrToken::Node(it) => Self::Node(it.detach()),
             NodeOrToken::Token(it) => Self::Token(it.detach()),
+        }
+    }
+
+    pub(crate) fn into_green(self) -> GreenElement {
+        match self {
+            NodeOrToken::Node(it) => it.ptr.into_green(),
+            NodeOrToken::Token(it) => it.into_green(),
         }
     }
 }
