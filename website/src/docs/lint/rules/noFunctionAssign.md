@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noFunctionAssign (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow reassigning function declarations.
 
 ## Examples

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noAsyncPromiseExecutor (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallows using an async function as a Promise executor.
 
 The executor function can also be an async function. However, this is usually a mistake, for a few reasons:

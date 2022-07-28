@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noUnnecessaryContinue (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Avoid using unnecessary `ContinueStatement`.
 
 ## Examples

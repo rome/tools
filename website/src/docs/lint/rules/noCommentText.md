@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noCommentText (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Prevent comments from being inserted as text nodes
 
 ## Examples

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useSingleVarDeclarator (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow multiple variable declarations in the same variable statement
 
 ## Examples

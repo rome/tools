@@ -68,7 +68,7 @@ fn main() -> Result<()> {
         groups
             .entry(meta.group)
             .or_insert_with(BTreeMap::new)
-            .insert(meta.name, (meta.docs, meta.version));
+            .insert(meta.name, meta);
     }
 
     for (group, rules) in groups {
@@ -83,8 +83,16 @@ fn main() -> Result<()> {
         writeln!(index, "<section>")?;
         writeln!(index, "<h2>{group_name}</h2>")?;
 
-        for (rule, (docs, version)) in rules {
-            match generate_rule(&root, group, rule, docs, version) {
+        for (rule, meta) in rules {
+            let version = meta.version;
+            match generate_rule(
+                &root,
+                group,
+                rule,
+                meta.docs,
+                meta.version,
+                meta.recommended,
+            ) {
                 Ok(summary) => {
                     writeln!(index, "<div class=\"rule\">")?;
                     writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
@@ -93,6 +101,9 @@ fn main() -> Result<()> {
                         "	<a href=\"/docs/lint/rules/{rule}\">{rule} (since v{version})</a>"
                     )?;
                     writeln!(index, "	<a class=\"header-anchor\" href=\"#{rule}\"></a>")?;
+                    if meta.recommended {
+                        writeln!(index, "	<span class=\"recommended\">recommended</span>")?;
+                    }
                     writeln!(index, "</h3>")?;
 
                     write_html(&mut index, summary.into_iter())?;
@@ -130,6 +141,7 @@ fn generate_rule(
     rule: &'static str,
     docs: &'static str,
     version: &'static str,
+    recommended: bool,
 ) -> Result<Vec<Event<'static>>> {
     let mut content = Vec::new();
 
@@ -142,6 +154,11 @@ fn generate_rule(
 
     writeln!(content, "# {rule} (since v{version})")?;
     writeln!(content)?;
+
+    if recommended {
+        writeln!(content, "> This rule is recommended by Rome.")?;
+        writeln!(content)?;
+    }
 
     let summary = parse_documentation(group, rule, docs, &mut content)?;
 

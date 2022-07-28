@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useSelfClosingElements (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Prevent extra closing tags for components without children
 
 ## Examples

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noSparseArray (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow sparse arrays
 
 ## Examples

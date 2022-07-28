@@ -68,7 +68,19 @@
 				font-size: 1.25em;
 				margin-top: 0;
 				border: 0;
+
+				.recommended {
+					display: inline-block;
+					border-radius: 5px;
+					padding: .2em .5em .3em;
+					background: var(--primary-color);
+					color: var(--label-font-color);
+					font-weight: 600;
+					margin: .25em .1em;
+					font-size: 0.6em;
+				}
 			}
+
 		}
 
 		.rule {
