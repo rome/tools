@@ -35,7 +35,7 @@ declare_rule! {
     pub(crate) UseCamelCase {
         version: "0.8.0",
         name: "useCamelCase",
-        recommended: true
+        recommended: false
     }
 }
 
