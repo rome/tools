@@ -184,7 +184,6 @@ Enforce camel case naming convention.
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
-	<span class="recommended">recommended</span>
 </h3>
 Discard redundant terms from logical expressions.
 </div>

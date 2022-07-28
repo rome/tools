@@ -313,6 +313,10 @@ pub struct FileGuard<'app, W: Workspace + ?Sized> {
     path: RomePath,
 }
 
+pub struct FixFile {
+    indent_style: Option<IndentStyle>,
+}
+
 impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
     pub fn open(workspace: &'app W, params: OpenFileParams) -> Result<Self, RomeError> {
         let path = params.path.clone();
@@ -382,10 +386,10 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn fix_file(&self, indent_style: Option<IndentStyle>) -> Result<FixFileResult, RomeError> {
+    pub fn fix_file(&self, fix_file: FixFile) -> Result<FixFileResult, RomeError> {
         self.workspace.fix_file(FixFileParams {
             path: self.path.clone(),
-            indent_style,
+            indent_style: fix_file.indent_style,
         })
     }
 }
