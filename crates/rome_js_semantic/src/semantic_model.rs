@@ -866,7 +866,7 @@ mod test {
             }
         }
 
-        // function scope must zero bindings
+        // function scope must have zero bindings
         // "f" was actually hoisted to the global scope
         let mut bindings = func_scope.bindings();
         assert!(bindings.next().is_none());
