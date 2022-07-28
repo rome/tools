@@ -963,7 +963,6 @@ mod test {
         assert_eq!(function_g.scope_hoisted_to(&model).unwrap(), global_scope);
 
         // And we can find their binding inside the global scope
-        dbg!(&global_scope);
         assert!(global_scope.get_binding("g").is_some());
         assert!(global_scope.get_binding("f").is_some());
     }

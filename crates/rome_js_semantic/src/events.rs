@@ -148,6 +148,7 @@ pub struct SemanticEventExtractor {
     bindings: HashMap<SyntaxTokenText, TextRange>,
 }
 
+#[derive(Debug)]
 struct Binding {
     name: SyntaxTokenText,
 }
@@ -167,11 +168,13 @@ impl Reference {
     }
 }
 
+#[derive(Debug)]
 pub enum ScopeHoisting {
     DontHoistDeclarationsToParent,
     HoistDeclarationsToParent,
 }
 
+#[derive(Debug)]
 struct Scope {
     scope_id: usize,
     started_at: TextSize,
@@ -268,15 +271,15 @@ impl SemanticEventExtractor {
         match node.parent().map(|parent| parent.kind()) {
             Some(JS_VARIABLE_DECLARATOR) => {
                 if let Some(true) = Self::is_var(&binding) {
-                    let scope_idx = self.scope_index_to_hoist_declarations();
-                    self.push_binding_into_scope(scope_idx, &name_token);
+                    let hoisted_scope_id = self.scope_index_to_hoist_declarations(0);
+                    self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 } else {
                     self.push_binding_into_scope(None, &name_token);
                 };
             }
             Some(JS_FUNCTION_DECLARATION) => {
-                let scope_idx = self.scope_index_to_hoist_declarations();
-                self.push_binding_into_scope(scope_idx, &name_token);
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
             }
             Some(_) => {
                 self.push_binding_into_scope(None, &name_token);
@@ -459,7 +462,7 @@ impl SemanticEventExtractor {
     ///
     /// This method when called inside the `f` scope will return
     /// the `f` scope index.
-    fn scope_index_to_hoist_declarations(&mut self) -> Option<usize> {
+    fn scope_index_to_hoist_declarations(&mut self, skip: usize) -> Option<usize> {
         // We should at least have the global scope
         // that do not hoist
         debug_assert!(matches!(
@@ -468,17 +471,21 @@ impl SemanticEventExtractor {
         ));
         debug_assert!(!self.scopes.is_empty());
 
-        let idx = self.scopes.iter().rev().position(|scope| {
-            matches!(scope.hoisting, ScopeHoisting::DontHoistDeclarationsToParent)
-        });
+        let scope_id_hoisted_to = self
+            .scopes
+            .iter()
+            .rev()
+            .skip(skip)
+            .find(|scope| matches!(scope.hoisting, ScopeHoisting::DontHoistDeclarationsToParent))
+            .map(|x| x.scope_id);
 
         let current_scope_id = self.current_scope_mut().scope_id;
-        match idx {
-            Some(idx) => {
-                if idx == current_scope_id {
+        match scope_id_hoisted_to {
+            Some(scope_id) => {
+                if scope_id == current_scope_id {
                     None
                 } else {
-                    Some(idx)
+                    Some(scope_id)
                 }
             }
             // Worst case this will fallback to the global scope
