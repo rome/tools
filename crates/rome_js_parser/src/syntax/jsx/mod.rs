@@ -620,7 +620,7 @@ fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
     } else {
         p.error(expected_token(T!['}']));
         p.parse_as_skipped_trivia_tokens(|p| {
-            while !p.at(JsSyntaxKind::EOF) && !p.at(T!['}']) {
+            while !p.at_ts(token_set![T!['}'], T![EOF]]) {
                 p.bump_any();
             }
         });

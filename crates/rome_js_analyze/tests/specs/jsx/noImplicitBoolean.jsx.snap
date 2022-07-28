@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: noImplicitBoolean.jsx
 ---
 # Input
@@ -10,6 +11,8 @@ expression: noImplicitBoolean.jsx
 <input disabled={0} />;
 <input disabled={undefined} />;
 <input disabled="false" />;
+// https://github.com/rome/tools/issues/2944
+<div className={asdf asdf} />;
 
 //invalid
 <input disabled />;
@@ -21,57 +24,57 @@ expression: noImplicitBoolean.jsx
 # Diagnostics
 ```
 warning[jsx/noImplicitBoolean]: Use explicit boolean values for boolean JSX props.
-  ┌─ noImplicitBoolean.jsx:9:8
-  │
-9 │ <input disabled />;
-  │        --------
+   ┌─ noImplicitBoolean.jsx:11:8
+   │
+11 │ <input disabled />;
+   │        --------
 
 Safe fix: Add explicit `true` literal for this attribute
-    | @@ -6,6 +6,6 @@
-5 5 |   <input disabled="false" />;
-6 6 |   
-7 7 |   //invalid
-8   | - <input disabled />;
-  8 | + <input disabled={true} />;
-9 9 |   <input accept/** some comment */ />;
-10 10 |   <input /** some comment */ accept />;
+      | @@ -8,6 +8,6 @@
+ 7  7 |   <div className={asdf asdf} />;
+ 8  8 |   
+ 9  9 |   //invalid
+10    | - <input disabled />;
+   10 | + <input disabled={true} />;
+11 11 |   <input accept/** some comment */ />;
+12 12 |   <input /** some comment */ accept />;
 
 
 ```
 
 ```
 warning[jsx/noImplicitBoolean]: Use explicit boolean values for boolean JSX props.
-   ┌─ noImplicitBoolean.jsx:10:8
+   ┌─ noImplicitBoolean.jsx:12:8
    │
-10 │ <input accept/** some comment */ />;
+12 │ <input accept/** some comment */ />;
    │        ------
 
 Safe fix: Add explicit `true` literal for this attribute
-      | @@ -7,5 +7,5 @@
- 6  6 |   
- 7  7 |   //invalid
- 8  8 |   <input disabled />;
- 9    | - <input accept/** some comment */ />;
-    9 | + <input accept={true}/** some comment */ />;
-10 10 |   <input /** some comment */ accept />;
+      | @@ -9,5 +9,5 @@
+ 8  8 |   
+ 9  9 |   //invalid
+10 10 |   <input disabled />;
+11    | - <input accept/** some comment */ />;
+   11 | + <input accept={true}/** some comment */ />;
+12 12 |   <input /** some comment */ accept />;
 
 
 ```
 
 ```
 warning[jsx/noImplicitBoolean]: Use explicit boolean values for boolean JSX props.
-   ┌─ noImplicitBoolean.jsx:11:28
+   ┌─ noImplicitBoolean.jsx:13:28
    │
-11 │ <input /** some comment */ accept />;
+13 │ <input /** some comment */ accept />;
    │                            ------
 
 Safe fix: Add explicit `true` literal for this attribute
-      | @@ -8,4 +8,4 @@
- 7  7 |   //invalid
- 8  8 |   <input disabled />;
- 9  9 |   <input accept/** some comment */ />;
-10    | - <input /** some comment */ accept />;
-   10 | + <input /** some comment */ accept={true} />;
+      | @@ -10,4 +10,4 @@
+ 9  9 |   //invalid
+10 10 |   <input disabled />;
+11 11 |   <input accept/** some comment */ />;
+12    | - <input /** some comment */ accept />;
+   12 | + <input /** some comment */ accept={true} />;
 
 
 ```
