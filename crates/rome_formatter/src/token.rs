@@ -105,12 +105,12 @@ where
 ///
 /// when inserting the "(" before the "string" token.
 #[derive(Clone, Debug)]
-pub struct FormatInsertedOpenParen<L>
+pub struct FormatInsertedOpenParen<'a, L>
 where
     L: Language,
 {
     /// The token before which the open paren must be inserted
-    before_token: Option<SyntaxToken<L>>,
+    before_token: Option<&'a SyntaxToken<L>>,
 
     /// The token text of the open paren
     text: &'static str,
@@ -119,11 +119,15 @@ where
     kind: L::Kind,
 }
 
-impl<L> FormatInsertedOpenParen<L>
+impl<'a, L> FormatInsertedOpenParen<'a, L>
 where
     L: Language,
 {
-    pub fn new(before_token: Option<SyntaxToken<L>>, kind: L::Kind, text: &'static str) -> Self {
+    pub fn new(
+        before_token: Option<&'a SyntaxToken<L>>,
+        kind: L::Kind,
+        text: &'static str,
+    ) -> Self {
         Self {
             before_token,
             kind,
@@ -132,7 +136,7 @@ where
     }
 }
 
-impl<Context, L> Format<Context> for FormatInsertedOpenParen<L>
+impl<Context, L> Format<Context> for FormatInsertedOpenParen<'_, L>
 where
     L: Language + 'static,
     Context: CstFormatContext<Language = L>,
@@ -221,7 +225,7 @@ where
     L: Language,
 {
     pub fn after_token<Context>(
-        after_token: &Option<SyntaxToken<L>>,
+        after_token: Option<&SyntaxToken<L>>,
         kind: L::Kind,
         text: &'static str,
         f: &mut Formatter<Context>,

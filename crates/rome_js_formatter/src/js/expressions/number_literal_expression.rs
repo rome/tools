@@ -21,9 +21,9 @@ impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpressi
                 return write!(
                     f,
                     [format_parenthesize(
-                        Some(value_token.clone()),
+                        Some(&value_token),
                         &value_token.format(),
-                        Some(value_token.clone())
+                        Some(&value_token)
                     )]
                 );
             }

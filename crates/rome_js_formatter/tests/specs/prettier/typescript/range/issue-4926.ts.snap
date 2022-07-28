@@ -24,9 +24,7 @@ class Foo {
   match(keyevent) {
     // 'in' doesn't include prototypes, so it's safe for this object.
     for (let attr in this) {
-      if (this[attr] !== keyevent[attr]) {
-        return false;
-      }
+      if (this[attr] !== keyevent[attr]) return false;
     }
     return true;
   }

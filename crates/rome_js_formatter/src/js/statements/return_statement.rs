@@ -26,9 +26,9 @@ impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
 
                         if let JsAnyExpression::JsSequenceExpression(_expression) = argument {
                             format_parenthesize(
-                                argument.syntax().first_token(),
+                                argument.syntax().first_token().as_ref(),
                                 &argument.format(),
-                                argument.syntax().last_token(),
+                                argument.syntax().last_token().as_ref(),
                             )
                             .grouped_with_soft_block_indent()
                             .fmt(f)?;

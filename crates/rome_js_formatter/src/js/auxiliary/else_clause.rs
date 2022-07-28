@@ -1,8 +1,7 @@
-use crate::js::statements::if_statement::FormatIfElseConsequentBlock;
+use crate::js::statements::if_statement::FormatConsequentClause;
 use crate::prelude::*;
 
 use rome_formatter::write;
-use rome_js_syntax::JsAnyStatement::JsIfStatement;
 use rome_js_syntax::JsElseClause;
 use rome_js_syntax::JsElseClauseFields;
 
@@ -11,20 +10,24 @@ pub struct FormatJsElseClause;
 
 impl FormatNodeRule<JsElseClause> for FormatJsElseClause {
     fn fmt_fields(&self, node: &JsElseClause, f: &mut JsFormatter) -> FormatResult<()> {
+        use rome_js_syntax::JsAnyStatement::*;
+
         let JsElseClauseFields {
             else_token,
             alternate,
         } = node.as_fields();
 
-        write!(f, [space_token(), else_token.format()])?;
+        let alternate = alternate?;
 
-        match alternate? {
-            JsIfStatement(if_statement) => {
-                write!(f, [space_token(), if_statement.format()])
-            }
-            other => {
-                write!(f, [FormatIfElseConsequentBlock::from(other)])
-            }
-        }
+        write!(
+            f,
+            [
+                else_token.format(),
+                group_elements(
+                    &FormatConsequentClause::new(&alternate)
+                        .with_forced_space(matches!(alternate, JsIfStatement(_)))
+                )
+            ]
+        )
     }
 }

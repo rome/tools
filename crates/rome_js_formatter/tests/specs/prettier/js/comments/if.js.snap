@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: if.js
 ---
 # Input
@@ -76,16 +77,13 @@ if (1)
   false;
 }
 // comment
-else if (2) {
-  true;
-}
+else if (2) true;
 // multi
 // ple
 // lines
-else if (3) {
+else if (3)
   // existing comment
   true;
-}
 // okay?
 else if (4) {
   // empty with existing comment
@@ -94,18 +92,17 @@ else if (4) {
 else {
 }
 
-if (5) {
+if (5)
   // comment
   true;
-}
 
 if (6) {
   // comment
   true;
-} else if (7) {
+} else if (7)
   // comment
   true;
-} else {
+else {
   // comment
   true;
 }
@@ -114,11 +111,11 @@ if (8) // comment
 // comment
 {
   true;
-} else if (9) {
+} else if (9)
   // comment
   // comment
   true;
-} else // comment
+else // comment
 // comment
 {
   true;
@@ -127,15 +124,14 @@ if (8) // comment
 if (10) /* comment */ {
   // comment
   true;
-} else if (11) /* comment */ {
-  true;
-} else if (12) {
+} else if (11) /* comment */ true;
+else if (12)
   // comment /* comment */ // comment
   true;
-} else if (13) /* comment */ /* comment */ {
+else if (13) /* comment */ /* comment */
   // comment
   true;
-} else /* comment */ {
+else /* comment */ {
   true;
 }
 
@@ -144,12 +140,11 @@ if (14) // comment
 // comment
 {
   true;
-} else if (15) {
+} else if (15)
   // comment
   /* comment */
   /* comment */ // comment
   true;
-}
 
 ```
 

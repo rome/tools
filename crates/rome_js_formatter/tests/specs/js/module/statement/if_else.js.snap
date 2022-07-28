@@ -132,9 +132,8 @@ if (true) {
 	// trailing
 }
 
-if (true) {
-	that();
-} else;
+if (true) that();
+else;
 
 if (true) {
 }

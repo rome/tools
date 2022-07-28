@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 182
 expression: expr_and_same_line_comments.js
 ---
 # Input
@@ -28,52 +29,41 @@ else if (a === 2) looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
 # Output
 ```js
-if (a === 0) {
+if (a === 0)
   doSomething(); // comment A1
-} else if (a === 1) {
+else if (a === 1)
   doSomethingElse(); // comment B1
-} else if (a === 2) {
+else if (a === 2)
   doSomethingElse(); // comment C1
-}
 
-if (a === 0) {
-  doSomething(); /* comment A2 */
-} else if (a === 1) {
-  doSomethingElse(); /* comment B2 */
-} else if (a === 2) {
-  doSomethingElse(); /* comment C2 */
-}
+if (a === 0) doSomething(); /* comment A2 */
+else if (a === 1) doSomethingElse(); /* comment B2 */
+else if (a === 2) doSomethingElse(); /* comment C2 */
 
-if (a === 0) {
+if (a === 0)
   expr; // comment A3
-} else if (a === 1) {
+else if (a === 1)
   expr; // comment B3
-} else if (a === 2) {
+else if (a === 2)
   expr; // comment C3
-}
 
-if (a === 0) {
-  expr; /* comment A4 */
-} else if (a === 1) {
-  expr; /* comment B4 */
-} else if (a === 2) {
-  expr; /* comment C4 */
-}
+if (a === 0) expr; /* comment A4 */
+else if (a === 1) expr; /* comment B4 */
+else if (a === 2) expr; /* comment C4 */
 
-if (a === 0) {
+if (a === 0)
   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment A5
-} else if (a === 1) {
+else if (a === 1)
   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment B5
-} else if (a === 2) {
+else if (a === 2)
   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment C5
-}
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-   34:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment A5
-   36:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment B5
-   38:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment C5
+   24:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment A5
+   26:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment B5
+   28:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment C5
 ```
 

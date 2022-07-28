@@ -37,9 +37,9 @@ impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
                     write!(
                         f,
                         [format_parenthesize(
-                            super_class.syntax().first_token(),
+                            super_class.syntax().first_token().as_ref(),
                             &content,
-                            super_class.syntax().last_token()
+                            super_class.syntax().last_token().as_ref()
                         )]
                     )
                 } else {
