@@ -28,8 +28,6 @@ warning[js/useCamelCase]: Prefer symbols names in camel case.
   │
 1 │ let snake_case
   │     ----------
-2 │ snake_case = 1;
-  │ ---------- Used here.
 
 Safe fix: Rename this symbol to camel case
     | @@ -1,5 +1,5 @@
@@ -40,30 +38,6 @@ Safe fix: Rename this symbol to camel case
 2 2 |   let _snake_case
 3 3 |   console.log(_snake_case);
 4 4 |   
-
-
-```
-
-```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
-  ┌─ useCamelCase.js:3:5
-  │
-3 │ let _snake_case
-  │     -----------
-4 │ console.log(_snake_case);
-  │             ----------- Used here.
-
-Safe fix: Rename this symbol to camel case
-    | @@ -1,7 +1,7 @@
-0 0 |   let snake_case
-1 1 |   snake_case = 1;
-2   | - let _snake_case
-3   | - console.log(_snake_case);
-  2 | + let snakeCase
-  3 | + console.log(snakeCase);
-4 4 |   
-5 5 |   function f(snake_case, PascalCase) {
-6 6 |   }
 
 
 ```

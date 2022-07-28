@@ -58,9 +58,13 @@ impl Rule for UseCamelCase {
         let is_parameter = binding.parent::<JsFormalParameter>().is_some();
         if is_variable || is_parameter {
             let name = binding.name_token().ok()?;
-            let name = name.text().to_camel_case();
+            let name = name.text_trimmed();
 
-            match name {
+            if name.starts_with("_") {
+                return None;
+            }
+
+            match name.to_camel_case() {
                 Cow::Borrowed(_) => None,
                 Cow::Owned(new_name) => Some(State { new_name }),
             }
@@ -72,18 +76,12 @@ impl Rule for UseCamelCase {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let binding = ctx.query();
 
-        let mut diag = RuleDiagnostic::warning(
+        let diag = RuleDiagnostic::warning(
             binding.syntax().text_trimmed_range(),
             markup! {
                 "Prefer symbols names in camel case."
             },
         );
-
-        let references = binding.all_references(ctx.model());
-        for reference in references {
-            let node = reference.node();
-            diag = diag.secondary(node.text_trimmed_range(), "Used here.")
-        }
 
         Some(diag)
     }
