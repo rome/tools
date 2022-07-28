@@ -59,6 +59,7 @@ impl<L: Language> SyntaxNode<L> {
     ///
     /// ## Panics
     /// If the slot index is out of bounds
+    #[inline]
     pub fn element_in_slot(&self, slot: u32) -> Option<SyntaxElement<L>> {
         self.raw.element_in_slot(slot).map(SyntaxElement::from)
     }
@@ -759,14 +760,17 @@ pub struct SyntaxSlots<L> {
 impl<L: Language> Iterator for SyntaxSlots<L> {
     type Item = SyntaxSlot<L>;
 
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         self.raw.next().map(SyntaxSlot::from)
     }
 
+    #[inline(always)]
     fn size_hint(&self) -> (usize, Option<usize>) {
         self.raw.size_hint()
     }
 
+    #[inline]
     fn last(self) -> Option<Self::Item>
     where
         Self: Sized,
@@ -774,6 +778,7 @@ impl<L: Language> Iterator for SyntaxSlots<L> {
         self.raw.last().map(SyntaxSlot::from)
     }
 
+    #[inline]
     fn nth(&mut self, n: usize) -> Option<Self::Item> {
         self.raw.nth(n).map(SyntaxSlot::from)
     }
@@ -782,16 +787,19 @@ impl<L: Language> Iterator for SyntaxSlots<L> {
 impl<L: Language> FusedIterator for SyntaxSlots<L> {}
 
 impl<L: Language> ExactSizeIterator for SyntaxSlots<L> {
+    #[inline(always)]
     fn len(&self) -> usize {
         self.raw.len()
     }
 }
 
 impl<L: Language> DoubleEndedIterator for SyntaxSlots<L> {
+    #[inline]
     fn next_back(&mut self) -> Option<Self::Item> {
         self.raw.next_back().map(SyntaxSlot::from)
     }
 
+    #[inline]
     fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
         self.raw.nth_back(n).map(SyntaxSlot::from)
     }

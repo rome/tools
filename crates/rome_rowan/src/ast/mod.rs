@@ -255,7 +255,7 @@ impl<L: Language, N: AstNode<Language = L>> Iterator for AstNodeListIterator<L, 
     }
 
     fn size_hint(&self) -> (usize, Option<usize>) {
-        (self.inner.len(), Some(self.inner.len()))
+        self.inner.size_hint()
     }
 
     fn last(self) -> Option<Self::Item>

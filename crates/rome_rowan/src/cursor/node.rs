@@ -71,21 +71,14 @@ impl SyntaxNode {
 
     pub(crate) fn element_in_slot(&self, slot_index: u32) -> Option<SyntaxElement> {
         let slot = self
-            .green()
             .slots()
             .nth(slot_index as usize)
             .expect("Slot index out of bounds");
 
-        slot.as_ref().map(|element| {
-            SyntaxElement::new(
-                element,
-                self.clone(),
-                slot_index,
-                self.offset() + slot.rel_offset(),
-            )
-        })
+        slot.map(|element| element)
     }
 
+    #[inline]
     pub(crate) fn slots(&self) -> SyntaxSlots {
         SyntaxSlots::new(self.clone())
     }
@@ -667,26 +660,52 @@ impl From<SyntaxElement> for SyntaxSlot {
     }
 }
 
+impl SyntaxSlot {
+    #[inline]
+    pub fn map<F, R>(self, mapper: F) -> Option<R>
+    where
+        F: FnOnce(SyntaxElement) -> R,
+    {
+        match self {
+            SyntaxSlot::Node(node) => Some(mapper(SyntaxElement::Node(node))),
+            SyntaxSlot::Token(token) => Some(mapper(SyntaxElement::Token(token))),
+            SyntaxSlot::Empty { .. } => None,
+        }
+    }
+}
+
 /// Iterator over a node's slots
 #[derive(Debug, Clone)]
 pub(crate) struct SyntaxSlots {
-    /// Current consuming position tracked from the front
-    front_next_position: u32,
-    /// Current consuming position tracked from the back
-    /// **The index is from the end of the iterator!**
-    /// The API uses [`nth_back`] to retrieve the item:
+    /// Position of the next element to return.
+    pos: u32,
+
+    /// Position of the last returned element from the back.
+    /// Initially points one element past the last slot.
     ///
     /// [nth_back]: https://doc.rust-lang.org/std/iter/trait.DoubleEndedIterator.html#method.nth_back
-    back_next_position: u32,
+    back_pos: u32,
     parent: SyntaxNode,
 }
 
 impl SyntaxSlots {
+    #[inline]
     fn new(parent: SyntaxNode) -> Self {
         Self {
-            front_next_position: 0,
-            back_next_position: 0,
+            pos: 0,
+            back_pos: parent.green().slice().len() as u32,
             parent,
+        }
+    }
+
+    /// Returns a slice containing the remaining elements to iterate over
+    /// an empty slice if the iterator reached the end.
+    #[inline]
+    fn slice(&self) -> &[Slot] {
+        if self.pos < self.back_pos {
+            &self.parent.green().slice()[self.pos as usize..self.back_pos as usize]
+        } else {
+            &[]
         }
     }
 
@@ -710,87 +729,69 @@ impl SyntaxSlots {
             )),
         }
     }
-
-    /// Checks if the front position is less than the back position.
-    /// When [false], it means that the iterator can't be consumed anymore and it has to return [None]
-    fn assert_can_consume(&self) -> bool {
-        ((self.front_next_position + self.back_next_position) as usize)
-            < self.parent.green().slots().len()
-    }
 }
 
 impl Iterator for SyntaxSlots {
     type Item = SyntaxSlot;
 
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        if !self.assert_can_consume() {
-            return None;
-        }
-        let mut slots = self.parent.green().slots();
-        let current_position = self.front_next_position as usize;
-        if current_position < slots.len() {
-            let next_slot = slots.nth(current_position);
-            self.front_next_position += 1;
-            next_slot.map(|slot| self.map_slot(slot, current_position as u32))
-        } else {
-            None
-        }
+        let slot = self.slice().first()?;
+        let mapped = self.map_slot(slot, self.pos);
+        self.pos += 1;
+        Some(mapped)
     }
 
-    fn last(self) -> Option<Self::Item>
+    #[inline(always)]
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let len = self.slice().len();
+        (len, Some(len))
+    }
+
+    #[inline(always)]
+    fn count(self) -> usize
     where
         Self: Sized,
     {
-        let mut slots = self.parent.green().slots();
-        let slots_len = slots.len() as usize;
-
-        if (self.front_next_position as usize) < slots_len {
-            let position = slots_len - 1;
-            slots
-                .nth(position)
-                .map(|slot| self.map_slot(slot, position as u32))
-        } else {
-            // already at/passed the end
-            None
-        }
+        self.len()
     }
 
+    #[inline]
+    fn last(mut self) -> Option<Self::Item>
+    where
+        Self: Sized,
+    {
+        self.next_back()
+    }
+
+    #[inline]
     fn nth(&mut self, n: usize) -> Option<Self::Item> {
-        self.front_next_position += n as u32;
+        self.pos += n as u32;
         self.next()
-    }
-
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        self.parent.green().slots().size_hint()
     }
 }
 
 impl ExactSizeIterator for SyntaxSlots {
+    #[inline(always)]
     fn len(&self) -> usize {
-        self.parent.green().slots().len()
+        self.slice().len()
     }
 }
 
 impl FusedIterator for SyntaxSlots {}
 
 impl DoubleEndedIterator for SyntaxSlots {
+    #[inline]
     fn next_back(&mut self) -> Option<Self::Item> {
-        if !self.assert_can_consume() {
-            return None;
-        }
-        let mut slots = self.parent.green().slots();
-        let current_position = self.back_next_position as usize;
-        if current_position < slots.len() {
-            let previous_slot = slots.nth_back(current_position as usize);
-            self.back_next_position += 1;
-            previous_slot.map(|slot| self.map_slot(slot, current_position as u32))
-        } else {
-            None
-        }
+        let slot = self.slice().last()?;
+        let mapped = self.map_slot(slot, self.back_pos - 1);
+        self.back_pos -= 1;
+        Some(mapped)
     }
 
+    #[inline]
     fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
-        self.back_next_position += n as u32;
+        self.back_pos -= n as u32;
         self.next_back()
     }
 }
@@ -898,3 +899,55 @@ impl<'a> Siblings<'a> {
 }
 
 // endregion
+
+#[cfg(test)]
+mod tests {
+    use crate::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
+
+    #[test]
+    fn slots_iter() {
+        let mut builder = RawSyntaxTreeBuilder::new();
+        builder.start_node(RawLanguageKind::EXPRESSION_LIST);
+
+        for number in [1, 2, 3, 4] {
+            builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+            builder.token(RawLanguageKind::NUMBER_TOKEN, &number.to_string());
+            builder.finish_node();
+        }
+        builder.finish_node();
+
+        let list = builder.finish();
+
+        let mut iter = list.slots();
+
+        assert_eq!(iter.size_hint(), (4, Some(4)));
+
+        assert_eq!(
+            iter.next()
+                .and_then(|slot| slot.into_node())
+                .map(|node| node.text().to_string())
+                .as_deref(),
+            Some("1")
+        );
+
+        assert_eq!(iter.size_hint(), (3, Some(3)));
+
+        assert_eq!(
+            iter.next_back()
+                .and_then(|slot| slot.into_node())
+                .map(|node| node.text().to_string())
+                .as_deref(),
+            Some("4")
+        );
+
+        assert_eq!(iter.size_hint(), (2, Some(2)));
+
+        assert_eq!(
+            iter.last()
+                .and_then(|slot| slot.into_node())
+                .map(|node| node.text().to_string())
+                .as_deref(),
+            Some("3")
+        );
+    }
+}
