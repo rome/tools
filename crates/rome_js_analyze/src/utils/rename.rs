@@ -91,7 +91,7 @@ pub trait RenameSymbolExtensions {
     /// Rename a symbol using the new name from the candidates iterator
     /// until the first success.
     ///
-    /// A usual usecase is to append a suffix to a variable name.
+    /// A usual use case is to append a suffix to a variable name.
     ///
     /// ```ignore
     /// let new_name = "new_name";
