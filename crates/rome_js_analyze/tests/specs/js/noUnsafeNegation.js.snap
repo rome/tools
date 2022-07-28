@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: noUnsafeNegation.js
 ---
 # Input
@@ -19,11 +20,11 @@ delete 1 in [1,2];
 
 # Diagnostics
 ```
-warning[js/noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
+error[js/noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
   ┌─ noUnsafeNegation.js:9:1
   │
 9 │ !1 in [1,2];
-  │ -----------
+  │ ^^^^^^^^^^^
 
 Suggested fix: Wrap the expression with a parenthesis
     | @@ -6,5 +6,5 @@
@@ -38,11 +39,11 @@ Suggested fix: Wrap the expression with a parenthesis
 ```
 
 ```
-warning[js/noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
+error[js/noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
    ┌─ noUnsafeNegation.js:10:10
    │
 10 │ /**test*/!/** test*/1 instanceof [1,2];
-   │          -----------------------------
+   │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Suggested fix: Wrap the expression with a parenthesis
       | @@ -7,4 +7,4 @@

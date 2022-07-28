@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: noCompareNegZero.js
 ---
 # Input
@@ -60,11 +61,11 @@ x != -0;
 
 # Diagnostics
 ```
-warning[js/noCompareNegZero]: Do not use the === operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the === operator to compare against -0.
    ┌─ noCompareNegZero.js:32:1
    │
 32 │ x === -0;
-   │ --------
+   │ ^^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -29,7 +29,7 @@
@@ -81,11 +82,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the == operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the == operator to compare against -0.
    ┌─ noCompareNegZero.js:33:1
    │
 33 │ x == -0;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -30,7 +30,7 @@
@@ -102,11 +103,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the == operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the == operator to compare against -0.
    ┌─ noCompareNegZero.js:34:1
    │
 34 │ -0 == x;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -31,7 +31,7 @@
@@ -123,11 +124,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the < operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the < operator to compare against -0.
    ┌─ noCompareNegZero.js:35:1
    │
 35 │ x < -0;
-   │ ------
+   │ ^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -32,7 +32,7 @@
@@ -144,11 +145,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the < operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the < operator to compare against -0.
    ┌─ noCompareNegZero.js:36:1
    │
 36 │ -0 < x;
-   │ ------
+   │ ^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -33,7 +33,7 @@
@@ -165,11 +166,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the <= operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the <= operator to compare against -0.
    ┌─ noCompareNegZero.js:37:1
    │
 37 │ x <= -0;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -34,7 +34,7 @@
@@ -186,11 +187,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the <= operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the <= operator to compare against -0.
    ┌─ noCompareNegZero.js:38:1
    │
 38 │ -0 <= x;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -35,7 +35,7 @@
@@ -207,11 +208,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the > operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the > operator to compare against -0.
    ┌─ noCompareNegZero.js:39:1
    │
 39 │ x > -0;
-   │ ------
+   │ ^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -36,7 +36,7 @@
@@ -228,11 +229,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the > operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the > operator to compare against -0.
    ┌─ noCompareNegZero.js:40:1
    │
 40 │ -0 > x;
-   │ ------
+   │ ^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -37,7 +37,7 @@
@@ -249,11 +250,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the >= operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the >= operator to compare against -0.
    ┌─ noCompareNegZero.js:41:1
    │
 41 │ x >= -0;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -38,7 +38,7 @@
@@ -270,11 +271,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the >= operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the >= operator to compare against -0.
    ┌─ noCompareNegZero.js:42:1
    │
 42 │ -0 >= x;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -39,7 +39,7 @@
@@ -291,11 +292,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the != operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the != operator to compare against -0.
    ┌─ noCompareNegZero.js:43:1
    │
 43 │ x != -0;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -40,7 +40,7 @@
@@ -312,11 +313,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the != operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the != operator to compare against -0.
    ┌─ noCompareNegZero.js:44:1
    │
 44 │ -0 != x;
-   │ -------
+   │ ^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -41,7 +41,7 @@
@@ -333,11 +334,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the !== operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the !== operator to compare against -0.
    ┌─ noCompareNegZero.js:45:1
    │
 45 │ -0 !== x;
-   │ --------
+   │ ^^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -42,7 +42,7 @@
@@ -354,11 +355,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the === operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the === operator to compare against -0.
    ┌─ noCompareNegZero.js:46:1
    │
 46 │ -0 === -0;
-   │ ---------
+   │ ^^^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -43,7 +43,7 @@
@@ -375,11 +376,11 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the === operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the === operator to compare against -0.
    ┌─ noCompareNegZero.js:47:1
    │
 47 │ -0 /** commnet **/ === 4;
-   │ ------------------------
+   │ ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Safe fix: Replace -0 with 0
       | @@ -44,7 +44,7 @@
@@ -396,13 +397,13 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the === operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the === operator to compare against -0.
    ┌─ noCompareNegZero.js:48:1
    │  
 48 │ ┌ -0
 49 │ │ // comment
 50 │ │ === 4;
-   │ └─────'
+   │ └─────^
 
 Safe fix: Replace -0 with 0
       | @@ -45,7 +45,7 @@
@@ -419,12 +420,12 @@ Safe fix: Replace -0 with 0
 ```
 
 ```
-warning[js/noCompareNegZero]: Do not use the === operator to compare against -0.
+error[js/noCompareNegZero]: Do not use the === operator to compare against -0.
    ┌─ noCompareNegZero.js:51:1
    │  
 51 │ ┌ 4 === // comment
 52 │ │ -0
-   │ └──'
+   │ └──^
 
 Safe fix: Replace -0 with 0
       | @@ -49,4 +49,4 @@

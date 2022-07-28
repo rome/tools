@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: useSimplifiedLogicExpression.js
 ---
 # Input
@@ -26,11 +27,11 @@ const r4 = !boolExpr1 || !boolExpr2;
 
 # Diagnostics
 ```
-warning[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
+error[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
    ┌─ useSimplifiedLogicExpression.js:10:11
    │
 10 │ const r = true && boolExp;
-   │           ---------------
+   │           ^^^^^^^^^^^^^^^
 
 Suggested fix: Discard redundant terms from the logical expression.
       | @@ -7,7 +7,7 @@
@@ -47,11 +48,11 @@ Suggested fix: Discard redundant terms from the logical expression.
 ```
 
 ```
-warning[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
+error[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
    ┌─ useSimplifiedLogicExpression.js:12:12
    │
 12 │ const r2 = boolExp || true;
-   │            ---------------
+   │            ^^^^^^^^^^^^^^^
 
 Suggested fix: Discard redundant terms from the logical expression.
       | @@ -9,7 +9,7 @@
@@ -68,11 +69,11 @@ Suggested fix: Discard redundant terms from the logical expression.
 ```
 
 ```
-warning[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
+error[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
    ┌─ useSimplifiedLogicExpression.js:14:12
    │
 14 │ const r3 = null ?? nonNullExp;
-   │            ------------------
+   │            ^^^^^^^^^^^^^^^^^^
 
 Suggested fix: Discard redundant terms from the logical expression.
       | @@ -11,7 +11,7 @@
@@ -89,11 +90,11 @@ Suggested fix: Discard redundant terms from the logical expression.
 ```
 
 ```
-warning[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
+error[js/useSimplifiedLogicExpression]: Logical expression contains unnecessary complexity.
    ┌─ useSimplifiedLogicExpression.js:17:12
    │
 17 │ const r4 = !boolExpr1 || !boolExpr2;
-   │            ------------------------
+   │            ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Suggested fix: Reduce the complexity of the logical expression.
       | @@ -14,4 +14,4 @@

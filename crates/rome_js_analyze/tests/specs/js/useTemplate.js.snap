@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 88
+assertion_line: 89
 expression: useTemplate.js
 ---
 # Input
@@ -27,11 +27,11 @@ foo() + " bar";
 
 # Diagnostics
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
   ┌─ useTemplate.js:6:13
   │
 6 │ console.log(foo + "baz");
-  │             -----------
+  │             ^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
     | @@ -3,7 +3,7 @@
@@ -48,11 +48,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
   ┌─ useTemplate.js:7:13
   │
 7 │ console.log(1 * 2 + "foo");
-  │             -------------
+  │             ^^^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
     | @@ -4,7 +4,7 @@
@@ -69,11 +69,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
   ┌─ useTemplate.js:8:13
   │
 8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
-  │             ---------------------------------
+  │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
     | @@ -5,7 +5,7 @@
@@ -90,11 +90,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
   ┌─ useTemplate.js:9:14
   │
 9 │ console.log((1 + "foo") * 2);
-  │              ---------
+  │              ^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
     | @@ -6,7 +6,7 @@
@@ -111,11 +111,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:10:13
    │
 10 │ console.log(1 * (2 + "foo") + "bar");
-   │             -----------------------
+   │             ^^^^^^^^^^^^^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -7,7 +7,7 @@
@@ -132,11 +132,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:10:18
    │
 10 │ console.log(1 * (2 + "foo") + "bar");
-   │                  ---------
+   │                  ^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -7,7 +7,7 @@
@@ -153,11 +153,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:11:13
    │
 11 │ console.log("foo" + 1);
-   │             ---------
+   │             ^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -8,7 +8,7 @@
@@ -174,11 +174,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:12:13
    │
 12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
-   │             ---------------------------------------------
+   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -9,7 +9,7 @@
@@ -195,11 +195,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:13:13
    │
 13 │ console.log("foo" + 1 + 2);
-   │             -------------
+   │             ^^^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -10,7 +10,7 @@
@@ -216,11 +216,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:14:1
    │
 14 │ 1 + "2" - 3;
-   │ -------
+   │ ^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -11,7 +11,7 @@
@@ -237,11 +237,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:15:1
    │
 15 │ foo() + " bar";
-   │ --------------
+   │ ^^^^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -12,6 +12,6 @@
@@ -257,11 +257,11 @@ Suggested fix: Use a TemplateLiteral.
 ```
 
 ```
-warning[js/useTemplate]: Template literals are preferred over string concatenation.
+error[js/useTemplate]: Template literals are preferred over string concatenation.
    ┌─ useTemplate.js:17:1
    │
 17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
-   │ -----------------------------------------------------------------
+   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Suggested fix: Use a TemplateLiteral.
       | @@ -14,4 +14,4 @@

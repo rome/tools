@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: noCommentText.tsx
 ---
 # Input
@@ -16,11 +17,11 @@ const a2 = <div className={"cls" /* comment */}></div>;
 
 # Diagnostics
 ```
-warning[jsx/noCommentText]: Wrap comments inside children within braces.
+error[jsx/noCommentText]: Wrap comments inside children within braces.
   ┌─ noCommentText.tsx:2:17
   │
 2 │ const a3 = <div>// comment</div>;
-  │                 ----------
+  │                 ^^^^^^^^^^
 
 Suggested fix: Wrap the comments with braces
     | @@ -1,5 +1,5 @@
@@ -35,11 +36,11 @@ Suggested fix: Wrap the comments with braces
 ```
 
 ```
-warning[jsx/noCommentText]: Wrap comments inside children within braces.
+error[jsx/noCommentText]: Wrap comments inside children within braces.
   ┌─ noCommentText.tsx:3:17
   │
 3 │ const a4 = <div>/* comment */</div>;
-  │                 -------------
+  │                 ^^^^^^^^^^^^^
 
 Suggested fix: Wrap the comments with braces
     | @@ -1,6 +1,6 @@
@@ -55,11 +56,11 @@ Suggested fix: Wrap the comments with braces
 ```
 
 ```
-warning[jsx/noCommentText]: Wrap comments inside children within braces.
+error[jsx/noCommentText]: Wrap comments inside children within braces.
   ┌─ noCommentText.tsx:4:17
   │
 4 │ const a5 = <div>/** comment */</div>;
-  │                 --------------
+  │                 ^^^^^^^^^^^^^^
 
 Suggested fix: Wrap the comments with braces
     | @@ -1,7 +1,7 @@

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: noAsyncPromiseExecutor.js
 ---
 # Input
@@ -17,31 +18,31 @@ new Promise(((((async () => {})))))
 
 # Diagnostics
 ```
-warning[js/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
+error[js/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
   ┌─ noAsyncPromiseExecutor.js:7:13
   │
 7 │ new Promise(async function foo(resolve, reject) {})
-  │             --------------------------------------
+  │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 ```
 
 ```
-warning[js/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
+error[js/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
   ┌─ noAsyncPromiseExecutor.js:8:13
   │
 8 │ new Promise(async (resolve, reject) => {})
-  │             -----------------------------
+  │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 ```
 
 ```
-warning[js/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
+error[js/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
   ┌─ noAsyncPromiseExecutor.js:9:17
   │
 9 │ new Promise(((((async () => {})))))
-  │                 --------------
+  │                 ^^^^^^^^^^^^^^
 
 
 ```

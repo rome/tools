@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: useSingleCaseStatement.js
 ---
 # Input
@@ -51,12 +52,12 @@ switch (foo) {
 
 # Diagnostics
 ```
-warning[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
+error[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
   ┌─ useSingleCaseStatement.js:4:9
   │  
 4 │ ┌         let foo = '';
 5 │ │         foo;
-  │ └────────────'
+  │ └────────────^
 
 Suggested fix: Wrap the statements in a block
     | @@ -1,8 +1,9 @@
@@ -75,12 +76,12 @@ Suggested fix: Wrap the statements in a block
 ```
 
 ```
-warning[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
+error[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
    ┌─ useSingleCaseStatement.js:11:9
    │  
 11 │ ┌         let foo = '';
 12 │ │         foo;
-   │ └────────────'
+   │ └────────────^
 
 Suggested fix: Wrap the statements in a block
       | @@ -7,9 +7,10 @@
@@ -100,12 +101,12 @@ Suggested fix: Wrap the statements in a block
 ```
 
 ```
-warning[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
+error[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
    ┌─ useSingleCaseStatement.js:17:9
    │  
 17 │ ┌         let foo = '';
 18 │ │         foo;
-   │ └────────────'
+   │ └────────────^
 
 Suggested fix: Wrap the statements in a block
       | @@ -13,9 +13,10 @@
@@ -125,12 +126,12 @@ Suggested fix: Wrap the statements in a block
 ```
 
 ```
-warning[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
+error[js/useSingleCaseStatement]: A switch case should only have a single statement. If you want more, then wrap it in a block.
    ┌─ useSingleCaseStatement.js:24:9
    │  
 24 │ ┌         let foo = '';
 25 │ │         foo;
-   │ └────────────'
+   │ └────────────^
 
 Suggested fix: Wrap the statements in a block
       | @@ -20,9 +20,10 @@

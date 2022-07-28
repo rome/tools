@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 89
 expression: noFunctionAssign.js
 ---
 # Input
@@ -33,11 +34,11 @@ var foo13 = function () { foo13 = bar; };
 
 # Diagnostics
 ```
-warning[js/noFunctionAssign]: Do not reassign a function declaration.
+error[js/noFunctionAssign]: Do not reassign a function declaration.
   ┌─ noFunctionAssign.js:1:10
   │
 1 │ function foo() { };
-  │          ---
+  │          ^^^
 2 │ foo = bar;
   │ --- Reassigned here.
 
@@ -47,11 +48,11 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 ```
 
 ```
-warning[js/noFunctionAssign]: Do not reassign a function declaration.
+error[js/noFunctionAssign]: Do not reassign a function declaration.
   ┌─ noFunctionAssign.js:4:10
   │
 4 │ function foo2() { foo2 = bar; }
-  │          ----     ---- Reassigned here.
+  │          ^^^^     ---- Reassigned here.
 
 =  note: Use a local variable instead.
 
@@ -59,13 +60,13 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 ```
 
 ```
-warning[js/noFunctionAssign]: Do not reassign a function declaration.
+error[js/noFunctionAssign]: Do not reassign a function declaration.
   ┌─ noFunctionAssign.js:7:10
   │
 6 │ foo3 = bar;
   │ ---- Reassigned here.
 7 │ function foo3() { };
-  │          ----
+  │          ^^^^
 
 =  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
@@ -74,13 +75,13 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 ```
 
 ```
-warning[js/noFunctionAssign]: Do not reassign a function declaration.
+error[js/noFunctionAssign]: Do not reassign a function declaration.
    ┌─ noFunctionAssign.js:10:10
    │
  9 │ [foo4] = bar;
    │  ---- Reassigned here.
 10 │ function foo4() { };
-   │          ----
+   │          ^^^^
 
 =  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
@@ -89,13 +90,13 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 ```
 
 ```
-warning[js/noFunctionAssign]: Do not reassign a function declaration.
+error[js/noFunctionAssign]: Do not reassign a function declaration.
    ┌─ noFunctionAssign.js:13:10
    │
 12 │ ({ x: foo5 = 0 } = bar);
    │       ---- Reassigned here.
 13 │ function foo5() { };
-   │          ----
+   │          ^^^^
 
 =  note: Reassignment happens here because the function declaration is hoisted.
 =  note: Use a local variable instead.
@@ -104,11 +105,11 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 ```
 
 ```
-warning[js/noFunctionAssign]: Do not reassign a function declaration.
+error[js/noFunctionAssign]: Do not reassign a function declaration.
    ┌─ noFunctionAssign.js:15:10
    │
 15 │ function foo6() { [foo6] = bar; }
-   │          ----      ---- Reassigned here.
+   │          ^^^^      ---- Reassigned here.
 
 =  note: Use a local variable instead.
 
@@ -116,11 +117,11 @@ warning[js/noFunctionAssign]: Do not reassign a function declaration.
 ```
 
 ```
-warning[js/noFunctionAssign]: Do not reassign a function declaration.
+error[js/noFunctionAssign]: Do not reassign a function declaration.
    ┌─ noFunctionAssign.js:17:50
    │
 17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
-   │                      ----                        ----
+   │                      ----                        ^^^^
    │                      │                            
    │                      Reassigned here.
 
