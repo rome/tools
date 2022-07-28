@@ -1,7 +1,8 @@
 mod assertions;
 pub mod declarations;
+mod functions;
 mod references;
-pub mod scopes;
+mod scopes;
 
 #[macro_export]
 macro_rules! assert_semantics {

@@ -1,10 +1,14 @@
 use rome_js_syntax::{
     JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxNode, TextRange,
+    JsSyntaxNode, TextRange, TextSize,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
-use std::{collections::HashMap, iter::FusedIterator, sync::Arc};
+use std::{
+    collections::{BTreeSet, HashMap},
+    iter::FusedIterator,
+    sync::Arc,
+};
 
 use crate::{SemanticEvent, SemanticEventExtractor};
 
@@ -29,6 +33,7 @@ pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
 impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
 
+#[derive(Debug)]
 struct SemanticModelScopeData {
     parent: Option<usize>,
     children: Vec<usize>,
@@ -40,10 +45,13 @@ struct SemanticModelScopeData {
 ///
 /// That allows any returned struct (like [Scope], [Binding])
 /// to outlive the [SemanticModel], and to not include lifetimes.
+#[derive(Debug)]
 struct SemanticModelData {
     root: JsAnyRoot,
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
+    // Maps the start of a node range to a scope id
+    scope_hoisted_to_by_range: HashMap<TextSize, usize>,
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     // Maps any range in the code to its declaration
     declared_at_by_range: HashMap<TextRange, TextRange>,
@@ -61,11 +69,16 @@ impl SemanticModelData {
             .scope_by_range
             .find(range.start().into(), range.end().into());
 
-        match scopes.last() {
-            Some(interval) => interval.val,
+        // We always want the most tight scope
+        match scopes.map(|x| x.val).max() {
+            Some(val) => val,
             // We always have at least one scope, the global one.
             None => unreachable!("Expected global scope not present"),
         }
+    }
+
+    fn scope_hoisted_to(&self, range: &TextRange) -> Option<usize> {
+        self.scope_hoisted_to_by_range.get(&range.start()).cloned()
     }
 
     pub fn all_references_iter(
@@ -133,7 +146,7 @@ impl FusedIterator for ScopeAncestorsIter {}
 
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Scope {
     data: Arc<SemanticModelData>,
     id: usize,
@@ -147,16 +160,6 @@ impl PartialEq for Scope {
 
 impl Eq for Scope {}
 
-impl std::fmt::Debug for Scope {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let data = &self.data.scopes[self.id];
-        f.debug_struct("Scope")
-            .field("parent", &data.parent)
-            .field("children", &data.children)
-            .finish()
-    }
-}
-
 impl Scope {
     /// Returns all parents of this scope. Starting with the current
     /// [Scope].
@@ -166,7 +169,7 @@ impl Scope {
         }
     }
 
-    /// Return this scope parent.
+    /// Returns this scope parent.
     pub fn parent(&self) -> Option<Scope> {
         // id will always be a valid scope because
         // it was created by [SemanticModel::scope] method.
@@ -179,8 +182,8 @@ impl Scope {
         })
     }
 
-    /// Return all bindings that were bound in this scope. It **does
-    /// not** return bindings of parent scopes.
+    /// Returns all bindings that were bound in this scope. It **does
+    /// not** Returns bindings of parent scopes.
     pub fn bindings(&self) -> ScopeBindingsIter {
         ScopeBindingsIter {
             data: self.data.clone(),
@@ -189,7 +192,7 @@ impl Scope {
         }
     }
 
-    /// Return a binding by its name, like it appears on code.
+    /// Returns a binding by its name, like it appears on code.
     pub fn get_binding(&self, name: impl AsRef<str>) -> Option<Binding> {
         let name = name.as_ref();
         let data = &self.data.scopes[self.id];
@@ -206,6 +209,7 @@ impl Scope {
 }
 
 /// Provides all information regarding to a specific binding.
+#[derive(Debug)]
 pub struct Binding {
     node: JsSyntaxNode,
     data: Arc<SemanticModelData>,
@@ -255,7 +259,7 @@ impl Binding {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 enum ReferenceType {
     Read { hoisted: bool },
     Write { hoisted: bool },
@@ -338,7 +342,7 @@ impl<'a> ExactSizeIterator for ReferencesIter<'a> {
 impl<'a> FusedIterator for ReferencesIter<'a> {}
 
 /// Iterate all bindings that were bound in a given scope. It **does
-/// not** return bindings of parent scopes.
+/// not** Returns bindings of parent scopes.
 pub struct ScopeBindingsIter {
     data: Arc<SemanticModelData>,
     scope_id: usize,
@@ -396,7 +400,15 @@ impl SemanticModel {
         }
     }
 
-    /// Return the [Scope] which the syntax is part of.
+    /// Returns the global scope of the model
+    pub fn global_scope(&self) -> Scope {
+        Scope {
+            data: self.data.clone(),
+            id: 0,
+        }
+    }
+
+    /// Returns the [Scope] which the syntax is part of.
     /// Can also be called from [AstNode]::scope extension method.
     ///
     /// ```rust
@@ -420,22 +432,25 @@ impl SemanticModel {
     /// ```
     pub fn scope(&self, node: &JsSyntaxNode) -> Scope {
         let range = node.text_range();
-        let scopes = self
-            .data
-            .scope_by_range
-            .find(range.start().into(), range.end().into());
-
-        match scopes.last() {
-            Some(interval) => Scope {
-                data: self.data.clone(),
-                id: interval.val,
-            },
-            // We always have at least one scope, the global one.
-            None => unreachable!(),
+        let id = self.data.scope(&range);
+        Scope {
+            data: self.data.clone(),
+            id,
         }
     }
 
-    /// Return the [Declaration] of a reference.
+    /// Returns the [Scope] which the specified syntax node was hoisted to, if any.
+    /// Can also be called from [AstNode]::scope_hoisted_to extension method.
+    pub fn scope_hoisted_to(&self, node: &JsSyntaxNode) -> Option<Scope> {
+        let range = node.text_range();
+        let id = self.data.scope_hoisted_to(&range)?;
+        Some(Scope {
+            data: self.data.clone(),
+            id,
+        })
+    }
+
+    /// Returns the [Declaration] of a reference.
     /// Can also be called from "declaration" extension method.
     ///
     /// ```rust
@@ -468,7 +483,7 @@ impl SemanticModel {
         })
     }
 
-    /// Return a list with all [Reference] of a declaration.
+    /// Returns a list with all [Reference] of a declaration.
     /// Can also be called from "all_references" extension method.
     ///
     /// ```rust
@@ -526,21 +541,29 @@ impl SemanticModel {
 /// Extension method to allow [AstNode] to easily
 /// get its [Scope].
 pub trait SemanticScopeExtensions {
-    /// Return the [Scope] which this object is part of.
+    /// Returns the [Scope] which this object is part of.
     /// See [scope](semantic_model::SemanticModel::scope)
     fn scope(&self, model: &SemanticModel) -> Scope;
+
+    /// Returns the [Scope] which this object was hosted to, if any.
+    /// See [scope](semantic_model::SemanticModel::scope_hoisted_to)
+    fn scope_hoisted_to(&self, model: &SemanticModel) -> Option<Scope>;
 }
 
 impl<T: AstNode<Language = JsLanguage>> SemanticScopeExtensions for T {
     fn scope(&self, model: &SemanticModel) -> Scope {
         model.scope(self.syntax())
     }
+
+    fn scope_hoisted_to(&self, model: &SemanticModel) -> Option<Scope> {
+        model.scope_hoisted_to(self.syntax())
+    }
 }
 
 /// Extension method to allow any node that have a declaration to easily
 /// get its declaration.
 pub trait DeclarationExtensions {
-    /// Return the [Binding] that declared the symbol this reference references.
+    /// Returns the [Binding] that declared the symbol this reference references.
     fn declaration(&self, model: &SemanticModel) -> Option<Binding>
     where
         Self: HasDeclarationAstNode,
@@ -586,9 +609,9 @@ impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
 /// and stored inside the [SemanticModel].
 pub struct SemanticModelBuilder {
     root: JsAnyRoot,
-    scope_stack: Vec<usize>,
     scopes: Vec<SemanticModelScopeData>,
-    scope_by_range: Vec<Interval<usize, usize>>,
+    scope_range_by_start: HashMap<TextSize, BTreeSet<Interval<usize, usize>>>,
+    scope_hoisted_to_by_range: HashMap<TextSize, usize>,
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     declarations_by_range: HashMap<TextRange, TextRange>,
     declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
@@ -600,9 +623,9 @@ impl SemanticModelBuilder {
     pub fn new(root: JsAnyRoot) -> Self {
         Self {
             root,
-            scope_stack: vec![],
             scopes: vec![],
-            scope_by_range: vec![],
+            scope_range_by_start: HashMap::new(),
+            scope_hoisted_to_by_range: HashMap::new(),
             node_by_range: HashMap::new(),
             declarations_by_range: HashMap::new(),
             declaration_all_references: HashMap::new(),
@@ -620,43 +643,59 @@ impl SemanticModelBuilder {
     pub fn push_event(&mut self, e: SemanticEvent) {
         use SemanticEvent::*;
         match e {
-            ScopeStarted { range } => {
-                let new_scope_id = self.scopes.len();
-
-                let current_scope_id = match self.scope_stack.last() {
-                    Some(&i) => {
-                        self.scopes[i].children.push(new_scope_id);
-                        Some(i)
-                    }
-                    None => None,
-                };
+            ScopeStarted {
+                range,
+                parent_scope_id,
+                scope_id,
+            } => {
+                // Scopes will be raised in order
+                debug_assert!(scope_id == self.scopes.len());
 
                 self.scopes.push(SemanticModelScopeData {
-                    parent: current_scope_id,
+                    parent: parent_scope_id,
                     children: vec![],
                     bindings: vec![],
                     bindings_by_name: HashMap::new(),
                 });
-                self.scope_by_range.push(Interval {
-                    start: range.start().into(),
-                    stop: range.end().into(),
-                    val: new_scope_id,
-                });
-                self.scope_stack.push(new_scope_id);
-            }
-            ScopeEnded { .. } => {
-                self.scope_stack.pop();
-            }
-            DeclarationFound { name, range, .. } => {
-                // We must always have one scope, at least, the global one
-                debug_assert!(!self.scope_stack.is_empty());
 
-                let scope = &mut self.scopes[*self.scope_stack.last().unwrap()];
+                if let Some(parent_scope_id) = parent_scope_id {
+                    self.scopes[parent_scope_id].children.push(scope_id);
+                }
+
+                let start = range.start();
+                self.scope_range_by_start
+                    .entry(start)
+                    .or_default()
+                    .insert(Interval {
+                        start: start.into(),
+                        stop: range.end().into(),
+                        val: scope_id,
+                    });
+            }
+            ScopeEnded { .. } => {}
+            DeclarationFound {
+                name,
+                range,
+                scope_id,
+                hoisted_scope_id,
+                ..
+            } => {
+                let binding_scope_id = hoisted_scope_id.unwrap_or(scope_id);
+
+                // SAFETY: this scope id is guaranteed to exist because they were generated by the
+                // event extractor
+                debug_assert!(binding_scope_id < self.scopes.len());
+                let scope = self.scopes.get_mut(binding_scope_id).unwrap();
+
                 scope.bindings.push(range);
-
                 scope
                     .bindings_by_name
                     .insert(name, scope.bindings.len() - 1);
+
+                if let Some(hoisted_scope_id) = hoisted_scope_id {
+                    self.scope_hoisted_to_by_range
+                        .insert(range.start(), hoisted_scope_id);
+                }
             }
             Read {
                 range,
@@ -723,7 +762,14 @@ impl SemanticModelBuilder {
         let data = SemanticModelData {
             root: self.root,
             scopes: self.scopes,
-            scope_by_range: Lapper::new(self.scope_by_range),
+            scope_by_range: Lapper::new(
+                self.scope_range_by_start
+                    .iter()
+                    .flat_map(|(_, scopes)| scopes.iter())
+                    .cloned()
+                    .collect(),
+            ),
+            scope_hoisted_to_by_range: self.scope_hoisted_to_by_range,
             node_by_range: self.node_by_range,
             declared_at_by_range: self.declarations_by_range,
             declaration_all_references: self.declaration_all_references,
@@ -794,6 +840,7 @@ mod test {
         let global_scope = func_scope.parent().unwrap();
 
         assert!(global_scope.parent().is_none());
+        assert_eq!(global_scope, model.global_scope());
         assert_eq!(block_scope.ancestors().count(), 3);
 
         // Scope equality
@@ -819,16 +866,11 @@ mod test {
             }
         }
 
-        // function scope must have one binding: f
-        let bindings = func_scope.bindings().collect::<Vec<_>>();
-        match bindings.as_slice() {
-            [f] => {
-                assert_eq!("f", f.syntax().text_trimmed());
-            }
-            _ => {
-                panic!("wrong number of bindings");
-            }
-        }
+        // function scope must have zero bindings
+        // "f" was actually hoisted to the global scope
+        let mut bindings = func_scope.bindings();
+        assert!(bindings.next().is_none());
+        assert!(global_scope.get_binding("f").is_some());
 
         // Binding by name
 
@@ -870,5 +912,47 @@ mod test {
         assert_eq!(1, b_declaration.all_writes().count());
         assert!(b_declaration.all_reads().all(|r| r.is_read()));
         assert!(b_declaration.all_writes().all(|r| r.is_write()));
+    }
+
+    #[test]
+    pub fn ok_semantic_model_function_scope() {
+        let r = rome_js_parser::parse(
+            "function f() {} function g() {}",
+            0,
+            SourceType::js_module(),
+        );
+        let model = semantic_model(&r.tree());
+
+        let function_f = r
+            .syntax()
+            .descendants()
+            .filter_map(|x| x.cast::<JsIdentifierBinding>())
+            .find(|x| x.text() == "f")
+            .unwrap();
+
+        let function_g = r
+            .syntax()
+            .descendants()
+            .filter_map(|x| x.cast::<JsIdentifierBinding>())
+            .find(|x| x.text() == "g")
+            .unwrap();
+
+        // "f" and "g" tokens are not in the same scope, because
+        // the keyword "function" starts a new scope
+        // but they are both hoisted to the same scope
+        assert_ne!(function_f.scope(&model), function_g.scope(&model));
+        assert_eq!(
+            function_f.scope_hoisted_to(&model),
+            function_g.scope_hoisted_to(&model)
+        );
+
+        // they are hoisted to the global scope
+        let global_scope = model.global_scope();
+        assert_eq!(function_f.scope_hoisted_to(&model).unwrap(), global_scope);
+        assert_eq!(function_g.scope_hoisted_to(&model).unwrap(), global_scope);
+
+        // And we can find their binding inside the global scope
+        assert!(global_scope.get_binding("g").is_some());
+        assert!(global_scope.get_binding("f").is_some());
     }
 }
