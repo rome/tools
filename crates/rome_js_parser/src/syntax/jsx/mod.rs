@@ -605,7 +605,8 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
         _ => ParsedSyntax::Absent,
     }
 }
-
+// test_err jsx jsx_element_attribute_expression_error
+// <div className={asdf asdf} />;
 fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return ParsedSyntax::Absent;
@@ -614,7 +615,17 @@ fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.bump(T!['{']);
     parse_jsx_assignment_expression(p, false).or_add_diagnostic(p, expected_expression);
-    p.expect(T!['}']);
+    if p.at(T!['}']) {
+        p.eat(T!['}']);
+    } else {
+        p.error(expected_token(T!['}']));
+        p.parse_as_skipped_trivia_tokens(|p| {
+            while !p.at(JsSyntaxKind::EOF) && !p.at(T!['}']) {
+                p.bump_any();
+            }
+        });
+        p.expect(T!['}']);
+    }
 
     ParsedSyntax::Present(m.complete(p, JSX_EXPRESSION_ATTRIBUTE_VALUE))
 }
