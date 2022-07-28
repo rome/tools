@@ -923,7 +923,6 @@ mod test {
         );
         let model = semantic_model(&r.tree());
 
-        // f and g must be in the same scope
         let function_f = r
             .syntax()
             .descendants()
@@ -940,7 +939,7 @@ mod test {
 
         // "f" and "g" tokens are not in the same scope, because
         // the keyword "function" starts a new scope
-        // But they are both hoisted to the same scope
+        // but they are both hoisted to the same scope
         assert_ne!(function_f.scope(&model), function_g.scope(&model));
         assert_eq!(
             function_f.scope_hoisted_to(&model),
