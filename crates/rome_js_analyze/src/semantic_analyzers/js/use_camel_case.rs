@@ -35,15 +35,20 @@ declare_rule! {
     /// ```
     pub(crate) UseCamelCase {
         version: "0.8.0",
-        name: "useCamelCase"
+        name: "useCamelCase",
+        recommended: true
     }
+}
+
+pub struct State {
+    new_name: String,
 }
 
 impl Rule for UseCamelCase {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Semantic<JsIdentifierBinding>;
-    type State = (String, Vec<Reference>);
+    type State = State;
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
@@ -57,9 +62,7 @@ impl Rule for UseCamelCase {
 
             match name {
                 Cow::Borrowed(_) => None,
-                Cow::Owned(new_name) => {
-                    Some((new_name, binding.all_references(ctx.model()).collect()))
-                }
+                Cow::Owned(new_name) => Some(State { new_name }),
             }
         } else {
             None
@@ -67,16 +70,17 @@ impl Rule for UseCamelCase {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let declarator = ctx.query();
+        let binding = ctx.query();
 
         let mut diag = RuleDiagnostic::warning(
-            declarator.syntax().text_trimmed_range(),
+            binding.syntax().text_trimmed_range(),
             markup! {
                 "Prefer symbols names in camel case."
             },
         );
 
-        for reference in state.1.iter() {
+        let references = binding.all_references(ctx.model());
+        for reference in references {
             let node = reference.node();
             diag = diag.secondary(node.text_trimmed_range(), "Used here.")
         }
@@ -84,7 +88,7 @@ impl Rule for UseCamelCase {
         Some(diag)
     }
 
-    fn action(ctx: &RuleContext<Self>, (new_name, _): &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, State { new_name }: &Self::State) -> Option<JsRuleAction> {
         let model = ctx.model();
         let mut batch = ctx.root().begin();
 
@@ -95,7 +99,7 @@ impl Rule for UseCamelCase {
                 category: ActionCategory::Refactor,
                 applicability: Applicability::Always,
                 message: markup! { "Rename this symbol to camel case" }.to_owned(),
-                root: batch.commit(),
+                mutation: batch,
             })
         } else {
             None
