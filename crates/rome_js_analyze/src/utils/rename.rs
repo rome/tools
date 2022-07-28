@@ -143,20 +143,16 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
         // We can shadow parent scopes, so we don´t check them.
 
         let syntax = prev_binding.syntax();
-        dbg!(syntax);
         let scope = model
             .scope_hoisted_to(syntax)
             .unwrap_or_else(|| model.scope(syntax));
-        dbg!(&scope);
         if scope.get_binding(new_name).is_some() {
-            dbg!(1);
             return false;
         }
 
         let name_token = match prev_binding.name_token() {
             Ok(name_token) => name_token,
             Err(_) => {
-                dbg!(1);
                 return false;
             }
         };
@@ -175,7 +171,6 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
                 .next()
                 .is_some()
             {
-                dbg!(1);
                 return false;
             }
 
