@@ -8,7 +8,7 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::AllReferencesExtensions;
 use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator};
 use rome_rowan::{AstNode, BatchMutationExt};
 use std::{borrow::Cow, iter::once};
@@ -69,7 +69,7 @@ impl Rule for UseCamelCase {
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let binding = ctx.query();
 
         let mut diag = RuleDiagnostic::warning(
@@ -94,7 +94,7 @@ impl Rule for UseCamelCase {
 
         let candidates = (2..).map(|i| format!("{}{}", new_name, i).into());
         let candidates = once(Cow::from(new_name)).chain(candidates);
-        if batch.try_rename_node_declaration_until_success(model, ctx.query().clone(), candidates) {
+        if batch.rename_node_declaration_with_retry(model, ctx.query().clone(), candidates) {
             Some(JsRuleAction {
                 category: ActionCategory::Refactor,
                 applicability: Applicability::Always,
