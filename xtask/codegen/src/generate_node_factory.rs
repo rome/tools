@@ -144,24 +144,25 @@ pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Resul
 
         if list.separator.is_some() {
             quote! {
-                pub fn #factory_name<I>(items: I) -> #list_name
+                pub fn #factory_name<I, S>(items: I, separators: S) -> #list_name
                 where
-                    I: IntoIterator<Item = (#item, Option<#syntax_token>)>,
+                    I: IntoIterator<Item = #item>,
                     I::IntoIter: ExactSizeIterator,
+                    S: IntoIterator<Item = #syntax_token>,
+                    S::IntoIter: ExactSizeIterator,
                 {
-                    let items = items.into_iter();
-                    let length = items.len() * 2;
-
-                    let mut iter = items.flat_map(|(item, separator)| [
-                        Some(item.into_syntax().into()),
-                        separator.map(|token| token.into()),
-                    ]);
-
+                    let mut items = items.into_iter();
+                    let mut separators = separators.into_iter();
+                    let length = items.len() + separators.len();
                     #list_name::unwrap_cast(SyntaxNode::new_detached(
                         #syntax_kind::#kind,
-                        // Wrap the iterator in fixed size Range since FlatMap doesn't
-                        // implement ExactSizeIterator (required by new_detached)
-                        (0..length).map(|_| iter.next().unwrap()),
+                        (0..length).map(|index| {
+                            if index % 2 == 0 {
+                                Some(items.next()?.into_syntax().into())
+                            } else {
+                                Some(separators.next()?.into())
+                            }
+                        }),
                     ))
                 }
             }

@@ -108,39 +108,45 @@ pub fn json_string(json_string_literal_token: SyntaxToken) -> JsonString {
         [Some(SyntaxElement::Token(json_string_literal_token))],
     ))
 }
-pub fn json_array_element_list<I>(items: I) -> JsonArrayElementList
+pub fn json_array_element_list<I, S>(items: I, separators: S) -> JsonArrayElementList
 where
-    I: IntoIterator<Item = (JsonValue, Option<JsonSyntaxToken>)>,
+    I: IntoIterator<Item = JsonValue>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsonSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsonArrayElementList::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_ARRAY_ELEMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn json_member_list<I>(items: I) -> JsonMemberList
+pub fn json_member_list<I, S>(items: I, separators: S) -> JsonMemberList
 where
-    I: IntoIterator<Item = (JsonMember, Option<JsonSyntaxToken>)>,
+    I: IntoIterator<Item = JsonMember>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsonSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsonMemberList::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_MEMBER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }

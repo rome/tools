@@ -4,29 +4,81 @@ expression: useSingleVarDeclarator.js
 ---
 # Input
 ```js
+var x, y
+
 function test() {
 	// Comment
 	let foo, bar;
 }
+
+var x = 1,
+	// comment
+    y = 2
 
 ```
 
 # Diagnostics
 ```
 warning[js/useSingleVarDeclarator]: Declare variables separately
-  ┌─ useSingleVarDeclarator.js:3:2
+  ┌─ useSingleVarDeclarator.js:1:1
   │
-3 │     let foo, bar;
+1 │ var x, y
+  │ --------
+
+Suggested fix: Break out into multiple declarations
+    | @@ -1,4 +1,5 @@
+0   | - var x, y
+  0 | + var x
+  1 | + var y
+1 2 |   
+2 3 |   function test() {
+3 4 |   	// Comment
+
+
+```
+
+```
+warning[js/useSingleVarDeclarator]: Declare variables separately
+  ┌─ useSingleVarDeclarator.js:5:2
+  │
+5 │     let foo, bar;
   │     -------------
 
-Safe fix: Break out into multiple declarations
-    | @@ -1,4 +1,5 @@
-0 0 |   function test() {
-1 1 |   	// Comment
-2   | - 	let foo, bar;
-  2 | + 	let foo;
-  3 | + 	let bar;
-3 4 |   }
+Suggested fix: Break out into multiple declarations
+    | @@ -2,7 +2,8 @@
+1 1 |   
+2 2 |   function test() {
+3 3 |   	// Comment
+4   | - 	let foo, bar;
+  4 | + 	let foo;
+  5 | + 	let bar;
+5 6 |   }
+6 7 |   
+7 8 |   var x = 1,
+
+
+```
+
+```
+warning[js/useSingleVarDeclarator]: Declare variables separately
+   ┌─ useSingleVarDeclarator.js:8:1
+   │  
+ 8 │ ┌ var x = 1,
+ 9 │ │     // comment
+10 │ │     y = 2
+   │ └─────────'
+
+Suggested fix: Break out into multiple declarations
+    | @@ -5,6 +5,6 @@
+4 4 |   	let foo, bar;
+5 5 |   }
+6 6 |   
+7   | - var x = 1,
+8   | - 	// comment
+9   | -     y = 2
+  7 | + var x = 1
+  8 | + // comment
+  9 | + var y = 2
 
 
 ```

@@ -701,22 +701,25 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn css_at_media_query_list<I>(items: I) -> CssAtMediaQueryList
+pub fn css_at_media_query_list<I, S>(items: I, separators: S) -> CssAtMediaQueryList
 where
-    I: IntoIterator<Item = (CssAtMediaQuery, Option<CssSyntaxToken>)>,
+    I: IntoIterator<Item = CssAtMediaQuery>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = CssSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     CssAtMediaQueryList::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn css_attribute_list<I>(items: I) -> CssAttributeList
@@ -743,22 +746,25 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn css_keyframes_selector_list<I>(items: I) -> CssKeyframesSelectorList
+pub fn css_keyframes_selector_list<I, S>(items: I, separators: S) -> CssKeyframesSelectorList
 where
-    I: IntoIterator<Item = (CssKeyframesSelector, Option<CssSyntaxToken>)>,
+    I: IntoIterator<Item = CssKeyframesSelector>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = CssSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     CssKeyframesSelectorList::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_KEYFRAMES_SELECTOR_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn css_parameter_list<I>(items: I) -> CssParameterList
@@ -785,21 +791,24 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn css_selector_list<I>(items: I) -> CssSelectorList
+pub fn css_selector_list<I, S>(items: I, separators: S) -> CssSelectorList
 where
-    I: IntoIterator<Item = (CssSelector, Option<CssSyntaxToken>)>,
+    I: IntoIterator<Item = CssSelector>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = CssSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     CssSelectorList::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_SELECTOR_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }

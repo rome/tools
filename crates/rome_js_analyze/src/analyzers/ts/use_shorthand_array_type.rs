@@ -141,21 +141,17 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
             }
             length => {
                 let ts_union_type_builder = make::ts_union_type(make::ts_union_type_variant_list(
-                    types_array.into_iter().enumerate().map(|(i, item)| {
-                        (
-                            item,
-                            (i != length - 1).then(|| {
-                                make::token(T![|])
-                                    .with_leading_trivia(std::iter::once((
-                                        TriviaPieceKind::Whitespace,
-                                        " ",
-                                    )))
-                                    .with_trailing_trivia(std::iter::once((
-                                        TriviaPieceKind::Whitespace,
-                                        " ",
-                                    )))
-                            }),
-                        )
+                    types_array.into_iter(),
+                    (0..length - 1).map(|_| {
+                        make::token(T![|])
+                            .with_leading_trivia(std::iter::once((
+                                TriviaPieceKind::Whitespace,
+                                " ",
+                            )))
+                            .with_trailing_trivia(std::iter::once((
+                                TriviaPieceKind::Whitespace,
+                                " ",
+                            )))
                     }),
                 ));
                 return Some(TsType::TsUnionType(ts_union_type_builder.build()));
