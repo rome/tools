@@ -648,16 +648,15 @@ impl SemanticModelBuilder {
                 parent_scope_id,
                 scope_id,
             } => {
-                if scope_id == self.scopes.len() {
-                    self.scopes.push(SemanticModelScopeData {
-                        parent: parent_scope_id,
-                        children: vec![],
-                        bindings: vec![],
-                        bindings_by_name: HashMap::new(),
-                    });
-                } else {
-                    todo!("{:?} {:?}", scope_id, self.scopes.len())
-                }
+                // Scopes will be raised in order
+                debug_assert!(scope_id == self.scopes.len());
+
+                self.scopes.push(SemanticModelScopeData {
+                    parent: parent_scope_id,
+                    children: vec![],
+                    bindings: vec![],
+                    bindings_by_name: HashMap::new(),
+                });
 
                 if let Some(parent_scope_id) = parent_scope_id {
                     self.scopes[parent_scope_id].children.push(scope_id);
