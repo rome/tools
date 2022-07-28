@@ -161,6 +161,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
 <h3 data-toc-exclude id="useCamelCase">
 	<a href="/docs/lint/rules/useCamelCase">useCamelCase (since v0.8.0)</a>
 	<a class="header-anchor" href="#useCamelCase"></a>
+	<span class="recommended">recommended</span>
 </h3>
 Enforce camel case naming convention.
 </div>

@@ -8,7 +8,6 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::AllReferencesExtensions;
 use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator};
 use rome_rowan::{AstNode, BatchMutationExt};
 use std::{borrow::Cow, iter::once};
@@ -60,7 +59,7 @@ impl Rule for UseCamelCase {
             let name = binding.name_token().ok()?;
             let name = name.text_trimmed();
 
-            if name.starts_with("_") {
+            if name.starts_with('_') {
                 return None;
             }
 

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useCamelCase (since v0.8.0)
 
+> This rule is recommended by Rome.
+
 Enforce camel case naming convention.
 
 ## Examples
