@@ -155,6 +155,7 @@ pub struct LanguageSettings<L: Language> {
 
 /// Handle object holding a temporary lock on the workspace settings until
 /// the deferred language-specific options resolution is called
+#[derive(Debug)]
 pub(crate) struct SettingsHandle<'a, E> {
     inner: RwLockReadGuard<'a, WorkspaceSettings>,
     /// Additional per-request state injected by the editor

@@ -187,11 +187,15 @@ fn code_actions(
     PullActionsResult { actions }
 }
 
+/// If applies all the safe fixes to the given syntax tree.
+///
+/// If `indent_style` is [Some], it means that the formatting should be applied at the end
 fn fix_all(
     rome_path: &RomePath,
     parse: AnyParse,
     configuration_rules: Option<&Rules>,
-) -> FixFileResult {
+    settings: Option<SettingsHandle<IndentStyle>>,
+) -> Result<FixFileResult, RomeError> {
     let mut tree: JsAnyRoot = parse.tree();
     let mut actions = Vec::new();
 
@@ -233,10 +237,14 @@ fn fix_all(
                 }
             }
             None => {
-                return FixFileResult {
-                    code: tree.syntax().to_string(),
-                    actions,
-                }
+                let code = if let Some(settings) = settings {
+                    let context = settings.format_context::<JsLanguage>(rome_path);
+                    let formatted = format_node(context, tree.syntax())?;
+                    formatted.print().into_code()
+                } else {
+                    tree.syntax().to_string()
+                };
+                return Ok(FixFileResult { code, actions });
             }
         }
     }

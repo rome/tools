@@ -122,9 +122,10 @@ fn fix_all(
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
 ) -> Result<Option<CodeActionOrCommand>, RomeError> {
-    let fixed = session
-        .workspace
-        .fix_file(FixFileParams { path: rome_path })?;
+    let fixed = session.workspace.fix_file(FixFileParams {
+        path: rome_path,
+        indent_style: None,
+    })?;
 
     if fixed.actions.is_empty() {
         return Ok(None);

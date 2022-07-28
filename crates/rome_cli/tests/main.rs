@@ -28,8 +28,7 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 const FIX_BEFORE: &str = "
 if(a != -0) {}
 ";
-const FIX_AFTER: &str = "
-if(a != 0) {}
+const FIX_AFTER: &str = "if(a != 0) {}
 ";
 
 const CUSTOM_FORMAT_BEFORE: &str = r#"
@@ -44,14 +43,21 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 }
 "#;
 
-const NO_DEBUGGER: &str = "debugger;";
+const NO_DEBUGGER_BEFORE: &str = "debugger;";
+const NO_DEBUGGER_AFTER: &str = "debugger;\n";
 
-const JS_ERRORS: &str = r#"try {
-    !a && !b
+const JS_ERRORS_BEFORE: &str = r#"try {
+    !a && !b;
 } catch (err) {
     err = 24;
 }
 "#;
+const JS_ERRORS_AFTER: &str = "try {\
+    \n\t!a && !b;
+} catch (err) {\
+    \n\terr = 24;
+}
+";
 
 mod check {
     use super::*;
@@ -289,7 +295,7 @@ mod check {
         let mut console = BufferConsole::default();
 
         let file_path = Path::new("fix.js");
-        fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+        fs.insert(file_path.into(), NO_DEBUGGER_BEFORE.as_bytes());
 
         let config_path = Path::new("rome.json");
         fs.insert(config_path.into(), CONFIG_LINTER_SUPPRESSED_RULE.as_bytes());
@@ -314,7 +320,7 @@ mod check {
             .read_to_string(&mut buffer)
             .unwrap();
 
-        assert_eq!(buffer, NO_DEBUGGER);
+        assert_eq!(buffer, NO_DEBUGGER_AFTER);
     }
 
     #[test]
@@ -323,7 +329,7 @@ mod check {
         let mut console = BufferConsole::default();
 
         let file_path = Path::new("fix.js");
-        fs.insert(file_path.into(), JS_ERRORS.as_bytes());
+        fs.insert(file_path.into(), JS_ERRORS_BEFORE.as_bytes());
 
         let config_path = Path::new("rome.json");
         fs.insert(
@@ -351,7 +357,7 @@ mod check {
             .read_to_string(&mut buffer)
             .unwrap();
 
-        assert_eq!(buffer, JS_ERRORS);
+        assert_eq!(buffer, JS_ERRORS_AFTER);
     }
 }
 

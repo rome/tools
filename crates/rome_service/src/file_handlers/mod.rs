@@ -74,7 +74,12 @@ type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
 type Lint = fn(&RomePath, AnyParse, AnalysisFilter) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
-type FixAll = fn(&RomePath, AnyParse, Option<&Rules>) -> FixFileResult;
+type FixAll = fn(
+    &RomePath,
+    AnyParse,
+    Option<&Rules>,
+    Option<SettingsHandle<IndentStyle>>,
+) -> Result<FixFileResult, RomeError>;
 type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;
 type FormatRange =
     fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;

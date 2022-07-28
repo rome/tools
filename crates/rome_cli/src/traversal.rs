@@ -485,7 +485,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         if ctx.mode.should_fix() {
             let fixed = file_guard
-                .fix_file()
+                .fix_file(Some(IndentStyle::default()))
                 .with_file_id_and_code(file_id, "Lint")?;
 
             if fixed.code != input {
@@ -562,8 +562,15 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         if can_format {
             let write = match ctx.mode {
-                // In check mode do not run the formatter and return the result immediately
-                TraversalMode::Check { .. } => return Ok(result),
+                // In check mode do not run the formatter and return the result immediately,
+                // but only if the argument `--apply` is not passed.
+                TraversalMode::Check { should_fix, .. } => {
+                    if should_fix {
+                        true
+                    } else {
+                        return Ok(result);
+                    }
+                }
                 TraversalMode::CI { .. } => false,
                 TraversalMode::Format { write, .. } => write,
             };

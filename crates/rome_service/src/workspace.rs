@@ -205,6 +205,7 @@ pub struct FormatOnTypeParams {
 )]
 pub struct FixFileParams {
     pub path: RomePath,
+    pub indent_style: Option<IndentStyle>,
 }
 
 #[cfg_attr(
@@ -381,9 +382,10 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn fix_file(&self) -> Result<FixFileResult, RomeError> {
+    pub fn fix_file(&self, indent_style: Option<IndentStyle>) -> Result<FixFileResult, RomeError> {
         self.workspace.fix_file(FixFileParams {
             path: self.path.clone(),
+            indent_style,
         })
     }
 }

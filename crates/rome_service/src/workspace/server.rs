@@ -312,7 +312,13 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
         let rules = settings.linter.rules.as_ref();
-        Ok(fix_all(&params.path, parse, rules))
+        let indent_style = if let Some(indent_style) = params.indent_style {
+            let settings = self.settings(indent_style);
+            Some(settings)
+        } else {
+            None
+        };
+        fix_all(&params.path, parse, rules, indent_style)
     }
 
     fn rename(&self, params: super::RenameParams) -> Result<RenameResult, RomeError> {
