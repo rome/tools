@@ -98,7 +98,7 @@ impl Rules {
             None
         }
     }
-    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled rules,"]
     #[doc = r" while the second element are the disabled rules."]
     #[doc = r""]

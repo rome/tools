@@ -239,7 +239,10 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             }
 
             pub(crate) fn is_recommended(&self) -> bool {
-                matches!(self.recommended, Some(true))
+                // It is only considered _not_ recommended when
+                // the configuration is `"recommended": false`.
+                // Hence, omission of the setting or set to `true` are considered recommneded.
+                !matches!(self.recommended, Some(false))
             }
 
             /// It returns a tuple of filters. The first element of the tuple are the enabled rules,
