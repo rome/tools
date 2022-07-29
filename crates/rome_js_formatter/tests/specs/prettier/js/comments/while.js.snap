@@ -36,7 +36,7 @@ while(1) // Comment
 ```diff
 --- Prettier
 +++ Rome
-@@ -3,25 +3,18 @@
+@@ -3,19 +3,14 @@
    // Comment
  ) {}
  
@@ -59,13 +59,6 @@ while(1) // Comment
  ) {}
  
  while (true) {} // comment
- 
- while (true) /* comment */ ++x;
- 
--while (1)
--  // Comment
--  foo();
-+while (1) foo(); // Comment
 ```
 
 # Output
@@ -90,7 +83,9 @@ while (true) {} // comment
 
 while (true) /* comment */ ++x;
 
-while (1) foo(); // Comment
+while (1)
+  // Comment
+  foo();
 ```
 
 

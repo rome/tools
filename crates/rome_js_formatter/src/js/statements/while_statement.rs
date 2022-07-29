@@ -2,7 +2,8 @@ use crate::prelude::*;
 
 use crate::utils::FormatBodyStatement;
 
-use rome_formatter::write;
+use crate::js::statements::if_statement::FormatStatementBody;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsWhileStatement;
 use rome_js_syntax::JsWhileStatementFields;
 
@@ -21,13 +22,13 @@ impl FormatNodeRule<JsWhileStatement> for FormatJsWhileStatement {
 
         write!(
             f,
-            [
+            [group(&format_args![
                 while_token.format(),
                 space(),
-                format_delimited(&l_paren_token?, &test.format(), &r_paren_token?,)
+                format_delimited(&l_paren_token?, &test.format(), &r_paren_token?)
                     .soft_block_indent(),
-                FormatBodyStatement::new(&body?)
-            ]
+                FormatStatementBody::new(&body?)
+            ])]
         )
     }
 }

@@ -1,4 +1,4 @@
-use crate::js::statements::if_statement::FormatConsequentClause;
+use crate::js::statements::if_statement::FormatStatementBody;
 use crate::prelude::*;
 
 use rome_formatter::write;
@@ -24,7 +24,7 @@ impl FormatNodeRule<JsElseClause> for FormatJsElseClause {
             [
                 else_token.format(),
                 group(
-                    &FormatConsequentClause::new(&alternate)
+                    &FormatStatementBody::new(&alternate)
                         .with_forced_space(matches!(alternate, JsIfStatement(_)))
                 )
             ]

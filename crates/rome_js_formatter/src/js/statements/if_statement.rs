@@ -31,7 +31,7 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
                 space(),
                 format_delimited(&l_paren_token, &test.format(), &r_paren_token)
                     .soft_block_indent(),
-                FormatConsequentClause::new(&consequent),
+                FormatStatementBody::new(&consequent),
             ]),]
         )?;
 
@@ -51,12 +51,12 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
     }
 }
 
-pub(crate) struct FormatConsequentClause<'a> {
+pub(crate) struct FormatStatementBody<'a> {
     statement: &'a JsAnyStatement,
     force_space: bool,
 }
 
-impl<'a> FormatConsequentClause<'a> {
+impl<'a> FormatStatementBody<'a> {
     pub fn new(consequent: &'a JsAnyStatement) -> Self {
         Self {
             statement: consequent,
@@ -72,7 +72,7 @@ impl<'a> FormatConsequentClause<'a> {
     }
 }
 
-impl Format<JsFormatContext> for FormatConsequentClause<'_> {
+impl Format<JsFormatContext> for FormatStatementBody<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         use JsAnyStatement::*;
 
