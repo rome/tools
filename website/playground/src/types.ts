@@ -12,6 +12,7 @@ export interface RomeOutput {
 	errors: string;
 	formatted_code: string;
 	formatter_ir: string;
+	control_flow_graph: string;
 }
 
 export interface PlaygroundState {
@@ -23,6 +24,7 @@ export interface PlaygroundState {
 	sourceType: SourceType;
 	isTypeScript: boolean;
 	isJsx: boolean;
+	cursorPosition: number;
 }
 
 // change `lineWidth` and `indentWidth` to string type, just to fits our `usePlaygroundState` fallback usage
@@ -38,6 +40,7 @@ export const defaultRomeConfig: RomeConfiguration = {
 	sourceType: SourceType.Module,
 	isTypeScript: false,
 	isJsx: false,
+	cursorPosition: 0,
 };
 
 export interface PlaygroundProps {

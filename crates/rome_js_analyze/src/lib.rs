@@ -1,7 +1,8 @@
 use control_flow::make_visitor;
 use rome_analyze::{
-    AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, LanguageRoot, Phases,
-    RegistryRuleMetadata, RuleAction, ServiceBag, SyntaxVisitor,
+    AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, LanguageRoot,
+    MatchQueryParams, MatcherLayer, Phases, RegistryRuleMetadata, RuleAction, ServiceBag,
+    SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
@@ -30,13 +31,15 @@ pub fn metadata(filter: AnalysisFilter) -> impl Iterator<Item = RegistryRuleMeta
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
 /// then call `emit_signal` when an analysis rule emits a diagnostic or action
-pub fn analyze<'a, F, B>(
+pub fn analyze_with_matcher_layer<'a, V, F, B>(
     file_id: FileId,
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
+    matcher_layer: V,
     mut emit_signal: F,
 ) -> Option<B>
 where
+    V: FnMut(&MatchQueryParams<JsLanguage>) + 'a,
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
@@ -54,7 +57,7 @@ where
     }
 
     let mut analyzer = Analyzer::new(
-        build_registry(&filter),
+        MatcherLayer::new(build_registry(&filter), matcher_layer),
         parse_linter_suppression_comment,
         &mut emit_signal,
     );
@@ -71,6 +74,22 @@ where
         range: filter.range,
         services: ServiceBag::default(),
     })
+}
+
+/// Run the analyzer on the provided `root`: this process will use the given `filter`
+/// to selectively restrict analysis to specific rules / a specific source range,
+/// then call `emit_signal` when an analysis rule emits a diagnostic or action
+pub fn analyze<'a, F, B>(
+    file_id: FileId,
+    root: &LanguageRoot<JsLanguage>,
+    filter: AnalysisFilter,
+    emit_signal: F,
+) -> Option<B>
+where
+    F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
+    B: 'a,
+{
+    analyze_with_matcher_layer(file_id, root, filter, |_| {}, emit_signal)
 }
 
 #[cfg(test)]

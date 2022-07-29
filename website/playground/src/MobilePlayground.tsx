@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeMirror from "@uiw/react-codemirror";
+import type { ViewUpdate } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
@@ -16,6 +17,16 @@ export function MobilePlayground(
 ) {
 	const { isJsx, isTypeScript } = settings;
 
+	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
+		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
+		setPlaygroundState(
+			(state) =>
+				state.cursorPosition !== cursorPosition ? {
+					...state,
+					cursorPosition,
+				} : state,
+		);
+	}, []);
 	const onChange = useCallback((value) => {
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
@@ -46,6 +57,7 @@ export function MobilePlayground(
 						value={code}
 						extensions={extensions}
 						placeholder="Enter your code here"
+						onUpdate={onUpdate}
 						onChange={onChange}
 						style={{
 							fontSize: 12,

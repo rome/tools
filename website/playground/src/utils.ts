@@ -79,6 +79,7 @@ export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 			(
 				searchParams.get("sourceType") as SourceType
 			) ?? defaultRomeConfig.sourceType,
+		cursorPosition: 0,
 	});
 	const [playgroundState, setPlaygroundState] = useState(initState());
 
@@ -89,7 +90,11 @@ export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 	useEffect(() => {
 		const { code, isTypeScript, isJsx } = playgroundState;
 		const queryString = new URLSearchParams({
-			...crateObjectExcludeKeys(playgroundState, ["isTypeScript", "isJsx"]),
+			...crateObjectExcludeKeys(playgroundState, [
+				"isTypeScript",
+				"isJsx",
+				"cursorPosition",
+			]),
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();

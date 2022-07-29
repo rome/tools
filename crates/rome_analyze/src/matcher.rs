@@ -113,6 +113,42 @@ impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
     }
 }
 
+pub struct MatcherLayer<F, I> {
+    layer: F,
+    inner: I,
+}
+
+impl<F, I> MatcherLayer<F, I> {
+    pub fn new<L>(inner: I, layer: F) -> Self
+    where
+        L: Language,
+        F: FnMut(&MatchQueryParams<L>),
+        I: QueryMatcher<L>,
+    {
+        Self { layer, inner }
+    }
+}
+
+impl<L, F, I> QueryMatcher<L> for MatcherLayer<F, I>
+where
+    L: Language,
+    F: FnMut(&MatchQueryParams<L>),
+    I: QueryMatcher<L>,
+{
+    fn find_group(&self, group: &str) -> Option<GroupKey> {
+        self.inner.find_group(group)
+    }
+
+    fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
+        self.inner.find_rule(group, rule)
+    }
+
+    fn match_query(&mut self, params: MatchQueryParams<L>) {
+        (self.layer)(&params);
+        self.inner.match_query(params);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use rome_console::codespan::Severity;

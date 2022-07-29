@@ -1,7 +1,7 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
 use js_sys::Array;
-use rome_analyze::{AnalysisFilter, ControlFlow, Never};
+use rome_analyze::{AnalysisFilter, ControlFlow, Never, QueryMatch};
 use rome_console::codespan::Severity;
 use rome_console::fmt::{Formatter, HTML};
 use rome_console::{markup, Markup};
@@ -11,7 +11,7 @@ use rome_formatter::IndentStyle;
 use rome_js_formatter::context::JsFormatContext;
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
-use rome_js_syntax::{LanguageVariant, SourceType};
+use rome_js_syntax::{LanguageVariant, SourceType, TextSize};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -45,6 +45,7 @@ pub struct RomeOutput {
     formatted_code: String,
     formatter_ir: String,
     errors: String,
+    control_flow_graph: String,
 }
 
 #[wasm_bindgen]
@@ -72,6 +73,11 @@ impl RomeOutput {
     #[wasm_bindgen(getter)]
     pub fn errors(&self) -> String {
         self.errors.clone()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn control_flow_graph(&self) -> String {
+        self.control_flow_graph.clone()
     }
 }
 
@@ -124,6 +130,7 @@ pub fn run(
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
+    cursor_position: u32,
 ) -> RomeOutput {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
@@ -179,11 +186,35 @@ pub fn run(
         diagnostic_to_string(&simple_files, main_file_id, diag, &mut html);
     }
 
+    let cursor_position = TextSize::from(cursor_position);
+    let mut control_flow_graph = None;
+
     mark("rome::analyze::begin");
-    rome_js_analyze::analyze(
+    rome_js_analyze::analyze_with_matcher_layer(
         main_file_id,
         &parse.tree(),
         AnalysisFilter::default(),
+        |match_params| {
+            let (cfg, range) = match &match_params.query {
+                QueryMatch::ControlFlowGraph(cfg, node) => (cfg, node),
+                _ => return,
+            };
+
+            if !range.contains(cursor_position) {
+                return;
+            }
+
+            match &control_flow_graph {
+                None => {
+                    control_flow_graph = Some((cfg.clone(), *range));
+                }
+                Some((_, prev_range)) => {
+                    if range.len() < prev_range.len() {
+                        control_flow_graph = Some((cfg.clone(), *range));
+                    }
+                }
+            }
+        },
         |signal| {
             if let Some(diag) = signal.diagnostic() {
                 // we default the severity to error, because only the recommended rules are run
@@ -217,6 +248,9 @@ pub fn run(
         formatted_code,
         formatter_ir,
         errors: String::from_utf8(html.0).unwrap(),
+        control_flow_graph: control_flow_graph
+            .map(|(cfg, _)| cfg.to_string())
+            .unwrap_or_default(),
     }
 }
 

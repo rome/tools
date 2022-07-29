@@ -1,5 +1,6 @@
 import { PlaygroundProps } from "./types";
-import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
+import CodeMirror from "@uiw/react-codemirror";
+import type { ViewUpdate } from "@codemirror/view";
 // import { EditorView } from "@codemirror/view";
 // import { romeAst } from "../lang-rome-ast/dist/";
 import { romeAst } from "codemirror-lang-rome-ast";
@@ -15,13 +16,21 @@ import { ReactComponent as FailedIcon } from "../assets/failed.svg";
 //@ts-expect-error
 import { ReactComponent as CopyIcon } from "../assets/copy.svg";
 import { useCallback, useEffect, useState } from "react";
+import MermaidGraph from "./MermaidGraph";
 
 export default function DesktopPlayground(
 	{
 		setPlaygroundState,
 		playgroundState: { code, ...settings },
 		prettierOutput,
-		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+		romeOutput: {
+			cst,
+			ast,
+			formatted_code,
+			formatter_ir,
+			errors,
+			control_flow_graph,
+		},
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;
@@ -61,6 +70,16 @@ export default function DesktopPlayground(
 		}
 	};
 
+	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
+		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
+		setPlaygroundState(
+			(state) =>
+				state.cursorPosition !== cursorPosition ? {
+					...state,
+					cursorPosition,
+				} : state,
+		);
+	}, []);
 	const onChange = useCallback((value) => {
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
@@ -79,6 +98,7 @@ export default function DesktopPlayground(
 						height="70vh"
 						extensions={extensions}
 						placeholder="Enter your code here"
+						onUpdate={onUpdate}
 						onChange={onChange}
 					/>
 				</div>
@@ -92,6 +112,12 @@ export default function DesktopPlayground(
 							<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
 							<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
 								Diagnostics
+							</Tab>
+							<Tab
+								disabled={control_flow_graph === ""}
+								selectedClassName="bg-slate-300"
+							>
+								Control Flow Graph
 							</Tab>
 						</TabList>
 						<TabPanel>
@@ -138,6 +164,7 @@ export default function DesktopPlayground(
 								dangerouslySetInnerHTML={{ __html: errors }}
 							/>
 						</TabPanel>
+						<TabPanel><MermaidGraph graph={control_flow_graph} /></TabPanel>
 					</Tabs>
 				</div>
 			</div>
