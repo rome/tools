@@ -18,9 +18,9 @@ impl FormatNodeRule<TsAssertsReturnType> for FormatTsAssertsReturnType {
             f,
             [
                 asserts_token.format(),
-                space_token(),
+                space(),
                 parameter_name.format(),
-                space_token(),
+                space(),
                 predicate.format()
             ]
         ]

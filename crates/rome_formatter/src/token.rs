@@ -63,7 +63,7 @@ where
         write_space_between_comment_and_token(self.kind, f)?;
 
         f.state_mut().set_last_token_kind(self.kind);
-        token(self.text).fmt(f)
+        text(self.text).fmt(f)
     }
 }
 
@@ -80,7 +80,7 @@ where
     // end token
     if is_last_content_inline_content && !f.context().comment_style().is_group_end_token(token_kind)
     {
-        space_token().fmt(f)?;
+        space().fmt(f)?;
     }
 
     f.state_mut().set_last_content_inline_comment(false);
@@ -626,7 +626,7 @@ where
             if lines_before > 0 {
                 write!(f, [hard_line_break()])?;
             } else if spaces > 0 {
-                write!(f, [space_token()])?;
+                write!(f, [space()])?;
             };
 
             // Write  leading comments of the next token
@@ -691,7 +691,7 @@ where
                 if comment.lines_before() > 0 && first {
                     write!(f, [hard_line_break()])?;
                 } else if !first {
-                    write!(f, [space_token()])?;
+                    write!(f, [space()])?;
                 };
 
                 write!(f, [comment.piece()])?;
@@ -809,14 +809,14 @@ where
                             if f.context().comment_style().is_group_start_token(token)
                                 && index == 0 => {}
                         //  Write a space for all other cases
-                        _ => space_token().fmt(f)?,
+                        _ => space().fmt(f)?,
                     }
                     comment.piece().fmt(f)
                 } else {
                     write![
                         f,
                         [
-                            line_suffix(&format_args![space_token(), comment.piece()]),
+                            line_suffix(&format_args![space(), comment.piece()]),
                             expand_parent()
                         ]
                     ]

@@ -26,9 +26,9 @@ impl FormatNodeRule<TsExportAsNamespaceClause> for FormatTsExportAsNamespaceClau
             [FormatWithSemicolon::new(
                 &format_args!(
                     as_token.format(),
-                    space_token(),
+                    space(),
                     namespace_token.format(),
-                    space_token(),
+                    space(),
                     name.format()
                 ),
                 semicolon_token.as_ref()

@@ -14,11 +14,7 @@ impl FormatNodeRule<TsTypeAliasDeclaration> for FormatTsTypeAliasDeclaration {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_args![
-                    type_token.format(),
-                    space_token(),
-                    group_elements(&assignment_like)
-                ],
+                &format_args![type_token.format(), space(), group(&assignment_like)],
                 semicolon.as_ref()
             )]
         )

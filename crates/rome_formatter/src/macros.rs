@@ -15,7 +15,7 @@
 /// use rome_formatter::prelude::*;
 ///
 /// let formatted = format!(SimpleFormatContext::default(), [
-///     format_args!(token("Hello World"))
+///     format_args!(text("Hello World"))
 /// ]).unwrap();
 ///
 /// assert_eq!("Hello World", formatted.print().as_code());
@@ -49,15 +49,15 @@ macro_rules! format_args {
 /// fn main() -> FormatResult<()> {
 ///     let mut state = FormatState::new(SimpleFormatContext::default());
 ///     let mut buffer = VecBuffer::new(&mut state);
-///     write!(&mut buffer, [token("Hello"), space_token()])?;
-///     write!(&mut buffer, [token("World")])?;
+///     write!(&mut buffer, [text("Hello"), space()])?;
+///     write!(&mut buffer, [text("World")])?;
 ///
 ///     assert_eq!(
 ///         buffer.into_element(),
 ///         FormatElement::from_iter([
-///             FormatElement::Token(Token::Static { text: "Hello" }),
+///             FormatElement::Text(Text::Static { text: "Hello" }),
 ///             FormatElement::Space,
-///             FormatElement::Token(Token::Static { text: "World" }),
+///             FormatElement::Text(Text::Static { text: "World" }),
 ///         ])
 ///     );
 ///
@@ -82,10 +82,10 @@ macro_rules! write {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// dbg_write!(buffer, [token("Hello")]).unwrap();
+/// dbg_write!(buffer, [text("Hello")]).unwrap();
 /// // ^-- prints: [src/main.rs:7][0] = StaticToken("Hello")
 ///
-/// assert_eq!(buffer.into_element(), FormatElement::Token(Token::Static { text: "Hello" }));
+/// assert_eq!(buffer.into_element(), FormatElement::Text(Text::Static { text: "Hello" }));
 /// ```
 ///
 /// Note that the macro is intended as debugging tool and therefore you should avoid having
@@ -119,14 +119,14 @@ macro_rules! dbg_write {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::format;
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [token("("), token("a"), token(")")]).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), [text("("), text("a"), text(")")]).unwrap();
 ///
 /// assert_eq!(
 ///     formatted.into_format_element(),
 ///     FormatElement::from_iter([
-///         FormatElement::Token(Token::Static { text: "(" }),
-///         FormatElement::Token(Token::Static { text: "a" }),
-///         FormatElement::Token(Token::Static { text: ")" }),
+///         FormatElement::Text(Text::Static { text: "(" }),
+///         FormatElement::Text(Text::Static { text: "a" }),
+///         FormatElement::Text(Text::Static { text: ")" }),
 ///     ])
 /// );
 /// ```
@@ -152,49 +152,49 @@ macro_rules! format {
 /// let formatted = format!(
 ///     SimpleFormatContext::default(),
 ///     [
-///         token("aVeryLongIdentifier"),
+///         text("aVeryLongIdentifier"),
 ///         best_fitting!(
 ///             // Everything fits on a single line
 ///             format_args!(
-///                 token("("),
-///                 group_elements(&format_args![
-///                     token("["),
+///                 text("("),
+///                 group(&format_args![
+///                     text("["),
 ///                         soft_block_indent(&format_args![
-///                         token("1,"),
+///                         text("1,"),
 ///                         soft_line_break_or_space(),
-///                         token("2,"),
+///                         text("2,"),
 ///                         soft_line_break_or_space(),
-///                         token("3"),
+///                         text("3"),
 ///                     ]),
-///                     token("]")
+///                     text("]")
 ///                 ]),
-///                 token(")")
+///                 text(")")
 ///             ),
 ///
 ///             // Breaks after `[`, but prints all elements on a single line
 ///             format_args!(
-///                 token("("),
-///                 token("["),
-///                 block_indent(&token("1, 2, 3")),
-///                 token("]"),
-///                 token(")"),
+///                 text("("),
+///                 text("["),
+///                 block_indent(&text("1, 2, 3")),
+///                 text("]"),
+///                 text(")"),
 ///             ),
 ///
 ///             // Breaks after `[` and prints each element on a single line
 ///             format_args!(
-///                 token("("),
+///                 text("("),
 ///                 block_indent(&format_args![
-///                     token("["),
+///                     text("["),
 ///                     block_indent(&format_args![
-///                         token("1,"),
+///                         text("1,"),
 ///                         hard_line_break(),
-///                         token("2,"),
+///                         text("2,"),
 ///                         hard_line_break(),
-///                         token("3"),
+///                         text("3"),
 ///                     ]),
-///                     token("]"),
+///                     text("]"),
 ///                 ]),
-///                 token(")")
+///                 text(")")
 ///             )
 ///         )
 ///     ]
@@ -267,7 +267,7 @@ mod tests {
 
     impl Format<()> for TestFormat {
         fn fmt(&self, f: &mut Formatter<()>) -> FormatResult<()> {
-            write!(f, [token("test")])
+            write!(f, [text("test")])
         }
     }
 
@@ -280,7 +280,7 @@ mod tests {
 
         assert_eq!(
             buffer.into_element(),
-            FormatElement::Token(Token::Static { text: "test" })
+            FormatElement::Text(Text::Static { text: "test" })
         );
     }
 
@@ -291,24 +291,18 @@ mod tests {
 
         write![
             &mut buffer,
-            [
-                token("a"),
-                space_token(),
-                token("simple"),
-                space_token(),
-                TestFormat
-            ]
+            [text("a"), space(), text("simple"), space(), TestFormat]
         ]
         .unwrap();
 
         assert_eq!(
             buffer.into_element(),
             FormatElement::List(List::new(vec![
-                FormatElement::Token(Token::Static { text: "a" }),
+                FormatElement::Text(Text::Static { text: "a" }),
                 FormatElement::Space,
-                FormatElement::Token(Token::Static { text: "simple" }),
+                FormatElement::Text(Text::Static { text: "simple" }),
                 FormatElement::Space,
-                FormatElement::Token(Token::Static { text: "test" })
+                FormatElement::Text(Text::Static { text: "test" })
             ]))
         );
     }
@@ -322,40 +316,40 @@ mod tests {
         let formatted_best_fitting = format!(
             SimpleFormatContext::default(),
             [
-                token("aVeryLongIdentifier"),
+                text("aVeryLongIdentifier"),
                 soft_line_break_or_space(),
                 best_fitting!(
-                    format_args!(token(
+                    format_args!(text(
                         "Something that will not fit on a 30 character print width."
                     ),),
                     format_args![
-                        token("Start"),
+                        text("Start"),
                         soft_line_break(),
-                        &group_elements(&soft_block_indent(&format_args![
-                            token("1,"),
+                        &group(&soft_block_indent(&format_args![
+                            text("1,"),
                             soft_line_break_or_space(),
-                            token("2,"),
+                            text("2,"),
                             soft_line_break_or_space(),
-                            token("3"),
+                            text("3"),
                         ])),
                         soft_line_break_or_space(),
                         &soft_block_indent(&format_args![
-                            token("1,"),
+                            text("1,"),
                             soft_line_break_or_space(),
-                            token("2,"),
+                            text("2,"),
                             soft_line_break_or_space(),
-                            group_elements(&format_args!(
-                                token("A,"),
+                            group(&format_args!(
+                                text("A,"),
                                 soft_line_break_or_space(),
-                                token("B")
+                                text("B")
                             )),
                             soft_line_break_or_space(),
-                            token("3")
+                            text("3")
                         ]),
                         soft_line_break_or_space(),
-                        token("End")
+                        text("End")
                     ],
-                    format_args!(token("Most"), hard_line_break(), token("Expanded"))
+                    format_args!(text("Most"), hard_line_break(), text("Expanded"))
                 )
             ]
         )
@@ -366,34 +360,34 @@ mod tests {
         let formatted_normal_list = format!(
             SimpleFormatContext::default(),
             [
-                token("aVeryLongIdentifier"),
+                text("aVeryLongIdentifier"),
                 soft_line_break_or_space(),
                 format_args![
-                    token("Start"),
+                    text("Start"),
                     soft_line_break(),
-                    &group_elements(&soft_block_indent(&format_args![
-                        token("1,"),
+                    &group(&soft_block_indent(&format_args![
+                        text("1,"),
                         soft_line_break_or_space(),
-                        token("2,"),
+                        text("2,"),
                         soft_line_break_or_space(),
-                        token("3"),
+                        text("3"),
                     ])),
                     soft_line_break_or_space(),
                     &soft_block_indent(&format_args![
-                        token("1,"),
+                        text("1,"),
                         soft_line_break_or_space(),
-                        token("2,"),
+                        text("2,"),
                         soft_line_break_or_space(),
-                        group_elements(&format_args!(
-                            token("A,"),
+                        group(&format_args!(
+                            text("A,"),
                             soft_line_break_or_space(),
-                            token("B")
+                            text("B")
                         )),
                         soft_line_break_or_space(),
-                        token("3")
+                        text("3")
                     ]),
                     soft_line_break_or_space(),
-                    token("End")
+                    text("End")
                 ],
             ]
         )

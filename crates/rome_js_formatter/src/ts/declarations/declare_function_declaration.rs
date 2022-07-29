@@ -26,14 +26,14 @@ impl FormatNodeRule<TsDeclareFunctionDeclaration> for FormatTsDeclareFunctionDec
 
         let declaration = format_with(|f| {
             if let Some(async_token) = &async_token {
-                write!(f, [async_token.format(), space_token()])?;
+                write!(f, [async_token.format(), space()])?;
             }
 
             write!(
                 f,
                 [
                     function_token.format(),
-                    space_token(),
+                    space(),
                     id.format(),
                     type_parameters.format(),
                     parameters.format(),

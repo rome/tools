@@ -69,7 +69,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     .format_separated(JsSyntaxKind::COMMA)
                     .with_trailing_separator(TrailingSeparator::Omit);
 
-                f.join_with(space_token()).entries(separated).finish()?;
+                f.join_with(space()).entries(separated).finish()?;
                 return write!(f, [r_paren_token.format()]);
             }
         };
@@ -143,7 +143,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     [
                         &l_leading_trivia,
                         &l_paren,
-                        &group_elements(&format_with(|f| {
+                        &group(&format_with(|f| {
                             write!(
                                 f,
                                 [
@@ -183,7 +183,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     let mut iter = separated.iter();
                     // SAFETY: check on the existence of at least one argument are done before
                     let first = iter.next().unwrap();
-                    f.join_with(&space_token())
+                    f.join_with(&space())
                         .entry(&format_with(|f| {
                             write!(f, [&format_args![first, expand_parent()]])
                         }))
@@ -195,7 +195,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     // SAFETY: check on the existence of at least one argument are done before
                     let last = iter.next_back().unwrap();
 
-                    f.join_with(&space_token())
+                    f.join_with(&space())
                         .entries(iter)
                         .entry(&format_with(|f| {
                             write!(f, [&format_args![last, expand_parent()]])
@@ -212,7 +212,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                         l_leading_trivia,
                         l_paren,
                         l_trailing_trivia,
-                        group_elements(&format_args![format_with(|f| {
+                        group(&format_args![format_with(|f| {
                             write_arguments_multi_line(separated.iter(), f)
                         })]),
                         r_leading_trivia,
@@ -228,7 +228,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_leading_trivia,
-                    &group_elements(&format_args![
+                    &group(&format_args![
                         l_paren,
                         l_trailing_trivia,
                         &soft_block_indent(&format_with(|f| {

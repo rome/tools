@@ -19,7 +19,7 @@ impl FormatNodeRule<TsExportAssignmentClause> for FormatTsExportAssignmentClause
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_args!(eq_token.format(), space_token(), expression.format()),
+                &format_args!(eq_token.format(), space(), expression.format()),
                 semicolon_token.as_ref()
             )]
         )

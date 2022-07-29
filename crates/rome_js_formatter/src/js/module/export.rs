@@ -14,9 +14,6 @@ impl FormatNodeRule<JsExport> for FormatJsExport {
             export_clause,
         } = node.as_fields();
 
-        write![
-            f,
-            [export_token.format(), space_token(), export_clause.format()]
-        ]
+        write![f, [export_token.format(), space(), export_clause.format()]]
     }
 }

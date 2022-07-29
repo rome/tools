@@ -13,9 +13,6 @@ impl FormatNodeRule<TsDeclareStatement> for FormatTsDeclareStatement {
             declaration,
             declare_token,
         } = node.as_fields();
-        write![
-            f,
-            [declare_token.format(), space_token(), declaration.format()]
-        ]
+        write![f, [declare_token.format(), space(), declaration.format()]]
     }
 }

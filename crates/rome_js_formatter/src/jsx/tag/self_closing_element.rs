@@ -23,9 +23,9 @@ impl FormatNodeRule<JsxSelfClosingElement> for FormatJsxSelfClosingElement {
                 l_angle_token.format(),
                 name.format(),
                 type_arguments.format(),
-                space_token(),
+                space(),
                 attributes.format(),
-                space_token(),
+                space(),
                 slash_token.format(),
                 r_angle_token.format()
             ]

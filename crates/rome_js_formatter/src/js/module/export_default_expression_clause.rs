@@ -24,7 +24,7 @@ impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultEx
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_args!(default_token.format(), space_token(), expression.format()),
+                &format_args!(default_token.format(), space(), expression.format()),
                 semicolon_token.as_ref()
             )]
         )

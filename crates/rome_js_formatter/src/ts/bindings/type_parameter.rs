@@ -17,11 +17,11 @@ impl FormatNodeRule<TsTypeParameter> for FormatTsTypeParameter {
         write!(f, [name.format()])?;
 
         if let Some(constraint) = constraint {
-            write!(f, [space_token(), constraint.format()])?;
+            write!(f, [space(), constraint.format()])?;
         }
 
         if let Some(default) = default {
-            write!(f, [space_token(), default.format()])?;
+            write!(f, [space(), default.format()])?;
         }
 
         Ok(())

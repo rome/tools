@@ -34,7 +34,7 @@ impl Conditional {
                 if f.context().comments().is_suppressed(expr.syntax()) {
                     write!(f, [format_suppressed_node(expr.syntax())])
                 } else {
-                    write![f, [expr.test()?.format(), space_token(),]]
+                    write![f, [expr.test()?.format(), space(),]]
                 }
             }
             Conditional::Type(t) => {
@@ -45,11 +45,11 @@ impl Conditional {
                         f,
                         [
                             t.check_type()?.format(),
-                            space_token(),
+                            space(),
                             t.extends_token()?.format(),
-                            space_token(),
+                            space(),
                             t.extends_type()?.format(),
-                            space_token(),
+                            space(),
                         ]
                     ]
                 }
@@ -101,10 +101,10 @@ impl Conditional {
         } else {
             write!(
                 f,
-                [group_elements(&format_args![
-                    space_token(),
+                [group(&format_args![
+                    space(),
                     format_consequent,
-                    space_token(),
+                    space(),
                     format_alternate
                 ])]
             )?;
@@ -128,7 +128,7 @@ impl Conditional {
                             f,
                             [
                                 expr.question_mark_token().format(),
-                                space_token(),
+                                space(),
                                 format_consequent
                             ]
                         ]
@@ -138,7 +138,7 @@ impl Conditional {
                             f,
                             [
                                 ty.question_mark_token().format(),
-                                space_token(),
+                                space(),
                                 format_consequent
                             ]
                         ]
@@ -151,7 +151,7 @@ impl Conditional {
                         f,
                         [
                             expr.question_mark_token().format(),
-                            space_token(),
+                            space(),
                             expr.consequent().format()
                         ]
                     ]
@@ -161,7 +161,7 @@ impl Conditional {
                         f,
                         [
                             ty.question_mark_token().format(),
-                            space_token(),
+                            space(),
                             ty.true_type().format()
                         ]
                     ]
@@ -181,16 +181,10 @@ impl Conditional {
 
                 match self {
                     Conditional::Expression(expr) => {
-                        write![
-                            f,
-                            [expr.colon_token().format(), space_token(), format_alternate]
-                        ]
+                        write![f, [expr.colon_token().format(), space(), format_alternate]]
                     }
                     Conditional::Type(ty) => {
-                        write![
-                            f,
-                            [ty.colon_token().format(), space_token(), format_alternate]
-                        ]
+                        write![f, [ty.colon_token().format(), space(), format_alternate]]
                     }
                 }
             }
@@ -200,17 +194,13 @@ impl Conditional {
                     f,
                     [
                         expr.colon_token().format(),
-                        space_token(),
+                        space(),
                         expr.alternate().format()
                     ]
                 ],
                 Conditional::Type(ty) => write![
                     f,
-                    [
-                        ty.colon_token().format(),
-                        space_token(),
-                        ty.false_type().format()
-                    ]
+                    [ty.colon_token().format(), space(), ty.false_type().format()]
                 ],
             },
         }

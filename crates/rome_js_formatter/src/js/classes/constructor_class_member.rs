@@ -20,10 +20,10 @@ impl FormatNodeRule<JsConstructorClassMember> for FormatJsConstructorClassMember
             f,
             [
                 modifiers.format(),
-                space_token(),
+                space(),
                 name.format(),
                 parameters.format(),
-                space_token(),
+                space(),
                 body.format()
             ]
         ]

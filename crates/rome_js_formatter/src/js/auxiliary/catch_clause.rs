@@ -14,10 +14,10 @@ impl FormatNodeRule<JsCatchClause> for FormatJsCatchClause {
             body,
         } = node.as_fields();
 
-        write!(f, [catch_token.format(), space_token()])?;
+        write!(f, [catch_token.format(), space()])?;
 
         if let Some(declaration) = declaration {
-            write![f, [declaration.format(), space_token()]]?;
+            write![f, [declaration.format(), space()]]?;
         }
 
         write!(f, [body.format()])

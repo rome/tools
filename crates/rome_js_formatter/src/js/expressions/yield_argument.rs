@@ -14,6 +14,6 @@ impl FormatNodeRule<JsYieldArgument> for FormatJsYieldArgument {
             expression,
         } = node.as_fields();
 
-        write![f, [star_token.format(), space_token(), expression.format()]]
+        write![f, [star_token.format(), space(), expression.format()]]
     }
 }

@@ -16,7 +16,7 @@ impl FormatNodeRule<TsIntersectionType> for FormatTsIntersectionType {
 
         write!(
             f,
-            [group_elements(&indent(&format_args!(
+            [group(&indent(&format_args!(
                 soft_line_break(),
                 FormatTypeSetLeadingSeparator {
                     separator: JsSyntaxKind::AMP,
@@ -37,13 +37,13 @@ impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match &self.leading_separator {
             Some(token) => {
-                format_only_if_breaks(token, &format_args!(token.format(), space_token())).fmt(f)
+                format_only_if_breaks(token, &format_args!(token.format(), space())).fmt(f)
             }
             None => write!(
                 f,
                 [if_group_breaks(&format_args![
                     format_inserted(self.separator),
-                    space_token()
+                    space()
                 ])]
             ),
         }

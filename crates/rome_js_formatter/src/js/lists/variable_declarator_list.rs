@@ -52,7 +52,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
 
         write!(
             f,
-            [group_elements(&format_args!(
+            [group(&format_args!(
                 leading_element,
                 indent(&other_declarators)
             ))]

@@ -32,16 +32,16 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
                     &format_args!(
                         readonly_modifier
                             .format()
-                            .with_or_empty(|readonly, f| write![f, [readonly, space_token()]]),
+                            .with_or_empty(|readonly, f| write![f, [readonly, space()]]),
                         l_brack_token.format(),
                         property_name.format(),
-                        space_token(),
+                        space(),
                         in_token.format(),
-                        space_token(),
+                        space(),
                         keys_type.format(),
                         as_clause
                             .format()
-                            .with_or_empty(|clause, f| write![f, [space_token(), clause]]),
+                            .with_or_empty(|clause, f| write![f, [space(), clause]]),
                         r_brack_token.format(),
                         optional_modifier.format(),
                         mapped_type.format(),

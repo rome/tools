@@ -19,9 +19,9 @@ impl FormatNodeRule<TsAsExpression> for FormatTsAsExpression {
             f,
             [
                 expression.format(),
-                space_token(),
+                space(),
                 as_token.format(),
-                space_token(),
+                space(),
                 ty.format(),
             ]
         ]

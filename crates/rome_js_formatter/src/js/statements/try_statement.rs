@@ -19,9 +19,9 @@ impl FormatNodeRule<JsTryStatement> for FormatJsTryStatement {
             f,
             [
                 try_token.format(),
-                space_token(),
+                space(),
                 body.format(),
-                space_token(),
+                space(),
                 catch_clause.format(),
             ]
         ]

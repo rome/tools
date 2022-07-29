@@ -9,6 +9,6 @@ pub struct FormatTsDefaultTypeClause;
 impl FormatNodeRule<TsDefaultTypeClause> for FormatTsDefaultTypeClause {
     fn fmt_fields(&self, node: &TsDefaultTypeClause, f: &mut JsFormatter) -> FormatResult<()> {
         let TsDefaultTypeClauseFields { eq_token, ty } = node.as_fields();
-        write![f, [eq_token.format(), space_token(), ty.format()]]
+        write![f, [eq_token.format(), space(), ty.format()]]
     }
 }

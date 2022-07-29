@@ -20,7 +20,7 @@ impl FormatNodeRule<JsMethodObjectMember> for FormatJsMethodObjectMember {
         } = node.as_fields();
 
         if let Some(async_token) = async_token {
-            write!(f, [async_token.format(), space_token()])?;
+            write!(f, [async_token.format(), space()])?;
         }
 
         write![
@@ -31,7 +31,7 @@ impl FormatNodeRule<JsMethodObjectMember> for FormatJsMethodObjectMember {
                 type_parameters.format(),
                 parameters.format(),
                 return_type_annotation.format(),
-                space_token(),
+                space(),
                 body.format(),
             ]
         ]

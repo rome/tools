@@ -50,7 +50,7 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
                     write!(
                         f,
                         [
-                            if_group_breaks(&space_token()).with_group_id(type_parameter_group),
+                            if_group_breaks(&space()).with_group_id(type_parameter_group),
                             if_group_fits_on_line(&soft_line_break_or_space())
                                 .with_group_id(type_parameter_group),
                         ]
@@ -59,13 +59,13 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
                     write!(f, [soft_line_break_or_space()])?;
                 }
 
-                write!(f, [extends_clause.format(), space_token()])?;
+                write!(f, [extends_clause.format(), space()])?;
             }
 
             Ok(())
         });
 
-        write![f, [interface_token.format(), space_token()]]?;
+        write![f, [interface_token.format(), space()]]?;
 
         // Manually handle the trailing comments and push them into the members block
         // to prevent that a comment gets formatted on the same line as the opening `{`
@@ -94,18 +94,12 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
             if should_indent_extends_only {
                 write!(
                     f,
-                    [group_elements(&format_args!(
-                        format_id,
-                        indent(&format_extends)
-                    ))]
+                    [group(&format_args!(format_id, indent(&format_extends)))]
                 )?;
             } else {
                 write!(
                     f,
-                    [group_elements(&indent(&format_args!(
-                        format_id,
-                        format_extends
-                    )))]
+                    [group(&indent(&format_args!(format_id, format_extends)))]
                 )?;
             }
         } else {
@@ -115,7 +109,7 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
         write!(
             f,
             [
-                space_token(),
+                space(),
                 format_delimited(
                     &l_curly_token,
                     &format_args![

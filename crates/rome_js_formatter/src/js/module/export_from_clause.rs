@@ -25,16 +25,16 @@ impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
             [FormatWithSemicolon::new(
                 &format_args!(
                     star_token.format(),
-                    space_token(),
+                    space(),
                     export_as
                         .format()
-                        .with_or_empty(|as_token, f| write![f, [as_token, space_token()]]),
+                        .with_or_empty(|as_token, f| write![f, [as_token, space()]]),
                     from_token.format(),
-                    space_token(),
+                    space(),
                     source.format(),
                     assertion
                         .format()
-                        .with_or_empty(|assertion, f| write![f, [space_token(), assertion]]),
+                        .with_or_empty(|assertion, f| write![f, [space(), assertion]]),
                 ),
                 semicolon_token.as_ref()
             )]

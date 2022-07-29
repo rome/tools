@@ -29,9 +29,9 @@ impl FormatNodeRule<TsGetterSignatureClassMember> for FormatTsGetterSignatureCla
             [FormatWithSemicolon::new(
                 &format_args!(
                     modifiers.format(),
-                    space_token(),
+                    space(),
                     get_token.format(),
-                    space_token(),
+                    space(),
                     name.format(),
                     l_paren_token.format(),
                     r_paren_token.format(),

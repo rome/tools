@@ -24,7 +24,7 @@ impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
                     write!(f, [continue_token.format()])?;
 
                     if let Some(label_token) = &label_token {
-                        write!(f, [space_token(), label_token.format()])?;
+                        write!(f, [space(), label_token.format()])?;
                     }
 
                     Ok(())

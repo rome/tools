@@ -27,10 +27,7 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
         );
 
         if is_keyword_operator {
-            return write![
-                f,
-                [operator_token.format(), space_token(), argument.format(),]
-            ];
+            return write![f, [operator_token.format(), space(), argument.format(),]];
         }
 
         // Parenthesize the inner expression if it's a binary or pre-update

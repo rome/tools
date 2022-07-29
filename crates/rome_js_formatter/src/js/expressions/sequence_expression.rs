@@ -64,7 +64,7 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
         if is_nested {
             write!(f, [format_content])
         } else {
-            write!(f, [group_elements(&format_content)])
+            write!(f, [group(&format_content)])
         }
     }
 }

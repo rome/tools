@@ -16,7 +16,7 @@ impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
             r_curly_token,
         } = node.as_fields();
 
-        write![f, [assert_token.format(), space_token()]]?;
+        write![f, [assert_token.format(), space()]]?;
 
         write!(
             f,

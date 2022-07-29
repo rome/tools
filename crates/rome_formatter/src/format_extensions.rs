@@ -24,7 +24,7 @@ pub trait FormatOptional<Context> {
     ///
     /// impl Format<SimpleFormatContext> for MyFormat {
     ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-    ///         write!(f, [token("MyToken")])
+    ///         write!(f, [text("MyToken")])
     ///     }
     /// }
     ///
@@ -38,11 +38,11 @@ pub trait FormatOptional<Context> {
     ///
     /// let some_token = Some(MyFormat);
     /// assert_eq!(
-    ///     format![SimpleFormatContext::default(), [space_token(), token("MyToken")]],
+    ///     format![SimpleFormatContext::default(), [space(), text("MyToken")]],
     ///     format!(
     ///         SimpleFormatContext::default(), [
     ///             some_token.with_or_empty(|token, f| {
-    ///                 write!(f, [space_token(), token])
+    ///                 write!(f, [space(), token])
     ///             })
     ///         ]
     ///     )
@@ -108,7 +108,7 @@ pub trait MemoizeFormat<Context> {
     ///         let value = self.value.get();
     ///         self.value.set(value + 1);
     ///
-    ///         write!(f, [dynamic_token(&std::format!("Formatted {value} times."), TextSize::from(0))])
+    ///         write!(f, [dynamic_text(&std::format!("Formatted {value} times."), TextSize::from(0))])
     ///     }
     /// }
     ///
@@ -117,14 +117,14 @@ pub trait MemoizeFormat<Context> {
     /// // Calls `format` for everytime the object gets formatted
     /// assert_eq!(
     ///     "Formatted 1 times. Formatted 2 times.",
-    ///     format!(SimpleFormatContext::default(), [normal, space_token(), normal]).unwrap().print().as_code()
+    ///     format!(SimpleFormatContext::default(), [normal, space(), normal]).unwrap().print().as_code()
     /// );
     ///
     /// // Memoized memoizes the result and calls `format` only once.
     /// let memoized = normal.memoized();
     /// assert_eq!(
     ///     "Formatted 3 times. Formatted 3 times.",
-    ///     format![SimpleFormatContext::default(), [memoized, space_token(), memoized]].unwrap().print().as_code()
+    ///     format![SimpleFormatContext::default(), [memoized, space(), memoized]].unwrap().print().as_code()
     /// );
     /// ```
     ///
@@ -182,9 +182,9 @@ where
     ///         let current = self.value.get();
     ///
     ///         write!(f, [
-    ///             token("Count:"),
-    ///             space_token(),
-    ///             dynamic_token(&std::format!("{current}"), TextSize::default()),
+    ///             text("Count:"),
+    ///             space(),
+    ///             dynamic_text(&std::format!("{current}"), TextSize::default()),
     ///             hard_line_break()
     ///         ])?;
     ///
@@ -198,9 +198,9 @@ where
     ///     let counter_content = counter.inspect(f)?;
     ///
     ///     if counter_content.will_break() {
-    ///         write!(f, [token("Counter:"), block_indent(&counter)])
+    ///         write!(f, [text("Counter:"), block_indent(&counter)])
     ///     } else {
-    ///         write!(f, [token("Counter:"), counter])
+    ///         write!(f, [text("Counter:"), counter])
     ///     }?;
     ///
     ///     write!(f, [counter])

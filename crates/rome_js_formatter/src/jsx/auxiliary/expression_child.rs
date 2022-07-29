@@ -1,7 +1,7 @@
 use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
 use crate::prelude::{format_args, write};
-use rome_formatter::{group_elements, CstFormatContext, FormatResult};
+use rome_formatter::{group, CstFormatContext, FormatResult};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsxExpressionChild, JsxExpressionChildFields,
 };
@@ -52,7 +52,7 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
 
         write![
             f,
-            [group_elements(&format_args![
+            [group(&format_args![
                 l_curly_token.format(),
                 expression.format(),
                 line_suffix_boundary(),

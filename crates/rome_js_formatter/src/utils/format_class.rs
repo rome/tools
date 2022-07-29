@@ -53,14 +53,14 @@ impl Format<JsFormatContext> for FormatClass<'_> {
         let group_mode = self.should_group()?;
 
         if let Some(abstract_token) = abstract_token {
-            write!(f, [abstract_token.format(), space_token()])?;
+            write!(f, [abstract_token.format(), space()])?;
         }
 
         write!(f, [class_token.format()])?;
 
         let head = format_with(|f| {
             if let Some(id) = &id {
-                write!(f, [space_token(), id.format()])?;
+                write!(f, [space(), id.format()])?;
             }
 
             write!(f, [type_parameters.format()])?;
@@ -69,7 +69,7 @@ impl Format<JsFormatContext> for FormatClass<'_> {
                 if group_mode {
                     write!(f, [soft_line_break_or_space()])?;
                 } else {
-                    write!(f, [space_token()])?;
+                    write!(f, [space()])?;
                 }
 
                 write!(f, [extends.format()])?;
@@ -88,8 +88,8 @@ impl Format<JsFormatContext> for FormatClass<'_> {
             write!(
                 f,
                 [
-                    group_elements(&indent(&head)).with_group_id(Some(heritage_id)),
-                    space_token(),
+                    group(&indent(&head)).with_group_id(Some(heritage_id)),
+                    space(),
                 ]
             )?;
 
@@ -100,7 +100,7 @@ impl Format<JsFormatContext> for FormatClass<'_> {
                 )?;
             }
         } else {
-            write!(f, [head, space_token()])?;
+            write!(f, [head, space()])?;
         }
 
         write![

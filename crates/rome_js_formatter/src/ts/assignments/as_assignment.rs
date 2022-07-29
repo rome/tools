@@ -19,9 +19,9 @@ impl FormatNodeRule<TsAsAssignment> for FormatTsAsAssignment {
             f,
             [
                 assignment.format(),
-                space_token(),
+                space(),
                 as_token.format(),
-                space_token(),
+                space(),
                 ty.format(),
             ]
         ]

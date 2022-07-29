@@ -33,10 +33,10 @@ impl FormatNodeRule<JsSwitchStatement> for FormatJsSwitchStatement {
             f,
             [
                 switch_token.format(),
-                space_token(),
+                space(),
                 format_delimited(&l_paren_token?, &discriminant.format(), &r_paren_token?,)
                     .soft_block_indent(),
-                space_token(),
+                space(),
                 format_delimited(&l_curly_token?, &format_cases, &r_curly_token?).block_indent()
             ]
         ]

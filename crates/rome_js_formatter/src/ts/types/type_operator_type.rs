@@ -10,6 +10,6 @@ impl FormatNodeRule<TsTypeOperatorType> for FormatTsTypeOperatorType {
     fn fmt_fields(&self, node: &TsTypeOperatorType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeOperatorTypeFields { operator_token, ty } = node.as_fields();
 
-        write![f, [operator_token.format(), space_token(), ty.format()]]
+        write![f, [operator_token.format(), space(), ty.format()]]
     }
 }

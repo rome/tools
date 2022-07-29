@@ -22,7 +22,7 @@ impl FormatNodeRule<TsNamedTupleTypeElement> for FormatTsNamedTupleTypeElement {
                 name.format(),
                 question_mark_token.format(),
                 colon_token.format(),
-                space_token(),
+                space(),
                 ty.format(),
             ]
         ]

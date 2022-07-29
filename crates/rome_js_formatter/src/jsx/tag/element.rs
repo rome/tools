@@ -21,7 +21,7 @@ impl FormatNodeRule<JsxElement> for FormatJsxElement {
 
         write![
             formatter,
-            [group_elements(&format_args![
+            [group(&format_args![
                 opening_element.format(),
                 expand_if_special_case,
                 soft_block_indent(&children.format()),

@@ -51,13 +51,12 @@ pub use buffer::{
     WillBreakBuffer,
 };
 pub use builders::{
-    block_indent, comment, empty_line, get_lines_before, group_elements, hard_line_break,
-    if_group_breaks, if_group_fits_on_line, indent, labelled, line_suffix, soft_block_indent,
-    soft_line_break, soft_line_break_or_space, soft_line_indent_or_space, space_token, token,
-    BestFitting,
+    block_indent, comment, empty_line, get_lines_before, group, hard_line_break, if_group_breaks,
+    if_group_fits_on_line, indent, labelled, line_suffix, soft_block_indent, soft_line_break,
+    soft_line_break_or_space, soft_line_indent_or_space, space, text, BestFitting,
 };
 pub use comments::{CommentKind, CommentStyle, Comments, SourceComment};
-pub use format_element::{normalize_newlines, FormatElement, Token, Verbatim, LINE_TERMINATORS};
+pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
 use rome_rowan::{
@@ -436,7 +435,7 @@ impl From<&SyntaxError> for FormatError {
 ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
 ///         write!(f, [
 ///             hard_line_break(),
-///             dynamic_token(&self.0, TextSize::from(0)),
+///             dynamic_text(&self.0, TextSize::from(0)),
 ///             hard_line_break(),
 ///         ])
 ///     }
@@ -679,7 +678,7 @@ where
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut buffer, [format_args!(token("Hello World"))]).unwrap();
+/// write!(&mut buffer, [format_args!(text("Hello World"))]).unwrap();
 ///
 /// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
 ///
@@ -695,7 +694,7 @@ where
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut buffer, [token("Hello World")]).unwrap();
+/// write!(&mut buffer, [text("Hello World")]).unwrap();
 ///
 /// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
 ///
@@ -723,7 +722,7 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, format_args};
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [&format_args!(token("test"))]).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), [&format_args!(text("test"))]).unwrap();
 /// assert_eq!("test", formatted.print().as_code());
 /// ```
 ///
@@ -733,7 +732,7 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format};
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [token("test")]).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), [text("test")]).unwrap();
 /// assert_eq!("test", formatted.print().as_code());
 /// ```
 pub fn format<Context>(

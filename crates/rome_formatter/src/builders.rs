@@ -23,7 +23,7 @@ use std::ops::Deref;
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![token("a,"), soft_line_break(), token("b")])
+///     group(&format_args![text("a,"), soft_line_break(), text("b")])
 /// ]).unwrap();
 ///
 /// assert_eq!(
@@ -45,10 +45,10 @@ use std::ops::Deref;
 /// };
 ///
 /// let elements = format!(context, [
-///     group_elements(&format_args![
-///         token("a long word,"),
+///     group(&format_args![
+///         text("a long word,"),
 ///         soft_line_break(),
-///         token("so that the group doesn't fit on a single line"),
+///         text("so that the group doesn't fit on a single line"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -73,10 +73,10 @@ pub const fn soft_line_break() -> Line {
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("a,"),
+///     group(&format_args![
+///         text("a,"),
 ///         hard_line_break(),
-///         token("b"),
+///         text("b"),
 ///         hard_line_break()
 ///     ])
 /// ]).unwrap();
@@ -102,10 +102,10 @@ pub const fn hard_line_break() -> Line {
 ///
 /// let elements = format!(
 ///     SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("a,"),
+///     group(&format_args![
+///         text("a,"),
 ///         empty_line(),
-///         token("b"),
+///         text("b"),
 ///         empty_line()
 ///     ])
 /// ]).unwrap();
@@ -130,10 +130,10 @@ pub const fn empty_line() -> Line {
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("a,"),
+///     group(&format_args![
+///         text("a,"),
 ///         soft_line_break_or_space(),
-///         token("b"),
+///         text("b"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -154,10 +154,10 @@ pub const fn empty_line() -> Line {
 /// };
 ///
 /// let elements = format!(context, [
-///     group_elements(&format_args![
-///         token("a long word,"),
+///     group(&format_args![
+///         text("a long word,"),
 ///         soft_line_break_or_space(),
-///         token("so that the group doesn't fit on a single line"),
+///         text("so that the group doesn't fit on a single line"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -207,7 +207,7 @@ impl std::fmt::Debug for Line {
 /// use rome_formatter::format;
 /// use rome_formatter::prelude::*;
 ///
-/// let elements = format!(SimpleFormatContext::default(), [token("Hello World")]).unwrap();
+/// let elements = format!(SimpleFormatContext::default(), [text("Hello World")]).unwrap();
 ///
 /// assert_eq!(
 ///     "Hello World",
@@ -223,57 +223,57 @@ impl std::fmt::Debug for Line {
 /// use rome_formatter::prelude::*;
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
-/// let elements = format!(SimpleFormatContext::default(), [token("\"Hello\\tWorld\"")]).unwrap();
+/// let elements = format!(SimpleFormatContext::default(), [text("\"Hello\\tWorld\"")]).unwrap();
 ///
 /// assert_eq!(r#""Hello\tWorld""#, elements.print().as_code());
 /// ```
 #[inline]
-pub fn token(text: &'static str) -> StaticToken {
+pub fn text(text: &'static str) -> StaticText {
     debug_assert_no_newlines(text);
 
-    StaticToken { text }
+    StaticText { text }
 }
 
 #[derive(Clone, Copy, Eq, PartialEq)]
-pub struct StaticToken {
+pub struct StaticText {
     text: &'static str,
 }
 
-impl<Context> Format<Context> for StaticToken {
+impl<Context> Format<Context> for StaticText {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        f.write_element(FormatElement::Token(Token::Static { text: self.text }))
+        f.write_element(FormatElement::Text(Text::Static { text: self.text }))
     }
 }
 
-impl std::fmt::Debug for StaticToken {
+impl std::fmt::Debug for StaticText {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::write!(f, "StaticToken({})", self.text)
     }
 }
 
-/// Create a token from a dynamic string and a range of the input source
-pub fn dynamic_token(text: &str, position: TextSize) -> DynamicToken {
+/// Creates a text from a dynamic string and a range of the input source
+pub fn dynamic_text(text: &str, position: TextSize) -> DynamicText {
     debug_assert_no_newlines(text);
 
-    DynamicToken { text, position }
+    DynamicText { text, position }
 }
 
 #[derive(Eq, PartialEq)]
-pub struct DynamicToken<'a> {
+pub struct DynamicText<'a> {
     text: &'a str,
     position: TextSize,
 }
 
-impl<Context> Format<Context> for DynamicToken<'_> {
+impl<Context> Format<Context> for DynamicText<'_> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        f.write_element(FormatElement::Token(Token::Dynamic {
+        f.write_element(FormatElement::Text(Text::Dynamic {
             text: self.text.to_string().into_boxed_str(),
             source_position: self.position,
         }))
     }
 }
 
-impl std::fmt::Debug for DynamicToken<'_> {
+impl std::fmt::Debug for DynamicText<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::write!(f, "DynamicToken({})", self.text)
     }
@@ -311,12 +311,12 @@ impl<L: Language, Context> Format<Context> for SyntaxTokenCowSlice<'_, L> {
                 let relative_range = range - self.token.text_range().start();
                 let slice = self.token.token_text().slice(relative_range);
 
-                f.write_element(FormatElement::Token(Token::SyntaxTokenSlice {
+                f.write_element(FormatElement::Text(Text::SyntaxTokenTextSlice {
                     slice,
                     source_position: self.start,
                 }))
             }
-            Cow::Owned(text) => f.write_element(FormatElement::Token(Token::Dynamic {
+            Cow::Owned(text) => f.write_element(FormatElement::Text(Text::Dynamic {
                 text: text.to_string().into_boxed_str(),
                 source_position: self.start,
             })),
@@ -353,7 +353,7 @@ pub struct SyntaxTokenTextSlice {
 
 impl<Context> Format<Context> for SyntaxTokenTextSlice {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        f.write_element(FormatElement::Token(Token::SyntaxTokenSlice {
+        f.write_element(FormatElement::Text(Text::SyntaxTokenTextSlice {
             slice: self.text.clone(),
             source_position: self.source_position,
         }))
@@ -367,7 +367,7 @@ impl std::fmt::Debug for SyntaxTokenTextSlice {
 }
 
 fn debug_assert_no_newlines(text: &str) {
-    debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
+    debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but text must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
 }
 
 /// Pushes some content to the end of the current line
@@ -379,9 +379,9 @@ fn debug_assert_no_newlines(text: &str) {
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     token("a"),
-///     line_suffix(&token("c")),
-///     token("b")
+///     text("a"),
+///     line_suffix(&text("c")),
+///     text("b")
 /// ]).unwrap();
 ///
 /// assert_eq!(
@@ -431,11 +431,11 @@ impl<Context> std::fmt::Debug for LineSuffix<'_, Context> {
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     token("a"),
-///     line_suffix(&token("c")),
-///     token("b"),
+///     text("a"),
+///     line_suffix(&text("c")),
+///     text("b"),
 ///     line_suffix_boundary(),
-///     token("d")
+///     text("d")
 /// ]).unwrap();
 ///
 /// assert_eq!(
@@ -470,18 +470,18 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 /// let elements = format!(
 ///     SimpleFormatContext::default(),
 ///     [
-///         group_elements(&format_args![
-///             comment(&format_args![token("// test"), hard_line_break()]),
+///         group(&format_args![
+///             comment(&format_args![text("// test"), hard_line_break()]),
 ///             format_with(|f| {
 ///                 write!(f, [
-///                     comment(&format_args![token("/* inline */"), hard_line_break()]).memoized(),
-///                     token("a"),
+///                     comment(&format_args![text("/* inline */"), hard_line_break()]).memoized(),
+///                     text("a"),
 ///                     soft_line_break_or_space(),
 ///                 ])
 ///             }).memoized(),
-///             token("b"),
+///             text("b"),
 ///             soft_line_break_or_space(),
-///             token("c")
+///             text("c")
 ///         ])
 ///     ]
 /// ).unwrap();
@@ -578,12 +578,12 @@ impl<Context> std::fmt::Debug for FormatLabelled<'_, Context> {
 /// use rome_formatter::prelude::*;
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
-/// let elements = format!(SimpleFormatContext::default(), [token("a"), space_token(), token("b")]).unwrap();
+/// let elements = format!(SimpleFormatContext::default(), [text("a"), space(), text("b")]).unwrap();
 ///
 /// assert_eq!("a b", elements.print().as_code());
 /// ```
 #[inline]
-pub const fn space_token() -> Space {
+pub const fn space() -> Space {
     Space
 }
 
@@ -611,16 +611,16 @@ impl<Context> Format<Context> for Space {
 /// use rome_formatter::prelude::*;
 ///
 /// let block = format!(SimpleFormatContext::default(), [
-///     token("switch {"),
+///     text("switch {"),
 ///     block_indent(&format_args![
-///         token("default:"),
+///         text("default:"),
 ///         indent(&format_args![
 ///             // this is where we want to use a
 ///             hard_line_break(),
-///             token("break;"),
+///             text("break;"),
 ///         ])
 ///     ]),
-///     token("}"),
+///     text("}"),
 /// ]).unwrap();
 ///
 /// assert_eq!(
@@ -680,13 +680,13 @@ impl<Context> std::fmt::Debug for Indent<'_, Context> {
 /// let block = format![
 ///     SimpleFormatContext::default(),
 ///     [
-///         token("{"),
+///         text("{"),
 ///         block_indent(&format_args![
-///             token("let a = 10;"),
+///             text("let a = 10;"),
 ///             hard_line_break(),
-///             token("let c = a + 5;"),
+///             text("let c = a + 5;"),
 ///         ]),
-///         token("}"),
+///         text("}"),
 ///     ]
 /// ].unwrap();
 ///
@@ -721,14 +721,14 @@ pub fn block_indent<Context>(content: &impl Format<Context>) -> BlockIndent<Cont
 /// };
 ///
 /// let elements = format!(context, [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("'First string',"),
+///             text("'First string',"),
 ///             soft_line_break_or_space(),
-///             token("'second string',"),
+///             text("'second string',"),
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -744,14 +744,14 @@ pub fn block_indent<Context>(content: &impl Format<Context>) -> BlockIndent<Cont
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("5,"),
+///             text("5,"),
 ///             soft_line_break_or_space(),
-///             token("10"),
+///             text("10"),
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -789,16 +789,16 @@ pub fn soft_block_indent<Context>(content: &impl Format<Context>) -> BlockIndent
 /// };
 ///
 /// let elements = format!(context, [
-///     group_elements(&format_args![
-///         token("name"),
-///         space_token(),
-///         token("="),
+///     group(&format_args![
+///         text("name"),
+///         space(),
+///         text("="),
 ///         soft_line_indent_or_space(&format_args![
-///             token("firstName"),
-///             space_token(),
-///             token("+"),
-///             space_token(),
-///             token("lastName"),
+///             text("firstName"),
+///             space(),
+///             text("+"),
+///             space(),
+///             text("lastName"),
 ///         ]),
 ///     ])
 /// ]).unwrap();
@@ -815,11 +815,11 @@ pub fn soft_block_indent<Context>(content: &impl Format<Context>) -> BlockIndent
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("a"),
-///         space_token(),
-///         token("="),
-///         soft_line_indent_or_space(&token("10")),
+///     group(&format_args![
+///         text("a"),
+///         space(),
+///         text("="),
+///         soft_line_indent_or_space(&text("10")),
 ///     ])
 /// ]).unwrap();
 ///
@@ -910,16 +910,16 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("1,"),
+///             text("1,"),
 ///             soft_line_break_or_space(),
-///             token("2,"),
+///             text("2,"),
 ///             soft_line_break_or_space(),
-///             token("3"),
+///             text("3"),
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -940,16 +940,16 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 /// };
 ///
 /// let elements = format!(context, [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("'Good morning! How are you today?',"),
+///             text("'Good morning! How are you today?',"),
 ///             soft_line_break_or_space(),
-///             token("2,"),
+///             text("2,"),
 ///             soft_line_break_or_space(),
-///             token("3"),
+///             text("3"),
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -959,29 +959,29 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 /// );
 /// ```
 #[inline]
-pub fn group_elements<Context>(content: &impl Format<Context>) -> GroupElements<Context> {
-    GroupElements {
+pub fn group<Context>(content: &impl Format<Context>) -> Group<Context> {
+    Group {
         content: Argument::new(content),
         group_id: None,
     }
 }
 
 #[derive(Copy, Clone)]
-pub struct GroupElements<'a, Context> {
+pub struct Group<'a, Context> {
     content: Argument<'a, Context>,
     group_id: Option<GroupId>,
 }
 
-impl<Context> GroupElements<'_, Context> {
+impl<Context> Group<'_, Context> {
     pub fn with_group_id(mut self, group_id: Option<GroupId>) -> Self {
         self.group_id = group_id;
         self
     }
 }
 
-impl<Context> Format<Context> for GroupElements<'_, Context> {
+impl<Context> Format<Context> for Group<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        let mut buffer = GroupElementsBuffer::new(f);
+        let mut buffer = GroupBuffer::new(f);
         buffer.write_fmt(Arguments::from(&self.content))?;
         let content = buffer.into_vec();
 
@@ -989,7 +989,7 @@ impl<Context> Format<Context> for GroupElements<'_, Context> {
             return Ok(());
         }
 
-        let group = Group::new(content).with_id(self.group_id);
+        let group = format_element::Group::new(content).with_id(self.group_id);
 
         f.write_element(FormatElement::Group(group))?;
 
@@ -997,7 +997,7 @@ impl<Context> Format<Context> for GroupElements<'_, Context> {
     }
 }
 
-impl<Context> std::fmt::Debug for GroupElements<'_, Context> {
+impl<Context> std::fmt::Debug for Group<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("GroupElements")
             .field("group_id", &self.group_id)
@@ -1019,14 +1019,14 @@ impl<Context> std::fmt::Debug for GroupElements<'_, Context> {
 /// The `/* a comment */` belongs to the `[` group token that is part of a group wrapping the whole
 /// `[1]` expression. It's important that the comment `/* a comment */` gets moved out of the group element
 /// to avoid that the `[1]` group expands because of the line break inserted by the comment.
-struct GroupElementsBuffer<'inner, Context> {
+struct GroupBuffer<'inner, Context> {
     inner: &'inner mut dyn Buffer<Context = Context>,
 
     /// The group inner content
     content: Vec<FormatElement>,
 }
 
-impl<'inner, Context> GroupElementsBuffer<'inner, Context> {
+impl<'inner, Context> GroupBuffer<'inner, Context> {
     fn new(inner: &'inner mut dyn Buffer<Context = Context>) -> Self {
         Self {
             inner,
@@ -1093,7 +1093,7 @@ impl<'inner, Context> GroupElementsBuffer<'inner, Context> {
     }
 }
 
-impl<Context> Buffer for GroupElementsBuffer<'_, Context> {
+impl<Context> Buffer for GroupBuffer<'_, Context> {
     type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
@@ -1161,17 +1161,17 @@ struct GroupElementsBufferSnapshot {
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("'Good morning! How are you today?',"),
+///             text("'Good morning! How are you today?',"),
 ///             soft_line_break_or_space(),
-///             token("2,"),
+///             text("2,"),
 ///             expand_parent(), // Forces the parent to expand
 ///             soft_line_break_or_space(),
-///             token("3"),
+///             text("3"),
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -1212,17 +1212,17 @@ impl<Context> Format<Context> for ExpandParent {
 /// use rome_formatter::prelude::*;
 ///
 /// let elements = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("1,"),
+///             text("1,"),
 ///             soft_line_break_or_space(),
-///             token("2,"),
+///             text("2,"),
 ///             soft_line_break_or_space(),
-///             token("3"),
-///             if_group_breaks(&token(","))
+///             text("3"),
+///             if_group_breaks(&text(","))
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -1243,17 +1243,17 @@ impl<Context> Format<Context> for ExpandParent {
 /// };
 ///
 /// let elements = format!(context, [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("'A somewhat longer string to force a line break',"),
+///             text("'A somewhat longer string to force a line break',"),
 ///             soft_line_break_or_space(),
-///             token("2,"),
+///             text("2,"),
 ///             soft_line_break_or_space(),
-///             token("3"),
-///             if_group_breaks(&token(","))
+///             text("3"),
+///             if_group_breaks(&text(","))
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -1291,17 +1291,17 @@ where
 /// use rome_formatter::prelude::*;
 ///
 /// let formatted = format!(SimpleFormatContext::default(), [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("1,"),
+///             text("1,"),
 ///             soft_line_break_or_space(),
-///             token("2,"),
+///             text("2,"),
 ///             soft_line_break_or_space(),
-///             token("3"),
-///             if_group_fits_on_line(&token(","))
+///             text("3"),
+///             if_group_fits_on_line(&text(","))
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -1322,17 +1322,17 @@ where
 /// };
 ///
 /// let formatted = format!(context, [
-///     group_elements(&format_args![
-///         token("["),
+///     group(&format_args![
+///         text("["),
 ///         soft_block_indent(&format_args![
-///             token("'A somewhat longer string to force a line break',"),
+///             text("'A somewhat longer string to force a line break',"),
 ///             soft_line_break_or_space(),
-///             token("2,"),
+///             text("2,"),
 ///             soft_line_break_or_space(),
-///             token("3"),
-///             if_group_fits_on_line(&token(","))
+///             text("3"),
+///             if_group_fits_on_line(&text(","))
 ///         ]),
-///         token("]"),
+///         text("]"),
 ///     ])
 /// ]).unwrap();
 ///
@@ -1384,23 +1384,23 @@ impl<Context> IfGroupBreaks<'_, Context> {
     ///     let group_id = f.group_id("array");
     ///
     ///     write!(f, [
-    ///         group_elements(
+    ///         group(
     ///             &format_args![
-    ///                 token("["),
+    ///                 text("["),
     ///                 soft_block_indent(&format_with(|f| {
     ///                     f.fill(soft_line_break_or_space())
-    ///                         .entry(&token("1,"))
-    ///                         .entry(&token("234568789,"))
-    ///                         .entry(&token("3456789,"))
+    ///                         .entry(&text("1,"))
+    ///                         .entry(&text("234568789,"))
+    ///                         .entry(&text("3456789,"))
     ///                         .entry(&format_args!(
-    ///                             token("["),
-    ///                             soft_block_indent(&token("4")),
-    ///                             token("]"),
-    ///                             if_group_breaks(&token(",")).with_group_id(Some(group_id))
+    ///                             text("["),
+    ///                             soft_block_indent(&text("4")),
+    ///                             text("]"),
+    ///                             if_group_breaks(&text(",")).with_group_id(Some(group_id))
     ///                         ))
     ///                         .finish()
     ///                 })),
-    ///                 token("]")
+    ///                 text("]")
     ///             ],
     ///         ).with_group_id(Some(group_id))
     ///     ])
@@ -1488,17 +1488,17 @@ impl<Context, T> std::fmt::Debug for FormatWith<Context, T> {
 /// impl Format<SimpleFormatContext> for MyFormat {
 ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
 ///         write!(f, [
-///             token("("),
+///             text("("),
 ///             block_indent(&format_with(|f| {
-///                 let separator = space_token();
+///                 let separator = space();
 ///                 let mut join = f.join_with(&separator);
 ///
 ///                 for item in &self.items {
-///                     join.entry(&format_with(|f| write!(f, [dynamic_token(item, TextSize::default())])));
+///                     join.entry(&format_with(|f| write!(f, [dynamic_text(item, TextSize::default())])));
 ///                 }
 ///                 join.finish()
 ///             })),
-///             token(")")
+///             text(")")
 ///         ])
 ///     }
 /// }
@@ -1536,8 +1536,8 @@ where
 ///
 /// struct MyFormat;
 ///
-/// fn generate_values() -> impl Iterator<Item=StaticToken> {
-///     vec![token("1"), token("2"), token("3"), token("4")].into_iter()
+/// fn generate_values() -> impl Iterator<Item=StaticText> {
+///     vec![text("1"), text("2"), text("3"), text("4")].into_iter()
 /// }
 ///
 /// impl Format<SimpleFormatContext> for MyFormat {

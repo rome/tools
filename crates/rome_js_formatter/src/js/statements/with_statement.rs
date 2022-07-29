@@ -23,7 +23,7 @@ impl FormatNodeRule<JsWithStatement> for FormatJsWithStatement {
             f,
             [
                 with_token.format(),
-                space_token(),
+                space(),
                 format_delimited(&l_paren_token?, &object.format(), &r_paren_token?,)
                     .soft_block_indent(),
                 FormatBodyStatement::new(&body?)

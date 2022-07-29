@@ -21,7 +21,7 @@ impl FormatNodeRule<JsExportNamedClause> for FormatJsExportNamedClause {
 
         let content = format_with(move |f| {
             if let Some(type_token) = &type_token {
-                write!(f, [type_token.format(), space_token()])?;
+                write!(f, [type_token.format(), space()])?;
             }
 
             write!(

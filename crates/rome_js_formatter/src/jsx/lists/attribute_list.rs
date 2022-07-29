@@ -15,6 +15,6 @@ impl FormatRule<JsxAttributeList> for FormatJsxAttributeList {
                 .finish()
         });
 
-        write!(f, [group_elements(&soft_block_indent(&attributes))])
+        write!(f, [group(&soft_block_indent(&attributes))])
     }
 }

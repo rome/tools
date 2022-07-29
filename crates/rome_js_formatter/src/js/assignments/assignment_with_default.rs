@@ -19,9 +19,9 @@ impl FormatNodeRule<JsAssignmentWithDefault> for FormatJsAssignmentWithDefault {
             f,
             [
                 pattern.format(),
-                space_token(),
+                space(),
                 eq_token.format(),
-                space_token(),
+                space(),
                 default.format(),
             ]
         )

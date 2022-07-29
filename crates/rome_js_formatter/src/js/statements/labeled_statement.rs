@@ -26,7 +26,7 @@ impl FormatNodeRule<JsLabeledStatement> for FormatJsLabeledStatement {
                 )
             }
             body => {
-                write!(f, [space_token(), body.format()])
+                write!(f, [space(), body.format()])
             }
         }
     }

@@ -23,9 +23,9 @@ impl FormatNodeRule<TsExternalModuleDeclaration> for FormatTsExternalModuleDecla
             f,
             [
                 module_token.format(),
-                space_token(),
+                space(),
                 source.format(),
-                space_token(),
+                space(),
                 body.format()
             ]
         ]

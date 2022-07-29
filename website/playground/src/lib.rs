@@ -171,7 +171,7 @@ pub fn run(
     measure_and_print("rome::format", "rome::format::begin", "rome::format::end");
 
     let root_element = formatted.into_format_element();
-    let formatter_ir = format!("{:#?}", root_element);
+    let formatter_ir = format!("{}", root_element);
 
     let mut html = HTML(Vec::new());
     for diag in parse.diagnostics() {

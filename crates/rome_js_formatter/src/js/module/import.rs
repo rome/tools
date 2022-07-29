@@ -20,7 +20,7 @@ impl FormatNodeRule<JsImport> for FormatJsImport {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_args!(import_token.format(), space_token(), import_clause.format()),
+                &format_args!(import_token.format(), space(), import_clause.format()),
                 semicolon_token.as_ref()
             )]
         )

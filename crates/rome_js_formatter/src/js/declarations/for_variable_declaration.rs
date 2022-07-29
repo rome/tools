@@ -14,9 +14,6 @@ impl FormatNodeRule<JsForVariableDeclaration> for FormatJsForVariableDeclaration
             declarator,
         } = node.as_fields();
 
-        write![
-            f,
-            [kind_token.format(), space_token(), declarator.format(),]
-        ]
+        write![f, [kind_token.format(), space(), declarator.format(),]]
     }
 }

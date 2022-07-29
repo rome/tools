@@ -26,7 +26,7 @@ impl FormatNodeRule<TsConstructSignatureTypeMember> for FormatTsConstructSignatu
             f,
             [
                 new_token.format(),
-                space_token(),
+                space(),
                 type_parameters.format(),
                 parameters.format(),
                 type_annotation.format(),

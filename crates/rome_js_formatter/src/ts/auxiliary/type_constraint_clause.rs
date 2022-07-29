@@ -12,6 +12,6 @@ impl FormatNodeRule<TsTypeConstraintClause> for FormatTsTypeConstraintClause {
 
         let extends = extends_token.format();
         let ty = ty.format();
-        write![f, [extends, space_token(), ty]]
+        write![f, [extends, space(), ty]]
     }
 }

@@ -11,7 +11,7 @@ impl FormatRule<TsTemplateElementList> for FormatTsTemplateElementList {
         let mut join = f.join();
 
         for item in node {
-            join.entry(&group_elements(&item.format()));
+            join.entry(&group(&item.format()));
         }
 
         join.finish()

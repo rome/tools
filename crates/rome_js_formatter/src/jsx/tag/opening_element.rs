@@ -26,10 +26,7 @@ impl FormatNodeRule<JsxOpeningElement> for FormatJsxOpeningElement {
         )?;
 
         if !attributes.is_empty() {
-            write!(
-                f,
-                [space_token(), attributes.format(), line_suffix_boundary()]
-            )?;
+            write!(f, [space(), attributes.format(), line_suffix_boundary()])?;
         }
 
         write!(f, [r_angle_token.format()])

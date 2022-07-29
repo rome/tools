@@ -12,6 +12,6 @@ impl FormatNodeRule<TsTypeAnnotation> for FormatTsTypeAnnotation {
         let colon = colon_token.format();
         let ty = ty.format();
 
-        write![f, [colon, space_token(), ty]]
+        write![f, [colon, space(), ty]]
     }
 }

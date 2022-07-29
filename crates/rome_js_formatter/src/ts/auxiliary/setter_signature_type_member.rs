@@ -26,7 +26,7 @@ impl FormatNodeRule<TsSetterSignatureTypeMember> for FormatTsSetterSignatureType
             f,
             [
                 set_token.format(),
-                space_token(),
+                space(),
                 name.format(),
                 l_paren_token.format(),
                 parameter.format(),

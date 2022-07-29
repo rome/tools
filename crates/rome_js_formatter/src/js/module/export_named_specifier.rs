@@ -17,16 +17,16 @@ impl FormatNodeRule<JsExportNamedSpecifier> for FormatJsExportNamedSpecifier {
         } = node.as_fields();
 
         if let Some(type_token) = type_token {
-            write!(f, [type_token.format(), space_token()])?;
+            write!(f, [type_token.format(), space()])?;
         }
 
         write![
             f,
             [
                 local_name.format(),
-                space_token(),
+                space(),
                 as_token.format(),
-                space_token(),
+                space(),
                 exported_name.format()
             ]
         ]

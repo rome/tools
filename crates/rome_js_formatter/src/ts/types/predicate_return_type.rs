@@ -18,9 +18,9 @@ impl FormatNodeRule<TsPredicateReturnType> for FormatTsPredicateReturnType {
             f,
             [
                 parameter_name.format(),
-                space_token(),
+                space(),
                 is_token.format(),
-                space_token(),
+                space(),
                 ty.format()
             ]
         ]

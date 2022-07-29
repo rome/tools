@@ -21,7 +21,7 @@ impl FormatNodeRule<TsImportType> for FormatTsImportType {
         } = node.as_fields();
 
         if let Some(typeof_token) = typeof_token {
-            write!(f, [typeof_token.format(), space_token()])?;
+            write!(f, [typeof_token.format(), space()])?;
         }
 
         write![

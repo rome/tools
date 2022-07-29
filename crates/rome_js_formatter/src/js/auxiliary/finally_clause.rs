@@ -14,6 +14,6 @@ impl FormatNodeRule<JsFinallyClause> for FormatJsFinallyClause {
             body,
         } = node.as_fields();
 
-        write![f, [finally_token.format(), space_token(), body.format()]]
+        write![f, [finally_token.format(), space(), body.format()]]
     }
 }

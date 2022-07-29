@@ -19,19 +19,19 @@ impl FormatNodeRule<TsConstructorType> for FormatTsConstructorType {
         } = node.as_fields();
 
         if let Some(abstract_token) = abstract_token {
-            write!(f, [abstract_token.format(), space_token()])?;
+            write!(f, [abstract_token.format(), space()])?;
         }
 
         write![
             f,
             [
                 new_token.format(),
-                space_token(),
+                space(),
                 type_parameters.format(),
                 parameters.format(),
-                space_token(),
+                space(),
                 fat_arrow_token.format(),
-                space_token(),
+                space(),
                 return_type.format()
             ]
         ]

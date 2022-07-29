@@ -22,7 +22,7 @@ impl FormatNodeRule<JsStaticInitializationBlockClassMember>
             r_curly_token,
         } = node.as_fields();
 
-        write!(f, [static_token.format(), space_token()])?;
+        write!(f, [static_token.format(), space()])?;
 
         write!(
             f,

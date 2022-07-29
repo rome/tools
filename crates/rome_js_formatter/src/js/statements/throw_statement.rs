@@ -23,7 +23,7 @@ impl FormatNodeRule<JsThrowStatement> for FormatJsThrowStatement {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_args!(throw_token, space_token(), exception),
+                &format_args!(throw_token, space(), exception),
                 semicolon_token.as_ref()
             )]
         )

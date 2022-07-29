@@ -23,7 +23,7 @@ impl FormatNodeRule<JsWhileStatement> for FormatJsWhileStatement {
             f,
             [
                 while_token.format(),
-                space_token(),
+                space(),
                 format_delimited(&l_paren_token?, &test.format(), &r_paren_token?,)
                     .soft_block_indent(),
                 FormatBodyStatement::new(&body?)
