@@ -152,27 +152,45 @@ pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
     false
 }
 
-/// Format an element with a single line head and a body that might
-/// be either a block or a single statement.
-pub struct FormatBodyStatement<'a> {
+/// Formats the body of a statement where it can either be a single statement, an empty statement,
+/// or a block statement.
+pub(crate) struct FormatStatementBody<'a> {
     body: &'a JsAnyStatement,
+    force_space: bool,
 }
 
-impl<'a> FormatBodyStatement<'a> {
-    pub fn new(statement: &'a JsAnyStatement) -> Self {
-        Self { body: statement }
+impl<'a> FormatStatementBody<'a> {
+    pub fn new(body: &'a JsAnyStatement) -> Self {
+        Self {
+            body,
+            force_space: false,
+        }
+    }
+
+    /// Prevents that the consequent is formatted on its own line and indented by one level and
+    /// instead gets separated by a space.
+    pub fn with_forced_space(mut self, forced: bool) -> Self {
+        self.force_space = forced;
+        self
     }
 }
 
-impl Format<JsFormatContext> for FormatBodyStatement<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        match self.body {
-            JsAnyStatement::JsEmptyStatement(body) => {
-                write!(f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)])
-            }
-            body => {
-                write!(f, [space(), body.format()])
-            }
+impl Format<JsFormatContext> for FormatStatementBody<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        use JsAnyStatement::*;
+
+        if let JsEmptyStatement(empty) = &self.body {
+            write!(f, [empty.format()])
+        } else if matches!(&self.body, JsBlockStatement(_)) || self.force_space {
+            write!(f, [space(), self.body.format()])
+        } else {
+            write!(
+                f,
+                [indent(&format_args![
+                    soft_line_break_or_space(),
+                    self.body.format()
+                ])]
+            )
         }
     }
 }

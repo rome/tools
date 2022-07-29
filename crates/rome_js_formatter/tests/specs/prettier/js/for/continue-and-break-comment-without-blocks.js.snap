@@ -110,26 +110,34 @@ label1: for (;;) continue label1
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,20 +1,28 @@
+@@ -1,69 +1,104 @@
 -for (;;) continue;
-+for (;;) continue
- // comment
-+;
+-// comment
++for (;;)
++  continue
++  // comment
++  ;
  
 -for (;;) break;
-+for (;;) break
- // comment
-+;
+-// comment
++for (;;)
++  break
++  // comment
++  ;
  
 -for (const f of []) continue;
-+for (const f of []) continue
- // comment
-+;
+-// comment
++for (const f of [])
++  continue
++  // comment
++  ;
  
 -for (const f of []) break;
-+for (const f of []) break
- // comment
-+;
+-// comment
++for (const f of [])
++  break
++  // comment
++  ;
  
 -for (const f in {}) continue;
 -// comment
@@ -145,11 +153,21 @@ label1: for (;;) continue label1
 +  // comment
 +  ;
  
- for (;;) continue; // comment
+-for (;;) continue; // comment
++for (;;)
++  continue; // comment
  
-@@ -24,46 +32,58 @@
+-for (;;) break; // comment
++for (;;)
++  break; // comment
  
- for (const f of []) break; // comment
+-for (const f of []) continue; // comment
++for (const f of [])
++  continue; // comment
+ 
+-for (const f of []) break; // comment
++for (const f of [])
++  break; // comment
  
 -for (const f in {}) continue; // comment
 +for (const f in {})
@@ -178,24 +196,32 @@ label1: for (;;) continue label1
 +for (const f in {}) break /* comment */;
  
 -for (;;) continue;
-+for (;;) continue
- /* comment */
-+;
+-/* comment */
++for (;;)
++  continue
++  /* comment */
++  ;
  
 -for (;;) break;
-+for (;;) break
- /* comment */
-+;
+-/* comment */
++for (;;)
++  break
++  /* comment */
++  ;
  
 -for (const f of []) continue;
-+for (const f of []) continue
- /* comment */
-+;
+-/* comment */
++for (const f of [])
++  continue
++  /* comment */
++  ;
  
 -for (const f of []) break;
-+for (const f of []) break
- /* comment */
-+;
+-/* comment */
++for (const f of [])
++  break
++  /* comment */
++  ;
  
 -for (const f in {}) continue;
 -/* comment */
@@ -214,36 +240,46 @@ label1: for (;;) continue label1
  label1: for (;;) continue label1 /* comment */;
  
 -label1: for (;;) continue label1;
-+label1: for (;;) continue label1
- /* comment */
-+;
+-/* comment */
++label1: for (;;)
++  continue label1
++  /* comment */
++  ;
  
- label1: for (;;) continue label1; // comment
+-label1: for (;;) continue label1; // comment
++label1: for (;;)
++  continue label1; // comment
  
 -label1: for (;;) continue label1;
-+label1: for (;;) continue label1
- // comment
-+;
+-// comment
++label1: for (;;)
++  continue label1
++  // comment
++  ;
 ```
 
 # Output
 
 ```js
-for (;;) continue
-// comment
-;
+for (;;)
+  continue
+  // comment
+  ;
 
-for (;;) break
-// comment
-;
+for (;;)
+  break
+  // comment
+  ;
 
-for (const f of []) continue
-// comment
-;
+for (const f of [])
+  continue
+  // comment
+  ;
 
-for (const f of []) break
-// comment
-;
+for (const f of [])
+  break
+  // comment
+  ;
 
 for (const f in {})
   continue
@@ -255,13 +291,17 @@ for (const f in {})
   // comment
   ;
 
-for (;;) continue; // comment
+for (;;)
+  continue; // comment
 
-for (;;) break; // comment
+for (;;)
+  break; // comment
 
-for (const f of []) continue; // comment
+for (const f of [])
+  continue; // comment
 
-for (const f of []) break; // comment
+for (const f of [])
+  break; // comment
 
 for (const f in {})
   continue; // comment
@@ -281,21 +321,25 @@ for (const f in {}) continue /* comment */;
 
 for (const f in {}) break /* comment */;
 
-for (;;) continue
-/* comment */
-;
+for (;;)
+  continue
+  /* comment */
+  ;
 
-for (;;) break
-/* comment */
-;
+for (;;)
+  break
+  /* comment */
+  ;
 
-for (const f of []) continue
-/* comment */
-;
+for (const f of [])
+  continue
+  /* comment */
+  ;
 
-for (const f of []) break
-/* comment */
-;
+for (const f of [])
+  break
+  /* comment */
+  ;
 
 for (const f in {})
   continue
@@ -309,15 +353,18 @@ for (const f in {})
 
 label1: for (;;) continue label1 /* comment */;
 
-label1: for (;;) continue label1
-/* comment */
-;
+label1: for (;;)
+  continue label1
+  /* comment */
+  ;
 
-label1: for (;;) continue label1; // comment
+label1: for (;;)
+  continue label1; // comment
 
-label1: for (;;) continue label1
-// comment
-;
+label1: for (;;)
+  continue label1
+  // comment
+  ;
 ```
 
 

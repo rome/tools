@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::js::statements::if_statement::FormatStatementBody;
+use crate::utils::FormatStatementBody;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsForInStatement;
 use rome_js_syntax::JsForInStatementFields;

@@ -1,6 +1,6 @@
-use crate::js::statements::if_statement::FormatStatementBody;
 use crate::prelude::*;
 
+use crate::utils::FormatStatementBody;
 use rome_formatter::write;
 use rome_js_syntax::JsElseClause;
 use rome_js_syntax::JsElseClauseFields;

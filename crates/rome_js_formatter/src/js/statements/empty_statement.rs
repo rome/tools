@@ -20,6 +20,9 @@ impl FormatNodeRule<JsEmptyStatement> for FormatJsEmptyStatement {
                     | JsSyntaxKind::JS_ELSE_CLAUSE
                     | JsSyntaxKind::JS_WHILE_STATEMENT
                     | JsSyntaxKind::JS_FOR_IN_STATEMENT
+                    | JsSyntaxKind::JS_FOR_OF_STATEMENT
+                    | JsSyntaxKind::JS_FOR_STATEMENT
+                    | JsSyntaxKind::JS_WITH_STATEMENT
             )
         ) {
             write!(f, [semicolon_token.format()])

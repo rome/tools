@@ -1,7 +1,6 @@
 use crate::prelude::*;
 
-use crate::js::statements::if_statement::FormatStatementBody;
-use crate::utils::FormatWithSemicolon;
+use crate::utils::{FormatStatementBody, FormatWithSemicolon};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
