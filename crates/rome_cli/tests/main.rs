@@ -31,12 +31,11 @@ if(a != -0) {}
 const FIX_AFTER: &str = "if(a != 0) {}
 ";
 
-const APPLY_SUGGESTED_BEFORE: &str = "
+const APPLY_SUGGESTED_BEFORE: &str = "let a = 4;
 debugger;
 ";
 
-const APPLY_SUGGESTED_AFTER: &str = "let a = 4;
-";
+const APPLY_SUGGESTED_AFTER: &str = "let a = 4;\n";
 
 const CUSTOM_FORMAT_BEFORE: &str = r#"
 function f() {

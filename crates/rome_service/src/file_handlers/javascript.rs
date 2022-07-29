@@ -197,7 +197,6 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         rome_path,
         parse,
         rules,
-        settings,
         fix_file_mode,
     } = params;
 
@@ -257,11 +256,8 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
                 }
             }
             None => {
-                let context = settings.format_context::<JsLanguage>(rome_path);
-                let formatted = format_node(context, tree.syntax())?;
-
                 return Ok(FixFileResult {
-                    code: formatted.print().into_code(),
+                    code: tree.syntax().to_string(),
                     skipped_suggested_fixes,
                     actions,
                 });

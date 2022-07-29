@@ -313,12 +313,10 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
         let rules = settings.linter.rules.as_ref();
-        let settings = self.settings(());
         fix_all(FixAllParams {
             rome_path: &params.path,
             parse,
             rules,
-            settings,
             fix_file_mode: params.fix_file_mode,
         })
     }

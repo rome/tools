@@ -75,7 +75,6 @@ pub struct FixAllParams<'a> {
     pub(crate) rome_path: &'a RomePath,
     pub(crate) parse: AnyParse,
     pub(crate) rules: Option<&'a Rules>,
-    pub(crate) settings: SettingsHandle<'a, ()>,
     pub(crate) fix_file_mode: FixFileMode,
 }
 
