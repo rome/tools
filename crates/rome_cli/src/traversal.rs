@@ -512,9 +512,9 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             if fixed.skipped_suggested_fixes > 0 {
                 ctx.push_message(TraversalWarning {
                     title: format!("Skipped {} suggested fixes", fixed.skipped_suggested_fixes),
-                    paragraph: format!(
+                    paragraph:
                         "If you wish to apply the suggested fixes, use --apply-suggested argument"
-                    ),
+                            .to_string(),
                 })
             }
 

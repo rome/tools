@@ -28,7 +28,8 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 const FIX_BEFORE: &str = "
 if(a != -0) {}
 ";
-const FIX_AFTER: &str = "if(a != 0) {}
+const FIX_AFTER: &str = "
+if(a != 0) {}
 ";
 
 const APPLY_SUGGESTED_BEFORE: &str = "let a = 4;
@@ -50,7 +51,7 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 "#;
 
 const NO_DEBUGGER_BEFORE: &str = "debugger;";
-const NO_DEBUGGER_AFTER: &str = "debugger;\n";
+const NO_DEBUGGER_AFTER: &str = "debugger;";
 
 const JS_ERRORS_BEFORE: &str = r#"try {
     !a && !b;
@@ -58,10 +59,10 @@ const JS_ERRORS_BEFORE: &str = r#"try {
     err = 24;
 }
 "#;
-const JS_ERRORS_AFTER: &str = "try {\
-    \n\t!a && !b;
-} catch (err) {\
-    \n\terr = 24;
+const JS_ERRORS_AFTER: &str = "try {
+    !a && !b;
+} catch (err) {
+    err = 24;
 }
 ";
 
