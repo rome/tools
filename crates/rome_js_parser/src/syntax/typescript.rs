@@ -23,15 +23,19 @@ use super::expr::is_nth_at_identifier;
 use super::js_parse_error::expected_identifier;
 use super::stmt::optional_semi;
 
-fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_identifier_binding(p: &mut Parser, is_module: bool) -> ParsedSyntax {
     parse_identifier(p, TS_IDENTIFIER_BINDING).map(|mut ident| {
         if ident.kind().is_unknown() {
             return ident;
         }
 
         let name = p.source(ident.range(p));
-
-        if is_reserved_type_name(name) {
+        let is_reserved_word_this_context = if is_module {
+            is_reserved_module_name(name)
+        } else {
+            is_reserved_type_name(name)
+        };
+        if is_reserved_word_this_context {
             let error = p
                 .err_builder(&format!("Type alias cannot be {}", name))
                 .primary(ident.range(p), "");

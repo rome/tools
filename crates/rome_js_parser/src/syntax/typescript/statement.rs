@@ -207,7 +207,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_range().start();
     let m = p.start();
     p.expect(T![type]);
-    parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_identifier_binding(p, false).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();
     p.expect(T![=]);
     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
@@ -297,7 +297,7 @@ pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.expect(T![interface]);
-    parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_identifier_binding(p, false).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();
     eat_interface_heritage_clause(p);
     p.expect(T!['{']);
@@ -464,8 +464,13 @@ fn parse_ts_namespace_or_module_declaration_clause(
     Present(m.complete(p, TS_MODULE_DECLARATION))
 }
 
+// test ts built_in_module_name
+// // https://github.com/rome/tools/issues/2959
+// module number {}
+// module string {}
+// declare module never {}
 fn parse_ts_module_name(p: &mut Parser) -> ParsedSyntax {
-    let mut left = parse_ts_identifier_binding(p);
+    let mut left = parse_ts_identifier_binding(p, true);
 
     while p.at(T![.]) {
         let m = left.precede_or_add_diagnostic(p, expected_identifier);
