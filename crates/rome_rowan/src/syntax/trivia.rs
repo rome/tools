@@ -608,6 +608,17 @@ impl<L: Language> SyntaxTrivia<L> {
         })
     }
 
+    pub fn first(&self) -> Option<SyntaxTriviaPiece<L>> {
+        let piece = self.raw.first()?;
+
+        Some(SyntaxTriviaPiece {
+            raw: self.raw.clone(),
+            offset: self.raw.text_range().end() - piece.length,
+            trivia: *piece,
+            _p: Default::default(),
+        })
+    }
+
     pub fn text(&self) -> &str {
         self.raw.text()
     }
