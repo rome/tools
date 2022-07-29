@@ -1,9 +1,12 @@
 use crate::session::Session;
 use crate::utils;
-use anyhow::{Context, Result};
+use anyhow::{Context, Error, Result};
 use rome_formatter::IndentStyle;
 use rome_rowan::TextRange;
-use rome_service::workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams};
+use rome_service::{
+    workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams},
+    RomeError,
+};
 use tower_lsp::lsp_types::*;
 use tracing::trace;
 
@@ -24,10 +27,16 @@ pub(crate) fn format(
     };
 
     trace!("Formatting...");
-    let printed = session.workspace.format_file(FormatFileParams {
+    let result = session.workspace.format_file(FormatFileParams {
         path: rome_path,
         indent_style,
-    })?;
+    });
+
+    let printed = match result {
+        Ok(printed) => printed,
+        Err(RomeError::FormatWithErrorsDisabled) => return Ok(None),
+        Err(err) => return Err(Error::from(err)),
+    };
 
     let num_lines: u32 = doc.line_index.newlines.len().try_into()?;
 
@@ -76,11 +85,17 @@ pub(crate) fn format_range(
     })?;
 
     let format_range = TextRange::new(start_index, end_index);
-    let formatted = session.workspace.format_range(FormatRangeParams {
+    let result = session.workspace.format_range(FormatRangeParams {
         path: rome_path,
         range: format_range,
         indent_style,
-    })?;
+    });
+
+    let formatted = match result {
+        Ok(formatted) => formatted,
+        Err(RomeError::FormatWithErrorsDisabled) => return Ok(None),
+        Err(err) => return Err(Error::from(err)),
+    };
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
@@ -133,11 +148,17 @@ pub(crate) fn format_on_type(
     let offset = utils::offset(&doc.line_index, position)
         .with_context(|| format!("failed to access position {position:?} in document {url}"))?;
 
-    let formatted = session.workspace.format_on_type(FormatOnTypeParams {
+    let result = session.workspace.format_on_type(FormatOnTypeParams {
         path: rome_path,
         offset,
         indent_style,
-    })?;
+    });
+
+    let formatted = match result {
+        Ok(formatted) => formatted,
+        Err(RomeError::FormatWithErrorsDisabled) => return Ok(None),
+        Err(err) => return Err(Error::from(err)),
+    };
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {

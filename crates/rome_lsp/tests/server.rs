@@ -13,6 +13,8 @@ use serde::de::DeserializeOwned;
 use serde::Serialize;
 use serde_json::{from_value, to_value};
 use std::any::type_name;
+use std::collections::HashMap;
+use std::fmt::Display;
 use std::slice;
 use std::time::Duration;
 use tower::timeout::Timeout;
@@ -25,6 +27,8 @@ use tower_lsp::lsp_types::CodeActionParams;
 use tower_lsp::lsp_types::CodeActionResponse;
 use tower_lsp::lsp_types::DidCloseTextDocumentParams;
 use tower_lsp::lsp_types::DidOpenTextDocumentParams;
+use tower_lsp::lsp_types::DocumentFormattingParams;
+use tower_lsp::lsp_types::FormattingOptions;
 use tower_lsp::lsp_types::InitializeResult;
 use tower_lsp::lsp_types::InitializedParams;
 use tower_lsp::lsp_types::PartialResultParams;
@@ -32,6 +36,7 @@ use tower_lsp::lsp_types::Position;
 use tower_lsp::lsp_types::Range;
 use tower_lsp::lsp_types::TextDocumentIdentifier;
 use tower_lsp::lsp_types::TextDocumentItem;
+use tower_lsp::lsp_types::TextEdit;
 use tower_lsp::lsp_types::Url;
 use tower_lsp::lsp_types::WorkDoneProgressParams;
 use tower_lsp::LspService;
@@ -165,7 +170,7 @@ impl Server {
             })
     }
 
-    async fn open_document(&mut self) -> Result<()> {
+    async fn open_document(&mut self, text: impl Display) -> Result<()> {
         self.notify(
             "textDocument/didOpen",
             DidOpenTextDocumentParams {
@@ -173,7 +178,7 @@ impl Server {
                     uri: Url::parse("test://workspace/document.js")?,
                     language_id: String::from("javascript"),
                     version: 0,
-                    text: String::from("for(;a == b;);"),
+                    text: text.to_string(),
                 },
             },
         )
@@ -255,7 +260,7 @@ async fn document_lifecycle() -> Result<()> {
     server.initialize().await?;
     server.initialized().await?;
 
-    server.open_document().await?;
+    server.open_document("").await?;
     server.close_document().await?;
 
     server.shutdown().await?;
@@ -275,7 +280,7 @@ async fn pull_code_actions() -> Result<()> {
     server.initialize().await?;
     server.initialized().await?;
 
-    server.open_document().await?;
+    server.open_document("for(;a == b;);").await?;
 
     let res: CodeActionResponse = server
         .request(
@@ -311,6 +316,53 @@ async fn pull_code_actions() -> Result<()> {
         .context("codeAction returned None")?;
 
     assert!(!res.is_empty());
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn format_with_syntax_errors() -> Result<()> {
+    let (service, client) = build_server();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let reader = tokio::spawn(client_handler(stream, sink));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server.open_document("expression(").await?;
+
+    let res: Option<Vec<TextEdit>> = server
+        .request(
+            "textDocument/formatting",
+            "formatting",
+            DocumentFormattingParams {
+                text_document: TextDocumentIdentifier {
+                    uri: Url::parse("test://workspace/document.js")?,
+                },
+                options: FormattingOptions {
+                    tab_size: 4,
+                    insert_spaces: false,
+                    properties: HashMap::default(),
+                    trim_trailing_whitespace: None,
+                    insert_final_newline: None,
+                    trim_final_newlines: None,
+                },
+                work_done_progress_params: WorkDoneProgressParams {
+                    work_done_token: None,
+                },
+            },
+        )
+        .await?
+        .context("formatting returned None")?;
+
+    assert!(res.is_none());
 
     server.close_document().await?;
 
