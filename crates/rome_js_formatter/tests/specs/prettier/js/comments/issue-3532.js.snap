@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-3532.js
 ---
+
 # Input
+
 ```js
 import React from 'react';
 
@@ -45,10 +46,34 @@ const AspectRatioBox = ({
 );
 
 export default AspectRatioBox;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -24,11 +24,13 @@
+ 
+ const AspectRatioBox = ({ aspectRatio, children, ...props }) => (
+   <div
+-    className={`height: 0;
++    className={
++      `height: 0;
+   overflow: hidden;
+   padding-top: ${(props) => 100 / props.aspectRatio}%;
+   background: white;
+-  position: relative;`}
++  position: relative;`
++    }
+   >
+     <div>{children}</div>
+   </div>
 ```
 
 # Output
+
 ```js
 import React from "react";
 
@@ -89,7 +114,7 @@ const AspectRatioBox = ({ aspectRatio, children, ...props }) => (
 );
 
 export default AspectRatioBox;
-
 ```
+
 
 

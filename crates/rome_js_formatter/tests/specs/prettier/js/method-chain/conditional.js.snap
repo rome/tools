@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: conditional.js
 ---
+
 # Input
+
 ```js
 (a ? b : c).d();
 
@@ -29,10 +30,60 @@ object[valid
   ? helper.responseBody(this.currentUser)
   : helper.responseBody(defaultUser)]
 .map();
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,25 +4,24 @@
+ 
+ (a ? b : c).d().e().f();
+ 
+-(valid
+-  ? helper.responseBody(this.currentUser)
+-  : helper.responseBody(this.defaultUser)
++(
++  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
++    this.defaultUser,
++  )
+ ).map();
+ 
+-(valid
+-  ? helper.responseBody(this.currentUser)
+-  : helper.responseBody(this.defaultUser)
+-)
+-  .map()
+-  .filter();
++(
++  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
++    this.defaultUser,
++  )
++).map().filter();
+ 
+-(valid
+-  ? helper.responseBody(this.currentUser)
+-  : helper.responseBody(defaultUser)
++(
++  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
++    defaultUser,
++  )
+ ).map();
+ 
+-object[
+-  valid
+-    ? helper.responseBody(this.currentUser)
+-    : helper.responseBody(defaultUser)
+-].map();
++object[valid ? helper.responseBody(this.currentUser) : helper.responseBody(
++  defaultUser,
++)].map();
 ```
 
 # Output
+
 ```js
 (a ? b : c).d();
 
@@ -61,7 +112,7 @@ object[valid
 object[valid ? helper.responseBody(this.currentUser) : helper.responseBody(
   defaultUser,
 )].map();
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment.js
 ---
+
 # Input
+
 ```js
 for (x
 /*a*/
@@ -41,10 +42,58 @@ of y);
 for(x of
 //a
 y);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,25 +1,31 @@
++for (x
+ /*a*/
+-for (x in y); //b //c
++in y); //b //c
+ 
+-for (x /*a*/ in y); //b //c
++for (x in /*a*/ y); //b //c
+ 
+ for (x /*a*/ in y); //b //c
+ 
++for (x
+ //a
+-for (x in y);
++in y);
+ 
++for (x in
+ //a
+-for (x in y);
++y);
+ 
++for (x
+ /*a*/
+-for (x of y); //b //c
++of y); //b //c
+ 
+-for (x /*a*/ of y); //b //c
++for (x of /*a*/ y); //b //c
+ 
+ for (x /*a*/ of y); //b //c
+ 
++for (x
+ //a
+-for (x of y);
++of y);
+ 
++for (x of
+ //a
+-for (x of y);
++y);
 ```
 
 # Output
+
 ```js
 for (x
 /*a*/
@@ -77,7 +126,7 @@ of y);
 for (x of
 //a
 y);
-
 ```
+
 
 

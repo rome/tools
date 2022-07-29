@@ -1,25 +1,41 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: with-semicolon-2.js
 ---
+
 # Input
+
 ```js
 class C {
   accessor clicked = "value";
   *foo() {}
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,5 @@
+ class C {
+-  accessor clicked = "value";
++  accessor;
++  clicked = "value";
+   *foo() {}
+ }
 ```
 
 # Output
+
 ```js
 class C {
   accessor;
   clicked = "value";
   *foo() {}
 }
-
 ```
+
 
 # Errors
 ```

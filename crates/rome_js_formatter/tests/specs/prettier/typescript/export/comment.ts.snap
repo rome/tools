@@ -1,19 +1,32 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment.ts
 ---
+
 # Input
+
 ```js
 export function match(): string /* the matching pattern */
 a
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,2 +1,2 @@
+-export function match(): string; /* the matching pattern */
++export function match(): string /* the matching pattern */;
+ a;
 ```
 
 # Output
+
 ```js
 export function match(): string /* the matching pattern */;
 a;
-
 ```
+
 
 

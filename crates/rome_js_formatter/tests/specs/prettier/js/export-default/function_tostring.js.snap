@@ -1,17 +1,29 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: function_tostring.js
 ---
+
 # Input
+
 ```js
 export default (function() {}).toString();
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-export default (function () {}.toString());
++export default (function () {}).toString();
 ```
 
 # Output
+
 ```js
 export default (function () {}).toString();
-
 ```
+
 
 

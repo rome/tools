@@ -1,20 +1,33 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: expressions.ts
 ---
+
 # Input
+
 ```js
-const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo.bar.baz} long long long long long long long long long long long long long long`;
+const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo.bar.baz} long long long long long long long long long long long long long long`;```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1,3 @@
+-const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo.bar.baz} long long long long long long long long long long long long long long`;
++const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo
++  .bar
++  .baz} long long long long long long long long long long long long long long`;
 ```
 
 # Output
+
 ```js
 const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo
   .bar
   .baz} long long long long long long long long long long long long long long`;
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: expand.js
 ---
+
 # Input
+
 ```js
 const veryVeryVeryVeryVeryVeryVeryLong = doc.expandedStates[doc.expandedStates.length - 1];
 const small = doc.expandedStates[doc.expandedStates.length - 1];
@@ -39,10 +40,32 @@ window.FooClient.something.setVars({
   locale: getFooLocale({ page }),
   authorizationToken: data.token
 }).initVerify("foo_container");
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -38,9 +38,7 @@
+   authorizationToken: data.token,
+ }).initVerify("foo_container");
+ 
+-window.FooClient.something
+-  .setVars({
+-    locale: getFooLocale({ page }),
+-    authorizationToken: data.token,
+-  })
+-  .initVerify("foo_container");
++window.FooClient.something.setVars({
++  locale: getFooLocale({ page }),
++  authorizationToken: data.token,
++}).initVerify("foo_container");
 ```
 
 # Output
+
 ```js
 const veryVeryVeryVeryVeryVeryVeryLong =
   doc.expandedStates[doc.expandedStates.length - 1];
@@ -88,7 +111,7 @@ window.FooClient.something.setVars({
   locale: getFooLocale({ page }),
   authorizationToken: data.token,
 }).initVerify("foo_container");
-
 ```
+
 
 

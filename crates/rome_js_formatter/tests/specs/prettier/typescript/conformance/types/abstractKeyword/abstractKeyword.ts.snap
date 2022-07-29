@@ -1,19 +1,32 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: abstractKeyword.ts
 ---
+
 # Input
+
 ```js
 abstract interface I {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1,2 @@
+-abstract interface I {}
++abstract;
++interface I {}
 ```
 
 # Output
+
 ```js
 abstract;
 interface I {}
-
 ```
+
 
 # Errors
 ```

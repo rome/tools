@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: decorators.ts
 ---
+
 # Input
+
 ```js
 export class TestTextFileService {
 	constructor(
@@ -81,10 +82,43 @@ class Class6 {
       []) { prop1 }: Type
   ) {}
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,7 +6,7 @@
+ export class TabCompletionController {}
+ 
+ @Component({
+-  selector: "angular-component",
++  selector: 'angular-component',
+ })
+ class AngularComponent {
+   @Input() myInput: string;
+@@ -55,7 +55,13 @@
+ 
+ class Class6 {
+   method(@Decorator({}) { prop1 }: Type) {}
+-  method(@Decorator({}) { prop1 }: Type) {}
++  method(
++    @Decorator(
++      {}) { prop1 }: Type,
++  ) {}
+   method(@Decorator([]) { prop1 }: Type) {}
+-  method(@Decorator([]) { prop1 }: Type) {}
++  method(
++    @Decorator(
++      []) { prop1 }: Type,
++  ) {}
+ }
 ```
 
 # Output
+
 ```js
 export class TestTextFileService {
   constructor(@ILifecycleService lifecycleService) {}
@@ -153,7 +187,7 @@ class Class6 {
       []) { prop1 }: Type,
   ) {}
 }
-
 ```
+
 
 

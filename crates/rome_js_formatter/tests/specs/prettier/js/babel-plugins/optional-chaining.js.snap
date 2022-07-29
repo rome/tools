@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: optional-chaining.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining
 
@@ -67,10 +68,28 @@ const obj4 = {
 };
 
 const ret = delete obj?.foo?.bar?.baz; // true
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -17,7 +17,8 @@
+ // `bar` exists
+ 
+ // Example usage with bracket notation:
+-obj?.["foo"]?.bar?.baz; // 42
++// rome-ignore format: https://github.com/rome/tools/issues/2768
++obj?.['foo']?.bar?.baz // 42
+ 
+ const obj2 = {
+   foo: {
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining
 
@@ -134,7 +153,7 @@ const obj4 = {
 };
 
 const ret = delete obj?.foo?.bar?.baz; // true
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: empty.js
 ---
+
 # Input
+
 ```js
 export * as foo from "foo.json"
 export * as bar from "bar.json" assert { }
@@ -10,10 +11,30 @@ export * as baz from "baz.json" assert { /* comment */ }
 
 import * as foo from "foo.json"
 import * as bar from "bar.json" assert { }
-import * as baz from "baz.json" assert { /* comment */ }
+import * as baz from "baz.json" assert { /* comment */ }```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,7 @@
+ export * as foo from "foo.json";
+-export * as bar from "bar.json";
+-export * as baz from "baz.json" /* comment */;
++export * as bar from "bar.json" assert {};
++export * as baz from "baz.json" assert { /* comment */ };
+ 
+ import * as foo from "foo.json";
+-import * as bar from "bar.json";
+-import * as baz from "baz.json" /* comment */;
++import * as bar from "bar.json" assert {};
++import * as baz from "baz.json" assert { /* comment */ };
 ```
 
 # Output
+
 ```js
 export * as foo from "foo.json";
 export * as bar from "bar.json" assert {};
@@ -22,7 +43,7 @@ export * as baz from "baz.json" assert { /* comment */ };
 import * as foo from "foo.json";
 import * as bar from "bar.json" assert {};
 import * as baz from "baz.json" assert { /* comment */ };
-
 ```
+
 
 

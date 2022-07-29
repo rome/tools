@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: with-type-params.ts
 ---
+
 # Input
+
 ```js
 type GetChatsSagaEffects =
   | CallEffect
@@ -14,10 +14,25 @@ type GetChatsSagaEffects =
       | GetChatsStartedAction
     >
   | SelectEffect
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,5 +5,5 @@
+       | GetChatsSucceededAction
+       | GetChatsFailedAction
+       | GetChatsStartedAction
+-    >
++  >
+   | SelectEffect;
 ```
 
 # Output
+
 ```js
 type GetChatsSagaEffects =
   | CallEffect
@@ -28,7 +43,7 @@ type GetChatsSagaEffects =
       | GetChatsStartedAction
   >
   | SelectEffect;
-
 ```
+
 
 

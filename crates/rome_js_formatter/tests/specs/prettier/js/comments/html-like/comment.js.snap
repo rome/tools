@@ -1,21 +1,35 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment.js
 ---
+
 # Input
+
 ```js
 <!--
 alert(1)
--->
+-->```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,3 @@
+ <!--
+-alert(1); 
++alert(1)
+ -->
 ```
 
 # Output
+
 ```js
 <!--
 alert(1)
 -->
-
 ```
+
 
 # Errors
 ```

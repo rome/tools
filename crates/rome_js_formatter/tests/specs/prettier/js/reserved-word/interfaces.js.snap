@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: interfaces.js
 ---
+
 # Input
+
 ```js
 foo.interface;
 interface.foo;
@@ -11,10 +12,26 @@ new interface();
 (interface, "foo");
 void interface;
 const interface = "foo";
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,6 @@
+ interface.foo;
+ new interface();
+ ({ interface: "foo" });
+-interface, "foo";
++(interface, "foo");
+ void interface;
+ const interface = "foo";
 ```
 
 # Output
+
 ```js
 foo.interface;
 interface.foo;
@@ -23,8 +40,8 @@ new interface();
 (interface, "foo");
 void interface;
 const interface = "foo";
-
 ```
+
 
 # Errors
 ```

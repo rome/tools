@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: basic.ts
 ---
+
 # Input
+
 ```js
 class Person {
   #name: string;
@@ -19,10 +20,31 @@ class Person {
     );
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -7,9 +7,9 @@
+   equals(other: unknown) {
+     return (
+       other &&
+-      typeof other === "object" &&
+-      #name in other && // <- this is new!
+-      this.#name === other.#name
++        typeof other === "object" &&
++        (#name in other) && // <- this is new!
++        this.#name === other.#name
+     );
+   }
+ }
 ```
 
 # Output
+
 ```js
 class Person {
   #name: string;
@@ -39,7 +61,7 @@ class Person {
     );
   }
 }
-
 ```
+
 
 

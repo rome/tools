@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-3594.js
 ---
+
 # Input
+
 ```js
 const fetched = fetch("/foo");
 fetched
@@ -12,10 +13,31 @@ fetched
 let column = new Column(null, conn)
     .table(data.table)
     .json(data.column);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,8 @@
+ const fetched = fetch("/foo");
+-fetched
+-  .then((response) => response.json())
+-  .then((json) => processThings(json.data.things));
++fetched.then((response) => response.json()).then(
++  (json) => processThings(json.data.things),
++);
+ 
+-let column = new Column(null, conn).table(data.table).json(data.column);
++let column = new Column(null, conn)
++  .table(data.table)
++  .json(data.column);
 ```
 
 # Output
+
 ```js
 const fetched = fetch("/foo");
 fetched.then((response) => response.json()).then(
@@ -25,7 +47,7 @@ fetched.then((response) => response.json()).then(
 let column = new Column(null, conn)
   .table(data.table)
   .json(data.column);
-
 ```
+
 
 

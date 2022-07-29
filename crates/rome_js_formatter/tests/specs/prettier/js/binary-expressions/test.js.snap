@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: test.js
 ---
+
 # Input
+
 ```js
 // It should always break the highest precedence operators first, and
 // break them all at the same time.
@@ -23,10 +24,62 @@ const x9 = longVariable * longint && longVariable >> 0 && longVariable + longVar
 const x10 = longVariable > longint && longVariable === 0 + longVariable * longVariable;
 
 foo(obj.property * new Class() && obj instanceof Class && longVariable ? number + 5 : false);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,20 +4,16 @@
+ const x = longVariable + longVariable + longVariable;
+ const x1 =
+   longVariable +
+-  longVariable +
+-  longVariable +
+-  longVariable -
+-  longVariable +
+-  longVariable;
++    longVariable +
++    longVariable +
++    longVariable - longVariable + longVariable;
+ const x2 =
+   longVariable +
+-  longVariable * longVariable +
+-  longVariable -
+-  longVariable +
+-  longVariable;
++    (longVariable * longVariable) +
++    longVariable - longVariable + longVariable;
+ const x3 =
+   longVariable +
+-  (longVariable * longVariable * longVariable) / longVariable +
++  (longVariable * longVariable * longVariable / longVariable) +
+   longVariable;
+ 
+ const x4 =
+@@ -49,10 +45,12 @@
+   longVariable * longint && longVariable >> 0 && longVariable + longVariable;
+ 
+ const x10 =
+-  longVariable > longint && longVariable === 0 + longVariable * longVariable;
++  longVariable > longint && longVariable === (
++    0 + (longVariable * longVariable)
++  );
+ 
+ foo(
+-  obj.property * new Class() && obj instanceof Class && longVariable
+-    ? number + 5
+-    : false,
++  obj.property * new Class() &&
++    (obj instanceof Class) &&
++    longVariable ? number + 5 : false,
+ );
 ```
 
 # Output
+
 ```js
 // It should always break the highest precedence operators first, and
 // break them all at the same time.
@@ -84,7 +137,7 @@ foo(
     (obj instanceof Class) &&
     longVariable ? number + 5 : false,
 );
-
 ```
+
 
 

@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: after_jsx_generic.ts
 ---
+
 # Input
+
 ```js
 let comp = (
   <>
@@ -30,10 +30,63 @@ let comp = (
     ></Component>
   </>
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,25 +1,23 @@
+ let comp = (
+   <>
+-    <Component<number> /* comment1 */></Component>
+-    <Component<number> foo /* comment2 */></Component>
+-    <Component<number> /* comment3 */ bar></Component>
+-    <Component<number> foo /* comment4 */ bar></Component>
+-
+-    <Component<number>
+-    // comment5
+-    ></Component>
+-    <Component<number>
+-      foo
+-      // comment6
+-    ></Component>
+-    <Component<number>
+-      // comment7
+-      foo
+-    ></Component>
+-    <Component<number>
+-      foo
+-      // comment8
+-      bar
+-    ></Component>
++  <Component<number> /* comment1 */ ></Component>
++  <Component<number> foo /* comment2 */ ></Component>
++  <Component<number> /* comment3 */ bar></Component>
++  <Component<number> foo /* comment4 */ bar></Component>
++  <Component<number>
++  // comment5
++  ></Component>
++  <Component<number> foo
++  // comment6
++  ></Component>
++  <Component<number>
++    // comment7
++    foo
++  ></Component>
++  <Component<number>
++    foo
++    // comment8
++    bar
++  ></Component>
+   </>
+ );
 ```
 
 # Output
+
 ```js
 let comp = (
   <>
@@ -58,7 +111,7 @@ let comp = (
   ></Component>
   </>
 );
-
 ```
+
 
 

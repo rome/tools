@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: class-method.ts
 ---
+
 # Input
+
 ```js
 // https://github.com/prettier/prettier/issues/4070
 export class Thing implements OtherThing {
@@ -102,10 +102,60 @@ export class Thing22 implements OtherThing {
 const appIDs = createSelector(
     PubXURLParams.APP_IDS,
    (rawAppIDs): Array<AppID> => deserializeList(rawAppIDs),
-);
+);```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -54,15 +54,19 @@
+ export class Thing8 implements OtherThing {
+   do: (type: Type) => Provider<Prop> = memoize(
+     (type: ObjectType) =>
+-      <Provider<Opts>>(
+-        type.doSomething(withArgs, soIt, does, not, fit).extraCall()
+-      ),
++      <Provider<Opts>>type.doSomething(
++        withArgs,
++        soIt,
++        does,
++        not,
++        fit,
++      ).extraCall(),
+   );
+ }
+ 
+ export class Thing9 implements OtherThing {
+-  do: (type: Type) => Provider<Prop> = memoize((type: ObjectType) =>
+-    type.doSomething(),
++  do: (type: Type) => Provider<Prop> = memoize(
++    (type: ObjectType) => type.doSomething(),
+   );
+ }
+ 
+@@ -143,9 +147,13 @@
+ 
+ export class Thing19 implements OtherThing {
+   do: (type: Type) => Provider<Prop> = memoize(function (type: ObjectType) {
+-    return <Provider<Opts>>(
+-      type.doSomething(withArgs, soIt, does, not, fit).extraCall()
+-    );
++    return <Provider<Opts>>type.doSomething(
++      withArgs,
++      soIt,
++      does,
++      not,
++      fit,
++    ).extraCall();
+   });
+ }
+ 
 ```
 
 # Output
+
 ```js
 // https://github.com/prettier/prettier/issues/4070
 export class Thing implements OtherThing {
@@ -292,7 +342,7 @@ const appIDs = createSelector(
   PubXURLParams.APP_IDS,
   (rawAppIDs): Array<AppID> => deserializeList(rawAppIDs),
 );
-
 ```
+
 
 

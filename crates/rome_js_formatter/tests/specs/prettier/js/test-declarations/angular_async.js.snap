@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: angular_async.js
 ---
+
 # Input
+
 ```js
 beforeEach(async(() => {
   // code
@@ -39,10 +39,73 @@ it("does something really long and complicated so I have to write a very long na
 * no errors are thrown when calling isTestCall(parent)
 */
 function x() { async(() => {}) }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,28 +1,38 @@
+-beforeEach(async(() => {
+-  // code
+-}));
++beforeEach(
++  async(() => {
++    // code
++  }),
++);
+ 
+ beforeEach((done) => foo().bar().bar());
+ 
+-afterAll(async(() => {
+-  console.log("Hello");
+-}));
++afterAll(
++  async(() => {
++    console.log("Hello");
++  }),
++);
+ 
+ afterAll((done) => foo().bar().bar());
+ 
+-it("should create the app", async(() => {
+-  //code
+-}));
++it(
++  "should create the app",
++  async(() => {
++    //code
++  }),
++);
+ 
+-it("does something really long and complicated so I have to write a very long name for the test", async(() => {
+-  // code
+-}));
++it(
++  "does something really long and complicated so I have to write a very long name for the test",
++  async(() => {
++    // code
++  }),
++);
+ 
+ /*
+- * isTestCall(parent) should only be called when parent exists
+- * and parent.type is CallExpression. This test makes sure that
+- * no errors are thrown when calling isTestCall(parent)
+- */
++* isTestCall(parent) should only be called when parent exists
++* and parent.type is CallExpression. This test makes sure that
++* no errors are thrown when calling isTestCall(parent)
++*/
+ function x() {
+   async(() => {});
+ }
 ```
 
 # Output
+
 ```js
 beforeEach(
   async(() => {
@@ -82,8 +145,8 @@ it(
 function x() {
   async(() => {});
 }
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

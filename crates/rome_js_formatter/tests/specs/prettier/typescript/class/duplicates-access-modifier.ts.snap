@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: duplicates-access-modifier.ts
 ---
+
 # Input
+
 ```js
 class Foo {
   public public a;
@@ -11,10 +12,31 @@ class Foo {
   public protected d;
   public protected private e;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,7 @@
+ class Foo {
+-  public a;
+-  private b;
+-  protected c;
+-  public d;
+-  public e;
++  public public a;
++  private public b;
++  protected private c;
++  public protected d;
++  public protected private e;
+ }
 ```
 
 # Output
+
 ```js
 class Foo {
   public public a;
@@ -23,8 +45,8 @@ class Foo {
   public protected d;
   public protected private e;
 }
-
 ```
+
 
 # Errors
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: unionTypeEquivalence.ts
 ---
+
 # Input
+
 ```js
 ﻿// A | B is equivalent to A if B is a subtype of A
 class C { }
@@ -22,10 +23,24 @@ var AB : string | number;
 var BC : number | boolean;
 var z1: typeof AB | boolean;
 var z1: string | typeof BC;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-﻿// A | B is equivalent to A if B is a subtype of A
++// A | B is equivalent to A if B is a subtype of A
+ class C {}
+ class D extends C {
+   foo() {}
 ```
 
 # Output
+
 ```js
 // A | B is equivalent to A if B is a subtype of A
 class C {}
@@ -47,7 +62,7 @@ var AB: string | number;
 var BC: number | boolean;
 var z1: typeof AB | boolean;
 var z1: string | typeof BC;
-
 ```
+
 
 

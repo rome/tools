@@ -1,25 +1,41 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: spread.js
 ---
+
 # Input
+
 ```js
 const foo = { ...(a || b) };
 const foo2 = { ...a || b };
 const foo3 = { ...(a ? b : c) };
 
 async () => ({ ...(await foo) });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+ const foo = { ...(a || b) };
+-const foo2 = { ...(a || b) };
++const foo2 = { ...a || b };
+ const foo3 = { ...(a ? b : c) };
+ 
+ async () => ({ ...(await foo) });
 ```
 
 # Output
+
 ```js
 const foo = { ...(a || b) };
 const foo2 = { ...a || b };
 const foo3 = { ...(a ? b : c) };
 
 async () => ({ ...(await foo) });
-
 ```
+
 
 

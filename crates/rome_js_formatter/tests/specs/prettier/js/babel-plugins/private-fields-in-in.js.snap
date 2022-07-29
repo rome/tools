@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: private-fields-in-in.js
 ---
+
 # Input
+
 ```js
 // https://github.com/tc39/proposal-private-fields-in-in
 
@@ -59,10 +60,30 @@ class C3 {
 //     return try obj.#brand;
 //   }
 // }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -41,10 +41,9 @@
+   get #getter() {}
+ 
+   static isC(obj) {
+-    return #brand in obj && #method in obj && #getter in obj;
++    return (#brand in obj) && (#method in obj) && (#getter in obj);
+   }
+ }
+-
+ // Invalid https://github.com/tc39/proposal-private-fields-in-in#try-statement
+ // class C {
+ //   #brand;
 ```
 
 # Output
+
 ```js
 // https://github.com/tc39/proposal-private-fields-in-in
 
@@ -118,7 +139,7 @@ class C3 {
 //     return try obj.#brand;
 //   }
 // }
-
 ```
+
 
 

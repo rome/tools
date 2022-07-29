@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: multiline.js
 ---
+
 # Input
+
 ```js
 class Foo {
   @deco([
@@ -20,10 +21,38 @@ class Foo {
   @decorator({
   }) method() {}
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,11 +1,16 @@
+ class Foo {
+-  @deco([foo, bar]) prop = value;
++  @deco([
++    foo,
++    bar
++  ]) prop = value;
+ 
+   @decorator([]) method() {}
+ 
+-  @decorator([]) method() {}
++  @decorator([
++  ]) method() {}
+ 
+   @decorator({}) method() {}
+ 
+-  @decorator({}) method() {}
++  @decorator({
++  }) method() {}
+ }
 ```
 
 # Output
+
 ```js
 class Foo {
   @deco([
@@ -41,7 +70,7 @@ class Foo {
   @decorator({
   }) method() {}
 }
-
 ```
+
 
 

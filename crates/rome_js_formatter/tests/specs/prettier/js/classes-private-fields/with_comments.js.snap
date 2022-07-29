@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: with_comments.js
 ---
+
 # Input
+
 ```js
 class A {
   #foobar =
@@ -12,10 +12,27 @@ class A {
     // comment to break again
     2;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,6 @@
+   #foobar =
+     // comment to break
+     1 +
+-    // comment to break again
+-    2;
++      // comment to break again
++      2;
+ }
 ```
 
 # Output
+
 ```js
 class A {
   #foobar =
@@ -24,7 +41,7 @@ class A {
       // comment to break again
       2;
 }
-
 ```
+
 
 

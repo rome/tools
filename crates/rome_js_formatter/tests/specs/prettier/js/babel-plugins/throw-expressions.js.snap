@@ -1,18 +1,38 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: throw-expressions.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions
 
 function test(param = throw new Error('required!')) {
   const test = param === true || throw new Error('Falsy!');
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,8 @@
+ // https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions
+ 
+-function test(param = throw new Error("required!")) {
+-  const test = param === true || throw new Error("Falsy!");
++function test(param = throw new Error('required!')
++)
++{
++  const test = param === true ||
++  throw new Error("Falsy!");
+ }
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions
 
@@ -22,8 +42,8 @@ function test(param = throw new Error('required!')
   const test = param === true ||
   throw new Error("Falsy!");
 }
-
 ```
+
 
 # Errors
 ```

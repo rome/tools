@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: module-blocks.js
 ---
+
 # Input
+
 ```js
 module { await 3 };
 
@@ -42,10 +43,104 @@ let moduleBlock = module { export let y = 1; };
 foo(module { export let foo = "foo"; });
 
 let m = module { /* foo */ };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,50 +1,60 @@
+-module {
++module;
++{
+   await 3;
+-};
++}
+ 
+ class B {
+   #p() {
+-    module {
++    module;
++    {
+       class C {
+         [this.#p];
+       }
+-    };
++    }
+   }
+ }
+ 
+-const m = module {
++const m = module;
++{
+   export const foo = "foo";
+   export { foo };
+-};
++}
+ 
+-module {
+-  export { foo };
+-};
++module;
++{
++  export { foo }
++}
+ 
+-const m = module {};
++const m = module;
++{
++}
+ 
+ const worker = new Worker(module {
+   export const foo = "foo";
+-});
++})
+ 
+-let m = module {
+-  module {
++let m = module;
++{
++  module;
++  {
+     export let foo = "foo";
+-  };
+-};
++  }
++}
+ 
+-const m = module {
+-  export const foo = "foo";
+-};
++const m = module;
++{
++  export const foo = "foo"
++}
+ 
+-let moduleBlock = module {
++let moduleBlock = module;
++{
+   export let y = 1;
+-};
++}
+ 
+-foo(module {
+-  export let foo = "foo";
+-});
++foo(module { export let foo = "foo";
++})
+ 
+-let m = module {
++let m = module;
++{
+   /* foo */
+-};
++}
 ```
 
 # Output
+
 ```js
 module;
 {
@@ -107,8 +202,8 @@ let m = module;
 {
   /* foo */
 }
-
 ```
+
 
 # Errors
 ```

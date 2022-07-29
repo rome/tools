@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: string.js
 ---
+
 # Input
+
 ```js
 fnString =
   // Comment
@@ -73,10 +74,61 @@ var fnString = // Comment0
 
 var fnString = // Comment
   'some' + 'long' + 'string';
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -24,19 +24,20 @@
+ 
+ fnString =
+   /* inline */ "some" +
+-  "long" +
+-  "string" +
+-  "some" +
+-  "long" +
+-  "string" +
+-  "some" +
+-  "long" +
+-  "string" +
+-  "some" +
+-  "long" +
+-  "string";
++    "long" +
++    "string" +
++    "some" +
++    "long" +
++    "string" +
++    "some" +
++    "long" +
++    "string" +
++    "some" +
++    "long" +
++    "string";
+ 
+-fnString = // Comment0
++fnString =
++  // Comment0
+   // Comment1
+   "some" + "long" + "string";
+ 
+@@ -80,7 +81,8 @@
+   "long" +
+   "string";
+ 
+-var fnString = // Comment0
++var fnString =
++  // Comment0
+   // Comment1
+   "some" + "long" + "string";
+ 
 ```
 
 # Output
+
 ```js
 fnString =
   // Comment
@@ -167,7 +219,7 @@ var fnString =
   "some" + "long" + "string";
 
 var fnString = "some" + "long" + "string"; // Comment
-
 ```
+
 
 

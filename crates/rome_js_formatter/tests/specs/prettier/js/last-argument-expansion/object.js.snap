@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: object.js
 ---
+
 # Input
+
 ```js
 const formatData = pipe(
   zip,
@@ -23,10 +24,34 @@ export const setProp = y => ({
 export const log = y => {
   console.log('very, very, very long very, very long text')
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,11 @@
+ const formatData = pipe(
+   zip,
+-  map(([ref, data]) => ({
+-    nodeId: ref.nodeId.toString(),
+-    ...attributeFromDataValue(ref.attributeId, data),
+-  })),
++  map(
++    ([ref, data]) => ({
++      nodeId: ref.nodeId.toString(),
++      ...attributeFromDataValue(ref.attributeId, data),
++    }),
++  ),
+   groupBy(prop("nodeId")),
+   map(mergeAll),
+   values,
 ```
 
 # Output
+
 ```js
 const formatData = pipe(
   zip,
@@ -49,7 +74,7 @@ export const setProp = (y) => ({
 export const log = (y) => {
   console.log("very, very, very long very, very long text");
 };
-
 ```
+
 
 

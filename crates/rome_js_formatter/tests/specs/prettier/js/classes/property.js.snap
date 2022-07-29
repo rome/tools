@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: property.js
 ---
+
 # Input
+
 ```js
 class A {
   foobar =
@@ -23,10 +23,29 @@ class B {
     someInstanceProperty3 =
   "foo";
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,8 +2,8 @@
+   foobar =
+     // comment to break
+     1 +
+-    // comment to break again
+-    2;
++      // comment to break again
++      2;
+ }
+ 
+ class B {
 ```
 
 # Output
+
 ```js
 class A {
   foobar =
@@ -46,7 +65,7 @@ class B {
 
   someInstanceProperty3 = "foo";
 }
-
 ```
+
 
 

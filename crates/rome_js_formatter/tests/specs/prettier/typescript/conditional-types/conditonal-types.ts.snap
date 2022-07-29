@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: conditonal-types.ts
 ---
+
 # Input
+
 ```js
 export type DeepReadonly<T> = T extends any[] ? DeepReadonlyArray<T[number]> : T extends object ? DeepReadonlyObject<T> : T;
 
@@ -41,10 +41,78 @@ type U1 = new () => X extends T ? U : V;
 type U1a = new () => (X extends T ? U : V);
 type U1b = new () => (X) extends T ? U : V;
 type U2 = (new () => X) extends T ? U : V;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,8 @@
+ export type DeepReadonly<T> = T extends any[]
+   ? DeepReadonlyArray<T[number]>
+   : T extends object
+-  ? DeepReadonlyObject<T>
+-  : T;
++    ? DeepReadonlyObject<T>
++    : T;
+ 
+ type NonFunctionPropertyNames<T> = {
+   [K in keyof T]: T[K] extends Function ? never : K;
+@@ -17,30 +17,30 @@
+ type TypeName<T> = T extends string
+   ? "string"
+   : T extends number
+-  ? "number"
+-  : T extends boolean
+-  ? "boolean"
+-  : T extends undefined
+-  ? "undefined"
+-  : T extends Function
+-  ? "function"
+-  : "object";
++    ? "number"
++    : T extends boolean
++      ? "boolean"
++      : T extends undefined
++        ? "undefined"
++        : T extends Function
++          ? "function"
++          : "object";
+ 
+ type Type01 = 0 extends (1 extends 2 ? 3 : 4) ? 5 : 6;
+-type Type02 = 0 extends (1 extends 2 ? 3 : 4) ? 5 : 6;
+-type Type03 = 0 extends (1 extends 2 ? 3 : 4) ? 5 : 6;
+-type Type04 = 0 extends (1 extends 2 ? 3 : 4) ? 5 : 6;
++type Type02 = 0 extends ((1 extends 2 ? 3 : 4)) ? 5 : 6;
++type Type03 = 0 extends (((1 extends 2 ? 3 : 4))) ? 5 : 6;
++type Type04 = 0 extends ((((1 extends 2 ? 3 : 4)))) ? 5 : 6;
+ type Type05 = (0 extends 1 ? 2 : 3) extends 4 ? 5 : 6;
+-type Type06 = (0 extends 1 ? 2 : 3) extends 4 ? 5 : 6;
+-type Type07 = (0 extends 1 ? 2 : 3) extends 4 ? 5 : 6;
+-type Type08 = (0 extends 1 ? 2 : 3) extends 4 ? 5 : 6;
++type Type06 = ((0 extends 1 ? 2 : 3)) extends 4 ? 5 : 6;
++type Type07 = (((0 extends 1 ? 2 : 3))) extends 4 ? 5 : 6;
++type Type08 = ((((0 extends 1 ? 2 : 3)))) extends 4 ? 5 : 6;
+ 
+ type T1 = () => void extends T ? U : V;
+-type T1a = () => void extends T ? U : V;
+-type T1b = () => void extends T ? U : V;
++type T1a = () => (void extends T ? U : V);
++type T1b = () => (void) extends T ? U : V;
+ type T2 = (() => void) extends T ? U : V;
+ 
+ type U1 = new () => X extends T ? U : V;
+-type U1a = new () => X extends T ? U : V;
+-type U1b = new () => X extends T ? U : V;
++type U1a = new () => (X extends T ? U : V);
++type U1b = new () => (X) extends T ? U : V;
+ type U2 = (new () => X) extends T ? U : V;
 ```
 
 # Output
+
 ```js
 export type DeepReadonly<T> = T extends any[]
   ? DeepReadonlyArray<T[number]>
@@ -92,7 +160,7 @@ type U1 = new () => X extends T ? U : V;
 type U1a = new () => (X extends T ? U : V);
 type U1b = new () => (X) extends T ? U : V;
 type U2 = (new () => X) extends T ? U : V;
-
 ```
+
 
 

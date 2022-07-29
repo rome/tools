@@ -1,23 +1,38 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: wideningTuples3.ts
 ---
+
 # Input
+
 ```js
 //@noImplicitAny: true
 var a: [any];
 
 var b = a = [undefined, null];
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+ //@noImplicitAny: true
+ var a: [any];
+ 
+-var b = (a = [undefined, null]);
++var b = a = [undefined, null];
 ```
 
 # Output
+
 ```js
 //@noImplicitAny: true
 var a: [any];
 
 var b = a = [undefined, null];
-
 ```
+
 
 

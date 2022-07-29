@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: pr-7889.js
 ---
+
 # Input
+
 ```js
 const Profile = view.with({ name: (state) => state.name }).as((props) => (
   <div>
@@ -15,10 +16,36 @@ const Profile2 = view.with({ name }).as((props) => (
     <h1>Hello, {props.name}</h1>
   </div>
 ))
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,11 +1,7 @@
+-const Profile = view.with({ name: (state) => state.name }).as((props) => (
+-  <div>
+-    <h1>Hello, {props.name}</h1>
+-  </div>
+-));
++const Profile = view.with({ name: (state) => state.name }).as(
++  (props) => <div><h1>Hello, {props.name}</h1></div>,
++);
+ 
+-const Profile2 = view.with({ name }).as((props) => (
+-  <div>
+-    <h1>Hello, {props.name}</h1>
+-  </div>
+-));
++const Profile2 = view.with({ name }).as(
++  (props) => <div><h1>Hello, {props.name}</h1></div>,
++);
 ```
 
 # Output
+
 ```js
 const Profile = view.with({ name: (state) => state.name }).as(
   (props) => <div><h1>Hello, {props.name}</h1></div>,
@@ -27,7 +54,7 @@ const Profile = view.with({ name: (state) => state.name }).as(
 const Profile2 = view.with({ name }).as(
   (props) => <div><h1>Hello, {props.name}</h1></div>,
 );
-
 ```
+
 
 

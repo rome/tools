@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: member-chain.ts
 ---
+
 # Input
+
 ```js
 const { somePropThatHasAReallyLongName, anotherPropThatHasALongName } = this.props.imReallySureAboutThis!;
 
@@ -11,10 +12,29 @@ const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } = this.p
 this.foo.get("bar")!.doThings().more();
 
 foo!.bar().baz().what();
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,8 @@
+ const { somePropThatHasAReallyLongName, anotherPropThatHasALongName } =
+   this.props.imReallySureAboutThis!;
+ 
+-const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } =
+-  this.props.imReallySureAboutThis!.anotherObject;
++const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } = this
++  .props.imReallySureAboutThis!.anotherObject;
+ 
+ this.foo.get("bar")!.doThings().more();
+ 
 ```
 
 # Output
+
 ```js
 const { somePropThatHasAReallyLongName, anotherPropThatHasALongName } =
   this.props.imReallySureAboutThis!;
@@ -25,7 +45,7 @@ const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } = this
 this.foo.get("bar")!.doThings().more();
 
 foo!.bar().baz().what();
-
 ```
+
 
 

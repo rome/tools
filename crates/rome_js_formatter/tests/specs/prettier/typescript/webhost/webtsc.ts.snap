@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: webtsc.ts
 ---
+
 # Input
+
 ```js
 /// <reference path='..\..\src\compiler\tsc.ts'/>
 
@@ -108,10 +109,35 @@ namespace TypeScript.WebTsc {
         };
     }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -40,11 +40,11 @@
+             fileStream.Position = 0;
+             // [0xFF,0xFE] and [0xFE,0xFF] mean utf-16 (little or big endian), otherwise default to utf-8
+             fileStream.Charset =
+-              bom.length >= 2 &&
+-              ((bom.charCodeAt(0) === 0xff && bom.charCodeAt(1) === 0xfe) ||
+-                (bom.charCodeAt(0) === 0xfe && bom.charCodeAt(1) === 0xff))
+-                ? "unicode"
+-                : "utf-8";
++              bom.length >= 2 && (
++                (bom.charCodeAt(0) === 0xFF && bom.charCodeAt(1) === 0xFE) || (
++                  bom.charCodeAt(0) === 0xFE && bom.charCodeAt(1) === 0xFF
++                )
++              ) ? "unicode" : "utf-8";
+           }
+           // ReadText method always strips byte order mark from resulting string
+           return fileStream.ReadText();
 ```
 
 # Output
+
 ```js
 /// <reference path='..\..\src\compiler\tsc.ts'/>
 
@@ -222,8 +248,8 @@ namespace TypeScript.WebTsc {
     };
   }
 }
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

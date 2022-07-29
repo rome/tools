@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: class.js
 ---
+
 # Input
+
 ```js
 class x {
   /**
@@ -11,10 +12,27 @@ class x {
   static get defaultSettings() {
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,6 @@
+ class x {
+   /**
+-   * Set of default settings to be applied to model fetch calls in DAO layer.
+-   */
++  * Set of default settings to be applied to model fetch calls in DAO layer.
++  */
+   static get defaultSettings() {}
+ }
 ```
 
 # Output
+
 ```js
 class x {
   /**
@@ -22,7 +40,7 @@ class x {
   */
   static get defaultSettings() {}
 }
-
 ```
+
 
 

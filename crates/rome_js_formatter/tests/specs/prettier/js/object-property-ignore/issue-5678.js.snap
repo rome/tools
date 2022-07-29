@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-5678.js
 ---
+
 # Input
+
 ```js
 // #5678
 const refreshTokenPayload = {
@@ -56,10 +57,27 @@ export default {
        "0 0 0\r\n" +
        " 000 "
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,7 +4,7 @@
+   sub: this._id,
+   role: this.role,
+   // prettier-ignore
+-  exp: now + (60 * 60 * 24 * 90), // (90 days)
++    exp: now + (60 * 60 * 24 * 90), // (90 days)
+ };
+ 
+ export default {
 ```
 
 # Output
+
 ```js
 // #5678
 const refreshTokenPayload = {
@@ -113,7 +131,7 @@ export default {
        "0 0 0\r\n" +
        " 000 ",
 };
-
 ```
+
 
 

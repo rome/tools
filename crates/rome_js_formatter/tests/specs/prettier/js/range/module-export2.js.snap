@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: module-export2.js
 ---
+
 # Input
+
 ```js
 import  def , {named}  from    'x'
 
@@ -13,10 +14,30 @@ export    const  x
 
 export   default    42
 
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,8 @@
+-import def, { named } from "x";
++import  def , {named}  from    'x'
+ 
+-export * from "d";
++export *  from   'd'
+ 
+ export const x = 42;
+ 
+-export default 42;
++export   default    42
++
 ```
 
 # Output
+
 ```js
 import  def , {named}  from    'x'
 
@@ -26,7 +47,7 @@ export const x = 42;
 
 export   default    42
 
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: bigint.js
 ---
+
 # Input
+
 ```js
 // https://github.com/tc39/proposal-bigint
 
@@ -132,10 +133,32 @@ const goodPrecision = BigInt('9007199254740993');
 
 const alsoGoodPrecision = 9007199254740993n;
 // ↪9007199254740993n
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -103,10 +103,10 @@
+ 1n + 2;
+ // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
+ 
+-1n * 2 +
+-  // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
++(1n * 2)
++// ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
+ 
+-  1n;
+++ 1n;
+ // ↪ TypeError: Cannot convert a BigInt value to a number
+ 
+ Number(1n);
 ```
 
 # Output
+
 ```js
 // https://github.com/tc39/proposal-bigint
 
@@ -265,7 +288,7 @@ const goodPrecision = BigInt("9007199254740993");
 
 const alsoGoodPrecision = 9007199254740993n;
 // ↪9007199254740993n
-
 ```
+
 
 

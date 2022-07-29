@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: escape.js
 ---
+
 # Input
+
 ```js
 gql`
   "\`foo\` mutation payload."
@@ -45,10 +46,52 @@ gql`
     a
   }
 `
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,12 @@
+ gql`
+   "\`foo\` mutation payload."
+-  type FooPayload {
+-    bar: String
++  type      FooPayload       {
++    	bar: String
+   }
+ `;
+ 
+ gql`
+-  type Project {
++type Project {
+     "Pattern: \`\${project}\`"
+     pattern: String
+     """
+@@ -14,13 +14,13 @@
+     """
+     pattern: String
+ 
+-    # Also: Escaping the first parentheses...
+-    "Pattern: \`\${project}\`"
++	# Also: Escaping the first parentheses...
++	"Pattern: \`$\{project}\`"
+     pattern: String
+     # Or escaping the first and second parentheses...
+-    "Pattern: \`\${project}\`"
++	"Pattern: \`$\{project\}\`"
+     pattern: String
+-  }
++}
+ `;
+ 
+ gql`
 ```
 
 # Output
+
 ```js
 gql`
   "\`foo\` mutation payload."
@@ -91,7 +134,7 @@ gql`
     a
   }
 `;
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: test.js
 ---
+
 # Input
+
 ```js
 export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
 
@@ -13,10 +14,40 @@ export * as ns from "mod";
 export * as foo,{bar} from "./baz";
 
 export { undefinedExport };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,10 +6,19 @@
+   value5,
+ } from "exports";
+ 
+-export a, { b } from "./baz";
++export
++a, { b };
++from;
++("./baz");
+ 
+ export * as ns from "mod";
+ 
+-export * as foo, { bar } from "./baz";
++export * as foo
++,
++{
++  bar;
++}
++from;
++("./baz");
+ 
+ export { undefinedExport };
 ```
 
 # Output
+
 ```js
 export {
   value1,
@@ -42,8 +73,8 @@ from;
 ("./baz");
 
 export { undefinedExport };
-
 ```
+
 
 # Errors
 ```

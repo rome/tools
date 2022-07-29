@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-6259.ts
 ---
+
 # Input
+
 ```js
 const yesFrame = (
     ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
@@ -11,10 +12,31 @@ const yesFrame = (
         ${css({}, ...args)}
     }
 `
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,6 @@
+-const yesFrame = (
+-  ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
+-) => css`
+-  ${ChatRoot}[data-frame="yes"] & {
+-    ${css({}, ...args)}
+-  }
++const yesFrame = (...args: Interpolation<ThemedStyledProps<{}, Theme>>[]) =>
++  css`
++    ${ChatRoot}[data-frame="yes"] & {
++        ${css({}, ...args)}
++    }
+ `;
 ```
 
 # Output
+
 ```js
 const yesFrame = (...args: Interpolation<ThemedStyledProps<{}, Theme>>[]) =>
   css`
@@ -22,7 +44,7 @@ const yesFrame = (...args: Interpolation<ThemedStyledProps<{}, Theme>>[]) =>
         ${css({}, ...args)}
     }
 `;
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comments.js
 ---
+
 # Input
+
 ```js
 import { a //comment1
 //comment2
@@ -49,10 +50,52 @@ import x, {
   // comment
   y
 } from 'z';
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,26 +1,25 @@
+ import {
+-  //comment1
++  a //comment1
+   //comment2
+   //comment3
+-  a as b,
++  as b,
+ } from "";
+ 
+ import {
+-  //comment1
++  a as //comment1
+   //comment2
+   //comment3
+-  a as b1,
++  b1,
+ } from "";
+ 
+ import {
+-  //comment2 //comment1
++  a as //comment2 //comment1
+   //comment3
+-  a as b2,
++  b2,
+ } from "";
+ 
+ import {
+-  //comment3 //comment2 //comment1
+-  a as b3,
++  a as b3, //comment3 //comment2 //comment1
+ } from "";
+ 
+ import {
 ```
 
 # Output
+
 ```js
 import {
   a //comment1
@@ -100,7 +143,7 @@ import x, {
   // comment
   y,
 } from "z";
-
 ```
+
 
 

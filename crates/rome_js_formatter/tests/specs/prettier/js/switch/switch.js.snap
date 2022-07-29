@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: switch.js
 ---
+
 # Input
+
 ```js
 switch (a) {
   case 3:
@@ -39,10 +40,44 @@ switch ($veryLongAndVeryVerboseVariableName && $anotherVeryLongAndVeryVerboseVar
 
 switch ($longButSlightlyShorterVariableName && $anotherSlightlyShorterVariableName) {
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -23,8 +23,7 @@
+ }
+ 
+ switch (
+-  veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong >
+-  veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong
++  veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong > veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong
+ ) {
+   case 3:
+     alert("3");
+@@ -34,13 +33,11 @@
+ }
+ 
+ switch (
+-  $veryLongAndVeryVerboseVariableName &&
+-  $anotherVeryLongAndVeryVerboseVariableName
++  $veryLongAndVeryVerboseVariableName && $anotherVeryLongAndVeryVerboseVariableName
+ ) {
+ }
+ 
+ switch (
+-  $longButSlightlyShorterVariableName &&
+-  $anotherSlightlyShorterVariableName
++  $longButSlightlyShorterVariableName && $anotherSlightlyShorterVariableName
+ ) {
+ }
 ```
 
 # Output
+
 ```js
 switch (a) {
   case 3:
@@ -87,8 +122,8 @@ switch (
   $longButSlightlyShorterVariableName && $anotherSlightlyShorterVariableName
 ) {
 }
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

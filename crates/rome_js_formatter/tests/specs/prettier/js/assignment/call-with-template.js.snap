@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: call-with-template.js
 ---
+
 # Input
+
 ```js
 const result = template(`
   if (SOME_VAR === "") {}
@@ -15,10 +15,29 @@ const output =
  template(`function f() %%A%%`)({
    A: t.blockStatement([]),
  });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,8 @@
+-const result = template(`
++const result = template(
++  `
+   if (SOME_VAR === "") {}
+-`)({
++`,
++)({
+   SOME_VAR: value,
+ });
+ 
 ```
 
 # Output
+
 ```js
 const result = template(
   `
@@ -31,7 +50,7 @@ const result = template(
 const output = template(`function f() %%A%%`)({
   A: t.blockStatement([]),
 });
-
 ```
+
 
 

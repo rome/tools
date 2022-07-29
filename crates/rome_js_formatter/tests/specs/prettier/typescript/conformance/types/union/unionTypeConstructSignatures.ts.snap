@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: unionTypeConstructSignatures.ts
 ---
+
 # Input
+
 ```js
 ﻿var numOrDate: number | Date;
 var strOrBoolean: string | boolean;
@@ -75,10 +75,24 @@ strOrNum = new unionWithRestParameter3('hello', 10); // error no call signature
 strOrNum = new unionWithRestParameter3('hello', 10, 11); // error no call signature
 strOrNum = new unionWithRestParameter3('hello', "hello"); // error no call signature
 strOrNum = new unionWithRestParameter3(); // error no call signature
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-﻿var numOrDate: number | Date;
++var numOrDate: number | Date;
+ var strOrBoolean: string | boolean;
+ var strOrNum: string | number;
+ 
 ```
 
 # Output
+
 ```js
 var numOrDate: number | Date;
 var strOrBoolean: string | boolean;
@@ -172,8 +186,8 @@ strOrNum = new unionWithRestParameter3("hello", 10); // error no call signature
 strOrNum = new unionWithRestParameter3("hello", 10, 11); // error no call signature
 strOrNum = new unionWithRestParameter3("hello", "hello"); // error no call signature
 strOrNum = new unionWithRestParameter3(); // error no call signature
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

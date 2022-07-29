@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: union.ts
 ---
+
 # Input
+
 ```js
 type UploadState<E, EM, D>
   // The upload hasnt begun yet
@@ -24,10 +24,39 @@ type UploadState2<E, EM, D>
   | C
   // Uploading to aws3 and CreatePostMutation succeeded
   | D;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,6 @@
+-type UploadState<E, EM, D> =
+-  // The upload hasnt begun yet
++type UploadState<E, EM, D>
++// The upload hasnt begun yet
++=
+   | { type: "Not_begun" }
+   // The upload timed out
+   | { type: "Timed_out" }
+@@ -8,8 +9,9 @@
+   // Uploading to aws3 and CreatePostMutation succeeded
+   | { type: "Success"; data: D };
+ 
+-type UploadState2<E, EM, D> =
+-  // The upload hasnt begun yet
++type UploadState2<E, EM, D>
++// The upload hasnt begun yet
++=
+   | A
+   // The upload timed out
+   | B
 ```
 
 # Output
+
 ```js
 type UploadState<E, EM, D>
 // The upload hasnt begun yet
@@ -50,7 +79,7 @@ type UploadState2<E, EM, D>
   | C
   // Uploading to aws3 and CreatePostMutation succeeded
   | D;
-
 ```
+
 
 

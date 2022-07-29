@@ -1,18 +1,40 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: intersection.ts
 ---
+
 # Input
+
 ```js
 type Example = {
   [A in B]: T;
 } & {
   [A in B]: T;
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,7 @@
+-type Example = {
+-  [A in B]: T;
+-} & {
+-  [A in B]: T;
+-};
++type Example =
++  & {
++    [A in B]: T;
++  }
++  & {
++    [A in B]: T;
++  };
 ```
 
 # Output
+
 ```js
 type Example =
   & {
@@ -21,7 +43,7 @@ type Example =
   & {
     [A in B]: T;
   };
-
 ```
+
 
 

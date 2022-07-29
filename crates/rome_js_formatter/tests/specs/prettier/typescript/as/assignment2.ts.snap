@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: assignment2.ts
 ---
+
 # Input
+
 ```js
 const defaultMaskGetter = $parse(attrs[directiveName]) as (
   scope: ng.IScope
@@ -33,10 +33,41 @@ const annotate = (angular.injector as any).$$annotate as (
 
 const originalPrototype = originalConstructor.prototype as TComponent & InjectionTarget,
   propertyToServiceName = originalPrototype._inject;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -21,14 +21,17 @@
+   this.initialValues =
+     undefined;
+ 
+-const extraRendererAttrs = ((attrs.rendererAttrs &&
+-  this.utils.safeParseJsonString(attrs.rendererAttrs)) ||
+-  Object.create(null)) as FieldService.RendererAttributes;
++const extraRendererAttrs = (
++  (
++    attrs.rendererAttrs && this.utils.safeParseJsonString(attrs.rendererAttrs)
++  ) || Object.create(null)
++) as FieldService.RendererAttributes;
+ 
+ const annotate = (angular.injector as any).$$annotate as (
+   fn: Function,
+ ) => string[];
+ 
+-const originalPrototype = originalConstructor.prototype as TComponent &
+-    InjectionTarget,
++const originalPrototype = originalConstructor.prototype as
++  & TComponent
++  & InjectionTarget,
+   propertyToServiceName = originalPrototype._inject;
 ```
 
 # Output
+
 ```js
 const defaultMaskGetter = $parse(attrs[directiveName]) as (
   scope: ng.IScope,
@@ -75,7 +106,7 @@ const originalPrototype = originalConstructor.prototype as
   & TComponent
   & InjectionTarget,
   propertyToServiceName = originalPrototype._inject;
-
 ```
+
 
 

@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: trailing.js
 ---
+
 # Input
+
 ```js
 export type Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-editor2" };
 
@@ -15,10 +15,28 @@ export type Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-ed
     
     
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,8 +6,7 @@
+ `
+    
+    
+-` +
+-  `
++` + `
+     
+     
+ `;
 ```
 
 # Output
+
 ```js
 export type Result<T, V> =
   | { kind: "not-test-editor1" }
@@ -32,7 +50,7 @@ export type Result<T, V> =
     
     
 `;
-
 ```
+
 
 

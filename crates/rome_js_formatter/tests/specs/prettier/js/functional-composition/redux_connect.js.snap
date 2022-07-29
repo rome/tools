@@ -1,19 +1,37 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: redux_connect.js
 ---
+
 # Input
+
 ```js
 const ArtistInput = connect(mapStateToProps, mapDispatchToProps, mergeProps)(Component);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,3 @@
+-const ArtistInput = connect(
+-  mapStateToProps,
+-  mapDispatchToProps,
+-  mergeProps,
+-)(Component);
++const ArtistInput = connect(mapStateToProps, mapDispatchToProps, mergeProps)(
++  Component,
++);
 ```
 
 # Output
+
 ```js
 const ArtistInput = connect(mapStateToProps, mapDispatchToProps, mergeProps)(
   Component,
 );
-
 ```
+
 
 

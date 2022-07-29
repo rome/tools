@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: no-semi.js
 ---
+
 # Input
+
 ```js
 a
 ;::b.c
@@ -15,10 +16,25 @@ class A {
   a = b;
   instanceof(){}
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+ a;
+-::b.c;
++::b.c
+ 
+ class A {
+   a = b;
 ```
 
 # Output
+
 ```js
 a;
 ::b.c
@@ -31,8 +47,8 @@ class A {
   a = b;
   instanceof() {}
 }
-
 ```
+
 
 # Errors
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: styled-components-multiple-expressions.js
 ---
+
 # Input
+
 ```js
 const Header = styled.div`
   ${something()}
@@ -25,10 +26,53 @@ styled.div`${foo}-0-idle { }`
 styled.div`
 font-family: "${a}", "${b}";
 `
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,27 +1,21 @@
+ const Header = styled.div`
+   ${something()}
+   & > ${Child}:not(:first-child) {
+-    margin-left: 5px;
+-  }
++margin-left:5px;
++}
+ `;
+ 
+ const Header2 = styled.div`
+   ${something()}
+   & > ${Child}${Child2}:not(:first-child) {
+-    margin-left: 5px;
+-  }
++margin-left:5px;
++}
+ `;
+ 
+-styled.div`
+-  ${foo}-idle {
+-  }
+-`;
++styled.div`${foo}-idle { }`;
+ 
+-styled.div`
+-  ${foo}-0-idle {
+-  }
+-`;
++styled.div`${foo}-0-idle { }`;
+ 
+ styled.div`
+-  font-family: "${a}", "${b}";
++font-family: "${a}", "${b}";
+ `;
 ```
 
 # Output
+
 ```js
 const Header = styled.div`
   ${something()}
@@ -51,7 +95,7 @@ styled.div`${foo}-0-idle { }`;
 styled.div`
 font-family: "${a}", "${b}";
 `;
-
 ```
+
 
 

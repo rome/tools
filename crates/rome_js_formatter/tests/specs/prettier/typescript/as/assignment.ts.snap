@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: assignment.ts
 ---
+
 # Input
+
 ```js
 export const LOG_LEVEL = {
     EMERGENCY: 0,
@@ -34,10 +35,45 @@ this.previewPlayerHandle = (setInterval(async () => {
 this.intervalID = (setInterval(() => {
   self.step();
 }, 30) as unknown) as number;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -18,13 +18,17 @@
+   "symbolic link": "link",
+ } as Foo;
+ 
+-this.previewPlayerHandle = setInterval(async () => {
+-  if (this.previewIsPlaying) {
+-    await this.fetchNextPreviews();
+-    this.currentPreviewIndex++;
+-  }
+-}, this.refreshDelay) as unknown as number;
++this.previewPlayerHandle = (
++  setInterval(async () => {
++    if (this.previewIsPlaying) {
++      await this.fetchNextPreviews();
++      this.currentPreviewIndex++;
++    }
++  }, this.refreshDelay) as unknown
++) as number;
+ 
+-this.intervalID = setInterval(() => {
+-  self.step();
+-}, 30) as unknown as number;
++this.intervalID = (
++  setInterval(() => {
++    self.step();
++  }, 30) as unknown
++) as number;
 ```
 
 # Output
+
 ```js
 export const LOG_LEVEL = {
   EMERGENCY: 0,
@@ -73,7 +109,7 @@ this.intervalID = (
     self.step();
   }, 30) as unknown
 ) as number;
-
 ```
+
 
 

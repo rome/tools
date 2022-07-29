@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: math.js
 ---
+
 # Input
+
 ```js
 x + y / z;
 x / y + z;
@@ -26,10 +27,56 @@ x & y & z;
 x | y | z;
 x & y >> z;
 x << y | z;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,22 +1,22 @@
+-x + y / z;
+-x / y + z;
++x + (y / z);
++(x / y) + z;
+ 
+-(x * y) % z;
+-(x / y) % z;
+-(x % y) * z;
+-(x % y) / z;
++x * y % z;
++x / y % z;
++x % y * z;
++x % y / z;
+ 
+-(x % y) % z;
++x % y % z;
+ 
+-(x << y) >> z;
+-(x >>> y) << z;
+-(x >>> y) >>> z;
+-(x + y) >> z;
++x << y >> z;
++x >>> y << z;
++x >>> y >>> z;
++x + y >> z;
+ 
+-x | (y & z);
+-(x & y) | z;
++x | y & z;
++x & y | z;
+ x ^ y ^ z;
+ x & y & z;
+ x | y | z;
+-x & (y >> z);
+-(x << y) | z;
++x & y >> z;
++x << y | z;
 ```
 
 # Output
+
 ```js
 x + (y / z);
 (x / y) + z;
@@ -53,7 +100,7 @@ x & y & z;
 x | y | z;
 x & y >> z;
 x << y | z;
-
 ```
+
 
 

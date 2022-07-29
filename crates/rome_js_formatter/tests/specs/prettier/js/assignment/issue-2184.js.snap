@@ -1,23 +1,38 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-2184.js
 ---
+
 # Input
+
 ```js
 const areaPercentageDiff = (
     topRankedZoneFit.areaPercentageRemaining
   - previousZoneFitNow.areaPercentageRemaining
 ).toFixed(2)
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,3 @@
+ const areaPercentageDiff = (
+-  topRankedZoneFit.areaPercentageRemaining -
+-  previousZoneFitNow.areaPercentageRemaining
++  topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining
+ ).toFixed(2);
 ```
 
 # Output
+
 ```js
 const areaPercentageDiff = (
   topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining
 ).toFixed(2);
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

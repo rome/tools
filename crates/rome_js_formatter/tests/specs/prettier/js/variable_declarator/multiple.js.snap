@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: multiple.js
 ---
+
 # Input
+
 ```js
 var assert = require('assert'),
   lookup = require('../lookup');
@@ -27,10 +27,38 @@ var templateTagsMapping = {
     return key;
   }),
   data;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,4 @@
+-var assert = require("assert"),
+-  lookup = require("../lookup");
++var assert = require("assert"), lookup = require("../lookup");
+ 
+ const eloBar = require("elo-bar"),
+   foo = require("foo"),
+@@ -15,9 +14,9 @@
+ for (var i = 0, len = arr.length; i < len; i++) {}
+ 
+ var templateTagsMapping = {
+-    "%{itemIndex}": "index",
+-    "%{itemContentMetaTextViews}": "views",
+-  },
++  "%{itemIndex}": "index",
++  "%{itemContentMetaTextViews}": "views",
++},
+   separator = '<span class="item__content__meta__separator">•</span>',
+   templateTagsList = $.map(templateTagsMapping, function (value, key) {
+     return key;
 ```
 
 # Output
+
 ```js
 var assert = require("assert"), lookup = require("../lookup");
 
@@ -56,7 +84,7 @@ var templateTagsMapping = {
     return key;
   }),
   data;
-
 ```
+
 
 

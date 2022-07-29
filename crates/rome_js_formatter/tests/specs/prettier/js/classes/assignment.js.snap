@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: assignment.js
 ---
+
 # Input
+
 ```js
 aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends (
   aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg1
@@ -35,10 +36,47 @@ module.exports = class A extends B {
     console.log("foo");
   }
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,5 @@
+-aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends (
++aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee
++  .ffffffff.gggggggg2 = class extends (
+   aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg1
+ ) {
+   method() {
+@@ -12,17 +13,15 @@
+   }
+ };
+ 
+-aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends (
+-  bar
+-) {
++aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee
++  .ffffffff.gggggggg2 = class extends bar {
+   method() {
+     console.log("foo");
+   }
+ };
+ 
+-foo = class extends (
+-  aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2
+-) {
++foo = class extends aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff
++  .gggggggg2 {
+   method() {
+     console.log("foo");
+   }
 ```
 
 # Output
+
 ```js
 aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee
   .ffffffff.gggggggg2 = class extends (
@@ -74,7 +112,7 @@ module.exports = class A extends B {
     console.log("foo");
   }
 };
-
 ```
+
 
 

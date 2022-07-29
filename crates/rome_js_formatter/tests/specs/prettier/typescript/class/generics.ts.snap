@@ -1,26 +1,42 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: generics.ts
 ---
+
 # Input
+
 ```js
 class<T> implements Map<T> {}
 
 interface AudioBufferList {
 	mBuffers: interop.Reference<any /*AudioBuffer*/>;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+ class<T> implements Map<T> {}
+ 
+ interface AudioBufferList {
+-  mBuffers: interop.Reference<any /*AudioBuffer*/>;
++  mBuffers: interop.Reference<any /*AudioBuffer*/ >;
+ }
 ```
 
 # Output
+
 ```js
 class<T> implements Map<T> {}
 
 interface AudioBufferList {
   mBuffers: interop.Reference<any /*AudioBuffer*/ >;
 }
-
 ```
+
 
 # Errors
 ```

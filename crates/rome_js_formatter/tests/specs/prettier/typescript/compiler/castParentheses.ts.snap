@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: castParentheses.ts
 ---
+
 # Input
+
 ```js
 ﻿class a {
     static b: any;
@@ -15,10 +16,34 @@ var b = (<any>a.b()).c;
 var b = (<any>new a);
 var b = (<any>new a.b);
 var b = (<any>new a).b
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,11 +1,11 @@
+-﻿class a {
++class a {
+   static b: any;
+ }
+ 
+-var b = <any>a;
++var b = (<any>a);
+ var b = (<any>a).b;
+ var b = (<any>a.b).c;
+ var b = (<any>a.b()).c;
+-var b = <any>new a();
+-var b = <any>new a.b();
++var b = (<any>new a());
++var b = (<any>new a.b());
+ var b = (<any>new a()).b;
 ```
 
 # Output
+
 ```js
 class a {
   static b: any;
@@ -31,7 +56,7 @@ var b = (<any>a.b()).c;
 var b = (<any>new a());
 var b = (<any>new a.b());
 var b = (<any>new a()).b;
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: range.js
 ---
+
 # Input
+
 ```js
 function ugly ( {a=1,     b     =   2     }      ) {
   function ugly ( {a=1,     b     =   2     }      ) {
@@ -12,10 +13,30 @@ function ugly ( {a=1,     b     =   2     }      ) {
     }
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,7 @@
+-function ugly({ a = 1, b = 2 }) {
+-  function ugly({ a = 1, b = 2 }) {
+-    function ugly({ a = 1, b = 2 }) {
+-      `multiline template string
++function ugly ( {a=1,     b     =   2     }      ) {
++  function ugly ( {a=1,     b     =   2     }      ) {
++    function ugly ( {a=1,     b     =   2     }      ) {
++             `multiline template string
+               with too much indentation`;
+     }
+   }
 ```
 
 # Output
+
 ```js
 function ugly ( {a=1,     b     =   2     }      ) {
   function ugly ( {a=1,     b     =   2     }      ) {
@@ -25,7 +46,7 @@ function ugly ( {a=1,     b     =   2     }      ) {
     }
   }
 }
-
 ```
+
 
 

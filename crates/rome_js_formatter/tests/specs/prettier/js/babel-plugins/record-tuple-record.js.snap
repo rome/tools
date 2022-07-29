@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: record-tuple-record.js
 ---
+
 # Input
+
 ```js
 const record1 = #{
     a: 1,
@@ -11,10 +12,36 @@ const record1 = #{
 };
 
 const record2 = #{...record1, b: 5};
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,11 @@
+-const record1 = #{
+-  a: 1,
+-  b: 2,
+-  c: 3,
+-};
++const record1 = #;
++{
++  a: 1, b;
++  : 2,
++    c: 3,
++}
+ 
+-const record2 = #{ ...record1, b: 5 };
++const record2 = #;
++{
++  ...record1, b: 5
++}
 ```
 
 # Output
+
 ```js
 const record1 = #;
 {
@@ -27,8 +54,8 @@ const record2 = #;
 {
   ...record1, b: 5
 }
-
 ```
+
 
 # Errors
 ```

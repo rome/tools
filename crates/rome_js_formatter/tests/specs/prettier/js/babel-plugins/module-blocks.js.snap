@@ -1,25 +1,42 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: module-blocks.js
 ---
+
 # Input
+
 ```js
 let m = module {
   export let m = 2;
   export let n = 3;
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,5 @@
+-let m = module {
++let m = module;
++{
+   export let m = 2;
+   export let n = 3;
+-};
++}
 ```
 
 # Output
+
 ```js
 let m = module;
 {
   export let m = 2;
   export let n = 3;
 }
-
 ```
+
 
 # Errors
 ```

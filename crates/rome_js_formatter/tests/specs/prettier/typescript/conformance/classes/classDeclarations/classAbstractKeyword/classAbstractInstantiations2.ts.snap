@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: classAbstractInstantiations2.ts
 ---
+
 # Input
+
 ```js
 class A {
 }
@@ -53,10 +54,25 @@ abstract class G {
 
 class H {
     abstract baz() : number;
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -51,5 +51,5 @@
+ }
+ 
+ class H {
+-  abstract baz(): number;
++  abstract baz() : number;
+ }
 ```
 
 # Output
+
 ```js
 class A {}
 
@@ -113,8 +129,8 @@ abstract class G {
 class H {
   abstract baz() : number;
 }
-
 ```
+
 
 # Errors
 ```

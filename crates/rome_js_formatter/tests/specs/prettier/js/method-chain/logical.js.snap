@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: logical.js
 ---
+
 # Input
+
 ```js
 const someLongVariableName = (idx(
   this.props,
@@ -21,10 +22,55 @@ const someLongVariableName = (idx(
 
 (veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError).map(tickets =>
   TicketRecord.createFromSomeLongString()).filter(obj => !!obj);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,24 +2,24 @@
+   idx(this.props, (props) => props.someLongPropertyName) || []
+ ).map((edge) => edge.node);
+ 
+-(veryLongVeryLongVeryLong || e).map((tickets) =>
+-  TicketRecord.createFromSomeLongString(),
++(veryLongVeryLongVeryLong || e).map(
++  (tickets) => TicketRecord.createFromSomeLongString(),
+ );
+ 
+-(veryLongVeryLongVeryLong || e)
+-  .map((tickets) => TicketRecord.createFromSomeLongString())
+-  .filter((obj) => !!obj);
++(veryLongVeryLongVeryLong || e).map(
++  (tickets) => TicketRecord.createFromSomeLongString(),
++).filter((obj) => !!obj);
+ 
+ (
+   veryLongVeryLongVeryLong ||
+-  anotherVeryLongVeryLongVeryLong ||
+-  veryVeryVeryLongError
++    anotherVeryLongVeryLongVeryLong ||
++    veryVeryVeryLongError
+ ).map((tickets) => TicketRecord.createFromSomeLongString());
+ 
+ (
+   veryLongVeryLongVeryLong ||
+-  anotherVeryLongVeryLongVeryLong ||
+-  veryVeryVeryLongError
+-)
+-  .map((tickets) => TicketRecord.createFromSomeLongString())
+-  .filter((obj) => !!obj);
++    anotherVeryLongVeryLongVeryLong ||
++    veryVeryVeryLongError
++).map((tickets) => TicketRecord.createFromSomeLongString()).filter(
++  (obj) => !!obj,
++);
 ```
 
 # Output
+
 ```js
 const someLongVariableName = (
   idx(this.props, (props) => props.someLongPropertyName) || []
@@ -51,7 +97,7 @@ const someLongVariableName = (
 ).map((tickets) => TicketRecord.createFromSomeLongString()).filter(
   (obj) => !!obj,
 );
-
 ```
+
 
 

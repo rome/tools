@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: worker.js
 ---
+
 # Input
+
 ```js
 let worker = new Worker(module {
   onmessage = function({data}) {
@@ -19,10 +20,51 @@ let worker = new Worker(module {
 }, {type: "module", foo: "bar" });
 
 worker.postMessage(module { export function fn() { return "hello!" } });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,22 +1,15 @@
+ let worker = new Worker(module {
+-  onmessage = function ({ data }) {
++  onmessage = function({data}) {
+     let mod = import(data);
+     postMessage(mod.fn());
+-  };
+-}, { type: "module" });
+-
+-let worker = new Worker(
+-  module {
+-    onmessage = function ({ data }) {
+-      let mod = import(data);
+-      postMessage(mod.fn());
+-    };
+-  },
+-  { type: "module", foo: "bar" },
+-);
++  }
++}, {type: "module"});
+ 
+-worker.postMessage(module {
+-  export function fn() {
+-    return "hello!";
++let worker = new Worker(module {
++  onmessage = function({data}) {
++    let mod = import(data);
++    postMessage(mod.fn());
+   }
+-});
++}, {type: "module", foo: "bar" });
++
++worker.postMessage(module { export function fn() { return "hello!" } });
 ```
 
 # Output
+
 ```js
 let worker = new Worker(module {
   onmessage = function({data}) {
@@ -39,8 +81,8 @@ let worker = new Worker(module {
 }, {type: "module", foo: "bar" });
 
 worker.postMessage(module { export function fn() { return "hello!" } });
-
 ```
+
 
 # Errors
 ```

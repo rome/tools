@@ -1,18 +1,29 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: ternary.js
 ---
+
 # Input
+
 ```js
 if (1) (class {}) ? 1 : 2;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-if (1) (class {} ? 1 : 2);
++if (1) (class {}) ? 1 : 2;
 ```
 
 # Output
+
 ```js
 if (1) (class {}) ? 1 : 2;
-
 ```
+
 
 

@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
-expression: jsdoc.js
 ---
+
 # Input
+
 ```js
 /** @type {any} */
 const x = (
@@ -30,10 +30,40 @@ function HelloWorld() {
            <span>Test</span>
         </div>
     );
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,5 @@
+ /** @type {any} */
+-const x = (
+-  <div>
+-    <div />
+-  </div>
+-);
++const x = <div><div /></div>;
+ 
+ /**
+  * @type {object}
+@@ -18,9 +14,5 @@
+  * @type {object}
+  */
+ function HelloWorld() {
+-  return (
+-    <div>
+-      <span>Test</span>
+-    </div>
+-  );
++  return <div><span>Test</span></div>;
+ }
 ```
 
 # Output
+
 ```js
 /** @type {any} */
 const x = <div><div /></div>;
@@ -53,7 +83,7 @@ const x = <div><div /></div>;
 function HelloWorld() {
   return <div><span>Test</span></div>;
 }
-
 ```
+
 
 

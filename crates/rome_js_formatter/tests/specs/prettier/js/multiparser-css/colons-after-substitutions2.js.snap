@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: colons-after-substitutions2.js
 ---
+
 # Input
+
 ```js
 const Icon = styled.div`
   height: 48px;
@@ -27,10 +28,27 @@ const Icon3 = styled.div`
     fill: rebeccapurple;
   }
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -9,7 +9,7 @@
+ const Icon2 = styled.div`
+   height: 48px;
+ 
+-  ${Link}:empty:before {
++  ${Link}:empty:before{
+     fill: rebeccapurple;
+   }
+ `;
 ```
 
 # Output
+
 ```js
 const Icon = styled.div`
   height: 48px;
@@ -55,7 +73,7 @@ const Icon3 = styled.div`
     fill: rebeccapurple;
   }
 `;
-
 ```
+
 
 

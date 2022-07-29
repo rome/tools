@@ -4,3 +4,9 @@ crates/rome_js_parser/src/lexer/tables.rs linguist-generated=true text=auto eol=
 crates/rome_js_analyze/src/analyzers.rs linguist-generated=true text=auto eol=lf
 crates/rome_js_analyze/src/assists.rs linguist-generated=true text=auto eol=lf
 crates/rome_js_analyze/src/registry.rs linguist-generated=true text=auto eol=lf
+
+
+crates/rome_js_formatter/tests/**/*.ts.prettier-snap linguist-language=TypeScript
+crates/rome_js_formatter/tests/**/*.js.prettier-snap linguist-language=JavaScript
+crates/rome_js_formatter/tests/**/*.ts.snap linguist-language=Markdown
+crates/rome_js_formatter/tests/**/*.js.snap linguist-language=Markdown

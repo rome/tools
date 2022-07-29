@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment.js
 ---
+
 # Input
+
 ```js
 {
   inf_leave: // goto emulation
@@ -13,10 +14,30 @@ expression: comment.js
   // goto emulation
   for (; ;) { }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,8 @@
+ {
+-  // goto emulation
+-  inf_leave: for (;;) {}
++  inf_leave: for (;;) {} // goto emulation
+ }
+ {
++  inf_leave:
+   // goto emulation
+-  inf_leave: for (;;) {}
++  for (;;) {}
+ }
 ```
 
 # Output
+
 ```js
 {
   inf_leave: for (;;) {} // goto emulation
@@ -26,7 +47,7 @@ expression: comment.js
   // goto emulation
   for (;;) {}
 }
-
 ```
+
 
 

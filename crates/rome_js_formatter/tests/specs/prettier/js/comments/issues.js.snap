@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: issues.js
 ---
+
 # Input
+
 ```js
 // Does not need to break as it fits in 80 columns
 this.call(a, /* comment */ b);
@@ -76,10 +76,42 @@ const result = asyncExecute('non_existing_command', /* args */ []);
 foo({}
   // Hi
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -9,13 +9,14 @@
+ });
+ 
+ // Missing one level of indentation because of the comment
+-const rootEpic = (actions, store) =>
++const rootEpic = (actions, store) => (
+   combineEpics(...epics)(actions, store)
+     // Log errors and continue.
+     .catch((err, stream) => {
+       getLogger().error(err);
+       return stream;
+-    });
++    })
++);
+ 
+ // optional trailing comma gets moved all the way to the beginning
+ const regex = new RegExp(
+@@ -64,5 +65,5 @@
+ // The closing paren is printed on the same line as the comment
+ foo(
+   {},
+-  // Hi
++// Hi
+ );
 ```
 
 # Output
+
 ```js
 // Does not need to break as it fits in 80 columns
 this.call(a, /* comment */ b);
@@ -150,8 +182,8 @@ foo(
   {},
 // Hi
 );
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: nested-in-condition.ts
 ---
+
 # Input
+
 ```js
 type Foo =
   (ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider) extends
@@ -21,10 +22,53 @@ type Foo3 =
   (DoubleGobbledygookProvider extends MockGobbledygookProvider ? MockThingamabobberFactory : ThingamabobberFactory)
     ? UniqueDalgametreService
     : CompositeZamazingoResolver;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,27 +1,13 @@
+ type Foo = (
+-  ThingamabobberFactory extends AbstractThingamabobberFactory
+-    ? GobbledygookProvider
+-    : CompositeGobbledygookProvider
+-) extends DoubleGobbledygookProvider
+-  ? UniqueDalgametreService
+-  : CompositeZamazingoResolver;
++  ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
++) extends DoubleGobbledygookProvider ? UniqueDalgametreService : CompositeZamazingoResolver;
+ 
+ type Foo2 = DoubleGobbledygookProvider extends (
+-  ThingamabobberFactory extends AbstractThingamabobberFactory
+-    ? GobbledygookProvider
+-    : CompositeGobbledygookProvider
+-)
+-  ? UniqueDalgametreService
+-  : CompositeZamazingoResolver;
++  ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
++) ? UniqueDalgametreService : CompositeZamazingoResolver;
+ 
+ type Foo3 = (
+-  ThingamabobberFactory extends AbstractThingamabobberFactory
+-    ? GobbledygookProvider
+-    : CompositeGobbledygookProvider
++  ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
+ ) extends (
+-  DoubleGobbledygookProvider extends MockGobbledygookProvider
+-    ? MockThingamabobberFactory
+-    : ThingamabobberFactory
+-)
+-  ? UniqueDalgametreService
+-  : CompositeZamazingoResolver;
++  DoubleGobbledygookProvider extends MockGobbledygookProvider ? MockThingamabobberFactory : ThingamabobberFactory
++) ? UniqueDalgametreService : CompositeZamazingoResolver;
 ```
 
 # Output
+
 ```js
 type Foo = (
   ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
@@ -39,8 +83,8 @@ type Foo3 = (
 ) extends (
   DoubleGobbledygookProvider extends MockGobbledygookProvider ? MockThingamabobberFactory : ThingamabobberFactory
 ) ? UniqueDalgametreService : CompositeZamazingoResolver;
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

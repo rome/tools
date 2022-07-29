@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: export.js
 ---
+
 # Input
+
 ```js
 export * as ns from 'mod';
 export v from 'mod';
@@ -12,10 +13,58 @@ export * as d, { bar } from 'mod';
 export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
 export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
 export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooooooooooooooooooooooooooooo  } from "fooooooooooooooooooooooooooooo";
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,31 @@
+ export * as ns from "mod";
+-export v from "mod";
+-export a, * as b from "mod";
+-export c, { foo } from "mod";
+-export * as d, { bar } from "mod";
+-export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+-export Bar, {
+-  barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr,
+-} from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
++export
++v;
++from;
++("mod");
++export
++a, * as
++b;
++from;
++("mod");
++export
++c, { foo };
++from;
++("mod");
++export * as d
++,
++{
++  bar;
++}
++from;
++("mod");
++export {
++  fooooooooooooooooooooooooooooooooooooooooooooooooo,
++} from "fooooooooooooooooooooooooooooo";
++export
++Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr };
++from;
++("barrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+ export {
+   foooooooooooooooooooooooooooooooooooooooooooooo,
+   fooooooooooooooooooooooooooooooooooooooooooooooo,
 ```
 
 # Output
+
 ```js
 export * as ns from "mod";
 export
@@ -49,8 +98,8 @@ export {
   foooooooooooooooooooooooooooooooooooooooooooooo,
   fooooooooooooooooooooooooooooooooooooooooooooooo,
 } from "fooooooooooooooooooooooooooooo";
-
 ```
+
 
 # Errors
 ```

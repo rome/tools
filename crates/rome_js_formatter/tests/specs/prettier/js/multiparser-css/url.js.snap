@@ -1,17 +1,32 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: url.js
 ---
+
 # Input
+
 ```js
 styled.div`color:red;background: url(http://example.com?q=${foo})`
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1 @@
+-styled.div`
+-  color: red;
+-  background: url(http://example.com?q=${foo});
+-`;
++styled.div`color:red;background: url(http://example.com?q=${foo})`;
 ```
 
 # Output
+
 ```js
 styled.div`color:red;background: url(http://example.com?q=${foo})`;
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: castTest.ts
 ---
+
 # Input
+
 ```js
 
 var x : any = 0;
@@ -34,10 +35,33 @@ var p_cast = <Point> ({
     },
     mult: function(p) { return p; }
 })
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -18,7 +18,7 @@
+   constructor(x: number, y: number);
+ }
+ 
+-var p_cast = <Point>{
++var p_cast = <Point>({
+   x: 0,
+   y: 0,
+   add: function (dx, dy) {
+@@ -27,4 +27,4 @@
+   mult: function (p) {
+     return p;
+   },
+-};
++});
 ```
 
 # Output
+
 ```js
 var x: any = 0;
 var z = <number>x;
@@ -69,7 +93,7 @@ var p_cast = <Point>({
     return p;
   },
 });
-
 ```
+
 
 

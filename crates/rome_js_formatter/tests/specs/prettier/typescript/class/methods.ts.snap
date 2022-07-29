@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: methods.ts
 ---
+
 # Input
+
 ```js
 class X {
     optionalMethod?() {}
@@ -15,10 +16,28 @@ interface Iterable<T> {
 export class Check {
   private static property = 'test';
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -3,7 +3,8 @@
+ }
+ 
+ interface Iterable<T> {
+-  export [Symbol.iterator](): Iterator<T>;
++  export;
++  [Symbol.iterator](): Iterator<T>;
+ }
+ 
+ export class Check {
 ```
 
 # Output
+
 ```js
 class X {
   optionalMethod?() {}
@@ -32,8 +51,8 @@ interface Iterable<T> {
 export class Check {
   private static property = "test";
 }
-
 ```
+
 
 # Errors
 ```

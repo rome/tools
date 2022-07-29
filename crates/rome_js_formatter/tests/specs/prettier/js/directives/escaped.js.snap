@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: escaped.js
 ---
+
 # Input
+
 ```js
 // Unnecessary escapes. (adapted from tests/quotes/strings.js)
 // Note that in directives, unnecessary escapes should be preserved.
@@ -40,10 +40,42 @@ expression: escaped.js
 '
 'escaped \u2028 \ '
 'escaped \u2029 \ '
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,19 +6,19 @@
+ "\'";
+ "\"";
+ "\\";
+-"\a";
++"a";
+ "hol\a";
+-"hol\a";
++"hola";
+ "hol\\a (the a is not escaped)";
+ "hol\\a (the a is not escaped)";
+ "multiple \a unnecessary \a escapes";
+-"multiple \a unnecessary \a escapes";
++"multiple a unnecessary a escapes";
+ "unnecessarily escaped character preceded by escaped backslash \\\a";
+ "unnecessarily escaped character preceded by escaped backslash \\\a";
+ "unescaped character preceded by two escaped backslashes       \\\\a";
+ "unescaped character preceded by two escaped backslashes       \\\\a";
+ "\a\a"; // consecutive unnecessarily escaped characters
+-"\a\a"; // consecutive unnecessarily escaped characters
++"aa"; // consecutive unnecessarily escaped characters
+ "escaped \u2030 \‰ (should still stay escaped)";
+ 
+ // Meaningful escapes
 ```
 
 # Output
+
 ```js
 // Unnecessary escapes. (adapted from tests/quotes/strings.js)
 // Note that in directives, unnecessary escapes should be preserved.
@@ -80,8 +112,8 @@ expression: escaped.js
 ";
 "escaped \u2028 \ ";
 "escaped \u2029 \ ";
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

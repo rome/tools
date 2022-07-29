@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: unionTypeIndexSignature.ts
 ---
+
 # Input
+
 ```js
 ﻿var numOrDate: number | Date;
 var anyVar: number;
@@ -28,10 +28,24 @@ numOrDate = unionOfDifferentReturnType1[10]; // number | Date
 var unionOfTypesWithAndWithoutStringSignature1: { [a: number]: number; } | boolean;
 anyVar = unionOfTypesWithAndWithoutStringSignature1["hello"]; // any
 anyVar = unionOfTypesWithAndWithoutStringSignature1[10]; // any
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-﻿var numOrDate: number | Date;
++var numOrDate: number | Date;
+ var anyVar: number;
+ 
+ // If each type in U has a string index signature,
 ```
 
 # Output
+
 ```js
 var numOrDate: number | Date;
 var anyVar: number;
@@ -62,8 +76,8 @@ var unionOfTypesWithAndWithoutStringSignature1:
   | boolean;
 anyVar = unionOfTypesWithAndWithoutStringSignature1["hello"]; // any
 anyVar = unionOfTypesWithAndWithoutStringSignature1[10]; // any
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

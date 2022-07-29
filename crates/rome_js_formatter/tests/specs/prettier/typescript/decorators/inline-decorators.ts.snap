@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: inline-decorators.ts
 ---
+
 # Input
+
 ```js
 
 @d1
@@ -54,10 +54,59 @@ class Bar {
 class MyContainerComponent {
   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,9 +6,9 @@
+ 
+ class Class2 {
+   @d1
+-  @d2(foo)
+-  @d3.bar
+-  @d4.baz()
++    @d2(foo)
++    @d3.bar
++    @d4.baz()
+   method1() {}
+ 
+   @d1
+@@ -30,22 +30,19 @@
+   constructor(
+     @d1 private x: number,
+     @d2(foo) private y: number,
+-    @d3("foo") private z: number,
++    @d3('foo') private z: number,
+     @d4({
+-      x: string,
+-    })
+-    private a: string,
++            x: string
++        }) private a: string,
+   ) {}
+ }
+ 
+-@decorated
+-class Foo {}
++@decorated class Foo {}
+ 
+ class Bar {
+   @decorated method() {}
+ }
+ 
+ class MyContainerComponent {
+-  @ContentChildren(MyComponent)
+-  components: QueryListSomeBigName<MyComponentThat>;
++  @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+ }
 ```
 
 # Output
+
 ```js
 @d1
 @d2(foo)
@@ -107,8 +156,8 @@ class Bar {
 class MyContainerComponent {
   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 }
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: readonlyInConstructorParameters.ts
 ---
+
 # Input
+
 ```js
 class C {
     constructor(readonly x: number) {}
@@ -16,10 +17,27 @@ class E {
 class F {
     constructor(private readonly x: number) {}
 }
-new F(1).x;
+new F(1).x;```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,7 +4,7 @@
+ new C(1).x = 2;
+ 
+ class E {
+-  constructor(public readonly x: number) {}
++  constructor(readonly public x: number) {}
+ }
+ 
+ class F {
 ```
 
 # Output
+
 ```js
 class C {
   constructor(readonly x: number) {}
@@ -34,8 +52,8 @@ class F {
   constructor(private readonly x: number) {}
 }
 new F(1).x;
-
 ```
+
 
 # Errors
 ```

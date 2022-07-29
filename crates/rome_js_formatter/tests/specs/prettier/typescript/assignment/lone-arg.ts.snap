@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: lone-arg.ts
 ---
+
 # Input
+
 ```js
 if (true) {
   if (condition) {
@@ -10,10 +11,28 @@ if (true) {
       .type;
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,6 @@
+ if (true) {
+   if (condition) {
+-    const secondType = sourceCode.getNodeByRangeIndex1234(
+-      second.range[0],
+-    )!.type;
++    const secondType = sourceCode.getNodeByRangeIndex1234(second.range[0])!
++      .type;
+   }
+ }
 ```
 
 # Output
+
 ```js
 if (true) {
   if (condition) {
@@ -21,7 +40,7 @@ if (true) {
       .type;
   }
 }
-
 ```
+
 
 

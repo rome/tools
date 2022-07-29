@@ -1,26 +1,43 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: declare_function_with_body.ts
 ---
+
 # Input
+
 ```js
 // Invalid, but recoverable
 declare function foo() {}
 declare function bar() {
   // comment
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+ // Invalid, but recoverable
+-declare function foo() {};
++declare function foo() {}
+ declare function bar() {
+   // comment
+-};
++}
 ```
 
 # Output
+
 ```js
 // Invalid, but recoverable
 declare function foo() {}
 declare function bar() {
   // comment
 }
-
 ```
+
 
 # Errors
 ```

@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: jest-each.js
 ---
+
 # Input
+
 ```js
 describe.each`
 a|b|expected
@@ -67,10 +67,109 @@ test.each([
     expect(Number(a)).toBe(b);
   }
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,8 @@
+ describe.each`
+-  a            | b        | expected
+-  ${11}        | ${1}     | ${222}
+-  ${1 - 1}     | ${2 + 2} | ${3333}
+-  ${2 + 1 + 2} | ${1111}  | ${3}
++a|b|expected
++${11} | ${1}|${222}
++${1 - 1}|${2 + 2}|${3333}
++${2 + 1 + 2}|${1111}|${3}
+ `("$a + $b", ({ a, b, expected }) => {
+   test(`returns ${expected}`, () => {
+     expect(a + b).toBe(expected);
+@@ -18,53 +18,47 @@
+ });
+ 
+ describe.only.each`
+-  a            | b        | expected
+-  ${11}        | ${1}     | ${222}   | ${"unknown column 1"}   | ${"unknown column 2"}
+-  ${1 - 1}     | ${2 + 2} | ${3333}
+-  ${2 + 1 + 2} | ${1111}  | ${3}     | ${"unknown column xyz"}
++a|b|expected
++${11} | ${1}|${222}|${"unknown column 1"}|${"unknown column 2"}
++${1 - 1}|${2 + 2}|${3333}
++${2 + 1 + 2}|${1111}|${3}          |${"unknown column xyz"}
+ `;
+ 
+ describe.only.each`
+-               |          |
+-  ${11}        | ${1}     | ${222}  | ${"unknown column 1"}   | ${"unknown column 2"}
+-  ${1 - 1}     | ${2 + 2} | ${3333}
+-  ${2 + 1 + 2} | ${1111}  | ${3}    | ${"unknown column xyz"}
++||
++${11} | ${1}|${222}|${"unknown column 1"}|${"unknown column 2"}
++${1 - 1}|${2 + 2}|${3333}
++${2 + 1 + 2}|${1111}|${3}          |${"unknown column xyz"}
+ `;
+ 
+-describe.each`
+-  a    | b    | expected
+-  ${1} | ${1} | ${2}
+-  ${1} | ${2} | ${3}
+-  ${2} | ${1} | ${3}
+-`;
++describe.each`a    | b    | expected
++${1} | ${1} | ${2}
++${1} | ${2} | ${3}
++${2} | ${1} | ${3}`;
+ 
+ // an example to demo multiline quasi
+-describe.each`
+-  a    | b    | expected
+-  ${11111111111} | ${a()
++describe.each`a    | b    | expected
++${11111111111} | ${a()
+   .b((x) => x)
+   .c()
+   .d()} | ${2}
+-  ${1} | ${2} | ${3}
+-  ${2} | ${1} | ${3}
+-`;
++${1} | ${2} | ${3}
++${2} | ${1} | ${3}`;
+ 
+ describe.each([1, 2, 3])("test", (a) => {
+   expect(a).toBe(a);
+ });
+ 
+-test.only.each([
+-  [1, 1, 2],
+-  [1, 2, 3],
+-  [2, 1, 3],
+-])(".add(%i, %i)", (a, b, expected) => {
++test.only.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(".add(%i, %i)", (
++  a,
++  b,
++  expected,
++) => {
+   expect(a + b).toBe(expected);
+ });
+ 
+-test.each([
+-  { a: "1", b: 1 },
+-  { a: "2", b: 2 },
+-  { a: "3", b: 3 },
+-])("test", ({ a, b }) => {
++test.each([{ a: "1", b: 1 }, { a: "2", b: 2 }, { a: "3", b: 3 }])("test", (
++  { a, b },
++) => {
+   expect(Number(a)).toBe(b);
+ });
 ```
 
 # Output
+
 ```js
 describe.each`
 a|b|expected
@@ -136,7 +235,7 @@ test.each([{ a: "1", b: 1 }, { a: "2", b: 2 }, { a: "3", b: 3 }])("test", (
 ) => {
   expect(Number(a)).toBe(b);
 });
-
 ```
+
 
 

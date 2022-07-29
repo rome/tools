@@ -1,19 +1,32 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: templateStringWithEmbeddedTypeAssertionOnAdditionES6.ts
 ---
+
 # Input
+
 ```js
 ﻿// @target: ES6
 var x = `abc${ <any>(10 + 10) }def`;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,2 +1,2 @@
+-﻿// @target: ES6
++// @target: ES6
+ var x = `abc${<any>(10 + 10)}def`;
 ```
 
 # Output
+
 ```js
 // @target: ES6
 var x = `abc${<any>(10 + 10)}def`;
-
 ```
+
 
 

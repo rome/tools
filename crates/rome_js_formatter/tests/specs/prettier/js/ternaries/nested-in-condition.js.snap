@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: nested-in-condition.js
 ---
+
 # Input
+
 ```js
 $var = ($number % 10 >= 2 && ($number % 100 < 10 || $number % 100 >= 20)
 ? kochabCooieGameOnOboleUnweave
@@ -40,10 +41,71 @@ const value = (bifornCringerMoshedPerplexSawder
     <Sub />
   </Element2>
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,40 +1,23 @@
+ $var = (
+-  $number % 10 >= 2 && ($number % 100 < 10 || $number % 100 >= 20)
+-    ? kochabCooieGameOnOboleUnweave
+-    : annularCooeedSplicesWalksWayWay
+-)
+-  ? anodyneCondosMalateOverateRetinol
+-  : averredBathersBoxroomBuggyNurl;
++  ($number % 10) >= 2 && (
++    ($number % 100) < 10 || ($number % 100) >= 20
++  ) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
++) ? anodyneCondosMalateOverateRetinol : averredBathersBoxroomBuggyNurl;
+ 
+ const value = (
+-  bifornCringerMoshedPerplexSawder
+-    ? askTrovenaBeenaDependsRowans
+-    : glimseGlyphsHazardNoopsTieTie
++  bifornCringerMoshedPerplexSawder ? askTrovenaBeenaDependsRowans : glimseGlyphsHazardNoopsTieTie
+ )
+   ? true
+     ? true
+     : false
+   : true
+-  ? true
+-  : false;
++    ? true
++    : false;
+ 
+ (
+-  bifornCringerMoshedPerplexSawder
+-    ? askTrovenaBeenaDependsRowans
+-    : glimseGlyphsHazardNoopsTieTie
+-) ? (
+-  <Element>
+-    <Sub />
+-    <Sub />
+-    <Sub />
+-    <Sub />
+-    <Sub />
+-    <Sub />
+-  </Element>
+-) : (
+-  <Element2>
+-    <Sub />
+-    <Sub />
+-    <Sub />
+-  </Element2>
++  bifornCringerMoshedPerplexSawder ? (askTrovenaBeenaDependsRowans) : (
++    glimseGlyphsHazardNoopsTieTie
++  )
++) ? <Element><Sub /><Sub /><Sub /><Sub /><Sub /><Sub /></Element> : (
++  <Element2><Sub /><Sub /><Sub /></Element2>
+ );
 ```
 
 # Output
+
 ```js
 $var = (
   ($number % 10) >= 2 && (
@@ -68,8 +130,8 @@ const value = (
 ) ? <Element><Sub /><Sub /><Sub /><Sub /><Sub /><Sub /></Element> : (
   <Element2><Sub /><Sub /><Sub /></Element2>
 );
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

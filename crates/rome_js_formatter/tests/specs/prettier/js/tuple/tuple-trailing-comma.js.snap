@@ -1,18 +1,30 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: tuple-trailing-comma.js
 ---
+
 # Input
+
 ```js
 #[1,]
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-#[1];
++#[1,]
 ```
 
 # Output
+
 ```js
 #[1,]
-
 ```
+
 
 # Errors
 ```

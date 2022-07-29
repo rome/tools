@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: classAbstractMixedWithModifiers.ts
 ---
+
 # Input
+
 ```js
 abstract class A {
     abstract foo_a();
@@ -18,10 +19,34 @@ abstract class A {
     abstract static foo_d();
     
     static abstract foo_e();
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,11 +5,11 @@
+   protected abstract foo_c();
+   private abstract foo_d();
+ 
+-  public abstract foo_bb();
+-  protected abstract foo_cc();
+-  private abstract foo_dd();
++  abstract public foo_bb();
++  abstract protected foo_cc();
++  abstract private foo_dd();
+ 
+-  static abstract foo_d();
++  abstract static foo_d();
+ 
+   static abstract foo_e();
+ }
 ```
 
 # Output
+
 ```js
 abstract class A {
   abstract foo_a();
@@ -38,8 +63,8 @@ abstract class A {
 
   static abstract foo_e();
 }
-
 ```
+
 
 # Errors
 ```

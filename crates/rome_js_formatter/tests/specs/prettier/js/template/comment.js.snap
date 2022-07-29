@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment.js
 ---
+
 # Input
+
 ```js
 `
 (?:${escapeChar}[\\S\\s]|(?:(?!${// Using `XRegExp.union` safely rewrites backreferences in `left` and `right`.
@@ -16,10 +17,27 @@ XRegExp.union([left, right], '', {conjunction: 'or'}).source})[^${escapeChar}])+
 g
 // h
 }`;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,7 +8,7 @@
+ })[^${escapeChar}])+)+
+ `;
+ 
+-`a${/* b */ c /* d */}e${
++`a${ /* b */ c /* d */}e${
+   // f
+   g
+   // h
 ```
 
 # Output
+
 ```js
 `
 (?:${escapeChar}[\\S\\s]|(?:(?!${
@@ -36,7 +54,7 @@ g
   g
   // h
 }`;
-
 ```
+
 
 

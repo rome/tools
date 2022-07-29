@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: css-prop.js
 ---
+
 # Input
+
 ```js
 function SomeComponent (props) {
   // Create styles as if you're calling css and the class will be applied to the component
@@ -30,10 +31,63 @@ const TestComponent = ({ children, ...props }) => (
     {children}
   </div>
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,18 +2,20 @@
+   // Create styles as if you're calling css and the class will be applied to the component
+   return (
+     <div
+-      css={`
+-        color: blue;
+-        font-size: 17 px;
++      css={
++        `
++    color: blue;
++    font-size: 17 px;
+ 
+-        &:hover {
+-          color: green;
+-        }
++    &:hover {
++      color: green;
++    }
+ 
+-        & .some-class {
+-          font-size: 20px;
+-        }
+-      `}
++    & .some-class {
++      font-size: 20px;
++    }
++  `
++      }
+     >
+       This will be blue until hovered.
+       <div className="some-class">This font size will be 20px</div>
+@@ -22,12 +24,5 @@
+ }
+ 
+ const TestComponent = ({ children, ...props }) => (
+-  <div
+-    css={`
+-      color: white;
+-      background: black;
+-    `}
+-  >
+-    {children}
+-  </div>
++  <div css={`color: white; background: black`}>{children}</div>
+ );
 ```
 
 # Output
+
 ```js
 function SomeComponent(props) {
   // Create styles as if you're calling css and the class will be applied to the component
@@ -63,8 +117,8 @@ function SomeComponent(props) {
 const TestComponent = ({ children, ...props }) => (
   <div css={`color: white; background: black`}>{children}</div>
 );
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: urnary_expression.js
 ---
+
 # Input
+
 ```js
 !!x
 x++
@@ -12,10 +13,26 @@ x + + + + 1;
 x + (+ (+ (+ 1)))
 x * +y;
 +x * y;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -3,6 +3,6 @@
+ x--;
+ -+1;
+ x + +(+(+1));
+-x + +(+(+1));
++x + (+(+(+1)));
+ x * +y;
+ +x * y;
 ```
 
 # Output
+
 ```js
 !!x;
 x++;
@@ -25,7 +42,7 @@ x + +(+(+1));
 x + (+(+(+1)));
 x * +y;
 +x * y;
-
 ```
+
 
 

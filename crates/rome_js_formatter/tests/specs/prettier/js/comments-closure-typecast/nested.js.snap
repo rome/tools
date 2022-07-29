@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: nested.js
 ---
+
 # Input
+
 ```js
 foo = /** @type {!Foo} */ (/** @type {!Baz} */ (baz).bar );
 
@@ -12,10 +13,31 @@ const BarImpl = /** @type {BarConstructor} */ (
 		throw new Error("Internal error: Illegal constructor");
 	})
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,9 +2,7 @@
+ 
+ const BarImpl = /** @type {BarConstructor} */ (
+   /** @type {unknown} */
+-  (
+-    function Bar() {
+-      throw new Error("Internal error: Illegal constructor");
+-    }
+-  )
++  (function Bar() {
++    throw new Error("Internal error: Illegal constructor");
++  })
+ );
 ```
 
 # Output
+
 ```js
 foo = /** @type {!Foo} */ (/** @type {!Baz} */ (baz).bar);
 
@@ -25,7 +47,7 @@ const BarImpl = /** @type {BarConstructor} */ (
     throw new Error("Internal error: Illegal constructor");
   })
 );
-
 ```
+
 
 

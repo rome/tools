@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: graphql.js
 ---
+
 # Input
+
 ```js
 module.exports = Relay.createContainer(
   // ...
@@ -22,10 +23,37 @@ module.exports = Relay.createContainer(
     },
   },
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,13 +2,14 @@
+   // ...
+   {
+     fragments: {
+-      nodes: ({ solution_type, time_frame }) => Relay.QL`
++      nodes: ({ solution_type, time_frame }) =>
++        Relay.QL`
+         fragment on RelatedNode @relay(plural: true) {
+           __typename
+           ${OptimalSolutionsSection.getFragment("node", {
+-            solution_type,
+-            time_frame,
+-          })}
++          solution_type,
++          time_frame,
++        })}
+         }
+       `,
+     },
 ```
 
 # Output
+
 ```js
 module.exports = Relay.createContainer(
   // ...
@@ -44,7 +72,7 @@ module.exports = Relay.createContainer(
     },
   },
 );
-
 ```
+
 
 

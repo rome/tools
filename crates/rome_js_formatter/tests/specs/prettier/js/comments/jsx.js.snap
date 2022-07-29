@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: jsx.js
 ---
+
 # Input
+
 ```js
 <div>
   {
@@ -125,10 +125,145 @@ onClick={() => {}}>
   {}
   <Component />
 </Wrapper>
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,26 +1,24 @@
+-<div>{/* comment */}</div>;
++<div>
++  {
++  /* comment */
++  }
++</div>;
+ 
+ <div>{/* comment */}</div>;
+ 
+ <div>
+   {/* comment
+-   */}
++*/}
+ </div>;
+ 
+ <div>
+-  {
+-    a
+-    /* comment
+-     */
+-  }
++  {a /* comment
++*/}
+ </div>;
+ 
+ <div>
+-  {
+-    /* comment
+-     */
+-    a
+-  }
++  {/* comment
++*/ a}
+ </div>;
+ 
+ <div>{/* comment */}</div>;
+@@ -29,29 +27,29 @@
+ 
+ <div>
+   {
+-    // single line comment
++  // single line comment
+   }
+ </div>;
+ 
+ <div>
+   {
+-    // multiple line comments 1
+-    // multiple line comments 2
++  // multiple line comments 1
++  // multiple line comments 2
+   }
+ </div>;
+ 
+ <div>
+   {
+-    // multiple mixed comments 1
+-    /* multiple mixed comments 2 */
+-    /* multiple mixed comments 3 */
+-    // multiple mixed comments 4
++  // multiple mixed comments 1
++  /* multiple mixed comments 2 */
++  /* multiple mixed comments 3 */
++  // multiple mixed comments 4
+   }
+ </div>;
+ 
+ <div>
+   {
+-    // Some very v  ery very very merry (xmas) very very long line to break line width limit
++  // Some very v  ery very very merry (xmas) very very long line to break line width limit
+   }
+ </div>;
+ 
+@@ -62,19 +60,21 @@
+ <div>
+   {/**
+    * JSDoc-y comment in JSX. I wonder what will happen to it?
+-   */}
++  */}
+ </div>;
+ 
+ <div>
+-  {/**
++  {
++  /**
+    * Another JSDoc comment in JSX.
+-   */}
++  */
++  }
+ </div>;
+ 
+ <div
+   /**
+-   * Handles clicks.
+-   */
++ * Handles clicks.
++*/
+   onClick={() => {}}
+ ></div>;
+ 
+@@ -90,20 +90,15 @@
+   {foo}
+ </div>;
+ 
+-<div
+-  className="foo"
+-  // comment
++<div className="foo"
++// comment
+ >
+   {foo}
+ </div>;
+ 
+ <div // comment
+-  id="foo"
+->
++id="foo">
+   {children}
+ </div>;
+ 
+-<Wrapper>
+-  {}
+-  <Component />
+-</Wrapper>;
++<Wrapper>{}<Component /></Wrapper>;
 ```
 
 # Output
+
 ```js
 <div>
   {
@@ -234,8 +369,8 @@ id="foo">
 </div>;
 
 <Wrapper>{}<Component /></Wrapper>;
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

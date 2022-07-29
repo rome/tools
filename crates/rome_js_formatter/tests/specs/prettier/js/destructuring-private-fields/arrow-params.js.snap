@@ -1,17 +1,34 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: arrow-params.js
 ---
+
 # Input
+
 ```js
 class C {
   #x = 1;
   #p = ({ #x: x }) => {}
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,6 @@
+ class C {
+   #x = 1;
+-  #p = ({ #x: x }) => {};
++  #p = ({ #x: x })
++  => {
++}
+ }
 ```
 
 # Output
+
 ```js
 class C {
   #x = 1;
@@ -19,8 +36,8 @@ class C {
   => {
 }
 }
-
 ```
+
 
 # Errors
 ```

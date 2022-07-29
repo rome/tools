@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: indexerWithTuple.ts
 ---
+
 # Input
+
 ```js
 ﻿var strNumTuple: [string, number] = ["foo", 10]; 
 var numTupleTuple: [number, [string, number]] = [10, ["bar", 20]];
@@ -36,10 +37,24 @@ var eleUnion23 = unionTuple2[idx0]; // string | number | boolean
 var eleUnion24 = unionTuple2[idx1]; // string | number | boolean
 var eleUnion25 = unionTuple2["0"]; // boolean
 var eleUnion26 = unionTuple2["1"]; // string | number
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-﻿var strNumTuple: [string, number] = ["foo", 10];
++var strNumTuple: [string, number] = ["foo", 10];
+ var numTupleTuple: [number, [string, number]] = [10, ["bar", 20]];
+ var unionTuple1: [number, string | number] = [10, "foo"];
+ var unionTuple2: [boolean, string | number] = [true, "foo"];
 ```
 
 # Output
+
 ```js
 var strNumTuple: [string, number] = ["foo", 10];
 var numTupleTuple: [number, [string, number]] = [10, ["bar", 20]];
@@ -73,7 +88,7 @@ var eleUnion23 = unionTuple2[idx0]; // string | number | boolean
 var eleUnion24 = unionTuple2[idx1]; // string | number | boolean
 var eleUnion25 = unionTuple2["0"]; // boolean
 var eleUnion26 = unionTuple2["1"]; // string | number
-
 ```
+
 
 

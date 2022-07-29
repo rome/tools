@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: extends_implements.ts
 ---
+
 # Input
+
 ```js
 class Class extends AbstractClass implements Interface1, Interface2, Interface3, Interface4 {}
 
@@ -66,10 +67,34 @@ class ImplementsInterfaceClassWithComments1<
     TypeArgumentNumberThree
   > // comments
     implements BaseInterface {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -68,10 +68,11 @@
+   implements BaseInterface {}
+ 
+ class ImplementsInterfaceClass1<
+-  TypeArgumentNumberOne,
+-  TypeArgumentNumberTwo,
+-  TypeArgumentNumberThree,
+-> implements BaseInterface {}
++    TypeArgumentNumberOne,
++    TypeArgumentNumberTwo,
++    TypeArgumentNumberThree,
++  >
++  implements BaseInterface {}
+ 
+ class ImplementsInterfaceClassWithComments1<
+     TypeArgumentNumberOne,
 ```
 
 # Output
+
 ```js
 class Class
   extends AbstractClass
@@ -153,8 +178,8 @@ class ImplementsInterfaceClassWithComments1<
     TypeArgumentNumberThree,
   > // comments
   implements BaseInterface {}
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

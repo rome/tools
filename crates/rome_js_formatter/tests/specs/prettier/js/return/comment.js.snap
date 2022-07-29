@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: comment.js
 ---
+
 # Input
+
 ```js
 function f() {
   return /* a */;
@@ -46,10 +46,58 @@ fn(function f() {
       .bar()
   );
 });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -12,30 +12,29 @@
+ }
+ 
+ function f() {
+-  return; /* a */
++  return /* a */
+   // b
++  ;
+ }
+ 
+ function x() {
+-  return (
+-    func2
+-      //comment
+-      .bar()
+-  );
++  return func2
++  //comment
++  .bar();
+ }
+ 
+ function f() {
+   return (
+     foo
+-      // comment
+-      .bar()
++    // comment
++    .bar()
+   );
+ }
+ 
+ fn(function f() {
+   return (
+     foo
+-      // comment
+-      .bar()
++    // comment
++    .bar()
+   );
+ });
 ```
 
 # Output
+
 ```js
 function f() {
   return /* a */;
@@ -91,7 +139,7 @@ fn(function f() {
     .bar()
   );
 });
-
 ```
+
 
 

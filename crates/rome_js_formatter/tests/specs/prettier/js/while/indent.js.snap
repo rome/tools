@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: indent.js
 ---
+
 # Input
+
 ```js
 if (someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD) {}
 while (someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD) {}
@@ -18,10 +19,25 @@ while (0) 1;
 
 do 1;
 while (0);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -46,5 +46,4 @@
+ 
+ while (0) 1;
+ 
+-do 1;
+-while (0);
++do 1; while (0);
 ```
 
 # Output
+
 ```js
 if (
   someVeryLongStringA &&
@@ -72,7 +88,7 @@ do {} while (
 while (0) 1;
 
 do 1; while (0);
-
 ```
+
 
 

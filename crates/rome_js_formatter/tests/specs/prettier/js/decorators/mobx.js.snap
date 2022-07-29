@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: mobx.js
 ---
+
 # Input
+
 ```js
 import {observable} from "mobx";
 
@@ -40,10 +41,47 @@ import {observable} from "mobx";
   
   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,8 @@
+ import { observable } from "mobx";
+ 
+-@observer
+-class OrderLine {
+-  @observable price: number = 0;
+-  @observable amount: number = 1;
++@observer class OrderLine {
++  @observable price:number = 0;
++  @observable amount:number = 1;
+ 
+   constructor(price) {
+     this.price = price;
+@@ -27,14 +26,7 @@
+     this.price = price;
+   }
+ 
+-  @computed
+-  @computed
+-  @computed
+-  @computed
+-  @computed
+-  @computed
+-  @computed
+-  get total() {
++  @computed @computed @computed @computed @computed @computed @computed get total() {
+     return this.price * this.amount;
+   }
+ 
 ```
 
 # Output
+
 ```js
 import { observable } from "mobx";
 
@@ -83,8 +121,8 @@ import { observable } from "mobx";
   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) =>
     doSomething();
 }
-
 ```
+
 
 # Errors
 ```

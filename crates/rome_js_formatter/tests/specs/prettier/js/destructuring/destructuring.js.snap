@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: destructuring.js
 ---
+
 # Input
+
 ```js
 const [one, two = null, three = null] = arr;
 a = ([s=1,]) => 1
@@ -50,10 +50,51 @@ class A {
     return id + title;
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -15,12 +15,14 @@
+ 
+ function f({ data: { name } }) {}
+ 
+-const UserComponent = function ({
+-  name: { first, last },
+-  organisation: {
+-    address: { street: orgStreetAddress, postcode: orgPostcode },
++const UserComponent = function (
++  {
++    name: { first, last },
++    organisation: {
++      address: { street: orgStreetAddress, postcode: orgPostcode },
++    },
+   },
+-}) {
++) {
+   return;
+ };
+ 
+@@ -39,11 +41,7 @@
+ 
+ try {
+   // code
+-} catch ({
+-  data: {
+-    message: { errors },
+-  },
+-}) {
++} catch ({ data: { message: { errors } } }) {
+   // code
+ }
+ 
 ```
 
 # Output
+
 ```js
 const [one, two = null, three = null] = arr;
 a = ([s = 1]) => 1;
@@ -113,7 +154,7 @@ class A {
     return id + title;
   }
 }
-
 ```
+
 
 

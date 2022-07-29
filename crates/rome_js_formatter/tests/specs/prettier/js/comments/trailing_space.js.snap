@@ -1,25 +1,40 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: trailing_space.js
 ---
+
 # Input
+
 ```js
 #!/there/is-space-here->         
 
 // Do not trim trailing whitespace from this source file!
 
 // There is some space here ->                        
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-#!/there/is-space-here->
++#!/there/is-space-here->         
+ 
+ // Do not trim trailing whitespace from this source file!
+ 
 ```
 
 # Output
+
 ```js
 #!/there/is-space-here->         
 
 // Do not trim trailing whitespace from this source file!
 
 // There is some space here ->
-
 ```
+
 
 

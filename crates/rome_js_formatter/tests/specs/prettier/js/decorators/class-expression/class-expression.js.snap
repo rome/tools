@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: class-expression.js
 ---
+
 # Input
+
 ```js
 const a1 = (@deco class Foo {});
 const a2 = (@deco class {});
@@ -18,10 +19,69 @@ const b2 = []
 
 // This is not a `ClassExpression` but `ClassDeclaration`
 @deco class Foo {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,35 +1,26 @@
+-const a1 =
+-  (
+-    @deco
+-    class Foo {}
+-  );
+-const a2 =
+-  (
+-    @deco
+-    class {}
+-  );
++const a1 = (
++@deco class Foo {}
++)
++const a2 = (
++@deco class {}
++)
+ 
+ (
+-  @deco
+-  class Foo {}
+-);
++@deco class Foo {}
++)
+ (
+-  @deco
+-  class {}
+-);
++@deco class {}
++)
+ 
+ const b1 = [];
+ (
+-  @deco
+-  class Foo {}
+-);
++@deco class Foo {}
++)
+ 
+ const b2 = [];
+ (
+-  @deco
+-  class {}
+-);
++@deco class {}
++)
+ 
+ // This is not a `ClassExpression` but `ClassDeclaration`
+-@deco
+-class Foo {}
++@deco class Foo {}
 ```
 
 # Output
+
 ```js
 const a1 = (
 @deco class Foo {}
@@ -49,8 +109,8 @@ const b2 = [];
 
 // This is not a `ClassExpression` but `ClassDeclaration`
 @deco class Foo {}
-
 ```
+
 
 # Errors
 ```

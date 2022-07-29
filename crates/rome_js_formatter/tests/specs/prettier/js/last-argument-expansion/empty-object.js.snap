@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: empty-object.js
 ---
+
 # Input
+
 ```js
 func(first, second, third, fourth, fifth, aReallyLongArgumentsListToForceItToBreak, {
   // comment
@@ -26,10 +26,27 @@ func(
   // comment
   {}
 )
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -20,7 +20,7 @@
+ 
+ func(
+   {},
+-  // comment
++// comment
+ );
+ 
+ func(
 ```
 
 # Output
+
 ```js
 func(
   first,
@@ -60,7 +77,7 @@ func(
   // comment
   {},
 );
-
 ```
+
 
 

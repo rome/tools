@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-10691.js
 ---
+
 # Input
+
 ```js
 export default function include_photoswipe(
 	gallery_selector = ".my-gallery"
@@ -14,10 +15,32 @@ export default function include_photoswipe(
 			);
 		</script>`;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,8 @@
+ export default function include_photoswipe(gallery_selector = ".my-gallery") {
+-  return /* HTML */ ` <script>
+-    window.addEventListener("load", () =>
+-      initPhotoSwipeFromDOM("${gallery_selector}"),
+-    );
+-  </script>`;
++  return /* HTML */ `
++		<script>
++			window.addEventListener("load", () =>
++				initPhotoSwipeFromDOM("${gallery_selector}")
++			);
++		</script>`;
+ }
 ```
 
 # Output
+
 ```js
 export default function include_photoswipe(gallery_selector = ".my-gallery") {
   return /* HTML */ `
@@ -27,7 +50,7 @@ export default function include_photoswipe(gallery_selector = ".my-gallery") {
 			);
 		</script>`;
 }
-
 ```
+
 
 

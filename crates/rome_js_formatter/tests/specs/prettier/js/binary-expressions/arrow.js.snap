@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: arrow.js
 ---
+
 # Input
+
 ```js
 function f() {
   const appEntities = getAppEntities(loadObject).filter(
@@ -20,10 +21,28 @@ function f2() {
 
 ((x) => x) + '';
 '' + ((x) => x);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -14,7 +14,8 @@
+       entity &&
+       entity.isInstallAvailable() &&
+       !entity.isQueue() &&
+-      entity.isDisabled() && {
++      entity.isDisabled() &&
++      {
+         id: entity.id,
+       },
+   );
 ```
 
 # Output
+
 ```js
 function f() {
   const appEntities = getAppEntities(loadObject).filter(
@@ -50,7 +69,7 @@ function f2() {
 
 ((x) => x) + "";
 "" + ((x) => x);
-
 ```
+
 
 

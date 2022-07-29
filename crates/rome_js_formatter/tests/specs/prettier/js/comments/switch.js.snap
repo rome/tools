@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: switch.js
 ---
+
 # Input
+
 ```js
 switch (node && node.type) {
   case "Property":
@@ -42,10 +43,40 @@ switch (foo) {
     doThing();
   } //comment
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -7,19 +7,18 @@
+   case "MemberExpression":
+     prop = node.property;
+     break;
+-
+   // no default
+ }
+ 
+ switch (foo) {
+   case "bar":
+     doThing();
+-
+   // no default
+ }
+ 
+ switch (foo) {
+-  case "bar": //comment
++  case "bar":
++    //comment
+     doThing(); //comment
+ 
+   case "baz":
 ```
 
 # Output
+
 ```js
 switch (node && node.type) {
   case "Property":
@@ -83,7 +114,7 @@ switch (foo) {
     doThing();
   } //comment
 }
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: blank-line-between-specifiers.js
 ---
+
 # Input
+
 ```js
 export {
   // a
@@ -25,10 +26,34 @@ export {
   bar2,
   baz2,
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,6 @@
+ export {
+   // a
+   foo1,
+-
+   // b
+   bar1,
+   baz1,
+@@ -14,7 +13,6 @@
+ export {
+   // a
+   foo2,
+-
+   // b
+   bar2,
+   baz2,
 ```
 
 # Output
+
 ```js
 export {
   // a
@@ -49,7 +74,7 @@ export {
   bar2,
   baz2,
 };
-
 ```
+
 
 

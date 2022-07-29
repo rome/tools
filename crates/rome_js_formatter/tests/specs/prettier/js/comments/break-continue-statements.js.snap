@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: break-continue-statements.js
 ---
+
 # Input
+
 ```js
 for (;;) {
   break /* comment */;
@@ -15,10 +16,27 @@ loop: for (;;) {
   continue /* comment */ loop;
   continue loop /* comment */;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,6 @@
+ for (;;) {
+-  break; /* comment */
+-  continue; /* comment */
++  break /* comment */;
++  continue /* comment */;
+ }
+ 
+ loop: for (;;) {
 ```
 
 # Output
+
 ```js
 for (;;) {
   break /* comment */;
@@ -31,7 +49,7 @@ loop: for (;;) {
   continue /* comment */ loop;
   continue loop /* comment */;
 }
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: while.js
 ---
+
 # Input
+
 ```js
 while(
     true
@@ -27,10 +28,48 @@ while(true) /* comment */ ++x;
 
 while(1) // Comment
   foo();
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -3,25 +3,18 @@
+   // Comment
+ ) {}
+ 
+-while (true) {
+-  // Comment
+-}
++while (true) {} // Comment
+ 
+ while (true) {} // Comment
+ 
+-while (true) {
+-  /*Comment*/
+-}
++while (true) /*Comment*/ {}
+ 
+ while (
+-  true && // Comment
+-  true // Comment
++  true && true // Comment // Comment
+ ) {}
+ 
+ while (true) {} // comment
+ 
+ while (true) /* comment */ ++x;
+ 
+-while (1)
+-  // Comment
+-  foo();
++while (1) foo(); // Comment
 ```
 
 # Output
+
 ```js
 while (
   true
@@ -52,7 +91,7 @@ while (true) {} // comment
 while (true) /* comment */ ++x;
 
 while (1) foo(); // Comment
-
 ```
+
 
 

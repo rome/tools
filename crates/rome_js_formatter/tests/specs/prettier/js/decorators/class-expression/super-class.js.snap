@@ -1,16 +1,43 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: super-class.js
 ---
+
 # Input
+
 ```js
 class Foo extends (@deco class Foo {}){}
 
 class Foo extends (@deco class {}){}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,9 @@
+-class Foo extends (
+-  @deco
+-  class Foo {}
+-) {}
++class Foo extends (@deco class Foo {}
++)
++{
++}
+ 
+-class Foo extends (
+-  @deco
+-  class {}
+-) {}
++class Foo extends (@deco class {}
++)
++{
++}
 ```
 
 # Output
+
 ```js
 class Foo extends (@deco class Foo {}
 )
@@ -21,8 +48,8 @@ class Foo extends (@deco class {}
 )
 {
 }
-
 ```
+
 
 # Errors
 ```

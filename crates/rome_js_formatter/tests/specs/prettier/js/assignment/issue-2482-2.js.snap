@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-2482-2.js
 ---
+
 # Input
+
 ```js
 class foo {
     bar() {
@@ -11,10 +12,30 @@ class foo {
             : (dates[half - 1].getTime() + dates[half].getTime()) / 2.0;
     }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,8 @@
+ class foo {
+   bar() {
+     const median =
+-      dates.length % 2
+-        ? dates[half].getTime()
+-        : (dates[half - 1].getTime() + dates[half].getTime()) / 2.0;
++      dates.length % 2 ? dates[half].getTime() : (
++        dates[half - 1].getTime() + dates[half].getTime()
++      ) / 2.0;
+   }
+ }
 ```
 
 # Output
+
 ```js
 class foo {
   bar() {
@@ -24,7 +45,7 @@ class foo {
       ) / 2.0;
   }
 }
-
 ```
+
 
 

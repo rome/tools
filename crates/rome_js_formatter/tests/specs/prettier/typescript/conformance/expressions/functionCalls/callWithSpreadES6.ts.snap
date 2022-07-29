@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: callWithSpreadES6.ts
 ---
+
 # Input
+
 ```js
 // @target: ES6
 
@@ -55,10 +56,31 @@ class D extends C {
         super.foo(1, 2, ...a);
     }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -19,9 +19,9 @@
+ obj.foo(1, 2, ...a);
+ obj.foo(1, 2, ...a, "abc");
+ 
+-obj.foo(1, 2, "abc");
+-obj.foo(1, 2, ...a);
+-obj.foo(1, 2, ...a, "abc");
++(obj.foo)(1, 2, "abc");
++(obj.foo)(1, 2, ...a);
++(obj.foo)(1, 2, ...a, "abc");
+ 
+ xa[1].foo(1, 2, "abc");
+ xa[1].foo(1, 2, ...a);
 ```
 
 # Output
+
 ```js
 // @target: ES6
 
@@ -109,7 +131,7 @@ class D extends C {
     super.foo(1, 2, ...a);
   }
 }
-
 ```
+
 
 

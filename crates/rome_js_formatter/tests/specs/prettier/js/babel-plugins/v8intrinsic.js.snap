@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: v8intrinsic.js
 ---
+
 # Input
+
 ```js
 // https://github.com/babel/babel/pull/10148
 
@@ -29,10 +30,36 @@ function *foo() {
 }
 
 foo%bar()
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,6 @@
+ // https://github.com/babel/babel/pull/10148
+ 
+-%DebugPrint(foo);
++%DebugPrint(foo)
+ 
+ // Invalid code https://github.com/JLHwung/babel/blob/c1a3cbfd65e08b7013fd6f8c62add8cb10b4b169/packages/babel-parser/test/fixtures/v8intrinsic/_errors/in-bind-expression/options.json
+ // ::%DebugPrint(null)
+@@ -18,7 +18,8 @@
+ new %DebugPrint(null);
+ 
+ function* foo() {
+-  yield %StringParseInt("42", 10);
++  yield;
++  %StringParseInt("42", 10)
+ }
+ 
+ foo % bar();
 ```
 
 # Output
+
 ```js
 // https://github.com/babel/babel/pull/10148
 
@@ -59,8 +86,8 @@ function* foo() {
 }
 
 foo % bar();
-
 ```
+
 
 # Errors
 ```

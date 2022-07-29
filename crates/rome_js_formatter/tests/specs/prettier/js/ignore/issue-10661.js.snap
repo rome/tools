@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-10661.js
 ---
+
 # Input
+
 ```js
 verylongidentifierthatwillwrap123123123123123(
   a.b
@@ -30,10 +31,44 @@ because the prettier-ignore comment is attached as MemberExpression leading comm
     // prettier-ignore
     .c
 )
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,19 +8,20 @@
+ call(
+   // comment
+   a.
+-    // prettier-ignore
++  // prettier-ignore
+     b,
+ );
+ 
+ call(
+   a(
+-/*
++    /*
+ this won't get formatted too,
+ because the prettier-ignore comment is attached as MemberExpression leading comment
+ */
+-1,
+-2.0000, 3
+-)
++    1,
++    2.0000,
++    3,
++  )
+     // prettier-ignore
+     .c,
+ );
 ```
 
 # Output
+
 ```js
 verylongidentifierthatwillwrap123123123123123(
   a.b
@@ -62,8 +97,8 @@ because the prettier-ignore comment is attached as MemberExpression leading comm
     // prettier-ignore
     .c,
 );
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

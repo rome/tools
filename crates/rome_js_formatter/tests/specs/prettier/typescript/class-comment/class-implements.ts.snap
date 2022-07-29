@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: class-implements.ts
 ---
+
 # Input
+
 ```js
 class a1 extends b // comment
 implements z
@@ -77,10 +78,104 @@ b // comment-b2
     {
   constructor() {}
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -12,8 +12,10 @@
+ 
+ class a3
+   extends b
+-  // comment
+-  implements z, y
++  implements
++    // comment
++    z,
++    y
+ {
+   constructor() {}
+ }
+@@ -31,60 +33,56 @@
+   extends b
+   implements
+     z, // comment-z
+-    y
++    y // comment-y
+ {
+-  // comment-y
+   constructor() {}
+ }
+ 
+ class a6
+   extends b
+-  // comment-z1
+   implements
++    // comment-z1
+     z, // comment-z2
+     // comment-y1
+-    y
++    y // comment-y2
+ {
+-  // comment-y2
+   constructor() {}
+ }
+ 
+ class a7
+   extends b
+-  // comment-z1
+   implements
++    // comment-z1
+     z, // comment-z2
+     // comment-y1
+-    y
++    y // comment-y2
++// comment-y3
+ {
+-  // comment-y2
+-  // comment-y3
+   //comment-body
+   constructor() {}
+ }
+ 
+ class a8
+   extends b // comment-b
+-  // comment-z1
+   implements
++    // comment-z1
+     z, // comment-z2
+     // comment-y1
+-    y
++    y // comment-y2
+ {
+-  // comment-y2
+   constructor() {}
+ }
+ 
+ class a9
++  extends
+   // comment-b1
+-  extends b // comment-b2
++  b // comment-b2
+   // comment-b3
+-  // comment-z1
+   implements
++    // comment-z1
+     z, // comment-z2
+     // comment-y1
+-    y
++    y // comment-y2
+ {
+-  // comment-y2
+   constructor() {}
+ }
 ```
 
 # Output
+
 ```js
 class a1
   extends b // comment
@@ -170,7 +265,7 @@ class a9
 {
   constructor() {}
 }
-
 ```
+
 
 

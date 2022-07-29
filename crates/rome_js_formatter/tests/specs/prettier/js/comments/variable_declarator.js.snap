@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: variable_declarator.js
 ---
+
 # Input
+
 ```js
 let obj1 = // Comment
 {
@@ -70,10 +71,66 @@ let // Comment
 const foo3 = 123
 // Nothing to see here.
 ;["2", "3"].forEach(x => console.log(x))
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -38,35 +38,29 @@
+   "val",
+ ];
+ 
+-let obj9 =
+-  // Comment
+-  `val`;
++let obj9 = // Comment
++`val`;
+ 
+-let obj10 =
+-  // Comment
+-  `
++let obj10 = // Comment
++`
+ val
+ val
+ `;
+ 
+-let obj11 =
+-  // Comment
+-  tag`val`;
++let obj11 = tag // Comment
++`val`;
+ 
+-let obj12 =
+-  // Comment
+-  tag`
++let obj12 = tag // Comment
++`
+ val
+ val
+ `;
+ 
+-let // Comment
+-  foo1 = "val";
++let foo1 = "val"; // Comment
+ 
+-let // Comment
+-  foo2 = "val",
+-  bar = "val";
++let foo2 = "val", bar = "val"; // Comment
+ 
+-const foo3 = 123;
++const foo3 = 123
+ // Nothing to see here.
++;
+ ["2", "3"].forEach((x) => console.log(x));
 ```
 
 # Output
+
 ```js
 let obj1 =
   // Comment
@@ -141,7 +198,7 @@ const foo3 = 123
 // Nothing to see here.
 ;
 ["2", "3"].forEach((x) => console.log(x));
-
 ```
+
 
 

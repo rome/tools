@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: dynamic_imports.js
 ---
+
 # Input
+
 ```js
 import(/* Hello */ 'something')
 
@@ -24,10 +24,29 @@ wrap(
     'something'
   )
 )
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,8 +8,8 @@
+ 
+ import(
+   /* Hello */
+-  "something"
+-  /* Hello */
++  "something",
++/* Hello */
+ );
+ 
+ wrap(import(/* Hello */ "something"));
 ```
 
 # Output
+
 ```js
 import(/* Hello */ "something");
 
@@ -44,7 +63,7 @@ import(
 );
 
 wrap(import(/* Hello */ "something"));
-
 ```
+
 
 

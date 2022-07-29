@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: long_name_method.js
 ---
+
 # Input
+
 ```js
 class X {
   constructor() {
@@ -12,10 +13,27 @@ class X {
   testLongNameMethodAndSomethingElseLallala() {
     return true;
   }
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,7 @@
+ class X {
+   constructor() {
+     this.testLongNameMethodAndSomethingElseLallala =
+-      ::this.testLongNameMethodAndSomethingElseLallala;
++    ::this.testLongNameMethodAndSomethingElseLallala
+   }
+ 
+   testLongNameMethodAndSomethingElseLallala() {
 ```
 
 # Output
+
 ```js
 class X {
   constructor() {
@@ -27,8 +45,8 @@ class X {
     return true;
   }
 }
-
 ```
+
 
 # Errors
 ```

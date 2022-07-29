@@ -1,23 +1,38 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: unary.js
 ---
+
 # Input
+
 ```js
 const anyTestFailures = !(
   aggregatedResults.numFailedTests === 0 &&
   aggregatedResults.numRuntimeErrorTestSuites === 0
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,3 @@
+ const anyTestFailures = !(
+-  aggregatedResults.numFailedTests === 0 &&
+-  aggregatedResults.numRuntimeErrorTestSuites === 0
++  aggregatedResults.numFailedTests === 0 && aggregatedResults.numRuntimeErrorTestSuites === 0
+ );
 ```
 
 # Output
+
 ```js
 const anyTestFailures = !(
   aggregatedResults.numFailedTests === 0 && aggregatedResults.numRuntimeErrorTestSuites === 0
 );
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

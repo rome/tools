@@ -1,22 +1,37 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-5370.ts
 ---
+
 # Input
+
 ```js
 const durabilityMetricsSelectable: Immutable.OrderedSet<
   SomeReportingMetric,
 > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,2 +1,3 @@
+-const durabilityMetricsSelectable: Immutable.OrderedSet<SomeReportingMetric> =
+-  myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
++const durabilityMetricsSelectable: Immutable.OrderedSet<
++  SomeReportingMetric,
++> = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
 ```
 
 # Output
+
 ```js
 const durabilityMetricsSelectable: Immutable.OrderedSet<
   SomeReportingMetric,
 > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
-
 ```
+
 
 # Errors
 ```

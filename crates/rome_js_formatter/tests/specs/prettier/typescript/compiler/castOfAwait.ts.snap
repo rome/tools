@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: castOfAwait.ts
 ---
+
 # Input
+
 ```js
 // @target: es6
 async function f() {
@@ -12,10 +13,30 @@ async function f() {
     await void <string> typeof <number> void await 0;
     await await 0;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,8 @@
+ // @target: es6
+ async function f() {
+   <number>await 0;
+-  typeof (await 0);
+-  void (await 0);
+-  await void (<string>typeof (<number>void (await 0)));
++  typeof await 0;
++  void await 0;
++  await void <string>typeof <number>void await 0;
+   await await 0;
+ }
 ```
 
 # Output
+
 ```js
 // @target: es6
 async function f() {
@@ -25,7 +46,7 @@ async function f() {
   await void <string>typeof <number>void await 0;
   await await 0;
 }
-
 ```
+
 
 

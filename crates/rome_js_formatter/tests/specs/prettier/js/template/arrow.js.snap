@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: arrow.js
 ---
+
 # Input
+
 ```js
 () => a`
 	a
@@ -11,10 +12,30 @@ expression: arrow.js
 () => `
 	a
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,9 @@
+-() => a`
++() =>
++  a`
+ 	a
+ `;
+ 
+-() => `
++() =>
++  `
+ 	a
+ `;
 ```
 
 # Output
+
 ```js
 () =>
   a`
@@ -25,7 +46,7 @@ expression: arrow.js
   `
 	a
 `;
-
 ```
+
 
 

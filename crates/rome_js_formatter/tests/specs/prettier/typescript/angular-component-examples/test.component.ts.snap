@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: test.component.ts
 ---
+
 # Input
+
 ```js
 @Component({
        selector: 'app-test',
@@ -21,10 +22,50 @@ expression: test.component.ts
 ]
 })
 class     TestComponent {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,17 +1,17 @@
+ @Component({
+-  selector: "app-test",
+-  template: `<ul>
+-    <li>test</li>
+-  </ul> `,
+-  styles: [
+-    `
+-      :host {
+-        color: red;
+-      }
+-      div {
+-        background: blue;
+-      }
+-    `,
+-  ],
++       selector: 'app-test',
++  template: `<ul>   <li>test</li>
++  </ul>
++  `,
++  styles: [   `
++  
++ :host {
++   color: red;
++ } 
++ div { background: blue
++ }
++`
++
++]
+ })
+ class TestComponent {}
 ```
 
 # Output
+
 ```js
 @Component({
        selector: 'app-test',
@@ -43,7 +84,7 @@ class     TestComponent {}
 ]
 })
 class TestComponent {}
-
 ```
+
 
 

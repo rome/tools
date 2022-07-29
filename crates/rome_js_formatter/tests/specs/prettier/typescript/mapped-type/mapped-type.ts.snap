@@ -1,16 +1,35 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: mapped-type.ts
 ---
+
 # Input
+
 ```js
 type Keys = 'option1' | 'option2';
 type A = { [K in Keys] };
 type B = { [K in Keys]+? };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,7 @@
+ type Keys = "option1" | "option2";
+-type A = { [K in Keys] };
+-type B = { [K in Keys]+? };
++type A = {
++  [K in Keys];
++};
++type B = {
++  [K in Keys]+?;
++};
 ```
 
 # Output
+
 ```js
 type Keys = "option1" | "option2";
 type A = {
@@ -19,7 +38,7 @@ type A = {
 type B = {
   [K in Keys]+?;
 };
-
 ```
+
 
 

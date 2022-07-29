@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: conditional-expression.js
 ---
+
 # Input
+
 ```js
 async function f() {
   const result = typeof fn === 'function' ? await fn() : null;
@@ -18,10 +19,25 @@ async function f2() {
   await (spellcheck && spellcheck.setChecking(false));
   await spellcheck && spellcheck.setChecking(false)
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,5 +8,5 @@
+ 
+ async function f2() {
+   await (spellcheck && spellcheck.setChecking(false));
+-  (await spellcheck) && spellcheck.setChecking(false);
++  await spellcheck && spellcheck.setChecking(false);
+ }
 ```
 
 # Output
+
 ```js
 async function f() {
   const result = typeof fn === "function" ? await fn() : null;
@@ -35,7 +51,7 @@ async function f2() {
   await (spellcheck && spellcheck.setChecking(false));
   await spellcheck && spellcheck.setChecking(false);
 }
-
 ```
+
 
 

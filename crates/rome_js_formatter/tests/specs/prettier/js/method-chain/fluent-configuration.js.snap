@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: fluent-configuration.js
 ---
+
 # Input
+
 ```js
 domain
     .concept('Page')
@@ -22,10 +23,32 @@ domain
     .concept(CONCEPT_NAME)
     .val('title')
     .vals()
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,7 @@
+ domain.concept("Page").val("title", "string").vals("widgets", "Widget");
+-domain
+-  .concept("Widget")
+-  .val("title", "string")
+-  .val("color", "Color")
+-  .val("foo", "Foo")
+-  .val("bar", "Bar");
++domain.concept("Widget").val("title", "string").val("color", "Color").val(
++  "foo",
++  "Foo",
++).val("bar", "Bar");
+ domain.concept("Widget").val("title", "string").val("color", "Color");
+ domain.concept(CONCEPT_NAME).val("title").vals();
 ```
 
 # Output
+
 ```js
 domain.concept("Page").val("title", "string").vals("widgets", "Widget");
 domain.concept("Widget").val("title", "string").val("color", "Color").val(
@@ -34,7 +57,7 @@ domain.concept("Widget").val("title", "string").val("color", "Color").val(
 ).val("bar", "Bar");
 domain.concept("Widget").val("title", "string").val("color", "Color");
 domain.concept(CONCEPT_NAME).val("title").vals();
-
 ```
+
 
 

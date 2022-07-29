@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: functionTypeLong.ts
 ---
+
 # Input
+
 ```js
 type AwkwardlyLongFunctionTypeDefinition = <
     GenericTypeNumberOne,
@@ -13,10 +14,24 @@ type AwkwardlyLongFunctionTypeDefinition = <
     arg2: GenericTypeNumberTwo,
     arg3: GenericTypeNumberThree
 ) => (GenericTypeNumberOne | GenericTypeNumberTwo | GenericTypeNumberThree);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,4 +6,4 @@
+   arg1: GenericTypeNumberOne,
+   arg2: GenericTypeNumberTwo,
+   arg3: GenericTypeNumberThree,
+-) => GenericTypeNumberOne | GenericTypeNumberTwo | GenericTypeNumberThree;
++) => (GenericTypeNumberOne | GenericTypeNumberTwo | GenericTypeNumberThree);
 ```
 
 # Output
+
 ```js
 type AwkwardlyLongFunctionTypeDefinition = <
   GenericTypeNumberOne,
@@ -27,7 +42,7 @@ type AwkwardlyLongFunctionTypeDefinition = <
   arg2: GenericTypeNumberTwo,
   arg3: GenericTypeNumberThree,
 ) => (GenericTypeNumberOne | GenericTypeNumberTwo | GenericTypeNumberThree);
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: template-literal.js
 ---
+
 # Input
+
 ```js
 `
 ${a // comment
@@ -16,10 +17,27 @@ ${// comment
 d //comment
 };
 `
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,7 +5,7 @@
+ 
+ ${b /* comment */}
+ 
+-${/* comment */ c /* comment */}
++${ /* comment */ c /* comment */}
+ 
+ ${
+   // comment
 ```
 
 # Output
+
 ```js
 `
 ${
@@ -35,7 +53,7 @@ ${
   d //comment
 };
 `;
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: without-annotation.ts
 ---
+
 # Input
+
 ```js
 class Foo {
   a!
@@ -16,10 +17,40 @@ let a! = x
 const b! = x
 var c/* */! = x
 export const d! = x
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,12 @@
+ class Foo {
+-  a!;
+-  #b!;
+-  static c!;
+-  [d]! = 1;
+-  "e"!;
++  a!
++  #b!
++  static c!
++  [d]! = 1
++  'e'!
+ }
+ 
+-let a! = x;
+-const b! = x;
+-var c! /* */ = x;
+-export const d! = x;
++let a! = x
++const b! = x
++var c/* */! = x
++export const d! = x
 ```
 
 # Output
+
 ```js
 class Foo {
   a!
@@ -33,8 +64,8 @@ let a! = x
 const b! = x
 var c/* */! = x
 export const d! = x
-
 ```
+
 
 # Errors
 ```

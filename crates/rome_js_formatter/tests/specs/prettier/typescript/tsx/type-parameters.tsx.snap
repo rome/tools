@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: type-parameters.tsx
 ---
+
 # Input
+
 ```js
 const functionName1 = <T,>(arg) => false;
 const functionName2 = <T extends any>(arg) => false;
@@ -25,10 +26,24 @@ interface Interface2 {
 type Type1<T> = "type1";
 
 type Type2 = Two<T>;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-const functionName1 = <T>(arg) => false;
++const functionName1 = <T,>(arg) => false;
+ const functionName2 = <T extends any>(arg) => false;
+ const functionName3 = <T, S>(arg) => false;
+ 
 ```
 
 # Output
+
 ```js
 const functionName1 = <T,>(arg) => false;
 const functionName2 = <T extends any>(arg) => false;
@@ -51,7 +66,7 @@ interface Interface2 {
 type Type1<T> = "type1";
 
 type Type2 = Two<T>;
-
 ```
+
 
 

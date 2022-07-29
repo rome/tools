@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: ramda_compose.js
 ---
+
 # Input
+
 ```js
 var classyGreeting = (firstName, lastName) =>
   "The name's " + lastName + ", " + firstName + " " + lastName;
@@ -47,10 +48,38 @@ const mapStateToProps = state => ({
   users: R.compose( R.filter(R.propEq('status', 'active')),
     R.values)(state.users)
 });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -34,14 +34,13 @@
+ 
+ //  followersForUser :: String -> Promise [UserId]
+ var followersForUser = R.composeP(lookupFollowers, lookupUser);
+-followersForUser("JOE").then((followers) =>
+-  console.log("Followers:", followers),
++followersForUser("JOE").then(
++  (followers) => console.log("Followers:", followers),
+ );
+ // Followers: ["STEVE","SUZY"]
+ 
+ const mapStateToProps = (state) => ({
+-  users: R.compose(
+-    R.filter(R.propEq("status", "active")),
+-    R.values,
+-  )(state.users),
++  users: R.compose(R.filter(R.propEq("status", "active")), R.values)(
++    state.users,
++  ),
+ });
 ```
 
 # Output
+
 ```js
 var classyGreeting = (firstName, lastName) =>
   "The name's " + lastName + ", " + firstName + " " + lastName;
@@ -98,7 +127,7 @@ const mapStateToProps = (state) => ({
     state.users,
   ),
 });
-
 ```
+
 
 

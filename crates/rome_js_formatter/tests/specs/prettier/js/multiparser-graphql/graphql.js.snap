@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: graphql.js
 ---
+
 # Input
+
 ```js
 graphql(schema, `
 mutation     MarkReadNotificationMutation(
@@ -10,10 +11,36 @@ mutation     MarkReadNotificationMutation(
     : MarkReadNotificationData!
   )
 { markReadNotification(data: $input ) { notification {seenState} } }`)
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,9 @@
+ graphql(
+   schema,
+   `
+-    mutation MarkReadNotificationMutation($input: MarkReadNotificationData!) {
+-      markReadNotification(data: $input) {
+-        notification {
+-          seenState
+-        }
+-      }
+-    }
+-  `,
++mutation     MarkReadNotificationMutation(
++    $input
++    : MarkReadNotificationData!
++  )
++{ markReadNotification(data: $input ) { notification {seenState} } }`,
+ );
 ```
 
 # Output
+
 ```js
 graphql(
   schema,
@@ -24,7 +51,7 @@ mutation     MarkReadNotificationMutation(
   )
 { markReadNotification(data: $input ) { notification {seenState} } }`,
 );
-
 ```
+
 
 

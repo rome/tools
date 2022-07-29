@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: mapped_types.ts
 ---
+
 # Input
+
 ```js
 type A = {
   // commentA
@@ -44,10 +45,56 @@ type K = { [k in /* commentK */ K]: string }
 type L = { [l in L /* commentL */]: string }
 
 type M = { [m in M] /* commentG */: string }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -24,17 +24,30 @@
+ };
+ 
+ type G = {
+-  [g in G /* commentG */]: string;
++  [g in G] /* commentG */ : string;
+ };
+ 
+-type H = { [/* commentH */ h in H]: string };
++type H = {
++  /* commentH */
++  [h in H]: string;
++};
+ 
+-type I = { [/* commentI */ i in I]: string };
++type I = {
++  [/* commentI */ i in I]: string;
++};
+ 
+-type J = { [j /* commentJ */ in J]: string };
++type J = {
++  [j /* commentJ */ in J]: string;
++};
+ 
+-type K = { [k in /* commentK */ K]: string };
++type K = {
++  [k in /* commentK */ K]: string;
++};
+ 
+-type L = { [l in L /* commentL */]: string };
++type L = {
++  [l in L /* commentL */]: string;
++};
+ 
+-type M = { [m in M /* commentG */]: string };
++type M = {
++  [m in M] /* commentG */ : string;
++};
 ```
 
 # Output
+
 ```js
 type A = {
   // commentA
@@ -102,7 +149,7 @@ type L = {
 type M = {
   [m in M] /* commentG */ : string;
 };
-
 ```
+
 
 

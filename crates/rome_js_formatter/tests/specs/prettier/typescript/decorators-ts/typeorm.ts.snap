@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: typeorm.ts
 ---
+
 # Input
+
 ```js
 @Entity()
 export class Board {
@@ -26,10 +27,26 @@ export class Board {
     topics: Topic[]
 
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -15,6 +15,6 @@
+   @Column()
+   description: string;
+ 
+-  @OneToMany((type) => Topic, (topic) => topic.board)
++  @OneToMany(type => Topic, topic => topic.board)
+   topics: Topic[];
+ }
 ```
 
 # Output
+
 ```js
 @Entity()
 export class Board {
@@ -51,7 +68,7 @@ export class Board {
   @OneToMany(type => Topic, topic => topic.board)
   topics: Topic[];
 }
-
 ```
+
 
 

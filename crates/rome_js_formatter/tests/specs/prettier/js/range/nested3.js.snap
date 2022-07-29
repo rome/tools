@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: nested3.js
 ---
+
 # Input
+
 ```js
 try {
 1;if (condition) {
@@ -10,10 +11,31 @@ try {
   }
 }
 catch (err) {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,7 @@
+ try {
+-  1;
+-  if (condition) {
+-    body;
+-  }
+-} catch (err) {}
++1;
++if (condition) {
++  body;
++}
++}
++catch (err) {}
 ```
 
 # Output
+
 ```js
 try {
 1;
@@ -22,7 +44,7 @@ if (condition) {
 }
 }
 catch (err) {}
-
 ```
+
 
 

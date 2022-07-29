@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-5697.js
 ---
+
 # Input
+
 ```js
 const StyledH1 = styled.div`
   font-size: 2.5em;
@@ -21,10 +22,42 @@ const StyledH1 = styled.div`
     font-size: 2em;
   }
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,15 +4,16 @@
+   font-family: ${constants.text.displayFont.fontFamily};
+   letter-spacing: ${(props) => (props.light ? "0.04em" : 0)};
+   color: ${(props) => props.textColor};
+-  ${(props) =>
+-    props.center
+-      ? ` display: flex;
++  ${
++  (props) =>
++    props.center ? ` display: flex;
+                 align-items: center;
+                 justify-content: center;
+-                text-align: center;`
+-      : ""}
+-  @media (max-width: ${(props) =>
+-    props.noBreakPoint ? "0" : constants.layout.breakpoint.break1}px) {
++                text-align: center;` : ""
++}
++  @media (max-width: ${
++  (props) => (props.noBreakPoint ? "0" : constants.layout.breakpoint.break1)
++}px) {
+     font-size: 2em;
+   }
+ `;
 ```
 
 # Output
+
 ```js
 const StyledH1 = styled.div`
   font-size: 2.5em;
@@ -45,7 +78,7 @@ const StyledH1 = styled.div`
     font-size: 2em;
   }
 `;
-
 ```
+
 
 
