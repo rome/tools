@@ -79,7 +79,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
                     r_curly_token_ref.leading_trivia().first().map(|t| t.kind()),
                     Some(TriviaPieceKind::Skipped)
                 ) {
-                    write!(f, [space_token(), r_curly_token.format()])
+                    write!(f, [space(), r_curly_token.format()])
                 } else {
                     write!(f, [r_curly_token.format()])
                 }
