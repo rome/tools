@@ -158,6 +158,13 @@ Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useCamelCase">
+	<a href="/docs/lint/rules/useCamelCase">useCamelCase (since v0.8.0)</a>
+	<a class="header-anchor" href="#useCamelCase"></a>
+</h3>
+Enforce camel case naming convention.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>

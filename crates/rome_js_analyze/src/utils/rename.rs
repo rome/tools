@@ -88,6 +88,36 @@ pub trait RenameSymbolExtensions {
         new_name: &str,
     ) -> bool;
 
+    /// Rename a symbol using the new name from the candidates iterator
+    /// until the first success.
+    ///
+    /// A usual use case is to append a suffix to a variable name.
+    ///
+    /// ```ignore
+    /// let new_name = "new_name";
+    /// let candidates = (2..).map(|i| format!("{}{}", new_name, i).into());
+    /// let candidates = once(Cow::from(new_name)).chain(candidates);
+    /// batch.try_rename_node_declaration_until_success(model, node, candidates);
+    /// ```
+    fn rename_node_declaration_with_retry<S, I>(
+        &mut self,
+        model: &SemanticModel,
+        node: impl RenamableNode + Clone,
+        candidates: I,
+    ) -> bool
+    where
+        S: AsRef<str>,
+        I: Iterator<Item = S>,
+    {
+        for candidate in candidates {
+            if self.rename_node_declaration(model, node.clone(), candidate.as_ref()) {
+                return true;
+            }
+        }
+
+        false
+    }
+
     /// Rename the binding and all its references to "new_name".
     fn rename_any_renamable_node(
         &mut self,
