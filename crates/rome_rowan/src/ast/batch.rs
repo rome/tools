@@ -2,9 +2,15 @@ use rome_text_edit::Indel;
 use text_size::TextRange;
 
 use crate::{
-    AstNode, Language, SyntaxElement, SyntaxNode, SyntaxNodeCast, SyntaxSlot, SyntaxToken,
+    AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxNodeCast, SyntaxSlot,
+    SyntaxToken,
 };
-use std::{any::type_name, collections::BinaryHeap, iter::once};
+use std::{
+    any::type_name,
+    cmp,
+    collections::BinaryHeap,
+    iter::{empty, once},
+};
 
 pub trait BatchMutationExt<L>: AstNode<Language = L>
 where
@@ -29,10 +35,11 @@ where
 }
 
 /// Stores the changes internally used by the [BatchMutation::commit] algorithm.
-/// It needs to be sorted by depth, then by range start and range end.
+/// It needs to be sorted by depth in decreasing order, then by range start and
+/// by slot in increasing order.
 ///
 /// This is necesasry so we can aggregate all changes to the same node using "peek".
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct CommitChange<L: Language> {
     parent_depth: usize,
     parent: Option<SyntaxNode<L>>,
@@ -41,9 +48,23 @@ struct CommitChange<L: Language> {
     new_node: Option<SyntaxElement<L>>,
 }
 
+impl<L: Language> CommitChange<L> {
+    /// Returns the "ordering key" for a change, controlling in what order this
+    /// change will be applied relatively to other changes. The key consists of
+    /// a tuple of numeric values representing the depth, parent start and slot
+    /// of the corresponding change
+    fn key(&self) -> (usize, cmp::Reverse<u32>, cmp::Reverse<usize>) {
+        (
+            self.parent_depth,
+            cmp::Reverse(self.parent_range.map(|(start, _)| start).unwrap_or(0)),
+            cmp::Reverse(self.new_node_slot),
+        )
+    }
+}
+
 impl<L: Language> PartialEq for CommitChange<L> {
     fn eq(&self, other: &Self) -> bool {
-        self.parent == other.parent
+        self.key() == other.key()
     }
 }
 impl<L: Language> Eq for CommitChange<L> {}
@@ -56,24 +77,17 @@ impl<L: Language> Eq for CommitChange<L> {}
 /// The second is important to guarante that the ".peek()" we do below is sufficient
 /// to see the same node in case of two or more nodes having the same depth.
 impl<L: Language> PartialOrd for CommitChange<L> {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        let self_range = self.parent_range.unwrap_or((0u32, 0u32));
-        let other_range = other.parent_range.unwrap_or((0u32, 0u32));
-
-        (self.parent_depth, self_range.0, self_range.1).partial_cmp(&(
-            other.parent_depth,
-            other_range.0,
-            other_range.1,
-        ))
+    fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {
+        Some(self.cmp(other))
     }
 }
 impl<L: Language> Ord for CommitChange<L> {
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.parent_depth.cmp(&other.parent_depth)
+    fn cmp(&self, other: &Self) -> cmp::Ordering {
+        self.key().cmp(&other.key())
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct BatchMutation<L, N>
 where
     L: Language,
@@ -334,9 +348,20 @@ where
                 // and push a pending change to its parent.
 
                 let mut current_parent = current_parent.detach();
+                let is_list = current_parent.kind().is_list();
+                let mut removed_slots = 0;
 
                 for (index, replace_with) in modifications {
-                    current_parent = current_parent.splice_slots(index..=index, once(replace_with));
+                    let index = index.checked_sub( removed_slots).unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
+
+                    current_parent = if is_list && replace_with.is_none() {
+                        removed_slots += 1;
+                        current_parent.clone().splice_slots(index..=index, empty())
+                    } else {
+                        current_parent
+                            .clone()
+                            .splice_slots(index..=index, once(replace_with))
+                    };
                 }
 
                 changes.push(CommitChange {

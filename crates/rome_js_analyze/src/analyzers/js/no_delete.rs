@@ -116,7 +116,19 @@ impl TryFrom<JsAnyExpression> for MemberExpression {
                     member,
                 } = expr.as_fields();
 
-                if object.is_err() || operator_token.is_err() || member.is_err() {
+                match object {
+                    Ok(expr) if has_optional(&expr)? => return Err(()),
+                    Err(_) => return Err(()),
+                    _ => {}
+                }
+
+                match operator_token {
+                    Ok(token) if token.kind() == T![?.] => return Err(()),
+                    Err(_) => return Err(()),
+                    _ => {}
+                }
+
+                if member.is_err() {
                     return Err(());
                 }
 
@@ -131,8 +143,13 @@ impl TryFrom<JsAnyExpression> for MemberExpression {
                     r_brack_token,
                 } = expr.as_fields();
 
-                if object.is_err()
-                    || optional_chain_token.is_some()
+                match object {
+                    Ok(expr) if has_optional(&expr)? => return Err(()),
+                    Err(_) => return Err(()),
+                    _ => {}
+                }
+
+                if optional_chain_token.is_some()
                     || l_brack_token.is_err()
                     || member.is_err()
                     || r_brack_token.is_err()
@@ -186,5 +203,26 @@ impl TryFrom<MemberExpression> for JsAnyAssignmentPattern {
                 )))
             }
         }
+    }
+}
+
+fn has_optional(expr: &JsAnyExpression) -> Result<bool, ()> {
+    match expr {
+        JsAnyExpression::JsStaticMemberExpression(expr) => match expr.operator_token() {
+            Ok(token) if token.kind() == T![?.] => Ok(true),
+            Err(_) => Err(()),
+            _ => match expr.object() {
+                Ok(expr) => has_optional(&expr),
+                Err(_) => Err(()),
+            },
+        },
+        JsAnyExpression::JsComputedMemberExpression(expr) => match expr.optional_chain_token() {
+            Some(_) => Ok(true),
+            None => match expr.object() {
+                Ok(expr) => has_optional(&expr),
+                Err(_) => Err(()),
+            },
+        },
+        _ => Ok(false),
     }
 }

@@ -27,3 +27,4 @@ quickcheck_macros = "1.0.0"
 
 [features]
 serde = ["rome_js_syntax/serde"]
+tests = []

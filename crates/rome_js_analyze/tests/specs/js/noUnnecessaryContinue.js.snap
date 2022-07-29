@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 95
 expression: noUnnecessaryContinue.js
 ---
 # Input
@@ -193,7 +194,7 @@ Suggested fix: Delete the unnecessary continue statement
 22 22 |   }
 23 23 |   
 24    | - test: for (let i = 0; i < 9; i++) continue test;
-   24 | + test: for (let i = 0; i < 9; i++)
+   24 | + test: for (let i = 0; i < 9; i++) ;
 25 25 |   
 26 26 |   test2: do {
 27 27 |   	continue test2;

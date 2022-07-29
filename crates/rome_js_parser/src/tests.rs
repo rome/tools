@@ -1,12 +1,10 @@
-use crate::{parse, parse_module, Parse};
+use crate::{parse, parse_module, test_utils::assert_errors_are_absent, Parse};
 use expect_test::expect_file;
-use rome_diagnostics::file::SimpleFile;
-use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{file::SimpleFiles, Emitter};
-use rome_js_syntax::{JsAnyRoot, JsLanguage, JsSyntaxKind, SourceType};
-use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, Direction, SyntaxKind, TextSize};
-use std::fmt::{Debug, Write};
+use rome_js_syntax::{JsAnyRoot, JsSyntaxKind, SourceType};
+use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxToken};
+use rome_rowan::{AstNode, Direction, TextSize};
+use std::fmt::Write;
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -156,40 +154,6 @@ fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
         path.display(),
         program.syntax()
     );
-}
-
-// sometimes our parser emits unknown nodes without diagnostics;
-// this check makes sure that we don't signal that the tree has errors.
-fn has_unknown_nodes(node: &JsSyntaxNode) -> bool {
-    node.descendants()
-        .any(|descendant| descendant.kind().is_unknown())
-}
-
-fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path)
-where
-    T: AstNode<Language = JsLanguage> + Debug,
-{
-    let syntax = program.syntax();
-    let debug_tree = format!("{:?}", program.tree());
-    let has_missing_children = debug_tree.contains("missing (required)");
-
-    if !program.has_errors() && !has_unknown_nodes(&syntax) && !has_missing_children {
-        return;
-    }
-
-    let file = SimpleFile::new(path.to_str().unwrap().to_string(), syntax.to_string());
-    let mut emitter = Emitter::new(&file);
-    let mut buffer = Buffer::no_color();
-
-    for diagnostic in program.diagnostics() {
-        emitter.emit_with_writer(diagnostic, &mut buffer).unwrap();
-    }
-
-    panic!("There should be no errors in the file {:?} but the following errors where present:\n{}\n\nParsed tree:\n{:#?}",
-        path.display(),
-        std::str::from_utf8(buffer.as_slice()).unwrap(),
-        &syntax
-	);
 }
 
 #[test]

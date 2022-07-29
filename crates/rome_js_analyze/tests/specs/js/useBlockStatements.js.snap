@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 95
 expression: useBlockStatements.js
 ---
 # Input
@@ -18,7 +19,7 @@ for (x of xs);
 do;
 while (x);
 while (x);
-with (x);
+
 ```
 
 # Diagnostics
@@ -157,7 +158,7 @@ warning[js/useBlockStatements]: Block statements are preferred in this position.
    │ └──────────'
 
 Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -9,7 +9,7 @@
+      | @@ -9,6 +9,6 @@
  8  8 |   for (;;);
  9  9 |   for (p in obj);
 10 10 |   for (x of xs);
@@ -165,7 +166,6 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
    11 | + do {}
 12 12 |   while (x);
 13 13 |   while (x);
-14 14 |   with (x);
 
 
 ```
@@ -178,13 +178,12 @@ warning[js/useBlockStatements]: Block statements are preferred in this position.
    │ ----------
 
 Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -11,5 +11,5 @@
+      | @@ -11,4 +11,4 @@
 10 10 |   for (x of xs);
 11 11 |   do;
 12 12 |   while (x);
 13    | - while (x);
    13 | + while (x) {}
-14 14 |   with (x);
 
 
 ```
