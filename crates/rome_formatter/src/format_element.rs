@@ -1,4 +1,11 @@
-use crate::{GroupId, TextSize};
+use crate::prelude::{dynamic_text, format_with};
+use crate::printer::LineEnding;
+use crate::{
+    format, format_args, group, soft_block_indent, soft_line_break_or_space,
+    soft_line_indent_or_space, space, text, write, Buffer, Format, FormatContext, FormatResult,
+    Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
+};
+use indexmap::IndexSet;
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
@@ -6,7 +13,7 @@ use rome_rowan::SyntaxTokenText;
 use std::any::type_name;
 use std::any::TypeId;
 use std::borrow::Cow;
-use std::fmt::{self, Debug, Formatter};
+use std::hash::{Hash, Hasher};
 use std::ops::Deref;
 use std::rc::Rc;
 
@@ -127,8 +134,18 @@ impl Verbatim {
     }
 }
 
-impl Debug for FormatElement {
-    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+impl std::fmt::Display for FormatElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let formatted = format!(IrFormatContext::default(), [self])
+            .expect("Formatting not to throw any FormatErrors");
+
+        f.write_str(formatted.print().as_code())
+    }
+}
+
+impl std::fmt::Debug for FormatElement {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use std::write;
         match self {
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(content) => fmt.debug_tuple("Line").field(content).finish(),
@@ -185,8 +202,8 @@ pub struct List {
     content: Vec<FormatElement>,
 }
 
-impl Debug for List {
-    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+impl std::fmt::Debug for List {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
         fmt.debug_list().entries(&self.content).finish()
     }
 }
@@ -239,8 +256,8 @@ pub struct Group {
     pub(crate) id: Option<GroupId>,
 }
 
-impl Debug for Group {
-    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+impl std::fmt::Debug for Group {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
         if let Some(id) = &self.id {
             fmt.debug_struct("")
                 .field("content", &self.content)
@@ -336,13 +353,13 @@ impl BestFitting {
     }
 }
 
-impl Debug for BestFitting {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+impl std::fmt::Debug for BestFitting {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_list().entries(&*self.variants).finish()
     }
 }
 
-#[derive(Clone, Eq, PartialEq)]
+#[derive(Clone)]
 pub struct Interned(Rc<FormatElement>);
 
 impl Interned {
@@ -351,8 +368,25 @@ impl Interned {
     }
 }
 
-impl Debug for Interned {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+impl PartialEq for Interned {
+    fn eq(&self, other: &Interned) -> bool {
+        Rc::ptr_eq(&self.0, &other.0)
+    }
+}
+
+impl Eq for Interned {}
+
+impl Hash for Interned {
+    fn hash<H>(&self, hasher: &mut H)
+    where
+        H: Hasher,
+    {
+        hasher.write_usize(Rc::as_ptr(&self.0) as usize);
+    }
+}
+
+impl std::fmt::Debug for Interned {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.0.fmt(f)
     }
 }
@@ -365,11 +399,25 @@ impl Deref for Interned {
     }
 }
 
-#[derive(Eq, PartialEq, Copy, Clone, Debug)]
+#[derive(Eq, PartialEq, Copy, Clone)]
 pub struct LabelId {
     id: TypeId,
     #[cfg(debug_assertions)]
     label: &'static str,
+}
+
+#[cfg(debug_assertions)]
+impl std::fmt::Debug for LabelId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(self.label)
+    }
+}
+
+#[cfg(not(debug_assertions))]
+impl std::fmt::Debug for LabelId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::write!(f, "#{}", self.id)
+    }
 }
 
 impl LabelId {
@@ -401,8 +449,8 @@ impl Label {
     }
 }
 
-impl Debug for Label {
-    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+impl std::fmt::Debug for Label {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
         fmt.debug_struct("")
             .field("label_id", &self.label_id)
             .field("content", &self.content)
@@ -462,8 +510,10 @@ pub enum Text {
     },
 }
 
-impl Debug for Text {
-    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+impl std::fmt::Debug for Text {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use std::write;
+
         // This does not use debug_tuple so the tokens are
         // written on a single line even when pretty-printing
         match self {
@@ -662,6 +712,238 @@ impl FromIterator<FormatElement> for FormatElement {
 impl From<ConditionalGroupContent> for FormatElement {
     fn from(token: ConditionalGroupContent) -> Self {
         FormatElement::ConditionalGroupContent(token)
+    }
+}
+
+#[derive(Clone, Default, Debug)]
+struct IrFormatContext {
+    /// The interned elements that have been printed to this point
+    printed_interned_elements: IndexSet<Interned>,
+}
+
+impl FormatContext for IrFormatContext {
+    fn indent_style(&self) -> IndentStyle {
+        IndentStyle::Space(2)
+    }
+
+    fn line_width(&self) -> LineWidth {
+        LineWidth(80)
+    }
+
+    fn as_print_options(&self) -> PrinterOptions {
+        PrinterOptions {
+            tab_width: 2,
+            print_width: self.line_width(),
+            line_ending: LineEnding::LineFeed,
+            indent_string: "  ".to_string(),
+        }
+    }
+}
+
+impl Format<IrFormatContext> for FormatElement {
+    fn fmt(&self, f: &mut crate::Formatter<IrFormatContext>) -> FormatResult<()> {
+        match self {
+            FormatElement::Space => {
+                write!(f, [text(" ")])
+            }
+            FormatElement::Line(mode) => match mode {
+                LineMode::SoftOrSpace => {
+                    write!(f, [text("soft_line_break_or_space")])
+                }
+                LineMode::Soft => {
+                    write!(f, [text("soft_line_break")])
+                }
+                LineMode::Hard => {
+                    write!(f, [text("hard_line_break")])
+                }
+                LineMode::Empty => {
+                    write!(f, [text("empty_line")])
+                }
+            },
+            FormatElement::ExpandParent => {
+                write!(f, [text("expand_parent")])
+            }
+            text @ FormatElement::Text(_) => f.write_element(text.clone()),
+            FormatElement::LineSuffixBoundary => {
+                write!(f, [text("line_suffix_boundary")])
+            }
+            FormatElement::Indent(content) => {
+                write!(f, [text("indent("), content.as_ref(), text(")")])
+            }
+            FormatElement::List(list) => {
+                write!(f, [list.as_ref()])
+            }
+            FormatElement::LineSuffix(line_suffix) => {
+                write!(f, [text("line_suffix("), line_suffix.as_ref(), text(")")])
+            }
+            FormatElement::Comment(content) => {
+                write!(f, [text("comment("), content.as_ref(), text(")")])
+            }
+            FormatElement::Verbatim(verbatim) => {
+                write!(f, [text("verbatim("), verbatim.content.as_ref(), text(")")])
+            }
+            FormatElement::Group(group_element) => {
+                write!(f, [text("group(")])?;
+
+                if let Some(id) = group_element.id {
+                    write!(
+                        f,
+                        [group(&soft_block_indent(&format_args![
+                            group_element.content.as_ref(),
+                            text(","),
+                            soft_line_break_or_space(),
+                            text("{"),
+                            group(&format_args![soft_line_indent_or_space(&format_args![
+                                text("id:"),
+                                space(),
+                                dynamic_text(&std::format!("{id:?}"), TextSize::default()),
+                                soft_line_break_or_space()
+                            ])]),
+                            text("}")
+                        ]))]
+                    )?;
+                } else {
+                    write!(f, [group_element.content.as_ref()])?;
+                }
+
+                write!(f, [text(")")])
+            }
+            FormatElement::ConditionalGroupContent(content) => {
+                match content.mode {
+                    PrintMode::Flat => {
+                        write!(f, [text("if_group_fits_on_line")])?;
+                    }
+                    PrintMode::Expanded => {
+                        write!(f, [text("if_group_breaks")])?;
+                    }
+                }
+
+                write!(f, [text("(")])?;
+
+                if let Some(id) = content.group_id {
+                    write!(
+                        f,
+                        [group(&soft_block_indent(&format_args![
+                            content.content.as_ref(),
+                            text(","),
+                            soft_line_break_or_space(),
+                            text("{"),
+                            group(&format_args![soft_line_indent_or_space(&format_args![
+                                text("id:"),
+                                space(),
+                                dynamic_text(&std::format!("{id:?}"), TextSize::default()),
+                                soft_line_break_or_space()
+                            ])]),
+                            text("}")
+                        ]))]
+                    )?;
+                } else {
+                    write!(f, [content.content.as_ref()])?;
+                }
+
+                write!(f, [text(")")])
+            }
+            FormatElement::Label(labelled) => {
+                let label_id = labelled.label_id;
+                write!(
+                    f,
+                    [
+                        text("label(\""),
+                        dynamic_text(&std::format!("{label_id:?}"), TextSize::default()),
+                        text("\","),
+                        space(),
+                        labelled.content.as_ref(),
+                        text(")")
+                    ]
+                )
+            }
+            FormatElement::Fill(fill) => {
+                write!(
+                    f,
+                    [
+                        text("fill("),
+                        fill.separator.as_ref(),
+                        text(","),
+                        space(),
+                        fill.content(),
+                        text(")")
+                    ]
+                )
+            }
+
+            FormatElement::BestFitting(best_fitting) => {
+                write!(
+                    f,
+                    [text("best_fitting("), best_fitting.variants(), text(")")]
+                )
+            }
+            FormatElement::Interned(interned) => {
+                let (index, inserted) = f
+                    .context_mut()
+                    .printed_interned_elements
+                    .insert_full(interned.clone());
+
+                if inserted {
+                    write!(
+                        f,
+                        [
+                            dynamic_text(&std::format!("<interned {index}>"), TextSize::default()),
+                            space(),
+                            &interned.0.as_ref()
+                        ]
+                    )
+                } else {
+                    write!(
+                        f,
+                        [dynamic_text(
+                            &std::format!("<ref interned *{index}>"),
+                            TextSize::default()
+                        )]
+                    )
+                }
+            }
+        }
+    }
+}
+
+impl<'a> Format<IrFormatContext> for &'a [FormatElement] {
+    fn fmt(&self, f: &mut Formatter<IrFormatContext>) -> FormatResult<()> {
+        write!(
+            f,
+            [
+                text("["),
+                group(&soft_block_indent(&format_with(|f| {
+                    let mut joiner = f.join_with(soft_line_break_or_space());
+                    let len = self.len();
+
+                    for (index, element) in self.iter().enumerate() {
+                        joiner.entry(&format_with(|f| {
+                            let print_as_str =
+                                matches!(element, FormatElement::Text(_) | FormatElement::Space);
+
+                            if print_as_str {
+                                write!(f, [text("\"")])?;
+                            }
+
+                            write!(f, [group(&element)])?;
+
+                            if print_as_str {
+                                write!(f, [text("\"")])?;
+                            }
+
+                            if index < len - 1 {
+                                write!(f, [text(",")])?;
+                            }
+
+                            Ok(())
+                        }));
+                    }
+
+                    joiner.finish()
+                }))),
+                text("]")
+            ]
+        )
     }
 }
 
