@@ -3,8 +3,8 @@ use crate::prelude::*;
 use crate::js::statements::if_statement::FormatStatementBody;
 use crate::utils::FormatWithSemicolon;
 use rome_formatter::{format_args, write};
+use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
-use rome_js_syntax::{JsDoWhileStatementFields, JsSyntaxKind};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsDoWhileStatement;

@@ -1,7 +1,5 @@
 use crate::prelude::*;
 
-use crate::utils::FormatBodyStatement;
-
 use crate::js::statements::if_statement::FormatStatementBody;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsWhileStatement;

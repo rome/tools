@@ -110,7 +110,7 @@ label1: for (;;) continue label1
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,20 +1,26 @@
+@@ -1,20 +1,28 @@
 -for (;;) continue;
 +for (;;) continue
  // comment
@@ -132,20 +132,32 @@ label1: for (;;) continue label1
 +;
  
 -for (const f in {}) continue;
-+for (const f in {}) continue
- // comment
-+;
+-// comment
++for (const f in {})
++  continue
++  // comment
++  ;
  
 -for (const f in {}) break;
-+for (const f in {}) break
- // comment
-+;
+-// comment
++for (const f in {})
++  break
++  // comment
++  ;
  
  for (;;) continue; // comment
  
-@@ -28,42 +34,50 @@
+@@ -24,46 +32,58 @@
  
- for (const f in {}) break; // comment
+ for (const f of []) break; // comment
+ 
+-for (const f in {}) continue; // comment
++for (const f in {})
++  continue; // comment
+ 
+-for (const f in {}) break; // comment
++for (const f in {})
++  break; // comment
  
 -for (;;) continue; /* comment */
 +for (;;) continue /* comment */;
@@ -186,14 +198,18 @@ label1: for (;;) continue label1
 +;
  
 -for (const f in {}) continue;
-+for (const f in {}) continue
- /* comment */
-+;
+-/* comment */
++for (const f in {})
++  continue
++  /* comment */
++  ;
  
 -for (const f in {}) break;
-+for (const f in {}) break
- /* comment */
-+;
+-/* comment */
++for (const f in {})
++  break
++  /* comment */
++  ;
  
  label1: for (;;) continue label1 /* comment */;
  
@@ -229,13 +245,15 @@ for (const f of []) break
 // comment
 ;
 
-for (const f in {}) continue
-// comment
-;
+for (const f in {})
+  continue
+  // comment
+  ;
 
-for (const f in {}) break
-// comment
-;
+for (const f in {})
+  break
+  // comment
+  ;
 
 for (;;) continue; // comment
 
@@ -245,9 +263,11 @@ for (const f of []) continue; // comment
 
 for (const f of []) break; // comment
 
-for (const f in {}) continue; // comment
+for (const f in {})
+  continue; // comment
 
-for (const f in {}) break; // comment
+for (const f in {})
+  break; // comment
 
 for (;;) continue /* comment */;
 
@@ -277,13 +297,15 @@ for (const f of []) break
 /* comment */
 ;
 
-for (const f in {}) continue
-/* comment */
-;
+for (const f in {})
+  continue
+  /* comment */
+  ;
 
-for (const f in {}) break
-/* comment */
-;
+for (const f in {})
+  break
+  /* comment */
+  ;
 
 label1: for (;;) continue label1 /* comment */;
 

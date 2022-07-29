@@ -1,6 +1,6 @@
 use crate::prelude::*;
-use crate::utils::FormatBodyStatement;
 
+use crate::js::statements::if_statement::FormatStatementBody;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsForInStatement;
 use rome_js_syntax::JsForInStatementFields;
@@ -31,13 +31,13 @@ impl FormatNodeRule<JsForInStatement> for FormatJsForInStatement {
                 for_token,
                 space(),
                 l_paren_token.format(),
-                group(&initializer),
+                initializer,
                 space(),
                 in_token,
                 space(),
                 expression,
                 r_paren_token.format(),
-                FormatBodyStatement::new(&body?)
+                FormatStatementBody::new(&body?)
             ))]
         )
     }
