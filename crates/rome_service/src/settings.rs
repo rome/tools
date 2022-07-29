@@ -125,7 +125,6 @@ pub trait Language: rome_rowan::Language {
     fn resolve_format_context(
         global: &FormatSettings,
         language: &Self::FormatSettings,
-        editor: IndentStyle,
         path: &RomePath,
     ) -> Self::FormatContext;
 }
@@ -159,6 +158,7 @@ pub struct LanguageSettings<L: Language> {
 pub(crate) struct SettingsHandle<'a, E> {
     inner: RwLockReadGuard<'a, WorkspaceSettings>,
     /// Additional per-request state injected by the editor
+    #[allow(dead_code)]
     editor: E,
 }
 
@@ -177,7 +177,7 @@ impl<'a, E> AsRef<WorkspaceSettings> for SettingsHandle<'a, E> {
     }
 }
 
-impl<'a> SettingsHandle<'a, IndentStyle> {
+impl<'a> SettingsHandle<'a, ()> {
     /// Resolve the formatting context for the given language
     pub(crate) fn format_context<L>(self, path: &RomePath) -> L::FormatContext
     where
@@ -186,7 +186,6 @@ impl<'a> SettingsHandle<'a, IndentStyle> {
         L::resolve_format_context(
             &self.inner.format,
             &L::lookup_settings(&self.inner.languages).format,
-            self.editor,
             path,
         )
     }

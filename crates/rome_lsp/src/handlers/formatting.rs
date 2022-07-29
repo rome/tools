@@ -1,7 +1,6 @@
 use crate::session::Session;
 use crate::utils;
 use anyhow::{Context, Error, Result};
-use rome_formatter::IndentStyle;
 use rome_rowan::TextRange;
 use rome_service::{
     workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams},
@@ -20,17 +19,10 @@ pub(crate) fn format(
 
     let doc = session.document(&url)?;
 
-    let indent_style = if params.options.insert_spaces {
-        IndentStyle::Space(params.options.tab_size as u8)
-    } else {
-        IndentStyle::Tab
-    };
-
     trace!("Formatting...");
-    let result = session.workspace.format_file(FormatFileParams {
-        path: rome_path,
-        indent_style,
-    });
+    let result = session
+        .workspace
+        .format_file(FormatFileParams { path: rome_path });
 
     let printed = match result {
         Ok(printed) => printed,
@@ -65,12 +57,6 @@ pub(crate) fn format_range(
     let rome_path = session.file_path(&url);
     let doc = session.document(&url)?;
 
-    let indent_style = if params.options.insert_spaces {
-        IndentStyle::Space(params.options.tab_size as u8)
-    } else {
-        IndentStyle::Tab
-    };
-
     let start_index = utils::offset(&doc.line_index, params.range.start).with_context(|| {
         format!(
             "failed to access position {:?} in document {url}",
@@ -88,7 +74,6 @@ pub(crate) fn format_range(
     let result = session.workspace.format_range(FormatRangeParams {
         path: rome_path,
         range: format_range,
-        indent_style,
     });
 
     let formatted = match result {
@@ -139,19 +124,12 @@ pub(crate) fn format_on_type(
     let rome_path = session.file_path(&url);
     let doc = session.document(&url)?;
 
-    let indent_style = if params.options.insert_spaces {
-        IndentStyle::Space(params.options.tab_size as u8)
-    } else {
-        IndentStyle::Tab
-    };
-
     let offset = utils::offset(&doc.line_index, position)
         .with_context(|| format!("failed to access position {position:?} in document {url}"))?;
 
     let result = session.workspace.format_on_type(FormatOnTypeParams {
         path: rome_path,
         offset,
-        indent_style,
     });
 
     let formatted = match result {

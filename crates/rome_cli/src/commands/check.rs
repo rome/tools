@@ -50,7 +50,8 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
     traverse(
         TraversalMode::Check {
             max_diagnostics,
-            should_fix: session.args.contains("--apply"),
+            should_apply_safe_fixes: session.args.contains("--apply"),
+            should_apply_suggested_fixes: session.args.contains("--apply-suggested"),
         },
         session,
     )

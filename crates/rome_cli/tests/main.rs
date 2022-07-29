@@ -31,6 +31,13 @@ if(a != -0) {}
 const FIX_AFTER: &str = "if(a != 0) {}
 ";
 
+const APPLY_SUGGESTED_BEFORE: &str = "
+debugger;
+";
+
+const APPLY_SUGGESTED_AFTER: &str = "let a = 4;
+";
+
 const CUSTOM_FORMAT_BEFORE: &str = r#"
 function f() {
 return { something }
@@ -223,6 +230,37 @@ mod check {
         println!("{console:#?}");
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
+
+    #[test]
+    fn apply_suggested() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply-suggested"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, APPLY_SUGGESTED_AFTER);
     }
 
     #[test]

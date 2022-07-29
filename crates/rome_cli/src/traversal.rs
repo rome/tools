@@ -20,9 +20,9 @@ use rome_diagnostics::{
     file::{FileId, SimpleFile},
     Diagnostic, DiagnosticHeader, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
-use rome_formatter::IndentStyle;
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
+use rome_service::workspace::FixFileMode;
 use rome_service::{
     workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
     Workspace,
@@ -90,8 +90,8 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
     let skipped = skipped.load(Ordering::Relaxed);
 
     match mode {
-        TraversalMode::Check { should_fix, .. } => {
-            if should_fix {
+        TraversalMode::Check { .. } => {
+            if mode.as_fix_file_mode().is_some() {
                 console.log(rome_console::markup! {
                     <Info>"Fixed "{count}" files in "{duration}</Info>
                 });
@@ -161,6 +161,11 @@ fn print_messages_to_console(
 
     while let Ok(msg) = recv_msgs.recv() {
         match msg {
+            Message::Warning(warning) => console.log(markup! {
+                <Warn><Emphasis>{warning.title}"\n"</Emphasis></Warn>
+                {warning.paragraph}"\n"
+            }),
+
             Message::Error(err) => {
                 // Retrieves the file name from the file ID cache, if it's a miss
                 // flush entries from the interner channel until it's found
@@ -290,7 +295,12 @@ pub(crate) enum TraversalMode {
     Check {
         max_diagnostics: u16,
         /// `true` when running the command `check` with the `--apply` argument
-        should_fix: bool,
+        should_apply_safe_fixes: bool,
+
+        /// `true` when running the command `check` with the `--apply-suggested` argument
+        ///
+        /// It applies **safe** and **suggested** fixes.
+        should_apply_suggested_fixes: bool,
     },
     /// This mode is enabled when running the command `rome ci`
     CI,
@@ -309,11 +319,22 @@ impl TraversalMode {
     }
 
     /// `true` only when running the traversal in [TraversalMode::Check] and `should_fix` is `true`
-    fn should_fix(&self) -> bool {
-        if let TraversalMode::Check { should_fix, .. } = self {
-            *should_fix
+    fn as_fix_file_mode(&self) -> Option<FixFileMode> {
+        if let TraversalMode::Check {
+            should_apply_safe_fixes,
+            should_apply_suggested_fixes,
+            ..
+        } = self
+        {
+            if *should_apply_suggested_fixes {
+                Some(FixFileMode::SafeAndSuggestedFixes)
+            } else if *should_apply_safe_fixes {
+                Some(FixFileMode::SafeFixes)
+            } else {
+                None
+            }
         } else {
-            false
+            None
         }
     }
 
@@ -483,10 +504,19 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         )
         .with_file_id_and_code(file_id, "IO")?;
 
-        if ctx.mode.should_fix() {
+        if let Some(fix_mode) = ctx.mode.as_fix_file_mode() {
             let fixed = file_guard
-                .fix_file(Some(IndentStyle::default()))
+                .fix_file(fix_mode)
                 .with_file_id_and_code(file_id, "Lint")?;
+
+            if fixed.skipped_suggested_fixes > 0 {
+                ctx.push_message(TraversalWarning {
+                    title: format!("Skipped {} suggested fixes", fixed.skipped_suggested_fixes),
+                    paragraph: format!(
+                        "If you wish to apply the suggested fixes, use --apply-suggested argument"
+                    ),
+                })
+            }
 
             if fixed.code != input {
                 file.set_content(fixed.code.as_bytes())
@@ -564,8 +594,8 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             let write = match ctx.mode {
                 // In check mode do not run the formatter and return the result immediately,
                 // but only if the argument `--apply` is not passed.
-                TraversalMode::Check { should_fix, .. } => {
-                    if should_fix {
+                TraversalMode::Check { .. } => {
+                    if ctx.mode.as_fix_file_mode().is_some() {
                         true
                     } else {
                         return Ok(result);
@@ -576,7 +606,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             };
 
             let printed = file_guard
-                .format_file(IndentStyle::default())
+                .format_file()
                 .with_file_id_and_code(file_id, "Format")?;
 
             let output = printed.into_code();
@@ -607,6 +637,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 /// Wrapper type for messages that can be printed during the traversal process
 enum Message {
     Error(TraversalError),
+    Warning(TraversalWarning),
     Diagnostics {
         name: String,
         content: String,
@@ -625,12 +656,24 @@ impl From<TraversalError> for Message {
     }
 }
 
+impl From<TraversalWarning> for Message {
+    fn from(warning: TraversalWarning) -> Self {
+        Self::Warning(warning)
+    }
+}
+
 /// Generic error type returned by the traversal process
 struct TraversalError {
     severity: Severity,
     file_id: FileId,
     code: &'static str,
     message: String,
+}
+
+/// Generic warning type turned by the traversal process
+struct TraversalWarning {
+    title: String,
+    paragraph: String,
 }
 
 /// Extension trait for turning [Display]-able error types into [TraversalError]
