@@ -21,7 +21,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         groups
             .entry(meta.group)
             .or_insert_with(BTreeMap::new)
-            .insert(meta.name, meta.recommended);
+            .insert(meta.rule.name, meta.rule.recommended);
     }
 
     let mut struct_groups = Vec::new();

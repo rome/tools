@@ -130,8 +130,8 @@ where
         R::diagnostic(&ctx, &self.state).map(|diag| {
             diag.into_diagnostic(
                 self.file_id,
-                format!("{}/{}", G::NAME, R::NAME),
-                format!("https://rome.tools/docs/lint/rules/{}/", R::NAME),
+                format!("{}/{}", G::NAME, R::METADATA.name),
+                format!("https://rome.tools/docs/lint/rules/{}/", R::METADATA.name),
             )
         })
     }
@@ -141,7 +141,7 @@ where
 
         R::action(&ctx, &self.state).map(|action| AnalyzerAction {
             group_name: G::NAME,
-            rule_name: R::NAME,
+            rule_name: R::METADATA.name,
             file_id: self.file_id,
             category: action.category,
             applicability: action.applicability,

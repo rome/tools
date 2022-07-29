@@ -49,7 +49,7 @@ declare_rule! {
     pub(crate) NoDoubleEquals {
         version: "0.7.0",
         name: "noDoubleEquals",
-        recommended: true
+        recommended: true,
     }
 }
 

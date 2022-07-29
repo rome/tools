@@ -50,7 +50,7 @@ declare_rule! {
     pub(crate) UseTemplate {
         version: "0.7.0",
         name: "useTemplate",
-        recommended: true
+        recommended: true,
     }
 }
 

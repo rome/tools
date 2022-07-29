@@ -68,7 +68,7 @@ fn main() -> Result<()> {
         groups
             .entry(meta.group)
             .or_insert_with(BTreeMap::new)
-            .insert(meta.name, meta);
+            .insert(meta.rule.name, meta.rule);
     }
 
     for (group, rules) in groups {

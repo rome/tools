@@ -19,9 +19,11 @@ pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 pub use crate::matcher::{QueryMatcher, RuleKey, SignalEntry};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
-    LanguageRoot, Phase, Phases, RuleMetadata, RuleRegistry, RuleSuppressions,
+    LanguageRoot, Phase, Phases, RegistryRuleMetadata, RuleRegistry, RuleSuppressions,
 };
-pub use crate::rule::{GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup, RuleMeta};
+pub use crate::rule::{
+    GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup, RuleMeta, RuleMetadata,
+};
 pub use crate::services::{CannotCreateServicesError, FromServices, ServiceBag};
 use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
@@ -521,7 +523,7 @@ impl RuleFilter<'_> {
     {
         match self {
             RuleFilter::Group(group) => group == G::NAME,
-            RuleFilter::Rule(group, rule) => group == G::NAME && rule == R::NAME,
+            RuleFilter::Rule(group, rule) => group == G::NAME && rule == R::METADATA.name,
         }
     }
 }

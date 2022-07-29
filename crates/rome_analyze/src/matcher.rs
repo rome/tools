@@ -63,7 +63,7 @@ impl RuleKey {
     }
 
     pub fn rule<G: RuleGroup, R: Rule>() -> Self {
-        Self::new(G::NAME, R::NAME)
+        Self::new(G::NAME, R::METADATA.name)
     }
 }
 

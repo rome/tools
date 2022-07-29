@@ -35,7 +35,7 @@ declare_rule! {
     pub(crate) NoEmptyPattern {
         version: "0.7.0",
         name: "noEmptyPattern",
-        recommended: true
+        recommended: true,
     }
 }
 

@@ -46,7 +46,7 @@ declare_rule! {
     pub(crate) NoImplicitBoolean {
         version: "0.7.0",
         name: "noImplicitBoolean",
-        recommended: true
+        recommended: true,
     }
 }
 

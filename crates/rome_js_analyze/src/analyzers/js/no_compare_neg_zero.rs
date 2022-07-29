@@ -36,7 +36,7 @@ declare_rule! {
     pub(crate) NoCompareNegZero {
         version: "0.7.0",
         name: "noCompareNegZero",
-        recommended: true
+        recommended: true,
     }
 }
 

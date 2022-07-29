@@ -37,7 +37,7 @@ declare_rule! {
     pub(crate) NoAsyncPromiseExecutor {
         version: "0.7.0",
         name: "noAsyncPromiseExecutor",
-        recommended: true
+        recommended: true,
     }
 }
 

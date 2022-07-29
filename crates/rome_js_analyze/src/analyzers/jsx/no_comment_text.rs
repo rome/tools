@@ -37,7 +37,7 @@ declare_rule! {
     pub(crate) NoCommentText {
         version: "0.7.0",
         name: "noCommentText",
-        recommended: true
+        recommended: true,
     }
 }
 

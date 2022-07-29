@@ -52,7 +52,7 @@ declare_rule! {
     pub(crate) UseSimplifiedLogicExpression {
         version: "0.7.0",
         name: "useSimplifiedLogicExpression",
-        recommended: true
+        recommended: true,
     }
 }
 

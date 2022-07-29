@@ -39,7 +39,7 @@ declare_rule! {
     pub(crate) NoDelete {
         version: "0.7.0",
         name: "noDelete",
-        recommended: true
+        recommended: true,
     }
 }
 
