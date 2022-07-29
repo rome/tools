@@ -619,6 +619,7 @@ fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
         p.parse_as_skipped_trivia_tokens(|p| {
             p.bump_any();
         });
+		p.expect(T!['}']);
     }
 
     ParsedSyntax::Present(m.complete(p, JSX_EXPRESSION_ATTRIBUTE_VALUE))
