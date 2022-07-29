@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noImportAssign (since v0.8.0)
 
+> This rule is recommended by Rome.
+
 Disallow assigning to imported bindings
 
 ## Examples
