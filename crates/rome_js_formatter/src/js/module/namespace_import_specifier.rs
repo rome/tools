@@ -23,9 +23,9 @@ impl FormatNodeRule<JsNamespaceImportSpecifier> for FormatJsNamespaceImportSpeci
             f,
             [
                 star_token.format(),
-                space_token(),
+                space(),
                 as_token.format(),
-                space_token(),
+                space(),
                 local_name.format()
             ]
         ]

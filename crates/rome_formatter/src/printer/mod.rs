@@ -74,7 +74,7 @@ impl<'a> Printer<'a> {
                     self.state.pending_space = true;
                 }
             }
-            FormatElement::Token(token) => {
+            FormatElement::Text(token) => {
                 // Print pending indention
                 if self.state.pending_indent > 0 {
                     self.print_str(
@@ -769,7 +769,7 @@ fn fits_element_on_line<'a, 'rest>(
                 .map(|t| PrintElementCall::new(t, args)),
         ),
 
-        FormatElement::Token(token) => {
+        FormatElement::Text(token) => {
             state.line_width += state.pending_indent as usize * options.indent_string.len();
             state.pending_indent = 0;
 
@@ -955,10 +955,10 @@ mod tests {
     fn it_prints_a_group_on_a_single_line_if_it_fits() {
         let result = format(&FormatArrayElements {
             items: vec![
-                &token("\"a\""),
-                &token("\"b\""),
-                &token("\"c\""),
-                &token("\"d\""),
+                &text("\"a\""),
+                &text("\"b\""),
+                &text("\"c\""),
+                &text("\"d\""),
             ],
         });
 
@@ -968,17 +968,17 @@ mod tests {
     #[test]
     fn it_tracks_the_indent_for_each_token() {
         let formatted = format(&format_args!(
-            token("a"),
+            text("a"),
             soft_block_indent(&format_args!(
-                token("b"),
+                text("b"),
                 soft_block_indent(&format_args!(
-                    token("c"),
-                    soft_block_indent(&format_args!(token("d"), soft_line_break(), token("d"),)),
-                    token("c"),
+                    text("c"),
+                    soft_block_indent(&format_args!(text("d"), soft_line_break(), text("d"),)),
+                    text("c"),
                 )),
-                token("b"),
+                text("b"),
             )),
-            token("a")
+            text("a")
         ));
 
         assert_eq!(
@@ -1003,9 +1003,9 @@ a"#,
 
         let result = format_with_options(
             &format_args![
-                token("function main() {"),
-                block_indent(&token("let x = `This is a multiline\nstring`;")),
-                token("}"),
+                text("function main() {"),
+                block_indent(&text("let x = `This is a multiline\nstring`;")),
+                text("}"),
                 hard_line_break()
             ],
             options,
@@ -1021,8 +1021,8 @@ a"#,
     fn it_breaks_a_group_if_a_string_contains_a_newline() {
         let result = format(&FormatArrayElements {
             items: vec![
-                &token("`This is a string spanning\ntwo lines`"),
-                &token("\"b\""),
+                &text("`This is a string spanning\ntwo lines`"),
+                &text("\"b\""),
             ],
         });
 
@@ -1037,10 +1037,7 @@ two lines`,
     }
     #[test]
     fn it_breaks_a_group_if_it_contains_a_hard_line_break() {
-        let result = format(&group_elements(&format_args![
-            token("a"),
-            block_indent(&token("b"))
-        ]));
+        let result = format(&group(&format_args![text("a"), block_indent(&text("b"))]));
 
         assert_eq!("a\n  b\n", result.as_code())
     }
@@ -1049,17 +1046,17 @@ two lines`,
     fn it_breaks_parent_groups_if_they_dont_fit_on_a_single_line() {
         let result = format(&FormatArrayElements {
             items: vec![
-                &token("\"a\""),
-                &token("\"b\""),
-                &token("\"c\""),
-                &token("\"d\""),
+                &text("\"a\""),
+                &text("\"b\""),
+                &text("\"c\""),
+                &text("\"d\""),
                 &FormatArrayElements {
                     items: vec![
-                        &token("\"0123456789\""),
-                        &token("\"0123456789\""),
-                        &token("\"0123456789\""),
-                        &token("\"0123456789\""),
-                        &token("\"0123456789\""),
+                        &text("\"0123456789\""),
+                        &text("\"0123456789\""),
+                        &text("\"0123456789\""),
+                        &text("\"0123456789\""),
+                        &text("\"0123456789\""),
                     ],
                 },
             ],
@@ -1088,7 +1085,7 @@ two lines`,
 
         let result = format_with_options(
             &FormatArrayElements {
-                items: vec![&token("'a'"), &token("'b'"), &token("'c'"), &token("'d'")],
+                items: vec![&text("'a'"), &text("'b'"), &text("'c'"), &text("'d'")],
             },
             options,
         );
@@ -1099,11 +1096,11 @@ two lines`,
     #[test]
     fn it_prints_consecutive_hard_lines_as_one() {
         let result = format(&format_args![
-            token("a"),
+            text("a"),
             hard_line_break(),
             hard_line_break(),
             hard_line_break(),
-            token("b"),
+            text("b"),
         ]);
 
         assert_eq!("a\nb", result.as_code())
@@ -1112,11 +1109,11 @@ two lines`,
     #[test]
     fn it_prints_consecutive_empty_lines_as_one() {
         let result = format(&format_args![
-            token("a"),
+            text("a"),
             empty_line(),
             empty_line(),
             empty_line(),
-            token("b"),
+            text("b"),
         ]);
 
         assert_eq!("a\n\nb", result.as_code())
@@ -1125,12 +1122,12 @@ two lines`,
     #[test]
     fn it_prints_consecutive_mixed_lines_as_one() {
         let result = format(&format_args![
-            token("a"),
+            text("a"),
             empty_line(),
             hard_line_break(),
             empty_line(),
             hard_line_break(),
-            token("b"),
+            text("b"),
         ]);
 
         assert_eq!("a\n\nb", result.as_code())
@@ -1145,22 +1142,22 @@ two lines`,
         formatter
             .fill(&soft_line_break_or_space())
             // These all fit on the same line together
-            .entry(&format_args!(token("1"), token(",")))
-            .entry(&format_args!(token("2"), token(",")))
-            .entry(&format_args!(token("3"), token(",")))
+            .entry(&format_args!(text("1"), text(",")))
+            .entry(&format_args!(text("2"), text(",")))
+            .entry(&format_args!(text("3"), text(",")))
             // This one fits on a line by itself,
-            .entry(&format_args!(token("723493294"), token(",")))
+            .entry(&format_args!(text("723493294"), text(",")))
             // fits without breaking
-            .entry(&group_elements(&format_args!(
-                token("["),
-                soft_block_indent(&token("5")),
-                token("],")
+            .entry(&group(&format_args!(
+                text("["),
+                soft_block_indent(&text("5")),
+                text("],")
             )))
             // this one must be printed in expanded mode to fit
-            .entry(&group_elements(&format_args!(
-                token("["),
-                soft_block_indent(&token("123456789")),
-                token("]"),
+            .entry(&group(&format_args!(
+                text("["),
+                soft_block_indent(&text("123456789")),
+                text("]"),
             )))
             .finish()
             .unwrap();
@@ -1179,22 +1176,22 @@ two lines`,
     #[test]
     fn line_suffix_printed_at_end() {
         let printed = format(&format_args![
-            group_elements(&format_args![
-                token("["),
+            group(&format_args![
+                text("["),
                 soft_block_indent(&format_with(|f| {
                     f.fill(soft_line_break_or_space())
-                        .entry(&format_args!(token("1"), token(",")))
-                        .entry(&format_args!(token("2"), token(",")))
-                        .entry(&format_args!(token("3"), if_group_breaks(&token(","))))
+                        .entry(&format_args!(text("1"), text(",")))
+                        .entry(&format_args!(text("2"), text(",")))
+                        .entry(&format_args!(text("3"), if_group_breaks(&text(","))))
                         .finish()
                 })),
-                token("]")
+                text("]")
             ]),
-            token(";"),
+            text(";"),
             comment(&line_suffix(&format_args![
-                space_token(),
-                token("// trailing"),
-                space_token()
+                space(),
+                text("// trailing"),
+                space()
             ]),)
         ]);
 
@@ -1208,16 +1205,16 @@ two lines`,
             write!(
                 f,
                 [
-                    group_elements(&format_args![
-                        token("The referenced group breaks."),
+                    group(&format_args![
+                        text("The referenced group breaks."),
                         hard_line_break()
                     ])
                     .with_group_id(Some(group_id)),
-                    group_elements(&format_args![
-                        token("This group breaks because:"),
+                    group(&format_args![
+                        text("This group breaks because:"),
                         soft_line_break_or_space(),
-                        if_group_fits_on_line(&token("This content fits but should not be printed.")).with_group_id(Some(group_id)),
-                        if_group_breaks(&token("It measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.")).with_group_id(Some(group_id)),
+                        if_group_fits_on_line(&text("This content fits but should not be printed.")).with_group_id(Some(group_id)),
+                        if_group_breaks(&text("It measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.")).with_group_id(Some(group_id)),
                     ])
                 ]
             )
@@ -1236,16 +1233,16 @@ two lines`,
         fn fmt(&self, f: &mut Formatter<()>) -> FormatResult<()> {
             write!(
                 f,
-                [group_elements(&format_args!(
-                    token("["),
+                [group(&format_args!(
+                    text("["),
                     soft_block_indent(&format_args!(
                         format_with(|f| f
-                            .join_with(format_args!(token(","), soft_line_break_or_space()))
+                            .join_with(format_args!(text(","), soft_line_break_or_space()))
                             .entries(&self.items)
                             .finish()),
-                        if_group_breaks(&token(",")),
+                        if_group_breaks(&text(",")),
                     )),
-                    token("]")
+                    text("]")
                 ))]
             )
         }

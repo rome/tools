@@ -10,7 +10,7 @@ impl FormatRule<TsIndexSignatureModifierList> for FormatTsIndexSignatureModifier
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &TsIndexSignatureModifierList, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join_with(&space_token())
+        f.join_with(&space())
             .entries(sort_modifiers_by_precedence(node).into_iter().formatted())
             .finish()
     }

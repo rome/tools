@@ -25,13 +25,13 @@ impl FormatNodeRule<JsObjectBindingPatternProperty> for FormatJsObjectBindingPat
             [
                 member.format(),
                 colon_token.format(),
-                space_token(),
+                space(),
                 pattern.format(),
             ]
         ]?;
 
         if let Some(init) = init {
-            write!(f, [space_token(), init.format()])?;
+            write!(f, [space(), init.format()])?;
         }
 
         Ok(())

@@ -22,12 +22,12 @@ impl FormatNodeRule<JsSetterObjectMember> for FormatJsSetterObjectMember {
             f,
             [
                 set_token.format(),
-                space_token(),
+                space(),
                 name.format(),
                 l_paren_token.format(),
                 parameter.format(),
                 r_paren_token.format(),
-                space_token(),
+                space(),
                 body.format(),
             ]
         ]

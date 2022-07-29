@@ -16,7 +16,7 @@ impl FormatNodeRule<JsExportNamedShorthandSpecifier> for FormatJsExportNamedShor
         let JsExportNamedShorthandSpecifierFields { type_token, name } = node.as_fields();
 
         if let Some(type_token) = type_token {
-            write!(f, [type_token.format(), space_token()])?;
+            write!(f, [type_token.format(), space()])?;
         }
 
         write![f, [name.format()]]

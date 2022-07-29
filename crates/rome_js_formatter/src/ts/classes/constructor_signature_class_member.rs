@@ -26,7 +26,7 @@ impl FormatNodeRule<TsConstructorSignatureClassMember> for FormatTsConstructorSi
             [FormatWithSemicolon::new(
                 &format_args!(
                     modifiers.format(),
-                    space_token(),
+                    space(),
                     name.format(),
                     parameters.format(),
                 ),

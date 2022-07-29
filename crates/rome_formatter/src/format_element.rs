@@ -47,8 +47,8 @@ pub enum FormatElement {
     /// flat or expanded mode to fill the print width. See [crate::Formatter::fill].
     Fill(Fill),
 
-    /// A token that should be printed as is, see [crate::builders::token] for documentation and examples.
-    Token(Token),
+    /// A text that should be printed as is, see [crate::builders::token] for documentation and examples.
+    Text(Text),
 
     /// Delay the printing of its content until the next line break
     LineSuffix(Content),
@@ -143,7 +143,7 @@ impl Debug for FormatElement {
                 content.fmt(fmt)
             }
             FormatElement::Fill(fill) => fill.fmt(fmt),
-            FormatElement::Token(content) => content.fmt(fmt),
+            FormatElement::Text(content) => content.fmt(fmt),
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
@@ -441,7 +441,7 @@ impl ConditionalGroupContent {
 
 /// See [crate::builders::token] for documentation
 #[derive(Eq, Clone)]
-pub enum Token {
+pub enum Text {
     /// Token constructed by the formatter from a static string
     Static { text: &'static str },
     /// Token constructed from the input source as a dynamics
@@ -454,7 +454,7 @@ pub enum Token {
     },
     /// A token for a text that is taken as is from the source code (input text and formatted representation are identical).
     /// Implementing by taking a slice from a `SyntaxToken` to avoid allocating a new string.
-    SyntaxTokenSlice {
+    SyntaxTokenTextSlice {
         /// The start position of the token in the unformatted source code
         source_position: TextSize,
         /// The token text
@@ -462,32 +462,32 @@ pub enum Token {
     },
 }
 
-impl Debug for Token {
+impl Debug for Text {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
         // This does not use debug_tuple so the tokens are
         // written on a single line even when pretty-printing
         match self {
-            Token::Static { text } => write!(fmt, "StaticToken({:?})", text),
-            Token::Dynamic { text, .. } => write!(fmt, "DynamicToken({:?})", text),
-            Token::SyntaxTokenSlice {
+            Text::Static { text } => write!(fmt, "StaticText({:?})", text),
+            Text::Dynamic { text, .. } => write!(fmt, "DynamicText({:?})", text),
+            Text::SyntaxTokenTextSlice {
                 slice: token_text, ..
             } => {
-                write!(fmt, "SyntaxTokenSlice({:?})", token_text)
+                write!(fmt, "SyntaxTokenTextSlice({:?})", token_text)
             }
         }
     }
 }
 
-impl Token {
+impl Text {
     /// Get the range of the input source covered by this token,
     /// or None if the token was synthesized by the formatter
     pub fn source_position(&self) -> Option<&TextSize> {
         match self {
-            Token::Static { .. } => None,
-            Token::Dynamic {
+            Text::Static { .. } => None,
+            Text::Dynamic {
                 source_position, ..
             } => Some(source_position),
-            Token::SyntaxTokenSlice {
+            Text::SyntaxTokenTextSlice {
                 source_position, ..
             } => Some(source_position),
         }
@@ -495,7 +495,7 @@ impl Token {
 }
 
 // Token equality only compares the text content
-impl PartialEq for Token {
+impl PartialEq for Text {
     fn eq(&self, other: &Self) -> bool {
         **self == **other
     }
@@ -533,13 +533,13 @@ pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) ->
     }
 }
 
-impl Deref for Token {
+impl Deref for Text {
     type Target = str;
     fn deref(&self) -> &Self::Target {
         match self {
-            Token::Static { text } => text,
-            Token::Dynamic { text, .. } => text,
-            Token::SyntaxTokenSlice {
+            Text::Static { text } => text,
+            Text::Dynamic { text, .. } => text,
+            Text::SyntaxTokenTextSlice {
                 slice: token_text, ..
             } => token_text.deref(),
         }
@@ -574,7 +574,7 @@ impl FormatElement {
             | FormatElement::Label(Label { content, .. })
             | FormatElement::Indent(content) => content.iter().any(FormatElement::will_break),
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
-            FormatElement::Token(token) => token.contains('\n'),
+            FormatElement::Text(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
             FormatElement::BestFitting(_) => false,
             FormatElement::LineSuffixBoundary => false,
@@ -622,9 +622,9 @@ impl FormatElement {
     }
 }
 
-impl From<Token> for FormatElement {
-    fn from(token: Token) -> Self {
-        FormatElement::Token(token)
+impl From<Text> for FormatElement {
+    fn from(token: Text) -> Self {
+        FormatElement::Text(token)
     }
 }
 
@@ -690,7 +690,7 @@ static_assert!(std::mem::size_of::<crate::format_element::VerbatimKind>() == 8us
 static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 24usize);
 
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::Token>() == 24usize);
+static_assert!(std::mem::size_of::<crate::format_element::Text>() == 24usize);
 
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]

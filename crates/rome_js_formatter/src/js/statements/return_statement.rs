@@ -22,7 +22,7 @@ impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
                     write!(f, [return_token.format()])?;
 
                     if let Some(argument) = &argument {
-                        write!(f, [space_token()])?;
+                        write!(f, [space()])?;
 
                         if let JsAnyExpression::JsSequenceExpression(_expression) = argument {
                             format_parenthesize(

@@ -18,16 +18,16 @@ impl FormatNodeRule<TsEnumDeclaration> for FormatTsEnumDeclaration {
         } = node.as_fields();
 
         if let Some(const_token) = const_token {
-            write!(f, [const_token.format(), space_token()])?;
+            write!(f, [const_token.format(), space()])?;
         }
 
         write!(
             f,
             [
                 enum_token.format(),
-                space_token(),
+                space(),
                 id.format(),
-                space_token(),
+                space(),
                 format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
                     .soft_block_spaces()
             ]

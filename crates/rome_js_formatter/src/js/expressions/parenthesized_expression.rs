@@ -49,7 +49,7 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
                 f,
                 [
                     format_removed(&l_paren_token?),
-                    group_elements(&expression.format()),
+                    group(&expression.format()),
                     format_removed(&r_paren_token?),
                 ]
             ]?;

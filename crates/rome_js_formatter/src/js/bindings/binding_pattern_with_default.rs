@@ -23,9 +23,9 @@ impl FormatNodeRule<JsBindingPatternWithDefault> for FormatJsBindingPatternWithD
             f,
             [
                 pattern.format(),
-                space_token(),
+                space(),
                 eq_token.format(),
-                space_token(),
+                space(),
                 default.format()
             ]
         ]

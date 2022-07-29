@@ -46,7 +46,7 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
                 f,
                 [
                     for_token.format(),
-                    space_token(),
+                    space(),
                     format_delimited(l_paren_token.as_ref()?, &condition, r_paren_token.as_ref()?,)
                         .soft_block_indent(),
                 ]
@@ -58,11 +58,11 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
                     write![f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)]]
                 }
                 body => {
-                    write!(f, [space_token(), body.format()])
+                    write!(f, [space(), body.format()])
                 }
             }
         });
 
-        write!(f, [group_elements(&content)])
+        write!(f, [group(&content)])
     }
 }

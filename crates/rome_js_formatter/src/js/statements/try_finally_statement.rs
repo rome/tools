@@ -16,12 +16,12 @@ impl FormatNodeRule<JsTryFinallyStatement> for FormatJsTryFinallyStatement {
             finally_clause,
         } = node.as_fields();
 
-        write![f, [try_token.format(), space_token(), body.format(),]]?;
+        write![f, [try_token.format(), space(), body.format(),]]?;
 
         if let Some(catch_clause) = catch_clause {
-            write!(f, [space_token(), catch_clause.format()])?;
+            write!(f, [space(), catch_clause.format()])?;
         }
 
-        write!(f, [space_token(), finally_clause.format()])
+        write!(f, [space(), finally_clause.format()])
     }
 }

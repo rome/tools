@@ -24,7 +24,7 @@ impl FormatNodeRule<JsBreakStatement> for FormatJsBreakStatement {
                     write!(f, [break_token.format()])?;
 
                     if let Some(label_token) = &label_token {
-                        write!(f, [space_token(), label_token.format()])?;
+                        write!(f, [space(), label_token.format()])?;
                     }
 
                     Ok(())

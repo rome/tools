@@ -32,7 +32,7 @@ pub struct FormatTypeVariant {
 
 impl Format<JsFormatContext> for FormatTypeVariant {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        write!(f, [group_elements(&self.element.node().format())])?;
+        write!(f, [group(&self.element.node().format())])?;
 
         let separator = self.element.trailing_separator()?;
 
@@ -41,10 +41,7 @@ impl Format<JsFormatContext> for FormatTypeVariant {
                 if self.last {
                     write!(f, [format_removed(token)])?;
                 } else {
-                    write![
-                        f,
-                        [soft_line_break_or_space(), token.format(), space_token()]
-                    ]?;
+                    write![f, [soft_line_break_or_space(), token.format(), space()]]?;
                 }
             }
             None => {
@@ -54,7 +51,7 @@ impl Format<JsFormatContext> for FormatTypeVariant {
                         [
                             soft_line_break_or_space(),
                             format_inserted(JsSyntaxKind::PIPE),
-                            space_token()
+                            space()
                         ]
                     ]?;
                 }

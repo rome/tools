@@ -28,7 +28,7 @@ impl FormatNodeRule<TsIndexSignatureClassMember> for FormatTsIndexSignatureClass
             [FormatWithSemicolon::new(
                 &format_args!(
                     modifiers.format(),
-                    space_token(),
+                    space(),
                     l_brack_token.format(),
                     parameter.format(),
                     r_brack_token.format(),

@@ -20,26 +20,26 @@ impl FormatNodeRule<JsImportNamespaceClause> for FormatJsImportNamespaceClause {
         } = node.as_fields();
 
         if let Some(type_token) = type_token {
-            write!(f, [type_token.format(), space_token()])?;
+            write!(f, [type_token.format(), space()])?;
         }
 
         write![
             f,
             [
                 star_token.format(),
-                space_token(),
+                space(),
                 as_token.format(),
-                space_token(),
+                space(),
                 local_name.format(),
-                space_token(),
+                space(),
                 from_token.format(),
-                space_token(),
+                space(),
                 source.format(),
             ]
         ]?;
 
         if let Some(assertion) = assertion {
-            write!(f, [space_token(), assertion.format()])?;
+            write!(f, [space(), assertion.format()])?;
         }
 
         Ok(())

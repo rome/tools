@@ -26,9 +26,9 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
 
         write!(
             f,
-            [group_elements(&format_args![
+            [group(&format_args![
                 if_token.format(),
-                space_token(),
+                space(),
                 format_delimited(&l_paren_token, &test.format(), &r_paren_token)
                     .soft_block_indent(),
                 FormatConsequentClause::new(&consequent),
@@ -39,7 +39,7 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
             let else_on_same_line = matches!(consequent, JsBlockStatement(_));
 
             if else_on_same_line {
-                write!(f, [space_token()])?;
+                write!(f, [space()])?;
             } else {
                 write!(f, [hard_line_break()])?;
             }
@@ -79,7 +79,7 @@ impl Format<JsFormatContext> for FormatConsequentClause<'_> {
         if let JsEmptyStatement(empty) = &self.statement {
             write!(f, [empty.format()])
         } else if matches!(&self.statement, JsBlockStatement(_)) || self.force_space {
-            write!(f, [space_token(), self.statement.format()])
+            write!(f, [space(), self.statement.format()])
         } else {
             write!(
                 f,

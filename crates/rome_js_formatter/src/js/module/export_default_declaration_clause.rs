@@ -18,9 +18,6 @@ impl FormatNodeRule<JsExportDefaultDeclarationClause> for FormatJsExportDefaultD
             semicolon_token: _,
         } = node.as_fields();
 
-        write![
-            f,
-            [default_token.format(), space_token(), declaration.format()]
-        ]
+        write![f, [default_token.format(), space(), declaration.format()]]
     }
 }

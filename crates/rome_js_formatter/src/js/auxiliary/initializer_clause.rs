@@ -14,6 +14,6 @@ impl FormatNodeRule<JsInitializerClause> for FormatJsInitializerClause {
             expression,
         } = node.as_fields();
 
-        write![f, [eq_token.format(), space_token(), expression.format()]]
+        write![f, [eq_token.format(), space(), expression.format()]]
     }
 }

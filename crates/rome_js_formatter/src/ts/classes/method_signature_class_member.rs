@@ -31,8 +31,8 @@ impl FormatNodeRule<TsMethodSignatureClassMember> for FormatTsMethodSignatureCla
                     modifiers.format(),
                     async_token
                         .format()
-                        .with_or_empty(|token, f| write![f, [token, space_token()]]),
-                    space_token(),
+                        .with_or_empty(|token, f| write![f, [token, space()]]),
+                    space(),
                     name.format(),
                     question_mark_token.format(),
                     type_parameters.format(),

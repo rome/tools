@@ -20,7 +20,7 @@ impl FormatNodeRule<JsNewExpression> for FormatJsNewExpression {
             f,
             [
                 new_token.format(),
-                space_token(),
+                space(),
                 callee.format(),
                 type_arguments.format(),
             ]

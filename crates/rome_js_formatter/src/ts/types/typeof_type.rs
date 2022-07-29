@@ -15,11 +15,7 @@ impl FormatNodeRule<TsTypeofType> for FormatTsTypeofType {
 
         write![
             f,
-            [
-                typeof_token.format(),
-                space_token(),
-                expression_name.format()
-            ]
+            [typeof_token.format(), space(), expression_name.format()]
         ]
     }
 }

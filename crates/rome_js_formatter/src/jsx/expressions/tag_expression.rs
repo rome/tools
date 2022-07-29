@@ -11,18 +11,18 @@ impl FormatNodeRule<JsxTagExpression> for FormatJsxTagExpression {
         match get_wrap_state(node.syntax()) {
             WrapState::WrapOnBreak => write![
                 f,
-                [group_elements(&format_args![
-                    if_group_breaks(&token("(")),
+                [group(&format_args![
+                    if_group_breaks(&text("(")),
                     soft_block_indent(&format_args![node.tag().format()]),
-                    if_group_breaks(&token(")"))
+                    if_group_breaks(&text(")"))
                 ])]
             ],
             WrapState::AlwaysWrap => write![
                 f,
-                [group_elements(&format_args![
-                    token("("),
+                [group(&format_args![
+                    text("("),
                     soft_block_indent(&format_args![node.tag().format()]),
-                    token(")")
+                    text(")")
                 ])]
             ],
             WrapState::NoWrap => write![f, [node.tag().format()]],

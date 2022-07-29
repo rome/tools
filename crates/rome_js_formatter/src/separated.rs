@@ -28,7 +28,7 @@ where
         if !self.options.nodes_grouped {
             node.format().fmt(f)?;
         } else {
-            group_elements(&node.format()).fmt(f)?;
+            group(&node.format()).fmt(f)?;
         }
 
         // Reuse the existing trailing separator or create it if it wasn't in the

@@ -23,17 +23,17 @@ impl FormatNodeRule<JsForOfStatement> for FormatJsForOfStatement {
 
         write!(
             f,
-            [group_elements(&format_args![
+            [group(&format_args![
                 for_token.format(),
-                space_token(),
+                space(),
                 await_token
                     .format()
-                    .with_or_empty(|token, f| write![f, [token, space_token()]]),
+                    .with_or_empty(|token, f| write![f, [token, space()]]),
                 l_paren_token.format(),
-                group_elements(&initializer.format()),
-                space_token(),
+                group(&initializer.format()),
+                space(),
                 of_token.format(),
-                space_token(),
+                space(),
                 expression.format(),
                 r_paren_token.format(),
                 FormatBodyStatement::new(&body?)

@@ -19,7 +19,7 @@ impl FormatNodeRule<JsShorthandNamedImportSpecifier> for FormatJsShorthandNamedI
         } = node.as_fields();
 
         if let Some(type_token) = type_token {
-            write!(f, [type_token.format(), space_token()])?;
+            write!(f, [type_token.format(), space()])?;
         }
 
         write![f, [local_name.format()]]

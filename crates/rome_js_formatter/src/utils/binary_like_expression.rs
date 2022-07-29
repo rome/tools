@@ -514,7 +514,7 @@ impl FlattenedBinaryExpressionPart {
                             group.expression.write(f, items)?;
 
                             if let Some(operator) = &group.operator {
-                                write!(f, [space_token(), operator.format()])?;
+                                write!(f, [space(), operator.format()])?;
                             }
 
                             match &group.terminator {
@@ -530,7 +530,7 @@ impl FlattenedBinaryExpressionPart {
 
                     if keep_on_same_line {
                         // we bail early if group doesn't need to be broken. We don't need to do further checks
-                        f.join_with(space_token()).entries(groups).finish()
+                        f.join_with(space()).entries(groups).finish()
                     } else if is_inside_parenthesis(current.syntax()) {
                         f.join_with(soft_line_break_or_space())
                             .entries(groups)
@@ -538,7 +538,7 @@ impl FlattenedBinaryExpressionPart {
                     } else if should_not_indent_if_parent_indents(current) {
                         write!(
                             f,
-                            [group_elements(&format_once(|f| {
+                            [group(&format_once(|f| {
                                 f.join_with(soft_line_break_or_space())
                                     .entries(groups)
                                     .finish()
@@ -547,13 +547,11 @@ impl FlattenedBinaryExpressionPart {
                     } else if should_indent_if_parent_inlines(current) {
                         write!(
                             f,
-                            [soft_line_indent_or_space(&group_elements(&format_once(
-                                |f| {
-                                    f.join_with(soft_line_break_or_space())
-                                        .entries(groups)
-                                        .finish()
-                                }
-                            )))]
+                            [soft_line_indent_or_space(&group(&format_once(|f| {
+                                f.join_with(soft_line_break_or_space())
+                                    .entries(groups)
+                                    .finish()
+                            })))]
                         )
                     } else {
                         // if none of the previous conditions is met,
@@ -566,13 +564,11 @@ impl FlattenedBinaryExpressionPart {
 
                         write!(
                             f,
-                            [group_elements(&soft_line_indent_or_space(&format_once(
-                                |f| {
-                                    f.join_with(soft_line_break_or_space())
-                                        .entries(groups)
-                                        .finish()
-                                }
-                            )))]
+                            [group(&soft_line_indent_or_space(&format_once(|f| {
+                                f.join_with(soft_line_break_or_space())
+                                    .entries(groups)
+                                    .finish()
+                            })))]
                         )
                     }
                 });

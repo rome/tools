@@ -9,7 +9,7 @@ impl FormatRule<TsPropertyParameterModifierList> for FormatTsPropertyParameterMo
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &TsPropertyParameterModifierList, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join_with(&space_token())
+        f.join_with(&space())
             .entries(sort_modifiers_by_precedence(node).into_iter().formatted())
             .finish()
     }

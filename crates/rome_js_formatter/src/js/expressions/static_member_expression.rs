@@ -29,7 +29,7 @@ impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression
             StaticMemberExpressionLayout::BreakAfterObject => {
                 write!(
                     f,
-                    [group_elements(&indent(&format_args![
+                    [group(&indent(&format_args![
                         soft_line_break(),
                         operator_token.format(),
                         member.format(),

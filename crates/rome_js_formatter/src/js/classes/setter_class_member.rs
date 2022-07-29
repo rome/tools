@@ -23,14 +23,14 @@ impl FormatNodeRule<JsSetterClassMember> for FormatJsSetterClassMember {
             f,
             [
                 modifiers.format(),
-                space_token(),
+                space(),
                 set_token.format(),
-                space_token(),
+                space(),
                 name.format(),
                 l_paren_token.format(),
                 parameter.format(),
                 r_paren_token.format(),
-                space_token(),
+                space(),
                 body.format(),
             ]
         ]

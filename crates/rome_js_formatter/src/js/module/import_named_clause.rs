@@ -22,13 +22,13 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
         } = node.as_fields();
 
         if let Some(type_token) = type_token {
-            write!(f, [type_token.format(), space_token()])?;
+            write!(f, [type_token.format(), space()])?;
         }
 
         let is_default_specifier_empty = default_specifier.is_none();
 
         if let Some(default_specifier) = default_specifier {
-            write!(f, [default_specifier.format(), space_token()])?;
+            write!(f, [default_specifier.format(), space()])?;
         }
 
         let named_import = named_import?;
@@ -78,16 +78,13 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
                                     specifiers: _,
                                     r_curly_token,
                                 } = specifiers.as_fields();
-                                write!(
-                                    f,
-                                    [l_curly_token.format(), space_token(), specifier.format(),]
-                                )?;
+                                write!(f, [l_curly_token.format(), space(), specifier.format(),])?;
 
                                 if let Some(separator) = separator {
                                     format_removed(separator).fmt(f)?;
                                 }
 
-                                write!(f, [space_token(), r_curly_token.format()])
+                                write!(f, [space(), r_curly_token.format()])
                             }
                         }
                         _ => write![f, [named_import.format()]],
@@ -97,18 +94,10 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
             }
         }?;
 
-        write![
-            f,
-            [
-                space_token(),
-                from_token.format(),
-                space_token(),
-                source.format(),
-            ]
-        ]?;
+        write![f, [space(), from_token.format(), space(), source.format(),]]?;
 
         if let Some(assertion) = assertion {
-            write!(f, [space_token(), assertion.format()])?;
+            write!(f, [space(), assertion.format()])?;
         }
 
         Ok(())

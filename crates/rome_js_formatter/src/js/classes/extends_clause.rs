@@ -62,13 +62,6 @@ impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
             }
         });
 
-        write![
-            f,
-            [
-                extends_token.format(),
-                space_token(),
-                group_elements(&format_super)
-            ]
-        ]
+        write![f, [extends_token.format(), space(), group(&format_super)]]
     }
 }

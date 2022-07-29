@@ -21,9 +21,9 @@ impl FormatNodeRule<TsFunctionType> for FormatTsFunctionType {
             [
                 type_parameters.format(),
                 parameters.format(),
-                space_token(),
+                space(),
                 fat_arrow_token.format(),
-                space_token(),
+                space(),
                 return_type.format()
             ]
         ]

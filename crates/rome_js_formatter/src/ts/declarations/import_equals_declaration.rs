@@ -28,14 +28,14 @@ impl FormatNodeRule<TsImportEqualsDeclaration> for FormatTsImportEqualsDeclarati
             [FormatWithSemicolon::new(
                 &format_args!(
                     import_token.format(),
-                    space_token(),
+                    space(),
                     type_token
                         .format()
-                        .with_or_empty(|token, f| write![f, [token, space_token()]]),
+                        .with_or_empty(|token, f| write![f, [token, space()]]),
                     id.format(),
-                    space_token(),
+                    space(),
                     eq_token.format(),
-                    space_token(),
+                    space(),
                     module_reference.format(),
                 ),
                 semicolon_token.as_ref()

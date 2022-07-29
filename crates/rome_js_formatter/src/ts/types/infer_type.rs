@@ -12,9 +12,6 @@ impl FormatNodeRule<TsInferType> for FormatTsInferType {
             infer_token,
             type_parameter,
         } = node.as_fields();
-        write![
-            f,
-            [infer_token.format(), space_token(), type_parameter.format()]
-        ]
+        write![f, [infer_token.format(), space(), type_parameter.format()]]
     }
 }

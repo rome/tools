@@ -27,14 +27,14 @@ impl FormatNodeRule<JsForInStatement> for FormatJsForInStatement {
 
         write!(
             f,
-            [group_elements(&format_args!(
+            [group(&format_args!(
                 for_token,
-                space_token(),
+                space(),
                 l_paren_token.format(),
-                group_elements(&initializer),
-                space_token(),
+                group(&initializer),
+                space(),
                 in_token,
-                space_token(),
+                space(),
                 expression,
                 r_paren_token.format(),
                 FormatBodyStatement::new(&body?)

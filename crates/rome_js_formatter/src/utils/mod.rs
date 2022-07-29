@@ -75,7 +75,7 @@ impl<'a> FormatInitializerClause<'a> {
 impl Format<JsFormatContext> for FormatInitializerClause<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(initializer) = self.initializer {
-            write!(f, [space_token(), initializer.format()])
+            write!(f, [space(), initializer.format()])
         } else {
             Ok(())
         }
@@ -171,7 +171,7 @@ impl Format<JsFormatContext> for FormatBodyStatement<'_> {
                 write!(f, [body.format(), format_inserted(JsSyntaxKind::SEMICOLON)])
             }
             body => {
-                write!(f, [space_token(), body.format()])
+                write!(f, [space(), body.format()])
             }
         }
     }
@@ -471,7 +471,7 @@ where
         let last = iterator.peek().is_none();
 
         if last {
-            join_with.entry(&format_args![&element, &if_group_breaks(&token(","))]);
+            join_with.entry(&format_args![&element, &if_group_breaks(&text(","))]);
         } else {
             join_with.entry(&element);
         }

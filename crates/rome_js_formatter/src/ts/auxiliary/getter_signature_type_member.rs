@@ -26,7 +26,7 @@ impl FormatNodeRule<TsGetterSignatureTypeMember> for FormatTsGetterSignatureType
             f,
             [
                 get_token.format(),
-                space_token(),
+                space(),
                 name.format(),
                 l_paren_token.format(),
                 r_paren_token.format(),

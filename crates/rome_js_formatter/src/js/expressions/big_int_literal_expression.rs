@@ -27,7 +27,7 @@ impl FormatNodeRule<JsBigIntLiteralExpression> for FormatJsBigIntLiteralExpressi
                     f,
                     [format_replaced(
                         &value_token,
-                        &dynamic_token(&lowercase, value_token.text_trimmed_range().start())
+                        &dynamic_text(&lowercase, value_token.text_trimmed_range().start())
                     )]
                 )
             }

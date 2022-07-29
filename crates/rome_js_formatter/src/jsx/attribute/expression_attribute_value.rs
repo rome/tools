@@ -22,7 +22,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
 
         write!(
             f,
-            [group_elements(&format_with(|f| {
+            [group(&format_with(|f| {
                 write!(f, [l_curly_token.format()])?;
 
                 let expression = expression.as_ref()?;

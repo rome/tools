@@ -13,9 +13,6 @@ impl FormatNodeRule<TsPropertyParameter> for FormatTsPropertyParameter {
             formal_parameter,
         } = node.as_fields();
 
-        write![
-            f,
-            [modifiers.format(), space_token(), formal_parameter.format()]
-        ]
+        write![f, [modifiers.format(), space(), formal_parameter.format()]]
     }
 }

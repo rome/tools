@@ -45,7 +45,7 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
         });
         write![
             f,
-            [group_elements(&format_with(|f| {
+            [group(&format_with(|f| {
                 if should_indent {
                     write!(f, [&indent(&body)])
                 } else {

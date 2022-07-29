@@ -21,7 +21,7 @@ impl FormatNodeRule<JsxClosingElement> for FormatJsxClosingElement {
 
         write![
             formatter,
-            [group_elements(&format_args![
+            [group(&format_args![
                 l_angle_token.format(),
                 slash_token.format(),
                 name.format(),

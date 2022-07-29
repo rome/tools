@@ -67,7 +67,7 @@ impl<'fmt, Context> Argument<'fmt, Context> {
 /// use rome_formatter::{format, format_args};
 ///
 /// let formatted = format!(SimpleFormatContext::default(), [
-///     format_args!(token("a"), space_token(), token("b"))
+///     format_args!(text("a"), space(), text("b"))
 /// ]).unwrap();
 ///
 /// assert_eq!("a b", formatted.print().as_code());
@@ -118,7 +118,7 @@ impl<'fmt, Context> From<&'fmt Argument<'fmt, Context>> for Arguments<'fmt, Cont
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
-    use crate::{format_args, write, FormatState, VecBuffer};
+    use crate::{format_args, format_element, write, FormatState, VecBuffer};
 
     #[test]
     fn test_nesting() {
@@ -128,11 +128,11 @@ mod tests {
         write!(
             &mut buffer,
             [
-                token("function"),
-                space_token(),
-                token("a"),
-                space_token(),
-                group_elements(&format_args!(token("("), token(")")))
+                text("function"),
+                space(),
+                text("a"),
+                space(),
+                group(&format_args!(text("("), text(")")))
             ]
         )
         .unwrap();
@@ -140,13 +140,13 @@ mod tests {
         assert_eq!(
             buffer.into_element(),
             FormatElement::List(List::new(vec![
-                FormatElement::Token(Token::Static { text: "function" }),
+                FormatElement::Text(Text::Static { text: "function" }),
                 FormatElement::Space,
-                FormatElement::Token(Token::Static { text: "a" }),
+                FormatElement::Text(Text::Static { text: "a" }),
                 FormatElement::Space,
-                FormatElement::Group(Group::new(vec![
-                    FormatElement::Token(Token::Static { text: "(" }),
-                    FormatElement::Token(Token::Static { text: ")" }),
+                FormatElement::Group(format_element::Group::new(vec![
+                    FormatElement::Text(Text::Static { text: "(" }),
+                    FormatElement::Text(Text::Static { text: ")" }),
                 ]))
             ]))
         );

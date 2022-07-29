@@ -25,7 +25,7 @@ impl FormatNodeRule<JsComputedMemberExpression> for FormatJsComputedMemberExpres
             f,
             [
                 object.format(),
-                group_elements(&format_args![
+                group(&format_args![
                     optional_chain_token.format(),
                     l_brack_token.format(),
                     soft_line_break(),

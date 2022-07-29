@@ -15,11 +15,7 @@ impl FormatNodeRule<TsExtendsClause> for FormatTsExtendsClause {
 
         write!(
             f,
-            [
-                extends_token.format(),
-                space_token(),
-                &indent(&types.format())
-            ]
+            [extends_token.format(), space(), &indent(&types.format())]
         )
     }
 }

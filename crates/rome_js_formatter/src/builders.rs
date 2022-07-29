@@ -137,7 +137,7 @@ impl Format<JsFormatContext> for FormatParenthesize<'_> {
         if self.grouped {
             write!(
                 f,
-                [group_elements(&format_args![
+                [group(&format_args![
                     format_open_paren,
                     soft_block_indent(&Arguments::from(&self.content)),
                     format_close_paren
@@ -222,7 +222,7 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     write_trivia_token(f, leading_trivia)?;
                 }
 
-                dynamic_token(
+                dynamic_text(
                     &normalize_newlines(&self.node.text_trimmed().to_string(), LINE_TERMINATORS),
                     self.node.text_trimmed_range().start(),
                 )
@@ -431,10 +431,10 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
             DelimitedMode::BlockIndent => write!(f, [delimited])?,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
                 match group_id {
-                    None => write!(f, [group_elements(&delimited)])?,
+                    None => write!(f, [group(&delimited)])?,
                     Some(group_id) => write!(
                         f,
-                        [group_elements(&delimited).with_group_id(Some(*group_id))]
+                        [group(&delimited).with_group_id(Some(*group_id))]
                     )?,
                 }
             }

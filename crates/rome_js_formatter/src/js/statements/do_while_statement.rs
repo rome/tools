@@ -26,16 +26,16 @@ impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
                 write!(f, [body.format(), hard_line_break()])?;
             }
             body => {
-                write!(f, [space_token(), body.format()])?;
+                write!(f, [space(), body.format()])?;
             }
         };
 
         write![
             f,
             [
-                space_token(),
+                space(),
                 while_token.format(),
-                space_token(),
+                space(),
                 format_delimited(&l_paren_token?, &test.format(), &r_paren_token?,)
                     .soft_block_indent(),
             ]

@@ -180,10 +180,10 @@ impl Format<JsFormatContext> for RightAssignmentLike {
                 write!(f, [assignment.format()])
             }
             RightAssignmentLike::JsInitializerClause(initializer) => {
-                write!(f, [space_token(), initializer.format()])
+                write!(f, [space(), initializer.format()])
             }
             RightAssignmentLike::TsType(ty) => {
-                write!(f, [space_token(), ty.format()])
+                write!(f, [space(), ty.format()])
             }
         }
     }
@@ -426,7 +426,7 @@ impl JsAnyAssignmentLike {
                     value: _,
                     semicolon_token: _,
                 } = property_class_member.as_fields();
-                write!(f, [modifiers.format(), space_token()])?;
+                write!(f, [modifiers.format(), space()])?;
 
                 let name = name?;
 
@@ -454,7 +454,7 @@ impl JsAnyAssignmentLike {
                     semicolon_token: _,
                 } = property_signature_class_member.as_fields();
 
-                write!(f, [modifiers.format(), space_token(),])?;
+                write!(f, [modifiers.format(), space(),])?;
 
                 let width = write_member_name(&name?.into(), f)?;
 
@@ -474,7 +474,7 @@ impl JsAnyAssignmentLike {
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
                 let operator_token = assignment.operator_token()?;
-                write!(f, [space_token(), operator_token.format()])
+                write!(f, [space(), operator_token.format()])
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
                 let colon_token = property.colon_token()?;
@@ -483,18 +483,18 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 if let Some(initializer) = variable_declarator.initializer() {
                     let eq_token = initializer.eq_token()?;
-                    write!(f, [space_token(), eq_token.format()])?
+                    write!(f, [space(), eq_token.format()])?
                 }
                 Ok(())
             }
             JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
                 let eq_token = type_alias_declaration.eq_token()?;
-                write!(f, [space_token(), eq_token.format()])
+                write!(f, [space(), eq_token.format()])
             }
             JsAnyAssignmentLike::JsPropertyClassMember(property_class_member) => {
                 if let Some(initializer) = property_class_member.value() {
                     let eq_token = initializer.eq_token()?;
-                    write!(f, [space_token(), eq_token.format()])?
+                    write!(f, [space(), eq_token.format()])?
                 }
                 Ok(())
             }
@@ -511,32 +511,32 @@ impl JsAnyAssignmentLike {
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
                 let right = assignment.right()?;
-                write!(f, [space_token(), right.format()])
+                write!(f, [space(), right.format()])
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
                 let pattern = property.pattern()?;
                 let init = property.init();
                 write!(f, [pattern.format()])?;
                 if let Some(init) = init {
-                    write!(f, [space_token(), init.format()])?;
+                    write!(f, [space(), init.format()])?;
                 }
                 Ok(())
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 if let Some(initializer) = variable_declarator.initializer() {
                     let expression = initializer.expression()?;
-                    write!(f, [space_token(), expression.format()])?;
+                    write!(f, [space(), expression.format()])?;
                 }
                 Ok(())
             }
             JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
                 let ty = type_alias_declaration.ty()?;
-                write!(f, [space_token(), ty.format()])
+                write!(f, [space(), ty.format()])
             }
             JsAnyAssignmentLike::JsPropertyClassMember(property_class_member) => {
                 if let Some(initializer) = property_class_member.value() {
                     let expression = initializer.expression()?;
-                    write!(f, [space_token(), expression.format()])?;
+                    write!(f, [space(), expression.format()])?;
                 }
                 Ok(())
             }
@@ -897,7 +897,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                 } else {
                     write!(
                         f,
-                        [group_elements(&format_once(|f| {
+                        [group(&format_once(|f| {
                             f.write_element(formatted_element)
                         }))]
                     )
@@ -921,7 +921,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         write![
                             f,
                             [
-                                group_elements(&indent(&soft_line_break_or_space()),)
+                                group(&indent(&soft_line_break_or_space()),)
                                     .with_group_id(Some(group_id)),
                                 line_suffix_boundary(),
                                 if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
@@ -932,18 +932,18 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                     AssignmentLikeLayout::BreakAfterOperator => {
                         write![
                             f,
-                            [group_elements(&indent(&format_args![
+                            [group(&indent(&format_args![
                                 soft_line_break_or_space(),
                                 right,
                             ]))]
                         ]
                     }
                     AssignmentLikeLayout::NeverBreakAfterOperator => {
-                        write![f, [space_token(), right]]
+                        write![f, [space(), right]]
                     }
 
                     AssignmentLikeLayout::BreakLeftHandSide => {
-                        write![f, [space_token(), group_elements(&right)]]
+                        write![f, [space(), group(&right)]]
                     }
 
                     AssignmentLikeLayout::Chain => {
@@ -963,8 +963,8 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                         write!(
                             f,
                             [
-                                space_token(),
-                                group_elements(&indent(&format_args![hard_line_break(), right]))
+                                space(),
+                                group(&indent(&format_args![hard_line_break(), right]))
                                     .with_group_id(Some(group_id)),
                             ]
                         )
@@ -984,7 +984,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                     write!(f, [&inner_content])
                 }
                 _ => {
-                    write!(f, [group_elements(&inner_content)])
+                    write!(f, [group(&inner_content)])
                 }
             }
         });

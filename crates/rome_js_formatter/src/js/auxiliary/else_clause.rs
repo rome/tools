@@ -23,7 +23,7 @@ impl FormatNodeRule<JsElseClause> for FormatJsElseClause {
             f,
             [
                 else_token.format(),
-                group_elements(
+                group(
                     &FormatConsequentClause::new(&alternate)
                         .with_forced_space(matches!(alternate, JsIfStatement(_)))
                 )

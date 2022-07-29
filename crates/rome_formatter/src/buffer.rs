@@ -18,14 +18,14 @@ pub trait Buffer {
     /// # Examples
     ///
     /// ```
-    /// use rome_formatter::{Buffer, FormatElement, FormatState, SimpleFormatContext, Token, VecBuffer};
+    /// use rome_formatter::{Buffer, FormatElement, FormatState, SimpleFormatContext, Text, VecBuffer};
     ///
     /// let mut state = FormatState::new(SimpleFormatContext::default());
     /// let mut buffer = VecBuffer::new(&mut state);
     ///
-    /// buffer.write_element(FormatElement::Token( Token::Static { text: "test"})).unwrap();
+    /// buffer.write_element(FormatElement::Text( Text::Static { text: "test"})).unwrap();
     ///
-    /// assert_eq!(buffer.into_element(), FormatElement::Token( Token::Static { text: "test"}));
+    /// assert_eq!(buffer.into_element(), FormatElement::Text( Text::Static { text: "test"}));
     /// ```
     ///
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()>;
@@ -38,14 +38,14 @@ pub trait Buffer {
     ///
     /// ```
     /// use rome_formatter::prelude::*;
-    /// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, Token, VecBuffer, format_args};
+    /// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, Text, VecBuffer, format_args};
     ///
     /// let mut state = FormatState::new(SimpleFormatContext::default());
     /// let mut buffer = VecBuffer::new(&mut state);
     ///
-    /// buffer.write_fmt(format_args!(token("Hello World"))).unwrap();
+    /// buffer.write_fmt(format_args!(text("Hello World"))).unwrap();
     ///
-    /// assert_eq!(buffer.into_element(), FormatElement::Token( Token::Static { text: "Hello World"}));
+    /// assert_eq!(buffer.into_element(), FormatElement::Text( Text::Static { text: "Hello World"}));
     /// ```
     fn write_fmt(mut self: &mut Self, arguments: Arguments<Self::Context>) -> FormatResult<()> {
         write(&mut self, arguments)
@@ -266,13 +266,13 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
 ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-///         write!(f, [token("# heading"), hard_line_break()])
+///         write!(f, [text("# heading"), hard_line_break()])
 ///     }
 /// }
 ///
 /// let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
 ///
-/// write!(&mut with_preamble, [token("this text will be on a new line")]).unwrap();
+/// write!(&mut with_preamble, [text("this text will be on a new line")]).unwrap();
 ///
 /// drop(with_preamble);
 ///
@@ -293,7 +293,7 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
 ///     fn fmt(&self, f: &mut Formatter<SimpleFormatContext>) -> FormatResult<()> {
-///         write!(f, [token("# heading"), hard_line_break()])
+///         write!(f, [text("# heading"), hard_line_break()])
 ///     }
 /// }
 ///
@@ -461,9 +461,9 @@ pub trait BufferExtensions: Buffer + Sized {
     ///
     ///     let element = format_with(|f| {
     ///         write!(f, [
-    ///             token("hello"),
+    ///             text("hello"),
     ///             hard_line_break(),
-    ///             token("world!")
+    ///             text("world!")
     ///         ])
     ///     });
     ///     let mut buffer = f.inspect_will_break();
@@ -471,9 +471,9 @@ pub trait BufferExtensions: Buffer + Sized {
     ///     let does_element_break = buffer.will_break();
     ///
     ///     if does_element_break {
-    ///         write!(f, [hard_line_break(), token("break")])
+    ///         write!(f, [hard_line_break(), text("break")])
     ///     } else {
-    ///         write!(f, [token("did not break")])
+    ///         write!(f, [text("did not break")])
     ///     }
     ///
     /// })]).unwrap();
@@ -521,16 +521,16 @@ pub trait BufferExtensions: Buffer + Sized {
     ///         write!(buffer, [
     ///             labelled(
     ///                 LabelId::of::<SomeLabelId>(),
-    ///                 &token("'I have a label'")
+    ///                 &text("'I have a label'")
     ///             )
     ///         ])?;
     ///
     ///         let is_labelled = buffer.has_label();
     ///
     ///         if is_labelled {
-    ///             write!(f, [token(" has label SomeLabelId")])
+    ///             write!(f, [text(" has label SomeLabelId")])
     ///         } else {
-    ///             write!(f, [token(" doesn't have label SomeLabelId")])
+    ///             write!(f, [text(" doesn't have label SomeLabelId")])
     ///         }
     ///     })]
     /// )

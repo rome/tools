@@ -31,7 +31,7 @@ where
         join.entry(
             node.syntax(),
             &format_with(|f| {
-                write!(f, [group_elements(&node.format())])?;
+                write!(f, [group(&node.format())])?;
 
                 if is_disallow {
                     // Trailing separators are disallowed, replace it with an empty element

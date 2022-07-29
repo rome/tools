@@ -45,11 +45,11 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.join()
-    ///         .entry(&token("a"))
-    ///         .entry(&space_token())
-    ///         .entry(&token("+"))
-    ///         .entry(&space_token())
-    ///         .entry(&token("b"))
+    ///         .entry(&text("a"))
+    ///         .entry(&space())
+    ///         .entry(&text("+"))
+    ///         .entry(&space())
+    ///         .entry(&text("b"))
     ///         .finish()
     /// })]).unwrap();
     ///
@@ -73,11 +73,11 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::prelude::*;
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.join_with(&format_args!(token(","), space_token()))
-    ///         .entry(&token("1"))
-    ///         .entry(&token("2"))
-    ///         .entry(&token("3"))
-    ///         .entry(&token("4"))
+    ///     f.join_with(&format_args!(text(","), space()))
+    ///         .entry(&text("1"))
+    ///         .entry(&text("2"))
+    ///         .entry(&text("3"))
+    ///         .entry(&text("4"))
     ///         .finish()
     /// })]).unwrap();
     ///
@@ -130,10 +130,10 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.fill(soft_line_break_or_space())
-    ///         .entry(&token("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
-    ///         .entry(&token("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
-    ///         .entry(&token("cccccccccccccccccccccccccccccc"))
-    ///         .entry(&token("dddddddddddddddddddddddddddddd"))
+    ///         .entry(&text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+    ///         .entry(&text("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
+    ///         .entry(&text("cccccccccccccccccccccccccccccc"))
+    ///         .entry(&text("dddddddddddddddddddddddddddddd"))
     ///         .finish()
     /// })]).unwrap();
     ///
@@ -148,10 +148,10 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::{format, format_args};
     ///
     /// let entries = vec![
-    ///     token("<b>Important: </b>"),
-    ///     token("Please do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you "),
-    ///     token("<em>will</em>"),
-    ///     token(" be reprimanded")
+    ///     text("<b>Important: </b>"),
+    ///     text("Please do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you "),
+    ///     text("<em>will</em>"),
+    ///     text(" be reprimanded")
     /// ];
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {

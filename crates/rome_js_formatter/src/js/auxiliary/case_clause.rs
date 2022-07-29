@@ -21,7 +21,7 @@ impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
             f,
             [
                 case_token.format(),
-                space_token(),
+                space(),
                 test.format(),
                 colon_token.format()
             ]
@@ -38,7 +38,7 @@ impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
             // block to push them into
             return write!(f, [hard_line_break()]);
         } else if is_first_child_block_stmt {
-            write![f, [space_token(), consequent.format()]]
+            write![f, [space(), consequent.format()]]
         } else {
             // no line break needed after because it is added by the indent in the switch statement
             write!(

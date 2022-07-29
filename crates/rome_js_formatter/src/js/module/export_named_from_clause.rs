@@ -24,7 +24,7 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
 
         let content = format_with(|f| {
             if let Some(type_token) = &type_token {
-                write!(f, [type_token.format(), space_token()])?;
+                write!(f, [type_token.format(), space()])?;
             }
 
             if node_has_leading_newline(specifiers.syntax()) {
@@ -49,18 +49,10 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
                 )?;
             };
 
-            write![
-                f,
-                [
-                    space_token(),
-                    from_token.format(),
-                    space_token(),
-                    source.format(),
-                ]
-            ]?;
+            write![f, [space(), from_token.format(), space(), source.format(),]]?;
 
             if let Some(assertion) = &assertion {
-                write!(f, [space_token(), assertion.format()])?;
+                write!(f, [space(), assertion.format()])?;
             }
 
             Ok(())

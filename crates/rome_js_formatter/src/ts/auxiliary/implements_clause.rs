@@ -18,7 +18,7 @@ impl FormatNodeRule<TsImplementsClause> for FormatTsImplementsClause {
             f,
             [
                 implements_token.format(),
-                group_elements(&indent(&format_args![
+                group(&indent(&format_args![
                     soft_line_break_or_space(),
                     types.format()
                 ]))

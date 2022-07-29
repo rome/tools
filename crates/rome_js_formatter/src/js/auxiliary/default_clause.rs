@@ -20,15 +20,12 @@ impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
             Some(JsAnyStatement::JsBlockStatement(_))
         );
 
-        write!(
-            f,
-            [default_token.format(), colon_token.format(), space_token()]
-        )?;
+        write!(f, [default_token.format(), colon_token.format(), space()])?;
 
         if consequent.is_empty() {
             write!(f, [hard_line_break()])
         } else if first_child_is_block_stmt {
-            write!(f, [space_token(), consequent.format()])
+            write!(f, [space(), consequent.format()])
         } else {
             // no line break needed after because it is added by the indent in the switch statement
             write!(

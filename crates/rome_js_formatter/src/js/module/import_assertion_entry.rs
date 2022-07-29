@@ -38,7 +38,7 @@ impl FormatNodeRule<JsImportAssertionEntry> for FormatJsImportAssertionEntry {
             f,
             [
                 colon_token.format(),
-                space_token(),
+                space(),
                 FormatLiteralStringToken::new(&value_token?, StringLiteralParentKind::Expression),
             ]
         ]

@@ -19,9 +19,9 @@ impl FormatNodeRule<TsModuleDeclaration> for FormatTsModuleDeclaration {
             f,
             [
                 module_or_namespace.format(),
-                space_token(),
+                space(),
                 name.format(),
-                space_token(),
+                space(),
                 body.format(),
             ]
         ]
