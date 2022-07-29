@@ -96,7 +96,7 @@ impl Rule for UseSingleVarDeclarator {
         // Extract the indentation part from the leading trivia of the kind
         // token, defined as all whitespace and newline trivia pieces starting
         // from the token going backwards up to the first newline (included).
-        // If the leading trivia for the token is empty a single newline trivia
+        // If the leading trivia for the token is empty, a single newline trivia
         // piece is created.  For efficiency, the trivia pieces are stored in
         // reverse order (the vector is then reversed again on iteration)
         let mut has_newline = false;
@@ -125,7 +125,7 @@ impl Rule for UseSingleVarDeclarator {
         };
 
         let last_semicolon_token = semicolon_token.as_ref();
-        let remaining_semicolor_token = semicolon_token.clone().map(|_| make::token(T![;]));
+        let remaining_semicolon_token = semicolon_token.clone().map(|_| make::token(T![;]));
 
         let declarators_len = declarators.len();
 
@@ -206,7 +206,7 @@ impl Rule for UseSingleVarDeclarator {
                     let semicolon_token = if index + 1 == declarators_len {
                         last_semicolon_token
                     } else {
-                        remaining_semicolor_token.as_ref()
+                        remaining_semicolon_token.as_ref()
                     };
 
                     if let Some(semicolon_token) = semicolon_token {
