@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: react-relay.js
 ---
+
 # Input
+
 ```js
 const { graphql } = require("react-relay");
 
@@ -21,10 +22,50 @@ graphql.experimental`
   )
 { markReadNotification(data: $input ) { notification {seenState} } }
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,21 +1,17 @@
+ const { graphql } = require("react-relay");
+ 
+ graphql`
+-  mutation MarkReadNotificationMutation($input: MarkReadNotificationData!) {
+-    markReadNotification(data: $input) {
+-      notification {
+-        seenState
+-      }
+-    }
+-  }
++ mutation     MarkReadNotificationMutation(
++    $input
++    : MarkReadNotificationData!
++  )
++{ markReadNotification(data: $input ) { notification {seenState} } }
+ `;
+ 
+ graphql.experimental`
+-  mutation MarkReadNotificationMutation($input: MarkReadNotificationData!) {
+-    markReadNotification(data: $input) {
+-      notification {
+-        seenState
+-      }
+-    }
+-  }
++ mutation     MarkReadNotificationMutation(
++    $input
++    : MarkReadNotificationData!
++  )
++{ markReadNotification(data: $input ) { notification {seenState} } }
+ `;
 ```
 
 # Output
+
 ```js
 const { graphql } = require("react-relay");
 
@@ -43,7 +84,7 @@ graphql.experimental`
   )
 { markReadNotification(data: $input ) { notification {seenState} } }
 `;
-
 ```
+
 
 

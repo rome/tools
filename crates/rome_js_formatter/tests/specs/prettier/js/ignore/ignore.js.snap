@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: ignore.js
 ---
+
 # Input
+
 ```js
 function a() {
   // prettier-ignore
@@ -62,10 +63,27 @@ const response = {
   '_text': 'Turn on the lights',
   intent: 'lights',
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -24,7 +24,7 @@
+   };
+ 
+   function giveMeSome() {
+-    a(  a  ); // prettier-ignore
++    a(a); // prettier-ignore
+     // shouldn't I return something?  :shrug:
+   }
+ 
 ```
 
 # Output
+
 ```js
 function a() {
   // prettier-ignore
@@ -125,7 +143,7 @@ const response = {
   '_text': 'Turn on the lights',
   intent: "lights",
 };
-
 ```
+
 
 

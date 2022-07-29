@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comments.js
 ---
+
 # Input
+
 ```js
 var x = 100
 
@@ -35,10 +36,30 @@ export class AppModule {}
 @Bar()
 // C
 export class Bar{}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,9 @@
+ var x = 100;
+ 
+ @Hello({
+-  a: "a", // Comment is in the wrong place
++  a: 'a', // Comment is in the wrong place
+   // test
+-  b: "2",
++  b: '2'
+ })
+ class X {}
+ 
 ```
 
 # Output
+
 ```js
 var x = 100;
 
@@ -68,7 +89,7 @@ export class AppModule {}
 @Bar()
 // C
 export class Bar {}
-
 ```
+
 
 

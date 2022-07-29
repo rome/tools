@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: block-comments.js
 ---
+
 # Input
+
 ```js
 bifornCringerMoshedPerplexSawder
 |> foo1
@@ -10,10 +11,30 @@ bifornCringerMoshedPerplexSawder
 |> foo3 /* comment2 */
 |> kochabCooieGameOnOboleUnweave
 |> glimseGlyphsHazardNoopsTieTie;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,6 @@
+ bifornCringerMoshedPerplexSawder
+-  |> foo1
+-  |> foo2 /* comment1 */
+-  |> foo3 /* comment2 */
+-  |> kochabCooieGameOnOboleUnweave
+-  |> glimseGlyphsHazardNoopsTieTie;
++|> foo1
++|> foo2 /* comment1 */
++|> foo3 /* comment2 */
++|> kochabCooieGameOnOboleUnweave
++|> glimseGlyphsHazardNoopsTieTie;
 ```
 
 # Output
+
 ```js
 bifornCringerMoshedPerplexSawder
 |> foo1
@@ -21,8 +42,8 @@ bifornCringerMoshedPerplexSawder
 |> foo3 /* comment2 */
 |> kochabCooieGameOnOboleUnweave
 |> glimseGlyphsHazardNoopsTieTie;
-
 ```
+
 
 # Errors
 ```

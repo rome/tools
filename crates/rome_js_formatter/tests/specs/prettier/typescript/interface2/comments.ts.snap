@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comments.ts
 ---
+
 # Input
+
 ```js
 interface A1  // comment
 {  foo(): bar;}
@@ -32,10 +33,53 @@ extends Base  // comment2
 {
 // comment4
 foo(): bar;}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -15,24 +15,27 @@
+ }
+ 
+ interface A4 // comment1
+-  extends Base {
++  extends Base
++// comment3
++{
+   // comment2
+-  // comment3
+   foo(): bar;
+ }
+ 
+ interface A5 // comment1
+-  extends Base {
+-  // comment2
+-  // comment3
++  extends Base
++// comment3
++{
+   // comment4
++  // comment2
+   foo(): bar;
+ }
+ 
+ interface A6 // comment1
+-  extends Base {
++  extends Base
++// comment3
++{
+   // comment2
+-  // comment3
+   // comment4
+   foo(): bar;
+ }
 ```
 
 # Output
+
 ```js
 interface A1 {
   // comment
@@ -78,7 +122,7 @@ interface A6 // comment1
   // comment4
   foo(): bar;
 }
-
 ```
+
 
 

@@ -1,22 +1,39 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: dangling_for.js
 ---
+
 # Input
+
 ```js
 for // comment
 (;;);
 
 for /* comment */(;;);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,3 @@
+-// comment
+-for (;;);
++for (;;); // comment
+ 
+-/* comment */
+-for (;;);
++for /* comment */ (;;);
 ```
 
 # Output
+
 ```js
 for (;;); // comment
 
 for /* comment */ (;;);
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: square_0.js
 ---
+
 # Input
+
 ```js
 const version = someLongString
   .split('jest version =')
@@ -13,10 +14,30 @@ const version = someLongString
 const component = find('.org-lclp-edit-copy-url-banner__link')[0]
   .getAttribute('href')
   .indexOf(this.landingPageLink);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,6 @@
+-const version = someLongString
+-  .split("jest version =")
+-  .pop()
+-  .split(EOL)[0]
+-  .trim();
++const version = someLongString.split("jest version =").pop().split(
++  EOL,
++)[0].trim();
+ 
+ const component = find(".org-lclp-edit-copy-url-banner__link")[0]
+   .getAttribute("href")
 ```
 
 # Output
+
 ```js
 const version = someLongString.split("jest version =").pop().split(
   EOL,
@@ -25,7 +46,7 @@ const version = someLongString.split("jest version =").pop().split(
 const component = find(".org-lclp-edit-copy-url-banner__link")[0]
   .getAttribute("href")
   .indexOf(this.landingPageLink);
-
 ```
+
 
 

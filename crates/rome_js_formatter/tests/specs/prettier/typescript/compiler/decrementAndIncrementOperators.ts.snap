@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: decrementAndIncrementOperators.ts
 ---
+
 # Input
+
 ```js
 var x = 0;
 
@@ -41,10 +42,49 @@ x--;
 ((x))--;
 
 x[x++]++;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -3,11 +3,11 @@
+ // errors
+ 1++;
+ 
+-1++;
+-1--;
++(1)++;
++(1)--;
+ 
+-++1;
+---1;
++++(1);
++--(1);
+ 
+ (1 + 2)++;
+ (1 + 2)--;
+@@ -28,10 +28,10 @@
+ ++x;
+ --x;
+ 
+-x++;
+---x;
++(x)++;
++--(x);
+ 
+-x++;
+-x--;
++((x))++;
++((x))--;
+ 
+ x[x++]++;
 ```
 
 # Output
+
 ```js
 var x = 0;
 
@@ -83,8 +123,8 @@ x--;
 ((x))--;
 
 x[x++]++;
-
 ```
+
 
 # Errors
 ```

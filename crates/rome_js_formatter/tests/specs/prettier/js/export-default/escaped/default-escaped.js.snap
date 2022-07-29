@@ -1,22 +1,38 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: default-escaped.js
 ---
+
 # Input
+
 ```js
 // export asyn\u{63} from "async";
-export n\u{63} from "async";
+export n\u{63} from "async";```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,2 +1,5 @@
+ // export asyn\u{63} from "async";
+-export nc from "async";
++export
++n\u{63};
++from;
++("async");
 ```
 
 # Output
+
 ```js
 // export asyn\u{63} from "async";
 export
 n\u{63};
 from;
 ("async");
-
 ```
+
 
 # Errors
 ```

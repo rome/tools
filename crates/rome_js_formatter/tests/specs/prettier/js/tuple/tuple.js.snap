@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: tuple.js
 ---
+
 # Input
+
 ```js
 const tuple1 = #[1, 2, 3];
 
@@ -21,10 +22,35 @@ assert(tuple4 === #[1, 2, 2, 3, 4]);
 assert(tuple4.first() === 1);
 const tuple5 = tuple4.popped();
 assert(tuple5 === #[2, 2, 3, 4]);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,5 @@
+-const tuple1 = #[1, 2, 3];
++const tuple1 = #;
++[1, 2, 3];
+ 
+ assert(tuple1[0] === 1);
+ 
+@@ -6,7 +7,8 @@
+ assert(tuple1 !== tuple2);
+ assert(tuple2 === #[2, 2, 3]);
+ 
+-const tuple3 = #[1, ...tuple2];
++const tuple3 = #;
++[1, ...tuple2];
+ assert(tuple3 === #[1, 2, 2, 3]);
+ 
+ const tuple4 = tuple3.pushed(4);
 ```
 
 # Output
+
 ```js
 const tuple1 = #;
 [1, 2, 3];
@@ -45,8 +71,8 @@ assert(tuple4 === #[1, 2, 2, 3, 4]);
 assert(tuple4.first() === 1);
 const tuple5 = tuple4.popped();
 assert(tuple5 === #[2, 2, 3, 4]);
-
 ```
+
 
 # Errors
 ```

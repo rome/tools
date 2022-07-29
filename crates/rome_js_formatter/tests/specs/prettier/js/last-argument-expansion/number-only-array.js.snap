@@ -1,18 +1,38 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: number-only-array.js
 ---
+
 # Input
+
 ```js
 instantiate(game, [
   transform([-0.7, 0.5, 0]),
   render_colored_diffuse(game.MaterialDiffuse, game.Meshes["monkey_flat"], [1, 1, 0.3, 1]),
 ]);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,6 @@
+ instantiate(game, [
+   transform([-0.7, 0.5, 0]),
+-  render_colored_diffuse(
+-    game.MaterialDiffuse,
+-    game.Meshes["monkey_flat"],
+-    [1, 1, 0.3, 1],
+-  ),
++  render_colored_diffuse(game.MaterialDiffuse, game.Meshes["monkey_flat"], [
++    1, 1, 0.3, 1,
++  ]),
+ ]);
 ```
 
 # Output
+
 ```js
 instantiate(game, [
   transform([-0.7, 0.5, 0]),
@@ -20,7 +40,7 @@ instantiate(game, [
     1, 1, 0.3, 1,
   ]),
 ]);
-
 ```
+
 
 

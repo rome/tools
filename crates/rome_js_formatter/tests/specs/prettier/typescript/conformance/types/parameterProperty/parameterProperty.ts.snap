@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: parameterProperty.ts
 ---
+
 # Input
+
 ```js
 class c3 {
   constructor(public arg: number = 10) {
@@ -11,10 +12,26 @@ class c3 {
   not_constructor(public arg: number = 10) {
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,5 +2,6 @@
+   constructor(public arg: number = 10) {
+     // fails because of comment
+   }
+-  not_constructor(public arg: number = 10) {}
++  not_constructor(public arg: number = 10) {
++  }
+ }
 ```
 
 # Output
+
 ```js
 class c3 {
   constructor(public arg: number = 10) {
@@ -23,8 +40,8 @@ class c3 {
   not_constructor(public arg: number = 10) {
   }
 }
-
 ```
+
 
 # Errors
 ```

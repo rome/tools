@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-5961.js
 ---
+
 # Input
+
 ```js
 const Steps = styled.div`
   @media (min-width: 1px) {
@@ -39,10 +40,27 @@ const Steps2 = styled.div`
     }
   }
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,6 @@
+ const Steps = styled.div`
+   @media (min-width: 1px) {
+-    ${Step}:nth-child(odd) {
+-    }
++    ${Step}:nth-child(odd) {}
+   }
+ `;
+ 
 ```
 
 # Output
+
 ```js
 const Steps = styled.div`
   @media (min-width: 1px) {
@@ -79,7 +97,7 @@ const Steps2 = styled.div`
     }
   }
 `;
-
 ```
+
 
 

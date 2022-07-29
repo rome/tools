@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: classes.js
 ---
+
 # Input
+
 ```js
 @deco class Foo {}
 
@@ -19,10 +20,54 @@ const bar =
   class {
     //
   };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,24 +1,17 @@
+-@deco
+-class Foo {}
++@deco class Foo {}
+ 
+-@deco
+-export class Bar {}
++@deco export class Bar {}
+ 
+-@deco
+-export default class Baz {}
++@deco export default class Baz {}
+ 
+ const foo =
+-  (
+-    @deco
+-    class {
+-      //
+-    }
+-  );
++@deco class {
++  //
++}
+ 
+ const bar =
+-  (
+-    @deco
+-    class {
+-      //
+-    }
+-  );
++
++@deco
++  class {
++    //
++  }
 ```
 
 # Output
+
 ```js
 @deco class Foo {}
 
@@ -41,8 +86,8 @@ const bar =
   class {
     //
   }
-
 ```
+
 
 # Errors
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: short-right.js
 ---
+
 # Input
+
 ```js
 this._cumulativeHeights &&
  Math.abs(
@@ -23,10 +24,32 @@ const isPartOfPackageJSON = dependenciesArray.indexOf(
 defaultContent.filter(defaultLocale => {
   // ...
 })[0] || null;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,8 @@
+-this._cumulativeHeights &&
+-  Math.abs(
+-    this._cachedItemHeight(this._firstVisibleIndex + i) -
+-      this._provider.fastHeight(i + this._firstVisibleIndex),
+-  ) > 1;
++this._cumulativeHeights && Math.abs(
++  this._cachedItemHeight(
++    this._firstVisibleIndex + i,
++  ) - this._provider.fastHeight(i + this._firstVisibleIndex),
++) > 1;
+ 
+ foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(
+   aaaaaaaaaaaaaaaaaaa,
 ```
 
 # Output
+
 ```js
 this._cumulativeHeights && Math.abs(
   this._cachedItemHeight(
@@ -44,7 +67,7 @@ const isPartOfPackageJSON =
 defaultContent.filter((defaultLocale) => {
   // ...
 })[0] || null;
-
 ```
+
 
 

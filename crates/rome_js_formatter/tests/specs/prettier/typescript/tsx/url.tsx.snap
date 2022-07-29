@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: url.tsx
 ---
+
 # Input
+
 ```js
 const link = <a href="example.com">http://example.com</a>;
 
@@ -15,10 +16,38 @@ const first = <div>http://example.com</div>;
  const fourth = <div><span></span>http://example.com</div>;
 
  const fifth = <div>{}http://example.com</div>;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,17 +4,8 @@
+ 
+ const second = <>http://example.com</>;
+ 
+-const third = (
+-  <div>
+-    <br />
+-    http://example.com
+-  </div>
+-);
++const third = <div><br />http://example.com</div>;
+ 
+-const fourth = (
+-  <div>
+-    <span></span>http://example.com
+-  </div>
+-);
++const fourth = <div><span></span>http://example.com</div>;
+ 
+ const fifth = <div>{}http://example.com</div>;
 ```
 
 # Output
+
 ```js
 const link = <a href="example.com">http://example.com</a>;
 
@@ -31,7 +60,7 @@ const third = <div><br />http://example.com</div>;
 const fourth = <div><span></span>http://example.com</div>;
 
 const fifth = <div>{}http://example.com</div>;
-
 ```
+
 
 

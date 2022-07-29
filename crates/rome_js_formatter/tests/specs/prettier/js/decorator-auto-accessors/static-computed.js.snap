@@ -1,23 +1,38 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: static-computed.js
 ---
+
 # Input
+
 ```js
 class Foo {
   static accessor ["bar"];
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,4 @@
+ class Foo {
+-  static accessor ["bar"];
++  static accessor;
++  ["bar"];
+ }
 ```
 
 # Output
+
 ```js
 class Foo {
   static accessor;
   ["bar"];
 }
-
 ```
+
 
 # Errors
 ```

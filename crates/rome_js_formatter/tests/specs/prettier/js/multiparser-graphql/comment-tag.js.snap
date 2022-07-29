@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment-tag.js
 ---
+
 # Input
+
 ```js
 const query = /* GraphQL */`
       {
@@ -13,10 +14,27 @@ const query = /* GraphQL */`
     }
   }
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,6 @@
+ const query = /* GraphQL */ `
+-  {
+-    user(id: 5) {
++      {
++    user(   id :   5  )  {
+       firstName
+ 
+       lastName
 ```
 
 # Output
+
 ```js
 const query = /* GraphQL */ `
       {
@@ -27,7 +45,7 @@ const query = /* GraphQL */ `
     }
   }
 `;
-
 ```
+
 
 

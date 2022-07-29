@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: intrinsic_call.js
 ---
+
 # Input
+
 ```js
 function doSmth()     {
             %DebugPrint
@@ -28,10 +29,45 @@ function doSmth()     {
         GetFunctioName(f)
         );
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,10 +1,22 @@
+ function doSmth() {
+-  %DebugPrint(foo);
++  %DebugPrint
++        (
++                foo )
+ }
+ 
+ function printFunc(f) {
+-  if (%IsAsmWasmCode(f)) console.log("asm.js");
+-  if (%IsWasmCode(f)) console.log("wasm");
++  if(%
++    IsAsmWasmCode(f))              console.log("asm.js");
++  if(
++
++        % IsWasmCode(
++        f))
++            console.log (
++                "wasm"
++            );
+ 
+-  console.log(%GetFunctioName(f));
++  console.log
++    (%
++        GetFunctioName(f)
++        );
+ }
 ```
 
 # Output
+
 ```js
 function doSmth() {
   %DebugPrint
@@ -55,8 +91,8 @@ function printFunc(f) {
         GetFunctioName(f)
         );
 }
-
 ```
+
 
 # Errors
 ```

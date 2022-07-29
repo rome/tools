@@ -1,23 +1,41 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: binary.js
 ---
+
 # Input
+
 ```js
 (class {}) + 1;
 (class a {}) + 1;
 (class extends b {}) + 1;
 (class a extends b {}) + 1;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-(class {} + 1);
+-(class a {} + 1);
+-(class extends b {} + 1);
+-(class a extends b {} + 1);
++(class {}) + 1;
++(class a {}) + 1;
++(class extends b {}) + 1;
++(class a extends b {}) + 1;
 ```
 
 # Output
+
 ```js
 (class {}) + 1;
 (class a {}) + 1;
 (class extends b {}) + 1;
 (class a extends b {}) + 1;
-
 ```
+
 
 

@@ -1,24 +1,43 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: after_export.js
 ---
+
 # Input
+
 ```js
 export @decorator class Foo {}
 
 export default @decorator class {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,5 @@
+ export
+-@decorator
+-class Foo {}
++@decorator class Foo {}
+ 
+ export default
+-@decorator
+-class {}
++@decorator class {}
 ```
 
 # Output
+
 ```js
 export
 @decorator class Foo {}
 
 export default
 @decorator class {}
-
 ```
+
 
 # Errors
 ```

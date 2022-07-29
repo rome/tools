@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: function-bind.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-function-bind
 
@@ -21,10 +22,45 @@ func.call(obj, val)
 ::obj.func(val)
 // is equivalent to:
 obj.func.call(obj, val)
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,16 +1,18 @@
+ // https://babeljs.io/docs/en/babel-plugin-proposal-function-bind
+ 
+-obj::func;
++obj:
++:func
+ // is equivalent to:
+-func.bind(obj)::obj.func;
++func.bind(obj)
++
++::obj.func
+ // is equivalent to:
+-obj.func.bind(obj);
++obj.func.bind(obj)
+ 
+-obj::func(val);
++obj::func(val)
+ // is equivalent to:
+-func
+-  .call(obj, val)
++func.call(obj, val)
+ 
+-  ::obj.func(val);
++::obj.func(val)
+ // is equivalent to:
+-obj.func.call(obj, val);
++obj.func.call(obj, val)
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-function-bind
 
@@ -44,8 +80,8 @@ func.call(obj, val)
 ::obj.func(val)
 // is equivalent to:
 obj.func.call(obj, val)
-
 ```
+
 
 # Errors
 ```

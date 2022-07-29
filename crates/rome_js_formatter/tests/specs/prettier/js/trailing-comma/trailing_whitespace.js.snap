@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: trailing_whitespace.js
 ---
+
 # Input
+
 ```js
 let example = [
   'FOO',
@@ -48,10 +48,51 @@ this.getAttribute(function(s)
 this.getAttribute(function(s) /*string*/ {
   console.log()
 });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,11 @@
+ let example = [
+-  "FOO",
+-  "BAR",
++  "FOO", "BAR",
+   // Comment
+ ];
+ 
+ foo(
+   {},
+-  // Comment
++// Comment
+ );
+ 
+ o = {
+@@ -16,7 +15,6 @@
+ 
+ o = {
+   state,
+-
+   // Comment
+ };
+ 
+@@ -35,7 +33,8 @@
+   a;
+ }
+ 
+-this.getAttribute(function (s) /*string*/ {
++this.getAttribute(function (s)
++/*string*/ {
+   console.log();
+ });
+ this.getAttribute(function (s) /*string*/ {
 ```
 
 # Output
+
 ```js
 let example = [
   "FOO", "BAR",
@@ -95,7 +136,7 @@ this.getAttribute(function (s)
 this.getAttribute(function (s) /*string*/ {
   console.log();
 });
-
 ```
+
 
 

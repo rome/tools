@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: braces.ts
 ---
+
 # Input
+
 ```js
 const myFunction2 = (key: string): number =>
   ({
@@ -20,10 +20,42 @@ if (a) ({ a, ...b }.a())!.c();
 (function() {})!()
 
 class a extends ({}!) {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,9 @@
+-const myFunction2 = (key: string): number =>
+-  ({
++const myFunction2 = (key: string): number => (
++  {
+     a: 42,
+     b: 42,
+-  }[key]!);
++  }[key]!
++);
+ 
+ const myFunction3 = (key) => ({}!.a);
+ 
+@@ -10,8 +11,8 @@
+   log(a);
+ })!;
+ 
+-if (a) ({ a, ...b }.a()!.c());
++if (a) ({ a, ...b }.a())!.c();
+ 
+-(function () {}!());
++(function () {})!();
+ 
+ class a extends ({}!) {}
 ```
 
 # Output
+
 ```js
 const myFunction2 = (key: string): number => (
   {
@@ -43,7 +75,7 @@ if (a) ({ a, ...b }.a())!.c();
 (function () {})!();
 
 class a extends ({}!) {}
-
 ```
+
 
 

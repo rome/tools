@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: nested-await-and-as.ts
 ---
+
 # Input
+
 ```js
 const getAccountCount = async () =>
   (await
@@ -11,10 +12,32 @@ const getAccountCount = async () =>
     ).findItem("My bookmarks")) as TreeItem
   ).getChildren()
   ).length
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,10 @@
+ const getAccountCount = async () =>
+   (
+     await (
+-      (await (
+-        await focusOnSection(BOOKMARKED_PROJECTS_SECTION_NAME)
+-      ).findItem("My bookmarks")) as TreeItem
++      (
++        await (await focusOnSection(BOOKMARKED_PROJECTS_SECTION_NAME)).findItem(
++          "My bookmarks",
++        )
++      ) as TreeItem
+     ).getChildren()
+   ).length;
 ```
 
 # Output
+
 ```js
 const getAccountCount = async () =>
   (
@@ -26,7 +49,7 @@ const getAccountCount = async () =>
       ) as TreeItem
     ).getChildren()
   ).length;
-
 ```
+
 
 

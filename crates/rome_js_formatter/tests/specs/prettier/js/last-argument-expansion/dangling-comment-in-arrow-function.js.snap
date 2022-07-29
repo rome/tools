@@ -1,24 +1,39 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: dangling-comment-in-arrow-function.js
 ---
+
 # Input
+
 ```js
 foo(
   (
     // foo
   ) => {}
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,3 @@
+-foo(() =>
++foo((
+   // foo
+-  {},
+-);
++) => {});
 ```
 
 # Output
+
 ```js
 foo((
   // foo
 ) => {});
-
 ```
+
 
 

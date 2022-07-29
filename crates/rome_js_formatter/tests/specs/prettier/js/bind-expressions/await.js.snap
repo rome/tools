@@ -1,25 +1,41 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: await.js
 ---
+
 # Input
+
 ```js
 const doBothThings = async () => {
     const request = doAsyncThing();
     return (await request)::doSyncThing();
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,5 @@
+ const doBothThings = async () => {
+   const request = doAsyncThing();
+-  return (await request)::doSyncThing();
++  return (await request);
++  ::doSyncThing()
+ };
 ```
 
 # Output
+
 ```js
 const doBothThings = async () => {
   const request = doAsyncThing();
   return (await request);
   ::doSyncThing()
 };
-
 ```
+
 
 # Errors
 ```

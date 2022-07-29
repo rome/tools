@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: bind_parens.js
 ---
+
 # Input
+
 ```js
 (a || b)::c;
 a || (b::c);
@@ -38,10 +39,118 @@ new (a::b)();
 new f(a::b);
 f[a::b];
 f[a::b()];
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,34 +1,66 @@
+-(a || b)::c;
+-a || b::c;
+-::obj.prop;
+-(void 0)::func();
+-(+0)::is(-0);
+-a::b.c;
+-a::(b.c());
+-a::b.c();
+-a::(b.c()());
+-a::(b.c()());
+-a::(b.c())();
+-a::(b.c().d);
+-a::(c().d.e);
+-a::(b());
+-a::(b::c());
+-a::(b()::c);
+-a::(b().c::d);
+-a::(b.c::d);
+-a::(b::c.d);
+-a::(b.c::d::e);
+-a::(b::c::d);
+-a::(b::c::d.e);
+-a::(b::c::d).e;
+-a::(void 0);
+-a::(b.c()::d.e);
+-a::(b.c::d.e);
+-a::(b.c::d.e)::f.g;
+-b.c::d.e;
+-(b.c::d).e;
+-(b::c::d).e;
+-new (a::b)();
++(a || b);
++::c
++a || (b
++::c)
++::obj.prop
++(void 0);
++::func()
++(+0);
++::is(-0)
++a:
++:(b.c)
++a:
++:(b.c())
++a:
++:b.c()
++a:
++:(b.c()())
++a:
++:((b.c())())
++a:
++:(b.c())()
++a:
++:(b.c().d)
++a:
++:(c().d.e)
++a:
++:(b())
++a:
++:(b::c())
++a:
++:(b()::c)
++a:
++:(b().c::d)
++a:
++:(b.c::d)
++a:
++:(b::c.d)
++a:
++:(b.c::d::e)
++a:
++:(b::c::d)
++a:
++:(b::c::d.e)
++a:
++:((b::c::d).e)
++a:
++:(void 0)
++a:
++:(b.c()::d.e)
++a:
++:(b.c::d.e)
++a:
++:(b.c::d.e)::f.g
++b.c;
++::d.e
++(b.c
++::d).e
++(b::c::d)
++.e
++new (a
++::b)()
+ new f(a::b);
+-f[a::b];
+-f[a::b()];
++f[a
++::b]
++f[a
++::b()]
 ```
 
 # Output
+
 ```js
 (a || b);
 ::c
@@ -109,8 +218,8 @@ f[a
 ::b]
 f[a
 ::b()]
-
 ```
+
 
 # Errors
 ```

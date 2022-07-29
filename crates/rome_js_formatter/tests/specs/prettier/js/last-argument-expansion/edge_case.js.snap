@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: edge_case.js
 ---
+
 # Input
+
 ```js
 
 
@@ -62,10 +62,120 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ }
 /******/ ])
 });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -9,26 +9,26 @@
+ 
+ exports.examples = [
+   {
+-    render: withGraphQLQuery(
+-      "node(1234567890){image{uri}}",
+-      function (container, data) {
+-        return (
+-          <div>
+-            <InlineBlock>
+-              <img
+-                src={data[1234567890].image.uri}
+-                style={{
+-                  position: "absolute",
+-                  top: "0",
+-                  left: "0",
+-                  zIndex: "-1",
+-                }}
+-              />
+-            </InlineBlock>
+-          </div>
+-        );
+-      },
+-    ),
++    render: withGraphQLQuery("node(1234567890){image{uri}}", function (
++      container,
++      data,
++    ) {
++      return (
++        <div>
++          <InlineBlock>
++            <img
++              src={data[1234567890].image.uri}
++              style={{
++                position: "absolute",
++                top: "0",
++                left: "0",
++                zIndex: "-1",
++              }}
++            />
++          </InlineBlock>
++        </div>
++      );
++    }),
+   },
+ ];
+ 
+@@ -40,29 +40,28 @@
+   ],
+ );
+ 
+-(function webpackUniversalModuleDefinition() {})(
+-  this,
+-  function (__WEBPACK_EXTERNAL_MODULE_85__, __WEBPACK_EXTERNAL_MODULE_115__) {
+-    return /******/ (function (modules) {
+-      // webpackBootstrap
+-      /******/
+-    })(
+-      /************************************************************************/
+-      /******/ [
+-        /* 0 */
+-        /***/ function (module, exports, __webpack_require__) {
+-          /***/
+-        },
+-        /* 1 */
+-        /***/ function (module, exports, __webpack_require__) {
+-          /***/
+-        },
+-        /* 2 */
+-        /***/ function (module, exports, __webpack_require__) {
+-          /***/
+-        },
+-        /******/
+-      ],
+-    );
+-  },
+-);
++(function webpackUniversalModuleDefinition() {})(this, function (
++  __WEBPACK_EXTERNAL_MODULE_85__,
++  __WEBPACK_EXTERNAL_MODULE_115__,
++) {
++  return /******/ (function (modules) {
++    // webpackBootstrap
++    /******/
++  })
++  /************************************************************************/
++  /******/ ([
++    /* 0 */
++    /***/ function (module, exports, __webpack_require__) {
++      /***/
++    },
++    /* 1 */
++    /***/ function (module, exports, __webpack_require__) {
++      /***/
++    },
++    /* 2 */
++    /***/ function (module, exports, __webpack_require__) {
++      /***/
++    },
++    /******/
++  ]);
++});
 ```
 
 # Output
+
 ```js
 a(
   SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong,
@@ -134,8 +244,8 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
     /******/
   ]);
 });
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: after-key.js
 ---
+
 # Input
+
 ```js
 let a = {
    a /* comment */: () => 1
@@ -11,10 +12,28 @@ let a = {
 let b = {
    "a" /* comment */: () => 1
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,7 @@
+ let a = {
+-  a /* comment */: () => 1,
++  a /* comment */ : () => 1,
+ };
+ 
+ let b = {
+-  a /* comment */: () => 1,
++  a /* comment */ : () => 1,
+ };
 ```
 
 # Output
+
 ```js
 let a = {
   a /* comment */ : () => 1,
@@ -23,7 +42,7 @@ let a = {
 let b = {
   a /* comment */ : () => 1,
 };
-
 ```
+
 
 

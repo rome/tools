@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: range-end.js
 ---
+
 # Input
+
 ```js
 // Unchanged
 call(
@@ -12,10 +13,29 @@ call(
 
 call(
   1, 2,3
-);
+);```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,7 @@
+ // Unchanged
+-call(1, 2, 3);
++call(
++  1, 2,3
++);
++
+ 
+-call(1, 2, 3);
++call(1, 2, 3);
+\ No newline at end of file
 ```
 
 # Output
+
 ```js
 // Unchanged
 call(
@@ -23,7 +43,7 @@ call(
 );
 
 
-call(1, 2, 3);
-```
+call(1, 2, 3);```
+
 
 

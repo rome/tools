@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: call.js
 ---
+
 # Input
+
 ```js
 (
   aaaaaaaaaaaaaaaaaaaaaaaaa &&
@@ -69,10 +70,72 @@ expression: call.js
     ddddddddddddddddddddddddd &&
     eeeeeeeeeeeeeeeeeeeeeeeee
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,37 +1,37 @@
+ (
+   aaaaaaaaaaaaaaaaaaaaaaaaa &&
+-  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+-  ccccccccccccccccccccccccc &&
+-  ddddddddddddddddddddddddd &&
+-  eeeeeeeeeeeeeeeeeeeeeeeee
++    bbbbbbbbbbbbbbbbbbbbbbbbb &&
++    ccccccccccccccccccccccccc &&
++    ddddddddddddddddddddddddd &&
++    eeeeeeeeeeeeeeeeeeeeeeeee
+ )();
+ 
+ (aa && bb && cc && dd && ee)();
+ 
+ (
+   aaaaaaaaaaaaaaaaaaaaaaaaa +
+-  bbbbbbbbbbbbbbbbbbbbbbbbb +
+-  ccccccccccccccccccccccccc +
+-  ddddddddddddddddddddddddd +
+-  eeeeeeeeeeeeeeeeeeeeeeeee
++    bbbbbbbbbbbbbbbbbbbbbbbbb +
++    ccccccccccccccccccccccccc +
++    ddddddddddddddddddddddddd +
++    eeeeeeeeeeeeeeeeeeeeeeeee
+ )();
+ 
+ (aa + bb + cc + dd + ee)();
+ 
+ (
+   aaaaaaaaaaaaaaaaaaaaaaaaa &&
+-  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+-  ccccccccccccccccccccccccc &&
+-  ddddddddddddddddddddddddd &&
+-  eeeeeeeeeeeeeeeeeeeeeeeee
++    bbbbbbbbbbbbbbbbbbbbbbbbb &&
++    ccccccccccccccccccccccccc &&
++    ddddddddddddddddddddddddd &&
++    eeeeeeeeeeeeeeeeeeeeeeeee
+ )()()();
+ 
+ (
+   aaaaaaaaaaaaaaaaaaaaaaaaa &&
+-  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+-  ccccccccccccccccccccccccc &&
+-  ddddddddddddddddddddddddd &&
+-  eeeeeeeeeeeeeeeeeeeeeeeee
++    bbbbbbbbbbbbbbbbbbbbbbbbb &&
++    ccccccccccccccccccccccccc &&
++    ddddddddddddddddddddddddd &&
++    eeeeeeeeeeeeeeeeeeeeeeeee
+ )(
+   aaaaaaaaaaaaaaaaaaaaaaaaa &&
+     bbbbbbbbbbbbbbbbbbbbbbbbb &&
 ```
 
 # Output
+
 ```js
 (
   aaaaaaaaaaaaaaaaaaaaaaaaa &&
@@ -127,7 +190,7 @@ expression: call.js
     ddddddddddddddddddddddddd &&
     eeeeeeeeeeeeeeeeeeeeeeeee,
 );
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: inline-object-array.js
 ---
+
 # Input
+
 ```js
 prevState = prevState || {
   catalogs: [],
@@ -93,10 +94,107 @@ const obj = {
     },
   loaded: true
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -7,7 +7,8 @@
+ };
+ 
+ prevState = prevState ||
+-  defaultState || {
++  defaultState ||
++  {
+     catalogs: [],
+     loadState: LOADED,
+     opened: false,
+@@ -16,17 +17,19 @@
+   };
+ 
+ prevState =
+-  prevState ||
+-  (defaultState && {
+-    catalogs: [],
+-    loadState: LOADED,
+-    opened: false,
+-    searchQuery: "",
+-    selectedCatalog: null,
+-  });
++  prevState || (
++    defaultState && {
++      catalogs: [],
++      loadState: LOADED,
++      opened: false,
++      searchQuery: "",
++      selectedCatalog: null,
++    }
++  );
+ 
+ prevState = prevState ||
+-  (useDefault && defaultState) || {
++  (useDefault && defaultState) ||
++  {
+     catalogs: [],
+     loadState: LOADED,
+     opened: false,
+@@ -42,13 +45,14 @@
+ ];
+ 
+ this.steps =
+-  steps ||
+-  (checkStep && [
+-    {
+-      name: "mock-module",
+-      path: "/nux/mock-module",
+-    },
+-  ]);
++  steps || (
++    checkStep && [
++      {
++        name: "mock-module",
++        path: "/nux/mock-module",
++      },
++    ]
++  );
+ 
+ this.steps = (steps && checkStep) || [
+   {
+@@ -61,11 +65,12 @@
+   const result = doSomething();
+   return (
+     shouldReturn &&
+-    result.ok && {
+-      status: "ok",
+-      createdAt: result.createdAt,
+-      updatedAt: result.updatedAt,
+-    }
++      result.ok &&
++      {
++        status: "ok",
++        createdAt: result.createdAt,
++        updatedAt: result.updatedAt,
++      }
+   );
+ };
+ 
+@@ -82,7 +87,8 @@
+ 
+ const obj = {
+   state: shouldHaveState &&
+-    stateIsOK && {
++    stateIsOK &&
++    {
+       loadState: LOADED,
+       opened: false,
+     },
 ```
 
 # Output
+
 ```js
 prevState = prevState || {
   catalogs: [],
@@ -197,7 +295,7 @@ const obj = {
   },
   loaded: true,
 };
-
 ```
+
 
 

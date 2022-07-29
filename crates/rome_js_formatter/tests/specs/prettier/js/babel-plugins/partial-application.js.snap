@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: partial-application.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-partial-application
 
@@ -25,10 +26,29 @@ o.f(x, ?)         // partial application from left
 o.f(?, x)         // partial application from right
 o.f(?, x, ?)      // partial application for any arg
 super.f(?)        // partial application allowed for call on |SuperProperty|
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -10,7 +10,9 @@
+ const addTen = add(?, 10); // apply from the right
+ addTen(2); // 12
+ 
+-let newScore = player.score |> add(7, ?) |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
++let newScore = player.score
++  |> add(7, ?)
++  |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+ 
+ f(x, ?); // partial application from left
+ f(?, x); // partial application from right
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-partial-application
 
@@ -53,8 +73,8 @@ o.f(x, ?); // partial application from left
 o.f(?, x); // partial application from right
 o.f(?, x, ?); // partial application for any arg
 super.f(?); // partial application allowed for call on |SuperProperty|
-
 ```
+
 
 # Errors
 ```

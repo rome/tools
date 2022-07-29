@@ -1,18 +1,35 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: return-outside-function.js
 ---
+
 # Input
+
 ```js
 return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1 @@
+-return (
+-  someVeryLongStringA &&
+-  someVeryLongStringB &&
+-  someVeryLongStringC &&
+-  someVeryLongStringD
+-);
++return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
 ```
 
 # Output
+
 ```js
 return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
-
 ```
+
 
 # Errors
 ```

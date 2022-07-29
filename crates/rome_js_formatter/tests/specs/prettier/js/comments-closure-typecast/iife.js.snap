@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: iife.js
 ---
+
 # Input
+
 ```js
 const helpers1 = /** @type {Helpers} */ ((
   (helpers = {}) => helpers
@@ -17,10 +18,29 @@ const helpers = /** @type {Helpers} */ ((
   /** @param {Partial<Helpers>} helpers */
   (helpers = {}) => helpers
 )());
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,6 +8,8 @@
+ 
+ // TODO: @param is misplaced https://github.com/prettier/prettier/issues/5850
+ const helpers = /** @type {Helpers} */ (
+-  /** @param {Partial<Helpers>} helpers */
+-  ((helpers = {}) => helpers)()
++  (
++    /** @param {Partial<Helpers>} helpers */
++    (helpers = {}) => helpers
++  )()
+ );
 ```
 
 # Output
+
 ```js
 const helpers1 = /** @type {Helpers} */ (((helpers = {}) => helpers)());
 
@@ -37,7 +57,7 @@ const helpers = /** @type {Helpers} */ (
     (helpers = {}) => helpers
   )()
 );
-
 ```
+
 
 

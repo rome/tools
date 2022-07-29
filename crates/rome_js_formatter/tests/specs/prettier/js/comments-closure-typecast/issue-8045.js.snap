@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-8045.js
 ---
+
 # Input
+
 ```js
 const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (fooBarBaz);
 
@@ -25,10 +26,46 @@ function jsdocCastInReturn() {
   return (/** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
     (fooBarBaz));
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+-const myLongVariableName =
+-  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (fooBarBaz);
++const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
++  (fooBarBaz);
+ 
+ function jsdocCastInReturn() {
+   return /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
+@@ -7,8 +7,7 @@
+   );
+ }
+ 
+-const myLongVariableName =
+-  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
++const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+   (fooBarBaz);
+ 
+ function jsdocCastInReturn() {
+@@ -18,8 +17,7 @@
+   );
+ }
+ 
+-const myLongVariableName =
+-  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
++const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+   (fooBarBaz);
+ 
+ function jsdocCastInReturn() {
 ```
 
 # Output
+
 ```js
 const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
   (fooBarBaz);
@@ -58,8 +95,8 @@ function jsdocCastInReturn() {
     (fooBarBaz)
   );
 }
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

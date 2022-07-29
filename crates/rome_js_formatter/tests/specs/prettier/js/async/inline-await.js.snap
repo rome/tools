@@ -1,16 +1,42 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: inline-await.js
 ---
+
 # Input
+
 ```js
 async function f() {
   const admins = (await(db.select('*').from('admins').leftJoin('bla').where('id', 'in', [1,2,3,4]))).map(({id, name})=>({id, name}))
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,11 @@
+ async function f() {
+   const admins = (
+-    await db
+-      .select("*")
+-      .from("admins")
+-      .leftJoin("bla")
+-      .where("id", "in", [1, 2, 3, 4])
++    await (
++      db
++        .select("*")
++        .from("admins")
++        .leftJoin("bla")
++        .where("id", "in", [1, 2, 3, 4])
++    )
+   ).map(({ id, name }) => ({ id, name }));
+ }
 ```
 
 # Output
+
 ```js
 async function f() {
   const admins = (
@@ -23,7 +49,7 @@ async function f() {
     )
   ).map(({ id, name }) => ({ id, name }));
 }
-
 ```
+
 
 

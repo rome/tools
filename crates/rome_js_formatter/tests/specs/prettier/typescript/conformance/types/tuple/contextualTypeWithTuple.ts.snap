@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: contextualTypeWithTuple.ts
 ---
+
 # Input
+
 ```js
 ﻿// no error
 var numStrTuple: [number, string] = [5, "hello"];
@@ -29,10 +30,24 @@ unionTuple = unionTuple1;
 unionTuple = unionTuple2;
 unionTuple2 = unionTuple;
 numStrTuple = unionTuple3;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-﻿// no error
++// no error
+ var numStrTuple: [number, string] = [5, "hello"];
+ var numStrTuple2: [number, string] = [5, "foo", true];
+ var numStrBoolTuple: [number, string, boolean] = [5, "foo", true];
 ```
 
 # Output
+
 ```js
 // no error
 var numStrTuple: [number, string] = [5, "hello"];
@@ -59,7 +74,7 @@ unionTuple = unionTuple1;
 unionTuple = unionTuple2;
 unionTuple2 = unionTuple;
 numStrTuple = unionTuple3;
-
 ```
+
 
 

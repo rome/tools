@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: break.ts
 ---
+
 # Input
+
 ```js
 export interface Environment1 extends GenericEnvironment<
   SomeType,
@@ -70,10 +71,51 @@ interface ExtendsManyWithGenerics
   }
 
 export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,  ToBreakLineToBreakLineToBreakLine> {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -68,14 +68,14 @@
+ 
+ interface ExtendsMany
+   extends ASingleGenericInterface<
+-    Interface1,
+-    Interface2,
+-    Interface3,
+-    Interface4,
+-    Interface5,
+-    Interface6,
+-    Interface7
+-  > {
++      Interface1,
++      Interface2,
++      Interface3,
++      Interface4,
++      Interface5,
++      Interface6,
++      Interface7
++    > {
+   x: string;
+ }
+ 
+@@ -97,6 +97,6 @@
+ 
+ export interface ExtendsLongOneWithGenerics
+   extends Bar<
+-    SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
+-    ToBreakLineToBreakLineToBreakLine
+-  > {}
++      SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
++      ToBreakLineToBreakLineToBreakLine
++    > {}
 ```
 
 # Output
+
 ```js
 export interface Environment1
   extends GenericEnvironment<SomeType, AnotherType, YetAnotherType> {
@@ -177,7 +219,7 @@ export interface ExtendsLongOneWithGenerics
       SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
       ToBreakLineToBreakLineToBreakLine
     > {}
-
 ```
+
 
 

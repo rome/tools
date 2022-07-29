@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: catch.js
 ---
+
 # Input
+
 ```js
 try {}
 catch(
@@ -29,10 +30,29 @@ catch(
   foo
   /* comment */
 ) {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -10,7 +10,9 @@
+ ) {}
+ 
+ try {
+-} catch (/* comment */ foo) {}
++} catch (
++  /* comment */ foo
++) {}
+ 
+ try {
+ } catch (foo /* comment */) {}
 ```
 
 # Output
+
 ```js
 try {
 } catch (
@@ -58,7 +78,7 @@ try {
   foo
   /* comment */
 ) {}
-
 ```
+
 
 

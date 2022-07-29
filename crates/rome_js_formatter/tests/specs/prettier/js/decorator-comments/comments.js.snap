@@ -1,26 +1,43 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comments.js
 ---
+
 # Input
+
 ```js
 class Something {
     @Annotateme()
     // comment
     static property: Array<string>;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+ class Something {
+   @Annotateme()
+-  // comment
+-  static property: Array<string>;
++    // comment
++    static property: Array<string>;
+ }
 ```
 
 # Output
+
 ```js
 class Something {
   @Annotateme()
     // comment
     static property: Array<string>;
 }
-
 ```
+
 
 # Errors
 ```

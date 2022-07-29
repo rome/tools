@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: inline.js
 ---
+
 # Input
+
 ```js
 this._pipe.write(`\n\n Pattern matches ${total} ${pluralizeTest}`);
 this._pipe.write(
@@ -36,10 +37,36 @@ this._pipe.write(`
 
 // https://github.com/prettier/prettier/issues/5529
 editTitle += `${iconHTML({ class: "reply-to-glyph" })}`;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -10,11 +10,14 @@
+   `\n\n Pattern matches ${total} ${pluralizeTest} but that's long`,
+ );
+ 
+-this._pipe.write(`
++this._pipe.write(
++  `
+   \n\n Pattern matches ${total} ${pluralizeTest} but that's long
+-`);
++`,
++);
+ 
+-() => `
++() =>
++  `
+   a
+ `;
+ 
 ```
 
 # Output
+
 ```js
 this._pipe.write(`\n\n Pattern matches ${total} ${pluralizeTest}`);
 this._pipe.write(`\n\n Pattern matches ${total} ${pluralizeTest}`);
@@ -71,7 +98,7 @@ this._pipe.write(
 
 // https://github.com/prettier/prettier/issues/5529
 editTitle += `${iconHTML({ class: "reply-to-glyph" })}`;
-
 ```
+
 
 

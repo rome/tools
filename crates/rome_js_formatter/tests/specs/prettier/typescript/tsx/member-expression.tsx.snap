@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: member-expression.tsx
 ---
+
 # Input
+
 ```js
 (<a />).method();
 (<a />).property;
@@ -28,10 +29,46 @@ expression: member-expression.tsx
     <a>foo</a>
   </div>
 )["computed"]();
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,23 +2,7 @@
+ (<a />).property;
+ (<a />)["computed"];
+ (<a />)["computed"]();
+-(
+-  <div>
+-    <a>foo</a>
+-  </div>
+-).method();
+-(
+-  <div>
+-    <a>foo</a>
+-  </div>
+-).property;
+-(
+-  <div>
+-    <a>foo</a>
+-  </div>
+-)["computed"];
+-(
+-  <div>
+-    <a>foo</a>
+-  </div>
+-)["computed"]();
++(<div><a>foo</a></div>).method();
++(<div><a>foo</a></div>).property;
++(<div><a>foo</a></div>)["computed"];
++(<div><a>foo</a></div>)["computed"]();
 ```
 
 # Output
+
 ```js
 (<a />).method();
 (<a />).property;
@@ -41,7 +78,7 @@ expression: member-expression.tsx
 (<div><a>foo</a></div>).property;
 (<div><a>foo</a></div>)["computed"];
 (<div><a>foo</a></div>)["computed"]();
-
 ```
+
 
 

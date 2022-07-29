@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: equality.js
 ---
+
 # Input
+
 ```js
 x == y == z;
 x != y == z;
@@ -13,10 +14,36 @@ x === y === z;
 x !== y === z;
 x === y !== z;
 x !== y !== z;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,9 @@
+-(x == y) == z;
+-(x != y) == z;
+-(x == y) != z;
+-(x != y) != z;
++x == y == z;
++x != y == z;
++x == y != z;
++x != y != z;
+ 
+-(x === y) === z;
+-(x !== y) === z;
+-(x === y) !== z;
+-(x !== y) !== z;
++x === y === z;
++x !== y === z;
++x === y !== z;
++x !== y !== z;
 ```
 
 # Output
+
 ```js
 x == y == z;
 x != y == z;
@@ -27,7 +54,7 @@ x === y === z;
 x !== y === z;
 x === y !== z;
 x !== y !== z;
-
 ```
+
 
 

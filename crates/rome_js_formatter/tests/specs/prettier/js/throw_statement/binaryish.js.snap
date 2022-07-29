@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: binaryish.js
 ---
+
 # Input
+
 ```js
 function f() {
   throw (
@@ -27,10 +28,55 @@ function f() {
   throw !filePath.includes(coverageDirectory) &&
     !filePath.endsWith(`.${SNAPSHOT_EXTENSION}`);
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,23 +1,22 @@
+ function f() {
+   throw (
+     property.isIdentifier() &&
+-    FUNCTIONS[property.node.name] &&
+-    (object.isIdentifier(JEST_GLOBAL) ||
+-      (callee.isMemberExpression() && shouldHoistExpression(object))) &&
+-    FUNCTIONS[property.node.name](expr.get("arguments"))
++      FUNCTIONS[property.node.name] &&
++      (
++        object.isIdentifier(JEST_GLOBAL) || (
++          callee.isMemberExpression() && shouldHoistExpression(object)
++        )
++      ) &&
++      FUNCTIONS[property.node.name](expr.get("arguments"))
+   );
+ 
+-  throw (
+-    chalk.bold("No tests found related to files changed since last commit.\n") +
+-    chalk.dim(
+-      patternInfo.watch
+-        ? "Press `a` to run all tests, or run Jest with `--watchAll`."
+-        : "Run Jest without `-o` to run all tests.",
+-    )
++  throw chalk.bold(
++    "No tests found related to files changed since last commit.\n",
++  ) + chalk.dim(
++    patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
+   );
+ 
+-  throw (
+-    !filePath.includes(coverageDirectory) &&
+-    !filePath.endsWith(`.${SNAPSHOT_EXTENSION}`)
++  throw !filePath.includes(coverageDirectory) && !filePath.endsWith(
++    `.${SNAPSHOT_EXTENSION}`,
+   );
+ }
 ```
 
 # Output
+
 ```js
 function f() {
   throw (
@@ -54,8 +100,8 @@ function f() {
     `.${SNAPSHOT_EXTENSION}`,
   );
 }
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

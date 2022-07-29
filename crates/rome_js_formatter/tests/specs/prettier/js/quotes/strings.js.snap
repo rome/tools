@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: strings.js
 ---
+
 # Input
+
 ```js
 // Prevent strings from being parsed as directives
 // See https://github.com/prettier/prettier/pull/1560#issue-227225960
@@ -105,10 +105,52 @@ expression: strings.js
 // Somewhat more real-word example 2.
 "var backslash = \"\\\", doubleQuote = '\"';"
 'var backslash = "\\", doubleQuote = \'"\';'
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -43,13 +43,13 @@
+ ("hol\\a (the a is not escaped)");
+ ("multiple a unnecessary a escapes");
+ ("multiple a unnecessary a escapes");
+-("unnecessarily escaped character preceded by escaped backslash \\a");
+-("unnecessarily escaped character preceded by escaped backslash \\a");
++("unnecessarily escaped character preceded by escaped backslash \\\a");
++("unnecessarily escaped character preceded by escaped backslash \\\a");
+ ("unescaped character preceded by two escaped backslashes       \\\\a");
+ ("unescaped character preceded by two escaped backslashes       \\\\a");
+ ("aa"); // consecutive unnecessarily escaped characters
+ ("aa"); // consecutive unnecessarily escaped characters
+-("escaped \u2030 ‰ (should not stay escaped)");
++("escaped \u2030 \‰ (should not stay escaped)");
+ 
+ // Meaningful escapes
+ ("octal escapes \0 \1 \2 \3 \4 \5 \6 \7");
+@@ -88,13 +88,13 @@
+ ("\\");
+ 
+ // Backslases.
+-("\"\\\"\\\\\" ''\\'\\'\\\\'");
+-('\'\\\'\\\\\' ""\\"\\"\\\\"');
++("\"\\\"\\\\\" ''\\'\\\'\\\\'");
++('\'\\\'\\\\\' ""\\"\\\"\\\\"');
+ 
+ // Somewhat more real-word example.
+ ("He's sayin': \"How's it goin'?\" Don't ask me why.");
+ ("He's sayin': \"How's it goin'?\" Don't ask me why.");
+ 
+ // Somewhat more real-word example 2.
+-('var backslash = "\\", doubleQuote = \'"\';');
++('var backslash = "\\\", doubleQuote = \'"\';');
+ ('var backslash = "\\", doubleQuote = \'"\';');
 ```
 
 # Output
+
 ```js
 // Prevent strings from being parsed as directives
 // See https://github.com/prettier/prettier/pull/1560#issue-227225960
@@ -210,7 +252,7 @@ expression: strings.js
 // Somewhat more real-word example 2.
 ('var backslash = "\\\", doubleQuote = \'"\';');
 ('var backslash = "\\", doubleQuote = \'"\';');
-
 ```
+
 
 

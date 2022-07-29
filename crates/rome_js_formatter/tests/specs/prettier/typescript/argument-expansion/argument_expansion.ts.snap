@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: argument_expansion.ts
 ---
+
 # Input
+
 ```js
 const bar1 = [1,2,3].reduce((carry, value) => {
   return [...carry, value];
@@ -36,10 +36,63 @@ const bar7 = [1,2,3].reduce((carry, value) => {
 const bar8 = [1,2,3].reduce((carry, value) => {
   return {...carry, [value]: true};
 }, <{[key: number]: boolean}>{1: true});
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,17 +1,14 @@
+ const bar1 = [1, 2, 3].reduce((carry, value) => {
+   return [...carry, value];
+-}, [] as unknown as number[]);
++}, ([] as unknown) as number[]);
+ 
+ const bar2 = [1, 2, 3].reduce((carry, value) => {
+   return [...carry, value];
+ }, <Array<number>>[]);
+ 
+-const bar3 = [1, 2, 3].reduce(
+-  (carry, value) => {
+-    return [...carry, value];
+-  },
+-  [1, 2, 3] as unknown as number[],
+-);
++const bar3 = [1, 2, 3].reduce((carry, value) => {
++  return [...carry, value];
++}, ([1, 2, 3] as unknown) as number[]);
+ 
+ const bar4 = [1, 2, 3].reduce(
+   (carry, value) => {
+@@ -22,18 +19,15 @@
+ 
+ const bar5 = [1, 2, 3].reduce((carry, value) => {
+   return { ...carry, [value]: true };
+-}, {} as unknown as { [key: number]: boolean });
++}, ({} as unknown) as { [key: number]: boolean });
+ 
+ const bar6 = [1, 2, 3].reduce((carry, value) => {
+   return { ...carry, [value]: true };
+ }, <{ [key: number]: boolean }>{});
+ 
+-const bar7 = [1, 2, 3].reduce(
+-  (carry, value) => {
+-    return { ...carry, [value]: true };
+-  },
+-  { 1: true } as unknown as { [key: number]: boolean },
+-);
++const bar7 = [1, 2, 3].reduce((carry, value) => {
++  return { ...carry, [value]: true };
++}, ({ 1: true } as unknown) as { [key: number]: boolean });
+ 
+ const bar8 = [1, 2, 3].reduce(
+   (carry, value) => {
 ```
 
 # Output
+
 ```js
 const bar1 = [1, 2, 3].reduce((carry, value) => {
   return [...carry, value];
@@ -78,7 +131,7 @@ const bar8 = [1, 2, 3].reduce(
   },
   <{ [key: number]: boolean }>{ 1: true },
 );
-
 ```
+
 
 

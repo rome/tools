@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: valid-multiple-bindings.js
 ---
+
 # Input
+
 ```js
 class C {
   #x = 1;
@@ -10,10 +11,26 @@ class C {
     const {#x: x1, #x: x2 = x1 } = this;
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,6 @@
+ class C {
+   #x = 1;
+   m() {
+-    const { #x: x1, #x: x2 = x1 } = this;
++    const {#x: x1, #x: x2 = x1 } = this;
+   }
+ }
 ```
 
 # Output
+
 ```js
 class C {
   #x = 1;
@@ -21,8 +38,8 @@ class C {
     const {#x: x1, #x: x2 = x1 } = this;
   }
 }
-
 ```
+
 
 # Errors
 ```

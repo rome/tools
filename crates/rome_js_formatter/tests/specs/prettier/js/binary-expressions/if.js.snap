@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: if.js
 ---
+
 # Input
+
 ```js
 if (this.hasPlugin("dynamicImports") && this.lookahead().type) {}
 
@@ -12,10 +13,36 @@ if (this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.r
 
 if (VeryVeryVeryVeryVeryVeryVeryVeryLong === VeryVeryVeryVeryVeryVeryVeryVeryLong) {
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,14 +2,13 @@
+ }
+ 
+ if (
+-  this.hasPlugin("dynamicImports") &&
+-  this.lookahead().type === tt.parenLeft
++  this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft
+ ) {
+ }
+ 
+ if (
+-  this.hasPlugin("dynamicImports") &&
+-  this.lookahead().type === tt.parenLeft.right
++  this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft
++    .right
+ ) {
+ }
+ 
 ```
 
 # Output
+
 ```js
 if (this.hasPlugin("dynamicImports") && this.lookahead().type) {
 }
@@ -35,7 +62,7 @@ if (
   VeryVeryVeryVeryVeryVeryVeryVeryLong === VeryVeryVeryVeryVeryVeryVeryVeryLong
 ) {
 }
-
 ```
+
 
 

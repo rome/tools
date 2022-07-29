@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 181
-expression: boundary.js
 ---
+
 # Input
+
 ```js
 `${
 a +  // a
@@ -29,10 +29,38 @@ ExampleStory.getFragment('story')}
 {ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
 }
 </div>;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -9,7 +9,7 @@
+ 
+ ${b /* comment */}
+ 
+-${/* comment */ c /* comment */}
++${ /* comment */ c /* comment */}
+ 
+ ${
+   // comment
+@@ -23,7 +23,8 @@
+ `;
+ 
+ <div>
+-  {
+-    ExampleStory.getFragment("story") // $FlowFixMe found when converting React.createClass to ES6
++  {ExampleStory.getFragment(
++    "story",
++  ) // $FlowFixMe found when converting React.createClass to ES6
+   }
+ </div>;
 ```
 
 # Output
+
 ```js
 `${
   a + // a
@@ -64,7 +92,7 @@ ${
   ) // $FlowFixMe found when converting React.createClass to ES6
   }
 </div>;
-
 ```
+
 
 

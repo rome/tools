@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: test_declarations.js
 ---
+
 # Input
+
 ```js
 // Shouldn't break
 
@@ -167,10 +167,112 @@ it(
   () => new Promise(resolve => setTimeout(resolve, 10)),
   250
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,11 +8,15 @@
+   console.log("hello!");
+ });
+ 
+-it("does something really long and complicated so I have to write a very long name for the test", function (done) {
++it("does something really long and complicated so I have to write a very long name for the test", function (
++  done,
++) {
+   console.log("hello!");
+ });
+ 
+-it("does something really long and complicated so I have to write a very long name for the test", function myAssertions(done) {
++it("does something really long and complicated so I have to write a very long name for the test", function myAssertions(
++  done,
++) {
+   console.log("hello!");
+ });
+ 
+@@ -31,11 +35,15 @@
+   console.log("hello!");
+ });
+ 
+-test("does something really long and complicated so I have to write a very long name for the test", (done) => {
++test("does something really long and complicated so I have to write a very long name for the test", (
++  done,
++) => {
+   console.log("hello!");
+ });
+ 
+-test(`does something really long and complicated so I have to write a very long name for the test`, (done) => {
++test(`does something really long and complicated so I have to write a very long name for the test`, (
++  done,
++) => {
+   console.log("hello!");
+ });
+ 
+@@ -93,35 +101,25 @@
+ 
+ test.describe(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+ 
+-test.describe
+-  .only("does something really long and complicated so I have to write a very long name for the test", () => {});
++test.describe.only("does something really long and complicated so I have to write a very long name for the test", () => {});
+ 
+-test.describe
+-  .only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
++test.describe.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+ 
+-test.describe
+-  .parallel("does something really long and complicated so I have to write a very long name for the test", () => {});
++test.describe.parallel("does something really long and complicated so I have to write a very long name for the test", () => {});
+ 
+-test.describe
+-  .parallel(`does something really long and complicated so I have to write a very long name for the test`, () => {});
++test.describe.parallel(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+ 
+-test.describe.parallel
+-  .only("does something really long and complicated so I have to write a very long name for the testThis is a very", () => {});
++test.describe.parallel.only("does something really long and complicated so I have to write a very long name for the testThis is a very", () => {});
+ 
+-test.describe.parallel
+-  .only(`does something really long and complicated so I have to write a very long name for the testThis is a very`, () => {});
++test.describe.parallel.only(`does something really long and complicated so I have to write a very long name for the testThis is a very`, () => {});
+ 
+-test.describe
+-  .serial("does something really long and complicated so I have to write a very long name for the test", () => {});
++test.describe.serial("does something really long and complicated so I have to write a very long name for the test", () => {});
+ 
+-test.describe
+-  .serial(`does something really long and complicated so I have to write a very long name for the test`, () => {});
++test.describe.serial(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+ 
+-test.describe.serial
+-  .only("does something really long and complicated so I have to write a very long name for the test", () => {});
++test.describe.serial.only("does something really long and complicated so I have to write a very long name for the test", () => {});
+ 
+-test.describe.serial
+-  .only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
++test.describe.serial.only(`does something really long and complicated so I have to write a very long name for the test`, () => {});
+ 
+ // Should break
+ 
+@@ -152,10 +150,7 @@
+   () => {},
+ );
+ 
+-test.describe.only.parallel(
+-  "does something really long and complicated so I have to write a very long name for the test",
+-  () => {},
+-);
++test.describe.only.parallel("does something really long and complicated so I have to write a very long name for the test", () => {});
+ 
+ test.describe.parallel.serial(
+   "does something really long and complicated so I have to write a very long name for the testThis is a very",
 ```
 
 # Output
+
 ```js
 // Shouldn't break
 
@@ -362,8 +464,8 @@ it(
   () => new Promise((resolve) => setTimeout(resolve, 10)),
   250,
 );
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

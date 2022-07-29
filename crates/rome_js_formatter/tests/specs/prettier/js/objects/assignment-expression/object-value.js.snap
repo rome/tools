@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: object-value.js
 ---
+
 # Input
+
 ```js
 a = {
   resource: (this.resource = resource),
@@ -11,10 +12,30 @@ a = {
 map(([resource]) => ({
   resource: (this.resource = resource),
 }))
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,8 @@
+   resource: (this.resource = resource),
+ };
+ 
+-map(([resource]) => ({
+-  resource: (this.resource = resource),
+-}));
++map(
++  ([resource]) => ({
++    resource: (this.resource = resource),
++  }),
++);
 ```
 
 # Output
+
 ```js
 a = {
   resource: (this.resource = resource),
@@ -25,7 +46,7 @@ map(
     resource: (this.resource = resource),
   }),
 );
-
 ```
+
 
 

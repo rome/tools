@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: break.js
 ---
+
 # Input
+
 ```js
 const f = (argument1, argument2, argument3) =>
   (doSomethingWithArgument(argument1), doSomethingWithArgument(argument2),argument1);
@@ -17,10 +18,71 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
   (a = b ? c : function() { return 0; }),
   (a = b ? c : function() { return 0; }),
   (a = b ? c : function() { return 0; });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -31,28 +31,28 @@
+   test;
+   update
+ ) {}
+-(a = b
+-  ? c
+-  : function () {
++(
++  a = b ? c : function () {
++    return 0;
++  }
++),
++  (
++    a = b ? c : function () {
++      return 0;
++    }
++  ),
++  (
++    a = b ? c : function () {
++      return 0;
++    }
++  ),
++  (
++    a = b ? c : function () {
++      return 0;
++    }
++  ),
++  (
++    a = b ? c : function () {
+       return 0;
+-    }),
+-  (a = b
+-    ? c
+-    : function () {
+-        return 0;
+-      }),
+-  (a = b
+-    ? c
+-    : function () {
+-        return 0;
+-      }),
+-  (a = b
+-    ? c
+-    : function () {
+-        return 0;
+-      }),
+-  (a = b
+-    ? c
+-    : function () {
+-        return 0;
+-      });
++    }
++  );
 ```
 
 # Output
+
 ```js
 const f = (argument1, argument2, argument3) => (
   doSomethingWithArgument(argument1),
@@ -80,7 +142,7 @@ for (
       return 0;
     }
   );
-
 ```
+
 
 

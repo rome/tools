@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: computed.js
 ---
+
 # Input
+
 ```js
 nock(/test/)
   .matchHeader('Accept', 'application/json')
@@ -11,17 +11,33 @@ nock(/test/)
   .reply(200, {
     foo: 'bar',
   });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,5 @@
+ nock(/test/)
+-  .matchHeader("Accept", "application/json")
+-  [httpMethodNock(method)]("/foo")
++  .matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")
+   .reply(200, {
+     foo: "bar",
+   });
 ```
 
 # Output
+
 ```js
 nock(/test/)
   .matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")
   .reply(200, {
     foo: "bar",
   });
-
 ```
+
 
 

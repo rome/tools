@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: ungrouped-parameters.ts
 ---
+
 # Input
+
 ```js
 function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   customTooltipWithoutAggregatedField?:
@@ -18,10 +18,26 @@ function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   }
   // ...
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,4 @@
+-function filterTooltipWithFoo<F extends Field>(
+-  oldEncoding: Encoding<F>,
+-): {
++function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
+   customTooltipWithoutAggregatedField?:
+     | StringFieldDefWithCondition<F>
+     | StringValueDefWithCondition<F>
 ```
 
 # Output
+
 ```js
 function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   customTooltipWithoutAggregatedField?:
@@ -36,7 +52,7 @@ function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   }
   // ...
 }
-
 ```
+
 
 

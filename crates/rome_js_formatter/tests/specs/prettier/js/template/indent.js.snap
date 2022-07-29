@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: indent.js
 ---
+
 # Input
+
 ```js
 const foo = () => {
   {
@@ -25,10 +25,31 @@ line n + n
       }
     }
   }
-};
+};```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,9 +8,9 @@
+ ...
+ line n
+ ${foo({
+-  many: keys,
+-  many: keys,
+-})}
++          many: keys,
++          many: keys,
++        })}
+ line n + 1
+ line n + 2
+ line n + n
 ```
 
 # Output
+
 ```js
 const foo = () => {
   {
@@ -51,7 +72,7 @@ line n + n
     }
   }
 };
-
 ```
+
 
 

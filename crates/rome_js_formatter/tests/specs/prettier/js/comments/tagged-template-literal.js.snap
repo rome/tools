@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: tagged-template-literal.js
 ---
+
 # Input
+
 ```js
 foo``; // comment
 
@@ -19,10 +20,29 @@ foo /* comment */`
 foo /* comment */
 `
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -7,8 +7,8 @@
+ `
+ `;
+ 
+-foo/* comment */ `
++foo /* comment */ `
+ `;
+ 
+-foo/* comment */ `
++foo /* comment */ `
+ `;
 ```
 
 # Output
+
 ```js
 foo``; // comment
 
@@ -38,7 +58,7 @@ foo /* comment */ `
 
 foo /* comment */ `
 `;
-
 ```
+
 
 

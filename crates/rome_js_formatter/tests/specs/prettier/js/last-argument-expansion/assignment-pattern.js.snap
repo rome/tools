@@ -1,16 +1,41 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: assignment-pattern.js
 ---
+
 # Input
+
 ```js
 bob.doL(({ a, b = () => {
   console.log;
 }}) => something.else.else({}));
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,10 @@
+ bob.doL(
+-  ({
+-    a,
+-    b = () => {
+-      console.log;
++  (
++    {
++      a,
++      b = () => {
++        console.log;
++      },
+     },
+-  }) => something.else.else({}),
++  ) => something.else.else({}),
+ );
 ```
 
 # Output
+
 ```js
 bob.doL(
   (
@@ -22,7 +47,7 @@ bob.doL(
     },
   ) => something.else.else({}),
 );
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: ignore.js
 ---
+
 # Input
+
 ```js
 const {
   // prettier-ignore
@@ -46,10 +47,36 @@ const {
   // prettier-ignore
   bar7 =            1,
 } = foo
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -17,7 +17,7 @@
+ 
+ const {
+   // prettier-ignore
+-  bar4 =           1 /* comment */,
++  bar4 =           1, /* comment */
+ } = foo;
+ 
+ const {
+@@ -35,7 +35,7 @@
+ const {
+   baz: {
+     // prettier-ignore
+-    foo2 = [1, 2,    3],
++  foo2 = [1, 2,    3],
+   },
+   // prettier-ignore
+   bar7 =            1,
 ```
 
 # Output
+
 ```js
 const {
   // prettier-ignore
@@ -93,7 +120,7 @@ const {
   // prettier-ignore
   bar7 =            1,
 } = foo;
-
 ```
+
 
 

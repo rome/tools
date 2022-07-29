@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: class-declaration.js
 ---
+
 # Input
+
 ```js
 
 
@@ -10,10 +11,28 @@ class    a {
   b(   ) {}
 }
 
-let    x
+let    x```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,7 @@
++
++
+ class a {
+   b() {}
+ }
+ 
+-let x;
++let    x
+\ No newline at end of file
 ```
 
 # Output
+
 ```js
 
 
@@ -21,7 +40,7 @@ class a {
   b() {}
 }
 
-let    x
-```
+let    x```
+
 
 

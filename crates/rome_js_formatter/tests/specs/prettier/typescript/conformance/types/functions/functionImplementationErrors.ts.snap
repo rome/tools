@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: functionImplementationErrors.ts
 ---
+
 # Input
+
 ```js
 // @allowUnreachableCode: true
 
@@ -78,10 +79,34 @@ var f13 = () => {
     return new Base();
     return new AnotherClass();
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -37,11 +37,10 @@
+ 
+ // FunctionExpression with non -void return type annotation with a throw, no return, and other code
+ // Should be error but isn't
+-undefined ===
+-  function (): number {
+-    throw undefined;
+-    var x = 4;
+-  };
++undefined === function (): number {
++  throw undefined;
++  var x = 4;
++};
+ 
+ class Base {
+   private x;
 ```
 
 # Output
+
 ```js
 // @allowUnreachableCode: true
 
@@ -163,8 +188,8 @@ var f13 = () => {
   return new Base();
   return new AnotherClass();
 };
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

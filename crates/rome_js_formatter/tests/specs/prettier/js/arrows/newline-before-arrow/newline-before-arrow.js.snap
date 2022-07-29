@@ -1,21 +1,35 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: newline-before-arrow.js
 ---
+
 # Input
+
 ```js
 async x
 => x
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1,3 @@
+-async (x) => x;
++async;
++x;
++=> x
 ```
 
 # Output
+
 ```js
 async;
 x;
 => x
-
 ```
+
 
 # Errors
 ```

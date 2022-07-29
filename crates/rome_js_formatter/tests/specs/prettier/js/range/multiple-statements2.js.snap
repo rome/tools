@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: multiple-statements2.js
 ---
+
 # Input
+
 ```js
 call(
   1, 2,3
@@ -19,10 +20,32 @@ call(
 call(
   1, 2,3
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,11 @@
+-call(1, 2, 3);
++call(
++  1, 2,3
++);
+ 
+ call(1, 2, 3);
+ 
+ call(1, 2, 3);
+ 
+-call(1, 2, 3);
++call(
++  1, 2,3
++);
 ```
 
 # Output
+
 ```js
 call(
   1, 2,3
@@ -35,7 +58,7 @@ call(1, 2, 3);
 call(
   1, 2,3
 );
-
 ```
+
 
 

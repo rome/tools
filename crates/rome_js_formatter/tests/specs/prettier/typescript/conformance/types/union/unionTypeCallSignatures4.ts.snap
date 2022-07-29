@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: unionTypeCallSignatures4.ts
 ---
+
 # Input
+
 ```js
 ﻿type F1 = (a: string, b?: string) => void;
 type F2 = (a: string, b?: string, c?: string) => void;
@@ -29,10 +30,24 @@ var f12345: F1 | F2 | F3 | F4 | F5;
 f12345("a");  // error
 f12345("a", "b");
 f12345("a", "b", "c");  // error
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-﻿type F1 = (a: string, b?: string) => void;
++type F1 = (a: string, b?: string) => void;
+ type F2 = (a: string, b?: string, c?: string) => void;
+ type F3 = (a: string, ...rest: string[]) => void;
+ type F4 = (a: string, b?: string, ...rest: string[]) => void;
 ```
 
 # Output
+
 ```js
 type F1 = (a: string, b?: string) => void;
 type F2 = (a: string, b?: string, c?: string) => void;
@@ -59,7 +74,7 @@ var f12345: F1 | F2 | F3 | F4 | F5;
 f12345("a"); // error
 f12345("a", "b");
 f12345("a", "b", "c"); // error
-
 ```
+
 
 

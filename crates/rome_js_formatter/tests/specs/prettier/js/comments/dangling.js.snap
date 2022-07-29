@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: dangling.js
 ---
+
 # Input
+
 ```js
 var a = {/* dangling */};
 var b = {
@@ -16,10 +16,33 @@ function d() {
 new Thing(/* dangling */);
 Thing(/* dangling */);
 export /* dangling */{};
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,8 @@
+-var a = {
+-  /* dangling */
+-};
++var a = {/* dangling */};
+ var b = {
+   // dangling
+ };
+-var b = [
+-  /* dangling */
+-];
++var b = [/* dangling */];
+ function d() {
+   /* dangling */
+ }
 ```
 
 # Output
+
 ```js
 var a = {/* dangling */};
 var b = {
@@ -32,7 +55,7 @@ function d() {
 new Thing(/* dangling */);
 Thing(/* dangling */);
 export /* dangling */ {};
-
 ```
+
 
 

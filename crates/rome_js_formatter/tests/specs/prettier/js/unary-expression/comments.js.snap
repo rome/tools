@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comments.js
 ---
+
 # Input
+
 ```js
 !x;
 !(x /* foo */);
@@ -289,10 +290,196 @@ async function bar2() {
     await x // foo
   );
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -14,33 +14,33 @@
+ );
+ 
+ !(x + y);
+-!((x + y) /* foo */);
+-!(/* foo */ (x + y));
++!(x + y /* foo */);
++!(/* foo */ x + y);
+ !(
+   /* foo */
+-  (x + y)
++  x + y
+ );
+ !(
+-  (x + y)
++  x + y
+   /* foo */
+ );
+ !(
+-  (x + y) // foo
++  x + y // foo
+ );
+ 
+ !(x || y);
+-!(/* foo */ (x || y));
+-!((x || y) /* foo */);
++!(/* foo */ x || y);
++!(x || y /* foo */);
+ !(
+   /* foo */
+-  (x || y)
++  x || y
+ );
+ !(
+-  (x || y)
++  x || y
+   /* foo */
+ );
+ !(
+-  (x || y) // foo
++  x || y // foo
+ );
+ 
+ ![1, 2, 3];
+@@ -144,18 +144,18 @@
+ );
+ 
+ !(x = y);
+-!((x = y) /* foo */);
+-!(/* foo */ (x = y));
++!(x = y /* foo */);
++!(/* foo */ x = y);
+ !(
+   /* foo */
+-  (x = y)
++  x = y
+ );
+ !(
+-  (x = y)
++  x = y
+   /* foo */
+ );
+ !(
+-  (x = y) // foo
++  x = y // foo
+ );
+ 
+ !x.y;
+@@ -174,18 +174,18 @@
+ );
+ 
+ !(x ? y : z);
+-!((x ? y : z) /* foo */);
+-!(/* foo */ (x ? y : z));
++!(x ? y : z /* foo */);
++!(/* foo */ x ? y : z);
+ !(
+   /* foo */
+-  (x ? y : z)
++  x ? y : z
+ );
+ !(
+-  (x ? y : z)
++  x ? y : z
+   /* foo */
+ );
+ !(
+-  (x ? y : z) // foo
++  x ? y : z // foo
+ );
+ 
+ !x();
+@@ -219,14 +219,14 @@
+ );
+ 
+ !(x, y);
+-!((x, y) /* foo */);
+-!(/* foo */ (x, y));
++!(x, y /* foo */);
++!(/* foo */ x, y);
+ !(
+   /* foo */
+-  (x, y)
++  x, y
+ );
+ !(
+-  (x, y)
++  x, y
+   /* foo */
+ );
+ !(
+@@ -234,50 +234,51 @@
+ );
+ 
+ !(() => 3);
+-!((() => 3) /* foo */);
+-!(/* foo */ (() => 3));
++!(() => 3 /* foo */);
++!(/* foo */ () => 3);
+ !(
+   /* foo */
+-  (() => 3)
++  () => 3
+ );
+ !(
+-  (() => 3)
++  () => 3
+   /* foo */
+ );
+ !(
+-  (() => 3) // foo
++  () =>
++    3 // foo
+ );
+ 
+ function* bar() {
+   !(yield x);
+-  !((yield x) /* foo */);
+-  !(/* foo */ (yield x));
++  !(yield x /* foo */);
++  !(/* foo */ yield x);
+   !(
+     /* foo */
+-    (yield x)
++    yield x
+   );
+   !(
+-    (yield x)
++    yield x
+     /* foo */
+   );
+   !(
+-    (yield x) // foo
++    yield x // foo
+   );
+ }
+ 
+ async function bar2() {
+   !(await x);
+-  !((await x) /* foo */);
+-  !(/* foo */ (await x));
++  !(await x /* foo */);
++  !(/* foo */ await x);
+   !(
+     /* foo */
+-    (await x)
++    await x
+   );
+   !(
+-    (await x)
++    await x
+     /* foo */
+   );
+   !(
+-    (await x) // foo
++    await x // foo
+   );
+ }
 ```
 
 # Output
+
 ```js
 !x;
 !(x /* foo */);
@@ -578,7 +765,7 @@ async function bar2() {
     await x // foo
   );
 }
-
 ```
+
 
 

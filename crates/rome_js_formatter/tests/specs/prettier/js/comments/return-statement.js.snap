@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: return-statement.js
 ---
+
 # Input
+
 ```js
 function jsx() {
   return (
@@ -125,10 +126,142 @@ function inlineComment() {
     /* hi */ 42
   ) || 42
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -19,77 +19,83 @@
+ function logical() {
+   return (
+     // Reason for 42
+-    42 && 84
+-  );
++    42
++  ) && 84;
+ }
+ 
+ function binary() {
+   return (
+     // Reason for 42
+-    42 * 84
+-  );
++    42
++  ) * 84;
+ }
+ 
+ function binaryInBinaryLeft() {
+   return (
+-    // Reason for 42
+-    42 * 84 + 2
+-  );
++    (
++      // Reason for 42
++      42
++    ) * 84
++  ) + 2;
+ }
+ 
+ function binaryInBinaryRight() {
+   return (
+     // Reason for 42
+-    42 + 84 * 2
+-  );
++    42
++  ) + (84 * 2);
+ }
+ 
+ function conditional() {
+   return (
+     // Reason for 42
+-    42 ? 1 : 2
+-  );
++    42
++  ) ? 1 : 2;
+ }
+ 
+ function binaryInConditional() {
+   return (
+     // Reason for 42
+-    42 * 3 ? 1 : 2
+-  );
++    42
++  ) * 3 ? 1 : 2;
+ }
+ 
+ function call() {
+   return (
+     // Reason for a
+-    a()
+-  );
++    a
++  )();
+ }
+ 
+ function memberInside() {
+   return (
+     // Reason for a.b
+-    a.b.c
+-  );
++    a.b
++  ).c;
+ }
+ 
+ function memberOutside() {
+   return (
+     // Reason for a
+-    a.b.c
+-  );
++    a
++  ).b.c;
+ }
+ 
+ function memberInAndOutWithCalls() {
+-  return aFunction
+-    .b // Reason for a
+-    ()
+-    .c.d();
++  return (
++    // Reason for a
++    aFunction.b()
++  ).c.d();
+ }
+ 
+ function excessiveEverything() {
+   return (
+     // Reason for stuff
+-    a.b() * 3 + 4 ? ((a`hi`, 1) ? 1 : 1) : 1
++    (a.b() * 3) + 4
++      ? (a`hi`, 1)
++        ? 1
++        : 1
++      : 1
+   );
+ }
+ 
+@@ -111,10 +117,12 @@
+ function taggedTemplate() {
+   return (
+     // Reason for a
+-    a`b`
+-  );
++    a
++  )`b`;
+ }
+ 
+ function inlineComment() {
+-  return /* hi */ 42 || 42;
++  return (
++    /* hi */ 42
++  ) || 42;
+ }
 ```
 
 # Output
+
 ```js
 function jsx() {
   return (
@@ -258,7 +391,7 @@ function inlineComment() {
     /* hi */ 42
   ) || 42;
 }
-
 ```
+
 
 

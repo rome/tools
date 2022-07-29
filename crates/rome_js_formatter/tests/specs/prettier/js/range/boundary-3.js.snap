@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: boundary-3.js
 ---
+
 # Input
+
 ```js
 a (
 );
@@ -10,17 +11,34 @@ b (
 );                 c (
 ); d(
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,5 @@
+-a();
++a (
++);
+ b();
+-c();
+-d();
++c(); d(
++);
 ```
 
 # Output
+
 ```js
 a (
 );
 b();
 c(); d(
 );
-
 ```
+
 
 

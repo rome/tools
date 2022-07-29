@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: index.ts
 ---
+
 # Input
+
 ```js
 const assertString = (x: any): asserts x => {
   console.assert(typeof x === 'string');
@@ -31,10 +32,27 @@ class AssertsFoo {
   isBaz = (): asserts this => {
     return;
   }
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -15,7 +15,7 @@
+ }
+ 
+ interface AssertFoo {
+-  isString(node: any): asserts node;
++  isString(node: any): asserts node ;
+ }
+ 
+ class AssertsFoo {
 ```
 
 # Output
+
 ```js
 const assertString = (x: any): asserts x => {
   console.assert(typeof x === "string");
@@ -64,7 +82,7 @@ class AssertsFoo {
     return;
   };
 }
-
 ```
+
 
 

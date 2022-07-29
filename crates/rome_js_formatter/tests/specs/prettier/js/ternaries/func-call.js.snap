@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: func-call.js
 ---
+
 # Input
+
 ```js
 fn(
   bifornCringerMoshedPerplexSawder,
@@ -12,18 +13,36 @@ fn(
       ? annularCooeedSplicesWalksWayWay 
       : kochabCooieGameOnOboleUnweave 
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,5 @@
+ fn(
+   bifornCringerMoshedPerplexSawder,
+   askTrovenaBeenaDependsRowans,
+-  glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl &&
+-    anodyneCondosMalateOverateRetinol
+-    ? annularCooeedSplicesWalksWayWay
+-    : kochabCooieGameOnOboleUnweave,
++  glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl && anodyneCondosMalateOverateRetinol ? annularCooeedSplicesWalksWayWay : kochabCooieGameOnOboleUnweave,
+ );
 ```
 
 # Output
+
 ```js
 fn(
   bifornCringerMoshedPerplexSawder,
   askTrovenaBeenaDependsRowans,
   glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl && anodyneCondosMalateOverateRetinol ? annularCooeedSplicesWalksWayWay : kochabCooieGameOnOboleUnweave,
 );
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

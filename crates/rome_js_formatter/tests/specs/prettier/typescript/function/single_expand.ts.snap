@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: single_expand.ts
 ---
+
 # Input
+
 ```js
 function onDidInsertSuggestion({
   editor,
@@ -18,10 +18,38 @@ class X {
   > {
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,13 +1,9 @@
+-function onDidInsertSuggestion({
+-  editor,
+-  triggerPosition,
+-  re,
+-}): Promise<void> {}
++function onDidInsertSuggestion(
++  { editor, triggerPosition, re },
++): Promise<void> {}
+ 
+ class X {
+-  async onDidInsertSuggestion({
+-    editor,
+-    triggerPosition,
+-    suggestion,
+-  }): Promise<void> {}
++  async onDidInsertSuggestion(
++    { editor, triggerPosition, suggestion },
++  ): Promise<void> {}
+ }
 ```
 
 # Output
+
 ```js
 function onDidInsertSuggestion(
   { editor, triggerPosition, re },
@@ -32,7 +60,7 @@ class X {
     { editor, triggerPosition, suggestion },
   ): Promise<void> {}
 }
-
 ```
+
 
 

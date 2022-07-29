@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: no-semi.js
 ---
+
 # Input
+
 ```js
 
 // with preexisting semi
@@ -85,10 +85,61 @@ while (false)
 
 aReallyLongLine012345678901234567890123456789012345678901234567890123456789 *
   (b + c)
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -13,13 +13,13 @@
+ x;
+ ("h" + "i").repeat(10);
+ x;
+-1, 2;
++(1, 2);
+ x;
+ (() => {})();
+ x;
+-({ a: 1 }.entries());
++({ a: 1 }).entries();
+ x;
+-({ a: 1 }.entries());
++({ a: 1 }).entries();
+ x;
+ <Hello />;
+ x;
+@@ -45,11 +45,8 @@
+ 
+ // check statement clauses
+ 
+-do break;
+-while (false);
+-if (true)
+-  do break;
+-  while (false);
++do break; while (false);
++if (true) do break; while (false);
+ 
+ if (true) 1;
+ else 2;
+@@ -85,7 +82,8 @@
+ x;
+ ++(a || b).c;
+ 
+-while (false) (function () {})();
++while (false) (function () {}());
+ 
+-aReallyLongLine012345678901234567890123456789012345678901234567890123456789 *
+-  (b + c);
++aReallyLongLine012345678901234567890123456789012345678901234567890123456789 * (
++  b + c
++);
 ```
 
 # Output
+
 ```js
 // with preexisting semi
 
@@ -179,7 +230,7 @@ while (false) (function () {}());
 aReallyLongLine012345678901234567890123456789012345678901234567890123456789 * (
   b + c
 );
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: function_expression.js
 ---
+
 # Input
+
 ```js
 (function() {}).length
 typeof (function() {});
@@ -15,10 +16,32 @@ a = function f() {} || b;
 (function() {} && a);
 a + function() {};
 new function() {};
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+-(function () {}.length);
+-typeof function () {};
++(function () {}).length;
++typeof (function () {});
+ export default (function () {})();
+ (function () {})()``;
+ (function () {})``;
+@@ -8,4 +8,4 @@
+ a = function f() {} || b;
+ (function () {} && a);
+ a + function () {};
+-new (function () {})();
++new function () {}();
 ```
 
 # Output
+
 ```js
 (function () {}).length;
 typeof (function () {});
@@ -31,7 +54,7 @@ a = function f() {} || b;
 (function () {} && a);
 a + function () {};
 new function () {}();
-
 ```
+
 
 

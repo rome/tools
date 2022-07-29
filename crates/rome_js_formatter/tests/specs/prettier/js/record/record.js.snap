@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: record.js
 ---
+
 # Input
+
 ```js
 const record1 = #{
     a: 1,
@@ -20,10 +21,39 @@ assert(record1?.a === 1);
 assert(record1?.d === undefined);
 assert(record1?.d ?? 5 === 5);
 assert(record1.d?.a === undefined);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,10 +1,14 @@
+-const record1 = #{
+-  a: 1,
+-  b: 2,
+-  c: 3,
+-};
++const record1 = #;
++{
++  a: 1, b;
++  : 2,
++    c: 3,
++}
+ 
+-const record2 = #{ ...record1, b: 5 };
++const record2 = #;
++{
++  ...record1, b: 5
++}
+ 
+ assert(record1.a === 1);
+ assert(record1["a"] === 1);
 ```
 
 # Output
+
 ```js
 const record1 = #;
 {
@@ -45,8 +75,8 @@ assert(record1?.a === 1);
 assert(record1?.d === undefined);
 assert(record1?.d ?? 5 === 5);
 assert(record1.d?.a === undefined);
-
 ```
+
 
 # Errors
 ```

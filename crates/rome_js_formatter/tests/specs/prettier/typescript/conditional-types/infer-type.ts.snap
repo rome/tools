@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: infer-type.ts
 ---
+
 # Input
+
 ```js
 type TestReturnType<T extends (...args: any[]) => any> = T extends (...args: any[]) => infer R ? R : any;
 
@@ -11,10 +12,37 @@ type Unpacked<T> =
   T extends (...args: any[]) => infer U ? U :
   T extends Promise<infer U> ? U :
   T;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,13 +1,11 @@
+ type TestReturnType<T extends (...args: any[]) => any> = T extends (
+   ...args: any[]
+-) => infer R
+-  ? R
+-  : any;
++) => infer R ? R : any;
+ 
+ type Unpacked<T> = T extends (infer U)[]
+   ? U
+   : T extends (...args: any[]) => infer U
+-  ? U
+-  : T extends Promise<infer U>
+-  ? U
+-  : T;
++    ? U
++    : T extends Promise<infer U>
++      ? U
++      : T;
 ```
 
 # Output
+
 ```js
 type TestReturnType<T extends (...args: any[]) => any> = T extends (
   ...args: any[]
@@ -27,7 +55,7 @@ type Unpacked<T> = T extends (infer U)[]
     : T extends Promise<infer U>
       ? U
       : T;
-
 ```
+
 
 

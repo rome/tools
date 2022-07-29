@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: method_chain.js
 ---
+
 # Input
+
 ```js
 import {interval} from 'rxjs/observable/interval';
 import {filter} from 'rxjs/operator/filter';
@@ -21,10 +22,39 @@ function test(observable) {
         )
         ::map(someFunction);
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,12 +6,12 @@
+ import { takeUntil } from "rxjs/operator/takeUntil";
+ 
+ function test(observable) {
+-  return observable
+-    ::filter((data) => data.someTest)
+-    ::throttle(() =>
+-      interval(10)
+-        ::take(1)
+-        ::takeUntil(observable::filter((data) => someOtherTest)),
+-    )
+-    ::map(someFunction);
++  return observable;
++  ::filter(data => data.someTest)
++        ::throttle(() =>
++            interval(10)
++                ::take(1)
++                ::takeUntil(observable::filter(data => someOtherTest))
++        )
++        ::map(someFunction)
+ }
 ```
 
 # Output
+
 ```js
 import { interval } from "rxjs/observable/interval";
 import { filter } from "rxjs/operator/filter";
@@ -43,8 +73,8 @@ function test(observable) {
         )
         ::map(someFunction)
 }
-
 ```
+
 
 # Errors
 ```

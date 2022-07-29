@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: html-template-literals.js
 ---
+
 # Input
+
 ```js
 const nestedFun = /* HTML */ `${outerExpr(1)}
   <script>
@@ -36,10 +37,27 @@ setFoo(
   </div>`,
   secondArgument
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,7 +5,7 @@
+ 
+ const nestedFun2 = /* HTML */ `${outerExpr(1)}
+   <script>
+-    const tpl = html\` <div>\${innerExpr(1)} ${outerExpr(2)}</div> \`;
++    const tpl = html\`\\n<div>\${innerExpr(1)} ${outerExpr(2)}</div>\\n\`;
+   </script>`;
+ 
+ setFoo(
 ```
 
 # Output
+
 ```js
 const nestedFun = /* HTML */ `${outerExpr(1)}
   <script>
@@ -73,7 +91,7 @@ setFoo(
   </div>`,
   secondArgument,
 );
-
 ```
+
 
 

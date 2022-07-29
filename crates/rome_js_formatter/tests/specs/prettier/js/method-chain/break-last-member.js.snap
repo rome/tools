@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: break-last-member.js
 ---
+
 # Input
+
 ```js
 SomeVeryLongUpperCaseConstant.someVeryLongCallExpression().some_very_long_member_expression
 weNeedToReachTheEightyCharacterLimitXXXXXXXXXXXXXXXXX.someNode
@@ -24,10 +25,46 @@ const {
   location,
   category: categories,
 } = rawAd.entry;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -3,22 +3,17 @@
+ weNeedToReachTheEightyCharacterLimitXXXXXXXXXXXXXXXXX.someNode
+   .childrenInAnArray[0];
+ superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered;
+-superSupersuperSupersuperSupersuperSupersuperSuperLong
+-  .exampleOfOrderOfGetterAndSetterReordered[0];
++superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered[
++  0
++];
+ 
+ expect(
+   findDOMNode(component.instance()).getElementsByClassName(styles.inner)[0]
+     .style.paddingRight,
+ ).toBe("1000px");
+ 
+-const {
+-  course,
+-  conflicts = [],
+-  index,
+-  scheduleId,
+-  studentId,
+-  something,
+-} = a.this.props;
++const { course, conflicts = [], index, scheduleId, studentId, something } =
++  a.this.props;
+ 
+ const {
+   course2,
 ```
 
 # Output
+
 ```js
 SomeVeryLongUpperCaseConstant.someVeryLongCallExpression()
   .some_very_long_member_expression;
@@ -61,8 +98,8 @@ const {
   location,
   category: categories,
 } = rawAd.entry;
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

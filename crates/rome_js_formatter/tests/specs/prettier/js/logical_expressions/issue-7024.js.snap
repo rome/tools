@@ -1,17 +1,37 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-7024.js
 ---
+
 # Input
+
 ```js
 const radioSelectedAttr =
   (isAnyValueSelected &&
     node.getAttribute(radioAttr.toLowerCase()) === radioValue) ||
   ((!isAnyValueSelected && values[a].default === true) || a === 0);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,6 @@
+ const radioSelectedAttr =
+-  (isAnyValueSelected &&
+-    node.getAttribute(radioAttr.toLowerCase()) === radioValue) ||
+-  (!isAnyValueSelected && values[a].default === true) ||
+-  a === 0;
++  (
++    isAnyValueSelected && node.getAttribute(
++      radioAttr.toLowerCase(),
++    ) === radioValue
++  ) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
 ```
 
 # Output
+
 ```js
 const radioSelectedAttr =
   (
@@ -19,7 +39,7 @@ const radioSelectedAttr =
       radioAttr.toLowerCase(),
     ) === radioValue
   ) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
-
 ```
+
 
 

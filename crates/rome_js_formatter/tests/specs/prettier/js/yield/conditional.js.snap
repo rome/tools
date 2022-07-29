@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: conditional.js
 ---
+
 # Input
+
 ```js
 function* f1() {
   a = (yield) ? 1 : 1;
@@ -23,10 +24,27 @@ async function f3() {
   a = (await 1) ? 1 : 1;
   a = 1 ? await 1 : await 1;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -13,7 +13,7 @@
+ }
+ 
+ async function f3() {
+-  a = (await 1) ? 1 : 1;
++  a = await 1 ? 1 : 1;
+   a = (await 1) ? 1 : 1;
+   a = 1 ? await 1 : await 1;
+ }
 ```
 
 # Output
+
 ```js
 function* f1() {
   a = (yield) ? 1 : 1;
@@ -47,7 +65,7 @@ async function f3() {
   a = (await 1) ? 1 : 1;
   a = 1 ? await 1 : await 1;
 }
-
 ```
+
 
 

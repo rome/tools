@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: call_comment.js
 ---
+
 # Input
+
 ```js
 render( // Warm any cache
   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
@@ -19,10 +19,39 @@ render?.( // Warm any cache
   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
   container
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,17 +1,14 @@
+-render(
+-  // Warm any cache
++render( // Warm any cache
+   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   container,
+ );
+ 
+-React.render(
+-  // Warm any cache
++React.render( // Warm any cache
+   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   container,
+ );
+ 
+-render?.(
+-  // Warm any cache
++render?.( // Warm any cache
+   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   container,
+ );
 ```
 
 # Output
+
 ```js
 render( // Warm any cache
   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
@@ -38,7 +67,7 @@ render?.( // Warm any cache
   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
   container,
 );
-
 ```
+
 
 

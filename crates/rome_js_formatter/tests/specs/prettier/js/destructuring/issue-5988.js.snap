@@ -1,19 +1,37 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-5988.js
 ---
+
 # Input
+
 ```js
 const { foo, bar: bazAndSomething, quxIsLong } = someBigFunctionName("foo")("bar");
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,3 @@
+-const {
+-  foo,
+-  bar: bazAndSomething,
+-  quxIsLong,
+-} = someBigFunctionName("foo")("bar");
++const { foo, bar: bazAndSomething, quxIsLong } = someBigFunctionName("foo")(
++  "bar",
++);
 ```
 
 # Output
+
 ```js
 const { foo, bar: bazAndSomething, quxIsLong } = someBigFunctionName("foo")(
   "bar",
 );
-
 ```
+
 
 

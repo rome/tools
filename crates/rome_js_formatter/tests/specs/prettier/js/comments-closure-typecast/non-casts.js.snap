@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: non-casts.js
 ---
+
 # Input
+
 ```js
 /* @type { } */
 z(x => {
@@ -23,10 +23,43 @@ let q = z(x => {
 })
 
 const w1 = /** @typefoo Foo */ (value);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,18 +1,18 @@
+ /* @type { } */
+ z((x) => {
+-  foo(bar(2 + 3));
+-  return 1;
++  (foo)((bar)(2 + (3)));
++  return (1);
+ });
+ 
+ /** @type { } */
+ z((x) => {
+-  foo(bar(2 + 3));
+-  return 1;
++  (foo)((bar)(2 + (3)));
++  return (1);
+ });
+ 
+ /** @type {number} */
+ let q = z((x) => {
+-  return 1;
++  return (1);
+ });
+ 
+-const w1 = /** @typefoo Foo */ value;
++const w1 = /** @typefoo Foo */ (value);
 ```
 
 # Output
+
 ```js
 /* @type { } */
 z((x) => {
@@ -46,7 +79,7 @@ let q = z((x) => {
 });
 
 const w1 = /** @typefoo Foo */ (value);
-
 ```
+
 
 

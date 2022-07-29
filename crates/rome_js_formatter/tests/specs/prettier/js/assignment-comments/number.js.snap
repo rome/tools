@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: number.js
 ---
+
 # Input
+
 ```js
 fnNumber =
   // Comment
@@ -47,10 +48,37 @@ var fnNumber = /* comment */
 var fnNumber = /* comments0 */
   /* comments1 */
   3;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -14,8 +14,7 @@
+ 
+ fnNumber = /* comment */ 3;
+ 
+-fnNumber =
+-  /* comments0 */
++fnNumber = /* comments0 */
+   /* comments1 */
+   3;
+ 
+@@ -35,7 +34,6 @@
+ 
+ var fnNumber = /* comment */ 3;
+ 
+-var fnNumber =
+-  /* comments0 */
++var fnNumber = /* comments0 */
+   /* comments1 */
+   3;
 ```
 
 # Output
+
 ```js
 fnNumber =
   // Comment
@@ -91,7 +119,7 @@ var fnNumber = /* comment */ 3;
 var fnNumber = /* comments0 */
   /* comments1 */
   3;
-
 ```
+
 
 

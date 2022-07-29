@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: export-and-import.js
 ---
+
 # Input
+
 ```js
 // These are tests to compare comment formats in `export` and `import`.
 
@@ -29,10 +30,43 @@ import {
   bar as  // comment
 		 baz,
 } from 'foo'
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,8 +2,7 @@
+ 
+ export {
+   foo,
+-  // comment
+-  bar as baz,
++  bar as baz, // comment
+ } from "foo";
+ 
+ const fooo = "";
+@@ -11,12 +10,10 @@
+ 
+ export {
+   fooo,
+-  // comment
+-  barr as bazz,
++  barr as bazz, // comment
+ };
+ 
+ import {
+   foo,
+-  // comment
+-  bar as baz,
++  bar as baz, // comment
+ } from "foo";
 ```
 
 # Output
+
 ```js
 // These are tests to compare comment formats in `export` and `import`.
 
@@ -53,7 +87,7 @@ import {
   foo,
   bar as baz, // comment
 } from "foo";
-
 ```
+
 
 

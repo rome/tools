@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: preserve_empty_lines.js
 ---
+
 # Input
+
 ```js
 a = [
 
@@ -16,10 +17,26 @@ a = [
 
 
 ]
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,6 @@
+ a = [
+-  1, 2,
++  1,
++  2,
+ 
+   3,
+ 
 ```
 
 # Output
+
 ```js
 a = [
   1,
@@ -29,7 +46,7 @@ a = [
 
   4,
 ];
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: expressions.js
 ---
+
 # Input
+
 ```js
 graphql(schema, `
 query allPartsByManufacturerName($name: String!) {
@@ -19,10 +20,54 @@ query allPartsByManufacturerName($name: String!) {
 }}
 ${fragments.all}
 `)
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,23 +1,21 @@
+ graphql(
+   schema,
+   `
+-    query allPartsByManufacturerName($name: String!) {
+-      allParts(filter: { manufacturer: { name: $name } }) {
+-        ...PartAll
+-      }
+-    }
+-    ${fragments.all}
+-  `,
++query allPartsByManufacturerName($name: String!) {
++  allParts(filter:{manufacturer: {name: $name}}) {
++...    PartAll
++}}
++${fragments.all}
++`,
+ );
+ 
+ const veryLongVariableNameToMakeTheLineBreak = graphql(
+   schema,
+   `
+-    query allPartsByManufacturerName($name: String!) {
+-      allParts(filter: { manufacturer: { name: $name } }) {
+-        ...PartAll
+-      }
+-    }
+-    ${fragments.all}
+-  `,
++query allPartsByManufacturerName($name: String!) {
++  allParts(filter:{manufacturer: {name: $name}}) {
++...    PartAll
++}}
++${fragments.all}
++`,
+ );
 ```
 
 # Output
+
 ```js
 graphql(
   schema,
@@ -45,7 +90,7 @@ query allPartsByManufacturerName($name: String!) {
 ${fragments.all}
 `,
 );
-
 ```
+
 
 

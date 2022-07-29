@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: async-do-expressions.js
 ---
+
 # Input
+
 ```js
 async do {
   1;
@@ -30,10 +31,68 @@ let x = async do {
   let tmp = f();
   tmp * tmp + 1
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,30 +1,31 @@
+-(async do {
++async;
++do {
+   1;
+-});
++};
+ 
+-(async do {});
++(async
++do {});
+ 
+-let x = async do {
+-  if (foo()) {
+-    f();
+-  } else if (bar()) {
+-    g();
+-  } else {
+-    h();
+-  }
++let x = async;
++do {
++  if (foo()) { f() }
++  else if (bar()) { g() }
++  else { h() }
+ };
+ 
+-(async do {
+-  await 42;
+-});
++async;
++do {
++  await 42
++}
+ 
+ function iter() {
+   return async do {
+     return 1;
+-  };
+-}
++  }
++};
+ 
+-let x = async do {
++let x = async;
++do {
+   let tmp = f();
+-  tmp * tmp + 1;
++  tmp * tmp + 1
+ };
 ```
 
 # Output
+
 ```js
 async;
 do {
@@ -66,8 +125,8 @@ do {
   let tmp = f();
   tmp * tmp + 1
 };
-
 ```
+
 
 # Errors
 ```

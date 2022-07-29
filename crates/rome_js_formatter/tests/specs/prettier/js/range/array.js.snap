@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: array.js
 ---
+
 # Input
+
 ```js
 a = [
 ,
@@ -12,12 +13,24 @@ a = [
 
 ,
 a,
-]
+]```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-a = [, , , , , , , a];
++a = [, , , , , , , a];
+\ No newline at end of file
 ```
 
 # Output
+
 ```js
-a = [, , , , , , , a];
-```
+a = [, , , , , , , a];```
+
 
 

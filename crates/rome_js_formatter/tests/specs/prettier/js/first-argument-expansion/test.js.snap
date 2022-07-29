@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: test.js
 ---
+
 # Input
+
 ```js
 setTimeout(function() {
   thing();
@@ -118,10 +118,148 @@ setTimeout(/* blip */ function() {
 func((args) => {
   execute(args);
 }, result => result && console.log("success"))
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -34,12 +34,9 @@
+   thing();
+ }, /regex.*?/);
+ 
+-func(
+-  () => {
+-    thing();
+-  },
+-  1 ? 2 : 3,
+-);
++func(() => {
++  thing();
++}, 1 ? 2 : 3);
+ 
+ func(
+   function () {
+@@ -48,35 +45,25 @@
+   1 ? 2 : 3,
+ );
+ 
+-func(
+-  () => {
+-    thing();
+-  },
+-  something() ? someOtherThing() : somethingElse(true, 0),
+-);
++func(() => {
++  thing();
++}, something() ? someOtherThing() : somethingElse(true, 0));
+ 
+-func(
+-  () => {
+-    thing();
+-  },
+-  something(longArgumentName, anotherLongArgumentName)
+-    ? someOtherThing()
+-    : somethingElse(true, 0),
+-);
++func(() => {
++  thing();
++}, something(
++  longArgumentName,
++  anotherLongArgumentName,
++) ? someOtherThing() : somethingElse(true, 0));
+ 
+-func(
+-  () => {
+-    thing();
+-  },
+-  something(
+-    longArgumentName,
+-    anotherLongArgumentName,
+-    anotherLongArgumentName,
+-    anotherLongArgumentName,
+-  )
+-    ? someOtherThing()
+-    : somethingElse(true, 0),
+-);
++func(() => {
++  thing();
++}, something(
++  longArgumentName,
++  anotherLongArgumentName,
++  anotherLongArgumentName,
++  anotherLongArgumentName,
++) ? someOtherThing() : somethingElse(true, 0));
+ 
+ compose(
+   (a) => {
+@@ -86,19 +73,20 @@
+ );
+ 
+ somthing.reduce(function (item, thing) {
+-  return (thing.blah = item);
++  return thing.blah = item;
+ }, {});
+ 
+ somthing.reduce(function (item, thing) {
+   return thing.push(item);
+ }, []);
+ 
+-reallyLongLongLongLongLongLongLongLongLongLongLongLongLongLongMethod(
+-  (f, g, h) => {
+-    return f.pop();
+-  },
+-  true,
+-);
++reallyLongLongLongLongLongLongLongLongLongLongLongLongLongLongMethod((
++  f,
++  g,
++  h,
++) => {
++  return f.pop();
++}, true);
+ 
+ // Don't do the rest of these
+ 
+@@ -110,12 +98,9 @@
+   false,
+ );
+ 
+-func(
+-  () => {
+-    thing();
+-  },
+-  { yes: true, cats: 5 },
+-);
++func(() => {
++  thing();
++}, { yes: true, cats: 5 });
+ 
+ compose(
+   (a) => {
+@@ -146,12 +131,10 @@
+   500,
+ );
+ 
+-setTimeout(
+-  /* blip */ function () {
+-    thing();
+-  },
+-  500,
+-);
++setTimeout(/* blip */
++function () {
++  thing();
++}, 500);
+ 
+ func(
+   (args) => {
 ```
 
 # Output
+
 ```js
 setTimeout(function () {
   thing();
@@ -267,7 +405,7 @@ func(
   },
   (result) => result && console.log("success"),
 );
-
 ```
+
 
 

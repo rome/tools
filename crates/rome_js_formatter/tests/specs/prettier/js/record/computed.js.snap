@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: computed.js
 ---
+
 # Input
+
 ```js
 const key = "a";
 assert(#{ [key]: 1 } === #{ a: 1 })
@@ -13,10 +14,34 @@ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
 
 assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
 assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,9 @@
+ const key = "a";
+-assert(#{ [key]: 1 } === #{ a: 1 });
+-assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 });
++assert(#{ [key]: 1 } === #{ a: 1 })
++assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
+ 
+-assert(#{ [true]: 1 } === #{ true: 1 });
+-assert(#{ [true]: 1 } === #{ ["true"]: 1 });
++assert(#{ [true]: 1 } === #{ true: 1 })
++assert(#{ [true]: 1 } === #{ ["true"]: 1 })
+ 
+-assert(#{ [1 + 1]: "two" } === #{ 2: "two" });
+-assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" });
++assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
++assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
 ```
 
 # Output
+
 ```js
 const key = "a";
 assert(#{ [key]: 1 } === #{ a: 1 })
@@ -27,8 +52,8 @@ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
 
 assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
 assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-
 ```
+
 
 # Errors
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: type-modifier.ts
 ---
+
 # Input
+
 ```js
 export type { SomeThing };
 export type { A as B };
@@ -19,10 +20,24 @@ import type { foo as bar } from 'baz';
 import type * as foo from './bar';
 import type foo from 'bar';
 import type foo, { bar } from 'bar';
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -12,4 +12,4 @@
+ import type { foo as bar } from "baz";
+ import type * as foo from "./bar";
+ import type foo from "bar";
+-import type foo, { bar } from "bar";
++import type foo, { bar } from 'bar';
 ```
 
 # Output
+
 ```js
 export type { SomeThing };
 export type { A as B };
@@ -39,8 +54,8 @@ import type { foo as bar } from "baz";
 import type * as foo from "./bar";
 import type foo from "bar";
 import type foo, { bar } from 'bar';
-
 ```
+
 
 # Errors
 ```

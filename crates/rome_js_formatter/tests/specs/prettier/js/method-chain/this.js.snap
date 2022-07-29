@@ -1,21 +1,37 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: this.js
 ---
+
 # Input
+
 ```js
 const sel = this.connections
   .concat(this.activities.concat(this.operators))
   .filter(x => x.selected);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,3 @@
+-const sel = this.connections
+-  .concat(this.activities.concat(this.operators))
+-  .filter((x) => x.selected);
++const sel = this.connections.concat(
++  this.activities.concat(this.operators),
++).filter((x) => x.selected);
 ```
 
 # Output
+
 ```js
 const sel = this.connections.concat(
   this.activities.concat(this.operators),
 ).filter((x) => x.selected);
-
 ```
+
 
 

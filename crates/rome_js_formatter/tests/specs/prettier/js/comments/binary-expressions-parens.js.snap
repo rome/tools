@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: binary-expressions-parens.js
 ---
+
 # Input
+
 ```js
 Math.min(
   (
@@ -14,10 +15,34 @@ Math.min(
   ) - devsite_footer_height,
   0,
 )
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,9 @@
+ Math.min(
+-  /* $FlowFixMe(>=0.38.0 site=www) - Flow error detected during the
+-   * deployment of v0.38.0. To see the error, remove this comment and
+-   * run flow */
+-  document.body.scrollHeight -
+-    (window.scrollY + window.innerHeight) -
+-    devsite_footer_height,
++  (
++    /* $FlowFixMe(>=0.38.0 site=www) - Flow error detected during the
++     * deployment of v0.38.0. To see the error, remove this comment and
++     * run flow */
++    document.body.scrollHeight - (window.scrollY + window.innerHeight)
++  ) - devsite_footer_height,
+   0,
+ );
 ```
 
 # Output
+
 ```js
 Math.min(
   (
@@ -28,7 +53,7 @@ Math.min(
   ) - devsite_footer_height,
   0,
 );
-
 ```
+
 
 

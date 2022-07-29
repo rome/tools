@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: faulty-locations.js
 ---
+
 # Input
+
 ```js
 var o = {
   [`key`]: () => {
@@ -18,10 +19,28 @@ var x = {
     }
   `
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,7 +5,8 @@
+ };
+ 
+ var x = {
+-  y: () => Relay.QL`
++  y: () =>
++    Relay.QL`
+     query {
+       ${foo},
+       field,
 ```
 
 # Output
+
 ```js
 var o = {
   [`key`]: () => {
@@ -38,7 +57,7 @@ var x = {
     }
   `,
 };
-
 ```
+
 
 

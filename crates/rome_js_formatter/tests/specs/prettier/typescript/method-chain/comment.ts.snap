@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: comment.ts
 ---
+
 # Input
+
 ```js
 
 this.firebase.object(`/shops/${shopLocation.shop}`)
@@ -14,10 +14,44 @@ this.firebase.object(`/shops/${shopLocation.shop}`)
       s.distance = shopLocation.distance;
       return s;
   });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,15 +1,13 @@
+ this.firebase
+   .object(`/shops/${shopLocation.shop}`)
+   // keep distance info
+-  .first(
+-    (
+-      shop: ShopQueryResult,
+-      index: number,
+-      source: Observable<ShopQueryResult>,
+-    ): any => {
+-      // add distance to result
+-      const s = shop;
+-      s.distance = shopLocation.distance;
+-      return s;
+-    },
+-  );
++  .first((
++    shop: ShopQueryResult,
++    index: number,
++    source: Observable<ShopQueryResult>,
++  ): any => {
++    // add distance to result
++    const s = shop;
++    s.distance = shopLocation.distance;
++    return s;
++  });
 ```
 
 # Output
+
 ```js
 this.firebase
   .object(`/shops/${shopLocation.shop}`)
@@ -32,7 +66,7 @@ this.firebase
     s.distance = shopLocation.distance;
     return s;
   });
-
 ```
+
 
 

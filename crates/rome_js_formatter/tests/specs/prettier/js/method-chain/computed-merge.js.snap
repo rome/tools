@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: computed-merge.js
 ---
+
 # Input
+
 ```js
 [].forEach(key => {
   data[key]('foo')
@@ -21,10 +21,28 @@ expression: computed-merge.js
 window.Data[key]("foo")
   .then(() => a)
   .catch(() => b);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,8 +5,7 @@
+ });
+ 
+ [].forEach((key) => {
+-  data("foo")
+-    [key]("bar")
++  data("foo")[key]("bar")
+     .then(() => console.log("bar"))
+     .catch(() => console.log("baz"));
+ });
 ```
 
 # Output
+
 ```js
 [].forEach((key) => {
   data[key]("foo")
@@ -41,7 +59,7 @@ window.Data[key]("foo")
 window.Data[key]("foo")
   .then(() => a)
   .catch(() => b);
-
 ```
+
 
 

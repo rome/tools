@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: jsx.js
 ---
+
 # Input
+
 ```js
 <div
   onClick={() =>
@@ -12,10 +12,26 @@ expression: jsx.js
     })
   }
 />;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,5 @@
+   onClick={() =>
+     doSomething({
+       foo: bar,
+-    })
+-  }
++    })}
+ />;
 ```
 
 # Output
+
 ```js
 <div
   onClick={() =>
@@ -23,7 +39,7 @@ expression: jsx.js
       foo: bar,
     })}
 />;
-
 ```
+
 
 

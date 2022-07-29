@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: nested-bindings.js
 ---
+
 # Input
+
 ```js
 class C {
   #x = 1;
@@ -11,10 +11,29 @@ class C {
     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,9 +2,7 @@
+   #x = 1;
+   m() {
+     const {
+-      x: {
+-        #x: [x],
+-      },
++      x: { #x: [x] },
+       y: [...{ #x: y }],
+     } = this;
+   }
 ```
 
 # Output
+
 ```js
 class C {
   #x = 1;
@@ -25,8 +44,8 @@ class C {
     } = this;
   }
 }
-
 ```
+
 
 # Errors
 ```

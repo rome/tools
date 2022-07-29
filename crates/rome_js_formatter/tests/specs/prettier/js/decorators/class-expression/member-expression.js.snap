@@ -1,15 +1,39 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: member-expression.js
 ---
+
 # Input
+
 ```js
 (@deco class Foo {}).name;
 (@deco class {}).name;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,6 @@
+-((
+-  @deco
+-  class Foo {}
+-).name);
+-((
+-  @deco
+-  class {}
+-).name);
++(
++@deco class Foo {}
++).name
++(
++@deco class {}
++).name
 ```
 
 # Output
+
 ```js
 (
 @deco class Foo {}
@@ -17,8 +41,8 @@ expression: member-expression.js
 (
 @deco class {}
 ).name
-
 ```
+
 
 # Errors
 ```

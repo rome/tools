@@ -1,23 +1,39 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: readonlyReadonly.ts
 ---
+
 # Input
+
 ```js
 class C {
     readonly readonly x: number;
     constructor(readonly readonly y: number) {}
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+ class C {
+-  readonly x: number;
+-  constructor(readonly y: number) {}
++  readonly readonly x: number;
++  constructor(readonly readonly y: number) {}
+ }
 ```
 
 # Output
+
 ```js
 class C {
   readonly readonly x: number;
   constructor(readonly readonly y: number) {}
 }
-
 ```
+
 
 # Errors
 ```

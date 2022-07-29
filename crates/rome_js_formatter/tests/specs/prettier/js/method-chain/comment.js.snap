@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: comment.js
 ---
+
 # Input
+
 ```js
 function f() {
   return observableFromSubscribeFunction()
@@ -58,10 +58,87 @@ vm.runInContext(source, ctx)
 angular.module('AngularAppModule')
   // Hello, I am comment.
   .constant('API_URL', 'http://localhost:8080/api');
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,10 +1,8 @@
+ function f() {
+-  return (
+-    observableFromSubscribeFunction()
+-      // Debounce manually rather than using editor.onDidStopChanging so that the debounce time is
+-      // configurable.
+-      .debounceTime(debounceInterval)
+-  );
++  return observableFromSubscribeFunction()
++    // Debounce manually rather than using editor.onDidStopChanging so that the debounce time is
++    // configurable.
++    .debounceTime(debounceInterval);
+ }
+ 
+ _.a(a)
+@@ -22,16 +20,17 @@
+   .a();
+ 
+ Something
+-  // $FlowFixMe(>=0.41.0)
+-  .getInstance(this.props.dao)
+-  .getters();
++// $FlowFixMe(>=0.41.0)
++.getInstance(this.props.dao).getters();
+ 
+ // Warm-up first
+-measure().then(() => {
+-  SomethingLong();
+-});
++measure()
++  .then(() => {
++    SomethingLong();
++  });
+ 
+-measure() // Warm-up first
++measure()
++  // Warm-up first
+   .then(() => {
+     SomethingLong();
+   });
+@@ -41,20 +40,20 @@
+   .consolidated // global/default values (do NOT modify)
+   .merge(this.cachedWorkspaceConfig);
+ 
+-this.doWriteConfiguration(target, value, options) // queue up writes to prevent race conditions
++this.doWriteConfiguration(target, value, options)
++  // queue up writes to prevent race conditions
+   .then(
+     () => null,
+     (error) => {
+-      return options.donotNotifyError
+-        ? TPromise.wrapError(error)
+-        : this.onError(error, target, value);
++      return options.donotNotifyError ? TPromise.wrapError(
++        error,
++      ) : this.onError(error, target, value);
+     },
+   );
+ 
+-ret = __DEV__
+-  ? // $FlowFixMe: this type differs according to the env
+-    vm.runInContext(source, ctx)
+-  : a;
++ret = __DEV__ ?
++// $FlowFixMe: this type differs according to the env
++vm.runInContext(source, ctx) : a;
+ 
+ angular
+   .module("AngularAppModule")
 ```
 
 # Output
+
 ```js
 function f() {
   return observableFromSubscribeFunction()
@@ -124,8 +201,8 @@ angular
   .module("AngularAppModule")
   // Hello, I am comment.
   .constant("API_URL", "http://localhost:8080/api");
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

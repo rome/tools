@@ -1,19 +1,30 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: function-declaration-in-if.js
 ---
+
 # Input
+
 ```js
 if (false) function foo(){}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-if (false) function foo() {}
++if (false) function foo(){}
 ```
 
 # Output
+
 ```js
 if (false) function foo(){}
-
 ```
+
 
 # Errors
 ```

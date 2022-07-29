@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: multiple.js
 ---
+
 # Input
+
 ```js
 const dog = {
   @readonly
@@ -19,10 +20,44 @@ const dog = {
 const foo = {
   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,18 +1,16 @@
+ const dog = {
+-  @readonly
++
++@readonly
+   @nonenumerable
+   @doubledValue
+   legs: 4,
+ 
+-  @readonly
++@readonly
+   @nonenumerable
+   @doubledValue
+-  eyes: 2,
+-};
++eyes: 2;
++}
+ 
+ const foo = {
+-  @multipleDecorators
+-  @inline
+-  @theyWontAllFitInOneline
+-  aVeryLongPropName: "A very long string as value",
+-};
++@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
++}
 ```
 
 # Output
+
 ```js
 const dog = {
 
@@ -40,8 +75,8 @@ eyes: 2;
 const foo = {
 @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 }
-
 ```
+
 
 # Errors
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: location.ts
 ---
+
 # Input
+
 ```js
 function x({
   x,
@@ -39,10 +40,39 @@ export type WrappedFormUtils = {
     exclusive?: boolean;
   }): (node: React.ReactNode) => React.ReactNode;
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,11 @@
+-function x({
+-  x,
+-  y,
+-}: {
+-  // Hello world.
+-  x: string;
+-  // Yoyo.
+-  y: string;
+-}) {}
++function x(
++  { x, y }: {
++    // Hello world.
++    x: string;
++    // Yoyo.
++    y: string;
++  },
++) {}
+ 
+ export interface ApplicationEventData {
+   registerBroadcastReceiver(
 ```
 
 # Output
+
 ```js
 function x(
   { x, y }: {
@@ -83,8 +113,8 @@ export type WrappedFormUtils = {
     },
   ): (node: React.ReactNode) => React.ReactNode;
 };
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

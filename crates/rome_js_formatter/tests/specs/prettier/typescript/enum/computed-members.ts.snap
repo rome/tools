@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: computed-members.ts
 ---
+
 # Input
+
 ```js
 enum A {
   [i++],
@@ -17,10 +18,35 @@ const foo = () => "foo";
 enum C {
   [foo()] = 2,
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,13 +1,7 @@
+-enum A {
+-  [i++],
+-}
++enum A { [i++] }
+ 
+ const bar = "bar";
+-enum B {
+-  [bar] = 2,
+-}
++enum B { [bar] = 2 }
+ 
+ const foo = () => "foo";
+-enum C {
+-  [foo()] = 2,
+-}
++enum C { [foo()] = 2 }
 ```
 
 # Output
+
 ```js
 enum A { [i++] }
 
@@ -29,7 +55,7 @@ enum B { [bar] = 2 }
 
 const foo = () => "foo";
 enum C { [foo()] = 2 }
-
 ```
+
 
 

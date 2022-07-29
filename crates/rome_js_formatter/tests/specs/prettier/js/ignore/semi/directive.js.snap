@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: directive.js
 ---
+
 # Input
+
 ```js
 // prettier-ignore
 'use strict';
@@ -13,10 +14,26 @@ function foo() {
 'use strict';
 [].forEach();
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,6 +4,6 @@
+ 
+ function foo() {
+   // prettier-ignore
+-  'use strict';
++'use strict';
+   [].forEach();
+ }
 ```
 
 # Output
+
 ```js
 // prettier-ignore
 'use strict';
@@ -27,7 +44,7 @@ function foo() {
 'use strict';
   [].forEach();
 }
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: declare.ts
 ---
+
 # Input
+
 ```js
 declare class a  // 1
   // extends b   // 2
@@ -15,10 +16,36 @@ declare class A1<T> // 1
 // 2
 extends B<T> // 3
 {}
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,13 +1,12 @@
+ declare class a // 1
+   // extends b   // 2
+-  implements z, x
++  implements
++    z,
++    x // 3
+ {
+-  // 3
+   doo: boolean;
+ }
+ 
+ declare class A1<T> // 1
+   // 2
+-  extends B<T> {
+-  // 3
+-}
++  extends B<T> {} // 3
 ```
 
 # Output
+
 ```js
 declare class a // 1
   // extends b   // 2
@@ -32,7 +59,7 @@ declare class a // 1
 declare class A1<T> // 1
   // 2
   extends B<T> {} // 3
-
 ```
+
 
 

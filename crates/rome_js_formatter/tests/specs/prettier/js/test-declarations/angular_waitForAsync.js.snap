@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: angular_waitForAsync.js
 ---
+
 # Input
+
 ```js
 beforeEach(waitForAsync(() => {
   // code
@@ -29,10 +29,79 @@ it("does something really long and complicated so I have to write a very long na
 * no errors are thrown when calling isTestCall(parent)
 */
 function x() { waitForAsync(() => {}) }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,27 +1,42 @@
+-beforeEach(waitForAsync(() => {
+-  // code
+-}));
++beforeEach(
++  waitForAsync(() => {
++    // code
++  }),
++);
+ 
+-afterAll(waitForAsync(() => {
+-  console.log("Hello");
+-}));
++afterAll(
++  waitForAsync(() => {
++    console.log("Hello");
++  }),
++);
+ 
+-it("should create the app", waitForAsync(() => {
+-  //code
+-}));
++it(
++  "should create the app",
++  waitForAsync(() => {
++    //code
++  }),
++);
+ 
+-it("does something really long and complicated so I have to write a very long name for the test", waitForAsync(() => {
+-  // code
+-}));
++it(
++  "does something really long and complicated so I have to write a very long name for the test",
++  waitForAsync(() => {
++    // code
++  }),
++);
+ 
+-it("does something really long and complicated so I have to write a very long name for the test", waitForAsync(() =>
+-  new SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS()));
++it(
++  "does something really long and complicated so I have to write a very long name for the test",
++  waitForAsync(
++    () =>
++      new SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS(),
++  ),
++);
+ 
+ /*
+- * isTestCall(parent) should only be called when parent exists
+- * and parent.type is CallExpression. This test makes sure that
+- * no errors are thrown when calling isTestCall(parent)
+- */
++* isTestCall(parent) should only be called when parent exists
++* and parent.type is CallExpression. This test makes sure that
++* no errors are thrown when calling isTestCall(parent)
++*/
+ function x() {
+   waitForAsync(() => {});
+ }
 ```
 
 # Output
+
 ```js
 beforeEach(
   waitForAsync(() => {
@@ -76,8 +145,8 @@ it(
 function x() {
   waitForAsync(() => {});
 }
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

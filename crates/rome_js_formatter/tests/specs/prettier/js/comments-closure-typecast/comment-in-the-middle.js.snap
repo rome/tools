@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment-in-the-middle.js
 ---
+
 # Input
+
 ```js
 var a =
 /**
@@ -15,10 +16,37 @@ var a =
 //2
  ((window['s'])).toString();
 console.log(a.foo());
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,11 +1,11 @@
+ var a =
+   /**
+-   * bla bla bla
+-   * @type {string |
+-   * number
+-   * }
+-   * bla bla bla
+-   */
++ * bla bla bla
++ * @type {string |
++  * number
++ * }
++* bla bla bla
++ */
+   //2
+-  (window["s"]).toString();
++  ((window["s"])).toString();
+ console.log(a.foo());
 ```
 
 # Output
+
 ```js
 var a =
   /**
@@ -31,7 +59,7 @@ var a =
   //2
   ((window["s"])).toString();
 console.log(a.foo());
-
 ```
+
 
 

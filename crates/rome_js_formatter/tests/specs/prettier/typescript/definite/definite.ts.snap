@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: definite.ts
 ---
+
 # Input
+
 ```js
 class MyComponent {
 ngModel!: ng.INgModelController;
@@ -11,10 +12,26 @@ ngModel!: ng.INgModelController;
 const x!: string = '';
 
 var y!: MyComponent
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,6 @@
+   ngModel!: ng.INgModelController;
+ }
+ 
+-const x!: string = "";
++const x!: string = '';
+ 
+ var y!: MyComponent;
 ```
 
 # Output
+
 ```js
 class MyComponent {
   ngModel!: ng.INgModelController;
@@ -23,8 +40,8 @@ class MyComponent {
 const x!: string = '';
 
 var y!: MyComponent;
-
 ```
+
 
 # Errors
 ```

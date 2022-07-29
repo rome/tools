@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: do.js
 ---
+
 # Input
+
 ```js
 const envSpecific = {
   domain:
@@ -58,10 +59,112 @@ function foo() {
     obj[key];
   }
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,55 +1,61 @@
+ const envSpecific = {
+-  domain: do {
+-    if (env === "production") "https://abc.mno.com/";
+-    else if (env === "development") "http://localhost:4000";
+-  },
+-};
++  domain:
++    do {
++      if(env === 'production') 'https://abc.mno.com/';
++else
++if (env === "development") "http://localhost:4000";
++}
++}
+ 
+-let x = do {
++let x =
++do {
+   let tmp = f();
+-  tmp * tmp + 1;
++  tmp * tmp + 1
+ };
+ 
+-let y = do {
+-  if (foo()) {
+-    f();
+-  } else if (bar()) {
+-    g();
+-  } else {
+-    h();
+-  }
++let y =
++do {
++  if (foo()) { f() }
++  else if (bar()) { g() }
++  else { h() }
+ };
+ 
+ function foo() {
+   return (
+     <nav>
+       <Home />
+-      {do {
+-        if (loggedIn) {
+-          <LogoutButton />;
+-        } else {
+-          <LoginButton />;
++      {
++        do {
++          if (loggedIn) {
++            <LogoutButton />
++          } else {
++            <LoginButton />
++          }
+         }
+-      }}
++      }
+     </nav>
+   );
+ }
+ 
+-(do {});
+-(do {} + 1);
+-1 + do {};
+-() => do {};
++(
++do {});
++(
++do {} + 1);
++(1 +
++do {});
++() =>
++do {};
+ 
+-(do {
+-  switch (0) {
+-    case 0:
+-      "foo";
+-    case 1:
+-      break;
++(
++do {
++  switch(0) {
++    case 0: "foo";
++    case 1: break;
+   }
+ });
+ 
+-() => do {
++() =>
++do {
+   var obj = { foo: "bar", bar: "foo" };
+   for (var key in obj) {
+     obj[key];
 ```
 
 # Output
+
 ```js
 const envSpecific = {
   domain:
@@ -126,8 +229,8 @@ do {
     obj[key];
   }
 };
-
 ```
+
 
 # Errors
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment-inside.js
 ---
+
 # Input
+
 ```js
 // #9274
 html`
@@ -65,10 +66,104 @@ expr1 = html`
         bar
       )}</div>
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,9 +2,9 @@
+ html`
+   <div>
+     ${
+-      this.set && this.set.artist
+-      /* avoid console errors if `this.set` is undefined */
+-    }
++  this.set && this.set.artist
++  /* avoid console errors if `this.set` is undefined */
++}
+   </div>
+ `;
+ 
+@@ -13,36 +13,32 @@
+   /* comment */
+ }`;
+ html`
+-  ${
+-    foo
+-    /* comment */
+-  }
++${
++  foo
++  /* comment */
++}
+ `;
+ 
+-graphql`
+-  ${
+-    foo
+-    /* comment */
+-  }
+-`;
++graphql`${
++  foo
++  /* comment */
++}`;
+ graphql`
+-  ${
+-    foo
+-    /* comment */
+-  }
++${
++  foo
++  /* comment */
++}
+ `;
+ 
+-css`
+-  ${
+-    foo
+-    /* comment */
+-  }
+-`;
++css`${
++  foo
++  /* comment */
++}`;
+ css`
+-  ${
+-    foo
+-    /* comment */
+-  }
++${
++  foo
++  /* comment */
++}
+ `;
+ 
+ markdown`${
+@@ -59,9 +55,10 @@
+ // https://github.com/prettier/prettier/pull/9278#issuecomment-700589195
+ expr1 = html`
+   <div>
+-    ${x(
+-      foo, // fg
+-      bar,
+-    )}
+-  </div>
++    ${
++  x(
++    foo, // fg
++    bar,
++  )
++}</div>
+ `;
 ```
 
 # Output
+
 ```js
 // #9274
 html`
@@ -134,7 +229,7 @@ expr1 = html`
   )
 }</div>
 `;
-
 ```
+
 
 

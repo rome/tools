@@ -1,20 +1,33 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: new.ts
 ---
+
 # Input
+
 ```js
 // new
 new A<T>;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,2 +1,2 @@
+ // new
+-new A<T>();
++new A<T>;
 ```
 
 # Output
+
 ```js
 // new
 new A<T>;
-
 ```
+
 
 # Errors
 ```

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: object-with-comment.js
 ---
+
 # Input
+
 ```js
 const objectWithComment = /** @type MyType */ (
   /* comment */
@@ -15,10 +16,28 @@ const objectWithComment2 = /** @type MyType */ (  /* comment */  {
     foo: bar
   }
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,7 +6,8 @@
+ );
+ 
+ const objectWithComment2 = /** @type MyType */ (
+-  /* comment */ {
++  /* comment */
++  {
+     foo: bar,
+   }
+ );
 ```
 
 # Output
+
 ```js
 const objectWithComment = /** @type MyType */ (
   /* comment */
@@ -33,7 +52,7 @@ const objectWithComment2 = /** @type MyType */ (
     foo: bar,
   }
 );
-
 ```
+
 
 

@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: issue-10846.ts
 ---
+
 # Input
+
 ```js
 const foo = call<{
   prop1: string;
@@ -43,10 +43,56 @@ const foo =
       Foooooooooooo &
       Foooooooooooo
   >();
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,18 +1,24 @@
+-const foo = call<{
+-  prop1: string;
+-  prop2: string;
+-  prop3: string;
+-}>();
++const foo = call<
++  {
++    prop1: string;
++    prop2: string;
++    prop3: string;
++  }
++>();
+ 
+-export const CallRecorderContext = createContext<{
+-  deleteRecording: (id: string) => void;
+-  deleteAll: () => void;
+-} | null>(null);
++export const CallRecorderContext = createContext<
++  | {
++    deleteRecording: (id: string) => void;
++    deleteAll: () => void;
++  }
++  | null>(null);
+ 
+-export const CallRecorderContext = createContext<{
+-  deleteRecording: (id: string) => void;
+-  deleteAll: () => void;
+-} | null>(null, "useless");
++export const CallRecorderContext = createContext<
++  | {
++    deleteRecording: (id: string) => void;
++    deleteAll: () => void;
++  }
++  | null>(null, "useless");
+ 
+ const foo = call<
+   Foooooo,
 ```
 
 # Output
+
 ```js
 const foo = call<
   {
@@ -87,7 +133,7 @@ const foo = call<
 const foo = call<
   Foooooooooooo & Foooooooooooo & Foooooooooooo & Foooooooooooo & Foooooooooooo
 >();
-
 ```
+
 
 

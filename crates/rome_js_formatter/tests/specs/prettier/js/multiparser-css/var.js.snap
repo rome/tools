@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: var.js
 ---
+
 # Input
+
 ```js
 const Something = styled.div`
   background: var(--${one}); /* ... */
@@ -30,10 +31,43 @@ const v2 = css`
 export const StyledComponent = styled.div`
   grid-area:  area-${props => props.propName};
 `
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -10,17 +10,17 @@
+ `;
+ 
+ const v1 = css`
+-  prop: var(--global--color--${props.variant});
++prop: var(--global--color--${props.variant});
+ `;
+ 
+ const v2 = css`
+-  background-color: var(--global--color--${props.variant});
++        background-color: var(--global--color--${props.variant});
+ 
+-  &:hover {
+-    background-color: var(--global--color--${props.variant}__one);
+-  }
+-`;
++        &:hover {
++          background-color: var(--global--color--${props.variant}__one);
++        }
++      `;
+ 
+ export const StyledComponent = styled.div`
+-  grid-area: area-${(props) => props.propName};
++  grid-area:  area-${(props) => props.propName};
+ `;
 ```
 
 # Output
+
 ```js
 const Something = styled.div`
   background: var(--${one}); /* ... */
@@ -61,7 +95,7 @@ const v2 = css`
 export const StyledComponent = styled.div`
   grid-area:  area-${(props) => props.propName};
 `;
-
 ```
+
 
 

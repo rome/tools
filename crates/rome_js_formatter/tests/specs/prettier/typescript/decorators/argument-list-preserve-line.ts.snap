@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: argument-list-preserve-line.ts
 ---
+
 # Input
+
 ```js
 class Foo {
     constructor(
@@ -17,10 +18,29 @@ class Foo {
         private readonly anotherThing: IAnotherThing | undefined,
     ) { }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,10 +2,8 @@
+   constructor(
+     @inject(Bar)
+     private readonly bar: IBar,
+-
+     @inject(MyProcessor)
+     private readonly myProcessor: IMyProcessor,
+-
+     @inject(InjectionTypes.AnotherThing)
+     private readonly anotherThing: IAnotherThing | undefined,
+   ) {}
 ```
 
 # Output
+
 ```js
 class Foo {
   constructor(
@@ -32,7 +52,7 @@ class Foo {
     private readonly anotherThing: IAnotherThing | undefined,
   ) {}
 }
-
 ```
+
 
 

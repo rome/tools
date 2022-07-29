@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: parenthesized.ts
 ---
+
 # Input
+
 ```js
 // https://github.com/babel/babel/pull/12933/files
 (<number>x) = null;
@@ -10,10 +11,27 @@ expression: parenthesized.ts
 (a as any) = null;
 (a as number) = 42;
 ((a as any) as string) = null;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,6 @@
+ // https://github.com/babel/babel/pull/12933/files
+ (<number>x) = null;
+-x! = null;
++(x!) = null;
+ (a as any) = null;
+ (a as number) = 42;
+-(a as any as string) = null;
++((a as any) as string) = null;
 ```
 
 # Output
+
 ```js
 // https://github.com/babel/babel/pull/12933/files
 (<number>x) = null;
@@ -21,7 +39,7 @@ expression: parenthesized.ts
 (a as any) = null;
 (a as number) = 42;
 ((a as any) as string) = null;
-
 ```
+
 
 

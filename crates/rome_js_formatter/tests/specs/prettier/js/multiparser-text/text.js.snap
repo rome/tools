@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: text.js
 ---
+
 # Input
+
 ```js
 a = {
   viewer: graphql`
@@ -15,10 +16,33 @@ a = {
     }
   `,
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,11 +1,9 @@
+ a = {
+   viewer: graphql`
+     fragment x on Viewer {
+-      y(
+-        named: [
+-          "projects_feedback_ids" # PROJECTS_FEEDBACK_IDS
+-        ]
+-      ) {
++      y(named: [
++        "projects_feedback_ids" # PROJECTS_FEEDBACK_IDS
++      ]) {
+         name
+       }
+     }
 ```
 
 # Output
+
 ```js
 a = {
   viewer: graphql`
@@ -31,7 +55,7 @@ a = {
     }
   `,
 };
-
 ```
+
 
 

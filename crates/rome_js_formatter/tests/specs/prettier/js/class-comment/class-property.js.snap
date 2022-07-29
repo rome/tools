@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: class-property.js
 ---
+
 # Input
+
 ```js
 class X {
   TEMPLATE =
@@ -12,10 +12,27 @@ class X {
     '<div class="ag-large-textarea"></div>' +
     '</div>';
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,6 @@
+   TEMPLATE =
+     // tab index is needed so we can focus, which is needed for keyboard events
+     '<div class="ag-large-text" tabindex="0">' +
+-    '<div class="ag-large-textarea"></div>' +
+-    "</div>";
++      '<div class="ag-large-textarea"></div>' +
++      "</div>";
+ }
 ```
 
 # Output
+
 ```js
 class X {
   TEMPLATE =
@@ -24,7 +41,7 @@ class X {
       '<div class="ag-large-textarea"></div>' +
       "</div>";
 }
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: indent.js
 ---
+
 # Input
+
 ```js
 `
 Mixed tabs and spaces:
@@ -20,10 +21,74 @@ Tabs:
 	${() => {a}}
 		${() => {a}}
 `
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,35 +4,35 @@
+   a;
+ }}
+  	${() => {
+-    a;
+-  }}
++  a;
++}}
+   	${() => {
+-      a;
+-    }}
++  a;
++}}
+    	${() => {
+-      a;
+-    }}
++  a;
++}}
+     	${() => {
+-        a;
+-      }}
++  a;
++}}
+      	${() => {
+-        a;
+-      }}
++  a;
++}}
+       	${() => {
+-          a;
+-        }}
++  a;
++}}
+        	${() => {
+-          a;
+-        }}
++  a;
++}}
+         	${() => {
+-            a;
+-          }}
++  a;
++}}
+ 
+ Tabs:
+ 	${() => {
+-    a;
+-  }}
++  a;
++}}
+ 		${() => {
+-      a;
+-    }}
++  a;
++}}
+ `;
 ```
 
 # Output
+
 ```js
 `
 Mixed tabs and spaces:
@@ -63,7 +128,7 @@ Tabs:
   a;
 }}
 `;
-
 ```
+
 
 

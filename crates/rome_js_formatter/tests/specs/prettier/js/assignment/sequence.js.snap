@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: sequence.js
 ---
+
 # Input
+
 ```js
 for ((i = 0), (len = arr.length); i < len; i++) {
   console.log(arr[i])
@@ -11,10 +12,24 @@ for ((i = 0), (len = arr.length); i < len; i++) {
 for (i = 0, len = arr.length; i < len; i++) {
   console.log(arr[i])
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-for (i = 0, len = arr.length; i < len; i++) {
++for ((i = 0), (len = arr.length); i < len; i++) {
+   console.log(arr[i]);
+ }
+ 
 ```
 
 # Output
+
 ```js
 for ((i = 0), (len = arr.length); i < len; i++) {
   console.log(arr[i]);
@@ -23,7 +38,7 @@ for ((i = 0), (len = arr.length); i < len; i++) {
 for (i = 0, len = arr.length; i < len; i++) {
   console.log(arr[i]);
 }
-
 ```
+
 
 

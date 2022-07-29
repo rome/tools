@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: pipeline-operator-fsharp.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
 // https://github.com/valtech-nyc/proposal-fsharp-pipelines
@@ -38,10 +39,59 @@ newScore //=> 57
 
 // As opposed to:
 let newScore = boundScore(0, 100, add(7, double(person.score)));
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -3,25 +3,32 @@
+ 
+ promise
+   |> await
+-  |> (x) => doubleSay(x, ", ")
++  |> x
++=> doubleSay(x, ', ')
+   |> capitalize
+-  |> (x) => x + "!"
+-  |> (x) => new User.Message(x)
+-  |> (x) => stream.write(x)
++  |> x => x + '!'
++  |> x => new User.Message(x)
++  |> x => stream.write(x)
+   |> await
+-  |> console.log;
++  |> console.log
+ 
+ const result = exclaim(capitalize(doubleSay("hello")));
+ result; //=> "Hello, hello!"
+ 
+-const result = "hello" |> doubleSay |> capitalize |> exclaim;
++const result = "hello"
++  |> doubleSay
++  |> capitalize
++  |> exclaim;
+ 
+ result; //=> "Hello, hello!"
+ 
+ const person = { score: 25 };
+ 
+-const newScore =
+-  person.score |> double |> (n) => add(7, n) |> (n) => boundScore(0, 100, n);
++const newScore = person.score
++  |> double
++  |> n
++=> add(7, n)
++  |> n => boundScore(0, 100, n)
+ 
+ newScore; //=> 57
+ 
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
 // https://github.com/valtech-nyc/proposal-fsharp-pipelines
@@ -79,8 +129,8 @@ newScore; //=> 57
 
 // As opposed to:
 let newScore = boundScore(0, 100, add(7, double(person.score)));
-
 ```
+
 
 # Errors
 ```

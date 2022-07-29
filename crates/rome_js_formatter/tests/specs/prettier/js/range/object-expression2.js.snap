@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: object-expression2.js
 ---
+
 # Input
+
 ```js
 
 const y =       [
@@ -14,10 +15,23 @@ const y =       [
               b:2
     },
 ]
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,4 @@
++
+ const y = [
+   {
+     a: 1,
 ```
 
 # Output
+
 ```js
 
 const y = [
@@ -29,7 +43,7 @@ const y = [
     b: 2,
   },
 ];
-
 ```
+
 
 

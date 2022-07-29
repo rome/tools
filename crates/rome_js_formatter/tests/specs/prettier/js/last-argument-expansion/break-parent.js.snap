@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: break-parent.js
 ---
+
 # Input
+
 ```js
 ({
   processors: [
@@ -30,10 +30,33 @@ true
       f={123412341234}
       g={123412341234}
     />;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -10,11 +10,9 @@
+   ],
+ });
+ 
+-true ? (
+-  test({
+-    a: 1,
+-  })
+-) : (
++true ? test({
++  a: 1,
++}) : (
+   <div
+     a={123412342314}
+     b={123412341234}
 ```
 
 # Output
+
 ```js
 ({
   processors: [
@@ -60,7 +83,7 @@ true ? test({
     g={123412341234}
   />
 );
-
 ```
+
 
 

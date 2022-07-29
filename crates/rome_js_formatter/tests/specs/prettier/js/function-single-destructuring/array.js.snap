@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: array.js
 ---
+
 # Input
+
 ```js
 function excludeFirstFiveResults([first, second, third, fourth, fifth, ...rest]) {
   return rest;
@@ -30,10 +30,98 @@ class A {
 promise.then(([firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest]) => {
   return rest;
 });
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,22 +1,12 @@
+-function excludeFirstFiveResults([
+-  first,
+-  second,
+-  third,
+-  fourth,
+-  fifth,
+-  ...rest
+-]) {
++function excludeFirstFiveResults(
++  [first, second, third, fourth, fifth, ...rest],
++) {
+   return rest;
+ }
+ 
+-function excludeFirstFiveResults2([
+-  first,
+-  second,
+-  third,
+-  fourth,
+-  fifth,
+-  ...rest
+-] = DEFAULT_FIVE_RESULTS) {
++function excludeFirstFiveResults2(
++  [first, second, third, fourth, fifth, ...rest] = DEFAULT_FIVE_RESULTS,
++) {
+   return rest;
+ }
+ 
+@@ -33,39 +23,22 @@
+   return rest;
+ }
+ 
+-const excludeFirstFiveResults5 = ([
+-  first,
+-  second,
+-  third,
+-  fourth,
+-  fifth,
+-  ...rest
+-]) => {
++const excludeFirstFiveResults5 = (
++  [first, second, third, fourth, fifth, ...rest],
++) => {
+   return rest;
+ };
+ 
+ class A {
+-  excludeFirstFiveResults([
+-    first,
+-    second,
+-    third,
+-    fourth,
+-    fifth,
+-    ...restOfResults
+-  ]) {
++  excludeFirstFiveResults(
++    [first, second, third, fourth, fifth, ...restOfResults],
++  ) {
+     return restOfResults;
+   }
+ }
+ 
+-promise.then(
+-  ([
+-    firstResult,
+-    secondResult,
+-    thirdResult,
+-    fourthResult,
+-    fifthResult,
+-    ...rest
+-  ]) => {
+-    return rest;
+-  },
+-);
++promise.then((
++  [firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest],
++) => {
++  return rest;
++});
 ```
 
 # Output
+
 ```js
 function excludeFirstFiveResults(
   [first, second, third, fourth, fifth, ...rest],
@@ -79,7 +167,7 @@ promise.then((
 ) => {
   return rest;
 });
-
 ```
+
 
 

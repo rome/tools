@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: short_name_method.js
 ---
+
 # Input
+
 ```js
 class X {
   constructor() {
@@ -12,10 +13,27 @@ class X {
   shortMethod() {
     return true;
   }
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,7 @@
+ class X {
+   constructor() {
+-    this.shortMethod = ::this.shortMethod;
++    this.shortMethod =
++    ::this.shortMethod
+   }
+ 
+   shortMethod() {
 ```
 
 # Output
+
 ```js
 class X {
   constructor() {
@@ -27,8 +45,8 @@ class X {
     return true;
   }
 }
-
 ```
+
 
 # Errors
 ```

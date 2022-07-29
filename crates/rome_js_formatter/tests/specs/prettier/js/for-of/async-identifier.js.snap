@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: async-identifier.js
 ---
+
 # Input
+
 ```js
 for ((async) of []);
 for ((foo) of async);
@@ -14,10 +15,34 @@ async function f() {
   for await ((foo) of async);
   for await ((foo) of []) async;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,10 +1,10 @@
+ for ((async) of []);
+-for (foo of async);
+-for (foo of []) async;
++for ((foo) of async);
++for ((foo) of []) async;
+ 
+ async function f() {
+   for await (async of []);
+-  for await (async of []);
+-  for await (foo of async);
+-  for await (foo of []) async;
++  for await ((async) of []);
++  for await ((foo) of async);
++  for await ((foo) of []) async;
+ }
 ```
 
 # Output
+
 ```js
 for ((async) of []);
 for ((foo) of async);
@@ -29,7 +54,7 @@ async function f() {
   for await ((foo) of async);
   for await ((foo) of []) async;
 }
-
 ```
+
 
 

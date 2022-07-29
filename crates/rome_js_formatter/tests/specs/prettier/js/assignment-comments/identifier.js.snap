@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: identifier.js
 ---
+
 # Input
+
 ```js
 const kochabCooieGameOnOboleUnweave = // ???
       annularCooeedSplicesWalksWayWay;
@@ -11,10 +12,31 @@ const bifornCringerMoshedPerplexSawder = // !!!
   glimseGlyphsHazardNoopsTieTie +
   averredBathersBoxroomBuggyNurl -
   anodyneCondosMalateOverateRetinol;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,7 @@
+-const kochabCooieGameOnOboleUnweave = // ???
++const kochabCooieGameOnOboleUnweave =
++  // ???
+   annularCooeedSplicesWalksWayWay;
+ 
+-const bifornCringerMoshedPerplexSawder = // !!!
+-  glimseGlyphsHazardNoopsTieTie +
+-  averredBathersBoxroomBuggyNurl -
+-  anodyneCondosMalateOverateRetinol;
++const bifornCringerMoshedPerplexSawder =
++  // !!!
++  glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol;
 ```
 
 # Output
+
 ```js
 const kochabCooieGameOnOboleUnweave =
   // ???
@@ -23,8 +45,8 @@ const kochabCooieGameOnOboleUnweave =
 const bifornCringerMoshedPerplexSawder =
   // !!!
   glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol;
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

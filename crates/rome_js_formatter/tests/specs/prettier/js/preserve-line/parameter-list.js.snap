@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 184
-expression: parameter-list.js
 ---
+
 # Input
+
 ```js
 class Foo {
   constructor(
@@ -156,10 +156,141 @@ it(
     console.log("hello!");
   }
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,104 +1,54 @@
+ class Foo {
+   constructor(
+     one,
+-
+     two,
+     three,
+     four,
+-
+     five,
+     six,
+     seven,
+     eight,
+     nine,
+     ten,
+-
+     eleven,
+   ) {}
+ }
+ 
+ function foo(
+   one,
+-
+   two,
+   three,
+   four,
+-
+   five,
+   six,
+   seven,
+   eight,
+   nine,
+   ten,
+-
+   eleven,
+ ) {}
+ 
+ call((a, b) => {});
+ 
+ call((one, two, three, four, five, six, seven, eight, nine, ten, eleven) => {});
+-
+-call(
+-  (
+-    one,
+-
+-    two,
+-    three,
+-    four,
+ 
+-    five,
+-    six,
+-    seven,
+-    eight,
+-    nine,
+-    ten,
+-
+-    eleven,
+-  ) => {},
+-);
+-
+-function test({
+-  one,
+-
+-  two,
+-  three,
+-  four,
+-
+-  five,
+-  six,
+-  seven,
+-  eight,
+-  nine,
+-  ten,
++call((one, two, three, four, five, six, seven, eight, nine, ten, eleven) => {});
+ 
+-  eleven,
+-}) {}
++function test(
++  { one, two, three, four, five, six, seven, eight, nine, ten, eleven },
++) {}
+ 
+ function test({ one, two, three, four }) {}
+ 
+-function test({
+-  one,
++function test({ one, two, three, four }) {}
+ 
+-  two,
+-  three,
+-  four,
+-}) {}
++function test({ one, two, three, four }, $a) {}
+ 
+ function test({ one, two, three, four }, $a) {}
+ 
+-function test(
+-  { one, two, three, four },
+-
+-  $a,
+-) {}
+-
+ function foo(...rest) {}
+-
+-function foo(
+-  one,
+ 
+-  ...rest
+-) {}
++function foo(one, ...rest) {}
+ 
+ function foo(one, ...rest) {}
+ 
+@@ -107,6 +57,9 @@
+   ...args,
+ );
+ 
+-it("does something really long and complicated so I have to write a very long name for the test", function (done, foo) {
++it("does something really long and complicated so I have to write a very long name for the test", function (
++  done,
++  foo,
++) {
+   console.log("hello!");
+ });
 ```
 
 # Output
+
 ```js
 class Foo {
   constructor(
@@ -226,8 +357,8 @@ it("does something really long and complicated so I have to write a very long na
 ) {
   console.log("hello!");
 });
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

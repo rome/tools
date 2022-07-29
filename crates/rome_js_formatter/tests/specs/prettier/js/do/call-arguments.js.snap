@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: call-arguments.js
 ---
+
 # Input
+
 ```js
 // from https://github.com/babel/babel/pull/13122/
 expect(
@@ -45,10 +46,77 @@ expect(
     bar;
   }
 ).toThrow(ReferenceError);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,24 +1,36 @@
+ // from https://github.com/babel/babel/pull/13122/
+-expect(do {
+-  var bar = "foo";
+-  if (!bar) throw new Error("unreachable");
+-  bar;
+-}).toBe("foo");
++expect(
++do {
++    var bar = "foo";
++    if (!bar) throw new Error(
++      "unreachable"
++    )
++    bar;
++  }
++)
++.toBe("foo")
+ expect(bar).toBe("foo");
+ 
+-var x = do {
++var x =
++do {
+   var bar = "foo";
+-  if (!bar) throw new Error("unreachable");
++  if (!bar) throw new Error(
++    "unreachable"
++  )
+   bar;
+ };
+ 
+-expect(do {
+-  var bar = "foo";
+-  bar;
+-}).toBe("foo");
++expect(
++do {
++    var bar = "foo";
++    bar;
++  }
++)
++.toBe("foo")
+ expect(bar).toBe("foo");
+ 
+-var x = do {
++var x =
++do {
+   var bar = "foo";
+   bar;
+ };
+@@ -28,6 +40,6 @@
+     () => {
+       var bar = "foo";
+     };
+-    bar;
+-  },
+-).toThrow(ReferenceError);
++bar;
++}
++).toThrow(ReferenceError)
 ```
 
 # Output
+
 ```js
 // from https://github.com/babel/babel/pull/13122/
 expect(
@@ -95,8 +163,8 @@ expect(
 bar;
 }
 ).toThrow(ReferenceError)
-
 ```
+
 
 # Errors
 ```

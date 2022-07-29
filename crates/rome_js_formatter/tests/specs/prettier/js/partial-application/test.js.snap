@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: test.js
 ---
+
 # Input
+
 ```js
 const addOne = add(1, ?); // apply from the left
 addOne(2); // 3
@@ -14,10 +15,26 @@ addTen(2); // 12
 let newScore = player.score
   |> add(7, ?)
   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,4 +5,6 @@
+ addTen(2); // 12
+ 
+ // with pipeline
+-let newScore = player.score |> add(7, ?) |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
++let newScore = player.score
++  |> add(7, ?)
++  |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
 ```
 
 # Output
+
 ```js
 const addOne = add(1, ?); // apply from the left
 addOne(2); // 3
@@ -29,8 +46,8 @@ addTen(2); // 12
 let newScore = player.score
   |> add(7, ?)
   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-
 ```
+
 
 # Errors
 ```

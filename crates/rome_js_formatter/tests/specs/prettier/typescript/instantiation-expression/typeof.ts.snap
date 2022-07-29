@@ -1,19 +1,32 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: typeof.ts
 ---
+
 # Input
+
 ```js
 let x: typeof y.z<w>;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1,2 @@
+-let x: typeof y.z<w>;
++let x: typeof y.z;
++<w>;
 ```
 
 # Output
+
 ```js
 let x: typeof y.z;
 <w>;
-
 ```
+
 
 # Errors
 ```

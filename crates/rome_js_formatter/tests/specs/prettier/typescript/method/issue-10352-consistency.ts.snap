@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-10352-consistency.ts
 ---
+
 # Input
+
 ```js
 export interface Store {
   getRecord(collectionName: string, documentPath: string): TaskEither<Error, Option<GenericRecord>>;
@@ -20,10 +21,53 @@ export function loadPlugin(
 ): { filepath: string, value: mixed } {
   // ...
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,22 +1,22 @@
+ export interface Store {
+-  getRecord(
+-    collectionName: string,
+-    documentPath: string,
+-  ): TaskEither<Error, Option<GenericRecord>>;
++  getRecord(collectionName: string, documentPath: string): TaskEither<
++    Error,
++    Option<GenericRecord>
++  >;
+ }
+ 
+ export default class StoreImpl extends Service implements Store {
+-  getRecord(
+-    collectionName: string,
+-    documentPath: string,
+-  ): TaskEither<Error, Option<GenericRecord>> {
++  getRecord(collectionName: string, documentPath: string): TaskEither<
++    Error,
++    Option<GenericRecord>
++  > {
+     // Do some stuff.
+   }
+ }
+ 
+-export function loadPlugin(
+-  name: string,
+-  dirname: string,
+-): { filepath: string; value: mixed } {
++export function loadPlugin(name: string, dirname: string): {
++  filepath: string;
++  value: mixed;
++} {
+   // ...
+ }
 ```
 
 # Output
+
 ```js
 export interface Store {
   getRecord(collectionName: string, documentPath: string): TaskEither<
@@ -47,7 +91,7 @@ export function loadPlugin(name: string, dirname: string): {
 } {
   // ...
 }
-
 ```
+
 
 

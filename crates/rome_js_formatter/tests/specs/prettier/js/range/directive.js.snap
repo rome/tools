@@ -1,19 +1,32 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: directive.js
 ---
+
 # Input
+
 ```js
 'aaa';
 'bbb';
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,2 +1,2 @@
+ "aaa";
+-"bbb";
++'bbb';
 ```
 
 # Output
+
 ```js
 "aaa";
 'bbb';
-
 ```
+
 
 

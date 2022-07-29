@@ -1,19 +1,32 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: record-tuple-tuple.js
 ---
+
 # Input
+
 ```js
 const tuple1 = #[1, 2, 3];
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1,2 @@
+-const tuple1 = #[1, 2, 3];
++const tuple1 = #;
++[1, 2, 3];
 ```
 
 # Output
+
 ```js
 const tuple1 = #;
 [1, 2, 3];
-
 ```
+
 
 # Errors
 ```

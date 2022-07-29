@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: await-parse.js
 ---
+
 # Input
+
 ```js
 async function f1() { (await f()).length }
 async function g() {
@@ -20,10 +21,27 @@ async () => {
   new A(await x);
   obj[await x];
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -8,7 +8,7 @@
+   !(yield a);
+ }
+ async function f3() {
+-  a = !(await f());
++  a = !await f();
+ }
+ async () => {
+   new A(await x);
 ```
 
 # Output
+
 ```js
 async function f1() {
   (await f()).length;
@@ -41,7 +59,7 @@ async () => {
   new A(await x);
   obj[await x];
 };
-
 ```
+
 
 

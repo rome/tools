@@ -1,18 +1,35 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-1966.js
 ---
+
 # Input
+
 ```js
 const aVeryLongNameThatGoesOnAndOn = this.someOtherObject.someOtherNestedObject.someLongFunctionName();
 
 this.someObject.someOtherNestedObject = this.someOtherObject.whyNotNestAnotherOne.someLongFunctionName();
 
 this.isaverylongmethodexpression.withmultiplelevels = this.isanotherverylongexpression.thatisalsoassigned = 0;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,5 +4,5 @@
+ this.someObject.someOtherNestedObject =
+   this.someOtherObject.whyNotNestAnotherOne.someLongFunctionName();
+ 
+-this.isaverylongmethodexpression.withmultiplelevels =
+-  this.isanotherverylongexpression.thatisalsoassigned = 0;
++this.isaverylongmethodexpression.withmultiplelevels = this
++  .isanotherverylongexpression.thatisalsoassigned = 0;
 ```
 
 # Output
+
 ```js
 const aVeryLongNameThatGoesOnAndOn =
   this.someOtherObject.someOtherNestedObject.someLongFunctionName();
@@ -22,7 +39,7 @@ this.someObject.someOtherNestedObject =
 
 this.isaverylongmethodexpression.withmultiplelevels = this
   .isanotherverylongexpression.thatisalsoassigned = 0;
-
 ```
+
 
 

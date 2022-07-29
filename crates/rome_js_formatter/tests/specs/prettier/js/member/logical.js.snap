@@ -1,16 +1,34 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: logical.js
 ---
+
 # Input
+
 ```js
 (veryLongVeryLongVeryLong || e).prop;
 
 (veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError).prop;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,6 @@
+ 
+ (
+   veryLongVeryLongVeryLong ||
+-  anotherVeryLongVeryLongVeryLong ||
+-  veryVeryVeryLongError
++    anotherVeryLongVeryLongVeryLong ||
++    veryVeryVeryLongError
+ ).prop;
 ```
 
 # Output
+
 ```js
 (veryLongVeryLongVeryLong || e).prop;
 
@@ -19,7 +37,7 @@ expression: logical.js
     anotherVeryLongVeryLongVeryLong ||
     veryVeryVeryLongError
 ).prop;
-
 ```
+
 
 

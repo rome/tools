@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: simple-types.ts
 ---
+
 # Input
+
 ```js
 const foo1: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<any> = a;
 const foo2: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<null> = a;
@@ -17,10 +17,28 @@ const foo9: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 const foo10: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0> = a;
 const foo11: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0xDeeD_Beef> = a;
 const foo12: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0xDeeD_Beefn> = a;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -18,7 +18,7 @@
+   a;
+ const foo10: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0> =
+   a;
+-const foo11: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0xdeed_beef> =
++const foo11: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0xDeeD_Beef> =
+   a;
+-const foo12: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0xdeed_beefn> =
++const foo12: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0xDeeD_Beefn> =
+   a;
 ```
 
 # Output
+
 ```js
 const foo1: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<any> =
   a;
@@ -46,8 +64,8 @@ const foo11: Foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
   a;
 const foo12: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<0xDeeD_Beefn> =
   a;
-
 ```
+
 
 # Lines exceeding max width of 80 characters
 ```

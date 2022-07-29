@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-10708.js
 ---
+
 # Input
+
 ```js
 bob
 	.doL(({ a, b: {
@@ -10,10 +11,34 @@ bob
 	}}) => something
 		.else
       	.else({}))
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,10 @@
+ bob.doL(
+-  ({
+-    a,
+-    b: {
+-      // comment
++  (
++    {
++      a,
++      b: {
++        // comment
++      },
+     },
+-  }) => something.else.else({}),
++  ) => something.else.else({}),
+ );
 ```
 
 # Output
+
 ```js
 bob.doL(
   (
@@ -25,7 +50,7 @@ bob.doL(
     },
   ) => something.else.else({}),
 );
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: pipeline-operator-hack.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
 // https://github.com/js-choi/proposal-hack-pipes
@@ -12,10 +13,28 @@ return list
  |> equals(%, prefix);
 
 // (The % token isn't final; it might instead be @ or ? or #.)
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,7 @@
+ // https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
+ // https://github.com/js-choi/proposal-hack-pipes
+ 
+-return list |> take(prefix.length, %) |> equals(%, prefix);
+-
++return list
++ |> take(prefix.length, %)
++ |> equals(%, prefix);
+ // (The % token isn't final; it might instead be @ or ? or #.)
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
 // https://github.com/js-choi/proposal-hack-pipes
@@ -24,8 +43,8 @@ return list
  |> take(prefix.length, %)
  |> equals(%, prefix);
 // (The % token isn't final; it might instead be @ or ? or #.)
-
 ```
+
 
 # Errors
 ```

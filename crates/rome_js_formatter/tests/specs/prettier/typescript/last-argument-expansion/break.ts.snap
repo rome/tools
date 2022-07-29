@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: break.ts
 ---
+
 # Input
+
 ```js
 export default class AddAssetHtmlPlugin {
   apply(compiler: WebpackCompilerType) {
@@ -14,10 +14,46 @@ export default class AddAssetHtmlPlugin {
     });
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,17 +1,16 @@
+ export default class AddAssetHtmlPlugin {
+   apply(compiler: WebpackCompilerType) {
+     compiler.plugin("compilation", (compilation: WebpackCompilationType) => {
+-      compilation.plugin(
+-        "html-webpack-plugin-before-html",
+-        (callback: Callback<any>) => {
+-          addAllAssetsToCompilation(
+-            this.assets,
+-            compilation,
+-            htmlPluginData,
+-            callback,
+-          );
+-        },
+-      );
++      compilation.plugin("html-webpack-plugin-before-html", (
++        callback: Callback<any>,
++      ) => {
++        addAllAssetsToCompilation(
++          this.assets,
++          compilation,
++          htmlPluginData,
++          callback,
++        );
++      });
+     });
+   }
+ }
 ```
 
 # Output
+
 ```js
 export default class AddAssetHtmlPlugin {
   apply(compiler: WebpackCompilerType) {
@@ -35,7 +71,7 @@ export default class AddAssetHtmlPlugin {
     });
   }
 }
-
 ```
+
 
 

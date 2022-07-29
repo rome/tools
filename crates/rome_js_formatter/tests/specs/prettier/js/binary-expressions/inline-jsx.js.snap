@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: inline-jsx.js
 ---
+
 # Input
+
 ```js
 const user = renderedUser || <div><User name={this.state.user.name} age={this.state.user.age} /></div>;
 
@@ -11,10 +12,49 @@ const user2 = renderedUser || shouldRenderUser && <div><User name={this.state.us
 const avatar = hasAvatar && <Gravatar user={author} size={size} />;
 
 const avatar2 = (hasAvatar || showPlaceholder) && <Gravatar user={author} size={size} />;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,19 +1,16 @@
+-const user = renderedUser || (
+-  <div>
+-    <User name={this.state.user.name} age={this.state.user.age} />
+-  </div>
+-);
++const user =
++  renderedUser || (
++    <div><User name={this.state.user.name} age={this.state.user.age} /></div>
++  );
+ 
+ const user2 =
+-  renderedUser ||
+-  (shouldRenderUser && (
+-    <div>
+-      <User name={this.state.user.name} age={this.state.user.age} />
+-    </div>
+-  ));
++  renderedUser || (
++    shouldRenderUser && (
++      <div><User name={this.state.user.name} age={this.state.user.age} /></div>
++    )
++  );
+ 
+ const avatar = hasAvatar && <Gravatar user={author} size={size} />;
+ 
+-const avatar2 = (hasAvatar || showPlaceholder) && (
+-  <Gravatar user={author} size={size} />
+-);
++const avatar2 =
++  (hasAvatar || showPlaceholder) && <Gravatar user={author} size={size} />;
 ```
 
 # Output
+
 ```js
 const user =
   renderedUser || (
@@ -32,7 +72,7 @@ const avatar = hasAvatar && <Gravatar user={author} size={size} />;
 
 const avatar2 =
   (hasAvatar || showPlaceholder) && <Gravatar user={author} size={size} />;
-
 ```
+
 
 

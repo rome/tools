@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: eval.js
 ---
+
 # Input
+
 ```js
 // https://github.com/babel/babel/pull/11850
 
@@ -28,10 +29,27 @@ eval()?.foo;
 foo.eval?.(foo);
 
 eval.foo?.(foo);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,7 +5,7 @@
+ /* indirect eval calls */
+ eval?.(foo);
+ 
+-eval?.(foo);
++(eval)?.(foo);
+ 
+ eval?.()();
+ 
 ```
 
 # Output
+
 ```js
 // https://github.com/babel/babel/pull/11850
 
@@ -57,7 +75,7 @@ eval()?.foo;
 foo.eval?.(foo);
 
 eval.foo?.(foo);
-
 ```
+
 
 

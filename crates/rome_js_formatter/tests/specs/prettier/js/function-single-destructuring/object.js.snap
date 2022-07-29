@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: object.js
 ---
+
 # Input
+
 ```js
 function StatelessFunctionalComponent({
   isActive,
@@ -62,10 +63,98 @@ class C {
     return <div />
   }
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,26 +1,30 @@
+-function StatelessFunctionalComponent({
+-  isActive,
+-  onFiltersUpdated,
+-  onSelect,
+-  onSubmitAndDeselect,
+-  onCancel,
+-  searchFilters,
+-  title,
+-  items,
+-}) {
++function StatelessFunctionalComponent(
++  {
++    isActive,
++    onFiltersUpdated,
++    onSelect,
++    onSubmitAndDeselect,
++    onCancel,
++    searchFilters,
++    title,
++    items,
++  },
++) {
+   return <div />;
+ }
+ 
+-function StatelessFunctionalComponent2({
+-  isActive = true,
+-  onFiltersUpdated = () => null,
+-  onSelect = () => null,
+-  onSubmitAndDeselect = () => null,
+-  onCancel = () => null,
+-  searchFilters = null,
+-  title = "",
+-  items = [],
+-} = {}) {
++function StatelessFunctionalComponent2(
++  {
++    isActive = true,
++    onFiltersUpdated = () => null,
++    onSelect = () => null,
++    onSubmitAndDeselect = () => null,
++    onCancel = () => null,
++    searchFilters = null,
++    title = "",
++    items = [],
++  } = {},
++) {
+   return <div />;
+ }
+ 
+@@ -42,16 +46,18 @@
+ }
+ 
+ class C {
+-  StatelessFunctionalComponent({
+-    isActive,
+-    onFiltersUpdated,
+-    onSelect,
+-    onSubmitAndDeselect,
+-    onCancel,
+-    searchFilters,
+-    title,
+-    items,
+-  }) {
++  StatelessFunctionalComponent(
++    {
++      isActive,
++      onFiltersUpdated,
++      onSelect,
++      onSubmitAndDeselect,
++      onCancel,
++      searchFilters,
++      title,
++      items,
++    },
++  ) {
+     return <div />;
+   }
+ }
 ```
 
 # Output
+
 ```js
 function StatelessFunctionalComponent(
   {
@@ -130,7 +219,7 @@ class C {
     return <div />;
   }
 }
-
 ```
+
 
 

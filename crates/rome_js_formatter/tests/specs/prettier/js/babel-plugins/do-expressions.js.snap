@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: do-expressions.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-do-expressions
 
@@ -15,10 +16,34 @@ let a = do {
 };
 // is equivalent to:
 let a = x > 10 ? 'big' : 'small';
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,10 +1,11 @@
+ // https://babeljs.io/docs/en/babel-plugin-proposal-do-expressions
+ 
+-let a = do {
+-  if (x > 10) {
+-    ("big");
++let a =
++do {
++  if(x > 10) {
++    'big';
+   } else {
+-    ("small");
++    'small';
+   }
+ };
+ // is equivalent to:
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-do-expressions
 
@@ -32,8 +57,8 @@ do {
 };
 // is equivalent to:
 let a = x > 10 ? "big" : "small";
-
 ```
+
 
 # Errors
 ```

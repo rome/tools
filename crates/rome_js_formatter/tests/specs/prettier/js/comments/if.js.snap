@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: if.js
 ---
+
 # Input
+
 ```js
 if (1)
 // comment
@@ -66,10 +66,86 @@ else if (15) // comment
 /* comment */
 /* comment */ // comment
 true
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,6 @@
+-if (1) {
+-  // comment
++if (1)
++// comment
++{
+   false;
+ }
+ // comment
+@@ -28,43 +29,43 @@
+ } else if (7)
+   // comment
+   true;
+-// comment
+ else {
++  // comment
+   true;
+ }
+ 
+-if (8) {
+-  // comment
+-  // comment
++if (8) // comment
++// comment
++{
+   true;
+ } else if (9)
+   // comment
+   // comment
+   true;
+-// comment
++else // comment
+ // comment
+-else {
++{
+   true;
+ }
+ 
+-if (10) {
+-  /* comment */ // comment
++if (10) /* comment */ {
++  // comment
+   true;
+ } else if (11) /* comment */ true;
+ else if (12)
+   // comment /* comment */ // comment
+   true;
+-else if (13)
+-  /* comment */ /* comment */ // comment
++else if (13) /* comment */ /* comment */
++  // comment
+   true;
+-/* comment */ else {
++else /* comment */ {
+   true;
+ }
+ 
+-if (14) {
+-  // comment
+-  /* comment */
+-  // comment
++if (14) // comment
++/* comment */
++// comment
++{
+   true;
+ } else if (15)
+   // comment
 ```
 
 # Output
+
 ```js
 if (1)
 // comment
@@ -145,7 +221,7 @@ if (14) // comment
   /* comment */
   /* comment */ // comment
   true;
-
 ```
+
 
 

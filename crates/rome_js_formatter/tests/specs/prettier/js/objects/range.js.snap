@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: range.js
 ---
+
 # Input
+
 ```js
 group(
   concat([
@@ -18,10 +18,39 @@ group(
   ]),
   {shouldBreak: true}
 )
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,13 +1,7 @@
+-group(
+-  concat([
+-    "(",
+-    indent(
+-      options.tabWidth,
+-      concat([line, join(concat([",", line]), printed)]),
+-    ),
+-    options.trailingComma ? "," : "",
+-    line,
+-    ")",
+-  ]),
+-  { shouldBreak: true },
+-);
++group(concat([
++  "(",
++  indent(options.tabWidth, concat([line, join(concat([",", line]), printed)])),
++  options.trailingComma ? "," : "",
++  line,
++  ")",
++]), { shouldBreak: true });
 ```
 
 # Output
+
 ```js
 group(concat([
   "(",
@@ -30,7 +59,7 @@ group(concat([
   line,
   ")",
 ]), { shouldBreak: true });
-
 ```
+
 
 

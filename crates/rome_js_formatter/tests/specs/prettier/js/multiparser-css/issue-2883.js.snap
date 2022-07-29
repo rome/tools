@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-2883.js
 ---
+
 # Input
+
 ```js
 export const foo = css`
 &.foo .${bar}::before,&.foo[value="hello"] .${bar}::before {
@@ -21,10 +22,45 @@ button.${foo}.${bar} {
   color: #fff;
 }
 `;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,17 +1,17 @@
+ export const foo = css`
+-  &.foo .${bar}::before,&.foo[value="hello"] .${bar}::before {
+-    position: absolute;
+-  }
++&.foo .${bar}::before,&.foo[value="hello"] .${bar}::before {
++	position: absolute;
++}
+ `;
+ 
+ export const foo2 = css`
+-  a.${bar}:focus,a.${bar}:hover {
+-    color: red;
+-  }
++a.${bar}:focus,a.${bar}:hover {
++  color: red;
++}
+ `;
+ 
+ export const global = css`
+-  button.${foo}.${bar} {
+-    color: #fff;
+-  }
++button.${foo}.${bar} {
++  color: #fff;
++}
+ `;
 ```
 
 # Output
+
 ```js
 export const foo = css`
 &.foo .${bar}::before,&.foo[value="hello"] .${bar}::before {
@@ -43,7 +79,7 @@ button.${foo}.${bar} {
   color: #fff;
 }
 `;
-
 ```
+
 
 

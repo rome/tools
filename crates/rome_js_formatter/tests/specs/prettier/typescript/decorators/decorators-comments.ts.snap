@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: decorators-comments.ts
 ---
+
 # Input
+
 ```js
 
 class Foo1 {
@@ -46,10 +47,35 @@ class Something3 {
     // comment
     abstract method(): Array<string>
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -30,12 +30,12 @@
+ 
+ class Something2 {
+   @foo()
+-  // comment
+-  abstract property: Array<string>;
++    // comment
++    abstract property: Array<string>
+ }
+ 
+ class Something3 {
+   @foo()
+-  // comment
+-  abstract method(): Array<string>;
++    // comment
++    abstract method(): Array<string>
+ }
 ```
 
 # Output
+
 ```js
 class Foo1 {
   @foo
@@ -92,8 +118,8 @@ class Something3 {
     // comment
     abstract method(): Array<string>
 }
-
 ```
+
 
 # Errors
 ```

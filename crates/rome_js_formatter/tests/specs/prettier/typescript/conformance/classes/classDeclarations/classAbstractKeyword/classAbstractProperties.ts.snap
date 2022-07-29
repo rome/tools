@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: classAbstractProperties.ts
 ---
+
 # Input
+
 ```js
 abstract class A {
     abstract x : number;
@@ -16,10 +17,33 @@ abstract class A {
     public abstract foo_y() : number;
     protected abstract foo_z() : number;
     private abstract foo_w() : number;
-}
+}```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,12 +2,12 @@
+   abstract x: number;
+   public abstract y: number;
+   protected abstract z: number;
+-  private abstract w: number;
++  private abstract w : number;
+ 
+   abstract m: () => void;
+ 
+   abstract foo_x(): number;
+   public abstract foo_y(): number;
+   protected abstract foo_z(): number;
+-  private abstract foo_w(): number;
++  private abstract foo_w() : number;
+ }
 ```
 
 # Output
+
 ```js
 abstract class A {
   abstract x: number;
@@ -34,8 +58,8 @@ abstract class A {
   protected abstract foo_z(): number;
   private abstract foo_w() : number;
 }
-
 ```
+
 
 # Errors
 ```

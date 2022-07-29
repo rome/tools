@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: trailing_comment.js
 ---
+
 # Input
+
 ```js
 if (code === 92 /* '\' */) {}
 if (code === 92 /* '\' */ /* '\' */) {}
@@ -24,10 +24,39 @@ if (
 ) {
 	b;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -3,8 +3,7 @@
+ if (code === 92 /* '\' */ /* '\' */) {
+ }
+ 
+-if (code === 92) {
+-  /* '\' */
++if (code === 92) /* '\' */ {
+ }
+ if (code === 92) {
+   /* '\' */
+@@ -16,3 +15,10 @@
+ ) {
+   a;
+ }
++
++if (
++  // comment
++  1
++) {
++  b;
++}
 ```
 
 # Output
+
 ```js
 if (code === 92 /* '\' */) {
 }
@@ -53,7 +82,7 @@ if (
 ) {
   b;
 }
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: chain.js
 ---
+
 # Input
+
 ```js
 let bifornCringerMoshedPerplexSawder=
 askTrovenaBeenaDependsRowans=
@@ -31,10 +32,60 @@ bifornCringerMoshedPerplexSawder =
     kochabCooieGameOnOboleUnweave+kochabCooieGameOnOboleUnweave;
 
 a=b=c;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,21 +1,17 @@
+ let bifornCringerMoshedPerplexSawder =
+-  (askTrovenaBeenaDependsRowans =
+-  glimseGlyphsHazardNoopsTieTie =
+-  averredBathersBoxroomBuggyNurl =
+-  anodyneCondosMalateOverateRetinol =
+-  annularCooeedSplicesWalksWayWay =
+-    kochabCooieGameOnOboleUnweave);
++  askTrovenaBeenaDependsRowans =
++    glimseGlyphsHazardNoopsTieTie =
++    averredBathersBoxroomBuggyNurl =
++    anodyneCondosMalateOverateRetinol =
++    annularCooeedSplicesWalksWayWay =
++      kochabCooieGameOnOboleUnweave;
+ 
+ bifornCringerMoshedPerplexSawder =
+   askTrovenaBeenaDependsRowans =
+   glimseGlyphsHazardNoopsTieTie =
+   x =
+   averredBathersBoxroomBuggyNurl =
+-  anodyneCondosMal(
+-    sdsadsa,
+-    dasdas,
+-    asd(() => sdf),
+-  ).ateOverateRetinol =
++  anodyneCondosMal(sdsadsa, dasdas, asd(() => sdf)).ateOverateRetinol =
+   annularCooeedSplicesWalksWayWay =
+     kochabCooieGameOnOboleUnweave;
+ 
+@@ -24,11 +20,7 @@
+   glimseGlyphsHazardNoopsTieTie =
+   x =
+   averredBathersBoxroomBuggyNurl =
+-  anodyneCondosMal(
+-    sdsadsa,
+-    dasdas,
+-    asd(() => sdf),
+-  ).ateOverateRetinol =
++  anodyneCondosMal(sdsadsa, dasdas, asd(() => sdf)).ateOverateRetinol =
+   annularCooeedSplicesWalksWayWay =
+     kochabCooieGameOnOboleUnweave + kochabCooieGameOnOboleUnweave;
+ 
 ```
 
 # Output
+
 ```js
 let bifornCringerMoshedPerplexSawder =
   askTrovenaBeenaDependsRowans =
@@ -63,7 +114,7 @@ bifornCringerMoshedPerplexSawder =
     kochabCooieGameOnOboleUnweave + kochabCooieGameOnOboleUnweave;
 
 a = b = c;
-
 ```
+
 
 

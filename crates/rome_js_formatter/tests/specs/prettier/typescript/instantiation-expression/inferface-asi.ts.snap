@@ -1,24 +1,39 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: inferface-asi.ts
 ---
+
 # Input
+
 ```js
 interface Example {
   (a: number): typeof a
       
   <T>(): void
 };
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,4 @@
+ interface Example {
+   (a: number): typeof a;
+-
+   <T>(): void;
+ }
 ```
 
 # Output
+
 ```js
 interface Example {
   (a: number): typeof a;
   <T>(): void;
 }
-
 ```
+
 
 

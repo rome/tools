@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: comment.js
 ---
+
 # Input
+
 ```js
 a = (
   // Comment 1
@@ -57,10 +58,56 @@ foo[
     b
   )
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,8 +1,10 @@
+ a =
+-  // Comment 1
+-  Math.random() * (yRange * (1 - minVerticalFraction)) +
+-  minVerticalFraction * yRange -
+-  offset;
++  (
++    // Comment 1
++    (Math.random() * (yRange * (1 - minVerticalFraction))) + (
++      minVerticalFraction * yRange
++    )
++  ) - offset;
+ 
+ a +
+   a +
+@@ -44,13 +46,13 @@
+ 
+ !(
+   a +
+-  a + // comment
+-  a +
+-  !(
+-    b +
+-    b +
+-    b + // comment
+-    b +
+-    b
+-  )
++    a + // comment
++    a +
++    !(
++      b +
++        b +
++        b + // comment
++        b +
++        b
++    )
+ );
 ```
 
 # Output
+
 ```js
 a =
   (
@@ -120,7 +167,7 @@ foo[
         b
     )
 );
-
 ```
+
 
 

@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: issue-6107-curry.ts
 ---
+
 # Input
+
 ```js
 const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) =>
   iconEngagementType => engagementTypes.includes(iconEngagementType);
@@ -23,10 +24,48 @@ const getIconEngagementTypeFrom2 =
   ) =>
   iconEngagementType =>
   engagementTypes.includes(iconEngagementType);
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,17 +1,14 @@
+-const getIconEngagementTypeFrom =
+-  (engagementTypes: Array<EngagementType>) => (iconEngagementType) =>
+-    engagementTypes.includes(iconEngagementType);
++const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) => (
++  iconEngagementType,
++) => engagementTypes.includes(iconEngagementType);
+ 
+-const getIconEngagementTypeFrom2 =
+-  (engagementTypes: Array<EngagementType>, secondArg: Something) =>
+-  (iconEngagementType) =>
+-    engagementTypes.includes(iconEngagementType);
++const getIconEngagementTypeFrom2 = (
++  engagementTypes: Array<EngagementType>,
++  secondArg: Something,
++) => (iconEngagementType) => engagementTypes.includes(iconEngagementType);
+ 
+-const getIconEngagementTypeFrom2 =
+-  (
+-    engagementTypes: Array<EngagementType>,
+-    secondArg: Something,
+-    thirArg: SomethingElse,
+-  ) =>
+-  (iconEngagementType) =>
+-    engagementTypes.includes(iconEngagementType);
++const getIconEngagementTypeFrom2 = (
++  engagementTypes: Array<EngagementType>,
++  secondArg: Something,
++  thirArg: SomethingElse,
++) => (iconEngagementType) => engagementTypes.includes(iconEngagementType);
 ```
 
 # Output
+
 ```js
 const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) => (
   iconEngagementType,
@@ -42,7 +81,7 @@ const getIconEngagementTypeFrom2 = (
   secondArg: Something,
   thirArg: SomethingElse,
 ) => (iconEngagementType) => engagementTypes.includes(iconEngagementType);
-
 ```
+
 
 

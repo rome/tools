@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: exp.js
 ---
+
 # Input
+
 ```js
 a ** b ** c;
 (a ** b) ** c;
@@ -13,10 +14,24 @@ a ** -b;
 (a * b) ** c;
 a ** (b * c);
 (a % b) ** c;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-a ** (b ** c);
++a ** b ** c;
+ (a ** b) ** c;
+ a.b ** c;
+ (-a) ** b;
 ```
 
 # Output
+
 ```js
 a ** b ** c;
 (a ** b) ** c;
@@ -27,7 +42,7 @@ a ** -b;
 (a * b) ** c;
 a ** (b * c);
 (a % b) ** c;
-
 ```
+
 
 

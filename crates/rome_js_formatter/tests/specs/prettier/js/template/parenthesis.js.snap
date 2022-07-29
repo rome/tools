@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: parenthesis.js
 ---
+
 # Input
+
 ```js
 // "ArrowFunctionExpression"
 (() => {})``;
@@ -58,10 +59,47 @@ b.c``;
 function* d() {
   (yield 1)``;
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -16,7 +16,7 @@
+ b()``;
+ 
+ // "ClassExpression"
+-(class {}``);
++(class {})``;
+ 
+ // "ConditionalExpression"
+ (b ? c : d)``;
+@@ -31,16 +31,16 @@
+ b.c``;
+ 
+ // "NewExpression"
+-new B()``;
++(new B())``;
+ 
+ // "ObjectExpression"
+-({}``);
++({})``;
+ 
+ // "SequenceExpression"
+ (b, c)``;
+ 
+ // "TaggedTemplateExpression"
+-````;
++(``)``;
+ 
+ // "UnaryExpression"
+ (void b)``;
 ```
 
 # Output
+
 ```js
 // "ArrowFunctionExpression"
 (() => {})``;
@@ -117,7 +155,7 @@ b.c``;
 function* d() {
   (yield 1)``;
 }
-
 ```
+
 
 

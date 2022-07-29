@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: unary.js
 ---
+
 # Input
+
 ```js
 !x::y;
 !(x::y /* foo */);
@@ -18,10 +19,48 @@ expression: unary.js
 !(
   x::y // foo
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,14 +1,20 @@
+-!x::y;
+-!(x::y /* foo */);
+-!(/* foo */ x::y);
++!x;
++::y
++!(x
++::y /* foo */)
++!(/* foo */ x
++::y)
+ !(
+   /* foo */
+-  x::y
+-);
++  x
++::y
++)
+ !(
+-  x::y
++  x
++::y
+   /* foo */
+-);
++)
+ !(
+-  x::y // foo
+-);
++  x
++::y // foo
++)
 ```
 
 # Output
+
 ```js
 !x;
 ::y
@@ -43,8 +82,8 @@ expression: unary.js
   x
 ::y // foo
 )
-
 ```
+
 
 # Errors
 ```

@@ -1,22 +1,37 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: indent.js
 ---
+
 # Input
+
 ```js
 with (0) {}
 
 with (0) 1;
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,3 @@
+-with (0) {
+-}
++with (0) {}
+ 
+ with (0) 1;
 ```
 
 # Output
+
 ```js
 with (0) {}
 
 with (0) 1;
-
 ```
+
 
 # Errors
 ```

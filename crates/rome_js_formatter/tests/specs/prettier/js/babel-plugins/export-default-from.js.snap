@@ -1,17 +1,35 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: export-default-from.js
 ---
+
 # Input
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from
 
 
 export v from 'mod';
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,7 @@
+ // https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from
+ 
+-export v from "mod";
++
++export
++v;
++from;
++("mod");
 ```
 
 # Output
+
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from
 
@@ -20,8 +38,8 @@ export
 v;
 from;
 ("mod");
-
 ```
+
 
 # Errors
 ```

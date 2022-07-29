@@ -1,9 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 182
-expression: reduce.js
 ---
+
 # Input
+
 ```js
 const [ first1 ] = array.reduce(
   () => [accumulator, element, accumulator, element],
@@ -14,10 +14,38 @@ const [ first2 ] = array.reduce(
   (accumulator, element, ) => [accumulator, element],
   [fullName]
 );
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,11 @@
+-const [first1] = array.reduce(
+-  () => [accumulator, element, accumulator, element],
+-  [fullName],
+-);
++const [first1] = array.reduce(() => [
++  accumulator,
++  element,
++  accumulator,
++  element,
++], [fullName]);
+ 
+-const [first2] = array.reduce(
+-  (accumulator, element) => [accumulator, element],
+-  [fullName],
+-);
++const [first2] = array.reduce((accumulator, element) => [
++  accumulator,
++  element,
++], [fullName]);
 ```
 
 # Output
+
 ```js
 const [first1] = array.reduce(() => [
   accumulator,
@@ -30,7 +58,7 @@ const [first2] = array.reduce((accumulator, element) => [
   accumulator,
   element,
 ], [fullName]);
-
 ```
+
 
 

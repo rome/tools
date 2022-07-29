@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: lone-arg.js
 ---
+
 # Input
+
 ```js
 let vgChannel = pointPositionDefaultRef({
   model,
@@ -24,10 +25,35 @@ if (true) {
 
 const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(`foo
 `)("bar");
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -10,10 +10,11 @@
+   someBigFunctionName("foo")("bar");
+ 
+ if (true) {
+-  node.id = this.flowParseTypeAnnotatableIdentifier(
+-    /*allowPrimitiveOverride*/ true,
+-  );
++  node.id =
++    this.flowParseTypeAnnotatableIdentifier(/*allowPrimitiveOverride*/ true);
+ }
+ 
+-const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(`foo
+-`)("bar");
++const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(
++  `foo
++`,
++)("bar");
 ```
 
 # Output
+
 ```js
 let vgChannel = pointPositionDefaultRef({
   model,
@@ -49,7 +75,7 @@ const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(
   `foo
 `,
 )("bar");
-
 ```
+
 
 

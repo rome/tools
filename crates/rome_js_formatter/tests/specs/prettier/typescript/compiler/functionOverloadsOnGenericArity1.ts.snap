@@ -1,8 +1,9 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-expression: functionOverloadsOnGenericArity1.ts
 ---
+
 # Input
+
 ```js
 // overloading on arity not allowed
 interface C {
@@ -15,10 +16,29 @@ interface C {
   new <T>(): string;
   new <T, U>(): string; 
 }
+```
 
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,10 +2,8 @@
+ interface C {
+   f<T>(): string;
+   f<T, U>(): string;
+-
+   <T>(): string;
+   <T, U>(): string;
+-
+   new <T>(): string;
+   new <T, U>(): string;
+ }
 ```
 
 # Output
+
 ```js
 // overloading on arity not allowed
 interface C {
@@ -29,7 +49,7 @@ interface C {
   new <T>(): string;
   new <T, U>(): string;
 }
-
 ```
+
 
 
