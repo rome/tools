@@ -51,7 +51,8 @@ declare_rule! {
     /// ```
     pub(crate) NoImportAssign {
         version: "0.8.0",
-        name: "noImportAssign"
+        name: "noImportAssign",
+        recommended: true
     }
 }
 
@@ -91,7 +92,7 @@ impl Rule for NoImportAssign {
                 let ident_binding = binding.as_js_identifier_binding()?;
                 let model = ctx.model();
                 for reference in model.all_references(ident_binding) {
-                    if JsIdentifierAssignment::can_cast(reference.node().kind()) {
+                    if reference.is_write() {
                         invalid_assign_list.push((
                             JsIdentifierAssignment::cast(reference.node().clone())?,
                             ident_binding.clone(),
