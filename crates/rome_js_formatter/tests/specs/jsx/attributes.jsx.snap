@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
+assertion_line: 259
 expression: attributes.jsx
 ---
 # Input
@@ -50,6 +50,9 @@ expression: attributes.jsx
 					<test {...WithAVeryLongFunctionthat_exceeds_the_line_width_what_happens_with_ithis()} />;
 					<div {...["Chungking Express", "Fallen Angels", "In the Mood for Love", "Days of Living Wild", "Happy Together"]}/>;
 
+
+// https://github.com/rome/tools/issues/2944
+<div className={asdf asdf} />;
 =============================
 # Outputs
 ## Output 1
@@ -111,6 +114,9 @@ let a = (
 		"Happy Together",
 	]}
 />;
+
+// https://github.com/rome/tools/issues/2944
+<div className={asdf asdf} />;
 
 
 ## Lines exceeding width of 80 characters

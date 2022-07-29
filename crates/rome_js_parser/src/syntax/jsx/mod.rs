@@ -616,10 +616,10 @@ fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
     p.bump(T!['{']);
     parse_jsx_assignment_expression(p, false).or_add_diagnostic(p, expected_expression);
     if !p.expect(T!['}']) {
-        if p.nth_at(T!['}']) {
-           p.parse_as_skipped_trivia_tokens(|p| {
-       	    	p.bump_any();
-        	});
+        if p.nth_at(1, T!['}']) {
+            p.parse_as_skipped_trivia_tokens(|p| {
+                p.bump_any();
+            });
         }
     }
 
