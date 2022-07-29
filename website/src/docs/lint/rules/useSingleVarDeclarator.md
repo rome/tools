@@ -23,10 +23,11 @@ let foo, bar;
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> let foo, bar;
   <span style="color: rgb(38, 148, 255);">│</span> <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Safe fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Break out into multiple declarations</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Break out into multiple declarations</span>
+    | <span style="color: rgb(38, 148, 255);">@@ -1 +1,2 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">let foo, bar;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">let foo;let bar;</span>
+  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">let foo;</span>
+  1 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">let bar;</span>
 
 </code></pre>{% endraw %}
 
