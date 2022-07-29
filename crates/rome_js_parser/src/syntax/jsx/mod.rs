@@ -615,16 +615,12 @@ fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.bump(T!['{']);
     parse_jsx_assignment_expression(p, false).or_add_diagnostic(p, expected_expression);
-    if p.at(T!['}']) {
-        p.eat(T!['}']);
-    } else {
-        p.error(expected_token(T!['}']));
-        p.parse_as_skipped_trivia_tokens(|p| {
-            while !p.at_ts(token_set![T!['}'], T![EOF]]) {
-                p.bump_any();
-            }
-        });
-        p.expect(T!['}']);
+    if !p.expect(T!['}']) {
+        if p.nth_at(T!['}']) {
+           p.parse_as_skipped_trivia_tokens(|p| {
+       	    	p.bump_any();
+        	});
+        }
     }
 
     ParsedSyntax::Present(m.complete(p, JSX_EXPRESSION_ATTRIBUTE_VALUE))
