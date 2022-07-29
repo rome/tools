@@ -48,11 +48,18 @@ pub fn check_reformat(params: CheckReformatParams) {
     let printed = formatted.print();
 
     if text != printed.as_code() {
-        let input_formatted = format_node(context, root).unwrap();
+        let input_formatted = format_node(context, root).unwrap().into_format_element();
+
+        let pretty_input_ir = format!("{input_formatted}");
+        let pretty_reformat_ir = format!("{}", formatted.into_format_element());
 
         // Print a diff of the Formatter IR emitted for the input and the output
-        let diff =
-            similar_asserts::Diff::from_debug(&input_formatted, &formatted, "input", "output");
+        let diff = similar_asserts::Diff::from_str(
+            &pretty_input_ir,
+            &pretty_reformat_ir,
+            "input",
+            "output",
+        );
 
         println!("{diff}");
 
