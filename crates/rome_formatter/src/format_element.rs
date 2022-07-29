@@ -21,10 +21,10 @@ type Content = Box<[FormatElement]>;
 
 /// Language agnostic IR for formatting source code.
 ///
-/// Use the helper functions like [crate::space_token], [crate::soft_line_break] etc. defined in this file to create elements.
+/// Use the helper functions like [crate::space], [crate::soft_line_break] etc. defined in this file to create elements.
 #[derive(Clone, Eq, PartialEq)]
 pub enum FormatElement {
-    /// A space token, see [crate::space_token] for documentation.
+    /// A space token, see [crate::space] for documentation.
     Space,
 
     /// A new line, see [crate::soft_line_break], [crate::hard_line_break], and [crate::soft_line_break_or_space] for documentation.
@@ -37,7 +37,7 @@ pub enum FormatElement {
     /// * on a single line: Omitting `LineMode::Soft` line breaks and printing spaces for `LineMode::SoftOrSpace`
     /// * on multiple lines: Printing all line breaks
     ///
-    /// See [crate::group_elements] for documentation and examples.
+    /// See [crate::group] for documentation and examples.
     Group(Group),
 
     /// Forces the parent group to print in expanded mode.
@@ -54,7 +54,7 @@ pub enum FormatElement {
     /// flat or expanded mode to fill the print width. See [crate::Formatter::fill].
     Fill(Fill),
 
-    /// A text that should be printed as is, see [crate::builders::token] for documentation and examples.
+    /// A text that should be printed as is, see [crate::text] for documentation and examples.
     Text(Text),
 
     /// Delay the printing of its content until the next line break
@@ -487,7 +487,7 @@ impl ConditionalGroupContent {
     }
 }
 
-/// See [crate::builders::token] for documentation
+/// See [crate::text] for documentation
 #[derive(Eq, Clone)]
 pub enum Text {
     /// Token constructed by the formatter from a static string

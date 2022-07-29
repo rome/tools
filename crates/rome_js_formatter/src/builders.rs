@@ -432,10 +432,9 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
                 match group_id {
                     None => write!(f, [group(&delimited)])?,
-                    Some(group_id) => write!(
-                        f,
-                        [group(&delimited).with_group_id(Some(*group_id))]
-                    )?,
+                    Some(group_id) => {
+                        write!(f, [group(&delimited).with_group_id(Some(*group_id))])?
+                    }
                 }
             }
         };
