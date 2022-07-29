@@ -6144,76 +6144,94 @@ pub fn ts_void_type(void_token: SyntaxToken) -> TsVoidType {
         [Some(SyntaxElement::Token(void_token))],
     ))
 }
-pub fn js_array_assignment_pattern_element_list<I>(items: I) -> JsArrayAssignmentPatternElementList
+pub fn js_array_assignment_pattern_element_list<I, S>(
+    items: I,
+    separators: S,
+) -> JsArrayAssignmentPatternElementList
 where
-    I: IntoIterator<Item = (JsAnyArrayAssignmentPatternElement, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyArrayAssignmentPatternElement>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsArrayAssignmentPatternElementList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_array_binding_pattern_element_list<I>(items: I) -> JsArrayBindingPatternElementList
+pub fn js_array_binding_pattern_element_list<I, S>(
+    items: I,
+    separators: S,
+) -> JsArrayBindingPatternElementList
 where
-    I: IntoIterator<Item = (JsAnyArrayBindingPatternElement, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyArrayBindingPatternElement>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsArrayBindingPatternElementList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_array_element_list<I>(items: I) -> JsArrayElementList
+pub fn js_array_element_list<I, S>(items: I, separators: S) -> JsArrayElementList
 where
-    I: IntoIterator<Item = (JsAnyArrayElement, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyArrayElement>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsArrayElementList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ARRAY_ELEMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_call_argument_list<I>(items: I) -> JsCallArgumentList
+pub fn js_call_argument_list<I, S>(items: I, separators: S) -> JsCallArgumentList
 where
-    I: IntoIterator<Item = (JsAnyCallArgument, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyCallArgument>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsCallArgumentList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_CALL_ARGUMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn js_class_member_list<I>(items: I) -> JsClassMemberList
@@ -6240,22 +6258,25 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn js_constructor_parameter_list<I>(items: I) -> JsConstructorParameterList
+pub fn js_constructor_parameter_list<I, S>(items: I, separators: S) -> JsConstructorParameterList
 where
-    I: IntoIterator<Item = (JsAnyConstructorParameter, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyConstructorParameter>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsConstructorParameterList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_CONSTRUCTOR_PARAMETER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn js_directive_list<I>(items: I) -> JsDirectiveList
@@ -6270,58 +6291,70 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn js_export_named_from_specifier_list<I>(items: I) -> JsExportNamedFromSpecifierList
+pub fn js_export_named_from_specifier_list<I, S>(
+    items: I,
+    separators: S,
+) -> JsExportNamedFromSpecifierList
 where
-    I: IntoIterator<Item = (JsExportNamedFromSpecifier, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsExportNamedFromSpecifier>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsExportNamedFromSpecifierList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_EXPORT_NAMED_FROM_SPECIFIER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_export_named_specifier_list<I>(items: I) -> JsExportNamedSpecifierList
+pub fn js_export_named_specifier_list<I, S>(items: I, separators: S) -> JsExportNamedSpecifierList
 where
-    I: IntoIterator<Item = (JsAnyExportNamedSpecifier, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyExportNamedSpecifier>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsExportNamedSpecifierList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_EXPORT_NAMED_SPECIFIER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_import_assertion_entry_list<I>(items: I) -> JsImportAssertionEntryList
+pub fn js_import_assertion_entry_list<I, S>(items: I, separators: S) -> JsImportAssertionEntryList
 where
-    I: IntoIterator<Item = (JsAnyImportAssertionEntry, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyImportAssertionEntry>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsImportAssertionEntryList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_IMPORT_ASSERTION_ENTRY_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn js_method_modifier_list<I>(items: I) -> JsMethodModifierList
@@ -6348,96 +6381,115 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn js_named_import_specifier_list<I>(items: I) -> JsNamedImportSpecifierList
+pub fn js_named_import_specifier_list<I, S>(items: I, separators: S) -> JsNamedImportSpecifierList
 where
-    I: IntoIterator<Item = (JsAnyNamedImportSpecifier, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyNamedImportSpecifier>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsNamedImportSpecifierList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_object_assignment_pattern_property_list<I>(
+pub fn js_object_assignment_pattern_property_list<I, S>(
     items: I,
+    separators: S,
 ) -> JsObjectAssignmentPatternPropertyList
 where
-    I: IntoIterator<Item = (JsAnyObjectAssignmentPatternMember, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyObjectAssignmentPatternMember>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsObjectAssignmentPatternPropertyList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_object_binding_pattern_property_list<I>(items: I) -> JsObjectBindingPatternPropertyList
+pub fn js_object_binding_pattern_property_list<I, S>(
+    items: I,
+    separators: S,
+) -> JsObjectBindingPatternPropertyList
 where
-    I: IntoIterator<Item = (JsAnyObjectBindingPatternMember, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyObjectBindingPatternMember>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsObjectBindingPatternPropertyList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_object_member_list<I>(items: I) -> JsObjectMemberList
+pub fn js_object_member_list<I, S>(items: I, separators: S) -> JsObjectMemberList
 where
-    I: IntoIterator<Item = (JsAnyObjectMember, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyObjectMember>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsObjectMemberList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_OBJECT_MEMBER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn js_parameter_list<I>(items: I) -> JsParameterList
+pub fn js_parameter_list<I, S>(items: I, separators: S) -> JsParameterList
 where
-    I: IntoIterator<Item = (JsAnyParameter, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsAnyParameter>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsParameterList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_PARAMETER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn js_property_modifier_list<I>(items: I) -> JsPropertyModifierList
@@ -6488,22 +6540,25 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn js_variable_declarator_list<I>(items: I) -> JsVariableDeclaratorList
+pub fn js_variable_declarator_list<I, S>(items: I, separators: S) -> JsVariableDeclaratorList
 where
-    I: IntoIterator<Item = (JsVariableDeclarator, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = JsVariableDeclarator>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     JsVariableDeclaratorList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_VARIABLE_DECLARATOR_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn jsx_attribute_list<I>(items: I) -> JsxAttributeList
@@ -6530,22 +6585,25 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn ts_enum_member_list<I>(items: I) -> TsEnumMemberList
+pub fn ts_enum_member_list<I, S>(items: I, separators: S) -> TsEnumMemberList
 where
-    I: IntoIterator<Item = (TsEnumMember, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = TsEnumMember>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     TsEnumMemberList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_ENUM_MEMBER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn ts_index_signature_modifier_list<I>(items: I) -> TsIndexSignatureModifierList
@@ -6560,22 +6618,28 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn ts_intersection_type_element_list<I>(items: I) -> TsIntersectionTypeElementList
+pub fn ts_intersection_type_element_list<I, S>(
+    items: I,
+    separators: S,
+) -> TsIntersectionTypeElementList
 where
-    I: IntoIterator<Item = (TsType, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = TsType>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     TsIntersectionTypeElementList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_INTERSECTION_TYPE_ELEMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn ts_method_signature_modifier_list<I>(items: I) -> TsMethodSignatureModifierList
@@ -6626,58 +6690,67 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn ts_tuple_type_element_list<I>(items: I) -> TsTupleTypeElementList
+pub fn ts_tuple_type_element_list<I, S>(items: I, separators: S) -> TsTupleTypeElementList
 where
-    I: IntoIterator<Item = (TsAnyTupleTypeElement, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = TsAnyTupleTypeElement>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     TsTupleTypeElementList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TUPLE_TYPE_ELEMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn ts_type_argument_list<I>(items: I) -> TsTypeArgumentList
+pub fn ts_type_argument_list<I, S>(items: I, separators: S) -> TsTypeArgumentList
 where
-    I: IntoIterator<Item = (TsType, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = TsType>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     TsTypeArgumentList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_ARGUMENT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn ts_type_list<I>(items: I) -> TsTypeList
+pub fn ts_type_list<I, S>(items: I, separators: S) -> TsTypeList
 where
-    I: IntoIterator<Item = (TsNameWithTypeArguments, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = TsNameWithTypeArguments>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     TsTypeList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
 pub fn ts_type_member_list<I>(items: I) -> TsTypeMemberList
@@ -6692,39 +6765,45 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn ts_type_parameter_list<I>(items: I) -> TsTypeParameterList
+pub fn ts_type_parameter_list<I, S>(items: I, separators: S) -> TsTypeParameterList
 where
-    I: IntoIterator<Item = (TsTypeParameter, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = TsTypeParameter>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     TsTypeParameterList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_PARAMETER_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }
-pub fn ts_union_type_variant_list<I>(items: I) -> TsUnionTypeVariantList
+pub fn ts_union_type_variant_list<I, S>(items: I, separators: S) -> TsUnionTypeVariantList
 where
-    I: IntoIterator<Item = (TsType, Option<JsSyntaxToken>)>,
+    I: IntoIterator<Item = TsType>,
     I::IntoIter: ExactSizeIterator,
+    S: IntoIterator<Item = JsSyntaxToken>,
+    S::IntoIter: ExactSizeIterator,
 {
-    let items = items.into_iter();
-    let length = items.len() * 2;
-    let mut iter = items.flat_map(|(item, separator)| {
-        [
-            Some(item.into_syntax().into()),
-            separator.map(|token| token.into()),
-        ]
-    });
+    let mut items = items.into_iter();
+    let mut separators = separators.into_iter();
+    let length = items.len() + separators.len();
     TsUnionTypeVariantList::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_UNION_TYPE_VARIANT_LIST,
-        (0..length).map(|_| iter.next().unwrap()),
+        (0..length).map(|index| {
+            if index % 2 == 0 {
+                Some(items.next()?.into_syntax().into())
+            } else {
+                Some(separators.next()?.into())
+            }
+        }),
     ))
 }

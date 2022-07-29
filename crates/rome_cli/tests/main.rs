@@ -26,20 +26,10 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 "#;
 
 const FIX_BEFORE: &str = "
-var a, b, c;
-var d, e, f;
-var g, h, i;
+if(a != -0) {}
 ";
 const FIX_AFTER: &str = "
-var a;
-var b;
-var c;
-var d;
-var e;
-var f;
-var g;
-var h;
-var i;
+if(a != 0) {}
 ";
 
 const CUSTOM_FORMAT_BEFORE: &str = r#"
