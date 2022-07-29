@@ -43,7 +43,7 @@ declare_rule! {
     pub(crate) NoDeadCode {
         version: "0.7.0",
         name: "noDeadCode",
-        recommended: false
+        recommended: false,
     }
 }
 

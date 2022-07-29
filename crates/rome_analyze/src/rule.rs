@@ -10,17 +10,44 @@ use crate::context::RuleContext;
 use crate::registry::{RuleLanguage, RuleSuppressions};
 use crate::{AnalysisFilter, LanguageRoot, Phase, Phases, Queryable, RuleRegistry};
 
-pub trait RuleMeta {
+/// Static metadata containing information about a rule
+pub struct RuleMetadata {
     /// It marks if a rule is deprecated, and if so a reason has to be provided.
-    const DEPRECATED: Option<&'static str>;
+    pub deprecated: Option<&'static str>,
     /// The version when the rule was implemented
-    const VERSION: &'static str;
+    pub version: &'static str,
     /// The name of this rule, displayed in the diagnostics it emits
-    const NAME: &'static str;
+    pub name: &'static str,
     /// The content of the documentation comments for this rule
-    const DOCS: &'static str;
+    pub docs: &'static str,
     /// Whether a rule is recommended or not
-    const RECOMMENDED: bool;
+    pub recommended: bool,
+}
+
+impl RuleMetadata {
+    pub const fn new(version: &'static str, name: &'static str, docs: &'static str) -> Self {
+        Self {
+            deprecated: None,
+            version,
+            name,
+            docs,
+            recommended: false,
+        }
+    }
+
+    pub const fn recommended(mut self, recommended: bool) -> Self {
+        self.recommended = recommended;
+        self
+    }
+
+    pub const fn deprecated(mut self, deprecated: &'static str) -> Self {
+        self.deprecated = Some(deprecated);
+        self
+    }
+}
+
+pub trait RuleMeta {
+    const METADATA: RuleMetadata;
 }
 
 /// This macro is used to declare an analyzer rule type, and implement the
@@ -118,34 +145,14 @@ macro_rules! declare_rule {
     ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {
         version: $version:literal,
         name: $name:literal,
-        recommended: $recommended:literal
+        $( $key:ident: $value:expr, )*
     } ) => {
         $( #[doc = $doc] )*
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
-            const DEPRECATED: Option<&'static str> = None;
-            const VERSION: &'static str = $version;
-            const NAME: &'static str = $name;
-            const RECOMMENDED: bool = $recommended;
-            const DOCS: &'static str = concat!( $( $doc, "\n", )* );
-        }
-    };
-    ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {
-        version: $version:literal,
-        name: $name:literal,
-        recommended: $recommended:literal,
-        deprecated: $deprecated:literal
-    } ) => {
-        $( #[doc = $doc] )*
-        $vis enum $id {}
-
-        impl $crate::RuleMeta for $id {
-            const DEPRECATED: Option<&'static str> = Some($deprecated);
-            const VERSION: &'static str = $version;
-            const NAME: &'static str = $name;
-            const RECOMMENDED: bool = $recommended;
-            const DOCS: &'static str = concat!( $( $doc, "\n", )* );
+            const METADATA: $crate::RuleMetadata =
+                $crate::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* )) $( .$key($value) )*;
         }
     };
 }

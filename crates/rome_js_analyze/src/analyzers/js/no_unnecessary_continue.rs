@@ -74,7 +74,7 @@ declare_rule! {
     pub(crate) NoUnnecessaryContinue {
         version: "0.7.0",
         name: "noUnnecessaryContinue",
-        recommended: true
+        recommended: true,
     }
 
 }

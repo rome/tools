@@ -33,7 +33,7 @@ declare_rule! {
     pub(crate) UseSingleVarDeclarator {
         version: "0.7.0",
         name: "useSingleVarDeclarator",
-        recommended: true
+        recommended: true,
     }
 }
 

@@ -25,7 +25,7 @@ declare_rule! {
     pub(crate) UseWhile {
         version: "0.7.0",
         name: "useWhile",
-        recommended: true
+        recommended: true,
     }
 }
 

@@ -25,7 +25,7 @@ declare_rule! {
     pub(crate) NoLabelVar {
         version: "0.7.0",
         name: "noLabelVar",
-        recommended: true
+        recommended: true,
     }
 }
 

@@ -28,7 +28,7 @@ declare_rule! {
     pub(crate) NoArguments {
         version: "0.7.0",
         name: "noArguments",
-        recommended: true
+        recommended: true,
     }
 }
 

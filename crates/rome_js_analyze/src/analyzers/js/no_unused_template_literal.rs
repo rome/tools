@@ -39,7 +39,7 @@ declare_rule! {
     pub(crate) NoUnusedTemplateLiteral {
         version: "0.7.0",
         name: "noUnusedTemplateLiteral",
-        recommended: true
+        recommended: true,
     }
 }
 

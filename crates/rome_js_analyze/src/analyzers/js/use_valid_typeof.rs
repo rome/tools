@@ -73,7 +73,7 @@ declare_rule! {
     pub(crate) UseValidTypeof {
         version: "0.7.0",
         name: "useValidTypeof",
-        recommended: true
+        recommended: true,
     }
 }
 

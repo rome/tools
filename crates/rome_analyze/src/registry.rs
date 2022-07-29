@@ -8,7 +8,7 @@ use crate::{
     matcher::{GroupKey, MatchQueryParams},
     query::{QueryKey, QueryMatch, Queryable},
     signals::RuleSignal,
-    AnalysisFilter, QueryMatcher, Rule, RuleGroup, RuleKey, SignalEntry,
+    AnalysisFilter, QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata, SignalEntry,
 };
 
 /// Defines all the phases that the [RuleRegistry] supports.
@@ -43,7 +43,7 @@ impl Phase for () {
 pub struct RuleRegistry<L: Language> {
     /// Stores metadata information for all the rules in the registry, sorted
     /// alphabetically
-    metadata: BTreeMap<MetadataKey, MetadataValue>,
+    metadata: BTreeMap<MetadataKey, RuleMetadata>,
     /// Holds a collection of rules for each phase.
     phase_rules: [PhaseRules<L>; 2],
 }
@@ -107,30 +107,18 @@ impl<L: Language + Default> RuleRegistry<L> {
 
         self.metadata.insert(
             MetadataKey {
-                inner: (G::NAME, R::NAME),
+                inner: (G::NAME, R::METADATA.name),
             },
-            MetadataValue {
-                version: R::VERSION,
-                docs: R::DOCS,
-                deprecated: R::DEPRECATED,
-                recommended: R::RECOMMENDED,
-            },
+            R::METADATA,
         );
     }
 
     /// Returns an iterator over the name and documentation of all active rules
     /// in this instance of the registry
-    pub fn metadata(self) -> impl Iterator<Item = RuleMetadata> {
+    pub fn metadata(self) -> impl Iterator<Item = RegistryRuleMetadata> {
         self.metadata.into_iter().map(|(key, value)| {
-            let (group, name) = key.inner;
-            RuleMetadata {
-                group,
-                name,
-                docs: value.docs,
-                version: value.version,
-                deprecated: value.deprecated,
-                recommended: value.recommended,
-            }
+            let (group, _) = key.inner;
+            RegistryRuleMetadata { group, rule: value }
         })
     }
 }
@@ -216,21 +204,10 @@ impl<'a> borrow::Borrow<(&'a str, &'a str)> for MetadataKey {
     }
 }
 
-struct MetadataValue {
-    version: &'static str,
-    docs: &'static str,
-    deprecated: Option<&'static str>,
-    recommended: bool,
-}
-
-/// Metadata entry for a rule in the registry
-pub struct RuleMetadata {
+/// Metadata entry for a rule and its group in the registry
+pub struct RegistryRuleMetadata {
     pub group: &'static str,
-    pub name: &'static str,
-    pub docs: &'static str,
-    pub version: &'static str,
-    pub deprecated: Option<&'static str>,
-    pub recommended: bool,
+    pub rule: RuleMetadata,
 }
 
 /// Internal representation of a single rule in the registry
