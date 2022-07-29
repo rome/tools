@@ -47,3 +47,4 @@
 
 // https://github.com/rome/tools/issues/2944
 <div className={asdf asdf} />;
+<div className={asdf /** test*/ asdf} />;

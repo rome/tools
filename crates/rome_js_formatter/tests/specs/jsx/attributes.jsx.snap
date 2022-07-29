@@ -53,6 +53,7 @@ expression: attributes.jsx
 
 // https://github.com/rome/tools/issues/2944
 <div className={asdf asdf} />;
+<div className={asdf /** test*/ asdf} />;
 =============================
 # Outputs
 ## Output 1
@@ -117,6 +118,7 @@ let a = (
 
 // https://github.com/rome/tools/issues/2944
 <div className={asdf asdf} />;
+<div className={asdf /** test*/ asdf} />;
 
 
 ## Lines exceeding width of 80 characters
