@@ -10,8 +10,6 @@ use rome_rowan::AstNode;
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsStaticMemberExpression;
 
-struct MemberLabel;
-
 impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression {
     fn fmt_fields(&self, node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsStaticMemberExpressionFields {
@@ -31,14 +29,11 @@ impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression
             StaticMemberExpressionLayout::BreakAfterObject => {
                 write!(
                     f,
-                    [labelled(
-                        LabelId::of::<MemberLabel>(),
-                        &group(&indent(&format_args![
-                            soft_line_break(),
-                            operator_token.format(),
-                            member.format(),
-                        ]))
-                    )]
+                    [group(&indent(&format_args![
+                        soft_line_break(),
+                        operator_token.format(),
+                        member.format(),
+                    ]))]
                 )
             }
         }

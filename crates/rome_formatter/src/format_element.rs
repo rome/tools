@@ -416,7 +416,7 @@ impl std::fmt::Debug for LabelId {
 #[cfg(not(debug_assertions))]
 impl std::fmt::Debug for LabelId {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::write!(f, "#{}", self.id)
+        std::write!(f, "#{:?}", self.id)
     }
 }
 
