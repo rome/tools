@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 88
+assertion_line: 89
 expression: noImportAssign.js
 ---
 # Input

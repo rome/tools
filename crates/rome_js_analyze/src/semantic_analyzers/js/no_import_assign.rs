@@ -52,7 +52,7 @@ declare_rule! {
     pub(crate) NoImportAssign {
         version: "0.8.0",
         name: "noImportAssign",
-        recommended: true
+        recommended: true,
     }
 }
 
