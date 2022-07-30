@@ -141,7 +141,7 @@ impl SemanticEvent {
 ///         WalkEvent::Leave(node) => extractor.leave(&node),
 ///         _ => {}
 ///     }
-///     
+///
 ///     while let Some(e) = extractor.pop() {
 ///         dbg!(e);
 ///     }
@@ -372,7 +372,7 @@ impl SemanticEventExtractor {
             JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
-            | JS_FUNCTION_EXPRESSION
+            |JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
