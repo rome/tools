@@ -91,13 +91,11 @@ impl Rule for NoImportAssign {
             .and_then(|binding| {
                 let ident_binding = binding.as_js_identifier_binding()?;
                 let model = ctx.model();
-                for reference in model.all_references(ident_binding) {
-                    if reference.is_write() {
-                        invalid_assign_list.push((
-                            JsIdentifierAssignment::cast(reference.node().clone())?,
-                            ident_binding.clone(),
-                        ));
-                    }
+                for reference in model.all_writes(ident_binding) {
+                    invalid_assign_list.push((
+                        JsIdentifierAssignment::cast(reference.node().clone())?,
+                        ident_binding.clone(),
+                    ));
                 }
                 Some(invalid_assign_list)
             })
