@@ -222,6 +222,7 @@ impl SemanticEventExtractor {
                 ScopeHoisting::DontHoistDeclarationsToParent,
             ),
             JS_FUNCTION_DECLARATION
+            | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
