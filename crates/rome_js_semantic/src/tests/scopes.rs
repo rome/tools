@@ -20,7 +20,6 @@ assert_semantics! {
 assert_semantics! {
     ok_scope_function, ";function/*START A*/ f() {}/*END A*/",
     ok_scope_function_expression, ";var a = function/*START A*/ f() {}/*END A*/",
-
     ok_scope_arrow_function, ";(/*START A*/) => {}/*END A*/",
 }
 
