@@ -118,7 +118,7 @@ impl Rule for NoFunctionAssign {
 
         let id = declaration.id().ok()?;
         let id = id.as_js_identifier_binding()?;
-        let all_writes: Vec<Reference> = id.all_references(model).collect();
+        let all_writes: Vec<Reference> = id.all_writes(model).collect();
         if all_writes.is_empty() {
             None
         } else {
