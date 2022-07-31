@@ -49,7 +49,7 @@ jobs:
           version: 7
       - name: Install libraries
         working-directory: website/playground
-        run: pnpm i
+        run: pnpm i -r
       - name: Build Wasm
         working-directory: website/playground
         run: pnpm build
