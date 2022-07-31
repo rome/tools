@@ -1500,6 +1500,7 @@ version = "0.0.0"
 dependencies = [
  "case",
  "countme",
+ "criterion",
  "fastbloom-rs",
  "fst",
  "iai",
