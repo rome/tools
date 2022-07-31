@@ -14,14 +14,13 @@
 		"tsc": "tsc",
 		"build:codemirror": "pnpm --filter codemirror-lang-rome-ast run build ",
 		"postinstall": "pnpm build:codemirror"
-	
 	},
 	"dependencies": {
 		"@codemirror/lang-javascript": "^6.0.1",
-		"codemirror-lang-rome-ast": "file:./lang-rome-ast",
-		"@uiw/react-codemirror": "^4.11.4",
-		"@codemirror/view": "6.1.0",
 		"@codemirror/state": "6.1.0",
+		"@codemirror/view": "6.1.0",
+		"@uiw/react-codemirror": "^4.11.4",
+		"codemirror-lang-rome-ast": "file:./lang-rome-ast",
 		"prettier": "^2.7.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
