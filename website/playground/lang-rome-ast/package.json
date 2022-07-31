@@ -21,7 +21,8 @@
   "scripts": {
     "dev": "npm run build && vite ./dev",
     "build": "cm-buildhelper src/index.ts",
-    "test": "cm-runtests"
+    "test": "cm-runtests",
+    "postinstall": "pnpm --filter codemirror-lang-rome-ast build"
   },
   "dependencies": {
     "@codemirror/language": "^6.0.0",
@@ -39,8 +40,7 @@
     "@codemirror/view": "6.0.0",
     "@lezer/generator": "^1.0.0",
     "codemirror": "^6.0.0",
-    "rome": "0.7.0-next.f6510d6",
-    "vite": "^3.0.2"
+    "rome": "0.7.0-next.f6510d6"
   },
   "repository": {
     "type": "git",
