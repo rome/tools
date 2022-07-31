@@ -12,7 +12,8 @@
 		"format": "cargo run -p rome_cli --release -- format --write ./src",
 		"format:rome": "rome format --write src .",
 		"tsc": "tsc",
-		"build:codemirror": "pnpm --filter codemirror-lang-rome-ast run build "
+		"build:codemirror": "pnpm --filter codemirror-lang-rome-ast run build ",
+		"postinstall": "pnpm build:codemirror"
 	
 	},
 	"dependencies": {
