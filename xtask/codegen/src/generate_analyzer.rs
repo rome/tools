@@ -55,7 +55,7 @@ fn generate_category(
             file_name.to_string(),
             quote! {
                 mod #module_name;
-                pub(super) use #module_name::#group_name;
+                pub(super) use self::#module_name::#group_name;
             },
         );
     }
@@ -103,7 +103,7 @@ fn generate_group(category: &'static str, group: &str) -> Result<()> {
                     mod #module_name;
                 },
                 quote! {
-                    #module_name::#rule_name
+                    self::#module_name::#rule_name
                 },
             ),
         );

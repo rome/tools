@@ -131,7 +131,11 @@ pub struct Js {
 }
 impl Js {
     const GROUP_NAME: &'static str = "js";
+<<<<<<< HEAD
     pub(crate) const GROUP_RULES: [&'static str; 28] = [
+=======
+    pub(crate) const GROUP_RULES: [&'static str; 26] = [
+>>>>>>> 196e4fd7ac (no shadow restricted lint rule)
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -146,6 +150,7 @@ impl Js {
         "noImportAssign",
         "noLabelVar",
         "noNegationElse",
+        "noShadowRestrictedNames",
         "noShoutyConstants",
         "noSparseArray",
         "noUnnecessaryContinue",
@@ -161,7 +166,11 @@ impl Js {
         "useValidTypeof",
         "useWhile",
     ];
+<<<<<<< HEAD
     const RECOMMENDED_RULES: [RuleFilter<'static>; 26] = [
+=======
+    const RECOMMENDED_RULES: [RuleFilter<'static>; 24] = [
+>>>>>>> 196e4fd7ac (no shadow restricted lint rule)
         RuleFilter::Rule("js", Self::GROUP_RULES[0]),
         RuleFilter::Rule("js", Self::GROUP_RULES[1]),
         RuleFilter::Rule("js", Self::GROUP_RULES[2]),
@@ -180,14 +189,16 @@ impl Js {
         RuleFilter::Rule("js", Self::GROUP_RULES[16]),
         RuleFilter::Rule("js", Self::GROUP_RULES[17]),
         RuleFilter::Rule("js", Self::GROUP_RULES[18]),
-        RuleFilter::Rule("js", Self::GROUP_RULES[19]),
         RuleFilter::Rule("js", Self::GROUP_RULES[20]),
         RuleFilter::Rule("js", Self::GROUP_RULES[22]),
         RuleFilter::Rule("js", Self::GROUP_RULES[23]),
         RuleFilter::Rule("js", Self::GROUP_RULES[24]),
         RuleFilter::Rule("js", Self::GROUP_RULES[25]),
+<<<<<<< HEAD
         RuleFilter::Rule("js", Self::GROUP_RULES[26]),
         RuleFilter::Rule("js", Self::GROUP_RULES[27]),
+=======
+>>>>>>> 196e4fd7ac (no shadow restricted lint rule)
     ];
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {

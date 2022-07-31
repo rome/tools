@@ -18,7 +18,7 @@ rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 roaring = "0.9.0"
 rustc-hash = "1.1.0"
-iai = "0.1.1"
+regex = { version = "1.6.0" }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
@@ -26,8 +26,23 @@ rome_text_edit = { path = "../rome_text_edit" }
 rome_js_parser = { path = "../rome_js_parser", features = ["tests"] }
 insta = { version = "1.10.0", features = ["glob"] }
 countme = { version = "3.0.0", features = ["enable"] }
+iai = "0.1.1"
 case = "1.0.0"
+fastbloom-rs = "0.3.0"
+qp-trie = "0.8.0"
+fst = "0.4.7"
+
 
 [[bench]]
-name = "iai"
+name = "to_camel_case"
 harness = false
+
+[[bench]]
+name = "contains"
+harness = false
+
+[[bin]]
+name = "contains_iai"
+path = "bins/contains_iai.rs"
+test = false
+bench = false
