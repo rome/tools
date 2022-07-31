@@ -9,12 +9,6 @@ import {
 	continuedIndent,
 } from "@codemirror/language";
 import { styleTags, tags as t } from "@lezer/highlight";
-import {
-	completeFromList,
-	ifNotIn,
-	snippetCompletion as snip,
-	Completion,
-} from "@codemirror/autocomplete";
 
 export const romeAstLanguage = LRLanguage.define({
 	parser: romeParser.configure({

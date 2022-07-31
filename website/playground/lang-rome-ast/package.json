@@ -21,11 +21,9 @@
   "scripts": {
     "dev": "npm run build && vite ./dev",
     "build": "cm-buildhelper src/index.ts",
-    "test": "cm-runtests",
-    "postinstall": "npm run build"
+    "test": "cm-runtests"
   },
   "dependencies": {
-    "@codemirror/autocomplete": "^6.0.0",
     "@codemirror/language": "^6.0.0",
     "@codemirror/state": "^6.0.0",
     "@codemirror/view": "^6.0.0",
