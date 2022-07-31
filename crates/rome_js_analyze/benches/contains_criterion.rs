@@ -82,6 +82,27 @@ fn criterion_benchmark(c: &mut Criterion) {
             count
         })
     });
+
+    let set = contains_memchr_setup();
+    c.bench_function("contains_memchr", |b| {
+        b.iter(|| {
+            {
+                let mut count = 0;
+                for k in search_for() {
+                    for item in set.iter() {
+                        count += if memchr::memmem::find(k.as_bytes(), item.as_str().as_bytes())
+                            .is_some()
+                        {
+                            1
+                        } else {
+                            0
+                        };
+                    }
+                }
+                count
+            };
+        })
+    });
 }
 
 criterion_group!(contains, criterion_benchmark);

@@ -19,5 +19,7 @@ iai::main!(
     contains_fst_setup,
     contains_fst,
     contains_binary_search_setup,
-    contains_binary_search
+    contains_binary_search,
+    contains_memchr_setup,
+    contains_memchr,
 );

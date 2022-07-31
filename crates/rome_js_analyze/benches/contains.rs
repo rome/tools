@@ -150,3 +150,23 @@ pub fn contains_fst() -> i32 {
     }
     count
 }
+
+pub fn contains_memchr_setup() -> Vec<String> {
+    contains_binary_search_setup()
+}
+
+pub fn contains_memchr() -> i32 {
+    let set = contains_memchr_setup();
+
+    let mut count = 0;
+    for k in search_for() {
+        for item in set.iter() {
+            count += if memchr::memmem::find(k.as_bytes(), item.as_str().as_bytes()).is_some() {
+                1
+            } else {
+                0
+            };
+        }
+    }
+    count
+}
