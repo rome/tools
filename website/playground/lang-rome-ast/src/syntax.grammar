@@ -1,0 +1,70 @@
+@top Program { SyntaxNode }
+
+@skip { space  }
+
+SyntaxNode {
+  SyntaxNodeType '{' 
+    (SyntaxNodePair ',')+
+  '}'
+}
+
+
+SyntaxToken {
+  SyntaxTokenType '@' Range String TriviaPart TriviaPart
+}
+
+SyntaxNodeList {
+  SyntaxNodeType '[' 
+    ((SyntaxNode | SyntaxToken)  ',')*
+  ']'
+}
+
+Range {
+  Number '.' '.' Number
+}
+
+TriviaPart {
+  '[' TriviaList? ']'
+}
+
+
+TriviaList {
+ Trivia (',' Trivia)*
+}
+
+Trivia {
+  Identifier '(' String ')'
+}
+
+
+SyntaxNodePair {
+  SyntaxNodePairKey ':' (SyntaxNode | SyntaxToken | MissingOptional | MissingRequired | SyntaxNodeList)
+}
+
+
+
+
+@tokens {
+  String {'"' (![\\\n"] | "\\" _)* '"'}
+  Number { $[0-9]+ }
+  Identifier { $[a-zA-Z_]+ }
+  space { $[ \t\n\r]+ }
+
+  SyntaxNodePairKey { $[a-z_]+ }
+
+  // Workaround for ambiguity between `SyntaxNodeType` and `SyntaxTokenType`
+  SyntaxNodeType { $[A-Z]$[a-z]$[A-Za-z]* }
+
+  SyntaxTokenType { $[A-Z_]+ }
+    
+  @precedence { SyntaxNodeType,SyntaxTokenType }
+
+  MissingOptional { 'missing (optional)' }
+  MissingRequired { 'missing (required)' }
+
+  "[" "]"
+  "{" "}"
+  "(" ")"
+}
+
+@detectDelim

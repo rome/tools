@@ -13,7 +13,7 @@ specifiers:
   '@uiw/react-codemirror': ^4.11.4
   '@vitejs/plugin-react': ^1.0.7
   autoprefixer: ^10.4.2
-  codemirror-lang-rome-ast: 0.0.4
+  codemirror-lang-rome-ast: file:./lang-rome-ast
   postcss: ^8.4.6
   prettier: ^2.7.0
   react: ^17.0.2
@@ -30,7 +30,7 @@ dependencies:
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
   '@uiw/react-codemirror': 4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq
-  codemirror-lang-rome-ast: 0.0.4
+  codemirror-lang-rome-ast: file:lang-rome-ast
   prettier: 2.7.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -888,18 +888,6 @@ packages:
   /clsx/1.1.1:
     resolution: {integrity: sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==}
     engines: {node: '>=6'}
-    dev: false
-
-  /codemirror-lang-rome-ast/0.0.4:
-    resolution: {integrity: sha512-fX6ahzHRhN2dNU6YcMDelT74qL4S3w+mu9PqE8xQA0UvBR/auGJsMFuKM6AJTK9ktZQ2y3cwZAa3hOevSZy01g==}
-    dependencies:
-      '@codemirror/autocomplete': 6.0.4
-      '@codemirror/language': 6.2.0
-      '@codemirror/state': 6.1.0
-      '@codemirror/view': 6.1.0
-      '@lezer/common': 1.0.0
-      '@lezer/highlight': 1.0.0
-      '@lezer/lr': 1.2.0
     dev: false
 
   /codemirror/6.0.1:
@@ -1849,3 +1837,17 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
     dev: true
+
+  file:lang-rome-ast:
+    resolution: {directory: lang-rome-ast, type: directory}
+    name: codemirror-lang-rome-ast
+    version: 0.0.4
+    dependencies:
+      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/language': 6.2.0
+      '@codemirror/state': 6.1.0
+      '@codemirror/view': 6.1.0
+      '@lezer/common': 1.0.0
+      '@lezer/highlight': 1.0.0
+      '@lezer/lr': 1.2.0
+    dev: false
