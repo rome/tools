@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::collections::{BTreeSet, HashSet};
 
 use fastbloom_rs::{BloomFilter, FilterBuilder, Membership};
