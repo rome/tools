@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@codemirror/autocomplete': ^6.0.0
   '@codemirror/buildhelper': ^0.1.16
   '@codemirror/language': ^6.0.0
   '@codemirror/state': ^6.0.0
@@ -16,7 +15,6 @@ specifiers:
   vite: ^3.0.2
 
 dependencies:
-  '@codemirror/autocomplete': 6.1.0
   '@codemirror/language': 6.2.1
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
@@ -66,6 +64,7 @@ packages:
       '@codemirror/state': 6.1.0
       '@codemirror/view': 6.1.0
       '@lezer/common': 1.0.0
+    dev: true
 
   /@codemirror/buildhelper/0.1.16:
     resolution: {integrity: sha512-b88pPVoLoBp3DHe+CK5p/1t/WFGYRGxn69d9Efp/cEP3uF91hXTIKOimaL3IyVhm9q6ILjKzn8q8MFUUy7GvwA==}
