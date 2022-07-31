@@ -132,26 +132,6 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:22:26
-   │
-22 │ export default function (a, b, a, a) {}
-   │                          -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:22:29
-   │
-22 │ export default function (a, b, a, a) {}
-   │                             -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
    ┌─ noDupeArgs.js:22:32
    │
 22 │ export default function (a, b, a, a) {}
