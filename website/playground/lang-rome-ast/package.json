@@ -3,7 +3,7 @@
   "description": "A Rome-Ast mode for CodeMirror 6",
   "version": "0.0.4",
   "type": "module",
-  "main": "dist/index.cjs",
+  "main": "dist/index.js",
   "exports": {
     "import": "./dist/index.js",
     "require": "./dist/index.cjs"
