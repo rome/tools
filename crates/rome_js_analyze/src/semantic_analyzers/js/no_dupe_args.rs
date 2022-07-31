@@ -1,36 +1,39 @@
-use crate::{semantic_services::Semantic, JsRuleAction};
+use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticScopeExtensions;
-use rome_js_syntax::{
-    JsAnyFunction, JsArrowFunctionExpression, JsFunctionDeclaration, JsFunctionExpression,
-    JsIdentifierBinding, JsLabeledStatement, JsSyntaxNode, JsSyntaxToken,
-};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_syntax::{JsAnyFunction, JsIdentifierBinding, JsSyntaxNode};
+use rome_rowan::AstNode;
 use rustc_hash::FxHashSet;
 
 declare_rule! {
-    ///  Disallow labels that share a name with a variable
+    ///  Disallow duplicate function arguments name.
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// const x1 = "test";
-    /// x1: expr;
+    /// var f = function(a, b, b) {}
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// function b(a, b, b) {}
     /// ```
     ///
     /// ### Valid
     ///
     /// ```js
-    /// const x = "test";
-    /// z: expr;
+    /// function i(i, b, c) {}
+    /// var j = function (j, b, c) {};
+    /// function k({ k, b }, { c, d }) {}
+    /// function l([, l]) {}
+    /// function foo([[a, b], [c, d]]) {}
     /// ```
     pub(crate) NoDupeArgs {
-        version: "0.7.0",
+        version: "0.8.0",
         name: "noDupeArgs",
-        recommended: true
+        recommended: true,
     }
 }
 
@@ -38,7 +41,6 @@ impl Rule for NoDupeArgs {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Semantic<JsAnyFunction>;
-    /// The first element of the tuple is the name of the binding, the second element of the tuple is the label name
     type State = JsSyntaxNode;
     type Signals = Vec<Self::State>;
 
@@ -59,14 +61,12 @@ impl Rule for NoDupeArgs {
                 if let Some(binding) = args
                     .syntax()
                     .descendants()
-                    .find_map(|item| JsIdentifierBinding::cast(item))
+                    .find_map(JsIdentifierBinding::cast)
                 {
-                    println!("{}", args.syntax());
                     let mut set = FxHashSet::default();
                     let model = ctx.model();
                     let scope = binding.scope(model);
                     for binding in scope.bindings() {
-                        println!("{}", binding.syntax());
                         let name = binding.syntax().text_trimmed().to_string();
                         if set.contains(&name) {
                             ret.push(binding.syntax().clone());
@@ -78,29 +78,15 @@ impl Rule for NoDupeArgs {
                 Some(ret)
             })
             .unwrap_or_default()
-        // for arg in args.items() {
-        //     let arg = arg.ok()?;
-        // }
     }
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let binding_syntax_node = state;
-        // let name = label_token.text_trimmed();
-
         Some(RuleDiagnostic::warning(
             binding_syntax_node.text_trimmed_range(),
             markup! {
                 "Duplicate argument name"
             },
         ))
-        // .secondary(binding_syntax_node.text_trimmed_range(), markup! {
-        //     "The variable is declared here"
-        // },)
-        // .footer_note(markup! {"Creating a label with the same name as an in-scope variable leads to confusion."}))
     }
 }
-
-// declare_node_union! {
-//     /// Matches an if statement or a conditional expression
-//     pub(crate) JsAnyFunctionLike = JsFunctionDeclaration | JsFunctionExpression | JsArrowFunctionExpression
-// }

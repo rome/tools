@@ -6,8 +6,11 @@ expression: noDupeArgs.js
 # Input
 ```js
 // valid
-function a([ , a]) {}
-
+function a(a, b, c) {}
+var j = function (j, b, c) {};
+function k({ k, b }, { c, d }) {}
+function l([, l]) {}
+function foo([[a, b], [c, d]]) {}
 // invalid
 function b(a, b, b) {}
 
@@ -22,14 +25,16 @@ var f = function(a, b, b) {}
 var g = function(a, a, a) {}
 
 var h = function(a, b, a) {}
+
+export default function (a, b, a, a) {}
 ```
 
 # Diagnostics
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-  ┌─ noDupeArgs.js:5:18
+  ┌─ noDupeArgs.js:8:18
   │
-5 │ function b(a, b, b) {}
+8 │ function b(a, b, b) {}
   │                  -
 
 
@@ -37,39 +42,19 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-  ┌─ noDupeArgs.js:7:15
-  │
-7 │ function c(a, a, a) {}
-  │               -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-  ┌─ noDupeArgs.js:7:18
-  │
-7 │ function c(a, a, a) {}
-  │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-  ┌─ noDupeArgs.js:9:18
-  │
-9 │ function d(a, b, a) {}
-  │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:11:18
+   ┌─ noDupeArgs.js:10:15
    │
-11 │ function e(a, b, a, b) {}
+10 │ function c(a, a, a) {}
+   │               -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:10:18
+   │
+10 │ function c(a, a, a) {}
    │                  -
 
 
@@ -77,19 +62,9 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:11:21
+   ┌─ noDupeArgs.js:12:18
    │
-11 │ function e(a, b, a, b) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:18
-   │
-13 │ var f = function(a, b, b) {}
+12 │ function d(a, b, a) {}
    │                  -
 
 
@@ -97,9 +72,19 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:21
+   ┌─ noDupeArgs.js:14:18
    │
-13 │ var f = function(a, b, b) {}
+14 │ function e(a, b, a, b) {}
+   │                  -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:14:21
+   │
+14 │ function e(a, b, a, b) {}
    │                     -
 
 
@@ -107,9 +92,9 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:24
+   ┌─ noDupeArgs.js:16:24
    │
-13 │ var f = function(a, b, b) {}
+16 │ var f = function(a, b, b) {}
    │                        -
 
 
@@ -117,19 +102,9 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:18
+   ┌─ noDupeArgs.js:18:21
    │
-15 │ var g = function(a, a, a) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:21
-   │
-15 │ var g = function(a, a, a) {}
+18 │ var g = function(a, a, a) {}
    │                     -
 
 
@@ -137,9 +112,9 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:24
+   ┌─ noDupeArgs.js:18:24
    │
-15 │ var g = function(a, a, a) {}
+18 │ var g = function(a, a, a) {}
    │                        -
 
 
@@ -147,29 +122,9 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:18
+   ┌─ noDupeArgs.js:20:24
    │
-17 │ var h = function(a, b, a) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:21
-   │
-17 │ var h = function(a, b, a) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:24
-   │
-17 │ var h = function(a, b, a) {}
+20 │ var h = function(a, b, a) {}
    │                        -
 
 
@@ -177,180 +132,40 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:18
+   ┌─ noDupeArgs.js:22:26
    │
-13 │ var f = function(a, b, b) {}
-   │                  -
+22 │ export default function (a, b, a, a) {}
+   │                          -
 
 
 ```
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:21
+   ┌─ noDupeArgs.js:22:29
    │
-13 │ var f = function(a, b, b) {}
-   │                     -
+22 │ export default function (a, b, a, a) {}
+   │                             -
 
 
 ```
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:24
+   ┌─ noDupeArgs.js:22:32
    │
-13 │ var f = function(a, b, b) {}
-   │                        -
+22 │ export default function (a, b, a, a) {}
+   │                                -
 
 
 ```
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:18
+   ┌─ noDupeArgs.js:22:35
    │
-15 │ var g = function(a, a, a) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:21
-   │
-15 │ var g = function(a, a, a) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:24
-   │
-15 │ var g = function(a, a, a) {}
-   │                        -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:18
-   │
-17 │ var h = function(a, b, a) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:21
-   │
-17 │ var h = function(a, b, a) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:24
-   │
-17 │ var h = function(a, b, a) {}
-   │                        -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:18
-   │
-13 │ var f = function(a, b, b) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:21
-   │
-13 │ var f = function(a, b, b) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:13:24
-   │
-13 │ var f = function(a, b, b) {}
-   │                        -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:18
-   │
-15 │ var g = function(a, a, a) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:21
-   │
-15 │ var g = function(a, a, a) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:24
-   │
-15 │ var g = function(a, a, a) {}
-   │                        -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:18
-   │
-17 │ var h = function(a, b, a) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:21
-   │
-17 │ var h = function(a, b, a) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:17:24
-   │
-17 │ var h = function(a, b, a) {}
-   │                        -
+22 │ export default function (a, b, a, a) {}
+   │                                   -
 
 
 ```

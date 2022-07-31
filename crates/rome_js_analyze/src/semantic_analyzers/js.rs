@@ -10,4 +10,4 @@ mod no_label_var;
 mod no_shouty_constants;
 mod no_unused_variables;
 mod use_camel_case;
-declare_group! { pub (crate) Js { name : "js" , rules : [self :: no_arguments :: NoArguments , self :: no_catch_assign :: NoCatchAssign , self :: no_function_assign :: NoFunctionAssign , self :: no_import_assign :: NoImportAssign , self :: no_label_var :: NoLabelVar , self :: no_shouty_constants :: NoShoutyConstants , self :: no_unused_variables :: NoUnusedVariables , self :: use_camel_case :: UseCamelCase ,] } }
+declare_group! { pub (crate) Js { name : "js" , rules : [no_arguments :: NoArguments , no_catch_assign :: NoCatchAssign , no_dupe_args :: NoDupeArgs , no_function_assign :: NoFunctionAssign , no_label_var :: NoLabelVar , no_shouty_constants :: NoShoutyConstants , use_camel_case :: UseCamelCase ,] } }
