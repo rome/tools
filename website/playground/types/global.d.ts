@@ -1,1 +1,1 @@
-declare module "codemirror-lang-rome-ast";
+declare module "codemirror-lang-rome-ast" ;
