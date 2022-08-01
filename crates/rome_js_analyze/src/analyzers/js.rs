@@ -10,6 +10,7 @@ mod no_double_equals;
 mod no_empty_pattern;
 mod no_extra_boolean_cast;
 mod no_negation_else;
+mod no_shadow_restricted_names;
 mod no_sparse_array;
 mod no_unnecessary_continue;
 mod no_unsafe_negation;

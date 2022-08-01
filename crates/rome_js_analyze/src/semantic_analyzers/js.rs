@@ -6,7 +6,6 @@ mod no_catch_assign;
 mod no_function_assign;
 mod no_import_assign;
 mod no_label_var;
-mod no_shadow_restricted_names;
 mod no_shouty_constants;
 mod no_unused_variables;
 mod use_camel_case;
