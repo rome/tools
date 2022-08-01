@@ -19,7 +19,6 @@ rome_diagnostics = { path = "../rome_diagnostics" }
 roaring = "0.9.0"
 rustc-hash = "1.1.0"
 regex = { version = "1.6.0" }
-memchr = "2.5.0"
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
@@ -33,6 +32,7 @@ fastbloom-rs = "0.3.0"
 qp-trie = "0.8.0"
 fst = "0.4.7"
 criterion = "0.3.5"
+memchr = "2.5.0"
 
 [[bench]]
 name = "to_camel_case"
