@@ -119,6 +119,11 @@ jobs:
         with:
           command: codegen
           args: analyzer
+      - name: Run the configuration codegen
+        uses: actions-rs/cargo@v1
+        with:
+          command: codegen
+          args: configuration
       - name: Run the website codegen
         uses: actions-rs/cargo@v1
         with:
