@@ -6,13 +6,21 @@ import { javascript } from "@codemirror/lang-javascript";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
+import MermaidGraph from "./MermaidGraph";
 
 export function MobilePlayground(
 	{
 		setPlaygroundState,
 		playgroundState: { code, ...settings },
 		prettierOutput,
-		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+		romeOutput: {
+			cst,
+			ast,
+			formatted_code,
+			formatter_ir,
+			errors,
+			control_flow_graph,
+		},
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;
@@ -51,6 +59,12 @@ export function MobilePlayground(
 					<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
 					<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
 					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">Errors</Tab>
+					<Tab
+						disabled={control_flow_graph === ""}
+						selectedClassName="bg-slate-300"
+					>
+						Control Flow Graph
+					</Tab>
 				</TabList>
 				<TabPanel>
 					<CodeMirror
@@ -118,6 +132,7 @@ export function MobilePlayground(
 						{errors}
 					</pre>
 				</TabPanel>
+				<TabPanel><MermaidGraph graph={control_flow_graph} /></TabPanel>
 			</Tabs>
 		</div>
 	);
