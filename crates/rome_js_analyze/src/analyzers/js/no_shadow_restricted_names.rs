@@ -1,4 +1,3 @@
-use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::JsIdentifierBinding;
