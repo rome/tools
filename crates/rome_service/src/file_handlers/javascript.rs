@@ -269,7 +269,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
 fn format(
     rome_path: &RomePath,
     parse: AnyParse,
-    settings: SettingsHandle<()>,
+    settings: SettingsHandle,
 ) -> Result<Printed, RomeError> {
     let context = settings.format_context::<JsLanguage>(rome_path);
 
@@ -282,7 +282,7 @@ fn format(
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
-    settings: SettingsHandle<()>,
+    settings: SettingsHandle,
     range: TextRange,
 ) -> Result<Printed, RomeError> {
     let context = settings.format_context::<JsLanguage>(rome_path);
@@ -295,7 +295,7 @@ fn format_range(
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
-    settings: SettingsHandle<()>,
+    settings: SettingsHandle,
     offset: TextSize,
 ) -> Result<Printed, RomeError> {
     let context = settings.format_context::<JsLanguage>(rome_path);

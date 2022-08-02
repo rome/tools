@@ -83,11 +83,9 @@ type DebugPrint = fn(&RomePath, AnyParse) -> String;
 type Lint = fn(&RomePath, AnyParse, AnalysisFilter) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;
-type Format = fn(&RomePath, AnyParse, SettingsHandle<()>) -> Result<Printed, RomeError>;
-type FormatRange =
-    fn(&RomePath, AnyParse, SettingsHandle<()>, TextRange) -> Result<Printed, RomeError>;
-type FormatOnType =
-    fn(&RomePath, AnyParse, SettingsHandle<()>, TextSize) -> Result<Printed, RomeError>;
+type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, RomeError>;
+type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, RomeError>;
+type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, RomeError>;
 type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, RomeError>;
 
 pub(crate) struct Capabilities {

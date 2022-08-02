@@ -108,8 +108,8 @@ impl WorkspaceServer {
         }
     }
 
-    fn settings<E>(&self, editor: E) -> SettingsHandle<E> {
-        SettingsHandle::new(&self.settings, editor)
+    fn settings(&self) -> SettingsHandle {
+        SettingsHandle::new(&self.settings)
     }
 
     /// Get the parser result for a given file
@@ -263,7 +263,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let settings = self.settings(());
+        let settings = self.settings();
 
         if !settings.as_ref().format.format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -279,7 +279,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let settings = self.settings(());
+        let settings = self.settings();
 
         if !settings.as_ref().format.format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -295,7 +295,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let settings = self.settings(());
+        let settings = self.settings();
 
         if !settings.as_ref().format.format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);

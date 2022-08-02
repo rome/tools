@@ -155,29 +155,25 @@ pub struct LanguageSettings<L: Language> {
 /// Handle object holding a temporary lock on the workspace settings until
 /// the deferred language-specific options resolution is called
 #[derive(Debug)]
-pub(crate) struct SettingsHandle<'a, E> {
+pub(crate) struct SettingsHandle<'a> {
     inner: RwLockReadGuard<'a, WorkspaceSettings>,
-    /// Additional per-request state injected by the editor
-    #[allow(dead_code)]
-    editor: E,
 }
 
-impl<'a, E> SettingsHandle<'a, E> {
-    pub(crate) fn new(settings: &'a RwLock<WorkspaceSettings>, editor: E) -> Self {
+impl<'a> SettingsHandle<'a> {
+    pub(crate) fn new(settings: &'a RwLock<WorkspaceSettings>) -> Self {
         Self {
             inner: settings.read().unwrap(),
-            editor,
         }
     }
 }
 
-impl<'a, E> AsRef<WorkspaceSettings> for SettingsHandle<'a, E> {
+impl<'a> AsRef<WorkspaceSettings> for SettingsHandle<'a> {
     fn as_ref(&self) -> &WorkspaceSettings {
         &*self.inner
     }
 }
 
-impl<'a> SettingsHandle<'a, ()> {
+impl<'a> SettingsHandle<'a> {
     /// Resolve the formatting context for the given language
     pub(crate) fn format_context<L>(self, path: &RomePath) -> L::FormatContext
     where
