@@ -10,6 +10,6 @@ layout: layouts/homepage.liquid
 {% include docs/cli.md %}
 {% include docs/formatter.md %}
 {% include docs/linter.md %}
-{% include docs/ci.md %}
+{% include docs/project-config.md %}
 {% include docs/philosophy.md %}
 {% include docs/_old_diagnostic-anatomy.md %}
