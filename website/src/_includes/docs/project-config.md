@@ -1,6 +1,6 @@
 ## Project Configuration
 
-The configuration file is considered **optional**, Rome has strong defaults. Use the configuration
+The configuration file is considered **optional**, Rome has good defaults. Use the configuration
 file to change those defaults.
 
 The configuration file must be placed at the root of your project, usually at the same directory level of your

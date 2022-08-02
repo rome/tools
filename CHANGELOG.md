@@ -15,7 +15,7 @@ This will work from both CLI and LSP.
 
 ### Linter
 
-The linter is now marked as "beta" and it can be used to lint code from the CLI and
+The linter is now marked as "alpha" and it can be used to lint code from the CLI and
 from the LSP.
 
 ### Formatter
