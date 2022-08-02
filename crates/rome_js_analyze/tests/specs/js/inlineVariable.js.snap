@@ -1,0 +1,35 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: inlineVariable.js
+---
+# Input
+```js
+let inlinable = "value1";
+let notInlinable = "value2";
+
+if (inlinable) {
+    notInlinable = inlinable;
+}
+
+statement(notInlinable);
+
+```
+
+# Actions
+```
+    | @@ -1,8 +1,8 @@
+0   | - let inlinable = "value1";
+  0 | + 
+1 1 |   let notInlinable = "value2";
+2 2 |   
+3   | - if (inlinable) {
+4   | -     notInlinable = inlinable;
+  3 | + if ("value1") {
+  4 | +     notInlinable = "value1";
+5 5 |   }
+6 6 |   
+7 7 |   statement(notInlinable);
+
+```
+
+
