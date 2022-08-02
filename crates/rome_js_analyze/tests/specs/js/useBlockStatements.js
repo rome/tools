@@ -12,3 +12,29 @@ for (x of xs);
 do;
 while (x);
 while (x);
+
+if (x);
+
+if (test);
+else if (test);
+else;
+
+while (test)
+  bar
+
+  while (test)
+    bar
+
+if (test)
+  bar
+else if(test)
+  bar
+else
+  bar
+
+  if (test)
+    bar
+  else if(test)
+    bar
+  else
+    bar
