@@ -14,9 +14,9 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
         let format_inner = format_with(|f| {
             let length = node.len();
 
-            let is_parent_for_loop = node.syntax().grand_parent().map_or(false, |parent| {
+            let is_parent_for_loop = node.syntax().grand_parent().map_or(false, |grand_parent| {
                 matches!(
-                    parent.kind(),
+                    grand_parent.kind(),
                     JsSyntaxKind::JS_FOR_STATEMENT
                         | JsSyntaxKind::JS_FOR_OF_STATEMENT
                         | JsSyntaxKind::JS_FOR_IN_STATEMENT
@@ -55,7 +55,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
                     write!(f, [format_first_declarator])?;
 
                     if length > 1 {
-                        write!(f, [line_suffix_boundary(), format_separator])?;
+                        write!(f, [format_separator])?;
                     }
 
                     f.join_with(&format_separator)
