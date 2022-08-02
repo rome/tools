@@ -8,7 +8,9 @@ The configuration file must be placed at the root of your project, usually at th
 
 All properties are **optional**, you can even have an empty config!
 
-We are deliberately lean with the supported configuration. We do not include options just for the sake of personalization. We aim to offer everything out of the box and only introduce configuration if absolutely necessary.
+We are deliberately lean with the supported configuration. 
+We do not include options just for the sake of personalization. 
+We aim to offer everything out of the box and only introduce configuration if [absolutely necessary](https://rome.tools/#philosophy).
 
 ```json
 {
@@ -32,7 +34,7 @@ Enables Rome's linter
 
 #### `linter.rules.recommended`
 
-Enables the recommended rule sets for all the groups. 
+Enables the [recommended rules](/docs/lint/rules) for all the groups. 
 
 > Default: `true`
 
@@ -43,7 +45,7 @@ A list of rules for `JavaScript` category.
 
 #### `linter.rules.js.recommended` 
 
-Enables the recommended rules for the category `JavaScript`.
+Enables the [recommended rules](/docs/lint/rules) for the category `JavaScript`.
 
 #### `linter.rules.js.rules`
 
@@ -75,7 +77,7 @@ A list of rules for `TypeScript` category.
 
 #### `linter.rules.ts.recommended`
 
-Enables the recommended rules for the category `TypeScript`.
+Enables the [recommended rules](/docs/lint/rules) for the category `TypeScript`.
 
 #### `linter.rules.ts.rules`
 
@@ -107,7 +109,7 @@ A list of rules for `JSX` category.
 
 #### `linter.rules.jsx.recommended`
 
-Enables the recommended rules for the category `JSX`.
+Enables the [recommended rules](/docs/lint/rules) for the category `JSX`.
 
 #### `linter.rules.jsx.rules`
 
@@ -139,7 +141,7 @@ A list of rules for `Regex` category.
 
 #### `linter.rules.regex.recommended`
 
-Enables the recommended rules for the category `Regex`.
+Enables the [recommended rules](/docs/lint/rules) for the category `Regex`.
 
 #### `linter.rules.regex.rules`
 
