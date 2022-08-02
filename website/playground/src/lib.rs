@@ -190,7 +190,7 @@ pub fn run(
     let mut control_flow_graph = None;
 
     mark("rome::analyze::begin");
-    rome_js_analyze::analyze_with_matcher_layer(
+    rome_js_analyze::analyze_with_inspect_matcher(
         main_file_id,
         &parse.tree(),
         AnalysisFilter::default(),

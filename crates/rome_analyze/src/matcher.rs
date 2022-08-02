@@ -113,27 +113,27 @@ impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
     }
 }
 
-/// Adapter type wrapping a [QueryMatcher] type with a `layer` function that
-/// can be used to inspect the query matches emitted by the analyzer
-pub struct MatcherLayer<F, I> {
-    layer: F,
+/// Adapter type wrapping a [QueryMatcher] type with a function that can be
+/// used to inspect the query matches emitted by the analyzer
+pub struct InspectMatcher<F, I> {
+    func: F,
     inner: I,
 }
 
-impl<F, I> MatcherLayer<F, I> {
-    ///  Create a new instance of [MatcherLayer] from an existing [QueryMatcher]
-    /// object and a wrapper layer function
-    pub fn new<L>(inner: I, layer: F) -> Self
+impl<F, I> InspectMatcher<F, I> {
+    ///  Create a new instance of [InspectMatcher] from an existing [QueryMatcher]
+    /// object and an inspection function
+    pub fn new<L>(inner: I, func: F) -> Self
     where
         L: Language,
         F: FnMut(&MatchQueryParams<L>),
         I: QueryMatcher<L>,
     {
-        Self { layer, inner }
+        Self { func, inner }
     }
 }
 
-impl<L, F, I> QueryMatcher<L> for MatcherLayer<F, I>
+impl<L, F, I> QueryMatcher<L> for InspectMatcher<F, I>
 where
     L: Language,
     F: FnMut(&MatchQueryParams<L>),
@@ -148,7 +148,7 @@ where
     }
 
     fn match_query(&mut self, params: MatchQueryParams<L>) {
-        (self.layer)(&params);
+        (self.func)(&params);
         self.inner.match_query(params);
     }
 }
