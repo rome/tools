@@ -30,7 +30,10 @@ pub fn metadata(filter: AnalysisFilter) -> impl Iterator<Item = RegistryRuleMeta
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
-/// then call `emit_signal` when an analysis rule emits a diagnostic or action
+/// then call `emit_signal` when an analysis rule emits a diagnostic or action.
+/// Additionally, this function takes a `matcher_layer` function that can be
+/// used to inspect the "query matches" emitted by the analyzer before they are
+/// processed by the lint rules registry
 pub fn analyze_with_matcher_layer<'a, V, F, B>(
     file_id: FileId,
     root: &LanguageRoot<JsLanguage>,

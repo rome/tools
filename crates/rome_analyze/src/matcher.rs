@@ -113,12 +113,16 @@ impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
     }
 }
 
+/// Adapter type wrapping a [QueryMatcher] type with a `layer` function that
+/// can be used to inspect the query matches emitted by the analyzer
 pub struct MatcherLayer<F, I> {
     layer: F,
     inner: I,
 }
 
 impl<F, I> MatcherLayer<F, I> {
+    ///  Create a new instance of [MatcherLayer] from an existing [QueryMatcher]
+    /// object and a wrapper layer function
     pub fn new<L>(inner: I, layer: F) -> Self
     where
         L: Language,
