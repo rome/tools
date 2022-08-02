@@ -86,7 +86,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                 | JsObjectExpression(_)
                 | JsxTagExpression(_) => true,
                 JsParenthesizedExpression(_) => true,
-                expr => is_simple_expression(&expr)?,
+                expr => is_simple_expression(expr)?,
             },
         };
 
