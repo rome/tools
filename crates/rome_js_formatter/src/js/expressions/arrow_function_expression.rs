@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
+use crate::js::declarations::function_declaration::FormatFunction;
 use rome_js_syntax::{JsAnyFunction, JsArrowFunctionExpression};
 
 #[derive(Debug, Clone, Default)]
@@ -12,6 +13,6 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         node: &JsArrowFunctionExpression,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        write![f, [JsAnyFunction::from(node.clone()).format()]]
+        write![f, [FormatFunction::new(&JsAnyFunction::from(node.clone()))]]
     }
 }
