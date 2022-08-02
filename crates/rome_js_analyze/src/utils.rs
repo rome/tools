@@ -119,13 +119,15 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
     }
 }
 
+/// Utility function to remove a statement node from a syntax tree, by either
+/// removing the node from its parent if said parent is a statement list or
+/// module item list, or by replacing the statement node with an empty statement
 pub(crate) fn remove_statement<N>(
     mutation: &mut BatchMutation<JsLanguage, JsAnyRoot>,
     node: &N,
 ) -> Option<()>
 where
-    N: AstNode<Language = JsLanguage>,
-    JsAnyStatement: From<N>,
+    N: AstNode<Language = JsLanguage> + Into<JsAnyStatement>,
 {
     let parent = node.syntax().parent()?;
 
@@ -133,7 +135,7 @@ where
         mutation.remove_node(node.clone());
     } else {
         mutation.replace_node(
-            JsAnyStatement::from(node.clone()),
+            node.clone().into(),
             JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
         );
     }
