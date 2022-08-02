@@ -53,9 +53,7 @@ impl FormatFunction {
 
     fn id(&self) -> SyntaxResult<Option<JsAnyBinding>> {
         match self {
-            FormatFunction::JsFunctionDeclaration(declaration) => {
-                declaration.id().map(Some)
-            }
+            FormatFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
             FormatFunction::JsFunctionExpression(expression) => Ok(expression.id()),
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
         }
