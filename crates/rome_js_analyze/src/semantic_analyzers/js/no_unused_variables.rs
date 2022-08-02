@@ -4,14 +4,12 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference, SemanticScopeExtensions};
+use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsFormalParameter, JsFunctionDeclaration,
-    JsIdentifierBinding, JsIdentifierExpression, JsLanguage, JsStringLiteralExpression,
-    JsSyntaxKind, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
-    JsVariableStatement,
+    JsFormalParameter, JsFunctionDeclaration, JsIdentifierBinding, JsSyntaxKind,
+    JsVariableDeclarator,
 };
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, BatchMutationExt, SyntaxNodeCast};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Disallow unused variables.
@@ -116,7 +114,7 @@ impl Rule for NoUnusedVariables {
                 // Another possibility is if all its references are "inside" the same declaration
                 if let Some(declarator) = declarator.as_ref() {
                     let node = declarator.syntax();
-                    if r.node().ancestors().find(|n| n == node).is_some() {
+                    if r.node().ancestors().any(|n| n == *node) {
                         continue;
                     }
                 }

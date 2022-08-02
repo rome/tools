@@ -62,7 +62,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage, JsAnyRoot> {
     }
 
     fn remove_js_formal_parameter(&mut self, parameter: &JsFormalParameter) {
-        parameter.parent::<JsParameterList>().and_then(|list| {
+        parameter.parent::<JsParameterList>().map(|list| {
             let mut elements = list.elements();
 
             // Find the parameter we want to remove

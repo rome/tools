@@ -193,7 +193,7 @@ impl Scope {
     /// assert!(scope.is_ancestor_of(scope));
     /// ```
     pub fn is_ancestor_of(&self, other: &Scope) -> bool {
-        other.ancestors().find(|s| s == self).is_some()
+        other.ancestors().any(|s| s == *self)
     }
 }
 

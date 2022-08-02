@@ -6,11 +6,11 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsIdentifierBinding,
-    JsIdentifierExpression, JsLanguage, JsStringLiteralExpression, JsVariableDeclaration,
-    JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement,
+    JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
+    JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList,
 };
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, BatchMutationExt, SyntaxNodeCast};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
 declare_rule! {
     /// Disallow the use of constants which its value is the upper-case version of its name.
