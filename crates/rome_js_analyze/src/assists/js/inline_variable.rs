@@ -26,11 +26,19 @@ declare_rule! {
     }
 }
 
+/// Signal struct emitted for each variable declaration the rule can inline
+pub(crate) struct State {
+    /// List of references to the variable
+    references: Vec<Reference>,
+    /// Initializer expression for the variable to be inlined
+    expression: JsAnyExpression,
+}
+
 impl Rule for InlineVariable {
     const CATEGORY: RuleCategory = RuleCategory::Action;
 
     type Query = Semantic<JsVariableDeclarator>;
-    type State = (Vec<Reference>, JsAnyExpression);
+    type State = State;
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
@@ -58,13 +66,19 @@ impl Rule for InlineVariable {
 
         let initializer = declarator.initializer()?;
         let expression = initializer.expression().ok()?;
-        Some((references, expression))
+        Some(State {
+            references,
+            expression,
+        })
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
         let mut mutation = ctx.root().begin();
-        let (references, expression) = state;
+        let State {
+            references,
+            expression,
+        } = state;
 
         remove_declarator(&mut mutation, node);
 
