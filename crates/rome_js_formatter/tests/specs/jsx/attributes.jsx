@@ -43,3 +43,9 @@
 
 					<test {...WithAVeryLongFunctionthat_exceeds_the_line_width_what_happens_with_ithis()} />;
 					<div {...["Chungking Express", "Fallen Angels", "In the Mood for Love", "Days of Living Wild", "Happy Together"]}/>;
+
+
+//  https://github.com/rome/tools/issues/2944
+<div className={asdf asdf} />;
+<div className={asdf
+	/* comment */ asdf } />

@@ -74,6 +74,11 @@ impl SyntaxTrivia {
         self.green_trivia().pieces().last()
     }
 
+    /// Returns the first trivia piece element
+    pub(crate) fn first(&self) -> Option<&TriviaPiece> {
+        self.green_trivia().pieces().first()
+    }
+
     /// Iterate over all pieces of the trivia. The iterator returns the offset
     /// of the trivia as [TextSize] and its data as [Trivia], which contains its length.
     /// See [SyntaxTriviaPiece].
