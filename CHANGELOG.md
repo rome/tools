@@ -6,17 +6,17 @@
 
 - Added `--max-diagnostics` argument to the command `rome check`.
 - The maximum number of diagnostics printed is now 20, use `--max-diagnostics` to change the default. 
-- Added a new command `rome init`
+- Added a new command `rome init`.
 
 ### Configuration
 
-- You can create a configuration file called `rome.json` to customize Rome's default options.
+- You can create a configuration file called `rome.json` to customize Rome's default options. 
+This will work from both CLI and LSP.
 
 ### Linter
 
 The linter is now marked as "beta" and it can be used to lint code from the CLI and
 from the LSP.
-
 
 ### Formatter
 
@@ -31,7 +31,13 @@ from the LSP.
     }
   }
   ```
-- Fixed some edge cases where the comment suppressions were not working as expected; 
+- Fixed some edge cases where the comment suppressions were not working as expected.
+
+### VSCode
+
+- **BREAKING CHANGE**: Removed the majority of settings that were available in the extension, use the 
+configuration file `rome.json` to change the Rome's defaults.
+- The extension now allows to rename variables;
 
 ## 0.7.0
 
