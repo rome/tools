@@ -49,7 +49,7 @@ Enables the [recommended rules](/docs/lint/rules) for the category `JavaScript`.
 
 #### `linter.rules.js.rules`
 
-A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
+A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
 for more details.
 
 Example:
@@ -81,7 +81,7 @@ Enables the [recommended rules](/docs/lint/rules) for the category `TypeScript`.
 
 #### `linter.rules.ts.rules`
 
-A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
+A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
 for more details.
 
 Example:
@@ -113,7 +113,7 @@ Enables the [recommended rules](/docs/lint/rules) for the category `JSX`.
 
 #### `linter.rules.jsx.rules`
 
-A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
+A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
 for more details.
 
 Example:
@@ -145,7 +145,7 @@ Enables the [recommended rules](/docs/lint/rules) for the category `Regex`.
 
 #### `linter.rules.regex.rules`
 
-A map with the name of the rule as key, and their configuration as value. Check [#configure-a-rule]
+A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
 for more details.
 
 Example:
@@ -197,7 +197,7 @@ The type of quote used when representing string literals. It can be `single` or 
 
 > Default: `double`
 
-### Rule configuration
+### Configure a rule
 
 A rule can be configured for multiple purposes:
 - change the severity of their diagnostics;
