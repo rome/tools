@@ -27,8 +27,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// function foo(myVar) {
-    ///     console.log('foo');
+    /// function foo() {
     /// };
     /// ```
     ///
@@ -40,8 +39,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// const foo = (b) => {
-    ///     console.log('foo');
+    /// const foo = () => {
     /// };
     /// ```
     ///
@@ -61,7 +59,7 @@ declare_rule! {
     /// # Valid
     ///
     /// ```js
-    /// function foo(, b) {
+    /// function foo(b) {
     ///     console.log(b)
     /// };
     /// foo();

@@ -390,7 +390,7 @@ fn assert_lint(
     let mut write = HTML(content);
     let mut diagnostic_count = 0;
 
-    let mut write_diagnostic = |diag: Diagnostic| {
+    let mut write_diagnostic = |code: &str, diag: Diagnostic| {
         // Fail the test if the analysis returns more diagnostics than expected
         if test.expect_diagnostic {
             ensure!(
@@ -400,8 +400,9 @@ fn assert_lint(
             );
         } else {
             bail!(format!(
-                "analysis returned an unexpected diagnostic, code snippet:\n\n{:?}",
-                diag.code.unwrap_or_default()
+                "analysis returned an unexpected diagnostic, code snippet:\n\n{:?}\n\n{}",
+                diag.code.unwrap_or_default(),
+                code
             ));
         }
 
@@ -417,7 +418,7 @@ fn assert_lint(
 
     if parse.has_errors() {
         for diag in parse.into_diagnostics() {
-            write_diagnostic(diag)?;
+            write_diagnostic(code, diag)?;
         }
     } else {
         let root = parse.tree();
@@ -434,7 +435,7 @@ fn assert_lint(
                     diag.suggestions.push(action.into());
                 }
 
-                let res = write_diagnostic(diag);
+                let res = write_diagnostic(code, diag);
 
                 // Abort the analysis on error
                 if let Err(err) = res {

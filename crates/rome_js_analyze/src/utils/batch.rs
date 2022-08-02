@@ -88,8 +88,8 @@ impl JsBatchMutation for BatchMutation<JsLanguage, JsAnyRoot> {
 
             // if it is the last parameter of the list
             // removes the comma before this element
-            if dbg!(elements.next().is_none()) {
-                if let Some(element) = dbg!(previous_element) {
+            if elements.next().is_none() {
+                if let Some(element) = previous_element {
                     if let Some(comma) = element.trailing_separator().ok().flatten() {
                         self.remove_token(comma.clone());
                     }
