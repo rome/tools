@@ -64,7 +64,7 @@ impl FormatFunction {
             FormatFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
             FormatFunction::JsFunctionExpression(expression) => Ok(expression.id()),
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.id().map(Some),
+            FormatFunction::TsDeclareFunctionDeclaration(member) => member.id().map(|id| Some(id)),
         }
     }
 
