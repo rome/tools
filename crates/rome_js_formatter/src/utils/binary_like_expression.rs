@@ -150,7 +150,7 @@ pub(crate) fn format_binary_like_expression(
 
 /// Small wrapper to identify the operation of an expression and deduce their precedence
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-enum BinaryLikeOperator {
+pub(crate) enum BinaryLikeOperator {
     Logical(JsLogicalOperator),
     Binary(JsBinaryOperator),
     Instanceof,
@@ -174,10 +174,10 @@ enum BinaryLikeOperator {
 /// first `foo && bar` is computed and its result is then computed against `|| lorem`.
 ///
 /// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
-fn needs_parens(
+pub(crate) fn binary_argument_needs_parens(
     parent_operator: BinaryLikeOperator,
     node: &JsAnyBinaryLikeLeftExpression,
-) -> FormatResult<bool> {
+) -> SyntaxResult<bool> {
     let compare_to = match node {
         JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => match expression {
             JsAnyExpression::JsLogicalExpression(logical) => {
@@ -224,7 +224,7 @@ fn format_sub_expression<'a>(
     sub_expression: &'a JsAnyBinaryLikeLeftExpression,
 ) -> impl Format<JsFormatContext> + 'a {
     format_with(move |f| {
-        if needs_parens(parent_operator, sub_expression)? {
+        if binary_argument_needs_parens(parent_operator, sub_expression)? {
             format_parenthesize(
                 sub_expression.syntax().first_token().as_ref(),
                 &sub_expression,
@@ -266,7 +266,12 @@ fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
 /// the indentation, then there's no need to do a second indentation.
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/b0201e01ef99db799eb3716f15b7dfedb0a2e62b/src/language-js/print/binaryish.js#L122-L125
 fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpression) -> bool {
-    let parent = current_node.syntax().parent();
+    let parent = current_node
+        .syntax()
+        .ancestors()
+        .skip(1)
+        .find(|parent| parent.kind() != JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION);
+
     let parent_kind = parent.as_ref().map(|node| node.kind());
 
     let great_parent = parent.and_then(|parent| parent.parent());
@@ -281,7 +286,11 @@ fn should_not_indent_if_parent_indents(current_node: &JsAnyBinaryLikeLeftExpress
                 .unwrap_or(false)
         }
         (
-            Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION),
+            Some(
+                JsSyntaxKind::JS_RETURN_STATEMENT
+                | JsSyntaxKind::JS_THROW_STATEMENT
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION,
+            ),
             _,
         ) => true,
         _ => false,
@@ -379,7 +388,7 @@ impl FlattenItems {
         let operator_token = binary_like_expression.operator_token()?;
 
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
-        let left_parenthesized = needs_parens(operator, &left)?;
+        let left_parenthesized = binary_argument_needs_parens(operator, &left)?;
         let mut left_item = FlattenItem::new(
             FlattenedBinaryExpressionPart::Group {
                 current: left,
@@ -759,7 +768,7 @@ impl JsAnyBinaryLikeExpression {
         }
     }
 
-    fn operator(&self) -> SyntaxResult<BinaryLikeOperator> {
+    pub(crate) fn operator(&self) -> SyntaxResult<BinaryLikeOperator> {
         match self {
             JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => {
                 logical.operator().map(BinaryLikeOperator::Logical)
@@ -850,7 +859,7 @@ impl JsAnyBinaryLikeExpression {
 }
 
 declare_node_union! {
-    JsAnyBinaryLikeLeftExpression = JsAnyExpression | JsPrivateName
+    pub(crate) JsAnyBinaryLikeLeftExpression = JsAnyExpression | JsPrivateName
 }
 
 impl JsAnyBinaryLikeLeftExpression {

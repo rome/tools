@@ -32,7 +32,7 @@ const test = /** @type (function (*): ?|undefined) */ (foo);
 @@ -1,11 +1,11 @@
  /** @type {Object} */ (myObject.property).someProp = true;
 -/** @type {Object} */ (myObject.property).someProp = true;
-+(/** @type {Object} */ (myObject.property)).someProp = true;
++(/** @type {Object} */ myObject.property).someProp = true;
  
  const prop = /** @type {Object} */ (myObject.property).someProp;
  
@@ -51,7 +51,7 @@ const test = /** @type (function (*): ?|undefined) */ (foo);
 
 ```js
 /** @type {Object} */ (myObject.property).someProp = true;
-(/** @type {Object} */ (myObject.property)).someProp = true;
+(/** @type {Object} */ myObject.property).someProp = true;
 
 const prop = /** @type {Object} */ (myObject.property).someProp;
 

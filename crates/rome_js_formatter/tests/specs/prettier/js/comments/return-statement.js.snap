@@ -134,44 +134,52 @@ function inlineComment() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -19,77 +19,83 @@
+@@ -18,78 +18,92 @@
+ 
  function logical() {
    return (
-     // Reason for 42
+-    // Reason for 42
 -    42 && 84
--  );
-+    42
-+  ) && 84;
++    (
++      // Reason for 42
++      42
++    ) && 84
+   );
  }
  
  function binary() {
    return (
-     // Reason for 42
+-    // Reason for 42
 -    42 * 84
--  );
-+    42
-+  ) * 84;
++    (
++      // Reason for 42
++      42
++    ) * 84
+   );
  }
  
  function binaryInBinaryLeft() {
    return (
 -    // Reason for 42
 -    42 * 84 + 2
--  );
 +    (
-+      // Reason for 42
-+      42
-+    ) * 84
-+  ) + 2;
++      (
++        // Reason for 42
++        42
++      ) * 84
++    ) + 2
+   );
  }
  
  function binaryInBinaryRight() {
    return (
-     // Reason for 42
+-    // Reason for 42
 -    42 + 84 * 2
--  );
-+    42
-+  ) + (84 * 2);
++    (
++      // Reason for 42
++      42
++    ) + (84 * 2)
+   );
  }
  
  function conditional() {
@@ -242,7 +250,17 @@ function inlineComment() {
    );
  }
  
-@@ -111,10 +117,12 @@
+@@ -103,18 +117,22 @@
+ 
+ function sequenceExpressionInside() {
+   return (
+-    // Reason for a
+-    a, b
++    a, // Reason for a
++    b
+   );
+ }
+ 
  function taggedTemplate() {
    return (
      // Reason for a
@@ -255,8 +273,10 @@ function inlineComment() {
  function inlineComment() {
 -  return /* hi */ 42 || 42;
 +  return (
-+    /* hi */ 42
-+  ) || 42;
++    (
++      /* hi */ 42
++    ) || 42
++  );
  }
 ```
 
@@ -283,32 +303,40 @@ function numericLiteralNoParen() {
 
 function logical() {
   return (
-    // Reason for 42
-    42
-  ) && 84;
+    (
+      // Reason for 42
+      42
+    ) && 84
+  );
 }
 
 function binary() {
-  return (
-    // Reason for 42
-    42
-  ) * 84;
-}
-
-function binaryInBinaryLeft() {
   return (
     (
       // Reason for 42
       42
     ) * 84
-  ) + 2;
+  );
+}
+
+function binaryInBinaryLeft() {
+  return (
+    (
+      (
+        // Reason for 42
+        42
+      ) * 84
+    ) + 2
+  );
 }
 
 function binaryInBinaryRight() {
   return (
-    // Reason for 42
-    42
-  ) + (84 * 2);
+    (
+      // Reason for 42
+      42
+    ) + (84 * 2)
+  );
 }
 
 function conditional() {
@@ -374,8 +402,8 @@ function excessiveEverything() {
 
 function sequenceExpressionInside() {
   return (
-    // Reason for a
-    a, b
+    a, // Reason for a
+    b
   );
 }
 
@@ -388,8 +416,10 @@ function taggedTemplate() {
 
 function inlineComment() {
   return (
-    /* hi */ 42
-  ) || 42;
+    (
+      /* hi */ 42
+    ) || 42
+  );
 }
 ```
 

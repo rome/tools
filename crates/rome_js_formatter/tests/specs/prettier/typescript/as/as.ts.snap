@@ -59,10 +59,11 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
 -(originalError
 -  ? wrappedError(errMsg, originalError)
 -  : Error(errMsg)) as InjectionError;
+-"current" in (props.pagination as Object);
 +(
 +  originalError ? wrappedError(errMsg, originalError) : Error(errMsg)
 +) as InjectionError;
- "current" in (props.pagination as Object);
++"current" in props.pagination as Object;
  ("current" in props.pagination) as Object;
  start + (yearSelectTotal as number);
  (start + yearSelectTotal) as number;
@@ -122,7 +123,7 @@ this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
 (
   originalError ? wrappedError(errMsg, originalError) : Error(errMsg)
 ) as InjectionError;
-"current" in (props.pagination as Object);
+"current" in props.pagination as Object;
 ("current" in props.pagination) as Object;
 start + (yearSelectTotal as number);
 (start + yearSelectTotal) as number;

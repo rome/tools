@@ -28,19 +28,15 @@ class Person {
 ```diff
 --- Prettier
 +++ Rome
-@@ -7,9 +7,9 @@
-   equals(other: unknown) {
+@@ -8,7 +8,7 @@
      return (
        other &&
--      typeof other === "object" &&
+       typeof other === "object" &&
 -      #name in other && // <- this is new!
--      this.#name === other.#name
-+        typeof other === "object" &&
-+        (#name in other) && // <- this is new!
-+        this.#name === other.#name
++      (#name in other) && // <- this is new!
+       this.#name === other.#name
      );
    }
- }
 ```
 
 # Output
@@ -55,9 +51,9 @@ class Person {
   equals(other: unknown) {
     return (
       other &&
-        typeof other === "object" &&
-        (#name in other) && // <- this is new!
-        this.#name === other.#name
+      typeof other === "object" &&
+      (#name in other) && // <- this is new!
+      this.#name === other.#name
     );
   }
 }

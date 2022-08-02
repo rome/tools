@@ -36,21 +36,18 @@ function f() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,23 +1,24 @@
- function f() {
+@@ -2,22 +2,25 @@
    return (
      property.isIdentifier() &&
--    FUNCTIONS[property.node.name] &&
+     FUNCTIONS[property.node.name] &&
 -    (object.isIdentifier(JEST_GLOBAL) ||
 -      (callee.isMemberExpression() && shouldHoistExpression(object))) &&
--    FUNCTIONS[property.node.name](expr.get("arguments"))
-+      FUNCTIONS[property.node.name] &&
-+      (
-+        object.isIdentifier(JEST_GLOBAL) || (
-+          callee.isMemberExpression() && shouldHoistExpression(object)
-+        )
-+      ) &&
-+      FUNCTIONS[property.node.name](expr.get("arguments"))
++    (
++      object.isIdentifier(JEST_GLOBAL) || (
++        callee.isMemberExpression() && shouldHoistExpression(object)
++      )
++    ) &&
+     FUNCTIONS[property.node.name](expr.get("arguments"))
    );
  
    return (
@@ -66,11 +63,12 @@ function f() {
      )
    );
  
--  return (
+   return (
 -    !filePath.includes(coverageDirectory) &&
 -    !filePath.endsWith(`.${SNAPSHOT_EXTENSION}`)
-+  return !filePath.includes(coverageDirectory) && !filePath.endsWith(
-+    `.${SNAPSHOT_EXTENSION}`,
++    !filePath.includes(coverageDirectory) && !filePath.endsWith(
++      `.${SNAPSHOT_EXTENSION}`,
++    )
    );
  }
 ```
@@ -81,13 +79,13 @@ function f() {
 function f() {
   return (
     property.isIdentifier() &&
-      FUNCTIONS[property.node.name] &&
-      (
-        object.isIdentifier(JEST_GLOBAL) || (
-          callee.isMemberExpression() && shouldHoistExpression(object)
-        )
-      ) &&
-      FUNCTIONS[property.node.name](expr.get("arguments"))
+    FUNCTIONS[property.node.name] &&
+    (
+      object.isIdentifier(JEST_GLOBAL) || (
+        callee.isMemberExpression() && shouldHoistExpression(object)
+      )
+    ) &&
+    FUNCTIONS[property.node.name](expr.get("arguments"))
   );
 
   return (
@@ -98,8 +96,10 @@ function f() {
     )
   );
 
-  return !filePath.includes(coverageDirectory) && !filePath.endsWith(
-    `.${SNAPSHOT_EXTENSION}`,
+  return (
+    !filePath.includes(coverageDirectory) && !filePath.endsWith(
+      `.${SNAPSHOT_EXTENSION}`,
+    )
   );
 }
 ```

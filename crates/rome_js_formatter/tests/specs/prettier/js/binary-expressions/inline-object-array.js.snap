@@ -163,24 +163,16 @@ const obj = {
  
  this.steps = (steps && checkStep) || [
    {
-@@ -61,11 +65,12 @@
+@@ -61,7 +65,8 @@
    const result = doSomething();
    return (
      shouldReturn &&
 -    result.ok && {
--      status: "ok",
--      createdAt: result.createdAt,
--      updatedAt: result.updatedAt,
--    }
-+      result.ok &&
-+      {
-+        status: "ok",
-+        createdAt: result.createdAt,
-+        updatedAt: result.updatedAt,
-+      }
-   );
- };
- 
++    result.ok &&
++    {
+       status: "ok",
+       createdAt: result.createdAt,
+       updatedAt: result.updatedAt,
 @@ -82,7 +87,8 @@
  
  const obj = {
@@ -263,12 +255,12 @@ const create = () => {
   const result = doSomething();
   return (
     shouldReturn &&
-      result.ok &&
-      {
-        status: "ok",
-        createdAt: result.createdAt,
-        updatedAt: result.updatedAt,
-      }
+    result.ok &&
+    {
+      status: "ok",
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    }
   );
 };
 

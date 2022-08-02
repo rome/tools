@@ -40,8 +40,7 @@ console.log(a.foo());
 +* bla bla bla
 + */
    //2
--  (window["s"]).toString();
-+  ((window["s"])).toString();
+   (window["s"]).toString();
  console.log(a.foo());
 ```
 
@@ -57,7 +56,7 @@ var a =
 * bla bla bla
  */
   //2
-  ((window["s"])).toString();
+  (window["s"]).toString();
 console.log(a.foo());
 ```
 
