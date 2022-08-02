@@ -364,6 +364,16 @@ pub trait AstSeparatedList {
         }
     }
 
+    /// Returns the first node
+    fn first(&self) -> Option<SyntaxResult<Self::Node>> {
+        self.iter().next()
+    }
+
+    /// Returns the last node
+    fn last(&self) -> Option<SyntaxResult<Self::Node>> {
+        self.iter().next_back()
+    }
+
     #[inline]
     fn is_empty(&self) -> bool {
         self.len() == 0

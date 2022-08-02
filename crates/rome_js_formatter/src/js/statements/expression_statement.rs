@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
 use crate::utils::FormatWithSemicolon;
 
@@ -19,7 +19,7 @@ impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_args!(expression.format()),
+                &expression.format(),
                 semicolon_token.as_ref()
             )]
         )

@@ -1,7 +1,6 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
-use crate::AsFormat;
 use rome_js_syntax::{JsSyntaxKind, JsVariableDeclaratorList};
 use rome_rowan::AstSeparatedList;
 
@@ -12,50 +11,60 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &JsVariableDeclaratorList, f: &mut JsFormatter) -> FormatResult<()> {
-        let last_index = node.len().saturating_sub(1);
+        let format_inner = format_with(|f| {
+            let length = node.len();
 
-        let mut declarators = node.elements().enumerate().map(|(index, element)| {
-            format_with(move |f| {
-                write!(f, [&element.node().format()])?;
+            let is_parent_for_loop = node.syntax().grand_parent().map_or(false, |parent| {
+                matches!(
+                    parent.kind(),
+                    JsSyntaxKind::JS_FOR_STATEMENT
+                        | JsSyntaxKind::JS_FOR_OF_STATEMENT
+                        | JsSyntaxKind::JS_FOR_IN_STATEMENT
+                )
+            });
 
-                match element.trailing_separator()? {
-                    None => {
-                        if index != last_index {
-                            format_inserted(JsSyntaxKind::COMMA).fmt(f)?;
-                        }
-                    }
-                    Some(separator) => {
-                        if index != last_index {
-                            write!(f, [separator.format()])?;
-                        }
-                    }
-                };
+            let has_any_initializer = node.iter().any(|declarator| {
+                declarator.map_or(false, |declarator| declarator.initializer().is_some())
+            });
 
-                Ok(())
-            })
-        });
+            let format_separator = format_with(|f| {
+                if !is_parent_for_loop && has_any_initializer {
+                    write!(f, [hard_line_break()])
+                } else {
+                    write!(f, [soft_line_break_or_space()])
+                }
+            });
 
-        let leading_element = declarators.next().ok_or(FormatError::SyntaxError)?;
+            let mut declarators = node.iter().zip(
+                node.format_separated(JsSyntaxKind::COMMA)
+                    .with_trailing_separator(TrailingSeparator::Disallowed),
+            );
 
-        let other_declarators = format_once(|f| {
-            if node.len() == 1 {
-                // No more declarators, avoid single line break
-                return Ok(());
+            let (first_declarator, format_first_declarator) = match declarators.next() {
+                Some((syntax, format_first_declarator)) => (syntax?, format_first_declarator),
+                None => return Err(FormatError::SyntaxError),
+            };
+
+            if length == 1 && !first_declarator.syntax().has_leading_comments() {
+                return write!(f, [format_first_declarator]);
             }
 
-            write!(f, [soft_line_break_or_space()])?;
+            write!(
+                f,
+                [indent(&format_once(|f| {
+                    write!(f, [format_first_declarator])?;
 
-            f.join_with(&soft_line_break_or_space())
-                .entries(declarators)
-                .finish()
+                    if length > 1 {
+                        write!(f, [line_suffix_boundary(), format_separator])?;
+                    }
+
+                    f.join_with(&format_separator)
+                        .entries(declarators.map(|(_, format)| format))
+                        .finish()
+                }))]
+            )
         });
 
-        write!(
-            f,
-            [group(&format_args!(
-                leading_element,
-                indent(&other_declarators)
-            ))]
-        )
+        write!(f, [group(&format_inner)])
     }
 }
