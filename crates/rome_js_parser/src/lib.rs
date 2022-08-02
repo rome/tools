@@ -310,6 +310,8 @@ mod lossless_tree_sink;
 mod parse;
 mod state;
 
+#[cfg(any(test, feature = "tests"))]
+pub mod test_utils;
 #[cfg(test)]
 mod tests;
 

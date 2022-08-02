@@ -9,8 +9,12 @@ use rome_console::{
     markup, Markup,
 };
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
-use rome_js_parser::parse;
-use rome_rowan::Language;
+use rome_js_parser::{
+    parse,
+    test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
+};
+use rome_js_syntax::{JsLanguage, SourceType};
+use rome_rowan::AstNode;
 use rome_text_edit::apply_indels;
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
@@ -40,6 +44,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     rome_js_analyze::analyze(0, &root, filter, |event| {
         if let Some(mut diag) = event.diagnostic() {
             if let Some(action) = event.action() {
+                check_code_action(input_file, &input_code, source_type, &action);
                 diag.suggestions.push(action.into());
             }
 
@@ -48,6 +53,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
         }
 
         if let Some(action) = event.action() {
+            check_code_action(input_file, &input_code, source_type, &action);
             code_fixes.push(code_fix_to_string(&input_code, action));
         }
 
@@ -130,10 +136,38 @@ fn diagnostic_to_string(name: &str, source: &str, diag: Diagnostic) -> String {
     text
 }
 
-fn code_fix_to_string<L>(source: &str, action: AnalyzerAction<L>) -> String
-where
-    L: Language,
-{
+fn check_code_action(
+    path: &Path,
+    source: &str,
+    source_type: SourceType,
+    action: &AnalyzerAction<JsLanguage>,
+) {
+    let mut output = source.to_string();
+    let (_, indels) = action.mutation.as_text_edits().unwrap_or_default();
+
+    apply_indels(&indels, &mut output);
+
+    let new_tree = action.mutation.clone().commit();
+
+    // Checks that applying the text edits returned by the BatchMutation
+    // returns the same code as printing the modified syntax tree
+    assert_eq!(new_tree.to_string(), output);
+
+    if has_unknown_nodes_or_empty_slots(new_tree.syntax()) {
+        panic!("modified tree has unknown nodes or empty slots:\n{new_tree:#?}")
+    }
+
+    // Checks the returned tree contains no missing children node
+    if format!("{new_tree:?}").contains("missing (required)") {
+        panic!("modified tree has missing children:\n{new_tree:#?}")
+    }
+
+    // Re-parse the modified code and panic if the resulting tree has syntax errors
+    let re_parse = parse(&output, 0, source_type);
+    assert_errors_are_absent(&re_parse, path);
+}
+
+fn code_fix_to_string(source: &str, action: AnalyzerAction<JsLanguage>) -> String {
     let mut output = source.to_string();
     let (_, indels) = action.mutation.as_text_edits().unwrap_or_default();
 

@@ -1,3 +1,6 @@
+use rome_js_factory::make;
+use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, T};
+use rome_rowan::{AstNode, BatchMutation};
 use std::borrow::Cow;
 
 pub mod rename;
@@ -114,6 +117,30 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
 
         Cow::Owned(output)
     }
+}
+
+/// Utility function to remove a statement node from a syntax tree, by either
+/// removing the node from its parent if said parent is a statement list or
+/// module item list, or by replacing the statement node with an empty statement
+pub(crate) fn remove_statement<N>(
+    mutation: &mut BatchMutation<JsLanguage, JsAnyRoot>,
+    node: &N,
+) -> Option<()>
+where
+    N: AstNode<Language = JsLanguage> + Into<JsAnyStatement>,
+{
+    let parent = node.syntax().parent()?;
+
+    if JsStatementList::can_cast(parent.kind()) || JsModuleItemList::can_cast(parent.kind()) {
+        mutation.remove_node(node.clone());
+    } else {
+        mutation.replace_node(
+            node.clone().into(),
+            JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
+        );
+    }
+
+    Some(())
 }
 
 #[test]
