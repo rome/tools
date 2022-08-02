@@ -196,12 +196,16 @@ pub struct FormatOnTypeParams {
     pub offset: TextSize,
 }
 
+#[derive(Clone, Copy)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
 )]
+/// Which fixes should be applied during the analyzing phase
 pub enum FixFileMode {
+    /// Applies [safe](rome_diagnostics::Applicability::Always) fixes
     SafeFixes,
+    /// Applies [safe](rome_diagnostics::Applicability::Always) and suggested [safe](rome_diagnostics::Applicability::MaybeIncorrect)
     SafeAndSuggestedFixes,
 }
 

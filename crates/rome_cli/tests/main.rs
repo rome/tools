@@ -233,6 +233,39 @@ mod check {
     }
 
     #[test]
+    fn apply_suggested_error() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply-suggested"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_err(), "run_cli returned {result:?}");
+
+        match result {
+            Err(error) => {
+                assert!(error
+                    .to_string()
+                    .contains("incompatible arguments '--apply' and '--apply-suggested"),)
+            }
+            _ => panic!("expected an error, but found none"),
+        }
+    }
+
+    #[test]
     fn apply_suggested() {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();

@@ -158,13 +158,15 @@ fn print_messages_to_console(
     let mut paths = HashMap::new();
     let mut printed_diagnostics: u16 = 0;
     let mut not_printed_diagnostics = 0;
+    let mut total_skipped_suggested_fixes = 0;
 
     while let Ok(msg) = recv_msgs.recv() {
         match msg {
-            Message::Warning(warning) => console.log(markup! {
-                <Warn><Emphasis>{warning.title}"\n"</Emphasis></Warn>
-                {warning.paragraph}"\n"
-            }),
+            Message::SkippedFixes {
+                skipped_suggested_fixes,
+            } => {
+                total_skipped_suggested_fixes += skipped_suggested_fixes;
+            }
 
             Message::Error(err) => {
                 // Retrieves the file name from the file ID cache, if it's a miss
@@ -279,6 +281,13 @@ fn print_messages_to_console(
         }
     }
 
+    if mode.is_check() && total_skipped_suggested_fixes > 0 {
+        console.log(markup! {
+            <Warn>"Skipped "{total_skipped_suggested_fixes}" suggested fixes.\n"</Warn>
+            <Info>"If you wish to apply the suggested fixes, use the command "<Emphasis>"rome check --apply-suggested\n"</Emphasis></Info>
+        })
+    }
+
     if !mode.is_ci() && not_printed_diagnostics > 0 {
         console.log(markup! {
             <Warn>"The number of diagnostics exceeds the number allowed by Rome.\n"</Warn>
@@ -293,14 +302,14 @@ fn print_messages_to_console(
 pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
+        /// The maximum number of diagnostics that can be printed in console
         max_diagnostics: u16,
-        /// `true` when running the command `check` with the `--apply` argument
-        should_apply_safe_fixes: bool,
 
-        /// `true` when running the command `check` with the `--apply-suggested` argument
+        /// The type of fixes that should be applied when analyzing a file.
         ///
-        /// It applies **safe** and **suggested** fixes.
-        should_apply_suggested_fixes: bool,
+        /// It's [None] if the `check` command is called without `--apply` or `--apply-suggested`
+        /// arguments.
+        fix_file_mode: Option<FixFileMode>,
     },
     /// This mode is enabled when running the command `rome ci`
     CI,
@@ -319,20 +328,9 @@ impl TraversalMode {
     }
 
     /// `true` only when running the traversal in [TraversalMode::Check] and `should_fix` is `true`
-    fn as_fix_file_mode(&self) -> Option<FixFileMode> {
-        if let TraversalMode::Check {
-            should_apply_safe_fixes,
-            should_apply_suggested_fixes,
-            ..
-        } = self
-        {
-            if *should_apply_suggested_fixes {
-                Some(FixFileMode::SafeAndSuggestedFixes)
-            } else if *should_apply_safe_fixes {
-                Some(FixFileMode::SafeFixes)
-            } else {
-                None
-            }
+    fn as_fix_file_mode(&self) -> Option<&FixFileMode> {
+        if let TraversalMode::Check { fix_file_mode, .. } = self {
+            fix_file_mode.as_ref()
         } else {
             None
         }
@@ -340,6 +338,10 @@ impl TraversalMode {
 
     fn is_ci(&self) -> bool {
         matches!(self, TraversalMode::CI { .. })
+    }
+
+    fn is_check(&self) -> bool {
+        matches!(self, TraversalMode::Check { .. })
     }
 }
 
@@ -506,17 +508,12 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         if let Some(fix_mode) = ctx.mode.as_fix_file_mode() {
             let fixed = file_guard
-                .fix_file(fix_mode)
+                .fix_file(fix_mode.clone())
                 .with_file_id_and_code(file_id, "Lint")?;
 
-            if fixed.skipped_suggested_fixes > 0 {
-                ctx.push_message(TraversalWarning {
-                    title: format!("Skipped {} suggested fixes", fixed.skipped_suggested_fixes),
-                    paragraph:
-                        "If you wish to apply the suggested fixes, use --apply-suggested argument"
-                            .to_string(),
-                })
-            }
+            ctx.push_message(Message::SkippedFixes {
+                skipped_suggested_fixes: fixed.skipped_suggested_fixes,
+            });
 
             if fixed.code != input {
                 file.set_content(fixed.code.as_bytes())
@@ -636,8 +633,11 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
 /// Wrapper type for messages that can be printed during the traversal process
 enum Message {
+    SkippedFixes {
+        /// Suggested fixes skipped during the lint traversal
+        skipped_suggested_fixes: u32,
+    },
     Error(TraversalError),
-    Warning(TraversalWarning),
     Diagnostics {
         name: String,
         content: String,
@@ -656,24 +656,12 @@ impl From<TraversalError> for Message {
     }
 }
 
-impl From<TraversalWarning> for Message {
-    fn from(warning: TraversalWarning) -> Self {
-        Self::Warning(warning)
-    }
-}
-
 /// Generic error type returned by the traversal process
 struct TraversalError {
     severity: Severity,
     file_id: FileId,
     code: &'static str,
     message: String,
-}
-
-/// Generic warning type turned by the traversal process
-struct TraversalWarning {
-    title: String,
-    paragraph: String,
 }
 
 /// Extension trait for turning [Display]-able error types into [TraversalError]
