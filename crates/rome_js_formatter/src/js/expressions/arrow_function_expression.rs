@@ -44,7 +44,9 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                 )
                 .grouped_with_soft_block_indent()]
             )?,
-            JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,
+            JsAnyArrowFunctionParameters::JsParameters(params) => {
+                write![f, [group(&params.format())]]?
+            }
         }
 
         write![

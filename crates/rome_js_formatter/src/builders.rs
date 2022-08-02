@@ -320,6 +320,7 @@ pub fn format_delimited<'a, 'content>(
         content: Argument::new(content),
         close_token,
         mode: DelimitedMode::SoftBlockIndent(None),
+        grouped: true,
     }
 }
 
@@ -329,6 +330,7 @@ pub struct FormatDelimited<'a, 'content> {
     content: Argument<'content, JsFormatContext>,
     close_token: &'a JsSyntaxToken,
     mode: DelimitedMode,
+    grouped: bool,
 }
 
 impl FormatDelimited<'_, '_> {
@@ -359,6 +361,12 @@ impl FormatDelimited<'_, '_> {
     pub fn soft_block_indent_with_group_id(self, group_id: Option<GroupId>) -> Self {
         self.with_mode(DelimitedMode::SoftBlockIndent(group_id))
     }
+
+    /// Prevents the formatter from grouping the content even in soft block or soft block spaces mode.
+    pub fn ungrouped(mut self) -> Self {
+        self.grouped = false;
+        self
+    }
 }
 
 impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
@@ -368,6 +376,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
             close_token,
             content,
             mode,
+            grouped,
         } = self;
 
         let open_delimiter = format_open_delimiter(open_token);
@@ -427,8 +436,8 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
         });
 
         match mode {
+            _ if !grouped => write!(f, [delimited])?,
             // Group is useless, the block indent would expand it right anyway
-            DelimitedMode::BlockIndent => write!(f, [delimited])?,
             DelimitedMode::SoftBlockIndent(group_id) | DelimitedMode::SoftBlockSpaces(group_id) => {
                 match group_id {
                     None => write!(f, [group(&delimited)])?,
@@ -437,6 +446,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                     }
                 }
             }
+            DelimitedMode::BlockIndent => write!(f, [delimited])?,
         };
 
         write!(f, [format_trailing_trivia(close_token)])

@@ -3,7 +3,8 @@ use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
-    JsFunctionExpression, JsParameters, JsSyntaxToken, TsReturnTypeAnnotation, TsTypeParameters,
+    JsFunctionExpression, JsParameters, JsSyntaxToken, TsAnyReturnType,
+    TsDeclareFunctionDeclaration, TsReturnTypeAnnotation, TsType, TsTypeParameters,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -17,7 +18,11 @@ impl FormatNodeRule<JsFunctionDeclaration> for FormatJsFunctionDeclaration {
 }
 
 declare_node_union! {
-    pub(crate) FormatFunction = JsFunctionDeclaration | JsFunctionExpression | JsFunctionExportDefaultDeclaration
+    pub(crate) FormatFunction =
+        JsFunctionDeclaration |
+        JsFunctionExpression |
+        JsFunctionExportDefaultDeclaration |
+        TsDeclareFunctionDeclaration
 }
 
 impl FormatFunction {
@@ -28,6 +33,7 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.async_token()
             }
+            FormatFunction::TsDeclareFunctionDeclaration(member) => member.async_token(),
         }
     }
 
@@ -38,6 +44,7 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.function_token()
             }
+            FormatFunction::TsDeclareFunctionDeclaration(member) => member.function_token(),
         }
     }
 
@@ -48,6 +55,7 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.star_token()
             }
+            FormatFunction::TsDeclareFunctionDeclaration(_) => None,
         }
     }
 
@@ -56,6 +64,7 @@ impl FormatFunction {
             FormatFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
             FormatFunction::JsFunctionExpression(expression) => Ok(expression.id()),
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
+            FormatFunction::TsDeclareFunctionDeclaration(member) => member.id().map(Some),
         }
     }
 
@@ -66,6 +75,7 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.type_parameters()
             }
+            FormatFunction::TsDeclareFunctionDeclaration(member) => member.type_parameters(),
         }
     }
 
@@ -76,6 +86,7 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.parameters()
             }
+            FormatFunction::TsDeclareFunctionDeclaration(member) => member.parameters(),
         }
     }
 
@@ -88,15 +99,19 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.return_type_annotation()
             }
+            FormatFunction::TsDeclareFunctionDeclaration(member) => member.return_type_annotation(),
         }
     }
 
-    fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        match self {
-            FormatFunction::JsFunctionDeclaration(declaration) => declaration.body(),
-            FormatFunction::JsFunctionExpression(expression) => expression.body(),
-            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => declaration.body(),
-        }
+    fn body(&self) -> SyntaxResult<Option<JsFunctionBody>> {
+        Ok(match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => Some(declaration.body()?),
+            FormatFunction::JsFunctionExpression(expression) => Some(expression.body()?),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                Some(declaration.body()?)
+            }
+            FormatFunction::TsDeclareFunctionDeclaration(_) => None,
+        })
     }
 }
 
@@ -120,22 +135,92 @@ impl Format<JsFormatContext> for FormatFunction {
             }
         }
 
-        write!(f, [self.type_parameters().format()])?;
+        let type_parameters = self.type_parameters();
+        let parameters = self.parameters()?;
+        let return_type_annotation = self.return_type_annotation();
+
+        write!(f, [type_parameters.format()])?;
 
         write!(
             f,
             [group(&format_with(|f| {
-                write![
+                let mut format_return_type_annotation = return_type_annotation.format().memoized();
+                let group_parameters = should_group_function_parameters(
+                    type_parameters.as_ref(),
+                    parameters.items().len(),
+                    return_type_annotation
+                        .as_ref()
+                        .map(|annotation| annotation.ty()),
+                    &mut format_return_type_annotation,
                     f,
-                    [
-                        self.parameters().format(),
-                        self.return_type_annotation().format(),
-                        space()
-                    ]
-                ]
+                )?;
+
+                if group_parameters {
+                    write!(f, [group(&parameters.format())])?;
+                } else {
+                    write!(f, [parameters.format()])?;
+                }
+
+                write![f, [format_return_type_annotation]]
             }))]
         )?;
 
-        write!(f, [self.body().format()])
+        if let Some(body) = self.body()? {
+            write!(f, [space(), body.format()])?;
+        }
+
+        Ok(())
     }
+}
+
+// Grouping the parameters has the effect that the return type will break first.
+pub(crate) fn should_group_function_parameters(
+    type_parameters: Option<&TsTypeParameters>,
+    parameter_count: usize,
+    return_type: Option<SyntaxResult<TsAnyReturnType>>,
+    formatted_return_type: &mut Memoized<impl Format<JsFormatContext>, JsFormatContext>,
+    f: &mut JsFormatter,
+) -> FormatResult<bool> {
+    let return_type = match return_type {
+        Some(return_type) => return_type?,
+        None => return Ok(false),
+    };
+
+    if let Some(type_parameters) = type_parameters {
+        match type_parameters.items().len() {
+            0 => {
+                // fall through
+            }
+            1 => {
+                // SAFETY: Safe because the length is 1
+                let first = type_parameters.items().iter().next().unwrap()?;
+
+                if first.constraint().is_none() || first.default().is_some() {
+                    return Ok(false);
+                }
+            }
+            _ => return Ok(false),
+        }
+    }
+
+    let result = if parameter_count != 1 {
+        false
+    } else {
+        // THIS is a hack that is necessary to avoid that the formatter doesn't insert a space
+        // between `)` and the `:` of the return type annotation IF there's a an inline comment
+        // after the last comment that has been written. This can be deleted once the comments refactor lands.
+        let is_last_content_inline_comment = f.state().is_last_content_inline_comment();
+        f.state_mut().set_last_content_inline_comment(false);
+
+        let group = matches!(
+            return_type,
+            TsAnyReturnType::TsType(TsType::TsObjectType(_) | TsType::TsMappedType(_))
+        ) || formatted_return_type.inspect(f)?.will_break();
+
+        f.state_mut()
+            .set_last_content_inline_comment(is_last_content_inline_comment);
+        group
+    };
+
+    Ok(result)
 }

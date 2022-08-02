@@ -1,6 +1,5 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
 use rome_js_syntax::JsParameters;
 use rome_js_syntax::JsParametersFields;
 
@@ -15,12 +14,9 @@ impl FormatNodeRule<JsParameters> for FormatJsParameters {
             r_paren_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [
-                format_delimited(&l_paren_token?, &items.format(), &r_paren_token?,)
-                    .soft_block_indent()
-            ]
-        )
+        format_delimited(&l_paren_token?, &items.format(), &r_paren_token?)
+            .soft_block_indent()
+            .ungrouped()
+            .fmt(f)
     }
 }

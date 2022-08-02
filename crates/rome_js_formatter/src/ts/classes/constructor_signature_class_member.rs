@@ -28,7 +28,7 @@ impl FormatNodeRule<TsConstructorSignatureClassMember> for FormatTsConstructorSi
                     modifiers.format(),
                     space(),
                     name.format(),
-                    parameters.format(),
+                    group(&parameters.format()),
                 ),
                 semicolon_token.as_ref()
             )]
