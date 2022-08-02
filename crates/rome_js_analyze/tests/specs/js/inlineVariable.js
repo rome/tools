@@ -6,3 +6,15 @@ if (inlinable) {
 }
 
 statement(notInlinable);
+
+let multipleDeclaratorsInlinable = "value3",
+    multipleDeclaratorsNotInlinable = "value4";
+
+if (multipleDeclaratorsInlinable) {
+    multipleDeclaratorsNotInlinable.memberWrite = multipleDeclaratorsInlinable;
+}
+
+statement(multipleDeclaratorsNotInlinable);
+
+let variable = expression();
+statement(variable);
