@@ -508,7 +508,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         if let Some(fix_mode) = ctx.mode.as_fix_file_mode() {
             let fixed = file_guard
-                .fix_file(fix_mode.clone())
+                .fix_file(*fix_mode)
                 .with_file_id_and_code(file_id, "Lint")?;
 
             ctx.push_message(Message::SkippedFixes {

@@ -50,14 +50,14 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
     let apply = session.args.contains("--apply");
     let apply_suggested = session.args.contains("--apply-suggested");
 
-    let fix_file_mode = if apply == true && apply_suggested == true {
+    let fix_file_mode = if apply && apply_suggested {
         return Err(Termination::IncompatibleArguments(
             "--apply",
             "--apply-suggested",
         ));
-    } else if apply == false && apply_suggested == false {
+    } else if !apply && !apply_suggested {
         None
-    } else if apply == true && apply_suggested == false {
+    } else if apply && !apply_suggested {
         Some(FixFileMode::SafeFixes)
     } else {
         Some(FixFileMode::SafeAndSuggestedFixes)
