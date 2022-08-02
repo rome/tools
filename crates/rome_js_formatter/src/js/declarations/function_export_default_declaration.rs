@@ -2,7 +2,6 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::js::declarations::function_declaration::FormatFunction;
-use rome_js_syntax::JsAnyFunction;
 use rome_js_syntax::JsFunctionExportDefaultDeclaration;
 
 #[derive(Debug, Clone, Default)]
@@ -16,6 +15,6 @@ impl FormatNodeRule<JsFunctionExportDefaultDeclaration>
         node: &JsFunctionExportDefaultDeclaration,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        write![f, [FormatFunction::new(&JsAnyFunction::from(node.clone()))]]
+        write![f, [FormatFunction::from(node.clone())]]
     }
 }

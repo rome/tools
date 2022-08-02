@@ -1,130 +1,143 @@
 use crate::prelude::*;
 
-use crate::utils::is_simple_expression;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 use rome_js_syntax::{
-    JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
-    JsFunctionDeclaration,
+    JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
+    JsFunctionExpression, JsParameters, JsSyntaxToken, TsReturnTypeAnnotation, TsTypeParameters,
 };
+use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsFunctionDeclaration;
 
 impl FormatNodeRule<JsFunctionDeclaration> for FormatJsFunctionDeclaration {
     fn fmt_fields(&self, node: &JsFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
-        write![f, [FormatFunction::new(&JsAnyFunction::from(node.clone()))]]
+        write![f, [FormatFunction::from(node.clone())]]
     }
 }
 
-#[derive(Debug, Clone, Copy)]
-pub struct FormatFunction<'a>(&'a JsAnyFunction);
+declare_node_union! {
+    pub(crate) FormatFunction = JsFunctionDeclaration | JsFunctionExpression | JsFunctionExportDefaultDeclaration
+}
 
-impl<'a> FormatFunction<'a> {
-    pub fn new(function: &'a JsAnyFunction) -> Self {
-        Self(function)
+impl FormatFunction {
+    fn async_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => declaration.async_token(),
+            FormatFunction::JsFunctionExpression(expression) => expression.async_token(),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.async_token()
+            }
+        }
+    }
+
+    fn function_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => declaration.function_token(),
+            FormatFunction::JsFunctionExpression(expression) => expression.function_token(),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.function_token()
+            }
+        }
+    }
+
+    fn star_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => declaration.star_token(),
+            FormatFunction::JsFunctionExpression(expression) => expression.star_token(),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.star_token()
+            }
+        }
+    }
+
+    fn id(&self) -> SyntaxResult<Option<JsAnyBinding>> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => {
+                declaration.id().map(|binding| Some(binding))
+            }
+            FormatFunction::JsFunctionExpression(expression) => Ok(expression.id()),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
+        }
+    }
+
+    fn type_parameters(&self) -> Option<TsTypeParameters> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => declaration.type_parameters(),
+            FormatFunction::JsFunctionExpression(expression) => expression.type_parameters(),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.type_parameters()
+            }
+        }
+    }
+
+    fn parameters(&self) -> SyntaxResult<JsParameters> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => declaration.parameters(),
+            FormatFunction::JsFunctionExpression(expression) => expression.parameters(),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.parameters()
+            }
+        }
+    }
+
+    fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => {
+                declaration.return_type_annotation()
+            }
+            FormatFunction::JsFunctionExpression(expression) => expression.return_type_annotation(),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.return_type_annotation()
+            }
+        }
+    }
+
+    fn body(&self) -> SyntaxResult<JsFunctionBody> {
+        match self {
+            FormatFunction::JsFunctionDeclaration(declaration) => declaration.body(),
+            FormatFunction::JsFunctionExpression(expression) => expression.body(),
+            FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => declaration.body(),
+        }
     }
 }
 
-impl Format<JsFormatContext> for FormatFunction<'_> {
+impl Format<JsFormatContext> for FormatFunction {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let function = self.0;
-
-        if let Some(async_token) = function.async_token() {
+        if let Some(async_token) = self.async_token() {
             write!(f, [async_token.format(), space()])?;
         }
 
         write!(
             f,
-            [
-                function.function_token().format(),
-                function.star_token().format()
-            ]
+            [self.function_token().format(), self.star_token().format()]
         )?;
 
-        if !matches!(function, JsAnyFunction::JsArrowFunctionExpression(_)) {
-            match function.id()? {
-                Some(id) => {
-                    write!(f, [space(), id.format()])?;
-                }
-                None => {
-                    write!(f, [space()])?;
-                }
+        match self.id()? {
+            Some(id) => {
+                write!(f, [space(), id.format()])?;
+            }
+            None => {
+                write!(f, [space()])?;
             }
         }
 
-        write!(f, [function.type_parameters().format()])?;
+        write!(f, [self.type_parameters().format()])?;
 
-        match function.parameters()? {
-            JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
-                f,
-                [format_parenthesize(
-                    binding.syntax().first_token().as_ref(),
-                    &format_args![binding.format(), if_group_breaks(&text(",")),],
-                    binding.syntax().last_token().as_ref(),
-                )
-                .grouped_with_soft_block_indent()]
-            )?,
-            JsAnyArrowFunctionParameters::JsParameters(params) => write![f, [params.format()]]?,
-        }
+        write!(
+            f,
+            [group(&format_with(|f| {
+                write![
+                    f,
+                    [
+                        self.parameters().format(),
+                        self.return_type_annotation().format(),
+                        space()
+                    ]
+                ]
+            }))]
+        )?;
 
-        write![f, [function.return_type_annotation().format(), space()]]?;
-
-        // We create a new group for everything after the parameters. That way if the parameters
-        // get broken, we don't line break the arrow and the body if they can fit on the same line.
-        // For instance:
-        //
-        //   (
-        //     a = [abcdefghijklmnopqrstuvwxyz123456789],
-        //     b = [abcdefghijklmnopqrstuvwxyz123456789],
-        //   ) =>
-        //     a + b
-        //
-        // The line break for `a + b` is not necessary
-        //
-        if let JsAnyFunction::JsArrowFunctionExpression(arrow) = function {
-            write![f, [arrow.fat_arrow_token().format(), space()]]?;
-        }
-
-        let body = function.body()?;
-        // With arrays, arrow functions and objects, they have a natural line breaking strategy:
-        // Arrays and objects become blocks:
-        //
-        //    [
-        //      100000,
-        //      200000,
-        //      300000
-        //    ]
-        //
-        // Arrow functions get line broken after the `=>`:
-        //
-        //  (foo) => (bar) =>
-        //     (foo + bar) * (foo + bar)
-        //
-        // Therefore if our body is an arrow function, array, or object, we
-        // do not have a soft line break after the arrow because the body is
-        // going to get broken anyways.
-        //
-        // TODO: Explore the concept of hierarchical line breaking
-        //   or vertical stacking for arrow functions
-        let body_has_soft_line_break = match body {
-            JsAnyFunctionBody::JsFunctionBody(_) => true,
-            JsAnyFunctionBody::JsAnyExpression(expr) => match expr {
-                JsAnyExpression::JsArrowFunctionExpression(_) => true,
-                JsAnyExpression::JsParenthesizedExpression(_) => true,
-                JsAnyExpression::JsxTagExpression(_) => true,
-                expr => is_simple_expression(&expr)?,
-            },
-        };
-
-        if body_has_soft_line_break {
-            write![f, [function.body().format()]]?;
-        } else {
-            write!(
-                f,
-                [group(&soft_line_indent_or_space(&function.body().format()))]
-            )?;
-        }
-
-        Ok(())
+        write!(f, [self.body().format()])
     }
 }
