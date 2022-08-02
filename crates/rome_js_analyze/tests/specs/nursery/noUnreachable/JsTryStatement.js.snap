@@ -83,42 +83,23 @@ JsTryStatement.js:10:5 lint/nursery/noUnreachable ━━━━━━━━━━
 ```
 
 ```
-JsTryStatement.js:28:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JsTryStatement.js:27:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This code is unreachable
   
   ! ... before it can reach this code
   
-    27 │     try {
+    25 │     return;
+    26 │ 
+  > 27 │     try {
+       │     ^^^^^
   > 28 │         tryBlock();
-       │         ^^^^^^^^^^^
-    29 │     } catch (err) {
-    30 │         catchClause();
-  
-  i This statement will return from the function ...
-  
-    24 │ function JsTryStatement3() {
-  > 25 │     return;
-       │     ^^^^^^^
-    26 │ 
-    27 │     try {
-  
-
-```
-
-```
-JsTryStatement.js:30:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
-  
-    28 │         tryBlock();
-    29 │     } catch (err) {
+  > 29 │     } catch (err) {
   > 30 │         catchClause();
-       │         ^^^^^^^^^^^^^^
-    31 │     }
+  > 31 │     }
+       │     ^
     32 │ }
+    33 │ 
   
   i This statement will return from the function ...
   
@@ -132,16 +113,19 @@ JsTryStatement.js:30:9 lint/nursery/noUnreachable ━━━━━━━━━━
 ```
 
 ```
-JsTryStatement.js:37:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JsTryStatement.js:36:19 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This code is unreachable
   
+    34 │ function JsTryStatement4() {
     35 │     try {
-    36 │     } catch (err) {
+  > 36 │     } catch (err) {
+       │                   ^
   > 37 │         catchClause();
-       │         ^^^^^^^^^^^^^^
-    38 │     }
+  > 38 │     }
+       │     ^
     39 │ }
+    40 │ 
   
 
 ```

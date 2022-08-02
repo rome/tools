@@ -39,7 +39,7 @@ function JsVariableStatement6() {
 
 # Diagnostics
 ```
-JsVariableStatement.js:8:20 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JsVariableStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This code is unreachable
   
@@ -48,7 +48,7 @@ JsVariableStatement.js:8:20 lint/nursery/noUnreachable ━━━━━━━━�
      6 │ function JsVariableStatement2() {
      7 │     return;
    > 8 │     var variable = initializer();
-       │                    ^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      9 │ }
     10 │ 
   
@@ -64,7 +64,7 @@ JsVariableStatement.js:8:20 lint/nursery/noUnreachable ━━━━━━━━�
 ```
 
 ```
-JsVariableStatement.js:18:20 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JsVariableStatement.js:18:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This code is unreachable
   
@@ -73,7 +73,7 @@ JsVariableStatement.js:18:20 lint/nursery/noUnreachable ━━━━━━━━
     16 │ function JsVariableStatement4() {
     17 │     return;
   > 18 │     let variable = initializer();
-       │                    ^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     19 │ }
     20 │ 
   
@@ -89,7 +89,7 @@ JsVariableStatement.js:18:20 lint/nursery/noUnreachable ━━━━━━━━
 ```
 
 ```
-JsVariableStatement.js:23:22 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JsVariableStatement.js:23:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This code is unreachable
   
@@ -98,7 +98,7 @@ JsVariableStatement.js:23:22 lint/nursery/noUnreachable ━━━━━━━━
     21 │ function JsVariableStatement5() {
     22 │     return;
   > 23 │     const variable = initializer();
-       │                      ^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     24 │ }
     25 │ 
   
@@ -114,7 +114,7 @@ JsVariableStatement.js:23:22 lint/nursery/noUnreachable ━━━━━━━━
 ```
 
 ```
-JsVariableStatement.js:28:21 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JsVariableStatement.js:28:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This code is unreachable
   
@@ -123,32 +123,9 @@ JsVariableStatement.js:28:21 lint/nursery/noUnreachable ━━━━━━━━
     26 │ function JsVariableStatement6() {
     27 │     return;
   > 28 │     var variable1 = initializer(),
-       │                     ^^^^^^^^^^^^^
-    29 │         variable2 = initializer();
-    30 │ }
-  
-  i This statement will return from the function ...
-  
-    26 │ function JsVariableStatement6() {
-  > 27 │     return;
-       │     ^^^^^^^
-    28 │     var variable1 = initializer(),
-    29 │         variable2 = initializer();
-  
-
-```
-
-```
-JsVariableStatement.js:29:21 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
-  
-    27 │     return;
-    28 │     var variable1 = initializer(),
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   > 29 │         variable2 = initializer();
-       │                     ^^^^^^^^^^^^^
+       │         ^^^^^^^^^^^^^^^^^^^^^^^^^^
     30 │ }
     31 │ 
   

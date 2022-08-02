@@ -25,6 +25,11 @@ function JsSwitchStatement2() {
     }
 }
 
+function JsSwitchStatement3() {
+    return;
+    switch (value) {}
+}
+
 ```
 
 # Diagnostics
@@ -50,6 +55,31 @@ JsSwitchStatement.js:18:13 lint/nursery/noUnreachable ━━━━━━━━�
        │             ^^^^^^
     18 │             afterBreak();
     19 │     }
+  
+
+```
+
+```
+JsSwitchStatement.js:24:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    22 │ function JsSwitchStatement3() {
+    23 │     return;
+  > 24 │     switch (value) {}
+       │     ^^^^^^^^^^^^^^^^^
+    25 │ }
+    26 │ 
+  
+  i This statement will return from the function ...
+  
+    22 │ function JsSwitchStatement3() {
+  > 23 │     return;
+       │     ^^^^^^^
+    24 │     switch (value) {}
+    25 │ }
   
 
 ```

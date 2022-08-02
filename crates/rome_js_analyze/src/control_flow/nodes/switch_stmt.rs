@@ -26,6 +26,9 @@ impl NodeVisitor for SwitchVisitor {
         builder: &mut FunctionBuilder,
         _: StatementStack,
     ) -> SyntaxResult<Self> {
+        // Execute the discriminant expression as a side-effect
+        builder.append_statement().with_node(node.discriminant()?);
+
         let entry_block = builder.cursor();
         let break_block = builder.append_block();
 
