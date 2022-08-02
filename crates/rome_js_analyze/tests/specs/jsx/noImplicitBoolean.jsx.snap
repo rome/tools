@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 89
+assertion_line: 95
 expression: noImplicitBoolean.jsx
 ---
 # Input
@@ -12,7 +12,7 @@ expression: noImplicitBoolean.jsx
 <input disabled={undefined} />;
 <input disabled="false" />;
 // https://github.com/rome/tools/issues/2944
-<div className={asdf asdf} />;
+// <div className={asdf asdf} />;
 
 //invalid
 <input disabled />;
@@ -31,7 +31,7 @@ warning[jsx/noImplicitBoolean]: Use explicit boolean values for boolean JSX prop
 
 Safe fix: Add explicit `true` literal for this attribute
       | @@ -8,6 +8,6 @@
- 7  7 |   <div className={asdf asdf} />;
+ 7  7 |   // <div className={asdf asdf} />;
  8  8 |   
  9  9 |   //invalid
 10    | - <input disabled />;
