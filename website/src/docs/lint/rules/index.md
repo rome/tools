@@ -126,7 +126,7 @@ Disallow negation in the condition of an <code>if</code> statement if it has an 
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noShadowRestrictedNames">
-	<a href="/docs/lint/rules/noShadowRestrictedNames">noShadowRestrictedNames (since v0.8.0)</a>
+	<a href="/docs/lint/rules/noShadowRestrictedNames">noShadowRestrictedNames (since v0.9.0)</a>
 	<a class="header-anchor" href="#noShadowRestrictedNames"></a>
 	<span class="recommended">recommended</span>
 </h3>

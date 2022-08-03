@@ -3,7 +3,7 @@ title: Lint Rule noShadowRestrictedNames
 layout: layouts/rule.liquid
 ---
 
-# noShadowRestrictedNames (since v0.8.0)
+# noShadowRestrictedNames (since v0.9.0)
 
 > This rule is recommended by Rome.
 
