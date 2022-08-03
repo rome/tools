@@ -20,7 +20,7 @@ impl FormatNodeRule<JsMethodClassMember> for FormatJsMethodClassMember {
             [
                 node.modifiers().format(),
                 space(),
-                FormatMethodMember::from(node.clone())
+                FormatJsAnyMethodMember::from(node.clone())
             ]
         ]
     }
@@ -28,7 +28,7 @@ impl FormatNodeRule<JsMethodClassMember> for FormatJsMethodClassMember {
 
 declare_node_union! {
     /// Formats the type parameters, parameters, and return type annotation of a method
-    pub(crate) FormatMethodMember =
+    pub(crate) FormatJsAnyMethodMember =
         JsMethodClassMember |
         JsMethodObjectMember |
         JsConstructorClassMember |
@@ -36,7 +36,7 @@ declare_node_union! {
         TsMethodSignatureTypeMember
 }
 
-impl Format<JsFormatContext> for FormatMethodMember {
+impl Format<JsFormatContext> for FormatJsAnyMethodMember {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         if let Some(async_token) = self.async_token() {
             write!(f, [async_token.format(), space()])?;
@@ -87,72 +87,84 @@ impl Format<JsFormatContext> for FormatMethodMember {
     }
 }
 
-impl FormatMethodMember {
+impl FormatJsAnyMethodMember {
     fn async_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            FormatMethodMember::JsMethodClassMember(member) => member.async_token(),
-            FormatMethodMember::JsMethodObjectMember(member) => member.async_token(),
-            FormatMethodMember::JsConstructorClassMember(_) => None,
-            FormatMethodMember::TsMethodSignatureClassMember(signature) => signature.async_token(),
-            FormatMethodMember::TsMethodSignatureTypeMember(_) => None,
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => member.async_token(),
+            FormatJsAnyMethodMember::JsMethodObjectMember(member) => member.async_token(),
+            FormatJsAnyMethodMember::JsConstructorClassMember(_) => None,
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(signature) => {
+                signature.async_token()
+            }
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(_) => None,
         }
     }
 
     fn star_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            FormatMethodMember::JsMethodClassMember(member) => member.star_token(),
-            FormatMethodMember::JsMethodObjectMember(member) => member.star_token(),
-            FormatMethodMember::JsConstructorClassMember(_) => None,
-            FormatMethodMember::TsMethodSignatureClassMember(_) => None,
-            FormatMethodMember::TsMethodSignatureTypeMember(_) => None,
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => member.star_token(),
+            FormatJsAnyMethodMember::JsMethodObjectMember(member) => member.star_token(),
+            FormatJsAnyMethodMember::JsConstructorClassMember(_) => None,
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(_) => None,
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(_) => None,
         }
     }
 
     fn name(&self) -> SyntaxResult<AnyMemberName> {
         Ok(match self {
-            FormatMethodMember::JsMethodClassMember(member) => member.name()?.into(),
-            FormatMethodMember::JsMethodObjectMember(member) => member.name()?.into(),
-            FormatMethodMember::JsConstructorClassMember(member) => {
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => member.name()?.into(),
+            FormatJsAnyMethodMember::JsMethodObjectMember(member) => member.name()?.into(),
+            FormatJsAnyMethodMember::JsConstructorClassMember(member) => {
                 AnyMemberName::from(JsAnyClassMemberName::from(member.name()?))
             }
-            FormatMethodMember::TsMethodSignatureClassMember(signature) => signature.name()?.into(),
-            FormatMethodMember::TsMethodSignatureTypeMember(member) => member.name()?.into(),
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(signature) => {
+                signature.name()?.into()
+            }
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(member) => member.name()?.into(),
         })
     }
 
     fn type_parameters(&self) -> Option<TsTypeParameters> {
         match self {
-            FormatMethodMember::JsMethodClassMember(member) => member.type_parameters(),
-            FormatMethodMember::JsMethodObjectMember(member) => member.type_parameters(),
-            FormatMethodMember::JsConstructorClassMember(_) => None,
-            FormatMethodMember::TsMethodSignatureClassMember(signature) => {
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => member.type_parameters(),
+            FormatJsAnyMethodMember::JsMethodObjectMember(member) => member.type_parameters(),
+            FormatJsAnyMethodMember::JsConstructorClassMember(_) => None,
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(signature) => {
                 signature.type_parameters()
             }
-            FormatMethodMember::TsMethodSignatureTypeMember(member) => member.type_parameters(),
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(member) => {
+                member.type_parameters()
+            }
         }
     }
 
     fn parameters(&self) -> SyntaxResult<MethodParameters> {
         Ok(match self {
-            FormatMethodMember::JsMethodClassMember(member) => member.parameters()?.into(),
-            FormatMethodMember::JsMethodObjectMember(member) => member.parameters()?.into(),
-            FormatMethodMember::JsConstructorClassMember(member) => member.parameters()?.into(),
-            FormatMethodMember::TsMethodSignatureClassMember(signature) => {
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => member.parameters()?.into(),
+            FormatJsAnyMethodMember::JsMethodObjectMember(member) => member.parameters()?.into(),
+            FormatJsAnyMethodMember::JsConstructorClassMember(member) => {
+                member.parameters()?.into()
+            }
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(signature) => {
                 signature.parameters()?.into()
             }
-            FormatMethodMember::TsMethodSignatureTypeMember(member) => member.parameters()?.into(),
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(member) => {
+                member.parameters()?.into()
+            }
         })
     }
 
     fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         match self {
-            FormatMethodMember::JsMethodClassMember(member) => member.return_type_annotation(),
-            FormatMethodMember::JsMethodObjectMember(member) => member.return_type_annotation(),
-            FormatMethodMember::JsConstructorClassMember(_) => None,
-            FormatMethodMember::TsMethodSignatureClassMember(signature) => {
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => member.return_type_annotation(),
+            FormatJsAnyMethodMember::JsMethodObjectMember(member) => {
+                member.return_type_annotation()
+            }
+            FormatJsAnyMethodMember::JsConstructorClassMember(_) => None,
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(signature) => {
                 signature.return_type_annotation()
             }
-            FormatMethodMember::TsMethodSignatureTypeMember(member) => {
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(member) => {
                 member.return_type_annotation()
             }
         }
@@ -160,23 +172,23 @@ impl FormatMethodMember {
 
     fn question_mark_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            FormatMethodMember::JsMethodClassMember(member) => member.question_mark_token(),
-            FormatMethodMember::JsMethodObjectMember(_) => None,
-            FormatMethodMember::JsConstructorClassMember(_) => None,
-            FormatMethodMember::TsMethodSignatureClassMember(signature) => {
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => member.question_mark_token(),
+            FormatJsAnyMethodMember::JsMethodObjectMember(_) => None,
+            FormatJsAnyMethodMember::JsConstructorClassMember(_) => None,
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(signature) => {
                 signature.question_mark_token()
             }
-            FormatMethodMember::TsMethodSignatureTypeMember(member) => member.optional_token(),
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(member) => member.optional_token(),
         }
     }
 
     fn body(&self) -> SyntaxResult<Option<JsFunctionBody>> {
         Ok(match self {
-            FormatMethodMember::JsMethodClassMember(member) => Some(member.body()?),
-            FormatMethodMember::JsMethodObjectMember(member) => Some(member.body()?),
-            FormatMethodMember::JsConstructorClassMember(member) => Some(member.body()?),
-            FormatMethodMember::TsMethodSignatureClassMember(_) => None,
-            FormatMethodMember::TsMethodSignatureTypeMember(_) => None,
+            FormatJsAnyMethodMember::JsMethodClassMember(member) => Some(member.body()?),
+            FormatJsAnyMethodMember::JsMethodObjectMember(member) => Some(member.body()?),
+            FormatJsAnyMethodMember::JsConstructorClassMember(member) => Some(member.body()?),
+            FormatJsAnyMethodMember::TsMethodSignatureClassMember(_) => None,
+            FormatJsAnyMethodMember::TsMethodSignatureTypeMember(_) => None,
         })
     }
 }

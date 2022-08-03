@@ -173,7 +173,8 @@ impl Format<JsFormatContext> for FormatFunction {
     }
 }
 
-// Grouping the parameters has the effect that the return type will break first.
+/// Returns `true` if the function parameters should be grouped.
+/// Grouping the parameters has the effect that the return type will break first.
 pub(crate) fn should_group_function_parameters(
     type_parameters: Option<&TsTypeParameters>,
     parameter_count: usize,
@@ -206,6 +207,7 @@ pub(crate) fn should_group_function_parameters(
     let result = if parameter_count != 1 {
         false
     } else {
+        // TODO https://github.com/rome/tools/issues/2768
         // THIS is a hack that is necessary to avoid that the formatter doesn't insert a space
         // between `)` and the `:` of the return type annotation IF there's a an inline comment
         // after the last comment that has been written. This can be deleted once the comments refactor lands.

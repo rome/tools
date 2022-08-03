@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::js::classes::method_class_member::FormatMethodMember;
+use crate::js::classes::method_class_member::FormatJsAnyMethodMember;
 use rome_formatter::write;
 use rome_js_syntax::JsConstructorClassMember;
 
@@ -14,7 +14,7 @@ impl FormatNodeRule<JsConstructorClassMember> for FormatJsConstructorClassMember
             [
                 node.modifiers().format(),
                 space(),
-                FormatMethodMember::from(node.clone())
+                FormatJsAnyMethodMember::from(node.clone())
             ]
         ]
     }

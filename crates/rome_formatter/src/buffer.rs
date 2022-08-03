@@ -486,7 +486,7 @@ pub trait BufferExtensions: Buffer + Sized {
     ///
     /// ## Alternatives
     ///
-    /// Use `Memoized.inspect(f).will_break()` if you need to know if some content breaks that should
+    /// Use `Memoized.inspect(f)?.will_break()` if you need to know if some content breaks that should
     /// only be written later.
     fn inspect_will_break(&mut self) -> WillBreakBuffer<Self::Context> {
         WillBreakBuffer::new(self)
@@ -541,7 +541,7 @@ pub trait BufferExtensions: Buffer + Sized {
     ///
     /// /// ## Alternatives
     ///
-    /// Use `Memoized.inspect(f).will_break()` if you need to know if some content breaks that should
+    /// Use `Memoized.inspect(f)?.has_label(LabelId::of::<SomeLabelId>()` if you need to know if some content breaks that should
     /// only be written later.
     fn inspect_is_labelled<T: ?Sized + 'static>(&mut self) -> HasLabelBuffer<Self::Context> {
         let label_id = LabelId::of::<T>();
