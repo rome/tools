@@ -78,6 +78,9 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
     }
 }
 
+/// Tests if the passed in argument has any leading comments. This is the case if
+/// * the argument's first token has a leading comment
+/// * the argument is a parenthesized expression and the inner expression has a leading comment.
 fn has_argument_leading_comments(argument: &JsAnyExpression) -> SyntaxResult<bool> {
     if matches!(argument, JsAnyExpression::JsxTagExpression(_)) {
         // JSX formatting takes care of adding parens
@@ -90,8 +93,7 @@ fn has_argument_leading_comments(argument: &JsAnyExpression) -> SyntaxResult<boo
 
     let result = match argument {
         JsAnyExpression::JsParenthesizedExpression(inner) => {
-            inner.syntax().has_leading_comments()
-                || has_argument_leading_comments(&inner.expression()?)?
+            has_argument_leading_comments(&inner.expression()?)?
         }
         _ => false,
     };

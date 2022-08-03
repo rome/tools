@@ -137,7 +137,7 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
 
     if let Some(parent) = &parent {
         match parent.kind() {
-            // The formatting of the return or throw argument takes care of adding parens if necessary
+            // The formatting of the return or throw argument takes care of adding parentheses if necessary
             JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_THROW_STATEMENT => {
                 return Ok(true)
             }
@@ -180,9 +180,8 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
         return Ok(false);
     }
 
-    if let Some(parent) = &parent {
-        if JsAnyBinaryLikeExpression::can_cast(parent.kind()) {
-            let binary_like = JsAnyBinaryLikeExpression::unwrap_cast(parent.clone());
+    if let Some(parent) = parent {
+        if let Some(binary_like) = JsAnyBinaryLikeExpression::cast(parent) {
             let operator = binary_like.operator()?;
 
             if !binary_argument_needs_parens(

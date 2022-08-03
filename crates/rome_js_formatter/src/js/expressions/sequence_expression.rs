@@ -19,6 +19,7 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
         let mut is_nested = false;
         let mut first_non_sequence_or_paren_parent = None;
 
+        // Skip 1 because ancestor starts with the current node but we're interested in the parent
         for parent in node.syntax().ancestors().skip(1) {
             if parent.kind() == JS_SEQUENCE_EXPRESSION {
                 is_nested = true;
