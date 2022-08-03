@@ -29,6 +29,11 @@ function f42(a, b) {
 }
 f42();
 
+function f43(a, b) {
+	console.log(a);
+}
+f43();
+
 const f5 = () => {};
 
 const f6 = () => {
@@ -202,22 +207,22 @@ Suggested fix: Remove dead code.
 ```
 
 ```
-warning[js/noUnusedVariables]: This variable is unused.
-   ┌─ noUnusedVariables.js:26:7
+warning[js/noUnusedVariables]: This parameter is unused.
+   ┌─ noUnusedVariables.js:26:17
    │
-26 │ const f5 = () => {};
-   │       --
+26 │ function f43(a, b) {
+   │                 -
 
 Suggested fix: Remove dead code.
-      | @@ -23,8 +23,6 @@
+      | @@ -23,7 +23,7 @@
 22 22 |   }
 23 23 |   f42();
 24 24 |   
-25    | - const f5 = () => {};
-26    | - 
-27 25 |   const f6 = () => {
-28 26 |   	f6();
-29 27 |   };
+25    | - function f43(a, b) {
+   25 | + function f43(a) {
+26 26 |   	console.log(a);
+27 27 |   }
+28 28 |   f43();
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -226,20 +231,43 @@ Suggested fix: Remove dead code.
 
 ```
 warning[js/noUnusedVariables]: This variable is unused.
-   ┌─ noUnusedVariables.js:28:7
+   ┌─ noUnusedVariables.js:31:7
    │
-28 │ const f6 = () => {
+31 │ const f5 = () => {};
    │       --
 
 Suggested fix: Remove dead code.
-      | @@ -24,7 +24,3 @@
-23 23 |   f42();
-24 24 |   
-25 25 |   const f5 = () => {};
-26    | - 
-27    | - const f6 = () => {
-28    | - 	f6();
-29    | - };
+      | @@ -28,8 +28,6 @@
+27 27 |   }
+28 28 |   f43();
+29 29 |   
+30    | - const f5 = () => {};
+31    | - 
+32 30 |   const f6 = () => {
+33 31 |   	f6();
+34 32 |   };
+
+=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+
+
+```
+
+```
+warning[js/noUnusedVariables]: This variable is unused.
+   ┌─ noUnusedVariables.js:33:7
+   │
+33 │ const f6 = () => {
+   │       --
+
+Suggested fix: Remove dead code.
+      | @@ -29,7 +29,3 @@
+28 28 |   f43();
+29 29 |   
+30 30 |   const f5 = () => {};
+31    | - 
+32    | - const f6 = () => {
+33    | - 	f6();
+34    | - };
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 

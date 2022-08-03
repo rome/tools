@@ -23,6 +23,11 @@ function f42(a, b) {
 }
 f42();
 
+function f43(a, b) {
+	console.log(a);
+}
+f43();
+
 const f5 = () => {};
 
 const f6 = () => {

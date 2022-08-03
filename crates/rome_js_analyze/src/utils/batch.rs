@@ -47,8 +47,13 @@ impl JsBatchMutation for BatchMutation<JsLanguage, JsAnyRoot> {
 
                     // if it is the last declarator of the list
                     // removes the comma before this element
-                    let is_last = elements.next().is_none();
-                    if is_last {
+                    let remove_previous_element_comma = match elements.next() {
+                        Some(e) if e.node().is_err() => true,
+                        None => true,
+                        _ => false,
+                    };
+
+                    if remove_previous_element_comma {
                         if let Some(element) = previous_element {
                             if let Some(comma) = element.trailing_separator().ok().flatten() {
                                 self.remove_token(comma.clone());
@@ -98,5 +103,48 @@ impl JsBatchMutation for BatchMutation<JsLanguage, JsAnyRoot> {
 
             Some(())
         });
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::assert_remove_ok;
+
+    // Remove JsVariableDeclarator
+    assert_remove_ok! {
+        ok_remove_variable_declarator_single,
+            "let a;",
+            "",
+        ok_remove_variable_declarator_fist,
+            "let a, b;",
+            "let b;",
+        ok_remove_variable_declarator_second,
+            "let b, a;",
+            "let b;",
+        ok_remove_variable_declarator_second_trailling_comma,
+            "let b, a,;",
+            "let b;",
+        ok_remove_variable_declarator_middle,
+            "let b, a, c;",
+            "let b, c;",
+    }
+
+    // Remove JsFormalParameter
+    assert_remove_ok! {
+        ok_remove_formal_parameter_single,
+            "function f(a) {}",
+            "function f() {}",
+        ok_remove_formal_parameter_first,
+            "function f(a, b) {}",
+            "function f(b) {}",
+        ok_remove_formal_parameter_second,
+            "function f(b, a) {}",
+            "function f(b) {}",
+        ok_remove_formal_parameter_second_trailing_comma,
+            "function f(b, a,) {}",
+            "function f(b) {}",
+        ok_remove_formal_parameter_middle,
+            "function f(b, a, c) {}",
+            "function f(b, c) {}",
     }
 }
