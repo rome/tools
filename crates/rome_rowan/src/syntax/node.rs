@@ -248,6 +248,11 @@ impl<L: Language> SyntaxNode<L> {
         self.raw.parent().map(Self::from)
     }
 
+    /// Returns the grand parent.
+    pub fn grand_parent(&self) -> Option<SyntaxNode<L>> {
+        self.parent().and_then(|parent| parent.parent())
+    }
+
     /// Returns the index of this node inside of its parent
     #[inline]
     pub(crate) fn index(&self) -> usize {

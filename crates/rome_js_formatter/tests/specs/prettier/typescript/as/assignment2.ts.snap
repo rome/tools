@@ -61,8 +61,8 @@ const originalPrototype = originalConstructor.prototype as TComponent & Injectio
 -const originalPrototype = originalConstructor.prototype as TComponent &
 -    InjectionTarget,
 +const originalPrototype = originalConstructor.prototype as
-+  & TComponent
-+  & InjectionTarget,
++    & TComponent
++    & InjectionTarget,
    propertyToServiceName = originalPrototype._inject;
 ```
 
@@ -103,8 +103,8 @@ const annotate = (angular.injector as any).$$annotate as (
 ) => string[];
 
 const originalPrototype = originalConstructor.prototype as
-  & TComponent
-  & InjectionTarget,
+    & TComponent
+    & InjectionTarget,
   propertyToServiceName = originalPrototype._inject;
 ```
 

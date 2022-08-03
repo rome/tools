@@ -79,7 +79,7 @@ const foo3 = 123
 ```diff
 --- Prettier
 +++ Rome
-@@ -38,35 +38,29 @@
+@@ -38,35 +38,31 @@
    "val",
  ];
  
@@ -119,8 +119,9 @@ const foo3 = 123
  
 -let // Comment
 -  foo2 = "val",
--  bar = "val";
-+let foo2 = "val", bar = "val"; // Comment
++let foo2 = "val",
++  // Comment
+   bar = "val";
  
 -const foo3 = 123;
 +const foo3 = 123
@@ -192,7 +193,9 @@ val
 
 let foo1 = "val"; // Comment
 
-let foo2 = "val", bar = "val"; // Comment
+let foo2 = "val",
+  // Comment
+  bar = "val";
 
 const foo3 = 123
 // Nothing to see here.
