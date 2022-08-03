@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 89
+assertion_line: 97
 expression: noArguments.cjs
 ---
 # Input
@@ -17,11 +17,11 @@ function f() {
 
 # Diagnostics
 ```
-error[js/noArguments]: Use the rest parameters instead of arguments.
+warning[js/noArguments]: Use the rest parameters instead of arguments.
   ┌─ noArguments.cjs:2:17
   │
 2 │     console.log(arguments);
-  │                 ^^^^^^^^^
+  │                 ---------
 
 =  note: arguments does not have Array.prototype methods and can be inconvenient to use.
 

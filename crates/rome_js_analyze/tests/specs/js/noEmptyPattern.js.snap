@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 89
+assertion_line: 97
 expression: noEmptyPattern.js
 ---
 # Input
@@ -26,91 +26,91 @@ function foo({a: []}) {};
 
 # Diagnostics
 ```
-error[js/noEmptyPattern]: Unexpected empty object pattern.
+warning[js/noEmptyPattern]: Unexpected empty object pattern.
   ┌─ noEmptyPattern.js:9:5
   │
 9 │ var {} = foo;
-  │     ^^
+  │     --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty array pattern.
+warning[js/noEmptyPattern]: Unexpected empty array pattern.
    ┌─ noEmptyPattern.js:10:5
    │
 10 │ var [] = foo;
-   │     ^^
+   │     --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty object pattern.
+warning[js/noEmptyPattern]: Unexpected empty object pattern.
    ┌─ noEmptyPattern.js:11:9
    │
 11 │ var {a: {}} = foo;
-   │         ^^
+   │         --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty object pattern.
+warning[js/noEmptyPattern]: Unexpected empty object pattern.
    ┌─ noEmptyPattern.js:12:12
    │
 12 │ var {a, b: {}} = foo;
-   │            ^^
+   │            --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty array pattern.
+warning[js/noEmptyPattern]: Unexpected empty array pattern.
    ┌─ noEmptyPattern.js:13:9
    │
 13 │ var {a: []} = foo;
-   │         ^^
+   │         --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty object pattern.
+warning[js/noEmptyPattern]: Unexpected empty object pattern.
    ┌─ noEmptyPattern.js:14:14
    │
 14 │ function foo({}) {};
-   │              ^^
+   │              --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty array pattern.
+warning[js/noEmptyPattern]: Unexpected empty array pattern.
    ┌─ noEmptyPattern.js:15:14
    │
 15 │ function foo([]) {};
-   │              ^^
+   │              --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty object pattern.
+warning[js/noEmptyPattern]: Unexpected empty object pattern.
    ┌─ noEmptyPattern.js:16:18
    │
 16 │ function foo({a: {}}) {};
-   │                  ^^
+   │                  --
 
 
 ```
 
 ```
-error[js/noEmptyPattern]: Unexpected empty array pattern.
+warning[js/noEmptyPattern]: Unexpected empty array pattern.
    ┌─ noEmptyPattern.js:17:18
    │
 17 │ function foo({a: []}) {};
-   │                  ^^
+   │                  --
 
 
 ```

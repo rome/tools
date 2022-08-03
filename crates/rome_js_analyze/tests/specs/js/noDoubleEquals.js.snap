@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 89
+assertion_line: 97
 expression: noDoubleEquals.js
 ---
 # Input
@@ -15,11 +15,11 @@ const isNonNull = a != null;
 
 # Diagnostics
 ```
-error[js/noDoubleEquals]: Use === instead of ==
+warning[js/noDoubleEquals]: Use === instead of ==
   ┌─ noDoubleEquals.js:1:18
   │
 1 │ const isZero = a == 0;
-  │                  ^^ == is only allowed when comparing against null
+  │                  -- == is only allowed when comparing against null
 
 Suggested fix: Use ===
     | @@ -1,4 +1,4 @@
@@ -35,11 +35,11 @@ Suggested fix: Use ===
 ```
 
 ```
-error[js/noDoubleEquals]: Use !== instead of !=
+warning[js/noDoubleEquals]: Use !== instead of !=
   ┌─ noDoubleEquals.js:2:21
   │
 2 │ const isNonZero = a != 0;
-  │                     ^^ != is only allowed when comparing against null
+  │                     -- != is only allowed when comparing against null
 
 Suggested fix: Use !==
     | @@ -1,5 +1,5 @@

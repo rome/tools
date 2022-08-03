@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 89
+assertion_line: 97
 expression: noUnusedTemplateLiteral.js
 ---
 # Input
@@ -33,11 +33,11 @@ var foo = `foo\\\\\\\nbar`;
 
 # Diagnostics
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:13:11
    │
 13 │ var foo = `bar`;
-   │           ^^^^^
+   │           -----
 
 Suggested fix: Replace with string literal
       | @@ -10,7 +10,7 @@
@@ -54,11 +54,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:14:12
    │
 14 │ var foo1 = `bar `;
-   │            ^^^^^^
+   │            ------
 
 Suggested fix: Replace with string literal
       | @@ -11,7 +11,7 @@
@@ -75,11 +75,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:15:11
    │
 15 │ var foo = `back\rtick`;
-   │           ^^^^^^^^^^^^
+   │           ------------
 
 Suggested fix: Replace with string literal
       | @@ -12,7 +12,7 @@
@@ -96,11 +96,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:16:11
    │
 16 │ var foo = `back\ntick`;
-   │           ^^^^^^^^^^^^
+   │           ------------
 
 Suggested fix: Replace with string literal
       | @@ -13,7 +13,7 @@
@@ -117,11 +117,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:17:11
    │
 17 │ var foo = `back\u2028tick`
-   │           ^^^^^^^^^^^^^^^^
+   │           ----------------
 
 Suggested fix: Replace with string literal
       | @@ -14,7 +14,7 @@
@@ -138,11 +138,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:18:11
    │
 18 │ var foo = `back\u2029tick`;
-   │           ^^^^^^^^^^^^^^^^
+   │           ----------------
 
 Suggested fix: Replace with string literal
       | @@ -15,7 +15,7 @@
@@ -159,11 +159,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:19:11
    │
 19 │ var foo = `back\\\\\ntick`;
-   │           ^^^^^^^^^^^^^^^^
+   │           ----------------
 
 Suggested fix: Replace with string literal
       | @@ -16,7 +16,7 @@
@@ -180,11 +180,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:20:11
    │
 20 │ var foo = `\n`;
-   │           ^^^^
+   │           ----
 
 Suggested fix: Replace with string literal
       | @@ -17,7 +17,7 @@
@@ -201,11 +201,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:21:18
    │
 21 │ function foo() { `use strict`; foo(); }
-   │                  ^^^^^^^^^^^^
+   │                  ------------
 
 Suggested fix: Replace with string literal
       | @@ -18,7 +18,7 @@
@@ -222,11 +222,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:22:11
    │
 22 │ var foo = `foo\\nbar`;
-   │           ^^^^^^^^^^^
+   │           -----------
 
 Suggested fix: Replace with string literal
       | @@ -19,6 +19,6 @@
@@ -242,11 +242,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:23:11
    │
 23 │ var foo = `foo\\\nbar`;
-   │           ^^^^^^^^^^^^
+   │           ------------
 
 Suggested fix: Replace with string literal
       | @@ -20,5 +20,5 @@
@@ -261,11 +261,11 @@ Suggested fix: Replace with string literal
 ```
 
 ```
-error[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
+warning[js/noUnusedTemplateLiteral]: Do not use template literals if interpolation and special-character handling are not needed.
    ┌─ noUnusedTemplateLiteral.js:24:11
    │
 24 │ var foo = `foo\\\\\\\nbar`;
-   │           ^^^^^^^^^^^^^^^^
+   │           ----------------
 
 Suggested fix: Replace with string literal
       | @@ -21,4 +21,4 @@

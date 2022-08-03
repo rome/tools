@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 89
+assertion_line: 97
 expression: noNegationElse.js
 ---
 # Input
@@ -21,7 +21,7 @@ let a = !test ? c : d;
 
 # Diagnostics
 ```
-error[js/noNegationElse]: Invert blocks when performing a negation test.
+warning[js/noNegationElse]: Invert blocks when performing a negation test.
   ┌─ noNegationElse.js:5:1
   │  
 5 │ ┌ if (!true) {
@@ -29,7 +29,7 @@ error[js/noNegationElse]: Invert blocks when performing a negation test.
 7 │ │ } else {
 8 │ │   alternate;
 9 │ │ }
-  │ └─^
+  │ └─'
 
 Suggested fix: Exchange alternate and consequent of the node
     | @@ -2,10 +2,10 @@
@@ -51,11 +51,11 @@ Suggested fix: Exchange alternate and consequent of the node
 ```
 
 ```
-error[js/noNegationElse]: Invert blocks when performing a negation test.
+warning[js/noNegationElse]: Invert blocks when performing a negation test.
    ┌─ noNegationElse.js:10:1
    │
 10 │ !condition ? consequent : alternate;
-   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │ -----------------------------------
 
 Suggested fix: Exchange alternate and consequent of the node
       | @@ -7,6 +7,6 @@
@@ -71,11 +71,11 @@ Suggested fix: Exchange alternate and consequent of the node
 ```
 
 ```
-error[js/noNegationElse]: Invert blocks when performing a negation test.
+warning[js/noNegationElse]: Invert blocks when performing a negation test.
    ┌─ noNegationElse.js:12:9
    │
 12 │ let a = !test ? c : d;
-   │         ^^^^^^^^^^^^^
+   │         -------------
 
 Suggested fix: Exchange alternate and consequent of the node
       | @@ -9,4 +9,4 @@

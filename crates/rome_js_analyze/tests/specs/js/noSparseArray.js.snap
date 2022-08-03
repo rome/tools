@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 89
+assertion_line: 97
 expression: noSparseArray.js
 ---
 # Input
@@ -20,11 +20,11 @@ const f = [1,,2]
 
 # Diagnostics
 ```
-error[js/noSparseArray]: This array contains an empty slot.
+warning[js/noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:5:11
   │
 5 │ const b = [/**test*/,];
-  │           ^^^^^^^^^^^^
+  │           ------------
 
 Suggested fix: Replace hole with undefined
     | @@ -2,7 +2,7 @@
@@ -41,11 +41,11 @@ Suggested fix: Replace hole with undefined
 ```
 
 ```
-error[js/noSparseArray]: This array contains an empty slot.
+warning[js/noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:6:11
   │
 6 │ const c = [,,];
-  │           ^^^^
+  │           ----
 
 Suggested fix: Replace hole with undefined
     | @@ -3,7 +3,7 @@
@@ -62,11 +62,11 @@ Suggested fix: Replace hole with undefined
 ```
 
 ```
-error[js/noSparseArray]: This array contains an empty slot.
+warning[js/noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:7:11
   │
 7 │ const d = [,2];
-  │           ^^^^
+  │           ----
 
 Suggested fix: Replace hole with undefined
     | @@ -4,7 +4,7 @@
@@ -83,11 +83,11 @@ Suggested fix: Replace hole with undefined
 ```
 
 ```
-error[js/noSparseArray]: This array contains an empty slot.
+warning[js/noSparseArray]: This array contains an empty slot.
   ┌─ noSparseArray.js:9:11
   │
 9 │ const e = [1,,]
-  │           ^^^^^
+  │           -----
 
 Suggested fix: Replace hole with undefined
     | @@ -6,5 +6,5 @@
@@ -102,11 +102,11 @@ Suggested fix: Replace hole with undefined
 ```
 
 ```
-error[js/noSparseArray]: This array contains an empty slot.
+warning[js/noSparseArray]: This array contains an empty slot.
    ┌─ noSparseArray.js:10:11
    │
 10 │ const f = [1,,2]
-   │           ^^^^^^
+   │           ------
 
 Suggested fix: Replace hole with undefined
       | @@ -7,4 +7,4 @@
