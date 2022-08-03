@@ -31,27 +31,23 @@ const w1 = /** @typefoo Foo */ (value);
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,18 +1,18 @@
+@@ -1,12 +1,12 @@
  /* @type { } */
  z((x) => {
 -  foo(bar(2 + 3));
--  return 1;
 +  (foo)((bar)(2 + (3)));
-+  return (1);
+   return 1;
  });
  
  /** @type { } */
  z((x) => {
 -  foo(bar(2 + 3));
--  return 1;
 +  (foo)((bar)(2 + (3)));
-+  return (1);
+   return 1;
  });
  
- /** @type {number} */
- let q = z((x) => {
--  return 1;
-+  return (1);
+@@ -15,4 +15,4 @@
+   return 1;
  });
  
 -const w1 = /** @typefoo Foo */ value;
@@ -64,18 +60,18 @@ const w1 = /** @typefoo Foo */ (value);
 /* @type { } */
 z((x) => {
   (foo)((bar)(2 + (3)));
-  return (1);
+  return 1;
 });
 
 /** @type { } */
 z((x) => {
   (foo)((bar)(2 + (3)));
-  return (1);
+  return 1;
 });
 
 /** @type {number} */
 let q = z((x) => {
-  return (1);
+  return 1;
 });
 
 const w1 = /** @typefoo Foo */ (value);

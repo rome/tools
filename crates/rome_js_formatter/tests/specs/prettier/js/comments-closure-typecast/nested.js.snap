@@ -30,9 +30,9 @@ const BarImpl = /** @type {BarConstructor} */ (
 -      throw new Error("Internal error: Illegal constructor");
 -    }
 -  )
-+  (function Bar() {
++  function Bar() {
 +    throw new Error("Internal error: Illegal constructor");
-+  })
++  }
  );
 ```
 
@@ -43,9 +43,9 @@ foo = /** @type {!Foo} */ (/** @type {!Baz} */ (baz).bar);
 
 const BarImpl = /** @type {BarConstructor} */ (
   /** @type {unknown} */
-  (function Bar() {
+  function Bar() {
     throw new Error("Internal error: Illegal constructor");
-  })
+  }
 );
 ```
 

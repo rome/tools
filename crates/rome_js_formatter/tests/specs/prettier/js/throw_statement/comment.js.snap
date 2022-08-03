@@ -34,7 +34,7 @@ fn(function f() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,23 +1,21 @@
+@@ -1,23 +1,17 @@
  function x() {
 -  throw (
 -    func2
@@ -47,23 +47,25 @@ fn(function f() {
  }
  
  function f() {
-   throw (
-     foo
+-  throw (
+-    foo
 -      // comment
 -      .bar()
-+    // comment
-+    .bar()
-   );
+-  );
++  throw foo
++  // comment
++  .bar();
  }
  
  fn(function f() {
-   throw (
-     foo
+-  throw (
+-    foo
 -      // comment
 -      .bar()
-+    // comment
-+    .bar()
-   );
+-  );
++  throw foo
++  // comment
++  .bar();
  });
 ```
 
@@ -77,19 +79,15 @@ function x() {
 }
 
 function f() {
-  throw (
-    foo
-    // comment
-    .bar()
-  );
+  throw foo
+  // comment
+  .bar();
 }
 
 fn(function f() {
-  throw (
-    foo
-    // comment
-    .bar()
-  );
+  throw foo
+  // comment
+  .bar();
 });
 ```
 

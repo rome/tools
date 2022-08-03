@@ -188,13 +188,15 @@ while (
 (something && elsewhere && happy && thoughts);
 
 function a() {
-	return something &&
-	elsewhere &&
-	happy &&
-	thoughts &&
-	somethingsomethingsomethingsomething &&
-	thoughts &&
-	somethingsomethingsomethingsomething;
+	return (
+		something &&
+		elsewhere &&
+		happy &&
+		thoughts &&
+		somethingsomethingsomethingsomething &&
+		thoughts &&
+		somethingsomethingsomethingsomething
+	);
 }
 
 const a = () => aa && bb && something && somethingsomethingsomethingsomething;
@@ -244,7 +246,9 @@ undefined === function () {
 };
 
 const b = `${
-	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+	(
+		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+	)
 }`;
 
 const a =
@@ -323,5 +327,5 @@ a in
 
 ## Lines exceeding width of 80 characters
 
-  121: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+  124: 		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
 

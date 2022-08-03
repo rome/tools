@@ -1,5 +1,8 @@
 use crate::prelude::*;
-use crate::utils::{is_simple_expression, FormatPrecedence};
+use crate::utils::{
+    binary_argument_needs_parens, is_simple_expression, FormatPrecedence,
+    JsAnyBinaryLikeLeftExpression,
+};
 use rome_formatter::write;
 
 use crate::utils::JsAnyBinaryLikeExpression;
@@ -36,7 +39,7 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
                 write![f, [l_paren_token.format()]]?;
             };
 
-            write![f, [expression.format(),]]?;
+            write![f, [expression.format()]]?;
 
             if parenthesis_can_be_omitted {
                 write!(f, [format_removed(&r_paren_token?)])?;
@@ -49,7 +52,7 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
                 f,
                 [
                     format_removed(&l_paren_token?),
-                    group(&expression.format()),
+                    expression.format(),
                     format_removed(&r_paren_token?),
                 ]
             ]?;
@@ -132,6 +135,19 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     let expression = node.expression()?;
     let parent = node.syntax().parent();
 
+    if let Some(parent) = &parent {
+        match parent.kind() {
+            // The formatting of the return or throw argument takes care of adding parentheses if necessary
+            JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_THROW_STATEMENT => {
+                return Ok(true)
+            }
+            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => return Ok(true),
+            _ => {
+                // fall through
+            }
+        }
+    }
+
     // if expression is a StringLiteralExpression, we need to check it before precedence comparison, here is an example:
     // ```js
     // a[("test")]
@@ -156,34 +172,26 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
             Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT)
         ));
     }
+
     let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
     let node_precedence = FormatPrecedence::with_precedence_for_parenthesis(Some(node.syntax()));
 
     if parent_precedence > node_precedence {
         return Ok(false);
     }
-    // Here we handle cases where we have binary/logical expressions.
-    // We want to remove the parenthesis only in cases where `left` and `right` are not other
-    // binary/logical expressions.
-    //
-    // From another point of view, logical/binary expressions with the same operator can stay without
-    // parenthesis.
-    match expression {
-        JsAnyExpression::JsBinaryExpression(expression) => {
-            let left = expression.left()?;
-            let right = expression.right()?;
 
-            Ok(!JsAnyBinaryLikeExpression::can_cast(left.syntax().kind())
-                && !JsAnyBinaryLikeExpression::can_cast(right.syntax().kind()))
+    if let Some(parent) = parent {
+        if let Some(binary_like) = JsAnyBinaryLikeExpression::cast(parent) {
+            let operator = binary_like.operator()?;
+
+            if !binary_argument_needs_parens(
+                operator,
+                &JsAnyBinaryLikeLeftExpression::from(expression),
+            )? {
+                return Ok(true);
+            }
         }
-
-        JsAnyExpression::JsLogicalExpression(expression) => {
-            let left = expression.left()?;
-            let right = expression.right()?;
-
-            Ok(!JsAnyBinaryLikeExpression::can_cast(left.syntax().kind())
-                && !JsAnyBinaryLikeExpression::can_cast(right.syntax().kind()))
-        }
-        _ => Ok(false),
     }
+
+    Ok(false)
 }

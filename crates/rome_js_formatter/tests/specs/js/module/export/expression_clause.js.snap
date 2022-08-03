@@ -12,5 +12,5 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-export default 1 - 43;
+export default (1 - 43);
 

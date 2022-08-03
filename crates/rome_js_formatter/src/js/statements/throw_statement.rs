@@ -3,6 +3,7 @@ use rome_formatter::{format_args, write};
 
 use crate::utils::FormatWithSemicolon;
 
+use crate::js::statements::return_statement::FormatReturnOrThrowArgument;
 use rome_js_syntax::JsThrowStatement;
 use rome_js_syntax::JsThrowStatementFields;
 
@@ -17,13 +18,14 @@ impl FormatNodeRule<JsThrowStatement> for FormatJsThrowStatement {
             semicolon_token,
         } = node.as_fields();
 
-        let throw_token = throw_token.format();
-        let exception = argument.format();
-
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_args!(throw_token, space(), exception),
+                &format_args![
+                    throw_token.format(),
+                    space(),
+                    FormatReturnOrThrowArgument::new(&argument?)
+                ],
                 semicolon_token.as_ref()
             )]
         )

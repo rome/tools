@@ -36,41 +36,39 @@ function f() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,23 +1,22 @@
- function f() {
+@@ -2,22 +2,25 @@
    throw (
      property.isIdentifier() &&
--    FUNCTIONS[property.node.name] &&
+     FUNCTIONS[property.node.name] &&
 -    (object.isIdentifier(JEST_GLOBAL) ||
 -      (callee.isMemberExpression() && shouldHoistExpression(object))) &&
--    FUNCTIONS[property.node.name](expr.get("arguments"))
-+      FUNCTIONS[property.node.name] &&
-+      (
-+        object.isIdentifier(JEST_GLOBAL) || (
-+          callee.isMemberExpression() && shouldHoistExpression(object)
-+        )
-+      ) &&
-+      FUNCTIONS[property.node.name](expr.get("arguments"))
++    (
++      object.isIdentifier(JEST_GLOBAL) || (
++        callee.isMemberExpression() && shouldHoistExpression(object)
++      )
++    ) &&
+     FUNCTIONS[property.node.name](expr.get("arguments"))
    );
  
--  throw (
+   throw (
 -    chalk.bold("No tests found related to files changed since last commit.\n") +
 -    chalk.dim(
 -      patternInfo.watch
 -        ? "Press `a` to run all tests, or run Jest with `--watchAll`."
 -        : "Run Jest without `-o` to run all tests.",
--    )
-+  throw chalk.bold(
-+    "No tests found related to files changed since last commit.\n",
-+  ) + chalk.dim(
-+    patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
++    chalk.bold(
++      "No tests found related to files changed since last commit.\n",
++    ) + chalk.dim(
++      patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
+     )
    );
  
--  throw (
+   throw (
 -    !filePath.includes(coverageDirectory) &&
 -    !filePath.endsWith(`.${SNAPSHOT_EXTENSION}`)
-+  throw !filePath.includes(coverageDirectory) && !filePath.endsWith(
-+    `.${SNAPSHOT_EXTENSION}`,
++    !filePath.includes(coverageDirectory) && !filePath.endsWith(
++      `.${SNAPSHOT_EXTENSION}`,
++    )
    );
  }
 ```
@@ -81,23 +79,27 @@ function f() {
 function f() {
   throw (
     property.isIdentifier() &&
-      FUNCTIONS[property.node.name] &&
-      (
-        object.isIdentifier(JEST_GLOBAL) || (
-          callee.isMemberExpression() && shouldHoistExpression(object)
-        )
-      ) &&
-      FUNCTIONS[property.node.name](expr.get("arguments"))
+    FUNCTIONS[property.node.name] &&
+    (
+      object.isIdentifier(JEST_GLOBAL) || (
+        callee.isMemberExpression() && shouldHoistExpression(object)
+      )
+    ) &&
+    FUNCTIONS[property.node.name](expr.get("arguments"))
   );
 
-  throw chalk.bold(
-    "No tests found related to files changed since last commit.\n",
-  ) + chalk.dim(
-    patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
+  throw (
+    chalk.bold(
+      "No tests found related to files changed since last commit.\n",
+    ) + chalk.dim(
+      patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
+    )
   );
 
-  throw !filePath.includes(coverageDirectory) && !filePath.endsWith(
-    `.${SNAPSHOT_EXTENSION}`,
+  throw (
+    !filePath.includes(coverageDirectory) && !filePath.endsWith(
+      `.${SNAPSHOT_EXTENSION}`,
+    )
   );
 }
 ```
@@ -105,6 +107,6 @@ function f() {
 
 # Lines exceeding max width of 80 characters
 ```
-   16:     patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
+   17:       patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
 ```
 
