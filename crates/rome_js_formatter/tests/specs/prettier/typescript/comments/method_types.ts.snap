@@ -52,12 +52,14 @@ abstract class Test {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,11 +1,11 @@
+@@ -1,11 +1,13 @@
  interface foo1 {
 -  bar3 /* foo */(/* baz */); // bat
 -  bar /* foo */ /* bar */?(/* baz */) /* bat */;
 -  bar2 /* foo */(/* baz */) /* bat */;
-+  bar3 /* foo */ (/* baz */); // bat
++  bar3 /* foo */ (
++    /* baz */
++  ); // bat
 +  bar /* foo */ ? /* bar */ (/* baz */) /* bat */;
 +  bar2 /* foo */ (/* baz */) /* bat */;
  }
@@ -68,7 +70,7 @@ abstract class Test {
  }
  
  interface foo3 {
-@@ -17,23 +17,23 @@
+@@ -17,23 +19,23 @@
  }
  
  interface foo5 {
@@ -106,7 +108,9 @@ abstract class Test {
 
 ```js
 interface foo1 {
-  bar3 /* foo */ (/* baz */); // bat
+  bar3 /* foo */ (
+    /* baz */
+  ); // bat
   bar /* foo */ ? /* bar */ (/* baz */) /* bat */;
   bar2 /* foo */ (/* baz */) /* bat */;
 }

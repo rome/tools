@@ -1,6 +1,6 @@
 pub use crate::builders::*;
 pub use crate::format_element::*;
-pub use crate::format_extensions::{FormatOptional as _, MemoizeFormat};
+pub use crate::format_extensions::{FormatOptional as _, MemoizeFormat, Memoized};
 pub use crate::formatter::Formatter;
 pub use crate::printer::PrinterOptions;
 pub use crate::token::{
