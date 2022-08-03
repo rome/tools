@@ -131,7 +131,7 @@ pub struct Js {
 }
 impl Js {
     const GROUP_NAME: &'static str = "js";
-    pub(crate) const GROUP_RULES: [&'static str; 26] = [
+    pub(crate) const GROUP_RULES: [&'static str; 27] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -160,7 +160,7 @@ impl Js {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [RuleFilter<'static>; 24] = [
+    const RECOMMENDED_RULES: [RuleFilter<'static>; 25] = [
         RuleFilter::Rule("js", Self::GROUP_RULES[0]),
         RuleFilter::Rule("js", Self::GROUP_RULES[1]),
         RuleFilter::Rule("js", Self::GROUP_RULES[2]),
@@ -179,12 +179,13 @@ impl Js {
         RuleFilter::Rule("js", Self::GROUP_RULES[16]),
         RuleFilter::Rule("js", Self::GROUP_RULES[17]),
         RuleFilter::Rule("js", Self::GROUP_RULES[18]),
-        RuleFilter::Rule("js", Self::GROUP_RULES[20]),
+        RuleFilter::Rule("js", Self::GROUP_RULES[19]),
         RuleFilter::Rule("js", Self::GROUP_RULES[21]),
         RuleFilter::Rule("js", Self::GROUP_RULES[22]),
         RuleFilter::Rule("js", Self::GROUP_RULES[23]),
         RuleFilter::Rule("js", Self::GROUP_RULES[24]),
         RuleFilter::Rule("js", Self::GROUP_RULES[25]),
+        RuleFilter::Rule("js", Self::GROUP_RULES[26]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
