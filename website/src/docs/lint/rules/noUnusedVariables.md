@@ -3,7 +3,7 @@ title: Lint Rule noUnusedVariables
 layout: layouts/rule.liquid
 ---
 
-# noUnusedVariables (since v0.8.0)
+# noUnusedVariables (since v0.9.0)
 
 > This rule is recommended by Rome.
 
@@ -23,7 +23,7 @@ const a = 4;
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const a = 4;
   <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove dead code.</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const a = 4;</span>
   0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"></span>
@@ -42,7 +42,7 @@ let a = 4;
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> let a = 4;
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove dead code.</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">let a = 4;</span>
   0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"></span>
@@ -62,7 +62,7 @@ function foo() {
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo() {
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove dead code.</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this function.</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1,2 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">function foo() {</span>
 1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">};</span>
@@ -85,7 +85,7 @@ foo();
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo(myVar) {
   <span style="color: rgb(38, 148, 255);">│</span>              <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove dead code.</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this parameter.</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1,4 +1,4 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">function foo(myVar) {</span>
   0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">function foo() {</span>
@@ -108,7 +108,7 @@ const foo = () => {
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const foo = () =&gt; {
   <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove dead code.</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1,2 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const foo = () =&gt; {</span>
 1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">};</span>
@@ -130,7 +130,7 @@ function foo() {
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo() {
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove dead code.</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this function.</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1,3 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">function foo() {</span>
 1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    foo();</span>
@@ -154,7 +154,7 @@ const foo = () => {
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const foo = () =&gt; {
   <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove dead code.</span>
+<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
     | <span style="color: rgb(38, 148, 255);">@@ -1,4 +1 @@</span>
 0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const foo = () =&gt; {</span>
 1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    foo();</span>

@@ -65,7 +65,7 @@ declare_rule! {
     /// foo();
     /// ```
     pub(crate) NoUnusedVariables {
-        version: "0.8.0",
+        version: "0.9.0",
         name: "noUnusedVariables",
         recommended: true,
     }
