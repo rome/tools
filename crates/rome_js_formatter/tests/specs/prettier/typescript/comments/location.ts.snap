@@ -48,40 +48,26 @@ export type WrappedFormUtils = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,12 +1,11 @@
+@@ -1,7 +1,4 @@
 -function x({
 -  x,
 -  y,
 -}: {
--  // Hello world.
--  x: string;
--  // Yoyo.
--  y: string;
--}) {}
-+function x(
-+  { x, y }: {
-+    // Hello world.
-+    x: string;
-+    // Yoyo.
-+    y: string;
-+  },
-+) {}
- 
- export interface ApplicationEventData {
-   registerBroadcastReceiver(
++function x({ x, y }: {
+   // Hello world.
+   x: string;
+   // Yoyo.
 ```
 
 # Output
 
 ```js
-function x(
-  { x, y }: {
-    // Hello world.
-    x: string;
-    // Yoyo.
-    y: string;
-  },
-) {}
+function x({ x, y }: {
+  // Hello world.
+  x: string;
+  // Yoyo.
+  y: string;
+}) {}
 
 export interface ApplicationEventData {
   registerBroadcastReceiver(
@@ -118,7 +104,7 @@ export type WrappedFormUtils = {
 
 # Lines exceeding max width of 80 characters
 ```
-   29:       /** 可以把 onChange 的参数转化为控件的值，例如 DatePicker 可设为：(date, dateString) => dateString */
-   33:       /** 校验规则，参见 [async-validator](https://github.com/yiminghe/async-validator) */
+   27:       /** 可以把 onChange 的参数转化为控件的值，例如 DatePicker 可设为：(date, dateString) => dateString */
+   31:       /** 校验规则，参见 [async-validator](https://github.com/yiminghe/async-validator) */
 ```
 

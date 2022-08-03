@@ -255,21 +255,21 @@ function foo(
  
    short3,
 -  // More comments
-+// More comments
-+
- );
- 
+-);
+-
 -differentArgTypes(
 -  () => {
 -    return true;
 -  },
--
++// More comments
+ 
 -  isTrue ? doSomething() : 12,
--);
+ );
+ 
 +differentArgTypes(() => {
 +  return true;
 +}, isTrue ? doSomething() : 12);
- 
++
  moreArgTypes(
    [1, 2, 3],
 -
@@ -350,14 +350,14 @@ function foo(
 -    time_frame,
 -  },
 -);
+-
+-stuff.doThing(
+-  someStuff,
 +doAnotherThing("node", {
 +  solution_type,
 +  time_frame,
 +});
  
--stuff.doThing(
--  someStuff,
--
 -  -1,
 -  {
 -    accept: (node) => doSomething(node),
@@ -396,24 +396,6 @@ function foo(
    /* Comment */
  
    // This is important
-@@ -161,17 +117,14 @@
- 
- function foo(
-   one,
--
-   two,
-   three,
-   four,
--
-   five,
-   six,
-   seven,
-   eight,
-   nine,
-   ten,
--
-   eleven,
- ) {}
 ```
 
 # Output
@@ -538,15 +520,18 @@ doSomething(
 
 function foo(
   one,
+
   two,
   three,
   four,
+
   five,
   six,
   seven,
   eight,
   nine,
   ten,
+
   eleven,
 ) {}
 ```

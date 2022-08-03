@@ -61,7 +61,7 @@ const Query: FunctionComponent<QueryProps> = ({
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,81 +1,66 @@
+@@ -1,10 +1,6 @@
  const MyComponent: React.VoidFunctionComponent<MyComponentProps> = ({ x }) => {
    const a = useA();
 -  return (
@@ -72,13 +72,10 @@ const Query: FunctionComponent<QueryProps> = ({
 +  return <div>x = {x}; a = {a}</div>;
  };
  
--const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({
--  x,
--  y,
--}) => {
-+const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = (
-+  { x, y },
-+) => {
+ const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({
+@@ -12,22 +8,14 @@
+   y,
+ }) => {
    const a = useA();
 -  return (
 -    <div>
@@ -101,25 +98,9 @@ const Query: FunctionComponent<QueryProps> = ({
  };
  
  const MyComponentWithLongName2: React.VoidFunctionComponent<
-   MyComponentWithLongNameProps
--> = ({
--  x,
--  y,
--  anotherPropWithLongName1,
--  anotherPropWithLongName2,
--  anotherPropWithLongName3,
--  anotherPropWithLongName4,
--}) => {
-+> = (
-+  {
-+    x,
-+    y,
-+    anotherPropWithLongName1,
-+    anotherPropWithLongName2,
-+    anotherPropWithLongName3,
-+    anotherPropWithLongName4,
-+  },
-+) => {
+@@ -41,29 +29,23 @@
+   anotherPropWithLongName4,
+ }) => {
    const a = useA();
 -  return (
 -    <div>
@@ -156,29 +137,6 @@ const Query: FunctionComponent<QueryProps> = ({
    return null;
  };
  
--const Query: FunctionComponent<QueryProps> = ({
--  children,
--  type,
--  resource,
--  payload,
--  // Provides an undefined onSuccess just so the key `onSuccess` is defined
--  // This is used to detect options in useDataProvider
--  options = { onSuccess: undefined },
--}) =>
-+const Query: FunctionComponent<QueryProps> = (
-+  {
-+    children,
-+    type,
-+    resource,
-+    payload,
-+    // Provides an undefined onSuccess just so the key `onSuccess` is defined
-+    // This is used to detect options in useDataProvider
-+    options = { onSuccess: undefined },
-+  },
-+) =>
-   children(
-     useQuery(
-       { type, resource, payload },
 ```
 
 # Output
@@ -189,9 +147,10 @@ const MyComponent: React.VoidFunctionComponent<MyComponentProps> = ({ x }) => {
   return <div>x = {x}; a = {a}</div>;
 };
 
-const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = (
-  { x, y },
-) => {
+const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({
+  x,
+  y,
+}) => {
   const a = useA();
   return <div>x = {x}; y = {y}; a = {a}</div>;
 };
@@ -205,16 +164,14 @@ const MyComponentWithLongName1: React.VoidFunctionComponent<
 
 const MyComponentWithLongName2: React.VoidFunctionComponent<
   MyComponentWithLongNameProps
-> = (
-  {
-    x,
-    y,
-    anotherPropWithLongName1,
-    anotherPropWithLongName2,
-    anotherPropWithLongName3,
-    anotherPropWithLongName4,
-  },
-) => {
+> = ({
+  x,
+  y,
+  anotherPropWithLongName1,
+  anotherPropWithLongName2,
+  anotherPropWithLongName3,
+  anotherPropWithLongName4,
+}) => {
   const a = useA();
   return <div>x = {x}; y = {y}; a = {a}</div>;
 };
@@ -236,17 +193,15 @@ export const ExportToExcalidrawPlus: React.FC<
   return null;
 };
 
-const Query: FunctionComponent<QueryProps> = (
-  {
-    children,
-    type,
-    resource,
-    payload,
-    // Provides an undefined onSuccess just so the key `onSuccess` is defined
-    // This is used to detect options in useDataProvider
-    options = { onSuccess: undefined },
-  },
-) =>
+const Query: FunctionComponent<QueryProps> = ({
+  children,
+  type,
+  resource,
+  payload,
+  // Provides an undefined onSuccess just so the key `onSuccess` is defined
+  // This is used to detect options in useDataProvider
+  options = { onSuccess: undefined },
+}) =>
   children(
     useQuery(
       { type, resource, payload },

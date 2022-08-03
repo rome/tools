@@ -99,17 +99,26 @@ class Class6 {
  })
  class AngularComponent {
    @Input() myInput: string;
-@@ -55,7 +55,13 @@
+@@ -44,6 +44,7 @@
+ class Class4 {
+   method(
+     param1,
++
+     @Decorator
+     { prop1, prop2 }: Type,
+   ) {}
+@@ -54,8 +55,14 @@
+ }
  
  class Class6 {
-   method(@Decorator({}) { prop1 }: Type) {}
 -  method(@Decorator({}) { prop1 }: Type) {}
+   method(@Decorator({}) { prop1 }: Type) {}
+-  method(@Decorator([]) { prop1 }: Type) {}
 +  method(
 +    @Decorator(
 +      {}) { prop1 }: Type,
 +  ) {}
    method(@Decorator([]) { prop1 }: Type) {}
--  method(@Decorator([]) { prop1 }: Type) {}
 +  method(
 +    @Decorator(
 +      []) { prop1 }: Type,
@@ -166,6 +175,7 @@ class Class3 {
 class Class4 {
   method(
     param1,
+
     @Decorator
     { prop1, prop2 }: Type,
   ) {}

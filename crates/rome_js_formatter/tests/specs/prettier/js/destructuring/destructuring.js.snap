@@ -58,27 +58,7 @@ class A {
 ```diff
 --- Prettier
 +++ Rome
-@@ -15,12 +15,14 @@
- 
- function f({ data: { name } }) {}
- 
--const UserComponent = function ({
--  name: { first, last },
--  organisation: {
--    address: { street: orgStreetAddress, postcode: orgPostcode },
-+const UserComponent = function (
-+  {
-+    name: { first, last },
-+    organisation: {
-+      address: { street: orgStreetAddress, postcode: orgPostcode },
-+    },
-   },
--}) {
-+) {
-   return;
- };
- 
-@@ -39,11 +41,7 @@
+@@ -39,11 +39,7 @@
  
  try {
    // code
@@ -113,14 +93,12 @@ const {
 
 function f({ data: { name } }) {}
 
-const UserComponent = function (
-  {
-    name: { first, last },
-    organisation: {
-      address: { street: orgStreetAddress, postcode: orgPostcode },
-    },
+const UserComponent = function ({
+  name: { first, last },
+  organisation: {
+    address: { street: orgStreetAddress, postcode: orgPostcode },
   },
-) {
+}) {
   return;
 };
 
