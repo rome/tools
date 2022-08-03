@@ -410,9 +410,10 @@ impl<'app, W: Workspace + ?Sized> Drop for FileGuard<'app, W> {
     }
 }
 
+/// Convenience trait with utility functions to query the workspace
 pub trait WorkspaceExt: Workspace {
     /// Retrieves the severity from the code of lint rule.
     ///
-    /// The code a string ling: {category}/{rule_name}
+    /// The code is a string like this: {category}/{rule_name}
     fn get_severity_from_rule_code(&self, code: &str) -> Severity;
 }

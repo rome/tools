@@ -10,6 +10,11 @@ use rome_console::codespan::Severity;
 use rome_formatter::Printed;
 use std::sync::RwLock;
 
+/// A slim workspace, which exposes some utilities via [WorkspaceExt]
+///
+/// ## Warnings
+///
+/// This is a workspace that holds only utility functionalities and should be used only for tests
 pub struct WorkspaceTest {
     pub settings: RwLock<WorkspaceSettings>,
 }
