@@ -1,4 +1,3 @@
-use std::fmt::format;
 use std::sync::RwLock;
 use std::{
     collections::BTreeMap,
@@ -450,7 +449,7 @@ fn assert_lint(
                     diag.suggestions.push(action.into());
                 }
 
-                let res = write_diagnostic(code, diag);
+                let res = write_diagnostic(&*code, diag);
 
                 // Abort the analysis on error
                 if let Err(err) = res {

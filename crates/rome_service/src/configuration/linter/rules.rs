@@ -248,7 +248,7 @@ impl Js {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [&'static str; 25] = [
+    const RECOMMENDED_RULES: [&'static str; 26] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -267,6 +267,7 @@ impl Js {
         "noUnnecessaryContinue",
         "noUnsafeNegation",
         "noUnusedTemplateLiteral",
+        "noUnusedVariables",
         "useBlockStatements",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
@@ -301,7 +302,7 @@ impl Js {
         RuleFilter::Rule("js", Self::CATEGORY_RULES[24]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[26]),
-        RuleFilter::Rule("js", Self::GROUP_RULES[27]),
+        RuleFilter::Rule("js", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("js", Self::GROUP_RULES[28]),
     ];
     pub(crate) fn is_recommended(&self) -> bool {
@@ -333,7 +334,7 @@ impl Js {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 25] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
