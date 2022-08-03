@@ -31,9 +31,7 @@ impl Default for Rules {
     }
 }
 impl Rules {
-    pub(crate) fn is_recommended(&self) -> bool {
-        matches!(self.recommended, Some(true))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled rules,"]
     #[doc = r" while the second element are the disabled rules."]
     #[doc = r""]
@@ -189,9 +187,7 @@ impl Js {
         RuleFilter::Rule("js", Self::GROUP_RULES[25]),
         RuleFilter::Rule("js", Self::GROUP_RULES[26]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool {
-        matches!(self.recommended, Some(true))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -254,9 +250,7 @@ impl Jsx {
         RuleFilter::Rule("jsx", Self::GROUP_RULES[1]),
         RuleFilter::Rule("jsx", Self::GROUP_RULES[2]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool {
-        matches!(self.recommended, Some(true))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -313,9 +307,7 @@ impl Regex {
         ["noMultipleSpacesInRegularExpressionLiterals"];
     const RECOMMENDED_RULES: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule("regex", Self::GROUP_RULES[0])];
-    pub(crate) fn is_recommended(&self) -> bool {
-        matches!(self.recommended, Some(true))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -371,9 +363,7 @@ impl Ts {
     pub(crate) const GROUP_RULES: [&'static str; 1] = ["useShorthandArrayType"];
     const RECOMMENDED_RULES: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule("ts", Self::GROUP_RULES[0])];
-    pub(crate) fn is_recommended(&self) -> bool {
-        matches!(self.recommended, Some(true))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
