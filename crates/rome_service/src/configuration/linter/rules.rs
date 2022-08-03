@@ -143,6 +143,7 @@ impl Js {
         "noEmptyPattern",
         "noExtraBooleanCast",
         "noFunctionAssign",
+        "noImportAssign",
         "noLabelVar",
         "noNegationElse",
         "noShoutyConstants",
