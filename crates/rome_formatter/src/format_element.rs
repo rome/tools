@@ -14,6 +14,7 @@ use std::any::type_name;
 use std::any::TypeId;
 use std::borrow::Cow;
 use std::hash::{Hash, Hasher};
+use std::num::NonZeroU8;
 use std::ops::Deref;
 use std::rc::Rc;
 
@@ -32,6 +33,12 @@ pub enum FormatElement {
 
     /// Indents the content one level deeper, see [crate::indent] for documentation and examples.
     Indent(Content),
+
+    /// Variant of [FormatElement::Indent] that indents content by a number of spaces. For example, `Align(2)`
+    /// indents any content following a line break by an additional two spaces.
+    ///
+    /// Nesting (Aligns)[FormatElement::Align] has the effect that all except the most inner align are handled as (Indent)[FormatElement::Indent].
+    Align(Align),
 
     /// Creates a logical group where its content is either consistently printed:
     /// * on a single line: Omitting `LineMode::Soft` line breaks and printing spaces for `LineMode::SoftOrSpace`
@@ -150,6 +157,11 @@ impl std::fmt::Debug for FormatElement {
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(content) => fmt.debug_tuple("Line").field(content).finish(),
             FormatElement::Indent(content) => fmt.debug_tuple("Indent").field(content).finish(),
+            FormatElement::Align(Align { count, content }) => fmt
+                .debug_struct("Align")
+                .field("count", count)
+                .field("content", content)
+                .finish(),
             FormatElement::Group(content) => {
                 write!(fmt, "Group")?;
                 content.fmt(fmt)
@@ -243,6 +255,22 @@ impl Fill {
 
     pub fn separator(&self) -> &FormatElement {
         &self.separator
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct Align {
+    pub(super) content: Content,
+    pub(super) count: NonZeroU8,
+}
+
+impl Align {
+    pub fn count(&self) -> NonZeroU8 {
+        self.count
+    }
+
+    pub fn content(&self) -> &[FormatElement] {
+        &self.content
     }
 }
 
@@ -622,7 +650,10 @@ impl FormatElement {
             | FormatElement::Fill(Fill { content, .. })
             | FormatElement::Verbatim(Verbatim { content, .. })
             | FormatElement::Label(Label { content, .. })
-            | FormatElement::Indent(content) => content.iter().any(FormatElement::will_break),
+            | FormatElement::Indent(content)
+            | FormatElement::Align(Align { content, .. }) => {
+                content.iter().any(FormatElement::will_break)
+            }
             FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
             FormatElement::Text(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
@@ -769,6 +800,19 @@ impl Format<IrFormatContext> for FormatElement {
             }
             FormatElement::Indent(content) => {
                 write!(f, [text("indent("), content.as_ref(), text(")")])
+            }
+            FormatElement::Align(Align { content, count }) => {
+                write!(
+                    f,
+                    [
+                        text("align("),
+                        dynamic_text(&count.to_string(), TextSize::default()),
+                        text(","),
+                        space(),
+                        content.as_ref(),
+                        text(")")
+                    ]
+                )
             }
             FormatElement::List(list) => {
                 write!(f, [list.as_ref()])

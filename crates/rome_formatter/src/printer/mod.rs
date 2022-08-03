@@ -1,13 +1,17 @@
 mod printer_options;
 
 pub use printer_options::*;
+use std::cmp::Ordering;
 
-use crate::format_element::{ConditionalGroupContent, Group, LineMode, PrintMode, VerbatimKind};
+use crate::format_element::{
+    Align, ConditionalGroupContent, Group, LineMode, PrintMode, VerbatimKind,
+};
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
 
 use rome_rowan::TextSize;
 use std::iter::{once, Rev};
+use std::num::NonZeroU8;
 
 /// Prints the format elements into a string
 #[derive(Debug, Default)]
@@ -37,7 +41,7 @@ impl<'a> Printer<'a> {
 
             queue.enqueue(PrintElementCall::new(
                 element,
-                PrintElementArgs::new(indent),
+                PrintElementArgs::new(Indent::Simple(indent)),
             ));
 
             while let Some(print_element_call) = queue.dequeue() {
@@ -75,15 +79,16 @@ impl<'a> Printer<'a> {
                 }
             }
             FormatElement::Text(token) => {
-                // Print pending indention
-                if self.state.pending_indent > 0 {
+                if !self.state.pending_indent.is_empty() {
                     self.print_str(
                         self.options
                             .indent_string
-                            .repeat(self.state.pending_indent as usize)
+                            .repeat(self.state.pending_indent.indent() as usize)
                             .as_str(),
                     );
-                    self.state.pending_indent = 0;
+
+                    self.print_str(&" ".repeat(self.state.pending_indent.align() as usize));
+                    self.state.pending_indent = Indent::empty();
                 }
 
                 // Print pending spaces
@@ -165,7 +170,11 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Indent(content) => {
-                queue.extend_with_args(content.iter(), args.with_incremented_indent());
+                queue.extend_with_args(content.iter(), args.indented());
+            }
+
+            FormatElement::Align(Align { content, count }) => {
+                queue.extend_with_args(content.iter(), args.aligned(*count))
             }
 
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
@@ -480,7 +489,7 @@ struct PrinterState<'a> {
     buffer: String,
     source_markers: Vec<SourceMarker>,
     source_position: TextSize,
-    pending_indent: u16,
+    pending_indent: Indent,
     pending_space: bool,
     measured_group_fits: bool,
     generated_line: usize,
@@ -530,20 +539,25 @@ impl GroupModes {
 /// data structures. Such structures should be stored on the [PrinterState] instead.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 struct PrintElementArgs {
-    indent: u16,
+    indent: Indent,
     mode: PrintMode,
 }
 
 impl PrintElementArgs {
-    pub fn new(indent: u16) -> Self {
+    pub fn new(indent: Indent) -> Self {
         Self {
             indent,
             ..Self::default()
         }
     }
 
-    pub fn with_incremented_indent(mut self) -> Self {
-        self.indent += 1;
+    pub fn indented(mut self) -> Self {
+        self.indent = self.indent.indented();
+        self
+    }
+
+    pub fn aligned(mut self, count: NonZeroU8) -> Self {
+        self.indent = self.indent.aligned(count);
         self
     }
 
@@ -556,9 +570,108 @@ impl PrintElementArgs {
 impl Default for PrintElementArgs {
     fn default() -> Self {
         Self {
-            indent: 0,
+            indent: Indent::Simple(0),
             mode: PrintMode::Expanded,
         }
+    }
+}
+
+#[derive(Copy, Clone, Eq, PartialEq, Debug)]
+enum Indent {
+    /// Indent by the specified count of indention levels
+    Simple(u16),
+    /// Indent `indent` indention levels and add `align` spaces.
+    IndentAlign { indent: u16, align: NonZeroU8 },
+}
+
+impl Indent {
+    const fn is_empty(&self) -> bool {
+        matches!(self, Indent::Simple(0))
+    }
+
+    const fn empty() -> Indent {
+        Indent::Simple(0)
+    }
+
+    fn indent(&self) -> u16 {
+        match self {
+            Indent::Simple(count) => *count,
+            Indent::IndentAlign { indent, .. } => *indent,
+        }
+    }
+
+    fn align(&self) -> u8 {
+        match self {
+            Indent::Simple(_) => 0,
+            Indent::IndentAlign { align, .. } => (*align).into(),
+        }
+    }
+
+    /// Indents by one additional level
+    fn indented(self) -> Self {
+        match self {
+            Indent::Simple(count) => Indent::Simple(count + 1),
+            // Increase the indent AND convert the align to an indent
+            Indent::IndentAlign { indent, .. } => Indent::Simple(indent + 2),
+        }
+    }
+
+    fn aligned(self, count: NonZeroU8) -> Self {
+        match self {
+            Indent::Simple(indent_count) => Indent::IndentAlign {
+                indent: indent_count,
+                align: count,
+            },
+            // Convert the existing align to an indent
+            Indent::IndentAlign { indent, .. } => Indent::IndentAlign {
+                indent: indent + 1,
+                align: count,
+            },
+        }
+    }
+}
+
+impl PartialOrd for Indent {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(match (self, other) {
+            (Indent::Simple(this_indent), Indent::Simple(other_indent)) => {
+                this_indent.cmp(other_indent)
+            }
+            (
+                Indent::IndentAlign {
+                    indent: this_indent,
+                    align: this_align,
+                },
+                Indent::IndentAlign {
+                    indent: other_indent,
+                    align: other_align,
+                },
+            ) => {
+                let indent_ordering = this_indent.cmp(other_indent);
+
+                if indent_ordering == Ordering::Equal {
+                    this_align.cmp(other_align)
+                } else {
+                    indent_ordering
+                }
+            }
+            (Indent::Simple(this_indent), Indent::IndentAlign { indent, .. }) => {
+                let indent_ordering = this_indent.cmp(indent);
+
+                if indent_ordering == Ordering::Equal {
+                    Ordering::Greater
+                } else {
+                    indent_ordering
+                }
+            }
+            _ => return other.partial_cmp(self).map(|ordering| ordering.reverse()),
+        })
+    }
+}
+
+impl Default for Indent {
+    fn default() -> Self {
+        Indent::Simple(0)
     }
 }
 
@@ -732,8 +845,10 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Indent(content) => {
-            queue.extend(content.iter(), args.with_incremented_indent())
+        FormatElement::Indent(content) => queue.extend(content.iter(), args.indented()),
+
+        FormatElement::Align(Align { content, count }) => {
+            queue.extend(content.iter(), args.aligned(*count))
         }
 
         FormatElement::Group(group) => {
@@ -766,8 +881,10 @@ fn fits_element_on_line<'a, 'rest>(
         ),
 
         FormatElement::Text(token) => {
-            state.line_width += state.pending_indent as usize * options.indent_string.len();
-            state.pending_indent = 0;
+            state.line_width += state.pending_indent.indent() as usize
+                * options.indent_string.len()
+                + state.pending_indent.align() as usize;
+            state.pending_indent = Indent::default();
 
             if state.pending_space {
                 state.line_width += 1;
@@ -849,7 +966,7 @@ impl From<bool> for Fits {
 /// State used when measuring if a group fits on a single line
 #[derive(Debug)]
 struct MeasureState<'group> {
-    pending_indent: u16,
+    pending_indent: Indent,
     pending_space: bool,
     has_line_suffix: bool,
     line_width: usize,
