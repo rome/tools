@@ -453,7 +453,11 @@ fn assert_lint(
 
     if test.expect_diagnostic {
         // Fail the test if the analysis didn't emit any diagnostic
-        ensure!(diagnostic_count == 1, "analysis returned no diagnostics");
+        ensure!(
+            diagnostic_count == 1,
+            "analysis returned no diagnostics.\n code snippet:\n {}",
+            code
+        );
     }
 
     Ok(())
