@@ -3,7 +3,7 @@ title: Lint Rule noImportAssign
 layout: layouts/rule.liquid
 ---
 
-# noImportAssign (since v0.8.0)
+# noImportAssign (since v0.9.0)
 
 > This rule is recommended by Rome.
 
@@ -49,35 +49,21 @@ import y from "y";
 
 ```jsx
 import z from "y";
-({ z } = 1);
-```
-
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noImportAssign/">js/noImportAssign</a></span><span style="color: Orange;">]</span><em>: </em><em>The imported variable </em><em><em>z</em></em><em> is read-only</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noImportAssign.js:2:4
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import z from &quot;y&quot;;
-  <span style="color: rgb(38, 148, 255);">│</span>        <span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
-<span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> ({ z } = 1);
-  <span style="color: rgb(38, 148, 255);">│</span>    <span style="color: rgb(38, 148, 255);">-</span>
-
-=  note: Use a local variable instead of reassigning an import.
-
-</code></pre>{% endraw %}
-
-```jsx
+({ z } = 1); /// ```
+```js,expect_diagnostic
 import a from "y";
 [...a] = 1;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noImportAssign/">js/noImportAssign</a></span><span style="color: Orange;">]</span><em>: </em><em>The imported variable </em><em><em>a</em></em><em> is read-only</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noImportAssign.js:2:5
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import a from &quot;y&quot;;
-  <span style="color: rgb(38, 148, 255);">│</span>        <span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
-<span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> [...a] = 1;
-  <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: rgb(38, 148, 255);">-</span>
-
-=  note: Use a local variable instead of reassigning an import.
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><em>: </em><em>unterminated template literal</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noImportAssign.js:3:4
+  <span style="color: rgb(38, 148, 255);">│</span>  
+<span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span>   ```<span style="color: Tomato;">j</span><span style="color: Tomato;">s</span><span style="color: Tomato;">,</span><span style="color: Tomato;">e</span><span style="color: Tomato;">x</span><span style="color: Tomato;">p</span><span style="color: Tomato;">e</span><span style="color: Tomato;">c</span><span style="color: Tomato;">t</span><span style="color: Tomato;">_</span><span style="color: Tomato;">d</span><span style="color: Tomato;">i</span><span style="color: Tomato;">a</span><span style="color: Tomato;">g</span><span style="color: Tomato;">n</span><span style="color: Tomato;">o</span><span style="color: Tomato;">s</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">c</span>
+  <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">┌</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">^</span>
+<span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> <span style="color: Tomato;">i</span><span style="color: Tomato;">m</span><span style="color: Tomato;">p</span><span style="color: Tomato;">o</span><span style="color: Tomato;">r</span><span style="color: Tomato;">t</span><span style="color: Tomato;"> </span><span style="color: Tomato;">a</span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">r</span><span style="color: Tomato;">o</span><span style="color: Tomato;">m</span><span style="color: Tomato;"> </span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">y</span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">;</span>
+<span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> <span style="color: Tomato;">[</span><span style="color: Tomato;">.</span><span style="color: Tomato;">.</span><span style="color: Tomato;">.</span><span style="color: Tomato;">a</span><span style="color: Tomato;">]</span><span style="color: Tomato;"> </span><span style="color: Tomato;">=</span><span style="color: Tomato;"> </span><span style="color: Tomato;">1</span><span style="color: Tomato;">;</span>
+<span style="color: rgb(38, 148, 255);">6</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> 
+  <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">└</span><span style="color: Tomato;">^</span>
 
 </code></pre>{% endraw %}
 

@@ -94,7 +94,7 @@ Disallow reassigning function declarations.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noImportAssign">
-	<a href="/docs/lint/rules/noImportAssign">noImportAssign (since v0.8.0)</a>
+	<a href="/docs/lint/rules/noImportAssign">noImportAssign (since v0.9.0)</a>
 	<a class="header-anchor" href="#noImportAssign"></a>
 	<span class="recommended">recommended</span>
 </h3>

@@ -26,8 +26,7 @@ declare_rule! {
     /// ```
     /// ```js,expect_diagnostic
     /// import z from "y";
-    /// ({ z } = 1);
-    /// ```
+    /// ({ z } = 1); /// ```
     /// ```js,expect_diagnostic
     /// import a from "y";
     /// [...a] = 1;
@@ -50,7 +49,7 @@ declare_rule! {
     /// e = 1;
     /// ```
     pub(crate) NoImportAssign {
-        version: "0.8.0",
+        version: "0.9.0",
         name: "noImportAssign",
         recommended: true,
     }
