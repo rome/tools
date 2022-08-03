@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsConditionalExpression, JsDoWhileStatement, JsForStatement, JsIfStatement, JsNewExpression,
     JsSyntaxKind, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator, JsWhileStatement,
 };
-use rome_rowan::{AstNode, AstSeparatedList,  SyntaxNodeCast, BatchMutationExt};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, SyntaxNodeCast};
 
 use crate::JsRuleAction;
 
@@ -56,7 +56,7 @@ declare_rule! {
     /// !!x;
     /// ```
 
-	pub(crate) NoExtraBooleanCast {
+    pub(crate) NoExtraBooleanCast {
         version: "0.9.0",
         name: "noExtraBooleanCast",
         recommended: true,
