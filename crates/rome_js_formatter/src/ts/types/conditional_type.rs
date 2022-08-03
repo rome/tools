@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{format_conditional, Conditional};
+use crate::utils::JsAnyConditional;
 
 use rome_js_syntax::TsConditionalType;
 
@@ -12,6 +12,6 @@ impl FormatNodeRule<TsConditionalType> for FormatTsConditionalType {
         node: &TsConditionalType,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_conditional(&Conditional::Type(node.clone()), formatter, false)
+        JsAnyConditional::from(node.clone()).fmt(formatter)
     }
 }

@@ -21,7 +21,7 @@ pub(crate) use binary_like_expression::{
     binary_argument_needs_parens, format_binary_like_expression, JsAnyBinaryLikeExpression,
     JsAnyBinaryLikeLeftExpression,
 };
-pub(crate) use format_conditional::{format_conditional, Conditional};
+pub(crate) use format_conditional::JsAnyConditional;
 pub(crate) use member_chain::format_call_expression;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
