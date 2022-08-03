@@ -1,8 +1,8 @@
 use crate::prelude::*;
-use crate::utils::FormatBodyStatement;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 use rome_js_syntax::JsForOfStatement;
 
+use crate::utils::FormatStatementBody;
 use rome_js_syntax::JsForOfStatementFields;
 
 #[derive(Debug, Clone, Default)]
@@ -21,23 +21,31 @@ impl FormatNodeRule<JsForOfStatement> for FormatJsForOfStatement {
             body,
         } = node.as_fields();
 
-        write!(
-            f,
-            [group(&format_args![
-                for_token.format(),
-                space(),
-                await_token
-                    .format()
-                    .with_or_empty(|token, f| write![f, [token, space()]]),
-                l_paren_token.format(),
-                group(&initializer.format()),
-                space(),
-                of_token.format(),
-                space(),
-                expression.format(),
-                r_paren_token.format(),
-                FormatBodyStatement::new(&body?)
-            ])]
-        )
+        let body = body?;
+
+        let format_inner = format_with(|f| {
+            write!(f, [for_token.format()])?;
+
+            if let Some(await_token) = await_token.as_ref() {
+                write!(f, [space(), await_token.format()])?;
+            }
+
+            write!(
+                f,
+                [
+                    space(),
+                    l_paren_token.format(),
+                    initializer.format(),
+                    space(),
+                    of_token.format(),
+                    space(),
+                    expression.format(),
+                    r_paren_token.format(),
+                    FormatStatementBody::new(&body)
+                ]
+            )
+        });
+
+        write!(f, [group(&format_inner)])
     }
 }

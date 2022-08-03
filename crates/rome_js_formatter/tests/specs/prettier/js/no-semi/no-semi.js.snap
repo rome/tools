@@ -110,21 +110,7 @@ aReallyLongLine012345678901234567890123456789012345678901234567890123456789 *
  x;
  <Hello />;
  x;
-@@ -45,11 +45,8 @@
- 
- // check statement clauses
- 
--do break;
--while (false);
--if (true)
--  do break;
--  while (false);
-+do break; while (false);
-+if (true) do break; while (false);
- 
- if (true) 1;
- else 2;
-@@ -85,7 +82,8 @@
+@@ -85,7 +85,8 @@
  x;
  ++(a || b).c;
  
@@ -188,8 +174,11 @@ if (true) {
 
 // check statement clauses
 
-do break; while (false);
-if (true) do break; while (false);
+do break;
+while (false);
+if (true)
+  do break;
+  while (false);
 
 if (true) 1;
 else 2;

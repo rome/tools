@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use crate::utils::{FormatStatementBody, FormatWithSemicolon};
+use rome_formatter::{format_args, write};
+use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
-use rome_js_syntax::{JsDoWhileStatementFields, JsSyntaxKind};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsDoWhileStatement;
@@ -19,31 +20,42 @@ impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
             semicolon_token,
         } = node.as_fields();
 
-        write!(f, [do_token.format()])?;
+        let body = body?;
+        let l_paren_token = l_paren_token?;
+        let r_paren_token = r_paren_token?;
 
-        match body? {
-            JsAnyStatement::JsEmptyStatement(body) => {
-                write!(f, [body.format(), hard_line_break()])?;
-            }
-            body => {
-                write!(f, [space(), body.format()])?;
-            }
-        };
+        let format_statement = format_with(|f| {
+            write!(
+                f,
+                [group(&format_args![
+                    do_token.format(),
+                    FormatStatementBody::new(&body)
+                ])]
+            )?;
 
-        write![
+            if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
+                write!(f, [space()])?;
+            } else {
+                write!(f, [hard_line_break()])?;
+            }
+
+            write!(
+                f,
+                [
+                    while_token.format(),
+                    space(),
+                    format_delimited(&l_paren_token, &test.format(), &r_paren_token)
+                        .soft_block_indent(),
+                ]
+            )
+        });
+
+        write!(
             f,
-            [
-                space(),
-                while_token.format(),
-                space(),
-                format_delimited(&l_paren_token?, &test.format(), &r_paren_token?,)
-                    .soft_block_indent(),
-            ]
-        ]?;
-
-        match semicolon_token {
-            Some(semicolon_token) => write!(f, [semicolon_token.format()]),
-            None => format_inserted(JsSyntaxKind::SEMICOLON).fmt(f),
-        }
+            [FormatWithSemicolon::new(
+                &format_statement,
+                semicolon_token.as_ref()
+            )]
+        )
     }
 }

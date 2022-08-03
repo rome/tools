@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
+use crate::utils::FormatStatementBody;
+use rome_js_syntax::JsIfStatement;
 use rome_js_syntax::JsIfStatementFields;
-use rome_js_syntax::{JsAnyStatement, JsIfStatement};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsIfStatement;
@@ -31,7 +32,7 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
                 space(),
                 format_delimited(&l_paren_token, &test.format(), &r_paren_token)
                     .soft_block_indent(),
-                FormatConsequentClause::new(&consequent),
+                FormatStatementBody::new(&consequent),
             ]),]
         )?;
 
@@ -48,46 +49,5 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
         }
 
         Ok(())
-    }
-}
-
-pub(crate) struct FormatConsequentClause<'a> {
-    statement: &'a JsAnyStatement,
-    force_space: bool,
-}
-
-impl<'a> FormatConsequentClause<'a> {
-    pub fn new(consequent: &'a JsAnyStatement) -> Self {
-        Self {
-            statement: consequent,
-            force_space: false,
-        }
-    }
-
-    /// Prevents that the consequent is formatted on its own line and indented by one level and
-    /// instead gets separated by a space.
-    pub fn with_forced_space(mut self, forced: bool) -> Self {
-        self.force_space = forced;
-        self
-    }
-}
-
-impl Format<JsFormatContext> for FormatConsequentClause<'_> {
-    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        use JsAnyStatement::*;
-
-        if let JsEmptyStatement(empty) = &self.statement {
-            write!(f, [empty.format()])
-        } else if matches!(&self.statement, JsBlockStatement(_)) || self.force_space {
-            write!(f, [space(), self.statement.format()])
-        } else {
-            write!(
-                f,
-                [indent(&format_args![
-                    soft_line_break_or_space(),
-                    self.statement.format()
-                ])]
-            )
-        }
     }
 }

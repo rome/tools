@@ -323,11 +323,7 @@ impl<'a> Printer<'a> {
         queue.extend(
             line_break
                 .into_iter()
-                .chain(self.state.line_suffixes.drain(..).map(move |mut call| {
-                    // Overwrite the arguments for the PrintElementCalls in the queue with the current arguments
-                    call.args = args;
-                    call
-                }))
+                .chain(self.state.line_suffixes.drain(..))
                 .chain(once(call_self)),
         );
     }
