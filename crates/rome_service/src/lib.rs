@@ -16,7 +16,7 @@ pub use crate::configuration::{
     create_config, load_config, Configuration, ConfigurationError, RuleConfiguration, Rules,
 };
 pub use crate::file_handlers::JsFormatSettings;
-pub use crate::workspace::{Workspace, WorkspaceExt, WorkspaceTest};
+pub use crate::workspace::{Workspace, WorkspaceExt};
 
 /// This is the main entrypoint of the application.
 pub struct App<'app> {

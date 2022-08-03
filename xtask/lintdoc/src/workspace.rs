@@ -1,13 +1,13 @@
-use crate::settings::WorkspaceSettings;
-use crate::workspace::{
+use rome_console::codespan::Severity;
+use rome_formatter::Printed;
+use rome_service::settings::WorkspaceSettings;
+use rome_service::workspace::{
     ChangeFileParams, CloseFileParams, FixFileParams, FixFileResult, FormatFileParams,
     FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
     PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameParams, RenameResult,
     SupportsFeatureParams, UpdateSettingsParams,
 };
-use crate::{RomeError, Workspace, WorkspaceExt};
-use rome_console::codespan::Severity;
-use rome_formatter::Printed;
+use rome_service::{RomeError, Workspace, WorkspaceExt};
 use std::sync::RwLock;
 
 /// A slim workspace, which exposes some utilities via [WorkspaceExt]

@@ -64,8 +64,6 @@ use rome_text_edit::Indel;
 use std::{borrow::Cow, panic::RefUnwindSafe};
 
 pub(crate) mod server;
-pub mod test;
-pub use test::WorkspaceTest;
 
 #[cfg_attr(
     feature = "serde_workspace",

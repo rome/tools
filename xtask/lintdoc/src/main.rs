@@ -1,3 +1,17 @@
+mod workspace;
+
+use crate::workspace::WorkspaceTest;
+use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
+use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
+use rome_console::{
+    fmt::{Formatter, HTML},
+    markup,
+};
+use rome_diagnostics::{file::SimpleFile, Diagnostic};
+use rome_js_analyze::{analyze, metadata};
+use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
+use rome_service::settings::WorkspaceSettings;
+use rome_service::{Rules, WorkspaceExt};
 use std::sync::RwLock;
 use std::{
     collections::BTreeMap,
@@ -7,20 +21,7 @@ use std::{
     slice,
     str::{self, FromStr},
 };
-
-use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
-use rome_console::{
-    fmt::{Formatter, HTML},
-    markup,
-};
-use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use xtask::{glue::fs2, *};
-
-use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
-use rome_js_analyze::{analyze, metadata};
-use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
-use rome_service::settings::WorkspaceSettings;
-use rome_service::{Rules, WorkspaceExt, WorkspaceTest};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/src/docs/lint/rules");
