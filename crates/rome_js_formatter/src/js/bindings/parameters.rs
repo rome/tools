@@ -2,7 +2,9 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::js::expressions::call_arguments::is_test_call_expression;
-use crate::js::lists::parameter_list::{AnyParameter, AnyParameterList, FormatParameterList};
+use crate::js::lists::parameter_list::{
+    AnyParameter, FormatJsAnyParameterList, JsAnyParameterList,
+};
 
 use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters,
@@ -15,15 +17,15 @@ pub struct FormatJsParameters;
 
 impl FormatNodeRule<JsParameters> for FormatJsParameters {
     fn fmt_fields(&self, node: &JsParameters, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatParameters::from(node.clone()).fmt(f)
+        FormatJsAnyParameters::from(node.clone()).fmt(f)
     }
 }
 
 declare_node_union! {
-    pub(crate) FormatParameters = JsParameters | JsConstructorParameters
+    pub(crate) FormatJsAnyParameters = JsParameters | JsConstructorParameters
 }
 
-impl Format<JsFormatContext> for FormatParameters {
+impl Format<JsFormatContext> for FormatJsAnyParameters {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let list = self.list();
 
@@ -54,14 +56,14 @@ impl Format<JsFormatContext> for FormatParameters {
                     f,
                     [
                         l_paren_token.format(),
-                        FormatParameterList::with_layout(&list, ParameterLayout::Hug),
+                        FormatJsAnyParameterList::with_layout(&list, ParameterLayout::Hug),
                         &r_paren_token.format()
                     ]
                 )
             }
             ParameterLayout::Default => format_delimited(
                 &l_paren_token,
-                &FormatParameterList::with_layout(&list, ParameterLayout::Default),
+                &FormatJsAnyParameterList::with_layout(&list, ParameterLayout::Default),
                 &r_paren_token,
             )
             .soft_block_indent()
@@ -71,35 +73,40 @@ impl Format<JsFormatContext> for FormatParameters {
     }
 }
 
-impl FormatParameters {
+impl FormatJsAnyParameters {
     fn l_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            FormatParameters::JsParameters(parameters) => parameters.l_paren_token(),
-            FormatParameters::JsConstructorParameters(parameters) => parameters.l_paren_token(),
+            FormatJsAnyParameters::JsParameters(parameters) => parameters.l_paren_token(),
+            FormatJsAnyParameters::JsConstructorParameters(parameters) => {
+                parameters.l_paren_token()
+            }
         }
     }
 
-    fn list(&self) -> AnyParameterList {
+    fn list(&self) -> JsAnyParameterList {
         match self {
-            FormatParameters::JsParameters(parameters) => {
-                AnyParameterList::from(parameters.items())
+            FormatJsAnyParameters::JsParameters(parameters) => {
+                JsAnyParameterList::from(parameters.items())
             }
-            FormatParameters::JsConstructorParameters(parameters) => {
-                AnyParameterList::from(parameters.parameters())
+            FormatJsAnyParameters::JsConstructorParameters(parameters) => {
+                JsAnyParameterList::from(parameters.parameters())
             }
         }
     }
 
     fn r_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            FormatParameters::JsParameters(parameters) => parameters.r_paren_token(),
-            FormatParameters::JsConstructorParameters(parameters) => parameters.r_paren_token(),
+            FormatJsAnyParameters::JsParameters(parameters) => parameters.r_paren_token(),
+            FormatJsAnyParameters::JsConstructorParameters(parameters) => {
+                parameters.r_paren_token()
+            }
         }
     }
 
+    /// Returns `true` for function parameters if the function is an argument of a [test `CallExpression`](is_test_call_expression).
     fn is_in_test_call(&self) -> SyntaxResult<bool> {
         let result = match self {
-            FormatParameters::JsParameters(parameters) => {
+            FormatJsAnyParameters::JsParameters(parameters) => {
                 match parameters.syntax().grand_parent() {
                     Some(function_parent) => match function_parent.kind() {
                         JsSyntaxKind::JS_CALL_ARGUMENT_LIST => {
@@ -122,7 +129,7 @@ impl FormatParameters {
                     None => false,
                 }
             }
-            FormatParameters::JsConstructorParameters(_) => false,
+            FormatJsAnyParameters::JsConstructorParameters(_) => false,
         };
 
         Ok(result)
@@ -134,11 +141,29 @@ pub enum ParameterLayout {
     /// Enforce that the opening and closing parentheses aren't separated from the first token of the parameter.
     /// For example, to enforce that the `{`  and `}` of an object expression are formatted on the same line
     /// as the `(` and `)` tokens even IF the object expression itself breaks across multiple lines.
+    ///
+    /// ```javascript
+    /// function test({
+    ///     aVeryLongObjectBinding,
+    ///     thatContinuesAndExceeds,
+    ///     theLineWidth
+    /// }) {}
+    /// ```
     Hug,
+
+    /// The default layout formats all parameters on the same line if they fit or breaks after the `(`
+    /// and before the `(`.
+    /// ```javascript
+    /// function test(
+    ///     firstParameter,
+    ///     secondParameter,
+    ///     thirdParameter
+    /// ) {}
+    /// ```
     Default,
 }
 
-fn should_hug_function_parameters(parameters: &FormatParameters) -> FormatResult<bool> {
+fn should_hug_function_parameters(parameters: &FormatJsAnyParameters) -> FormatResult<bool> {
     use rome_js_syntax::{
         JsAnyBinding::*, JsAnyBindingPattern::*, JsAnyExpression::*, JsAnyFormalParameter::*,
         JsAnyParameter::*,
@@ -161,16 +186,18 @@ fn should_hug_function_parameters(parameters: &FormatParameters) -> FormatResult
         return Ok(false);
     }
 
+    /// Returns true if the first parameter should be forced onto the same line as the `(` and `)` parentheses.
+    /// See the `[ParameterLayout::Hug] documentation.
     fn hug_formal_parameter(parameter: &self::JsAnyFormalParameter) -> FormatResult<bool> {
         let result = match parameter {
             JsFormalParameter(parameter) => {
                 match parameter.initializer() {
                     None => {
-                        // `a` or `[a]` or `{a}`
                         match parameter.binding()? {
                             // always true for `[a]` or `{a}`
                             JsArrayBindingPattern(_) | JsObjectBindingPattern(_) => true,
                             // only if the type parameter is an object type
+                            // `a: { prop: string }`
                             JsAnyBinding(JsIdentifierBinding(_)) => parameter
                                 .type_annotation()
                                 .map_or(false, |type_annotation| {
@@ -183,8 +210,7 @@ fn should_hug_function_parameters(parameters: &FormatParameters) -> FormatResult
                     }
 
                     Some(initializer) => {
-                        // `a = 5`, `[a] = [5]`, `{a} = {a: 5}`
-
+                        // only for `[a] = []`, `{a} = {}`
                         let object_or_array_binding = matches!(
                             parameter.binding()?,
                             JsArrayBindingPattern(_) | JsObjectBindingPattern(_)

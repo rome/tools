@@ -14,8 +14,8 @@ impl FormatRule<JsParameterList> for FormatJsParameterList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &JsParameterList, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatParameterList::with_layout(
-            &AnyParameterList::from(node.clone()),
+        FormatJsAnyParameterList::with_layout(
+            &JsAnyParameterList::from(node.clone()),
             ParameterLayout::Default,
         )
         .fmt(f)
@@ -23,13 +23,13 @@ impl FormatRule<JsParameterList> for FormatJsParameterList {
 }
 
 #[derive(Debug, Copy, Clone)]
-pub(crate) struct FormatParameterList<'a> {
-    list: &'a AnyParameterList,
+pub(crate) struct FormatJsAnyParameterList<'a> {
+    list: &'a JsAnyParameterList,
     layout: Option<ParameterLayout>,
 }
 
-impl<'a> FormatParameterList<'a> {
-    pub fn with_layout(list: &'a AnyParameterList, layout: ParameterLayout) -> Self {
+impl<'a> FormatJsAnyParameterList<'a> {
+    pub fn with_layout(list: &'a JsAnyParameterList, layout: ParameterLayout) -> Self {
         Self {
             list,
             layout: Some(layout),
@@ -37,7 +37,7 @@ impl<'a> FormatParameterList<'a> {
     }
 }
 
-impl Format<JsFormatContext> for FormatParameterList<'_> {
+impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self.layout {
             None | Some(ParameterLayout::Default) => {
@@ -62,7 +62,7 @@ impl Format<JsFormatContext> for FormatParameterList<'_> {
                 let mut join = f.join_nodes_with_soft_line();
 
                 match self.list {
-                    AnyParameterList::JsParameterList(list) => {
+                    JsAnyParameterList::JsParameterList(list) => {
                         let entries = list
                             .format_separated(JsSyntaxKind::COMMA)
                             .with_trailing_separator(trailing_separator)
@@ -72,7 +72,7 @@ impl Format<JsFormatContext> for FormatParameterList<'_> {
                             join.entry(node?.syntax(), &format_entry);
                         }
                     }
-                    AnyParameterList::JsConstructorParameterList(list) => {
+                    JsAnyParameterList::JsConstructorParameterList(list) => {
                         let entries = list
                             .format_separated(JsSyntaxKind::COMMA)
                             .with_trailing_separator(trailing_separator)
@@ -90,11 +90,11 @@ impl Format<JsFormatContext> for FormatParameterList<'_> {
                 let mut join = f.join_with(space());
 
                 match self.list {
-                    AnyParameterList::JsParameterList(list) => join.entries(
+                    JsAnyParameterList::JsParameterList(list) => join.entries(
                         list.format_separated(JsSyntaxKind::COMMA)
                             .with_trailing_separator(TrailingSeparator::Omit),
                     ),
-                    AnyParameterList::JsConstructorParameterList(list) => join.entries(
+                    JsAnyParameterList::JsConstructorParameterList(list) => join.entries(
                         list.format_separated(JsSyntaxKind::COMMA)
                             .with_trailing_separator(TrailingSeparator::Omit),
                     ),
@@ -107,81 +107,81 @@ impl Format<JsFormatContext> for FormatParameterList<'_> {
 }
 
 #[derive(Debug)]
-pub(crate) enum AnyParameterList {
+pub(crate) enum JsAnyParameterList {
     JsParameterList(JsParameterList),
     JsConstructorParameterList(JsConstructorParameterList),
 }
 
-impl From<JsParameterList> for AnyParameterList {
+impl From<JsParameterList> for JsAnyParameterList {
     fn from(list: JsParameterList) -> Self {
-        AnyParameterList::JsParameterList(list)
+        JsAnyParameterList::JsParameterList(list)
     }
 }
 
-impl From<JsConstructorParameterList> for AnyParameterList {
+impl From<JsConstructorParameterList> for JsAnyParameterList {
     fn from(list: JsConstructorParameterList) -> Self {
-        AnyParameterList::JsConstructorParameterList(list)
+        JsAnyParameterList::JsConstructorParameterList(list)
     }
 }
 
-impl AnyParameterList {
+impl JsAnyParameterList {
     pub fn len(&self) -> usize {
         match self {
-            AnyParameterList::JsParameterList(parameters) => parameters.len(),
-            AnyParameterList::JsConstructorParameterList(parameters) => parameters.len(),
+            JsAnyParameterList::JsParameterList(parameters) => parameters.len(),
+            JsAnyParameterList::JsConstructorParameterList(parameters) => parameters.len(),
         }
     }
 
     pub fn first(&self) -> Option<SyntaxResult<AnyParameter>> {
         Some(match self {
-            AnyParameterList::JsParameterList(parameters) => {
+            JsAnyParameterList::JsParameterList(parameters) => {
                 parameters.first()?.map(|parameter| parameter.into())
             }
-            AnyParameterList::JsConstructorParameterList(parameters) => {
+            JsAnyParameterList::JsConstructorParameterList(parameters) => {
                 parameters.first()?.map(|parameter| parameter.into())
             }
         })
     }
 
-    pub fn iter(&self) -> AnyParameterListNodeIter {
+    pub fn iter(&self) -> JsAnyParameterListNodeIter {
         match self {
-            AnyParameterList::JsParameterList(list) => {
-                AnyParameterListNodeIter::JsParameterList(list.iter())
+            JsAnyParameterList::JsParameterList(list) => {
+                JsAnyParameterListNodeIter::JsParameterList(list.iter())
             }
-            AnyParameterList::JsConstructorParameterList(list) => {
-                AnyParameterListNodeIter::JsConstructorParameterList(list.iter())
+            JsAnyParameterList::JsConstructorParameterList(list) => {
+                JsAnyParameterListNodeIter::JsConstructorParameterList(list.iter())
             }
         }
     }
 
     pub fn last(&self) -> Option<SyntaxResult<AnyParameter>> {
         Some(match self {
-            AnyParameterList::JsParameterList(parameters) => {
+            JsAnyParameterList::JsParameterList(parameters) => {
                 parameters.last()?.map(|parameter| parameter.into())
             }
-            AnyParameterList::JsConstructorParameterList(parameters) => {
+            JsAnyParameterList::JsConstructorParameterList(parameters) => {
                 parameters.last()?.map(|parameter| parameter.into())
             }
         })
     }
 }
 
-pub(crate) enum AnyParameterListNodeIter {
+pub(crate) enum JsAnyParameterListNodeIter {
     JsParameterList(AstSeparatedListNodesIterator<JsLanguage, JsAnyParameter>),
     JsConstructorParameterList(
         AstSeparatedListNodesIterator<JsLanguage, JsAnyConstructorParameter>,
     ),
 }
 
-impl Iterator for AnyParameterListNodeIter {
+impl Iterator for JsAnyParameterListNodeIter {
     type Item = SyntaxResult<AnyParameter>;
 
     fn next(&mut self) -> Option<Self::Item> {
         Some(match self {
-            AnyParameterListNodeIter::JsParameterList(inner) => {
+            JsAnyParameterListNodeIter::JsParameterList(inner) => {
                 inner.next()?.map(AnyParameter::from)
             }
-            AnyParameterListNodeIter::JsConstructorParameterList(inner) => {
+            JsAnyParameterListNodeIter::JsConstructorParameterList(inner) => {
                 inner.next()?.map(AnyParameter::from)
             }
         })
