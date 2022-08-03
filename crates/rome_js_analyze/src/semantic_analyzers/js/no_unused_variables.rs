@@ -167,10 +167,16 @@ impl Rule for NoUnusedVariables {
             batch.remove_js_formal_parameter(&formal_parameter);
         }
 
+        let symbol_type = match binding.syntax().parent().unwrap().kind() {
+            JsSyntaxKind::JS_FORMAL_PARAMETER => "parameter",
+            JsSyntaxKind::JS_FUNCTION_DECLARATION => "function",
+            _ => "variable",
+        };
+
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::QuickFix,
             applicability: Applicability::Unspecified,
-            message: markup! { "Remove dead code." }.to_owned(),
+            message: markup! { "Remove this " {symbol_type} "." }.to_owned(),
             mutation: batch,
         })
     }

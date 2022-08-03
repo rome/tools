@@ -50,7 +50,7 @@ warning[js/noUnusedVariables]: This variable is unused.
 1 │ const a = 1;
   │       -
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this variable.
     | @@ -1,4 +1,4 @@
 0   | - const a = 1;
   0 | + 
@@ -70,7 +70,7 @@ warning[js/noUnusedVariables]: This variable is unused.
 2 │ const b = 2, c = 3;
   │       -
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this variable.
     | @@ -1,5 +1,5 @@
 0 0 |   const a = 1;
 1   | - const b = 2, c = 3;
@@ -91,7 +91,7 @@ warning[js/noUnusedVariables]: This function is unused.
 5 │ function f1() {}
   │          --
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this function.
     | @@ -2,8 +2,6 @@
 1 1 |   const b = 2, c = 3;
 2 2 |   console.log(c);
@@ -114,7 +114,7 @@ warning[js/noUnusedVariables]: This function is unused.
 7 │ function f2() {
   │          --
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this function.
     | @@ -4,10 +4,6 @@
 3 3 |   
 4 4 |   function f1() {}
@@ -139,7 +139,7 @@ warning[js/noUnusedVariables]: This function is unused.
 11 │ function f3() {
    │          --
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this function.
       | @@ -8,13 +8,6 @@
  7  7 |   	f2();
  8  8 |   }
@@ -167,7 +167,7 @@ warning[js/noUnusedVariables]: This parameter is unused.
 18 │ function f41(a) {}
    │              -
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this parameter.
       | @@ -15,7 +15,7 @@
 14 14 |   	g();
 15 15 |   }
@@ -190,7 +190,7 @@ warning[js/noUnusedVariables]: This parameter is unused.
 21 │ function f42(a, b) {
    │                 -
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this parameter.
       | @@ -18,7 +18,7 @@
 17 17 |   function f41(a) {}
 18 18 |   f41();
@@ -213,7 +213,7 @@ warning[js/noUnusedVariables]: This parameter is unused.
 26 │ function f43(a, b) {
    │                 -
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this parameter.
       | @@ -23,7 +23,7 @@
 22 22 |   }
 23 23 |   f42();
@@ -236,7 +236,7 @@ warning[js/noUnusedVariables]: This variable is unused.
 31 │ const f5 = () => {};
    │       --
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this variable.
       | @@ -28,8 +28,6 @@
 27 27 |   }
 28 28 |   f43();
@@ -259,7 +259,7 @@ warning[js/noUnusedVariables]: This variable is unused.
 33 │ const f6 = () => {
    │       --
 
-Suggested fix: Remove dead code.
+Suggested fix: Remove this variable.
       | @@ -29,7 +29,3 @@
 28 28 |   f43();
 29 29 |   
