@@ -55,6 +55,7 @@ use crate::settings::WorkspaceSettings;
 use crate::RomeError;
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
+use rome_console::codespan::Severity;
 use rome_diagnostics::{CodeSuggestion, Diagnostic};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -63,6 +64,8 @@ use rome_text_edit::Indel;
 use std::{borrow::Cow, panic::RefUnwindSafe};
 
 pub(crate) mod server;
+pub mod test;
+pub use test::WorkspaceTest;
 
 #[cfg_attr(
     feature = "serde_workspace",
@@ -405,4 +408,11 @@ impl<'app, W: Workspace + ?Sized> Drop for FileGuard<'app, W> {
             // than panic (especially in a drop handler)
             .ok();
     }
+}
+
+pub trait WorkspaceExt: Workspace {
+    /// Retrieves the severity from the code of lint rule.
+    ///
+    /// The code a string ling: {category}/{rule_name}
+    fn get_severity_from_rule_code(&self, code: &str) -> Severity;
 }

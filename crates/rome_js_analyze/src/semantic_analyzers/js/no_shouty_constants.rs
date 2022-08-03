@@ -87,7 +87,7 @@ impl Rule for NoShoutyConstants {
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let declarator = ctx.query();
 
-        let mut diag = RuleDiagnostic::error(
+        let mut diag = RuleDiagnostic::new(
             declarator.syntax().text_trimmed_range(),
             markup! {
                 "Redundant constant declaration."

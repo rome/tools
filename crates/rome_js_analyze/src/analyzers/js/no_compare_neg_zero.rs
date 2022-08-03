@@ -77,7 +77,7 @@ impl Rule for NoCompareNegZero {
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::error(
+        Some(RuleDiagnostic::new(
             node.range(),
             markup! {
                 "Do not use the "{state.operator_kind}" operator to compare against -0."

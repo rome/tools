@@ -1,3 +1,5 @@
+use std::fmt::format;
+use std::sync::RwLock;
 use std::{
     collections::BTreeMap,
     fmt::Write as _,
@@ -18,6 +20,8 @@ use xtask::{glue::fs2, *};
 use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
 use rome_js_analyze::{analyze, metadata};
 use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
+use rome_service::settings::WorkspaceSettings;
+use rome_service::{Rules, WorkspaceExt, WorkspaceTest};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/src/docs/lint/rules");
@@ -423,6 +427,13 @@ fn assert_lint(
     } else {
         let root = parse.tree();
 
+        let mut settings = WorkspaceSettings::default();
+        settings.linter.rules = Some(Rules::default());
+
+        let workspace = WorkspaceTest {
+            settings: RwLock::new(settings),
+        };
+
         let rule_filter = RuleFilter::Rule(group, rule);
         let filter = AnalysisFilter {
             enabled_rules: Some(slice::from_ref(&rule_filter)),
@@ -430,7 +441,11 @@ fn assert_lint(
         };
 
         let result = analyze(0, &root, filter, |signal| {
-            if let Some(mut diag) = signal.diagnostic() {
+            if let Some(diag) = signal.diagnostic() {
+                let code = format!("{group}/{rule}");
+                let severity = workspace.get_severity_from_rule_code(&code);
+                let mut diag = diag.into_diagnostic(severity);
+
                 if let Some(action) = signal.action() {
                     diag.suggestions.push(action.into());
                 }

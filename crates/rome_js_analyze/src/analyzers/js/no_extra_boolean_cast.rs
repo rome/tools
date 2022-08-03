@@ -226,7 +226,7 @@ impl Rule for NoExtraBooleanCast {
 			ExtraBooleanCastType::BooleanCall => ("Avoid redundant `Boolean` call", "It is not necessary to use `Boolean` call when a value will already be coerced to a boolean."),
 		};
         Some(
-            RuleDiagnostic::warning(
+            RuleDiagnostic::new(
                 node.range(),
                 markup! {
                     {title}

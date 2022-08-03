@@ -106,7 +106,7 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
         let (first_start, _) = state[0];
         let (_, last_end) = state[state.len() - 1];
 
-        Some(RuleDiagnostic::error(
+        Some(RuleDiagnostic::new(
             TextRange::new(
                 value_token_range.start() + TextSize::from(first_start as u32),
                 value_token_range.start() + TextSize::from(last_end as u32),

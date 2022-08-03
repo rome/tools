@@ -46,7 +46,7 @@ impl Rule for NoDebugger {
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::error(
+        Some(RuleDiagnostic::new(
             node.syntax().text_trimmed_range(),
             markup! {
                 "This is an unexpected use of the "<Emphasis>"debugger"</Emphasis>" statement."

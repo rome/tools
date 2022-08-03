@@ -75,7 +75,7 @@ impl Rule for UseCamelCase {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let binding = ctx.query();
 
-        let diag = RuleDiagnostic::warning(
+        let diag = RuleDiagnostic::new(
             binding.syntax().text_trimmed_range(),
             markup! {
                 "Prefer symbols names in camel case."

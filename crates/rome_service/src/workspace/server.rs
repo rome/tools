@@ -1,5 +1,15 @@
-use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
-
+use super::{
+    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
+    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
+    PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameResult,
+    SupportsFeatureParams, UpdateSettingsParams,
+};
+use crate::file_handlers::FixAllParams;
+use crate::{
+    file_handlers::Features,
+    settings::{SettingsHandle, WorkspaceSettings},
+    RomeError, Workspace,
+};
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
@@ -7,20 +17,7 @@ use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
-
-use crate::file_handlers::FixAllParams;
-use crate::{
-    file_handlers::Features,
-    settings::{SettingsHandle, WorkspaceSettings},
-    RomeError, Workspace,
-};
-
-use super::{
-    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
-    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
-    PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameResult,
-    SupportsFeatureParams, UpdateSettingsParams,
-};
+use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
 pub(super) struct WorkspaceServer {
     /// features available throughout the application
@@ -233,24 +230,7 @@ impl Workspace for WorkspaceServer {
         };
 
         filter.categories = params.categories;
-        let mut diagnostics = linter(&params.path, parse, filter);
-
-        // We do now check if the severity of the diagnostics should be changed.
-        // The configuration allows to change the severity of the diagnostics emitted by rules.
-        if let Some(rules) = rules {
-            for mut diagnostic in &mut diagnostics {
-                if let Some(code) = &diagnostic.code {
-                    let severity = rules.get_severity_from_code(code.as_str());
-                    if let Some(rule_severity) = severity {
-                        // if the severity of the current diagnostic is different from the severity
-                        // specified in the configuration, we change it
-                        if diagnostic.severity != rule_severity {
-                            diagnostic.severity = rule_severity;
-                        }
-                    }
-                }
-            }
-        }
+        let diagnostics = linter(&params.path, parse, filter, rules);
 
         Ok(PullDiagnosticsResult { diagnostics })
     }

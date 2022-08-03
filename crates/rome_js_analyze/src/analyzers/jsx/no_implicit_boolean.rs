@@ -69,7 +69,7 @@ impl Rule for NoImplicitBoolean {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let n = ctx.query();
 
-        Some(RuleDiagnostic::error(
+        Some(RuleDiagnostic::new(
             n.range(),
             markup! {
                 "Use explicit boolean values for boolean JSX props."

@@ -23,6 +23,7 @@ use crate::{
 use super::{ExtensionHandler, Mime};
 use crate::file_handlers::FixAllParams;
 use indexmap::IndexSet;
+use rome_console::codespan::Severity;
 use std::borrow::Cow;
 use std::fmt::Debug;
 
@@ -128,18 +129,44 @@ fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
     format!("{tree:#?}")
 }
 
-fn lint(rome_path: &RomePath, parse: AnyParse, filter: AnalysisFilter) -> Vec<Diagnostic> {
+fn lint(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    filter: AnalysisFilter,
+    rules: Option<&Rules>,
+) -> Vec<Diagnostic> {
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
 
     let file_id = rome_path.file_id();
     analyze(file_id, &tree, filter, |signal| {
-        if let Some(mut diag) = signal.diagnostic() {
+        if let Some(diagnostic) = signal.diagnostic() {
+            // We do now check if the severity of the diagnostics should be changed.
+            // The configuration allows to change the severity of the diagnostics emitted by rules.
+            let severity = if let Some(rules) = rules {
+                if let Some(code) = diagnostic.code() {
+                    let severity = rules.get_severity_from_code(code.as_str());
+                    if let Some(rule_severity) = severity {
+                        // if the severity of the current diagnostic is different from the severity
+                        // specified in the configuration, we change it
+                        rule_severity
+                    } else {
+                        Severity::Error
+                    }
+                } else {
+                    Severity::Error
+                }
+            } else {
+                Severity::Error
+            };
+
+            let mut diagnostic = diagnostic.into_diagnostic(severity);
+
             if let Some(action) = signal.action() {
-                diag.suggestions.push(action.into());
+                diagnostic.suggestions.push(action.into());
             }
 
-            diagnostics.push(diag);
+            diagnostics.push(diagnostic);
         }
 
         ControlFlow::<Never>::Continue(())

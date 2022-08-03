@@ -115,6 +115,7 @@ impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
 
 #[cfg(test)]
 mod tests {
+    use rome_console::codespan::Severity;
     use rome_diagnostics::Diagnostic;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
@@ -122,8 +123,9 @@ mod tests {
     };
 
     use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, Never,
-        Phases, QueryMatch, QueryMatcher, RuleKey, ServiceBag, SignalEntry, SyntaxVisitor,
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerSignal,
+        ControlFlow, Never, Phases, QueryMatch, QueryMatcher, RuleKey, ServiceBag, SignalEntry,
+        SyntaxVisitor,
     };
 
     use super::{GroupKey, MatchQueryParams};
@@ -164,7 +166,10 @@ mod tests {
             let span = node.text_trimmed_range();
             params.signal_queue.push(SignalEntry {
                 signal: Box::new(DiagnosticSignal::new(move || {
-                    Diagnostic::warning(0, "test_suppression", "test_suppression").primary(span, "")
+                    AnalyzerDiagnostic::from_diagnostic(
+                        Diagnostic::warning(0, "test_suppression", "test_suppression")
+                            .primary(span, ""),
+                    )
                 })),
                 rule: RuleKey::new("group", "rule"),
                 text_range: span,
@@ -264,7 +269,10 @@ mod tests {
 
         let mut diagnostics = Vec::new();
         let mut emit_signal = |signal: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> {
-            let diag = signal.diagnostic().expect("diagnostic");
+            let diag = signal
+                .diagnostic()
+                .expect("diagnostic")
+                .into_diagnostic(Severity::Warning);
 
             let code = diag.code.expect("code");
             let label = diag.primary.expect("primary label");

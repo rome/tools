@@ -2662,6 +2662,7 @@ dependencies = [
  "rome_js_analyze",
  "rome_js_parser",
  "rome_js_syntax",
+ "rome_service",
  "xtask",
 ]
 

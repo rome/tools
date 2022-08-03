@@ -12,4 +12,5 @@ rome_diagnostics = { path = "../../crates/rome_diagnostics" }
 rome_js_analyze = { path = "../../crates/rome_js_analyze" }
 rome_js_parser = { path = "../../crates/rome_js_parser" }
 rome_js_syntax = { path = "../../crates/rome_js_syntax" }
+rome_service = { path = "../../crates/rome_service" }
 pulldown-cmark = { version = "0.9", default-features = false }

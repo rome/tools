@@ -71,7 +71,7 @@ impl Rule for UseSingleVarDeclarator {
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::error(
+        Some(RuleDiagnostic::new(
             node.range(),
             "Declare variables separately",
         ))

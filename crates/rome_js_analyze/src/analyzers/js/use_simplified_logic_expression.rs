@@ -127,7 +127,7 @@ impl Rule for UseSimplifiedLogicExpression {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
-        Some(RuleDiagnostic::error(
+        Some(RuleDiagnostic::new(
             node.range(),
             markup! {
                 "Logical expression contains unnecessary complexity."
