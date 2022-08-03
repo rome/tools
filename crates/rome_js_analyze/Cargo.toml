@@ -5,8 +5,6 @@ edition = "2021"
 authors = ["Rome Tools Developers and Contributros"]
 license = "MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 rome_analyze = { path = "../rome_analyze" }
 rome_control_flow = { path = "../rome_control_flow" }
@@ -18,7 +16,6 @@ rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 roaring = "0.9.0"
 rustc-hash = "1.1.0"
-regex = { version = "1.6.0" }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
@@ -26,28 +23,3 @@ rome_text_edit = { path = "../rome_text_edit" }
 rome_js_parser = { path = "../rome_js_parser", features = ["tests"] }
 insta = { version = "1.10.0", features = ["glob"] }
 countme = { version = "3.0.0", features = ["enable"] }
-iai = "0.1.1"
-case = "1.0.0"
-fastbloom-rs = "0.3.0"
-qp-trie = "0.8.0"
-fst = "0.4.7"
-criterion = "0.3.5"
-memchr = "2.5.0"
-
-[[bench]]
-name = "to_camel_case"
-harness = false
-
-[[bench]]
-name = "contains_iai"
-harness = false
-
-[[bench]]
-name = "contains_criterion"
-harness = false
-
-[[bin]]
-name = "contains_iai"
-path = "bins/contains_iai.rs"
-test = false
-bench = false

@@ -9,6 +9,7 @@ members = [
 	"xtask/codegen",
 	"xtask/coverage",
 	"xtask/lintdoc",
+	"xtask/libs_bench",
 ]
 
 [profile.release-with-debug]

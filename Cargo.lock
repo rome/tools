@@ -1498,16 +1498,8 @@ dependencies = [
 name = "rome_js_analyze"
 version = "0.0.0"
 dependencies = [
- "case",
  "countme",
- "criterion",
- "fastbloom-rs",
- "fst",
- "iai",
  "insta",
- "memchr",
- "qp-trie",
- "regex",
  "roaring",
  "rome_analyze",
  "rome_console",
@@ -2642,6 +2634,21 @@ dependencies = [
  "walkdir",
  "xtask",
  "yastl",
+]
+
+[[package]]
+name = "xtask_libs_bench"
+version = "0.0.0"
+dependencies = [
+ "case",
+ "criterion",
+ "fastbloom-rs",
+ "fst",
+ "iai",
+ "memchr",
+ "qp-trie",
+ "regex",
+ "rome_js_analyze",
 ]
 
 [[package]]
