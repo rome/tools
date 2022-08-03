@@ -85,6 +85,14 @@ Require the use of <code>===</code> and <code>!==</code>
 Disallows empty destructuring patterns.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noExtraBooleanCast">
+	<a href="/docs/lint/rules/noExtraBooleanCast">noExtraBooleanCast (since v0.9.0)</a>
+	<a class="header-anchor" href="#noExtraBooleanCast"></a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow unnecessary boolean casts
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noFunctionAssign">
 	<a href="/docs/lint/rules/noFunctionAssign">noFunctionAssign (since v0.7.0)</a>
 	<a class="header-anchor" href="#noFunctionAssign"></a>

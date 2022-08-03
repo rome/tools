@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsConditionalExpression, JsDoWhileStatement, JsForStatement, JsIfStatement, JsNewExpression,
     JsSyntaxKind, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator, JsWhileStatement,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, SyntaxNodeCast};
+use rome_rowan::{AstNode, AstSeparatedList,  SyntaxNodeCast, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -52,16 +52,15 @@ declare_rule! {
     /// ### Valid
     /// ```js
     /// Boolean(!x);
-    /// ```
-    ///
-    /// ```js
     /// !x;
-    /// ```
-    ///
-    /// ```js
     /// !!x;
     /// ```
-    pub(crate) NoExtraBooleanCast = "noExtraBooleanCast"
+
+	pub(crate) NoExtraBooleanCast {
+        version: "0.9.0",
+        name: "noExtraBooleanCast",
+        recommended: true,
+    }
 }
 
 /// Check if this node is in the position of `test` slot of parent syntax node.
@@ -71,8 +70,8 @@ declare_rule! {
 ///     ^^^ this is a boolean context
 /// }
 /// ```
-fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<bool> {
-    let parent = parent.clone();
+fn is_in_boolean_context(node: &JsSyntaxNode) -> Option<bool> {
+    let parent = node.parent()?;
     match parent.kind() {
         JsSyntaxKind::JS_IF_STATEMENT => {
             Some(parent.cast::<JsIfStatement>()?.test().ok()?.syntax() == node)
@@ -99,26 +98,12 @@ fn is_in_boolean_context(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> Option<b
 }
 
 /// Checks if the node is a `Boolean` Constructor Call
-/// ## Example
+/// # Example
 /// ```js
 /// new Boolean(x);
 /// ```
 /// The checking algorithm of [JsNewExpression] is a little different from [JsCallExpression] due to
-/// the ungram definition of [JsNewExpression] is different from [JsCallExpression], the arguments of [JsNewExpression] is optional
-/// ```text,no_run
-/// // new expression
-/// JsNewExpression =
-/// 'new'
-/// callee: JsAnyExpression
-/// type_arguments: TsTypeArguments?
-/// arguments: JsCallArguments?
-/// // call expression
-/// JsCallExpression =
-/// callee: JsAnyExpression
-/// optional_chain: '?.'?
-/// type_arguments: TsTypeArguments?
-/// arguments: JsCallArguments
-/// ```
+/// two nodes have different shapes
 fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
     let callee = JsCallArgumentList::cast(node.clone())?
         .parent::<JsCallArguments>()?
@@ -151,8 +136,13 @@ fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
 /// ```js
 /// !!x
 /// ```
-fn is_negation(node: &JsSyntaxNode) -> Option<bool> {
-    Some(JsUnaryExpression::cast(node.clone())?.operator().ok()? == JsUnaryOperator::LogicalNot)
+fn is_negation(node: &JsSyntaxNode) -> Option<JsUnaryExpression> {
+    let unary_expr = JsUnaryExpression::cast(node.clone())?;
+    if unary_expr.operator().ok()? == JsUnaryOperator::LogicalNot {
+        Some(unary_expr)
+    } else {
+        None
+    }
 }
 
 impl Rule for NoExtraBooleanCast {
@@ -169,33 +159,19 @@ impl Rule for NoExtraBooleanCast {
 
         // Check if parent `SyntaxNode` in any boolean `Type Coercion` context,
         // reference https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-        let parent_node_in_boolean_cast_context = is_in_boolean_context(&syntax, &parent_syntax)
-            .unwrap_or_default()
-            || is_boolean_constructor_call(&parent_syntax).unwrap_or_default()
-            || is_negation(&parent_syntax).unwrap_or_default()
-            || is_boolean_call(&parent_syntax).unwrap_or_default();
+        let parent_node_in_boolean_cast_context = is_in_boolean_context(&syntax).unwrap_or(false)
+            || is_boolean_constructor_call(&parent_syntax).unwrap_or(false)
+            || is_negation(&parent_syntax).is_some()
+            || is_boolean_call(&parent_syntax).unwrap_or(false);
         // Convert `!!x` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
         if parent_node_in_boolean_cast_context {
-            if is_negation(&syntax).unwrap_or_default() {
-                let argument = JsUnaryExpression::cast(syntax)?.argument().ok()?;
-                match argument {
-                    JsAnyExpression::JsUnaryExpression(expr)
-                        if expr.operator().ok()? == JsUnaryOperator::LogicalNot =>
-                    {
-                        return expr
-                            .argument()
-                            .ok()
-                            .map(|argument| (argument, ExtraBooleanCastType::DoubleNegation));
-                    }
-                    _ => {
-                        return None;
-                    }
-                }
-            }
+            if let Some(result) = is_double_negation_ignore_parenthesis(&syntax) {
+                return Some(result);
+            };
 
             // Convert `Boolean(x)` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
             // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
-            return JsCallExpression::cast(syntax).and_then(|expr| {
+            if let Some(expr) = JsCallExpression::cast(syntax.clone()) {
                 let callee = expr.callee().ok()?;
                 if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
                     if ident.name().ok()?.syntax().text_trimmed() == "Boolean" {
@@ -210,12 +186,31 @@ impl Rule for NoExtraBooleanCast {
                                 .map(|item| item.into_syntax())
                                 .and_then(JsAnyExpression::cast)
                                 .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
-                        } else {
-                            return None;
                         }
                     }
-                } else {
-                    return None;
+                }
+                return None;
+            }
+
+            // Convert `new Boolean(x)` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
+            // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
+            return JsNewExpression::cast(syntax).and_then(|expr| {
+                let callee = expr.callee().ok()?;
+                if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
+                    if ident.name().ok()?.syntax().text_trimmed() == "Boolean" {
+                        let arguments = expr.arguments()?;
+                        let len = arguments.args().len();
+                        if len == 1 {
+                            return arguments
+                                .args()
+                                .into_iter()
+                                .next()?
+                                .ok()
+                                .map(|item| item.into_syntax())
+                                .and_then(JsAnyExpression::cast)
+                                .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
+                        }
+                    }
                 }
                 None
             });
@@ -234,7 +229,7 @@ impl Rule for NoExtraBooleanCast {
             RuleDiagnostic::warning(
                 node.range(),
                 markup! {
-                    ""{title}""
+                    {title}
                 },
             )
             .footer_note(note),
@@ -243,20 +238,56 @@ impl Rule for NoExtraBooleanCast {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+        let mut mutation = ctx.root().begin();
         let (node_to_replace, extra_boolean_cast_type) = state;
         let message = match extra_boolean_cast_type {
             ExtraBooleanCastType::DoubleNegation => "Remove redundant double-negation",
             ExtraBooleanCastType::BooleanCall => "Remove redundant `Boolean` call",
         };
-        let root = ctx
-            .root()
-            .replace_node(node.clone(), node_to_replace.clone())?;
+        mutation.replace_node(node.clone(), node_to_replace.clone());
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { ""{message}"" }.to_owned(),
-            root,
+            message: markup! { {message} }.to_owned(),
+            mutation,
         })
+    }
+}
+
+/// Check if the SyntaxNode is a Double Negation. Including the edge case
+/// ```js
+/// !(!x)
+/// ```
+/// Return [Rule::State] `(JsAnyExpression, ExtraBooleanCastType)` if it is a DoubleNegation Expression
+///
+fn is_double_negation_ignore_parenthesis(
+    syntax: &rome_rowan::SyntaxNode<rome_js_syntax::JsLanguage>,
+) -> Option<(JsAnyExpression, ExtraBooleanCastType)> {
+    if let Some(negation_expr) = is_negation(syntax) {
+        let argument = negation_expr.argument().ok()?;
+        match argument {
+            JsAnyExpression::JsUnaryExpression(expr)
+                if expr.operator().ok()? == JsUnaryOperator::LogicalNot =>
+            {
+                expr.argument()
+                    .ok()
+                    .map(|argument| (argument, ExtraBooleanCastType::DoubleNegation))
+            }
+            // Check edge case `!(!xxx)`
+            JsAnyExpression::JsParenthesizedExpression(expr) => {
+                expr.expression().ok().and_then(|expr| {
+                    is_negation(expr.syntax()).and_then(|negation| {
+                        Some((
+                            negation.argument().ok()?,
+                            ExtraBooleanCastType::DoubleNegation,
+                        ))
+                    })
+                })
+            }
+            _ => None,
+        }
+    } else {
+        None
     }
 }

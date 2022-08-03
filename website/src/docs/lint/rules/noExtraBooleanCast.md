@@ -3,7 +3,9 @@ title: Lint Rule noExtraBooleanCast
 layout: layouts/rule.liquid
 ---
 
-# noExtraBooleanCast
+# noExtraBooleanCast (since v0.9.0)
+
+> This rule is recommended by Rome.
 
 Disallow unnecessary boolean casts
 
@@ -16,7 +18,7 @@ if (!Boolean(foo)) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noExtraBooleanCast</span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant `Boolean` call</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast/">js/noExtraBooleanCast</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant `Boolean` call</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noExtraBooleanCast.js:1:6
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> if (!Boolean(foo)) {
@@ -36,7 +38,7 @@ if (!Boolean(foo)) {
 while (!!foo) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noExtraBooleanCast</span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant double-negation.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast/">js/noExtraBooleanCast</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant double-negation.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noExtraBooleanCast.js:1:8
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> while (!!foo) {}
@@ -58,7 +60,7 @@ do {
 } while (Boolean(x));
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noExtraBooleanCast</span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant `Boolean` call</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast/">js/noExtraBooleanCast</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant `Boolean` call</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noExtraBooleanCast.js:4:10
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> } while (Boolean(x));
@@ -80,7 +82,7 @@ do {
 for (; !!foo; ) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noExtraBooleanCast</span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant double-negation.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast/">js/noExtraBooleanCast</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant double-negation.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noExtraBooleanCast.js:1:8
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> for (; !!foo; ) {}
@@ -99,7 +101,7 @@ for (; !!foo; ) {}
 new Boolean(!!x);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noExtraBooleanCast</span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant double-negation.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast/">js/noExtraBooleanCast</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid redundant double-negation.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noExtraBooleanCast.js:1:13
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> new Boolean(!!x);
@@ -118,13 +120,7 @@ new Boolean(!!x);
 
 ```jsx
 Boolean(!x);
-```
-
-```jsx
 !x;
-```
-
-```jsx
 !!x;
 ```
 
