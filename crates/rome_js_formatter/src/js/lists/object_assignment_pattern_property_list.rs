@@ -31,11 +31,17 @@ impl FormatRule<JsObjectAssignmentPatternPropertyList>
             TrailingSeparator::Allowed
         };
 
-        f.join_with(&soft_line_break_or_space())
-            .entries(
-                node.format_separated(JsSyntaxKind::COMMA)
-                    .with_trailing_separator(trailing_separator),
-            )
-            .finish()
+        let entries = node
+            .format_separated(JsSyntaxKind::COMMA)
+            .with_trailing_separator(trailing_separator)
+            .zip(node.iter());
+
+        let mut join = f.join_nodes_with_soft_line();
+
+        for (format_entry, node) in entries {
+            join.entry(node?.syntax(), &format_entry);
+        }
+
+        join.finish()
     }
 }

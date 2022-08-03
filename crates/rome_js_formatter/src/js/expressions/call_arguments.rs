@@ -474,8 +474,33 @@ struct IsTestFrameworkCallPayload<'a> {
     arguments_len: usize,
     callee: &'a JsAnyExpression,
 }
+
+pub(crate) fn is_test_call_expression(expression: &JsCallExpression) -> SyntaxResult<bool> {
+    let arguments = expression.arguments()?.args();
+    let mut arguments_iter = arguments.iter();
+
+    let result = match (
+        arguments_iter.next(),
+        arguments_iter.next(),
+        arguments_iter.next(),
+    ) {
+        (Some(first_argument), Some(second_argument), third_argument) => {
+            is_framework_test_call(IsTestFrameworkCallPayload {
+                first_argument: &first_argument?,
+                second_argument: &second_argument?,
+                third_argument: &third_argument,
+                arguments_len: arguments.len(),
+                callee: &expression.callee()?,
+            })?
+        }
+        (_, _, _) => false,
+    };
+
+    Ok(result)
+}
+
 /// This is a specialised function that checks if the current [call expression]
-/// is reminds a call expression usually used by the majority of testing frameworks.
+/// resembles a call expression usually used by a testing frameworks.
 ///
 /// If the [call expression] matches the criteria, a different formatting is applied.
 ///

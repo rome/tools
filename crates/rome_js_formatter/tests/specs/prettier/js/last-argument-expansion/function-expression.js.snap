@@ -44,9 +44,9 @@ function mySagas2() {
 -      console.log("pong");
 -    },
 -  );
-+  yield effects.takeEvery(rexpress.actionTypes.REQUEST_START, function* (
-+    { id },
-+  ) {
++  yield effects.takeEvery(rexpress.actionTypes.REQUEST_START, function* ({
++    id,
++  }) {
 +    console.log(id);
 +    yield rexpress.actions(store).writeHead(id, 400);
 +    yield rexpress.actions(store).end(id, "pong");
@@ -61,9 +61,9 @@ function mySagas2() {
 -      console.log(id);
 -    },
 -  );
-+  return effects.takeEvery(rexpress.actionTypes.REQUEST_START, function (
-+    { id },
-+  ) {
++  return effects.takeEvery(rexpress.actionTypes.REQUEST_START, function ({
++    id,
++  }) {
 +    console.log(id);
 +  });
  }
@@ -73,9 +73,9 @@ function mySagas2() {
 
 ```js
 function* mySagas() {
-  yield effects.takeEvery(rexpress.actionTypes.REQUEST_START, function* (
-    { id },
-  ) {
+  yield effects.takeEvery(rexpress.actionTypes.REQUEST_START, function* ({
+    id,
+  }) {
     console.log(id);
     yield rexpress.actions(store).writeHead(id, 400);
     yield rexpress.actions(store).end(id, "pong");
@@ -84,9 +84,9 @@ function* mySagas() {
 }
 
 function mySagas2() {
-  return effects.takeEvery(rexpress.actionTypes.REQUEST_START, function (
-    { id },
-  ) {
+  return effects.takeEvery(rexpress.actionTypes.REQUEST_START, function ({
+    id,
+  }) {
     console.log(id);
   });
 }
