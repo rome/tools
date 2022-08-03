@@ -1,32 +1,20 @@
-import mermaid from "mermaid";
-import { useLayoutEffect, useRef } from "react";
-
-mermaid.initialize({
-	startOnLoad: true,
-});
+import { memo } from "react";
 
 interface MermaidGraphProps {
 	graph: string;
 }
 
-export default function MermaidGraph({ graph }: MermaidGraphProps) {
-	const element = useRef<HTMLDivElement>(null);
-
-	useLayoutEffect(() => {
-		if (element.current) {
-			element.current.removeAttribute("data-processed");
-			mermaid.contentLoaded();
-			(element.current.firstChild as SVGElement)?.style.removeProperty(
-				"max-width",
-			);
-		}
-	}, [graph]);
-
+export default memo(function MermaidGraph({ graph }: MermaidGraphProps) {
 	if (graph === "") {
 		return null;
 	}
 
+	const encodedGraph = encodeURIComponent(btoa(graph));
+
 	return (
-		<div className="h-screen overflow-scroll mermaid" ref={element}>{graph}</div>
+		<iframe
+			className="h-screen w-full"
+			src={`/mermaid.html?graph=${encodedGraph}`}
+		/>
 	);
-}
+});
