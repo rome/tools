@@ -123,27 +123,6 @@ impl PartialEq for SemanticModelData {
 
 impl Eq for SemanticModelData {}
 
-/// Iterator to navigate upwards in the scope tree
-pub struct ScopeAncestorsIter {
-    current: Option<Scope>,
-}
-
-impl Iterator for ScopeAncestorsIter {
-    type Item = Scope;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        match self.current.take() {
-            Some(current) => {
-                self.current = current.parent();
-                Some(current)
-            }
-            None => None,
-        }
-    }
-}
-
-impl FusedIterator for ScopeAncestorsIter {}
-
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
 #[derive(Clone, Debug)]
@@ -163,10 +142,8 @@ impl Eq for Scope {}
 impl Scope {
     /// Returns all parents of this scope. Starting with the current
     /// [Scope].
-    pub fn ancestors(&self) -> ScopeAncestorsIter {
-        ScopeAncestorsIter {
-            current: Some(self.clone()),
-        }
+    pub fn ancestors(&self) -> impl Iterator<Item = Scope> {
+        std::iter::successors(Some(self.clone()), |scope| scope.parent())
     }
 
     /// Returns this scope parent.
@@ -183,7 +160,7 @@ impl Scope {
     }
 
     /// Returns all bindings that were bound in this scope. It **does
-    /// not** Returns bindings of parent scopes.
+    /// not** returns bindings of parent scopes.
     pub fn bindings(&self) -> ScopeBindingsIter {
         ScopeBindingsIter {
             data: self.data.clone(),
@@ -192,7 +169,8 @@ impl Scope {
         }
     }
 
-    /// Returns a binding by its name, like it appears on code.
+    /// Returns a binding by its name, like it appears on code.  It **does
+    /// not** returns bindings of parent scopes.
     pub fn get_binding(&self, name: impl AsRef<str>) -> Option<Binding> {
         let name = name.as_ref();
         let data = &self.data.scopes[self.id];
@@ -205,6 +183,17 @@ impl Scope {
             node: node.clone(),
             data: self.data.clone(),
         })
+    }
+
+    /// Checks if the current scope is one of the ancestor of "other". Given
+    /// that [ancestors] return "self" as the first scope,
+    /// this function returns true for:
+    ///
+    /// ```rust,ignore
+    /// assert!(scope.is_ancestor_of(scope));
+    /// ```
+    pub fn is_ancestor_of(&self, other: &Scope) -> bool {
+        other.ancestors().any(|s| s == *self)
     }
 }
 

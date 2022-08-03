@@ -165,6 +165,14 @@ Disallow using unsafe negation.
 Disallow template literals if interpolation and special-character handling are not needed
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noUnusedVariables">
+	<a href="/docs/lint/rules/noUnusedVariables">noUnusedVariables (since v0.9.0)</a>
+	<a class="header-anchor" href="#noUnusedVariables"></a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow unused variables.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useBlockStatements">
 	<a href="/docs/lint/rules/useBlockStatements">useBlockStatements (since v0.7.0)</a>
 	<a class="header-anchor" href="#useBlockStatements"></a>

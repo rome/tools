@@ -3,6 +3,7 @@ use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsLanguage, JsModuleItemList, Js
 use rome_rowan::{AstNode, BatchMutation};
 use std::borrow::Cow;
 
+pub mod batch;
 pub mod rename;
 #[cfg(test)]
 pub mod tests;
