@@ -166,6 +166,17 @@ impl BinaryLikeOperator {
             }
         }
     }
+
+    pub const fn is_logical(&self) -> bool {
+        matches!(self, BinaryLikeOperator::Logical(_))
+    }
+
+    pub const fn is_remainder(&self) -> bool {
+        matches!(
+            self,
+            BinaryLikeOperator::Binary(JsBinaryOperator::Remainder)
+        )
+    }
 }
 
 impl From<JsLogicalOperator> for BinaryLikeOperator {
@@ -180,23 +191,9 @@ impl From<JsBinaryOperator> for BinaryLikeOperator {
     }
 }
 
-/// This function is in charge of formatting a node inside a binaryish expression with parenthesis or not
-///
-/// At the moment this logic is applied only to logical expressions.
-///
-/// A logical expressions should be decorated with parenthesis only if its previous operation has a lower
-/// precedence.
-///
-/// For example:
-///
-/// ```ignore
-/// foo && bar || lorem
-/// ```
-///
-/// The logical expression `foo && bar` has higher precedence of `bar || lorem`. This means that
-/// first `foo && bar` is computed and its result is then computed against `|| lorem`.
-///
-/// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
+/// This function returns `true` when the binary expression should be wrapped in parentheses to either
+/// * a) correctly encode precedence
+/// * b) Improve readability by adding parentheses around expressions where the precedence may not be obvious to many readers.
 pub(crate) fn binary_argument_needs_parens(
     parent_operator: BinaryLikeOperator,
     node: &JsAnyBinaryLikeLeftExpression,
@@ -209,12 +206,8 @@ pub(crate) fn binary_argument_needs_parens(
             return Ok(false);
         };
 
-    if matches!(parent_operator, BinaryLikeOperator::Logical(_))
-        && matches!(
-            node,
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(JsAnyExpression::JsLogicalExpression(_))
-        )
-    {
+    // For logical nodes, add parentheses if the operators aren't the same
+    if parent_operator.is_logical() && current_operator.is_logical() {
         return Ok(parent_operator != current_operator);
     }
 
@@ -222,19 +215,27 @@ pub(crate) fn binary_argument_needs_parens(
     let parent_precedence = parent_operator.precedence();
 
     #[allow(clippy::if_same_then_else)]
+    // If the parent has a higher precedence than parentheses are necessary to not change the semantic meaning
+    // when re-parsing.
     let result = if parent_precedence > current_precedence {
         true
     } else if is_right && parent_precedence == current_precedence {
         true
-    } else if parent_precedence.is_bitwise() || parent_precedence.is_shift() {
+    }
+    // Add parentheses around bitwise and bit shift operators
+    // `a * 3 >> 5` -> `(a * 3) >> 5`
+    else if parent_precedence.is_bitwise() || parent_precedence.is_shift() {
         true
-    } else if parent_precedence < current_precedence
-        && current_operator == BinaryLikeOperator::Binary(JsBinaryOperator::Remainder)
-    {
+    }
+    // `a % 4 + 4` -> `a % (4 + 4)`
+    else if parent_precedence < current_precedence && current_operator.is_remainder() {
         parent_precedence.is_additive()
+    } else if parent_precedence == current_precedence
+        && !should_flatten(parent_operator, current_operator)
+    {
+        true
     } else {
-        parent_precedence == current_precedence
-            && !should_flatten(parent_operator, current_operator)
+        false
     };
 
     Ok(result)
@@ -851,8 +852,11 @@ impl JsAnyBinaryLikeExpression {
             _ => false,
         }
     }
-    /// Determines if a binary like expression should be flattened or not. As a rule of thumb, an expression
-    /// can be flattened if it is of the same kind as the left-hand side sub-expression and uses the same operator.
+    /// Determines if the left expression can be flattened together with this expression.
+    ///
+    /// Returns `false` if the left hand side isn't a binary like expression and otherwise.
+    ///
+    /// Delegates to [should_flatten] for all other expressions.
     fn can_flatten(&self) -> SyntaxResult<bool> {
         let left = self.left()?;
 
@@ -866,6 +870,10 @@ impl JsAnyBinaryLikeExpression {
     }
 }
 
+/// Returns `true` if a binary expression nested into another binary expression should be flattened together.
+///
+/// This is generally the case if both operator have the same precedence. See the inline comments for the exceptions
+/// to that rule.
 fn should_flatten(parent_operator: BinaryLikeOperator, child_operator: BinaryLikeOperator) -> bool {
     let parent_precedence = parent_operator.precedence();
     let child_precedence = child_operator.precedence();
@@ -873,27 +881,34 @@ fn should_flatten(parent_operator: BinaryLikeOperator, child_operator: BinaryLik
     #[allow(clippy::if_same_then_else)]
     if parent_precedence != child_precedence {
         false
-    } else if parent_precedence.is_exponential() {
+    }
+    // `**` is right associative.
+    else if parent_precedence.is_exponential() {
         false
-    } else if parent_precedence.is_equality() && child_precedence.is_equality() {
+    }
+    // avoid `a == b == c` -> `(a == b) == c`
+    else if parent_precedence.is_equality() && child_precedence.is_equality() {
         false
-    } else if (matches!(
-        child_operator,
-        BinaryLikeOperator::Binary(JsBinaryOperator::Remainder)
-    ) && parent_precedence.is_multiplicative())
-        || (matches!(
-            parent_operator,
-            BinaryLikeOperator::Binary(JsBinaryOperator::Remainder)
-        ) && child_precedence.is_multiplicative())
+    }
+    // `a % b * c` -> `(a % b) * c`
+    // `a * b % c` -> `(a * b) % c`
+    else if (child_operator.is_remainder() && parent_precedence.is_multiplicative())
+        || (parent_operator.is_remainder() && child_precedence.is_multiplicative())
     {
         false
-    } else if child_operator != parent_operator
+    }
+    // `a * b / c` -> `(a * b) / c`
+    else if child_operator != parent_operator
         && child_precedence.is_multiplicative()
         && parent_precedence.is_multiplicative()
     {
         false
+    }
+    // `a >> b >> c` -> `(a >> b) >> c`
+    else if parent_precedence.is_shift() && child_precedence.is_shift() {
+        false
     } else {
-        !(parent_precedence.is_shift() && child_precedence.is_shift())
+        true
     }
 }
 
