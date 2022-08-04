@@ -14,6 +14,7 @@ specifiers:
   '@vitejs/plugin-react': ^1.0.7
   autoprefixer: ^10.4.2
   codemirror-lang-rome-ast: 0.0.4
+  lang-rome-formatter-ir: 0.0.1
   postcss: ^8.4.6
   prettier: ^2.7.0
   react: ^17.0.2
@@ -31,6 +32,7 @@ dependencies:
   '@codemirror/view': 6.1.0
   '@uiw/react-codemirror': 4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq
   codemirror-lang-rome-ast: 0.0.4
+  lang-rome-formatter-ir: 0.0.1
   prettier: 2.7.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -1386,6 +1388,18 @@ packages:
     dependencies:
       minimist: 1.2.6
     dev: true
+
+  /lang-rome-formatter-ir/0.0.1:
+    resolution: {integrity: sha512-4ljgmlstmCGC1mr06IZ/dNnjw1seiUVs7vj7MBzvggEDmqhsemCxFFTqGaTHxYra0X99S9M3Laki/plmuTpSvQ==}
+    dependencies:
+      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/language': 6.2.0
+      '@codemirror/state': 6.1.0
+      '@codemirror/view': 6.1.0
+      '@lezer/common': 1.0.0
+      '@lezer/highlight': 1.0.0
+      '@lezer/lr': 1.2.0
+    dev: false
 
   /lilconfig/2.0.4:
     resolution: {integrity: sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA==}

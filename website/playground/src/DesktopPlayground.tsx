@@ -3,6 +3,7 @@ import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
 // import { EditorView } from "@codemirror/view";
 // import { romeAst } from "../lang-rome-ast/dist/";
 import { romeAst } from "codemirror-lang-rome-ast";
+import {romeAst as RomeFormatterIr} from 'lang-rome-formatter-ir'
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
@@ -36,6 +37,7 @@ export default function DesktopPlayground(
 	];
 
 	const romeAstCodeMirrorExtension = [romeAst()];
+	const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
 
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
@@ -120,31 +122,12 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<button
-								className="bg-gray-300 px-2 py-2 text-white absolute right-0 top--1 mr-5 flex items-center rounded-md"
-								onClick={copyToClipboard}
-							>
-								{clipboardStatus === "success" && (
-									<SuccessIcon
-										style={{
-											width: 16,
-											height: 16,
-											marginRight: 5,
-										}}
-									/>
-								)}
-								{clipboardStatus === "failed" && (
-									<FailedIcon
-										style={{
-											width: 16,
-											height: 16,
-											marginRight: 5,
-										}}
-									/>
-								)}
-								<CopyIcon style={{ width: 16, height: 16 }} />
-							</button>
-							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
+							<CodeMirror
+								value={formatter_ir}
+								extensions={romeFormatterIrCodeMirrorExtension}
+								height="70vh"
+								readOnly={true}
+							/>
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll">{prettierOutput.ir}</pre>
