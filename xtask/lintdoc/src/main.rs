@@ -1,6 +1,3 @@
-mod workspace;
-
-use crate::workspace::WorkspaceTest;
 use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
 use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
 use rome_console::{
@@ -11,8 +8,6 @@ use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use rome_js_analyze::{analyze, metadata};
 use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
 use rome_service::settings::WorkspaceSettings;
-use rome_service::Rules;
-use std::sync::RwLock;
 use std::{
     collections::BTreeMap,
     fmt::Write as _,
@@ -428,11 +423,6 @@ fn assert_lint(
         let root = parse.tree();
 
         let mut settings = WorkspaceSettings::default();
-        settings.linter.rules = Some(Rules::default());
-
-        let workspace = WorkspaceTest {
-            settings: RwLock::new(settings),
-        };
 
         let rule_filter = RuleFilter::Rule(group, rule);
         let filter = AnalysisFilter {
@@ -443,7 +433,6 @@ fn assert_lint(
         let result = analyze(0, &root, filter, |signal| {
             if let Some(diag) = signal.diagnostic() {
                 let code = format!("{group}/{rule}");
-                let settings = workspace.settings();
                 let severity = settings.get_severity_from_rule_code(&code).unwrap();
                 let mut diag = diag.into_diagnostic(severity);
 
