@@ -5,8 +5,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsBlockStatement, JsConditionalExpression, JsIfStatement,
-    JsSyntaxKind, JsUnaryExpression, JsUnaryOperator,
+    JsAnyExpression, JsAnyStatement, JsConditionalExpression, JsIfStatement, JsUnaryExpression,
+    JsUnaryOperator,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt};
 
