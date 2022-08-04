@@ -1008,7 +1008,7 @@ mod init {
 mod configuration {
     use crate::configs::{
         CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_INCORRECT_GLOBALS,
-        CONFIG_LINTER_WRONG_RULE,
+        CONFIG_INCORRECT_GLOBALS_V2, CONFIG_LINTER_WRONG_RULE,
     };
     use pico_args::Arguments;
     use rome_cli::{run_cli, CliSession};
@@ -1109,5 +1109,23 @@ mod configuration {
             }
             _ => panic!("expected an error, but found none"),
         }
+    }
+
+    #[test]
+    fn ignore_globals() {
+        let mut fs = MemoryFileSystem::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Owned(Box::new(BufferConsole::default())),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+        });
+
+        assert!(result.is_ok());
     }
 }

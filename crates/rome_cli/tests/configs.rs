@@ -120,3 +120,11 @@ pub const CONFIG_LINTER_SUPPRESSED_GROUP: &str = r#"{
     }
   }
 }"#;
+
+pub const CONFIG_INCORRECT_GLOBALS_V2: &str = r#"{
+    "javascript": {
+      "formatter": {
+        "quoteStyle": "single"
+      }
+  }
+}"#;
