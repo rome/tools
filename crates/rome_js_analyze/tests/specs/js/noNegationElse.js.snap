@@ -7,6 +7,12 @@ expression: noNegationElse.js
 ```js
 // valid
 if (!true) {consequent;};
+// https://github.com/rome/tools/issues/2999
+if (!/^NCT/.test(input)) {
+	messages.push("NCT Number must start with NCT");
+} else if (!/^NCT\d{8}$/.test(input)) {
+	messages.push("NCT Number must have exactly 8 digits after NCT");
+}
 true ? consequent : alternate;
 // invalid
 if (!true) {
@@ -22,68 +28,68 @@ let a = !test ? c : d;
 # Diagnostics
 ```
 warning[js/noNegationElse]: Invert blocks when performing a negation test.
-  ┌─ noNegationElse.js:5:1
-  │  
-5 │ ┌ if (!true) {
-6 │ │   consequent;
-7 │ │ } else {
-8 │ │   alternate;
-9 │ │ }
-  │ └─'
+   ┌─ noNegationElse.js:11:1
+   │  
+11 │ ┌ if (!true) {
+12 │ │   consequent;
+13 │ │ } else {
+14 │ │   alternate;
+15 │ │ }
+   │ └─'
 
 Suggested fix: Exchange alternate and consequent of the node
-    | @@ -2,10 +2,10 @@
-1 1 |   if (!true) {consequent;};
-2 2 |   true ? consequent : alternate;
-3 3 |   // invalid
-4   | - if (!true) {
-  4 | + if (true) {
-  5 | +   alternate;
-  6 | + } else {
-5 7 |     consequent;
-6   | - } else {
-7   | -   alternate;
-8 8 |   }
-9 9 |   !condition ? consequent : alternate;
-10 10 |   
+      | @@ -8,10 +8,10 @@
+ 7  7 |   }
+ 8  8 |   true ? consequent : alternate;
+ 9  9 |   // invalid
+10    | - if (!true) {
+   10 | + if (true) {
+   11 | +   alternate;
+   12 | + } else {
+11 13 |     consequent;
+12    | - } else {
+13    | -   alternate;
+14 14 |   }
+15 15 |   !condition ? consequent : alternate;
+16 16 |   
 
 
 ```
 
 ```
 warning[js/noNegationElse]: Invert blocks when performing a negation test.
-   ┌─ noNegationElse.js:10:1
+   ┌─ noNegationElse.js:16:1
    │
-10 │ !condition ? consequent : alternate;
+16 │ !condition ? consequent : alternate;
    │ -----------------------------------
 
 Suggested fix: Exchange alternate and consequent of the node
-      | @@ -7,6 +7,6 @@
- 6  6 |   } else {
- 7  7 |     alternate;
- 8  8 |   }
- 9    | - !condition ? consequent : alternate;
-    9 | + condition ? alternate : consequent;
-10 10 |   
-11 11 |   let a = !test ? c : d;
+      | @@ -13,6 +13,6 @@
+12 12 |   } else {
+13 13 |     alternate;
+14 14 |   }
+15    | - !condition ? consequent : alternate;
+   15 | + condition ? alternate : consequent;
+16 16 |   
+17 17 |   let a = !test ? c : d;
 
 
 ```
 
 ```
 warning[js/noNegationElse]: Invert blocks when performing a negation test.
-   ┌─ noNegationElse.js:12:9
+   ┌─ noNegationElse.js:18:9
    │
-12 │ let a = !test ? c : d;
+18 │ let a = !test ? c : d;
    │         -------------
 
 Suggested fix: Exchange alternate and consequent of the node
-      | @@ -9,4 +9,4 @@
- 8  8 |   }
- 9  9 |   !condition ? consequent : alternate;
-10 10 |   
-11    | - let a = !test ? c : d;
-   11 | + let a = test ? d : c;
+      | @@ -15,4 +15,4 @@
+14 14 |   }
+15 15 |   !condition ? consequent : alternate;
+16 16 |   
+17    | - let a = !test ? c : d;
+   17 | + let a = test ? d : c;
 
 
 ```

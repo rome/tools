@@ -5,7 +5,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsConditionalExpression, JsIfStatement, JsUnaryExpression, JsUnaryOperator,
+    JsAnyExpression, JsAnyStatement, JsBlockStatement, JsConditionalExpression, JsIfStatement,
+    JsSyntaxKind, JsUnaryExpression, JsUnaryOperator,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt};
 
@@ -61,7 +62,11 @@ impl Rule for NoNegationElse {
                 }
             }
             JsAnyCondition::JsIfStatement(stmt) => {
-                if is_negation(&stmt.test().ok()?).unwrap_or(false) && stmt.else_clause().is_some()
+                if is_negation(&stmt.test().ok()?).unwrap_or(false)
+                    && matches!(
+                        stmt.else_clause()?.alternate().ok()?,
+                        JsAnyStatement::JsBlockStatement(_)
+                    )
                 {
                     Some(stmt.test().ok()?.as_js_unary_expression().unwrap().clone())
                 } else {
