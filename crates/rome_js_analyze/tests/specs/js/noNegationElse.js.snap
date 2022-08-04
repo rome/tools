@@ -17,7 +17,9 @@ if (!true) {
 !condition ? consequent : alternate;
 
 let a = !test ? c : d;
-
+if (!true) {
+	consequent;
+} else something();
 //valid https://github.com/rome/tools/issues/2999 
 if (!/^NCT/.test(input)) {
 	messages.push("NCT Number must start with NCT");
@@ -73,7 +75,7 @@ Suggested fix: Exchange alternate and consequent of the node
     9 | + condition ? alternate : consequent;
 10 10 |   
 11 11 |   let a = !test ? c : d;
-12 12 |   
+12 12 |   if (!true) {
 
 
 ```
@@ -92,9 +94,35 @@ Suggested fix: Exchange alternate and consequent of the node
 10 10 |   
 11    | - let a = !test ? c : d;
    11 | + let a = test ? d : c;
-12 12 |   
-13 13 |   //valid https://github.com/rome/tools/issues/2999
-14 14 |   if (!/^NCT/.test(input)) {
+12 12 |   if (!true) {
+13 13 |   	consequent;
+14 14 |   } else something();
+
+
+```
+
+```
+warning[js/noNegationElse]: Invert blocks when performing a negation test.
+   ┌─ noNegationElse.js:13:1
+   │  
+13 │ ┌ if (!true) {
+14 │ │     consequent;
+15 │ │ } else something();
+   │ └───────────────────'
+
+Suggested fix: Exchange alternate and consequent of the node
+      | @@ -10,9 +10,9 @@
+ 9  9 |   !condition ? consequent : alternate;
+10 10 |   
+11 11 |   let a = !test ? c : d;
+12    | - if (!true) {
+   12 | + if (true) something(); else {
+13 13 |   	consequent;
+14    | - } else something();
+   14 | + }
+15 15 |   //valid https://github.com/rome/tools/issues/2999
+16 16 |   if (!/^NCT/.test(input)) {
+17 17 |   	messages.push("NCT Number must start with NCT");
 
 
 ```

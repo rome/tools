@@ -63,9 +63,9 @@ impl Rule for NoNegationElse {
             }
             JsAnyCondition::JsIfStatement(stmt) => {
                 if is_negation(&stmt.test().ok()?).unwrap_or(false)
-                    && matches!(
+                    && !matches!(
                         stmt.else_clause()?.alternate().ok()?,
-                        JsAnyStatement::JsBlockStatement(_)
+                        JsAnyStatement::JsIfStatement(_)
                     )
                 {
                     Some(stmt.test().ok()?.as_js_unary_expression().unwrap().clone())

@@ -10,7 +10,9 @@ if (!true) {
 !condition ? consequent : alternate;
 
 let a = !test ? c : d;
-
+if (!true) {
+	consequent;
+} else something();
 //valid https://github.com/rome/tools/issues/2999 
 if (!/^NCT/.test(input)) {
 	messages.push("NCT Number must start with NCT");
