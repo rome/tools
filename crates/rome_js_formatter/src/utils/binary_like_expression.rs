@@ -214,7 +214,7 @@ pub(crate) fn binary_argument_needs_parens(
     let current_precedence = current_operator.precedence();
     let parent_precedence = parent_operator.precedence();
 
-    #[allow(clippy::if_same_then_else)]
+    #[allow(clippy::if_same_then_else, clippy::needless_bool)]
     // If the parent has a higher precedence than parentheses are necessary to not change the semantic meaning
     // when re-parsing.
     let result = if parent_precedence > current_precedence {
@@ -878,7 +878,7 @@ fn should_flatten(parent_operator: BinaryLikeOperator, child_operator: BinaryLik
     let parent_precedence = parent_operator.precedence();
     let child_precedence = child_operator.precedence();
 
-    #[allow(clippy::if_same_then_else)]
+    #[allow(clippy::if_same_then_else, clippy::needless_bool)]
     if parent_precedence != child_precedence {
         false
     }
