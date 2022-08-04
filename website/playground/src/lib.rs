@@ -2,6 +2,7 @@
 
 use js_sys::Array;
 use rome_analyze::{AnalysisFilter, ControlFlow, Never};
+use rome_console::codespan::Severity;
 use rome_console::fmt::{Formatter, HTML};
 use rome_console::{markup, Markup};
 use rome_diagnostics::file::SimpleFiles;
@@ -184,7 +185,10 @@ pub fn run(
         &parse.tree(),
         AnalysisFilter::default(),
         |signal| {
-            if let Some(mut diag) = signal.diagnostic() {
+            if let Some(diag) = signal.diagnostic() {
+                // we default the severity to error, because only the recommended rules are run
+                // in the playground
+                let mut diag = diag.into_diagnostic(Severity::Error);
                 if let Some(action) = signal.action() {
                     diag.suggestions.push(action.into());
                 }

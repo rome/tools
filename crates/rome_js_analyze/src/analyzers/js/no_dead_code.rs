@@ -69,7 +69,7 @@ impl Rule for NoDeadCode {
     }
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let mut diagnostic = RuleDiagnostic::warning(
+        let mut diagnostic = RuleDiagnostic::new(
             state.text_trimmed_range,
             markup! {
                 "This code is unreachable"

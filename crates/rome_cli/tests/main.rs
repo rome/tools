@@ -25,6 +25,8 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 "#;
 
+const NO_DEBUGGER: &str = "debugger;";
+
 const FIX_BEFORE: &str = "
 if(a != -0) {}
 ";
@@ -65,6 +67,14 @@ const JS_ERRORS_AFTER: &str = "try {
     err = 24;
 }
 ";
+
+const NO_DEAD_CODE_ERROR: &str = r#"function f() {
+    for (;;) {
+        continue;
+        break;
+    }
+}
+"#;
 
 mod check {
     use super::*;
@@ -114,7 +124,6 @@ mod check {
     }
 
     #[test]
-    #[ignore = "lint errors are disabled until the linter is stable"]
     fn lint_error() {
         let mut fs = MemoryFileSystem::default();
 
@@ -152,8 +161,7 @@ mod check {
 
         eprintln!("{:?}", console.buffer);
 
-        // TODO lint errors are disabled until the linter is stable
-        assert!(result.is_ok());
+        assert!(result.is_err());
 
         let messages = console.buffer;
 
@@ -540,7 +548,11 @@ mod ci {
 
 mod format {
     use super::*;
-    use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT};
+    use crate::configs::{
+        CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC,
+        CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
+    };
+    use rome_console::LogLevel;
     use rome_fs::FileSystemExt;
 
     #[test]
@@ -826,6 +838,82 @@ mod format {
             .expect("failed to read file from memory FS");
 
         assert_eq!(content, CUSTOM_FORMAT_BEFORE);
+    }
+
+    #[test]
+    fn downgrade_severity() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(
+            file_path.into(),
+            CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC.as_bytes(),
+        );
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Owned(Box::new(fs)),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let messages = console.buffer;
+
+        assert_eq!(
+            messages
+                .iter()
+                .filter(|m| m.level == LogLevel::Error)
+                .filter(|m| {
+                    let content = format!("{:?}", m.content);
+                    content.contains("js/noDebugger")
+                })
+                .count(),
+            1
+        );
+    }
+
+    #[test]
+    fn upgrade_severity() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(
+            file_path.into(),
+            CONFIG_LINTER_UPGRADE_DIAGNOSTIC.as_bytes(),
+        );
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), NO_DEAD_CODE_ERROR.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Owned(Box::new(fs)),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        });
+
+        assert!(result.is_err(), "run_cli returned {result:?}");
+
+        let messages = console.buffer;
+
+        assert_eq!(
+            messages
+                .iter()
+                .filter(|m| m.level == LogLevel::Error)
+                .filter(|m| {
+                    let content = format!("{:?}", m.content);
+                    content.contains("js/noDeadCode")
+                })
+                .count(),
+            1
+        );
     }
 }
 

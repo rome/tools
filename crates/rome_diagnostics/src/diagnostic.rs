@@ -48,6 +48,11 @@ impl Diagnostic {
         Self::new_with_code(file_id, Severity::Note, title, Some(code.into()))
     }
 
+    /// Creates a new [`Diagnostic`] with the `Bug` severity.
+    pub fn bug(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Bug, title, Some(code.into()))
+    }
+
     /// Creates a new [`Diagnostic`] that will be used in a builder-like way
     /// to modify labels, and suggestions.
     pub fn new(file_id: FileId, severity: Severity, title: impl Display) -> Self {

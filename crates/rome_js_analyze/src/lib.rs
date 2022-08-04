@@ -77,6 +77,7 @@ where
 mod tests {
 
     use rome_analyze::Never;
+    use rome_console::codespan::Severity;
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
@@ -110,6 +111,7 @@ mod tests {
         let mut error_ranges = Vec::new();
         analyze(0, &parsed.tree(), AnalysisFilter::default(), |signal| {
             if let Some(diag) = signal.diagnostic() {
+                let diag = diag.into_diagnostic(Severity::Warning);
                 let code = diag.code.as_deref().unwrap();
                 let primary = diag.primary.as_ref().unwrap();
 

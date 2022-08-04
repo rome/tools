@@ -80,7 +80,7 @@ pub struct FixAllParams<'a> {
 
 type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
-type Lint = fn(&RomePath, AnyParse, AnalysisFilter) -> Vec<Diagnostic>;
+type Lint = fn(&RomePath, AnyParse, AnalysisFilter, Option<&Rules>) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;
 type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, RomeError>;
@@ -88,15 +88,25 @@ type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<
 type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, RomeError>;
 type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, RomeError>;
 
+/// The list of capabilities that are available for a language
 pub(crate) struct Capabilities {
+    /// Parse a file
     pub(crate) parse: Option<Parse>,
+    /// Prints the tree
     pub(crate) debug_print: Option<DebugPrint>,
+    /// It lints a file
     pub(crate) lint: Option<Lint>,
+    /// It extracts code actions for a file
     pub(crate) code_actions: Option<CodeActions>,
+    /// Applies fixes to a file
     pub(crate) fix_all: Option<FixAll>,
+    /// It formats a file
     pub(crate) format: Option<Format>,
+    /// It formats a portion of text of a file
     pub(crate) format_range: Option<FormatRange>,
+    /// It formats a file while typing
     pub(crate) format_on_type: Option<FormatOnType>,
+    /// It renames a binding inside a file
     pub(crate) rename: Option<Rename>,
 }
 

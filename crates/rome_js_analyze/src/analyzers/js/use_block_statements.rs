@@ -127,7 +127,7 @@ impl Rule for UseBlockStatements {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
-        Some(RuleDiagnostic::warning(
+        Some(RuleDiagnostic::new(
             node.range(),
             markup! {
                 "Block statements are preferred in this position."

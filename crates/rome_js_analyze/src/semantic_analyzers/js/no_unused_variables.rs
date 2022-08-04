@@ -138,7 +138,7 @@ impl Rule for NoUnusedVariables {
             _ => "variable",
         };
 
-        let diag = RuleDiagnostic::warning(
+        let diag = RuleDiagnostic::new(
             binding.syntax().text_trimmed_range(),
             markup! {
                 "This " {symbol_type} " is unused."

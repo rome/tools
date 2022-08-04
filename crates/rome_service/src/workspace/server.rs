@@ -1,5 +1,15 @@
-use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
-
+use super::{
+    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
+    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
+    PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameResult,
+    SupportsFeatureParams, UpdateSettingsParams,
+};
+use crate::file_handlers::FixAllParams;
+use crate::{
+    file_handlers::Features,
+    settings::{SettingsHandle, WorkspaceSettings},
+    RomeError, Workspace,
+};
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
@@ -7,20 +17,7 @@ use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
-
-use crate::file_handlers::FixAllParams;
-use crate::{
-    file_handlers::Features,
-    settings::{SettingsHandle, WorkspaceSettings},
-    RomeError, Workspace,
-};
-
-use super::{
-    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
-    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
-    PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameResult,
-    SupportsFeatureParams, UpdateSettingsParams,
-};
+use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
 pub(super) struct WorkspaceServer {
     /// features available throughout the application
@@ -233,7 +230,7 @@ impl Workspace for WorkspaceServer {
         };
 
         filter.categories = params.categories;
-        let diagnostics = linter(&params.path, parse, filter);
+        let diagnostics = linter(&params.path, parse, filter, rules);
 
         Ok(PullDiagnosticsResult { diagnostics })
     }

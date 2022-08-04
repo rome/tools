@@ -3,6 +3,7 @@ use std::{
 };
 
 use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleFilter};
+use rome_console::codespan::Severity;
 use rome_console::{
     diff::{Diff, DiffMode},
     fmt::{Formatter, Termcolor},
@@ -42,7 +43,8 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut code_fixes = Vec::new();
 
     rome_js_analyze::analyze(0, &root, filter, |event| {
-        if let Some(mut diag) = event.diagnostic() {
+        if let Some(diag) = event.diagnostic() {
+            let mut diag = diag.into_diagnostic(Severity::Warning);
             if let Some(action) = event.action() {
                 check_code_action(input_file, &input_code, source_type, &action);
                 diag.suggestions.push(action.into());

@@ -1,14 +1,14 @@
-use rome_console::fmt::Display;
-use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::file::FileSpan;
-use rome_diagnostics::{file::FileId, Applicability, Severity};
-use rome_diagnostics::{Diagnostic, DiagnosticTag, Footer, Span, SubDiagnostic};
-use rome_rowan::{BatchMutation, Language, TextRange};
-
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RuleLanguage, RuleSuppressions};
-use crate::{AnalysisFilter, LanguageRoot, Phase, Phases, Queryable, RuleRegistry};
+use crate::{
+    AnalysisFilter, AnalyzerDiagnostic, LanguageRoot, Phase, Phases, Queryable, RuleRegistry,
+};
+use rome_console::fmt::Display;
+use rome_console::{markup, MarkupBuf};
+use rome_diagnostics::{file::FileId, Applicability, Severity};
+use rome_diagnostics::{DiagnosticTag, Footer, Span};
+use rome_rowan::{BatchMutation, Language, TextRange};
 
 /// Static metadata containing information about a rule
 pub struct RuleMetadata {
@@ -320,14 +320,13 @@ pub trait Rule: RuleMeta {
 
 /// Diagnostic object returned by a single analysis rule
 pub struct RuleDiagnostic {
-    severity: Severity,
-    span: TextRange,
-    title: MarkupBuf,
-    summary: Option<String>,
-    tag: Option<DiagnosticTag>,
-    primary: Option<MarkupBuf>,
-    secondaries: Vec<(Severity, MarkupBuf, TextRange)>,
-    footers: Vec<Footer>,
+    pub(crate) span: TextRange,
+    pub(crate) title: MarkupBuf,
+    pub(crate) summary: Option<String>,
+    pub(crate) tag: Option<DiagnosticTag>,
+    pub(crate) primary: Option<MarkupBuf>,
+    pub(crate) secondaries: Vec<(Severity, MarkupBuf, TextRange)>,
+    pub(crate) footers: Vec<Footer>,
 }
 
 // Some of these methods aren't used by anything yet
@@ -335,9 +334,8 @@ pub struct RuleDiagnostic {
 impl RuleDiagnostic {
     /// Creates a new [`RuleDiagnostic`] with a severity and title that will be
     /// used in a builder-like way to modify labels.
-    fn new(severity: Severity, span: impl Span, title: impl Display) -> Self {
+    pub fn new(span: impl Span, title: impl Display) -> Self {
         Self {
-            severity,
             span: span.as_range(),
             title: markup!({ title }).to_owned(),
             summary: None,
@@ -346,26 +344,6 @@ impl RuleDiagnostic {
             secondaries: Vec::new(),
             footers: Vec::new(),
         }
-    }
-
-    /// Creates a new [`RuleDiagnostic`] with the `Error` severity.
-    pub fn error(span: impl Span, title: impl Display) -> Self {
-        Self::new(Severity::Error, span, title)
-    }
-
-    /// Creates a new [`RuleDiagnostic`] with the `Warning` severity.
-    pub fn warning(span: impl Span, title: impl Display) -> Self {
-        Self::new(Severity::Warning, span, title)
-    }
-
-    /// Creates a new [`RuleDiagnostic`] with the `Help` severity.
-    pub fn help(span: impl Span, title: impl Display) -> Self {
-        Self::new(Severity::Help, span, title)
-    }
-
-    /// Creates a new [`RuleDiagnostic`] with the `Note` severity.
-    pub fn note(span: impl Span, title: impl Display) -> Self {
-        Self::new(Severity::Note, span, title)
     }
 
     /// Set an explicit plain-text summary for this diagnostic.
@@ -451,46 +429,16 @@ impl RuleDiagnostic {
         self.span
     }
 
-    /// Convert this [`RuleDiagnostic`] into an instance of [`Diagnostic`] by
+    /// Convert this [`RuleDiagnostic`] into an instance of [`AnalyzerDiagnostic`] by
     /// injecting the name of the rule that emitted it and the ID of the file
     /// the rule was being run on
-    pub(crate) fn into_diagnostic(
+    pub(crate) fn into_analyzer_diagnostic(
         self,
         file_id: FileId,
         code: String,
         code_link: String,
-    ) -> Diagnostic {
-        Diagnostic {
-            file_id,
-            severity: self.severity,
-            code: Some(code),
-            code_link: Some(code_link),
-            title: self.title,
-            summary: self.summary,
-            tag: self.tag,
-            primary: Some(SubDiagnostic {
-                severity: self.severity,
-                msg: self.primary.unwrap_or_default(),
-                span: FileSpan {
-                    file: file_id,
-                    range: self.span,
-                },
-            }),
-            children: self
-                .secondaries
-                .into_iter()
-                .map(|(severity, msg, range)| SubDiagnostic {
-                    severity,
-                    msg,
-                    span: FileSpan {
-                        file: file_id,
-                        range,
-                    },
-                })
-                .collect(),
-            suggestions: Vec::new(),
-            footers: self.footers,
-        }
+    ) -> AnalyzerDiagnostic {
+        AnalyzerDiagnostic::from_rule_diagnostic(file_id, code, code_link, self)
     }
 }
 

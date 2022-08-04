@@ -34,3 +34,4 @@ serde_workspace = [
     "rome_js_formatter/serde",
     "rome_text_edit/serde"
 ]
+

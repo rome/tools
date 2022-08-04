@@ -28,8 +28,11 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let mut line_groups = Vec::new();
     let mut default_for_groups = Vec::new();
     let mut group_rules_union = Vec::new();
+    let mut group_match_code = Vec::new();
+    let mut group_get_severity = Vec::new();
     for (group, rules) in groups {
         let mut lines_recommended_rule = Vec::new();
+        let mut lines_recommended_rule_as_filter = Vec::new();
         let mut declarations = Vec::new();
         let mut lines_rule = Vec::new();
         let property_group_name = Ident::new(&to_lower_snake_case(group), Span::call_site());
@@ -45,8 +48,12 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             };
             declarations.push(declaration);
             if *recommended {
+                lines_recommended_rule_as_filter.push(quote! {
+                    RuleFilter::Rule(#group, Self::CATEGORY_RULES[#rule_position])
+                });
+
                 lines_recommended_rule.push(quote! {
-                    RuleFilter::Rule(#group, Self::GROUP_RULES[#rule_position])
+                    #rule
                 });
                 number_of_recommended_rules += 1;
             }
@@ -78,14 +85,21 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
             impl #group_struct_name {
 
-                const GROUP_NAME: &'static str = #group;
-                pub(crate) const GROUP_RULES: [&'static str; #number_of_rules] = [
+                const CATEGORY_NAME: &'static str = #group;
+                pub(crate) const CATEGORY_RULES: [&'static str; #number_of_rules] = [
                     #( #lines_rule ),*
                 ];
 
-                const RECOMMENDED_RULES: [RuleFilter<'static>; #number_of_recommended_rules] = [
+                const RECOMMENDED_RULES: [&'static str; #number_of_recommended_rules] = [
                     #( #lines_recommended_rule ),*
                 ];
+
+                const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; #number_of_recommended_rules] = [
+                    #( #lines_recommended_rule_as_filter ),*
+                ];
+
+
+
 
                 pub(crate) fn is_recommended(&self) -> bool {
                     matches!(self.recommended, Some(true))
@@ -95,7 +109,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
                    IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
                         if conf.is_enabled() {
-                            Some(RuleFilter::Rule(Self::GROUP_NAME, key))
+                            Some(RuleFilter::Rule(Self::CATEGORY_NAME, key))
                         } else {
                             None
                         }
@@ -105,11 +119,25 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
                    IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
                         if conf.is_disabled() {
-                            Some(RuleFilter::Rule(Self::GROUP_NAME, key))
+                            Some(RuleFilter::Rule(Self::CATEGORY_NAME, key))
                         } else {
                             None
                         }
                     }))
+                }
+
+                /// Checks if, given a rule name, matches one of the rules contained in this category
+                pub(crate) fn has_rule(rule_name: &str) -> bool {
+                    Self::CATEGORY_RULES.contains(&rule_name)
+                }
+
+                /// Checks if, given a rule name, it is marked as recommended
+                pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
+                     Self::RECOMMENDED_RULES.contains(&rule_name)
+                }
+
+                pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; #number_of_recommended_rules] {
+                    Self::RECOMMENDED_RULES_AS_FILTERS
                 }
             }
 
@@ -121,7 +149,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             {
                 let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
                 for rule_name in value.keys() {
-                    if !#group_struct_name::GROUP_RULES.contains(&rule_name.as_str()) {
+                    if !#group_struct_name::CATEGORY_RULES.contains(&rule_name.as_str()) {
                         return Err(serde::de::Error::custom(RomeError::Configuration(
                             ConfigurationError::DeserializationError(format!("Invalid rule name `{rule_name}`")),
                         )));
@@ -142,13 +170,31 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         group_rules_union.push(quote! {
             if let Some(group) = self.#property_group_name.as_ref() {
                 if self.is_recommended() && group.is_recommended() {
-                    enabled_rules.extend(&Js::RECOMMENDED_RULES);
+                    enabled_rules.extend(#group_struct_name::recommended_rules_as_filters());
                 }
                 enabled_rules.extend(&group.get_enabled_rules());
                 disabled_rules.extend(&group.get_disabled_rules());
             } else if self.is_recommended() {
-                enabled_rules.extend(#group_struct_name::RECOMMENDED_RULES);
+                enabled_rules.extend(#group_struct_name::recommended_rules_as_filters());
             }
+        });
+
+        group_get_severity.push(quote! {
+            #group => self
+                .#property_group_name
+                .as_ref()
+                .and_then(|#property_group_name| #property_group_name.rules.get(rule_name))
+                .map(|rule_setting| rule_setting.into())
+                .unwrap_or_else(|| {
+                    if #group_struct_name::is_recommended_rule(rule_name) {
+                        Severity::Error
+                    } else {
+                        Severity::Warning
+                    }
+                })
+        });
+        group_match_code.push(quote! {
+           #group => #group_struct_name::has_rule(rule_name).then(|| (category, rule_name))
         });
     }
 
@@ -157,6 +203,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use crate::{ConfigurationError, RomeError, RuleConfiguration};
         use rome_analyze::RuleFilter;
         use indexmap::{IndexMap, IndexSet};
+        use rome_console::codespan::Severity;
 
         #[derive(Deserialize, Serialize, Debug, Clone)]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -177,8 +224,51 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             }
         }
         impl Rules {
+
+            /// Checks if the code coming from [rome_diagnostic::Diagnostic] corresponds to a rule.
+            /// Usually the code is built like {category}/{rule_name}
+            pub fn matches_diagnostic_code<'a>(
+                &self,
+                category: Option<&'a str>,
+                rule_name: Option<&'a str>,
+            ) -> Option<(&'a str, &'a str)> {
+                match (category, rule_name) {
+                    (Some(category), Some(rule_name)) => match category {
+                        #( #group_match_code ),*,
+
+                        _ => None
+                    },
+                    _ => None
+                }
+            }
+
+            /// Given a code coming from [Diagnostic](rome_diagnostic::Diagnostic), this function returns
+            /// the [Severity](rome_diagnostic::Severity) associated to the rule, if the configuration changed it.
+            ///
+            /// If not, the function returns [None].
+            pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
+                let mut split_code = code.split('/');
+
+                let group = split_code.next();
+                let rule_name = split_code.next();
+
+                if let Some((group, rule_name)) = self.matches_diagnostic_code(group, rule_name) {
+                    let severity = match group {
+                        #( #group_get_severity ),*,
+
+                        _ => unreachable!("this group should not exist, found {}", group),
+                    };
+                    Some(severity)
+                } else {
+                    None
+                }
+            }
+
             pub(crate) fn is_recommended(&self) -> bool {
-                matches!(self.recommended, Some(true))
+                // It is only considered _not_ recommended when
+                // the configuration is `"recommended": false`.
+                // Hence, omission of the setting or set to `true` are considered recommneded.
+                !matches!(self.recommended, Some(false))
             }
 
             /// It returns a tuple of filters. The first element of the tuple are the enabled rules,

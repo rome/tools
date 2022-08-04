@@ -132,7 +132,7 @@ impl Rule for NoShadowRestrictedNames {
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let binding = ctx.query();
 
-        let diag = RuleDiagnostic::warning(
+        let diag = RuleDiagnostic::new(
             binding.syntax().text_trimmed_range(),
             markup! {
                 "Do not shadow the global \"" {state.shadowed_name} "\" property."

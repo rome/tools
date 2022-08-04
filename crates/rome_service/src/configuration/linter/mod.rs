@@ -3,6 +3,7 @@ mod rules;
 
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
+use rome_console::codespan::Severity;
 pub use rules::*;
 use serde::{Deserialize, Serialize};
 
@@ -65,6 +66,28 @@ impl RuleConfiguration {
 impl Default for RuleConfiguration {
     fn default() -> Self {
         Self::Plain(RulePlainConfiguration::Error)
+    }
+}
+
+impl From<&RuleConfiguration> for Severity {
+    fn from(conf: &RuleConfiguration) -> Self {
+        match conf {
+            RuleConfiguration::Plain(p) => p.into(),
+            RuleConfiguration::WithOptions(conf) => {
+                let level = &conf.level;
+                level.into()
+            }
+        }
+    }
+}
+
+impl From<&RulePlainConfiguration> for Severity {
+    fn from(conf: &RulePlainConfiguration) -> Self {
+        match conf {
+            RulePlainConfiguration::Warn => Severity::Warning,
+            RulePlainConfiguration::Error => Severity::Error,
+            _ => unreachable!("the rule is turned off, it should not step in here"),
+        }
     }
 }
 

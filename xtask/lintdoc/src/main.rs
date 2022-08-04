@@ -1,3 +1,13 @@
+use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
+use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
+use rome_console::{
+    fmt::{Formatter, HTML},
+    markup,
+};
+use rome_diagnostics::{file::SimpleFile, Diagnostic};
+use rome_js_analyze::{analyze, metadata};
+use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
+use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
     fmt::Write as _,
@@ -6,18 +16,7 @@ use std::{
     slice,
     str::{self, FromStr},
 };
-
-use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
-use rome_console::{
-    fmt::{Formatter, HTML},
-    markup,
-};
-use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use xtask::{glue::fs2, *};
-
-use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
-use rome_js_analyze::{analyze, metadata};
-use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/src/docs/lint/rules");
@@ -423,6 +422,8 @@ fn assert_lint(
     } else {
         let root = parse.tree();
 
+        let settings = WorkspaceSettings::default();
+
         let rule_filter = RuleFilter::Rule(group, rule);
         let filter = AnalysisFilter {
             enabled_rules: Some(slice::from_ref(&rule_filter)),
@@ -430,12 +431,16 @@ fn assert_lint(
         };
 
         let result = analyze(0, &root, filter, |signal| {
-            if let Some(mut diag) = signal.diagnostic() {
+            if let Some(diag) = signal.diagnostic() {
+                let code = format!("{group}/{rule}");
+                let severity = settings.get_severity_from_rule_code(&code).unwrap();
+                let mut diag = diag.into_diagnostic(severity);
+
                 if let Some(action) = signal.action() {
                     diag.suggestions.push(action.into());
                 }
 
-                let res = write_diagnostic(code, diag);
+                let res = write_diagnostic(&*code, diag);
 
                 // Abort the analysis on error
                 if let Err(err) = res {
