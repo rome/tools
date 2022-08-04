@@ -573,24 +573,31 @@ impl<'analysis> AnalysisFilter<'analysis> {
     }
 }
 
-/// It holds onto the information necessary to eventually create a [Diagnostic]
-pub enum AnalyzerDiagnosticBag {
-    /// Inside the bag we have a diagnostic created by the linter
-    Rule(RuleDiagnostic),
+/// Small wrapper for diagnostics during the analysis phase.
+///
+/// During these phases, analyzers can create various type diagnostics and some of them
+/// don't have all the info to actually create a real [Diagnostic].
+///
+/// This wrapper serves as glue, which eventually is able to spit out full fledged diagnostics.
+///
+pub enum AnalyzerDiagnostic {
+    /// It holds various info related to diagnostics emitted by the rules
+    Rule {
+        file_id: FileId,
+        code: String,
+        code_link: String,
+        rule_diagnostic: RuleDiagnostic,
+    },
     /// We have raw information to create a basic [Diagnostic]
     Raw(Diagnostic),
 }
 
-pub struct AnalyzerDiagnostic {
-    file_id: Option<FileId>,
-    code: Option<String>,
-    code_link: Option<String>,
-    diagnostic_bag: AnalyzerDiagnosticBag,
-}
-
 impl AnalyzerDiagnostic {
     pub fn code(&self) -> Option<&String> {
-        self.code.as_ref()
+        match self {
+            AnalyzerDiagnostic::Rule { code, .. } => Some(code),
+            AnalyzerDiagnostic::Raw(diag) => diag.code.as_ref(),
+        }
     }
 
     pub fn from_rule_diagnostic(
@@ -599,61 +606,57 @@ impl AnalyzerDiagnostic {
         code_link: String,
         rule_diagnostic: RuleDiagnostic,
     ) -> Self {
-        Self {
-            file_id: Some(file_id),
-            code: Some(code.into()),
-            code_link: Some(code_link),
-            diagnostic_bag: AnalyzerDiagnosticBag::Rule(rule_diagnostic),
+        Self::Rule {
+            file_id,
+            code: code.into(),
+            code_link,
+            rule_diagnostic,
         }
     }
 
     pub fn from_diagnostic(diagnostic: Diagnostic) -> Self {
-        Self {
-            file_id: None,
-            code: None,
-            code_link: None,
-            diagnostic_bag: AnalyzerDiagnosticBag::Raw(diagnostic),
-        }
+        Self::Raw(diagnostic)
     }
 
     pub fn into_diagnostic(self, severity: Severity) -> Diagnostic {
-        match self.diagnostic_bag {
-            AnalyzerDiagnosticBag::Rule(rule_diagnostic) => {
-                debug_assert!(self.file_id.is_some(), "You created an AnalyzerDiagnostic that doesn't have a file id. Use from_rule_diagnostic");
-                let file_id = self.file_id.unwrap();
-                Diagnostic {
-                    file_id,
+        match self {
+            AnalyzerDiagnostic::Rule {
+                code,
+                code_link,
+                rule_diagnostic,
+                file_id,
+            } => Diagnostic {
+                file_id,
+                severity,
+                code: Some(code),
+                code_link: Some(code_link),
+                title: rule_diagnostic.title,
+                summary: rule_diagnostic.summary,
+                tag: rule_diagnostic.tag,
+                primary: Some(SubDiagnostic {
                     severity,
-                    code: self.code,
-                    code_link: self.code_link,
-                    title: rule_diagnostic.title,
-                    summary: rule_diagnostic.summary,
-                    tag: rule_diagnostic.tag,
-                    primary: Some(SubDiagnostic {
+                    msg: rule_diagnostic.primary.unwrap_or_default(),
+                    span: FileSpan {
+                        file: file_id,
+                        range: rule_diagnostic.span,
+                    },
+                }),
+                children: rule_diagnostic
+                    .secondaries
+                    .into_iter()
+                    .map(|(severity, msg, range)| SubDiagnostic {
                         severity,
-                        msg: rule_diagnostic.primary.unwrap_or_default(),
+                        msg,
                         span: FileSpan {
                             file: file_id,
-                            range: rule_diagnostic.span,
+                            range,
                         },
-                    }),
-                    children: rule_diagnostic
-                        .secondaries
-                        .into_iter()
-                        .map(|(severity, msg, range)| SubDiagnostic {
-                            severity,
-                            msg,
-                            span: FileSpan {
-                                file: file_id,
-                                range,
-                            },
-                        })
-                        .collect(),
-                    suggestions: Vec::new(),
-                    footers: rule_diagnostic.footers,
-                }
-            }
-            AnalyzerDiagnosticBag::Raw(diagnostic) => diagnostic,
+                    })
+                    .collect(),
+                suggestions: Vec::new(),
+                footers: rule_diagnostic.footers,
+            },
+            AnalyzerDiagnostic::Raw(diagnostic) => diagnostic,
         }
     }
 }

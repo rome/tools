@@ -1,5 +1,6 @@
 use crate::{Configuration, Rules};
 use indexmap::IndexSet;
+use rome_console::codespan::Severity;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
@@ -43,6 +44,20 @@ impl WorkspaceSettings {
         let globals = configuration.javascript.map(|j| j.globals);
         if let Some(globals) = globals {
             self.languages.javascript.globals = globals;
+        }
+    }
+
+    /// It retrieves the severity based on the `code` of the rule and the current configuration.
+    ///
+    /// The code of the has the following pattern: `{group}/{rule_name}`.
+    ///
+    /// It returns [None] if the `code` doesn't match any rule.
+    pub fn get_severity_from_rule_code(&self, code: &str) -> Option<Severity> {
+        let rules = self.linter.rules.as_ref();
+        if let Some(rules) = rules {
+            rules.get_severity_from_code(code)
+        } else {
+            None
         }
     }
 }

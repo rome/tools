@@ -1,4 +1,3 @@
-use rome_console::codespan::Severity;
 use rome_formatter::Printed;
 use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::{
@@ -7,8 +6,8 @@ use rome_service::workspace::{
     PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameParams, RenameResult,
     SupportsFeatureParams, UpdateSettingsParams,
 };
-use rome_service::{RomeError, Workspace, WorkspaceExt};
-use std::sync::RwLock;
+use rome_service::{RomeError, Workspace};
+use std::sync::{RwLock, RwLockReadGuard};
 
 /// A slim workspace, which exposes some utilities via [WorkspaceExt]
 ///
@@ -78,16 +77,9 @@ impl Workspace for WorkspaceTest {
     }
 }
 
-impl WorkspaceExt for WorkspaceTest {
-    fn get_severity_from_rule_code(&self, code: &str) -> Severity {
+impl WorkspaceTest {
+    pub(crate) fn settings(&self) -> RwLockReadGuard<WorkspaceSettings> {
         let settings = self.settings.read().unwrap();
-        let rules = &settings.linter.rules;
-        let rules = rules.as_ref().expect("rules should be populated");
-        let severity = rules.get_severity_from_code(code);
-        if let Some(severity) = severity {
-            severity
-        } else {
-            Severity::Warning
-        }
+        settings
     }
 }

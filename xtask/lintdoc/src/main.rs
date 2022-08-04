@@ -11,7 +11,7 @@ use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use rome_js_analyze::{analyze, metadata};
 use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
 use rome_service::settings::WorkspaceSettings;
-use rome_service::{Rules, WorkspaceExt};
+use rome_service::Rules;
 use std::sync::RwLock;
 use std::{
     collections::BTreeMap,
@@ -443,7 +443,8 @@ fn assert_lint(
         let result = analyze(0, &root, filter, |signal| {
             if let Some(diag) = signal.diagnostic() {
                 let code = format!("{group}/{rule}");
-                let severity = workspace.get_severity_from_rule_code(&code);
+                let settings = workspace.settings();
+                let severity = settings.get_severity_from_rule_code(&code).unwrap();
                 let mut diag = diag.into_diagnostic(severity);
 
                 if let Some(action) = signal.action() {

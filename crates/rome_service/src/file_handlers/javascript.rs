@@ -143,22 +143,10 @@ fn lint(
         if let Some(diagnostic) = signal.diagnostic() {
             // We do now check if the severity of the diagnostics should be changed.
             // The configuration allows to change the severity of the diagnostics emitted by rules.
-            let severity = if let Some(rules) = rules {
-                if let Some(code) = diagnostic.code() {
-                    let severity = rules.get_severity_from_code(code.as_str());
-                    if let Some(rule_severity) = severity {
-                        // if the severity of the current diagnostic is different from the severity
-                        // specified in the configuration, we change it
-                        rule_severity
-                    } else {
-                        Severity::Error
-                    }
-                } else {
-                    Severity::Error
-                }
-            } else {
-                Severity::Error
-            };
+            let severity = rules
+                .as_ref()
+                .and_then(|rules| rules.get_severity_from_code(diagnostic.code()?.as_str()))
+                .unwrap_or(Severity::Error);
 
             let mut diagnostic = diagnostic.into_diagnostic(severity);
 
