@@ -1,13 +1,11 @@
 // valid
-if (!true) {
-	consequent;
-}
+if (!true) {consequent;};
 true ? consequent : alternate;
 // invalid
 if (!true) {
-	consequent;
+  consequent;
 } else {
-	alternate;
+  alternate;
 }
 !condition ? consequent : alternate;
 
