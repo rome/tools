@@ -231,10 +231,10 @@ function foo(
    /* Hello World */
    longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong3,
  );
- 
+-
 -shortArgNames(
 -  short,
--
+ 
 -  short2,
 -  short3,
 -);
@@ -256,13 +256,13 @@ function foo(
    short3,
 -  // More comments
 -);
--
++// More comments
+ 
 -differentArgTypes(
 -  () => {
 -    return true;
 -  },
-+// More comments
- 
+-
 -  isTrue ? doSomething() : 12,
  );
  
@@ -301,11 +301,9 @@ function foo(
 +  doSomething({ name: "Hello World", age: 34 }, true),
    14,
 -
--  1 + 2 - 90 / 80,
+   1 + 2 - 90 / 80,
 -
--  !98 * 60 - 90,
-+  1 + 2 - (90 / 80),
-+  (!98 * 60) - 90,
+   !98 * 60 - 90,
  );
  
  foo.apply(
@@ -317,15 +315,15 @@ function foo(
  
 -bar.on(
 -  "readable",
--
--  () => {
--    doStuff();
--  },
--);
 +bar.on("readable", () => {
 +  doStuff();
 +});
  
+-  () => {
+-    doStuff();
+-  },
+-);
+-
  foo(
    ["A, B"],
 -
@@ -341,10 +339,10 @@ function foo(
  
    ["Hello world 1", "Hello world 2", "Hello world 3"],
  );
--
+ 
 -doAnotherThing(
 -  "node",
- 
+-
 -  {
 -    solution_type,
 -    time_frame,
@@ -381,13 +379,13 @@ function foo(
 -  () => {
 -    thing();
 -  },
--
--  { yes: true, no: 5 },
--);
 +func(() => {
 +  thing();
 +}, { yes: true, no: 5 });
  
+-  { yes: true, no: 5 },
+-);
+-
  doSomething(
    { tomorrow: maybe, today: never[always] },
 -
@@ -458,8 +456,8 @@ moreArgTypes(
 evenMoreArgTypes(
   doSomething({ name: "Hello World", age: 34 }, true),
   14,
-  1 + 2 - (90 / 80),
-  (!98 * 60) - 90,
+  1 + 2 - 90 / 80,
+  !98 * 60 - 90,
 );
 
 foo.apply(

@@ -172,7 +172,7 @@ var l = base
      .createHash("sha256")
      .update(data)
      .digest("hex");
-@@ -44,14 +45,15 @@
+@@ -44,7 +45,8 @@
  
  // examples from https://github.com/prettier/prettier/issues/1565
  
@@ -182,14 +182,6 @@ var l = base
    .selectAll("p")
    .data([1, 2, 3])
    .enter()
-   .style("color", "white");
- 
- Object.keys(props)
--  .filter((key) => key in own === false)
-+  .filter((key) => (key in own) === false)
-   .reduce((a, key) => {
-     a[key] = props[key];
-     return a;
 @@ -67,7 +69,10 @@
  
  db.branch(
@@ -386,7 +378,7 @@ d3
   .style("color", "white");
 
 Object.keys(props)
-  .filter((key) => (key in own) === false)
+  .filter((key) => key in own === false)
   .reduce((a, key) => {
     a[key] = props[key];
     return a;

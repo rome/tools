@@ -21,4 +21,3 @@ mod pattern;
 pub mod program;
 mod stmt;
 mod typescript;
-mod util;

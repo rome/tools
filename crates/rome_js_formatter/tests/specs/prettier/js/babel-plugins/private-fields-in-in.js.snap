@@ -68,12 +68,8 @@ class C3 {
 ```diff
 --- Prettier
 +++ Rome
-@@ -41,10 +41,9 @@
-   get #getter() {}
- 
-   static isC(obj) {
--    return #brand in obj && #method in obj && #getter in obj;
-+    return (#brand in obj) && (#method in obj) && (#getter in obj);
+@@ -44,7 +44,6 @@
+     return #brand in obj && #method in obj && #getter in obj;
    }
  }
 -
@@ -128,7 +124,7 @@ class C3 {
   get #getter() {}
 
   static isC(obj) {
-    return (#brand in obj) && (#method in obj) && (#getter in obj);
+    return #brand in obj && #method in obj && #getter in obj;
   }
 }
 // Invalid https://github.com/tc39/proposal-private-fields-in-in#try-statement

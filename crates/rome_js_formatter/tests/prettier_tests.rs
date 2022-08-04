@@ -397,11 +397,16 @@ impl DiffReport {
         rome_formatted_result: &str,
         prettier_formatted_result: &str,
     ) {
-        self.state.lock().push(DiffReportItem {
-            file_name,
-            rome_formatted_result: rome_formatted_result.to_owned(),
-            prettier_formatted_result: prettier_formatted_result.to_owned(),
-        });
+        match env::var("REPORT_PRETTIER") {
+            Ok(value) if value == "1" => {
+                self.state.lock().push(DiffReportItem {
+                    file_name,
+                    rome_formatted_result: rome_formatted_result.to_owned(),
+                    prettier_formatted_result: prettier_formatted_result.to_owned(),
+                });
+            }
+            _ => {}
+        }
     }
     fn print(&self) {
         if let Some(report) = rome_rowan::check_live() {
@@ -469,10 +474,9 @@ impl DiffReport {
                     writeln!(diff, "{}{}", tag, line).unwrap();
                 }
 
-                let single_file_compatibility =
-                    matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
+                let ratio = matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
 
-                (matched_lines, single_file_compatibility, Some(diff))
+                (matched_lines, ratio, Some(diff))
             };
 
             total_lines += rome_lines.max(prettier_lines);

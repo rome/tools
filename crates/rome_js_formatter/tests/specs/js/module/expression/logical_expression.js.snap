@@ -282,7 +282,7 @@ const a =
 (
 	lorem &&
 		// foo
-		((3 + 6) == 9)
+		(3 + 6 == 9)
 );
 
 let a = a || (b && c);
@@ -315,17 +315,12 @@ a in
 	LongClassName;
 
 (
-	(
-		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String
-	) && (
-		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number
-	)
-) || (
-	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean
-);
+	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number
+) || veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean;
 
 
 ## Lines exceeding width of 80 characters
 
   124: 		veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+  192: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number
 
