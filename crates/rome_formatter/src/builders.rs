@@ -8,6 +8,7 @@ use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
 use std::cell::Cell;
 use std::marker::PhantomData;
+use std::num::NonZeroU8;
 use std::ops::Deref;
 
 /// A line break that only gets printed if the enclosing `Group` doesn't fit on a single line.
@@ -661,6 +662,93 @@ impl<Context> Format<Context> for Indent<'_, Context> {
 impl<Context> std::fmt::Debug for Indent<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("Indent").field(&"{{content}}").finish()
+    }
+}
+
+/// Aligns its content by indenting the content by `count` spaces.
+///
+/// [align] is a variant of `[indent]` that indents its content by a specified number of spaces rather than
+/// using the configured indent character (tab or a specified number of spaces).
+///
+/// You should use [align] when you want to indent a content by a specific number of spaces.
+/// Using [indent] is preferred in all other situations as it respects the users preferred indent character.
+///
+/// # Examples
+/// ```
+/// use std::num::NonZeroU8;
+/// use rome_formatter::{format, format_args};
+/// use rome_formatter::prelude::*;
+///
+/// let block = format!(SimpleFormatContext::default(), [
+///     text("a"),
+///     hard_line_break(),
+///     text("?"),
+///     space(),
+///     align(2, &format_args![
+///         text("function () {"),
+///         hard_line_break(),
+///         text("}"),
+///     ]),
+///     hard_line_break(),
+///     text(":"),
+///     space(),
+///     align(2, &format_args![
+///         text("function () {"),
+///         block_indent(&text("console.log('test');")),
+///         text("}"),
+///     ]),
+///     text(";")
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "a\n? function () {\n  }\n: function () {\n\t\tconsole.log('test');\n  };",
+///     block.print().as_code()
+/// );
+/// ```
+///
+/// You can see that the printer indents the function's `}` by two spaces as specified by the IR and not with a tab.
+/// You can further see that alignments behave the same as an `indent` if you nest `indent` inside an align.
+///
+pub fn align<Content, Context>(count: u8, content: &Content) -> Align<Context>
+where
+    Content: Format<Context>,
+{
+    Align {
+        count: NonZeroU8::new(count).expect("Alignment count must be a non-zero number."),
+        content: Argument::new(content),
+    }
+}
+
+#[derive(Copy, Clone)]
+pub struct Align<'a, Context> {
+    count: NonZeroU8,
+    content: Argument<'a, Context>,
+}
+
+impl<Context> Format<Context> for Align<'_, Context> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
+
+        buffer.write_fmt(Arguments::from(&self.content))?;
+
+        if buffer.is_empty() {
+            return Ok(());
+        }
+
+        let content = buffer.into_vec();
+        f.write_element(FormatElement::Align(format_element::Align {
+            content: content.into_boxed_slice(),
+            count: self.count,
+        }))
+    }
+}
+
+impl<Context> std::fmt::Debug for Align<'_, Context> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Align")
+            .field("count", &self.count)
+            .field("content", &"{{content}}")
+            .finish()
     }
 }
 
