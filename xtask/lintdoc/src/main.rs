@@ -422,7 +422,7 @@ fn assert_lint(
     } else {
         let root = parse.tree();
 
-        let mut settings = WorkspaceSettings::default();
+        let settings = WorkspaceSettings::default();
 
         let rule_filter = RuleFilter::Rule(group, rule);
         let filter = AnalysisFilter {

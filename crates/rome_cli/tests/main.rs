@@ -25,6 +25,8 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 "#;
 
+const NO_DEBUGGER: &str = "debugger;";
+
 const FIX_BEFORE: &str = "
 if(a != -0) {}
 ";
