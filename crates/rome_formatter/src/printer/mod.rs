@@ -170,11 +170,15 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Indent(content) => {
-                queue.extend_with_args(content.iter(), args.indented());
+                queue.extend_with_args(content.iter(), args.increment_indent_level());
+            }
+
+            FormatElement::Dedent(content) => {
+                queue.extend_with_args(content.iter(), args.decrement_indent());
             }
 
             FormatElement::Align(Align { content, count }) => {
-                queue.extend_with_args(content.iter(), args.aligned(*count))
+                queue.extend_with_args(content.iter(), args.set_indent_align(*count))
             }
 
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
@@ -551,13 +555,18 @@ impl PrintElementArgs {
         }
     }
 
-    pub fn indented(mut self) -> Self {
+    pub fn increment_indent_level(mut self) -> Self {
         self.indent = self.indent.increment_level();
         self
     }
 
-    pub fn aligned(mut self, count: NonZeroU8) -> Self {
-        self.indent = self.indent.add_align(count);
+    pub fn decrement_indent(mut self) -> Self {
+        self.indent = self.indent.decrement_indent();
+        self
+    }
+
+    pub fn set_indent_align(mut self, count: NonZeroU8) -> Self {
+        self.indent = self.indent.set_align(count);
         self
     }
 
@@ -622,10 +631,22 @@ impl Indention {
         }
     }
 
+    /// Decrements the indent by one by:
+    /// * Reducing the level by one if this is [Indent::Level]
+    /// * Removing the `align` if this is [Indent::Align]
+    ///
+    /// No-op if the level is already zero.
+    fn decrement_indent(self) -> Self {
+        match self {
+            Indention::Level(level) => Indention::Level(level.saturating_sub(1)),
+            Indention::Align { level, .. } => Indention::Level(level),
+        }
+    }
+
     /// Adds an `align` of `count` spaces to the current indention.
     ///
     /// It increments the `level` value if the current value is [Indent::IndentAlign].
-    fn add_align(self, count: NonZeroU8) -> Self {
+    fn set_align(self, count: NonZeroU8) -> Self {
         match self {
             Indention::Level(indent_count) => Indention::Align {
                 level: indent_count,
@@ -857,10 +878,14 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Indent(content) => queue.extend(content.iter(), args.indented()),
+        FormatElement::Indent(content) => {
+            queue.extend(content.iter(), args.increment_indent_level())
+        }
+
+        FormatElement::Dedent(content) => queue.extend(content.iter(), args.decrement_indent()),
 
         FormatElement::Align(Align { content, count }) => {
-            queue.extend(content.iter(), args.aligned(*count))
+            queue.extend(content.iter(), args.set_indent_align(*count))
         }
 
         FormatElement::Group(group) => {
