@@ -6,8 +6,9 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
-    JsCatchDeclaration, JsFormalParameter, JsFunctionDeclaration, JsIdentifierBinding,
-    JsParameterList, JsParameters, JsSyntaxKind, JsVariableDeclarator,
+    JsCatchDeclaration, JsConstructorParameterList, JsConstructorParameters, JsFormalParameter,
+    JsFunctionDeclaration, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
+    JsVariableDeclarator,
 };
 use rome_rowan::{AstNode, BatchMutationExt};
 
@@ -73,25 +74,37 @@ declare_rule! {
 
 // It is ok in some Typescripts constructs for a parameter to be unused.
 fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
-    let parameters = binding
-        .parent::<JsFormalParameter>()?
-        .parent::<JsParameterList>()?
-        .parent::<JsParameters>()?;
-    match parameters.syntax().parent()?.kind() {
-        // Class
-        JsSyntaxKind::TS_INDEX_SIGNATURE_CLASS_MEMBER
-        | JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER
-        | JsSyntaxKind::TS_GETTER_SIGNATURE_CLASS_MEMBER
-        | JsSyntaxKind::TS_SETTER_SIGNATURE_CLASS_MEMBER
-        | JsSyntaxKind::TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER 
-        // Type
-        | JsSyntaxKind::TS_CALL_SIGNATURE_TYPE_MEMBER
-        | JsSyntaxKind::TS_INDEX_SIGNATURE_TYPE_MEMBER
-        | JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER
-        | JsSyntaxKind::TS_GETTER_SIGNATURE_TYPE_MEMBER
-        | JsSyntaxKind::TS_SETTER_SIGNATURE_TYPE_MEMBER
-        | JsSyntaxKind::TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
-        => Some(()),
+    match binding.syntax().parent()?.kind() {
+        JsSyntaxKind::JS_FORMAL_PARAMETER => {
+            let parameter = binding.parent::<JsFormalParameter>()?;
+            match parameter.syntax().parent()?.kind() {
+                JsSyntaxKind::JS_PARAMETER_LIST => {
+                    let parameters = parameter
+                        .parent::<JsParameterList>()?
+                        .parent::<JsParameters>()?;
+                    match parameters.syntax().parent()?.kind() {
+                        JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER
+                        | JsSyntaxKind::TS_CALL_SIGNATURE_TYPE_MEMBER
+                        | JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER => Some(()),
+                        _ => None,
+                    }
+                }
+                JsSyntaxKind::JS_CONSTRUCTOR_PARAMETER_LIST => {
+                    let parameters = parameter
+                        .parent::<JsConstructorParameterList>()?
+                        .parent::<JsConstructorParameters>()?;
+                    match parameters.syntax().parent()?.kind() {
+                        JsSyntaxKind::TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
+                        | JsSyntaxKind::TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER => Some(()),
+                        _ => None,
+                    }
+                }
+                JsSyntaxKind::TS_SETTER_SIGNATURE_TYPE_MEMBER
+                | JsSyntaxKind::TS_SETTER_SIGNATURE_CLASS_MEMBER => Some(()),
+                _ => None,
+            }
+        }
+        JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => return Some(()),
         _ => None,
     }
 }
@@ -187,28 +200,36 @@ impl Rule for NoUnusedVariables {
 
         let mut batch = root.begin();
 
-        // If this is a function, remove the whole declaration
-        if let Some(declaration) = binding.parent::<JsFunctionDeclaration>() {
-            batch.remove_node(declaration)
+        // Try to remove node
+        let removed = if let Some(declaration) = binding.parent::<JsFunctionDeclaration>() {
+            batch.remove_node(declaration);
+            true
         } else if let Some(variable_declarator) = binding.parent::<JsVariableDeclarator>() {
-            batch.remove_js_variable_declarator(&variable_declarator);
+            batch.remove_js_variable_declarator(&variable_declarator)
         } else if let Some(formal_parameter) = binding.parent::<JsFormalParameter>() {
-            batch.remove_js_formal_parameter(&formal_parameter);
+            batch.remove_js_formal_parameter(&formal_parameter)
         } else if let Some(catch_declaration) = binding.parent::<JsCatchDeclaration>() {
             batch.remove_node(catch_declaration);
-        }
-
-        let symbol_type = match binding.syntax().parent().unwrap().kind() {
-            JsSyntaxKind::JS_FORMAL_PARAMETER => "parameter",
-            JsSyntaxKind::JS_FUNCTION_DECLARATION => "function",
-            _ => "variable",
+            true
+        } else {
+            false
         };
 
-        Some(JsRuleAction {
-            category: ActionCategory::QuickFix,
-            applicability: Applicability::Unspecified,
-            message: markup! { "Remove this " {symbol_type} "." }.to_owned(),
-            mutation: batch,
-        })
+        if removed {
+            let symbol_type = match binding.syntax().parent().unwrap().kind() {
+                JsSyntaxKind::JS_FORMAL_PARAMETER => "parameter",
+                JsSyntaxKind::JS_FUNCTION_DECLARATION => "function",
+                _ => "variable",
+            };
+
+            Some(JsRuleAction {
+                category: ActionCategory::QuickFix,
+                applicability: Applicability::Unspecified,
+                message: markup! { "Remove this " {symbol_type} "." }.to_owned(),
+                mutation: batch,
+            })
+        } else {
+            None
+        }
     }
 }
