@@ -945,10 +945,17 @@ fn parse_property_class_member_body(
             // test_err ts ts_property_initializer_ambient_context
             // declare class A { prop = "test" }
             // class B { declare prop = "test" }
-            p.error(
-                p.err_builder("Initializers are not allowed in ambient contexts.")
-                    .primary(initializer.range(p), ""),
-            );
+            //
+            // test ts ts_property_readonly_initializer_ambient_context
+            // declare class A { readonly prop = "test" }
+            // class B { declare readonly prop = "test" }
+
+            if !modifiers.has(ModifierKind::Readonly) {
+                p.error(
+                    p.err_builder("Initializers are not allowed in ambient contexts.")
+                        .primary(initializer.range(p), ""),
+                );
+            }
         }
     }
 
