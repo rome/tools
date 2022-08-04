@@ -1,0 +1,99 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noUnusedVariables.ts
+---
+# Input
+```js
+// Invalid
+
+class D {
+	constructor(a: number) {}
+	f(a: number) {}
+	set a(a: number) {}
+}
+console.log(new D());
+
+// Valid
+
+interface A {
+	f(a: number);
+	set a(a: number);
+	[key: string]: string;
+}
+
+abstract class B {
+	constructor(a: number);
+	abstract f(a: number);
+	g(a: number);
+	abstract set a(a: number);
+}
+console.log(new B());
+
+class C {
+	constructor(a: number);
+	f(a: number);
+}
+console.log(new C());
+
+```
+
+# Diagnostics
+```
+warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
+  ┌─ noUnusedVariables.ts:4:14
+  │
+4 │     constructor(a: number) {}
+  │                 -
+
+Suggested fix: Remove this parameter.
+    | @@ -1,7 +1,7 @@
+0 0 |   // Invalid
+1 1 |   
+2 2 |   class D {
+3   | - 	constructor(a: number) {}
+  3 | + 	constructor() {}
+4 4 |   	f(a: number) {}
+5 5 |   	set a(a: number) {}
+6 6 |   }
+
+=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+
+
+```
+
+```
+warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
+  ┌─ noUnusedVariables.ts:5:4
+  │
+5 │     f(a: number) {}
+  │       -
+
+Suggested fix: Remove this parameter.
+    | @@ -2,7 +2,7 @@
+1 1 |   
+2 2 |   class D {
+3 3 |   	constructor(a: number) {}
+4   | - 	f(a: number) {}
+  4 | + 	f() {}
+5 5 |   	set a(a: number) {}
+6 6 |   }
+7 7 |   console.log(new D());
+
+=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+
+
+```
+
+```
+warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
+  ┌─ noUnusedVariables.ts:6:8
+  │
+6 │     set a(a: number) {}
+  │           -
+
+=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+
+
+```
+
+

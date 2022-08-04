@@ -48,7 +48,7 @@ try {
 
 # Diagnostics
 ```
-warning[js/noUnusedVariables]: This variable is unused.
+warning[no_unused_variables/noUnusedVariables]: This variable is unused.
   ┌─ noUnusedVariables.js:1:7
   │
 1 │ const a = 1;
@@ -68,7 +68,7 @@ Suggested fix: Remove this variable.
 ```
 
 ```
-warning[js/noUnusedVariables]: This variable is unused.
+warning[no_unused_variables/noUnusedVariables]: This variable is unused.
   ┌─ noUnusedVariables.js:2:7
   │
 2 │ const b = 2,
@@ -89,7 +89,7 @@ Suggested fix: Remove this variable.
 ```
 
 ```
-warning[js/noUnusedVariables]: This function is unused.
+warning[no_unused_variables/noUnusedVariables]: This function is unused.
   ┌─ noUnusedVariables.js:6:10
   │
 6 │ function f1() {}
@@ -112,7 +112,7 @@ Suggested fix: Remove this function.
 ```
 
 ```
-warning[js/noUnusedVariables]: This function is unused.
+warning[no_unused_variables/noUnusedVariables]: This function is unused.
   ┌─ noUnusedVariables.js:8:10
   │
 8 │ function f2() {
@@ -137,7 +137,7 @@ Suggested fix: Remove this function.
 ```
 
 ```
-warning[js/noUnusedVariables]: This function is unused.
+warning[no_unused_variables/noUnusedVariables]: This function is unused.
    ┌─ noUnusedVariables.js:12:10
    │
 12 │ function f3() {
@@ -165,7 +165,7 @@ Suggested fix: Remove this function.
 ```
 
 ```
-warning[js/noUnusedVariables]: This parameter is unused.
+warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
    ┌─ noUnusedVariables.js:19:14
    │
 19 │ function f41(a) {}
@@ -188,7 +188,7 @@ Suggested fix: Remove this parameter.
 ```
 
 ```
-warning[js/noUnusedVariables]: This parameter is unused.
+warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
    ┌─ noUnusedVariables.js:22:17
    │
 22 │ function f42(a, b) {
@@ -211,7 +211,7 @@ Suggested fix: Remove this parameter.
 ```
 
 ```
-warning[js/noUnusedVariables]: This parameter is unused.
+warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
    ┌─ noUnusedVariables.js:27:17
    │
 27 │ function f43(a, b) {
@@ -234,7 +234,7 @@ Suggested fix: Remove this parameter.
 ```
 
 ```
-warning[js/noUnusedVariables]: This variable is unused.
+warning[no_unused_variables/noUnusedVariables]: This variable is unused.
    ┌─ noUnusedVariables.js:32:7
    │
 32 │ const f5 = () => {};
@@ -257,7 +257,7 @@ Suggested fix: Remove this variable.
 ```
 
 ```
-warning[js/noUnusedVariables]: This variable is unused.
+warning[no_unused_variables/noUnusedVariables]: This variable is unused.
    ┌─ noUnusedVariables.js:34:7
    │
 34 │ const f6 = () => {
@@ -281,7 +281,7 @@ Suggested fix: Remove this variable.
 ```
 
 ```
-warning[js/noUnusedVariables]: This variable is unused.
+warning[no_unused_variables/noUnusedVariables]: This variable is unused.
    ┌─ noUnusedVariables.js:39:10
    │
 39 │ } catch (e) {}

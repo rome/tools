@@ -9,6 +9,7 @@ pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage
     registry.push_group::<crate::analyzers::Regex>(filter);
     registry.push_group::<crate::analyzers::Ts>(filter);
     registry.push_group::<crate::semantic_analyzers::Js>(filter);
+    registry.push_group::<crate::semantic_analyzers::NoUnusedVariables>(filter);
     registry.push_group::<crate::assists::Js>(filter);
     registry
 }
