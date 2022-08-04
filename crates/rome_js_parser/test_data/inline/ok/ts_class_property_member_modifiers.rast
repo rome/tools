@@ -59,6 +59,7 @@ JsModule {
                             string_token: STRING_KW@74..80 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@80..81 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -79,6 +80,7 @@ JsModule {
                             string_token: STRING_KW@105..111 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@111..112 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -99,6 +101,7 @@ JsModule {
                             string_token: STRING_KW@136..142 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@142..143 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -122,6 +125,7 @@ JsModule {
                             string_token: STRING_KW@176..182 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@182..183 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -145,6 +149,7 @@ JsModule {
                             string_token: STRING_KW@216..222 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@222..223 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -171,6 +176,7 @@ JsModule {
                             string_token: STRING_KW@263..269 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@269..270 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -197,6 +203,7 @@ JsModule {
                             string_token: STRING_KW@310..316 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@316..317 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -220,6 +227,7 @@ JsModule {
                             string_token: STRING_KW@353..359 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@359..360 ";" [] [],
                 },
                 TsPropertySignatureClassMember {
@@ -243,6 +251,7 @@ JsModule {
                             string_token: STRING_KW@396..402 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@402..403 ";" [] [],
                 },
                 JsPropertyClassMember {
@@ -323,7 +332,8 @@ JsModule {
             0: COLON@72..74 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@74..80
               0: STRING_KW@74..80 "string" [] []
-          3: SEMICOLON@80..81 ";" [] []
+          3: (empty)
+          4: SEMICOLON@80..81 ";" [] []
         1: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@81..112
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@81..102
             0: TS_ACCESSIBILITY_MODIFIER@81..94
@@ -336,7 +346,8 @@ JsModule {
             0: COLON@103..105 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@105..111
               0: STRING_KW@105..111 "string" [] []
-          3: SEMICOLON@111..112 ";" [] []
+          3: (empty)
+          4: SEMICOLON@111..112 ";" [] []
         2: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@112..143
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@112..133
             0: TS_DECLARE_MODIFIER@112..125
@@ -349,7 +360,8 @@ JsModule {
             0: COLON@134..136 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@136..142
               0: STRING_KW@136..142 "string" [] []
-          3: SEMICOLON@142..143 ";" [] []
+          3: (empty)
+          4: SEMICOLON@142..143 ";" [] []
         3: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@143..183
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@143..173
             0: TS_DECLARE_MODIFIER@143..156
@@ -364,7 +376,8 @@ JsModule {
             0: COLON@174..176 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@176..182
               0: STRING_KW@176..182 "string" [] []
-          3: SEMICOLON@182..183 ";" [] []
+          3: (empty)
+          4: SEMICOLON@182..183 ";" [] []
         4: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@183..223
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@183..213
             0: TS_ACCESSIBILITY_MODIFIER@183..196
@@ -379,7 +392,8 @@ JsModule {
             0: COLON@214..216 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@216..222
               0: STRING_KW@216..222 "string" [] []
-          3: SEMICOLON@222..223 ";" [] []
+          3: (empty)
+          4: SEMICOLON@222..223 ";" [] []
         5: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@223..270
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@223..260
             0: TS_DECLARE_MODIFIER@223..236
@@ -396,7 +410,8 @@ JsModule {
             0: COLON@261..263 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@263..269
               0: STRING_KW@263..269 "string" [] []
-          3: SEMICOLON@269..270 ";" [] []
+          3: (empty)
+          4: SEMICOLON@269..270 ";" [] []
         6: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@270..317
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@270..307
             0: TS_ACCESSIBILITY_MODIFIER@270..283
@@ -413,7 +428,8 @@ JsModule {
             0: COLON@308..310 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@310..316
               0: STRING_KW@310..316 "string" [] []
-          3: SEMICOLON@316..317 ";" [] []
+          3: (empty)
+          4: SEMICOLON@316..317 ";" [] []
         7: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@317..360
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@317..350
             0: TS_ACCESSIBILITY_MODIFIER@317..332
@@ -428,7 +444,8 @@ JsModule {
             0: COLON@351..353 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@353..359
               0: STRING_KW@353..359 "string" [] []
-          3: SEMICOLON@359..360 ";" [] []
+          3: (empty)
+          4: SEMICOLON@359..360 ";" [] []
         8: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@360..403
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@360..393
             0: TS_ACCESSIBILITY_MODIFIER@360..375
@@ -443,7 +460,8 @@ JsModule {
             0: COLON@394..396 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@396..402
               0: STRING_KW@396..402 "string" [] []
-          3: SEMICOLON@402..403 ";" [] []
+          3: (empty)
+          4: SEMICOLON@402..403 ";" [] []
         9: JS_PROPERTY_CLASS_MEMBER@403..450
           0: JS_PROPERTY_MODIFIER_LIST@403..436
             0: TS_ACCESSIBILITY_MODIFIER@403..418

@@ -287,6 +287,7 @@ JsModule {
                             string_token: STRING_KW@349..355 "string" [] [],
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@355..356 ";" [] [],
                 },
                 TsMethodSignatureClassMember {
@@ -563,7 +564,8 @@ JsModule {
             0: COLON@347..349 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@349..355
               0: STRING_KW@349..355 "string" [] []
-          3: SEMICOLON@355..356 ";" [] []
+          3: (empty)
+          4: SEMICOLON@355..356 ";" [] []
         1: TS_METHOD_SIGNATURE_CLASS_MEMBER@356..380
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@356..370
             0: TS_ABSTRACT_MODIFIER@356..370

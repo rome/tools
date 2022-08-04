@@ -115,6 +115,7 @@ JsModule {
                         value: IDENT@145..149 "prop" [] [],
                     },
                     property_annotation: missing (optional),
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@149..150 ";" [] [],
                 },
             ],
@@ -217,6 +218,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@145..149
             0: IDENT@145..149 "prop" [] []
           2: (empty)
-          3: SEMICOLON@149..150 ";" [] []
+          3: (empty)
+          4: SEMICOLON@149..150 ";" [] []
       8: R_CURLY@150..152 "}" [Newline("\n")] []
   3: EOF@152..153 "" [Newline("\n")] []

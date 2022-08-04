@@ -719,6 +719,7 @@ TsPropertySignatureClassMember =
 	modifiers: TsPropertySignatureModifierList
 	name: JsAnyClassMemberName
 	property_annotation: TsAnyPropertySignatureAnnotation?
+	value: JsInitializerClause?
 	';'?
 
 TsPropertySignatureModifierList = TsAnyPropertySignatureModifier*

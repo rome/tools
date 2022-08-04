@@ -10510,6 +10510,7 @@ impl TsPropertySignatureClassMember {
             modifiers: self.modifiers(),
             name: self.name(),
             property_annotation: self.property_annotation(),
+            value: self.value(),
             semicolon_token: self.semicolon_token(),
         }
     }
@@ -10522,7 +10523,8 @@ impl TsPropertySignatureClassMember {
     pub fn property_annotation(&self) -> Option<TsAnyPropertySignatureAnnotation> {
         support::node(&self.syntax, 2usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsPropertySignatureClassMember {
@@ -10538,6 +10540,7 @@ pub struct TsPropertySignatureClassMemberFields {
     pub modifiers: TsPropertySignatureModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub property_annotation: Option<TsAnyPropertySignatureAnnotation>,
+    pub value: Option<JsInitializerClause>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -23313,6 +23316,7 @@ impl std::fmt::Debug for TsPropertySignatureClassMember {
                 "property_annotation",
                 &support::DebugOptionalElement(self.property_annotation()),
             )
+            .field("value", &support::DebugOptionalElement(self.value()))
             .field(
                 "semicolon_token",
                 &support::DebugOptionalElement(self.semicolon_token()),
