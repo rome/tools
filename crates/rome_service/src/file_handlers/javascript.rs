@@ -1,6 +1,6 @@
 use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories, RuleFilter};
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
-use rome_formatter::{FormatError, IndentStyle, Printed};
+use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::analyze;
 use rome_js_analyze::utils::rename::RenameError;
@@ -11,7 +11,9 @@ use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
-use crate::workspace::{CodeAction, FixAction, FixFileResult, PullActionsResult, RenameResult};
+use crate::workspace::{
+    CodeAction, FixAction, FixFileMode, FixFileResult, PullActionsResult, RenameResult,
+};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::server::AnyParse,
@@ -19,6 +21,7 @@ use crate::{
 };
 
 use super::{ExtensionHandler, Mime};
+use crate::file_handlers::FixAllParams;
 use indexmap::IndexSet;
 use std::borrow::Cow;
 use std::fmt::Debug;
@@ -53,11 +56,10 @@ impl Language for JsLanguage {
     fn resolve_format_context(
         global: &FormatSettings,
         language: &JsFormatSettings,
-        editor: IndentStyle,
         path: &RomePath,
     ) -> JsFormatContext {
         JsFormatContext::new(path.as_path().try_into().unwrap_or_default())
-            .with_indent_style(global.indent_style.unwrap_or(editor))
+            .with_indent_style(global.indent_style.unwrap_or_default())
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
     }
@@ -187,15 +189,21 @@ fn code_actions(
     PullActionsResult { actions }
 }
 
-fn fix_all(
-    rome_path: &RomePath,
-    parse: AnyParse,
-    configuration_rules: Option<&Rules>,
-) -> FixFileResult {
+/// If applies all the safe fixes to the given syntax tree.
+///
+/// If `indent_style` is [Some], it means that the formatting should be applied at the end
+fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
+    let FixAllParams {
+        rome_path,
+        parse,
+        rules,
+        fix_file_mode,
+    } = params;
+
     let mut tree: JsAnyRoot = parse.tree();
     let mut actions = Vec::new();
 
-    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = configuration_rules {
+    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
         let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
         Some(enabled.into_iter().collect())
     } else {
@@ -210,12 +218,27 @@ fn fix_all(
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
 
     let file_id = rome_path.file_id();
-
+    let mut skipped_suggested_fixes = 0;
     loop {
         let action = analyze(file_id, &tree, filter, |signal| {
             if let Some(action) = signal.action() {
-                if action.applicability == Applicability::Always {
-                    return ControlFlow::Break(action);
+                match fix_file_mode {
+                    FixFileMode::SafeFixes => {
+                        if action.applicability == Applicability::MaybeIncorrect {
+                            skipped_suggested_fixes += 1;
+                        }
+                        if action.applicability == Applicability::Always {
+                            return ControlFlow::Break(action);
+                        }
+                    }
+                    FixFileMode::SafeAndSuggestedFixes => {
+                        if matches!(
+                            action.applicability,
+                            Applicability::Always | Applicability::MaybeIncorrect
+                        ) {
+                            return ControlFlow::Break(action);
+                        }
+                    }
                 }
             }
 
@@ -233,10 +256,11 @@ fn fix_all(
                 }
             }
             None => {
-                return FixFileResult {
+                return Ok(FixFileResult {
                     code: tree.syntax().to_string(),
+                    skipped_suggested_fixes,
                     actions,
-                }
+                });
             }
         }
     }
@@ -245,7 +269,7 @@ fn fix_all(
 fn format(
     rome_path: &RomePath,
     parse: AnyParse,
-    settings: SettingsHandle<IndentStyle>,
+    settings: SettingsHandle,
 ) -> Result<Printed, RomeError> {
     let context = settings.format_context::<JsLanguage>(rome_path);
 
@@ -258,7 +282,7 @@ fn format(
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
-    settings: SettingsHandle<IndentStyle>,
+    settings: SettingsHandle,
     range: TextRange,
 ) -> Result<Printed, RomeError> {
     let context = settings.format_context::<JsLanguage>(rome_path);
@@ -271,7 +295,7 @@ fn format_range(
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
-    settings: SettingsHandle<IndentStyle>,
+    settings: SettingsHandle,
     offset: TextSize,
 ) -> Result<Printed, RomeError> {
     let context = settings.format_context::<JsLanguage>(rome_path);

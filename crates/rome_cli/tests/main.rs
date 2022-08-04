@@ -32,6 +32,12 @@ const FIX_AFTER: &str = "
 if(a != 0) {}
 ";
 
+const APPLY_SUGGESTED_BEFORE: &str = "let a = 4;
+debugger;
+";
+
+const APPLY_SUGGESTED_AFTER: &str = "let a = 4;\n";
+
 const CUSTOM_FORMAT_BEFORE: &str = r#"
 function f() {
 return { something }
@@ -44,14 +50,21 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 }
 "#;
 
-const NO_DEBUGGER: &str = "debugger;";
+const NO_DEBUGGER_BEFORE: &str = "debugger;";
+const NO_DEBUGGER_AFTER: &str = "debugger;";
 
-const JS_ERRORS: &str = r#"try {
-    !a && !b
+const JS_ERRORS_BEFORE: &str = r#"try {
+    !a && !b;
 } catch (err) {
     err = 24;
 }
 "#;
+const JS_ERRORS_AFTER: &str = "try {
+    !a && !b;
+} catch (err) {
+    err = 24;
+}
+";
 
 mod check {
     use super::*;
@@ -220,6 +233,70 @@ mod check {
     }
 
     #[test]
+    fn apply_suggested_error() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply-suggested"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_err(), "run_cli returned {result:?}");
+
+        match result {
+            Err(error) => {
+                assert!(error
+                    .to_string()
+                    .contains("incompatible arguments '--apply' and '--apply-suggested"),)
+            }
+            _ => panic!("expected an error, but found none"),
+        }
+    }
+
+    #[test]
+    fn apply_suggested() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("fix.js");
+        fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply-suggested"),
+                file_path.as_os_str().into(),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, APPLY_SUGGESTED_AFTER);
+    }
+
+    #[test]
     fn no_lint_if_linter_is_disabled_when_run_apply() {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
@@ -289,7 +366,7 @@ mod check {
         let mut console = BufferConsole::default();
 
         let file_path = Path::new("fix.js");
-        fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+        fs.insert(file_path.into(), NO_DEBUGGER_BEFORE.as_bytes());
 
         let config_path = Path::new("rome.json");
         fs.insert(config_path.into(), CONFIG_LINTER_SUPPRESSED_RULE.as_bytes());
@@ -314,7 +391,7 @@ mod check {
             .read_to_string(&mut buffer)
             .unwrap();
 
-        assert_eq!(buffer, NO_DEBUGGER);
+        assert_eq!(buffer, NO_DEBUGGER_AFTER);
     }
 
     #[test]
@@ -323,7 +400,7 @@ mod check {
         let mut console = BufferConsole::default();
 
         let file_path = Path::new("fix.js");
-        fs.insert(file_path.into(), JS_ERRORS.as_bytes());
+        fs.insert(file_path.into(), JS_ERRORS_BEFORE.as_bytes());
 
         let config_path = Path::new("rome.json");
         fs.insert(
@@ -351,7 +428,7 @@ mod check {
             .read_to_string(&mut buffer)
             .unwrap();
 
-        assert_eq!(buffer, JS_ERRORS);
+        assert_eq!(buffer, JS_ERRORS_AFTER);
     }
 }
 

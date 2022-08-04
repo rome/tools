@@ -125,7 +125,6 @@ pub trait Language: rome_rowan::Language {
     fn resolve_format_context(
         global: &FormatSettings,
         language: &Self::FormatSettings,
-        editor: IndentStyle,
         path: &RomePath,
     ) -> Self::FormatContext;
 }
@@ -155,28 +154,26 @@ pub struct LanguageSettings<L: Language> {
 
 /// Handle object holding a temporary lock on the workspace settings until
 /// the deferred language-specific options resolution is called
-pub(crate) struct SettingsHandle<'a, E> {
+#[derive(Debug)]
+pub(crate) struct SettingsHandle<'a> {
     inner: RwLockReadGuard<'a, WorkspaceSettings>,
-    /// Additional per-request state injected by the editor
-    editor: E,
 }
 
-impl<'a, E> SettingsHandle<'a, E> {
-    pub(crate) fn new(settings: &'a RwLock<WorkspaceSettings>, editor: E) -> Self {
+impl<'a> SettingsHandle<'a> {
+    pub(crate) fn new(settings: &'a RwLock<WorkspaceSettings>) -> Self {
         Self {
             inner: settings.read().unwrap(),
-            editor,
         }
     }
 }
 
-impl<'a, E> AsRef<WorkspaceSettings> for SettingsHandle<'a, E> {
+impl<'a> AsRef<WorkspaceSettings> for SettingsHandle<'a> {
     fn as_ref(&self) -> &WorkspaceSettings {
         &*self.inner
     }
 }
 
-impl<'a> SettingsHandle<'a, IndentStyle> {
+impl<'a> SettingsHandle<'a> {
     /// Resolve the formatting context for the given language
     pub(crate) fn format_context<L>(self, path: &RomePath) -> L::FormatContext
     where
@@ -185,7 +182,6 @@ impl<'a> SettingsHandle<'a, IndentStyle> {
         L::resolve_format_context(
             &self.inner.format,
             &L::lookup_settings(&self.inner.languages).format,
-            self.editor,
             path,
         )
     }

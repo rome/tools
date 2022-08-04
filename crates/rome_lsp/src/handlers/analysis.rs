@@ -4,7 +4,7 @@ use anyhow::{Context, Result};
 use rome_analyze::ActionCategory;
 use rome_fs::RomePath;
 use rome_service::workspace::{
-    FeatureName, FixFileParams, PullActionsParams, SupportsFeatureParams,
+    FeatureName, FixFileMode, FixFileParams, PullActionsParams, SupportsFeatureParams,
 };
 use rome_service::RomeError;
 use tower_lsp::lsp_types::{
@@ -122,9 +122,10 @@ fn fix_all(
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
 ) -> Result<Option<CodeActionOrCommand>, RomeError> {
-    let fixed = session
-        .workspace
-        .fix_file(FixFileParams { path: rome_path })?;
+    let fixed = session.workspace.fix_file(FixFileParams {
+        path: rome_path,
+        fix_file_mode: FixFileMode::SafeFixes,
+    })?;
 
     if fixed.actions.is_empty() {
         return Ok(None);

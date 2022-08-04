@@ -56,7 +56,7 @@ use crate::RomeError;
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_diagnostics::{CodeSuggestion, Diagnostic};
-use rome_formatter::{IndentStyle, Printed};
+use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
 use rome_text_edit::Indel;
@@ -176,7 +176,6 @@ pub struct CodeAction {
 )]
 pub struct FormatFileParams {
     pub path: RomePath,
-    pub indent_style: IndentStyle,
 }
 
 #[cfg_attr(
@@ -186,7 +185,6 @@ pub struct FormatFileParams {
 pub struct FormatRangeParams {
     pub path: RomePath,
     pub range: TextRange,
-    pub indent_style: IndentStyle,
 }
 
 #[cfg_attr(
@@ -196,7 +194,19 @@ pub struct FormatRangeParams {
 pub struct FormatOnTypeParams {
     pub path: RomePath,
     pub offset: TextSize,
-    pub indent_style: IndentStyle,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+/// Which fixes should be applied during the analyzing phase
+pub enum FixFileMode {
+    /// Applies [safe](rome_diagnostics::Applicability::Always) fixes
+    SafeFixes,
+    /// Applies [safe](rome_diagnostics::Applicability::Always) and suggested [safe](rome_diagnostics::Applicability::MaybeIncorrect)
+    SafeAndSuggestedFixes,
 }
 
 #[cfg_attr(
@@ -205,8 +215,10 @@ pub struct FormatOnTypeParams {
 )]
 pub struct FixFileParams {
     pub path: RomePath,
+    pub fix_file_mode: FixFileMode,
 }
 
+#[derive(Debug)]
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
@@ -216,12 +228,16 @@ pub struct FixFileResult {
     pub code: String,
     /// List of all the code actions applied to the file
     pub actions: Vec<FixAction>,
+
+    /// number of skipped suggested fixes
+    pub skipped_suggested_fixes: u32,
 }
 
 #[cfg_attr(
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
 )]
+#[derive(Debug)]
 pub struct FixAction {
     /// Name of the rule that emitted this code action
     pub rule_name: Cow<'static, str>,
@@ -350,40 +366,30 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn format_file(&self, indent_style: IndentStyle) -> Result<Printed, RomeError> {
+    pub fn format_file(&self) -> Result<Printed, RomeError> {
         self.workspace.format_file(FormatFileParams {
             path: self.path.clone(),
-            indent_style,
         })
     }
 
-    pub fn format_range(
-        &self,
-        indent_style: IndentStyle,
-        range: TextRange,
-    ) -> Result<Printed, RomeError> {
+    pub fn format_range(&self, range: TextRange) -> Result<Printed, RomeError> {
         self.workspace.format_range(FormatRangeParams {
             path: self.path.clone(),
-            indent_style,
             range,
         })
     }
 
-    pub fn format_on_type(
-        &self,
-        indent_style: IndentStyle,
-        offset: TextSize,
-    ) -> Result<Printed, RomeError> {
+    pub fn format_on_type(&self, offset: TextSize) -> Result<Printed, RomeError> {
         self.workspace.format_on_type(FormatOnTypeParams {
             path: self.path.clone(),
-            indent_style,
             offset,
         })
     }
 
-    pub fn fix_file(&self) -> Result<FixFileResult, RomeError> {
+    pub fn fix_file(&self, fix_file_mode: FixFileMode) -> Result<FixFileResult, RomeError> {
         self.workspace.fix_file(FixFileParams {
             path: self.path.clone(),
+            fix_file_mode,
         })
     }
 }

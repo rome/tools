@@ -8,6 +8,7 @@ use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
 
+use crate::file_handlers::FixAllParams;
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
@@ -107,8 +108,8 @@ impl WorkspaceServer {
         }
     }
 
-    fn settings<E>(&self, editor: E) -> SettingsHandle<E> {
-        SettingsHandle::new(&self.settings, editor)
+    fn settings(&self) -> SettingsHandle {
+        SettingsHandle::new(&self.settings)
     }
 
     /// Get the parser result for a given file
@@ -262,7 +263,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let settings = self.settings(params.indent_style);
+        let settings = self.settings();
 
         if !settings.as_ref().format.format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -278,7 +279,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let settings = self.settings(params.indent_style);
+        let settings = self.settings();
 
         if !settings.as_ref().format.format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -294,7 +295,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
-        let settings = self.settings(params.indent_style);
+        let settings = self.settings();
 
         if !settings.as_ref().format.format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -312,7 +313,12 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
         let rules = settings.linter.rules.as_ref();
-        Ok(fix_all(&params.path, parse, rules))
+        fix_all(FixAllParams {
+            rome_path: &params.path,
+            parse,
+            rules,
+            fix_file_mode: params.fix_file_mode,
+        })
     }
 
     fn rename(&self, params: super::RenameParams) -> Result<RenameResult, RomeError> {

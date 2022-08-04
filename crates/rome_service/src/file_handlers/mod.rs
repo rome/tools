@@ -1,6 +1,6 @@
 use rome_analyze::AnalysisFilter;
 use rome_diagnostics::Diagnostic;
-use rome_formatter::{IndentStyle, Printed};
+use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
 use std::ffi::OsStr;
@@ -17,6 +17,7 @@ mod javascript;
 mod json;
 mod unknown;
 
+use crate::workspace::FixFileMode;
 pub use javascript::JsFormatSettings;
 
 /// Supported languages by Rome
@@ -70,16 +71,21 @@ impl std::fmt::Display for Mime {
     }
 }
 
+pub struct FixAllParams<'a> {
+    pub(crate) rome_path: &'a RomePath,
+    pub(crate) parse: AnyParse,
+    pub(crate) rules: Option<&'a Rules>,
+    pub(crate) fix_file_mode: FixFileMode,
+}
+
 type Parse = fn(&RomePath, &str) -> AnyParse;
 type DebugPrint = fn(&RomePath, AnyParse) -> String;
 type Lint = fn(&RomePath, AnyParse, AnalysisFilter) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
-type FixAll = fn(&RomePath, AnyParse, Option<&Rules>) -> FixFileResult;
-type Format = fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>) -> Result<Printed, RomeError>;
-type FormatRange =
-    fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextRange) -> Result<Printed, RomeError>;
-type FormatOnType =
-    fn(&RomePath, AnyParse, SettingsHandle<IndentStyle>, TextSize) -> Result<Printed, RomeError>;
+type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;
+type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, RomeError>;
+type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, RomeError>;
+type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, RomeError>;
 type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, RomeError>;
 
 pub(crate) struct Capabilities {

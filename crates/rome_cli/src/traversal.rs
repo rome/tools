@@ -20,9 +20,9 @@ use rome_diagnostics::{
     file::{FileId, SimpleFile},
     Diagnostic, DiagnosticHeader, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
-use rome_formatter::IndentStyle;
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
+use rome_service::workspace::FixFileMode;
 use rome_service::{
     workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
     Workspace,
@@ -90,8 +90,8 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
     let skipped = skipped.load(Ordering::Relaxed);
 
     match mode {
-        TraversalMode::Check { should_fix, .. } => {
-            if should_fix {
+        TraversalMode::Check { .. } => {
+            if mode.as_fix_file_mode().is_some() {
                 console.log(rome_console::markup! {
                     <Info>"Fixed "{count}" files in "{duration}</Info>
                 });
@@ -158,9 +158,16 @@ fn print_messages_to_console(
     let mut paths = HashMap::new();
     let mut printed_diagnostics: u16 = 0;
     let mut not_printed_diagnostics = 0;
+    let mut total_skipped_suggested_fixes = 0;
 
     while let Ok(msg) = recv_msgs.recv() {
         match msg {
+            Message::SkippedFixes {
+                skipped_suggested_fixes,
+            } => {
+                total_skipped_suggested_fixes += skipped_suggested_fixes;
+            }
+
             Message::Error(err) => {
                 // Retrieves the file name from the file ID cache, if it's a miss
                 // flush entries from the interner channel until it's found
@@ -274,6 +281,13 @@ fn print_messages_to_console(
         }
     }
 
+    if mode.is_check() && total_skipped_suggested_fixes > 0 {
+        console.log(markup! {
+            <Warn>"Skipped "{total_skipped_suggested_fixes}" suggested fixes.\n"</Warn>
+            <Info>"If you wish to apply the suggested fixes, use the command "<Emphasis>"rome check --apply-suggested\n"</Emphasis></Info>
+        })
+    }
+
     if !mode.is_ci() && not_printed_diagnostics > 0 {
         console.log(markup! {
             <Warn>"The number of diagnostics exceeds the number allowed by Rome.\n"</Warn>
@@ -288,9 +302,14 @@ fn print_messages_to_console(
 pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
+        /// The maximum number of diagnostics that can be printed in console
         max_diagnostics: u16,
-        /// `true` when running the command `check` with the `--apply` argument
-        should_fix: bool,
+
+        /// The type of fixes that should be applied when analyzing a file.
+        ///
+        /// It's [None] if the `check` command is called without `--apply` or `--apply-suggested`
+        /// arguments.
+        fix_file_mode: Option<FixFileMode>,
     },
     /// This mode is enabled when running the command `rome ci`
     CI,
@@ -309,16 +328,20 @@ impl TraversalMode {
     }
 
     /// `true` only when running the traversal in [TraversalMode::Check] and `should_fix` is `true`
-    fn should_fix(&self) -> bool {
-        if let TraversalMode::Check { should_fix, .. } = self {
-            *should_fix
+    fn as_fix_file_mode(&self) -> Option<&FixFileMode> {
+        if let TraversalMode::Check { fix_file_mode, .. } = self {
+            fix_file_mode.as_ref()
         } else {
-            false
+            None
         }
     }
 
     fn is_ci(&self) -> bool {
         matches!(self, TraversalMode::CI { .. })
+    }
+
+    fn is_check(&self) -> bool {
+        matches!(self, TraversalMode::Check { .. })
     }
 }
 
@@ -483,10 +506,14 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         )
         .with_file_id_and_code(file_id, "IO")?;
 
-        if ctx.mode.should_fix() {
+        if let Some(fix_mode) = ctx.mode.as_fix_file_mode() {
             let fixed = file_guard
-                .fix_file()
+                .fix_file(*fix_mode)
                 .with_file_id_and_code(file_id, "Lint")?;
+
+            ctx.push_message(Message::SkippedFixes {
+                skipped_suggested_fixes: fixed.skipped_suggested_fixes,
+            });
 
             if fixed.code != input {
                 file.set_content(fixed.code.as_bytes())
@@ -562,14 +589,21 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         if can_format {
             let write = match ctx.mode {
-                // In check mode do not run the formatter and return the result immediately
-                TraversalMode::Check { .. } => return Ok(result),
+                // In check mode do not run the formatter and return the result immediately,
+                // but only if the argument `--apply` is not passed.
+                TraversalMode::Check { .. } => {
+                    if ctx.mode.as_fix_file_mode().is_some() {
+                        true
+                    } else {
+                        return Ok(result);
+                    }
+                }
                 TraversalMode::CI { .. } => false,
                 TraversalMode::Format { write, .. } => write,
             };
 
             let printed = file_guard
-                .format_file(IndentStyle::default())
+                .format_file()
                 .with_file_id_and_code(file_id, "Format")?;
 
             let output = printed.into_code();
@@ -599,6 +633,10 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
 /// Wrapper type for messages that can be printed during the traversal process
 enum Message {
+    SkippedFixes {
+        /// Suggested fixes skipped during the lint traversal
+        skipped_suggested_fixes: u32,
+    },
     Error(TraversalError),
     Diagnostics {
         name: String,
