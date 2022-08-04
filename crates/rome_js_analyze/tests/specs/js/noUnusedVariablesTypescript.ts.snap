@@ -1,0 +1,17 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noUnusedVariablesTypescript.ts
+---
+# Input
+```js
+interface A {
+	f(a: number);
+}
+
+abstract class B {
+	abstract f(a: number);
+}
+
+```
+
+

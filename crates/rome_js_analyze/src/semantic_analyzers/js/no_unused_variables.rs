@@ -6,8 +6,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
-    JsFormalParameter, JsFunctionDeclaration, JsIdentifierBinding, JsSyntaxKind,
-    JsVariableDeclarator,
+    JsCatchDeclaration, JsFormalParameter, JsFunctionDeclaration, JsIdentifierBinding,
+    JsParameterList, JsParameters, JsSyntaxKind, JsVariableDeclarator,
 };
 use rome_rowan::{AstNode, BatchMutationExt};
 
@@ -71,6 +71,31 @@ declare_rule! {
     }
 }
 
+// It is ok in some Typescripts constructs for a parameter to be unused.
+fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
+    let parameters = binding
+        .parent::<JsFormalParameter>()?
+        .parent::<JsParameterList>()?
+        .parent::<JsParameters>()?;
+    match parameters.syntax().parent()?.kind() {
+        // Class
+        JsSyntaxKind::TS_INDEX_SIGNATURE_CLASS_MEMBER
+        | JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER
+        | JsSyntaxKind::TS_GETTER_SIGNATURE_CLASS_MEMBER
+        | JsSyntaxKind::TS_SETTER_SIGNATURE_CLASS_MEMBER
+        | JsSyntaxKind::TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER 
+        // Type
+        | JsSyntaxKind::TS_CALL_SIGNATURE_TYPE_MEMBER
+        | JsSyntaxKind::TS_INDEX_SIGNATURE_TYPE_MEMBER
+        | JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER
+        | JsSyntaxKind::TS_GETTER_SIGNATURE_TYPE_MEMBER
+        | JsSyntaxKind::TS_SETTER_SIGNATURE_TYPE_MEMBER
+        | JsSyntaxKind::TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
+        => Some(()),
+        _ => None,
+    }
+}
+
 impl Rule for NoUnusedVariables {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
@@ -81,6 +106,10 @@ impl Rule for NoUnusedVariables {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let binding = ctx.query();
         let model = ctx.model();
+
+        if is_typescript_unused_ok(binding).is_some() {
+            return None;
+        }
 
         let all_references = binding.all_references(model);
 
@@ -165,6 +194,8 @@ impl Rule for NoUnusedVariables {
             batch.remove_js_variable_declarator(&variable_declarator);
         } else if let Some(formal_parameter) = binding.parent::<JsFormalParameter>() {
             batch.remove_js_formal_parameter(&formal_parameter);
+        } else if let Some(catch_declaration) = binding.parent::<JsCatchDeclaration>() {
+            batch.remove_node(catch_declaration);
         }
 
         let symbol_type = match binding.syntax().parent().unwrap().kind() {
