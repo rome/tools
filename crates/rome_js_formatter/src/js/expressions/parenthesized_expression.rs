@@ -183,10 +183,12 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     if let Some(parent) = parent {
         if let Some(binary_like) = JsAnyBinaryLikeExpression::cast(parent) {
             let operator = binary_like.operator()?;
+            let is_right = expression.syntax() == binary_like.right()?.syntax();
 
             if !binary_argument_needs_parens(
                 operator,
                 &JsAnyBinaryLikeLeftExpression::from(expression),
+                is_right,
             )? {
                 return Ok(true);
             }

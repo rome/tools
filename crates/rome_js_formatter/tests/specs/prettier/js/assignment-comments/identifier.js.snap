@@ -20,19 +20,18 @@ const bifornCringerMoshedPerplexSawder = // !!!
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,7 +1,7 @@
+@@ -1,7 +1,9 @@
 -const kochabCooieGameOnOboleUnweave = // ???
 +const kochabCooieGameOnOboleUnweave =
 +  // ???
    annularCooeedSplicesWalksWayWay;
  
 -const bifornCringerMoshedPerplexSawder = // !!!
--  glimseGlyphsHazardNoopsTieTie +
--  averredBathersBoxroomBuggyNurl -
--  anodyneCondosMalateOverateRetinol;
 +const bifornCringerMoshedPerplexSawder =
 +  // !!!
-+  glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol;
+   glimseGlyphsHazardNoopsTieTie +
+   averredBathersBoxroomBuggyNurl -
+   anodyneCondosMalateOverateRetinol;
 ```
 
 # Output
@@ -44,12 +43,10 @@ const kochabCooieGameOnOboleUnweave =
 
 const bifornCringerMoshedPerplexSawder =
   // !!!
-  glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol;
+  glimseGlyphsHazardNoopsTieTie +
+  averredBathersBoxroomBuggyNurl -
+  anodyneCondosMalateOverateRetinol;
 ```
 
 
-# Lines exceeding max width of 80 characters
-```
-    7:   glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol;
-```
 

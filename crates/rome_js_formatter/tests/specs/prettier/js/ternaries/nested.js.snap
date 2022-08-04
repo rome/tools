@@ -168,17 +168,15 @@ a
 +);
  
  const message =
--  i % 3 === 0 && i % 5 === 0
-+  (i % 3) === 0 && (i % 5) === 0
+   i % 3 === 0 && i % 5 === 0
      ? "fizzbuzz"
--    : i % 3 === 0
+     : i % 3 === 0
 -    ? "fizz"
 -    : i % 5 === 0
 -    ? "buzz"
 -    : String(i);
-+    : (i % 3) === 0
 +      ? "fizz"
-+      : (i % 5) === 0
++      : i % 5 === 0
 +        ? "buzz"
 +        : String(i);
  
@@ -305,11 +303,11 @@ const StorybookLoader = ({ match }) => (
 );
 
 const message =
-  (i % 3) === 0 && (i % 5) === 0
+  i % 3 === 0 && i % 5 === 0
     ? "fizzbuzz"
-    : (i % 3) === 0
+    : i % 3 === 0
       ? "fizz"
-      : (i % 5) === 0
+      : i % 5 === 0
         ? "buzz"
         : String(i);
 

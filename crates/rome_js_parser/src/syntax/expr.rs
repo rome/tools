@@ -4,7 +4,6 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
 use super::typescript::*;
-use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::lexer::{LexContext, ReLexContext};
@@ -479,9 +478,9 @@ fn parse_binary_or_logical_expression_recursive(
         }
 
         let new_precedence = match OperatorPrecedence::try_from_binary_operator(op) {
-            Ok(precedence) => precedence,
+            Some(precedence) => precedence,
             // Not a binary operator
-            Err(_) => break,
+            None => break,
         };
 
         let stop_at_current_operator = if new_precedence.is_right_to_left() {

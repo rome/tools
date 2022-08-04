@@ -147,7 +147,7 @@ const alsoGoodPrecision = 9007199254740993n;
  
 -1n * 2 +
 -  // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
-+(1n * 2)
++1n * 2
 +// ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
  
 -  1n;
@@ -265,7 +265,7 @@ view[0];
 1n + 2;
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
-(1n * 2)
+1n * 2
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
 + 1n;
