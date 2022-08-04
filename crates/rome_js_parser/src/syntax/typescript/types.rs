@@ -34,20 +34,26 @@ use rome_js_syntax::{JsSyntaxKind::*, *};
 use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
 
 pub(crate) fn is_reserved_type_name(name: &str) -> bool {
-    matches!(
-        name,
-        "string"
-            | "null"
-            | "number"
-            | "object"
-            | "any"
-            | "unknown"
-            | "boolean"
-            | "bigint"
-            | "symbol"
-            | "void"
-            | "never"
-    )
+    name.len() <= 6
+        && name.len() >= 3
+        && matches!(
+            name,
+            "string"
+                | "null"
+                | "number"
+                | "object"
+                | "any"
+                | "unknown"
+                | "boolean"
+                | "bigint"
+                | "symbol"
+                | "void"
+                | "never"
+        )
+}
+
+pub(crate) fn is_reserved_module_name(name: &str) -> bool {
+    name.len() == 4 && matches!(name, "void" | "null")
 }
 
 pub(crate) fn parse_ts_type_annotation(p: &mut Parser) -> ParsedSyntax {
