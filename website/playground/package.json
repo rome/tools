@@ -16,7 +16,7 @@
 	"dependencies": {
 		"@codemirror/lang-javascript": "^6.0.1",
 		"codemirror-lang-rome-ast": "0.0.4",
-		"lang-rome-formatter-ir": "0.0.1",
+		"lang-rome-formatter-ir": "0.0.2",
 		"@uiw/react-codemirror": "^4.11.4",
 		"@codemirror/view": "6.1.0",
 		"@codemirror/state": "6.1.0",
