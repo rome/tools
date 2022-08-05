@@ -14,7 +14,7 @@ export default memo(function MermaidGraph({ graph }: MermaidGraphProps) {
 	return (
 		<iframe
 			className="h-screen w-full"
-			src={`/mermaid.html?graph=${encodedGraph}`}
+			src={`mermaid.html?graph=${encodedGraph}`}
 		/>
 	);
 });
