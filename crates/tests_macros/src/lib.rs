@@ -96,7 +96,13 @@ fn transform_file_name(input: &str) -> String {
             | "typeof"
     );
 
-    let is_number = result.as_str().parse::<u32>().is_ok();
+    let is_number = result
+        .chars()
+        .next()
+        .unwrap()
+        .to_string()
+        .parse::<u32>()
+        .is_ok();
 
     if is_keyword {
         result.push('_');
