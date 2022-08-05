@@ -3,7 +3,7 @@ import CodeMirror, { basicSetup } from "@uiw/react-codemirror";
 // import { EditorView } from "@codemirror/view";
 // import { romeAst } from "../lang-rome-ast/dist/";
 import { romeAst } from "codemirror-lang-rome-ast";
-import {romeAst as RomeFormatterIr} from 'lang-rome-formatter-ir'
+import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
