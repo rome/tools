@@ -1013,7 +1013,7 @@ mod test {
 
         match node.kind() {
             JsSyntaxKind::JS_IDENTIFIER_BINDING => {
-                let binding = JsIdentifierBinding::cast(node.clone()).unwrap();
+                let binding = JsIdentifierBinding::cast(node).unwrap();
                 // These do the same thing, but with different APIs
                 assert!(
                     is_exported == model.is_exported(binding.node()),
@@ -1027,7 +1027,7 @@ mod test {
                 );
             }
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => {
-                let reference = JsReferenceIdentifier::cast(node.clone()).unwrap();
+                let reference = JsReferenceIdentifier::cast(node).unwrap();
                 // These do the same thing, but with different APIs
                 assert!(
                     is_exported == model.is_exported(&reference).unwrap(),

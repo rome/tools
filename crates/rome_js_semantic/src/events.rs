@@ -411,19 +411,19 @@ impl SemanticEventExtractor {
                             declaration_at.start() < reference.range().start();
                         let e = match (declaration_before_reference, &reference) {
                             (true, Reference::Read { range, .. }) => SemanticEvent::Read {
-                                range: range.clone(),
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
                             (false, Reference::Read { range, .. }) => SemanticEvent::HoistedRead {
-                                range: range.clone(),
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
                             (true, Reference::Write { range }) => SemanticEvent::Write {
-                                range: range.clone(),
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
                             (false, Reference::Write { range }) => SemanticEvent::HoistedWrite {
-                                range: range.clone(),
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
                         };
