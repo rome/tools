@@ -143,8 +143,8 @@ impl<L: Language> SyntaxNode<L> {
     ///     );
     /// });
     /// let range = node.text_range();
-    /// assert_eq!(0u32, range.start().into());
-    /// assert_eq!(14u32, range.end().into());
+    /// assert_eq!(0u32, u32::from(range.start()));
+    /// assert_eq!(14u32, u32::from(range.end()));
     /// ```
     pub fn text_range(&self) -> TextRange {
         self.raw.text_range()
@@ -173,8 +173,8 @@ impl<L: Language> SyntaxNode<L> {
     ///     );
     /// });
     /// let range = node.text_trimmed_range();
-    /// assert_eq!(3u32, range.start().into());
-    /// assert_eq!(11u32, range.end().into());
+    /// assert_eq!(3u32, u32::from(range.start()));
+    /// assert_eq!(11u32, u32::from(range.end()));
     /// ```
     pub fn text_trimmed_range(&self) -> TextRange {
         self.raw.text_trimmed_range()

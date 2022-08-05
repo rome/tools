@@ -15,6 +15,7 @@ rome_rowan = { path = "../rome_rowan" }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 unicode-width = "0.1.9"
 serde = { version = "1.0.136", features = ["derive"], optional = true }
+schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
 rome_fs = { path = "../rome_fs" }
@@ -38,3 +39,6 @@ iai = "0.1.1"
 [[bench]]
 name = "iai"
 harness = false
+
+[features]
+serde = ["dep:serde", "schemars"]

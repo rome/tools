@@ -35,7 +35,7 @@ use std::fmt::Debug;
 #[derive(Debug, Clone, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct JsFormatSettings {
     pub quote_style: Option<QuoteStyle>,
@@ -44,7 +44,7 @@ pub struct JsFormatSettings {
 #[derive(Debug, Clone, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct JsLinterSettings {
     pub globals: Vec<String>,

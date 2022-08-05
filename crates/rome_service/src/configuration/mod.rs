@@ -8,6 +8,7 @@ use crate::configuration::javascript::JavascriptConfiguration;
 use crate::configuration::linter::LinterConfiguration;
 use crate::{DynRef, RomeError};
 use rome_fs::{FileSystem, OpenOptions};
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
@@ -22,7 +23,7 @@ pub(crate) use javascript::{deserialize_globals, serialize_globals};
 pub use linter::{RuleConfiguration, Rules};
 
 /// The configuration that is contained inside the file `rome.json`
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, JsonSchema, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Configuration {
     /// The configuration of the formatter

@@ -10,7 +10,7 @@ use std::sync::{RwLock, RwLockReadGuard};
 #[derive(Debug, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct WorkspaceSettings {
     /// Formatter settings applied to all files in the workspaces
@@ -69,7 +69,7 @@ impl WorkspaceSettings {
 #[derive(Debug)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct FormatSettings {
     /// Enabled by default
@@ -96,7 +96,7 @@ impl Default for FormatSettings {
 #[derive(Debug)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct LinterSettings {
     /// Enabled by default
@@ -119,7 +119,7 @@ impl Default for LinterSettings {
 #[derive(Debug, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct LanguagesSettings {
     #[cfg_attr(feature = "serde_workspace", serde(default))]
@@ -128,10 +128,24 @@ pub struct LanguagesSettings {
 
 pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
+    #[cfg(not(feature = "serde_workspace"))]
     type FormatSettings: Default;
+    /// Formatter settings type for this language
+    #[cfg(feature = "serde_workspace")]
+    type FormatSettings: Default
+        + serde::Serialize
+        + serde::de::DeserializeOwned
+        + schemars::JsonSchema;
 
     /// Linter settings type for this language
+    #[cfg(not(feature = "serde_workspace"))]
     type LinterSettings: Default;
+    /// Linter settings type for this language
+    #[cfg(feature = "serde_workspace")]
+    type LinterSettings: Default
+        + serde::Serialize
+        + serde::de::DeserializeOwned
+        + schemars::JsonSchema;
 
     /// Fully resolved formatter options type for this language
     type FormatContext: rome_formatter::FormatContext;
@@ -151,7 +165,7 @@ pub trait Language: rome_rowan::Language {
 #[derive(Debug, Default)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language

@@ -1,11 +1,12 @@
 use indexmap::IndexSet;
 use rome_js_formatter::context::QuoteStyle;
+use schemars::JsonSchema;
 use serde::de::{SeqAccess, Visitor};
 use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
 use std::marker::PhantomData;
 
-#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Default, Debug, Deserialize, JsonSchema, Serialize, Eq, PartialEq)]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -75,7 +76,7 @@ where
     sequence.end()
 }
 
-#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Default, Debug, Deserialize, Serialize, JsonSchema, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
@@ -83,7 +84,7 @@ pub struct JavascriptFormatter {
     pub quote_style: QuoteStyle,
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, JsonSchema, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", remote = "QuoteStyle")]
 pub enum PlainQuoteStyle {
     Double,

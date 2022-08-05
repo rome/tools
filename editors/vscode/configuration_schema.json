@@ -1,0 +1,301 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Configuration",
+  "description": "The configuration that is contained inside the file `rome.json`",
+  "type": "object",
+  "properties": {
+    "formatter": {
+      "description": "The configuration of the formatter",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/FormatterConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "javascript": {
+      "description": "Specific configuration for the JavaScript language",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/JavascriptConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "linter": {
+      "description": "The configuration for the linter",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/LinterConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "FormatterConfiguration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "type": "boolean"
+        },
+        "formatWithErrors": {
+          "description": "Stores whether formatting should be allowed to proceed if a given file has syntax errors",
+          "default": false,
+          "type": "boolean"
+        },
+        "indentSize": {
+          "description": "The size of the indentation, 2 by default",
+          "default": 2,
+          "type": "integer",
+          "format": "uint8",
+          "minimum": 0.0
+        },
+        "indentStyle": {
+          "description": "The indent style.",
+          "default": "tab",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PlainIndentStyle"
+            }
+          ]
+        },
+        "lineWidth": {
+          "description": "What's the max width of a line. Defaults to 80.",
+          "default": 80,
+          "allOf": [
+            {
+              "$ref": "#/definitions/LineWidth"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "JavascriptConfiguration": {
+      "type": "object",
+      "properties": {
+        "formatter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JavascriptFormatter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "globals": {
+          "description": "A list of global bindings that should be ignored by the analyzers\n\nIf defined here, they should not emit diagnostics.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "JavascriptFormatter": {
+      "type": "object",
+      "properties": {
+        "quoteStyle": {
+          "description": "The style for quotes. Defaults to double.",
+          "default": "double",
+          "allOf": [
+            {
+              "$ref": "#/definitions/QuoteStyle"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Js": {
+      "type": "object",
+      "properties": {
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "Jsx": {
+      "type": "object",
+      "properties": {
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "LineWidth": {
+      "description": "Validated value for the `line_width` formatter options\n\nThe allowed range of values is 1..=320",
+      "type": "integer",
+      "format": "uint16",
+      "minimum": 0.0
+    },
+    "LinterConfiguration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "if `false`, it disables the feature and the linter won't be executed. `true` by default",
+          "default": true,
+          "type": "boolean"
+        },
+        "rules": {
+          "description": "List of rules",
+          "default": {
+            "recommended": true
+          },
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Rules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PlainIndentStyle": {
+      "type": "string",
+      "enum": [
+        "tab",
+        "space"
+      ]
+    },
+    "QuoteStyle": {
+      "type": "string",
+      "enum": [
+        "double",
+        "single"
+      ]
+    },
+    "Regex": {
+      "type": "object",
+      "properties": {
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "RuleConfiguration": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RulePlainConfiguration"
+        },
+        {
+          "$ref": "#/definitions/RuleWithOptions"
+        }
+      ]
+    },
+    "RulePlainConfiguration": {
+      "type": "string",
+      "enum": [
+        "warn",
+        "error",
+        "off"
+      ]
+    },
+    "RuleWithOptions": {
+      "type": "object",
+      "required": [
+        "level",
+        "options"
+      ],
+      "properties": {
+        "level": {
+          "$ref": "#/definitions/RulePlainConfiguration"
+        },
+        "options": true
+      },
+      "additionalProperties": false
+    },
+    "Rules": {
+      "type": "object",
+      "properties": {
+        "js": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Js"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jsx": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Jsx"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the lint rules recommended by Rome. `true` by default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "regex": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Regex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ts": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Ts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Ts": {
+      "type": "object",
+      "properties": {
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

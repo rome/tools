@@ -1,8 +1,9 @@
 use crate::settings::FormatSettings;
 use rome_formatter::{IndentStyle, LineWidth};
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, JsonSchema, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
@@ -68,7 +69,7 @@ where
     s.serialize_u16(line_width.value())
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, JsonSchema, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum PlainIndentStyle {
     /// Tab

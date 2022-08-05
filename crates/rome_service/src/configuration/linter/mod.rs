@@ -5,9 +5,12 @@ pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
 use rome_console::codespan::Severity;
 pub use rules::*;
+#[cfg(feature = "schemars")]
+use schemars::{gen::SchemaGenerator, schema::Schema, JsonSchema};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct LinterConfiguration {
     /// if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -37,6 +40,7 @@ impl From<LinterConfiguration> for LinterSettings {
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum RuleConfiguration {
     Plain(RulePlainConfiguration),
@@ -92,6 +96,7 @@ impl From<&RulePlainConfiguration> for Severity {
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum RulePlainConfiguration {
     Warn,
@@ -100,9 +105,16 @@ pub enum RulePlainConfiguration {
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct RuleWithOptions {
     level: RulePlainConfiguration,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[schemars(schema_with = "schema_any")]
     options: Option<Box<serde_json::value::RawValue>>,
+}
+
+#[cfg(feature = "schemars")]
+fn schema_any(_gen: &mut SchemaGenerator) -> Schema {
+    Schema::Bool(true)
 }

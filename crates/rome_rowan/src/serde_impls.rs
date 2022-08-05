@@ -1,3 +1,4 @@
+use schemars::JsonSchema;
 use serde::ser::{Serialize, SerializeMap, SerializeSeq, Serializer};
 use std::fmt;
 
@@ -5,6 +6,12 @@ use crate::{
     syntax::{Language, SyntaxNode, SyntaxToken},
     NodeOrToken,
 };
+
+#[derive(JsonSchema)]
+pub struct TextRangeSchema {
+    pub start: u32,
+    pub end: u32,
+}
 
 struct SerDisplay<T>(T);
 impl<T: fmt::Display> Serialize for SerDisplay<T> {

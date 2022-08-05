@@ -9,6 +9,7 @@ description = "Simple text editing crate ported from rust-analyzer for the RSLin
 [dependencies]
 text-size = "1.1.0"
 serde = { version = "1.0.136", features = ["derive"], optional = true }
+schemars = { version = "0.8.10", optional = true }
 
 [features]
-serde = ["dep:serde", "text-size/serde"]
+serde = ["dep:serde", "schemars", "text-size/serde"]

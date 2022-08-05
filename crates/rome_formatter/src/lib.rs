@@ -69,7 +69,10 @@ use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub enum IndentStyle {
     /// Tab
     Tab,
@@ -123,7 +126,10 @@ impl std::fmt::Display for IndentStyle {
 ///
 /// The allowed range of values is 1..=320
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct LineWidth(u16);
 
 impl LineWidth {
@@ -270,11 +276,16 @@ impl FormatContext for SimpleFormatContext {
 
 /// Lightweight sourcemap marker between source and output tokens
 #[derive(Debug, Clone, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct SourceMarker {
     /// Position of the marker in the original source
+    #[cfg_attr(feature = "serde", schemars(with = "u32"))]
     pub source: TextSize,
     /// Position of the marker in the output code
+    #[cfg_attr(feature = "serde", schemars(with = "u32"))]
     pub dest: TextSize,
 }
 
@@ -312,11 +323,19 @@ where
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct Printed {
     code: String,
+    #[cfg_attr(
+        feature = "serde",
+        schemars(with = "Option<rome_rowan::TextRangeSchema>")
+    )]
     range: Option<TextRange>,
     sourcemap: Vec<SourceMarker>,
+    #[cfg_attr(feature = "serde", schemars(with = "Vec<rome_rowan::TextRangeSchema>"))]
     verbatim_ranges: Vec<TextRange>,
 }
 

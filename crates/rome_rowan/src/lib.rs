@@ -32,6 +32,8 @@ mod syntax_factory;
 mod syntax_token_text;
 mod tree_builder;
 
+#[cfg(feature = "serde")]
+pub use serde_impls::TextRangeSchema;
 pub use text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{

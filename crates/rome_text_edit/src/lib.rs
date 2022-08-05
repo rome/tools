@@ -7,11 +7,22 @@ pub use text_size::{TextRange, TextSize};
 ///
 /// Must not overlap with other `InDel`s
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct Indel {
     pub insert: String,
     /// Refers to offsets in the original text
+    #[cfg_attr(feature = "serde", schemars(with = "TextRangeSchema"))]
     pub delete: TextRange,
+}
+
+#[cfg(feature = "serde")]
+#[derive(schemars::JsonSchema)]
+pub struct TextRangeSchema {
+    pub start: u32,
+    pub end: u32,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]

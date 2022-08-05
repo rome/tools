@@ -122,8 +122,11 @@ jobs:
       - name: Run the configuration codegen
         uses: actions-rs/cargo@v1
         with:
-          command: codegen
-          args: configuration
+          command: codegen-configuration
+      - name: Run the schema codegen
+        uses: actions-rs/cargo@v1
+        with:
+          command: codegen-schema
       - name: Run the website codegen
         uses: actions-rs/cargo@v1
         with:

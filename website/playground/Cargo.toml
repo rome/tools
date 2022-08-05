@@ -18,3 +18,12 @@ js-sys = "0.3.58"
 rome_service = { path = "../../crates/rome_service", features = ["serde_workspace"] }
 rome_console = { path = "../../crates/rome_console" }
 rome_diagnostics = { path = "../../crates/rome_diagnostics" }
+
+[build-dependencies]
+serde_json = "1.0.79"
+rome_service = { path = "../../crates/rome_service", features = ["serde_workspace"] }
+rome_rowan = { path = "../../crates/rome_rowan" }
+rome_js_factory = { path = "../../crates/rome_js_factory" }
+rome_js_formatter = { path = "../../crates/rome_js_formatter" }
+schemars = "0.8.10"
+quote = "1.0.14"
