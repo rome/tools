@@ -34,10 +34,28 @@ impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
 
 /// Marker trait that groups all "AstNode" that can be exported
-pub trait CanBeExported: AstNode<Language = JsLanguage> {}
+pub trait IsExportedCanBeQueried: AstNode<Language = JsLanguage> {
+    type Result;
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result;
+}
 
-impl CanBeExported for JsIdentifierBinding {}
-impl CanBeExported for JsReferenceIdentifier {}
+impl IsExportedCanBeQueried for JsIdentifierBinding {
+    type Result = bool;
+
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result {
+        let range = self.syntax().text_range();
+        model.data.is_exported(range)
+    }
+}
+
+impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
+    type Result = Option<bool>;
+
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result {
+        let range = self.declaration(model)?.syntax().text_range();
+        Some(model.data.is_exported(range))
+    }
+}
 
 #[derive(Debug)]
 struct SemanticModelScopeData {
@@ -120,6 +138,10 @@ impl SemanticModelData {
         } else {
             [].iter()
         }
+    }
+
+    pub fn is_exported(&self, range: TextRange) -> bool {
+        self.exported.contains(&range)
     }
 }
 
@@ -536,9 +558,18 @@ impl SemanticModel {
         }
     }
 
-    pub fn is_exported(&self, node: &impl CanBeExported) -> bool {
-        let range = node.syntax().text_range();
-        self.data.exported.contains(&range)
+    /// Returns if the node is exported or is a reference to a binding
+    /// that is exported.
+    ///
+    /// When a binding is specified this method returns a bool.
+    ///
+    /// When a reference is specified this method returns Option<bool>,
+    /// because there is no guarantee that the corresponding declaration exists.
+    pub fn is_exported<T>(&self, node: &T) -> T::Result
+    where
+        T: IsExportedCanBeQueried,
+    {
+        node.is_exported(self)
     }
 }
 
@@ -968,40 +999,73 @@ mod test {
         assert!(global_scope.get_binding("f").is_some());
     }
 
-    /// Finds the last time "f" is used and see if its node is marked as exported
-    fn assert_is_exported(is_exported: bool, code: &str) {
+    /// Finds the last time a token named "name" is used and see if its node is marked as exported
+    fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
         let r = rome_js_parser::parse(code, 0, SourceType::js_module());
         let model = semantic_model(&r.tree());
 
-        let function_f = r
+        let node = r
             .syntax()
             .descendants()
-            .filter(|x| x.text_trimmed() == "f")
+            .filter(|x| x.text_trimmed() == name)
             .last()
             .unwrap();
 
-        let actual = match function_f.kind() {
+        match node.kind() {
             JsSyntaxKind::JS_IDENTIFIER_BINDING => {
-                model.is_exported(&JsIdentifierBinding::cast(function_f.clone()).unwrap())
+                let binding = JsIdentifierBinding::cast(node.clone()).unwrap();
+                // These do the same thing, but with different APIs
+                assert!(
+                    is_exported == model.is_exported(binding.node()),
+                    "at \"{}\"",
+                    code
+                );
+                assert!(
+                    is_exported == binding.is_exported(&model),
+                    "at \"{}\"",
+                    code
+                );
             }
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => {
-                model.is_exported(&JsReferenceIdentifier::cast(function_f.clone()).unwrap())
+                let reference = JsReferenceIdentifier::cast(node.clone()).unwrap();
+                // These do the same thing, but with different APIs
+                assert!(
+                    is_exported == model.is_exported(&reference).unwrap(),
+                    "at \"{}\"",
+                    code
+                );
+                assert!(
+                    is_exported == reference.is_exported(&model).unwrap(),
+                    "at \"{}\"",
+                    code
+                );
             }
             _ => {
                 panic!("This node cannot be exported!");
             }
         };
-
-        assert!(is_exported == actual);
     }
+
     #[test]
     pub fn ok_semantic_model_is_exported() {
+        // Variables
+        assert_is_exported(true, "A", "const A = 1; export {A}");
+        assert_is_exported(true, "A", "export const A = 1");
+
         // Functions
-        assert_is_exported(false, "function f() {}");
-        assert_is_exported(true, "export function f() {}");
-        assert_is_exported(true, "export default function f() {}");
-        assert_is_exported(true, "function f() {} export default f;");
-        assert_is_exported(true, "function f() {} export {f};");
-        assert_is_exported(true, "function f() {} export {f as g};");
+        assert_is_exported(false, "f", "function f() {}");
+        assert_is_exported(true, "f", "export function f() {}");
+        assert_is_exported(true, "f", "export default function f() {}");
+        assert_is_exported(true, "f", "function f() {} export default f");
+        assert_is_exported(true, "f", "function f() {} export {f}");
+        assert_is_exported(true, "f", "function f() {} export {f as g}");
+
+        // Class
+        assert_is_exported(false, "A", "class A{}");
+        assert_is_exported(true, "A", "export class A{}");
+        assert_is_exported(true, "A", "export default class A{}");
+        assert_is_exported(true, "A", "class A{} export default A");
+        assert_is_exported(true, "A", "class A{} export {A}");
+        assert_is_exported(true, "A", "class A{} export {A as B}");
     }
 }

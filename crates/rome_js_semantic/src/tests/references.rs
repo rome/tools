@@ -128,3 +128,8 @@ assert_semantics! {
     ok_unmatched_reference, r#"a/*?*/"#,
     ok_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
 }
+
+assert_semantics! {
+    ok_export_hoisted_variable,
+        "var a/*#A1*/ = 2; export {a/*READ A2*/}; var a/*#A2*/ = 1;",
+}
