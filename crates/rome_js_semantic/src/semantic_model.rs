@@ -85,7 +85,7 @@ struct SemanticModelData {
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "writes"
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    // All bindings and references that were exported
+    // All bindings that were exported
     exported: HashSet<TextRange>,
 }
 
