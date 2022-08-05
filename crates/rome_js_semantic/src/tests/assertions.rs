@@ -127,6 +127,7 @@ pub fn assert(code: &str, test_name: &str) {
             SemanticEvent::Write { range, .. } => range.start(),
             SemanticEvent::HoistedWrite { range, .. } => range.start(),
             SemanticEvent::UnresolvedReference { range } => range.start(),
+            SemanticEvent::Exported { range } => range.start(),
         };
 
         let v = events_by_pos.entry(pos).or_default();

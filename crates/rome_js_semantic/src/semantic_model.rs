@@ -5,7 +5,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use std::{
-    collections::{BTreeSet, HashMap},
+    collections::{BTreeSet, HashMap, HashSet},
     iter::FusedIterator,
     sync::Arc,
 };
@@ -32,6 +32,12 @@ pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
 
 impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
+
+/// Marker trait that groups all "AstNode" that can be exported
+pub trait CanBeExported: AstNode<Language = JsLanguage> {}
+
+impl CanBeExported for JsIdentifierBinding {}
+impl CanBeExported for JsReferenceIdentifier {}
 
 #[derive(Debug)]
 struct SemanticModelScopeData {
@@ -61,6 +67,8 @@ struct SemanticModelData {
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "writes"
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    // All bindings and references that were exported
+    exported: HashSet<TextRange>,
 }
 
 impl SemanticModelData {
@@ -472,7 +480,7 @@ impl SemanticModel {
         })
     }
 
-    /// Returns a list with all [Reference] of a declaration.
+    /// Returns a list with all [Reference] of the specified declaration.
     /// Can also be called from "all_references" extension method.
     ///
     /// ```rust
@@ -506,6 +514,8 @@ impl SemanticModel {
         }
     }
 
+    /// Returns a list with all read [Reference] of the specified declaration.
+    /// Can also be called from "all_reads" extension method.
     pub fn all_reads<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
         let node = declaration.node();
         let range = node.syntax().text_range();
@@ -515,6 +525,8 @@ impl SemanticModel {
         }
     }
 
+    /// Returns a list with all write [Reference] of the specified declaration.
+    /// Can also be called from "all_writes" extension method.
     pub fn all_writes<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
         let node = declaration.node();
         let range = node.syntax().text_range();
@@ -522,6 +534,11 @@ impl SemanticModel {
             data: self.data.clone(),
             iter: self.data.all_writes_iter(&range),
         }
+    }
+
+    pub fn is_exported(&self, node: &impl CanBeExported) -> bool {
+        let range = node.syntax().text_range();
+        self.data.exported.contains(&range)
     }
 }
 
@@ -606,6 +623,7 @@ pub struct SemanticModelBuilder {
     declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    exported: HashSet<TextRange>,
 }
 
 impl SemanticModelBuilder {
@@ -620,6 +638,7 @@ impl SemanticModelBuilder {
             declaration_all_references: HashMap::new(),
             declaration_all_reads: HashMap::new(),
             declaration_all_writes: HashMap::new(),
+            exported: HashSet::new(),
         }
     }
 
@@ -743,6 +762,9 @@ impl SemanticModelBuilder {
                     .push((ReferenceType::Write { hoisted: true }, range));
             }
             UnresolvedReference { .. } => {}
+            Exported { range } => {
+                self.exported.insert(range);
+            }
         }
     }
 
@@ -764,6 +786,7 @@ impl SemanticModelBuilder {
             declaration_all_references: self.declaration_all_references,
             declaration_all_reads: self.declaration_all_reads,
             declaration_all_writes: self.declaration_all_writes,
+            exported: self.exported,
         };
         SemanticModel::new(data)
     }
@@ -796,7 +819,7 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_js_syntax::{JsReferenceIdentifier, SourceType};
+    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType};
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
@@ -943,5 +966,42 @@ mod test {
         // And we can find their binding inside the global scope
         assert!(global_scope.get_binding("g").is_some());
         assert!(global_scope.get_binding("f").is_some());
+    }
+
+    /// Finds the last time "f" is used and see if its node is marked as exported
+    fn assert_is_exported(is_exported: bool, code: &str) {
+        let r = rome_js_parser::parse(code, 0, SourceType::js_module());
+        let model = semantic_model(&r.tree());
+
+        let function_f = r
+            .syntax()
+            .descendants()
+            .filter(|x| x.text_trimmed() == "f")
+            .last()
+            .unwrap();
+
+        let actual = match function_f.kind() {
+            JsSyntaxKind::JS_IDENTIFIER_BINDING => {
+                model.is_exported(&JsIdentifierBinding::cast(function_f.clone()).unwrap())
+            }
+            JsSyntaxKind::JS_REFERENCE_IDENTIFIER => {
+                model.is_exported(&JsReferenceIdentifier::cast(function_f.clone()).unwrap())
+            }
+            _ => {
+                panic!("This node cannot be exported!");
+            }
+        };
+
+        assert!(is_exported == actual);
+    }
+    #[test]
+    pub fn ok_semantic_model_is_exported() {
+        // Functions
+        assert_is_exported(false, "function f() {}");
+        assert_is_exported(true, "export function f() {}");
+        assert_is_exported(true, "export default function f() {}");
+        assert_is_exported(true, "function f() {} export default f;");
+        assert_is_exported(true, "function f() {} export {f};");
+        assert_is_exported(true, "function f() {} export {f as g};");
     }
 }
