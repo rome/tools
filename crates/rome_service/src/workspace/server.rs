@@ -1,8 +1,9 @@
 use super::{
     ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
-    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
-    PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameResult,
-    SupportsFeatureParams, UpdateSettingsParams,
+    FormatOnTypeParams, FormatRangeParams, GetControlFlowGraphParams, GetFormatterIRParams,
+    GetSyntaxTreeParams, GetSyntaxTreeResult, OpenFileParams, PullActionsParams, PullActionsResult,
+    PullDiagnosticsParams, PullDiagnosticsResult, RenameResult, SupportsFeatureParams,
+    UpdateSettingsParams,
 };
 use crate::file_handlers::FixAllParams;
 use crate::{
@@ -167,16 +168,50 @@ impl Workspace for WorkspaceServer {
         Ok(())
     }
 
-    fn get_syntax_tree(&self, params: GetSyntaxTreeParams) -> Result<String, RomeError> {
+    fn get_syntax_tree(
+        &self,
+        params: GetSyntaxTreeParams,
+    ) -> Result<GetSyntaxTreeResult, RomeError> {
         let capabilities = self.features.get_capabilities(&params.path);
         let printer = capabilities
-            .debug_print
+            .debug_syntax_tree
             .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
 
         let parse = self.get_parse(params.path.clone())?;
         let printed = printer(&params.path, parse);
 
         Ok(printed)
+    }
+
+    fn get_control_flow_graph(
+        &self,
+        params: GetControlFlowGraphParams,
+    ) -> Result<String, RomeError> {
+        let capabilities = self.features.get_capabilities(&params.path);
+        let printer = capabilities
+            .debug_control_flow
+            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+
+        let parse = self.get_parse(params.path.clone())?;
+        let printed = printer(&params.path, parse, params.cursor);
+
+        Ok(printed)
+    }
+
+    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, RomeError> {
+        let capabilities = self.features.get_capabilities(&params.path);
+        let printer = capabilities
+            .debug_formatter_ir
+            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+
+        let parse = self.get_parse(params.path.clone())?;
+        let settings = self.settings();
+
+        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+            return Err(RomeError::FormatWithErrorsDisabled);
+        }
+
+        printer(&params.path, parse, settings)
     }
 
     /// Change the content of an open file

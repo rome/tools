@@ -112,6 +112,32 @@ pub struct GetSyntaxTreeParams {
     feature = "serde_workspace",
     derive(serde::Serialize, serde::Deserialize)
 )]
+pub struct GetSyntaxTreeResult {
+    pub cst: String,
+    pub ast: String,
+}
+
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+pub struct GetControlFlowGraphParams {
+    pub path: RomePath,
+    pub cursor: TextSize,
+}
+
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+pub struct GetFormatterIRParams {
+    pub path: RomePath,
+}
+
+#[cfg_attr(
+    feature = "serde_workspace",
+    derive(serde::Serialize, serde::Deserialize)
+)]
 pub struct ChangeFileParams {
     pub path: RomePath,
     pub content: String,
@@ -279,7 +305,19 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     fn open_file(&self, params: OpenFileParams) -> Result<(), RomeError>;
 
     // Return a textual, debug representation of the syntax tree for a given document
-    fn get_syntax_tree(&self, params: GetSyntaxTreeParams) -> Result<String, RomeError>;
+    fn get_syntax_tree(
+        &self,
+        params: GetSyntaxTreeParams,
+    ) -> Result<GetSyntaxTreeResult, RomeError>;
+
+    // Return a textual, debug representation of the control flow graph at a given position in the document
+    fn get_control_flow_graph(
+        &self,
+        params: GetControlFlowGraphParams,
+    ) -> Result<String, RomeError>;
+
+    // Return a textual, debug representation of the formatter IR for a given document
+    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, RomeError>;
 
     /// Change the content of an open file
     fn change_file(&self, params: ChangeFileParams) -> Result<(), RomeError>;
@@ -335,7 +373,7 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         Ok(Self { workspace, path })
     }
 
-    pub fn get_syntax_tree(&self) -> Result<String, RomeError> {
+    pub fn get_syntax_tree(&self) -> Result<GetSyntaxTreeResult, RomeError> {
         self.workspace.get_syntax_tree(GetSyntaxTreeParams {
             path: self.path.clone(),
         })

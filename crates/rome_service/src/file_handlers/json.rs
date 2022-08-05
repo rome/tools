@@ -6,7 +6,9 @@ impl ExtensionHandler for JsonFileHandler {
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
             parse: None,
-            debug_print: None,
+            debug_syntax_tree: None,
+            debug_control_flow: None,
+            debug_formatter_ir: None,
             format: None,
             lint: None,
             code_actions: None,

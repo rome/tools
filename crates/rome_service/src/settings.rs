@@ -14,10 +14,13 @@ use std::sync::{RwLock, RwLockReadGuard};
 )]
 pub struct WorkspaceSettings {
     /// Formatter settings applied to all files in the workspaces
+    #[cfg_attr(feature = "serde_workspace", serde(default))]
     pub format: FormatSettings,
     /// Linter settings applied to all files in the workspace
+    #[cfg_attr(feature = "serde_workspace", serde(default))]
     pub linter: LinterSettings,
     /// Language specific settings
+    #[cfg_attr(feature = "serde_workspace", serde(default))]
     pub languages: LanguagesSettings,
 }
 
@@ -119,6 +122,7 @@ impl Default for LinterSettings {
     derive(serde::Serialize, serde::Deserialize)
 )]
 pub struct LanguagesSettings {
+    #[cfg_attr(feature = "serde_workspace", serde(default))]
     pub javascript: LanguageSettings<JsLanguage>,
 }
 
@@ -151,15 +155,18 @@ pub trait Language: rome_rowan::Language {
 )]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
+    #[cfg_attr(feature = "serde_workspace", serde(default))]
     pub format: L::FormatSettings,
 
     /// Linter settings for this language
+    #[cfg_attr(feature = "serde_workspace", serde(default))]
     pub linter: L::LinterSettings,
 
     /// Globals variables/bindings that can be found in a file
     #[cfg_attr(
         feature = "serde_workspace",
         serde(
+            default,
             deserialize_with = "crate::configuration::deserialize_globals",
             serialize_with = "crate::configuration::serialize_globals"
         )

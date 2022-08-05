@@ -7,7 +7,9 @@ use std::ffi::OsStr;
 
 use crate::{
     settings::SettingsHandle,
-    workspace::{server::AnyParse, FixFileResult, PullActionsResult, RenameResult},
+    workspace::{
+        server::AnyParse, FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult,
+    },
     RomeError, Rules,
 };
 
@@ -79,7 +81,9 @@ pub struct FixAllParams<'a> {
 }
 
 type Parse = fn(&RomePath, &str) -> AnyParse;
-type DebugPrint = fn(&RomePath, AnyParse) -> String;
+type DebugSyntaxTree = fn(&RomePath, AnyParse) -> GetSyntaxTreeResult;
+type DebugControlFlow = fn(&RomePath, AnyParse, TextSize) -> String;
+type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, RomeError>;
 type Lint = fn(&RomePath, AnyParse, AnalysisFilter, Option<&Rules>) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;
@@ -93,7 +97,9 @@ pub(crate) struct Capabilities {
     /// Parse a file
     pub(crate) parse: Option<Parse>,
     /// Prints the tree
-    pub(crate) debug_print: Option<DebugPrint>,
+    pub(crate) debug_syntax_tree: Option<DebugSyntaxTree>,
+    pub(crate) debug_control_flow: Option<DebugControlFlow>,
+    pub(crate) debug_formatter_ir: Option<DebugFormatterIR>,
     /// It lints a file
     pub(crate) lint: Option<Lint>,
     /// It extracts code actions for a file
@@ -128,7 +134,9 @@ pub(crate) trait ExtensionHandler {
     fn capabilities(&self) -> Capabilities {
         Capabilities {
             parse: None,
-            debug_print: None,
+            debug_syntax_tree: None,
+            debug_control_flow: None,
+            debug_formatter_ir: None,
             format: None,
             lint: None,
             code_actions: None,

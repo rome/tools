@@ -1,275 +1,360 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
-use js_sys::Array;
-use rome_analyze::{AnalysisFilter, ControlFlow, Never, QueryMatch};
-use rome_console::codespan::Severity;
-use rome_console::fmt::{Formatter, HTML};
-use rome_console::{markup, Markup};
-use rome_diagnostics::file::SimpleFiles;
-use rome_diagnostics::Diagnostic;
-use rome_formatter::IndentStyle;
-use rome_js_formatter::context::JsFormatContext;
-use rome_js_formatter::format_node;
-use rome_js_parser::parse;
-use rome_js_syntax::{LanguageVariant, SourceType, TextSize};
+use std::fmt::Display;
+
+use js_sys::Error;
+use rome_console::fmt::HTML;
+use rome_diagnostics::file::SimpleFile;
 use wasm_bindgen::prelude::*;
+
+use rome_console::{fmt::Formatter, markup};
+use rome_diagnostics::Diagnostic;
+use rome_service::workspace::{
+    self, ChangeFileParams, CloseFileParams, FixFileParams, FormatFileParams, FormatOnTypeParams,
+    FormatRangeParams, GetControlFlowGraphParams, GetFormatterIRParams, GetSyntaxTreeParams,
+    PullActionsParams, PullDiagnosticsParams, RenameParams, UpdateSettingsParams,
+};
+use rome_service::workspace::{OpenFileParams, SupportsFeatureParams};
 
 #[wasm_bindgen]
 extern "C" {
-    // Use `js_namespace` here to bind `console.log(..)` instead of just
-    // `log(..)`
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-
-    #[wasm_bindgen(js_namespace = performance)]
-    fn mark(name: &str);
-
-    #[wasm_bindgen(js_namespace = performance)]
-    fn measure(name: &str, begin: &str, end: &str) -> JsValue;
-
-    #[wasm_bindgen(js_namespace = performance)]
-    fn getEntriesByName(name: &str, ty: &str) -> Array;
-}
-
-#[allow(unused_macros)]
-macro_rules! console_log {
-    // Note that this is using the `log` function imported above during
-    // `bare_bones`
-    ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
-}
-
-#[wasm_bindgen]
-pub struct RomeOutput {
-    ast: String,
-    cst: String,
-    formatted_code: String,
-    formatter_ir: String,
-    errors: String,
-    control_flow_graph: String,
-}
-
-#[wasm_bindgen]
-impl RomeOutput {
-    #[wasm_bindgen(getter)]
-    pub fn ast(&self) -> String {
-        self.ast.clone()
-    }
-
-    #[wasm_bindgen(getter)]
-    pub fn cst(&self) -> String {
-        self.cst.clone()
-    }
-
-    #[wasm_bindgen(getter)]
-    pub fn formatted_code(&self) -> String {
-        self.formatted_code.clone()
-    }
-
-    #[wasm_bindgen(getter)]
-    pub fn formatter_ir(&self) -> String {
-        self.formatter_ir.clone()
-    }
-
-    #[wasm_bindgen(getter)]
-    pub fn errors(&self) -> String {
-        self.errors.clone()
-    }
-
-    #[wasm_bindgen(getter)]
-    pub fn control_flow_graph(&self) -> String {
-        self.control_flow_graph.clone()
-    }
+    #[wasm_bindgen(typescript_type = "SupportsFeatureParams")]
+    pub type ISupportsFeatureParams;
+    #[wasm_bindgen(typescript_type = "UpdateSettingsParams")]
+    pub type IUpdateSettingsParams;
+    #[wasm_bindgen(typescript_type = "OpenFileParams")]
+    pub type IOpenFileParams;
+    #[wasm_bindgen(typescript_type = "GetSyntaxTreeParams")]
+    pub type IGetSyntaxTreeParams;
+    #[wasm_bindgen(typescript_type = "GetControlFlowGraphParams")]
+    pub type IGetControlFlowGraphParams;
+    #[wasm_bindgen(typescript_type = "GetFormatterIRParams")]
+    pub type IGetFormatterIRParams;
+    #[wasm_bindgen(typescript_type = "ChangeFileParams")]
+    pub type IChangeFileParams;
+    #[wasm_bindgen(typescript_type = "CloseFileParams")]
+    pub type ICloseFileParams;
+    #[wasm_bindgen(typescript_type = "PullDiagnosticsParams")]
+    pub type IPullDiagnosticsParams;
+    #[wasm_bindgen(typescript_type = "PullActionsParams")]
+    pub type IPullActionsParams;
+    #[wasm_bindgen(typescript_type = "FormatFileParams")]
+    pub type IFormatFileParams;
+    #[wasm_bindgen(typescript_type = "FormatRangeParams")]
+    pub type IFormatRangeParams;
+    #[wasm_bindgen(typescript_type = "FormatOnTypeParams")]
+    pub type IFormatOnTypeParams;
+    #[wasm_bindgen(typescript_type = "FixFileParams")]
+    pub type IFixFileParams;
+    #[wasm_bindgen(typescript_type = "RenameParams")]
+    pub type IRenameParams;
+    #[wasm_bindgen(typescript_type = "GetSyntaxTreeResult")]
+    pub type IGetSyntaxTreeResult;
+    #[wasm_bindgen(typescript_type = "PullDiagnosticsResult")]
+    pub type IPullDiagnosticsResult;
+    #[wasm_bindgen(typescript_type = "PullActionsResult")]
+    pub type IPullActionsResult;
+    #[wasm_bindgen(typescript_type = "FixFileResult")]
+    pub type IFixFileResult;
+    #[wasm_bindgen(typescript_type = "RenameResult")]
+    pub type IRenameResult;
+    #[wasm_bindgen(typescript_type = "Diagnostic")]
+    pub type IDiagnostic;
 }
 
 #[wasm_bindgen]
-pub struct PlaygroundFormatOptions {
-    line_width: u16,
-    indent_width: Option<u8>, // If None, we use tabs
-    quote_style: String,
+pub struct Workspace {
+    inner: Box<dyn workspace::Workspace>,
 }
 
 #[wasm_bindgen]
-impl PlaygroundFormatOptions {
+impl Workspace {
     #[wasm_bindgen(constructor)]
-    pub fn new(
-        line_width: u16,
-        indent_width: Option<u8>, // If None, we use tabs
-        quote_style: String,
-    ) -> Self {
-        Self {
-            line_width,
-            indent_width,
-            quote_style,
+    #[allow(clippy::new_without_default)]
+    pub fn new() -> Workspace {
+        Workspace {
+            inner: workspace::server(),
         }
     }
-}
 
-fn measure_and_print(name: &str, begin: &str, end: &str) {
-    let parse_measure = measure(name, begin, end);
-    // Firefox returns undefined
-    if parse_measure.is_truthy() {
-        if let Ok(parse_measure) = js_sys::JSON::stringify(&parse_measure) {
-            log(&parse_measure.as_string().unwrap());
-        }
-    } else {
-        let entries = getEntriesByName(name, "measure");
-        if entries.is_truthy() {
-            let entry = entries.get(0);
-            if entry.is_truthy() {
-                let json = js_sys::JSON::stringify(&entry).unwrap();
-                log(&json.as_string().unwrap());
-            }
-        }
+    pub fn supports_feature(&self, params: ISupportsFeatureParams) -> Result<bool, Error> {
+        let params: SupportsFeatureParams = params.into_serde().map_err(into_error)?;
+        Ok(self.inner.supports_feature(params))
+    }
+
+    pub fn update_settings(&self, params: IUpdateSettingsParams) -> Result<(), Error> {
+        let params: UpdateSettingsParams = params.into_serde().map_err(into_error)?;
+        self.inner.update_settings(params).map_err(into_error)
+    }
+
+    pub fn open_file(&self, params: IOpenFileParams) -> Result<(), Error> {
+        let params: OpenFileParams = params.into_serde().map_err(into_error)?;
+        self.inner.open_file(params).map_err(into_error)
+    }
+
+    pub fn get_syntax_tree(
+        &self,
+        params: IGetSyntaxTreeParams,
+    ) -> Result<IGetSyntaxTreeResult, Error> {
+        let params: GetSyntaxTreeParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.get_syntax_tree(params).map_err(into_error)?;
+        JsValue::from_serde(&result)
+            .map(IGetSyntaxTreeResult::from)
+            .map_err(into_error)
+    }
+
+    pub fn get_control_flow_graph(
+        &self,
+        params: IGetControlFlowGraphParams,
+    ) -> Result<String, Error> {
+        let params: GetControlFlowGraphParams = params.into_serde().map_err(into_error)?;
+        self.inner
+            .get_control_flow_graph(params)
+            .map_err(into_error)
+    }
+
+    pub fn get_formatter_ir(&self, params: IGetFormatterIRParams) -> Result<String, Error> {
+        let params: GetFormatterIRParams = params.into_serde().map_err(into_error)?;
+        self.inner.get_formatter_ir(params).map_err(into_error)
+    }
+
+    pub fn change_file(&self, params: IChangeFileParams) -> Result<(), Error> {
+        let params: ChangeFileParams = params.into_serde().map_err(into_error)?;
+        self.inner.change_file(params).map_err(into_error)
+    }
+
+    pub fn close_file(&self, params: ICloseFileParams) -> Result<(), Error> {
+        let params: CloseFileParams = params.into_serde().map_err(into_error)?;
+        self.inner.close_file(params).map_err(into_error)
+    }
+
+    pub fn pull_diagnostics(
+        &self,
+        params: IPullDiagnosticsParams,
+    ) -> Result<IPullDiagnosticsResult, Error> {
+        let params: PullDiagnosticsParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.pull_diagnostics(params).map_err(into_error)?;
+        JsValue::from_serde(&result)
+            .map(IPullDiagnosticsResult::from)
+            .map_err(into_error)
+    }
+
+    pub fn pull_actions(&self, params: IPullActionsParams) -> Result<IPullActionsResult, Error> {
+        let params: PullActionsParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.pull_actions(params).map_err(into_error)?;
+        JsValue::from_serde(&result)
+            .map(IPullActionsResult::from)
+            .map_err(into_error)
+    }
+
+    pub fn format_file(&self, params: IFormatFileParams) -> Result<JsValue, Error> {
+        let params: FormatFileParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.format_file(params).map_err(into_error)?;
+        JsValue::from_serde(&result).map_err(into_error)
+    }
+
+    pub fn format_range(&self, params: IFormatRangeParams) -> Result<JsValue, Error> {
+        let params: FormatRangeParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.format_range(params).map_err(into_error)?;
+        JsValue::from_serde(&result).map_err(into_error)
+    }
+
+    pub fn format_on_type(&self, params: IFormatOnTypeParams) -> Result<JsValue, Error> {
+        let params: FormatOnTypeParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.format_on_type(params).map_err(into_error)?;
+        JsValue::from_serde(&result).map_err(into_error)
+    }
+
+    pub fn fix_file(&self, params: IFixFileParams) -> Result<IFixFileResult, Error> {
+        let params: FixFileParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.fix_file(params).map_err(into_error)?;
+        JsValue::from_serde(&result)
+            .map(IFixFileResult::from)
+            .map_err(into_error)
+    }
+
+    pub fn rename(&self, params: IRenameParams) -> Result<IRenameResult, Error> {
+        let params: RenameParams = params.into_serde().map_err(into_error)?;
+        let result = self.inner.rename(params).map_err(into_error)?;
+        JsValue::from_serde(&result)
+            .map(IRenameResult::from)
+            .map_err(into_error)
     }
 }
 
 #[wasm_bindgen]
-pub fn run(
-    code: String,
-    options: PlaygroundFormatOptions,
-    is_typescript: bool,
-    is_jsx: bool,
-    source_type: String,
-    cursor_position: u32,
-) -> RomeOutput {
-    let mut simple_files = SimpleFiles::new();
-    let main_file_id = simple_files.add("main.js".to_string(), code.clone());
+pub struct DiagnosticPrinter {
+    file: SimpleFile,
+    buffer: Vec<u8>,
+}
 
-    let source_type = if source_type == "script" {
-        SourceType::js_script()
-    } else {
-        let source_type = if is_typescript {
-            SourceType::ts()
-        } else {
-            SourceType::js_module()
-        };
-
-        if is_jsx {
-            source_type.with_variant(LanguageVariant::Jsx)
-        } else {
-            source_type
+#[wasm_bindgen]
+impl DiagnosticPrinter {
+    #[wasm_bindgen(constructor)]
+    pub fn new(file_name: String, file_source: String) -> Self {
+        Self {
+            file: SimpleFile::new(file_name, file_source),
+            buffer: Vec::new(),
         }
-    };
-
-    mark("rome::begin");
-    mark("rome::parse::begin");
-    let parse = parse(&code, main_file_id, source_type);
-    mark("rome::parse::end");
-    measure_and_print("rome::parse", "rome::parse::begin", "rome::parse::end");
-
-    let syntax = parse.syntax();
-
-    let indent_style = if let Some(width) = options.indent_width {
-        IndentStyle::Space(width)
-    } else {
-        IndentStyle::Tab
-    };
-
-    let context = JsFormatContext::new(source_type)
-        .with_indent_style(indent_style)
-        .with_line_width(options.line_width.try_into().unwrap_or_default())
-        .with_quote_style(options.quote_style.parse().unwrap_or_default());
-
-    let (cst, ast) = (format!("{:#?}", syntax), format!("{:#?}", parse.tree()));
-
-    mark("rome::format::begin");
-    let formatted = format_node(context, &syntax).unwrap();
-    let formatted_code = formatted.print().into_code();
-    mark("rome::format::end");
-    measure_and_print("rome::format", "rome::format::begin", "rome::format::end");
-
-    let root_element = formatted.into_format_element();
-    let formatter_ir = format!("{}", root_element);
-
-    let mut html = HTML(Vec::new());
-    for diag in parse.diagnostics() {
-        diagnostic_to_string(&simple_files, main_file_id, diag, &mut html);
     }
 
-    let cursor_position = TextSize::from(cursor_position);
-    let mut control_flow_graph = None;
+    pub fn print(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
+        let diag: Diagnostic = diagnostic.into_serde().map_err(into_error)?;
 
-    mark("rome::analyze::begin");
-    rome_js_analyze::analyze_with_inspect_matcher(
-        main_file_id,
-        &parse.tree(),
-        AnalysisFilter::default(),
-        |match_params| {
-            let (cfg, range) = match &match_params.query {
-                QueryMatch::ControlFlowGraph(cfg, node) => (cfg, node),
-                _ => return,
-            };
+        let mut html = HTML(&mut self.buffer);
+        Formatter::new(&mut html)
+            .write_markup(markup!({ diag.display(&self.file) }))
+            .map_err(into_error)?;
 
-            if !range.contains(cursor_position) {
-                return;
-            }
+        Ok(())
+    }
 
-            match &control_flow_graph {
-                None => {
-                    control_flow_graph = Some((cfg.clone(), *range));
-                }
-                Some((_, prev_range)) => {
-                    if range.len() < prev_range.len() {
-                        control_flow_graph = Some((cfg.clone(), *range));
-                    }
-                }
-            }
-        },
-        |signal| {
-            if let Some(diag) = signal.diagnostic() {
-                // we default the severity to error, because only the recommended rules are run
-                // in the playground
-                let mut diag = diag.into_diagnostic(Severity::Error);
-                if let Some(action) = signal.action() {
-                    diag.suggestions.push(action.into());
-                }
-                diagnostic_to_string(&simple_files, main_file_id, &diag, &mut html);
-            }
-
-            ControlFlow::<Never>::Continue(())
-        },
-    );
-    mark("rome::analyze::end");
-    measure_and_print(
-        "rome::analyze",
-        "rome::analyze::begin",
-        "rome::analyze::end",
-    );
-
-    mark("rome::end");
-    measure_and_print("rome", "rome::begin", "rome::end");
-
-    // Make easier to read each set of mearures
-    log("");
-
-    RomeOutput {
-        cst,
-        ast,
-        formatted_code,
-        formatter_ir,
-        errors: String::from_utf8(html.0).unwrap(),
-        control_flow_graph: control_flow_graph
-            .map(|(cfg, _)| cfg.to_string())
-            .unwrap_or_default(),
+    pub fn finish(self) -> Result<String, Error> {
+        String::from_utf8(self.buffer).map_err(into_error)
     }
 }
 
-fn markup_to_string(markup: Markup, html: &mut HTML<Vec<u8>>) {
-    let mut fmt = Formatter::new(html);
-    fmt.write_markup(markup).unwrap();
+fn into_error<E: Display>(err: E) -> Error {
+    Error::new(&err.to_string())
 }
 
-fn diagnostic_to_string(
-    simple_files: &SimpleFiles,
-    id: usize,
-    diag: &Diagnostic,
-    html: &mut HTML<Vec<u8>>,
-) {
-    let file = simple_files.get(id).unwrap();
-    markup_to_string(
-        markup! {
-            {diag.display(file)}
-        },
-        html,
-    );
+#[wasm_bindgen(typescript_custom_section)]
+const TS_TYPEDEFS: &'static str = r#"
+interface RomePath {
+	path: string;
+	id: number;
 }
+
+interface SupportsFeatureParams {
+    path: RomePath;
+    feature: FeatureName;
+}
+
+type FeatureName = "Format" | "Lint";
+
+interface WorkspaceSettings {}
+
+interface UpdateSettingsParams {
+    settings: WorkspaceSettings;
+}
+
+interface OpenFileParams {
+    path: RomePath;
+    content: string;
+    version: number;
+}
+
+interface GetSyntaxTreeParams {
+    path: RomePath;
+}
+
+interface GetSyntaxTreeResult {
+    cst: string;
+    ast: string;
+}
+
+interface GetControlFlowGraphParams {
+    path: RomePath;
+    cursor: TextSize;
+}
+
+interface GetFormatterIRParams {
+    path: RomePath;
+    indent_style: IndentStyle;
+}
+
+interface ChangeFileParams {
+    path: RomePath;
+    content: string;
+    version: number;
+}
+
+interface CloseFileParams {
+    path: RomePath;
+}
+
+type RuleCategory = "Syntax" | "Lint" | "Action";
+
+interface PullDiagnosticsParams {
+    path: RomePath;
+    categories: RuleCategory[];
+}
+
+interface Diagnostic {}
+
+interface PullDiagnosticsResult {
+    diagnostics: Diagnostic[];
+}
+
+interface TextRange {
+    start: TextSize;
+    end: TextSize;
+}
+
+interface PullActionsParams {
+    path: RomePath;
+    range: TextRange;
+}
+
+interface PullActionsResult {
+    actions: CodeAction[];
+}
+
+type ActionCategory = "QuickFix" | "Refactor";
+
+interface CodeSuggestion {}
+
+interface CodeAction {
+    category: ActionCategory;
+    rule_name: string;
+    suggestion: CodeSuggestion;
+}
+
+type IndentStyle = "Tab" | { "Space": number };
+
+interface FormatFileParams {
+    path: RomePath;
+    indent_style: IndentStyle;
+}
+
+interface FormatRangeParams {
+    path: RomePath;
+    range: TextRange;
+    indent_style: IndentStyle;
+}
+
+type TextSize = number;
+
+interface FormatOnTypeParams {
+    path: RomePath;
+    offset: TextSize;
+    indent_style: IndentStyle;
+}
+
+interface FixFileParams {
+    path: RomePath;
+}
+
+interface FixFileResult {
+    code: string;
+    actions: FixAction[];
+}
+
+interface FixAction {
+    rule_name: string;
+    range: TextRange;
+}
+
+interface RenameParams {
+    path: RomePath;
+    symbol_at: TextSize;
+    new_name: string;
+}
+
+interface Indel {}
+
+interface RenameResult {
+    range: TextRange;
+    indels: Indel;
+}
+"#;
