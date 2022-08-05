@@ -104,7 +104,7 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
                 _ => None,
             }
         }
-        JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => return Some(()),
+        JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => Some(()),
         _ => None,
     }
 }
