@@ -584,16 +584,14 @@ impl SemanticEventExtractor {
             return;
         }
 
-        if let Some(possible_export) = function_declaration.parent() {
-            let is_exported = matches!(
-                possible_export.kind(),
-                JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE
-            );
-            if is_exported {
-                self.stash.push_back(SemanticEvent::Exported {
-                    range: binding.text_range(),
-                });
-            }
+        let is_exported = matches!(
+            function_declaration.parent().map(|p| p.kind()),
+            Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
+        );
+        if is_exported {
+            self.stash.push_back(SemanticEvent::Exported {
+                range: binding.text_range(),
+            });
         }
     }
 
@@ -614,17 +612,14 @@ impl SemanticEventExtractor {
             return;
         }
 
-        if let Some(possible_export) = class_declaration.parent() {
-            let is_exported = matches!(
-                possible_export.kind(),
-                JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE
-            );
-
-            if is_exported {
-                self.stash.push_back(SemanticEvent::Exported {
-                    range: binding.text_range(),
-                });
-            }
+        let is_exported = matches!(
+            class_declaration.parent().map(|p| p.kind()),
+            Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
+        );
+        if is_exported {
+            self.stash.push_back(SemanticEvent::Exported {
+                range: binding.text_range(),
+            });
         }
     }
 
