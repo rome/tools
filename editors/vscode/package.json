@@ -112,9 +112,9 @@
 	"devDependencies": {
 		"@types/node": "^18.0.0",
 		"@types/vscode": "^1.68.1",
-		"esbuild": "^0.14.47",
-		"rome": "^0.8.0-next",
 		"typescript": "^4.5.2",
-		"vsce": "^2.10.0"
+		"vsce": "^2.10.0",
+		"esbuild": "^0.14.47",
+		"rome": "next"
 	}
 }
