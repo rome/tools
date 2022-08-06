@@ -8131,7 +8131,7 @@ impl TsDeclareFunctionDeclaration {
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 3usize)
     }
@@ -8156,7 +8156,7 @@ impl Serialize for TsDeclareFunctionDeclaration {
 pub struct TsDeclareFunctionDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
-    pub id: SyntaxResult<JsAnyBinding>,
+    pub id: Option<JsAnyBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -21299,7 +21299,7 @@ impl std::fmt::Debug for TsDeclareFunctionDeclaration {
                 "function_token",
                 &support::DebugSyntaxResult(self.function_token()),
             )
-            .field("id", &support::DebugSyntaxResult(self.id()))
+            .field("id", &support::DebugOptionalElement(self.id()))
             .field(
                 "type_parameters",
                 &support::DebugOptionalElement(self.type_parameters()),

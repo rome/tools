@@ -103,6 +103,7 @@ struct Test {
 enum Language {
     JavaScript,
     TypeScript,
+    TypescriptDeclaration,
     Jsx,
     Tsx,
 }
@@ -114,6 +115,7 @@ impl Language {
             Language::TypeScript => "ts",
             Language::Jsx => "jsx",
             Language::Tsx => "tsx",
+            Language::TypescriptDeclaration => "d.ts",
         }
     }
 
@@ -123,6 +125,7 @@ impl Language {
             "ts" => Language::TypeScript,
             "jsx" => Language::Jsx,
             "tsx" => Language::Tsx,
+            "d.ts" => Language::TypescriptDeclaration,
             _ => {
                 return None;
             }
@@ -154,6 +157,7 @@ fn collect_tests(s: &str) -> Vec<Test> {
             Some(("js", name)) => (Language::JavaScript, name),
             Some(("ts", name)) => (Language::TypeScript, name),
             Some(("tsx", name)) => (Language::Tsx, name),
+            Some(("d.ts", name)) => (Language::TypescriptDeclaration, name),
             Some((name, _)) => (Language::JavaScript, name),
             _ => (Language::JavaScript, suffix),
         };

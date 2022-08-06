@@ -1728,7 +1728,7 @@ TsExternalModuleReference =
 TsDeclareFunctionDeclaration =
 	'async'?
 	'function'
-	id: JsAnyBinding
+	id: JsAnyBinding?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?

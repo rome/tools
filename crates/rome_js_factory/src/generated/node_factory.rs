@@ -4187,14 +4187,13 @@ impl TsConstructorTypeBuilder {
 }
 pub fn ts_declare_function_declaration(
     function_token: SyntaxToken,
-    id: JsAnyBinding,
     parameters: JsParameters,
 ) -> TsDeclareFunctionDeclarationBuilder {
     TsDeclareFunctionDeclarationBuilder {
         function_token,
-        id,
         parameters,
         async_token: None,
+        id: None,
         type_parameters: None,
         return_type_annotation: None,
         semicolon_token: None,
@@ -4202,9 +4201,9 @@ pub fn ts_declare_function_declaration(
 }
 pub struct TsDeclareFunctionDeclarationBuilder {
     function_token: SyntaxToken,
-    id: JsAnyBinding,
     parameters: JsParameters,
     async_token: Option<SyntaxToken>,
+    id: Option<JsAnyBinding>,
     type_parameters: Option<TsTypeParameters>,
     return_type_annotation: Option<TsReturnTypeAnnotation>,
     semicolon_token: Option<SyntaxToken>,
@@ -4212,6 +4211,10 @@ pub struct TsDeclareFunctionDeclarationBuilder {
 impl TsDeclareFunctionDeclarationBuilder {
     pub fn with_async_token(mut self, async_token: SyntaxToken) -> Self {
         self.async_token = Some(async_token);
+        self
+    }
+    pub fn with_id(mut self, id: JsAnyBinding) -> Self {
+        self.id = Some(id);
         self
     }
     pub fn with_type_parameters(mut self, type_parameters: TsTypeParameters) -> Self {
@@ -4235,7 +4238,8 @@ impl TsDeclareFunctionDeclarationBuilder {
             [
                 self.async_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.function_token)),
-                Some(SyntaxElement::Node(self.id.into_syntax())),
+                self.id
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.type_parameters
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Node(self.parameters.into_syntax())),

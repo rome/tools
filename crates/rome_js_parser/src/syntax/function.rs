@@ -67,7 +67,7 @@ pub(super) fn parse_function_declaration(
 
     let m = p.start();
     let mut function = if p.state.in_ambient_context() {
-        parse_ambient_function(p, m)
+        parse_ambient_function(p, m, AmbientFunctionKind::Declaration)
     } else {
         parse_function(
             p,
@@ -124,7 +124,7 @@ pub(super) fn parse_function_export_default_declaration(p: &mut Parser) -> Parse
     let m = p.start();
 
     Present(if p.state.in_ambient_context() {
-        parse_ambient_function(p, m)
+        parse_ambient_function(p, m, AmbientFunctionKind::Export)
     } else {
         parse_function(p, m, FunctionKind::ExportDefault)
     })
@@ -340,11 +340,29 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
 // declare module a {
 //   function test(): string;
 // }
-pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMarker {
+
+#[derive(Eq, PartialEq, Debug)]
+pub(crate) enum AmbientFunctionKind {
+    Declaration,
+    Export,
+}
+
+pub(crate) fn parse_ambient_function(
+    p: &mut Parser,
+    m: Marker,
+    kind: AmbientFunctionKind,
+) -> CompletedMarker {
     let stmt_start = p.cur_range().start();
 
     // test_err ts ts_declare_async_function
     // declare async function test();
+
+    // test d.ts ts_ambient_export_default_function
+    // export default function (objA: any, objB: any): boolean;
+    // declare module "classnames" {
+    //   export default function classnames(...inputs: (string)[]): string;
+    // }
+    dbg!(&kind);
     let is_async = p.at(T![async]);
     if is_async {
         p.error(
@@ -355,7 +373,14 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
     }
 
     p.expect(T![function]);
-    parse_binding(p).or_add_diagnostic(p, expected_binding);
+    if kind == AmbientFunctionKind::Declaration {
+        parse_binding(p).or_add_diagnostic(p, expected_binding);
+    } else {
+        // In export default function, the name binding is optional. e.g.
+        // export default function (objA: any, objB: any): boolean;
+        //                        ^
+        parse_binding(p).ok();
+    }
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
