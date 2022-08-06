@@ -892,8 +892,8 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /codemirror-lang-rome-ast/0.0.4:
-    resolution: {integrity: sha512-fX6ahzHRhN2dNU6YcMDelT74qL4S3w+mu9PqE8xQA0UvBR/auGJsMFuKM6AJTK9ktZQ2y3cwZAa3hOevSZy01g==}
+  /codemirror-lang-rome-ast/0.0.6:
+    resolution: {integrity: sha512-2E4E4rNcj6XxLsVjCZJeOsdEXpfdgiejuLrbq6O4muXzf0KSv5X0ScQrs3LK5LmGwoQUC0AowYbfdj3lsaLWkQ==}
     dependencies:
       '@codemirror/autocomplete': 6.0.4
       '@codemirror/language': 6.2.0
