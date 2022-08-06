@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@codemirror/lang-javascript": "^6.0.1",
 		"codemirror-lang-rome-ast": "0.0.4",
+		"lang-rome-formatter-ir": "0.0.2",
 		"@uiw/react-codemirror": "^4.11.4",
 		"@codemirror/view": "6.1.0",
 		"@codemirror/state": "6.1.0",
@@ -34,7 +35,7 @@
 		"@vitejs/plugin-react": "^1.0.7",
 		"autoprefixer": "^10.4.2",
 		"postcss": "^8.4.6",
-		"rome": "^0.7.0-next",
+		"rome": "next",
 		"tailwindcss": "^3.0.19",
 		"typescript": "^4.4.4",
 		"vite": "2.9.5",
