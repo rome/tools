@@ -665,6 +665,79 @@ impl<Context> std::fmt::Debug for Indent<'_, Context> {
     }
 }
 
+/// It reduces the indention for the given content depending on the closest [indent] or [align] parent element.
+/// * [align] Undoes the spaces added by [align]
+/// * [indent] Reduces the indention level by one
+///
+/// This is a No-op if the indention level is zero.
+///
+/// # Examples
+///
+/// ```
+/// use rome_formatter::{format, format_args};
+/// use rome_formatter::prelude::*;
+///
+/// let block = format!(SimpleFormatContext::default(), [
+///     text("root"),
+///     align(2, &format_args![
+///         hard_line_break(),
+///         text("aligned"),
+///         dedent(&format_args![
+///             hard_line_break(),
+///             text("not aligned"),
+///         ]),
+///         dedent(&indent(&format_args![
+///             hard_line_break(),
+///             text("Indented, not aligned")
+///         ]))
+///     ]),
+///     dedent(&format_args![
+///         hard_line_break(),
+///         text("Dedent on root level is a no-op.")
+///     ])
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "root\n  aligned\nnot aligned\n\tIndented, not aligned\nDedent on root level is a no-op.",
+///     block.print().as_code()
+/// );
+/// ```
+#[inline]
+pub fn dedent<Content, Context>(content: &Content) -> Dedent<Context>
+where
+    Content: Format<Context>,
+{
+    Dedent {
+        content: Argument::new(content),
+    }
+}
+
+#[derive(Copy, Clone)]
+pub struct Dedent<'a, Context> {
+    content: Argument<'a, Context>,
+}
+
+impl<Context> Format<Context> for Dedent<'_, Context> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
+
+        buffer.write_fmt(Arguments::from(&self.content))?;
+
+        if buffer.is_empty() {
+            return Ok(());
+        }
+
+        let content = buffer.into_vec();
+        f.write_element(FormatElement::Dedent(content.into_boxed_slice()))
+    }
+}
+
+impl<Context> std::fmt::Debug for Dedent<'_, Context> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_tuple("Dedent").field(&"{{content}}").finish()
+    }
+}
+
 /// Aligns its content by indenting the content by `count` spaces.
 ///
 /// [align] is a variant of `[indent]` that indents its content by a specified number of spaces rather than
