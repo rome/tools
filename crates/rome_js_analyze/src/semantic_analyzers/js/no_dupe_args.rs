@@ -31,7 +31,7 @@ declare_rule! {
     /// function foo([[a, b], [c, d]]) {}
     /// ```
     pub(crate) NoDupeArgs {
-        version: "0.8.0",
+        version: "0.9.0",
         name: "noDupeArgs",
         recommended: true,
     }

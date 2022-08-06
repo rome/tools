@@ -78,7 +78,7 @@ Require the use of <code>===</code> and <code>!==</code>
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDupeArgs">
-	<a href="/docs/lint/rules/noDupeArgs">noDupeArgs (since v0.8.0)</a>
+	<a href="/docs/lint/rules/noDupeArgs">noDupeArgs (since v0.9.0)</a>
 	<a class="header-anchor" href="#noDupeArgs"></a>
 	<span class="recommended">recommended</span>
 </h3>

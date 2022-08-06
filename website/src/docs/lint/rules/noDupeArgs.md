@@ -3,7 +3,7 @@ title: Lint Rule noDupeArgs
 layout: layouts/rule.liquid
 ---
 
-# noDupeArgs (since v0.8.0)
+# noDupeArgs (since v0.9.0)
 
 > This rule is recommended by Rome.
 
