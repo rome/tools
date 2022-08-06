@@ -1,0 +1,13 @@
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "js": {
+        "rules": {
+          "noUnusedVariables": "off"
+        }
+      }
+    }
+  }
+}
