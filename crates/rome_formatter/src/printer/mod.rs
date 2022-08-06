@@ -561,7 +561,7 @@ impl PrintElementArgs {
     }
 
     pub fn decrement_indent(mut self) -> Self {
-        self.indent = self.indent.decrement_indent();
+        self.indent = self.indent.decrement();
         self
     }
 
@@ -636,7 +636,7 @@ impl Indention {
     /// * Removing the `align` if this is [Indent::Align]
     ///
     /// No-op if the level is already zero.
-    fn decrement_indent(self) -> Self {
+    fn decrement(self) -> Self {
         match self {
             Indention::Level(level) => Indention::Level(level.saturating_sub(1)),
             Indention::Align { level, .. } => Indention::Level(level),

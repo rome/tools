@@ -691,10 +691,14 @@ impl<Context> std::fmt::Debug for Indent<'_, Context> {
 ///             text("Indented, not aligned")
 ///         ]))
 ///     ]),
+///     dedent(&format_args![
+///         hard_line_break(),
+///         text("Dedent on root level is a no-op.")
+///     ])
 /// ]).unwrap();
 ///
 /// assert_eq!(
-///     "root\n  aligned\nnot aligned\n\tIndented, not aligned",
+///     "root\n  aligned\nnot aligned\n\tIndented, not aligned\nDedent on root level is a no-op.",
 ///     block.print().as_code()
 /// );
 /// ```
