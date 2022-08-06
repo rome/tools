@@ -7,7 +7,7 @@ use crate::format_element::{
     Align, ConditionalGroupContent, Group, LineMode, PrintMode, VerbatimKind,
 };
 use crate::intersperse::Intersperse;
-use crate::{FormatElement, GroupId, Printed, SourceMarker, TextRange};
+use crate::{FormatElement, GroupId, IndentStyle, Printed, SourceMarker, TextRange};
 
 use rome_rowan::TextSize;
 use std::iter::{once, Rev};
@@ -80,15 +80,25 @@ impl<'a> Printer<'a> {
             }
             FormatElement::Text(token) => {
                 if !self.state.pending_indent.is_empty() {
-                    self.print_str(
-                        self.options
-                            .indent_string
-                            .repeat(self.state.pending_indent.level() as usize)
-                            .as_str(),
-                    );
+                    let (indent_char, repeat_count) = match self.options.indent_style() {
+                        IndentStyle::Tab => ('\t', 1),
+                        IndentStyle::Space(count) => (' ', count),
+                    };
 
-                    self.print_str(&" ".repeat(self.state.pending_indent.align() as usize));
-                    self.state.pending_indent = Indention::default();
+                    let indent = std::mem::take(&mut self.state.pending_indent);
+                    let total_indent_char_count = indent.level() as usize * repeat_count as usize;
+
+                    self.state
+                        .buffer
+                        .reserve(total_indent_char_count + indent.align() as usize);
+
+                    for _ in 0..total_indent_char_count {
+                        self.print_char(indent_char);
+                    }
+
+                    for _ in 0..indent.align() {
+                        self.print_char(' ');
+                    }
                 }
 
                 // Print pending spaces
@@ -170,7 +180,10 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Indent(content) => {
-                queue.extend_with_args(content.iter(), args.increment_indent_level());
+                queue.extend_with_args(
+                    content.iter(),
+                    args.increment_indent_level(self.options.indent_style()),
+                );
             }
 
             FormatElement::Dedent(content) => {
@@ -460,27 +473,31 @@ impl<'a> Printer<'a> {
 
     fn print_str(&mut self, content: &str) {
         for char in content.chars() {
-            if char == '\n' {
-                self.state
-                    .buffer
-                    .push_str(self.options.line_ending.as_str());
-                self.state.generated_line += 1;
-                self.state.generated_column = 0;
-                self.state.line_width = 0;
-            } else {
-                self.state.buffer.push(char);
-                self.state.generated_column += 1;
-
-                let char_width = if char == '\t' {
-                    self.options.tab_width as usize
-                } else {
-                    1
-                };
-
-                self.state.line_width += char_width;
-            }
+            self.print_char(char);
 
             self.state.has_empty_line = false;
+        }
+    }
+
+    fn print_char(&mut self, char: char) {
+        if char == '\n' {
+            self.state
+                .buffer
+                .push_str(self.options.line_ending.as_str());
+            self.state.generated_line += 1;
+            self.state.generated_column = 0;
+            self.state.line_width = 0;
+        } else {
+            self.state.buffer.push(char);
+            self.state.generated_column += 1;
+
+            let char_width = if char == '\t' {
+                self.options.tab_width as usize
+            } else {
+                1
+            };
+
+            self.state.line_width += char_width;
         }
     }
 }
@@ -555,8 +572,8 @@ impl PrintElementArgs {
         }
     }
 
-    pub fn increment_indent_level(mut self) -> Self {
-        self.indent = self.indent.increment_level();
+    pub fn increment_indent_level(mut self, indent_style: IndentStyle) -> Self {
+        self.indent = self.indent.increment_level(indent_style);
         self
     }
 
@@ -622,12 +639,22 @@ impl Indention {
 
     /// Increments the level by one.
     ///
-    /// It sets `align` to 0 if the current value is [Indent::Align] and increments the level by one.
-    fn increment_level(self) -> Self {
+    /// The behaviour if this is an [Indent::Align] depends on the indent character used by the printer:
+    /// * **Tabs**: `align` is converted into an indent. This results in `level` increasing by two: once for the align, once for the level increment
+    /// * **Spaces**: Increments the `level` by one and keeps the `align` unchanged.
+    /// Keeps any  the current value is [Indent::Align] and increments the level by one.
+    fn increment_level(self, indent_style: IndentStyle) -> Self {
         match self {
             Indention::Level(count) => Indention::Level(count + 1),
             // Increase the indent AND convert the align to an indent
-            Indention::Align { level: indent, .. } => Indention::Level(indent + 2),
+            Indention::Align { level, .. } if indent_style.is_tab() => Indention::Level(level + 2),
+            Indention::Align {
+                level: indent,
+                align,
+            } => Indention::Align {
+                level: indent + 1,
+                align,
+            },
         }
     }
 
@@ -878,9 +905,10 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Indent(content) => {
-            queue.extend(content.iter(), args.increment_indent_level())
-        }
+        FormatElement::Indent(content) => queue.extend(
+            content.iter(),
+            args.increment_indent_level(options.indent_style()),
+        ),
 
         FormatElement::Dedent(content) => queue.extend(content.iter(), args.decrement_indent()),
 
@@ -918,9 +946,9 @@ fn fits_element_on_line<'a, 'rest>(
         ),
 
         FormatElement::Text(token) => {
-            state.line_width += state.pending_indent.level() as usize * options.indent_string.len()
-                + state.pending_indent.align() as usize;
-            state.pending_indent = Indention::default();
+            let indent = std::mem::take(&mut state.pending_indent);
+            state.line_width +=
+                indent.level() as usize * options.indent_width() as usize + indent.align() as usize;
 
             if state.pending_space {
                 state.line_width += 1;
@@ -1079,13 +1107,13 @@ impl<'a, 'rest> MeasureQueue<'a, 'rest> {
 mod tests {
     use crate::prelude::*;
     use crate::printer::{LineEnding, Printer, PrinterOptions};
-    use crate::{format_args, write, FormatState, LineWidth, Printed, VecBuffer};
+    use crate::{format_args, write, FormatState, IndentStyle, LineWidth, Printed, VecBuffer};
 
     fn format(root: &dyn Format<()>) -> Printed {
         format_with_options(
             root,
             PrinterOptions {
-                indent_string: String::from("  "),
+                indent_style: IndentStyle::Space(2),
                 ..PrinterOptions::default()
             },
         )
@@ -1226,7 +1254,7 @@ two lines`,
     #[test]
     fn it_use_the_indent_character_specified_in_the_options() {
         let options = PrinterOptions {
-            indent_string: String::from("\t"),
+            indent_style: IndentStyle::Tab,
             tab_width: 4,
             print_width: LineWidth::try_from(19).unwrap(),
             ..PrinterOptions::default()

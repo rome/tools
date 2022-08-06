@@ -68,7 +68,7 @@ use std::num::ParseIntError;
 use std::rc::Rc;
 use std::str::FromStr;
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum IndentStyle {
     /// Tab
@@ -79,6 +79,16 @@ pub enum IndentStyle {
 
 impl IndentStyle {
     pub const DEFAULT_SPACES: u8 = 2;
+
+    /// Returns `true` if this is an [IndentStyle::Tab].
+    pub const fn is_tab(&self) -> bool {
+        matches!(self, IndentStyle::Tab)
+    }
+
+    /// Returns `true` if this is an [IndentStyle::Space].
+    pub const fn is_space(&self) -> bool {
+        matches!(self, IndentStyle::Space(_))
+    }
 }
 
 impl Default for IndentStyle {

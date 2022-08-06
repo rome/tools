@@ -747,6 +747,9 @@ impl<Context> std::fmt::Debug for Dedent<'_, Context> {
 /// Using [indent] is preferred in all other situations as it respects the users preferred indent character.
 ///
 /// # Examples
+///
+/// ## Tab indention
+///
 /// ```
 /// use std::num::NonZeroU8;
 /// use rome_formatter::{format, format_args};
@@ -779,9 +782,52 @@ impl<Context> std::fmt::Debug for Dedent<'_, Context> {
 /// );
 /// ```
 ///
-/// You can see that the printer indents the function's `}` by two spaces as specified by the IR and not with a tab.
-/// You can further see that alignments behave the same as an `indent` if you nest `indent` inside an align.
+/// You can see that:
 ///
+/// * the printer indents the function's `}` by two spaces as specified by the IR and not with a tab.
+/// * that `align` acts the same as an `indent` if you nest `indent` inside an align.
+///
+/// ## Spaces indention
+///
+/// ```
+/// use std::num::NonZeroU8;
+/// use rome_formatter::{format, format_args, IndentStyle};
+/// use rome_formatter::prelude::*;
+///
+/// let context = SimpleFormatContext {
+///     indent_style: IndentStyle::Space(4),
+///     ..SimpleFormatContext::default()
+/// };
+///
+/// let block = format!(context, [
+///     text("a"),
+///     hard_line_break(),
+///     text("?"),
+///     space(),
+///     align(2, &format_args![
+///         text("function () {"),
+///         hard_line_break(),
+///         text("}"),
+///     ]),
+///     hard_line_break(),
+///     text(":"),
+///     space(),
+///     align(2, &format_args![
+///         text("function () {"),
+///         block_indent(&text("console.log('test');")),
+///         text("}"),
+///     ]),
+///     text(";")
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "a\n? function () {\n  }\n: function () {\n      console.log('test');\n  };",
+///     block.print().as_code()
+/// );
+/// ```
+///
+/// Nesting an `indent` inside of an `align` has a different semantic when using spaces over tabs as indent sequence.
+/// With spaces, the outer `align` doesn't get converted into an `indent` and is, instead, kept as is.
 pub fn align<Content, Context>(count: u8, content: &Content) -> Align<Context>
 where
     Content: Format<Context>,

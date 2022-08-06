@@ -12,12 +12,8 @@ pub struct PrinterOptions {
     /// The type of line ending to apply to the printed input
     pub line_ending: LineEnding,
 
-    /// The never ending question whatever to use spaces or tabs, and if spaces, how many spaces
-    /// to indent code.
-    ///
-    /// * Tab: Value is '\t'
-    /// * Spaces: String containing the number of spaces per indention level, e.g. "  " for using two spaces
-    pub indent_string: String,
+    /// Whether the printer should use tabs or spaces to indent code and if spaces, by how many.
+    pub indent_style: IndentStyle,
 }
 
 impl PrinterOptions {
@@ -27,18 +23,21 @@ impl PrinterOptions {
     }
 
     pub fn with_indent(mut self, style: IndentStyle) -> Self {
-        match style {
-            IndentStyle::Tab => {
-                self.indent_string = String::from("\t");
-                self.tab_width = 2;
-            }
-            IndentStyle::Space(quantity) => {
-                self.indent_string = " ".repeat(quantity as usize);
-                self.tab_width = quantity;
-            }
-        }
+        self.indent_style = style;
 
         self
+    }
+
+    pub(crate) fn indent_style(&self) -> IndentStyle {
+        self.indent_style
+    }
+
+    /// Width of an indent in characters.
+    pub(super) const fn indent_width(&self) -> u8 {
+        match self.indent_style {
+            IndentStyle::Tab => self.tab_width,
+            IndentStyle::Space(count) => count,
+        }
     }
 }
 
@@ -71,7 +70,7 @@ impl Default for PrinterOptions {
         PrinterOptions {
             tab_width: 2,
             print_width: LineWidth::default(),
-            indent_string: String::from("\t"),
+            indent_style: Default::default(),
             line_ending: LineEnding::LineFeed,
         }
     }

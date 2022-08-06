@@ -396,6 +396,10 @@ impl std::fmt::Debug for BestFitting {
 pub struct Interned(Rc<FormatElement>);
 
 impl Interned {
+    pub(crate) fn new(element: FormatElement) -> Self {
+        Self(Rc::new(element))
+    }
+
     pub(crate) fn try_unwrap(this: Interned) -> Result<FormatElement, Interned> {
         Rc::try_unwrap(this.0).map_err(Interned)
     }
@@ -697,16 +701,6 @@ impl FormatElement {
             _ => Some(self),
         }
     }
-
-    /// Interns a format element.
-    ///
-    /// Returns `self` for an already interned element.
-    pub fn intern(self) -> Interned {
-        match self {
-            FormatElement::Interned(interned) => interned,
-            element => Interned(Rc::new(element)),
-        }
-    }
 }
 
 impl From<Text> for FormatElement {
@@ -772,7 +766,7 @@ impl FormatContext for IrFormatContext {
             tab_width: 2,
             print_width: self.line_width(),
             line_ending: LineEnding::LineFeed,
-            indent_string: "  ".to_string(),
+            indent_style: IndentStyle::Space(2),
         }
     }
 }
