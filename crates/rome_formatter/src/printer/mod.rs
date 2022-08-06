@@ -1,7 +1,6 @@
 mod printer_options;
 
 pub use printer_options::*;
-use std::cmp::Ordering;
 
 use crate::format_element::{
     Align, ConditionalGroupContent, Group, LineMode, PrintMode, VerbatimKind,
@@ -333,7 +332,7 @@ impl<'a> Printer<'a> {
         // If the indentation level has changed since these line suffixes were queued,
         // insert a line break before to push the comments into the new indent block
         // SAFETY: Indexing into line_suffixes is guarded by the above call to is_empty
-        let has_line_break = self.state.line_suffixes[0].args.indent < args.indent;
+        let has_line_break = self.state.line_suffixes[0].args.indent.level() < args.indent.level();
 
         // Print this line break element again once all the line suffixes have been flushed
         let call_self = PrintElementCall::new(line_break, args);
@@ -686,46 +685,6 @@ impl Indention {
                 align: count,
             },
         }
-    }
-}
-
-/// Compares two [Indent]s by first comparing the indent level and, if equal, comparing the `align`.
-/// This implementation assumes that `width(align) < width(1-level)`.
-impl PartialOrd for Indention {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(match (self, other) {
-            (Indention::Level(this_indent), Indention::Level(other_indent)) => {
-                this_indent.cmp(other_indent)
-            }
-            (
-                Indention::Align {
-                    level: this_indent,
-                    align: this_align,
-                },
-                Indention::Align {
-                    level: other_indent,
-                    align: other_align,
-                },
-            ) => {
-                let indent_ordering = this_indent.cmp(other_indent);
-
-                if indent_ordering == Ordering::Equal {
-                    this_align.cmp(other_align)
-                } else {
-                    indent_ordering
-                }
-            }
-            (Indention::Level(this_indent), Indention::Align { level: indent, .. }) => {
-                let indent_ordering = this_indent.cmp(indent);
-
-                if indent_ordering == Ordering::Equal {
-                    Ordering::Greater
-                } else {
-                    indent_ordering
-                }
-            }
-            _ => return other.partial_cmp(self).map(|ordering| ordering.reverse()),
-        })
     }
 }
 

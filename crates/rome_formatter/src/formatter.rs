@@ -211,10 +211,12 @@ where
 impl<Context> Buffer for Formatter<'_, Context> {
     type Context = Context;
 
+    #[inline(always)]
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         self.buffer.write_element(element)
     }
 
+    #[inline(always)]
     fn write_fmt(&mut self, arguments: Arguments<Self::Context>) -> FormatResult<()> {
         for argument in arguments.items() {
             argument.format(self)?;

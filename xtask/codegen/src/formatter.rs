@@ -440,6 +440,7 @@ impl BoilerplateImpls {
             _ => quote! {
                 impl FormatRule<rome_js_syntax::#node_id> for #format_id {
                    type Context = JsFormatContext;
+                    #[inline(always)]
                     fn fmt(&self, node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
                         FormatNodeRule::<rome_js_syntax::#node_id>::fmt(self, node, f)
                     }

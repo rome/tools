@@ -465,6 +465,7 @@ impl<T, Context> Format<Context> for &T
 where
     T: ?Sized + Format<Context>,
 {
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         Format::fmt(&**self, f)
     }
@@ -474,6 +475,7 @@ impl<T, Context> Format<Context> for &mut T
 where
     T: ?Sized + Format<Context>,
 {
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         Format::fmt(&**self, f)
     }
@@ -610,7 +612,7 @@ impl<T, R> Format<R::Context> for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
-    #[inline]
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
         self.rule.fmt(self.item, f)
     }
@@ -648,7 +650,7 @@ impl<T, R> Format<R::Context> for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    #[inline]
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
         self.rule.fmt(&self.item, f)
     }
@@ -711,6 +713,7 @@ where
 /// assert_eq!("Hello World", formatted.print().as_code())
 /// ```
 ///
+#[inline(always)]
 pub fn write<Context>(
     output: &mut dyn Buffer<Context = Context>,
     args: Arguments<Context>,

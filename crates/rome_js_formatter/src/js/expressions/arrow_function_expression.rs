@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
-use crate::utils::is_simple_expression;
+use crate::utils::{is_simple_expression, resolve_expression, starts_with_no_lookahead_token};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunctionBody, JsArrowFunctionExpression,
     JsArrowFunctionExpressionFields,
@@ -80,22 +80,50 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         // going to get broken anyways.
         // TODO: Explore the concept of hierarchical line breaking
         //   or vertical stacking for arrow selfs
-        let body_has_soft_line_break = match &body {
-            JsFunctionBody(_) => true,
+        let (body_has_soft_line_break, should_add_parens) = match &body {
+            JsFunctionBody(_) => (true, false),
             JsAnyExpression(expr) => match expr {
                 JsArrowFunctionExpression(_)
                 | JsArrayExpression(_)
                 | JsObjectExpression(_)
-                | JsxTagExpression(_) => true,
-                JsParenthesizedExpression(_) => true,
-                expr => is_simple_expression(expr)?,
+                | JsxTagExpression(_) => (true, false),
+                JsParenthesizedExpression(expression) => {
+                    let resolved = resolve_expression(expression.expression()?);
+
+                    match resolved {
+                        JsConditionalExpression(conditional) => {
+                            (false, !starts_with_no_lookahead_token(conditional.into())?)
+                        }
+                        _ => (true, false),
+                    }
+                }
+                JsConditionalExpression(conditional) => (
+                    false,
+                    !starts_with_no_lookahead_token(conditional.clone().into())?,
+                ),
+                expr => (is_simple_expression(expr)?, false),
             },
         };
 
         if body_has_soft_line_break {
             write![f, [body.format()]]
         } else {
-            write!(f, [group(&soft_line_indent_or_space(&body.format()))])
+            write!(
+                f,
+                [group(&soft_line_indent_or_space(&format_with(|f| {
+                    if should_add_parens {
+                        write!(f, [if_group_fits_on_line(&text("("))])?;
+                    }
+
+                    write!(f, [body.format()])?;
+
+                    if should_add_parens {
+                        write!(f, [if_group_fits_on_line(&text(")"))])?;
+                    }
+
+                    Ok(())
+                })))]
+            )
         }
     }
 }

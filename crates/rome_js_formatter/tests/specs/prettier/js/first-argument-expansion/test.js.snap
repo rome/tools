@@ -142,7 +142,7 @@ func((args) => {
  
  func(
    function () {
-@@ -48,35 +45,25 @@
+@@ -48,35 +45,26 @@
    1 ? 2 : 3,
  );
  
@@ -166,10 +166,9 @@ func((args) => {
 -);
 +func(() => {
 +  thing();
-+}, something(
-+  longArgumentName,
-+  anotherLongArgumentName,
-+) ? someOtherThing() : somethingElse(true, 0));
++}, something(longArgumentName, anotherLongArgumentName)
++  ? someOtherThing()
++  : somethingElse(true, 0));
  
 -func(
 -  () => {
@@ -191,11 +190,13 @@ func((args) => {
 +  anotherLongArgumentName,
 +  anotherLongArgumentName,
 +  anotherLongArgumentName,
-+) ? someOtherThing() : somethingElse(true, 0));
++)
++  ? someOtherThing()
++  : somethingElse(true, 0));
  
  compose(
    (a) => {
-@@ -86,19 +73,20 @@
+@@ -86,19 +74,20 @@
  );
  
  somthing.reduce(function (item, thing) {
@@ -223,7 +224,7 @@ func((args) => {
  
  // Don't do the rest of these
  
-@@ -110,12 +98,9 @@
+@@ -110,12 +99,9 @@
    false,
  );
  
@@ -239,7 +240,7 @@ func((args) => {
  
  compose(
    (a) => {
-@@ -146,12 +131,10 @@
+@@ -146,12 +132,10 @@
    500,
  );
  
@@ -314,10 +315,9 @@ func(() => {
 
 func(() => {
   thing();
-}, something(
-  longArgumentName,
-  anotherLongArgumentName,
-) ? someOtherThing() : somethingElse(true, 0));
+}, something(longArgumentName, anotherLongArgumentName)
+  ? someOtherThing()
+  : somethingElse(true, 0));
 
 func(() => {
   thing();
@@ -326,7 +326,9 @@ func(() => {
   anotherLongArgumentName,
   anotherLongArgumentName,
   anotherLongArgumentName,
-) ? someOtherThing() : somethingElse(true, 0));
+)
+  ? someOtherThing()
+  : somethingElse(true, 0));
 
 compose(
   (a) => {

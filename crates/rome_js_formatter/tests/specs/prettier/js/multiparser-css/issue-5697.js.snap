@@ -30,23 +30,22 @@ const StyledH1 = styled.div`
 ```diff
 --- Prettier
 +++ Rome
-@@ -4,15 +4,16 @@
+@@ -4,15 +4,18 @@
    font-family: ${constants.text.displayFont.fontFamily};
    letter-spacing: ${(props) => (props.light ? "0.04em" : 0)};
    color: ${(props) => props.textColor};
 -  ${(props) =>
--    props.center
--      ? ` display: flex;
 +  ${
 +  (props) =>
-+    props.center ? ` display: flex;
+     props.center
+       ? ` display: flex;
                  align-items: center;
                  justify-content: center;
--                text-align: center;`
+                 text-align: center;`
 -      : ""}
 -  @media (max-width: ${(props) =>
 -    props.noBreakPoint ? "0" : constants.layout.breakpoint.break1}px) {
-+                text-align: center;` : ""
++      : ""
 +}
 +  @media (max-width: ${
 +  (props) => (props.noBreakPoint ? "0" : constants.layout.breakpoint.break1)
@@ -67,10 +66,12 @@ const StyledH1 = styled.div`
   color: ${(props) => props.textColor};
   ${
   (props) =>
-    props.center ? ` display: flex;
+    props.center
+      ? ` display: flex;
                 align-items: center;
                 justify-content: center;
-                text-align: center;` : ""
+                text-align: center;`
+      : ""
 }
   @media (max-width: ${
   (props) => (props.noBreakPoint ? "0" : constants.layout.breakpoint.break1)

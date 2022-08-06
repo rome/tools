@@ -53,51 +53,18 @@ bifornCringerMoshedPerplexSawder =
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,50 +1,43 @@
- foo = (
--  coooooooooooooooooooooooooooooooooooooooooooooooooooond
--    ? baaaaaaaaaaaaaaaaaaaaar
--    : baaaaaaaaaaaaaaaaaaaaaz
-+  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
- ) as Fooooooooooo;
- 
- foo = (condition ? firstValue : secondValue) as SomeType;
- 
- const foo = (
--  coooooooooooooooooooooooooooooooooooooooooooooooooooond
--    ? baaaaaaaaaaaaaaaaaaaaar
--    : baaaaaaaaaaaaaaaaaaaaaz
-+  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
- ) as Fooooooooooo;
- 
- function foo() {
-   return (
--    coooooooooooooooooooooooooooooooooooooooooooooooooooond
--      ? baaaaaaaaaaaaaaaaaaaaar
--      : baaaaaaaaaaaaaaaaaaaaaz
-+    coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-   ) as Fooooooooooo;
- }
- 
- function foo() {
-   throw (
--    coooooooooooooooooooooooooooooooooooooooooooooooooooond
--      ? baaaaaaaaaaaaaaaaaaaaar
--      : baaaaaaaaaaaaaaaaaaaaaz
-+    coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-   ) as Fooooooooooo;
+@@ -29,22 +29,23 @@
  }
  
  function foo() {
 -  void ((
 -    coooooooooooooooooooooooooooooooooooooooooooooooooooond
--      ? baaaaaaaaaaaaaaaaaaaaar
++  void (
++    (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+       ? baaaaaaaaaaaaaaaaaaaaar
 -      : baaaaaaaaaaaaaaaaaaaaaz
 -  ) as Fooooooooooo);
-+  void (
-+    (
-+      coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-+    ) as Fooooooooooo
++      : baaaaaaaaaaaaaaaaaaaaaz) as Fooooooooooo
 +  );
  }
  
@@ -107,9 +74,9 @@ bifornCringerMoshedPerplexSawder =
 -    ? averredBathersBoxroomBuggyNurl
 -    : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
 +  askTrovenaBeenaDependsRowans + (
-+    (
-+      glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-+    ) as AnnularCooeedSplicesWalksWayWay
++    (glimseGlyphsHazardNoopsTieTie === 0
++      ? averredBathersBoxroomBuggyNurl
++      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
 +  );
  
  bifornCringerMoshedPerplexSawder =
@@ -119,9 +86,9 @@ bifornCringerMoshedPerplexSawder =
 -    ? averredBathersBoxroomBuggyNurl
 -    : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
 +  askTrovenaBeenaDependsRowans + (
-+    (
-+      glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-+    ) as AnnularCooeedSplicesWalksWayWay
++    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
++      ? averredBathersBoxroomBuggyNurl
++      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
 +  );
 ```
 
@@ -129,59 +96,61 @@ bifornCringerMoshedPerplexSawder =
 
 ```js
 foo = (
-  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+  coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz
 ) as Fooooooooooo;
 
 foo = (condition ? firstValue : secondValue) as SomeType;
 
 const foo = (
-  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+  coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz
 ) as Fooooooooooo;
 
 function foo() {
   return (
-    coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+    coooooooooooooooooooooooooooooooooooooooooooooooooooond
+      ? baaaaaaaaaaaaaaaaaaaaar
+      : baaaaaaaaaaaaaaaaaaaaaz
   ) as Fooooooooooo;
 }
 
 function foo() {
   throw (
-    coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+    coooooooooooooooooooooooooooooooooooooooooooooooooooond
+      ? baaaaaaaaaaaaaaaaaaaaar
+      : baaaaaaaaaaaaaaaaaaaaaz
   ) as Fooooooooooo;
 }
 
 function foo() {
   void (
-    (
-      coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-    ) as Fooooooooooo
+    (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+      ? baaaaaaaaaaaaaaaaaaaaar
+      : baaaaaaaaaaaaaaaaaaaaaz) as Fooooooooooo
   );
 }
 
 bifornCringerMoshedPerplexSawder =
   askTrovenaBeenaDependsRowans + (
-    (
-      glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-    ) as AnnularCooeedSplicesWalksWayWay
+    (glimseGlyphsHazardNoopsTieTie === 0
+      ? averredBathersBoxroomBuggyNurl
+      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
   );
 
 bifornCringerMoshedPerplexSawder =
   askTrovenaBeenaDependsRowans + (
-    (
-      glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-    ) as AnnularCooeedSplicesWalksWayWay
+    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+      ? averredBathersBoxroomBuggyNurl
+      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
   );
 ```
 
 
 # Lines exceeding max width of 80 characters
 ```
-    2:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-    8:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-   13:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-   19:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-   26:       coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-   34:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-   41:       glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+   48:     (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
 ```
 

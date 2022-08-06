@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
+assertion_line: 259
 expression: property_object_member.js
 ---
 # Input
@@ -149,14 +149,21 @@ const breakAfterColonObject = {
 		33333333333333331, "dsadsadasdsadas", 3, "dsadsadasdsadasdsadsadasdsadas", 5
 	),
 	"conditional-expression-1":
-		this.state
-			.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
+		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true
+			? {}
+			: {},
 	"conditional-expression-2":
-		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337
+			? {}
+			: {},
 	"conditional-expression-3":
-		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132
+			? {}
+			: {},
 	"conditional-expression-4":
-		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object ? {} : {},
+		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object
+			? {}
+			: {},
 	"conditional-expression-5":
 		{
 			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
@@ -181,14 +188,21 @@ const breakAfterColonObject = {
 	),
 
 	a:
-		this.state
-			.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
+		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true
+			? {}
+			: {},
 	b:
-		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337
+			? {}
+			: {},
 	c:
-		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132
+			? {}
+			: {},
 	d:
-		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object ? {} : {},
+		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object
+			? {}
+			: {},
 	g:
 		{
 			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
@@ -252,12 +266,10 @@ const fluidObject = {
    28: 		"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
    36: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
    38: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   52: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   54: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
-   64: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
-   66: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
-   68: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
-   70: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   84: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   86: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   57: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132
+   71: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
+   73: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
+   75: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
+   77: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
+   96: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132
 

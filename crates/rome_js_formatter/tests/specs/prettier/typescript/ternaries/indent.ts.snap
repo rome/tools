@@ -63,61 +63,36 @@ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,60 +1,44 @@
- foo = (
--  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
--    ? callNode.parent.parent
--    : callNode.parent
-+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-+    .parent : callNode.parent
- ).TSESTree!.BinaryExpression;
- 
- foo = (
--  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
--    ? callNode.parent.parent
--    : callNode.parent
-+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-+    .parent : callNode.parent
+@@ -11,13 +11,12 @@
  ).TSESTree!.BinaryExpression;
  
  bifornCringerMoshedPerplexSawder = (
 -  glimseGlyphsHazardNoopsTieTie === 0 &&
 -  kochabCooieGameOnOboleUnweave === Math.PI
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol
++  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol
 -).annularCooeedSplicesWalksWayWay
 -  .annularCooeedSplicesWalksWayWay(annularCooeedSplicesWalksWayWay)!
 -  .annularCooeedSplicesWalksWayWay();
-+  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
 +).annularCooeedSplicesWalksWayWay.annularCooeedSplicesWalksWayWay(
 +  annularCooeedSplicesWalksWayWay,
 +)!.annularCooeedSplicesWalksWayWay();
  
  foo = (
--  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
--    ? callNode.parent.parent
--    : callNode.parent
-+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-+    .parent : callNode.parent
- ).TSESTree!.BinaryExpression!;
- 
- foo = (
--  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
--    ? callNode.parent.parent
--    : callNode.parent
-+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-+    .parent : callNode.parent
+   callNode.parent?.type === AST_NODE_TYPES.ChainExpression
+@@ -32,17 +31,15 @@
  ).TSESTree!.BinaryExpression!;
  
  bifornCringerMoshedPerplexSawder = (
 -  glimseGlyphsHazardNoopsTieTie === 0 &&
 -  kochabCooieGameOnOboleUnweave === Math.PI
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol
++  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol
 -).annularCooeedSplicesWalksWayWay
 -  .annularCooeedSplicesWalksWayWay(annularCooeedSplicesWalksWayWay)!
 -  .annularCooeedSplicesWalksWayWay()!;
-+  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
 +).annularCooeedSplicesWalksWayWay.annularCooeedSplicesWalksWayWay(
 +  annularCooeedSplicesWalksWayWay,
 +)!.annularCooeedSplicesWalksWayWay()!;
@@ -125,83 +100,78 @@ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  (glimseGlyphsHazardNoopsTieTie === 0
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol
-+  askTrovenaBeenaDependsRowans + (
-+    glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
++  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol
    ).Foo!.foo;
- 
- foo = (
--  coooooooooooooooooooooooooooooooooooooooooooooooooooond
--    ? baaaaaaaaaaaaaaaaaaaaar
--    : baaaaaaaaaaaaaaaaaaaaaz
-+  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
- )!;
- 
- foo = (
--  coooooooooooooooooooooooooooooooooooooooooooooooooooond
--    ? baaaaaaaaaaaaaaaaaaaaar
--    : baaaaaaaaaaaaaaaaaaaaaz
-+  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
- )!!!!!;
 ```
 
 # Output
 
 ```js
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-    .parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
+    ? callNode.parent.parent
+    : callNode.parent
 ).TSESTree!.BinaryExpression;
 
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-    .parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
+    ? callNode.parent.parent
+    : callNode.parent
 ).TSESTree!.BinaryExpression;
 
 bifornCringerMoshedPerplexSawder = (
-  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol
 ).annularCooeedSplicesWalksWayWay.annularCooeedSplicesWalksWayWay(
   annularCooeedSplicesWalksWayWay,
 )!.annularCooeedSplicesWalksWayWay();
 
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-    .parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
+    ? callNode.parent.parent
+    : callNode.parent
 ).TSESTree!.BinaryExpression!;
 
 foo = (
-  callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent
-    .parent : callNode.parent
+  callNode.parent?.type === AST_NODE_TYPES.ChainExpression
+    ? callNode.parent.parent
+    : callNode.parent
 ).TSESTree!.BinaryExpression!;
 
 bifornCringerMoshedPerplexSawder = (
-  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol
 ).annularCooeedSplicesWalksWayWay.annularCooeedSplicesWalksWayWay(
   annularCooeedSplicesWalksWayWay,
 )!.annularCooeedSplicesWalksWayWay()!;
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol
   ).Foo!.foo;
 
 foo = (
-  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+  coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz
 )!;
 
 foo = (
-  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+  coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz
 )!!!!!;
 ```
 
 
 # Lines exceeding max width of 80 characters
 ```
-   12:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-   28:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-   35:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-   39:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-   43:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   14:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+   34:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
 ```
 

@@ -1,5 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 271
+info:
+  test_file: js/unary-expression/urnary_expression.js
 ---
 
 # Input

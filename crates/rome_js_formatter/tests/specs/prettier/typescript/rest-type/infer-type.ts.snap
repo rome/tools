@@ -33,14 +33,6 @@ type ReduceNextElement<
  
  // but not remove parens from this:
  type Tail3<T extends any[]> = T extends [infer U, ...(infer R)[]] ? R : never;
-@@ -9,6 +9,4 @@
- type ReduceNextElement<T extends readonly unknown[]> = T extends readonly [
-   infer V,
-   ...infer R,
--]
--  ? [V, R]
--  : never;
-+] ? [V, R] : never;
 ```
 
 # Output
@@ -57,7 +49,9 @@ type Tail3<T extends any[]> = T extends [infer U, ...(infer R)[]] ? R : never;
 type ReduceNextElement<T extends readonly unknown[]> = T extends readonly [
   infer V,
   ...infer R,
-] ? [V, R] : never;
+]
+  ? [V, R]
+  : never;
 ```
 
 

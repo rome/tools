@@ -5,6 +5,9 @@ edition = "2021"
 authors = ["Rome Tools Developers and Contributros"]
 license = "MIT"
 
+[package.metadata.wasm-pack.profile.dev]
+# wasm-opt = ['-O1']
+
 [lib]
 crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

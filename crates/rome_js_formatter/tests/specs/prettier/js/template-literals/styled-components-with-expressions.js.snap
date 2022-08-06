@@ -91,7 +91,7 @@ margin: 0;
 -    }
 -  }
 +	&:not(:first-child) {
-+			${(props) => props.vertical ? "margin-top" : "margin-left"}: 1rem;
++			${(props) => (props.vertical ? "margin-top" : "margin-left")}: 1rem;
 +		}
 +	}
  `;
@@ -155,7 +155,7 @@ margin: 0.5rem;
 	flex: 1;
 
 	&:not(:first-child) {
-			${(props) => props.vertical ? "margin-top" : "margin-left"}: 1rem;
+			${(props) => (props.vertical ? "margin-top" : "margin-left")}: 1rem;
 		}
 	}
 `;

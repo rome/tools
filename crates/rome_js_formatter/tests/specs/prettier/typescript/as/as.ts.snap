@@ -1,5 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 271
+info:
+  test_file: typescript/as/as.ts
 ---
 
 # Input
@@ -53,16 +56,11 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,31 +1,33 @@
- const name = (description as DescriptionObject).name || (description as string);
- this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
--(originalError
--  ? wrappedError(errMsg, originalError)
--  : Error(errMsg)) as InjectionError;
+@@ -3,29 +3,31 @@
+ (originalError
+   ? wrappedError(errMsg, originalError)
+   : Error(errMsg)) as InjectionError;
 -"current" in (props.pagination as Object);
-+(
-+  originalError ? wrappedError(errMsg, originalError) : Error(errMsg)
-+) as InjectionError;
 +"current" in props.pagination as Object;
  ("current" in props.pagination) as Object;
  start + (yearSelectTotal as number);
@@ -120,9 +118,9 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
 ```js
 const name = (description as DescriptionObject).name || (description as string);
 this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
-(
-  originalError ? wrappedError(errMsg, originalError) : Error(errMsg)
-) as InjectionError;
+(originalError
+  ? wrappedError(errMsg, originalError)
+  : Error(errMsg)) as InjectionError;
 "current" in props.pagination as Object;
 ("current" in props.pagination) as Object;
 start + (yearSelectTotal as number);

@@ -38,38 +38,18 @@ object[valid
 ```diff
 --- Prettier
 +++ Rome
-@@ -4,25 +4,24 @@
- 
- (a ? b : c).d().e().f();
- 
--(valid
--  ? helper.responseBody(this.currentUser)
--  : helper.responseBody(this.defaultUser)
-+(
-+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-+    this.defaultUser,
-+  )
- ).map();
- 
--(valid
--  ? helper.responseBody(this.currentUser)
--  : helper.responseBody(this.defaultUser)
+@@ -12,17 +12,13 @@
+ (valid
+   ? helper.responseBody(this.currentUser)
+   : helper.responseBody(this.defaultUser)
 -)
 -  .map()
 -  .filter();
-+(
-+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-+    this.defaultUser,
-+  )
 +).map().filter();
  
--(valid
--  ? helper.responseBody(this.currentUser)
--  : helper.responseBody(defaultUser)
-+(
-+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-+    defaultUser,
-+  )
+ (valid
+   ? helper.responseBody(this.currentUser)
+   : helper.responseBody(defaultUser)
  ).map();
  
 -object[
@@ -77,9 +57,9 @@ object[valid
 -    ? helper.responseBody(this.currentUser)
 -    : helper.responseBody(defaultUser)
 -].map();
-+object[valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-+  defaultUser,
-+)].map();
++object[valid
++  ? helper.responseBody(this.currentUser)
++  : helper.responseBody(defaultUser)].map();
 ```
 
 # Output
@@ -91,27 +71,24 @@ object[valid
 
 (a ? b : c).d().e().f();
 
-(
-  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-    this.defaultUser,
-  )
+(valid
+  ? helper.responseBody(this.currentUser)
+  : helper.responseBody(this.defaultUser)
 ).map();
 
-(
-  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-    this.defaultUser,
-  )
+(valid
+  ? helper.responseBody(this.currentUser)
+  : helper.responseBody(this.defaultUser)
 ).map().filter();
 
-(
-  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-    defaultUser,
-  )
+(valid
+  ? helper.responseBody(this.currentUser)
+  : helper.responseBody(defaultUser)
 ).map();
 
-object[valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-  defaultUser,
-)].map();
+object[valid
+  ? helper.responseBody(this.currentUser)
+  : helper.responseBody(defaultUser)].map();
 ```
 
 

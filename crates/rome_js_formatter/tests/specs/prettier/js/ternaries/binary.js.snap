@@ -25,7 +25,7 @@ room = room.map((row, rowIndex) => (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,17 +1,19 @@
+@@ -1,17 +1,22 @@
  const funnelSnapshotCard =
 -  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) ||
 -  (report === COMPANY_OVERVIEW &&
@@ -34,7 +34,9 @@ room = room.map((row, rowIndex) => (
 -  ) : null;
 +  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) || (
 +    report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
-+  ) ? <ReportMetricsFunnelSnapshotCard metrics={metrics} /> : null;
++  )
++    ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
++    : null;
  
 -room = room.map((row, rowIndex) =>
 -  row.map((col, colIndex) =>
@@ -47,14 +49,15 @@ room = room.map((row, rowIndex) => (
 +room = room.map(
 +  (row, rowIndex) => (
 +    row.map(
-+      (col, colIndex) => (
++      (col, colIndex) =>
 +        (
 +          rowIndex === 0 ||
 +            colIndex === 0 ||
 +            rowIndex === height ||
 +            colIndex === width
-+        ) ? 1 : 0
-+      ),
++        )
++          ? 1
++          : 0,
 +    )
    ),
  );
@@ -66,19 +69,22 @@ room = room.map((row, rowIndex) => (
 const funnelSnapshotCard =
   (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) || (
     report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
-  ) ? <ReportMetricsFunnelSnapshotCard metrics={metrics} /> : null;
+  )
+    ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
+    : null;
 
 room = room.map(
   (row, rowIndex) => (
     row.map(
-      (col, colIndex) => (
+      (col, colIndex) =>
         (
           rowIndex === 0 ||
             colIndex === 0 ||
             rowIndex === height ||
             colIndex === width
-        ) ? 1 : 0
-      ),
+        )
+          ? 1
+          : 0,
     )
   ),
 );

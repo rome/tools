@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::utils::{
-    binary_argument_needs_parens, is_simple_expression, FormatPrecedence,
+    binary_argument_needs_parens, is_simple_expression, resolve_expression, FormatPrecedence,
     JsAnyBinaryLikeLeftExpression,
 };
 use rome_formatter::write;
@@ -132,8 +132,9 @@ fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> Synta
 }
 
 fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
-    let expression = node.expression()?;
     let parent = node.syntax().parent();
+
+    let expression = resolve_expression(node.expression()?);
 
     if let Some(parent) = &parent {
         match parent.kind() {
@@ -141,10 +142,18 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
             JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_THROW_STATEMENT => {
                 return Ok(true)
             }
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => return Ok(true),
+            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => {
+                // Nested parentheses can always be removed
+                return Ok(true);
+            }
             _ => {
                 // fall through
             }
+        }
+
+        if let JsAnyExpression::JsConditionalExpression(_) = &expression {
+            // The formatting of conditional expression makes sure to insert parens if needed
+            return Ok(true);
         }
     }
 
@@ -174,9 +183,8 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     }
 
     let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
-    let node_precedence = FormatPrecedence::with_precedence_for_parenthesis(Some(node.syntax()));
 
-    if parent_precedence > node_precedence {
+    if parent_precedence > FormatPrecedence::Low {
         return Ok(false);
     }
 

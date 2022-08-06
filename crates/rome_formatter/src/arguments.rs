@@ -33,6 +33,7 @@ impl<'fmt, Context> Argument<'fmt, Context> {
     #[doc(hidden)]
     #[inline]
     pub fn new<F: Format<Context>>(value: &'fmt F) -> Self {
+        #[inline(always)]
         fn formatter<F: Format<Context>, Context>(
             ptr: *const c_void,
             fmt: &mut Formatter<Context>,
@@ -49,7 +50,7 @@ impl<'fmt, Context> Argument<'fmt, Context> {
     }
 
     /// Formats the value stored by this argument using the given formatter.
-    #[inline]
+    #[inline(always)]
     pub(super) fn format(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         (self.formatter)(self.value, f)
     }
@@ -76,7 +77,7 @@ pub struct Arguments<'fmt, Context>(pub &'fmt [Argument<'fmt, Context>]);
 
 impl<'fmt, Context> Arguments<'fmt, Context> {
     #[doc(hidden)]
-    #[inline]
+    #[inline(always)]
     pub fn new(arguments: &'fmt [Argument<'fmt, Context>]) -> Self {
         Self(arguments)
     }
@@ -97,7 +98,7 @@ impl<Context> Clone for Arguments<'_, Context> {
 }
 
 impl<Context> Format<Context> for Arguments<'_, Context> {
-    #[inline]
+    #[inline(always)]
     fn fmt(&self, formatter: &mut Formatter<Context>) -> FormatResult<()> {
         formatter.write_fmt(*self)
     }
