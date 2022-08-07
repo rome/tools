@@ -362,7 +362,6 @@ pub(crate) fn parse_ambient_function(
     // declare module "classnames" {
     //   export default function classnames(...inputs: (string)[]): string;
     // }
-    dbg!(&kind);
     let is_async = p.at(T![async]);
     if is_async {
         p.error(
@@ -373,13 +372,15 @@ pub(crate) fn parse_ambient_function(
     }
 
     p.expect(T![function]);
-    if kind == AmbientFunctionKind::Declaration {
-        parse_binding(p).or_add_diagnostic(p, expected_binding);
-    } else {
-        // In export default function, the name binding is optional. e.g.
-        // export default function (objA: any, objB: any): boolean;
-        //                        ^
-        parse_binding(p).ok();
+    match parse_binding(p) {
+        binding @ Absent => {
+            if kind == AmbientFunctionKind::Export {
+                binding.ok();
+            } else {
+                binding.or_add_diagnostic(p, expected_binding);
+            }
+        }
+        Present(_) => {}
     }
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
