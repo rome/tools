@@ -40,6 +40,10 @@ pub enum FormatElement {
     /// Nesting (Aligns)[FormatElement::Align] has the effect that all except the most inner align are handled as (Indent)[FormatElement::Indent].
     Align(Align),
 
+    /// Reduces the indention of the specified content by one. Reverse operation of `Indent` and can be used to
+    /// *undo` an `Align` for nested content.
+    Dedent(Content),
+
     /// Creates a logical group where its content is either consistently printed:
     /// * on a single line: Omitting `LineMode::Soft` line breaks and printing spaces for `LineMode::SoftOrSpace`
     /// * on multiple lines: Printing all line breaks
@@ -157,6 +161,7 @@ impl std::fmt::Debug for FormatElement {
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(content) => fmt.debug_tuple("Line").field(content).finish(),
             FormatElement::Indent(content) => fmt.debug_tuple("Indent").field(content).finish(),
+            FormatElement::Dedent(content) => fmt.debug_tuple("Dedent").field(content).finish(),
             FormatElement::Align(Align { count, content }) => fmt
                 .debug_struct("Align")
                 .field("count", count)
@@ -651,6 +656,7 @@ impl FormatElement {
             | FormatElement::Verbatim(Verbatim { content, .. })
             | FormatElement::Label(Label { content, .. })
             | FormatElement::Indent(content)
+            | FormatElement::Dedent(content)
             | FormatElement::Align(Align { content, .. }) => {
                 content.iter().any(FormatElement::will_break)
             }
@@ -800,6 +806,9 @@ impl Format<IrFormatContext> for FormatElement {
             }
             FormatElement::Indent(content) => {
                 write!(f, [text("indent("), content.as_ref(), text(")")])
+            }
+            FormatElement::Dedent(content) => {
+                write!(f, [text("dedent("), content.as_ref(), text(")")])
             }
             FormatElement::Align(Align { content, count }) => {
                 write!(
