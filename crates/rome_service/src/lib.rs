@@ -2,6 +2,7 @@ use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_js_analyze::utils::rename::RenameError;
+use rome_js_analyze::RuleError;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
@@ -42,6 +43,8 @@ pub enum RomeError {
     FormatError(FormatError),
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
     FormatWithErrorsDisabled,
+    /// The file could not be analyzed because a rule caused an error.
+    RuleError(RuleError),
     /// Thrown when Rome can't read a generic directory
     CantReadDirectory(PathBuf),
     /// Thrown when Rome can't read a generic file
@@ -54,17 +57,7 @@ pub enum RomeError {
 
 impl Debug for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            RomeError::NotFound => std::fmt::Display::fmt(self, f),
-            RomeError::SourceFileNotSupported(_) => std::fmt::Display::fmt(self, f),
-            RomeError::FormatError(_) => std::fmt::Display::fmt(self, f),
-            RomeError::FormatWithErrorsDisabled => std::fmt::Display::fmt(self, f),
-            RomeError::CantReadDirectory(_) => std::fmt::Display::fmt(self, f),
-            RomeError::CantReadFile(_) => std::fmt::Display::fmt(self, f),
-            RomeError::Configuration(_) => std::fmt::Display::fmt(self, f),
-            RomeError::DirtyWorkspace => std::fmt::Display::fmt(self, f),
-            RomeError::RenameError(_) => std::fmt::Display::fmt(self, f),
-        }
+        std::fmt::Display::fmt(self, f)
     }
 }
 
@@ -129,6 +122,12 @@ impl Display for RomeError {
                     )
                 }
             },
+            RomeError::RuleError(cause) => {
+                write!(
+                    f,
+                    "the linter encountered an error while analyzing the file: {cause}",
+                )
+            }
         }
     }
 }

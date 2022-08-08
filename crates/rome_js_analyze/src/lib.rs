@@ -8,6 +8,7 @@ use rome_js_syntax::{
     suppression::{parse_suppression_comment, SuppressionCategory},
     JsLanguage,
 };
+use std::error::Error;
 
 mod analyzers;
 mod assists;
@@ -133,3 +134,25 @@ mod tests {
         );
     }
 }
+
+/// Series of errors encountered when running rules on a file
+#[derive(Debug, PartialEq, Copy, Clone)]
+pub enum RuleError {
+    /// The rule with the specified name replaced the root of the file with a node that is not a [JsAnyRoot].
+    ReplacedRootWithNonRootError { rule_name: &'static str },
+}
+
+impl std::fmt::Display for RuleError {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            RuleError::ReplacedRootWithNonRootError { rule_name } => {
+                std::write!(
+                    fmt,
+                    "the rule '{rule_name}' replaced the root of the file with a non-root node."
+                )
+            }
+        }
+    }
+}
+
+impl Error for RuleError {}
