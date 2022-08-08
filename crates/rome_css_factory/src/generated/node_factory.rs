@@ -812,3 +812,10 @@ where
         }),
     ))
 }
+pub fn css_unknown<I>(slots: I) -> CssUnknown
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    CssUnknown::unwrap_cast(SyntaxNode::new_detached(CssSyntaxKind::CSS_UNKNOWN, slots))
+}

@@ -6807,3 +6807,90 @@ where
         }),
     ))
 }
+pub fn js_unknown<I>(slots: I) -> JsUnknown
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknown::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::JS_UNKNOWN, slots))
+}
+pub fn js_unknown_assignment<I>(slots: I) -> JsUnknownAssignment
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownAssignment::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_ASSIGNMENT,
+        slots,
+    ))
+}
+pub fn js_unknown_binding<I>(slots: I) -> JsUnknownBinding
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownBinding::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_BINDING,
+        slots,
+    ))
+}
+pub fn js_unknown_expression<I>(slots: I) -> JsUnknownExpression
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_EXPRESSION,
+        slots,
+    ))
+}
+pub fn js_unknown_import_assertion_entry<I>(slots: I) -> JsUnknownImportAssertionEntry
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownImportAssertionEntry::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_IMPORT_ASSERTION_ENTRY,
+        slots,
+    ))
+}
+pub fn js_unknown_member<I>(slots: I) -> JsUnknownMember
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownMember::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_MEMBER,
+        slots,
+    ))
+}
+pub fn js_unknown_named_import_specifier<I>(slots: I) -> JsUnknownNamedImportSpecifier
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownNamedImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_NAMED_IMPORT_SPECIFIER,
+        slots,
+    ))
+}
+pub fn js_unknown_parameter<I>(slots: I) -> JsUnknownParameter
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownParameter::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_PARAMETER,
+        slots,
+    ))
+}
+pub fn js_unknown_statement<I>(slots: I) -> JsUnknownStatement
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsUnknownStatement::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_UNKNOWN_STATEMENT,
+        slots,
+    ))
+}
