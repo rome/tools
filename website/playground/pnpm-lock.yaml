@@ -20,7 +20,7 @@ specifiers:
   react: ^17.0.2
   react-dom: ^17.0.2
   react-tabs: ^3.2.3
-  rome: next
+  rome: 0.8.0-next.ff4153b
   tailwindcss: ^3.0.19
   typescript: ^4.4.4
   vite: 2.9.5
