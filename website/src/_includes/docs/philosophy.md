@@ -2,11 +2,18 @@
 
 This list includes general ethos the project should abide by. This list is not comprehensive. Some of these are obvious but are stated for completeness.
 
+### Project Management
+
+- **Set clear expectations.** Make project intent and decisions known well in advance. Nothing should be a surprise.
+- **Clear messaging of decisions.** The team might evaluate options and make decisions using private channels. While the team will try to keep discussions
+using public channels like GitHub Discussions or Discord, frequent private check-in are the norm, due to the nature of the private company.
+When decisions occur via private channels, the team has to commit to communicate these decisions using the public channels.
+
 ### Technical
 
 - **Errors should suggest fixes and hints where possible.** These should be inferred and filtered from usage to reduce surfacing irrelevant and unhelpful messages.
 - **Unique and specific error messages.** No generic error messages. This not only helps users understand what went wrong, but should provide maintainers with a unique call site and the necessary information to debug.
-- **Minimize API.** Question the existence of all options and flags. Are they necessary? Can they be combined? How can we reduce code branching?
+- **Optimise API.** Question the existence of all options and flags. Are they necessary? Can they be combined? How can we reduce code branching?
 - **Reduce jargon.** Don't assume that users will understand specific terminology. Strive to provide clear meaning for experts and beginners. For example, use "character" where you would traditionally use "token" when producing parser errors.
 - **Utilize verbosity when naming commands and flags.** No unnecessary and confusing abbreviations.
 - **Use inclusive terminology.** Use gender-neutral pronouns. No ableist slurs. No usage of terms that could be considered insensitive.
