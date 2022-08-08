@@ -5,7 +5,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use std::{
-    collections::{BTreeSet, HashMap},
+    collections::{BTreeSet, HashMap, HashSet},
     iter::FusedIterator,
     sync::Arc,
 };
@@ -32,6 +32,30 @@ pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
 
 impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
+
+/// Marker trait that groups all "AstNode" that can be exported
+pub trait IsExportedCanBeQueried: AstNode<Language = JsLanguage> {
+    type Result;
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result;
+}
+
+impl IsExportedCanBeQueried for JsIdentifierBinding {
+    type Result = bool;
+
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result {
+        let range = self.syntax().text_range();
+        model.data.is_exported(range)
+    }
+}
+
+impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
+    type Result = Option<bool>;
+
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result {
+        let range = self.declaration(model)?.syntax().text_range();
+        Some(model.data.is_exported(range))
+    }
+}
 
 #[derive(Debug)]
 struct SemanticModelScopeData {
@@ -61,6 +85,8 @@ struct SemanticModelData {
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "writes"
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    // All bindings that were exported
+    exported: HashSet<TextRange>,
 }
 
 impl SemanticModelData {
@@ -112,6 +138,10 @@ impl SemanticModelData {
         } else {
             [].iter()
         }
+    }
+
+    pub fn is_exported(&self, range: TextRange) -> bool {
+        self.exported.contains(&range)
     }
 }
 
@@ -472,7 +502,7 @@ impl SemanticModel {
         })
     }
 
-    /// Returns a list with all [Reference] of a declaration.
+    /// Returns a list with all [Reference] of the specified declaration.
     /// Can also be called from "all_references" extension method.
     ///
     /// ```rust
@@ -506,6 +536,8 @@ impl SemanticModel {
         }
     }
 
+    /// Returns a list with all read [Reference] of the specified declaration.
+    /// Can also be called from "all_reads" extension method.
     pub fn all_reads<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
         let node = declaration.node();
         let range = node.syntax().text_range();
@@ -515,6 +547,8 @@ impl SemanticModel {
         }
     }
 
+    /// Returns a list with all write [Reference] of the specified declaration.
+    /// Can also be called from "all_writes" extension method.
     pub fn all_writes<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
         let node = declaration.node();
         let range = node.syntax().text_range();
@@ -522,6 +556,20 @@ impl SemanticModel {
             data: self.data.clone(),
             iter: self.data.all_writes_iter(&range),
         }
+    }
+
+    /// Returns if the node is exported or is a reference to a binding
+    /// that is exported.
+    ///
+    /// When a binding is specified this method returns a bool.
+    ///
+    /// When a reference is specified this method returns Option<bool>,
+    /// because there is no guarantee that the corresponding declaration exists.
+    pub fn is_exported<T>(&self, node: &T) -> T::Result
+    where
+        T: IsExportedCanBeQueried,
+    {
+        node.is_exported(self)
     }
 }
 
@@ -606,6 +654,7 @@ pub struct SemanticModelBuilder {
     declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    exported: HashSet<TextRange>,
 }
 
 impl SemanticModelBuilder {
@@ -620,6 +669,7 @@ impl SemanticModelBuilder {
             declaration_all_references: HashMap::new(),
             declaration_all_reads: HashMap::new(),
             declaration_all_writes: HashMap::new(),
+            exported: HashSet::new(),
         }
     }
 
@@ -743,6 +793,9 @@ impl SemanticModelBuilder {
                     .push((ReferenceType::Write { hoisted: true }, range));
             }
             UnresolvedReference { .. } => {}
+            Exported { range } => {
+                self.exported.insert(range);
+            }
         }
     }
 
@@ -764,6 +817,7 @@ impl SemanticModelBuilder {
             declaration_all_references: self.declaration_all_references,
             declaration_all_reads: self.declaration_all_reads,
             declaration_all_writes: self.declaration_all_writes,
+            exported: self.exported,
         };
         SemanticModel::new(data)
     }
@@ -796,7 +850,7 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_js_syntax::{JsReferenceIdentifier, SourceType};
+    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType};
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
@@ -943,5 +997,75 @@ mod test {
         // And we can find their binding inside the global scope
         assert!(global_scope.get_binding("g").is_some());
         assert!(global_scope.get_binding("f").is_some());
+    }
+
+    /// Finds the last time a token named "name" is used and see if its node is marked as exported
+    fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
+        let r = rome_js_parser::parse(code, 0, SourceType::js_module());
+        let model = semantic_model(&r.tree());
+
+        let node = r
+            .syntax()
+            .descendants()
+            .filter(|x| x.text_trimmed() == name)
+            .last()
+            .unwrap();
+
+        match node.kind() {
+            JsSyntaxKind::JS_IDENTIFIER_BINDING => {
+                let binding = JsIdentifierBinding::cast(node).unwrap();
+                // These do the same thing, but with different APIs
+                assert!(
+                    is_exported == model.is_exported(binding.node()),
+                    "at \"{}\"",
+                    code
+                );
+                assert!(
+                    is_exported == binding.is_exported(&model),
+                    "at \"{}\"",
+                    code
+                );
+            }
+            JsSyntaxKind::JS_REFERENCE_IDENTIFIER => {
+                let reference = JsReferenceIdentifier::cast(node).unwrap();
+                // These do the same thing, but with different APIs
+                assert!(
+                    is_exported == model.is_exported(&reference).unwrap(),
+                    "at \"{}\"",
+                    code
+                );
+                assert!(
+                    is_exported == reference.is_exported(&model).unwrap(),
+                    "at \"{}\"",
+                    code
+                );
+            }
+            _ => {
+                panic!("This node cannot be exported!");
+            }
+        };
+    }
+
+    #[test]
+    pub fn ok_semantic_model_is_exported() {
+        // Variables
+        assert_is_exported(true, "A", "const A = 1; export {A}");
+        assert_is_exported(true, "A", "export const A = 1");
+
+        // Functions
+        assert_is_exported(false, "f", "function f() {}");
+        assert_is_exported(true, "f", "export function f() {}");
+        assert_is_exported(true, "f", "export default function f() {}");
+        assert_is_exported(true, "f", "function f() {} export default f");
+        assert_is_exported(true, "f", "function f() {} export {f}");
+        assert_is_exported(true, "f", "function f() {} export {f as g}");
+
+        // Class
+        assert_is_exported(false, "A", "class A{}");
+        assert_is_exported(true, "A", "export class A{}");
+        assert_is_exported(true, "A", "export default class A{}");
+        assert_is_exported(true, "A", "class A{} export default A");
+        assert_is_exported(true, "A", "class A{} export {A}");
+        assert_is_exported(true, "A", "class A{} export {A as B}");
     }
 }

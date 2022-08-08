@@ -85,6 +85,11 @@ pub enum SemanticEvent {
         started_at: TextSize,
         scope_id: usize,
     },
+
+    /// Tracks where a symbol is exported.
+    /// The range points to the binding that
+    /// is being exported
+    Exported { range: TextRange },
 }
 
 impl SemanticEvent {
@@ -98,6 +103,7 @@ impl SemanticEvent {
             SemanticEvent::Write { range, .. } => range,
             SemanticEvent::HoistedWrite { range, .. } => range,
             SemanticEvent::UnresolvedReference { range } => range,
+            SemanticEvent::Exported { range } => range,
         }
     }
 
@@ -155,14 +161,14 @@ struct Binding {
 
 #[derive(Debug)]
 enum Reference {
-    Read { range: TextRange },
+    Read { range: TextRange, is_exported: bool },
     Write { range: TextRange },
 }
 
 impl Reference {
     pub fn range(&self) -> &TextRange {
         match self {
-            Reference::Read { range } => range,
+            Reference::Read { range, .. } => range,
             Reference::Write { range } => range,
         }
     }
@@ -222,6 +228,7 @@ impl SemanticEventExtractor {
                 ScopeHoisting::DontHoistDeclarationsToParent,
             ),
             JS_FUNCTION_DECLARATION
+            | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
@@ -265,41 +272,53 @@ impl SemanticEventExtractor {
     }
 
     fn enter_js_identifier_binding(&mut self, node: &JsSyntaxNode) -> Option<()> {
+        debug_assert!(matches!(node.kind(), JsSyntaxKind::JS_IDENTIFIER_BINDING));
+
         let binding = node.clone().cast::<JsIdentifierBinding>()?;
         let name_token = binding.name_token().ok()?;
 
         use JsSyntaxKind::*;
-        match node.parent().map(|parent| parent.kind()) {
-            Some(JS_VARIABLE_DECLARATOR) => {
+        let parent = node.parent()?;
+        match parent.kind() {
+            JS_VARIABLE_DECLARATOR => {
                 if let Some(true) = Self::is_var(&binding) {
                     let hoisted_scope_id = self.scope_index_to_hoist_declarations(0);
                     self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 } else {
                     self.push_binding_into_scope(None, &name_token);
                 };
+                self.export_variable_declarator(node, &parent);
             }
-            Some(JS_FUNCTION_DECLARATION) => {
+            JS_FUNCTION_DECLARATION | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
                 self.push_binding_into_scope(hoisted_scope_id, &name_token);
+                self.export_function_declaration(node, &parent);
             }
-            Some(_) => {
+            JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
+                self.push_binding_into_scope(None, &name_token);
+                self.export_class_declaration(node, &parent);
+            }
+            _ => {
                 self.push_binding_into_scope(None, &name_token);
             }
-            _ => {}
         }
 
         Some(())
     }
 
     fn enter_js_reference_identifier(&mut self, node: &JsSyntaxNode) -> Option<()> {
+        debug_assert!(matches!(node.kind(), JsSyntaxKind::JS_REFERENCE_IDENTIFIER));
+
         let reference = node.clone().cast::<JsReferenceIdentifier>()?;
         let name_token = reference.value_token().ok()?;
         let name = name_token.token_text_trimmed();
 
+        let is_exported = self.is_reference_identifier_exported(node);
         let current_scope = self.current_scope_mut();
         let references = current_scope.references.entry(name).or_default();
         references.push(Reference::Read {
             range: node.text_range(),
+            is_exported,
         });
 
         Some(())
@@ -328,6 +347,7 @@ impl SemanticEventExtractor {
         match node.kind() {
             JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
+            | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
@@ -389,25 +409,34 @@ impl SemanticEventExtractor {
                     for reference in references {
                         let declaration_before_reference =
                             declaration_at.start() < reference.range().start();
-                        let e = match (declaration_before_reference, reference) {
-                            (true, Reference::Read { range }) => SemanticEvent::Read {
-                                range,
+                        let e = match (declaration_before_reference, &reference) {
+                            (true, Reference::Read { range, .. }) => SemanticEvent::Read {
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
-                            (false, Reference::Read { range }) => SemanticEvent::HoistedRead {
-                                range,
+                            (false, Reference::Read { range, .. }) => SemanticEvent::HoistedRead {
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
                             (true, Reference::Write { range }) => SemanticEvent::Write {
-                                range,
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
                             (false, Reference::Write { range }) => SemanticEvent::HoistedWrite {
-                                range,
+                                range: *range,
                                 declared_at: *declaration_at,
                             },
                         };
                         self.stash.push_back(e);
+
+                        match reference {
+                            Reference::Read { is_exported, .. } if is_exported => {
+                                self.stash.push_back(SemanticEvent::Exported {
+                                    range: *declaration_at,
+                                });
+                            }
+                            _ => {}
+                        }
                     }
                 } else if let Some(parent) = self.scopes.last_mut() {
                     // ... if not, promote these references to the parent scope ...
@@ -536,6 +565,115 @@ impl SemanticEventExtractor {
             hoisted_scope_id,
             name,
         });
+    }
+
+    // Check if a function is exported and raise the [Exported] event.
+    fn export_function_declaration(
+        &mut self,
+        binding: &JsSyntaxNode,
+        function_declaration: &JsSyntaxNode,
+    ) {
+        use JsSyntaxKind::*;
+        debug_assert!(matches!(
+            function_declaration.kind(),
+            JS_FUNCTION_DECLARATION | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
+        ));
+
+        // scope[0] = global, scope[1] = the function itself
+        if self.scopes.len() != 2 {
+            return;
+        }
+
+        let is_exported = matches!(
+            function_declaration.parent().map(|p| p.kind()),
+            Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
+        );
+        if is_exported {
+            self.stash.push_back(SemanticEvent::Exported {
+                range: binding.text_range(),
+            });
+        }
+    }
+
+    // Check if a class is exported and raise the [Exported] event.
+    fn export_class_declaration(
+        &mut self,
+        binding: &JsSyntaxNode,
+        class_declaration: &JsSyntaxNode,
+    ) {
+        use JsSyntaxKind::*;
+        debug_assert!(matches!(
+            class_declaration.kind(),
+            JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+        ));
+
+        // export can only exist in the global scope
+        if self.scopes.len() > 1 {
+            return;
+        }
+
+        let is_exported = matches!(
+            class_declaration.parent().map(|p| p.kind()),
+            Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
+        );
+        if is_exported {
+            self.stash.push_back(SemanticEvent::Exported {
+                range: binding.text_range(),
+            });
+        }
+    }
+
+    // Check if a function is exported and raise the [Exported] event.
+    fn export_variable_declarator(
+        &mut self,
+        binding: &JsSyntaxNode,
+        variable_declarator: &JsSyntaxNode,
+    ) {
+        use JsSyntaxKind::*;
+        debug_assert!(matches!(variable_declarator.kind(), JS_VARIABLE_DECLARATOR));
+
+        // export can only exist in the global scope
+        if self.scopes.len() > 1 {
+            return;
+        }
+
+        let is_exported = matches!(
+            variable_declarator
+                .parent()
+                .and_then(|list| list.parent())
+                .and_then(|declaration| declaration.parent())
+                .and_then(|declaration_clause| declaration_clause.parent())
+                .map(|x| x.kind()),
+            Some(JS_EXPORT)
+        );
+
+        if is_exported {
+            self.stash.push_back(SemanticEvent::Exported {
+                range: binding.text_range(),
+            });
+        }
+    }
+
+    // Check if a reference is exported and raise the [Exported] event.
+    fn is_reference_identifier_exported(&mut self, reference: &JsSyntaxNode) -> bool {
+        use JsSyntaxKind::*;
+        debug_assert!(matches!(reference.kind(), JS_REFERENCE_IDENTIFIER));
+
+        // export can only exist in the global scope
+        if self.scopes.len() > 1 {
+            return false;
+        }
+
+        let reference_parent = reference.parent();
+        let reference_greatparent = reference_parent.as_ref().and_then(|p| p.parent());
+
+        matches!(
+            reference_parent.map(|p| p.kind()),
+            Some(JS_EXPORT_NAMED_SHORTHAND_SPECIFIER | JS_EXPORT_NAMED_SPECIFIER)
+        ) | matches!(
+            reference_greatparent.map(|p| p.kind()),
+            Some(JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE)
+        )
     }
 }
 
