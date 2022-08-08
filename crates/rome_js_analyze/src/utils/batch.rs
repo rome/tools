@@ -1,7 +1,6 @@
 use rome_js_syntax::{
-    JsAnyFormalParameter, JsAnyParameter, JsAnyRoot, JsFormalParameter, JsLanguage,
-    JsParameterList, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
-    JsVariableStatement,
+    JsAnyFormalParameter, JsAnyParameter, JsFormalParameter, JsLanguage, JsParameterList,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
 
@@ -16,7 +15,7 @@ pub trait JsBatchMutation {
     fn remove_js_formal_parameter(&mut self, parameter: &JsFormalParameter);
 }
 
-impl JsBatchMutation for BatchMutation<JsLanguage, JsAnyRoot> {
+impl JsBatchMutation for BatchMutation<JsLanguage> {
     fn remove_js_variable_declarator(&mut self, declarator: &JsVariableDeclarator) {
         declarator
             .parent::<JsVariableDeclaratorList>()

@@ -1,7 +1,7 @@
 use crate::{
     categories::ActionCategory,
     context::RuleContext,
-    registry::{LanguageRoot, RuleLanguage, RuleRoot},
+    registry::{RuleLanguage, RuleRoot},
     rule::Rule,
     AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag,
 };
@@ -61,7 +61,7 @@ pub struct AnalyzerAction<L: Language> {
     pub category: ActionCategory,
     pub applicability: Applicability,
     pub message: MarkupBuf,
-    pub mutation: BatchMutation<L, LanguageRoot<L>>,
+    pub mutation: BatchMutation<L>,
 }
 
 impl<L> From<AnalyzerAction<L>> for CodeSuggestion

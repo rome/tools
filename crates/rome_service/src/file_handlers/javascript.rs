@@ -2,8 +2,8 @@ use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories, RuleFilte
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
-use rome_js_analyze::analyze;
 use rome_js_analyze::utils::rename::RenameError;
+use rome_js_analyze::{analyze, RuleError};
 use rome_js_formatter::context::QuoteStyle;
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
@@ -262,7 +262,16 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         match action {
             Some(action) => {
                 if let Some((range, _)) = action.mutation.as_text_edits() {
-                    tree = action.mutation.commit();
+                    tree = match JsAnyRoot::cast(action.mutation.commit()) {
+                        Some(tree) => tree,
+                        None => {
+                            return Err(RomeError::RuleError(
+                                RuleError::ReplacedRootWithNonRootError {
+                                    rule_name: action.rule_name,
+                                },
+                            ))
+                        }
+                    };
                     actions.push(FixAction {
                         rule_name: Cow::Borrowed(action.rule_name),
                         range,
