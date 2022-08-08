@@ -784,8 +784,11 @@ impl<Context> std::fmt::Debug for Dedent<'_, Context> {
 ///
 /// You can see that:
 ///
-/// * the printer indents the function's `}` by two spaces as specified by the IR and not with a tab.
-/// * that `align` acts the same as an `indent` if you nest `indent` inside an align.
+/// * the printer indents the function's `}` by two spaces because it is inside of an `align`.
+/// * the block `console.log` gets indented by two tabs.
+///   This is because `align` increases the indention level by one (same as `indent`)
+///   if you nest an `indent` inside an `align`.
+///   Meaning that, `align > ... > indent` results in the same indention as `indent > ... > indent`.
 ///
 /// ## Spaces indention
 ///
@@ -826,8 +829,11 @@ impl<Context> std::fmt::Debug for Dedent<'_, Context> {
 /// );
 /// ```
 ///
-/// Nesting an `indent` inside of an `align` has a different semantic when using spaces over tabs as indent sequence.
-/// With spaces, the outer `align` doesn't get converted into an `indent` and is, instead, kept as is.
+/// The printing of `align` differs if using spaces as indention sequence *and* it contains an `indent`.
+/// You can see the difference when comparing the indention of the `console.log(...)` expression to the previous example:
+///
+/// * tab indention: Printer indents the expression with two tabs because the `align` increases the indention level.
+/// * space indention: Printer indents the expression by 4 spaces (one indention level) **and** 2 spaces for the align.
 pub fn align<Content, Context>(count: u8, content: &Content) -> Align<Context>
 where
     Content: Format<Context>,

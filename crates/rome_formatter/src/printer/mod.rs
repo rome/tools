@@ -639,7 +639,7 @@ impl Indention {
 
     /// Increments the level by one.
     ///
-    /// The behaviour if this is an [Indent::Align] depends on the indent character used by the printer:
+    /// The behaviour depends on the [`indent_style`][IndentStyle] if this is an [Indent::Align]:
     /// * **Tabs**: `align` is converted into an indent. This results in `level` increasing by two: once for the align, once for the level increment
     /// * **Spaces**: Increments the `level` by one and keeps the `align` unchanged.
     /// Keeps any  the current value is [Indent::Align] and increments the level by one.
