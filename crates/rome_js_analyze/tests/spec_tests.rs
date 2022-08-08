@@ -15,7 +15,6 @@ use rome_js_parser::{
     test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
 };
 use rome_js_syntax::{JsLanguage, SourceType};
-use rome_rowan::AstNode;
 use rome_text_edit::apply_indels;
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
@@ -155,7 +154,7 @@ fn check_code_action(
     // returns the same code as printing the modified syntax tree
     assert_eq!(new_tree.to_string(), output);
 
-    if has_unknown_nodes_or_empty_slots(new_tree.syntax()) {
+    if has_unknown_nodes_or_empty_slots(&new_tree) {
         panic!("modified tree has unknown nodes or empty slots:\n{new_tree:#?}")
     }
 

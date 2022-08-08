@@ -1,9 +1,7 @@
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RuleLanguage, RuleSuppressions};
-use crate::{
-    AnalysisFilter, AnalyzerDiagnostic, LanguageRoot, Phase, Phases, Queryable, RuleRegistry,
-};
+use crate::{AnalysisFilter, AnalyzerDiagnostic, Phase, Phases, Queryable, RuleRegistry};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::{file::FileId, Applicability, Severity};
@@ -447,5 +445,5 @@ pub struct RuleAction<L: Language> {
     pub category: ActionCategory,
     pub applicability: Applicability,
     pub message: MarkupBuf,
-    pub mutation: BatchMutation<L, LanguageRoot<L>>,
+    pub mutation: BatchMutation<L>,
 }

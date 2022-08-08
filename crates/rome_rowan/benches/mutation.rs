@@ -63,7 +63,7 @@ fn mutation_batch() -> usize {
     batch.replace_node(a, b);
     let root = batch.commit();
 
-    root.syntax().descendants().count()
+    root.descendants().count()
 }
 
 iai::main!(mutation_replace_node, mutation_batch);

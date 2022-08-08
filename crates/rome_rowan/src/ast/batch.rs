@@ -1,12 +1,8 @@
 use rome_text_edit::Indel;
 use text_size::TextRange;
 
-use crate::{
-    AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxNodeCast, SyntaxSlot,
-    SyntaxToken,
-};
+use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken};
 use std::{
-    any::type_name,
     cmp,
     collections::BinaryHeap,
     iter::{empty, once},
@@ -17,7 +13,7 @@ where
     L: Language,
 {
     #[must_use = "This method consumes the node and return the BatchMutation api that returns the new SynytaxNode on commit"]
-    fn begin(self) -> BatchMutation<L, Self>;
+    fn begin(self) -> BatchMutation<L>;
 }
 
 impl<L, T> BatchMutationExt<L> for T
@@ -26,11 +22,8 @@ where
     T: AstNode<Language = L>,
 {
     #[must_use = "This method consumes the node and return the BatchMutation api that returns the new SynytaxNode on commit"]
-    fn begin(self) -> BatchMutation<L, Self> {
-        BatchMutation {
-            root: self,
-            changes: BinaryHeap::new(),
-        }
+    fn begin(self) -> BatchMutation<L> {
+        BatchMutation::new(self.into_syntax())
     }
 }
 
@@ -88,20 +81,25 @@ impl<L: Language> Ord for CommitChange<L> {
 }
 
 #[derive(Debug, Clone)]
-pub struct BatchMutation<L, N>
+pub struct BatchMutation<L>
 where
     L: Language,
-    N: AstNode<Language = L>,
 {
-    root: N,
+    root: SyntaxNode<L>,
     changes: BinaryHeap<CommitChange<L>>,
 }
 
-impl<L, N> BatchMutation<L, N>
+impl<L> BatchMutation<L>
 where
     L: Language,
-    N: AstNode<Language = L>,
 {
+    pub fn new(root: SyntaxNode<L>) -> Self {
+        Self {
+            root,
+            changes: BinaryHeap::new(),
+        }
+    }
+
     /// Push a change to replace the "prev_node" with "next_node".
     /// Trivia from "prev_node" is automatically copied to "next_node".
     ///
@@ -264,7 +262,7 @@ where
     /// [None] if the mutation is empty
     pub fn as_text_edits(&self) -> Option<(TextRange, Vec<Indel>)> {
         let iter = self.changes.iter().filter_map(|change| {
-            let parent = change.parent.as_ref().unwrap_or_else(|| self.root.syntax());
+            let parent = change.parent.as_ref().unwrap_or_else(|| &self.root);
             let delete = match parent.slots().nth(change.new_node_slot) {
                 Some(SyntaxSlot::Node(node)) => node.text_range(),
                 Some(SyntaxSlot::Token(token)) => token.text_range(),
@@ -310,7 +308,7 @@ where
     /// To address this case at step 3, when we pop a new change to apply it, we actually aggregate all changes to the current
     /// parent together. This is done by the heap because we also sort by node and it's range.
     ///
-    pub fn commit(self) -> N {
+    pub fn commit(self) -> SyntaxNode<L> {
         let BatchMutation { root, mut changes } = self;
         // Fill the heap with the requested changes
 
@@ -376,16 +374,9 @@ where
                     .new_node
                     .expect("new_node")
                     .into_node()
-                    .expect("into_node");
-                let kind = root.kind();
-                match root.cast() {
-                    Some(root) => return root,
-                    None => panic!(
-                        "failed to cast root node with kind {:?} into {}",
-                        kind,
-                        type_name::<N>()
-                    ),
-                };
+                    .expect("expected root to be a node and not a token");
+
+                return root;
             }
         }
 
@@ -467,7 +458,7 @@ pub mod tests {
         let batch = before.begin();
         let after = batch.commit();
 
-        assert_eq!(before_debug, format!("{:#?}", after.syntax()));
+        assert_eq!(before_debug, format!("{:#?}", after));
     }
 
     #[test]
@@ -482,7 +473,7 @@ pub mod tests {
         batch.replace_node(a, b);
         let root = batch.commit();
 
-        assert_eq!(expected_debug, format!("{:#?}", root.syntax()));
+        assert_eq!(expected_debug, format!("{:#?}", root));
     }
 
     #[test]
@@ -500,6 +491,6 @@ pub mod tests {
         batch.replace_node(b, d);
         let after = batch.commit();
 
-        assert_eq!(expected_debug, format!("{:#?}", after.syntax()));
+        assert_eq!(expected_debug, format!("{:#?}", after));
     }
 }

@@ -1,5 +1,5 @@
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, T};
+use rome_js_syntax::{JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, T};
 use rome_rowan::{AstNode, BatchMutation};
 use std::borrow::Cow;
 
@@ -34,7 +34,7 @@ impl<'a> Iterator for InterpretEscapedString<'a> {
     }
 }
 
-/// unescape   
+/// unescape
 ///
 pub(crate) fn escape_string(s: &str) -> Result<String, EscapeError> {
     (InterpretEscapedString { s: s.chars() }).collect()
@@ -123,10 +123,7 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
 /// Utility function to remove a statement node from a syntax tree, by either
 /// removing the node from its parent if said parent is a statement list or
 /// module item list, or by replacing the statement node with an empty statement
-pub(crate) fn remove_statement<N>(
-    mutation: &mut BatchMutation<JsLanguage, JsAnyRoot>,
-    node: &N,
-) -> Option<()>
+pub(crate) fn remove_statement<N>(mutation: &mut BatchMutation<JsLanguage>, node: &N) -> Option<()>
 where
     N: AstNode<Language = JsLanguage> + Into<JsAnyStatement>,
 {

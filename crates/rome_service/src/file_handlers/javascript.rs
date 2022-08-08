@@ -262,7 +262,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         match action {
             Some(action) => {
                 if let Some((range, _)) = action.mutation.as_text_edits() {
-                    tree = action.mutation.commit();
+                    tree = JsAnyRoot::unwrap_cast(action.mutation.commit());
                     actions.push(FixAction {
                         rule_name: Cow::Borrowed(action.rule_name),
                         range,
