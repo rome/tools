@@ -2,7 +2,6 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::utils::parens::starts_with_no_lookahead_token;
-use rome_js_syntax::JsAnyExpression::JsNewExpression;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunctionBody, JsArrowFunctionExpression, JsAssignmentExpression,
     JsCallExpression, JsComputedMemberExpression, JsConditionalExpression, JsInitializerClause,
@@ -245,7 +244,7 @@ enum ConditionalLayout {
     ///         : c
     ///  )
     ///     ? d
-    /// 	: e;
+    ///     : e;
     /// ```
     ///
     /// Indents the
