@@ -663,7 +663,7 @@ function processStats(res, interactive) {
 
 	if (interactive) {
 		function show() {
-			const percent = Math.min(100, 100 / res.target * res.current);
+			const percent = Math.min(100, (100 / res.target) * res.current);
 			progressFillContainer.style.minWidth = `${progressFillContainer.clientWidth}px`;
 			progressFillContainer.style.width = "0";
 

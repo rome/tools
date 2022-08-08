@@ -20,6 +20,7 @@ function App() {
 		errors: "",
 		formatted_code: "",
 		formatter_ir: "",
+		control_flow_graph: "",
 	});
 	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
 

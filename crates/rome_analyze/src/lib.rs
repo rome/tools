@@ -17,7 +17,7 @@ mod syntax;
 mod visitor;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
-pub use crate::matcher::{QueryMatcher, RuleKey, SignalEntry};
+pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
     LanguageRoot, Phase, Phases, RegistryRuleMetadata, RuleRegistry, RuleSuppressions,

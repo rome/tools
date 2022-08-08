@@ -113,6 +113,46 @@ impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
     }
 }
 
+/// Adapter type wrapping a [QueryMatcher] type with a function that can be
+/// used to inspect the query matches emitted by the analyzer
+pub struct InspectMatcher<F, I> {
+    func: F,
+    inner: I,
+}
+
+impl<F, I> InspectMatcher<F, I> {
+    ///  Create a new instance of [InspectMatcher] from an existing [QueryMatcher]
+    /// object and an inspection function
+    pub fn new<L>(inner: I, func: F) -> Self
+    where
+        L: Language,
+        F: FnMut(&MatchQueryParams<L>),
+        I: QueryMatcher<L>,
+    {
+        Self { func, inner }
+    }
+}
+
+impl<L, F, I> QueryMatcher<L> for InspectMatcher<F, I>
+where
+    L: Language,
+    F: FnMut(&MatchQueryParams<L>),
+    I: QueryMatcher<L>,
+{
+    fn find_group(&self, group: &str) -> Option<GroupKey> {
+        self.inner.find_group(group)
+    }
+
+    fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
+        self.inner.find_rule(group, rule)
+    }
+
+    fn match_query(&mut self, params: MatchQueryParams<L>) {
+        (self.func)(&params);
+        self.inner.match_query(params);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use rome_console::codespan::Severity;

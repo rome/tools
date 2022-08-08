@@ -5,9 +5,9 @@ const manifestPath = resolve(join("package.json"));
 
 function pad(date) {
 	if (date < 10) {
-		return "0" + date;
+		return `0${date}`;
 	}
-	return "" + date;
+	return `${date}`;
 }
 
 // read the package.json file
@@ -32,13 +32,13 @@ readFile(manifestPath, "utf8")
 		manifest.version = `${currentMajor}.${newMinor}.${newPatch}`;
 		try {
 			await writeFile(manifestPath, JSON.stringify(manifest, null, "\t"));
-			console.log("version=" + manifest.version);
+			console.log(`version=${manifest.version}`);
 		} catch (_e) {
-			console.log("Could not write the package.json file at " + manifestPath);
+			console.log(`Could not write the package.json file at ${manifestPath}`);
 			process.exit(1);
 		}
 	})
 	.catch(() => {
-		console.log("Could not read the package.json file at " + manifestPath);
+		console.log(`Could not read the package.json file at ${manifestPath}`);
 		process.exit(1);
 	});

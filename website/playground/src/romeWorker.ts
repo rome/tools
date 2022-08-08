@@ -24,6 +24,7 @@ self.addEventListener("message", async (e) => {
 				isTypeScript,
 				isJsx,
 				sourceType,
+				cursorPosition,
 			} = e.data.playgroundState;
 			const romeOutput = run(
 				code,
@@ -35,6 +36,7 @@ self.addEventListener("message", async (e) => {
 				isTypeScript,
 				isJsx,
 				sourceType,
+				cursorPosition,
 			);
 			self.postMessage({
 				type: "formatted",
@@ -44,6 +46,7 @@ self.addEventListener("message", async (e) => {
 					errors: romeOutput.errors,
 					formatted_code: romeOutput.formatted_code,
 					formatter_ir: romeOutput.formatter_ir,
+					control_flow_graph: romeOutput.control_flow_graph,
 				},
 			});
 
