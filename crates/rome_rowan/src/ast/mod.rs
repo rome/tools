@@ -124,6 +124,32 @@ pub trait AstNode: Clone {
     where
         Self: Sized;
 
+    /// Tries to cast the passed syntax node to this AST node.
+    ///
+    /// # Returns
+    /// * [Ok] if the passed node can be cast into this [AstNode]
+    /// * [Err(syntax)](Err) If the node is of another kind.
+    fn try_cast(syntax: SyntaxNode<Self::Language>) -> Result<Self, SyntaxNode<Self::Language>> {
+        if Self::can_cast(syntax.kind()) {
+            Ok(Self::unwrap_cast(syntax))
+        } else {
+            Err(syntax)
+        }
+    }
+
+    /// Tries to cast the AST `node` into this node.
+    ///
+    /// # Returns
+    /// * [Ok] if the passed node can be cast into this [AstNode]
+    /// * [Err] if the node is of another kind
+    fn try_cast_node<T: AstNode<Language = Self::Language>>(node: T) -> Result<Self, T> {
+        if Self::can_cast(node.syntax().kind()) {
+            Ok(Self::unwrap_cast(node.into_syntax()))
+        } else {
+            Err(node)
+        }
+    }
+
     /// Returns the underlying syntax node.
     fn syntax(&self) -> &SyntaxNode<Self::Language>;
 

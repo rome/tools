@@ -2,6 +2,7 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::utils::parens::starts_with_no_lookahead_token;
+use rome_js_syntax::JsAnyExpression::JsNewExpression;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunctionBody, JsArrowFunctionExpression, JsAssignmentExpression,
     JsCallExpression, JsComputedMemberExpression, JsConditionalExpression, JsInitializerClause,
@@ -221,18 +222,53 @@ impl Format<JsFormatContext> for ExpressionOrType {
 
 #[derive(Clone, Eq, PartialEq, Debug)]
 enum ConditionalLayout {
-    /// Conditional expression that is the `alternate` of another conditional expression
+    /// Conditional that is the `alternate` of another conditional.
+    ///
+    /// The `test` condition of a nested alternated is aligned with the parent's `:`.
+    ///
+    /// ```javascript
+    /// outerCondition
+    // 	? consequent
+    // 	: nestedAlternate +
+    // 	  binary + // <- notice how the content is aligned to the `: `
+    // 	? consequentOfnestedAlternate
+    // 	: alternateOfNestedAlternate;
+    // ```
     NestedAlternate { parent: JsAnyConditional },
 
-    /// Conditional expression that is the `test` of another conditional expression.
+    /// Conditional that is the `test` of another conditional.
+    ///
+    /// ```javascript
+    /// (
+    ///     a              // <-- Note the extra indent here
+    ///         ? b
+    ///         : c
+    ///  )
+    ///     ? d
+    /// 	: e;
+    /// ```
+    ///
+    /// Indents the
     NestedTest { parent: JsAnyConditional },
 
-    /// Conditional expression that is the consequent of another conditional expression.
+    /// Conditional that is the `consequent` of another conditional.
+    ///
+    /// ```javascript
+    /// condition1
+    // 	? condition2
+    // 		? consequent2 // <-- consequent and alternate gets indented
+    // 		: alternate2
+    // 	: alternate1;
+    /// ```
     NestedConsequent { parent: JsAnyConditional },
 
-    /// This conditional expression isn't a child of another conditional expression.
+    /// This conditional isn't a child of another conditional.
+    ///
+    /// ```javascript
+    /// return a ? b : c;
+    /// ```
     Root {
-        /// The closest ancestor that isn't a parenthesized expression.
+        /// The closest ancestor that isn't a parenthesized node.
         parent: Option<JsSyntaxNode>,
     },
 }
@@ -382,7 +418,7 @@ impl JsAnyConditional {
         matches!(self, JsAnyConditional::JsConditionalExpression(_))
     }
 
-    /// It is desired to add an extra indent if this conditional is a conditional expression and is part
+    /// It is desired to add an extra indent if this conditional is a [JsConditionalExpression] and is directly inside
     /// of a member chain:
     ///
     /// ```javascript
@@ -560,7 +596,7 @@ impl JsAnyConditional {
         }
     }
 
-    /// Returns `true` if this is the root conditional expression and the parent is a static member expression.
+    /// Returns `true` if this is the root conditional expression and the parent is a [JsStaticMemberExpression].
     fn is_parent_static_member_expression(&self, layout: &ConditionalLayout) -> bool {
         if !self.is_conditional_expression() {
             return false;
@@ -591,6 +627,7 @@ pub(crate) fn conditional_needs_parens(
         | JsSyntaxKind::JSX_SPREAD_ATTRIBUTE
         | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
         | JsSyntaxKind::TS_AS_EXPRESSION
+        | JsSyntaxKind::JS_EXTENDS_CLAUSE
         | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => true,
 
         JsSyntaxKind::JS_NEW_EXPRESSION => {
@@ -625,7 +662,6 @@ pub(crate) fn conditional_needs_parens(
                 .as_ref()
                 == Ok(conditional.syntax())
         }
-        JsSyntaxKind::JS_EXTENDS_CLAUSE => true,
         JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
             let arrow = JsArrowFunctionExpression::unwrap_cast(parent.clone());
 

@@ -1,7 +1,15 @@
-use rome_js_syntax::{JsAnyExpression, JsAnyInProperty};
-use rome_rowan::SyntaxResult;
+use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
+use rome_js_syntax::JsAnyExpression;
+use rome_rowan::{AstNode, SyntaxResult};
 
-/// Returns `true` if the `node`s first token isn't a lookahead token (a `{`).
+/// Returns `true` if the `expression`s first token isn't a lookahead token (a `{`).
+///
+/// The [`ExpressionStatement`](https://tc39.es/ecma262/#prod-ExpressionStatement) parsing rule (and others)
+/// prohibit exclude tokens like a `{` from the lookahead because of ambiguity. This function allows to
+/// test if the expression starts with such a lookahead token.
+///
+/// Note: The current implementation only supports testing for `{` yet. Other lookahead tokens like
+/// `class, `function` and `let [` are not yet supported.
 pub(crate) fn starts_with_no_lookahead_token(expression: JsAnyExpression) -> SyntaxResult<bool> {
     use JsAnyExpression::*;
 
@@ -36,30 +44,23 @@ pub(crate) fn starts_with_no_lookahead_token(expression: JsAnyExpression) -> Syn
     Ok(result)
 }
 
-/// Resolves the left hand side of a binary like expression.
-///
-/// Returns the `left` most node or the passed in expression
+/// Resolves the (recursively) left hand side if `expression` is a binary like node or the expression itself.
 fn resolve_left_most_expression(expression: JsAnyExpression) -> SyntaxResult<JsAnyExpression> {
-    use JsAnyExpression::*;
     let mut current = expression;
 
-    loop {
-        current = match current {
-            JsLogicalExpression(logical) => logical.left()?,
-            JsBinaryExpression(binary) => binary.left()?,
-            JsInExpression(in_expression) => match in_expression.property()? {
-                JsAnyInProperty::JsAnyExpression(expression) => expression,
-                JsAnyInProperty::JsPrivateName(_) => {
-                    current = JsInExpression(in_expression);
-                    break;
+    let result = loop {
+        current = match JsAnyBinaryLikeExpression::try_cast_node(current) {
+            Ok(binary_like) => match binary_like.left()? {
+                JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression,
+                JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => {
+                    break JsAnyExpression::from(binary_like);
                 }
             },
-            JsInstanceofExpression(instance_of) => instance_of.left()?,
-            _ => {
-                break;
+            Err(expression) => {
+                break expression;
             }
-        }
-    }
+        };
+    };
 
-    Ok(current)
+    Ok(result)
 }

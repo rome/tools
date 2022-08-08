@@ -78,8 +78,6 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         // Therefore if our body is an arrow self, array, or object, we
         // do not have a soft line break after the arrow because the body is
         // going to get broken anyways.
-        // TODO: Explore the concept of hierarchical line breaking
-        //   or vertical stacking for arrow selfs
         let (body_has_soft_line_break, should_add_parens) = match &body {
             JsFunctionBody(_) => (true, false),
             JsAnyExpression(expr) => match expr {
