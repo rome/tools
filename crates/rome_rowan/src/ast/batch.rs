@@ -262,7 +262,7 @@ where
     /// [None] if the mutation is empty
     pub fn as_text_edits(&self) -> Option<(TextRange, Vec<Indel>)> {
         let iter = self.changes.iter().filter_map(|change| {
-            let parent = change.parent.as_ref().unwrap_or_else(|| &self.root);
+            let parent = change.parent.as_ref().unwrap_or(&self.root);
             let delete = match parent.slots().nth(change.new_node_slot) {
                 Some(SyntaxSlot::Node(node)) => node.text_range(),
                 Some(SyntaxSlot::Token(token)) => token.text_range(),
