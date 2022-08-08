@@ -9,6 +9,33 @@ import { FormatError } from "./error";
 
 const TEMPORARY_CONTENT = "temporary_content";
 
+function createWorkspaceSettingsFromFormatOptions({
+	quoteStyle,
+	indentStyle,
+	indentWidth,
+	lineWidth,
+}: Format): WorkspaceSettings {
+	const settings: WorkspaceSettings = {
+		formatter: {
+			indentStyle,
+			indentWidth,
+			lineWidth,
+		},
+		linter: undefined,
+		javascript: undefined,
+	};
+
+	if (quoteStyle) {
+		settings.javascript = {
+			formatter: {
+				quoteStyle: quoteStyle,
+			},
+		};
+	}
+
+	return settings;
+}
+
 /**
  * Options passed to format JavaScript files
  */
@@ -29,26 +56,10 @@ class Rome {
 
 	/**
 	 *
-	 * @param {FormatterSettings} options
+	 * @param {FormatterSettings} params
 	 */
-	format_options({ quoteStyle, indentStyle, indentWidth, lineWidth }: Format) {
-		const settings: WorkspaceSettings = {
-			formatter: {
-				indentStyle,
-				indentWidth,
-				lineWidth,
-			},
-			linter: undefined,
-			javascript: undefined,
-		};
-
-		if (quoteStyle) {
-			settings.javascript = {
-				formatter: {
-					quoteStyle: quoteStyle,
-				},
-			};
-		}
+	format_options(params: Format) {
+		const settings = createWorkspaceSettingsFromFormatOptions(params);
 		this.workspace.update_settings({
 			settings,
 		});
@@ -79,5 +90,40 @@ class Rome {
 	}
 }
 
+/**
+ * Formats some content given the input options. The options are optionals.
+ * @param {String} content
+ * @param {Format=?} options
+ * @returns {Printed | undefined}
+ */
+function format(
+	content: String,
+	options: Format | undefined,
+): Printed | undefined {
+	const workspace = new Workspace();
+	if (options) {
+		const settings = createWorkspaceSettingsFromFormatOptions(options);
+		workspace.update_settings({ settings });
+	}
+
+	workspace.open_file({
+		path: TEMPORARY_CONTENT,
+		content,
+	});
+	try {
+		return workspace.format_file({
+			path: TEMPORARY_CONTENT,
+		});
+	} catch (err) {
+		if (err instanceof FormatError) {
+			console.error(err.missing_content());
+		} else {
+			console.log("Unknown error");
+			console.log(err);
+		}
+		return undefined;
+	}
+}
+
 export type { Format, Printed };
-export { Rome };
+export { Rome, format };
