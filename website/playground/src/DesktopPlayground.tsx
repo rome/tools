@@ -18,21 +18,19 @@ import { ReactComponent as CopyIcon } from "../assets/copy.svg";
 import { useCallback, useEffect, useState } from "react";
 import MermaidGraph from "./MermaidGraph";
 
-export default function DesktopPlayground(
-	{
-		setPlaygroundState,
-		playgroundState: { code, ...settings },
-		prettierOutput,
-		romeOutput: {
-			cst,
-			ast,
-			formatted_code,
-			formatter_ir,
-			errors,
-			control_flow_graph,
-		},
-	}: PlaygroundProps,
-) {
+export default function DesktopPlayground({
+	setPlaygroundState,
+	playgroundState: { code, ...settings },
+	prettierOutput,
+	romeOutput: {
+		cst,
+		ast,
+		formatted_code,
+		formatter_ir,
+		errors,
+		control_flow_graph,
+	},
+}: PlaygroundProps) {
 	const { isJsx, isTypeScript } = settings;
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"

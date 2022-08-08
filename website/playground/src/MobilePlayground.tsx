@@ -8,21 +8,19 @@ import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
 import MermaidGraph from "./MermaidGraph";
 
-export function MobilePlayground(
-	{
-		setPlaygroundState,
-		playgroundState: { code, ...settings },
-		prettierOutput,
-		romeOutput: {
-			cst,
-			ast,
-			formatted_code,
-			formatter_ir,
-			errors,
-			control_flow_graph,
-		},
-	}: PlaygroundProps,
-) {
+export function MobilePlayground({
+	setPlaygroundState,
+	playgroundState: { code, ...settings },
+	prettierOutput,
+	romeOutput: {
+		cst,
+		ast,
+		formatted_code,
+		formatter_ir,
+		errors,
+		control_flow_graph,
+	},
+}: PlaygroundProps) {
 	const { isJsx, isTypeScript } = settings;
 
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {

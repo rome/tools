@@ -46,10 +46,9 @@ export function useWindowSize(): Size {
 	return windowSize;
 }
 
-export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
-	PlaygroundState,
-	Dispatch<SetStateAction<PlaygroundState>>,
-] {
+export function usePlaygroundState(
+	defaultRomeConfig: RomeConfiguration,
+): [PlaygroundState, Dispatch<SetStateAction<PlaygroundState>>] {
 	const searchParams = new URLSearchParams(window.location.search);
 	const initState = () => ({
 		code:

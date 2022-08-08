@@ -11,20 +11,18 @@ interface Props {
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
 }
 
-export function SettingsMenu(
-	{
-		setPlaygroundState,
-		settings: {
-			lineWidth,
-			indentWidth,
-			indentStyle,
-			quoteStyle,
-			sourceType,
-			isTypeScript,
-			isJsx,
-		},
-	}: Props,
-) {
+export function SettingsMenu({
+	setPlaygroundState,
+	settings: {
+		lineWidth,
+		indentWidth,
+		indentStyle,
+		quoteStyle,
+		sourceType,
+		isTypeScript,
+		isJsx,
+	},
+}: Props) {
 	return (
 		<div>
 			<div className="flex flex-col sm:flex-row">

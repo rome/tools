@@ -80,9 +80,9 @@ const PLATFORM_TRIPLETS: PlatformTriplets = {
 	},
 };
 
-async function getServerPath(context: ExtensionContext): Promise<
-	string | undefined
-> {
+async function getServerPath(
+	context: ExtensionContext,
+): Promise<string | undefined> {
 	const config = workspace.getConfiguration();
 	const explicitPath = config.get("rome.lspBin");
 	if (typeof explicitPath === "string" && explicitPath !== "") {

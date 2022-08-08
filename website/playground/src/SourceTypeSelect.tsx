@@ -9,16 +9,14 @@ interface Props {
 	sourceType: SourceType;
 }
 
-export default function SourceTypeSelect(
-	{
-		setIsTypeScript,
-		isTypeScript,
-		setIsJsx,
-		isJsx,
-		setSourceType,
-		sourceType,
-	}: Props,
-) {
+export default function SourceTypeSelect({
+	setIsTypeScript,
+	isTypeScript,
+	setIsJsx,
+	isJsx,
+	setSourceType,
+	sourceType,
+}: Props) {
 	return (
 		<div className="p-5 sm:pr-0 sm:pt-0">
 			<fieldset className="flex items-center">
