@@ -17,7 +17,6 @@ mod formatter;
 mod javascript;
 pub mod linter;
 
-#[cfg(feature = "serde_workspace")]
 pub(crate) use javascript::{deserialize_globals, serialize_globals};
 pub use linter::{RuleConfiguration, Rules};
 
@@ -63,6 +62,7 @@ impl Configuration {
 }
 
 /// Series of errors that can be thrown while computing the configuration
+#[derive(serde::Serialize, serde::Deserialize)]
 pub enum ConfigurationError {
     /// Thrown when the program can't serialize the configuration, while saving it
     SerializationError,

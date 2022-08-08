@@ -85,6 +85,12 @@ impl EnvConsole {
     }
 }
 
+impl Default for EnvConsole {
+    fn default() -> Self {
+        Self::new(false)
+    }
+}
+
 impl Console for EnvConsole {
     fn print(&mut self, level: LogLevel, args: Markup) {
         let mut out = match level {

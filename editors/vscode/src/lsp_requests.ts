@@ -1,7 +1,6 @@
 import {
 	RequestType,
 	TextDocumentIdentifier,
-	Range,
 } from "vscode-languageclient";
 
 export interface SyntaxTreeParams {
@@ -15,4 +14,4 @@ export const syntaxTreeRequest = new RequestType<
 	SyntaxTreeParams,
 	string,
 	void
->("rome/syntaxTree");
+>("rome_lsp/syntaxTree");

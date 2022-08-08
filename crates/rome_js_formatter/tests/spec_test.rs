@@ -171,7 +171,7 @@ impl SnapshotContent {
 /// * `json/null` -> input: `tests/specs/json/null.json`, expected output: `tests/specs/json/null.json.snap`
 /// * `null` -> input: `tests/specs/null.json`, expected output: `tests/specs/null.json.snap`
 pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, file_type: &str) {
-    let app = App::from_env(false);
+    let app = App::default();
 
     let file_path = &spec_input_file;
     let spec_input_file = Path::new(spec_input_file);

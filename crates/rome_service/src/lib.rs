@@ -3,6 +3,7 @@ use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
+use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
@@ -24,12 +25,13 @@ pub struct App<'app> {
     /// A reference to the internal virtual file system
     pub fs: DynRef<'app, dyn FileSystem>,
     /// A reference to the internal workspace
-    pub workspace: DynRef<'app, dyn Workspace>,
+    pub workspace: WorkspaceRef<'app>,
     /// A reference to the internal console, where its buffer will be used to write messages and
     /// errors
     pub console: DynRef<'app, dyn Console>,
 }
 
+#[derive(Serialize, Deserialize)]
 /// Generic errors thrown during rome operations
 pub enum RomeError {
     /// The project contains uncommitted changes
@@ -53,6 +55,9 @@ pub enum RomeError {
     Configuration(ConfigurationError),
     /// Error thrown when Rome cannot rename a symbol.
     RenameError(RenameError),
+    /// Error created from an underlying I/O error
+    #[serde(with = "IoErrorDef")]
+    IoError(std::io::Error),
 }
 
 impl Debug for RomeError {
@@ -132,6 +137,8 @@ impl Display for RomeError {
                     "the linter encountered an error while analyzing the file: {cause}",
                 )
             }
+
+            RomeError::IoError(error) => std::fmt::Display::fmt(error, f),
         }
     }
 }
@@ -144,12 +151,36 @@ impl From<FormatError> for RomeError {
     }
 }
 
-impl<'app> App<'app> {
-    /// Create a new instance of the app using the [OsFileSystem] and [EnvConsole]
-    pub fn from_env(no_colors: bool) -> Self {
+impl From<serde_json::Error> for RomeError {
+    fn from(err: serde_json::Error) -> Self {
+        Self::IoError(err.into())
+    }
+}
+
+impl From<std::io::Error> for RomeError {
+    fn from(err: std::io::Error) -> Self {
+        Self::IoError(err)
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(remote = "std::io::Error")]
+struct IoErrorDef {
+    #[serde(getter = "std::io::Error::to_string")]
+    message: String,
+}
+
+impl From<IoErrorDef> for std::io::Error {
+    fn from(def: IoErrorDef) -> std::io::Error {
+        std::io::Error::new(std::io::ErrorKind::Other, def.message)
+    }
+}
+
+impl Default for App<'static> {
+    fn default() -> Self {
         Self::with_filesystem_and_console(
             DynRef::Owned(Box::new(OsFileSystem)),
-            DynRef::Owned(Box::new(EnvConsole::new(no_colors))),
+            DynRef::Owned(Box::new(EnvConsole::default())),
         )
     }
 }
@@ -160,10 +191,35 @@ impl<'app> App<'app> {
         fs: DynRef<'app, dyn FileSystem>,
         console: DynRef<'app, dyn Console>,
     ) -> Self {
+        Self::new(fs, console, WorkspaceRef::Owned(workspace::server()))
+    }
+
+    /// Create a new instance of the app using the specified [FileSystem], [Console] and [Workspace] implementation
+    pub fn new(
+        fs: DynRef<'app, dyn FileSystem>,
+        console: DynRef<'app, dyn Console>,
+        workspace: WorkspaceRef<'app>,
+    ) -> Self {
         Self {
             fs,
             console,
-            workspace: DynRef::Owned(workspace::server()),
+            workspace,
+        }
+    }
+}
+
+pub enum WorkspaceRef<'app> {
+    Owned(Box<dyn Workspace>),
+    Borrowed(&'app dyn Workspace),
+}
+
+impl<'app> Deref for WorkspaceRef<'app> {
+    type Target = dyn Workspace + 'app;
+
+    fn deref(&self) -> &Self::Target {
+        match self {
+            WorkspaceRef::Owned(inner) => &**inner,
+            WorkspaceRef::Borrowed(inner) => *inner,
         }
     }
 }

@@ -9,8 +9,8 @@ use std::{ffi::OsString, path::Path};
 
 use pico_args::Arguments;
 use rome_cli::{run_cli, CliSession, Termination};
-use rome_console::BufferConsole;
-use rome_fs::MemoryFileSystem;
+use rome_console::{BufferConsole, Console};
+use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::{App, DynRef};
 
 const UNFORMATTED: &str = "  statement(  )  ";
@@ -99,7 +99,7 @@ mod check {
         fs.insert(file_path.into(), FORMATTED.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(fs)),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -117,7 +117,7 @@ mod check {
         fs.insert(file_path.into(), PARSE_ERROR.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(fs)),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -138,7 +138,7 @@ mod check {
         fs.insert(file_path.into(), LINT_ERROR.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(fs)),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -159,10 +159,7 @@ mod check {
         fs.insert(file_path.into(), ERRORS.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         });
 
@@ -202,10 +199,7 @@ mod check {
         fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
@@ -235,10 +229,7 @@ mod check {
         fs.insert(file_path.into(), FIX_AFTER.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
@@ -262,10 +253,7 @@ mod check {
         fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply-suggested"),
@@ -297,10 +285,7 @@ mod check {
         fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply-suggested"),
@@ -333,10 +318,7 @@ mod check {
         fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
@@ -369,10 +351,7 @@ mod check {
         fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         });
 
@@ -401,10 +380,7 @@ mod check {
         fs.insert(config_path.into(), CONFIG_LINTER_SUPPRESSED_RULE.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
@@ -440,10 +416,7 @@ mod check {
         );
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
@@ -478,10 +451,7 @@ mod check {
         fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         });
 
@@ -518,10 +488,7 @@ mod check {
         fs.insert(file_path.into(), NO_DEAD_CODE_ERROR.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         });
 
@@ -557,10 +524,7 @@ mod ci {
         fs.insert(file_path.into(), FORMATTED.as_bytes());
 
         let mut console = BufferConsole::default();
-        let app = App::with_filesystem_and_console(
-            DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-        );
+        let app = create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console));
 
         let result = run_cli(CliSession {
             app,
@@ -592,7 +556,7 @@ mod ci {
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(fs)),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -613,7 +577,7 @@ mod ci {
         fs.insert(file_path.into(), PARSE_ERROR.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(fs)),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -635,10 +599,7 @@ mod ci {
 
         let mut console = BufferConsole::default();
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
         });
 
@@ -668,7 +629,7 @@ mod format {
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -696,10 +657,7 @@ mod format {
         let file_path = Path::new("format.js");
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
-        let app = App::with_filesystem_and_console(
-            DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-        );
+        let app = create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console));
 
         let result = run_cli(CliSession {
             app,
@@ -737,10 +695,7 @@ mod format {
         fs.insert(file_path.into(), LINT_ERROR.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
         });
 
@@ -770,7 +725,7 @@ mod format {
     #[test]
     fn indent_style_parse_errors() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -793,7 +748,7 @@ mod format {
     #[test]
     fn indent_size_parse_errors_negative() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -816,7 +771,7 @@ mod format {
     #[test]
     fn indent_size_parse_errors_overflow() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -839,7 +794,7 @@ mod format {
     #[test]
     fn line_width_parse_errors_negative() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -862,7 +817,7 @@ mod format {
     #[test]
     fn line_width_parse_errors_overflow() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -892,7 +847,7 @@ mod format {
         fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -926,7 +881,7 @@ mod format {
         fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -960,10 +915,7 @@ mod format {
             .push("function f() {return{}}".to_string());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--stdin-file-path"),
@@ -993,10 +945,7 @@ mod format {
         let mut console = BufferConsole::default();
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--stdin-file-path"),
@@ -1029,10 +978,7 @@ mod format {
             .push("function f() {return{}}".to_string());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Borrowed(&mut console),
-            ),
+            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
             args: Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--stdin-file-path"),
@@ -1063,7 +1009,7 @@ mod help {
     #[test]
     fn unknown_command() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1086,7 +1032,7 @@ mod main {
     #[test]
     fn unknown_command() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1102,7 +1048,7 @@ mod main {
     #[test]
     fn unexpected_argument() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1124,7 +1070,7 @@ mod main {
     #[test]
     fn empty_arguments() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1140,7 +1086,7 @@ mod main {
     #[test]
     fn missing_argument() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1156,7 +1102,7 @@ mod main {
     #[test]
     fn incorrect_value() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1177,7 +1123,7 @@ mod main {
     #[test]
     fn overflow_value() {
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Owned(Box::new(MemoryFileSystem::default())),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1198,12 +1144,13 @@ mod main {
 }
 
 mod init {
+    use super::create_app;
     use crate::configs::CONFIG_INIT_DEFAULT;
     use pico_args::Arguments;
     use rome_cli::{run_cli, CliSession};
     use rome_console::BufferConsole;
     use rome_fs::{FileSystemExt, MemoryFileSystem};
-    use rome_service::{App, DynRef};
+    use rome_service::DynRef;
     use std::ffi::OsString;
     use std::path::Path;
 
@@ -1212,7 +1159,7 @@ mod init {
         let mut fs = MemoryFileSystem::default();
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1234,6 +1181,7 @@ mod init {
 }
 
 mod configuration {
+    use super::create_app;
     use crate::configs::{
         CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_INCORRECT_GLOBALS,
         CONFIG_INCORRECT_GLOBALS_V2, CONFIG_LINTER_WRONG_RULE,
@@ -1242,7 +1190,7 @@ mod configuration {
     use rome_cli::{run_cli, CliSession};
     use rome_console::BufferConsole;
     use rome_fs::MemoryFileSystem;
-    use rome_service::{App, DynRef};
+    use rome_service::DynRef;
     use std::ffi::OsString;
     use std::path::Path;
 
@@ -1253,7 +1201,7 @@ mod configuration {
         fs.insert(file_path.into(), CONFIG_ALL_FIELDS.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1271,7 +1219,7 @@ mod configuration {
         fs.insert(file_path.into(), CONFIG_BAD_LINE_WIDTH.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1298,7 +1246,7 @@ mod configuration {
         fs.insert(file_path.into(), CONFIG_LINTER_WRONG_RULE.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1323,7 +1271,7 @@ mod configuration {
         fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1350,7 +1298,7 @@ mod configuration {
         fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
 
         let result = run_cli(CliSession {
-            app: App::with_filesystem_and_console(
+            app: create_app(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Owned(Box::new(BufferConsole::default())),
             ),
@@ -1359,4 +1307,33 @@ mod configuration {
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
     }
+}
+
+/// Create an [App] instance using the provided [FileSystem] and [Console]
+/// instance, and using an in-process "remote" instance of the workspace
+fn create_app<'app>(
+    fs: DynRef<'app, dyn FileSystem>,
+    console: DynRef<'app, dyn Console>,
+) -> App<'app> {
+    use rome_bin::SocketTransport;
+    use rome_lsp::ServerFactory;
+    use rome_service::{workspace, WorkspaceRef};
+    use tokio::{
+        io::{duplex, split},
+        runtime::Runtime,
+    };
+
+    let factory = ServerFactory::default();
+    let connection = factory.create();
+
+    let runtime = Runtime::new().expect("failed to create runtime");
+
+    let (client, server) = duplex(4096);
+    let (stdin, stdout) = split(server);
+    runtime.spawn(connection.accept(stdin, stdout));
+
+    let transport = SocketTransport::new(runtime, client);
+
+    let workspace = workspace::client(transport).unwrap();
+    App::new(fs, console, WorkspaceRef::Owned(workspace))
 }

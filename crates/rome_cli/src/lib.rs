@@ -2,9 +2,11 @@
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
 
-use pico_args::Arguments;
+pub use pico_args::Arguments;
+use rome_console::EnvConsole;
 use rome_flags::FeatureFlags;
-use rome_service::App;
+use rome_fs::OsFileSystem;
+use rome_service::{App, DynRef, Workspace, WorkspaceRef};
 
 mod commands;
 mod execute;
@@ -25,13 +27,15 @@ pub struct CliSession<'app> {
     pub args: Arguments,
 }
 
-impl CliSession<'static> {
-    pub fn from_env() -> Self {
-        let mut args = Arguments::from_env();
+impl<'app> CliSession<'app> {
+    pub fn new(workspace: &'app dyn Workspace, mut args: Arguments) -> Self {
         let no_colors = args.contains("--no-colors");
-
         Self {
-            app: App::from_env(no_colors),
+            app: App::new(
+                DynRef::Owned(Box::new(OsFileSystem)),
+                DynRef::Owned(Box::new(EnvConsole::new(no_colors))),
+                WorkspaceRef::Borrowed(workspace),
+            ),
             args,
         }
     }

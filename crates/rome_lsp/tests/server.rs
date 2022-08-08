@@ -6,9 +6,9 @@ use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
 use futures::StreamExt;
-use rome_lsp::config::WorkspaceSettings;
-use rome_lsp::server::build_server;
-use rome_lsp::server::LSPServer;
+use rome_lsp::LSPServer;
+use rome_lsp::ServerFactory;
+use rome_lsp::WorkspaceSettings;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use serde_json::{from_value, to_value};
@@ -234,7 +234,8 @@ where
 
 #[tokio::test]
 async fn basic_lifecycle() -> Result<()> {
-    let (service, client) = build_server();
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
@@ -251,7 +252,8 @@ async fn basic_lifecycle() -> Result<()> {
 
 #[tokio::test]
 async fn document_lifecycle() -> Result<()> {
-    let (service, client) = build_server();
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
@@ -271,7 +273,8 @@ async fn document_lifecycle() -> Result<()> {
 
 #[tokio::test]
 async fn pull_code_actions() -> Result<()> {
-    let (service, client) = build_server();
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
@@ -327,7 +330,8 @@ async fn pull_code_actions() -> Result<()> {
 
 #[tokio::test]
 async fn format_with_syntax_errors() -> Result<()> {
-    let (service, client) = build_server();
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 

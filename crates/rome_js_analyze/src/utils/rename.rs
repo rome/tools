@@ -49,6 +49,7 @@ impl RenamableNode for JsAnyRenamableDeclaration {
     }
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
 pub enum RenameError {
     CannotFindDeclaration,
     CannotBeRenamed {

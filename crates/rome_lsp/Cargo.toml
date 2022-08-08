@@ -22,16 +22,12 @@ rome_diagnostics = { path = "../rome_diagnostics" }
 rome_flags = { path = "../rome_flags" }
 rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../rome_console" }
-tower-lsp = { version = "0.17.0"}
-tokio = { version = "1.15.0", features = ["full" ] }
-tracing = { version = "0.1.31", default-features = false, features = ["std", "max_level_trace", "release_max_level_warn"] }
-tracing-tree = "0.2.0"
-tracing-subscriber = { version = "0.3.5", features = ["env-filter"] }
+tokio = { version = "1.15.0", features = ["io-std"] }
+tower-lsp = { version = "0.17.0" }
+tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 parking_lot = "0.12.0"
 futures = "0.3"
 
-[target.'cfg(target_os = "windows")'.dependencies]
-mimalloc = "0.1.29"
-
 [dev-dependencies]
 tower = { version = "0.4.12", features = ["timeout"] }
+tokio = { version = "1.15.0", features = ["rt", "rt-multi-thread", "macros"] }

@@ -27,6 +27,6 @@ rayon = "1.5.1"
 
 [dev-dependencies]
 insta = "1.17.1"
-
-[target.'cfg(target_os = "windows")'.dependencies]
-mimalloc = "0.1.29"
+tokio = { version = "1.15.0", features = ["io-util"] }
+rome_lsp = { path = "../rome_lsp" }
+rome_bin = { path = "../rome_bin" }

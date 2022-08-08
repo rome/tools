@@ -7,20 +7,17 @@ use rome_js_syntax::JsLanguage;
 use std::sync::{RwLock, RwLockReadGuard};
 
 /// Global settings for the entire workspace
-#[derive(Debug, Default)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct WorkspaceSettings {
     /// Formatter settings applied to all files in the workspaces
-    #[cfg_attr(feature = "serde_workspace", serde(default))]
+    #[serde(default)]
     pub format: FormatSettings,
     /// Linter settings applied to all files in the workspace
-    #[cfg_attr(feature = "serde_workspace", serde(default))]
+    #[serde(default)]
     pub linter: LinterSettings,
     /// Language specific settings
-    #[cfg_attr(feature = "serde_workspace", serde(default))]
+    #[serde(default)]
     pub languages: LanguagesSettings,
 }
 
@@ -66,11 +63,8 @@ impl WorkspaceSettings {
 }
 
 /// Formatter settings for the entire workspace
-#[derive(Debug)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -93,11 +87,8 @@ impl Default for FormatSettings {
 }
 
 /// Linter settings for the entire workspace
-#[derive(Debug)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct LinterSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -116,32 +107,29 @@ impl Default for LinterSettings {
 }
 
 /// Static map of language names to language-specific settings
-#[derive(Debug, Default)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct LanguagesSettings {
-    #[cfg_attr(feature = "serde_workspace", serde(default))]
+    #[serde(default)]
     pub javascript: LanguageSettings<JsLanguage>,
 }
 
 pub trait Language: rome_rowan::Language {
+    #[cfg(not(feature = "schemars"))]
     /// Formatter settings type for this language
-    #[cfg(not(feature = "serde_workspace"))]
-    type FormatSettings: Default;
+    type FormatSettings: Default + serde::Serialize + serde::de::DeserializeOwned;
+    #[cfg(feature = "schemars")]
     /// Formatter settings type for this language
-    #[cfg(feature = "serde_workspace")]
     type FormatSettings: Default
         + serde::Serialize
         + serde::de::DeserializeOwned
         + schemars::JsonSchema;
 
+    #[cfg(not(feature = "schemars"))]
     /// Linter settings type for this language
-    #[cfg(not(feature = "serde_workspace"))]
-    type LinterSettings: Default;
+    type LinterSettings: Default + serde::Serialize + serde::de::DeserializeOwned;
+    #[cfg(feature = "schemars")]
     /// Linter settings type for this language
-    #[cfg(feature = "serde_workspace")]
     type LinterSettings: Default
         + serde::Serialize
         + serde::de::DeserializeOwned
@@ -162,28 +150,22 @@ pub trait Language: rome_rowan::Language {
     ) -> Self::FormatContext;
 }
 
-#[derive(Debug, Default)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
-    #[cfg_attr(feature = "serde_workspace", serde(default))]
+    #[serde(default)]
     pub format: L::FormatSettings,
 
     /// Linter settings for this language
-    #[cfg_attr(feature = "serde_workspace", serde(default))]
+    #[serde(default)]
     pub linter: L::LinterSettings,
 
     /// Globals variables/bindings that can be found in a file
-    #[cfg_attr(
-        feature = "serde_workspace",
-        serde(
-            default,
-            deserialize_with = "crate::configuration::deserialize_globals",
-            serialize_with = "crate::configuration::serialize_globals"
-        )
+    #[serde(
+        default,
+        deserialize_with = "crate::configuration::deserialize_globals",
+        serialize_with = "crate::configuration::serialize_globals"
     )]
     pub globals: IndexSet<String>,
 }

@@ -57,6 +57,10 @@ pub enum Termination {
     /// Wrapper for an underlying `rome_service` error
     #[error(transparent)]
     WorkspaceError(#[from] RomeError),
+
+    /// Wrapper for an underlying `std::io` error
+    #[error(transparent)]
+    IoError(#[from] std::io::Error),
 }
 
 fn command_name() -> String {
