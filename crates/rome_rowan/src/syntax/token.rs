@@ -8,7 +8,7 @@ use crate::{
 use std::fmt;
 use std::marker::PhantomData;
 use std::ptr::NonNull;
-use text_size::{TextRange, TextSize};
+use text_size::{TextLen, TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxToken<L: Language> {
@@ -191,26 +191,25 @@ impl<L: Language> SyntaxToken<L> {
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn with_leading_trivia<'a, I>(self, trivia: I) -> Self
     where
-        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+        I: Iterator<Item = (TriviaPieceKind, &'a str)> + ExactSizeIterator,
     {
-        let mut text = String::new();
-        for (_, piece) in trivia.clone() {
-            text.push_str(piece);
-        }
+        let mut token_text = String::new();
+        let trivia = trivia.map(|(kind, text)| {
+            token_text.push_str(text);
+            TriviaPiece::new(kind, TextSize::of(text))
+        });
 
-        text.push_str(self.text_trimmed());
+        let leading = GreenTrivia::new(trivia);
 
-        for piece in self.trailing_trivia().pieces() {
-            text.push_str(piece.text());
-        }
+        // Copy over token text and trailing trivia
+        let leading_len = self.raw.green().leading_trivia().text_len();
+        token_text.push_str(&self.text()[usize::from(leading_len)..]);
 
         Self {
             raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
                 self.kind().to_raw(),
-                &text,
-                GreenTrivia::new(
-                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
-                ),
+                &token_text,
+                leading,
                 self.green_token().trailing_trivia().clone(),
             )),
             _p: PhantomData,
@@ -221,27 +220,27 @@ impl<L: Language> SyntaxToken<L> {
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn with_trailing_trivia<'a, I>(self, trivia: I) -> Self
     where
-        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+        I: Iterator<Item = (TriviaPieceKind, &'a str)> + ExactSizeIterator,
     {
-        let mut text = String::new();
-        for piece in self.leading_trivia().pieces() {
-            text.push_str(piece.text());
-        }
+        let mut token_text = String::new();
 
-        text.push_str(self.text_trimmed());
+        // copy over leading trivia and token text
+        let trailing_len = self.green_token().trailing_trivia().text_len();
+        token_text.push_str(&self.text()[..usize::from(self.text().text_len() - trailing_len)]);
 
-        for (_, piece) in trivia.clone() {
-            text.push_str(piece);
-        }
+        let trivia = trivia.map(|(kind, text)| {
+            token_text.push_str(text);
+            TriviaPiece::new(kind, TextSize::of(text))
+        });
+
+        let trailing = GreenTrivia::new(trivia);
 
         Self {
             raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
                 self.kind().to_raw(),
-                &text,
+                &token_text,
                 self.green_token().leading_trivia().clone(),
-                GreenTrivia::new(
-                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
-                ),
+                trailing,
             )),
             _p: PhantomData,
         }
