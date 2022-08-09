@@ -3,6 +3,7 @@ use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use std::collections::HashMap;
+use std::fmt::Write as _;
 use std::path::PathBuf;
 
 #[derive(Default)]
@@ -31,9 +32,10 @@ impl CliSnapshot {
 
         for (name, file_content) in &self.files {
             if !name.starts_with("rome.json") {
-                let extension = name.split(".").last().unwrap();
-                content.push_str(&format!("## `{name}`\n\n"));
-                content.push_str(&format!("```{extension}"));
+                let extension = name.split('.').last().unwrap();
+
+                let _ = write!(content, "## `{name}`\n\n");
+                let _ = write!(content, "```{extension}");
                 content.push('\n');
                 content.push_str(&*file_content);
                 content.push('\n');
@@ -42,7 +44,7 @@ impl CliSnapshot {
             }
         }
 
-        if self.messages.len() > 0 {
+        if !self.messages.is_empty() {
             content.push_str("## Messages\n\n");
 
             for message in &self.messages {
@@ -78,7 +80,7 @@ pub fn assert_cli_snapshot(test_name: &str, fs: MemoryFileSystem, console: Buffe
     let configuration = fs.read(&config_path).ok();
     if let Some(mut configuration) = configuration {
         let mut buffer = String::new();
-        if let Ok(_) = configuration.read_to_string(&mut buffer) {
+        if configuration.read_to_string(&mut buffer).is_ok() {
             cli_snapshot.configuration = Some(buffer);
         }
     }

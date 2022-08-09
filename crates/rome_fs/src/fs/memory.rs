@@ -45,8 +45,7 @@ impl MemoryFileSystem {
 
     pub fn files(self) -> IntoIter<PathBuf, FileEntry> {
         let files = self.files.0.into_inner();
-        let iter = files.into_iter();
-        iter
+        files.into_iter()
     }
 }
 
