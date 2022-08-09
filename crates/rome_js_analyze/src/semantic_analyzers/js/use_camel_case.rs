@@ -11,7 +11,7 @@ use rome_diagnostics::Applicability;
 use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,
-    JsSetterClassMember, JsVariableDeclarator,
+    JsPrivateClassMemberName, JsPropertyClassMember, JsSetterClassMember, JsVariableDeclarator,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 use std::{borrow::Cow, iter::once};
@@ -47,6 +47,17 @@ pub struct State {
     new_name: String,
 }
 
+fn check_is_camel(name: &str) -> Option<State> {
+    if name.starts_with('_') {
+        return None;
+    }
+
+    match name.to_camel_case() {
+        Cow::Borrowed(_) => None,
+        Cow::Owned(new_name) => Some(State { new_name }),
+    }
+}
+
 impl Rule for UseCamelCase {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
@@ -67,16 +78,7 @@ impl Rule for UseCamelCase {
                     .is_some();
                 if is_variable || is_parameter || is_function || is_exported_function {
                     let name = binding.name_token().ok()?;
-                    let name = name.text_trimmed();
-
-                    if name.starts_with('_') {
-                        return None;
-                    }
-
-                    match name.to_camel_case() {
-                        Cow::Borrowed(_) => None,
-                        Cow::Owned(new_name) => Some(State { new_name }),
-                    }
+                    check_is_camel(name.text_trimmed())
                 } else {
                     None
                 }
@@ -85,17 +87,19 @@ impl Rule for UseCamelCase {
                 let is_method_class = name.parent::<JsMethodClassMember>().is_some();
                 let is_getter = name.parent::<JsGetterClassMember>().is_some();
                 let is_setter = name.parent::<JsSetterClassMember>().is_some();
-                if is_method_class || is_getter || is_setter {
+                let is_property = name.parent::<JsPropertyClassMember>().is_some();
+                if is_method_class || is_getter || is_setter || is_property {
                     let name = name.text();
-
-                    if name.starts_with('_') {
-                        return None;
-                    }
-
-                    match name.to_camel_case() {
-                        Cow::Borrowed(_) => None,
-                        Cow::Owned(new_name) => Some(State { new_name }),
-                    }
+                    check_is_camel(&name)
+                } else {
+                    None
+                }
+            }
+            JsAnyCamelCaseName::JsPrivateClassMemberName(name) => {
+                let is_property = name.parent::<JsPropertyClassMember>().is_some();
+                if is_property {
+                    let name = name.text();
+                    check_is_camel(&name)
                 } else {
                     None
                 }
@@ -123,28 +127,26 @@ impl Rule for UseCamelCase {
         let candidates = (2..).map(|i| format!("{}{}", new_name, i).into());
         let candidates = once(Cow::from(new_name)).chain(candidates);
 
-        let renamed = match ctx.query() {
+        match ctx.query() {
             JsAnyCamelCaseName::JsIdentifierBinding(binding) => {
-                batch.rename_node_declaration_with_retry(model, binding, candidates)
+                let renamed =
+                    batch.rename_node_declaration_with_retry(model, binding.clone(), candidates);
+                if renamed {
+                    Some(JsRuleAction {
+                        category: ActionCategory::Refactor,
+                        applicability: Applicability::Always,
+                        message: markup! { "Rename this symbol to camel case" }.to_owned(),
+                        mutation: batch,
+                    })
+                } else {
+                    None
+                }
             }
-            JsAnyCamelCaseName::JsLiteralMemberName(name) => {
-                batch.rename_node_declaration_with_retry(model, name, candidates)
-            }
-        };
-
-        if renamed {
-            Some(JsRuleAction {
-                category: ActionCategory::Refactor,
-                applicability: Applicability::Always,
-                message: markup! { "Rename this symbol to camel case" }.to_owned(),
-                mutation: batch,
-            })
-        } else {
-            None
+            _ => None,
         }
     }
 }
 
 declare_node_union! {
-    pub(crate) JsAnyCamelCaseName = JsIdentifierBinding | JsLiteralMemberName
+    pub(crate) JsAnyCamelCaseName = JsIdentifierBinding | JsLiteralMemberName | JsPrivateClassMemberName
 }

@@ -4,17 +4,32 @@ expression: useCamelCase.js
 ---
 # Input
 ```js
-let snake_case
+let snake_case;
 snake_case = 1;
-let _snake_case
+let _snake_case;
 console.log(_snake_case);
 
-function f(snake_case, PascalCase) {
-}
+function snake_function(snake_case, PascalCase) {}
 
 class PascalCase {
+	snake_property = 1;
+	#private_snake_property = 2;
 
+	snake_function() {}
+
+	get snake_getter() {}
+	set snake_setter(v) {
+		console.log(v);
+	}
 }
+
+console.log({
+	snake_function() {},
+	get snake_getter() {},
+	set snake_setter(v) {
+		console.log(v);
+	},
+});
 
 let camelCase;
 let longCamelCase;
@@ -26,16 +41,16 @@ let longCamelCase;
 warning[js/useCamelCase]: Prefer symbols names in camel case.
   ┌─ useCamelCase.js:1:5
   │
-1 │ let snake_case
+1 │ let snake_case;
   │     ----------
 
 Safe fix: Rename this symbol to camel case
     | @@ -1,5 +1,5 @@
-0   | - let snake_case
+0   | - let snake_case;
 1   | - snake_case = 1;
-  0 | + let snakeCase
+  0 | + let snakeCase;
   1 | + snakeCase = 1;
-2 2 |   let _snake_case
+2 2 |   let _snake_case;
 3 3 |   console.log(_snake_case);
 4 4 |   
 
@@ -44,42 +59,113 @@ Safe fix: Rename this symbol to camel case
 
 ```
 warning[js/useCamelCase]: Prefer symbols names in camel case.
-  ┌─ useCamelCase.js:6:12
+  ┌─ useCamelCase.js:6:10
   │
-6 │ function f(snake_case, PascalCase) {
-  │            ----------
+6 │ function snake_function(snake_case, PascalCase) {}
+  │          --------------
 
 Safe fix: Rename this symbol to camel case
     | @@ -3,7 +3,7 @@
-2 2 |   let _snake_case
+2 2 |   let _snake_case;
 3 3 |   console.log(_snake_case);
 4 4 |   
-5   | - function f(snake_case, PascalCase) {
-  5 | + function f(snakeCase, PascalCase) {
-6 6 |   }
-7 7 |   
-8 8 |   class PascalCase {
+5   | - function snake_function(snake_case, PascalCase) {}
+  5 | + function snakeFunction(snake_case, PascalCase) {}
+6 6 |   
+7 7 |   class PascalCase {
+8 8 |   	snake_property = 1;
 
 
 ```
 
 ```
 warning[js/useCamelCase]: Prefer symbols names in camel case.
-  ┌─ useCamelCase.js:6:24
+  ┌─ useCamelCase.js:6:25
   │
-6 │ function f(snake_case, PascalCase) {
-  │                        ----------
+6 │ function snake_function(snake_case, PascalCase) {}
+  │                         ----------
 
 Safe fix: Rename this symbol to camel case
     | @@ -3,7 +3,7 @@
-2 2 |   let _snake_case
+2 2 |   let _snake_case;
 3 3 |   console.log(_snake_case);
 4 4 |   
-5   | - function f(snake_case, PascalCase) {
-  5 | + function f(snake_case, pascalCase) {
-6 6 |   }
-7 7 |   
-8 8 |   class PascalCase {
+5   | - function snake_function(snake_case, PascalCase) {}
+  5 | + function snake_function(snakeCase, PascalCase) {}
+6 6 |   
+7 7 |   class PascalCase {
+8 8 |   	snake_property = 1;
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+  ┌─ useCamelCase.js:6:37
+  │
+6 │ function snake_function(snake_case, PascalCase) {}
+  │                                     ----------
+
+Safe fix: Rename this symbol to camel case
+    | @@ -3,7 +3,7 @@
+2 2 |   let _snake_case;
+3 3 |   console.log(_snake_case);
+4 4 |   
+5   | - function snake_function(snake_case, PascalCase) {}
+  5 | + function snake_function(snake_case, pascalCase) {}
+6 6 |   
+7 7 |   class PascalCase {
+8 8 |   	snake_property = 1;
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+  ┌─ useCamelCase.js:9:2
+  │
+9 │     snake_property = 1;
+  │     --------------
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+   ┌─ useCamelCase.js:10:2
+   │
+10 │     #private_snake_property = 2;
+   │     -----------------------
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+   ┌─ useCamelCase.js:12:2
+   │
+12 │     snake_function() {}
+   │     --------------
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+   ┌─ useCamelCase.js:14:6
+   │
+14 │     get snake_getter() {}
+   │         ------------
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+   ┌─ useCamelCase.js:15:6
+   │
+15 │     set snake_setter(v) {
+   │         ------------
 
 
 ```

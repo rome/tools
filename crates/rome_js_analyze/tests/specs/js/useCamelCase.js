@@ -6,6 +6,9 @@ console.log(_snake_case);
 function snake_function(snake_case, PascalCase) {}
 
 class PascalCase {
+	snake_property = 1;
+	#private_snake_property = 2;
+
 	snake_function() {}
 
 	get snake_getter() {}
