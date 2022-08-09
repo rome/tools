@@ -13,7 +13,7 @@ specifiers:
   '@uiw/react-codemirror': ^4.11.4
   '@vitejs/plugin-react': ^1.0.7
   autoprefixer: ^10.4.2
-  codemirror-lang-rome-ast: 0.0.4
+  codemirror-lang-rome-ast: 0.0.6
   lang-rome-formatter-ir: 0.0.2
   postcss: ^8.4.6
   prettier: ^2.7.0
@@ -31,7 +31,7 @@ dependencies:
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
   '@uiw/react-codemirror': 4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq
-  codemirror-lang-rome-ast: 0.0.4
+  codemirror-lang-rome-ast: 0.0.6
   lang-rome-formatter-ir: 0.0.2
   prettier: 2.7.0
   react: 17.0.2
@@ -892,8 +892,8 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /codemirror-lang-rome-ast/0.0.4:
-    resolution: {integrity: sha512-fX6ahzHRhN2dNU6YcMDelT74qL4S3w+mu9PqE8xQA0UvBR/auGJsMFuKM6AJTK9ktZQ2y3cwZAa3hOevSZy01g==}
+  /codemirror-lang-rome-ast/0.0.6:
+    resolution: {integrity: sha512-2E4E4rNcj6XxLsVjCZJeOsdEXpfdgiejuLrbq6O4muXzf0KSv5X0ScQrs3LK5LmGwoQUC0AowYbfdj3lsaLWkQ==}
     dependencies:
       '@codemirror/autocomplete': 6.0.4
       '@codemirror/language': 6.2.0
