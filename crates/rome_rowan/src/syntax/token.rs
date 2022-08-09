@@ -8,7 +8,7 @@ use crate::{
 use std::fmt;
 use std::marker::PhantomData;
 use std::ptr::NonNull;
-use text_size::{TextRange, TextSize};
+use text_size::{TextLen, TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxToken<L: Language> {
@@ -201,11 +201,9 @@ impl<L: Language> SyntaxToken<L> {
 
         let leading = GreenTrivia::new(trivia);
 
-        token_text.push_str(self.text_trimmed());
-
-        for piece in self.trailing_trivia().pieces() {
-            token_text.push_str(piece.text());
-        }
+        // Copy over token text and trailing trivia
+        let leading_len = self.raw.green().leading_trivia().text_len();
+        token_text.push_str(&self.text()[usize::from(leading_len)..]);
 
         Self {
             raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
@@ -225,11 +223,10 @@ impl<L: Language> SyntaxToken<L> {
         I: Iterator<Item = (TriviaPieceKind, &'a str)> + ExactSizeIterator,
     {
         let mut token_text = String::new();
-        for piece in self.leading_trivia().pieces() {
-            token_text.push_str(piece.text());
-        }
 
-        token_text.push_str(self.text_trimmed());
+        // copy over leading trivia and token text
+        let trailing_len = self.green_token().trailing_trivia().text_len();
+        token_text.push_str(&self.text()[..usize::from(self.text().text_len() - trailing_len)]);
 
         let trivia = trivia.map(|(kind, text)| {
             token_text.push_str(text);
