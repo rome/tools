@@ -164,11 +164,11 @@ mod check {
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         });
 
-        eprintln!("{:?}", console.buffer);
+        eprintln!("{:?}", console.out_buffer);
 
         assert!(result.is_err());
 
-        let messages = &console.buffer;
+        let messages = &console.out_buffer;
 
         assert_eq!(
             messages
@@ -497,8 +497,8 @@ mod ci {
 
         assert_eq!(content, FORMATTED);
 
-        if console.buffer.len() != 1 {
-            panic!("unexpected console content: {:#?}", console.buffer);
+        if console.out_buffer.len() != 1 {
+            panic!("unexpected console content: {:#?}", console.out_buffer);
         }
     }
 
@@ -560,7 +560,7 @@ mod ci {
             args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
         });
 
-        eprintln!("{:?}", console.buffer);
+        eprintln!("{:?}", console.out_buffer);
 
         match result {
             Err(Termination::CheckError) => {}
@@ -630,7 +630,7 @@ mod format {
             ]),
         });
 
-        eprintln!("{:?}", console.buffer);
+        eprintln!("{:?}", console.out_buffer);
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -644,7 +644,7 @@ mod format {
 
         assert_eq!(content, FORMATTED);
 
-        assert_eq!(console.buffer.len(), 1);
+        assert_eq!(console.out_buffer.len(), 1);
     }
 
     // Ensures lint warnings are not printed in format mode
@@ -679,7 +679,12 @@ mod format {
         // The console buffer is expected to contain the following message:
         // 0: "Formatter would have printed the following content"
         // 1: "Compared 1 files"
-        assert_eq!(console.buffer.len(), 2, "console {:#?}", console.buffer);
+        assert_eq!(
+            console.out_buffer.len(),
+            2,
+            "console {:#?}",
+            console.out_buffer
+        );
     }
 
     #[test]
@@ -888,7 +893,7 @@ mod format {
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
-        let messages = &console.buffer;
+        let messages = &console.out_buffer;
 
         assert_eq!(
             messages
@@ -929,7 +934,7 @@ mod format {
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        let messages = &console.buffer;
+        let messages = &console.out_buffer;
 
         assert_eq!(
             messages

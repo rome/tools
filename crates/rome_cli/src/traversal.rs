@@ -22,7 +22,7 @@ use rome_diagnostics::{
 };
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_service::workspace::FixFileMode;
+use rome_service::workspace::{FixFileMode, FormatFileParams};
 use rome_service::{
     workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
     Workspace,
@@ -49,7 +49,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
         inputs.push(input);
     }
 
-    if inputs.is_empty() {
+    if inputs.is_empty() && mode.as_stdin_file().is_none() {
         return Err(Termination::MissingArgument {
             argument: "<INPUT>",
         });
@@ -65,8 +65,25 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
     let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
 
+    // don't do any traversal if there's some content coming from stdin
+    if let Some((path, content)) = mode.as_stdin_file() {
+        let rome_path = RomePath::new(path, 0);
+        workspace.open_file(OpenFileParams {
+            path: rome_path.clone(),
+            version: 0,
+            content: content.into(),
+        })?;
+        let printed = workspace.format_file(FormatFileParams { path: rome_path })?;
+
+        console.log(markup! {
+            {printed.as_code()}
+        });
+
+        return Ok(());
+    }
+
     let (has_errors, duration) = join(
-        || print_messages_to_console(mode, console, recv_files, recv_msgs),
+        || print_messages_to_console(mode.clone(), console, recv_files, recv_msgs),
         || {
             // The traversal context is scoped to ensure all the channels it
             // contains are properly closed once the traversal finishes
@@ -76,7 +93,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
                 &TraversalOptions {
                     fs,
                     workspace,
-                    mode,
+                    mode: mode.clone(),
                     interner,
                     processed: &processed,
                     skipped: &skipped,
@@ -298,7 +315,7 @@ fn print_messages_to_console(
     has_errors
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
@@ -314,7 +331,14 @@ pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome ci`
     CI,
     /// This mode is enabled when running the command `rome format`
-    Format { ignore_errors: bool, write: bool },
+    Format {
+        /// It ignores parse errors
+        ignore_errors: bool,
+        /// It writes the new content on file
+        write: bool,
+        ///
+        stdin: Option<(PathBuf, String)>,
+    },
 }
 
 impl TraversalMode {
@@ -342,6 +366,13 @@ impl TraversalMode {
 
     fn is_check(&self) -> bool {
         matches!(self, TraversalMode::Check { .. })
+    }
+
+    fn as_stdin_file(&self) -> Option<&(PathBuf, String)> {
+        match self {
+            TraversalMode::Format { stdin, .. } => stdin.as_ref(),
+            _ => None,
+        }
     }
 }
 

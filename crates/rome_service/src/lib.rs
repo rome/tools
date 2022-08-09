@@ -65,12 +65,16 @@ impl Display for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             RomeError::SourceFileNotSupported(path) => {
-                let ext = path
-                    .extension()
-                    .and_then(|ext| ext.to_str())
-                    .unwrap_or("<unknown>");
+                let ext = path.extension().and_then(|ext| ext.to_str());
 
-                write!(f, "Rome doesn't support the file extension {ext:?} yet")
+                if let Some(ext) = ext {
+                    write!(f, "Rome doesn't support the file extension {ext:?} yet")
+                } else {
+                    write!(
+                        f,
+                        "Rome can't process the file because it doesn't have a clear extension"
+                    )
+                }
             }
             RomeError::NotFound => {
                 write!(f, "the file does not exist in the workspace")

@@ -1,5 +1,6 @@
 use rome_formatter::IndentStyle;
 use rome_service::{load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams};
+use std::path::PathBuf;
 
 use crate::{
     traversal::{traverse, TraversalMode},
@@ -24,6 +25,27 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
     let is_write = session.args.contains("--write");
     let ignore_errors = session.args.contains("--skip-errors");
+    let stdin_file_path: Option<String> = session
+        .args
+        .opt_value_from_str("--stdin-file-path")
+        .map_err(|source| Termination::ParseError {
+            argument: "--stdin-file-path",
+            source,
+        })?;
+
+    let stdin = if let Some(stdin_file_path) = stdin_file_path {
+        let console = &mut session.app.console;
+        let input_code = console.read(None);
+        if let Some(input_code) = input_code {
+            let path = PathBuf::from(stdin_file_path);
+            Some((path, input_code))
+        } else {
+            // we provided the argument without a piped stdin, we bail
+            return Err(Termination::MissingArgument { argument: "stdin" });
+        }
+    } else {
+        None
+    };
 
     session
         .app
@@ -36,6 +58,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         TraversalMode::Format {
             ignore_errors,
             write: is_write,
+            stdin,
         },
         session,
     )
