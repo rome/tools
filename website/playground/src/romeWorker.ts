@@ -1,4 +1,8 @@
-import init, { DiagnosticPrinter, RomePath, Workspace } from "../pkg/rome_playground";
+import init, {
+	DiagnosticPrinter,
+	RomePath,
+	Workspace,
+} from "../pkg/rome_playground";
 import {
 	SourceType,
 	LoadingState,
@@ -83,6 +87,8 @@ self.addEventListener("message", async (e) => {
 						enabled: true,
 						format_with_errors: true,
 						line_width: lineWidth,
+						indent_style:
+							indentStyle === IndentStyle.Tab ? "Tab" : { Space: indentWidth },
 					},
 					linter: {
 						enabled: true,
@@ -90,8 +96,9 @@ self.addEventListener("message", async (e) => {
 					languages: {
 						javascript: {
 							format: {
-								quote_style: quoteStyle === QuoteStyle.Double ? "Double" : "Single",
-							}
+								quote_style:
+									quoteStyle === QuoteStyle.Double ? "Double" : "Single",
+							},
 						},
 					},
 				},
@@ -132,8 +139,6 @@ self.addEventListener("message", async (e) => {
 			});
 			const formatter_ir = workspace.get_formatter_ir({
 				path,
-				indent_style:
-					indentStyle === IndentStyle.Tab ? "Tab" : { Space: indentWidth },
 			});
 
 			const diagnostics = workspace.pull_diagnostics({
@@ -148,8 +153,6 @@ self.addEventListener("message", async (e) => {
 
 			const printed = workspace.format_file({
 				path,
-				indent_style:
-					indentStyle === IndentStyle.Tab ? "Tab" : { Space: indentWidth },
 			});
 
 			const romeOutput: RomeOutput = {

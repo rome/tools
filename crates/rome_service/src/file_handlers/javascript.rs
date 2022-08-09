@@ -22,7 +22,10 @@ use crate::{
     RomeError, Rules,
 };
 
-use super::{ExtensionHandler, Mime};
+use super::{
+    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, Mime,
+    ParserCapabilities,
+};
 use crate::file_handlers::FixAllParams;
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
@@ -74,17 +77,23 @@ pub(crate) struct JsFileHandler;
 impl ExtensionHandler for JsFileHandler {
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
-            parse: Some(parse),
-            debug_syntax_tree: Some(debug_syntax_tree),
-            debug_control_flow: Some(debug_control_flow),
-            debug_formatter_ir: Some(debug_formatter_ir),
-            lint: Some(lint),
-            format: Some(format),
-            code_actions: Some(code_actions),
-            fix_all: Some(fix_all),
-            format_range: Some(format_range),
-            format_on_type: Some(format_on_type),
-            rename: Some(rename),
+            parser: ParserCapabilities { parse: Some(parse) },
+            debug: DebugCapabilities {
+                debug_syntax_tree: Some(debug_syntax_tree),
+                debug_control_flow: Some(debug_control_flow),
+                debug_formatter_ir: Some(debug_formatter_ir),
+            },
+            analyzer: AnalyzerCapabilities {
+                lint: Some(lint),
+                code_actions: Some(code_actions),
+                fix_all: Some(fix_all),
+                rename: Some(rename),
+            },
+            formatter: FormatterCapabilities {
+                format: Some(format),
+                format_range: Some(format_range),
+                format_on_type: Some(format_on_type),
+            },
         }
     }
 

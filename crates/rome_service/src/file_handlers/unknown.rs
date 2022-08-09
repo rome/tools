@@ -4,22 +4,6 @@ use super::ExtensionHandler;
 pub(crate) struct UnknownFileHandler {}
 
 impl ExtensionHandler for UnknownFileHandler {
-    fn capabilities(&self) -> super::Capabilities {
-        super::Capabilities {
-            parse: None,
-            debug_syntax_tree: None,
-            debug_control_flow: None,
-            debug_formatter_ir: None,
-            format: None,
-            lint: None,
-            code_actions: None,
-            fix_all: None,
-            format_range: None,
-            format_on_type: None,
-            rename: None,
-        }
-    }
-
     fn language(&self) -> super::Language {
         super::Language::Unknown
     }

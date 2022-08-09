@@ -3,22 +3,6 @@ use super::{ExtensionHandler, Mime};
 pub(crate) struct JsonFileHandler;
 
 impl ExtensionHandler for JsonFileHandler {
-    fn capabilities(&self) -> super::Capabilities {
-        super::Capabilities {
-            parse: None,
-            debug_syntax_tree: None,
-            debug_control_flow: None,
-            debug_formatter_ir: None,
-            format: None,
-            lint: None,
-            code_actions: None,
-            fix_all: None,
-            format_range: None,
-            format_on_type: None,
-            rename: None,
-        }
-    }
-
     fn language(&self) -> super::Language {
         super::Language::Json
     }

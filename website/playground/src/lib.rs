@@ -260,7 +260,6 @@ interface GetControlFlowGraphParams {
 
 interface GetFormatterIRParams {
     path: RomePath;
-    indent_style: IndentStyle;
 }
 
 interface ChangeFileParams {
@@ -310,17 +309,13 @@ interface CodeAction {
     suggestion: CodeSuggestion;
 }
 
-type IndentStyle = "Tab" | { "Space": number };
-
 interface FormatFileParams {
     path: RomePath;
-    indent_style: IndentStyle;
 }
 
 interface FormatRangeParams {
     path: RomePath;
     range: TextRange;
-    indent_style: IndentStyle;
 }
 
 type TextSize = number;
@@ -328,7 +323,6 @@ type TextSize = number;
 interface FormatOnTypeParams {
     path: RomePath;
     offset: TextSize;
-    indent_style: IndentStyle;
 }
 
 interface FixFileParams {
