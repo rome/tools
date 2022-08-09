@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 107
+assertion_line: 113
 expression: content
 ---
 ## `rome.json`
@@ -28,6 +28,7 @@ debugger;
 
 ## Messages
 
+```block
 warning[js/noDebugger]: This is an unexpected use of the debugger statement.
   ┌─ file.js:1:1
   │
@@ -39,5 +40,6 @@ Suggested fix: Remove debugger statement
 0   | - debugger;
 
 
+```
 
 

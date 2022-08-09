@@ -54,7 +54,11 @@ impl CliSnapshot {
                 //
                 // This is a workaround, and it might not work for all cases.
                 if !message_content.contains("files") {
+                    content.push_str("```block");
+                    content.push('\n');
                     content.push_str(message_content);
+                    content.push('\n');
+                    content.push_str("```");
                     content.push_str("\n\n")
                 }
             }

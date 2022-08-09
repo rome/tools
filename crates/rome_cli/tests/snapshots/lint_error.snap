@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 107
+assertion_line: 113
 expression: content
 ---
 ## `ci.js`
@@ -12,6 +12,7 @@ for(;true;);
 
 ## Messages
 
+```block
 error[js/useBlockStatements]: Block statements are preferred in this position.
   ┌─ ci.js:1:1
   │
@@ -24,7 +25,9 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
   0 | + for(;true;) {}
 
 
+```
 
+```block
 error[js/useWhile]: Use while loops instead of for loops.
   ┌─ ci.js:1:1
   │
@@ -37,5 +40,6 @@ Suggested fix: Use a while loop
   0 | + while (true);
 
 
+```
 
 
