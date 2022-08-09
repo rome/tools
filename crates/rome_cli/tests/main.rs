@@ -1,4 +1,9 @@
 mod configs;
+#[cfg(test)]
+mod snap_test;
+
+#[cfg(test)]
+use snap_test::assert_cli_snapshot;
 
 use std::{ffi::OsString, path::Path};
 
@@ -163,7 +168,7 @@ mod check {
 
         assert!(result.is_err());
 
-        let messages = console.buffer;
+        let messages = &console.buffer;
 
         assert_eq!(
             messages
@@ -182,6 +187,8 @@ mod check {
                     && content.contains("Diagnostics not shown")
                     && content.contains("76")
             }));
+
+        assert_cli_snapshot("maximum_diagnostics", fs, console);
     }
 
     #[test]
@@ -213,6 +220,8 @@ mod check {
             .unwrap();
 
         assert_eq!(buffer, FIX_AFTER);
+
+        assert_cli_snapshot("apply_ok", fs, console);
     }
 
     #[test]
@@ -238,6 +247,8 @@ mod check {
         println!("{console:#?}");
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        assert_cli_snapshot("apply_noop", fs, console);
     }
 
     #[test]
@@ -271,6 +282,8 @@ mod check {
             }
             _ => panic!("expected an error, but found none"),
         }
+
+        assert_cli_snapshot("apply_suggested_error", fs, console);
     }
 
     #[test]
@@ -302,6 +315,8 @@ mod check {
             .unwrap();
 
         assert_eq!(buffer, APPLY_SUGGESTED_AFTER);
+
+        assert_cli_snapshot("apply_suggested", fs, console);
     }
 
     #[test]
@@ -336,6 +351,8 @@ mod check {
             .unwrap();
 
         assert_eq!(buffer, FIX_BEFORE);
+
+        assert_cli_snapshot("no_lint_if_linter_is_disabled_when_run_apply", fs, console);
     }
 
     #[test]
@@ -366,6 +383,8 @@ mod check {
             .unwrap();
 
         assert_eq!(buffer, FIX_BEFORE);
+
+        assert_cli_snapshot("no_lint_if_linter_is_disabled", fs, console);
     }
 
     #[test]
@@ -400,6 +419,8 @@ mod check {
             .unwrap();
 
         assert_eq!(buffer, NO_DEBUGGER_AFTER);
+
+        assert_cli_snapshot("should_disable_a_rule", fs, console);
     }
 
     #[test]
@@ -437,6 +458,8 @@ mod check {
             .unwrap();
 
         assert_eq!(buffer, JS_ERRORS_AFTER);
+
+        assert_cli_snapshot("should_disable_a_rule_group", fs, console);
     }
 }
 
@@ -531,7 +554,7 @@ mod ci {
         let mut console = BufferConsole::default();
         let result = run_cli(CliSession {
             app: App::with_filesystem_and_console(
-                DynRef::Owned(Box::new(fs)),
+                DynRef::Borrowed(&mut fs),
                 DynRef::Borrowed(&mut console),
             ),
             args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
@@ -543,6 +566,8 @@ mod ci {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
+
+        assert_cli_snapshot("lint_error", fs, console);
     }
 }
 
@@ -586,11 +611,11 @@ mod format {
     #[test]
     fn write() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("format.js");
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
-        let mut console = BufferConsole::default();
         let app = App::with_filesystem_and_console(
             DynRef::Borrowed(&mut fs),
             DynRef::Borrowed(&mut console),
@@ -855,7 +880,7 @@ mod format {
 
         let result = run_cli(CliSession {
             app: App::with_filesystem_and_console(
-                DynRef::Owned(Box::new(fs)),
+                DynRef::Borrowed(&mut fs),
                 DynRef::Borrowed(&mut console),
             ),
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
@@ -863,22 +888,25 @@ mod format {
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
-        let messages = console.buffer;
+        let messages = &console.buffer;
 
         assert_eq!(
             messages
                 .iter()
                 .filter(|m| m.level == LogLevel::Error)
                 .filter(|m| {
-                    let content = format!("{:?}", m.content);
+                    let content = format!("{:#?}", m.content);
                     content.contains("js/noDebugger")
                 })
                 .count(),
             1
         );
+
+        assert_cli_snapshot("downgrade_severity", fs, console);
     }
 
     #[test]
+    #[ignore]
     fn upgrade_severity() {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
@@ -893,7 +921,7 @@ mod format {
 
         let result = run_cli(CliSession {
             app: App::with_filesystem_and_console(
-                DynRef::Owned(Box::new(fs)),
+                DynRef::Borrowed(&mut fs),
                 DynRef::Borrowed(&mut console),
             ),
             args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
@@ -901,7 +929,7 @@ mod format {
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        let messages = console.buffer;
+        let messages = &console.buffer;
 
         assert_eq!(
             messages
@@ -914,6 +942,8 @@ mod format {
                 .count(),
             1
         );
+
+        assert_cli_snapshot("upgrade_severity", fs, console);
     }
 }
 

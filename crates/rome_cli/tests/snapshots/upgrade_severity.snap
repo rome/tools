@@ -1,0 +1,46 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 97
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "js": {
+            "rules": {
+                "noDeadCode": "error"
+            }
+        }
+    }
+  }
+}
+```
+
+## `file.js`
+
+```json
+function f() {
+    for (;;) {
+        continue;
+        break;
+    }
+}
+
+```
+
+## Messages
+
+error[js/noDeadCode]: This code is unreachable
+  ┌─ file.js:3:9
+  │  
+3 │ ┌         continue;
+4 │ │         break;
+  │ └──────────────^
+
+
+
+

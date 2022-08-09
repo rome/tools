@@ -1,0 +1,28 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 107
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "enabled": false
+  }
+}
+```
+
+## `fix.js`
+
+```js
+
+if(a != -0) {}
+
+```
+
+## Messages
+
+fix.js: error[IO]: unhandled file type
+
+
