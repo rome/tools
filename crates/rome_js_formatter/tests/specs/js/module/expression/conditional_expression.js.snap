@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 259
 expression: conditional_expression.js
 ---
 # Input
@@ -24,7 +25,9 @@ Quote style: Double Quotes
 a ? b : c;
 d ? (e + f) : (g + h);
 
-somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName;
+somethingThatsAReallyLongPropName
+	? somethingThatsAReallyLongPropName
+	: somethingThatsAReallyLongPropName;
 
 somethingThatsAReallyLongPropName
 	? somethingThatsAReallyLongPropName
@@ -35,11 +38,6 @@ somethingThatsAReallyLongPropName
 somethingThatsAReallyLongPropName
 	? somethingThatsAReallyLongPropName
 	: somethingThatsAReallyLongPropName
-		? somethingThatsAReallyLongPropName
-		: somethingThatsAReallyLongPropName;
-
-
-## Lines exceeding width of 80 characters
-
-    4: somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName;
+	? somethingThatsAReallyLongPropName
+	: somethingThatsAReallyLongPropName;
 

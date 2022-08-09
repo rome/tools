@@ -1,6 +1,5 @@
-use crate::jsx::auxiliary::space::JsxSpace;
 use crate::prelude::*;
-use crate::utils::jsx_utils::JSX_WHITESPACE_CHARS;
+use crate::utils::jsx::{JsxSpace, JSX_WHITESPACE_CHARS};
 use rome_formatter::{write, FormatResult};
 use rome_js_syntax::{JsxText, JsxTextFields, TextSize};
 use std::borrow::Cow;

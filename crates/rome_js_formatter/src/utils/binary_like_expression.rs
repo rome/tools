@@ -832,9 +832,7 @@ impl JsAnyBinaryLikeExpression {
             }
         }
     }
-}
 
-impl JsAnyBinaryLikeExpression {
     /// Determines if a binary like expression should be inline or not.
     pub fn should_inline(&self) -> bool {
         match self {
@@ -867,6 +865,17 @@ impl JsAnyBinaryLikeExpression {
         };
 
         Ok(result)
+    }
+}
+
+impl From<JsAnyBinaryLikeExpression> for JsAnyExpression {
+    fn from(binary_like: JsAnyBinaryLikeExpression) -> Self {
+        match binary_like {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.into(),
+            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.into(),
+            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => instanceof.into(),
+            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.into(),
+        }
     }
 }
 

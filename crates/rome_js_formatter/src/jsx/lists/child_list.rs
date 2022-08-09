@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::jsx_utils::contains_meaningful_jsx_text;
+use crate::utils::jsx::contains_meaningful_jsx_text;
 use crate::JsFormatter;
 use rome_js_syntax::JsxChildList;
 

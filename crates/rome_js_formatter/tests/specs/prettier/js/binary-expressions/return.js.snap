@@ -28,7 +28,7 @@ function foo3() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,20 +1,17 @@
+@@ -1,20 +1,20 @@
  function foo() {
    return (
 -    this.hasPlugin("dynamicImports") &&
@@ -41,20 +41,19 @@ function foo3() {
  function foo2() {
 -  return this.hasPlugin("dynamicImports") &&
 -    this.lookahead().type === tt.parenLeft.right
--    ? true
--    : false;
 +  return this.hasPlugin("dynamicImports") && this.lookahead().type === tt
-+    .parenLeft.right ? true : false;
++    .parenLeft.right
+     ? true
+     : false;
  }
  
  function foo3() {
 -  return this.calculate().compute().first.numberOfThings >
 -    this.calculate().compute().last.numberOfThings
--    ? true
--    : false;
 +  return this.calculate().compute().first
-+    .numberOfThings > this.calculate().compute().last
-+    .numberOfThings ? true : false;
++    .numberOfThings > this.calculate().compute().last.numberOfThings
+     ? true
+     : false;
  }
 ```
 
@@ -70,13 +69,16 @@ function foo() {
 
 function foo2() {
   return this.hasPlugin("dynamicImports") && this.lookahead().type === tt
-    .parenLeft.right ? true : false;
+    .parenLeft.right
+    ? true
+    : false;
 }
 
 function foo3() {
   return this.calculate().compute().first
-    .numberOfThings > this.calculate().compute().last
-    .numberOfThings ? true : false;
+    .numberOfThings > this.calculate().compute().last.numberOfThings
+    ? true
+    : false;
 }
 ```
 

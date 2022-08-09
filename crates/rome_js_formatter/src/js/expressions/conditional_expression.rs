@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{format_conditional, Conditional};
+use crate::utils::JsAnyConditional;
 
 use rome_js_syntax::JsConditionalExpression;
 
@@ -12,6 +12,6 @@ impl FormatNodeRule<JsConditionalExpression> for FormatJsConditionalExpression {
         node: &JsConditionalExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_conditional(&Conditional::Expression(node.clone()), formatter, false)
+        JsAnyConditional::from(node.clone()).fmt(formatter)
     }
 }

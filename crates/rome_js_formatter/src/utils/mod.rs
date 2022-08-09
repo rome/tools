@@ -1,16 +1,17 @@
 pub(crate) mod array;
 mod assignment_like;
 mod binary_like_expression;
-mod format_conditional;
+mod conditional;
 mod simple;
 pub mod string_utils;
 
 pub(crate) mod format_class;
-pub mod jsx_utils;
+pub mod jsx;
 mod member_chain;
 mod object;
 mod object_like;
 mod object_pattern_like;
+mod parens;
 #[cfg(test)]
 mod quickcheck_utils;
 mod typescript;
@@ -21,10 +22,11 @@ pub(crate) use binary_like_expression::{
     binary_argument_needs_parens, format_binary_like_expression, JsAnyBinaryLikeExpression,
     JsAnyBinaryLikeLeftExpression,
 };
-pub(crate) use format_conditional::{format_conditional, Conditional};
+pub(crate) use conditional::{resolve_expression, JsAnyConditional};
 pub(crate) use member_chain::format_call_expression;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
+pub(crate) use parens::starts_with_no_lookahead_token;
 use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
@@ -32,11 +34,10 @@ use rome_js_syntax::{
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
-use std::fmt::Debug;
-pub(crate) use typescript::should_hug_type;
-
 pub(crate) use simple::*;
+use std::fmt::Debug;
 pub(crate) use string_utils::*;
+pub(crate) use typescript::should_hug_type;
 
 /// Utility function to format the separators of the nodes that belong to the unions
 /// of [rome_js_syntax::TsAnyTypeMember].

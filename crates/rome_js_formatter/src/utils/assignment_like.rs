@@ -818,33 +818,31 @@ pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResu
         return Ok(true);
     }
 
-    // head is a long chain, meaning that right -> right are both assignment expressions
-    if let JsAnyExpression::JsAssignmentExpression(assignment) = right {
-        let right = assignment.right()?;
-        if matches!(right, JsAnyExpression::JsAssignmentExpression(_)) {
-            return Ok(true);
+    let result = match right {
+        // head is a long chain, meaning that right -> right are both assignment expressions
+        JsAnyExpression::JsAssignmentExpression(assignment) => {
+            matches!(
+                assignment.right()?,
+                JsAnyExpression::JsAssignmentExpression(_)
+            )
         }
-    }
+        right if JsAnyBinaryLikeExpression::can_cast(right.syntax().kind()) => {
+            let binary_like = JsAnyBinaryLikeExpression::unwrap_cast(right.syntax().clone());
 
-    if JsAnyBinaryLikeExpression::cast(right.syntax().clone())
-        .map_or(false, |expression| !expression.should_inline())
-    {
-        return Ok(true);
-    }
-
-    if matches!(right, JsAnyExpression::JsSequenceExpression(_)) {
-        return Ok(true);
-    }
-
-    if let JsAnyExpression::JsConditionalExpression(conditional) = &right {
-        if JsAnyBinaryLikeExpression::cast(conditional.test()?.syntax().clone())
-            .map_or(false, |expression| !expression.should_inline())
-        {
-            return Ok(true);
+            !binary_like.should_inline()
         }
-    }
 
-    Ok(false)
+        JsAnyExpression::JsSequenceExpression(_) => true,
+
+        JsAnyExpression::JsConditionalExpression(conditional) => {
+            JsAnyBinaryLikeExpression::cast(conditional.test()?.into_syntax())
+                .map_or(false, |expression| !expression.should_inline())
+        }
+
+        _ => false,
+    };
+
+    Ok(result)
 }
 /// If checks if among leading trivias, we there's a sequence of [Newline, Comment]
 pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {

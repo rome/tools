@@ -1,6 +1,7 @@
-use rome_js_syntax::kind::JsSyntaxKind;
-use rome_js_syntax::{JsLanguage, JsxAnyChild, JsxChildList};
-use rome_rowan::{AstNodeList, SyntaxNode};
+use crate::context::QuoteStyle;
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsxAnyChild, JsxChildList};
 
 /// Checks if the children of an element contain meaningful text. See [is_meaningful_jsx_text] for
 /// definition of meaningful JSX text.
@@ -25,7 +26,7 @@ pub static JSX_WHITESPACE_CHARS: [char; 4] = [' ', '\n', '\t', '\r'];
 /// whitespace.
 ///
 /// ```
-/// use rome_js_formatter::utils::jsx_utils::is_meaningful_jsx_text;
+/// use rome_js_formatter::utils::jsx::is_meaningful_jsx_text;
 ///
 /// assert_eq!(is_meaningful_jsx_text("     \t\r   "), true);
 /// assert_eq!(is_meaningful_jsx_text("     \n\r   "), false);
@@ -79,7 +80,7 @@ pub enum WrapState {
 
 /// Checks if a JSX Element should be wrapped in parentheses. Returns a [WrapState] which
 /// indicates when the element should be wrapped in parentheses.
-pub fn get_wrap_state(node: &SyntaxNode<JsLanguage>) -> WrapState {
+pub fn get_wrap_state(node: &JsSyntaxNode) -> WrapState {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
     let mut ancestors = node.ancestors().skip(1);
@@ -121,7 +122,7 @@ pub fn get_wrap_state(node: &SyntaxNode<JsLanguage>) -> WrapState {
 ///  </div>;
 /// ```
 pub fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
-    node: &SyntaxNode<JsLanguage>,
+    node: &JsSyntaxNode,
 ) -> bool {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
@@ -156,4 +157,38 @@ pub fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
     }
 
     true
+}
+
+/// Creates either a space using an expression child and a string literal,
+/// or a regular space, depending on whether the group breaks or not.
+///
+/// ```jsx
+///  <div> Winter Light </div>;
+///
+///  <div>
+///    {" "}Winter Light
+///    Through A Glass Darkly
+///    The Silence
+///    Seventh Seal
+///    Wild Strawberries
+///  </div>
+/// ```
+#[derive(Default)]
+pub struct JsxSpace {}
+
+impl Format<JsFormatContext> for JsxSpace {
+    fn fmt(&self, formatter: &mut JsFormatter) -> FormatResult<()> {
+        let jsx_space = match formatter.context().quote_style() {
+            QuoteStyle::Double => "{\" \"}",
+            QuoteStyle::Single => "{\' \'}",
+        };
+
+        write![
+            formatter,
+            [
+                if_group_breaks(&format_args![text(jsx_space), hard_line_break()]),
+                if_group_fits_on_line(&space())
+            ]
+        ]
+    }
 }

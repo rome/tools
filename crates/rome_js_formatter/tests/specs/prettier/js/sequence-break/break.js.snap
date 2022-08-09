@@ -1,5 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 271
+info:
+  test_file: js/sequence-break/break.js
 ---
 
 # Input
@@ -26,41 +29,21 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
 ```diff
 --- Prettier
 +++ Rome
-@@ -31,28 +31,28 @@
+@@ -31,28 +31,38 @@
    test;
    update
  ) {}
 -(a = b
 -  ? c
 -  : function () {
-+(
-+  a = b ? c : function () {
-+    return 0;
-+  }
-+),
-+  (
-+    a = b ? c : function () {
-+      return 0;
-+    }
-+  ),
-+  (
-+    a = b ? c : function () {
-+      return 0;
-+    }
-+  ),
-+  (
-+    a = b ? c : function () {
-+      return 0;
-+    }
-+  ),
-+  (
-+    a = b ? c : function () {
-       return 0;
+-      return 0;
 -    }),
 -  (a = b
--    ? c
--    : function () {
--        return 0;
++(
++  a = b
+     ? c
+     : function () {
+         return 0;
 -      }),
 -  (a = b
 -    ? c
@@ -77,7 +60,35 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
 -    : function () {
 -        return 0;
 -      });
-+    }
++      }
++),
++  (
++    a = b
++      ? c
++      : function () {
++          return 0;
++        }
++  ),
++  (
++    a = b
++      ? c
++      : function () {
++          return 0;
++        }
++  ),
++  (
++    a = b
++      ? c
++      : function () {
++          return 0;
++        }
++  ),
++  (
++    a = b
++      ? c
++      : function () {
++          return 0;
++        }
 +  );
 ```
 
@@ -118,29 +129,39 @@ for (
   update
 ) {}
 (
-  a = b ? c : function () {
-    return 0;
-  }
+  a = b
+    ? c
+    : function () {
+        return 0;
+      }
 ),
   (
-    a = b ? c : function () {
-      return 0;
-    }
+    a = b
+      ? c
+      : function () {
+          return 0;
+        }
   ),
   (
-    a = b ? c : function () {
-      return 0;
-    }
+    a = b
+      ? c
+      : function () {
+          return 0;
+        }
   ),
   (
-    a = b ? c : function () {
-      return 0;
-    }
+    a = b
+      ? c
+      : function () {
+          return 0;
+        }
   ),
   (
-    a = b ? c : function () {
-      return 0;
-    }
+    a = b
+      ? c
+      : function () {
+          return 0;
+        }
   );
 ```
 

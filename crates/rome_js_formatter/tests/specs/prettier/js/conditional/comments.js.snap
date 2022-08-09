@@ -117,96 +117,74 @@ c */? foo : bar : bar;
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,84 +1,70 @@
+@@ -1,36 +1,39 @@
  var inspect =
--  4 === util.inspect.length
+   4 === util.inspect.length
 -    ? // node <= 0.8.x
 -      function (v, colors) {
--        return util.inspect(v, void 0, void 0, colors);
++    ? (function (v, colors) {
++        // node <= 0.8.x
+         return util.inspect(v, void 0, void 0, colors);
 -      }
 -    : // node > 0.8.x
 -      function (v, colors) {
--        return util.inspect(v, { colors: colors });
++      })
++    : (function (v, colors) {
++        // node > 0.8.x
+         return util.inspect(v, { colors: colors });
 -      };
-+  4 === util.inspect.length ? (function (v, colors) {
-+    // node <= 0.8.x
-+    return util.inspect(v, void 0, void 0, colors);
-+  }) : (function (v, colors) {
-+    // node > 0.8.x
-+    return util.inspect(v, { colors: colors });
-+  });
++      });
  
  var inspect =
--  4 === util.inspect.length
+   4 === util.inspect.length
 -    ? // node <= 0.8.x
 -      function (v, colors) {
--        return util.inspect(v, void 0, void 0, colors);
++    ? (function (v, colors) {
++        // node <= 0.8.x
+         return util.inspect(v, void 0, void 0, colors);
 -      }
 -    : // node > 0.8.x
 -      function (v, colors) {
--        return util.inspect(v, { colors: colors });
++      })
++    : (function (v, colors) {
++        // node > 0.8.x
+         return util.inspect(v, { colors: colors });
 -      };
-+  4 === util.inspect.length ? (function (v, colors) {
-+    // node <= 0.8.x
-+    return util.inspect(v, void 0, void 0, colors);
-+  }) : (function (v, colors) {
-+    // node > 0.8.x
-+    return util.inspect(v, { colors: colors });
-+  });
++      });
  
  const extractTextPluginOptions = shouldUseRelativeAssetPaths
 -  ? // Making sure that the publicPath goes back to to build folder.
 -    { publicPath: Array(cssFilename.split("/").length).join("../") }
--  : {};
-+// Making sure that the publicPath goes back to to build folder.
-+? { publicPath: Array(cssFilename.split("/").length).join("../") } : {};
++  // Making sure that the publicPath goes back to to build folder.
++  ? { publicPath: Array(cssFilename.split("/").length).join("../") }
+   : {};
  
--const extractTextPluginOptions2 = shouldUseRelativeAssetPaths
+ const extractTextPluginOptions2 = shouldUseRelativeAssetPaths
 -  ? // Making sure that the publicPath goes back to to build folder.
 -    { publicPath: Array(cssFilename.split("/").length).join("../") }
--  : {};
-+const extractTextPluginOptions2 = shouldUseRelativeAssetPaths ? {
-+  // Making sure that the publicPath goes back to to build folder.
-+  publicPath: Array(cssFilename.split("/").length).join("../"),
-+} : {};
++  ? {
++      // Making sure that the publicPath goes back to to build folder.
++      publicPath: Array(cssFilename.split("/").length).join("../"),
++    }
+   : {};
  
 -const extractTextPluginOptions3 = shouldUseRelativeAssetPaths // Making sure that the publicPath goes back to to build folder.
--  ? { publicPath: Array(cssFilename.split("/").length).join("../") }
--  : {};
-+const extractTextPluginOptions3 = shouldUseRelativeAssetPaths ? {
++const extractTextPluginOptions3 = shouldUseRelativeAssetPaths
 +  // Making sure that the publicPath goes back to to build folder.
-+  publicPath: Array(cssFilename.split("/").length).join("../"),
-+} : {};
+   ? { publicPath: Array(cssFilename.split("/").length).join("../") }
+   : {};
  
- const { configureStore } =
--  process.env.NODE_ENV === "production"
--    ? require("./configureProdStore") // a
--    : require("./configureDevStore"); // b
-+  process.env.NODE_ENV === "production" ? require(
-+    "./configureProdStore",
-+  ) : require("./configureDevStore"); // a // b
- 
- test /* comment
-   comment
-       comment
--*/
--  ? foo
--  : bar;
-+*/ ? foo : bar;
- 
--test
--  ? /* comment
-+test ? /* comment
+@@ -51,8 +54,7 @@
            comment
      comment
            comment
 -  */
 -    foo
--  : bar;
-+  */ foo : bar;
++  */ foo
+   : bar;
  
  test
-   ? /* comment
+@@ -60,13 +62,11 @@
         comment
         comment
         comment
@@ -214,21 +192,15 @@ c */? foo : bar : bar;
 -    foo
 +    */ foo
    : test
--  ? /* comment
-+    ? /* comment
+   ? /* comment
    comment
 -    comment */
 -    foo
--  : bar;
 +    comment */ foo
-+    : bar;
+   : bar;
  
  test ? /* comment */ foo : bar;
- 
--test
--  ? foo
--  : /* comment
-+test ? foo : /* comment
+@@ -77,8 +77,7 @@
           comment
       comment
             comment
@@ -238,17 +210,15 @@ c */? foo : bar : bar;
  
  test
    ? foo
-@@ -86,14 +72,12 @@
+@@ -86,14 +85,12 @@
           comment
       comment
             comment
 -    */
 -  test
--  ? foo
--  : /* comment
 +    */ test
-+    ? foo
-+    : /* comment
+   ? foo
+   : /* comment
    comment
      comment
 -   */
@@ -263,52 +233,63 @@ c */? foo : bar : bar;
 
 ```js
 var inspect =
-  4 === util.inspect.length ? (function (v, colors) {
-    // node <= 0.8.x
-    return util.inspect(v, void 0, void 0, colors);
-  }) : (function (v, colors) {
-    // node > 0.8.x
-    return util.inspect(v, { colors: colors });
-  });
+  4 === util.inspect.length
+    ? (function (v, colors) {
+        // node <= 0.8.x
+        return util.inspect(v, void 0, void 0, colors);
+      })
+    : (function (v, colors) {
+        // node > 0.8.x
+        return util.inspect(v, { colors: colors });
+      });
 
 var inspect =
-  4 === util.inspect.length ? (function (v, colors) {
-    // node <= 0.8.x
-    return util.inspect(v, void 0, void 0, colors);
-  }) : (function (v, colors) {
-    // node > 0.8.x
-    return util.inspect(v, { colors: colors });
-  });
+  4 === util.inspect.length
+    ? (function (v, colors) {
+        // node <= 0.8.x
+        return util.inspect(v, void 0, void 0, colors);
+      })
+    : (function (v, colors) {
+        // node > 0.8.x
+        return util.inspect(v, { colors: colors });
+      });
 
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
-// Making sure that the publicPath goes back to to build folder.
-? { publicPath: Array(cssFilename.split("/").length).join("../") } : {};
-
-const extractTextPluginOptions2 = shouldUseRelativeAssetPaths ? {
   // Making sure that the publicPath goes back to to build folder.
-  publicPath: Array(cssFilename.split("/").length).join("../"),
-} : {};
+  ? { publicPath: Array(cssFilename.split("/").length).join("../") }
+  : {};
 
-const extractTextPluginOptions3 = shouldUseRelativeAssetPaths ? {
+const extractTextPluginOptions2 = shouldUseRelativeAssetPaths
+  ? {
+      // Making sure that the publicPath goes back to to build folder.
+      publicPath: Array(cssFilename.split("/").length).join("../"),
+    }
+  : {};
+
+const extractTextPluginOptions3 = shouldUseRelativeAssetPaths
   // Making sure that the publicPath goes back to to build folder.
-  publicPath: Array(cssFilename.split("/").length).join("../"),
-} : {};
+  ? { publicPath: Array(cssFilename.split("/").length).join("../") }
+  : {};
 
 const { configureStore } =
-  process.env.NODE_ENV === "production" ? require(
-    "./configureProdStore",
-  ) : require("./configureDevStore"); // a // b
+  process.env.NODE_ENV === "production"
+    ? require("./configureProdStore") // a
+    : require("./configureDevStore"); // b
 
 test /* comment
   comment
       comment
-*/ ? foo : bar;
+*/
+  ? foo
+  : bar;
 
-test ? /* comment
+test
+  ? /* comment
           comment
     comment
           comment
-  */ foo : bar;
+  */ foo
+  : bar;
 
 test
   ? /* comment
@@ -317,14 +298,16 @@ test
        comment
     */ foo
   : test
-    ? /* comment
+  ? /* comment
   comment
     comment */ foo
-    : bar;
+  : bar;
 
 test ? /* comment */ foo : bar;
 
-test ? foo : /* comment
+test
+  ? foo
+  : /* comment
          comment
      comment
            comment
@@ -337,8 +320,8 @@ test
      comment
            comment
     */ test
-    ? foo
-    : /* comment
+  ? foo
+  : /* comment
   comment
     comment
    */ bar;
