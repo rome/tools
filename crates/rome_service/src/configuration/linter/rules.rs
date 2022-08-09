@@ -201,7 +201,7 @@ impl Rules {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+#[serde(rename_all = "camelCase", default)]
 pub struct Js {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -209,7 +209,8 @@ pub struct Js {
     #[doc = r" List of rules for the current group"]
     #[serde(
         skip_serializing_if = "IndexMap::is_empty",
-        deserialize_with = "deserialize_js_rules"
+        deserialize_with = "deserialize_js_rules",
+        flatten
     )]
     pub rules: IndexMap<String, RuleConfiguration>,
 }
@@ -352,7 +353,7 @@ where
     Ok(value)
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+#[serde(rename_all = "camelCase", default)]
 pub struct Jsx {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -360,7 +361,8 @@ pub struct Jsx {
     #[doc = r" List of rules for the current group"]
     #[serde(
         skip_serializing_if = "IndexMap::is_empty",
-        deserialize_with = "deserialize_jsx_rules"
+        deserialize_with = "deserialize_jsx_rules",
+        flatten
     )]
     pub rules: IndexMap<String, RuleConfiguration>,
 }
@@ -429,7 +431,7 @@ where
     Ok(value)
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+#[serde(rename_all = "camelCase", default)]
 pub struct Regex {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -437,7 +439,8 @@ pub struct Regex {
     #[doc = r" List of rules for the current group"]
     #[serde(
         skip_serializing_if = "IndexMap::is_empty",
-        deserialize_with = "deserialize_regex_rules"
+        deserialize_with = "deserialize_regex_rules",
+        flatten
     )]
     pub rules: IndexMap<String, RuleConfiguration>,
 }
@@ -496,7 +499,7 @@ where
     Ok(value)
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+#[serde(rename_all = "camelCase", default)]
 pub struct Ts {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -504,7 +507,8 @@ pub struct Ts {
     #[doc = r" List of rules for the current group"]
     #[serde(
         skip_serializing_if = "IndexMap::is_empty",
-        deserialize_with = "deserialize_ts_rules"
+        deserialize_with = "deserialize_ts_rules",
+        flatten
     )]
     pub rules: IndexMap<String, RuleConfiguration>,
 }

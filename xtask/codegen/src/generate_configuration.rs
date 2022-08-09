@@ -71,14 +71,14 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
         let group_struct = quote! {
             #[derive(Deserialize, Default, Serialize, Debug, Clone)]
-            #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+            #[serde(rename_all = "camelCase", default)]
             pub struct #group_struct_name {
                 /// It enables the recommended rules for this group
                 #[serde(skip_serializing_if = "Option::is_none")]
                 pub recommended: Option<bool>,
 
                 /// List of rules for the current group
-                #[serde(skip_serializing_if = "IndexMap::is_empty", deserialize_with = #deserialize_function_string)]
+                #[serde(skip_serializing_if = "IndexMap::is_empty", deserialize_with = #deserialize_function_string, flatten)]
                 pub rules: IndexMap<String, RuleConfiguration>,
             }
 

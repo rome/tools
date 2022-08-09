@@ -36,16 +36,14 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     "enabled": true,
     "rules": {
         "js": {
-            "rules": {
-                "noDeadCode": "off",
-                "useSimplifiedLogicExpression": "warn",
-                "noCatchAssign": "error",
-                "noLabelVar": {
-                    "level": "warn"
-                },
-                "useTemplate": {
-                    "level": "error"
-                }
+            "noDeadCode": "off",
+            "useSimplifiedLogicExpression": "warn",
+            "noCatchAssign": "error",
+            "noLabelVar": {
+                "level": "warn"
+            },
+            "useTemplate": {
+                "level": "error"
             }
         }
     }
@@ -75,14 +73,10 @@ pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
     "enabled": true,
     "rules": {
         "js": {
-            "rules": {
-                "foo_rule": "off"
-            }
+            "foo_rule": "off"
         },
         "jsx": {
-            "rules": {
-                "what_the_hell": "off"
-            }
+            "what_the_hell": "off"
         }
     }
   }
@@ -102,9 +96,7 @@ pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
     "rules": {
         "recommended": true,
         "js": {
-            "rules": {
-                "noDebugger": "off"
-            }
+            "noDebugger": "off"
         }
     }
   }
@@ -126,9 +118,8 @@ pub const CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC: &str = r#"{
     "rules": {
         "recommended": true,
         "js": {
-            "rules": {
-                "noDebugger": "warn"
-            }
+            "recommended": true,      
+            "noDebugger": "warn"
         }
     }
   }
@@ -139,9 +130,7 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
     "rules": {
         "recommended": true,
         "js": {
-            "rules": {
-                "noDeadCode": "error"
-            }
+            "noDeadCode": "error"
         }
     }
   }

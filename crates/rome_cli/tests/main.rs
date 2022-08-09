@@ -1150,7 +1150,7 @@ mod configuration {
             args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         });
 
-        assert!(result.is_ok());
+        assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -1167,7 +1167,8 @@ mod configuration {
             ),
             args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         });
-        assert!(result.is_err());
+
+        assert!(result.is_err(), "run_cli returned {result:?}");
 
         match result {
             Err(error) => {
@@ -1194,6 +1195,8 @@ mod configuration {
             args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         });
 
+        assert!(result.is_err(), "run_cli returned {result:?}");
+
         match result {
             Err(error) => {
                 assert!(error.to_string().contains("Invalid rule name `foo_rule`"),)
@@ -1217,7 +1220,7 @@ mod configuration {
             args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         });
 
-        assert!(result.is_err());
+        assert!(result.is_err(), "run_cli returned {result:?}");
 
         match result {
             Err(error) => {
@@ -1244,6 +1247,6 @@ mod configuration {
             args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         });
 
-        assert!(result.is_ok());
+        assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 }
