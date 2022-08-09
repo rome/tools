@@ -1,0 +1,121 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: useCamelCase.js
+---
+# Input
+```js
+let snake_case;
+snake_case = 1;
+let _snake_case;
+console.log(_snake_case);
+
+function snake_function(snake_case, PascalCase) {}
+
+class PascalCase {
+	snake_function() {}
+
+	get snake_getter() {}
+	set snake_setter(v) {
+		console.log(v);
+	}
+}
+
+console.log({
+	snake_function() {},
+	get snake_getter() {},
+	set snake_setter(v) {
+		console.log(v);
+	},
+});
+
+let camelCase;
+let longCamelCase;
+
+```
+
+# Diagnostics
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+  ┌─ useCamelCase.js:1:5
+  │
+1 │ let snake_case;
+  │     ----------
+
+Safe fix: Rename this symbol to camel case
+    | @@ -1,5 +1,5 @@
+0   | - let snake_case;
+1   | - snake_case = 1;
+  0 | + let snakeCase;
+  1 | + snakeCase = 1;
+2 2 |   let _snake_case;
+3 3 |   console.log(_snake_case);
+4 4 |   
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+  ┌─ useCamelCase.js:6:10
+  │
+6 │ function snake_function(snake_case, PascalCase) {}
+  │          --------------
+
+Safe fix: Rename this symbol to camel case
+    | @@ -3,7 +3,7 @@
+2 2 |   let _snake_case;
+3 3 |   console.log(_snake_case);
+4 4 |   
+5   | - function snake_function(snake_case, PascalCase) {}
+  5 | + function snakeFunction(snake_case, PascalCase) {}
+6 6 |   
+7 7 |   class PascalCase {
+8 8 |   	snake_function() {}
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+  ┌─ useCamelCase.js:6:25
+  │
+6 │ function snake_function(snake_case, PascalCase) {}
+  │                         ----------
+
+Safe fix: Rename this symbol to camel case
+    | @@ -3,7 +3,7 @@
+2 2 |   let _snake_case;
+3 3 |   console.log(_snake_case);
+4 4 |   
+5   | - function snake_function(snake_case, PascalCase) {}
+  5 | + function snake_function(snakeCase, PascalCase) {}
+6 6 |   
+7 7 |   class PascalCase {
+8 8 |   	snake_function() {}
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer symbols names in camel case.
+  ┌─ useCamelCase.js:6:37
+  │
+6 │ function snake_function(snake_case, PascalCase) {}
+  │                                     ----------
+
+Safe fix: Rename this symbol to camel case
+    | @@ -3,7 +3,7 @@
+2 2 |   let _snake_case;
+3 3 |   console.log(_snake_case);
+4 4 |   
+5   | - function snake_function(snake_case, PascalCase) {}
+  5 | + function snake_function(snake_case, pascalCase) {}
+6 6 |   
+7 7 |   class PascalCase {
+8 8 |   	snake_function() {}
+
+
+```
+
+
