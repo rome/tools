@@ -622,6 +622,8 @@ pub(crate) fn conditional_needs_parens(
         | JsSyntaxKind::JS_SPREAD
         | JsSyntaxKind::JS_BINARY_EXPRESSION
         | JsSyntaxKind::JS_LOGICAL_EXPRESSION
+        | JsSyntaxKind::JS_INSTANCEOF_EXPRESSION
+        | JsSyntaxKind::JS_IN_EXPRESSION
         | JsSyntaxKind::JS_AWAIT_EXPRESSION
         | JsSyntaxKind::JSX_SPREAD_ATTRIBUTE
         | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
