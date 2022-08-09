@@ -1,3 +1,4 @@
+use std::collections::hash_map::IntoIter;
 use std::{
     collections::HashMap,
     io,
@@ -41,6 +42,11 @@ impl MemoryFileSystem {
         let files = &mut self.files.0.write();
         files.insert(path, Arc::new(Mutex::new(content.into())));
     }
+
+    pub fn files(self) -> IntoIter<PathBuf, FileEntry> {
+        let files = self.files.0.into_inner();
+        files.into_iter()
+    }
 }
 
 impl FileSystem for MemoryFileSystem {
@@ -71,6 +77,20 @@ impl FileSystemExt for MemoryFileSystem {
     }
 
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        let files = &self.files.0.read();
+        let entry = files.get(path).ok_or_else(|| {
+            io::Error::new(
+                io::ErrorKind::NotFound,
+                format!("path {path:?} does not exists in memory filesystem"),
+            )
+        })?;
+
+        let lock = entry.lock_arc();
+
+        Ok(Box::new(MemoryFile { inner: lock }))
+    }
+
+    fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
         let files = &self.files.0.read();
         let entry = files.get(path).ok_or_else(|| {
             io::Error::new(
