@@ -228,7 +228,7 @@ impl Rule for NoUnusedVariables {
 
             Some(JsRuleAction {
                 category: ActionCategory::QuickFix,
-                applicability: Applicability::Unspecified,
+                applicability: Applicability::MaybeIncorrect,
                 message: markup! { "Remove this " {symbol_type} "." }.to_owned(),
                 mutation: batch,
             })
