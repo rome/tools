@@ -44,6 +44,11 @@ const f6 = () => {
 try {
 } catch (e) {}
 
+export function exported_function() {}
+
+function exported_function_2() {}
+export { exported_function_2 };
+
 ```
 
 # Diagnostics
@@ -264,7 +269,7 @@ warning[no_unused_variables/noUnusedVariables]: This variable is unused.
    │       --
 
 Suggested fix: Remove this variable.
-      | @@ -31,9 +31,5 @@
+      | @@ -31,10 +31,6 @@
 30 30 |   
 31 31 |   const f5 = () => {};
 32 32 |   
@@ -274,6 +279,7 @@ Suggested fix: Remove this variable.
 36    | - 
 37 33 |   try {
 38 34 |   } catch (e) {}
+39 35 |   
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -288,12 +294,15 @@ warning[no_unused_variables/noUnusedVariables]: This variable is unused.
    │          -
 
 Suggested fix: Remove this variable.
-      | @@ -36,4 +36,4 @@
+      | @@ -36,7 +36,7 @@
 35 35 |   };
 36 36 |   
 37 37 |   try {
 38    | - } catch (e) {}
    38 | + } catch {}
+39 39 |   
+40 40 |   export function exported_function() {}
+41 41 |   
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 

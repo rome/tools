@@ -37,3 +37,8 @@ const f6 = () => {
 
 try {
 } catch (e) {}
+
+export function exported_function() {}
+
+function exported_function_2() {}
+export { exported_function_2 };

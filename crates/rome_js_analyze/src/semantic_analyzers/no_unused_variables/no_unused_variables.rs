@@ -124,6 +124,10 @@ impl Rule for NoUnusedVariables {
             return None;
         }
 
+        if model.is_exported(binding) {
+            return None;
+        }
+
         let all_references = binding.all_references(model);
 
         if all_references.count() == 0 {
