@@ -32,7 +32,7 @@ impl Default for Rules {
     }
 }
 impl Rules {
-    #[doc = r" Checks if the code coming from [rome_diagnostic::Diagnostic] corresponds to a rule."]
+    #[doc = r" Checks if the code coming from [rome_diagnostics::Diagnostic] corresponds to a rule."]
     #[doc = r" Usually the code is built like {category}/{rule_name}"]
     pub fn matches_diagnostic_code<'a>(
         &self,
@@ -50,8 +50,8 @@ impl Rules {
             _ => None,
         }
     }
-    #[doc = r" Given a code coming from [Diagnostic](rome_diagnostic::Diagnostic), this function returns"]
-    #[doc = r" the [Severity](rome_diagnostic::Severity) associated to the rule, if the configuration changed it."]
+    #[doc = r" Given a code coming from [Diagnostic](rome_diagnostics::Diagnostic), this function returns"]
+    #[doc = r" the [Severity](rome_diagnostics::Severity) associated to the rule, if the configuration changed it."]
     #[doc = r""]
     #[doc = r" If not, the function returns [None]."]
     pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
