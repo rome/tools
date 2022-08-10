@@ -96,8 +96,7 @@ self.addEventListener("message", async (e) => {
 					languages: {
 						javascript: {
 							format: {
-								quote_style:
-									quoteStyle === QuoteStyle.Double ? "Double" : "Single",
+								quote_style: quoteStyle === QuoteStyle.Double ? "Double" : "Single",
 							},
 						},
 					},

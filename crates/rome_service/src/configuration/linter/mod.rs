@@ -110,7 +110,7 @@ pub enum RulePlainConfiguration {
 pub struct RuleWithOptions {
     level: RulePlainConfiguration,
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[schemars(schema_with = "schema_any")]
+    #[cfg_attr(feature = "schemars", schemars(schema_with = "schema_any"))]
     options: Option<Box<serde_json::value::RawValue>>,
 }
 
