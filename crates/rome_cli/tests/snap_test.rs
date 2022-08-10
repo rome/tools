@@ -1,5 +1,5 @@
 use rome_console::fmt::{Formatter, Termcolor};
-use rome_console::{markup, BufferConsole, Markup, Message};
+use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use std::collections::HashMap;

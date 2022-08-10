@@ -974,8 +974,7 @@ mod format {
 
         let message = console
             .out_buffer
-            .iter()
-            .next()
+            .get(0)
             .expect("Console should have written a message");
 
         let content = markup_to_string(markup! {
