@@ -336,7 +336,9 @@ pub(crate) enum TraversalMode {
         ignore_errors: bool,
         /// It writes the new content on file
         write: bool,
-        ///
+        /// An optional tuple.
+        /// 1. The virtual path to the file
+        /// 2. The content of the file
         stdin: Option<(PathBuf, String)>,
     },
 }

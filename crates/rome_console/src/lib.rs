@@ -1,8 +1,7 @@
 use atty::Stream;
 use std::io;
-use std::io::{BufRead, Read, Stdin, Write};
+use std::io::{Read, Stdin, Write};
 use std::panic::RefUnwindSafe;
-
 use termcolor::{ColorChoice, StandardStream};
 use write::Termcolor;
 
@@ -142,6 +141,12 @@ impl Console for BufferConsole {
         });
     }
     fn read(&mut self, _prompt: Option<Markup>) -> Option<String> {
-        todo!()
+        if self.in_buffer.is_empty() {
+            None
+        } else {
+            // for the time being we simple return the first message, as we don't
+            // particular use case for multiple prompts
+            Some(self.in_buffer[0].clone())
+        }
     }
 }

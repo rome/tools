@@ -84,7 +84,8 @@ const NO_DEAD_CODE_ERROR: &str = r#"function f() {
 mod check {
     use super::*;
     use crate::configs::{
-        CONFIG_LINTER_DISABLED, CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
+        CONFIG_LINTER_DISABLED, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_SUPPRESSED_GROUP,
+        CONFIG_LINTER_SUPPRESSED_RULE, CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
     };
     use rome_console::LogLevel;
     use rome_fs::FileSystemExt;
@@ -461,6 +462,86 @@ mod check {
 
         assert_cli_snapshot("should_disable_a_rule_group", fs, console);
     }
+
+    #[test]
+    fn downgrade_severity() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(
+            file_path.into(),
+            CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC.as_bytes(),
+        );
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let messages = &console.out_buffer;
+
+        assert_eq!(
+            messages
+                .iter()
+                .filter(|m| m.level == LogLevel::Error)
+                .filter(|m| {
+                    let content = format!("{:#?}", m.content);
+                    content.contains("js/noDebugger")
+                })
+                .count(),
+            1
+        );
+
+        assert_cli_snapshot("downgrade_severity", fs, console);
+    }
+
+    #[test]
+    fn upgrade_severity() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(
+            file_path.into(),
+            CONFIG_LINTER_UPGRADE_DIAGNOSTIC.as_bytes(),
+        );
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), NO_DEAD_CODE_ERROR.as_bytes());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        });
+
+        assert!(result.is_err(), "run_cli returned {result:?}");
+
+        let messages = &console.out_buffer;
+
+        assert_eq!(
+            messages
+                .iter()
+                .filter(|m| m.level == LogLevel::Error)
+                .filter(|m| {
+                    let content = format!("{:?}", m.content);
+                    content.contains("js/noDeadCode")
+                })
+                .count(),
+            1
+        );
+
+        assert_cli_snapshot("upgrade_severity", fs, console);
+    }
 }
 
 mod ci {
@@ -573,11 +654,9 @@ mod ci {
 
 mod format {
     use super::*;
-    use crate::configs::{
-        CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC,
-        CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
-    };
-    use rome_console::LogLevel;
+    use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT};
+    use crate::snap_test::markup_to_string;
+    use rome_console::markup;
     use rome_fs::FileSystemExt;
 
     #[test]
@@ -871,84 +950,70 @@ mod format {
     }
 
     #[test]
-    fn downgrade_severity() {
+    fn format_stdin_successfully() {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
-        let file_path = Path::new("rome.json");
-        fs.insert(
-            file_path.into(),
-            CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC.as_bytes(),
-        );
 
-        let file_path = Path::new("file.js");
-        fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+        console
+            .in_buffer
+            .push("function f() {return{}}".to_string());
 
         let result = run_cli(CliSession {
             app: App::with_filesystem_and_console(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Borrowed(&mut console),
             ),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+            args: Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--stdin-file-path"),
+                OsString::from("mock.js"),
+            ]),
         });
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
-        let messages = &console.out_buffer;
+        let message = console
+            .out_buffer
+            .iter()
+            .next()
+            .expect("Console should have written a message");
 
-        assert_eq!(
-            messages
-                .iter()
-                .filter(|m| m.level == LogLevel::Error)
-                .filter(|m| {
-                    let content = format!("{:#?}", m.content);
-                    content.contains("js/noDebugger")
-                })
-                .count(),
-            1
-        );
+        let content = markup_to_string(markup! {
+            {message.content}
+        });
 
-        assert_cli_snapshot("downgrade_severity", fs, console);
+        assert_eq!(content, "function f() {\n\treturn {};\n}\n");
+
+        assert_cli_snapshot("format_stdin_successfully", fs, console);
     }
 
     #[test]
-    #[ignore]
-    fn upgrade_severity() {
+    fn format_stdin_with_errors() {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
-        let file_path = Path::new("rome.json");
-        fs.insert(
-            file_path.into(),
-            CONFIG_LINTER_UPGRADE_DIAGNOSTIC.as_bytes(),
-        );
-
-        let file_path = Path::new("file.js");
-        fs.insert(file_path.into(), NO_DEAD_CODE_ERROR.as_bytes());
 
         let result = run_cli(CliSession {
             app: App::with_filesystem_and_console(
                 DynRef::Borrowed(&mut fs),
                 DynRef::Borrowed(&mut console),
             ),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+            args: Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--stdin-file-path"),
+                OsString::from("mock.js"),
+            ]),
         });
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        let messages = &console.out_buffer;
+        match result {
+            Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "stdin"),
+            _ => {
+                panic!("run_cli returned {result:?} for an unknown command help, expected an error")
+            }
+        }
 
-        assert_eq!(
-            messages
-                .iter()
-                .filter(|m| m.level == LogLevel::Error)
-                .filter(|m| {
-                    let content = format!("{:?}", m.content);
-                    content.contains("js/noDeadCode")
-                })
-                .count(),
-            1
-        );
-
-        assert_cli_snapshot("upgrade_severity", fs, console);
+        assert_cli_snapshot("format_stdin_with_errors", fs, console);
     }
 }
 

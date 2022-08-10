@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 113
+assertion_line: 137
 expression: content
 ---
 ## `rome.json`
@@ -25,7 +25,7 @@ expression: content
 debugger;
 ```
 
-## Messages
+# Emitted Messages
 
 ```block
 warning[js/noDebugger]: This is an unexpected use of the debugger statement.
