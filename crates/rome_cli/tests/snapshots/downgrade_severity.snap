@@ -11,9 +11,8 @@ expression: content
     "rules": {
         "recommended": true,
         "js": {
-            "rules": {
-                "noDebugger": "warn"
-            }
+            "recommended": true,      
+            "noDebugger": "warn"
         }
     }
   }
