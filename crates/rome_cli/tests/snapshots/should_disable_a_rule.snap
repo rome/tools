@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 107
+assertion_line: 113
 expression: content
 ---
 ## `rome.json`
@@ -11,9 +11,7 @@ expression: content
     "rules": {
         "recommended": true,
         "js": {
-            "rules": {
-                "noDebugger": "off"
-            }
+            "noDebugger": "off"
         }
     }
   }

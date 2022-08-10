@@ -225,7 +225,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         }
         impl Rules {
 
-            /// Checks if the code coming from [rome_diagnostic::Diagnostic] corresponds to a rule.
+            /// Checks if the code coming from [rome_diagnostics::Diagnostic] corresponds to a rule.
             /// Usually the code is built like {category}/{rule_name}
             pub fn matches_diagnostic_code<'a>(
                 &self,
@@ -242,8 +242,8 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 }
             }
 
-            /// Given a code coming from [Diagnostic](rome_diagnostic::Diagnostic), this function returns
-            /// the [Severity](rome_diagnostic::Severity) associated to the rule, if the configuration changed it.
+            /// Given a code coming from [Diagnostic](rome_diagnostics::Diagnostic), this function returns
+            /// the [Severity](rome_diagnostics::Severity) associated to the rule, if the configuration changed it.
             ///
             /// If not, the function returns [None].
             pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
