@@ -19,7 +19,7 @@ var a = b || /** @type {string} */
 -var a = b || /** @type {string} */ (c);
 +var a =
 +  b || /** @type {string} */
-+  (c);
++  c;
 ```
 
 # Output
@@ -27,7 +27,7 @@ var a = b || /** @type {string} */
 ```js
 var a =
   b || /** @type {string} */
-  (c);
+  c;
 ```
 
 

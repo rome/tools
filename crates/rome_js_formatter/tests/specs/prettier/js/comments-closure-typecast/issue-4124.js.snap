@@ -29,7 +29,7 @@ const test = /** @type (function (*): ?|undefined) */ (foo);
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,11 +1,11 @@
+@@ -1,18 +1,22 @@
  /** @type {Object} */ (myObject.property).someProp = true;
 -/** @type {Object} */ (myObject.property).someProp = true;
 +(/** @type {Object} */ myObject.property).someProp = true;
@@ -39,12 +39,29 @@ const test = /** @type (function (*): ?|undefined) */ (foo);
 -const test =
 -  /** @type (function (*): ?|undefined) */
 -  (goog.partial(NewThing.onTemplateChange, rationaleField, typeField));
-+const test = /** @type (function (*): ?|undefined) */ (
-+  goog.partial(NewThing.onTemplateChange, rationaleField, typeField)
-+);
++const test = /** @type (function (*): ?|undefined) */ (goog.partial(
++  NewThing.onTemplateChange,
++  rationaleField,
++  typeField,
++));
  
- const test = /** @type (function (*): ?|undefined) */ (
-   goog.partial(NewThing.onTemplateChange, rationaleField, typeField)
+-const test = /** @type (function (*): ?|undefined) */ (
+-  goog.partial(NewThing.onTemplateChange, rationaleField, typeField)
+-);
++const test = /** @type (function (*): ?|undefined) */ (goog.partial(
++  NewThing.onTemplateChange,
++  rationaleField,
++  typeField,
++));
+ 
+-const model = /** @type {?{getIndex: Function}} */ (model);
++const model = /** @type {?{getIndex: Function}} */ model;
+ 
+-const foo = /** @type {string} */ (bar);
++const foo = /** @type {string} */ bar;
+ 
+-const test = /** @type (function (*): ?|undefined) */ (foo);
++const test = /** @type (function (*): ?|undefined) */ foo;
 ```
 
 # Output
@@ -55,19 +72,23 @@ const test = /** @type (function (*): ?|undefined) */ (foo);
 
 const prop = /** @type {Object} */ (myObject.property).someProp;
 
-const test = /** @type (function (*): ?|undefined) */ (
-  goog.partial(NewThing.onTemplateChange, rationaleField, typeField)
-);
+const test = /** @type (function (*): ?|undefined) */ (goog.partial(
+  NewThing.onTemplateChange,
+  rationaleField,
+  typeField,
+));
 
-const test = /** @type (function (*): ?|undefined) */ (
-  goog.partial(NewThing.onTemplateChange, rationaleField, typeField)
-);
+const test = /** @type (function (*): ?|undefined) */ (goog.partial(
+  NewThing.onTemplateChange,
+  rationaleField,
+  typeField,
+));
 
-const model = /** @type {?{getIndex: Function}} */ (model);
+const model = /** @type {?{getIndex: Function}} */ model;
 
-const foo = /** @type {string} */ (bar);
+const foo = /** @type {string} */ bar;
 
-const test = /** @type (function (*): ?|undefined) */ (foo);
+const test = /** @type (function (*): ?|undefined) */ foo;
 ```
 
 

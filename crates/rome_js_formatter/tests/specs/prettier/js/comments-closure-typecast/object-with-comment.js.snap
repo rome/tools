@@ -24,34 +24,38 @@ const objectWithComment2 = /** @type MyType */ (  /* comment */  {
 ```diff
 --- Prettier
 +++ Rome
-@@ -6,7 +6,8 @@
- );
- 
- const objectWithComment2 = /** @type MyType */ (
--  /* comment */ {
-+  /* comment */
-+  {
+@@ -1,12 +1,9 @@
+-const objectWithComment = /** @type MyType */ (
++const objectWithComment = /** @type MyType */
+   /* comment */
+   {
      foo: bar,
-   }
- );
+-  }
+-);
++  };
+ 
+-const objectWithComment2 = /** @type MyType */ (
+-  /* comment */ {
+-    foo: bar,
+-  }
+-);
++const objectWithComment2 = /** @type MyType */ /* comment */ {
++  foo: bar,
++};
 ```
 
 # Output
 
 ```js
-const objectWithComment = /** @type MyType */ (
+const objectWithComment = /** @type MyType */
   /* comment */
   {
     foo: bar,
-  }
-);
+  };
 
-const objectWithComment2 = /** @type MyType */ (
-  /* comment */
-  {
-    foo: bar,
-  }
-);
+const objectWithComment2 = /** @type MyType */ /* comment */ {
+  foo: bar,
+};
 ```
 
 

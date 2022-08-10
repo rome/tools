@@ -322,26 +322,9 @@ impl<L: Language> fmt::Debug for SyntaxToken<L> {
             self.text_trimmed()
         )?;
 
-        write!(f, "[")?;
-        let mut first_piece = true;
-        for piece in self.leading_trivia().pieces() {
-            if !first_piece {
-                write!(f, ", ")?;
-            }
-            first_piece = false;
-            write!(f, "{:?}", piece)?;
-        }
-        write!(f, "] [")?;
-
-        let mut first_piece = true;
-        for piece in self.trailing_trivia().pieces() {
-            if !first_piece {
-                write!(f, ", ")?;
-            }
-            first_piece = false;
-            write!(f, "{:?}", piece)?;
-        }
-        write!(f, "]")
+        self.leading_trivia().fmt(f)?;
+        write!(f, " ")?;
+        self.trailing_trivia().fmt(f)
     }
 }
 

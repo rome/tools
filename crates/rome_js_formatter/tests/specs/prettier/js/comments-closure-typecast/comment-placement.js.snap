@@ -33,37 +33,47 @@ const foo5 =
 ```diff
 --- Prettier
 +++ Rome
-@@ -8,6 +8,8 @@
+@@ -1,13 +1,15 @@
+-const foo1 = /** @type {string} */ (value);
++const foo1 = /** @type {string} */ value;
+ 
+ const foo2 =
    /** @type {string} */
-   (value);
+-  (value);
++  value;
+ 
+ const foo3 =
+   /** @type {string} */
+-  (value);
++  value;
  
 -const foo4 = /** @type {string} */ (value);
 +const foo4 =
-+  /** @type {string} */ (value);
++  /** @type {string} */ value;
  
 -const foo5 = /** @type {string} */ (value);
 +const foo5 =
-+  /** @type {string} */ (value);
++  /** @type {string} */ value;
 ```
 
 # Output
 
 ```js
-const foo1 = /** @type {string} */ (value);
+const foo1 = /** @type {string} */ value;
 
 const foo2 =
   /** @type {string} */
-  (value);
+  value;
 
 const foo3 =
   /** @type {string} */
-  (value);
+  value;
 
 const foo4 =
-  /** @type {string} */ (value);
+  /** @type {string} */ value;
 
 const foo5 =
-  /** @type {string} */ (value);
+  /** @type {string} */ value;
 ```
 
 

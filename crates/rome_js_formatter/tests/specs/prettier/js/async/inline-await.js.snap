@@ -16,22 +16,20 @@ async function f() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,9 +1,11 @@
+@@ -1,9 +1,7 @@
  async function f() {
-   const admins = (
+-  const admins = (
 -    await db
 -      .select("*")
 -      .from("admins")
 -      .leftJoin("bla")
 -      .where("id", "in", [1, 2, 3, 4])
-+    await (
-+      db
-+        .select("*")
-+        .from("admins")
-+        .leftJoin("bla")
-+        .where("id", "in", [1, 2, 3, 4])
-+    )
-   ).map(({ id, name }) => ({ id, name }));
+-  ).map(({ id, name }) => ({ id, name }));
++  const admins = (await (db
++    .select("*")
++    .from("admins")
++    .leftJoin("bla")
++    .where("id", "in", [1, 2, 3, 4]))).map(({ id, name }) => ({ id, name }));
  }
 ```
 
@@ -39,15 +37,11 @@ async function f() {
 
 ```js
 async function f() {
-  const admins = (
-    await (
-      db
-        .select("*")
-        .from("admins")
-        .leftJoin("bla")
-        .where("id", "in", [1, 2, 3, 4])
-    )
-  ).map(({ id, name }) => ({ id, name }));
+  const admins = (await (db
+    .select("*")
+    .from("admins")
+    .leftJoin("bla")
+    .where("id", "in", [1, 2, 3, 4]))).map(({ id, name }) => ({ id, name }));
 }
 ```
 

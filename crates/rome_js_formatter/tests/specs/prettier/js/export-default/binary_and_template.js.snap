@@ -5,7 +5,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 # Input
 
 ```js
-f<<<T>(x)
+export default (function() {} + foo)``;
 ```
 
 
@@ -15,14 +15,14 @@ f<<<T>(x)
 --- Prettier
 +++ Rome
 @@ -1 +1 @@
--f << (<T>x);
-+f << <T>x;
+-export default (function () {} + foo)``;
++export default ((function () {}) + foo)``;
 ```
 
 # Output
 
 ```js
-f << <T>x;
+export default ((function () {}) + foo)``;
 ```
 
 

@@ -42,18 +42,17 @@ a=b=c;
 +++ Rome
 @@ -1,21 +1,17 @@
  let bifornCringerMoshedPerplexSawder =
--  (askTrovenaBeenaDependsRowans =
+   (askTrovenaBeenaDependsRowans =
 -  glimseGlyphsHazardNoopsTieTie =
 -  averredBathersBoxroomBuggyNurl =
 -  anodyneCondosMalateOverateRetinol =
 -  annularCooeedSplicesWalksWayWay =
 -    kochabCooieGameOnOboleUnweave);
-+  askTrovenaBeenaDependsRowans =
 +    glimseGlyphsHazardNoopsTieTie =
 +    averredBathersBoxroomBuggyNurl =
 +    anodyneCondosMalateOverateRetinol =
 +    annularCooeedSplicesWalksWayWay =
-+      kochabCooieGameOnOboleUnweave;
++      kochabCooieGameOnOboleUnweave);
  
  bifornCringerMoshedPerplexSawder =
    askTrovenaBeenaDependsRowans =
@@ -88,12 +87,12 @@ a=b=c;
 
 ```js
 let bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans =
+  (askTrovenaBeenaDependsRowans =
     glimseGlyphsHazardNoopsTieTie =
     averredBathersBoxroomBuggyNurl =
     anodyneCondosMalateOverateRetinol =
     annularCooeedSplicesWalksWayWay =
-      kochabCooieGameOnOboleUnweave;
+      kochabCooieGameOnOboleUnweave);
 
 bifornCringerMoshedPerplexSawder =
   askTrovenaBeenaDependsRowans =

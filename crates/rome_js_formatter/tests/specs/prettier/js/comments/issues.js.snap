@@ -84,24 +84,27 @@ foo({}
 ```diff
 --- Prettier
 +++ Rome
-@@ -9,13 +9,14 @@
+@@ -9,13 +9,12 @@
  });
  
  // Missing one level of indentation because of the comment
 -const rootEpic = (actions, store) =>
-+const rootEpic = (actions, store) => (
-   combineEpics(...epics)(actions, store)
-     // Log errors and continue.
-     .catch((err, stream) => {
-       getLogger().error(err);
-       return stream;
+-  combineEpics(...epics)(actions, store)
+-    // Log errors and continue.
+-    .catch((err, stream) => {
+-      getLogger().error(err);
+-      return stream;
 -    });
-+    })
-+);
++const rootEpic = (actions, store) => (combineEpics(...epics)(actions, store)
++  // Log errors and continue.
++  .catch((err, stream) => {
++    getLogger().error(err);
++    return stream;
++  }));
  
  // optional trailing comma gets moved all the way to the beginning
  const regex = new RegExp(
-@@ -64,5 +65,5 @@
+@@ -64,5 +63,5 @@
  // The closing paren is printed on the same line as the comment
  foo(
    {},
@@ -124,14 +127,12 @@ throw new ProcessSystemError({
 });
 
 // Missing one level of indentation because of the comment
-const rootEpic = (actions, store) => (
-  combineEpics(...epics)(actions, store)
-    // Log errors and continue.
-    .catch((err, stream) => {
-      getLogger().error(err);
-      return stream;
-    })
-);
+const rootEpic = (actions, store) => (combineEpics(...epics)(actions, store)
+  // Log errors and continue.
+  .catch((err, stream) => {
+    getLogger().error(err);
+    return stream;
+  }));
 
 // optional trailing comma gets moved all the way to the beginning
 const regex = new RegExp(
@@ -187,6 +188,6 @@ foo(
 
 # Lines exceeding max width of 80 characters
 ```
-   32: import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
+   30: import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
 ```
 

@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::JsNullLiteralExpression;
 use rome_js_syntax::JsNullLiteralExpressionFields;
+use rome_js_syntax::{JsNullLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsNullLiteralExpression;
@@ -12,5 +13,18 @@ impl FormatNodeRule<JsNullLiteralExpression> for FormatJsNullLiteralExpression {
         let JsNullLiteralExpressionFields { value_token } = node.as_fields();
 
         write![f, [value_token.format()]]
+    }
+
+    fn needs_parentheses(&self, item: &JsNullLiteralExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsNullLiteralExpression {
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

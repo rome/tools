@@ -1,8 +1,10 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
+use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{
-    JsAnyExpression, JsSyntaxToken, JsTemplate, TsTemplateLiteralType, TsTypeArguments,
+    JsAnyExpression, JsSyntaxNode, JsSyntaxToken, JsTemplate, TsTemplateLiteralType,
+    TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -12,6 +14,10 @@ pub struct FormatJsTemplate;
 impl FormatNodeRule<JsTemplate> for FormatJsTemplate {
     fn fmt_fields(&self, node: &JsTemplate, f: &mut JsFormatter) -> FormatResult<()> {
         JsAnyTemplate::from(node.clone()).fmt(f)
+    }
+
+    fn needs_parentheses(&self, item: &JsTemplate) -> bool {
+        item.needs_parentheses()
     }
 }
 
@@ -75,5 +81,16 @@ impl JsAnyTemplate {
             JsAnyTemplate::JsTemplate(template) => template.r_tick_token(),
             JsAnyTemplate::TsTemplateLiteralType(template) => template.r_tick_token(),
         }
+    }
+}
+
+/// `TemplateLiteral`'s are `PrimaryExpression's that never need parentheses.
+impl NeedsParentheses for JsTemplate {
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

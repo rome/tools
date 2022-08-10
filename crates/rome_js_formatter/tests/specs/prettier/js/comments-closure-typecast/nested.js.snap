@@ -21,32 +21,34 @@ const BarImpl = /** @type {BarConstructor} */ (
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,9 +2,7 @@
+@@ -1,10 +1,7 @@
+-foo = /** @type {!Foo} */ (/** @type {!Baz} */ (baz).bar);
++foo = /** @type {!Foo} */ (/** @type {!Baz} */ baz.bar);
  
- const BarImpl = /** @type {BarConstructor} */ (
+-const BarImpl = /** @type {BarConstructor} */ (
++const BarImpl = /** @type {BarConstructor} */
    /** @type {unknown} */
 -  (
 -    function Bar() {
 -      throw new Error("Internal error: Illegal constructor");
 -    }
 -  )
+-);
 +  function Bar() {
 +    throw new Error("Internal error: Illegal constructor");
-+  }
- );
++  };
 ```
 
 # Output
 
 ```js
-foo = /** @type {!Foo} */ (/** @type {!Baz} */ (baz).bar);
+foo = /** @type {!Foo} */ (/** @type {!Baz} */ baz.bar);
 
-const BarImpl = /** @type {BarConstructor} */ (
+const BarImpl = /** @type {BarConstructor} */
   /** @type {unknown} */
   function Bar() {
     throw new Error("Internal error: Illegal constructor");
-  }
-);
+  };
 ```
 
 

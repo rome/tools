@@ -8,8 +8,7 @@ use rome_formatter::write;
 use crate::utils::JsAnyBinaryLikeExpression;
 
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
-    JsParenthesizedExpressionFields, JsSyntaxKind,
+    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxKind,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -28,9 +27,20 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
             r_paren_token,
         } = node.as_fields();
 
-        let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node)?;
-
         let expression = expression?;
+
+        if is_expression_handling_parens(&expression) {
+            return write!(
+                f,
+                [
+                    format_removed(&l_paren_token?),
+                    expression.format(),
+                    format_removed(&r_paren_token?)
+                ]
+            );
+        }
+
+        let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node, &expression)?;
 
         if is_simple_parenthesized_expression(node)? {
             if parenthesis_can_be_omitted {
@@ -58,28 +68,7 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
             ]?;
         } else {
             match expression {
-                // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
-                // add extra soft_block_indent, for example:
-                // ```js
-                // ("escaped carriage return \
-                // ");
-                // ```
-                // if we add soft_block_indent, we will get:
-                // ```js
-                // (
-                // "escaped carriage return \
-                // "
-                // );
-                // ```
-                // which will not match prettier's formatting behavior, if we add this extra branch to handle this case, it become:
-                // ```js
-                // ("escaped carriage return \
-                // ");
-                // ```
-                // this is what we want
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsStringLiteralExpression(_),
-                ) => {
+                JsAnyExpression::JsObjectExpression(_) | JsAnyExpression::JsCallExpression(_) => {
                     write![
                         f,
                         [
@@ -131,10 +120,45 @@ fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> Synta
     Ok(true)
 }
 
-fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
-    let parent = node.syntax().parent();
+// Allow list of nodes that manually handle inserting parens if needed
+fn is_expression_handling_parens(expression: &JsAnyExpression) -> bool {
+    use JsAnyExpression::*;
 
-    let expression = resolve_expression(node.expression()?);
+    if let JsAnyExpression::JsParenthesizedExpression(inner) = expression {
+        if let Ok(inner) = inner.expression() {
+            is_expression_handling_parens(&inner)
+        } else {
+            false
+        }
+    } else {
+        matches!(
+            expression,
+            JsConditionalExpression(_)
+                | JsArrayExpression(_)
+                | JsUnaryExpression(_)
+                | JsPreUpdateExpression(_)
+                | JsPostUpdateExpression(_)
+                | JsObjectExpression(_)
+                | JsFunctionExpression(_)
+                | JsClassExpression(_)
+                | JsAwaitExpression(_)
+                | JsYieldExpression(_)
+                | JsIdentifierExpression(_)
+                | JsThisExpression(_)
+                | JsAnyLiteralExpression(_)
+                | JsSequenceExpression(_)
+                | JsSuperExpression(_)
+                | JsAssignmentExpression(_)
+                | JsArrowFunctionExpression(_)
+        )
+    }
+}
+
+fn parenthesis_can_be_omitted(
+    node: &JsParenthesizedExpression,
+    expression: &JsAnyExpression,
+) -> SyntaxResult<bool> {
+    let parent = node.syntax().parent();
 
     if let Some(parent) = &parent {
         match parent.kind() {
@@ -142,44 +166,23 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
             JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_THROW_STATEMENT => {
                 return Ok(true)
             }
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => {
-                // Nested parentheses can always be removed
-                return Ok(true);
-            }
+            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => return Ok(true),
             _ => {
                 // fall through
             }
         }
-
-        if let JsAnyExpression::JsConditionalExpression(_) = &expression {
-            // The formatting of conditional expression makes sure to insert parens if needed
-            return Ok(true);
-        }
     }
 
-    // if expression is a StringLiteralExpression, we need to check it before precedence comparison, here is an example:
-    // ```js
-    // a[("test")]
-    // ```
-    // if we use precedence comparison, we will get:
-    // parent_precedence should be `High` due to the parenthesized_expression's parent is ComputedMemberExpression,
-    // and node_precedence should be `Low` due to expression is StringLiteralExpression. `parent_precedence > node_precedence` will return false,
-    // the parenthesis will not be omitted.
-    // But the expected behavior is that the parenthesis will be omitted. The code above should be formatted as:
-    // ```js
-    // a["test"]
-    // ```
-    // So we need to add extra branch to handle this case.
-    if matches!(
-        expression,
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(
-            _
-        ))
-    ) {
-        return Ok(!matches!(
-            parent.map(|p| p.kind()),
-            Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT)
-        ));
+    let expression = resolve_expression(expression.clone());
+
+    match expression {
+        JsAnyExpression::JsConditionalExpression(_) => {
+            panic!("Reached conditional expression when it should have not, parent is:\n{parent:#?}\nexpression:\n{expression:#?}")
+        }
+
+        _ => {
+            // fall through
+        }
     }
 
     let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
@@ -195,7 +198,7 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
 
             if !binary_argument_needs_parens(
                 operator,
-                &JsAnyBinaryLikeLeftExpression::from(expression),
+                &JsAnyBinaryLikeLeftExpression::from(expression.clone()),
                 is_right,
             )? {
                 return Ok(true);

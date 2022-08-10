@@ -1,13 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::utils::parens::starts_with_no_lookahead_token;
+use crate::parentheses::resolve_expression_parent;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunctionBody, JsArrowFunctionExpression, JsAssignmentExpression,
-    JsCallExpression, JsComputedMemberExpression, JsConditionalExpression, JsInitializerClause,
-    JsNewExpression, JsParenthesizedExpression, JsReturnStatement, JsStaticMemberExpression,
-    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsThrowStatement, JsUnaryExpression,
-    JsYieldArgument, TsAsExpression, TsConditionalType, TsNonNullAssertionExpression, TsType,
+    JsAnyExpression, JsAssignmentExpression, JsCallExpression, JsComputedMemberExpression,
+    JsConditionalExpression, JsInitializerClause, JsNewExpression, JsParenthesizedExpression,
+    JsReturnStatement, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsThrowStatement, JsUnaryExpression, JsYieldArgument, TsAsExpression, TsConditionalType,
+    TsNonNullAssertionExpression, TsType,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -137,25 +137,10 @@ impl Format<JsFormatContext> for JsAnyConditional {
             }
         });
 
-        let with_extra_indent = format_with(|f| {
-            if layout.is_nested_test() || should_extra_indent {
-                group(&soft_block_indent(&grouped)).fmt(f)
-            } else {
-                grouped.fmt(f)
-            }
-        });
-
-        if self.needs_parens(layout.parent()) {
-            write!(
-                f,
-                [format_parenthesize(
-                    self.syntax().first_token().as_ref(),
-                    &with_extra_indent,
-                    self.syntax().last_token().as_ref()
-                )]
-            )
+        if layout.is_nested_test() || should_extra_indent {
+            group(&soft_block_indent(&grouped)).fmt(f)
         } else {
-            write!(f, [with_extra_indent])
+            grouped.fmt(f)
         }
     }
 }
@@ -327,16 +312,6 @@ impl JsAnyConditional {
             ConditionalLayout::Root {
                 parent: Some(parent),
             }
-        }
-    }
-
-    fn needs_parens(&self, parent: Option<&JsSyntaxNode>) -> bool {
-        match self {
-            JsAnyConditional::JsConditionalExpression(conditional) => parent
-                .map_or(false, |parent| {
-                    conditional_needs_parens(parent, conditional)
-                }),
-            JsAnyConditional::TsConditionalType(_) => false,
         }
     }
 
@@ -610,79 +585,6 @@ impl JsAnyConditional {
     }
 }
 
-/// Determines if the conditional expression needs parentheses to ease readability OR maintain precedence.
-pub(crate) fn conditional_needs_parens(
-    parent: &JsSyntaxNode,
-    conditional: &JsConditionalExpression,
-) -> bool {
-    match parent.kind() {
-        JsSyntaxKind::JS_TEMPLATE
-        | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-        | JsSyntaxKind::JS_UNARY_EXPRESSION
-        | JsSyntaxKind::JS_SPREAD
-        | JsSyntaxKind::JS_BINARY_EXPRESSION
-        | JsSyntaxKind::JS_LOGICAL_EXPRESSION
-        | JsSyntaxKind::JS_INSTANCEOF_EXPRESSION
-        | JsSyntaxKind::JS_IN_EXPRESSION
-        | JsSyntaxKind::JS_AWAIT_EXPRESSION
-        | JsSyntaxKind::JSX_SPREAD_ATTRIBUTE
-        | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
-        | JsSyntaxKind::TS_AS_EXPRESSION
-        | JsSyntaxKind::JS_EXTENDS_CLAUSE
-        | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => true,
-
-        JsSyntaxKind::JS_NEW_EXPRESSION => {
-            let new_expression = JsNewExpression::unwrap_cast(parent.clone());
-            new_expression
-                .callee()
-                .map(resolve_expression_syntax)
-                .as_ref()
-                == Ok(conditional.syntax())
-        }
-        JsSyntaxKind::JS_CALL_EXPRESSION => {
-            let call_expression = JsCallExpression::unwrap_cast(parent.clone());
-            call_expression
-                .callee()
-                .map(resolve_expression_syntax)
-                .as_ref()
-                == Ok(conditional.syntax())
-        }
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-            let conditional_parent = JsConditionalExpression::unwrap_cast(parent.clone());
-            conditional_parent
-                .test()
-                .map(resolve_expression_syntax)
-                .as_ref()
-                == Ok(conditional.syntax())
-        }
-        JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
-            let member_expression = JsComputedMemberExpression::unwrap_cast(parent.clone());
-            member_expression
-                .object()
-                .map(resolve_expression_syntax)
-                .as_ref()
-                == Ok(conditional.syntax())
-        }
-        JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-            let arrow = JsArrowFunctionExpression::unwrap_cast(parent.clone());
-
-            match arrow.body() {
-                Err(_) => false,
-                Ok(JsAnyFunctionBody::JsFunctionBody(_)) => false,
-                Ok(JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsSequenceExpression(
-                    _,
-                ))) => false,
-                Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
-                    let resolved = resolve_expression(expression);
-                    resolved.syntax() == conditional.syntax()
-                        && starts_with_no_lookahead_token(resolved).unwrap_or(false)
-                }
-            }
-        }
-        _ => false,
-    }
-}
-
 /// Resolves an expression to the first non parenthesized expression.
 pub(crate) fn resolve_expression(expression: JsAnyExpression) -> JsAnyExpression {
     match expression {
@@ -696,11 +598,4 @@ pub(crate) fn resolve_expression(expression: JsAnyExpression) -> JsAnyExpression
 /// Resolves an expression to the first non parenthesized expression and returns its [JsSyntaxNode].
 pub(crate) fn resolve_expression_syntax(expression: JsAnyExpression) -> JsSyntaxNode {
     resolve_expression(expression).into_syntax()
-}
-
-/// Resolves the parent of the node that is not a parenthesized expression
-pub(crate) fn resolve_expression_parent(node: &JsSyntaxNode) -> Option<JsSyntaxNode> {
-    node.ancestors()
-        .skip(1)
-        .find(|parent| !JsParenthesizedExpression::can_cast(parent.kind()))
 }

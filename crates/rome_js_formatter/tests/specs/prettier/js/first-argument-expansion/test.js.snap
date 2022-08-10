@@ -196,15 +196,7 @@ func((args) => {
  
  compose(
    (a) => {
-@@ -86,19 +74,20 @@
- );
- 
- somthing.reduce(function (item, thing) {
--  return (thing.blah = item);
-+  return thing.blah = item;
- }, {});
- 
- somthing.reduce(function (item, thing) {
+@@ -93,12 +81,13 @@
    return thing.push(item);
  }, []);
  
@@ -338,7 +330,7 @@ compose(
 );
 
 somthing.reduce(function (item, thing) {
-  return thing.blah = item;
+  return (thing.blah = item);
 }, {});
 
 somthing.reduce(function (item, thing) {

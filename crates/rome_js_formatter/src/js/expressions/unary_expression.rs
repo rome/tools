@@ -1,9 +1,10 @@
 use crate::prelude::*;
-use crate::utils::is_simple_expression;
 use rome_formatter::write;
 
-use rome_js_syntax::JsPreUpdateOperator;
-use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
+use crate::parentheses::{update_expression_needs_parentheses, NeedsParentheses};
+
+use rome_js_syntax::JsSyntaxNode;
+use rome_js_syntax::{JsSyntaxKind, JsUnaryExpression};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
 #[derive(Debug, Clone, Default)]
@@ -20,55 +21,63 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
         let operator_token = operator_token?;
         let argument = argument?;
 
-        // Insert a space between the operator and argument if its a keyword
+        write!(f, [operator_token.format()])?;
+
         let is_keyword_operator = matches!(
             operation,
             JsUnaryOperator::Delete | JsUnaryOperator::Void | JsUnaryOperator::Typeof
         );
 
         if is_keyword_operator {
-            return write![f, [operator_token.format(), space(), argument.format(),]];
+            write!(f, [space()])?;
         }
 
-        // Parenthesize the inner expression if it's a binary or pre-update
-        // operation with an ambiguous operator (+ and ++ or - and --)
-        let is_ambiguous_expression = match &argument {
-            JsAnyExpression::JsUnaryExpression(expr) => {
-                let inner_op = expr.operator()?;
-                matches!(
-                    (operation, inner_op),
-                    (JsUnaryOperator::Plus, JsUnaryOperator::Plus)
-                        | (JsUnaryOperator::Minus, JsUnaryOperator::Minus)
-                )
+        write![f, [argument.format(),]]
+    }
+
+    fn needs_parentheses(&self, item: &JsUnaryExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsUnaryExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match parent.kind() {
+            JsSyntaxKind::JS_UNARY_EXPRESSION => {
+                let parent_unary = JsUnaryExpression::unwrap_cast(parent.clone());
+                let parent_operator = parent_unary.operator();
+                let operator = self.operator();
+
+                matches!(operator, Ok(JsUnaryOperator::Plus | JsUnaryOperator::Minus))
+                    && parent_operator == operator
             }
-            JsAnyExpression::JsPreUpdateExpression(expr) => {
-                let inner_op = expr.operator()?;
-                matches!(
-                    (operation, inner_op),
-                    (JsUnaryOperator::Plus, JsPreUpdateOperator::Increment)
-                        | (JsUnaryOperator::Minus, JsPreUpdateOperator::Decrement)
-                )
-            }
-            _ => false,
-        };
-
-        if is_ambiguous_expression {
-            operator_token.format().fmt(f)?;
-
-            let first_token = argument.syntax().first_token();
-            let last_token = argument.syntax().last_token();
-            let format_argument = argument.format();
-
-            let parenthesize =
-                format_parenthesize(first_token.as_ref(), &format_argument, last_token.as_ref());
-
-            if is_simple_expression(&argument)? {
-                parenthesize.fmt(f)
-            } else {
-                parenthesize.grouped_with_soft_block_indent().fmt(f)
-            }
-        } else {
-            write![f, [operator_token.format(), argument.format(),]]
+            _ => update_expression_needs_parentheses(parent, self.syntax()),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::parentheses::NeedsParentheses;
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::JsUnaryExpression;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("class A extends (!B) {}", JsUnaryExpression);
+
+        assert_needs_parentheses!("(+a).b", JsUnaryExpression);
+        assert_needs_parentheses!("(+a)[b]", JsUnaryExpression);
+        assert_not_needs_parentheses!("a[+b]", JsUnaryExpression);
+
+        assert_needs_parentheses!("(+a)`template`", JsUnaryExpression);
+
+        assert_needs_parentheses!("(+a)()", JsUnaryExpression);
+        assert_needs_parentheses!("new (+a)()", JsUnaryExpression);
+
+        assert_needs_parentheses!("(+a)!", JsUnaryExpression);
+
+        assert_needs_parentheses!("(+a) ** 3", JsUnaryExpression);
+        assert_not_needs_parentheses!("(+a) + 3", JsUnaryExpression);
     }
 }

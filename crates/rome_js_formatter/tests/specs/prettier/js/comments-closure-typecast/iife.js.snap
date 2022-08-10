@@ -26,17 +26,26 @@ const helpers = /** @type {Helpers} */ ((
 ```diff
 --- Prettier
 +++ Rome
-@@ -8,6 +8,8 @@
+@@ -1,13 +1,11 @@
+ const helpers1 = /** @type {Helpers} */ (((helpers = {}) => helpers)());
+ 
+-const helpers2 = /** @type {Helpers} */ (
+-  (function () {
+-    return something;
+-  })()
+-);
++const helpers2 = /** @type {Helpers} */ ((function () {
++  return something;
++})());
  
  // TODO: @param is misplaced https://github.com/prettier/prettier/issues/5850
- const helpers = /** @type {Helpers} */ (
--  /** @param {Partial<Helpers>} helpers */
--  ((helpers = {}) => helpers)()
+-const helpers = /** @type {Helpers} */ (
++const helpers = /** @type {Helpers} */
 +  (
-+    /** @param {Partial<Helpers>} helpers */
-+    (helpers = {}) => helpers
-+  )()
- );
+   /** @param {Partial<Helpers>} helpers */
+-  ((helpers = {}) => helpers)()
+-);
++  ((helpers = {}) => helpers)());
 ```
 
 # Output
@@ -44,19 +53,15 @@ const helpers = /** @type {Helpers} */ ((
 ```js
 const helpers1 = /** @type {Helpers} */ (((helpers = {}) => helpers)());
 
-const helpers2 = /** @type {Helpers} */ (
-  (function () {
-    return something;
-  })()
-);
+const helpers2 = /** @type {Helpers} */ ((function () {
+  return something;
+})());
 
 // TODO: @param is misplaced https://github.com/prettier/prettier/issues/5850
-const helpers = /** @type {Helpers} */ (
+const helpers = /** @type {Helpers} */
   (
-    /** @param {Partial<Helpers>} helpers */
-    (helpers = {}) => helpers
-  )()
-);
+  /** @param {Partial<Helpers>} helpers */
+  ((helpers = {}) => helpers)());
 ```
 
 

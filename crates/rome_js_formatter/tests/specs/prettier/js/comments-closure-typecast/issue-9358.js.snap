@@ -1,0 +1,50 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+---
+
+# Input
+
+```js
+const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (fooobaarbazzItems || foo);
+const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (fooobaarbazzItems + foo);
+const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (fooobaarbazzItems || foo) ? foo : bar;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,9 +1,7 @@
+-const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
+-  fooobaarbazzItems || foo
+-);
+-const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
+-  fooobaarbazzItems + foo
+-);
++const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */
++  (fooobaarbazzItems || foo);
++const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */
++  (fooobaarbazzItems + foo);
+ const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
+   fooobaarbazzItems || foo
+ )
+```
+
+# Output
+
+```js
+const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */
+  (fooobaarbazzItems || foo);
+const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */
+  (fooobaarbazzItems + foo);
+const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
+  fooobaarbazzItems || foo
+)
+  ? foo
+  : bar;
+```
+
+
+

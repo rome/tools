@@ -1,8 +1,11 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use crate::parentheses::NeedsParentheses;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsSyntaxKind::{JS_PARENTHESIZED_EXPRESSION, JS_SEQUENCE_EXPRESSION};
-use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
+use rome_js_syntax::{
+    JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind, JsSyntaxNode,
+};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -41,7 +44,7 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
                             left.format(),
                             comma_token.format(),
                             line_suffix_boundary(),
-                            soft_line_indent_or_space(&right.format())
+                            indent(&format_args![soft_line_break_or_space(), right.format()])
                         ]
                     );
                 }
@@ -64,5 +67,39 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
         } else {
             write!(f, [group(&format_inner)])
         }
+    }
+
+    fn needs_parentheses(&self, item: &JsSequenceExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsSequenceExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match parent.kind() {
+            JsSyntaxKind::JS_RETURN_STATEMENT => false,
+            // There's a precedence for writing `x++, y++`
+            JsSyntaxKind::JS_FOR_STATEMENT => false,
+            JsSyntaxKind::JS_EXPRESSION_STATEMENT => false,
+            JsSyntaxKind::JS_SEQUENCE_EXPRESSION => false,
+            // Be on the safer side
+            _ => true,
+        }
+        // case "SequenceExpression":
+        //       switch (parent.type) {
+        //
+        //         case "ExpressionStatement":
+        //           return name !== "expression";
+        //
+        //         case "ArrowFunctionExpression":
+        //           // We do need parentheses, but SequenceExpressions are handled
+        //           // specially when printing bodies of arrow functions.
+        //           return name !== "body";
+        //
+        //         default:
+        //           // Otherwise err on the side of overparenthesization, adding
+        //           // explicit exceptions above if this proves overzealous.
+        //           return true;
+        //       }
     }
 }

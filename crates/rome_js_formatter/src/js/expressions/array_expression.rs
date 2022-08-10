@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::JsArrayExpression;
 use rome_js_syntax::JsArrayExpressionFields;
+use rome_js_syntax::{JsArrayExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsArrayExpression;
@@ -26,5 +27,14 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
                     .soft_block_indent_with_group_id(Some(group_id))
             ]
         )
+    }
+}
+
+impl NeedsParentheses for JsArrayExpression {
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

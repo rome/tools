@@ -134,99 +134,20 @@ function inlineComment() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -18,72 +18,84 @@
- 
- function logical() {
-   return (
--    // Reason for 42
--    42 && 84
-+    (
-+      // Reason for 42
-+      42
-+    ) && 84
-   );
- }
- 
- function binary() {
-   return (
--    // Reason for 42
--    42 * 84
-+    (
-+      // Reason for 42
-+      42
-+    ) * 84
-   );
- }
- 
- function binaryInBinaryLeft() {
-   return (
--    // Reason for 42
--    42 * 84 + 2
-+    (
-+      // Reason for 42
-+      42
-+    ) * 84 + 2
-   );
- }
- 
- function binaryInBinaryRight() {
-   return (
--    // Reason for 42
--    42 + 84 * 2
-+    (
-+      // Reason for 42
-+      42
-+    ) + 84 * 2
-   );
- }
- 
- function conditional() {
-   return (
-     // Reason for 42
--    42 ? 1 : 2
--  );
-+    42
-+  )
-+    ? 1
-+    : 2;
- }
- 
- function binaryInConditional() {
-   return (
-     // Reason for 42
--    42 * 3 ? 1 : 2
--  );
-+    42
-+  ) * 3
-+    ? 1
-+    : 2;
- }
- 
- function call() {
-   return (
-     // Reason for a
--    a()
--  );
-+    a
-+  )();
- }
+@@ -67,8 +67,10 @@
  
  function memberInside() {
    return (
-     // Reason for a.b
+-    // Reason for a.b
 -    a.b.c
--  );
-+    a.b
-+  ).c;
++    (
++      // Reason for a.b
++      a.b
++    ).c
+   );
  }
  
- function memberOutside() {
-   return (
-     // Reason for a
--    a.b.c
--  );
-+    a
-+  ).b.c;
+@@ -80,10 +82,11 @@
  }
  
  function memberInAndOutWithCalls() {
@@ -235,13 +156,14 @@ function inlineComment() {
 -    ()
 -    .c.d();
 +  return (
++    (
 +    // Reason for a
-+    aFunction.b()
-+  ).c.d();
++    aFunction.b()).c.d()
++  );
  }
  
  function excessiveEverything() {
-@@ -103,18 +115,22 @@
+@@ -103,8 +106,8 @@
  
  function sequenceExpressionInside() {
    return (
@@ -252,21 +174,13 @@ function inlineComment() {
    );
  }
  
- function taggedTemplate() {
-   return (
-     // Reason for a
--    a`b`
--  );
-+    a
-+  )`b`;
+@@ -116,5 +119,7 @@
  }
  
  function inlineComment() {
 -  return /* hi */ 42 || 42;
 +  return (
-+    (
-+      /* hi */ 42
-+    ) || 42
++    /* hi */ 42 || 42
 +  );
  }
 ```
@@ -294,84 +208,75 @@ function numericLiteralNoParen() {
 
 function logical() {
   return (
-    (
-      // Reason for 42
-      42
-    ) && 84
+    // Reason for 42
+    42 && 84
   );
 }
 
 function binary() {
   return (
-    (
-      // Reason for 42
-      42
-    ) * 84
+    // Reason for 42
+    42 * 84
   );
 }
 
 function binaryInBinaryLeft() {
   return (
-    (
-      // Reason for 42
-      42
-    ) * 84 + 2
+    // Reason for 42
+    42 * 84 + 2
   );
 }
 
 function binaryInBinaryRight() {
   return (
-    (
-      // Reason for 42
-      42
-    ) + 84 * 2
+    // Reason for 42
+    42 + 84 * 2
   );
 }
 
 function conditional() {
   return (
     // Reason for 42
-    42
-  )
-    ? 1
-    : 2;
+    42 ? 1 : 2
+  );
 }
 
 function binaryInConditional() {
   return (
     // Reason for 42
-    42
-  ) * 3
-    ? 1
-    : 2;
+    42 * 3 ? 1 : 2
+  );
 }
 
 function call() {
   return (
     // Reason for a
-    a
-  )();
+    a()
+  );
 }
 
 function memberInside() {
   return (
-    // Reason for a.b
-    a.b
-  ).c;
+    (
+      // Reason for a.b
+      a.b
+    ).c
+  );
 }
 
 function memberOutside() {
   return (
     // Reason for a
-    a
-  ).b.c;
+    a.b.c
+  );
 }
 
 function memberInAndOutWithCalls() {
   return (
+    (
     // Reason for a
-    aFunction.b()
-  ).c.d();
+    aFunction.b()).c.d()
+  );
 }
 
 function excessiveEverything() {
@@ -399,15 +304,13 @@ function sequenceExpressionInside() {
 function taggedTemplate() {
   return (
     // Reason for a
-    a
-  )`b`;
+    a`b`
+  );
 }
 
 function inlineComment() {
   return (
-    (
-      /* hi */ 42
-    ) || 42
+    /* hi */ 42 || 42
   );
 }
 ```
