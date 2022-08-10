@@ -1652,16 +1652,10 @@ name = "rome_playground"
 version = "0.0.0"
 dependencies = [
  "js-sys",
- "rome_analyze",
  "rome_console",
  "rome_diagnostics",
- "rome_formatter",
- "rome_js_analyze",
- "rome_js_formatter",
- "rome_js_parser",
- "rome_js_syntax",
+ "rome_service",
  "wasm-bindgen",
- "web-sys",
 ]
 
 [[package]]
@@ -2408,6 +2402,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7c53b543413a17a202f4be280a7e5c62a1c69345f5de525ee64f8cfdbc954994"
 dependencies = [
  "cfg-if",
+ "serde",
+ "serde_json",
  "wasm-bindgen-macro",
 ]
 

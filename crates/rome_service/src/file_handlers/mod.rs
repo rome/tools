@@ -7,7 +7,9 @@ use std::ffi::OsStr;
 
 use crate::{
     settings::SettingsHandle,
-    workspace::{server::AnyParse, FixFileResult, PullActionsResult, RenameResult},
+    workspace::{
+        server::AnyParse, FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult,
+    },
     RomeError, Rules,
 };
 
@@ -78,36 +80,66 @@ pub struct FixAllParams<'a> {
     pub(crate) fix_file_mode: FixFileMode,
 }
 
+#[derive(Default)]
+/// The list of capabilities that are available for a language
+pub(crate) struct Capabilities {
+    pub(crate) parser: ParserCapabilities,
+    pub(crate) debug: DebugCapabilities,
+    pub(crate) analyzer: AnalyzerCapabilities,
+    pub(crate) formatter: FormatterCapabilities,
+}
+
 type Parse = fn(&RomePath, &str) -> AnyParse;
-type DebugPrint = fn(&RomePath, AnyParse) -> String;
+
+#[derive(Default)]
+pub(crate) struct ParserCapabilities {
+    /// Parse a file
+    pub(crate) parse: Option<Parse>,
+}
+
+type DebugSyntaxTree = fn(&RomePath, AnyParse) -> GetSyntaxTreeResult;
+type DebugControlFlow = fn(&RomePath, AnyParse, TextSize) -> String;
+type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, RomeError>;
+
+#[derive(Default)]
+pub(crate) struct DebugCapabilities {
+    /// Prints the syntax tree
+    pub(crate) debug_syntax_tree: Option<DebugSyntaxTree>,
+    /// Prints the control flow graph
+    pub(crate) debug_control_flow: Option<DebugControlFlow>,
+    /// Prints the formatter IR
+    pub(crate) debug_formatter_ir: Option<DebugFormatterIR>,
+}
+
 type Lint = fn(&RomePath, AnyParse, AnalysisFilter, Option<&Rules>) -> Vec<Diagnostic>;
 type CodeActions = fn(&RomePath, AnyParse, TextRange, Option<&Rules>) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;
-type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, RomeError>;
-type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, RomeError>;
-type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, RomeError>;
 type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, RomeError>;
 
-/// The list of capabilities that are available for a language
-pub(crate) struct Capabilities {
-    /// Parse a file
-    pub(crate) parse: Option<Parse>,
-    /// Prints the tree
-    pub(crate) debug_print: Option<DebugPrint>,
+#[derive(Default)]
+pub(crate) struct AnalyzerCapabilities {
     /// It lints a file
     pub(crate) lint: Option<Lint>,
     /// It extracts code actions for a file
     pub(crate) code_actions: Option<CodeActions>,
     /// Applies fixes to a file
     pub(crate) fix_all: Option<FixAll>,
+    /// It renames a binding inside a file
+    pub(crate) rename: Option<Rename>,
+}
+
+type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, RomeError>;
+type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, RomeError>;
+type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, RomeError>;
+
+#[derive(Default)]
+pub(crate) struct FormatterCapabilities {
     /// It formats a file
     pub(crate) format: Option<Format>,
     /// It formats a portion of text of a file
     pub(crate) format_range: Option<FormatRange>,
     /// It formats a file while typing
     pub(crate) format_on_type: Option<FormatOnType>,
-    /// It renames a binding inside a file
-    pub(crate) rename: Option<Rename>,
 }
 
 /// Main trait to use to add a new language to Rome
@@ -126,17 +158,7 @@ pub(crate) trait ExtensionHandler {
 
     /// Capabilities that can applied to a file
     fn capabilities(&self) -> Capabilities {
-        Capabilities {
-            parse: None,
-            debug_print: None,
-            format: None,
-            lint: None,
-            code_actions: None,
-            fix_all: None,
-            format_range: None,
-            format_on_type: None,
-            rename: None,
-        }
+        Capabilities::default()
     }
 
     /// How a file should be treated. Usually an asset doesn't posses a parser.

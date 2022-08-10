@@ -1,26 +1,31 @@
-use rome_analyze::{AnalysisFilter, ControlFlow, Never, RuleCategories, RuleFilter};
+use rome_analyze::{AnalysisFilter, ControlFlow, Never, QueryMatch, RuleCategories, RuleFilter};
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::RenameError;
-use rome_js_analyze::{analyze, RuleError};
+use rome_js_analyze::{analyze, analyze_with_inspect_matcher, RuleError};
 use rome_js_formatter::context::QuoteStyle;
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::semantic_model;
-use rome_js_syntax::{JsAnyRoot, JsLanguage, SourceType, TextRange, TextSize, TokenAtOffset};
+use rome_js_syntax::{
+    JsAnyRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
+};
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
-use crate::workspace::{
-    CodeAction, FixAction, FixFileMode, FixFileResult, PullActionsResult, RenameResult,
-};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
-    workspace::server::AnyParse,
+    workspace::{
+        server::AnyParse, CodeAction, FixAction, FixFileMode, FixFileResult, GetSyntaxTreeResult,
+        PullActionsResult, RenameResult,
+    },
     RomeError, Rules,
 };
 
-use super::{ExtensionHandler, Mime};
+use super::{
+    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, Mime,
+    ParserCapabilities,
+};
 use crate::file_handlers::FixAllParams;
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
@@ -72,15 +77,23 @@ pub(crate) struct JsFileHandler;
 impl ExtensionHandler for JsFileHandler {
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
-            parse: Some(parse),
-            debug_print: Some(debug_print),
-            lint: Some(lint),
-            format: Some(format),
-            code_actions: Some(code_actions),
-            fix_all: Some(fix_all),
-            format_range: Some(format_range),
-            format_on_type: Some(format_on_type),
-            rename: Some(rename),
+            parser: ParserCapabilities { parse: Some(parse) },
+            debug: DebugCapabilities {
+                debug_syntax_tree: Some(debug_syntax_tree),
+                debug_control_flow: Some(debug_control_flow),
+                debug_formatter_ir: Some(debug_formatter_ir),
+            },
+            analyzer: AnalyzerCapabilities {
+                lint: Some(lint),
+                code_actions: Some(code_actions),
+                fix_all: Some(fix_all),
+                rename: Some(rename),
+            },
+            formatter: FormatterCapabilities {
+                format: Some(format),
+                format_range: Some(format_range),
+                format_on_type: Some(format_on_type),
+            },
         }
     }
 
@@ -124,9 +137,67 @@ where
     }
 }
 
-fn debug_print(_rome_path: &RomePath, parse: AnyParse) -> String {
+fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeResult {
+    let syntax: JsSyntaxNode = parse.syntax();
     let tree: JsAnyRoot = parse.tree();
-    format!("{tree:#?}")
+    GetSyntaxTreeResult {
+        cst: format!("{syntax:#?}"),
+        ast: format!("{tree:#?}"),
+    }
+}
+
+fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -> String {
+    let mut control_flow_graph = None;
+
+    let filter = AnalysisFilter {
+        categories: RuleCategories::LINT,
+        enabled_rules: Some(&[RuleFilter::Rule("js", "noDeadCode")]),
+        ..AnalysisFilter::default()
+    };
+
+    analyze_with_inspect_matcher(
+        rome_path.file_id(),
+        &parse.tree(),
+        filter,
+        |match_params| {
+            let (cfg, range) = match &match_params.query {
+                QueryMatch::ControlFlowGraph(cfg, node) => (cfg, node),
+                _ => return,
+            };
+
+            if !range.contains(cursor) {
+                return;
+            }
+
+            match &control_flow_graph {
+                None => {
+                    control_flow_graph = Some((cfg.to_string(), *range));
+                }
+                Some((_, prev_range)) => {
+                    if range.len() < prev_range.len() {
+                        control_flow_graph = Some((cfg.to_string(), *range));
+                    }
+                }
+            }
+        },
+        |_| ControlFlow::<Never>::Continue(()),
+    );
+
+    control_flow_graph.map(|(cfg, _)| cfg).unwrap_or_default()
+}
+
+fn debug_formatter_ir(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    settings: SettingsHandle,
+) -> Result<String, RomeError> {
+    let context = settings.format_context::<JsLanguage>(rome_path);
+
+    let tree = parse.syntax();
+    let formatted = format_node(context, &tree)?;
+
+    let root_element = formatted.into_format_element();
+    Ok(root_element.to_string())
 }
 
 fn lint(

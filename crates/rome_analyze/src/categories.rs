@@ -1,6 +1,7 @@
 use bitflags::bitflags;
 
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RuleCategory {
     /// This rule checks the syntax according to the language specification
     /// and emits error diagnostics accordingly
@@ -24,7 +25,6 @@ pub enum ActionCategory {
 }
 
 bitflags! {
-    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct RuleCategories: u8 {
         const SYNTAX = 1 << RuleCategory::Syntax as u8;
         const LINT = 1 << RuleCategory::Lint as u8;
@@ -45,5 +45,65 @@ impl From<RuleCategory> for RuleCategories {
             RuleCategory::Lint => RuleCategories::LINT,
             RuleCategory::Action => RuleCategories::ACTION,
         }
+    }
+}
+
+#[cfg(feature = "serde")]
+impl serde::Serialize for RuleCategories {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let mut flags = Vec::new();
+
+        if self.contains(Self::SYNTAX) {
+            flags.push(RuleCategory::Syntax);
+        }
+
+        if self.contains(Self::LINT) {
+            flags.push(RuleCategory::Lint);
+        }
+
+        if self.contains(Self::ACTION) {
+            flags.push(RuleCategory::Action);
+        }
+
+        serializer.collect_seq(flags)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for RuleCategories {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::{self, SeqAccess};
+        use std::fmt::{self, Formatter};
+
+        struct Visitor;
+
+        impl<'de> de::Visitor<'de> for Visitor {
+            type Value = RuleCategories;
+
+            fn expecting(&self, formatter: &mut Formatter) -> fmt::Result {
+                write!(formatter, "RuleCategories")
+            }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
+            where
+                A: SeqAccess<'de>,
+            {
+                let mut result = RuleCategories::empty();
+
+                while let Some(item) = seq.next_element::<RuleCategory>()? {
+                    result |= RuleCategories::from(item);
+                }
+
+                Ok(result)
+            }
+        }
+
+        deserializer.deserialize_seq(Visitor)
     }
 }
