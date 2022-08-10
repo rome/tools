@@ -1372,8 +1372,9 @@ JsExportDefaultDeclarationClause =
 JsAnyExportDefaultDeclaration =
 	JsClassExportDefaultDeclaration
 	| JsFunctionExportDefaultDeclaration
-	| TsDeclareFunctionDeclaration
+	| TsDeclareDefaultFunctionDeclaration
 	| TsInterfaceDeclaration
+	| TsDeclareFunctionDeclaration
 
 
 // export default class {}
@@ -1728,12 +1729,24 @@ TsExternalModuleReference =
 TsDeclareFunctionDeclaration =
 	'async'?
 	'function'
-	id: JsAnyBinding?
+	id: JsAnyBinding
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	';'?
 
+// export default declaration of a function without a body
+//
+// export default function ();
+//                ^^^^^^^^^^^^
+TsDeclareDefaultFunctionDeclaration =
+	'async'?
+	'function'
+	id: JsAnyBinding?
+	type_parameters: TsTypeParameters?
+	parameters: JsParameters
+	return_type_annotation: TsReturnTypeAnnotation?
+	';'?
 
 TsModuleDeclaration =
 	module_or_namespace: ('module' | 'namespace')

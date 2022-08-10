@@ -4185,11 +4185,11 @@ impl TsConstructorTypeBuilder {
         ))
     }
 }
-pub fn ts_declare_function_declaration(
+pub fn ts_declare_default_function_declaration(
     function_token: SyntaxToken,
     parameters: JsParameters,
-) -> TsDeclareFunctionDeclarationBuilder {
-    TsDeclareFunctionDeclarationBuilder {
+) -> TsDeclareDefaultFunctionDeclarationBuilder {
+    TsDeclareDefaultFunctionDeclarationBuilder {
         function_token,
         parameters,
         async_token: None,
@@ -4199,7 +4199,7 @@ pub fn ts_declare_function_declaration(
         semicolon_token: None,
     }
 }
-pub struct TsDeclareFunctionDeclarationBuilder {
+pub struct TsDeclareDefaultFunctionDeclarationBuilder {
     function_token: SyntaxToken,
     parameters: JsParameters,
     async_token: Option<SyntaxToken>,
@@ -4208,7 +4208,7 @@ pub struct TsDeclareFunctionDeclarationBuilder {
     return_type_annotation: Option<TsReturnTypeAnnotation>,
     semicolon_token: Option<SyntaxToken>,
 }
-impl TsDeclareFunctionDeclarationBuilder {
+impl TsDeclareDefaultFunctionDeclarationBuilder {
     pub fn with_async_token(mut self, async_token: SyntaxToken) -> Self {
         self.async_token = Some(async_token);
         self
@@ -4232,14 +4232,76 @@ impl TsDeclareFunctionDeclarationBuilder {
         self.semicolon_token = Some(semicolon_token);
         self
     }
+    pub fn build(self) -> TsDeclareDefaultFunctionDeclaration {
+        TsDeclareDefaultFunctionDeclaration::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_DECLARE_DEFAULT_FUNCTION_DECLARATION,
+            [
+                self.async_token.map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Token(self.function_token)),
+                self.id
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                self.type_parameters
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
+                self.return_type_annotation
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                self.semicolon_token
+                    .map(|token| SyntaxElement::Token(token)),
+            ],
+        ))
+    }
+}
+pub fn ts_declare_function_declaration(
+    function_token: SyntaxToken,
+    id: JsAnyBinding,
+    parameters: JsParameters,
+) -> TsDeclareFunctionDeclarationBuilder {
+    TsDeclareFunctionDeclarationBuilder {
+        function_token,
+        id,
+        parameters,
+        async_token: None,
+        type_parameters: None,
+        return_type_annotation: None,
+        semicolon_token: None,
+    }
+}
+pub struct TsDeclareFunctionDeclarationBuilder {
+    function_token: SyntaxToken,
+    id: JsAnyBinding,
+    parameters: JsParameters,
+    async_token: Option<SyntaxToken>,
+    type_parameters: Option<TsTypeParameters>,
+    return_type_annotation: Option<TsReturnTypeAnnotation>,
+    semicolon_token: Option<SyntaxToken>,
+}
+impl TsDeclareFunctionDeclarationBuilder {
+    pub fn with_async_token(mut self, async_token: SyntaxToken) -> Self {
+        self.async_token = Some(async_token);
+        self
+    }
+    pub fn with_type_parameters(mut self, type_parameters: TsTypeParameters) -> Self {
+        self.type_parameters = Some(type_parameters);
+        self
+    }
+    pub fn with_return_type_annotation(
+        mut self,
+        return_type_annotation: TsReturnTypeAnnotation,
+    ) -> Self {
+        self.return_type_annotation = Some(return_type_annotation);
+        self
+    }
+    pub fn with_semicolon_token(mut self, semicolon_token: SyntaxToken) -> Self {
+        self.semicolon_token = Some(semicolon_token);
+        self
+    }
     pub fn build(self) -> TsDeclareFunctionDeclaration {
         TsDeclareFunctionDeclaration::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION,
             [
                 self.async_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.function_token)),
-                self.id
-                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 self.type_parameters
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Node(self.parameters.into_syntax())),

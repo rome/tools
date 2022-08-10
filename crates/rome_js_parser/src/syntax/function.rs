@@ -372,16 +372,18 @@ pub(crate) fn parse_ambient_function(
     }
 
     p.expect(T![function]);
-    match parse_binding(p) {
+    let is_ts_declare_default_function_declaration = match parse_binding(p) {
         binding @ Absent => {
             if kind == AmbientFunctionKind::Export {
                 binding.ok();
+                true
             } else {
                 binding.or_add_diagnostic(p, expected_binding);
+                false
             }
         }
-        Present(_) => {}
-    }
+        Present(_) => kind == AmbientFunctionKind::Export,
+    };
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
@@ -398,6 +400,8 @@ pub(crate) fn parse_ambient_function(
 
     if is_async {
         m.complete(p, JS_UNKNOWN_STATEMENT)
+    } else if is_ts_declare_default_function_declaration {
+        m.complete(p, TS_DECLARE_DEFAULT_FUNCTION_DECLARATION)
     } else {
         m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
     }
