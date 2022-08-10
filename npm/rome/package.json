@@ -3,7 +3,10 @@
     "version": "0.8.0-next",
     "bin": "bin/rome",
     "scripts": {
-        "postinstall": "node scripts/postinstall.js"
+        "postinstall": "node scripts/postinstall.js",
+        "tsc": "tsc --noEmit",
+        "format": "cargo rome-cli-dev format ./src --write",
+        "check": "cargo rome-cli-dev check ./src"
     },
     "homepage": "https://rome.tools",
     "author": "Sebastian McKenzie",
@@ -24,5 +27,8 @@
     "engines": {
         "node": ">=14.*"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "devDependencies": {
+        "typescript": "^4.7.4"
+    }
 }
