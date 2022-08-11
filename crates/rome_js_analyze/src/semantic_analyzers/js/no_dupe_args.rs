@@ -140,14 +140,25 @@ fn traverse_binding(
             }
         }
         JsAnyBindingPattern::JsObjectBindingPattern(pattern) => {
-            for ele in pattern.properties().into_iter() {
-                let ele = ele.ok()?;
-                match ele {
+            for prop in pattern.properties().into_iter() {
+                let prop = prop.ok()?;
+                match prop {
                     JsAnyObjectBindingPatternMember::JsIdentifierBinding(id_binding) => {
                         check_binding(id_binding, set, res);
                     }
-                    JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(_) => todo!(),
-                    JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(_) => todo!(),
+                    JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(pattern) => {
+						let pattern = pattern.pattern().ok()?;
+						traverse_binding(pattern, set, res);
+					},
+                    JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(rest) => {
+                        let pattern = rest.binding().ok()?;
+                        match pattern {
+                            JsAnyBinding::JsIdentifierBinding(binding) => {
+                                check_binding(binding, set, res);
+                            }
+                            JsAnyBinding::JsUnknownBinding(_) => {}
+                        }
+                    }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(
                         shorthand_binding,
                     ) => match shorthand_binding.identifier().ok()? {

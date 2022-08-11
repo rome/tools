@@ -21,3 +21,6 @@ var g = function(a, a, a) {}
 var h = function(a, b, a) {}
 
 export default function (a, b, a, a) {}
+function f({test: res = 3}, res) {
+
+}

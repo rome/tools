@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 97
+assertion_line: 96
 expression: noDupeArgs.js
 ---
 # Input
@@ -28,6 +28,9 @@ var g = function(a, a, a) {}
 var h = function(a, b, a) {}
 
 export default function (a, b, a, a) {}
+function f({test: res = 3}, res) {
+
+}
 
 ```
 
@@ -148,6 +151,16 @@ warning[js/noDupeArgs]: Duplicate argument name
    │
 23 │ export default function (a, b, a, a) {}
    │                                   -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:24:29
+   │
+24 │ function f({test: res = 3}, res) {
+   │                             ---
 
 
 ```
