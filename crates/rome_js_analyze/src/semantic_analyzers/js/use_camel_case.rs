@@ -11,7 +11,8 @@ use rome_diagnostics::Applicability;
 use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,
-    JsPrivateClassMemberName, JsPropertyClassMember, JsSetterClassMember, JsVariableDeclarator,
+    JsPrivateClassMemberName, JsPropertyClassMember, JsSetterClassMember, JsSyntaxKind,
+    JsVariableDeclarator,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 use std::{borrow::Cow, iter::once};
@@ -110,10 +111,22 @@ impl Rule for UseCamelCase {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let binding = ctx.query();
 
+        let symbol_type = match binding.syntax().parent().unwrap().kind() {
+            JsSyntaxKind::JS_FORMAL_PARAMETER => "parameters",
+            JsSyntaxKind::JS_FUNCTION_DECLARATION => "functions",
+            JsSyntaxKind::JS_GETTER_CLASS_MEMBER
+            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER
+            | JsSyntaxKind::JS_METHOD_CLASS_MEMBER => "methods",
+            JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER | JsSyntaxKind::JS_PRIVATE_CLASS_MEMBER_NAME => {
+                "properties"
+            }
+            _ => "variables",
+        };
+
         let diag = RuleDiagnostic::new(
             binding.syntax().text_trimmed_range(),
             markup! {
-                "Prefer symbols names in camel case."
+                "Prefer " {symbol_type} " names in camel case."
             },
         );
 

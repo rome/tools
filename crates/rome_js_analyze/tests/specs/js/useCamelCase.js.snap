@@ -38,7 +38,7 @@ let longCamelCase;
 
 # Diagnostics
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer variables names in camel case.
   ┌─ useCamelCase.js:1:5
   │
 1 │ let snake_case;
@@ -58,7 +58,7 @@ Safe fix: Rename this symbol to camel case
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer functions names in camel case.
   ┌─ useCamelCase.js:6:10
   │
 6 │ function snake_function(snake_case, PascalCase) {}
@@ -79,7 +79,7 @@ Safe fix: Rename this symbol to camel case
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer parameters names in camel case.
   ┌─ useCamelCase.js:6:25
   │
 6 │ function snake_function(snake_case, PascalCase) {}
@@ -100,7 +100,7 @@ Safe fix: Rename this symbol to camel case
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer parameters names in camel case.
   ┌─ useCamelCase.js:6:37
   │
 6 │ function snake_function(snake_case, PascalCase) {}
@@ -121,7 +121,7 @@ Safe fix: Rename this symbol to camel case
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer properties names in camel case.
   ┌─ useCamelCase.js:9:2
   │
 9 │     snake_property = 1;
@@ -131,7 +131,7 @@ warning[js/useCamelCase]: Prefer symbols names in camel case.
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer properties names in camel case.
    ┌─ useCamelCase.js:10:2
    │
 10 │     #private_snake_property = 2;
@@ -141,7 +141,7 @@ warning[js/useCamelCase]: Prefer symbols names in camel case.
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer methods names in camel case.
    ┌─ useCamelCase.js:12:2
    │
 12 │     snake_function() {}
@@ -151,7 +151,7 @@ warning[js/useCamelCase]: Prefer symbols names in camel case.
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer methods names in camel case.
    ┌─ useCamelCase.js:14:6
    │
 14 │     get snake_getter() {}
@@ -161,7 +161,7 @@ warning[js/useCamelCase]: Prefer symbols names in camel case.
 ```
 
 ```
-warning[js/useCamelCase]: Prefer symbols names in camel case.
+warning[js/useCamelCase]: Prefer methods names in camel case.
    ┌─ useCamelCase.js:15:6
    │
 15 │     set snake_setter(v) {
