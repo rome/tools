@@ -1,4 +1,4 @@
-use rome_cli::{run_cli, setup_panic_handler, Arguments, CliSession, Termination};
+use rome_cli::{setup_panic_handler, Arguments, CliSession, Termination};
 use rome_service::workspace;
 use tokio::runtime::Runtime;
 
@@ -15,6 +15,5 @@ pub fn run_cli_session(args: Arguments) -> Result<(), Termination> {
         None => workspace::server(),
     };
 
-    let session = CliSession::new(&*workspace, args);
-    run_cli(session)
+    CliSession::new(&*workspace, args).run()
 }

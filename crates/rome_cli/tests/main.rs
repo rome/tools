@@ -8,7 +8,7 @@ use snap_test::assert_cli_snapshot;
 use std::{ffi::OsString, path::Path};
 
 use pico_args::Arguments;
-use rome_cli::{run_cli, CliSession, Termination};
+use rome_cli::{CliSession, Termination};
 use rome_console::{BufferConsole, Console};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::{App, DynRef};
@@ -98,13 +98,11 @@ mod check {
         let file_path = Path::new("check.js");
         fs.insert(file_path.into(), FORMATTED.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(fs)),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(fs)),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
     }
@@ -116,13 +114,11 @@ mod check {
         let file_path = Path::new("check.js");
         fs.insert(file_path.into(), PARSE_ERROR.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(fs)),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(fs)),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
 
         match result {
             Err(Termination::CheckError) => {}
@@ -137,13 +133,11 @@ mod check {
         let file_path = Path::new("check.js");
         fs.insert(file_path.into(), LINT_ERROR.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(fs)),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(fs)),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
 
         match result {
             Err(Termination::CheckError) => {}
@@ -158,10 +152,11 @@ mod check {
         let file_path = Path::new("check.js");
         fs.insert(file_path.into(), ERRORS.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
 
         eprintln!("{:?}", console.out_buffer);
 
@@ -198,14 +193,15 @@ mod check {
         let file_path = Path::new("fix.js");
         fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -228,14 +224,15 @@ mod check {
         let file_path = Path::new("fix.js");
         fs.insert(file_path.into(), FIX_AFTER.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         println!("{console:#?}");
 
@@ -252,15 +249,16 @@ mod check {
         let file_path = Path::new("fix.js");
         fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply-suggested"),
                 OsString::from("--apply"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -284,14 +282,15 @@ mod check {
         let file_path = Path::new("fix.js");
         fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply-suggested"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -317,14 +316,15 @@ mod check {
         let config_path = Path::new("rome.json");
         fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -350,10 +350,11 @@ mod check {
         let config_path = Path::new("rome.json");
         fs.insert(config_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -379,14 +380,15 @@ mod check {
         let config_path = Path::new("rome.json");
         fs.insert(config_path.into(), CONFIG_LINTER_SUPPRESSED_RULE.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -415,14 +417,15 @@ mod check {
             CONFIG_LINTER_SUPPRESSED_GROUP.as_bytes(),
         );
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--apply"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -450,10 +453,11 @@ mod check {
         let file_path = Path::new("file.js");
         fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -487,10 +491,11 @@ mod check {
         let file_path = Path::new("file.js");
         fs.insert(file_path.into(), NO_DEAD_CODE_ERROR.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -524,12 +529,12 @@ mod ci {
         fs.insert(file_path.into(), FORMATTED.as_bytes());
 
         let mut console = BufferConsole::default();
-        let app = create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console));
 
-        let result = run_cli(CliSession {
-            app,
-            args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -555,13 +560,11 @@ mod ci {
         let file_path = Path::new("ci.js");
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(fs)),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(fs)),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        );
 
         match result {
             Err(Termination::CheckError) => {}
@@ -576,13 +579,11 @@ mod ci {
         let file_path = Path::new("ci.js");
         fs.insert(file_path.into(), PARSE_ERROR.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(fs)),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(fs)),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        );
 
         match result {
             Err(Termination::CheckError) => {}
@@ -598,10 +599,11 @@ mod ci {
         fs.insert(file_path.into(), LINT_ERROR.as_bytes());
 
         let mut console = BufferConsole::default();
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        );
 
         eprintln!("{:?}", console.out_buffer);
 
@@ -628,13 +630,11 @@ mod format {
         let file_path = Path::new("format.js");
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -657,16 +657,15 @@ mod format {
         let file_path = Path::new("format.js");
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
-        let app = create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console));
-
-        let result = run_cli(CliSession {
-            app,
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--write"),
                 file_path.as_os_str().into(),
             ]),
-        });
+        );
 
         eprintln!("{:?}", console.out_buffer);
 
@@ -694,10 +693,11 @@ mod format {
         let file_path = Path::new("format.js");
         fs.insert(file_path.into(), LINT_ERROR.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -724,18 +724,16 @@ mod format {
 
     #[test]
     fn indent_style_parse_errors() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--indent-style"),
                 OsString::from("invalid"),
                 OsString::from("file.js"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-style"),
@@ -747,18 +745,16 @@ mod format {
 
     #[test]
     fn indent_size_parse_errors_negative() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--indent-size"),
                 OsString::from("-1"),
                 OsString::from("file.js"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
@@ -770,18 +766,16 @@ mod format {
 
     #[test]
     fn indent_size_parse_errors_overflow() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--indent-size"),
                 OsString::from("257"),
                 OsString::from("file.js"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
@@ -793,18 +787,16 @@ mod format {
 
     #[test]
     fn line_width_parse_errors_negative() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--line-width"),
                 OsString::from("-1"),
                 OsString::from("file.js"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--line-width"),
@@ -816,18 +808,16 @@ mod format {
 
     #[test]
     fn line_width_parse_errors_overflow() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--line-width"),
                 OsString::from("321"),
                 OsString::from("file.js"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--line-width"),
@@ -846,17 +836,15 @@ mod format {
         let file_path = Path::new("file.js");
         fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("file.js"),
                 OsString::from("--write"),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -880,17 +868,15 @@ mod format {
         let file_path = Path::new("file.js");
         fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("file.js"),
                 OsString::from("--write"),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -914,14 +900,15 @@ mod format {
             .in_buffer
             .push("function f() {return{}}".to_string());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--stdin-file-path"),
                 OsString::from("mock.js"),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -944,14 +931,15 @@ mod format {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--stdin-file-path"),
                 OsString::from("mock.js"),
             ]),
-        });
+        );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -977,14 +965,15 @@ mod format {
             .in_buffer
             .push("function f() {return{}}".to_string());
 
-        let result = run_cli(CliSession {
-            app: create_app(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console)),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--stdin-file-path"),
                 OsString::from("mock.js"),
             ]),
-        });
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -1008,13 +997,11 @@ mod help {
 
     #[test]
     fn unknown_command() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("unknown"), OsString::from("--help")]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("unknown"), OsString::from("--help")]),
+        );
 
         match result {
             Err(Termination::UnknownCommandHelp { command }) => assert_eq!(command, "unknown"),
@@ -1031,13 +1018,11 @@ mod main {
 
     #[test]
     fn unknown_command() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("unknown")]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("unknown")]),
+        );
 
         match result {
             Err(Termination::UnknownCommand { command }) => assert_eq!(command, "unknown"),
@@ -1047,17 +1032,15 @@ mod main {
 
     #[test]
     fn unexpected_argument() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--unknown"),
                 OsString::from("file.js"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::UnexpectedArgument { argument, .. }) => {
@@ -1069,13 +1052,11 @@ mod main {
 
     #[test]
     fn empty_arguments() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format")]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("format")]),
+        );
 
         match result {
             Err(Termination::EmptyArguments) => {}
@@ -1085,13 +1066,11 @@ mod main {
 
     #[test]
     fn missing_argument() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("--write")]),
-        });
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("format"), OsString::from("--write")]),
+        );
 
         match result {
             Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "<INPUT>"),
@@ -1101,16 +1080,14 @@ mod main {
 
     #[test]
     fn incorrect_value() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--max-diagnostics=foo"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::ParseError { argument, .. }) => {
@@ -1122,16 +1099,14 @@ mod main {
 
     #[test]
     fn overflow_value() {
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Owned(Box::new(MemoryFileSystem::default())),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![
+        let result = run_cli(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--max-diagnostics=500"),
             ]),
-        });
+        );
 
         match result {
             Err(Termination::OverflowNumberArgument(argument, limit)) => {
@@ -1144,10 +1119,9 @@ mod main {
 }
 
 mod init {
-    use super::create_app;
+    use super::*;
     use crate::configs::CONFIG_INIT_DEFAULT;
     use pico_args::Arguments;
-    use rome_cli::{run_cli, CliSession};
     use rome_console::BufferConsole;
     use rome_fs::{FileSystemExt, MemoryFileSystem};
     use rome_service::DynRef;
@@ -1158,13 +1132,11 @@ mod init {
     fn creates_config_file() {
         let mut fs = MemoryFileSystem::default();
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("init")]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("init")]),
+        );
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
         let file_path = Path::new("rome.json");
@@ -1181,13 +1153,12 @@ mod init {
 }
 
 mod configuration {
-    use super::create_app;
+    use super::*;
     use crate::configs::{
         CONFIG_ALL_FIELDS, CONFIG_BAD_LINE_WIDTH, CONFIG_INCORRECT_GLOBALS,
         CONFIG_INCORRECT_GLOBALS_V2, CONFIG_LINTER_WRONG_RULE,
     };
     use pico_args::Arguments;
-    use rome_cli::{run_cli, CliSession};
     use rome_console::BufferConsole;
     use rome_fs::MemoryFileSystem;
     use rome_service::DynRef;
@@ -1200,13 +1171,11 @@ mod configuration {
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_ALL_FIELDS.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
     }
@@ -1218,13 +1187,11 @@ mod configuration {
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_BAD_LINE_WIDTH.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
+        );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -1245,13 +1212,11 @@ mod configuration {
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_LINTER_WRONG_RULE.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+        );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -1270,13 +1235,11 @@ mod configuration {
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+        );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -1297,13 +1260,11 @@ mod configuration {
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
 
-        let result = run_cli(CliSession {
-            app: create_app(
-                DynRef::Borrowed(&mut fs),
-                DynRef::Owned(Box::new(BufferConsole::default())),
-            ),
-            args: Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
-        });
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+            Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+        );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
     }
@@ -1311,10 +1272,11 @@ mod configuration {
 
 /// Create an [App] instance using the provided [FileSystem] and [Console]
 /// instance, and using an in-process "remote" instance of the workspace
-fn create_app<'app>(
+fn run_cli<'app>(
     fs: DynRef<'app, dyn FileSystem>,
     console: DynRef<'app, dyn Console>,
-) -> App<'app> {
+    args: Arguments,
+) -> Result<(), Termination> {
     use rome_bin::SocketTransport;
     use rome_lsp::ServerFactory;
     use rome_service::{workspace, WorkspaceRef};
@@ -1335,5 +1297,8 @@ fn create_app<'app>(
     let transport = SocketTransport::open(runtime, client);
 
     let workspace = workspace::client(transport).unwrap();
-    App::new(fs, console, WorkspaceRef::Owned(workspace))
+    let app = App::new(fs, console, WorkspaceRef::Owned(workspace));
+
+    let session = CliSession { app, args };
+    session.run()
 }
