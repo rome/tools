@@ -3,9 +3,10 @@
 use std::collections::{HashMap, VecDeque};
 
 use rome_js_syntax::{
-    JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
-    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration,
-    JsVariableDeclarator, JsVariableDeclaratorList, TextRange, TextSize,
+    JsAnyAssignment, JsAnyAssignmentPattern, JsAssignmentExpression, JsForVariableDeclaration,
+    JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList, TextRange, TextSize,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxTokenText};
 
@@ -294,9 +295,15 @@ impl SemanticEventExtractor {
                 self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_function_declaration(node, &parent);
             }
+            JS_FUNCTION_EXPRESSION => {
+                self.export_function_expression(node, &parent);
+            }
             JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
                 self.push_binding_into_scope(None, &name_token);
                 self.export_class_declaration(node, &parent);
+            }
+            JS_CLASS_EXPRESSION => {
+                self.export_class_expression(node, &parent);
             }
             _ => {
                 self.push_binding_into_scope(None, &name_token);
@@ -595,6 +602,52 @@ impl SemanticEventExtractor {
         }
     }
 
+    // Check if a function is exported and raise the [Exported] event.
+    fn export_function_expression(
+        &mut self,
+        binding: &JsSyntaxNode,
+        function_expression: &JsSyntaxNode,
+    ) {
+        use JsSyntaxKind::*;
+        debug_assert!(matches!(function_expression.kind(), JS_FUNCTION_EXPRESSION));
+
+        // scope[0] = global, scope[1] = the function itself
+        if self.scopes.len() != 2 {
+            return;
+        }
+
+        let is_module_exports = function_expression
+            .parent()
+            .map(|x| self.is_assignment_left_side_module_exports(&x))
+            .unwrap_or(false);
+        if is_module_exports {
+            self.stash.push_back(SemanticEvent::Exported {
+                range: binding.text_range(),
+            });
+        }
+    }
+
+    // Check if a function is exported and raise the [Exported] event.
+    fn export_class_expression(&mut self, binding: &JsSyntaxNode, class_expression: &JsSyntaxNode) {
+        use JsSyntaxKind::*;
+        debug_assert!(matches!(class_expression.kind(), JS_CLASS_EXPRESSION));
+
+        // export can only exist in the global scope
+        if self.scopes.len() > 1 {
+            return;
+        }
+
+        let is_module_exports = class_expression
+            .parent()
+            .map(|x| self.is_assignment_left_side_module_exports(&x))
+            .unwrap_or(false);
+        if is_module_exports {
+            self.stash.push_back(SemanticEvent::Exported {
+                range: binding.text_range(),
+            });
+        }
+    }
+
     // Check if a class is exported and raise the [Exported] event.
     fn export_class_declaration(
         &mut self,
@@ -667,13 +720,44 @@ impl SemanticEventExtractor {
         let reference_parent = reference.parent();
         let reference_greatparent = reference_parent.as_ref().and_then(|p| p.parent());
 
+        // export
         matches!(
-            reference_parent.map(|p| p.kind()),
+            reference_parent.as_ref().map(|p| p.kind()),
             Some(JS_EXPORT_NAMED_SHORTHAND_SPECIFIER | JS_EXPORT_NAMED_SPECIFIER)
-        ) | matches!(
-            reference_greatparent.map(|p| p.kind()),
-            Some(JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE)
-        )
+        ) | {
+            let is_export_default = matches!(
+                reference_greatparent.as_ref().map(|p| p.kind()),
+                Some(JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE)
+            );
+            is_export_default
+        } | {
+            let is_module_exports = match reference_parent.map(|x| x.kind()) {
+                Some(JS_IDENTIFIER_EXPRESSION) => reference_greatparent
+                    .map(|x| self.is_assignment_left_side_module_exports(&x))
+                    .unwrap_or(false),
+                Some(JS_SHORTHAND_PROPERTY_OBJECT_MEMBER) => reference_greatparent
+                    .and_then(|g| g.grand_parent())
+                    .map(|x| self.is_assignment_left_side_module_exports(&x))
+                    .unwrap_or(false),
+                _ => false,
+            };
+            is_module_exports
+        }
+    }
+
+    fn is_assignment_left_side_module_exports(&self, node: &JsSyntaxNode) -> bool {
+        match node.kind() {
+            JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION => {
+                let expr = node.clone().cast::<JsAssignmentExpression>();
+                match expr.and_then(|x| x.left().ok()) {
+                    Some(JsAnyAssignmentPattern::JsAnyAssignment(
+                        JsAnyAssignment::JsStaticMemberAssignment(a),
+                    )) => a.syntax().text_trimmed() == "module.exports",
+                    _ => false,
+                }
+            }
+            _ => false,
+        }
     }
 }
 
