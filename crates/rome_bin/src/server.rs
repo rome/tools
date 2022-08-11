@@ -12,7 +12,7 @@ use crate::service::{print_socket, run_daemon};
 pub fn run_server_session() -> Result<(), Termination> {
     setup_tracing_subscriber();
 
-    let rt = Runtime::new().expect("could not instantiate the Tokio runtime");
+    let rt = Runtime::new()?;
     let factory = ServerFactory::default();
     let span = debug_span!("Running LSP Server", pid = std::process::id());
     rt.block_on(run_daemon(factory).instrument(span))?;
@@ -21,7 +21,7 @@ pub fn run_server_session() -> Result<(), Termination> {
 }
 
 pub fn print_server_socket() -> Result<(), Termination> {
-    let rt = Runtime::new().expect("could not instantiate the Tokio runtime");
+    let rt = Runtime::new()?;
     rt.block_on(print_socket())?;
     Ok(())
 }

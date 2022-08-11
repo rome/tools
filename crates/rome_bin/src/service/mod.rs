@@ -25,7 +25,7 @@ pub(crate) use self::unix::{print_socket, run_daemon};
 /// [WorkspaceTransport] instance if the socket is currently active
 pub(crate) fn open_transport(runtime: Runtime) -> io::Result<Option<impl WorkspaceTransport>> {
     match runtime.block_on(open_socket()) {
-        Ok(Some(socket)) => Ok(Some(SocketTransport::new(runtime, socket))),
+        Ok(Some(socket)) => Ok(Some(SocketTransport::open(runtime, socket))),
         Ok(None) => Ok(None),
         Err(err) => Err(err),
     }
@@ -40,7 +40,7 @@ pub struct SocketTransport {
 }
 
 impl SocketTransport {
-    pub fn new<T>(runtime: Runtime, socket: T) -> Self
+    pub fn open<T>(runtime: Runtime, socket: T) -> Self
     where
         T: AsyncRead + AsyncWrite + Send + 'static,
     {
@@ -66,7 +66,16 @@ impl SocketTransport {
                         }
                         // A read of two bytes corresponds to the "\r\n" sequence
                         // that indicates the end of the header section
-                        2 => break,
+                        2 => {
+                            if line != "\r\n" {
+                                return Err(RomeError::IoError(io::Error::new(
+                                    io::ErrorKind::Other,
+                                    "unexpected byte sequence",
+                                )));
+                            }
+
+                            break;
+                        }
                         _ => {
                             let colon = line.find(':').ok_or_else(|| {
                                 RomeError::IoError(io::Error::new(
@@ -96,7 +105,7 @@ impl SocketTransport {
                                     }
                                 }
                                 _ => {
-                                    // Ignore unknown headers
+                                    eprintln!("ignoring unknown header {name:?}");
                                 }
                             }
 
@@ -169,6 +178,7 @@ impl SocketTransport {
     }
 }
 
+// Allow the socket to be recovered across panic boundaries
 impl RefUnwindSafe for SocketTransport {}
 
 impl WorkspaceTransport for SocketTransport {

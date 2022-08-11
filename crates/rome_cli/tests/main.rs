@@ -1332,7 +1332,7 @@ fn create_app<'app>(
     let (stdin, stdout) = split(server);
     runtime.spawn(connection.accept(stdin, stdout));
 
-    let transport = SocketTransport::new(runtime, client);
+    let transport = SocketTransport::open(runtime, client);
 
     let workspace = workspace::client(transport).unwrap();
     App::new(fs, console, WorkspaceRef::Owned(workspace))

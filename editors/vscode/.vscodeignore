@@ -5,8 +5,8 @@
 !out/main.js
 !package-lock.json
 !package.json
-!server/rome_bin
-!server/rome_bin.exe
+!server/rome
+!server/rome.exe
 !rome_syntax_tree.tmGrammar.json
 !configuration_schema.json
 !README.md

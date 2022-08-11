@@ -9,7 +9,7 @@ pub fn run_cli_session(args: Arguments) -> Result<(), Termination> {
 
     // Try to open a connection to an existing Rome server socket, or create an
     // in-process Workspace server instance if no daemon process is found
-    let runtime = Runtime::new().expect("could not instantiate the Tokio runtime");
+    let runtime = Runtime::new()?;
     let workspace = match open_transport(runtime)? {
         Some(transport) => workspace::client(transport)?,
         None => workspace::server(),

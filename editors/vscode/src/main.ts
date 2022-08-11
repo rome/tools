@@ -86,7 +86,7 @@ async function getServerPath(
 	}
 
 	const binaryExt = triplet.includes("windows") ? ".exe" : "";
-	const binaryName = `rome_bin${binaryExt}`;
+	const binaryName = `rome${binaryExt}`;
 
 	const bundlePath = Uri.joinPath(context.extensionUri, "server", binaryName);
 	const bundleExists = await fileExists(bundlePath);
