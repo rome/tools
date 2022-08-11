@@ -147,9 +147,9 @@ fn traverse_binding(
                         check_binding(id_binding, set, res);
                     }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(pattern) => {
-						let pattern = pattern.pattern().ok()?;
-						traverse_binding(pattern, set, res);
-					},
+                        let pattern = pattern.pattern().ok()?;
+                        traverse_binding(pattern, set, res);
+                    }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(rest) => {
                         let pattern = rest.binding().ok()?;
                         match pattern {
