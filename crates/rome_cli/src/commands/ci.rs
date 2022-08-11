@@ -1,7 +1,4 @@
-use crate::{
-    traversal::{traverse, TraversalMode},
-    CliSession, Termination,
-};
+use crate::{execute_mode, CliSession, ExecutionMode, Termination};
 use rome_service::load_config;
 use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::UpdateSettingsParams;
@@ -26,5 +23,5 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
             settings: workspace_settings,
         })?;
 
-    traverse(TraversalMode::CI, session)
+    execute_mode(ExecutionMode::CI, session)
 }

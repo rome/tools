@@ -2,10 +2,7 @@ use rome_formatter::IndentStyle;
 use rome_service::{load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams};
 use std::path::PathBuf;
 
-use crate::{
-    traversal::{traverse, TraversalMode},
-    CliSession, Termination,
-};
+use crate::{execute_mode, CliSession, ExecutionMode, Termination};
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
@@ -54,8 +51,8 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             settings: workspace_settings,
         })?;
 
-    traverse(
-        TraversalMode::Format {
+    execute_mode(
+        ExecutionMode::Format {
             ignore_errors,
             write: is_write,
             stdin,

@@ -1014,6 +1014,46 @@ mod format {
 
         assert_cli_snapshot("format_stdin_with_errors", fs, console);
     }
+
+    #[test]
+    fn does_not_format_if_disabled() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_DISABLED_FORMATTER.as_bytes());
+
+        console
+            .in_buffer
+            .push("function f() {return{}}".to_string());
+
+        let result = run_cli(CliSession {
+            app: App::with_filesystem_and_console(
+                DynRef::Borrowed(&mut fs),
+                DynRef::Borrowed(&mut console),
+            ),
+            args: Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--stdin-file-path"),
+                OsString::from("mock.js"),
+            ]),
+        });
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let message = console
+            .out_buffer
+            .get(0)
+            .expect("Console should have written a message");
+
+        let content = markup_to_string(markup! {
+            {message.content}
+        });
+
+        assert_eq!(content, "function f() {return{}}".to_string());
+
+        assert_cli_snapshot("format_stdin_with_errors", fs, console);
+    }
 }
 
 mod help {
