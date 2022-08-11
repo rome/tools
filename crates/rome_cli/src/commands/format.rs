@@ -9,11 +9,6 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
-    if let Some(configuration) = &configuration {
-        if configuration.is_formatter_disabled() {
-            return Ok(());
-        }
-    }
     if let Some(configuration) = configuration {
         workspace_settings.merge_with_configuration(configuration);
     }

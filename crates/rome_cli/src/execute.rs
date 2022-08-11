@@ -75,7 +75,7 @@ impl ExecutionMode {
 }
 
 /// Based on the [mode](ExecutionMode), the function might launch a traversal of the file system
-/// or  
+/// or handles the stdin file.
 pub(crate) fn execute_mode(
     mode: ExecutionMode,
     mut session: CliSession,
@@ -102,6 +102,13 @@ pub(crate) fn execute_mode(
                 console.log(markup! {
                     {printed.as_code()}
                 });
+            } else {
+                console.log(markup! {
+                    {content}
+                });
+                console.error(markup!{
+                    <Warn>"The content was not formatted because the formatter is currently disabled."</Warn>
+                })
             }
         }
 

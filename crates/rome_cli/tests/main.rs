@@ -1052,7 +1052,7 @@ mod format {
 
         assert_eq!(content, "function f() {return{}}".to_string());
 
-        assert_cli_snapshot("format_stdin_with_errors", fs, console);
+        assert_cli_snapshot("does_not_format_if_disabled", fs, console);
     }
 }
 
