@@ -1,5 +1,5 @@
-import { spawn } from 'child_process';
-import { connect } from 'net';
+import { spawn } from "child_process";
+import { connect } from "net";
 import { ExtensionContext, Uri, window, workspace } from "vscode";
 import {
 	LanguageClient,
@@ -28,7 +28,10 @@ export async function activate(context: ExtensionContext) {
 		return;
 	}
 
-	const serverOptions: ServerOptions = createMessageTransports.bind(undefined, command);
+	const serverOptions: ServerOptions = createMessageTransports.bind(
+		undefined,
+		command,
+	);
 
 	const traceOutputChannel = window.createOutputChannel("Rome Trace");
 
@@ -109,25 +112,25 @@ async function fileExists(path: Uri) {
 
 function getSocket(command: string): Promise<string> {
 	return new Promise((resolve, reject) => {
-		const process = spawn(command, ['__print_socket'], {
-			stdio: 'pipe',
+		const process = spawn(command, ["__print_socket"], {
+			stdio: "pipe",
 		});
 
-		process.on('error', reject);
-	
-		let pipeName = '';
-		process.stdout.on('data', (data) => {
-			pipeName += data.toString('utf-8');
+		process.on("error", reject);
+
+		let pipeName = "";
+		process.stdout.on("data", (data) => {
+			pipeName += data.toString("utf-8");
 		});
-	
-		process.on('exit', (code) => {
+
+		process.on("exit", (code) => {
 			if (code === 0) {
 				console.log(`"${pipeName}"`);
 				resolve(pipeName.trimEnd());
 			} else {
 				reject(code);
 			}
-		})
+		});
 	});
 }
 
@@ -136,8 +139,8 @@ async function createMessageTransports(command: string): Promise<StreamInfo> {
 	const socket = connect(path);
 
 	await new Promise((resolve, reject) => {
-		socket.once('error', reject);
-		socket.once('ready', resolve);
+		socket.once("error", reject);
+		socket.once("ready", resolve);
 	});
 
 	return { writer: socket, reader: socket };

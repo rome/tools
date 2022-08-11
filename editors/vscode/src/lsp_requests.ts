@@ -1,7 +1,4 @@
-import {
-	RequestType,
-	TextDocumentIdentifier,
-} from "vscode-languageclient";
+import { RequestType, TextDocumentIdentifier } from "vscode-languageclient";
 
 export interface SyntaxTreeParams {
 	textDocument: TextDocumentIdentifier;
