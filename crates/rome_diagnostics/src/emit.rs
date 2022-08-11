@@ -348,7 +348,7 @@ labore et dolore magna aliqua";
             {diag.display(&files)}
         });
 
-        let mut iter = console.buffer.into_iter();
+        let mut iter = console.out_buffer.into_iter();
 
         let message = match iter.next() {
             Some(msg) => msg,

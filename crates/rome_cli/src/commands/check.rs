@@ -1,8 +1,5 @@
 use crate::commands::format::apply_format_settings_from_cli;
-use crate::{
-    traversal::{traverse, TraversalMode},
-    CliSession, Termination,
-};
+use crate::{execute_mode, CliSession, ExecutionMode, Termination};
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_service::load_config;
 use rome_service::settings::WorkspaceSettings;
@@ -63,8 +60,8 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         Some(FixFileMode::SafeAndSuggestedFixes)
     };
 
-    traverse(
-        TraversalMode::Check {
+    execute_mode(
+        ExecutionMode::Check {
             max_diagnostics,
             fix_file_mode,
         },

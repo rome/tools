@@ -1,14 +1,3 @@
-use std::{
-    collections::HashMap,
-    ffi::OsString,
-    fmt::Display,
-    io,
-    panic::catch_unwind,
-    path::{Path, PathBuf},
-    sync::atomic::{AtomicUsize, Ordering},
-    time::{Duration, Instant},
-};
-
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use rayon::join;
 use rome_console::{
@@ -22,15 +11,24 @@ use rome_diagnostics::{
 };
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_service::workspace::FixFileMode;
 use rome_service::{
     workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
     Workspace,
 };
+use std::{
+    collections::HashMap,
+    ffi::OsString,
+    fmt::Display,
+    io,
+    panic::catch_unwind,
+    path::{Path, PathBuf},
+    sync::atomic::{AtomicUsize, Ordering},
+    time::{Duration, Instant},
+};
 
-use crate::{CliSession, Termination};
+use crate::{CliSession, ExecutionMode, Termination};
 
-pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn traverse(mode: ExecutionMode, mut session: CliSession) -> Result<(), Termination> {
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
 
@@ -49,7 +47,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
         inputs.push(input);
     }
 
-    if inputs.is_empty() {
+    if inputs.is_empty() && mode.as_stdin_file().is_none() {
         return Err(Termination::MissingArgument {
             argument: "<INPUT>",
         });
@@ -66,7 +64,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
     let console = &mut *session.app.console;
 
     let (has_errors, duration) = join(
-        || print_messages_to_console(mode, console, recv_files, recv_msgs),
+        || print_messages_to_console(mode.clone(), console, recv_files, recv_msgs),
         || {
             // The traversal context is scoped to ensure all the channels it
             // contains are properly closed once the traversal finishes
@@ -76,7 +74,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
                 &TraversalOptions {
                     fs,
                     workspace,
-                    mode,
+                    mode: mode.clone(),
                     interner,
                     processed: &processed,
                     skipped: &skipped,
@@ -90,7 +88,7 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
     let skipped = skipped.load(Ordering::Relaxed);
 
     match mode {
-        TraversalMode::Check { .. } => {
+        ExecutionMode::Check { .. } => {
             if mode.as_fix_file_mode().is_some() {
                 console.log(rome_console::markup! {
                     <Info>"Fixed "{count}" files in "{duration}</Info>
@@ -101,17 +99,17 @@ pub(crate) fn traverse(mode: TraversalMode, mut session: CliSession) -> Result<(
                 });
             }
         }
-        TraversalMode::CI { .. } => {
+        ExecutionMode::CI { .. } => {
             console.log(rome_console::markup! {
                 <Info>"Checked "{count}" files in "{duration}</Info>
             });
         }
-        TraversalMode::Format { write: false, .. } => {
+        ExecutionMode::Format { write: false, .. } => {
             console.log(rome_console::markup! {
                 <Info>"Compared "{count}" files in "{duration}</Info>
             });
         }
-        TraversalMode::Format { write: true, .. } => {
+        ExecutionMode::Format { write: true, .. } => {
             console.log(rome_console::markup! {
                 <Info>"Formatted "{count}" files in "{duration}</Info>
             });
@@ -149,7 +147,7 @@ fn traverse_inputs(fs: &dyn FileSystem, inputs: Vec<OsString>, ctx: &TraversalOp
 /// This thread receives [Message]s from the workers through the `recv_msgs`
 /// and `recv_files` channels and prints them to the console
 fn print_messages_to_console(
-    mode: TraversalMode,
+    mode: ExecutionMode,
     console: &mut dyn Console,
     recv_files: Receiver<(usize, PathBuf)>,
     recv_msgs: Receiver<Message>,
@@ -239,7 +237,7 @@ fn print_messages_to_console(
                 old,
                 new,
             } => {
-                let header = if matches!(mode, TraversalMode::CI { .. }) {
+                let header = if matches!(mode, ExecutionMode::CI { .. }) {
                     // A diff is an error in CI mode
                     has_errors = true;
                     DiagnosticHeader {
@@ -298,53 +296,6 @@ fn print_messages_to_console(
     has_errors
 }
 
-#[derive(Clone, Copy)]
-pub(crate) enum TraversalMode {
-    /// This mode is enabled when running the command `rome check`
-    Check {
-        /// The maximum number of diagnostics that can be printed in console
-        max_diagnostics: u16,
-
-        /// The type of fixes that should be applied when analyzing a file.
-        ///
-        /// It's [None] if the `check` command is called without `--apply` or `--apply-suggested`
-        /// arguments.
-        fix_file_mode: Option<FixFileMode>,
-    },
-    /// This mode is enabled when running the command `rome ci`
-    CI,
-    /// This mode is enabled when running the command `rome format`
-    Format { ignore_errors: bool, write: bool },
-}
-
-impl TraversalMode {
-    fn get_max_diagnostics(&self) -> Option<u16> {
-        match self {
-            TraversalMode::Check {
-                max_diagnostics, ..
-            } => Some(*max_diagnostics),
-            _ => None,
-        }
-    }
-
-    /// `true` only when running the traversal in [TraversalMode::Check] and `should_fix` is `true`
-    fn as_fix_file_mode(&self) -> Option<&FixFileMode> {
-        if let TraversalMode::Check { fix_file_mode, .. } = self {
-            fix_file_mode.as_ref()
-        } else {
-            None
-        }
-    }
-
-    fn is_ci(&self) -> bool {
-        matches!(self, TraversalMode::CI { .. })
-    }
-
-    fn is_check(&self) -> bool {
-        matches!(self, TraversalMode::Check { .. })
-    }
-}
-
 /// Context object shared between directory traversal tasks
 struct TraversalOptions<'ctx, 'app> {
     /// Shared instance of [FileSystem]
@@ -352,7 +303,7 @@ struct TraversalOptions<'ctx, 'app> {
     /// Instance of [Workspace] used by this instance of the CLI
     workspace: &'ctx dyn Workspace,
     /// Determines how the files should be processed
-    mode: TraversalMode,
+    mode: ExecutionMode,
     /// File paths interner used by the filesystem traversal
     interner: AtomicInterner,
     /// Shared atomic counter storing the number of processed files
@@ -400,9 +351,9 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
         match self.mode {
-            TraversalMode::Check { .. } => self.can_lint(rome_path),
-            TraversalMode::CI { .. } => self.can_lint(rome_path) || self.can_format(rome_path),
-            TraversalMode::Format { .. } => self.can_format(rome_path),
+            ExecutionMode::Check { .. } => self.can_lint(rome_path),
+            ExecutionMode::CI { .. } => self.can_lint(rome_path) || self.can_format(rome_path),
+            ExecutionMode::Format { .. } => self.can_format(rome_path),
         }
     }
 
@@ -474,9 +425,9 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let rome_path = RomePath::new(path, file_id);
         let can_format = ctx.can_format(&rome_path);
         let can_handle = match ctx.mode {
-            TraversalMode::Check { .. } => ctx.can_lint(&rome_path),
-            TraversalMode::CI { .. } => ctx.can_lint(&rome_path) || can_format,
-            TraversalMode::Format { .. } => can_format,
+            ExecutionMode::Check { .. } => ctx.can_lint(&rome_path),
+            ExecutionMode::CI { .. } => ctx.can_lint(&rome_path) || can_format,
+            ExecutionMode::Format { .. } => can_format,
         };
 
         if !can_handle {
@@ -526,7 +477,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             return Ok(FileStatus::Ignored);
         }
 
-        let is_format = matches!(ctx.mode, TraversalMode::Format { .. });
+        let is_format = matches!(ctx.mode, ExecutionMode::Format { .. });
         let categories = if is_format {
             RuleCategories::SYNTAX
         } else {
@@ -544,7 +495,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         // In formatting mode, abort immediately if the file has errors
         match ctx.mode {
-            TraversalMode::Format { ignore_errors, .. } if has_errors => {
+            ExecutionMode::Format { ignore_errors, .. } if has_errors => {
                 return Err(if ignore_errors {
                     Message::from(TraversalError {
                         severity: Severity::Warning,
@@ -591,15 +542,15 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             let write = match ctx.mode {
                 // In check mode do not run the formatter and return the result immediately,
                 // but only if the argument `--apply` is not passed.
-                TraversalMode::Check { .. } => {
+                ExecutionMode::Check { .. } => {
                     if ctx.mode.as_fix_file_mode().is_some() {
                         true
                     } else {
                         return Ok(result);
                     }
                 }
-                TraversalMode::CI { .. } => false,
-                TraversalMode::Format { write, .. } => write,
+                ExecutionMode::CI { .. } => false,
+                ExecutionMode::Format { write, .. } => write,
             };
 
             let printed = file_guard

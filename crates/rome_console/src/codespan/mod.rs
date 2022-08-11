@@ -618,7 +618,7 @@ labore et dolore magna aliqua";
             {codespan}
         });
 
-        let mut iter = console.buffer.into_iter();
+        let mut iter = console.out_buffer.into_iter();
 
         let message = iter
             .next()

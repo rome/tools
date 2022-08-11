@@ -7,24 +7,27 @@ expression: content
 
 ```json
 {
-  "linter": {
+  "formatter": {
     "enabled": false
   }
 }
+
 ```
 
-## `fix.js`
+# Input messages
 
-```js
-
-if(a != -0) {}
-
+```block
+function f() {return{}}
 ```
 
 # Emitted Messages
 
 ```block
-fix.js: error[IO]: unhandled file type
+function f() {return{}}
+```
+
+```block
+The content was not formatted because the formatter is currently disabled.
 ```
 
 

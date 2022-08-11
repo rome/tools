@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 113
+assertion_line: 137
 expression: content
 ---
 ## `fix.js`
@@ -11,7 +11,7 @@ if(a != 0) {}
 
 ```
 
-## Messages
+# Emitted Messages
 
 ```block
 Skipped 1 suggested fixes.

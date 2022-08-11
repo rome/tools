@@ -423,7 +423,7 @@ function name(args) {
             {diff}
         });
 
-        let mut messages = console.buffer.into_iter();
+        let mut messages = console.out_buffer.into_iter();
         let message = match messages.next() {
             Some(msg) => msg,
             other => panic!("unexpected message {other:?}"),
@@ -447,7 +447,7 @@ function name(args) {
             {diff}
         });
 
-        let mut messages = console.buffer.into_iter();
+        let mut messages = console.out_buffer.into_iter();
         let message = match messages.next() {
             Some(msg) => msg,
             other => panic!("unexpected message {other:?}"),

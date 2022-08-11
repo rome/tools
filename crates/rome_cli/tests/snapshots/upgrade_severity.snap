@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 97
+assertion_line: 137
 expression: content
 ---
 ## `rome.json`
@@ -11,9 +11,7 @@ expression: content
     "rules": {
         "recommended": true,
         "js": {
-            "rules": {
-                "noDeadCode": "error"
-            }
+            "noDeadCode": "error"
         }
     }
   }
@@ -22,7 +20,7 @@ expression: content
 
 ## `file.js`
 
-```json
+```js
 function f() {
     for (;;) {
         continue;
@@ -32,8 +30,9 @@ function f() {
 
 ```
 
-## Messages
+# Emitted Messages
 
+```block
 error[js/noDeadCode]: This code is unreachable
   ┌─ file.js:3:9
   │  
@@ -42,5 +41,6 @@ error[js/noDeadCode]: This code is unreachable
   │ └──────────────^
 
 
+```
 
 

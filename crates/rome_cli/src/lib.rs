@@ -7,11 +7,13 @@ use rome_flags::FeatureFlags;
 use rome_service::App;
 
 mod commands;
+mod execute;
 mod metrics;
 mod panic;
 mod termination;
 mod traversal;
 
+pub(crate) use execute::{execute_mode, ExecutionMode};
 pub use panic::setup_panic_handler;
 pub use termination::Termination;
 

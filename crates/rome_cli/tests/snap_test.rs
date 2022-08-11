@@ -7,7 +7,14 @@ use std::fmt::Write as _;
 use std::path::PathBuf;
 
 #[derive(Default)]
+struct InMessages {
+    stdin: Option<String>,
+}
+
+#[derive(Default)]
 struct CliSnapshot {
+    /// input messages, coming from different sources
+    pub in_messages: InMessages,
     /// the configuration, if set
     pub configuration: Option<String>,
     /// file name -> content
@@ -44,8 +51,18 @@ impl CliSnapshot {
             }
         }
 
+        if let Some(stdin) = &self.in_messages.stdin {
+            content.push_str("# Input messages\n\n");
+            content.push_str("```block");
+            content.push('\n');
+            content.push_str(stdin);
+            content.push('\n');
+            content.push_str("```");
+            content.push_str("\n\n")
+        }
+
         if !self.messages.is_empty() {
-            content.push_str("## Messages\n\n");
+            content.push_str("# Emitted Messages\n\n");
 
             for message in &self.messages {
                 let message_content = &*message;
@@ -68,7 +85,7 @@ impl CliSnapshot {
     }
 }
 
-fn markup_to_string(markup: Markup) -> String {
+pub fn markup_to_string(markup: Markup) -> String {
     let mut buffer = Vec::new();
     let mut write = Termcolor(NoColor::new(&mut buffer));
     let mut fmt = Formatter::new(&mut write);
@@ -98,7 +115,14 @@ pub fn assert_cli_snapshot(test_name: &str, fs: MemoryFileSystem, console: Buffe
             .insert(file.to_str().unwrap().to_string(), String::from(content));
     }
 
-    for message in console.buffer {
+    let in_buffer = &console.in_buffer;
+    for (index, message) in in_buffer.iter().enumerate() {
+        if index == 0 {
+            cli_snapshot.in_messages.stdin = Some(message.to_string());
+        }
+    }
+
+    for message in &console.out_buffer {
         let content = markup_to_string(markup! {
             {message.content}
         });

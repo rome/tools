@@ -3,13 +3,19 @@ source: crates/rome_cli/tests/snap_test.rs
 assertion_line: 137
 expression: content
 ---
-## `fix.js`
+# Input messages
 
-```js
-let a = 4;
-
+```block
+function f() {return{}}
 ```
 
 # Emitted Messages
+
+```block
+function f() {
+	return {};
+}
+
+```
 
 

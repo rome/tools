@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 113
+assertion_line: 137
 expression: content
 ---
 ## `ci.js`
@@ -10,7 +10,7 @@ for(;true;);
 
 ```
 
-## Messages
+# Emitted Messages
 
 ```block
 error[js/useBlockStatements]: Block statements are preferred in this position.
