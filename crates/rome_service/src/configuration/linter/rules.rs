@@ -19,8 +19,6 @@ pub struct Rules {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub jsx: Option<Jsx>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub no_unused_variables: Option<No_unused_variables>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub regex: Option<Regex>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ts: Option<Ts>,
@@ -31,7 +29,6 @@ impl Default for Rules {
             recommended: Some(true),
             js: None,
             jsx: None,
-            no_unused_variables: None,
             regex: None,
             ts: None,
         }
@@ -49,9 +46,6 @@ impl Rules {
             (Some(category), Some(rule_name)) => match category {
                 "js" => Js::has_rule(rule_name).then(|| (category, rule_name)),
                 "jsx" => Jsx::has_rule(rule_name).then(|| (category, rule_name)),
-                "no_unused_variables" => {
-                    No_unused_variables::has_rule(rule_name).then(|| (category, rule_name))
-                }
                 "regex" => Regex::has_rule(rule_name).then(|| (category, rule_name)),
                 "ts" => Ts::has_rule(rule_name).then(|| (category, rule_name)),
                 _ => None,
@@ -88,18 +82,6 @@ impl Rules {
                     .map(|rule_setting| rule_setting.into())
                     .unwrap_or_else(|| {
                         if Jsx::is_recommended_rule(rule_name) {
-                            Severity::Error
-                        } else {
-                            Severity::Warning
-                        }
-                    }),
-                "no_unused_variables" => self
-                    .no_unused_variables
-                    .as_ref()
-                    .and_then(|no_unused_variables| no_unused_variables.rules.get(rule_name))
-                    .map(|rule_setting| rule_setting.into())
-                    .unwrap_or_else(|| {
-                        if No_unused_variables::is_recommended_rule(rule_name) {
                             Severity::Error
                         } else {
                             Severity::Warning
@@ -164,15 +146,6 @@ impl Rules {
         } else if self.is_recommended() {
             enabled_rules.extend(Jsx::recommended_rules_as_filters());
         }
-        if let Some(group) = self.no_unused_variables.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
-                enabled_rules.extend(No_unused_variables::recommended_rules_as_filters());
-            }
-            enabled_rules.extend(&group.get_enabled_rules());
-            disabled_rules.extend(&group.get_disabled_rules());
-        } else if self.is_recommended() {
-            enabled_rules.extend(No_unused_variables::recommended_rules_as_filters());
-        }
         if let Some(group) = self.regex.as_ref() {
             if self.is_recommended() && group.is_recommended() {
                 enabled_rules.extend(Regex::recommended_rules_as_filters());
@@ -208,15 +181,6 @@ impl Rules {
             disabled_rules.extend(&group.get_disabled_rules());
         } else if self.is_recommended() {
             enabled_rules.extend(Jsx::recommended_rules_as_filters());
-        }
-        if let Some(group) = self.no_unused_variables.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
-                enabled_rules.extend(No_unused_variables::recommended_rules_as_filters());
-            }
-            enabled_rules.extend(&group.get_enabled_rules());
-            disabled_rules.extend(&group.get_disabled_rules());
-        } else if self.is_recommended() {
-            enabled_rules.extend(No_unused_variables::recommended_rules_as_filters());
         }
         if let Some(group) = self.regex.as_ref() {
             if self.is_recommended() && group.is_recommended() {
@@ -256,7 +220,7 @@ pub struct Js {
 }
 impl Js {
     const CATEGORY_NAME: &'static str = "js";
-    pub(crate) const CATEGORY_RULES: [&'static str; 28] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 29] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -277,6 +241,7 @@ impl Js {
         "noUnnecessaryContinue",
         "noUnsafeNegation",
         "noUnusedTemplateLiteral",
+        "noUnusedVariables",
         "useBlockStatements",
         "useCamelCase",
         "useSimplifiedLogicExpression",
@@ -286,7 +251,7 @@ impl Js {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [&'static str; 26] = [
+    const RECOMMENDED_RULES: [&'static str; 27] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -306,6 +271,7 @@ impl Js {
         "noUnnecessaryContinue",
         "noUnsafeNegation",
         "noUnusedTemplateLiteral",
+        "noUnusedVariables",
         "useBlockStatements",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
@@ -314,7 +280,7 @@ impl Js {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 26] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 27] = [
         RuleFilter::Rule("js", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[2]),
@@ -335,12 +301,13 @@ impl Js {
         RuleFilter::Rule("js", Self::CATEGORY_RULES[18]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[19]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[20]),
-        RuleFilter::Rule("js", Self::CATEGORY_RULES[22]),
+        RuleFilter::Rule("js", Self::CATEGORY_RULES[21]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[23]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[24]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[27]),
+        RuleFilter::Rule("js", Self::CATEGORY_RULES[28]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -367,7 +334,7 @@ impl Js {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 27] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -470,75 +437,6 @@ where
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-#[serde(rename_all = "camelCase", default)]
-pub struct No_unused_variables {
-    #[doc = r" It enables the recommended rules for this group"]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub recommended: Option<bool>,
-    #[doc = r" List of rules for the current group"]
-    #[serde(
-        skip_serializing_if = "IndexMap::is_empty",
-        deserialize_with = "deserialize_no_unused_variables_rules",
-        flatten
-    )]
-    pub rules: IndexMap<String, RuleConfiguration>,
-}
-impl No_unused_variables {
-    const CATEGORY_NAME: &'static str = "no_unused_variables";
-    pub(crate) const CATEGORY_RULES: [&'static str; 1] = ["noUnusedVariables"];
-    const RECOMMENDED_RULES: [&'static str; 1] = ["noUnusedVariables"];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] = [RuleFilter::Rule(
-        "no_unused_variables",
-        Self::CATEGORY_RULES[0],
-    )];
-    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
-    pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
-        IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
-            if conf.is_enabled() {
-                Some(RuleFilter::Rule(Self::CATEGORY_NAME, key))
-            } else {
-                None
-            }
-        }))
-    }
-    pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
-        IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
-            if conf.is_disabled() {
-                Some(RuleFilter::Rule(Self::CATEGORY_NAME, key))
-            } else {
-                None
-            }
-        }))
-    }
-    #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
-    #[doc = r" Checks if, given a rule name, it is marked as recommended"]
-    pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
-        Self::RECOMMENDED_RULES.contains(&rule_name)
-    }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 1] {
-        Self::RECOMMENDED_RULES_AS_FILTERS
-    }
-}
-fn deserialize_no_unused_variables_rules<'de, D>(
-    deserializer: D,
-) -> Result<IndexMap<String, RuleConfiguration>, D::Error>
-where
-    D: serde::de::Deserializer<'de>,
-{
-    let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
-    for rule_name in value.keys() {
-        if !No_unused_variables::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::DeserializationError(format!(
-                    "Invalid rule name `{rule_name}`"
-                )),
-            )));
-        }
-    }
-    Ok(value)
-}
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase", default)]
 pub struct Regex {
     #[doc = r" It enables the recommended rules for this group"]

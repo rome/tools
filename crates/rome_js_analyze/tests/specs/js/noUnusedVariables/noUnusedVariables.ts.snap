@@ -39,7 +39,7 @@ console.log(new C());
 
 # Diagnostics
 ```
-warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
+warning[js/noUnusedVariables]: This parameter is unused.
   ┌─ noUnusedVariables.ts:4:14
   │
 4 │     constructor(a: number) {}
@@ -62,7 +62,7 @@ Suggested fix: Remove this parameter.
 ```
 
 ```
-warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
+warning[js/noUnusedVariables]: This parameter is unused.
   ┌─ noUnusedVariables.ts:5:4
   │
 5 │     f(a: number) {}
@@ -85,7 +85,7 @@ Suggested fix: Remove this parameter.
 ```
 
 ```
-warning[no_unused_variables/noUnusedVariables]: This parameter is unused.
+warning[js/noUnusedVariables]: This parameter is unused.
   ┌─ noUnusedVariables.ts:6:8
   │
 6 │     set a(a: number) {}
