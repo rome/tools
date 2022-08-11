@@ -2,7 +2,8 @@
 name = "rome_playground"
 version = "0.0.0"
 edition = "2021"
-authors = ["Rome Tools Developers and Contributros"]
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
 license = "MIT"
 
 [package.metadata.wasm-pack.profile.dev]
