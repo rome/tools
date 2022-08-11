@@ -4,6 +4,7 @@ var j = function (j, b, c) {};
 function k({ k, b }, { c, d }) {}
 function l([, l]) {}
 function foo([[a, b], [c, d]]) {}
+function test(a  = function(a) {}) {}
 // invalid
 function b(a, b, b) {}
 
