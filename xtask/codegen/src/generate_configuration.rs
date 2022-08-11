@@ -71,6 +71,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
         let group_struct = quote! {
             #[derive(Deserialize, Default, Serialize, Debug, Clone)]
+            #[cfg_attr(feature = "schemars", derive(JsonSchema))]
             #[serde(rename_all = "camelCase", default)]
             pub struct #group_struct_name {
                 /// It enables the recommended rules for this group
@@ -200,12 +201,15 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
     let groups = quote! {
         use serde::{Deserialize, Serialize};
+        #[cfg(feature = "schemars")]
+        use schemars::JsonSchema;
         use crate::{ConfigurationError, RomeError, RuleConfiguration};
         use rome_analyze::RuleFilter;
         use indexmap::{IndexMap, IndexSet};
         use rome_console::codespan::Severity;
 
         #[derive(Deserialize, Serialize, Debug, Clone)]
+        #[cfg_attr(feature = "schemars", derive(JsonSchema))]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]
         pub struct Rules {
             /// It enables the lint rules recommended by Rome. `true` by default.

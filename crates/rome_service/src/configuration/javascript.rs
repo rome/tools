@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 use std::marker::PhantomData;
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -76,6 +77,7 @@ where
 }
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
@@ -84,6 +86,7 @@ pub struct JavascriptFormatter {
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", remote = "QuoteStyle")]
 pub enum PlainQuoteStyle {
     Double,

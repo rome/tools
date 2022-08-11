@@ -15,6 +15,15 @@ walkdir = "2.3.2"
 ureq = "2.4.0"
 git2 = { version = "0.13.25", default-features = false }
 filetime = "0.2.15"
-rome_analyze = { path = "../../crates/rome_analyze" }
-rome_js_analyze = { path = "../../crates/rome_js_analyze" }
 case = "1.0.0"
+
+rome_analyze = { path = "../../crates/rome_analyze", optional = true }
+rome_js_analyze = { path = "../../crates/rome_js_analyze", optional = true }
+
+schemars = { version = "0.8.10", optional = true }
+serde_json = { version = "1.0.74", optional = true }
+rome_service = { path = "../../crates/rome_service", features = ["schemars"], optional = true }
+
+[features]
+configuration = ["rome_analyze", "rome_js_analyze"]
+schema = ["schemars", "serde_json", "rome_service"]

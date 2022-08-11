@@ -14,5 +14,9 @@ rayon = "1.5.1"
 crossbeam = "0.8.1"
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 serde = { version = "1.0.136", features = ["derive"], optional = true }
+schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
+
+[features]
+serde = ["dep:serde", "schemars"]

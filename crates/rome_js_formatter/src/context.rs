@@ -179,7 +179,10 @@ impl CommentStyle<JsLanguage> for JsCommentStyle {
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub enum QuoteStyle {
     Double,
     Single,

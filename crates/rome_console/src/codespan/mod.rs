@@ -40,7 +40,10 @@ pub enum LabelStyle {
 ///
 /// These are ordered in the following way:
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub enum Severity {
     /// A help message.
     Help,

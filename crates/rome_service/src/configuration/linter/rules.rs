@@ -4,8 +4,11 @@ use crate::{ConfigurationError, RomeError, RuleConfiguration};
 use indexmap::{IndexMap, IndexSet};
 use rome_analyze::RuleFilter;
 use rome_console::codespan::Severity;
+#[cfg(feature = "schemars")]
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Rules {
     #[doc = r" It enables the lint rules recommended by Rome. `true` by default."]
@@ -201,6 +204,7 @@ impl Rules {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 pub struct Js {
     #[doc = r" It enables the recommended rules for this group"]
@@ -353,6 +357,7 @@ where
     Ok(value)
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 pub struct Jsx {
     #[doc = r" It enables the recommended rules for this group"]
@@ -431,6 +436,7 @@ where
     Ok(value)
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 pub struct Regex {
     #[doc = r" It enables the recommended rules for this group"]
@@ -499,6 +505,7 @@ where
     Ok(value)
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 pub struct Ts {
     #[doc = r" It enables the recommended rules for this group"]

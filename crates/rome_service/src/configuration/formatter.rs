@@ -3,6 +3,7 @@ use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
@@ -69,6 +70,7 @@ where
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum PlainIndentStyle {
     /// Tab

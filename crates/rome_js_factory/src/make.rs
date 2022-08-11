@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, TriviaPieceKind};
 use rome_rowan::TriviaPiece;
 
@@ -16,6 +18,14 @@ pub fn js_string_literal(text: &str) -> JsSyntaxToken {
         [],
         [],
     )
+}
+
+/// Create a new string literal token with no attached trivia
+pub fn js_number_literal<N>(text: N) -> JsSyntaxToken
+where
+    N: Display + Copy,
+{
+    JsSyntaxToken::new_detached(JsSyntaxKind::JS_NUMBER_LITERAL, &text.to_string(), [], [])
 }
 
 /// Create a new token with the specified syntax kind and no attached trivia
@@ -40,4 +50,8 @@ pub fn token_decorated_with_space(kind: JsSyntaxKind) -> JsSyntaxToken {
     } else {
         panic!("token kind {kind:?} cannot be transformed to text")
     }
+}
+
+pub fn eof() -> JsSyntaxToken {
+    JsSyntaxToken::new_detached(JsSyntaxKind::EOF, "", [], [])
 }

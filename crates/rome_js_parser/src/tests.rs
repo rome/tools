@@ -214,24 +214,24 @@ pub fn jsroot_ranges() {
 
     let first_let = syntax.first_token().unwrap();
     let range = first_let.text_range();
-    assert_eq!(0usize, range.start().into());
-    assert_eq!(5usize, range.end().into());
+    assert_eq!(0usize, usize::from(range.start()));
+    assert_eq!(5usize, usize::from(range.end()));
 
     let range = first_let.text_trimmed_range();
-    assert_eq!(1usize, range.start().into());
-    assert_eq!(4usize, range.end().into());
+    assert_eq!(1usize, usize::from(range.start()));
+    assert_eq!(4usize, usize::from(range.end()));
 
     let eq = syntax
         .descendants_tokens(Direction::Next)
         .find(|x| x.text_trimmed() == "=")
         .unwrap();
     let range = eq.text_range();
-    assert_eq!(7usize, range.start().into());
-    assert_eq!(9usize, range.end().into());
+    assert_eq!(7usize, usize::from(range.start()));
+    assert_eq!(9usize, usize::from(range.end()));
 
     let range = eq.text_trimmed_range();
-    assert_eq!(7usize, range.start().into());
-    assert_eq!(8usize, range.end().into());
+    assert_eq!(7usize, usize::from(range.start()));
+    assert_eq!(8usize, usize::from(range.end()));
 }
 
 #[test]
@@ -247,12 +247,12 @@ pub fn node_range_must_be_correct() {
         .unwrap();
 
     let range = var_decl.text_range();
-    assert_eq!(18usize, range.start().into());
-    assert_eq!(29usize, range.end().into());
+    assert_eq!(18usize, usize::from(range.start()));
+    assert_eq!(29usize, usize::from(range.end()));
 
     let range = var_decl.text_trimmed_range();
-    assert_eq!(18usize, range.start().into());
-    assert_eq!(28usize, range.end().into());
+    assert_eq!(18usize, usize::from(range.start()));
+    assert_eq!(28usize, usize::from(range.end()));
 }
 
 #[test]

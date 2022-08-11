@@ -11,7 +11,7 @@ use rome_rowan::Language;
 use serde::Serialize;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, schemars::JsonSchema))]
 pub struct JsLanguage;
 
 impl Language for JsLanguage {

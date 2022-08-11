@@ -59,6 +59,8 @@ use rome_diagnostics::{CodeSuggestion, Diagnostic};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
+#[cfg(feature = "serde_workspace")]
+use rome_rowan::TextRangeSchema;
 use rome_text_edit::Indel;
 use std::{borrow::Cow, panic::RefUnwindSafe};
 
@@ -66,7 +68,7 @@ pub(crate) mod server;
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct SupportsFeatureParams {
     pub path: RomePath,
@@ -75,7 +77,7 @@ pub struct SupportsFeatureParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub enum FeatureName {
     Format,
@@ -84,7 +86,7 @@ pub enum FeatureName {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct UpdateSettingsParams {
     pub settings: WorkspaceSettings,
@@ -92,7 +94,7 @@ pub struct UpdateSettingsParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct OpenFileParams {
     pub path: RomePath,
@@ -102,7 +104,7 @@ pub struct OpenFileParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct GetSyntaxTreeParams {
     pub path: RomePath,
@@ -110,7 +112,7 @@ pub struct GetSyntaxTreeParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct GetSyntaxTreeResult {
     pub cst: String,
@@ -119,16 +121,17 @@ pub struct GetSyntaxTreeResult {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct GetControlFlowGraphParams {
     pub path: RomePath,
+    #[cfg_attr(feature = "serde_workspace", schemars(with = "u32"))]
     pub cursor: TextSize,
 }
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct GetFormatterIRParams {
     pub path: RomePath,
@@ -136,7 +139,7 @@ pub struct GetFormatterIRParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct ChangeFileParams {
     pub path: RomePath,
@@ -146,7 +149,7 @@ pub struct ChangeFileParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct CloseFileParams {
     pub path: RomePath,
@@ -154,7 +157,7 @@ pub struct CloseFileParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct PullDiagnosticsParams {
     pub path: RomePath,
@@ -163,7 +166,7 @@ pub struct PullDiagnosticsParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct PullDiagnosticsResult {
     pub diagnostics: Vec<Diagnostic>,
@@ -171,16 +174,17 @@ pub struct PullDiagnosticsResult {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct PullActionsParams {
     pub path: RomePath,
+    #[cfg_attr(feature = "serde_workspace", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
 }
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct PullActionsResult {
     pub actions: Vec<CodeAction>,
@@ -188,7 +192,7 @@ pub struct PullActionsResult {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct CodeAction {
     pub category: ActionCategory,
@@ -198,7 +202,7 @@ pub struct CodeAction {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct FormatFileParams {
     pub path: RomePath,
@@ -206,26 +210,28 @@ pub struct FormatFileParams {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct FormatRangeParams {
     pub path: RomePath,
+    #[cfg_attr(feature = "serde_workspace", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
 }
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct FormatOnTypeParams {
     pub path: RomePath,
+    #[cfg_attr(feature = "serde_workspace", schemars(with = "u32"))]
     pub offset: TextSize,
 }
 
 #[derive(Clone, Copy)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 /// Which fixes should be applied during the analyzing phase
 pub enum FixFileMode {
@@ -237,7 +243,7 @@ pub enum FixFileMode {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct FixFileParams {
     pub path: RomePath,
@@ -247,7 +253,7 @@ pub struct FixFileParams {
 #[derive(Debug)]
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct FixFileResult {
     /// New source code for the file with all fixes applied
@@ -261,32 +267,35 @@ pub struct FixFileResult {
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 #[derive(Debug)]
 pub struct FixAction {
     /// Name of the rule that emitted this code action
     pub rule_name: Cow<'static, str>,
     /// Source range at which this action was applied
+    #[cfg_attr(feature = "serde_workspace", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
 }
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct RenameParams {
     pub path: RomePath,
+    #[cfg_attr(feature = "serde_workspace", schemars(with = "u32"))]
     pub symbol_at: TextSize,
     pub new_name: String,
 }
 
 #[cfg_attr(
     feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub struct RenameResult {
     /// Range of source code modified by this rename operation
+    #[cfg_attr(feature = "serde_workspace", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
     /// List of text edit operations to apply on the source code
     pub indels: Vec<Indel>,

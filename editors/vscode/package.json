@@ -84,7 +84,13 @@
 					"markdownDescription": "The rome lsp server executable."
 				}
 			}
-		}
+		},
+		"jsonValidation": [
+			{
+				"fileMatch": "rome.json",
+				"url": "./configuration_schema.json"
+			}
+		]
 	},
 	"categories": [
 		"Formatters",

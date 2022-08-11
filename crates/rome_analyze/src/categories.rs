@@ -1,7 +1,10 @@
 use bitflags::bitflags;
 
 #[derive(Copy, Clone, Debug)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub enum RuleCategory {
     /// This rule checks the syntax according to the language specification
     /// and emits error diagnostics accordingly
@@ -16,7 +19,10 @@ pub enum RuleCategory {
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub enum ActionCategory {
     /// This action provides a fix to the diagnostic emitted by the same signal
     QuickFix,
@@ -105,5 +111,16 @@ impl<'de> serde::Deserialize<'de> for RuleCategories {
         }
 
         deserializer.deserialize_seq(Visitor)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl schemars::JsonSchema for RuleCategories {
+    fn schema_name() -> String {
+        String::from("RuleCategories")
+    }
+
+    fn json_schema(gen: &mut schemars::gen::SchemaGenerator) -> schemars::schema::Schema {
+        <Vec<RuleCategory>>::json_schema(gen)
     }
 }

@@ -116,9 +116,13 @@ pub type FileId = usize;
 
 /// A range that is indexed in a specific file.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct FileSpan {
     pub file: FileId,
+    #[cfg_attr(feature = "serde", schemars(with = "rome_rowan::TextRangeSchema"))]
     pub range: TextRange,
 }
 
