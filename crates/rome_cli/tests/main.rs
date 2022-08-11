@@ -41,9 +41,10 @@ if(a != 0) {}
 
 const APPLY_SUGGESTED_BEFORE: &str = "let a = 4;
 debugger;
+console.log(a);
 ";
 
-const APPLY_SUGGESTED_AFTER: &str = "let a = 4;\n";
+const APPLY_SUGGESTED_AFTER: &str = "let a = 4;\nconsole.log(a);\n";
 
 const CUSTOM_FORMAT_BEFORE: &str = r#"
 function f() {

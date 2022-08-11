@@ -1,12 +1,16 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
+<<<<<<< HEAD
 assertion_line: 137
+=======
+>>>>>>> c6ce7e57ee (fix cli snap test)
 expression: content
 ---
 ## `fix.js`
 
 ```js
 let a = 4;
+console.log(a);
 
 ```
 
