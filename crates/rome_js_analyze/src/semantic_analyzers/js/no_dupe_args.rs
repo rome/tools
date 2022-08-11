@@ -60,8 +60,8 @@ impl Rule for NoDupeArgs {
                     JsAnyFunction::JsFunctionExpression(func) => func.parameters().ok()?,
                 };
                 let mut set = FxHashSet::default();
-				// Traversing the parameters of the function in preorder and checking for duplicates,
-				// reuse the `HashSet` and `Vec` to avoid extra allocations.
+                // Traversing the parameters of the function in preorder and checking for duplicates,
+                // reuse the `HashSet` and `Vec` to avoid extra allocations.
                 for parameter in args.items().into_iter() {
                     let parameter = parameter.ok()?;
                     traverse_parameter(parameter, &mut set, &mut ret);
