@@ -5,7 +5,7 @@ use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::fmt::{Debug, Display, Formatter};
+use std::fmt::{self, Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
 
@@ -55,19 +55,18 @@ pub enum RomeError {
     Configuration(ConfigurationError),
     /// Error thrown when Rome cannot rename a symbol.
     RenameError(RenameError),
-    /// Error created from an underlying I/O error
-    #[serde(with = "IoErrorDef")]
-    IoError(std::io::Error),
+    /// Error emitted by the underlying transport layer for a remote Workspace
+    TransportError(TransportError),
 }
 
 impl Debug for RomeError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self, f)
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        fmt::Display::fmt(self, f)
     }
 }
 
 impl Display for RomeError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
             RomeError::SourceFileNotSupported(path) => {
                 let ext = path.extension().and_then(|ext| ext.to_str());
@@ -109,7 +108,7 @@ impl Display for RomeError {
                 )
             }
 
-            RomeError::Configuration(error) => std::fmt::Display::fmt(error, f),
+            RomeError::Configuration(error) => fmt::Display::fmt(error, f),
             RomeError::DirtyWorkspace => {
                 write!(f, "Uncommitted changes in repository")
             }
@@ -138,7 +137,9 @@ impl Display for RomeError {
                 )
             }
 
-            RomeError::IoError(error) => std::fmt::Display::fmt(error, f),
+            RomeError::TransportError(err) => {
+                write!(f, "{err}",)
+            }
         }
     }
 }
@@ -151,28 +152,40 @@ impl From<FormatError> for RomeError {
     }
 }
 
-impl From<serde_json::Error> for RomeError {
+impl From<TransportError> for RomeError {
+    fn from(err: TransportError) -> Self {
+        Self::TransportError(err)
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+/// Error emitted by the underlying transport layer for a remote Workspace
+pub enum TransportError {
+    /// Error emitted by the transport layer if the connection was lost due to an I/O error
+    ChannelClosed,
+    /// Error caused by a serialization or deserialization issue
+    SerdeError(String),
+    /// Generic error type for RPC errors that can't be deserialized into RomeError
+    RPCError(String),
+}
+
+impl Error for TransportError {}
+
+impl Display for TransportError {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        match self {
+            TransportError::SerdeError(err) => write!(fmt, "serialization error: {err}"),
+            TransportError::ChannelClosed => fmt.write_str(
+                "a request to the remote workspace failed because the connection was interrupted",
+            ),
+            TransportError::RPCError(err) => fmt.write_str(err),
+        }
+    }
+}
+
+impl From<serde_json::Error> for TransportError {
     fn from(err: serde_json::Error) -> Self {
-        Self::IoError(err.into())
-    }
-}
-
-impl From<std::io::Error> for RomeError {
-    fn from(err: std::io::Error) -> Self {
-        Self::IoError(err)
-    }
-}
-
-#[derive(Serialize, Deserialize)]
-#[serde(remote = "std::io::Error")]
-struct IoErrorDef {
-    #[serde(getter = "std::io::Error::to_string")]
-    message: String,
-}
-
-impl From<IoErrorDef> for std::io::Error {
-    fn from(def: IoErrorDef) -> std::io::Error {
-        std::io::Error::new(std::io::ErrorKind::Other, def.message)
+        TransportError::SerdeError(err.to_string())
     }
 }
 

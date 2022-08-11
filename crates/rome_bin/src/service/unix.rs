@@ -37,7 +37,7 @@ fn spawn_daemon() -> io::Result<Child> {
     cmd.arg("__run_server");
 
     // Create a new session for the process and make it the leader, this will
-    // ensures the child process is fully detached from its parent and will
+    // ensures that the child process is fully detached from its parent and will
     // continue running in the background even after the parent process exits
     //
     // SAFETY: This closure runs in the forked child process before it starts

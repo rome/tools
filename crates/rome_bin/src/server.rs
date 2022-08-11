@@ -14,7 +14,7 @@ pub fn run_server_session() -> Result<(), Termination> {
 
     let rt = Runtime::new()?;
     let factory = ServerFactory::default();
-    let span = debug_span!("Running LSP Server", pid = std::process::id());
+    let span = debug_span!("Running Server", pid = std::process::id());
     rt.block_on(run_daemon(factory).instrument(span))?;
 
     Ok(())
@@ -26,6 +26,12 @@ pub fn print_server_socket() -> Result<(), Termination> {
     Ok(())
 }
 
+/// Setup the [tracing]-based logging system for the server
+/// The events received by the subscriber are filtered at the `info` level,
+/// then printed using the [HierarchicalLayer] layer, and the resulting text
+/// is written to log files rotated on a hourly basis (in
+/// `rome-logs/server.log.yyyy-MM-dd-HH` files inside the system temporary
+/// directory)
 fn setup_tracing_subscriber() {
     /// This filter enables:
     /// - All spans and events at level info or higher

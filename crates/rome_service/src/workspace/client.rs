@@ -1,5 +1,4 @@
 use std::{
-    io,
     panic::RefUnwindSafe,
     sync::{
         atomic::{AtomicU64, Ordering},
@@ -11,7 +10,7 @@ use rome_formatter::Printed;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::{from_slice, json, to_vec};
 
-use crate::{RomeError, Workspace};
+use crate::{RomeError, TransportError, Workspace};
 
 use super::{
     ChangeFileParams, CloseFileParams, FixFileParams, FixFileResult, FormatFileParams,
@@ -27,8 +26,8 @@ pub(super) struct WorkspaceClient<T> {
 }
 
 pub trait WorkspaceTransport {
-    fn send(&mut self, request: Vec<u8>) -> Result<(), RomeError>;
-    fn receive(&mut self) -> Result<Vec<u8>, RomeError>;
+    fn send(&mut self, request: Vec<u8>) -> Result<(), TransportError>;
+    fn receive(&mut self) -> Result<Vec<u8>, TransportError>;
 }
 
 #[derive(Serialize)]
@@ -110,11 +109,11 @@ where
             params,
         };
 
-        let request = to_vec(&request)?;
+        let request = to_vec(&request).map_err(TransportError::from)?;
         transport.send(request)?;
 
         let response = transport.receive()?;
-        let response: JsonRpcResponse<R> = from_slice(&response)?;
+        let response: JsonRpcResponse<R> = from_slice(&response).map_err(TransportError::from)?;
 
         // This should be true since we don't allow concurrent requests yet
         assert_eq!(response.id, id);
@@ -123,10 +122,7 @@ where
             JsonRpcResult::Ok { result } => Ok(result),
             JsonRpcResult::Err { error } => match error.data {
                 Some(error) => Err(error),
-                None => Err(RomeError::IoError(io::Error::new(
-                    io::ErrorKind::Other,
-                    error.message,
-                ))),
+                None => Err(RomeError::from(TransportError::RPCError(error.message))),
             },
         }
     }

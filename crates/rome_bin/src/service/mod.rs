@@ -1,6 +1,13 @@
-use std::{io, panic::RefUnwindSafe};
+//! Implements the OS dependent transport layer for the server protocol. This
+//! uses a domain socket created in the global temporary directory on Unix
+//! systems, and a named pipe on Windows. The protocol used for message frames
+//! is based on the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#baseProtocol),
+//! a simplified derivative of the HTTP protocol
 
-use rome_service::{workspace::WorkspaceTransport, RomeError};
+use std::{io, panic::RefUnwindSafe, str::FromStr};
+
+use anyhow::{bail, ensure, Context, Error};
+use rome_service::{workspace::WorkspaceTransport, TransportError};
 use tokio::{
     io::{split, AsyncBufReadExt, AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader},
     runtime::Runtime,
@@ -56,55 +63,35 @@ impl SocketTransport {
                 let mut line = String::new();
 
                 loop {
-                    match socket_read.read_line(&mut line).await? {
+                    match socket_read
+                        .read_line(&mut line)
+                        .await
+                        .context("failed to read header line from the socket")?
+                    {
                         // A read of 0 bytes means the connection was closed
                         0 => {
-                            return Err(RomeError::IoError(io::Error::new(
-                                io::ErrorKind::UnexpectedEof,
-                                "unexpected EOF",
-                            )));
+                            bail!("the connection to the remote workspace was unexpectedly closed");
                         }
                         // A read of two bytes corresponds to the "\r\n" sequence
                         // that indicates the end of the header section
                         2 => {
                             if line != "\r\n" {
-                                return Err(RomeError::IoError(io::Error::new(
-                                    io::ErrorKind::Other,
-                                    "unexpected byte sequence",
-                                )));
+                                bail!("unexpected byte sequence received from the remote workspace, got {line:?} expected \"\\r\\n\"");
                             }
 
                             break;
                         }
                         _ => {
-                            let colon = line.find(':').ok_or_else(|| {
-                                RomeError::IoError(io::Error::new(
-                                    io::ErrorKind::Other,
-                                    "invalid header line",
-                                ))
-                            })?;
+                            let header: TransportHeader = line
+                                .parse()
+                                .context("failed to parse header from the remote workspace")?;
 
-                            let (name, value) = line.split_at(colon);
-                            let value = value[1..].trim();
-
-                            match name {
-                                "Content-Length" => {
-                                    length = Some(value.parse().map_err(|err| {
-                                        RomeError::IoError(io::Error::new(
-                                            io::ErrorKind::Other,
-                                            err,
-                                        ))
-                                    })?);
+                            match header {
+                                TransportHeader::ContentLength(value) => {
+                                    length = Some(value);
                                 }
-                                "Content-Type" => {
-                                    if !value.starts_with("application/json") {
-                                        return Err(RomeError::IoError(io::Error::new(
-                                            io::ErrorKind::Other,
-                                            "unsupported Content-Type encoding",
-                                        )));
-                                    }
-                                }
-                                _ => {
+                                TransportHeader::ContentType => {}
+                                TransportHeader::Unknown(name) => {
                                     eprintln!("ignoring unknown header {name:?}");
                                 }
                             }
@@ -114,16 +101,15 @@ impl SocketTransport {
                     }
                 }
 
-                let length = length.ok_or_else(|| {
-                    RomeError::IoError(io::Error::new(
-                        io::ErrorKind::Other,
-                        "incoming response is missing the Content-Length header",
-                    ))
-                })?;
+                let length = length.context("incoming response from the remote workspace is missing the Content-Length header")?;
 
                 let mut result = vec![0u8; length];
-                socket_read.read_exact(&mut result).await?;
+                socket_read.read_exact(&mut result).await.with_context(|| {
+                    format!("failed to read message of {length} bytes from the socket")
+                })?;
 
+                // Send the received message over the transport channel, or
+                // exit the task if the channel was closed
                 if read_send.send(result).is_err() {
                     break;
                 }
@@ -149,24 +135,18 @@ impl SocketTransport {
                 socket_write.write_all(&message).await?;
             }
 
-            Ok::<(), io::Error>(())
+            Ok::<(), Error>(())
         };
 
         runtime.spawn(async move {
-            match read_task.await {
-                Ok(()) => {}
-                Err(err) => {
-                    eprintln!("read_task exited with error: {err}");
-                }
+            if let Err(err) = read_task.await {
+                eprintln!("remote connection read task exited with an error: {err:#?}");
             }
         });
 
         runtime.spawn(async move {
-            match write_task.await {
-                Ok(()) => {}
-                Err(err) => {
-                    eprintln!("write_task exited with error: {err}");
-                }
+            if let Err(err) = write_task.await {
+                eprintln!("remote connection write task exited with an error: {err:#?}");
             }
         });
 
@@ -182,24 +162,53 @@ impl SocketTransport {
 impl RefUnwindSafe for SocketTransport {}
 
 impl WorkspaceTransport for SocketTransport {
-    fn send(&mut self, request: Vec<u8>) -> Result<(), RomeError> {
-        self.write_send.send(request).map_err(|_| {
-            RomeError::IoError(io::Error::new(
-                io::ErrorKind::UnexpectedEof,
-                "send channel was closed",
-            ))
-        })
+    fn send(&mut self, request: Vec<u8>) -> Result<(), TransportError> {
+        self.write_send
+            .send(request)
+            .map_err(|_| TransportError::ChannelClosed)
     }
 
-    fn receive(&mut self) -> Result<Vec<u8>, RomeError> {
+    fn receive(&mut self) -> Result<Vec<u8>, TransportError> {
         let read_recv = &mut self.read_recv;
-        self.runtime.block_on(async move {
-            read_recv.recv().await.ok_or_else(|| {
-                RomeError::IoError(io::Error::new(
-                    io::ErrorKind::UnexpectedEof,
-                    "receive channel was closed",
-                ))
-            })
-        })
+        self.runtime
+            .block_on(async move { read_recv.recv().await.ok_or(TransportError::ChannelClosed) })
+    }
+}
+
+enum TransportHeader {
+    ContentLength(usize),
+    ContentType,
+    Unknown(String),
+}
+
+impl FromStr for TransportHeader {
+    type Err = Error;
+
+    fn from_str(line: &str) -> Result<Self, Self::Err> {
+        let colon = line
+            .find(':')
+            .with_context(|| format!("could not find colon token in {line:?}"))?;
+
+        let (name, value) = line.split_at(colon);
+        let value = value[1..].trim();
+
+        match name {
+            "Content-Length" => {
+                let value = value.parse().with_context(|| {
+                    format!("could not parse Content-Length header value {value:?}")
+                })?;
+
+                Ok(TransportHeader::ContentLength(value))
+            }
+            "Content-Type" => {
+                ensure!(
+                    value.starts_with( "application/vscode-jsonrpc"),
+                    "invalid value for Content-Type expected \"application/vscode-jsonrpc\", got {value:?}"
+                );
+
+                Ok(TransportHeader::ContentType)
+            }
+            _ => Ok(TransportHeader::Unknown(name.into())),
+        }
     }
 }
