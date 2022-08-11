@@ -119,9 +119,9 @@ f();",
 assert_semantics! {
     ok_read_function, r#"function f/*#F*/() {} console.log(f/*READ F*/);"#,
     ok_write_function, r#"function f/*#F*/() {} f/*WRITE F*/ = null;"#,
-    ok_scope_function_expression_read, "var f/*#F1*/ = function f/*#F2*/() {console.log(f/*READ F2*/);}",
+    ok_scope_function_expression_read, "var f/*#F1*/ = function f/*#F2*/() {console.log(f/*READ F2*/);}; f/*READ F1*/();",
     ok_scope_function_expression_read1 ,"var f/*#F1*/ = function () {console.log(f/*READ F1*/);}",
-    ok_scope_function_expression_read2, "let f/*#F1*/ = 1; let g = function f/*#F2*/() {console.log(2, f/*READ F2*/);}",
+    ok_scope_function_expression_read2, "let f/*#F1*/ = 1; let g = function f/*#F2*/() {console.log(2, f/*READ F2*/);}; console.log(f/*READ F1*/);",
 }
 
 assert_semantics! {

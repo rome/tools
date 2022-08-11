@@ -1049,8 +1049,14 @@ mod test {
     #[test]
     pub fn ok_semantic_model_is_exported() {
         // Variables
-        assert_is_exported(true, "A", "const A = 1; export {A}");
+        assert_is_exported(false, "A", "const A = 1");
         assert_is_exported(true, "A", "export const A = 1");
+        assert_is_exported(true, "A", "const A = 1; export default A");
+        assert_is_exported(true, "A", "const A = 1; export {A}");
+        assert_is_exported(true, "A", "const A = 1; module.exports = A;");
+        assert_is_exported(true, "A", "const A = 1; module.exports = {A};");
+        assert_is_exported(true, "A", "const A = 1; exports = A;");
+        assert_is_exported(true, "A", "const A = 1; exports.A = A;");
 
         // Functions
         assert_is_exported(false, "f", "function f() {}");
@@ -1059,13 +1065,25 @@ mod test {
         assert_is_exported(true, "f", "function f() {} export default f");
         assert_is_exported(true, "f", "function f() {} export {f}");
         assert_is_exported(true, "f", "function f() {} export {f as g}");
+        assert_is_exported(true, "f", "module.exports = function f() {}");
+        assert_is_exported(true, "f", "exports = function f() {}");
+        assert_is_exported(true, "f", "exports.f = function f() {}");
+        assert_is_exported(true, "f", "function f() {} module.exports = f");
+        assert_is_exported(true, "f", "function f() {} module.exports = {f}");
+        assert_is_exported(true, "f", "function f() {} exports = f");
+        assert_is_exported(true, "f", "function f() {} exports.f = f");
 
-        // Class
+        // Classess
         assert_is_exported(false, "A", "class A{}");
         assert_is_exported(true, "A", "export class A{}");
         assert_is_exported(true, "A", "export default class A{}");
         assert_is_exported(true, "A", "class A{} export default A");
         assert_is_exported(true, "A", "class A{} export {A}");
         assert_is_exported(true, "A", "class A{} export {A as B}");
+        assert_is_exported(true, "A", "module.exports = class A{}");
+        assert_is_exported(true, "A", "exports = class A{}");
+        assert_is_exported(true, "A", "class A{} module.exports = A");
+        assert_is_exported(true, "A", "class A{} exports = A");
+        assert_is_exported(true, "A", "class A{} exports.A = A");
     }
 }
