@@ -1,5 +1,6 @@
 const a = 1;
-const b = 2, c = 3;
+const b = 2,
+	c = 3;
 console.log(c);
 
 function f1() {}
@@ -33,3 +34,11 @@ const f5 = () => {};
 const f6 = () => {
 	f6();
 };
+
+try {
+} catch (e) {}
+
+export function exported_function() {}
+
+function exported_function_2() {}
+export { exported_function_2 };

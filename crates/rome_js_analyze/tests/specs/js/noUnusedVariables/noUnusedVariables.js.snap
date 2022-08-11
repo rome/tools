@@ -5,7 +5,8 @@ expression: noUnusedVariables.js
 # Input
 ```js
 const a = 1;
-const b = 2, c = 3;
+const b = 2,
+	c = 3;
 console.log(c);
 
 function f1() {}
@@ -40,6 +41,14 @@ const f6 = () => {
 	f6();
 };
 
+try {
+} catch (e) {}
+
+export function exported_function() {}
+
+function exported_function_2() {}
+export { exported_function_2 };
+
 ```
 
 # Diagnostics
@@ -54,9 +63,9 @@ Suggested fix: Remove this variable.
     | @@ -1,4 +1,4 @@
 0   | - const a = 1;
   0 | + 
-1 1 |   const b = 2, c = 3;
-2 2 |   console.log(c);
-3 3 |   
+1 1 |   const b = 2,
+2 2 |   	c = 3;
+3 3 |   console.log(c);
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -67,17 +76,17 @@ Suggested fix: Remove this variable.
 warning[js/noUnusedVariables]: This variable is unused.
   ┌─ noUnusedVariables.js:2:7
   │
-2 │ const b = 2, c = 3;
+2 │ const b = 2,
   │       -
 
 Suggested fix: Remove this variable.
     | @@ -1,5 +1,5 @@
 0 0 |   const a = 1;
-1   | - const b = 2, c = 3;
-  1 | + const c = 3;
-2 2 |   console.log(c);
-3 3 |   
-4 4 |   function f1() {}
+1   | - const b = 2,
+  1 | + const
+2 2 |   	c = 3;
+3 3 |   console.log(c);
+4 4 |   
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -86,21 +95,21 @@ Suggested fix: Remove this variable.
 
 ```
 warning[js/noUnusedVariables]: This function is unused.
-  ┌─ noUnusedVariables.js:5:10
+  ┌─ noUnusedVariables.js:6:10
   │
-5 │ function f1() {}
+6 │ function f1() {}
   │          --
 
 Suggested fix: Remove this function.
-    | @@ -2,8 +2,6 @@
-1 1 |   const b = 2, c = 3;
-2 2 |   console.log(c);
-3 3 |   
-4   | - function f1() {}
-5   | - 
-6 4 |   function f2() {
-7 5 |   	f2();
-8 6 |   }
+    | @@ -3,8 +3,6 @@
+2 2 |   	c = 3;
+3 3 |   console.log(c);
+4 4 |   
+5   | - function f1() {}
+6   | - 
+7 5 |   function f2() {
+8 6 |   	f2();
+9 7 |   }
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -109,23 +118,23 @@ Suggested fix: Remove this function.
 
 ```
 warning[js/noUnusedVariables]: This function is unused.
-  ┌─ noUnusedVariables.js:7:10
+  ┌─ noUnusedVariables.js:8:10
   │
-7 │ function f2() {
+8 │ function f2() {
   │          --
 
 Suggested fix: Remove this function.
-    | @@ -4,10 +4,6 @@
-3 3 |   
-4 4 |   function f1() {}
-5 5 |   
-6   | - function f2() {
-7   | - 	f2();
-8   | - }
-9   | - 
-10 6 |   function f3() {
-11 7 |   	function g() {
-12 8 |   		f3();
+    | @@ -5,10 +5,6 @@
+4 4 |   
+5 5 |   function f1() {}
+6 6 |   
+7   | - function f2() {
+8   | - 	f2();
+9   | - }
+10   | - 
+11 7 |   function f3() {
+12 8 |   	function g() {
+13 9 |   		f3();
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -134,26 +143,26 @@ Suggested fix: Remove this function.
 
 ```
 warning[js/noUnusedVariables]: This function is unused.
-   ┌─ noUnusedVariables.js:11:10
+   ┌─ noUnusedVariables.js:12:10
    │
-11 │ function f3() {
+12 │ function f3() {
    │          --
 
 Suggested fix: Remove this function.
-      | @@ -8,13 +8,6 @@
- 7  7 |   	f2();
- 8  8 |   }
- 9  9 |   
-10    | - function f3() {
-11    | - 	function g() {
-12    | - 		f3();
-13    | - 	}
-14    | - 	g();
-15    | - }
-16    | - 
-17 10 |   function f41(a) {}
-18 11 |   f41();
-19 12 |   
+      | @@ -9,13 +9,6 @@
+ 8  8 |   	f2();
+ 9  9 |   }
+10 10 |   
+11    | - function f3() {
+12    | - 	function g() {
+13    | - 		f3();
+14    | - 	}
+15    | - 	g();
+16    | - }
+17    | - 
+18 11 |   function f41(a) {}
+19 12 |   f41();
+20 13 |   
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -162,21 +171,21 @@ Suggested fix: Remove this function.
 
 ```
 warning[js/noUnusedVariables]: This parameter is unused.
-   ┌─ noUnusedVariables.js:18:14
+   ┌─ noUnusedVariables.js:19:14
    │
-18 │ function f41(a) {}
+19 │ function f41(a) {}
    │              -
 
 Suggested fix: Remove this parameter.
-      | @@ -15,7 +15,7 @@
-14 14 |   	g();
-15 15 |   }
-16 16 |   
-17    | - function f41(a) {}
-   17 | + function f41() {}
-18 18 |   f41();
-19 19 |   
-20 20 |   function f42(a, b) {
+      | @@ -16,7 +16,7 @@
+15 15 |   	g();
+16 16 |   }
+17 17 |   
+18    | - function f41(a) {}
+   18 | + function f41() {}
+19 19 |   f41();
+20 20 |   
+21 21 |   function f42(a, b) {
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -185,21 +194,21 @@ Suggested fix: Remove this parameter.
 
 ```
 warning[js/noUnusedVariables]: This parameter is unused.
-   ┌─ noUnusedVariables.js:21:17
+   ┌─ noUnusedVariables.js:22:17
    │
-21 │ function f42(a, b) {
+22 │ function f42(a, b) {
    │                 -
 
 Suggested fix: Remove this parameter.
-      | @@ -18,7 +18,7 @@
-17 17 |   function f41(a) {}
-18 18 |   f41();
-19 19 |   
-20    | - function f42(a, b) {
-   20 | + function f42(a) {
-21 21 |   	console.log(a);
-22 22 |   }
-23 23 |   f42();
+      | @@ -19,7 +19,7 @@
+18 18 |   function f41(a) {}
+19 19 |   f41();
+20 20 |   
+21    | - function f42(a, b) {
+   21 | + function f42(a) {
+22 22 |   	console.log(a);
+23 23 |   }
+24 24 |   f42();
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -208,21 +217,21 @@ Suggested fix: Remove this parameter.
 
 ```
 warning[js/noUnusedVariables]: This parameter is unused.
-   ┌─ noUnusedVariables.js:26:17
+   ┌─ noUnusedVariables.js:27:17
    │
-26 │ function f43(a, b) {
+27 │ function f43(a, b) {
    │                 -
 
 Suggested fix: Remove this parameter.
-      | @@ -23,7 +23,7 @@
-22 22 |   }
-23 23 |   f42();
-24 24 |   
-25    | - function f43(a, b) {
-   25 | + function f43(a) {
-26 26 |   	console.log(a);
-27 27 |   }
-28 28 |   f43();
+      | @@ -24,7 +24,7 @@
+23 23 |   }
+24 24 |   f42();
+25 25 |   
+26    | - function f43(a, b) {
+   26 | + function f43(a) {
+27 27 |   	console.log(a);
+28 28 |   }
+29 29 |   f43();
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -231,21 +240,21 @@ Suggested fix: Remove this parameter.
 
 ```
 warning[js/noUnusedVariables]: This variable is unused.
-   ┌─ noUnusedVariables.js:31:7
+   ┌─ noUnusedVariables.js:32:7
    │
-31 │ const f5 = () => {};
+32 │ const f5 = () => {};
    │       --
 
 Suggested fix: Remove this variable.
-      | @@ -28,8 +28,6 @@
-27 27 |   }
-28 28 |   f43();
-29 29 |   
-30    | - const f5 = () => {};
-31    | - 
-32 30 |   const f6 = () => {
-33 31 |   	f6();
-34 32 |   };
+      | @@ -29,8 +29,6 @@
+28 28 |   }
+29 29 |   f43();
+30 30 |   
+31    | - const f5 = () => {};
+32    | - 
+33 31 |   const f6 = () => {
+34 32 |   	f6();
+35 33 |   };
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -254,20 +263,46 @@ Suggested fix: Remove this variable.
 
 ```
 warning[js/noUnusedVariables]: This variable is unused.
-   ┌─ noUnusedVariables.js:33:7
+   ┌─ noUnusedVariables.js:34:7
    │
-33 │ const f6 = () => {
+34 │ const f6 = () => {
    │       --
 
 Suggested fix: Remove this variable.
-      | @@ -29,7 +29,3 @@
-28 28 |   f43();
-29 29 |   
-30 30 |   const f5 = () => {};
-31    | - 
-32    | - const f6 = () => {
-33    | - 	f6();
-34    | - };
+      | @@ -31,10 +31,6 @@
+30 30 |   
+31 31 |   const f5 = () => {};
+32 32 |   
+33    | - const f6 = () => {
+34    | - 	f6();
+35    | - };
+36    | - 
+37 33 |   try {
+38 34 |   } catch (e) {}
+39 35 |   
+
+=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+
+
+```
+
+```
+warning[js/noUnusedVariables]: This variable is unused.
+   ┌─ noUnusedVariables.js:39:10
+   │
+39 │ } catch (e) {}
+   │          -
+
+Suggested fix: Remove this variable.
+      | @@ -36,7 +36,7 @@
+35 35 |   };
+36 36 |   
+37 37 |   try {
+38    | - } catch (e) {}
+   38 | + } catch {}
+39 39 |   
+40 40 |   export function exported_function() {}
+41 41 |   
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 

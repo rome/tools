@@ -96,7 +96,13 @@ fn transform_file_name(input: &str) -> String {
             | "typeof"
     );
 
-    let is_number = result.as_str().parse::<u32>().is_ok();
+    let is_number = result
+        .chars()
+        .next()
+        .unwrap()
+        .to_string()
+        .parse::<u32>()
+        .is_ok();
 
     if is_keyword {
         result.push('_');
@@ -164,7 +170,15 @@ impl Arguments {
         let path = path.as_ref();
         let file_stem = path.file_stem()?;
         let file_stem = file_stem.to_str()?;
-        let test_name = file_stem.to_snake();
+        let test_name = format!(
+            "{}{}",
+            file_stem.to_snake(),
+            if let Some(extension) = path.extension().and_then(|ext| ext.to_str()) {
+                format!("_{}", extension)
+            } else {
+                "".to_string()
+            }
+        );
         let test_directory = path.parent().unwrap().display().to_string();
 
         let test_full_path = path.display().to_string();

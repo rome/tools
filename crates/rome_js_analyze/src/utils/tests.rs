@@ -57,11 +57,14 @@ pub fn assert_remove_ok(before: &str, expected: &str) {
 
     let mut batch = r.tree().begin();
 
-    if let Some(parameter) = binding_a.parent::<JsFormalParameter>() {
-        batch.remove_js_formal_parameter(&parameter);
+    let r = if let Some(parameter) = binding_a.parent::<JsFormalParameter>() {
+        batch.remove_js_formal_parameter(&parameter)
     } else if let Some(declarator) = binding_a.parent::<JsVariableDeclarator>() {
-        batch.remove_js_variable_declarator(&declarator);
-    }
+        batch.remove_js_variable_declarator(&declarator)
+    } else {
+        panic!("Don't know how to remove this node: {:?}", binding_a);
+    };
+    assert!(r);
     let root = batch.commit();
 
     let after = root.to_string();
