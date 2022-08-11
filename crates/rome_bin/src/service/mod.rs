@@ -140,13 +140,19 @@ impl SocketTransport {
 
         runtime.spawn(async move {
             if let Err(err) = read_task.await {
-                eprintln!("remote connection read task exited with an error: {err:#?}");
+                eprintln!(
+                    "{:?}",
+                    err.context("remote connection read task exited with an error")
+                );
             }
         });
 
         runtime.spawn(async move {
             if let Err(err) = write_task.await {
-                eprintln!("remote connection write task exited with an error: {err:#?}");
+                eprintln!(
+                    "{:?}",
+                    err.context("remote connection write task exited with an error")
+                );
             }
         });
 
