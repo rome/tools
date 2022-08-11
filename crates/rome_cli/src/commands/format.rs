@@ -27,7 +27,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
     let stdin = if let Some(stdin_file_path) = stdin_file_path {
         let console = &mut session.app.console;
-        let input_code = console.read(None);
+        let input_code = console.read();
         if let Some(input_code) = input_code {
             let path = PathBuf::from(stdin_file_path);
             Some((path, input_code))

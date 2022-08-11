@@ -32,7 +32,7 @@ pub trait Console: Send + Sync + RefUnwindSafe {
     fn print(&mut self, level: LogLevel, args: Markup);
 
     /// It reads from a source, and if this source contains something, it's converted into a [String]
-    fn read(&mut self, prompt: Option<Markup>) -> Option<String>;
+    fn read(&mut self) -> Option<String>;
 }
 
 /// Extension trait for [Console] providing convenience printing methods
@@ -99,8 +99,8 @@ impl Console for EnvConsole {
         writeln!(out).unwrap();
     }
 
-    fn read(&mut self, _prompt: Option<Markup>) -> Option<String> {
-        // Here we check stdin is redirected. If not, we bail.
+    fn read(&mut self) -> Option<String> {
+        // Here we check if stdin is redirected. If not, we bail.
         //
         // Doing this check allows us to pipe stdin to rome, without expecting
         // user content when we call `read_to_string`
@@ -140,7 +140,7 @@ impl Console for BufferConsole {
             content: args.to_owned(),
         });
     }
-    fn read(&mut self, _prompt: Option<Markup>) -> Option<String> {
+    fn read(&mut self) -> Option<String> {
         if self.in_buffer.is_empty() {
             None
         } else {
