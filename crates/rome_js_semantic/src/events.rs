@@ -720,18 +720,19 @@ impl SemanticEventExtractor {
         let reference_parent = reference.parent();
         let reference_greatparent = reference_parent.as_ref().and_then(|p| p.parent());
 
-        // export
+        // check export keyword
         matches!(
             reference_parent.as_ref().map(|p| p.kind()),
             Some(JS_EXPORT_NAMED_SHORTHAND_SPECIFIER | JS_EXPORT_NAMED_SPECIFIER)
         ) | {
-            let is_export_default = matches!(
+            // check "export default" keyword
+            matches!(
                 reference_greatparent.as_ref().map(|p| p.kind()),
                 Some(JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE)
-            );
-            is_export_default
+            )
         } | {
-            let is_module_exports = match reference_parent.map(|x| x.kind()) {
+            // check module.exports
+            match reference_parent.map(|x| x.kind()) {
                 Some(JS_IDENTIFIER_EXPRESSION) => reference_greatparent
                     .map(|x| self.is_assignment_left_side_module_exports(&x))
                     .unwrap_or(false),
@@ -740,8 +741,7 @@ impl SemanticEventExtractor {
                     .map(|x| self.is_assignment_left_side_module_exports(&x))
                     .unwrap_or(false),
                 _ => false,
-            };
-            is_module_exports
+            }
         }
     }
 
