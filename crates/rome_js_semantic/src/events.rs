@@ -296,6 +296,7 @@ impl SemanticEventExtractor {
                 self.export_function_declaration(node, &parent);
             }
             JS_FUNCTION_EXPRESSION => {
+                self.push_binding_into_scope(None, &name_token);
                 self.export_function_expression(node, &parent);
             }
             JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
@@ -303,6 +304,7 @@ impl SemanticEventExtractor {
                 self.export_class_declaration(node, &parent);
             }
             JS_CLASS_EXPRESSION => {
+                self.push_binding_into_scope(None, &name_token);
                 self.export_class_expression(node, &parent);
             }
             _ => {
@@ -752,7 +754,29 @@ impl SemanticEventExtractor {
                 match expr.and_then(|x| x.left().ok()) {
                     Some(JsAnyAssignmentPattern::JsAnyAssignment(
                         JsAnyAssignment::JsStaticMemberAssignment(a),
-                    )) => a.syntax().text_trimmed() == "module.exports",
+                    )) => {
+                        let first = a
+                            .object()
+                            .ok()
+                            .and_then(|x| x.as_js_identifier_expression().cloned())
+                            .and_then(|x| x.name().ok())
+                            .and_then(|x| x.value_token().ok())
+                            .map(|x| x.token_text_trimmed());
+                        let second = a
+                            .member()
+                            .ok()
+                            .and_then(|x| x.as_js_name().cloned())
+                            .and_then(|x| x.value_token().ok())
+                            .map(|x| x.token_text_trimmed());
+                        match (first, second) {
+                            (Some(first), Some(second))
+                                if first == "module" && second == "exports" =>
+                            {
+                                true
+                            }
+                            _ => false,
+                        }
+                    }
                     _ => false,
                 }
             }
