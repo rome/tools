@@ -762,21 +762,27 @@ impl SemanticEventExtractor {
                             .and_then(|x| x.name().ok())
                             .and_then(|x| x.value_token().ok())
                             .map(|x| x.token_text_trimmed());
-                        let second = a
-                            .member()
-                            .ok()
-                            .and_then(|x| x.as_js_name().cloned())
-                            .and_then(|x| x.value_token().ok())
-                            .map(|x| x.token_text_trimmed());
-                        match (first, second) {
-                            (Some(first), Some(second))
-                                if first == "module" && second == "exports" =>
-                            {
-                                true
+
+                        match first {
+                            Some(first) if first == "module" => {
+                                let second = a
+                                    .member()
+                                    .ok()
+                                    .and_then(|x| x.as_js_name().cloned())
+                                    .and_then(|x| x.value_token().ok())
+                                    .map(|x| x.token_text_trimmed());
+                                // module.exports = ..
+                                matches!(second, Some(second) if second == "exports")
                             }
+                            // exports.<anything> = ..
+                            Some(first) if first == "exports" => true,
                             _ => false,
                         }
                     }
+                    // exports = ...
+                    Some(JsAnyAssignmentPattern::JsAnyAssignment(
+                        JsAnyAssignment::JsIdentifierAssignment(ident),
+                    )) => ident.syntax().text_trimmed() == "exports",
                     _ => false,
                 }
             }
