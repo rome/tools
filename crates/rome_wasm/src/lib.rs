@@ -1,20 +1,22 @@
-#![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
-
-use std::fmt::Display;
-
 use js_sys::Error;
-use rome_console::fmt::HTML;
-use rome_diagnostics::file::SimpleFile;
 use wasm_bindgen::prelude::*;
 
-use rome_console::{fmt::Formatter, markup};
-use rome_diagnostics::Diagnostic;
 use rome_service::workspace::{
     self, ChangeFileParams, CloseFileParams, FixFileParams, FormatFileParams, FormatOnTypeParams,
     FormatRangeParams, GetControlFlowGraphParams, GetFormatterIRParams, GetSyntaxTreeParams,
     PullActionsParams, PullDiagnosticsParams, RenameParams, UpdateSettingsParams,
 };
 use rome_service::workspace::{OpenFileParams, SupportsFeatureParams};
+
+mod utils;
+
+pub use crate::utils::DiagnosticPrinter;
+use crate::utils::{into_error, set_panic_hook};
+
+#[wasm_bindgen(start)]
+pub fn main() {
+    set_panic_hook();
+}
 
 include!(concat!(env!("OUT_DIR"), "/ts_types.rs"));
 
@@ -136,40 +138,4 @@ impl Workspace {
             .map(IRenameResult::from)
             .map_err(into_error)
     }
-}
-
-#[wasm_bindgen]
-pub struct DiagnosticPrinter {
-    file: SimpleFile,
-    buffer: Vec<u8>,
-}
-
-#[wasm_bindgen]
-impl DiagnosticPrinter {
-    #[wasm_bindgen(constructor)]
-    pub fn new(file_name: String, file_source: String) -> Self {
-        Self {
-            file: SimpleFile::new(file_name, file_source),
-            buffer: Vec::new(),
-        }
-    }
-
-    pub fn print(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
-        let diag: Diagnostic = diagnostic.into_serde().map_err(into_error)?;
-
-        let mut html = HTML(&mut self.buffer);
-        Formatter::new(&mut html)
-            .write_markup(markup!({ diag.display(&self.file) }))
-            .map_err(into_error)?;
-
-        Ok(())
-    }
-
-    pub fn finish(self) -> Result<String, Error> {
-        String::from_utf8(self.buffer).map_err(into_error)
-    }
-}
-
-fn into_error<E: Display>(err: E) -> Error {
-    Error::new(&err.to_string())
 }

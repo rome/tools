@@ -11,7 +11,7 @@ const rootManifest = JSON.parse(
 	fs.readFileSync(MANIFEST_PATH).toString("utf-8"),
 );
 
-function generatePackage(platform, arch) {
+function generateNativePackage(platform, arch) {
 	const packageName = `@rometools/cli-${platform}-${arch}`;
 	const packageRoot = resolve(PACKAGES_ROOT, `cli-${platform}-${arch}`);
 
@@ -46,17 +46,35 @@ function generatePackage(platform, arch) {
 	fs.copyFileSync(binarySource, binaryTarget);
 }
 
+function updateWasmPackage(target) {
+	const packageName = `@rometools/wasm-${target}`;
+	const packageRoot = resolve(PACKAGES_ROOT, `wasm-${target}`);
+
+	const manifestPath = resolve(packageRoot, "package.json");
+	const manifest = JSON.parse(fs.readFileSync(manifestPath).toString("utf-8"));
+
+	const { version } = rootManifest;
+	manifest["name"] = packageName;
+	manifest["version"] = version;
+
+	console.log("Update manifest " + manifestPath);
+	fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+}
+
 function writeManifest() {
+	const nativePackages = PLATFORMS.flatMap(
+		(platform) =>
+			ARCHITECTURES.map(
+				(arch) => [`@rometools/cli-${platform}-${arch}`, rootManifest.version],
+			),
+	);
+
+	const wasmPackages = WASM_TARGETS.map(
+		(target) => [`@rometools/wasm-${target}`, rootManifest.version],
+	);
+
 	rootManifest["optionalDependencies"] = Object.fromEntries(
-		PLATFORMS.flatMap(
-			(platform) =>
-				ARCHITECTURES.map(
-					(arch) => [
-						`@rometools/cli-${platform}-${arch}`,
-						rootManifest.version,
-					],
-				),
-		),
+		nativePackages.concat(wasmPackages),
 	);
 
 	console.log(`Update manifest ${MANIFEST_PATH}`);
@@ -66,10 +84,15 @@ function writeManifest() {
 
 const PLATFORMS = ["win32", "darwin", "linux"];
 const ARCHITECTURES = ["x64", "arm64"];
+const WASM_TARGETS = ["bundler", "nodejs", "web"];
+
+for (const target of WASM_TARGETS) {
+	updateWasmPackage(target);
+}
 
 for (const platform of PLATFORMS) {
 	for (const arch of ARCHITECTURES) {
-		generatePackage(platform, arch);
+		generateNativePackage(platform, arch);
 	}
 }
 

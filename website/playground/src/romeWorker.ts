@@ -2,7 +2,7 @@ import init, {
 	DiagnosticPrinter,
 	RomePath,
 	Workspace,
-} from "../pkg/rome_playground";
+} from "@rometools/wasm-web";
 import {
 	SourceType,
 	LoadingState,

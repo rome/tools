@@ -7,13 +7,14 @@
 		"preview": "vite preview",
 		"build": "pnpm build:wasm && pnpm build:js",
 		"build:js": "tsc && vite build",
-		"build:wasm": "wasm-pack build --target web --release",
-		"build:wasm-dev": "wasm-pack build --target web --dev",
+		"build:wasm": "wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools ../../crates/rome_wasm",
+		"build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../../crates/rome_wasm",
 		"format": "cargo rome-cli format --write ./src",
 		"format:rome": "rome format --write src .",
 		"tsc": "tsc"
 	},
 	"dependencies": {
+		"@rometools/wasm-web": "../../npm/wasm-web",
 		"@codemirror/lang-javascript": "^6.0.1",
 		"codemirror-lang-rome-ast": "0.0.6",
 		"lang-rome-formatter-ir": "0.0.2",
