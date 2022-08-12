@@ -6,7 +6,7 @@ use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAssignmentExpression, JsForVariableDeclaration,
     JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
     JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList, TextRange, TextSize,
+    JsVariableDeclaratorList, JsxReferenceIdentifier, TextRange, TextSize,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxTokenText};
 
@@ -217,8 +217,8 @@ impl SemanticEventExtractor {
             JS_IDENTIFIER_BINDING => {
                 self.enter_js_identifier_binding(node);
             }
-            JS_REFERENCE_IDENTIFIER => {
-                self.enter_js_reference_identifier(node);
+            JS_REFERENCE_IDENTIFIER | JSX_REFERENCE_IDENTIFIER => {
+                self.enter_reference_identifier(node);
             }
             JS_IDENTIFIER_ASSIGNMENT => {
                 self.enter_js_identifier_assignment(node);
@@ -315,14 +315,29 @@ impl SemanticEventExtractor {
         Some(())
     }
 
-    fn enter_js_reference_identifier(&mut self, node: &JsSyntaxNode) -> Option<()> {
-        debug_assert!(matches!(node.kind(), JsSyntaxKind::JS_REFERENCE_IDENTIFIER));
+    fn enter_reference_identifier(&mut self, node: &JsSyntaxNode) -> Option<()> {
+        debug_assert!(matches!(
+            node.kind(),
+            JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JSX_REFERENCE_IDENTIFIER
+        ));
 
-        let reference = node.clone().cast::<JsReferenceIdentifier>()?;
-        let name_token = reference.value_token().ok()?;
-        let name = name_token.token_text_trimmed();
+        let (name, is_exported) = match node.kind() {
+            JsSyntaxKind::JS_REFERENCE_IDENTIFIER => {
+                let reference = node.clone().cast::<JsReferenceIdentifier>()?;
+                let name_token = reference.value_token().ok()?;
+                (
+                    name_token.token_text_trimmed(),
+                    self.is_js_reference_identifier_exported(node),
+                )
+            }
+            JsSyntaxKind::JSX_REFERENCE_IDENTIFIER => {
+                let reference = node.clone().cast::<JsxReferenceIdentifier>()?;
+                let name_token = reference.value_token().ok()?;
+                (name_token.token_text_trimmed(), false)
+            }
+            _ => return None,
+        };
 
-        let is_exported = self.is_reference_identifier_exported(node);
         let current_scope = self.current_scope_mut();
         let references = current_scope.references.entry(name).or_default();
         references.push(Reference::Read {
@@ -710,7 +725,7 @@ impl SemanticEventExtractor {
     }
 
     // Check if a reference is exported and raise the [Exported] event.
-    fn is_reference_identifier_exported(&mut self, reference: &JsSyntaxNode) -> bool {
+    fn is_js_reference_identifier_exported(&mut self, reference: &JsSyntaxNode) -> bool {
         use JsSyntaxKind::*;
         debug_assert!(matches!(reference.kind(), JS_REFERENCE_IDENTIFIER));
 

@@ -124,6 +124,11 @@ assert_semantics! {
     ok_scope_function_expression_read2, "let f/*#F1*/ = 1; let g = function f/*#F2*/() {console.log(2, f/*READ F2*/);}; console.log(f/*READ F1*/);",
 }
 
+// Imports
+assert_semantics! {
+    ok_import_used_in_jsx, r#"import A/*#A*/ from 'a.js'; console.log(<A/*READ A*//>);"#,
+}
+
 assert_semantics! {
     ok_unmatched_reference, r#"a/*?*/"#,
     ok_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
