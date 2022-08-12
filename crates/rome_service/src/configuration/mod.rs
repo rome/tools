@@ -118,7 +118,6 @@ pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
 ) -> Result<Option<Configuration>, RomeError> {
     let config_name = file_system.config_name();
-    println!("Config: {:?}", config_name);
     let configuration_path = PathBuf::from(config_name);
     let options = OpenOptions::default().read(true).write(true);
     let file = file_system.open_with_options(&configuration_path, options);
