@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use tower_lsp::lsp_types::{TextDocumentIdentifier, Url};
 use tracing::info;
 
-pub const SYNTAX_TREE_REQUEST: &str = "rome/syntaxTree";
+pub const SYNTAX_TREE_REQUEST: &str = "rome_lsp/syntaxTree";
 
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]

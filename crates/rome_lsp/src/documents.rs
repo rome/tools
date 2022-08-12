@@ -6,7 +6,7 @@ use crate::line_index::LineIndex;
 ///
 /// [language identifiers]: https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-pub enum EditorLanguage {
+pub(crate) enum EditorLanguage {
     JavaScript,
     JavaScriptReact,
     TypeScript,

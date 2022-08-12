@@ -1,1 +1,1 @@
-pub mod syntax_tree;
+pub(crate) mod syntax_tree;

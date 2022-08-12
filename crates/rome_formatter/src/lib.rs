@@ -409,6 +409,7 @@ impl Printed {
 pub type FormatResult<F> = Result<F, FormatError>;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 /// Series of errors encountered during formatting
 pub enum FormatError {
     /// In case a node can't be formatted because it either misses a require child element or

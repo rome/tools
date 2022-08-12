@@ -863,9 +863,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "libc"
-version = "0.2.126"
+version = "0.2.129"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "349d5a591cd28b49e1d1037471617a32ddcda5731b99419008085f72d5a53836"
+checksum = "64de3cc433455c14174d42e554d4027ee631c4d046d43e3ecc6efc4636cdc7a7"
 
 [[package]]
 name = "libgit2-sys"
@@ -1049,6 +1049,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "19e64526ebdee182341572e50e9ad03965aa510cd94427a4549448f285e957a1"
 dependencies = [
  "hermit-abi",
+ "libc",
+]
+
+[[package]]
+name = "num_threads"
+version = "0.1.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2819ce041d2ee131036f4fc9d6ae7ae125a3a40e97ba64d04fe799ad9dabbb44"
+dependencies = [
  "libc",
 ]
 
@@ -1400,6 +1409,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_bin"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "libc",
+ "mimalloc",
+ "rome_cli",
+ "rome_lsp",
+ "rome_service",
+ "tokio",
+ "tower-lsp",
+ "tracing",
+ "tracing-appender",
+ "tracing-subscriber",
+ "tracing-tree",
+]
+
+[[package]]
 name = "rome_cli"
 version = "0.0.0"
 dependencies = [
@@ -1407,17 +1434,19 @@ dependencies = [
  "hdrhistogram",
  "insta",
  "lazy_static",
- "mimalloc",
  "parking_lot",
  "pico-args",
  "rayon",
+ "rome_bin",
  "rome_console",
  "rome_diagnostics",
  "rome_flags",
  "rome_formatter",
  "rome_fs",
+ "rome_lsp",
  "rome_service",
  "thiserror",
+ "tokio",
  "tracing",
  "tracing-subscriber",
 ]
@@ -1524,6 +1553,7 @@ dependencies = [
  "rome_rowan",
  "rome_text_edit",
  "rustc-hash",
+ "serde",
  "tests_macros",
 ]
 
@@ -1630,7 +1660,6 @@ dependencies = [
  "anyhow",
  "futures",
  "indexmap",
- "mimalloc",
  "parking_lot",
  "rome_analyze",
  "rome_console",
@@ -1647,8 +1676,6 @@ dependencies = [
  "tower",
  "tower-lsp",
  "tracing",
- "tracing-subscriber",
- "tracing-tree",
 ]
 
 [[package]]
@@ -2077,6 +2104,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "time"
+version = "0.3.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "db76ff9fa4b1458b3c7f077f3ff9887394058460d21e634355b273aaf11eea45"
+dependencies = [
+ "itoa 1.0.1",
+ "libc",
+ "num_threads",
+]
+
+[[package]]
 name = "timing"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2119,7 +2157,6 @@ dependencies = [
  "mio",
  "num_cpus",
  "once_cell",
- "parking_lot",
  "pin-project-lite",
  "signal-hook-registry",
  "socket2",
@@ -2234,6 +2271,17 @@ dependencies = [
  "pin-project-lite",
  "tracing-attributes",
  "tracing-core",
+]
+
+[[package]]
+name = "tracing-appender"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09d48f71a791638519505cefafe162606f706c25592e4bde4d97600c0195312e"
+dependencies = [
+ "crossbeam-channel",
+ "time",
+ "tracing-subscriber",
 ]
 
 [[package]]

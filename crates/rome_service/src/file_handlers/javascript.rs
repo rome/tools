@@ -32,20 +32,14 @@ use rome_console::codespan::Severity;
 use std::borrow::Cow;
 use std::fmt::Debug;
 
-#[derive(Debug, Clone, Default)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct JsFormatSettings {
     pub quote_style: Option<QuoteStyle>,
 }
 
-#[derive(Debug, Clone, Default)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct JsLinterSettings {
     pub globals: Vec<String>,
 }
@@ -338,7 +332,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
                         None => {
                             return Err(RomeError::RuleError(
                                 RuleError::ReplacedRootWithNonRootError {
-                                    rule_name: action.rule_name,
+                                    rule_name: Cow::Borrowed(action.rule_name),
                                 },
                             ))
                         }

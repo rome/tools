@@ -1,9 +1,11 @@
+import { spawn } from "child_process";
+import { connect } from "net";
 import { ExtensionContext, Uri, window, workspace } from "vscode";
 import {
 	LanguageClient,
 	LanguageClientOptions,
 	ServerOptions,
-	TransportKind,
+	StreamInfo,
 } from "vscode-languageclient/node";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
@@ -26,20 +28,12 @@ export async function activate(context: ExtensionContext) {
 		return;
 	}
 
-	const serverOptions: ServerOptions = {
+	const serverOptions: ServerOptions = createMessageTransports.bind(
+		undefined,
 		command,
-		transport: TransportKind.stdio,
-	};
+	);
 
 	const traceOutputChannel = window.createOutputChannel("Rome Trace");
-
-	// only override serverOptions.options when developing extension,
-	// this is convenient for debugging
-	// Before, every time we modify the client package, we need to rebuild vscode extension and install, for now, we could use Launching Client or press F5 to open a separate debug window and doing some check, finally we could bundle the vscode and do some final check.
-	// Passing such variable via `Launch.json`, you need not to add an extra environment variable or change the setting.json `rome.lspBin`,
-	if (process.env.DEBUG_SERVER_PATH) {
-		serverOptions.options = { env: { ...process.env } };
-	}
 
 	const clientOptions: LanguageClientOptions = {
 		documentSelector: [
@@ -95,7 +89,7 @@ async function getServerPath(
 	}
 
 	const binaryExt = triplet.includes("windows") ? ".exe" : "";
-	const binaryName = `rome_lsp${binaryExt}`;
+	const binaryName = `rome${binaryExt}`;
 
 	const bundlePath = Uri.joinPath(context.extensionUri, "server", binaryName);
 	const bundleExists = await fileExists(bundlePath);
@@ -114,6 +108,42 @@ async function fileExists(path: Uri) {
 			throw err;
 		}
 	}
+}
+
+function getSocket(command: string): Promise<string> {
+	return new Promise((resolve, reject) => {
+		const process = spawn(command, ["__print_socket"], {
+			stdio: "pipe",
+		});
+
+		process.on("error", reject);
+
+		let pipeName = "";
+		process.stdout.on("data", (data) => {
+			pipeName += data.toString("utf-8");
+		});
+
+		process.on("exit", (code) => {
+			if (code === 0) {
+				console.log(`"${pipeName}"`);
+				resolve(pipeName.trimEnd());
+			} else {
+				reject(code);
+			}
+		});
+	});
+}
+
+async function createMessageTransports(command: string): Promise<StreamInfo> {
+	const path = await getSocket(command);
+	const socket = connect(path);
+
+	await new Promise((resolve, reject) => {
+		socket.once("error", reject);
+		socket.once("ready", resolve);
+	});
+
+	return { writer: socket, reader: socket };
 }
 
 export function deactivate(): Thenable<void> | undefined {

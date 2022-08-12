@@ -9,7 +9,7 @@ use rome_js_syntax::{
     suppression::{parse_suppression_comment, SuppressionCategory},
     JsLanguage,
 };
-use std::error::Error;
+use std::{borrow::Cow, error::Error};
 
 mod analyzers;
 mod assists;
@@ -158,10 +158,11 @@ mod tests {
 }
 
 /// Series of errors encountered when running rules on a file
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RuleError {
     /// The rule with the specified name replaced the root of the file with a node that is not a valid root for that language.
-    ReplacedRootWithNonRootError { rule_name: &'static str },
+    ReplacedRootWithNonRootError { rule_name: Cow<'static, str> },
 }
 
 impl std::fmt::Display for RuleError {

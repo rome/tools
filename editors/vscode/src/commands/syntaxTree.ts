@@ -86,6 +86,7 @@ class SyntaxTreeProvider
 		if (document) {
 			return document.value;
 		}
+
 		const params: SyntaxTreeParams = {
 			textDocument: { uri: this.session.editor.document.uri.toString() },
 		};

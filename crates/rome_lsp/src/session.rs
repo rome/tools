@@ -10,12 +10,12 @@ use rome_analyze::RuleCategories;
 use rome_diagnostics::file::FileId;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::configuration::Configuration;
-use rome_service::workspace;
 use rome_service::workspace::UpdateSettingsParams;
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
 use rome_service::Workspace;
 use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
+use std::sync::Arc;
 use tower_lsp::lsp_types;
 use tracing::{error, trace};
 
@@ -29,7 +29,7 @@ pub(crate) struct Session {
     /// the configuration of the LSP
     pub(crate) config: RwLock<Config>,
 
-    pub(crate) workspace: Box<dyn Workspace>,
+    pub(crate) workspace: Arc<dyn Workspace>,
 
     /// File system to read files inside the workspace
     pub(crate) fs: DynRef<'static, dyn FileSystem>,
@@ -42,7 +42,7 @@ pub(crate) struct Session {
 }
 
 impl Session {
-    pub(crate) fn new(client: tower_lsp::Client) -> Self {
+    pub(crate) fn new(client: tower_lsp::Client, workspace: Arc<dyn Workspace>) -> Self {
         let client_capabilities = RwLock::new(Default::default());
         let documents = Default::default();
         let url_interner = Default::default();
@@ -51,7 +51,7 @@ impl Session {
         Self {
             client,
             client_capabilities,
-            workspace: workspace::server(),
+            workspace,
             documents,
             url_interner,
             config,

@@ -3,8 +3,9 @@ use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
+use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::fmt::{Debug, Display, Formatter};
+use std::fmt::{self, Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
 
@@ -24,12 +25,13 @@ pub struct App<'app> {
     /// A reference to the internal virtual file system
     pub fs: DynRef<'app, dyn FileSystem>,
     /// A reference to the internal workspace
-    pub workspace: DynRef<'app, dyn Workspace>,
+    pub workspace: WorkspaceRef<'app>,
     /// A reference to the internal console, where its buffer will be used to write messages and
     /// errors
     pub console: DynRef<'app, dyn Console>,
 }
 
+#[derive(Serialize, Deserialize)]
 /// Generic errors thrown during rome operations
 pub enum RomeError {
     /// The project contains uncommitted changes
@@ -53,16 +55,18 @@ pub enum RomeError {
     Configuration(ConfigurationError),
     /// Error thrown when Rome cannot rename a symbol.
     RenameError(RenameError),
+    /// Error emitted by the underlying transport layer for a remote Workspace
+    TransportError(TransportError),
 }
 
 impl Debug for RomeError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self, f)
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        fmt::Display::fmt(self, f)
     }
 }
 
 impl Display for RomeError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
             RomeError::SourceFileNotSupported(path) => {
                 let ext = path.extension().and_then(|ext| ext.to_str());
@@ -104,7 +108,7 @@ impl Display for RomeError {
                 )
             }
 
-            RomeError::Configuration(error) => std::fmt::Display::fmt(error, f),
+            RomeError::Configuration(error) => fmt::Display::fmt(error, f),
             RomeError::DirtyWorkspace => {
                 write!(f, "Uncommitted changes in repository")
             }
@@ -132,6 +136,10 @@ impl Display for RomeError {
                     "the linter encountered an error while analyzing the file: {cause}",
                 )
             }
+
+            RomeError::TransportError(err) => {
+                write!(f, "{err}",)
+            }
         }
     }
 }
@@ -144,12 +152,48 @@ impl From<FormatError> for RomeError {
     }
 }
 
-impl<'app> App<'app> {
-    /// Create a new instance of the app using the [OsFileSystem] and [EnvConsole]
-    pub fn from_env(no_colors: bool) -> Self {
+impl From<TransportError> for RomeError {
+    fn from(err: TransportError) -> Self {
+        Self::TransportError(err)
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+/// Error emitted by the underlying transport layer for a remote Workspace
+pub enum TransportError {
+    /// Error emitted by the transport layer if the connection was lost due to an I/O error
+    ChannelClosed,
+    /// Error caused by a serialization or deserialization issue
+    SerdeError(String),
+    /// Generic error type for RPC errors that can't be deserialized into RomeError
+    RPCError(String),
+}
+
+impl Error for TransportError {}
+
+impl Display for TransportError {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        match self {
+            TransportError::SerdeError(err) => write!(fmt, "serialization error: {err}"),
+            TransportError::ChannelClosed => fmt.write_str(
+                "a request to the remote workspace failed because the connection was interrupted",
+            ),
+            TransportError::RPCError(err) => fmt.write_str(err),
+        }
+    }
+}
+
+impl From<serde_json::Error> for TransportError {
+    fn from(err: serde_json::Error) -> Self {
+        TransportError::SerdeError(err.to_string())
+    }
+}
+
+impl Default for App<'static> {
+    fn default() -> Self {
         Self::with_filesystem_and_console(
             DynRef::Owned(Box::new(OsFileSystem)),
-            DynRef::Owned(Box::new(EnvConsole::new(no_colors))),
+            DynRef::Owned(Box::new(EnvConsole::default())),
         )
     }
 }
@@ -160,10 +204,35 @@ impl<'app> App<'app> {
         fs: DynRef<'app, dyn FileSystem>,
         console: DynRef<'app, dyn Console>,
     ) -> Self {
+        Self::new(fs, console, WorkspaceRef::Owned(workspace::server()))
+    }
+
+    /// Create a new instance of the app using the specified [FileSystem], [Console] and [Workspace] implementation
+    pub fn new(
+        fs: DynRef<'app, dyn FileSystem>,
+        console: DynRef<'app, dyn Console>,
+        workspace: WorkspaceRef<'app>,
+    ) -> Self {
         Self {
             fs,
             console,
-            workspace: DynRef::Owned(workspace::server()),
+            workspace,
+        }
+    }
+}
+
+pub enum WorkspaceRef<'app> {
+    Owned(Box<dyn Workspace>),
+    Borrowed(&'app dyn Workspace),
+}
+
+impl<'app> Deref for WorkspaceRef<'app> {
+    type Target = dyn Workspace + 'app;
+
+    fn deref(&self) -> &Self::Target {
+        match self {
+            WorkspaceRef::Owned(inner) => &**inner,
+            WorkspaceRef::Borrowed(inner) => *inner,
         }
     }
 }
