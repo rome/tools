@@ -62,7 +62,7 @@ impl ToOwned for GreenTokenData {
 impl Borrow<GreenTokenData> for GreenToken {
     #[inline]
     fn borrow(&self) -> &GreenTokenData {
-        &*self
+        &**self
     }
 }
 
@@ -79,14 +79,14 @@ impl fmt::Debug for GreenTokenData {
 
 impl fmt::Debug for GreenToken {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let data: &GreenTokenData = &*self;
+        let data: &GreenTokenData = &**self;
         fmt::Debug::fmt(data, f)
     }
 }
 
 impl fmt::Display for GreenToken {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let data: &GreenTokenData = &*self;
+        let data: &GreenTokenData = &**self;
         fmt::Display::fmt(data, f)
     }
 }

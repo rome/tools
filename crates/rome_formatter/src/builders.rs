@@ -2131,7 +2131,7 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
         let mut formatted_variants = Vec::with_capacity(variants.len());
 
         for variant in variants {
-            buffer.write_fmt(Arguments::from(&*variant))?;
+            buffer.write_fmt(Arguments::from(variant))?;
 
             formatted_variants.push(buffer.take_element());
         }

@@ -630,7 +630,7 @@ impl<L: Language> SyntaxTrivia<L> {
 
 fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::Result {
     let text = text.as_ref();
-    return if text.len() < 25 {
+    if text.len() < 25 {
         write!(f, "{:?}", text)
     } else {
         for idx in 21..25 {
@@ -640,5 +640,5 @@ fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::R
             }
         }
         write!(f, "")
-    };
+    }
 }

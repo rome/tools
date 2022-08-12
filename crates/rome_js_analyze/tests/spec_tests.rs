@@ -128,7 +128,7 @@ fn markup_to_string(markup: Markup) -> String {
 
     String::from_utf8(buffer).unwrap()
 }
-
+#[allow(clippy::let_and_return)]
 fn diagnostic_to_string(name: &str, source: &str, diag: Diagnostic) -> String {
     let file = SimpleFile::new(name.into(), source.into());
     let text = markup_to_string(markup! {
