@@ -33,7 +33,7 @@ pub struct TestResult {
     pub test_case: String,
 }
 
-#[derive(Debug, PartialEq,Eq, Serialize, Deserialize, Copy, Clone)]
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize, Copy, Clone)]
 pub enum Outcome {
     Passed,
     Failed,
