@@ -101,7 +101,11 @@ use std::collections::{BTreeMap, HashMap};
 /// if(true) ;/*NOEVENT*/;
 /// ```
 pub fn assert(code: &str, test_name: &str) {
-    let r = rome_js_parser::parse(code, 0, SourceType::js_module());
+    let r = rome_js_parser::parse(
+        code,
+        0,
+        SourceType::js_module().with_variant(rome_js_syntax::LanguageVariant::Jsx),
+    );
 
     if r.has_errors() {
         let files = SimpleFile::new(test_name.to_string(), code.into());
