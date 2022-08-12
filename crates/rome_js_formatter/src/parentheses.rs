@@ -299,19 +299,11 @@ pub(crate) fn is_in_left_hand_side_position(
     }
 }
 
-pub(crate) fn is_in_assignment_expression_position(
-    parent: &JsSyntaxNode,
-    _expression: &JsSyntaxNode,
-) -> bool {
-    matches!(parent.kind(), JsSyntaxKind::JS_SPREAD)
-}
-
 pub(crate) fn unary_expression_needs_parentheses(
     expression: &JsSyntaxNode,
     parent: &JsSyntaxNode,
 ) -> bool {
-    is_in_left_hand_side_position(expression, parent)
-        || is_in_assignment_expression_position(parent, expression)
+    is_in_left_hand_side_position(expression, parent) || is_spread(expression, parent)
 }
 
 /// Returns `true` if `node< is the `object` of a [JsStaticMemberExpression] or [JsComputedMemberExpression]
@@ -368,6 +360,8 @@ pub(crate) fn is_conditional_test(node: &JsSyntaxNode, parent: &JsSyntaxNode) ->
 
 /// Returns `true` if `node` is the `tag` of a [JsTemplate] expression
 pub(crate) fn is_tag(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
+    debug_assert_is_expression(node);
+
     match parent.kind() {
         JsSyntaxKind::JS_TEMPLATE => {
             let template = JsTemplate::unwrap_cast(parent.clone());
@@ -376,6 +370,18 @@ pub(crate) fn is_tag(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
         }
         _ => false,
     }
+}
+
+/// Returns `true` if `node` is a spread `...node`
+pub(crate) fn is_spread(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
+    debug_assert_is_expression(node);
+
+    matches!(
+        parent.kind(),
+        JsSyntaxKind::JSX_SPREAD_CHILD
+            | JsSyntaxKind::JS_SPREAD
+            | JsSyntaxKind::JSX_SPREAD_ATTRIBUTE
+    )
 }
 
 pub(crate) fn is_binary_like_left_or_right(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {

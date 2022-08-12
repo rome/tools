@@ -155,6 +155,7 @@ pub(crate) fn is_expression_handling_parens(expression: &JsAnyExpression) -> boo
                 | JsComputedMemberExpression(_)
                 | TsNonNullAssertionExpression(_)
                 | JsxTagExpression(_)
+                | TsAsExpression(_)
         )
     }
 }

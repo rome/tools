@@ -1,8 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 271
-info:
-  test_file: typescript/as/as.ts
 ---
 
 # Input
@@ -56,31 +53,8 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
 ```diff
 --- Prettier
 +++ Rome
-@@ -3,29 +3,31 @@
- (originalError
-   ? wrappedError(errMsg, originalError)
-   : Error(errMsg)) as InjectionError;
--"current" in (props.pagination as Object);
-+"current" in props.pagination as Object;
- ("current" in props.pagination) as Object;
- start + (yearSelectTotal as number);
- (start + yearSelectTotal) as number;
- scrollTop > (visibilityHeight as number);
- (scrollTop > visibilityHeight) as number;
--export default class Column<T> extends (RcTable.Column as React.ComponentClass<
--  ColumnProps<T>,
--  ColumnProps<T>,
--  ColumnProps<T>,
--  ColumnProps<T>
-->) {}
-+export default class Column<T> extends (
-+  RcTable.Column as React.ComponentClass<
-+    ColumnProps<T>,
-+    ColumnProps<T>,
-+    ColumnProps<T>,
-+    ColumnProps<T>
-+  >
-+) {}
+@@ -17,15 +17,15 @@
+ >) {}
  export const MobxTypedForm = class extends (Form as { new (): any }) {};
  export abstract class MobxTypedForm1 extends (Form as { new (): any }) {}
 -({} as {});
@@ -98,7 +72,7 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
  const state = JSON.stringify({
    next: window.location.href,
    nonce,
-@@ -41,9 +43,9 @@
+@@ -41,9 +41,9 @@
    thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
  const value2 =
    thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
@@ -121,20 +95,18 @@ this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
 (originalError
   ? wrappedError(errMsg, originalError)
   : Error(errMsg)) as InjectionError;
-"current" in props.pagination as Object;
+"current" in (props.pagination as Object);
 ("current" in props.pagination) as Object;
 start + (yearSelectTotal as number);
 (start + yearSelectTotal) as number;
 scrollTop > (visibilityHeight as number);
 (scrollTop > visibilityHeight) as number;
-export default class Column<T> extends (
-  RcTable.Column as React.ComponentClass<
-    ColumnProps<T>,
-    ColumnProps<T>,
-    ColumnProps<T>,
-    ColumnProps<T>
-  >
-) {}
+export default class Column<T> extends (RcTable.Column as React.ComponentClass<
+  ColumnProps<T>,
+  ColumnProps<T>,
+  ColumnProps<T>,
+  ColumnProps<T>
+>) {}
 export const MobxTypedForm = class extends (Form as { new (): any }) {};
 export abstract class MobxTypedForm1 extends (Form as { new (): any }) {}
 ({}) as {};
@@ -190,7 +162,7 @@ const iter2 = createIterator(
 
 # Lines exceeding max width of 80 characters
 ```
-   45:   thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
-   55:   thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
+   43:   thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
+   53:   thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
 ```
 

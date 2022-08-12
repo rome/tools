@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::js::expressions::static_member_expression::memberish_needs_parens;
+use crate::js::expressions::static_member_expression::member_chain_callee_needs_parens;
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
 use rome_js_syntax::{JsSyntaxKind, TsNonNullAssertionExpressionFields};
@@ -31,6 +31,6 @@ impl FormatNodeRule<TsNonNullAssertionExpression> for FormatTsNonNullAssertionEx
 impl NeedsParentheses for TsNonNullAssertionExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         matches!(parent.kind(), JsSyntaxKind::JS_EXTENDS_CLAUSE)
-            || memberish_needs_parens(self.clone().into(), parent)
+            || member_chain_callee_needs_parens(self.clone().into(), parent)
     }
 }

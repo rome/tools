@@ -16,13 +16,13 @@ export default (function log() {} as typeof console.log)
 +++ Rome
 @@ -1 +1 @@
 -export default (function log() {} as typeof console.log);
-+export default ((function log() {}) as typeof console.log);
++export default (function log() {}) as typeof console.log;
 ```
 
 # Output
 
 ```js
-export default ((function log() {}) as typeof console.log);
+export default (function log() {}) as typeof console.log;
 ```
 
 

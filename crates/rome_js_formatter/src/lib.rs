@@ -718,17 +718,12 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-let bifornCringerMoshedPerplexSawder=
-askTrovenaBeenaDependsRowans=
-glimseGlyphsHazardNoopsTieTie=
-averredBathersBoxroomBuggyNurl;
-
-let bifornCringerMoshedPerplexSawder =
-   (askTrovenaBeenaDependsRowans = glimseGlyphsHazardNoopsTieTie =
-      averredBathersBoxroomBuggyNurl);
-
-
-
+it(`handles
+  some
+    newlines
+  does something really long and complicated so I have to write a very long name for the test`, () => {
+  console.log("hello!");
+}, 2500);
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

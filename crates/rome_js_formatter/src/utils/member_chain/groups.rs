@@ -2,11 +2,9 @@ use crate::context::TabWidth;
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use crate::utils::member_chain::chain_member::{ChainEntry, ChainMember};
-use crate::utils::member_chain::simple_argument::SimpleArgument;
-use crate::utils::member_chain::MemberChain;
 use rome_formatter::write;
 use rome_js_syntax::JsCallExpression;
-use rome_rowan::{AstSeparatedList, SyntaxResult};
+use rome_rowan::SyntaxResult;
 use std::mem;
 
 pub(super) struct MemberChainGroupsBuilder {

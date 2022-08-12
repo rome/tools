@@ -155,21 +155,15 @@ impl NeedsParentheses for JsStaticMemberExpression {
             return true;
         }
 
-        memberish_needs_parens(self.clone().into(), parent)
+        member_chain_callee_needs_parens(self.clone().into(), parent)
     }
 }
 
-pub(crate) fn memberish_needs_parens(node: JsAnyExpression, parent: &JsSyntaxNode) -> bool {
+pub(crate) fn member_chain_callee_needs_parens(
+    node: JsAnyExpression,
+    parent: &JsSyntaxNode,
+) -> bool {
     use JsAnyExpression::*;
-    debug_assert!(
-        matches!(
-            node,
-            JsStaticMemberExpression(_)
-                | JsComputedMemberExpression(_)
-                | TsNonNullAssertionExpression(_)
-        ),
-        "Expected node to be a member expression"
-    );
 
     match parent.kind() {
         // `new (test().a)

@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::utils::JsAnyConditional;
 
 use crate::parentheses::{
-    is_binary_like_left_or_right, is_conditional_test, is_in_left_hand_side_position,
+    is_binary_like_left_or_right, is_conditional_test, is_in_left_hand_side_position, is_spread,
     NeedsParentheses,
 };
 use rome_js_syntax::{JsConditionalExpression, JsSyntaxKind, JsSyntaxNode};
@@ -28,9 +28,7 @@ impl NeedsParentheses for JsConditionalExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match parent.kind() {
             JsSyntaxKind::JS_UNARY_EXPRESSION
-            | JsSyntaxKind::JS_SPREAD
             | JsSyntaxKind::JS_AWAIT_EXPRESSION
-            | JsSyntaxKind::JSX_SPREAD_ATTRIBUTE
             | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
             | JsSyntaxKind::TS_AS_EXPRESSION => true,
 
@@ -38,6 +36,7 @@ impl NeedsParentheses for JsConditionalExpression {
                 is_conditional_test(self.syntax(), parent)
                     || is_in_left_hand_side_position(self.syntax(), parent)
                     || is_binary_like_left_or_right(self.syntax(), parent)
+                    || is_spread(self.syntax(), parent)
             }
         }
     }

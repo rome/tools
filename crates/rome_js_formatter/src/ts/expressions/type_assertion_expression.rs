@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::TsTypeAssertionExpression;
-use rome_js_syntax::TsTypeAssertionExpressionFields;
+use rome_js_syntax::{JsSyntaxKind, TsAsExpression, TsTypeAssertionExpressionFields};
+use rome_js_syntax::{JsSyntaxNode, TsTypeAssertionExpression};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsTypeAssertionExpression;

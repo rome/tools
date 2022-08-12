@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
+use crate::js::expressions::static_member_expression::member_chain_callee_needs_parens;
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{
     JsAnyExpression, JsSyntaxNode, JsSyntaxToken, JsTemplate, TsTemplateLiteralType,
@@ -86,11 +87,11 @@ impl JsAnyTemplate {
 
 /// `TemplateLiteral`'s are `PrimaryExpression's that never need parentheses.
 impl NeedsParentheses for JsTemplate {
-    fn needs_parentheses(&self) -> bool {
-        false
-    }
-
-    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
-        false
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        if self.tag().is_some() {
+            member_chain_callee_needs_parens(self.clone().into(), parent)
+        } else {
+            false
+        }
     }
 }
